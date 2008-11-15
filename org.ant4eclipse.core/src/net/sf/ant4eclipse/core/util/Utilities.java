@@ -1,0 +1,342 @@
+/**********************************************************************
+ * Copyright (c) 2005-2008 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
+package net.sf.ant4eclipse.core.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+
+import net.sf.ant4eclipse.core.Assert;
+import net.sf.ant4eclipse.core.CoreExceptionCode;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
+import net.sf.ant4eclipse.core.logging.A4ELogging;
+
+/**
+ * <p>
+ * Collection of utility functions that aren't specific to A4E.
+ * <p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
+ */
+public class Utilities {
+
+  /**
+   * Prevent instantiation of this class.
+   */
+  private Utilities() {
+    // Prevent instantiation of this class.
+  }
+
+  public static URL toURL(final File file) {
+    Assert.notNull(file);
+    final URI uri = file.toURI();
+    try {
+      return uri.toURL();
+    } catch (final MalformedURLException e) {
+      // TODO
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Returns true if the supplied path could be deleted completely. In case of a directory the complete tree will be
+   * deleted.
+   * 
+   * @param file
+   *          The path which shall be removed.
+   * 
+   * @return true <=> The path could be deleted with success.
+   */
+  public static final boolean delete(final File file) {
+    Assert.notNull(file);
+    A4ELogging.debug("Deleting '%s' ...", file.getPath());
+    boolean result = true;
+    if (file.isDirectory()) {
+      // delete the children
+      final File[] children = file.listFiles();
+      if (children != null) {
+        for (int i = 0; i < children.length; i++) {
+          result = result && delete(children[i]);
+        }
+      }
+    }
+    // try to delete the file multiple times,
+    // since the deletion query may fail (f.e.
+    // if another process locked the file)
+    int tries = 5;
+    while ((!file.delete()) && (tries > 0)) {
+      // allow the garbage collector to cleanup potential references
+      System.gc();
+      try {
+        Thread.sleep(10);
+      } catch (final InterruptedException ex) {
+        // do nothing here
+      }
+      tries--;
+    }
+    if (file.exists()) {
+      A4ELogging.warn("Failed to delete '%s' !", file.getPath());
+      result = false;
+    }
+    return (result);
+  }
+
+  /**
+   * Calculates a relative path for the supplied files.
+   * 
+   * @param fromfile
+   *          Starting point within a file system.
+   * @param tofile
+   *          Ending point within a file system.
+   * 
+   * @return The file which indicates the relative path. null in case the relative path could not be calculated.
+   */
+  public static final String calcRelative(final File fromfile, final File tofile) {
+    String frompath = null;
+    String topath = null;
+    try {
+      frompath = fromfile.getCanonicalPath();
+    } catch (final IOException ex) {
+      return (null);
+    }
+    try {
+      topath = tofile.getCanonicalPath();
+    } catch (final IOException ex) {
+      return (null);
+    }
+    final String[] fromstr = frompath.replace('\\', '/').split("/");
+    final String[] tostr = topath.replace('\\', '/').split("/");
+
+    System.err.println(Arrays.asList(fromstr));
+    System.err.println(Arrays.asList(tostr));
+
+    if (!fromstr[0].equals(tostr[0])) {
+      // we're not working on the same device
+      /**
+       * @todo [26-Feb-2006:KASI] Can this be omitted under UNIX ?
+       */
+      return (null);
+    }
+    int same = 1;
+    for (; same < Math.min(fromstr.length, tostr.length); same++) {
+      if (!fromstr[same].equals(tostr[same])) {
+        break;
+      }
+    }
+    final StringBuffer buffer = new StringBuffer();
+    for (int i = same; i < fromstr.length; i++) {
+      buffer.append(File.separator + "..");
+    }
+    for (int i = same; i < tostr.length; i++) {
+      buffer.append(File.separator + tostr[i]);
+    }
+    if (buffer.length() > 0) {
+      buffer.delete(0, File.separator.length());
+    }
+    return (buffer.toString());
+  }
+
+  /**
+   * removes trailing / or \\ from the given path
+   * 
+   * @param path
+   * @return the path without a trailing path separator
+   */
+  public static final String removeTrailingPathSeparator(final String path) {
+    if ((path == null) || (path.length() < 2)) {
+      return path;
+    }
+    if (path.endsWith("/") || path.endsWith("\\")) {
+      return path.substring(0, path.length() - 1);
+    }
+    return path;
+
+  }
+
+  /**
+   * <p>
+   * Check if a String has text. More specifically, returns <code>true</code> if the string not <code>null<code>, it's <code>length is > 0</code>,
+   * and it has at least one non-whitespace character.
+   * </p>
+   * <p>
+   * 
+   * <pre>
+   *      Utilities.hasText(null) = false
+   *      Utilities.hasText(&quot;&quot;) = false
+   *      Utilities.hasText(&quot; &quot;) = false
+   *      Utilities.hasText(&quot;12345&quot;) = true
+   *      Utilities.hasText(&quot; 12345 &quot;) = true
+   * </pre>
+   * 
+   * </p>
+   * 
+   * @param str
+   *          the String to check, may be <code>null</code>
+   * @return <code>true</code> if the String is not null, length > 0, and not whitespace only
+   * @see java.lang.Character#isWhitespace
+   */
+  public static final boolean hasText(final String str) {
+    int strLen;
+    if ((str == null) || ((strLen = str.length()) == 0)) {
+      return false;
+    }
+    for (int i = 0; i < strLen; i++) {
+      if (!Character.isWhitespace(str.charAt(i))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Replaces a character with a specified string.
+   * 
+   * @param input
+   *          The string which will be modified.
+   * @param ch
+   *          The character that shall be replaced.
+   * @param replacement
+   *          The replacing string.
+   * 
+   * @return A string with replaced characters.
+   */
+  public static final String replace(final String input, final char ch, final String replacement) {
+    final StringBuffer buffer = new StringBuffer();
+    final String searchstr = String.valueOf(ch);
+    final StringTokenizer tokenizer = new StringTokenizer(input, searchstr, true);
+    while (tokenizer.hasMoreTokens()) {
+      final String token = tokenizer.nextToken();
+      if (token.equals(searchstr)) {
+        buffer.append(replacement);
+      } else {
+        buffer.append(token);
+      }
+    }
+    return (buffer.toString());
+  }
+
+  /**
+   * Generates a textual representation of the supplied Property map.
+   * 
+   * @param properties
+   *          The map which shall be translated into a text.
+   * 
+   * @return The text representing the content of the supplied map.
+   */
+  public static final String toString(final Properties properties) {
+    return (toString(null, properties));
+  }
+
+  /**
+   * Generates a textual representation of the supplied Property map.
+   * 
+   * @param title
+   *          A textual information printed above the property map.
+   * @param properties
+   *          The map which shall be translated into a text.
+   * 
+   * @return The text representing the content of the supplied map.
+   */
+  public static final String toString(final String title, final Properties properties) {
+    final StringBuffer buffer = new StringBuffer();
+    final String linesep = System.getProperty("line.separator");
+    if (title != null) {
+      buffer.append(title);
+      buffer.append(linesep);
+    }
+    final Iterator it = properties.entrySet().iterator();
+    while (it.hasNext()) {
+      final Map.Entry entry = (Map.Entry) it.next();
+      buffer.append("'").append(entry.getKey());
+      buffer.append("' -> '").append(entry.getValue()).append("'");
+      buffer.append(linesep);
+    }
+    return (buffer.toString());
+  }
+
+  public static Properties readProperties(final File propertiesFile) {
+    FileInputStream fis = null;
+    Properties result = null;
+    try {
+      fis = new FileInputStream(propertiesFile);
+      final Properties pref = new Properties();
+      pref.load(fis);
+      result = pref;
+      fis.close();
+      A4ELogging.debug("Read compiler settings from '%s'", propertiesFile.getAbsolutePath());
+    } catch (final IOException ex) {
+      A4ELogging.warn("Could not load settings file '%s': '%s", new String[] { propertiesFile.getAbsolutePath(),
+          ex.toString() });
+    } finally {
+      if (fis != null) {
+        try {
+          fis.close();
+        } catch (final IOException ioe) {
+          // don't care...
+        }
+      }
+    }
+    return result;
+  }
+
+  public static Properties readPropertiesFromClasspath(final String name) {
+
+    final ClassLoader classLoader = Utilities.class.getClassLoader();
+
+    final InputStream inputStream = classLoader.getResourceAsStream(name);
+
+    if (inputStream == null) {
+      return null;
+    }
+
+    final Properties profileProperties = new Properties();
+
+    try {
+      profileProperties.load(inputStream);
+      inputStream.close();
+      return profileProperties;
+    } catch (final Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  /**
+   * Creates the given directory (including all of its missing parent directories) if it does not exists yet.
+   * 
+   * @param directory
+   */
+  public static void mkdirs(final File directory) {
+    Assert.notNull("The parameter 'directory' must not be null", directory);
+    if (directory.isDirectory()) {
+      return; // already there
+    }
+
+    if (directory.isFile()) {
+      throw new Ant4EclipseException(CoreExceptionCode.PATH_MUST_NOT_BE_A_FILE, directory);
+    }
+
+    if (!directory.mkdirs()) {
+      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED);
+    }
+  }
+}
