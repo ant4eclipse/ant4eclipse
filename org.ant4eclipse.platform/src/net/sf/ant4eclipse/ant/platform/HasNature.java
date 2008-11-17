@@ -116,7 +116,7 @@ public class HasNature extends ProjectComponent implements Condition {
    *          the workspace.
    */
   public void setWorkspace(final File workspace) {
-    this._projectDelegate.setWorkspace(workspace);
+    this._projectDelegate.setWorkspaceDirectory(workspace);
   }
 
   /**

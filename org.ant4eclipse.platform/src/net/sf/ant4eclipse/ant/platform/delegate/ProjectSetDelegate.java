@@ -13,8 +13,8 @@ package net.sf.ant4eclipse.ant.platform.delegate;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.model.platform.team.projectset.ProjectSetFileParser;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
+import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFileParser;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
@@ -88,6 +88,6 @@ public class ProjectSetDelegate extends WorkspaceDelegate {
   private TeamProjectSet readProjectSet() {
     requireProjectSetSet();
     requireWorkspaceSet();
-    return ProjectSetFileParser.parseTeamProjectSet(this._projectSetFile);
+    return TeamProjectSetFileParser.Helper.getInstance().parseTeamProjectSetFile(this._projectSetFile);
   }
 }

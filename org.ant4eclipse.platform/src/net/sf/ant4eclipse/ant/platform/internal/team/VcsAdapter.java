@@ -11,9 +11,11 @@
  **********************************************************************/
 package net.sf.ant4eclipse.ant.platform.internal.team;
 
+import java.io.File;
+
 import net.sf.ant4eclipse.core.Assert;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 import net.sf.ant4eclipse.core.util.Utilities;
-import net.sf.ant4eclipse.model.platform.resource.Workspace;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
 
 import org.apache.tools.ant.Project;
@@ -48,15 +50,17 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  public final void checkoutProject(final Workspace workspace, final TeamProjectDescription projectDescription,
-      final boolean deleteExisting) throws VcsException {
+  public final void checkoutProject(final File destination, final TeamProjectDescription projectDescription,
+      final boolean deleteExisting) throws Ant4EclipseException {
     Assert.notNull(projectDescription);
 
-    if (deleteExisting && workspace.hasChild(projectDescription.getProjectName())) {
-      Utilities.delete(workspace.getChild(projectDescription.getProjectName()));
+    String projectName = projectDescription.getProjectName();
+
+    if (deleteExisting && Utilities.hasChild(destination, projectName)) {
+      Utilities.delete(Utilities.getChild(destination, projectName));
     }
 
-    checkout(workspace, projectDescription);
+    checkout(destination, projectDescription);
   }
 
   /**
@@ -64,7 +68,7 @@ public abstract class VcsAdapter {
    * Runs a CVS update operation on a given project.
    * </p>
    * 
-   * @param workspace
+   * @param destination
    *          the current workspace in which the project will be updated.
    * @param projectDescription
    *          the description of the shared project.
@@ -72,10 +76,10 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  public final void updateProject(final Workspace workspace, final TeamProjectDescription projectDescription)
-      throws VcsException {
+  public final void updateProject(final File destination, final TeamProjectDescription projectDescription)
+      throws Ant4EclipseException {
     Assert.notNull(projectDescription);
-    update(workspace, projectDescription);
+    update(destination, projectDescription);
   }
 
   /**
@@ -91,31 +95,36 @@ public abstract class VcsAdapter {
    *          indicates if existing projects should be deleted.
    * @throws VcsException
    */
-  public final void exportProject(final Workspace workspace, final TeamProjectDescription projectDescription,
-      final boolean deleteExisting) throws VcsException {
+  public final void exportProject(final File destination, final TeamProjectDescription projectDescription,
+      final boolean deleteExisting) throws Ant4EclipseException {
     Assert.notNull(projectDescription);
 
-    if (deleteExisting && workspace.hasChild(projectDescription.getProjectName())) {
-      Utilities.delete(workspace.getChild(projectDescription.getProjectName()));
+    String projectName = projectDescription.getProjectName();
+
+    if (deleteExisting && Utilities.hasChild(destination, projectName)) {
+      Utilities.delete(Utilities.getChild(destination, projectName));
     }
 
-    export(workspace, projectDescription);
+    export(destination, projectDescription);
   }
 
   /**
    * Does the actual export operation. Must be implemented by subclasses to provide VCS-specific actions.
    */
-  protected abstract void export(Workspace workspace, TeamProjectDescription projectDescription) throws VcsException;
+  protected abstract void export(File destination, TeamProjectDescription projectDescription)
+      throws Ant4EclipseException;
 
   /**
    * Does the update export operation. Must be implemented by subclasses to provide VCS-specific actions.
    */
-  protected abstract void update(Workspace workspace, TeamProjectDescription projectDescription) throws VcsException;
+  protected abstract void update(File destination, TeamProjectDescription projectDescription)
+      throws Ant4EclipseException;
 
   /**
    * Does the actual checkout operation. Must be implemented by subclasses to provide VCS-specific actions.
    */
-  protected abstract void checkout(Workspace workspace, TeamProjectDescription projectDescription) throws VcsException;
+  protected abstract void checkout(File destination, TeamProjectDescription projectDescription)
+      throws Ant4EclipseException;
 
   protected Project getAntProject() {
     return this._antProject;

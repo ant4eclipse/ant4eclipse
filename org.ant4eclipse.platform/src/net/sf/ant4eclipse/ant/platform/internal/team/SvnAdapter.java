@@ -14,9 +14,10 @@ package net.sf.ant4eclipse.ant.platform.internal.team;
 import java.io.File;
 import java.net.MalformedURLException;
 
+import net.sf.ant4eclipse.ant.platform.team.TeamExceptionCode;
 import net.sf.ant4eclipse.core.Assert;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
-import net.sf.ant4eclipse.model.platform.resource.Workspace;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
 import net.sf.ant4eclipse.model.platform.team.svnsupport.projectset.SvnTeamProjectDescription;
 import net.sf.ant4eclipse.model.platform.team.svnsupport.projectset.SvnTeamProjectSet;
@@ -34,177 +35,183 @@ import org.tigris.subversion.svnclientadapter.SVNUrl;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class SvnAdapter extends VcsAdapter {
-  
+
   /**
-   * Set to false to use command line client interface instead of JNI JavaHL binding.  
-   * Defaults to true
+   * Set to <tt>false</tt> to use command line client interface instead of JNI JavaHL binding. e
    */
-  private boolean _javahl = true;
-  
+  private final boolean _javahl;
+
   /**
    * Set to false to use command line client interface instead of JavaSVN binding.
-   * Defaults to true
    */
-  private boolean _javasvn = true;
-  
+  private final boolean _svnkit;
+
   /**
    * formatter definition used to format/parse dates (e.g. when revision is specified as date).
    */
-  private String _dateFormatter = null;
-  
+  private final String  _dateFormatter;
+
   /**
    * time zone used to format/parse dates (e.g. when revision is specified as date).
    */
-  private String _dateTimeZone = null;
+  private final String  _dateTimeZone;
 
   /**
    * 
-   * @param antProject must not be null
+   * @param antProject
+   *          must not be null
    * @param javahl
-   * @param javasvn
-   * @param dateFormatter might be null
-   * @param dateTimeZone might be null
+   *          Set to <tt>false</tt> to use command line client interface instead of JNI JavaHL binding.
+   * @param svnkit
+   *          Set to <tt>false</tt> to use command line client interface instead of SVNKit binding.
+   * @param dateFormatter
+   *          might be null
+   * @param dateTimeZone
+   *          might be null
    */
-  public SvnAdapter(Project antProject, boolean javahl, boolean javasvn, String dateFormatter, String dateTimeZone) {
+  public SvnAdapter(Project antProject, boolean javahl, boolean svnkit, String dateFormatter, String dateTimeZone) {
     super(antProject);
     _javahl = javahl;
-    _javasvn = javasvn;
+    _svnkit = svnkit;
     _dateFormatter = dateFormatter;
     _dateTimeZone = dateTimeZone;
   }
 
-  protected void checkout(Workspace workspace, TeamProjectDescription projectDescription) throws VcsException {
-    Assert.notNull(workspace);
+  protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
+    Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription, "ProjectDescription must be a SvnTeamProjectDescription");
+    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
+        "ProjectDescription must be a SvnTeamProjectDescription");
 
-    SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription)projectDescription;
+    SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
-    SvnTask task = createSvnTask(workspace, svnTeamProjectDescription);
+    SvnTask task = createSvnTask(svnTeamProjectDescription);
     Checkout checkout = new Checkout();
     checkout.setProject(getAntProject());
     checkout.setTask(task);
-    File destPath = new File(workspace.getAbsolutePath(), svnTeamProjectDescription.getProjectName());
-    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[]{svnTeamProjectDescription.getProjectName(),destPath});
+    File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
+    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[] {
+        svnTeamProjectDescription.getProjectName(), destPath });
     checkout.setDestpath(destPath);
     checkout.setRevision(svnTeamProjectDescription.getRevision());
     try {
       checkout.setUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
     } catch (MalformedURLException e) {
-      throw new VcsException("Could not create an url for team project description: '" + svnTeamProjectDescription.getProjectName() + "': "+ e,e);
+      throw new Ant4EclipseException(TeamExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
+          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() });
     }
     task.addCheckout(checkout);
-    
+
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new VcsException("Could not execute 'checkout': " + ex, ex);
+      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "checkout",
+          ex.toString() }, ex);
     }
-    
+
   }
 
-  protected void export(Workspace workspace, TeamProjectDescription projectDescription) throws VcsException {
-    Assert.notNull(workspace);
+  protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
+    Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription, "ProjectDescription must be a SvnTeamProjectDescription");
+    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
+        "ProjectDescription must be a SvnTeamProjectDescription");
 
-    SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription)projectDescription;
+    SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
-    SvnTask task = createSvnTask(workspace, svnTeamProjectDescription);
-    
+    SvnTask task = createSvnTask(svnTeamProjectDescription);
+
     Export export = new Export();
     export.setProject(getAntProject());
     export.setTask(task);
 
-    File destPath = new File(workspace.getAbsolutePath(), svnTeamProjectDescription.getProjectName());
-    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[]{svnTeamProjectDescription.getProjectName(),destPath});
+    File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
+    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[] {
+        svnTeamProjectDescription.getProjectName(), destPath });
     export.setDestPath(destPath);
     export.setRevision(svnTeamProjectDescription.getRevision());
     try {
       export.setSrcUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
     } catch (MalformedURLException e) {
-      throw new VcsException("Could not create an url for team project description: '" + svnTeamProjectDescription.getProjectName() + "': "+ e,e);
+      throw new Ant4EclipseException(TeamExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
+          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() });
     }
     task.addExport(export);
-    
+
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new VcsException("Could not execute 'export': " + ex, ex);
+      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "export",
+          ex.toString() }, ex);
     }
   }
 
-  protected void update(Workspace workspace, TeamProjectDescription projectDescription) throws VcsException {
-    Assert.notNull(workspace);
+  protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
+    Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription, "ProjectDescription must be a SvnTeamProjectDescription");
+    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
+        "ProjectDescription must be a SvnTeamProjectDescription");
 
-    SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription)projectDescription;
+    SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
-    SvnTask task = createSvnTask(workspace, svnTeamProjectDescription);
-    
+    SvnTask task = createSvnTask(svnTeamProjectDescription);
+
     Update update = new Update();
     update.setProject(getAntProject());
     update.setTask(task);
-    File destPath = new File(workspace.getAbsolutePath(), svnTeamProjectDescription.getProjectName());
-    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[]{svnTeamProjectDescription.getProjectName(),destPath});
+    File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
+    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[] {
+        svnTeamProjectDescription.getProjectName(), destPath });
     update.setDir(destPath);
     update.setRevision(svnTeamProjectDescription.getRevision());
     task.addUpdate(update);
-    
+
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new VcsException("Could not execute 'update': " + ex, ex);
+      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "update",
+          ex.toString() }, ex);
     }
- }
-  
+  }
+
   /**
    * <p>
    * Creates a Subversion task using the supplied workspace and projects.
    * </p>
    * 
-   * @param workspace
-   *          the current workspace.
    * @param projectDescription
    *          the description of the shared project.
    * 
    * @return the task used to run a svn command.
    */
-  private SvnTask createSvnTask(Workspace workspace, SvnTeamProjectDescription projectDescription) {
-    
-    Object o = getAntProject().createTask("svn");
-    System.out.println("o: " + o + " -> " + o.getClass().getName()        );
-    
+  private SvnTask createSvnTask(SvnTeamProjectDescription projectDescription) {
+
     SvnTask svnTask = (SvnTask) getAntProject().createTask("svn");
     svnTask.setJavahl(_javahl);
-    svnTask.setJavasvn(_javasvn);
+    svnTask.setSvnkit(_svnkit);
     if (_dateFormatter != null) {
       svnTask.setDateFormatter(_dateFormatter);
     }
-    
+
     if (_dateTimeZone != null) {
       svnTask.setDateTimezone(_dateTimeZone);
     }
 
     A4ELogging.debug("Created svnTask %s", svnTask);
-    
+
     SvnTeamProjectSet teamProjectSet = projectDescription.getTeamProjectSet();
-    
+
     if (teamProjectSet.hasUser()) {
       A4ELogging.debug("Setting SVN user '%s'", teamProjectSet.getUser());
       svnTask.setUsername(teamProjectSet.getUser());
     }
-    
+
     if (teamProjectSet.hasPassword()) {
       A4ELogging.debug("Setting SVN password '%s'", teamProjectSet.getPassword());
-        svnTask.setPassword(teamProjectSet.getPassword());
+      svnTask.setPassword(teamProjectSet.getPassword());
     }
-    
-    
 
     return svnTask;
   }
- 
 
 }

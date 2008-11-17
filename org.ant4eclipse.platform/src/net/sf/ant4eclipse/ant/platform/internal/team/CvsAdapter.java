@@ -13,9 +13,10 @@ package net.sf.ant4eclipse.ant.platform.internal.team;
 
 import java.io.File;
 
+import net.sf.ant4eclipse.ant.platform.team.TeamExceptionCode;
 import net.sf.ant4eclipse.core.Assert;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
-import net.sf.ant4eclipse.model.platform.resource.Workspace;
 import net.sf.ant4eclipse.model.platform.team.cvssupport.projectset.CvsTeamProjectDescription;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
 
@@ -68,17 +69,17 @@ public class CvsAdapter extends VcsAdapter {
    * @param projectDescription
    *          the description of the shared project.
    */
-  protected void export(final Workspace workspace, final TeamProjectDescription projectDescription) {
-    Assert.notNull(workspace);
+  protected void export(final File destination, final TeamProjectDescription projectDescription) {
+    Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
     Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
     final CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
 
-    A4ELogging.debug("export(%s, %s)", new Object[] { workspace, projectDescription });
+    A4ELogging.debug("export(%s, %s)", new Object[] { destination, projectDescription });
 
-    final Cvs cvs = createCvsTask(workspace, cvsTeamProjectDescription);
+    final Cvs cvs = createCvsTask(destination, cvsTeamProjectDescription);
     final String nameInRepository = quote(cvsTeamProjectDescription.getNameInRepository());
     cvs.setCommand("export -d " + quote(projectDescription.getProjectName()));
     cvs.setPackage(nameInRepository);
@@ -94,7 +95,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (final Exception e) {
-      throw new VcsException("Could not execute cvs command: " + e.getMessage(), e);
+      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
+          cvs.getCommand(), e.toString() }, e);
     }
   }
 
@@ -111,16 +113,17 @@ public class CvsAdapter extends VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  protected void update(final Workspace workspace, final TeamProjectDescription projectDescription) throws VcsException {
-    Assert.notNull(workspace);
+  protected void update(final File destination, final TeamProjectDescription projectDescription)
+      throws Ant4EclipseException {
+    Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
     Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
-    A4ELogging.debug("update(%s, %s)", new Object[] { workspace, projectDescription });
+    A4ELogging.debug("update(%s, %s)", new Object[] { destination, projectDescription });
     final CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
-    final Cvs cvs = createCvsTask(workspace, cvsTeamProjectDescription);
-    final File projectFolder = new File(workspace.getFolder(), projectDescription.getProjectName());
+    final Cvs cvs = createCvsTask(destination, cvsTeamProjectDescription);
+    final File projectFolder = new File(destination, projectDescription.getProjectName());
     cvs.setDest(projectFolder);
     // -d: Create any directories that exist in the repository if they're missing from the working directory.
     // Normally, update acts only on directories and files that were already enrolled in your working directory.
@@ -135,7 +138,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (final Exception e) {
-      throw new VcsException("Could not execute cvs command: " + e.getMessage(), e);
+      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
+          cvs.getCommand(), e.toString() }, e);
     }
   }
 
@@ -150,17 +154,17 @@ public class CvsAdapter extends VcsAdapter {
    *          the description of the shared project.
    * @throws VcsException
    */
-  protected void checkout(final Workspace workspace, final TeamProjectDescription projectDescription)
-      throws VcsException {
-    Assert.notNull(workspace);
+  protected void checkout(final File destination, final TeamProjectDescription projectDescription)
+      throws Ant4EclipseException {
+    Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
     Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
-    A4ELogging.debug("checkout(%s, %s)", new Object[] { workspace, projectDescription });
+    A4ELogging.debug("checkout(%s, %s)", new Object[] { destination, projectDescription });
     final CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
 
-    final Cvs cvs = createCvsTask(workspace, cvsTeamProjectDescription);
+    final Cvs cvs = createCvsTask(destination, cvsTeamProjectDescription);
     final String nameInRepository = quote(cvsTeamProjectDescription.getNameInRepository());
     cvs.setPackage(nameInRepository);
 
@@ -175,7 +179,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (final Exception e) {
-      throw new VcsException("Could not execute cvs command: " + e.getMessage(), e);
+      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
+          cvs.getCommand(), e.toString() }, e);
     }
   }
 
@@ -191,13 +196,13 @@ public class CvsAdapter extends VcsAdapter {
    * 
    * @return the task used to run a CVS command.
    */
-  private Cvs createCvsTask(final Workspace workspace, final CvsTeamProjectDescription projectDescription) {
+  private Cvs createCvsTask(final File destination, final CvsTeamProjectDescription projectDescription) {
     final Cvs cvs = (Cvs) getAntProject().createTask("cvs");
 
     A4ELogging.debug("Created task cvs %s", cvs);
 
     cvs.setCvsRoot(projectDescription.getResolvedCvsRoot().toString());
-    cvs.setDest(workspace.getFolder());
+    cvs.setDest(destination);
 
     A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", new Object[] { new Boolean(this._quiet),
         new Boolean(this._reallyQuiet) });
