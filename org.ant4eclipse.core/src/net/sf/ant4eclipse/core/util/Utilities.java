@@ -13,6 +13,7 @@ package net.sf.ant4eclipse.core.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -98,6 +99,29 @@ public class Utilities {
       result = false;
     }
     return (result);
+  }
+
+  public static boolean hasChild(File directory, final String childName) {
+    String[] children = directory.list(new FilenameFilter() {
+      public boolean accept(File dir, String name) {
+        return name.equals(childName);
+      }
+    });
+
+    return (children.length > 0);
+  }
+
+  public static File getChild(File directory, final String childName) {
+    File[] children = directory.listFiles(new FilenameFilter() {
+      public boolean accept(File dir, String name) {
+        return name.equals(childName);
+      }
+    });
+    if (children.length < 1) {
+      return null;
+    }
+
+    return children[0];
   }
 
   /**
@@ -338,5 +362,40 @@ public class Utilities {
     if (!directory.mkdirs()) {
       throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED);
     }
+  }
+
+  /**
+   * Creates a new instance of the class with the given name.
+   * 
+   * <p>
+   * The class must be loadable via Class.forName() and must have a default constructor
+   * 
+   * @param className
+   * @return
+   */
+  public static Object newInstance(String className) {
+    Assert.notNull("The parameter 'className' must not be null", className);
+
+    Class clazz = null;
+
+    // Try to load class...
+    try {
+      clazz = Class.forName(className);
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_LOAD_CLASS, new Object[] { className, ex.toString() });
+    }
+
+    // try to instantiate using default cstr...
+    Object object = null;
+    try {
+      object = clazz.newInstance();
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, new Object[] { className,
+          ex.toString() });
+    }
+
+    // return the constructed object
+    return object;
+
   }
 }

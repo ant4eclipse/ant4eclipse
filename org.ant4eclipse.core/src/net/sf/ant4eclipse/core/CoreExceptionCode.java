@@ -41,6 +41,12 @@ public class CoreExceptionCode extends AbstractExceptionCode {
   public static final CoreExceptionCode DIRECTORY_COULD_NOT_BE_CREATED         = new CoreExceptionCode(
                                                                                    "Directory '%s' could not be created for an unkown reason");
 
+  public static final CoreExceptionCode COULD_NOT_LOAD_CLASS                   = new CoreExceptionCode(
+                                                                                   "The class '%s' could not be loaded: '%s'");
+
+  public static final CoreExceptionCode COULD_NOT_INSTANTIATE_CLASS            = new CoreExceptionCode(
+                                                                                   "The class '%s' could not be instantiated using its default constructor: '%s'");
+
   private CoreExceptionCode(final String message) {
     super(message);
   }
