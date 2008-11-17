@@ -40,7 +40,7 @@ public class ChunkyFile {
   };
 
   
-  private Vector    _chunkdata ;
+  private Vector<byte[]>    _chunkdata ;
   
   
   /**
@@ -52,7 +52,7 @@ public class ChunkyFile {
    * @throws  IOException   Reading the file failed for some reason.
    */
   public ChunkyFile(File source) throws IOException {
-    _chunkdata         = new Vector();
+    _chunkdata         = new Vector<byte[]>();
     byte[]      data  = new byte[(int) source.length()];
     InputStream input = null;
     try {
@@ -90,7 +90,7 @@ public class ChunkyFile {
    */
   public byte[] getChunk(int index) {
     if ((index >= 0) && (index < _chunkdata.size())) {
-      return ((byte[]) _chunkdata.get(index));
+      return _chunkdata.get(index);
     }
     return (null);
   }

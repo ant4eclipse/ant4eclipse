@@ -56,22 +56,22 @@ public final class EclipseProjectImpl implements EclipseProject {
   private String             _comment;
 
   /** the list of project natures */
-  private final List         _natures;
+  private final List<ProjectNature>         _natures;
 
   /** the list of project roles */
-  private final List         _roles;
+  private final List<ProjectRole>         _roles;
 
   /** the list of buildCommands */
-  private final List         _buildCommands;
+  private final List<BuildCommand>         _buildCommands;
 
   /** the referenced project specified in the project description */
-  private final List         _referencedProjects;
+  private final List<String>         _referencedProjects;
 
   /** the linked resources specified in the project description */
-  private final List         _linkedResources;
+  private final List<LinkedResourceImpl>         _linkedResources;
 
   /** the names of the linked resource. used for the mapping */
-  private final List         _linkedResourceNames;
+  private final List<String>         _linkedResourceNames;
 
   /**
    * Creates a new instance of type project.
@@ -86,12 +86,12 @@ public final class EclipseProjectImpl implements EclipseProject {
 
     this._workspace = workspace;
     this._projectDirectory = projectDirectory;
-    this._natures = new LinkedList();
-    this._roles = new LinkedList();
-    this._buildCommands = new LinkedList();
-    this._referencedProjects = new LinkedList();
-    this._linkedResources = new LinkedList();
-    this._linkedResourceNames = new LinkedList();
+    this._natures = new LinkedList<ProjectNature>();
+    this._roles = new LinkedList<ProjectRole>();
+    this._buildCommands = new LinkedList<BuildCommand>();
+    this._referencedProjects = new LinkedList<String>();
+    this._linkedResources = new LinkedList<LinkedResourceImpl>();
+    this._linkedResourceNames = new LinkedList<String>();
 
     final File settingsFolder = getChild(SETTINGS_FOLDER_NAME);
     this._settingsFolder = (settingsFolder.isDirectory() ? settingsFolder : null);
@@ -356,7 +356,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns the project natures of the project.
    */
   public ProjectNature[] getNatures() {
-    return (ProjectNature[]) this._natures.toArray(new ProjectNature[0]);
+    return this._natures.toArray(new ProjectNature[0]);
   }
 
   /**
@@ -374,7 +374,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return A list of all reference project names.
    */
   public String[] getReferencedProjects() {
-    return (String[]) this._referencedProjects.toArray(new String[0]);
+    return this._referencedProjects.toArray(new String[0]);
   }
 
   /**
@@ -399,10 +399,10 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns whether the role of the given type is set or not.
    * 
    */
-  public boolean hasRole(final Class projectRoleClass) {
+  public boolean hasRole(final Class<? extends ProjectRole> projectRoleClass) {
     Assert.notNull(projectRoleClass);
 
-    final Iterator iterator = this._roles.iterator();
+    final Iterator<ProjectRole> iterator = this._roles.iterator();
 
     while (iterator.hasNext()) {
       final AbstractProjectRole role = (AbstractProjectRole) iterator.next();
@@ -420,12 +420,12 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param projectRoleClass
    * @return Returns the role of the given type. If the role is not set, an exception will be thrown.
    */
-  public ProjectRole getRole(final Class projectRoleClass) {
+  public ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass) {
     Assert.notNull(projectRoleClass);
     Assert.assertTrue(hasRole(projectRoleClass), "hasRole(projectRoleClass) on project '" + getFolderName()
         + "'has to be true for role '" + projectRoleClass + "'!");
 
-    final Iterator iterator = this._roles.iterator();
+    final Iterator<ProjectRole> iterator = this._roles.iterator();
 
     AbstractProjectRole role = null;
 
@@ -444,7 +444,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns the roles of this project.
    */
   public ProjectRole[] getRoles() {
-    return (ProjectRole[]) this._roles.toArray(new ProjectRole[0]);
+    return this._roles.toArray(new ProjectRole[0]);
   }
 
   /**
@@ -493,7 +493,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns the build commands of this project.
    */
   public BuildCommand[] getBuildCommands() {
-    return (BuildCommand[]) this._buildCommands.toArray(new BuildCommand[0]);
+    return this._buildCommands.toArray(new BuildCommand[0]);
   }
 
   /**
@@ -522,7 +522,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   public LinkedResourceImpl getLinkedResource(final String name) {
     Assert.assertTrue(isLinkedResource(name), "Cannot retrieve linked resource '" + name + "' !");
     final int idx = this._linkedResourceNames.indexOf(name);
-    return ((LinkedResourceImpl) this._linkedResources.get(idx));
+    return this._linkedResources.get(idx);
   }
 
   /**

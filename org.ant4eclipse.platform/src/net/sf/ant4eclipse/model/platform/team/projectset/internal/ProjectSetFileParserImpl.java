@@ -114,15 +114,15 @@ public abstract class ProjectSetFileParserImpl implements TeamProjectSetFilePars
   public void initialize() {
     Properties properties = Utilities.readPropertiesFromClasspath(TEAMPROVIDERS_PROPERTIES);
 
-    Map providers = new Hashtable();
+    Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
-    Iterator entries = properties.entrySet().iterator();
+    Iterator<Entry<Object, Object>> entries = properties.entrySet().iterator();
     while (entries.hasNext()) {
-      Map.Entry entry = (Entry) entries.next();
+      Entry<Object, Object> entry = entries.next();
       String providerId = entry.getKey().toString();
       String implementationClassName = entry.getValue().toString();
 
-      TeamProjectSetFactory factory = (TeamProjectSetFactory) Utilities.newInstance(implementationClassName);
+      TeamProjectSetFactory factory = Utilities.newInstance(implementationClassName);
       A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", new Object[] { factory, providerId });
       providers.put(providerId, factory);
     }

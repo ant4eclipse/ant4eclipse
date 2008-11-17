@@ -50,14 +50,15 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param otherProperties
    *          Table with variable names as keys and their values as values. Might be null.
    */
-  public String resolveEclipseVariables(final String string, final EclipseProject project, final Map otherProperties);
+  public String resolveEclipseVariables(final String string, final EclipseProject project,
+      final Map<String, String> otherProperties);
 
   /**
    * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  public Map getEclipseVariables();
+  public Map<String, String> getEclipseVariables();
 
   /**
    * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
@@ -67,7 +68,7 @@ public interface EclipseVariableResolver extends Lifecycle {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  public Map getEclipseVariables(final EclipseProject project);
+  public Map<String, String> getEclipseVariables(final EclipseProject project);
 
   public void clear();
 } /* ENDCLASS */

@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sf.ant4eclipse.core.Assert;
 
@@ -29,13 +30,13 @@ import org.apache.tools.ant.taskdefs.Ant.Reference;
 public class ExecuteBuildDelegate extends AbstractAntDelegate {
 
   /** the prefix to be used */
-  private String     _prefix = "";
+  private String                _prefix = "";
 
   /** the parameter list */
-  private final List _parameters;
+  private final List<Property>  _parameters;
 
   /** the references list */
-  private final List _references;
+  private final List<Reference> _references;
 
   /**
    * <p>
@@ -46,8 +47,8 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
   public ExecuteBuildDelegate(final ProjectComponent component) {
     super(component);
 
-    this._parameters = new LinkedList();
-    this._references = new LinkedList();
+    this._parameters = new LinkedList<Property>();
+    this._references = new LinkedList<Reference>();
   }
 
   /**
@@ -90,7 +91,8 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
   public final boolean isCallTarget(final String targetName) {
     Assert.nonEmpty(targetName);
 
-    final Map allTargets = getAntProject().getTargets();
+    @SuppressWarnings("unchecked")
+    final Map<String, Target> allTargets = getAntProject().getTargets();
 
     if (allTargets.containsKey(targetName)) {
       return true;
@@ -114,7 +116,7 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
    * @return the new CallTarget
    */
   public CallTarget createCallTarget(final Target owningTarget, final String targetName, final boolean inheritAll,
-      final boolean inheritRefs, final Map implicitParameters) {
+      final boolean inheritRefs, final Map<String, String> implicitParameters) {
     Assert.nonEmpty(targetName);
 
     // create the CallTarget
@@ -135,9 +137,9 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
     }
 
     if (implicitParameters != null) {
-      final Iterator iterator = implicitParameters.entrySet().iterator();
+      Iterator<Entry<String, String>> iterator = implicitParameters.entrySet().iterator();
       while (iterator.hasNext()) {
-        final Map.Entry entry = (Map.Entry) iterator.next();
+        Entry<String, String> entry = iterator.next();
         toSet = callTarget.createParam();
         toSet.setName(prefix + entry.getKey());
         toSet.setValue("" + entry.getValue());
@@ -145,8 +147,8 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
     }
 
     // set parameters set via ant's the nested parameter element
-    for (final Iterator iterator = this._parameters.iterator(); iterator.hasNext();) {
-      final Property param = (Property) iterator.next();
+    for (final Iterator<Property> iterator = this._parameters.iterator(); iterator.hasNext();) {
+      final Property param = iterator.next();
 
       toSet = callTarget.createParam();
       toSet.setName(param.getName());
@@ -174,8 +176,8 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
     }
 
     // set all references
-    for (final Iterator iterator = this._references.iterator(); iterator.hasNext();) {
-      final Reference reference = (Reference) iterator.next();
+    for (final Iterator<Reference> iterator = this._references.iterator(); iterator.hasNext();) {
+      final Reference reference = iterator.next();
       callTarget.addReference(reference);
     }
 
@@ -191,12 +193,12 @@ public class ExecuteBuildDelegate extends AbstractAntDelegate {
    * @param tasks
    *          the list of tasks.
    */
-  public final void executeSequential(final List tasks) {
+  public final void executeSequential(final List<Task> tasks) {
     Assert.notNull(tasks);
 
     final TaskContainer tc = (TaskContainer) getAntProject().createTask("sequential");
 
-    for (final Iterator iterator = tasks.iterator(); iterator.hasNext();) {
+    for (final Iterator<Task> iterator = tasks.iterator(); iterator.hasNext();) {
       final Task task = (Task) iterator.next();
       tc.addTask(task);
     }

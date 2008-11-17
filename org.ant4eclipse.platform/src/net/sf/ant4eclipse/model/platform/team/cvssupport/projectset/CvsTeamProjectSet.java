@@ -37,7 +37,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
 
     A4ELogging.debug("setUserAndPassword(%s, %s)", new Object[] { cvsUser, cvsPwd });
 
-    for (Iterator iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
+    for (Iterator<TeamProjectDescription> iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
       CvsTeamProjectDescription description = (CvsTeamProjectDescription) iterator.next();
       description.setCvsUserAndPassword(cvsUser, cvsPwd);
     }
@@ -60,8 +60,8 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
     buffer.append(" name: ");
     buffer.append(getName());
     buffer.append(" { ");
-    for (Iterator iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
-      TeamProjectDescription description = (TeamProjectDescription) iterator.next();
+    for (Iterator<TeamProjectDescription> iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
+      TeamProjectDescription description = iterator.next();
       buffer.append(description);
 
       if (iterator.hasNext()) {

@@ -25,7 +25,7 @@ import net.sf.ant4eclipse.model.platform.resource.role.ProjectRoleIdentifier;
  */
 public class ProjectRoleIdentifierRegistry {
 
-  private static final Vector _projectroles = new Vector();
+  private static final Vector<ProjectRoleIdentifier> _projectroles = new Vector<ProjectRoleIdentifier>();
 
   /**
    * Prevent instantiation.
@@ -52,7 +52,7 @@ public class ProjectRoleIdentifierRegistry {
    */
   public static final void applyRoles(final EclipseProject project) {
     for (int i = 0; i < _projectroles.size(); i++) {
-      final ProjectRoleIdentifier role = (ProjectRoleIdentifier) _projectroles.get(i);
+      final ProjectRoleIdentifier role = _projectroles.get(i);
       if (role.isRoleSupported(project)) {
         final ProjectRole projectRole = role.createRole(project);
         ((EclipseProjectImpl) project).addRole(projectRole);

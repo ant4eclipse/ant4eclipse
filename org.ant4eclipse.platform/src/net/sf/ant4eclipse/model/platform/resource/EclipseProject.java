@@ -164,7 +164,7 @@ public interface EclipseProject {
    * @return Returns whether the role of the given type is set or not.
    * 
    */
-  public boolean hasRole(final Class projectRoleClass);
+  public boolean hasRole(final Class<? extends ProjectRole> projectRoleClass);
 
   /**
    * Returns the role of the given type. If the role is not set, an exception will be thrown.
@@ -172,7 +172,7 @@ public interface EclipseProject {
    * @param projectRoleClass
    * @return Returns the role of the given type. If the role is not set, an exception will be thrown.
    */
-  public ProjectRole getRole(final Class projectRoleClass);
+  public ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass);
 
   /**
    * Returns the roles of this project.

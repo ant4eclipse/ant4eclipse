@@ -22,10 +22,10 @@ import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
 public abstract class AbstractTeamProjectSet implements TeamProjectSet {
 
   /** the name of the project set */
-  private String _name;
+  private String                       _name;
 
   /** the team project descriptions */
-  private List   _projectDescriptions;
+  private List<TeamProjectDescription> _projectDescriptions;
 
   /**
    * Creates a new instance of type TeamProjectSet.
@@ -37,7 +37,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
     Assert.notNull(name);
 
     _name = name;
-    _projectDescriptions = new LinkedList();
+    _projectDescriptions = new LinkedList<TeamProjectDescription>();
   }
 
   /**
@@ -55,7 +55,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * @return Returns the TeamProjectDescriptions.
    */
   public TeamProjectDescription[] getTeamProjectDescriptions() {
-    return (TeamProjectDescription[]) _projectDescriptions.toArray(new TeamProjectDescription[0]);
+    return _projectDescriptions.toArray(new TeamProjectDescription[0]);
   }
 
   /**
@@ -68,8 +68,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   public TeamProjectDescription getTeamProjectDescriptionByName(String name) {
     Assert.notNull(name);
 
-    for (Iterator iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
-      TeamProjectDescription description = (TeamProjectDescription) iterator.next();
+    for (Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
+      TeamProjectDescription description = iterator.next();
 
       if (name.equals(description.getProjectName())) {
         return description;
@@ -88,8 +88,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
 
     String[] result = new String[_projectDescriptions.size()];
     int i = 0;
-    for (Iterator iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
-      TeamProjectDescription description = (TeamProjectDescription) iterator.next();
+    for (Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
+      TeamProjectDescription description = iterator.next();
       String projectName = description.getProjectName();
       result[i] = projectName;
       i++;
@@ -107,8 +107,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
     buffer.append(" name: ");
     buffer.append(_name);
     buffer.append(" { ");
-    for (Iterator iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
-      TeamProjectDescription description = (TeamProjectDescription) iterator.next();
+    for (Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
+      TeamProjectDescription description = iterator.next();
       buffer.append(description);
 
       if (iterator.hasNext()) {
@@ -128,7 +128,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
     _projectDescriptions.add(description);
   }
 
-  protected List getProjectDescriptions() {
+  protected List<TeamProjectDescription> getProjectDescriptions() {
     return _projectDescriptions;
   }
 

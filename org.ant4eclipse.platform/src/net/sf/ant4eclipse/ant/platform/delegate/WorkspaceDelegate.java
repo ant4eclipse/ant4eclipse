@@ -168,10 +168,11 @@ public class WorkspaceDelegate extends AbstractAntDelegate {
    * @param properties
    *          A map (String, String) of ANT properties.
    */
+  @SuppressWarnings("unchecked")
   private void registerAntProperties(final Hashtable properties) {
-    final Enumeration enumeration = properties.keys();
+    final Enumeration<String> enumeration = properties.keys();
     while (enumeration.hasMoreElements()) {
-      final String key = (String) enumeration.nextElement();
+      final String key = enumeration.nextElement();
       final String value = (String) properties.get(key);
       getEclipseVariableResolver().setEclipseVariable(key, value);
     }

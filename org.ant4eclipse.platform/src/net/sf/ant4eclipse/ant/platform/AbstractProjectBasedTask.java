@@ -17,6 +17,7 @@ import net.sf.ant4eclipse.ant.Ant4EclipseTask;
 import net.sf.ant4eclipse.ant.platform.delegate.ProjectDelegate;
 import net.sf.ant4eclipse.model.platform.resource.EclipseProject;
 import net.sf.ant4eclipse.model.platform.resource.Workspace;
+import net.sf.ant4eclipse.model.platform.resource.role.ProjectRole;
 
 import org.apache.tools.ant.BuildException;
 
@@ -61,7 +62,7 @@ public abstract class AbstractProjectBasedTask extends Ant4EclipseTask {
     return (this._projectBase);
   }
 
-  public void ensureRole(Class projectRoleClass) {
+  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     if (!getEclipseProject().hasRole(projectRoleClass)) {
       final StringBuffer buffer = new StringBuffer();
       buffer.append("Project ");

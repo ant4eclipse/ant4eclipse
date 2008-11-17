@@ -86,6 +86,6 @@ public interface Workspace {
    *          the class of the project role. Has to be assignable from class {@link ProjectRole}.
    * @return all the @link EclipseProject EclipseProjects} with the specified project role.
    */
-  public EclipseProject[] getAllProjects(final Class projectRole);
+  public EclipseProject[] getAllProjects(final Class<? extends ProjectRole> projectRole);
 
 } /* ENDCLASS */

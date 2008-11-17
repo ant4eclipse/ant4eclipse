@@ -27,9 +27,9 @@ import net.sf.ant4eclipse.model.platform.resource.registry.WorkspaceRegistry;
 public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
 
   /** - */
-  private Map       _registry;
+  private Map<String, Workspace> _registry;
 
-  private Workspace _current;
+  private Workspace              _current;
 
   public Workspace getCurrent() {
     return this._current;
@@ -48,7 +48,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
   }
 
   public Workspace getWorkspace(final String id) {
-    return (Workspace) this._registry.get(id);
+    return this._registry.get(id);
   }
 
   public boolean containsWorkspace(final String id) {
@@ -93,7 +93,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
    * @see net.sf.ant4eclipse.core.Lifecycle#initialize()
    */
   public void initialize() {
-    this._registry = new HashMap();
+    this._registry = new HashMap<String, Workspace>();
   }
 
   /**

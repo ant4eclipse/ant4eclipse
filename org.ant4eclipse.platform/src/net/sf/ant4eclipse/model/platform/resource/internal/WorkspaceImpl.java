@@ -34,7 +34,7 @@ import net.sf.ant4eclipse.model.platform.resource.role.ProjectRole;
 public final class WorkspaceImpl implements Workspace {
 
   /** map with all the eclipse projects */
-  private final Map _projects;
+  private final Map<String, EclipseProject> _projects;
 
   /**
    * @see net.sf.ant4eclipse.model.platform.resource.Workspace#hasProject(java.lang.String)
@@ -51,7 +51,7 @@ public final class WorkspaceImpl implements Workspace {
   public EclipseProject getProject(final String name) {
     Assert.nonEmpty(name);
 
-    return ((EclipseProject) this._projects.get(name));
+    return this._projects.get(name);
   }
 
   /**
@@ -68,8 +68,8 @@ public final class WorkspaceImpl implements Workspace {
    * @see net.sf.ant4eclipse.model.platform.resource.Workspace#getAllProjects()
    */
   public EclipseProject[] getAllProjects() {
-    final Collection projects = this._projects.values();
-    return (EclipseProject[]) projects.toArray(new EclipseProject[0]);
+    final Collection<EclipseProject> projects = this._projects.values();
+    return projects.toArray(new EclipseProject[0]);
   }
 
   public EclipseProject[] getAllProjects(final Class projectRole) {
@@ -78,23 +78,23 @@ public final class WorkspaceImpl implements Workspace {
         "Class '%s' mst be assignable from class '%s'", new Object[] { projectRole.getClass().getName(),
             ProjectRole.class.getName() }));
 
-    final List result = new LinkedList();
-    final Collection projects = this._projects.values();
-    for (final Iterator iterator = projects.iterator(); iterator.hasNext();) {
-      final EclipseProject eclipseProject = (EclipseProject) iterator.next();
+    final List<EclipseProject> result = new LinkedList<EclipseProject>();
+    final Collection<EclipseProject> projects = this._projects.values();
+    for (final Iterator<EclipseProject> iterator = projects.iterator(); iterator.hasNext();) {
+      final EclipseProject eclipseProject = iterator.next();
       if (eclipseProject.hasRole(projectRole)) {
         result.add(eclipseProject);
       }
     }
 
-    return (EclipseProject[]) result.toArray(new EclipseProject[0]);
+    return result.toArray(new EclipseProject[0]);
   }
 
   /**
    * 
    */
   WorkspaceImpl() {
-    this._projects = new Hashtable();
+    this._projects = new Hashtable<String, EclipseProject>();
   }
 
   void registerEclipseProject(final EclipseProject eclipseProject) {

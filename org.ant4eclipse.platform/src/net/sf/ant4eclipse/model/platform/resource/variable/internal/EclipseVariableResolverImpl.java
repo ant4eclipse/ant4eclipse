@@ -30,7 +30,7 @@ import net.sf.ant4eclipse.model.platform.resource.variable.EclipseVariableResolv
 public class EclipseVariableResolverImpl implements EclipseVariableResolver {
 
   /** a mapping for the eclipse variables */
-  private final Map _eclipsevariables = new Hashtable();
+  private final Map<String, String> _eclipsevariables = new Hashtable<String, String>();
 
   public void clear() {
     this._eclipsevariables.clear();
@@ -81,11 +81,11 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    *          Table with variable names as keys and their values as values. Might be null.
    */
   public final String resolveEclipseVariables(final String string, final EclipseProject project,
-      final Map otherProperties) {
+      final Map<String, String> otherProperties) {
     Assert.notNull(string);
     // Assert.notNull(project);
     // resolve Eclipse variables
-    final Map eclipseVariables = getEclipseVariables(project);
+    final Map<String, String> eclipseVariables = getEclipseVariables(project);
 
     // overwrite "default" values for eclipse variables with values as specified in otherProperties
     if (otherProperties != null) {
@@ -102,7 +102,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  public final Map getEclipseVariables() {
+  public final Map<String, String> getEclipseVariables() {
     return (getEclipseVariables(null));
   }
 
@@ -114,8 +114,8 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  public final Map getEclipseVariables(final EclipseProject project) {
-    final Map eclipseVariables = new Hashtable();
+  public final Map<String, String> getEclipseVariables(final EclipseProject project) {
+    final Map<String, String> eclipseVariables = new Hashtable<String, String>();
     eclipseVariables.putAll(this._eclipsevariables);
     if (project != null) {
       eclipseVariables.put("build_project", project.getFolder().getAbsolutePath());
@@ -133,23 +133,23 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * from org.apache.tools.ant.PropertyHelper
    */
-  private final String resolveProperties(final String value, final Map properties) {
+  private final String resolveProperties(final String value, final Map<String, String> properties) {
 
-    final Vector fragments = new Vector();
-    final Vector propertyRefs = new Vector();
-    final Vector propertyArgs = new Vector();
+    final Vector<String> fragments = new Vector<String>();
+    final Vector<String> propertyRefs = new Vector<String>();
+    final Vector<String> propertyArgs = new Vector<String>();
     parsePropertyString(value, fragments, propertyRefs, propertyArgs);
 
     final StringBuffer sb = new StringBuffer();
-    final Enumeration i = fragments.elements();
-    final Enumeration j = propertyRefs.elements();
-    final Enumeration k = propertyArgs.elements();
+    final Enumeration<String> i = fragments.elements();
+    final Enumeration<String> j = propertyRefs.elements();
+    final Enumeration<String> k = propertyArgs.elements();
 
     while (i.hasMoreElements()) {
-      String fragment = (String) i.nextElement();
+      String fragment = i.nextElement();
       if (fragment == null) {
-        final String propertyName = (String) j.nextElement();
-        final String propertyArg = (String) k.nextElement();
+        final String propertyName = j.nextElement();
+        final String propertyArg = k.nextElement();
         Object replacement = null;
         if (properties != null) {
           if ("workspace_loc".equals(propertyName)) {
@@ -177,8 +177,8 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * based on org.apache.tools.ant.PropertyHelper#parsePropertyString
    */
-  private final void parsePropertyString(final String value, final Vector fragments, final Vector propertyRefs,
-      final Vector propertyArgs) {
+  private final void parsePropertyString(final String value, final Vector<String> fragments,
+      final Vector<String> propertyRefs, final Vector<String> propertyArgs) {
     int prev = 0;
     int pos;
     // search for the next instance of $ from the 'prev' position

@@ -59,7 +59,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   public File[] getProjectFolders() {
 
     // define the result
-    final List result = new LinkedList();
+    final List<File> result = new LinkedList<File>();
 
     // read all directories in the workspace directory
     File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {
@@ -103,7 +103,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
     }
 
     // return the result
-    return (File[]) result.toArray(new File[0]);
+    return result.toArray(new File[0]);
   }
 
   /**
