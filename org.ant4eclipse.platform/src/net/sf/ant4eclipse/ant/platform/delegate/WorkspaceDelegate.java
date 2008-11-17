@@ -19,9 +19,9 @@ import net.sf.ant4eclipse.ant.TaskHelper;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.service.ServiceRegistry;
 import net.sf.ant4eclipse.model.platform.resource.Workspace;
-import net.sf.ant4eclipse.model.platform.resource.registry.DefaultEclipseWorkspaceDefinition;
-import net.sf.ant4eclipse.model.platform.resource.registry.WorkspaceRegistry;
 import net.sf.ant4eclipse.model.platform.resource.variable.EclipseVariableResolver;
+import net.sf.ant4eclipse.model.platform.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
+import net.sf.ant4eclipse.model.platform.resource.workspaceregistry.WorkspaceRegistry;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
