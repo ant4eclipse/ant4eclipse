@@ -10,7 +10,7 @@
  * 
  * Contributor(s): Daniel Kasmeroglu
  ******************************************************************************/
-package net.sf.ant4eclipse.lang.xquery;
+package net.sf.ant4eclipse.core.xquery;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

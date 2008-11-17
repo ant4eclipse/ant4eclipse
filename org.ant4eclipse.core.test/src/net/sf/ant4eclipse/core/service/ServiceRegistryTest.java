@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.lang.service;
+package net.sf.ant4eclipse.core.service;
 
 import net.sf.ant4eclipse.core.Lifecycle;
 import net.sf.ant4eclipse.core.service.ServiceNotAvailableException;

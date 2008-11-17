@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.lang.dependencygraph;
+package net.sf.ant4eclipse.core.dependencygraph;
 
 import java.util.List;
 

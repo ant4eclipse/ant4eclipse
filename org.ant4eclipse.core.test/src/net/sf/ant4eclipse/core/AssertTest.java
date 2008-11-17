@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.lang;
+package net.sf.ant4eclipse.core;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.lang.util;
+package net.sf.ant4eclipse.core.util;
 
 import java.io.File;
 

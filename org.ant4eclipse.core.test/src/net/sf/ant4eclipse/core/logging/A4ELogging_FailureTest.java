@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.lang.logging;
+package net.sf.ant4eclipse.core.logging;
 
 import org.junit.After;
 import org.junit.Before;
