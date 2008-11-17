@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.resource.registry;
+package net.sf.ant4eclipse.model.platform.resource.workspaceregistry;
 
 import net.sf.ant4eclipse.core.Lifecycle;
 import net.sf.ant4eclipse.model.platform.resource.Workspace;

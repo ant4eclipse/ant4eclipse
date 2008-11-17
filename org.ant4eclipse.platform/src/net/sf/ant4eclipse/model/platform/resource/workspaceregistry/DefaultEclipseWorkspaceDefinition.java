@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.resource.registry;
+package net.sf.ant4eclipse.model.platform.resource.workspaceregistry;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -54,7 +54,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   }
 
   /**
-   * @see net.sf.ant4eclipse.model.platform.resource.registry.WorkspaceDefinition#getProjectFolders()
+   * @see net.sf.ant4eclipse.model.platform.resource.workspaceregistry.WorkspaceDefinition#getProjectFolders()
    */
   public File[] getProjectFolders() {
 
