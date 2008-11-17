@@ -14,10 +14,10 @@ package net.sf.ant4eclipse.model.platform.team.cvssupport.projectset;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.model.platform.team.cvssupport.CvsRoot;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
+import net.sf.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectDescription;
 
-public class CvsTeamProjectDescription extends TeamProjectDescription {
-  
+public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
+
   /** the cvsRoot for the project * */
   private CvsRoot _cvsRoot;
 
@@ -94,8 +94,8 @@ public class CvsTeamProjectDescription extends TeamProjectDescription {
 
   /**
    * Returns the resolved CvsRoot (e.g. :pserver:user:pwd@localhost:C:/cvsRepository). Requires that
-   * isCvsUserAndPasswordSet() returns <code>true</code>. If isCvsUserAndPasswordSet() returns <code>false</code>,
-   * a PreconditionViolatedException will be thrown.
+   * isCvsUserAndPasswordSet() returns <code>true</code>. If isCvsUserAndPasswordSet() returns <code>false</code>, a
+   * PreconditionViolatedException will be thrown.
    * 
    * @return Returns the resolved CvsRoot.
    */
@@ -104,7 +104,8 @@ public class CvsTeamProjectDescription extends TeamProjectDescription {
 
     return _cvsRoot.getResolvedRoot(_cvsUser, _cvsPwd);
   }
-  private String  _cvsPwd  = null;
+
+  private String _cvsPwd = null;
 
   /**
    * Returns the name of the project in the repository.
@@ -183,7 +184,7 @@ public class CvsTeamProjectDescription extends TeamProjectDescription {
 
   /**
    * Returns <code>true</code> if this <code>CvsTeamProjectDescription</code> is the same as the o argument.
-   *
+   * 
    * @return <code>true</code> if this <code>CvsTeamProjectDescription</code> is the same as the o argument.
    */
   public boolean equals(Object o) {
@@ -201,18 +202,17 @@ public class CvsTeamProjectDescription extends TeamProjectDescription {
     }
     CvsTeamProjectDescription castedObj = (CvsTeamProjectDescription) o;
     return ((this._cvsRoot == null ? castedObj._cvsRoot == null : this._cvsRoot.equals(castedObj._cvsRoot))
-      && (this._nameInRepository == null ? castedObj._nameInRepository == null : this._nameInRepository
-        .equals(castedObj._nameInRepository))
-      && (this._branchOrVersionTag == null ? castedObj._branchOrVersionTag == null : this._branchOrVersionTag
-        .equals(castedObj._branchOrVersionTag))
-      && (this._cvsUser == null ? castedObj._cvsUser == null : this._cvsUser.equals(castedObj._cvsUser)) && (this._cvsPwd == null
-      ? castedObj._cvsPwd == null
-      : this._cvsPwd.equals(castedObj._cvsPwd)));
+        && (this._nameInRepository == null ? castedObj._nameInRepository == null : this._nameInRepository
+            .equals(castedObj._nameInRepository))
+        && (this._branchOrVersionTag == null ? castedObj._branchOrVersionTag == null : this._branchOrVersionTag
+            .equals(castedObj._branchOrVersionTag))
+        && (this._cvsUser == null ? castedObj._cvsUser == null : this._cvsUser.equals(castedObj._cvsUser)) && (this._cvsPwd == null ? castedObj._cvsPwd == null
+        : this._cvsPwd.equals(castedObj._cvsPwd)));
   }
 
   /**
    * Override hashCode.
-   *
+   * 
    * @return the Objects hashcode.
    */
   public int hashCode() {
@@ -224,6 +224,5 @@ public class CvsTeamProjectDescription extends TeamProjectDescription {
     hashCode = 31 * hashCode + (_cvsPwd == null ? 0 : _cvsPwd.hashCode());
     return hashCode;
   }
-
 
 }

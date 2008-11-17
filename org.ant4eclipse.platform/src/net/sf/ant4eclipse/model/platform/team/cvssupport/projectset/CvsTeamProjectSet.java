@@ -16,9 +16,9 @@ import java.util.Iterator;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
+import net.sf.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectSet;
 
-public class CvsTeamProjectSet extends TeamProjectSet {
+public class CvsTeamProjectSet extends AbstractTeamProjectSet {
 
   public CvsTeamProjectSet(String name) {
     super(name);
@@ -42,25 +42,15 @@ public class CvsTeamProjectSet extends TeamProjectSet {
       description.setCvsUserAndPassword(cvsUser, cvsPwd);
     }
   }
-  
+
   /**
-   * Overwritten method to make sure that the given TeamProjectDescription is an instance of
-   * a CvsTeamProjectDescription
+   * Overwritten method to make sure that the given TeamProjectDescription is an instance of a CvsTeamProjectDescription
    */
-  protected void addTeamProjectDescription(TeamProjectDescription description) {
+  public void addTeamProjectDescription(CvsTeamProjectDescription description) {
     Assert.notNull(description);
-    Assert.assertTrue(description instanceof CvsTeamProjectDescription, "TeamProjectDescription must be a CvsTeamProjectDescription");
     super.addTeamProjectDescription(description);
   }
 
-  public boolean isCvsProjectSet() {
-    return true;
-  }
-
-  public boolean isSvnProjectSet() {
-    return false;
-  }
-  
   /**
    * {@inheritDoc}
    */

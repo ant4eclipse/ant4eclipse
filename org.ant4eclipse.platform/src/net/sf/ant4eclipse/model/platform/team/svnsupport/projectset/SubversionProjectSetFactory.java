@@ -13,7 +13,6 @@ package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
 
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.model.platform.resource.internal.factory.FileParserException;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
 
@@ -58,9 +57,8 @@ public class SubversionProjectSetFactory implements TeamProjectSetFactory {
   /**
    * Parses a "reference" in a subversion-Project Set file.
    */
-  public TeamProjectDescription parseTeamProjectDescription(TeamProjectSet projectSet, String reference) {
-    Assert.assertTrue((projectSet instanceof SvnTeamProjectSet), "Parameter 'projectSet' must be of type "
-        + SvnTeamProjectSet.class.getName());
+  public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
+    Assert.instanceOf("projectSet", projectSet, SvnTeamProjectSet.class);
     Assert.notNull(reference);
 
     SvnTeamProjectSet svnTeamProjectSet = (SvnTeamProjectSet) projectSet;
@@ -76,6 +74,6 @@ public class SubversionProjectSetFactory implements TeamProjectSetFactory {
 
     SvnTeamProjectDescription svnTeamProjectDescription = new SvnTeamProjectDescription(svnTeamProjectSet, projectName,
         url);
-    return svnTeamProjectDescription;
+    svnTeamProjectSet.addTeamProjectDescription(svnTeamProjectDescription);
   }
 }

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.team.projectset;
+package net.sf.ant4eclipse.model.platform.team.projectset.internal;
 
 import java.io.File;
 import java.util.Hashtable;
@@ -26,6 +26,9 @@ import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.core.util.Utilities;
 import net.sf.ant4eclipse.core.xquery.XQuery;
 import net.sf.ant4eclipse.core.xquery.XQueryHandler;
+import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
+import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
+import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFileParser;
 
 /**
  * Reads an eclipse team project set file and constructs a
@@ -154,8 +157,7 @@ public abstract class ProjectSetFileParserImpl implements TeamProjectSetFilePars
 
     // create TeamProjectDescriptions for each project
     for (int i = 0; i < projects.length; i++) {
-      final TeamProjectDescription description = projectSetFactory.parseTeamProjectDescription(projectSet, projects[i]);
-      projectSet.addTeamProjectDescription(description);
+      projectSetFactory.addTeamProjectDescription(projectSet, projects[i]);
     }
 
     return projectSet;

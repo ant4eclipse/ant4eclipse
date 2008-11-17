@@ -33,14 +33,13 @@ public interface TeamProjectSetFactory {
   public TeamProjectSet createTeamProjectSet(String projectSetName);
 
   /**
-   * Creates a TeamProjectDescription for the given reference-String
+   * Creates a TeamProjectDescription for the given reference-String and adds it to the team project set
    * 
    * @param projectSet
    *          The project set this reference belongs to.
    * @param reference
    *          The reference string read out of the Project Set-File
-   * @return a new, provider-dependent, TeamProjectDescription
    */
-  public TeamProjectDescription parseTeamProjectDescription(TeamProjectSet projectSet, String reference);
+  public void addTeamProjectDescription(TeamProjectSet projectSet, String reference);
 
 }

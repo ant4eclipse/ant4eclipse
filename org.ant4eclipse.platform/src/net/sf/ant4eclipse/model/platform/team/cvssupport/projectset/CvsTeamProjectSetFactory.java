@@ -16,7 +16,6 @@ import java.util.StringTokenizer;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.model.platform.resource.internal.factory.FileParserException;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
 
@@ -48,10 +47,9 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
   /**
    * Parses the given reference of a CVS Project Set-file.
    * 
-   * <p>
-   * This mehtod is made public to make it accessible from the tests.
    */
-  public TeamProjectDescription parseTeamProjectDescription(TeamProjectSet projectSet, String reference) {
+  public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
+    Assert.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
     Assert.notNull(reference);
     A4ELogging.trace("parseReference ('%s')", reference);
 
@@ -81,7 +79,12 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
     String branchOrVersion = (tokensCount > 4) ? token[BRANCH_OR_VERSION_TAG] : "HEAD";
 
-    return new CvsTeamProjectDescription(token[PROJECT_NAME_IN_WORKSPACE], token[REPOSITORY_LOCATION],
-        token[PROJECT_NAME_IN_REPOSITORY], branchOrVersion);
+    CvsTeamProjectSet cvsTeamProjectSet = (CvsTeamProjectSet) projectSet;
+
+    CvsTeamProjectDescription cvsTeamProjectDescription = new CvsTeamProjectDescription(
+        token[PROJECT_NAME_IN_WORKSPACE], token[REPOSITORY_LOCATION], token[PROJECT_NAME_IN_REPOSITORY],
+        branchOrVersion);
+
+    cvsTeamProjectSet.addTeamProjectDescription(cvsTeamProjectDescription);
   }
 }
