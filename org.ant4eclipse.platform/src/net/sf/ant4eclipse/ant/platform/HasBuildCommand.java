@@ -105,6 +105,7 @@ public class HasBuildCommand extends ProjectComponent implements Condition {
    * 
    * @param workspace
    *          the workspace.
+   * @deprecated
    */
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspace(workspace);

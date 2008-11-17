@@ -114,6 +114,7 @@ public class HasNature extends ProjectComponent implements Condition {
    * 
    * @param workspace
    *          the workspace.
+   * @deprecated 
    */
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
@@ -124,6 +125,7 @@ public class HasNature extends ProjectComponent implements Condition {
    * 
    * @param project
    *          the project.
+   * @deprecated 
    */
   public void setProject(final File project) {
     this._projectDelegate.setProject(project);
