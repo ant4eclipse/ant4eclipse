@@ -57,6 +57,28 @@ public class Assert {
   }
 
   /**
+   * Asserts that the given parameter is an instance of the given type
+   * 
+   * @param parameterName
+   *          The name of the parameter that is checked
+   * @param parameter
+   *          The actual parameter value
+   * @param expectedType
+   *          The type the parameter should be an instance of
+   */
+  public static void instanceOf(String parameterName, Object parameter, Class expectedType) {
+    if (parameter == null) {
+      throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
+          + expectedType + "' but was null");
+    }
+
+    if (!expectedType.isInstance(parameter)) {
+      throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
+          + expectedType + "' but is a '" + expectedType.getName() + "'");
+    }
+  }
+
+  /**
    * <p>
    * Assert that the supplied string provides a value or not.
    * </p>
