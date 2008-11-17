@@ -23,12 +23,12 @@ public class ClassLoadingHelper {
 
   private static final String CLASS_ORG_APACHE_TOOLS_ANT_ANTCLASSLOADER = "org.apache.tools.ant.AntClassLoader";
 
-  public static String[] getClasspathEntriesFor(final Class clazz) {
+  public static String[] getClasspathEntriesFor(final Class<?> clazz) {
     Assert.notNull(clazz);
 
     // get class loader
     final ClassLoader classLoader = clazz.getClassLoader();
-    final Class classLoaderClass = classLoader.getClass();
+    final Class<? extends ClassLoader> classLoaderClass = classLoader.getClass();
 
     // AntClassLoader: we have to call 'getClasspath()', because the code source
     // always is the 'ant.jar'

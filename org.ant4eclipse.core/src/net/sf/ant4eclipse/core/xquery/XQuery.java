@@ -45,7 +45,7 @@ public class XQuery {
   private final int[]       _counter;
 
   // the result may be a String or a Vector instance
-  private Vector            _values;
+  private Vector<String>    _values;
 
   // keeps the depth which is acceptable for this query
   private int               _accept;
@@ -331,7 +331,7 @@ public class XQuery {
    */
   private void addValue(final String newvalue) {
     if (this._values == null) {
-      this._values = new Vector();
+      this._values = new Vector<String>();
     }
     this._values.add(newvalue);
   }
@@ -488,7 +488,7 @@ public class XQuery {
       }
 
       // increment the current value
-      final Vector values = XQuery.this._values;
+      final Vector<String> values = XQuery.this._values;
       final String lastval = (String) values.get(values.size() - 1);
       final int value = Integer.parseInt(lastval);
       values.set(values.size() - 1, String.valueOf(value + 1));

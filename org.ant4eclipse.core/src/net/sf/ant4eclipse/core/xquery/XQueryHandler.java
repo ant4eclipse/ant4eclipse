@@ -48,7 +48,7 @@ public class XQueryHandler extends DefaultHandler {
   private int                     _depth;
 
   /** - */
-  private final Vector            _queries;
+  private final Vector<XQuery>    _queries;
 
   private final String            _fileName;
 
@@ -61,7 +61,7 @@ public class XQueryHandler extends DefaultHandler {
   public XQueryHandler(final String fileName) {
     super();
     this._buffer = new StringBuffer();
-    this._queries = new Vector();
+    this._queries = new Vector<XQuery>();
     this._depth = 0;
     this._fileName = fileName;
   }
@@ -93,7 +93,7 @@ public class XQueryHandler extends DefaultHandler {
   public void startDocument() throws SAXException {
     this._depth = 0;
     for (int i = 0; i < this._queries.size(); i++) {
-      final XQuery query = (XQuery) this._queries.get(i);
+      final XQuery query = this._queries.get(i);
       query.reset();
     }
     if (this._buffer.length() > 0) {
@@ -108,7 +108,7 @@ public class XQueryHandler extends DefaultHandler {
       throws SAXException {
 
     for (int i = 0; i < this._queries.size(); i++) {
-      final XQuery query = (XQuery) this._queries.get(i);
+      final XQuery query = this._queries.get(i);
       query.visit(this._depth, qname, attributes);
     }
 
@@ -125,7 +125,7 @@ public class XQueryHandler extends DefaultHandler {
 
     final String str = this._buffer.toString().trim();
     for (int i = 0; i < this._queries.size(); i++) {
-      final XQuery query = (XQuery) this._queries.get(i);
+      final XQuery query = this._queries.get(i);
       query.endVisit(this._depth, str);
     }
 

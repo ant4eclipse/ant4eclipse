@@ -21,9 +21,9 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.Map.Entry;
 
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.CoreExceptionCode;
@@ -281,15 +281,15 @@ public class Utilities {
    * @return The text representing the content of the supplied map.
    */
   public static final String toString(final String title, final Properties properties) {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     final String linesep = System.getProperty("line.separator");
     if (title != null) {
       buffer.append(title);
       buffer.append(linesep);
     }
-    final Iterator it = properties.entrySet().iterator();
+    Iterator<Entry<Object, Object>> it = properties.entrySet().iterator();
     while (it.hasNext()) {
-      final Map.Entry entry = (Map.Entry) it.next();
+      Entry<Object, Object> entry = it.next();
       buffer.append("'").append(entry.getKey());
       buffer.append("' -> '").append(entry.getValue()).append("'");
       buffer.append(linesep);
@@ -373,10 +373,11 @@ public class Utilities {
    * @param className
    * @return
    */
-  public static Object newInstance(String className) {
+  @SuppressWarnings("unchecked")
+  public static <T> T newInstance(String className) {
     Assert.notNull("The parameter 'className' must not be null", className);
 
-    Class clazz = null;
+    Class<?> clazz = null;
 
     // Try to load class...
     try {
@@ -386,9 +387,11 @@ public class Utilities {
     }
 
     // try to instantiate using default cstr...
-    Object object = null;
+    T object = null;
+
     try {
-      object = clazz.newInstance();
+
+      object = (T) clazz.newInstance();
     } catch (Exception ex) {
       throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, new Object[] { className,
           ex.toString() });

@@ -23,9 +23,9 @@ import org.apache.tools.ant.Task;
  */
 public class AntBasedLogger implements Ant4EclipseLogger {
 
-  private Project           _project = null;
+  private Project                   _project = null;
 
-  private final ThreadLocal _context = new ThreadLocal();
+  private final ThreadLocal<Object> _context = new ThreadLocal<Object>();
 
   public AntBasedLogger(final Project project) {
     this._project = project;

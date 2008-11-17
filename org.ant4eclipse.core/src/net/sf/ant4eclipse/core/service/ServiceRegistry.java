@@ -37,19 +37,19 @@ import net.sf.ant4eclipse.core.util.MessageCreator;
 public class ServiceRegistry {
 
   /** the instance */
-  private static ServiceRegistry _instance;
+  private static ServiceRegistry    _instance;
 
   /** the service map **/
-  private final Map              _serviceMap;
+  private final Map<String, Object> _serviceMap;
 
   /** list that contains the ordering of the services **/
-  private final List             _serviceOrdering;
+  private final List<Object>        _serviceOrdering;
 
   /** indicates whether the registry is configured **/
-  private static boolean         _configured    = false;
+  private static boolean            _configured    = false;
 
   /** indicates whether the registry instance is initialized **/
-  private boolean                _isInitialized = false;
+  private boolean                   _isInitialized = false;
 
   /**
    * <p>
@@ -159,7 +159,7 @@ public class ServiceRegistry {
   private void initialize() {
     assertTrue(!isInitialized(), "initialize() darf nicht aufgerufen werden, wenn isInitialized() == true !");
 
-    final Iterator iterator = this._serviceOrdering.iterator();
+    final Iterator<Object> iterator = this._serviceOrdering.iterator();
 
     while (iterator.hasNext()) {
       final Object service = iterator.next();
@@ -184,7 +184,7 @@ public class ServiceRegistry {
   private void dispose() {
     assertTrue(isInitialized(), "dispose() darf nur aufgerufen werden, wenn isInitialized() == true !");
 
-    final Iterator iterator = this._serviceOrdering.iterator();
+    final Iterator<Object> iterator = this._serviceOrdering.iterator();
 
     while (iterator.hasNext()) {
       final Object service = iterator.next();
@@ -247,8 +247,8 @@ public class ServiceRegistry {
    * </p>
    */
   private ServiceRegistry() {
-    this._serviceMap = new HashMap();
-    this._serviceOrdering = new LinkedList();
+    this._serviceMap = new HashMap<String, Object>();
+    this._serviceOrdering = new LinkedList<Object>();
   }
 
   /**
@@ -294,7 +294,7 @@ public class ServiceRegistry {
       }
 
       for (int i = 0; i < serviceIdentifier.length; i++) {
-        final Object object = serviceIdentifier[i];
+        final String object = serviceIdentifier[i];
         ServiceRegistry.this._serviceMap.put(object, service);
         ServiceRegistry.this._serviceOrdering.add(service);
       }

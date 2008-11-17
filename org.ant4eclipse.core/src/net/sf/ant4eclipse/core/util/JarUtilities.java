@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
@@ -42,11 +43,11 @@ public class JarUtilities {
       }
     }
 
-    final Enumeration entries = jarFile.entries();
+    final Enumeration<JarEntry> entries = jarFile.entries();
     while (entries.hasMoreElements()) {
 
-      // TODO: not shure if we need this??
-      final ZipEntry zipEntry = fixDirectory(jarFile, (ZipEntry) entries.nextElement());
+      // TODO: not sure if we need this??
+      final ZipEntry zipEntry = fixDirectory(jarFile, entries.nextElement());
 
       final File destFile = new File(expansionDirectory, zipEntry.getName());
 

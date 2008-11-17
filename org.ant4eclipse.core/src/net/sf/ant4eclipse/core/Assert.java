@@ -66,7 +66,7 @@ public class Assert {
    * @param expectedType
    *          The type the parameter should be an instance of
    */
-  public static void instanceOf(String parameterName, Object parameter, Class expectedType) {
+  public static void instanceOf(String parameterName, Object parameter, Class<?> expectedType) {
     if (parameter == null) {
       throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
           + expectedType + "' but was null");

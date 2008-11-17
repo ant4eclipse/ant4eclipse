@@ -19,7 +19,6 @@ import java.util.jar.Manifest;
 
 import net.sf.ant4eclipse.core.Assert;
 
-
 /**
  * <p>
  * </p>
@@ -111,7 +110,7 @@ public class ManifestHelper {
     Assert.nonEmpty(manifestValue);
 
     final String[] elements = splitHeader(manifestValue);
-    final List result = new LinkedList();
+    final List<ManifestHeaderElement> result = new LinkedList<ManifestHeaderElement>();
     for (int i = 0; i < elements.length; i++) {
       final ManifestHeaderElement manifestHeaderElement = new ManifestHeaderElement();
       result.add(manifestHeaderElement);
@@ -153,10 +152,10 @@ public class ManifestHelper {
     if ((header == null) || (header.trim().length() == 0)) {
       return new String[0];
     }
-    final List result = new LinkedList();
+    final List<String> result = new LinkedList<String>();
 
     final char[] chars = header.toCharArray();
-    StringBuffer currentValue = new StringBuffer();
+    StringBuilder currentValue = new StringBuilder();
     boolean inQuotedString = false;
     for (int i = 0; i < chars.length; i++) {
 
@@ -188,7 +187,7 @@ public class ManifestHelper {
         // - split if we are not in a quoted string
         if (!inQuotedString) {
           result.add(currentValue.toString());
-          currentValue = new StringBuffer();
+          currentValue = new StringBuilder();
           i = i + (separator.length() - 1);
         }
 
@@ -255,29 +254,29 @@ public class ManifestHelper {
   public static class ManifestHeaderElement {
 
     /** the values */
-    protected List _values;
+    protected List<String>        _values;
 
     /** the attributes */
-    protected Map  _attributes;
+    protected Map<String, String> _attributes;
 
     /** the directives */
-    protected Map  _directives;
+    protected Map<String, String> _directives;
 
     public ManifestHeaderElement() {
-      this._values = new LinkedList();
-      this._attributes = new HashMap();
-      this._directives = new HashMap();
+      this._values = new LinkedList<String>();
+      this._attributes = new HashMap<String, String>();
+      this._directives = new HashMap<String, String>();
     }
 
-    void addAttribute(final Object key, final Object value) {
+    void addAttribute(final String key, final String value) {
       this._attributes.put(key, value);
     }
 
-    void addDirective(final Object key, final Object value) {
+    void addDirective(final String key, final String value) {
       this._directives.put(key, value);
     }
 
-    public boolean addValue(final Object o) {
+    public boolean addValue(final String o) {
       return this._values.add(o);
     }
 
@@ -291,14 +290,14 @@ public class ManifestHelper {
     /**
      * @return
      */
-    public Map getAttributes() {
+    public Map<String, String> getAttributes() {
       return this._attributes;
     }
 
     /**
      * @return
      */
-    public Map getDirectives() {
+    public Map<String, String> getDirectives() {
       return this._directives;
     }
 

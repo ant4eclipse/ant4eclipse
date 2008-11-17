@@ -72,7 +72,7 @@ public class TaskHelper {
     Assert.notNull(entries);
     Assert.notNull(pathseparator);
 
-    final List entriesAsString = new LinkedList();
+    final List<String> entriesAsString = new LinkedList<String>();
     for (int i = 0; i < entries.length; i++) {
       final File entry = entries[i];
       // if (entry.isResolved()) {
@@ -94,10 +94,10 @@ public class TaskHelper {
       // }
     }
 
-    final StringBuffer buffer = new StringBuffer();
-    final Iterator iterator = entriesAsString.iterator();
+    final StringBuilder buffer = new StringBuilder();
+    final Iterator<String> iterator = entriesAsString.iterator();
     while (iterator.hasNext()) {
-      String path = iterator.next().toString().replace('\\', '/');
+      String path = iterator.next().replace('\\', '/');
       path = Utilities.replace(path, '/', dirseparator);
       buffer.append(path);
       if (iterator.hasNext()) {
