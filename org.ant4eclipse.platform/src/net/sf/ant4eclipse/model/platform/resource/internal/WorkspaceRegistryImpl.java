@@ -21,60 +21,90 @@ import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.model.platform.resource.EclipseProject;
 import net.sf.ant4eclipse.model.platform.resource.Workspace;
 import net.sf.ant4eclipse.model.platform.resource.internal.factory.ProjectFactory;
-import net.sf.ant4eclipse.model.platform.resource.registry.WorkspaceDefinition;
-import net.sf.ant4eclipse.model.platform.resource.registry.WorkspaceRegistry;
+import net.sf.ant4eclipse.model.platform.resource.workspaceregistry.WorkspaceDefinition;
+import net.sf.ant4eclipse.model.platform.resource.workspaceregistry.WorkspaceRegistry;
 
+/**
+ * <p>
+ * Implementation of the {@link WorkspaceRegistry} interface. 
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
 
-  /** - */
+  /** the workspace map (String, Workspace) */
   private Map<String, Workspace> _registry;
 
+  /** the 'current' workspace */
   private Workspace              _current;
 
+  /**
+   * {@inheritDoc}
+   */
   public Workspace getCurrent() {
     return this._current;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean hasCurrent() {
     return this._current != null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setCurrent(final Workspace currentWorkspace) {
     this._current = currentWorkspace;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setCurrent(final String id) {
     this._current = getWorkspace(id);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Workspace getWorkspace(final String id) {
     return this._registry.get(id);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean containsWorkspace(final String id) {
     return this._registry.containsKey(id);
   }
 
   /**
-   * @see net.sf.ant4eclipse.model.platform.resource.registry.WorkspaceRegistry#registerWorkspace(java.lang.String,
-   *      java.io.File)
+   * {@inheritDoc}
    */
   public Workspace registerWorkspace(final String id, final WorkspaceDefinition workspaceDefinition) {
     Assert.nonEmpty(id);
     Assert.notNull(workspaceDefinition);
 
+    // create new workspace implementation
     final WorkspaceImpl workspace = new WorkspaceImpl();
 
+    // retrieve all project folders from the workspace definition
     final File[] projectFolders = workspaceDefinition.getProjectFolders();
 
-    A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=" + projectFolders.length);
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=" + projectFolders.length);
+    }
 
+    // read the projects and add them to the workspace
     for (int i = 0; i < projectFolders.length; i++) {
       final EclipseProject eclipseProject = ProjectFactory.readProjectFromWorkspace(workspace, projectFolders[i]);
       workspace.registerEclipseProject(eclipseProject);
     }
 
-    // add the workspace
+    // add the workspace to the registry
     this._registry.put(id, workspace);
 
     // return the workspace
@@ -82,7 +112,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
   }
 
   /**
-   * @see net.sf.ant4eclipse.core.Lifecycle#dispose()
+   * {@inheritDoc}
    */
   public void dispose() {
     this._registry.clear();
@@ -90,14 +120,14 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
   }
 
   /**
-   * @see net.sf.ant4eclipse.core.Lifecycle#initialize()
+   * {@inheritDoc}
    */
   public void initialize() {
     this._registry = new HashMap<String, Workspace>();
   }
 
   /**
-   * @see net.sf.ant4eclipse.core.Lifecycle#isInitialized()
+   * {@inheritDoc}
    */
   public boolean isInitialized() {
     return this._registry != null;

@@ -28,7 +28,8 @@ public class ProjectFactory {
   static {
     try {
       final Properties properties = new Properties();
-      properties.load(ProjectFactory.class.getResourceAsStream("roleidentifier.properties"));
+      // TODO!!!
+      properties.load(ProjectFactory.class.getClassLoader().getResources("/roleidentifier.properties"));
 
       // TODO
       Assert.assertTrue(properties.containsKey("roleidentifiers"),

@@ -15,7 +15,9 @@ import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.model.platform.resource.ProjectNature;
 
 /**
+ * <p>
  * Encapsulates a nature of a project. A project can have multiple natures.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
@@ -25,7 +27,9 @@ public class ProjectNatureImpl implements ProjectNature {
   private final String _name;
 
   /**
-   * Creates a new instance of type ProjectNature
+   * <p>
+   * Creates a new instance of type {@link ProjectNatureImpl}.
+   * </p>
    * 
    * @param name
    */
@@ -36,7 +40,7 @@ public class ProjectNatureImpl implements ProjectNature {
   }
 
   /**
-   * @return Returns the name.
+   * {@inheritDoc}
    */
   public final String getName() {
     return this._name;

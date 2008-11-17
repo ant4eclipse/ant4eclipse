@@ -30,11 +30,6 @@ import net.sf.ant4eclipse.model.platform.resource.role.ProjectRole;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-/**
- * EclipseProjectImpl --
- * 
- * @author nils
- */
 public final class EclipseProjectImpl implements EclipseProject {
 
   /** The name of the projects <tt>.settings</tt> folder */

@@ -27,7 +27,9 @@ import net.sf.ant4eclipse.model.platform.resource.Workspace;
 import net.sf.ant4eclipse.model.platform.resource.role.ProjectRole;
 
 /**
- * Encapsulates the workspace that contains the (Eclipse-)Projects.
+ * <p>
+ * Encapsulates the workspace that contains the eclipse projects.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
@@ -37,16 +39,16 @@ public final class WorkspaceImpl implements Workspace {
   private final Map<String, EclipseProject> _projects;
 
   /**
-   * @see net.sf.ant4eclipse.model.platform.resource.Workspace#hasProject(java.lang.String)
+   * {@inheritDoc}}
    */
   public boolean hasProject(final String name) {
     Assert.nonEmpty(name);
 
     return this._projects.containsKey(name);
   }
-
+  
   /**
-   * @see net.sf.ant4eclipse.model.platform.resource.Workspace#getProject(java.lang.String)
+   * {@inheritDoc}}
    */
   public EclipseProject getProject(final String name) {
     Assert.nonEmpty(name);
@@ -55,7 +57,7 @@ public final class WorkspaceImpl implements Workspace {
   }
 
   /**
-   * @see net.sf.ant4eclipse.model.platform.resource.Workspace#getProjects(java.lang.String[])
+   * {@inheritDoc}}
    */
   public EclipseProject[] getProjects(final String[] names, final boolean failOnMissingProjects) {
     Assert.notNull(names);
@@ -65,7 +67,7 @@ public final class WorkspaceImpl implements Workspace {
   }
 
   /**
-   * @see net.sf.ant4eclipse.model.platform.resource.Workspace#getAllProjects()
+   * {@inheritDoc}}
    */
   public EclipseProject[] getAllProjects() {
     final Collection<EclipseProject> projects = this._projects.values();
@@ -91,7 +93,9 @@ public final class WorkspaceImpl implements Workspace {
   }
 
   /**
-   * 
+   * <p>
+   * Creates a new instance of type {@link WorkspaceImpl}.
+   * </p>
    */
   WorkspaceImpl() {
     this._projects = new Hashtable<String, EclipseProject>();
