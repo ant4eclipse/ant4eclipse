@@ -17,7 +17,7 @@ public class CoreExceptionCode extends AbstractExceptionCode {
 
   private static final String           X_QUERY_PARSE_EXCEPTION_MSG            = "Could not parse document.";
 
-  private static final String           X_QUERY_INVALID_QUERY_EXCEPTION_MSG    = "Invalid x-query '%s': '%s'";
+  private static final String           X_QUERY_INVALID_QUERY_EXCEPTION_MSG    = "Invalid x-query '%s': %s";
 
   private static final String           X_QUERY_DUCPLICATE_ENTRY_EXCEPTION_MSG = "Duplicate entry '%s' in file '%s'";
 
