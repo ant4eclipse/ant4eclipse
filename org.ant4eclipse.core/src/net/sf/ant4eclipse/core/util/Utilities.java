@@ -69,7 +69,6 @@ public class Utilities {
    */
   public static final boolean delete(final File file) {
     Assert.notNull(file);
-    A4ELogging.debug("Deleting '%s' ...", file.getPath());
     boolean result = true;
     if (file.isDirectory()) {
       // delete the children
