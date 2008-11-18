@@ -43,7 +43,7 @@ public class ProjectFactory {
         final String[] classNames = manifestHeaderElement.getValues();
         for (int j = 0; j < classNames.length; j++) {
           final String className = classNames[j];
-          final Class clazz = ProjectFactory.class.getClassLoader().loadClass(className);
+          final Class<?> clazz = ProjectFactory.class.getClassLoader().loadClass(className);
           final Object instance = clazz.newInstance();
           // TODO ASSERT
           ProjectRoleIdentifierRegistry.addRoleIdentifier((ProjectRoleIdentifier) instance);

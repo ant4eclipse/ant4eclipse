@@ -13,9 +13,10 @@ package net.sf.ant4eclipse.model.platform.team.cvssupport.projectset;
 
 import java.util.StringTokenizer;
 
+import net.sf.ant4eclipse.ant.platform.team.TeamExceptionCode;
 import net.sf.ant4eclipse.core.Assert;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
-import net.sf.ant4eclipse.model.platform.resource.internal.factory.FileParserException;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
 
@@ -57,8 +58,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
     int tokensCount = stringTokenizer.countTokens();
 
     if (tokensCount < 4) {
-      throw new FileParserException("Invalid PSF-reference. Expected to have at least four tokens, but have: "
-          + tokensCount + " in reference '" + reference + "'");
+      throw new Ant4EclipseException(TeamExceptionCode.INVALID_PSF_REFERENCE, "at least four", tokensCount, reference);
     }
     if (tokensCount > 5) {
       // bug 1569122

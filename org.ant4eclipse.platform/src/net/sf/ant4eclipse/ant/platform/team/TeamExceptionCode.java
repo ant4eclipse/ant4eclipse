@@ -32,6 +32,12 @@ public class TeamExceptionCode extends AbstractExceptionCode {
   public static final TeamExceptionCode UNKNOWN_TEAM_PROJECT_SET_PROVIDER      = new TeamExceptionCode(
                                                                                    "The team project set provider with id '%s' is unkown");
 
+  public static final TeamExceptionCode ERROR_WHILE_READING_CVS_FILE           = new TeamExceptionCode(
+                                                                                   "Error while trying to read CVS file '%s': '%s'");
+
+  public static final TeamExceptionCode INVALID_PSF_REFERENCE                  = new TeamExceptionCode(
+                                                                                   "Invalid PSF-reference. Expected to have '%s' tokens, but have %s tokens in reference '%s'");
+
   public TeamExceptionCode(String message) {
     super(message);
   }

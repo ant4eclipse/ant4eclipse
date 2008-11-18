@@ -14,7 +14,6 @@ package net.sf.ant4eclipse.model.platform.team.cvssupport.project;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.model.platform.resource.EclipseProject;
-import net.sf.ant4eclipse.model.platform.resource.internal.factory.FileParserException;
 import net.sf.ant4eclipse.model.platform.resource.role.ProjectRole;
 import net.sf.ant4eclipse.model.platform.resource.role.ProjectRoleIdentifier;
 import net.sf.ant4eclipse.model.platform.team.cvssupport.CvsRoot;
@@ -36,7 +35,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public ProjectRole createRole(final EclipseProject project) throws FileParserException {
+  public ProjectRole createRole(final EclipseProject project) {
     A4ELogging.trace("CvsRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
     final CvsRoot cvsRoot = CvsParser.readCvsRoot(project);

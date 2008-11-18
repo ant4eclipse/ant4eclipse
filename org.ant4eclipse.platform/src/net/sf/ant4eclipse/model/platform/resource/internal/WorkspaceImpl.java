@@ -46,7 +46,7 @@ public final class WorkspaceImpl implements Workspace {
 
     return this._projects.containsKey(name);
   }
-  
+
   /**
    * {@inheritDoc}}
    */
@@ -74,10 +74,10 @@ public final class WorkspaceImpl implements Workspace {
     return projects.toArray(new EclipseProject[0]);
   }
 
-  public EclipseProject[] getAllProjects(final Class projectRole) {
+  public EclipseProject[] getAllProjects(final Class<? extends ProjectRole> projectRole) {
     Assert.notNull(projectRole);
     Assert.assertTrue(ProjectRole.class.isAssignableFrom(projectRole), MessageCreator.createMessage(
-        "Class '%s' mst be assignable from class '%s'", new Object[] { projectRole.getClass().getName(),
+        "Class '%s' must be assignable from class '%s'", new Object[] { projectRole.getClass().getName(),
             ProjectRole.class.getName() }));
 
     final List<EclipseProject> result = new LinkedList<EclipseProject>();

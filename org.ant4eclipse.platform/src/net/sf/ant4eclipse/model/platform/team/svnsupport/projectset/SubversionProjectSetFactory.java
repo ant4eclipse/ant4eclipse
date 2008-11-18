@@ -11,8 +11,9 @@
  **********************************************************************/
 package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
 
+import net.sf.ant4eclipse.ant.platform.team.TeamExceptionCode;
 import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.model.platform.resource.internal.factory.FileParserException;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
 
@@ -66,7 +67,7 @@ public class SubversionProjectSetFactory implements TeamProjectSetFactory {
     String[] parts = reference.split(",");
 
     if (parts.length < 3) {
-      throw new FileParserException("Invalid project set reference '" + reference + "'");
+      throw new Ant4EclipseException(TeamExceptionCode.INVALID_PSF_REFERENCE, "three", parts.length, reference);
     }
 
     String url = parts[URL];

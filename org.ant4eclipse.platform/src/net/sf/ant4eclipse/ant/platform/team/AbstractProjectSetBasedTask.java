@@ -15,8 +15,8 @@ import java.io.File;
 
 import net.sf.ant4eclipse.ant.Ant4EclipseTask;
 import net.sf.ant4eclipse.ant.platform.delegate.ProjectSetDelegate;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 import net.sf.ant4eclipse.model.platform.resource.Workspace;
-import net.sf.ant4eclipse.model.platform.resource.internal.factory.FileParserException;
 import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
 
 /**
@@ -49,10 +49,10 @@ public abstract class AbstractProjectSetBasedTask extends Ant4EclipseTask {
    * 
    * @return The TeamProjectSet instance associated with this task.
    * 
-   * @throws FileParserException
+   * @throws Ant4EclipseException
    *           Reading the data failed for some reason.
    */
-  public TeamProjectSet getProjectSet() throws FileParserException {
+  public TeamProjectSet getProjectSet() {
     return this._projectSetBase.getProjectSet();
   }
 

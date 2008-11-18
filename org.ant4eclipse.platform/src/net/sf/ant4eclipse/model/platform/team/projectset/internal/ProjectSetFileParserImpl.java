@@ -62,7 +62,7 @@ public abstract class ProjectSetFileParserImpl implements TeamProjectSetFilePars
   // */
   // public final static String SVN_PROVIDER_ID = "org.eclipse.team.svn.core.svnnature";
 
-  private Map _factories;
+  private Map<String, TeamProjectSetFactory> _factories;
 
   // /**
   // * Parses a project set file.
