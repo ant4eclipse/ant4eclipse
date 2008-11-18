@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.core.dependencygraph;
+package org.ant4eclipse.core.dependencygraph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,8 +7,9 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.core.dependencygraph.DependencyGraph;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
 /**

@@ -10,7 +10,7 @@
  * 
  * Contributor(s): Daniel Kasmeroglu
  ******************************************************************************/
-package net.sf.ant4eclipse.core.xquery;
+package org.ant4eclipse.core.xquery;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,9 +18,8 @@ import static org.junit.Assert.assertSame;
 
 import java.io.InputStream;
 
-import net.sf.ant4eclipse.core.CoreExceptionCode;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
 /**
@@ -37,8 +36,7 @@ public class XQueryHandlerTest {
   @Test
   public void testQueries() throws Exception {
 
-    InputStream inputStream = getClass().getClassLoader()
-        .getResourceAsStream("net/sf/ant4eclipse/lang/xquery/data.xml");
+    InputStream inputStream = getClass().getClassLoader().getResourceAsStream("org/ant4eclipse/lang/xquery/data.xml");
 
     XQueryHandler handler = new XQueryHandler();
 

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.core.service;
+package org.ant4eclipse.core.service;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -18,9 +18,10 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
-import net.sf.ant4eclipse.core.Ant4EclipseConfigurationProperties;
-import net.sf.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
+import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
+import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

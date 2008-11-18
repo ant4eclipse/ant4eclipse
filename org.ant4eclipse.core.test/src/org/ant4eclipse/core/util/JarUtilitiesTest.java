@@ -1,4 +1,4 @@
-package net.sf.ant4eclipse.core.util;
+package org.ant4eclipse.core.util;
 
 import static org.junit.Assert.assertTrue;
 
@@ -38,7 +38,7 @@ public class JarUtilitiesTest {
   @Test
   public void test() {
 
-    URL url = getClass().getClassLoader().getResource("net/sf/ant4eclipse/core/util/test-jar.jar");
+    URL url = getClass().getClassLoader().getResource("org/ant4eclipse/core/util/test-jar.jar");
     File jarFile = new File(url.getFile());
 
     assertTrue(jarFile.exists() && jarFile.isFile());

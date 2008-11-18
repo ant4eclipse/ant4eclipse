@@ -1,10 +1,10 @@
-package net.sf.ant4eclipse.core.service;
+package org.ant4eclipse.core.service;
 
-import net.sf.ant4eclipse.core.Lifecycle;
-import net.sf.ant4eclipse.core.service.ServiceNotAvailableException;
-import net.sf.ant4eclipse.core.service.ServiceRegistry;
-import net.sf.ant4eclipse.core.service.ServiceRegistryConfiguration;
 
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.service.ServiceNotAvailableException;
+import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

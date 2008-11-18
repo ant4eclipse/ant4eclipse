@@ -1,16 +1,16 @@
-package net.sf.ant4eclipse.core;
+package org.ant4eclipse.core;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.Properties;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.logging.Ant4EclipseLogger;
-import net.sf.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
-import net.sf.ant4eclipse.core.service.ServiceRegistry;
-import net.sf.ant4eclipse.testframework.ServiceRegistryConfigurator;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.Ant4EclipseLogger;
+import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
+import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.testframework.ServiceRegistryConfigurator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

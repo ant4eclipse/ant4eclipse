@@ -9,12 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.core;
+package org.ant4eclipse.core;
 
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

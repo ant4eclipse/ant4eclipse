@@ -1,6 +1,8 @@
-package net.sf.ant4eclipse.core.util;
+package org.ant4eclipse.core.util;
 
 import java.io.File;
+
+import org.ant4eclipse.core.util.Utilities;
 
 import junit.framework.TestCase;
 
