@@ -11,8 +11,9 @@
  **********************************************************************/
 package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
 
+import org.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectSet;
+
 import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectSet;
 
 /**
  * Represents a Team Project Set that is based on a Subversion repository

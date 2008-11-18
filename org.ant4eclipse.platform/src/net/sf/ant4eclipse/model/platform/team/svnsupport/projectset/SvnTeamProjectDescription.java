@@ -11,8 +11,9 @@
  **********************************************************************/
 package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
 
+import org.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectDescription;
+
 import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectDescription;
 
 public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
 

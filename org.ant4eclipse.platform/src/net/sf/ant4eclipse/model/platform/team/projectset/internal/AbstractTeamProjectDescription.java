@@ -11,8 +11,9 @@
  **********************************************************************/
 package net.sf.ant4eclipse.model.platform.team.projectset.internal;
 
+import org.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
+
 import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
 
 public class AbstractTeamProjectDescription implements TeamProjectDescription {
   /** the name of the project */

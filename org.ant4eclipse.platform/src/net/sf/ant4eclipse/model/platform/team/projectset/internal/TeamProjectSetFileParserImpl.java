@@ -15,7 +15,11 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sf.ant4eclipse.ant.platform.team.TeamExceptionCode;
+import org.ant4eclipse.ant.platform.team.TeamExceptionCode;
+import org.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
+import org.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.model.platform.team.projectset.TeamProjectSetFileParser;
+
 import net.sf.ant4eclipse.core.Ant4EclipseConfigurationProperties;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.Lifecycle;
@@ -24,13 +28,10 @@ import net.sf.ant4eclipse.core.logging.A4ELogging;
 import net.sf.ant4eclipse.core.util.Utilities;
 import net.sf.ant4eclipse.core.xquery.XQuery;
 import net.sf.ant4eclipse.core.xquery.XQueryHandler;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFileParser;
 
 /**
  * Reads an eclipse team project set file and constructs a
- * {@link net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSet TeamProjectSet} for it.
+ * {@link org.ant4eclipse.model.platform.team.projectset.TeamProjectSet TeamProjectSet} for it.
  * 
  * <p>
  * For the format of the psf-file used by Eclipse see org.eclipse.team.internal.ccvs.ui.CVSProjectSetSerializer
