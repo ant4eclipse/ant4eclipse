@@ -15,13 +15,12 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class Ant4EclipseConfigurationPropertiesTest {
-
-  private Ant4EclipseConfigurationProperties _configProperties;
 
   @Before
   public void initTestProperties() {
@@ -31,18 +30,24 @@ public class Ant4EclipseConfigurationPropertiesTest {
     properties.setProperty("service.serviceB", "Service 2");
     properties.setProperty("service.C", "Service 3");
     properties.setProperty("role.a", "Role A");
-    _configProperties = new Ant4EclipseConfigurationProperties(properties);
+
+    Ant4EclipseConfigurationProperties.initialize(properties);
+  }
+
+  @After
+  public void dispose() {
+    Ant4EclipseConfigurationProperties.dispose();
 
   }
 
   @Test
   public void test_Properties() {
+    Ant4EclipseConfigurationProperties configProperties = Ant4EclipseConfigurationProperties.getInstance();
+    Assert.assertTrue(configProperties.hasProperty("service.C"));
+    Assert.assertFalse(configProperties.hasProperty("service.D"));
+    Assert.assertEquals("Service 1", configProperties.getProperty("service.serviceA"));
 
-    Assert.assertTrue(_configProperties.hasProperty("service.C"));
-    Assert.assertFalse(_configProperties.hasProperty("service.D"));
-    Assert.assertEquals("Service 1", _configProperties.getProperty("service.serviceA"));
-
-    Iterable<String[]> serviceProperties = _configProperties.getAllProperties("service");
+    Iterable<String[]> serviceProperties = configProperties.getAllProperties("service");
 
     final Map<String, String> expectedValues = new Hashtable<String, String>();
     expectedValues.put("serviceA", "Service 1");
@@ -61,7 +66,7 @@ public class Ant4EclipseConfigurationPropertiesTest {
 
     Assert.assertTrue(expectedValues.isEmpty());
 
-    Iterable<String[]> emptyProperties = _configProperties.getAllProperties("notfound");
+    Iterable<String[]> emptyProperties = configProperties.getAllProperties("notfound");
     Assert.assertNotNull(emptyProperties);
     Assert.assertFalse(emptyProperties.iterator().hasNext());
   }
