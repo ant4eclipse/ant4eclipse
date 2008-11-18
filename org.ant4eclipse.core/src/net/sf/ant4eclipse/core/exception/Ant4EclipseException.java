@@ -22,7 +22,7 @@ public class Ant4EclipseException extends RuntimeException {
 
   private final Object[]              _args;
 
-  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Object[] args, final Throwable cause) {
+  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Throwable cause, final Object... args) {
     super(cause);
 
     this._exceptionCode = exceptionCode;
@@ -44,7 +44,7 @@ public class Ant4EclipseException extends RuntimeException {
     this._args = new Object[] { arg };
   }
 
-  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Object[] args) {
+  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Object... args) {
     super();
 
     this._exceptionCode = exceptionCode;
