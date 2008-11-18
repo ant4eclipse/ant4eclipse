@@ -14,11 +14,12 @@ package net.sf.ant4eclipse.core.xquery;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 
 import java.io.InputStream;
 
-import net.sf.ant4eclipse.core.xquery.XQuery;
-import net.sf.ant4eclipse.core.xquery.XQueryHandler;
+import net.sf.ant4eclipse.core.CoreExceptionCode;
+import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 
 import org.junit.Test;
 
@@ -132,7 +133,20 @@ public class XQueryHandlerTest {
     assertEquals(2, values10.length);
     assertEquals("2", values10[0]);
     assertEquals("4", values10[1]);
-
   }
 
+  @Test
+  public void testInvalidQueries() {
+    XQueryHandler handler = new XQueryHandler();
+
+    try {
+      // retrieve the attributes 'name' and 'age'. the resulting arrays will have the
+      // same length because their length depends on the number of 'element' elements.
+      handler.createQuery("/database/element/@name");
+    } catch (Ant4EclipseException e) {
+      assertSame(e.getExceptionCode(), CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION);
+      assertEquals("Invalid x-query '/database/element/@name': Query needs to starts with two slashes !", e
+          .getMessage());
+    }
+  }
 } /* ENDCLASS */
