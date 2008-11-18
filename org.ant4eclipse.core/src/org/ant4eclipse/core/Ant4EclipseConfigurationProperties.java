@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  */
 public class Ant4EclipseConfigurationProperties {
 
-  public static final String                        A4E_CONFIGURATION_PROPERTIES = "net/sf/ant4eclipse/ant4eclipse-configuration.properties";
+  public static final String                        A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
 
   /**
    * The only Ant4EclipseConfigurationProperties-instance
