@@ -17,10 +17,10 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 
-import net.sf.ant4eclipse.core.Assert;
 
 /**
  * <p>

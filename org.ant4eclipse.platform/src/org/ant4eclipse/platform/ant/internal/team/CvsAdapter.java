@@ -13,10 +13,10 @@ package org.ant4eclipse.platform.ant.internal.team;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;

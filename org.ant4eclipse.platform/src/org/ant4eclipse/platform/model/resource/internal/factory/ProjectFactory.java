@@ -14,15 +14,15 @@ package org.ant4eclipse.platform.model.resource.internal.factory;
 import java.io.File;
 import java.util.Properties;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.internal.EclipseProjectImpl;
 import org.ant4eclipse.platform.model.resource.internal.WorkspaceImpl;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
-import net.sf.ant4eclipse.core.util.ManifestHelper;
-import net.sf.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 public class ProjectFactory {
 

@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.resource.internal.ChunkyFile;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * Reads a ".location" file which provides the position of an external project from eclipse's .metadata directory.

@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.role;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import net.sf.ant4eclipse.core.Assert;
 
 /**
  * <p>

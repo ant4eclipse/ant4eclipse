@@ -13,9 +13,9 @@ package org.ant4eclipse.platform.model.resource.variable;
 
 import java.util.Map;
 
+import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import net.sf.ant4eclipse.core.Lifecycle;
 
 /**
  * <p>

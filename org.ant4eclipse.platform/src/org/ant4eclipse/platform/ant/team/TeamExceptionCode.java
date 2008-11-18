@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
-import net.sf.ant4eclipse.core.exception.AbstractExceptionCode;
+import org.ant4eclipse.core.exception.AbstractExceptionCode;
 
 public class TeamExceptionCode extends AbstractExceptionCode {
   private static final String           ERROR_WHILE_EXECUTING_CVS_COMMAND_MSG  = "Error while executing CVS '%s' command: '%s' ";

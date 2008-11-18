@@ -13,12 +13,12 @@ package org.ant4eclipse.platform.ant.team;
 
 import java.io.File;
 
+import org.ant4eclipse.ant.Ant4EclipseTask;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.platform.ant.delegate.ProjectSetDelegate;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
-import net.sf.ant4eclipse.ant.Ant4EclipseTask;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 
 /**
  * Base class for all tasks working with project sets

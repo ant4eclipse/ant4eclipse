@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.delegate;
 
-import net.sf.ant4eclipse.core.Assert;
 
+import org.ant4eclipse.core.Assert;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectComponent;
 

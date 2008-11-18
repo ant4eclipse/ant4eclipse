@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.svnsupport.projectset;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
 
 /**
  * Parses a Project Set-File provided by the Subversive Eclipse Plugin and the Subclipse Eclipse Plugin

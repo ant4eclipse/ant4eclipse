@@ -14,9 +14,9 @@ package org.ant4eclipse.platform.ant;
 import java.util.Hashtable;
 import java.util.Map;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;

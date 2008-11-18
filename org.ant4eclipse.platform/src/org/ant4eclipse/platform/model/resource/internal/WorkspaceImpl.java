@@ -18,14 +18,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.util.MessageCreator;
 import org.ant4eclipse.platform.model.PlatformModelExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-import net.sf.ant4eclipse.core.util.MessageCreator;
 
 /**
  * <p>

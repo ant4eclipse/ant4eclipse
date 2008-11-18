@@ -16,13 +16,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>

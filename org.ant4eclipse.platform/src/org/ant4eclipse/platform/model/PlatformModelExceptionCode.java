@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model;
 
-import net.sf.ant4eclipse.core.exception.AbstractExceptionCode;
+import org.ant4eclipse.core.exception.AbstractExceptionCode;
 
 public class PlatformModelExceptionCode extends AbstractExceptionCode {
 

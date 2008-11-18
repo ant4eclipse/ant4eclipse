@@ -15,19 +15,19 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.core.xquery.XQuery;
+import org.ant4eclipse.core.xquery.XQueryHandler;
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 
-import net.sf.ant4eclipse.core.Ant4EclipseConfigurationProperties;
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.Lifecycle;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
-import net.sf.ant4eclipse.core.util.Utilities;
-import net.sf.ant4eclipse.core.xquery.XQuery;
-import net.sf.ant4eclipse.core.xquery.XQueryHandler;
 
 /**
  * Reads an eclipse team project set file and constructs a

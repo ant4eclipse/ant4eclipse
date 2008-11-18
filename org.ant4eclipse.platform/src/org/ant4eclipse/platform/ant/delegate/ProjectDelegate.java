@@ -13,9 +13,9 @@ package org.ant4eclipse.platform.ant.delegate;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;

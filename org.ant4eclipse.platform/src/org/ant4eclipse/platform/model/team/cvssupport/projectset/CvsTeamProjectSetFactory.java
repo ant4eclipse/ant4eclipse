@@ -13,13 +13,13 @@ package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 
 import java.util.StringTokenizer;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * Parses a ProjectSetFile provided by the default Eclipse CVS plugin

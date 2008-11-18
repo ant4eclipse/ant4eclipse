@@ -14,6 +14,11 @@ package org.ant4eclipse.platform.model.resource.internal.factory;
 import java.io.File;
 import java.util.StringTokenizer;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.core.xquery.XQuery;
+import org.ant4eclipse.core.xquery.XQueryHandler;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.internal.BuildCommandImpl;
 import org.ant4eclipse.platform.model.resource.internal.EclipseProjectImpl;
@@ -21,11 +26,6 @@ import org.ant4eclipse.platform.model.resource.internal.LinkedResourceImpl;
 import org.ant4eclipse.platform.model.resource.internal.ProjectNatureImpl;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.service.ServiceRegistry;
-import net.sf.ant4eclipse.core.util.Utilities;
-import net.sf.ant4eclipse.core.xquery.XQuery;
-import net.sf.ant4eclipse.core.xquery.XQueryHandler;
 
 /**
  * <p>

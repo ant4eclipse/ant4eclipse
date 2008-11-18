@@ -12,7 +12,6 @@
 package org.ant4eclipse.platform.model.resource.internal;
 
 
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
 import java.util.Vector;
 
@@ -20,6 +19,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.File;
+
+import org.ant4eclipse.core.logging.A4ELogging;
 
 
 /**

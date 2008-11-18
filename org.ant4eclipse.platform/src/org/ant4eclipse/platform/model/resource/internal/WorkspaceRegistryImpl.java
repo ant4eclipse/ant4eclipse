@@ -15,15 +15,15 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.internal.factory.ProjectFactory;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.Lifecycle;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>

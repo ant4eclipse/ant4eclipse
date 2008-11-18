@@ -17,11 +17,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.MessageCreator;
 import org.ant4eclipse.platform.model.resource.internal.factory.LocationFileParser;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.logging.A4ELogging;
-import net.sf.ant4eclipse.core.util.MessageCreator;
 
 /**
  * 

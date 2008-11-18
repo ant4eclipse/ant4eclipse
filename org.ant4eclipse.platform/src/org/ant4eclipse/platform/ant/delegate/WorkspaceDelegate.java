@@ -15,10 +15,10 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import net.sf.ant4eclipse.ant.TaskHelper;
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.service.ServiceRegistry;
 
+import org.ant4eclipse.ant.TaskHelper;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;

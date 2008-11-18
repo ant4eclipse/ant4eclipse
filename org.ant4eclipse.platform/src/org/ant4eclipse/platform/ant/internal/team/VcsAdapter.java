@@ -13,10 +13,10 @@ package org.ant4eclipse.platform.ant.internal.team;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.core.Assert;
-import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
-import net.sf.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.apache.tools.ant.Project;
 

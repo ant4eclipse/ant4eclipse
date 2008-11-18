@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.ProjectNature;
@@ -23,7 +24,6 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-import net.sf.ant4eclipse.core.Assert;
 
 /**
  * Encapsultes a project. A project contains a workspace and is represented by a directory in this workspace. A project

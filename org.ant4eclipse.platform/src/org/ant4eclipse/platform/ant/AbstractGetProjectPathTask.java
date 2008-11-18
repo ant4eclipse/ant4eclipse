@@ -13,8 +13,8 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.ant.TaskHelper;
 
+import org.ant4eclipse.ant.TaskHelper;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
 

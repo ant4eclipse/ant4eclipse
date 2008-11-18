@@ -13,8 +13,8 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.ant.Ant4EclipseTask;
 
+import org.ant4eclipse.ant.Ant4EclipseTask;
 import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;

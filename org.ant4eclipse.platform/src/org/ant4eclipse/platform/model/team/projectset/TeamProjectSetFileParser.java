@@ -13,7 +13,8 @@ package org.ant4eclipse.platform.model.team.projectset;
 
 import java.io.File;
 
-import net.sf.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.service.ServiceRegistry;
+
 
 public interface TeamProjectSetFileParser {
 
