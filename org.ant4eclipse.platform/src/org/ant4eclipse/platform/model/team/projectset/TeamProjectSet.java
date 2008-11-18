@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.team.projectset;
+package org.ant4eclipse.platform.model.team.projectset;
 
 /**
  * Encapsultes a set of team project descriptions. A TeamProjectSet is used to share a set of projects within a team.

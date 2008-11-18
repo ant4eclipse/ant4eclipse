@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
+package org.ant4eclipse.platform.model.team.svnsupport.projectset;
 
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;

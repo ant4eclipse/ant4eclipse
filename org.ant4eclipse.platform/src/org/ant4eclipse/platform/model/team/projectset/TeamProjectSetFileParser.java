@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.team.projectset;
+package org.ant4eclipse.platform.model.team.projectset;
 
 import java.io.File;
 
