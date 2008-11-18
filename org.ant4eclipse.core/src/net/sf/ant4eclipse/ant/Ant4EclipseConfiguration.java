@@ -12,6 +12,7 @@
 package net.sf.ant4eclipse.ant;
 
 import net.sf.ant4eclipse.core.logging.Ant4EclipseLogger;
+import net.sf.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
 import net.sf.ant4eclipse.core.service.ServiceRegistry;
 import net.sf.ant4eclipse.core.service.ServiceRegistryConfiguration;
 
@@ -67,23 +68,13 @@ public class Ant4EclipseConfiguration {
 
         public void configure(final ConfigurationContext context) {
 
-          // add ant logger
+          // 1st: add ant logger
+          // TODO: could it be possible to configure this via properties file ?
           context.registerService(antLogger, Ant4EclipseLogger.class.getName());
 
-//          // add the java runtime registry
-//          context.registerService(new JavaRuntimeRegistryImpl(), JavaRuntimeRegistry.class.getName());
-//
-//          // add the workspace registry impl
-//          context.registerService(new WorkspaceRegistryImpl(), WorkspaceRegistry.class.getName());
-//
-//          // add Dm Server registry
-//          context.registerService(new DmServerRegistryImpl(), DmServerRegistry.class.getName());
-//
-//          // add S2 Application Platform registry
-//          context.registerService(new EclipseVariableResolverImpl(), EclipseVariableResolver.class.getName());
-//
-//          // add PDE TargetPlatformRegistry registry
-//          context.registerService(new TargetPlatformRegistryImpl(), TargetPlatformRegistry.class.getName());
+          // 2. Configure services from properties files
+          PropertiesBasedServiceRegistryConfiguration propertiesConfiguration = new PropertiesBasedServiceRegistryConfiguration();
+          propertiesConfiguration.configure(context);
         }
       };
 

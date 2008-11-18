@@ -31,6 +31,7 @@ import net.sf.ant4eclipse.core.util.MessageCreator;
  * <p>
  * After configuring the registry, services can be requested.
  * </p>
+ * TODO Make ServiceRegistry Keys Class-Objects
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */

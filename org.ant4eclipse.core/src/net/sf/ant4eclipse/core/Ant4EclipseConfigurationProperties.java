@@ -51,10 +51,50 @@ public class Ant4EclipseConfigurationProperties {
 
   public static Ant4EclipseConfigurationProperties getInstance() {
     if (_instance == null) {
-      _instance = createInstance();
+      throw new IllegalStateException("Ant4EclipseConfigurationProperties have not been initialized!");
     }
-
     return _instance;
+  }
+
+  /**
+   * Creates the Ant4EclipseConfigurationProperties singleton instance using the properties found in the ant4eclipse
+   * configuration properties files
+   * 
+   * <p>
+   * This method can only be invoked as long as the singleton has not been initialized
+   */
+  public static void initialize() {
+    if (_instance != null) {
+      throw new IllegalStateException("Ant4EclipseConfigurationProperties are already initialized!");
+    }
+    Properties properties = loadConfigurationProperties();
+    initialize(properties);
+  }
+
+  /**
+   * Creates the Ant4EclipseConfigurationProperties singleton instance using the given properties
+   * 
+   * <p>
+   * This method can only be invoked as long as the singleton has not been initialized
+   * 
+   * @param properties
+   *          The configuration properties. Must not be null.
+   */
+  public static void initialize(Properties properties) {
+    if (_instance != null) {
+      throw new IllegalStateException("Ant4EclipseConfigurationProperties are already initialized!");
+    }
+    if (properties == null) {
+      throw new IllegalArgumentException("Parameter 'properties' must not be null ");
+    }
+    _instance = new Ant4EclipseConfigurationProperties(properties);
+  }
+
+  /**
+   * Disposes the Ant4EclipseConfigurationProperties singleton
+   */
+  public static void dispose() {
+    _instance = null;
   }
 
   /**
@@ -70,7 +110,15 @@ public class Ant4EclipseConfigurationProperties {
     }
   }
 
-  private static Ant4EclipseConfigurationProperties createInstance() {
+  /**
+   * Loads the properties from <b>all</b> configuration files that can be found on the classpath.
+   * 
+   * <p>
+   * The properties will be merged into one {@link Properties} object
+   * 
+   * @return A Property object containing all loaded properties
+   */
+  private static Properties loadConfigurationProperties() {
     Enumeration<URL> propertyFiles = getPropertyFiles();
     final Properties allProperties = new Properties();
     while (propertyFiles.hasMoreElements()) {
@@ -91,7 +139,7 @@ public class Ant4EclipseConfigurationProperties {
       }
     }
 
-    return new Ant4EclipseConfigurationProperties(allProperties);
+    return allProperties;
   }
 
   /**
