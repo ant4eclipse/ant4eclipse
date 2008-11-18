@@ -13,12 +13,10 @@ package net.sf.ant4eclipse.model.platform.team.projectset.internal;
 
 import java.io.File;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Map.Entry;
 
 import net.sf.ant4eclipse.ant.platform.team.TeamExceptionCode;
+import net.sf.ant4eclipse.core.Ant4EclipseConfigurationProperties;
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.Lifecycle;
 import net.sf.ant4eclipse.core.exception.Ant4EclipseException;
@@ -40,94 +38,51 @@ import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFileParse
  * @see #parseTeamProjectSet(File)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class ProjectSetFileParserImpl implements TeamProjectSetFileParser, Lifecycle {
+public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, Lifecycle {
 
-  // /**
-  // * Provider ID used by the default Eclipse CVS plugin
-  // */
-  // public final static String CVS_PROVIDER_ID = "org.eclipse.team.cvs.core.cvsnature";
-  //
-  // /**
-  // * Provider ID used in PSF files from the Subversive Eclipse Plugin
-  // */
-  // public final static String SUBVERSIVE_PROVIDER_ID = "org.polarion.team.svn.core.svnnature";
-  //
-  // /**
-  // * Provider ID used in PSF files from the Subclipse Eclipse Plugin
-  // */
-  // public final static String SUBCLIPSE_PROVIDER_ID = "org.tigris.subversion.subclipse.core.svnnature";
-  //
-  // /**
-  // * FIXME MMi: Provider ID used by the default Eclipse SVS plugin
-  // */
-  // public final static String SVN_PROVIDER_ID = "org.eclipse.team.svn.core.svnnature";
+  /**
+   * The prefix for properties describing a team provider.
+   * 
+   * <p>
+   * The property must have the (eclipse) provider id as key (after the suffix) and the implementation class name as
+   * value
+   */
+  public final static String                 TEAMPROVIDER_PREFIX = "teamprovider";
 
+  /**
+   * A Map containing all registered {@link TeamProjectSetFactory} instances
+   */
   private Map<String, TeamProjectSetFactory> _factories;
 
-  // /**
-  // * Parses a project set file.
-  // *
-  // * @param projectSetFile
-  // * The file which contains the definition of a team project set.
-  // *
-  // * @return A TeamProjectSet instance providing the content of the project set file.
-  // */
-  // public static TeamProjectSet parseTeamProjectSet(final File projectSetFile) {
-  //
-  // ProjectSetFileParserImpl parser = null;
-  //
-  // if (CVS_PROVIDER_ID.equals(providerId)) {
-  // parser = new CvsTeamProjectSetFactory();
-  // } else if (SUBVERSIVE_PROVIDER_ID.equals(providerId)) {
-  // parser = new SubversionProjectSetFactory();
-  // } else if (SUBCLIPSE_PROVIDER_ID.equals(providerId)) {
-  // parser = new SubversionProjectSetFactory();
-  // } else if (SVN_PROVIDER_ID.equals(providerId)) {
-  // parser = new SubversionProjectSetFactory();
-  // }
-  //
-  // if (parser == null) {
-  // // TODO
-  // throw new RuntimeException("Unkown provider id '" + providerId + "' in psf file '" + projectSetFile + "'");
-  // }
-  //
-  // final TeamProjectSet projectSet = parser.createTeamProjectSet(projectSetFile);
-  //
-  // // retrieve the result
-  // final String[] projects = referenceQuery.getResult();
-  //
-  // for (int i = 0; i < projects.length; i++) {
-  // final TeamProjectDescription description = parser.parseTeamProjectDescription(projects[i]);
-  // projectSet.addTeamProjectDescription(description);
-  // }
-  //
-  // return projectSet;
-  // }
-
-  public void dispose() {
-    this._factories = null;
-
-  }
-
-  public final static String TEAMPROVIDERS_PROPERTIES = "net/sf/ant4eclipse/model/platform/team/projectset/teamproviders.properties";
-
   public void initialize() {
-    Properties properties = Utilities.readPropertiesFromClasspath(TEAMPROVIDERS_PROPERTIES);
-
+    Iterable<String[]> teamProviders = Ant4EclipseConfigurationProperties.getInstance().getAllProperties(
+        TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
-    Iterator<Entry<Object, Object>> entries = properties.entrySet().iterator();
-    while (entries.hasNext()) {
-      Entry<Object, Object> entry = entries.next();
-      String providerId = entry.getKey().toString();
-      String implementationClassName = entry.getValue().toString();
+    for (String[] teamProvider : teamProviders) {
+      String providerId = teamProvider[0];
+      String implementationClassName = teamProvider[1];
 
       TeamProjectSetFactory factory = Utilities.newInstance(implementationClassName);
       A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", new Object[] { factory, providerId });
       providers.put(providerId, factory);
     }
+
+    this._factories = providers;
   }
 
+  /**
+   * Disposes this TeamProjectSetFileParserImpl instances
+   */
+  public void dispose() {
+    this._factories = null;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.sf.ant4eclipse.core.Lifecycle#isInitialized()
+   */
   public boolean isInitialized() {
     return (this._factories != null);
   }
@@ -164,7 +119,7 @@ public abstract class ProjectSetFileParserImpl implements TeamProjectSetFilePars
 
   }
 
-  protected TeamProjectSetFactory getFactoryForProvider(String providerId) {
+  public TeamProjectSetFactory getFactoryForProvider(String providerId) {
     Assert.notNull("Parameter 'providerId' must not be null", providerId);
 
     if (!_factories.containsKey(providerId)) {

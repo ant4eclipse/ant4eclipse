@@ -30,7 +30,7 @@ import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class SubversionProjectSetFactory implements TeamProjectSetFactory {
+public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
 
   /**
    * Position of the repository URL in the reference string
