@@ -9,19 +9,18 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package net.sf.ant4eclipse.model.platform.team.projectset.internal;
+package org.ant4eclipse.platform.model.team.projectset.internal;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.Properties;
 
-import net.sf.ant4eclipse.core.Ant4EclipseConfigurationProperties;
-import net.sf.ant4eclipse.core.logging.Ant4EclipseLogger;
-import net.sf.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
-import net.sf.ant4eclipse.model.platform.team.cvssupport.projectset.CvsTeamProjectSetFactory;
-import net.sf.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
-import net.sf.ant4eclipse.testframework.ServiceRegistryConfigurator;
-
+import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
+import org.ant4eclipse.core.logging.Ant4EclipseLogger;
+import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
+import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.testframework.ServiceRegistryConfigurator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
