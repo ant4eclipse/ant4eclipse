@@ -11,9 +11,9 @@
  **********************************************************************/
 package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
 
-import org.ant4eclipse.ant.platform.team.TeamExceptionCode;
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.core.exception.Ant4EclipseException;

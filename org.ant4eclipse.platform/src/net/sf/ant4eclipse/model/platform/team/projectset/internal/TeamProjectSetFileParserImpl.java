@@ -15,10 +15,10 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.ant4eclipse.ant.platform.team.TeamExceptionCode;
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectSetFactory;
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectSetFileParser;
+import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 
 import net.sf.ant4eclipse.core.Ant4EclipseConfigurationProperties;
 import net.sf.ant4eclipse.core.Assert;

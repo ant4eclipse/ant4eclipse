@@ -15,8 +15,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectDescription;
-import org.ant4eclipse.model.platform.team.projectset.TeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 import net.sf.ant4eclipse.core.Assert;
 

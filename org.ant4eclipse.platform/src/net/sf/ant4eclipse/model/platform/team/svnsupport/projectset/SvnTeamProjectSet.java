@@ -11,7 +11,7 @@
  **********************************************************************/
 package net.sf.ant4eclipse.model.platform.team.svnsupport.projectset;
 
-import org.ant4eclipse.model.platform.team.projectset.internal.AbstractTeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectSet;
 
 import net.sf.ant4eclipse.core.Assert;
 
