@@ -19,23 +19,28 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
-
 /**
- * Identifier for a Java project role.
+ * <p>
+ * {@link ProjectRoleIdentifier} for the java project role.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
-   * Returns ture is the given project has a JavaNature
+   * <p>
+   * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.jdt.core.javanature"</code>.
+   * </p>
    */
   public boolean isRoleSupported(final EclipseProject project) {
     return (project.hasNature(JavaProjectRole.JAVA_NATURE));
   }
 
   /**
-   * Adds a JavaProjectRole to the given project and parses the classpath
+   * <p>
+   * Adds a {@link JavaProjectRole} to the given project and parses the class path.
+   * </p>
    */
   public ProjectRole createRole(final EclipseProject project) {
     A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
