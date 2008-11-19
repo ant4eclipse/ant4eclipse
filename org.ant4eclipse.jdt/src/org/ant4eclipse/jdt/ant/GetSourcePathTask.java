@@ -81,9 +81,7 @@ public class GetSourcePathTask extends AbstractGetProjectPathTask {
         throw new RuntimeException(buffer.toString());
       }
     }
-    if (project.hasRole(CProjectRole.class)) {
-      cresult = ResolverUtils.resolveSourcePathes(project, isRelative(), isAllowMultipleFolders());
-    }
+
     final File[] result = new File[javaresult.length + cresult.length];
     System.arraycopy(javaresult, 0, result, 0, javaresult.length);
     System.arraycopy(cresult, 0, result, javaresult.length, cresult.length);
