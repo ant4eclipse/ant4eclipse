@@ -20,7 +20,6 @@ import org.ant4eclipse.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrariesFileParser;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrary;
-import org.ant4eclipse.platform.model.resource.internal.factory.FileParserException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Path;
@@ -85,7 +84,7 @@ public class UserLibraryPath extends DataType {
         }
         getProject().addReference(PREFIX + libs[i], path);
       }
-    } catch (final FileParserException ex) {
+    } catch (final Exception ex) {
       A4ELogging.error("Failed to load userlibraries file.\n'%s'.", ex);
     }
   }
