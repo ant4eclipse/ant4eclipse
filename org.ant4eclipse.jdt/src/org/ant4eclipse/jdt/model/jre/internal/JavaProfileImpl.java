@@ -12,7 +12,6 @@
 package org.ant4eclipse.jdt.model.jre.internal;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -86,28 +85,28 @@ public class JavaProfileImpl implements JavaProfile {
     return this._properties.getProperty(JavaProfileImpl.PROPERTY_PROFILE_NAME);
   }
 
-  /**
-   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#isSystemPackage(java.lang.String)
-   */
-  public boolean isSystemPackage(final String packageName) {
-    return this._systemPackagesList.contains(packageName);
-  }
+//  /**
+//   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#isSystemPackage(java.lang.String)
+//   */
+//  public boolean isSystemPackage(final String packageName) {
+//    return this._systemPackagesList.contains(packageName);
+//  }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.jre.JavaProfile#isDelegatedToBootClassLoader(java.lang.String)
-   */
-  public boolean isDelegatedToBootClassLoader(final String packageName) {
-
-    for (final Iterator iterator = this._delegatedToBootClassLoaderList.iterator(); iterator.hasNext();) {
-      final PackageFilter packageFilter = (PackageFilter) iterator.next();
-      if (packageFilter.containsPackage(packageName)) {
-        return true;
-      }
-    }
-    return false;
-  }
+//  /*
+//   * (non-Javadoc)
+//   * 
+//   * @see net.sf.ant4eclipse.model.jdt.jre.JavaProfile#isDelegatedToBootClassLoader(java.lang.String)
+//   */
+//  public boolean isDelegatedToBootClassLoader(final String packageName) {
+//
+//    for (final Iterator iterator = this._delegatedToBootClassLoaderList.iterator(); iterator.hasNext();) {
+//      final PackageFilter packageFilter = (PackageFilter) iterator.next();
+//      if (packageFilter.containsPackage(packageName)) {
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
 
   /**
    * @see org.ant4eclipse.jdt.model.jre.JavaProfile#getExecutionEnvironments()
