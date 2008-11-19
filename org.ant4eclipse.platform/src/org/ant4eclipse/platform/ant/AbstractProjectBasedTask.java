@@ -13,7 +13,6 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-
 import org.ant4eclipse.ant.Ant4EclipseTask;
 import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -58,7 +57,7 @@ public abstract class AbstractProjectBasedTask extends Ant4EclipseTask {
    * 
    * @return The ProjectBase instance.
    */
-  protected ProjectDelegate getProjectBase() {
+  protected ProjectDelegate getProjectDelegate() {
     return (this._projectBase);
   }
 

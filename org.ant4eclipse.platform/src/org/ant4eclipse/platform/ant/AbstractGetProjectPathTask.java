@@ -140,7 +140,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    *          the path separator.
    */
   public final void setPathSeparator(final String pathSeparator) {
-    getProjectBase().setPathSeparator(pathSeparator);
+    getProjectDelegate().setPathSeparator(pathSeparator);
   }
 
   /**
@@ -151,7 +151,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * @return <code>true</code> if the path separator has been set.
    */
   protected final boolean isPathSeparatorSet() {
-    return getProjectBase().getPathSeparator() != null;
+    return getProjectDelegate().getPathSeparator() != null;
   }
 
   /**
@@ -221,7 +221,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * </p>
    */
   protected void populateProperty() {
-    getProjectBase().setPathProperty(getProperty(), getResolvedPath());
+    getProjectDelegate().setPathProperty(getProperty(), getResolvedPath());
   }
 
   /**

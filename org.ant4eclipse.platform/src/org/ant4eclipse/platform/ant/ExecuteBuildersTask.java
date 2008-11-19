@@ -87,7 +87,7 @@ public class ExecuteBuildersTask extends AbstractProjectBasedTask {
       }
 
       A4ELogging.info("Executing target %s for build command %s", new String[] { targetName, buildCommand.getName() });
-      getProjectBase().setStringProperty(CURRENT_BUILDCOMMAND_NAME, buildCommand.getName());
+      getProjectDelegate().setStringProperty(CURRENT_BUILDCOMMAND_NAME, buildCommand.getName());
       getProject().executeTarget(targetName);
 
     }
