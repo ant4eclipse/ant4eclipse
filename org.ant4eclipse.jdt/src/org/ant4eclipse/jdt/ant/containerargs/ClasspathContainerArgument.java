@@ -1,0 +1,38 @@
+package org.ant4eclipse.jdt.ant.containerargs;
+
+public class ClasspathContainerArgument {
+
+  private String key;
+
+  private String value;
+
+  /**
+   * @return the key
+   */
+  public final String getKey() {
+    return this.key;
+  }
+
+  /**
+   * @param key
+   *          the key to set
+   */
+  public final void setKey(final String key) {
+    this.key = key;
+  }
+
+  /**
+   * @return the value
+   */
+  public final String getValue() {
+    return this.value;
+  }
+
+  /**
+   * @param value
+   *          the value to set
+   */
+  public final void setValue(final String value) {
+    this.value = value;
+  }
+}
