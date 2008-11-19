@@ -262,7 +262,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
         }
       }
       A4ELogging.debug("Setting '%s' to list of referenced projects '%s'", new Object[] { getProperty(), result });
-      getProjectBase().setStringProperty(getProperty(), result.toString());
+      getProjectDelegate().setStringProperty(getProperty(), result.toString());
       
       if ((rejected != null) && (!rejected.isEmpty())) {
         result.setLength(0);
@@ -272,7 +272,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
           result.append(rejected.get(i));
         }
         A4ELogging.debug("Setting '%s' to list of rejected projects '%s'", new Object[] { _unavailableProjects, result });
-        getProjectBase().setStringProperty(_unavailableProjects, result.toString());
+        getProjectDelegate().setStringProperty(_unavailableProjects, result.toString());
       }
       
     } catch (BuildException ex) {
