@@ -11,14 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model;
 
-import org.ant4eclipse.core.exception.AbstractExceptionCode;
+import org.ant4eclipse.core.NLS;
+import org.ant4eclipse.core.NLSMessage;
+import org.ant4eclipse.core.exception.ExceptionCode;
 
-public class PlatformModelExceptionCode extends AbstractExceptionCode {
+public class PlatformModelExceptionCode extends ExceptionCode {
 
-  private static final String                    PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS_MSG = "There are two projects with the same specified name: '%s', '%s' ";
+  @NLSMessage("There are two projects with the same specified name: '%s', '%s' ")
+  public static PlatformModelExceptionCode PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS;
 
-  public static final PlatformModelExceptionCode PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS     = new PlatformModelExceptionCode(
-                                                                                                         PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS_MSG);
+  static {
+    NLS.initialize(PlatformModelExceptionCode.class);
+  }
 
   private PlatformModelExceptionCode(final String message) {
     super(message);
