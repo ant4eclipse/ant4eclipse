@@ -26,11 +26,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ProjectSetFileParserImplTest {
-  
+
   @Before
   public void configure() {
-    Ant4EclipseConfigurationProperties.initialize();
-    
     Properties properties = new Properties();
     properties.put(Ant4EclipseLogger.class.getName(), DefaultAnt4EclipseLogger.class.getName());
     ServiceRegistryConfigurator.configureServiceRegistry(properties);
@@ -40,15 +38,14 @@ public class ProjectSetFileParserImplTest {
   public void dispose() {
     Ant4EclipseConfigurationProperties.dispose();
   }
-  
+
   @Test
   public void test_Factories() {
     TeamProjectSetFileParserImpl projectSetFileParserImpl = new TeamProjectSetFileParserImpl();
     projectSetFileParserImpl.initialize();
-    TeamProjectSetFactory factoryForProvider = projectSetFileParserImpl.getFactoryForProvider("org.eclipse.team.cvs.core.cvsnature");
+    TeamProjectSetFactory factoryForProvider = projectSetFileParserImpl
+        .getFactoryForProvider("org.eclipse.team.cvs.core.cvsnature");
     assertTrue(factoryForProvider instanceof CvsTeamProjectSetFactory);
   }
-  
-  
 
 }
