@@ -152,6 +152,13 @@ public class Ant4EclipseConfigurationProperties {
     _properties = properties;
   }
 
+  /**
+   * Returns the property with the given name or null if there is no such property
+   * 
+   * @param propertyName
+   *          The name of the property
+   * @return The property or null if there is no such property
+   */
   public String getProperty(String propertyName) {
     if (propertyName == null) {
       throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
@@ -160,6 +167,13 @@ public class Ant4EclipseConfigurationProperties {
     return _properties.getProperty(propertyName);
   }
 
+  /**
+   * Checks if there is a property with the given name
+   * 
+   * @param propertyName
+   *          The name of the property to check
+   * @return true if there is a property with the given name otherwise false
+   */
   public boolean hasProperty(String propertyName) {
     if (propertyName == null) {
       throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
