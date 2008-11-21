@@ -24,15 +24,17 @@ import org.ant4eclipse.platform.model.resource.internal.factory.ProjectFactory;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 
-
 /**
  * <p>
- * Implementation of the {@link WorkspaceRegistry} interface. 
+ * Implementation of the {@link WorkspaceRegistry} interface.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
+
+  /** The factory used to build projects */
+  private ProjectFactory         _projectFactory;
 
   /** the workspace map (String, Workspace) */
   private Map<String, Workspace> _registry;
@@ -101,7 +103,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
 
     // read the projects and add them to the workspace
     for (int i = 0; i < projectFolders.length; i++) {
-      final EclipseProject eclipseProject = ProjectFactory.readProjectFromWorkspace(workspace, projectFolders[i]);
+      final EclipseProject eclipseProject = _projectFactory.readProjectFromWorkspace(workspace, projectFolders[i]);
       workspace.registerEclipseProject(eclipseProject);
     }
 
@@ -118,6 +120,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
   public void dispose() {
     this._registry.clear();
     this._registry = null;
+    this._projectFactory = null;
   }
 
   /**
@@ -125,12 +128,13 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
    */
   public void initialize() {
     this._registry = new HashMap<String, Workspace>();
+    this._projectFactory = new ProjectFactory();
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return this._registry != null;
+    return (this._registry != null && this._projectFactory != null);
   }
 }
