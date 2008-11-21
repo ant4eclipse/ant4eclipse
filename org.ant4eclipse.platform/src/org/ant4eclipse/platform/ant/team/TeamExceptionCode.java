@@ -34,6 +34,13 @@ public class TeamExceptionCode extends ExceptionCode {
   @NLSMessage("Invalid PSF-reference. Expected to have '%s' tokens, but have %s tokens in reference '%s'")
   public static TeamExceptionCode INVALID_PSF_REFERENCE;
 
+  public static String            MISSING_CONNECTION_TYPE = "Missing connection type";
+
+  public static String            MISSING_REPOSITORY      = "Missing repository";
+
+  @NLSMessage("The cvsroot '%s' is invalid: %s")
+  public static TeamExceptionCode INVALID_CVS_ROOT;
+
   static {
     NLS.initialize(TeamExceptionCode.class);
   }

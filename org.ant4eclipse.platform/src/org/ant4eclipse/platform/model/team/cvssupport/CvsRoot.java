@@ -12,7 +12,9 @@
 package org.ant4eclipse.platform.model.team.cvssupport;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 
 /**
  * <p>
@@ -208,10 +210,17 @@ public final class CvsRoot implements Cloneable {
   /**
    * Parse the specified root. Throws an IllegalArgumentException if the cvsroot has the wrong format.
    * 
-   * @param root
+   * <p>
+   * Support Format: <tt>[:method:][[user][:password]@]hostname[:[port]]/path/to/repository</tt>
+   * 
+   * @see http://ximbiot.com/cvs/manual/cvs-1.11.23/cvs_2.html#SEC26
+   * 
+   * @param cvsRoot
    *          the cvsroot to parse.
    */
-  private void parse(String root) {
+  private void parse(final String cvsRoot) {
+
+    String root = cvsRoot;
 
     // parse the connection method
     if (root.charAt(0) == ':') {
@@ -270,19 +279,26 @@ public final class CvsRoot implements Cloneable {
       /**
        * @todo [01-Apr-2006:KASI] Currently the port parameter is not parsed.
        */
-      separator = root.indexOf(':');
+      separator = root.indexOf('/');
       if (separator == -1) {
         throw (new IllegalArgumentException());
       }
       _host = root.substring(0, separator);
-      _repository = root.substring(separator + 1);
+      _repository = root.substring(separator);
     }
 
-    if ((_connectionType == null) || (_repository == null) || ("".equals(_connectionType))
-        || ("".equals(_repository))) {
-      throw new IllegalArgumentException("Invalid CvsRoot: " + toString() + "; connectionType: '" + _connectionType
-          + "', _repository: '" + _repository + "'");
+    if (isEmpty(_connectionType)) {
+      throw new Ant4EclipseException(TeamExceptionCode.INVALID_CVS_ROOT, cvsRoot,
+          TeamExceptionCode.MISSING_CONNECTION_TYPE);
     }
+
+    if (isEmpty(_repository)) {
+      throw new Ant4EclipseException(TeamExceptionCode.INVALID_CVS_ROOT, cvsRoot, TeamExceptionCode.MISSING_REPOSITORY);
+    }
+  }
+
+  private boolean isEmpty(String string) {
+    return (string == null || string.length() < 1);
   }
 
   /**
