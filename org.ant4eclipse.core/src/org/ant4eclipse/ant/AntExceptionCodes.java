@@ -11,23 +11,29 @@
  **********************************************************************/
 package org.ant4eclipse.ant;
 
-import org.ant4eclipse.core.exception.AbstractExceptionCode;
+import org.ant4eclipse.core.NLSMessage;
+import org.ant4eclipse.core.NLS;
+import org.ant4eclipse.core.exception.ExceptionCode;
 
 /**
  * Defines ExceptionCodes to be used in the 'ant'-layer
  * 
  * @author Nils Hartmann
  */
-public class AntExceptionCodes extends AbstractExceptionCode {
+public class AntExceptionCodes extends ExceptionCode {
 
-  public static AntExceptionCodes PARAMETER_MUST_BE_SET_ON_TASK = new AntExceptionCodes(
-                                                                    "Paramter '%s' must be set on task '%s'");
+  @NLSMessage("Paramter '%s' must be set on task '%s'")
+  public static AntExceptionCodes PARAMETER_MUST_BE_SET_ON_TASK;
 
-  public static AntExceptionCodes PARAMETER_MUST_BE_SET_ON_TYPE = new AntExceptionCodes(
-                                                                    "Paramter '%s' must be set on type '%s'");
+  @NLSMessage("Paramter '%s' must be set on type '%s'")
+  public static AntExceptionCodes PARAMETER_MUST_BE_SET_ON_TYPE;
 
   private AntExceptionCodes(final String message) {
     super(message);
+  }
+
+  static {
+    NLS.initialize(AntExceptionCodes.class);
   }
 
 }

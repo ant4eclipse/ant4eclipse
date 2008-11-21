@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.core.exception;
 
-public class AbstractExceptionCode {
+public class ExceptionCode {
 
   private final String _message;
 
-  protected AbstractExceptionCode(final String message) {
+  protected ExceptionCode(final String message) {
     this._message = message;
   }
 
@@ -29,7 +29,7 @@ public class AbstractExceptionCode {
 
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
-    buffer.append("[AbstractExceptionCode:");
+    buffer.append("[ExceptionCode:");
     buffer.append(" _message: ");
     buffer.append(this._message);
     buffer.append("]");

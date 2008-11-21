@@ -18,11 +18,11 @@ public class Ant4EclipseException extends RuntimeException {
   /** serialVersionUID */
   private static final long           serialVersionUID = -2322126644590371742L;
 
-  private final AbstractExceptionCode _exceptionCode;
+  private final ExceptionCode _exceptionCode;
 
   private final Object[]              _args;
 
-  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Throwable cause, final Object... args) {
+  public Ant4EclipseException(final ExceptionCode exceptionCode, final Throwable cause, final Object... args) {
     super(cause);
 
     this._exceptionCode = exceptionCode;
@@ -30,28 +30,28 @@ public class Ant4EclipseException extends RuntimeException {
 
   }
 
-  public Ant4EclipseException(final AbstractExceptionCode exceptionCode) {
+  public Ant4EclipseException(final ExceptionCode exceptionCode) {
     super();
 
     this._exceptionCode = exceptionCode;
     this._args = new Object[] {};
   }
 
-  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Object arg) {
+  public Ant4EclipseException(final ExceptionCode exceptionCode, final Object arg) {
     super();
 
     this._exceptionCode = exceptionCode;
     this._args = new Object[] { arg };
   }
 
-  public Ant4EclipseException(final AbstractExceptionCode exceptionCode, final Object... args) {
+  public Ant4EclipseException(final ExceptionCode exceptionCode, final Object... args) {
     super();
 
     this._exceptionCode = exceptionCode;
     this._args = args;
   }
 
-  public AbstractExceptionCode getExceptionCode() {
+  public ExceptionCode getExceptionCode() {
     return this._exceptionCode;
   }
 
