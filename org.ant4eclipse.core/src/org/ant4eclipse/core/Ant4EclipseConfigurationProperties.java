@@ -49,26 +49,20 @@ public class Ant4EclipseConfigurationProperties {
    */
   private final Properties                          _properties;
 
+  /**
+   * Returns the (singleton) instance of Ant4EclipseConfigurationProperties.
+   * <p>
+   * If there is no instance yet, a new instance will be constructed based on the ant4eclipse configuration properties
+   * files
+   * 
+   * @return The Ant4EclipseConfigurationProperties instance
+   */
   public static Ant4EclipseConfigurationProperties getInstance() {
     if (_instance == null) {
-      throw new IllegalStateException("Ant4EclipseConfigurationProperties have not been initialized!");
+      Properties properties = loadConfigurationProperties();
+      initialize(properties);
     }
     return _instance;
-  }
-
-  /**
-   * Creates the Ant4EclipseConfigurationProperties singleton instance using the properties found in the ant4eclipse
-   * configuration properties files
-   * 
-   * <p>
-   * This method can only be invoked as long as the singleton has not been initialized
-   */
-  public static void initialize() {
-    if (_instance != null) {
-      throw new IllegalStateException("Ant4EclipseConfigurationProperties are already initialized!");
-    }
-    Properties properties = loadConfigurationProperties();
-    initialize(properties);
   }
 
   /**
@@ -151,7 +145,7 @@ public class Ant4EclipseConfigurationProperties {
    * @param properties
    *          The backing properties
    */
-  public Ant4EclipseConfigurationProperties(Properties properties) {
+  private Ant4EclipseConfigurationProperties(Properties properties) {
     if (properties == null) {
       throw new IllegalArgumentException("Parameter 'properties' must not be null ");
     }
