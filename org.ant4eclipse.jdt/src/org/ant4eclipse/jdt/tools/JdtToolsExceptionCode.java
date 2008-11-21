@@ -11,33 +11,29 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools;
 
-import org.ant4eclipse.core.exception.AbstractExceptionCode;
+import org.ant4eclipse.core.NLS;
+import org.ant4eclipse.core.NLSMessage;
+import org.ant4eclipse.core.exception.ExceptionCode;
 
-public class JdtToolsExceptionCode extends AbstractExceptionCode {
-
-  /** - */
-  private static final String               BUILD_ORDER_EXCEPTION_MSG                  = "The specified directory '%s' doesn't point to a valid java runtime environment.";
-
-  /** - */
-  private static final String               REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION_MSG = "Project '%s'  references the unknown project '%s'";
-
-  private static final String               CYCLIC_DEPENDENCIES_EXCEPTION_MSG          = "Set of projects contains cyclic dependencies!";
-
-  private static final String               REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION_MSG  = "Project '%s'  references the unknown project '%s'";
+public class JdtToolsExceptionCode extends ExceptionCode {
 
   /** BUILD_ORDER_EXCEPTION */
-  public static final JdtToolsExceptionCode BUILD_ORDER_EXCEPTION                      = new JdtToolsExceptionCode(
-                                                                                           BUILD_ORDER_EXCEPTION_MSG);
+  @NLSMessage("The specified directory '%s' doesn't point to a valid java runtime environment.")
+  public static JdtToolsExceptionCode BUILD_ORDER_EXCEPTION;
 
   /** REFERENCE_TO_UNKNOWN_PROJECT */
-  public static final JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION     = new JdtToolsExceptionCode(
-                                                                                           REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION_MSG);
+  @NLSMessage("Project '%s'  references the unknown project '%s'")
+  public static JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION;
 
-  public static final JdtToolsExceptionCode CYCLIC_DEPENDENCIES_EXCEPTION              = new JdtToolsExceptionCode(
-                                                                                           CYCLIC_DEPENDENCIES_EXCEPTION_MSG);
+  @NLSMessage("Set of projects contains cyclic dependencies!")
+  public static JdtToolsExceptionCode CYCLIC_DEPENDENCIES_EXCEPTION;
 
-  public static final JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION      = new JdtToolsExceptionCode(
-                                                                                           REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION_MSG);
+  @NLSMessage("Project '%s'  references the unknown project '%s'")
+  public static JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION;
+
+  static {
+    NLS.initialize(JdtToolsExceptionCode.class);
+  }
 
   /**
    * @param message

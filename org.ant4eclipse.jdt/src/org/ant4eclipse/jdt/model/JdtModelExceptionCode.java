@@ -11,29 +11,27 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model;
 
-import org.ant4eclipse.core.exception.AbstractExceptionCode;
+import org.ant4eclipse.core.NLS;
+import org.ant4eclipse.core.NLSMessage;
+import org.ant4eclipse.core.exception.ExceptionCode;
 
-public class JdtModelExceptionCode extends AbstractExceptionCode {
+public class JdtModelExceptionCode extends ExceptionCode {
 
-  private static final String               INVALID_JRE_DIRECTORY_MSG             = "The specified directory '%s' doesn't point to a valid java runtime environment.";
+  @NLSMessage("The specified directory '%s' doesn't point to a valid java runtime environment.")
+  public static JdtModelExceptionCode INVALID_JRE_DIRECTORY;
 
-  private static final String               NO_JAVA_PROJECT_ROLE_MSG              = "Project '%s' must have a java project role.";
+  @NLSMessage("Project '%s' must have a java project role.")
+  public static JdtModelExceptionCode NO_JAVA_PROJECT_ROLE;
 
-  private static final String               NO_DEFAULT_JAVA_RUNTIME_EXCEPTION_MSG = "Default java runtime could not be resolved!";
+  @NLSMessage("Default java runtime could not be resolved!")
+  public static JdtModelExceptionCode NO_DEFAULT_JAVA_RUNTIME_EXCEPTION;
 
-  private static final String               JAVA_LAUNCHER_EXECUTION_EXCEPTION_MSG = "Exception while executing java launcher ('%s')";
+  @NLSMessage("Exception while executing java launcher ('%s')")
+  public static JdtModelExceptionCode JAVA_LAUNCHER_EXECUTION_EXCEPTION;
 
-  public static final JdtModelExceptionCode INVALID_JRE_DIRECTORY                 = new JdtModelExceptionCode(
-                                                                                      INVALID_JRE_DIRECTORY_MSG);
-
-  public static final JdtModelExceptionCode NO_JAVA_PROJECT_ROLE                  = new JdtModelExceptionCode(
-                                                                                      NO_JAVA_PROJECT_ROLE_MSG);
-
-  public static final JdtModelExceptionCode NO_DEFAULT_JAVA_RUNTIME_EXCEPTION     = new JdtModelExceptionCode(
-                                                                                      NO_DEFAULT_JAVA_RUNTIME_EXCEPTION_MSG);
-
-  public static final JdtModelExceptionCode JAVA_LAUNCHER_EXECUTION_EXCEPTION     = new JdtModelExceptionCode(
-                                                                                      JAVA_LAUNCHER_EXECUTION_EXCEPTION_MSG);
+  static {
+    NLS.initialize(JdtModelExceptionCode.class);
+  }
 
   private JdtModelExceptionCode(final String message) {
     super(message);
