@@ -3,34 +3,14 @@ package org.ant4eclipse.core;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.util.Properties;
 
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.Ant4EclipseLogger;
-import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.testframework.ServiceRegistryConfigurator;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.ant4eclipse.testframework.Ant4EclipseTestCase;
 import org.junit.Test;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class AssertTest {
-
-  @BeforeClass
-  public static void configureServiceRegistry() {
-    Properties properties = new Properties();
-    properties.put(Ant4EclipseLogger.class.getName(), DefaultAnt4EclipseLogger.class.getName());
-    ServiceRegistryConfigurator.configureServiceRegistry(properties);
-  }
-
-  @AfterClass
-  public static void disposeServiceRegistry() {
-    ServiceRegistry.reset();
-  }
+public class AssertTest extends Ant4EclipseTestCase {
 
   /**
    * 

@@ -1,43 +1,49 @@
 package org.ant4eclipse.testframework;
 
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
 
-
 public class ServiceRegistryConfigurator {
 
-  public static void configureServiceRegistry(final Properties properties) {
+  /**
+   * <p>
+   * entries:
+   * <p>
+   * key: id of the service to be registered.
+   * <p>
+   * value: either a String (that will be interpreted as a class name) or an object to be registered
+   * 
+   * @param entries
+   */
+  public static void configureServiceRegistry(final Map<String, Object> properties) {
 
     // get the entries
-    final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+    final Set<Map.Entry<String, Object>> entries = properties.entrySet();
 
     // setup the configuration
     ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
 
       public void configure(ConfigurationContext context) {
 
-        for (Iterator<Map.Entry<Object, Object>> iterator = entries.iterator(); iterator.hasNext();) {
-          Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) iterator.next();
-
+        for (Map.Entry<String, Object> entry : entries) {
           Object service = null;
 
-          if (entry.getValue() instanceof String) {
+          Object value = entry.getValue();
+          if (value instanceof String) {
             try {
-              Class<?> serviceclass = this.getClass().getClassLoader().loadClass((String) entry.getValue());
+              Class<?> serviceclass = this.getClass().getClassLoader().loadClass((String) value);
               service = serviceclass.newInstance();
             } catch (Exception e) {
               e.printStackTrace();
             }
           } else {
-            service = entry.getValue();
+            service = value;
           }
 
-          context.registerService(service, entry.getKey().toString());
+          context.registerService(service, entry.getKey());
         }
       }
     };
