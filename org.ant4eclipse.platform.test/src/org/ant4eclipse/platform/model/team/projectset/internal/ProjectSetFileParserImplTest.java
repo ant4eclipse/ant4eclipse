@@ -13,30 +13,16 @@ package org.ant4eclipse.platform.model.team.projectset.internal;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Properties;
-
-import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
-import org.ant4eclipse.core.logging.Ant4EclipseLogger;
-import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
-import org.ant4eclipse.testframework.ServiceRegistryConfigurator;
-import org.junit.After;
-import org.junit.Before;
+import org.ant4eclipse.testframework.Ant4EclipseTestCase;
 import org.junit.Test;
 
-public class ProjectSetFileParserImplTest {
+public class ProjectSetFileParserImplTest extends Ant4EclipseTestCase {
 
-  @Before
-  public void configure() {
-    Properties properties = new Properties();
-    properties.put(Ant4EclipseLogger.class.getName(), DefaultAnt4EclipseLogger.class.getName());
-    ServiceRegistryConfigurator.configureServiceRegistry(properties);
-  }
-
-  @After
-  public void dispose() {
-    Ant4EclipseConfigurationProperties.dispose();
+  @Override
+  protected void setupAnt4EclipseConfigurationProperties() {
+    // we want to use 'default' properties read from ant4eclipse-configuration.properties
   }
 
   @Test
