@@ -19,11 +19,11 @@ import org.ant4eclipse.core.exception.ExceptionCode;
  * <p>
  * <b>Support for I18N</b>
  * <p>
- * This class sets <tt>public static</tt> fields of a class with values read from (internationlized) properties files
+ * This class sets <tt>public static</tt> fields of a class with values read from (internationalized) properties files
  * 
  * <p>
  * To initialize the fields, a class needs to call {@link #initialize(Class)}, passing itself as the parameter. This can
- * be dann in the <code>static</code> block of a class:
+ * be done in the <code>static</code> block of a class:
  * 
  * <pre>
  * package org.ant4eclipse;
