@@ -12,18 +12,13 @@
 package org.ant4eclipse.platform.model.resource.internal.factory;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.internal.EclipseProjectImpl;
 import org.ant4eclipse.platform.model.resource.internal.WorkspaceImpl;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
+import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifierRegistry;
 
 /**
  * A Factory that builds EclipseProjects
@@ -32,40 +27,10 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
  */
 public class ProjectFactory {
 
-  /**
-   * The prefix of properties that holds a RoleIdentifier class name
-   */
-  public final static String              ROLEIDENTIFIER_PREFIX = "roleidentifier";
-
-  /**
-   * All known {@link ProjectRoleIdentifier}
-   */
-  private Iterable<ProjectRoleIdentifier> _projectRoleIdentifiers;
+  private ProjectRoleIdentifierRegistry _projectRoleIdentifierRegistry;
 
   public ProjectFactory() {
-    init();
-  }
-
-  /**
-   * Loads the configured RoleIdentifiers
-   */
-  protected void init() {
-    // get all properties that defines a ProjectRoleIdentifier
-    Iterable<String[]> roleidentifierEntries = Ant4EclipseConfigurationProperties.getInstance().getAllProperties(
-        ROLEIDENTIFIER_PREFIX);
-
-    final List<ProjectRoleIdentifier> roleIdentifiers = new LinkedList<ProjectRoleIdentifier>();
-
-    // Instantiate all ProjectRoleIdentifiers
-    for (String[] roleidentifierEntry : roleidentifierEntries) {
-      // we're not interested in the key of a roleidentifier. only the classname (value of the entry) is relevant
-      String roleidentiferClassName = roleidentifierEntry[1];
-      ProjectRoleIdentifier roleIdentifier = Utilities.newInstance(roleidentiferClassName);
-      A4ELogging.trace("Register ProjectRoleIdentifier '%s'", new Object[] { roleIdentifier });
-      roleIdentifiers.add(roleIdentifier);
-    }
-
-    this._projectRoleIdentifiers = roleIdentifiers;
+    _projectRoleIdentifierRegistry = new ProjectRoleIdentifierRegistry();
   }
 
   /**
@@ -91,25 +56,11 @@ public class ProjectFactory {
     ProjectFileParser.parseProject(project);
 
     // apply role specific information
-    applyRoles(project);
+    _projectRoleIdentifierRegistry.applyRoles(project);
 
     A4ELogging.trace("ProjectFactory: return '%s'", project);
     return project;
 
   }
 
-  /**
-   * Modifies the supplied project according to all currently registered RoleIdentifier instances.
-   * 
-   * @param project
-   *          The project that shall be modified.
-   */
-  protected void applyRoles(final EclipseProjectImpl project) {
-    for (ProjectRoleIdentifier projectRoleIdentifier : _projectRoleIdentifiers) {
-      if (projectRoleIdentifier.isRoleSupported(project)) {
-        final ProjectRole projectRole = projectRoleIdentifier.createRole(project);
-        project.addRole(projectRole);
-      }
-    }
-  }
 }
