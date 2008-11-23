@@ -18,8 +18,8 @@ import java.util.Properties;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
-
 
 /**
  * <p>
@@ -45,27 +45,27 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 public class JavaProfileImpl implements JavaProfile {
 
   /** - */
-  private static final String PROPERTY_SYSTEM_PACKAGES                           = "org.osgi.framework.system.packages";
+  private static final String       PROPERTY_SYSTEM_PACKAGES        = "org.osgi.framework.system.packages";
 
   /** - */
-  private static final String PROPERTY_BOOTDELEGATION                            = "org.osgi.framework.bootdelegation";
+  private static final String       PROPERTY_BOOTDELEGATION         = "org.osgi.framework.bootdelegation";
 
   /** - */
-  private static final String PROPERTY_EXECUTIONENVIRONMENT                      = "org.osgi.framework.executionenvironment";
+  private static final String       PROPERTY_EXECUTIONENVIRONMENT   = "org.osgi.framework.executionenvironment";
 
   /** - */
-  private static final String PROPERTY_PROFILE_NAME                              = "osgi.java.profile.name";
+  private static final String       PROPERTY_PROFILE_NAME           = "osgi.java.profile.name";
 
   /** the java profile properties */
-  private final Properties    _properties;
+  private final Properties          _properties;
 
   /** the list of system packages */
-  private final List         /* String */_systemPackagesList                    = new LinkedList();
+  private final List<String>        _systemPackagesList             = new LinkedList<String>();
 
   /** the list of packages that are delegated to the boot class loader */
-  private final List         /* PackageFilter */_delegatedToBootClassLoaderList = new LinkedList();
+  private final List<PackageFilter> _delegatedToBootClassLoaderList = new LinkedList<PackageFilter>();
 
-  private final List         /* String */_executionEnvironments                 = new LinkedList();
+  private final List<String>        _executionEnvironments          = new LinkedList<String>();
 
   /**
    * @param properties
@@ -85,28 +85,28 @@ public class JavaProfileImpl implements JavaProfile {
     return this._properties.getProperty(JavaProfileImpl.PROPERTY_PROFILE_NAME);
   }
 
-//  /**
-//   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#isSystemPackage(java.lang.String)
-//   */
-//  public boolean isSystemPackage(final String packageName) {
-//    return this._systemPackagesList.contains(packageName);
-//  }
+  /**
+   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#isSystemPackage(java.lang.String)
+   */
+  public boolean isSystemPackage(final String packageName) {
+    return this._systemPackagesList.contains(packageName);
+  }
 
-//  /*
-//   * (non-Javadoc)
-//   * 
-//   * @see net.sf.ant4eclipse.model.jdt.jre.JavaProfile#isDelegatedToBootClassLoader(java.lang.String)
-//   */
-//  public boolean isDelegatedToBootClassLoader(final String packageName) {
-//
-//    for (final Iterator iterator = this._delegatedToBootClassLoaderList.iterator(); iterator.hasNext();) {
-//      final PackageFilter packageFilter = (PackageFilter) iterator.next();
-//      if (packageFilter.containsPackage(packageName)) {
-//        return true;
-//      }
-//    }
-//    return false;
-//  }
+  /*
+   * (non-Javadoc)
+   * 
+   * @see net.sf.ant4eclipse.model.jdt.jre.JavaProfile#isDelegatedToBootClassLoader(java.lang.String)
+   */
+  public boolean isDelegatedToBootClassLoader(final String packageName) {
+
+    for (final Object element : this._delegatedToBootClassLoaderList) {
+      final PackageFilter packageFilter = (PackageFilter) element;
+      if (packageFilter.containsPackage(packageName)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * @see org.ant4eclipse.jdt.model.jre.JavaProfile#getExecutionEnvironments()
@@ -135,15 +135,12 @@ public class JavaProfileImpl implements JavaProfile {
           .getManifestHeaderElements(this._properties.getProperty(PROPERTY_SYSTEM_PACKAGES));
 
       // iterate over result
-      for (int i = 0; i < headerElements.length; i++) {
-        final ManifestHelper.ManifestHeaderElement headerElement = headerElements[i];
-
+      for (final ManifestHeaderElement headerElement : headerElements) {
         // get values (package names)
         final String[] packageNames = headerElement.getValues();
 
         // add package names to string
-        for (int j = 0; j < packageNames.length; j++) {
-          final String packageName = packageNames[j];
+        for (final String packageName : packageNames) {
           this._systemPackagesList.add(packageName);
         }
       }
@@ -151,16 +148,14 @@ public class JavaProfileImpl implements JavaProfile {
 
     if (isNotEmpty(this._properties.getProperty(PROPERTY_BOOTDELEGATION))) {
       final String[] packageDescriptions = this._properties.getProperty(PROPERTY_BOOTDELEGATION).split(",");
-      for (int i = 0; i < packageDescriptions.length; i++) {
-        final String packageDescription = packageDescriptions[i];
+      for (final String packageDescription : packageDescriptions) {
         this._delegatedToBootClassLoaderList.add(new PackageFilter(packageDescription));
       }
     }
 
     if (isNotEmpty(this._properties.getProperty(PROPERTY_EXECUTIONENVIRONMENT))) {
       final String[] executionEnvironments = this._properties.getProperty(PROPERTY_EXECUTIONENVIRONMENT).split(",");
-      for (int i = 0; i < executionEnvironments.length; i++) {
-        final String executionEnvironment = executionEnvironments[i];
+      for (final String executionEnvironment : executionEnvironments) {
         this._executionEnvironments.add(executionEnvironment);
       }
     }
@@ -210,8 +205,8 @@ public class JavaProfileImpl implements JavaProfile {
       Assert.notNull(packageName);
 
       //
-      for (int i = 0; i < this._includedPackages.length; i++) {
-        if (matches(this._includedPackages[i].trim(), packageName)) {
+      for (final String package1 : this._includedPackages) {
+        if (matches(package1.trim(), packageName)) {
           return true;
         }
       }
@@ -241,6 +236,7 @@ public class JavaProfileImpl implements JavaProfile {
    * @generated by CodeSugar http://sourceforge.net/projects/codesugar
    */
 
+  @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[JavaProfile:");

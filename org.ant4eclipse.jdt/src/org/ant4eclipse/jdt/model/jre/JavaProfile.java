@@ -89,27 +89,27 @@ public interface JavaProfile {
    */
   public Properties getProperties();
 
-//  /**
-//   * <p>
-//   * Returns <code>true</code>, if the specified package name denotes a system package.
-//   * </p>
-//   * 
-//   * @param packageName
-//   *          the package name
-//   * 
-//   * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code> otherwise.
-//   */
-//  public boolean isSystemPackage(final String packageName);
-//
-//  /**
-//   * <p>
-//   * Returns <code>true</code>, if the specified package name is must be delegated to the boot class loader.
-//   * </p>
-//   * 
-//   * @param packageName
-//   *          the package name
-//   * 
-//   * @return <code>true</code>, if the specified package name is must be delegated to the boot class loader.
-//   */
-//  public boolean isDelegatedToBootClassLoader(final String packageName);
+  /**
+   * <p>
+   * Returns <code>true</code>, if the specified package name denotes a system package.
+   * </p>
+   * 
+   * @param packageName
+   *          the package name
+   * 
+   * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code> otherwise.
+   */
+  public boolean isSystemPackage(final String packageName);
+
+  /**
+   * <p>
+   * Returns <code>true</code>, if the specified package name is must be delegated to the boot class loader.
+   * </p>
+   * 
+   * @param packageName
+   *          the package name
+   * 
+   * @return <code>true</code>, if the specified package name is must be delegated to the boot class loader.
+   */
+  public boolean isDelegatedToBootClassLoader(final String packageName);
 }
