@@ -58,7 +58,7 @@ public class ProjectRoleIdentifierRegistry {
     }
   }
 
-  protected Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
+  public Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
     return _projectRoleIdentifiers;
   }
 
