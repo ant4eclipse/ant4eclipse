@@ -26,7 +26,6 @@ import org.ant4eclipse.platform.model.internal.resource.ProjectNatureImpl;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 
-
 /**
  * <p>
  * Parser that reads an eclipse <code>.project</code> file and creates an

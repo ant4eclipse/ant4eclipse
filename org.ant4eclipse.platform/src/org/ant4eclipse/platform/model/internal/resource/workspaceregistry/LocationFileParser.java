@@ -22,7 +22,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.internal.resource.ChunkyFile;
 
-
 /**
  * Reads a ".location" file which provides the position of an external project from eclipse's .metadata directory.
  * 
