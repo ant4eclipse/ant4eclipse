@@ -14,11 +14,10 @@ package org.ant4eclipse.platform.ant.internal.team;
 import java.io.File;
 import java.net.MalformedURLException;
 
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectSet;
@@ -97,7 +96,7 @@ public class SvnAdapter extends VcsAdapter {
     try {
       checkout.setUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
     } catch (MalformedURLException e) {
-      throw new Ant4EclipseException(TeamExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
+      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
           svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() });
     }
     task.addCheckout(checkout);
@@ -105,8 +104,8 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "checkout",
-          ex.toString() }, ex);
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] {
+          "checkout", ex.toString() }, ex);
     }
 
   }
@@ -133,7 +132,7 @@ public class SvnAdapter extends VcsAdapter {
     try {
       export.setSrcUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
     } catch (MalformedURLException e) {
-      throw new Ant4EclipseException(TeamExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
+      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
           svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() });
     }
     task.addExport(export);
@@ -141,7 +140,7 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "export",
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "export",
           ex.toString() }, ex);
     }
   }
@@ -169,7 +168,7 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "update",
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "update",
           ex.toString() }, ex);
     }
   }

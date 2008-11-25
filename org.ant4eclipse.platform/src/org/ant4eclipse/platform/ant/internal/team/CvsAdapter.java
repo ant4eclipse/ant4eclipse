@@ -13,11 +13,10 @@ package org.ant4eclipse.platform.ant.internal.team;
 
 import java.io.File;
 
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.apache.tools.ant.Project;
@@ -95,7 +94,7 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (final Exception e) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
           cvs.getCommand(), e.toString() }, e);
     }
   }
@@ -138,7 +137,7 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (final Exception e) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
           cvs.getCommand(), e.toString() }, e);
     }
   }
@@ -179,7 +178,7 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (final Exception e) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
           cvs.getCommand(), e.toString() }, e);
     }
   }

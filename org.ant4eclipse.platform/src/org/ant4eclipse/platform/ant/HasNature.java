@@ -13,7 +13,6 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-
 import org.ant4eclipse.ant.Ant4EclipseConfiguration;
 import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -38,7 +37,6 @@ public class HasNature extends ProjectComponent implements Condition {
    * Creates a new instance of type HasNature.
    */
   public HasNature() {
-    Ant4EclipseConfiguration.configureAnt4Eclipse(getProject());
     this._projectDelegate = new ProjectDelegate(this);
   }
 
@@ -46,6 +44,7 @@ public class HasNature extends ProjectComponent implements Condition {
    * {@inheritDoc}
    */
   public boolean eval() throws BuildException {
+    Ant4EclipseConfiguration.configureAnt4Eclipse(getProject());
     this._projectDelegate.requireWorkspaceAndProjectNameOrProjectSet();
     requireNatureSet();
     try {
@@ -114,7 +113,7 @@ public class HasNature extends ProjectComponent implements Condition {
    * 
    * @param workspace
    *          the workspace.
-   * @deprecated 
+   * @deprecated
    */
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
@@ -125,7 +124,7 @@ public class HasNature extends ProjectComponent implements Condition {
    * 
    * @param project
    *          the project.
-   * @deprecated 
+   * @deprecated
    */
   public void setProject(final File project) {
     this._projectDelegate.setProject(project);
