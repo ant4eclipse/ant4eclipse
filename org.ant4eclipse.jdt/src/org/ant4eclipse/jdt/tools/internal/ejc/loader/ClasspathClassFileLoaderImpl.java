@@ -28,7 +28,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFile;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassName;
-import org.ant4eclipse.jdt.tools.schrott.FilteredClasspathClassFileLoader;
 
 /**
  * <p>

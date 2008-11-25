@@ -13,13 +13,9 @@ package org.ant4eclipse.jdt.tools.ejc.loader;
 
 import java.io.File;
 
-import org.ant4eclipse.jdt.model.jre.JavaProfile;
-import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
 import org.ant4eclipse.jdt.tools.internal.ejc.loader.ClasspathClassFileLoaderImpl;
 import org.ant4eclipse.jdt.tools.internal.ejc.loader.CompoundClassFileLoaderImpl;
-import org.ant4eclipse.jdt.tools.schrott.JreClassFileLoader;
-import org.ant4eclipse.jdt.tools.schrott.JreClassFileLoaderImpl;
 
 /**
  * <p>
@@ -69,22 +65,5 @@ public class ClassFileLoaderFactory {
    */
   public static ClassFileLoader createCompoundClassFileLoader(final ClassFileLoader[] classFileLoaders) {
     return new CompoundClassFileLoaderImpl(classFileLoaders);
-  }
-
-  /**
-   * <p>
-   * Creates an new instance of type {@link JreClassFileLoader}, that can load classes from a given java runtime
-   * environment.
-   * </p>
-   * 
-   * @param javaRuntime
-   *          the java runtime environment to load classes from
-   * @param jreProfile
-   *          the jre profile to use (may be null).
-   * @return an new instance of type {@link JreClassFileLoader}, that can load classes from a given java runtime
-   *         environment.
-   */
-  public static JreClassFileLoader createJreClassFileLoader(final JavaRuntime javaRuntime, final JavaProfile jreProfile) {
-    return new JreClassFileLoaderImpl(javaRuntime, jreProfile);
   }
 }
