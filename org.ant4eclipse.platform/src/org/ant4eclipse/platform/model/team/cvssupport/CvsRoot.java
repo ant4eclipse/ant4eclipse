@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.model.team.cvssupport;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 
 /**
  * <p>
@@ -288,12 +288,13 @@ public final class CvsRoot implements Cloneable {
     }
 
     if (isEmpty(_connectionType)) {
-      throw new Ant4EclipseException(TeamExceptionCode.INVALID_CVS_ROOT, cvsRoot,
-          TeamExceptionCode.MISSING_CONNECTION_TYPE);
+      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_CVS_ROOT, cvsRoot,
+          PlatformExceptionCode.MISSING_CONNECTION_TYPE);
     }
 
     if (isEmpty(_repository)) {
-      throw new Ant4EclipseException(TeamExceptionCode.INVALID_CVS_ROOT, cvsRoot, TeamExceptionCode.MISSING_REPOSITORY);
+      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_CVS_ROOT, cvsRoot,
+          PlatformExceptionCode.MISSING_REPOSITORY);
     }
   }
 

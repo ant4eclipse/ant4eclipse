@@ -23,11 +23,10 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
-import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
-
 
 /**
  * Reads an eclipse team project set file and constructs a
@@ -124,7 +123,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
     Assert.notNull("Parameter 'providerId' must not be null", providerId);
 
     if (!_factories.containsKey(providerId)) {
-      throw new Ant4EclipseException(TeamExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);
+      throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);
     }
 
     return (TeamProjectSetFactory) _factories.get(providerId);

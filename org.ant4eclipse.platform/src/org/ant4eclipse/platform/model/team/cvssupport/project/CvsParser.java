@@ -19,10 +19,9 @@ import java.io.IOException;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
-
 
 /**
  * <p>
@@ -127,7 +126,7 @@ public class CvsParser {
         A4ELogging.warn("Could not close file '%s': '%s", new Object[] { file, ioe.toString() });
       }
     } catch (final IOException e) {
-      throw new Ant4EclipseException(TeamExceptionCode.ERROR_WHILE_READING_CVS_FILE, e, file, e.toString());
+      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, e, file, e.toString());
     }
 
     return buffy.toString();
