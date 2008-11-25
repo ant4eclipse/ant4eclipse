@@ -18,21 +18,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.model.pde.pluginproject.PluginProjectRole;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-import org.ant4eclipse.tools.pde.RequiredPluginsResolver;
-import org.ant4eclipse.tools.pde.target.TargetPlatform;
-import org.ant4eclipse.tools.pde.target.TargetPlatformRegistry;
-import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.osgi.service.resolver.State;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -258,18 +251,16 @@ public class BuildOrderResolver {
     final Map projectWrapperMap = new Hashtable();
 
     // create dependency node...
-    for (int i = 0; i < this._projects.length; i++) {
-      final EclipseProject eclipseProject = this._projects[i];
-
+    for (final EclipseProject eclipseProject : this._projects) {
       if (!JavaProjectRole.Helper.hasJavaProjectRole(eclipseProject)) {
         if (nonJavaProjects == null) {
-          throw new Ant4EclipseException(JdtModelExceptionCode.NO_JAVA_PROJECT_ROLE, this._projects[i].getFolderName());
+          throw new Ant4EclipseException(JdtModelExceptionCode.NO_JAVA_PROJECT_ROLE, eclipseProject.getFolderName());
         }
         nonJavaProjects.add(eclipseProject);
 
       } else {
 
-        final DependencyNode projectWrapper = new DependencyNode(this._projects[i]);
+        final DependencyNode projectWrapper = new DependencyNode(eclipseProject);
         projectWrapperMap.put(projectWrapper.getProjectName(), projectWrapper);
 
       }
@@ -282,7 +273,7 @@ public class BuildOrderResolver {
       final DependencyNode projectWrapper = (DependencyNode) iterator.next();
 
       final DependencyNode[] requiredProjects = resolveRequiredProjects(projectWrapper, projectWrapperMap);
-      projectWrapper.addRequiredProjects(requiredProjects);
+      // projectWrapper.addRequiredProjects(requiredProjects);
     }
 
     return new LinkedList(projectWrapperMap.values());
@@ -300,9 +291,7 @@ public class BuildOrderResolver {
 
     final RawClasspathEntry[] classpathEntries = JavaProjectRole.Helper.getJavaProjectRole(project.getProject())
         .getRawClasspathEntries();
-    for (int i = 0; i < classpathEntries.length; i++) {
-      final RawClasspathEntry classpathEntry = classpathEntries[i];
-
+    for (final RawClasspathEntry classpathEntry : classpathEntries) {
       if (classpathEntry.getEntryKind() == RawClasspathEntry.CPE_PROJECT) {
         final String path = classpathEntry.getPath();
         final String projectName = path.substring(1);
@@ -319,46 +308,45 @@ public class BuildOrderResolver {
         /**
          * @todo [19-Feb-2006:KASI] Requires some discussion ?
          */
-        if (RequiredPluginsResolver.CONTAINER_TYPE_PDE_REQUIRED_PLUGINS.equals(classpathEntry.getPath())) {
-          final BundleDescription bundle = PluginProjectRole.getPluginProjectRole(project.getProject())
-              .getBundleDescription();
-
-          if (bundle == null) {
-            // final StringBuffer errMsg = new
-            // StringBuffer("Required plugin '").append(project.getProjectName()).append(
-            // "' missing in workspace at '").append(this._workspace.getAbsolutePath()).append("'");
-            // if (this._targetPlatformLocation != null) {
-            // errMsg.append(" and in target platform at '").append(this._targetPlatformLocation.getAbsolutePath())
-            // .append("'");
-            // }
-            // throw new BuildOrderException(errMsg.toString());#
-            // TODO
-            throw new Ant4EclipseException(JdtToolsExceptionCode.REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION);
-          }
-
-          final State state = getTargetPlatform().resolve(true);
-          final BundleDescription resolvedBundle = state.getBundle(bundle.getSymbolicName(), bundle.getVersion());
-          final BundleDescription[] preRequisits = resolvedBundle.getContainingState().getStateHelper()
-              .getPrerequisites(new BundleDescription[] { resolvedBundle });
-          for (int j = 0; j < preRequisits.length; j++) {
-            final BundleDescription description = preRequisits[j];
-            if (!description.getSymbolicName().equals(bundle.getSymbolicName())) {
-              final DependencyNode node = (DependencyNode) projectNodes.get(description.getSymbolicName());
-              if (node != null) {
-                requiredProjects.add(node);
-              }
-            }
-          }
-        }
+        // if (RequiredPluginsResolver.CONTAINER_TYPE_PDE_REQUIRED_PLUGINS.equals(classpathEntry.getPath())) {
+        // final BundleDescription bundle = PluginProjectRole.getPluginProjectRole(project.getProject())
+        // .getBundleDescription();
+        //
+        // if (bundle == null) {
+        // // final StringBuffer errMsg = new
+        // // StringBuffer("Required plugin '").append(project.getProjectName()).append(
+        // // "' missing in workspace at '").append(this._workspace.getAbsolutePath()).append("'");
+        // // if (this._targetPlatformLocation != null) {
+        // // errMsg.append(" and in target platform at '").append(this._targetPlatformLocation.getAbsolutePath())
+        // // .append("'");
+        // // }
+        // // throw new BuildOrderException(errMsg.toString());#
+        // // TODO
+        // throw new Ant4EclipseException(JdtToolsExceptionCode.REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION);
+        // }
+        //
+        // final State state = getTargetPlatform().resolve(true);
+        // final BundleDescription resolvedBundle = state.getBundle(bundle.getSymbolicName(), bundle.getVersion());
+        // final BundleDescription[] preRequisits = resolvedBundle.getContainingState().getStateHelper()
+        // .getPrerequisites(new BundleDescription[] { resolvedBundle });
+        // for (final final BundleDescription description : preRequisits) {
+        // if (!description.getSymbolicName().equals(bundle.getSymbolicName())) {
+        // final DependencyNode node = (DependencyNode) projectNodes.get(description.getSymbolicName());
+        // if (node != null) {
+        // requiredProjects.add(node);
+        // }
+        // }
+        // }
+        // }
       }
     }
 
     return (DependencyNode[]) requiredProjects.toArray(new DependencyNode[0]);
   }
 
-  protected TargetPlatform getTargetPlatform() {
-    return TargetPlatformRegistry.getInstance(this._workspace, this._targetPlatformLocation);
-  }
+  // protected TargetPlatform getTargetPlatform() {
+  // return TargetPlatformRegistry.getInstance(this._workspace, this._targetPlatformLocation);
+  // }
 
   /**
    * @param unorderedDependencyNodes
@@ -486,16 +474,15 @@ public class BuildOrderResolver {
       return this._requiredProjects.isEmpty();
     }
 
-    /**
-     * @param projects
-     */
-    void addRequiredProjects(final DependencyNode[] projects) {
-      Assert.notNull(projects);
-
-      for (int i = 0; i < projects.length; i++) {
-        final DependencyNode project = projects[i];
-        this._requiredProjects.add(project);
-      }
-    }
+    // /**
+    // * @param projects
+    // */
+    // void addRequiredProjects(final DependencyNode[] projects) {
+    // Assert.notNull(projects);
+    //
+    // for (final final DependencyNode project : projects) {
+    // this._requiredProjects.add(this.project);
+    // }
+    // }
   }
 }
