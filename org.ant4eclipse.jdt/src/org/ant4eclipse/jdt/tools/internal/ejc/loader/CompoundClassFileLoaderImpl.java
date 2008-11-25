@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFile;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassName;
 
 public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 

@@ -9,9 +9,8 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc.loader;
+package org.ant4eclipse.core;
 
-import org.ant4eclipse.core.Assert;
 
 /**
  * <p>

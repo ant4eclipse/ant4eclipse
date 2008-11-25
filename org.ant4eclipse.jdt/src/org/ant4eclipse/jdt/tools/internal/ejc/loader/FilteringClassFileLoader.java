@@ -3,9 +3,9 @@ package org.ant4eclipse.jdt.tools.internal.ejc.loader;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFile;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassName;
 import org.ant4eclipse.jdt.tools.ejc.loader.ModifiableClassFile;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
@@ -66,7 +66,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   }
 
   /**
-   * @see org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader#loadClass(org.ant4eclipse.jdt.tools.ejc.loader.ClassName)
+   * @see org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader#loadClass(org.ant4eclipse.core.ClassName)
    */
   public ClassFile loadClass(final ClassName className) {
 

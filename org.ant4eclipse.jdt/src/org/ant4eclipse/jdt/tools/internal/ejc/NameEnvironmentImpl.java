@@ -12,10 +12,10 @@
 package org.ant4eclipse.jdt.tools.internal.ejc;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFile;
 import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassName;
 import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
 

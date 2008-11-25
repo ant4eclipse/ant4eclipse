@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.ejc.loader;
 
+import org.ant4eclipse.core.ClassName;
+
 /**
  * <p>
  * {@link ClassFileLoader} instances are used to load {@link ClassFile ClassFiles} that are required during the
