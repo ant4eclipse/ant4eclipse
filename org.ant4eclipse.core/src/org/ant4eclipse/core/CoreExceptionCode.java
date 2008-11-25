@@ -39,6 +39,9 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("The class '%s' could not be instantiated using its default constructor: '%s'")
   public static CoreExceptionCode COULD_NOT_INSTANTIATE_CLASS;
 
+  @NLSMessage("The service '%s' could not be initialized: '%s'")
+  public static CoreExceptionCode COULD_NOT_INITIALIZE_SERVICE;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }

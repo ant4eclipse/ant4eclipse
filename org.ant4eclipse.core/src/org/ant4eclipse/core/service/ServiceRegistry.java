@@ -6,10 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 import org.ant4eclipse.core.util.MessageCreator;
-
 
 /**
  * <p>
@@ -170,8 +171,8 @@ public class ServiceRegistry {
         try {
           ((Lifecycle) service).initialize();
         } catch (final Exception e) {
-          // TODO: FEHLERBEHANDLUNG!!!
-          e.printStackTrace();
+          throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INITIALIZE_SERVICE, e, service.getClass()
+              .getName(), e.getMessage());
         }
       }
     }
