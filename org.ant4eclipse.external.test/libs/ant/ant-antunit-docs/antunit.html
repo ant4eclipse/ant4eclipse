@@ -1,0 +1,244 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>AntUnit Task</title>
+  </head>
+
+  <body>
+    <h2><a name="antunit">AntUnit</a></h2>
+
+    <h3>Description</h3>
+
+    <p>Runs Ant on targets of a build file that follow a certain
+      naming convention.  If Ant throws the special subclass of
+        <code>BuildException</code> that the 
+        <a href="assert.html"><code>assertTrue</code></a>
+      task uses, consider it a failed test.  Any other exception is
+      considered a failure.  If Ant completes the target without any
+      exception, consider it a passed test.</p>
+
+    <p>Tests are specified via ResourceCollections.</p>
+
+    <p>All targets whose name starts with "test" (but not if the name
+    is "test" exactly) are considered test cases.  If a test build
+    file contains a target named setUp, this gets executed before each
+    test target.  If it contains a target named tearDown this gets
+    executed after each test target.</p>
+
+    <p>If the test build file contains a target named suiteSetUp, this
+    gets executed before te very first test target (or before the
+    setUp target is executed for the first time).  If it contains a
+    target named suiteTearDown this gets executed after the last test
+    target (or tearDown has been executed the last time).</p>
+
+    <p>Each test target is run in a fresh Ant project, i.e. each test
+    target has a fresh set of properties and references.</p>
+
+    <p>So in a build file with targets setUp, tearDown, test1 and
+    test2, antunit will run two Ant builds.  One will run the targets
+    setUp, test1 and tearDown (in that order), the other one will run
+    setUp, test2 and tearDown.  The order of those two Ant builds is
+    not defined.</p>
+
+    <p>&lt;antunit&gt; also supports AntUnitListeners, i.e. classes
+    that receive notifications on test runs, failures and so one.
+    Currently two implementations of this interface are
+    provided with this Ant library.</p>
+
+    <p>Log output during each antunit test case is captured by an
+    instance of the LogCapturer class that is available via a project
+    reference named ant.antunit.log.  The published interface of that
+    class is:</p>
+
+    <pre>
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+ */
+
+package org.apache.ant.antunit;
+
+public class LogCapturer {
+    public static final String REFERENCE_ID = "ant.antunit.log";
+
+    /**
+     * All messages with <code>logLevel == Project.MSG_ERR</code>.
+     */
+    public String getErrLog();
+    /**
+     * All messages with <code>logLevel == Project.MSG_WARN</code> or
+     * more severe.
+     */
+    public String getWarnLog();
+    /**
+     * All messages with <code>logLevel == Project.MSG_INFO</code> or
+     * more severe.
+     */
+    public String getInfoLog();
+    /**
+     * All messages with <code>logLevel == Project.MSG_VERBOSE</code> or
+     * more severe.
+     */
+    public String getVerboseLog();
+    /**
+     * All messages with <code>logLevel == Project.MSG_DEBUG</code> or
+     * more severe.
+     */
+    public String getDebugLog();
+}
+</pre>
+
+<p>Additionally, the contents of the log can be accessed through a
+<a href="logcontent.html">LogContent</a> resource.</p>
+
+    <h3>Parameters</h3>
+    <table border="1" cellpadding="2" cellspacing="0">
+      <tr>
+        <td valign="top"><b>Attribute</b></td>
+        <td valign="top"><b>Description</b></td>
+        <td align="center" valign="top"><b>Required</b></td>
+      </tr>
+      <tr>
+        <td valign="top">failOnError</td>
+        <td valign="top">Whether to stop the build if one of the tests
+          fails/causes an error.  Defaults to true.</td>
+        <td align="center">No.</td>
+      </tr>
+      <tr>
+        <td valign="top">errorProperty</td>
+        <td valign="top">Name of the Ant property to set if one of the
+        tests fails/causes an error.  Only useful if the failOnError
+        attribute is set to false.</td>
+        <td align="center">No.</td>
+      </tr>
+    </table>
+
+    <h3>Parameters specified as nested elements</h3>
+
+    <h4>any file system resource collection</h4>
+
+    <p>Specifies the build files to run as tests.  At least one
+    resource is required.</p>
+
+    <h4>any implementation of AntUnitListener</h4>
+
+    <p>Creates a test listener that gets attached to the task.</p>
+
+    <p>Two listeners are part of this antlib <a
+    href="plainlistener.html">&lt;plainlistener/&gt;</a> which
+    creates reports similar to the "plain" &lt;formatter&gt; of the
+    &lt;junit&gt; task and <a
+    href="xmllistener.html">&lt;xmllistener/&gt;</a> which is similar
+    to the "xml" &lt;formatter&gt;.</p>
+
+    <h4>propertyset</h4>
+
+    <p><a
+    href="http://ant.apache.org/manual/CoreTypes/propertyset.html">&lt;propertyset&gt;</a>s
+    can be used to pass properties to the build files under test.</p>
+
+    <h3>Examples</h3>
+
+    <p>This build file snippet (from src/etc/testcases/antunit/base.xml)</p>
+<pre>
+  &lt;target name="setUp">
+    &lt;echo>setup&lt;/echo>
+  &lt;/target>
+
+  &lt;target name="test1">
+    &lt;echo>test1&lt;/echo>
+  &lt;/target>
+
+  &lt;target name="test2">
+    &lt;echo>test2&lt;/echo>
+  &lt;/target>
+
+  &lt;target name="Xtest3">
+    &lt;echo>test3&lt;/echo>
+  &lt;/target>
+
+  &lt;target name="test4">
+    &lt;au:assertTrue message="test4 fails">
+      &lt;istrue value="false"/>
+    &lt;/au:assertTrue>
+  &lt;/target>
+
+  &lt;target name="test5">
+    &lt;fail message="test5 exits with error"/>
+  &lt;/target>
+
+  &lt;target name="testLogCaptureActive">
+    &lt;au:assertReferenceSet refid="ant.antunit.log"/>
+  &lt;/target>
+
+  &lt;target name="test">
+    &lt;fail>should be ignored&lt;/fail>
+  &lt;/target>
+
+  &lt;target name="tearDown">
+    &lt;echo>tearDown&lt;/echo>
+  &lt;/target>
+</pre>
+
+    <p>together with</p>
+
+<pre>
+    &lt;au:antunit>
+      &lt;file file="antunit/base.xml"/>
+      &lt;au:plainlistener/>
+    &lt;/au:antunit>
+</pre>
+
+    <p>results in output similar to</p>
+
+<pre>
+[au:antunit] Build File: .../src/etc/testcases/antunit/base.xml
+[au:antunit] Tests run: 5, Failures: 1, Errors: 1, Time elapsed: 0.216 sec
+[au:antunit] Target: test2 took 0.001 sec
+[au:antunit] Target: test1 took 0.001 sec
+[au:antunit] Target: testLogCaptureActive took 0.128 sec
+[au:antunit] Target: test5  caused an ERROR
+[au:antunit]    at line 56, column 45
+[au:antunit]    Message: test5 exits with error
+[au:antunit]    took 0.01 sec
+[au:antunit] Target: test4  FAILED
+[au:antunit]    at line 50, column 42
+[au:antunit]    Message: test4 fails
+[au:antunit]    took 0.003 sec
+</pre>
+  </body>
+</html>
