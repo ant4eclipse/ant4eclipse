@@ -20,11 +20,6 @@ import org.junit.Test;
 
 public class ProjectSetFileParserImplTest extends Ant4EclipseTestCase {
 
-  @Override
-  protected void setupAnt4EclipseConfigurationProperties() {
-    // we want to use 'default' properties read from ant4eclipse-configuration.properties
-  }
-
   @Test
   public void test_Factories() {
     TeamProjectSetFileParserImpl projectSetFileParserImpl = new TeamProjectSetFileParserImpl();

@@ -2,6 +2,7 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
+import org.ant4eclipse.core.service.ServiceRegistry;
 import org.apache.tools.ant.BuildFileTest;
 
 public class HasNatureTest extends BuildFileTest {
@@ -12,6 +13,12 @@ public class HasNatureTest extends BuildFileTest {
     File workspaceDir = new File("C:/TEMP/a4e");
 
     getProject().setProperty("workspaceDir", workspaceDir.getAbsolutePath());
+  }
+
+  @Override
+  protected void tearDown() throws Exception {
+    super.tearDown();
+    ServiceRegistry.reset();
   }
 
   public void testNonexistingNature() {

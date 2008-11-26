@@ -24,12 +24,13 @@ import org.junit.Test;
 public class ProjectRoleIdentifierRegistryTest extends Ant4EclipseTestCase {
 
   @Override
-  protected void fillAnt4EclipseConfigurationProperties(Properties properties) {
-    super.fillAnt4EclipseConfigurationProperties(properties);
+  protected Properties customAnt4EclipseConfiguration(Properties properties) {
 
     // add TestProjectRoleIdentifier to ant4eclipse properties
     properties.setProperty(ProjectRoleIdentifierRegistry.ROLEIDENTIFIER_PREFIX + ".dummyRole",
         TestProjectRoleIdentifier.class.getName());
+
+    return properties;
   }
 
   @Test
@@ -40,7 +41,8 @@ public class ProjectRoleIdentifierRegistryTest extends Ant4EclipseTestCase {
     assertNotNull(projectRoleIdentifiers);
     // check at least one role
     assertTrue(projectRoleIdentifiers.iterator().hasNext());
-    assertTrue(projectRoleIdentifiers.iterator().next() instanceof TestProjectRoleIdentifier);
+    Object roleIdentifier = projectRoleIdentifiers.iterator().next();
+    assertTrue(roleIdentifier.getClass().getName(), roleIdentifier instanceof TestProjectRoleIdentifier);
   }
 
   public static class TestProjectRoleIdentifier implements ProjectRoleIdentifier {
