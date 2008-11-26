@@ -13,7 +13,6 @@ package org.ant4eclipse.platform.ant.team;
 
 import java.io.File;
 
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
@@ -112,7 +111,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractProjectSetBasedT
   /**
    * {@inheritDoc}
    */
-  public void execute() throws BuildException {
+  public void doExecute() throws BuildException {
     // check mandatory attributes..
     requireDestinationSet();
     requireProjectSetSet();
@@ -122,23 +121,16 @@ public abstract class AbstractGetProjectSetTask extends AbstractProjectSetBasedT
     _vcsAdapter = createVcsAdapter();
     A4ELogging.debug("using version control adapter = ", _vcsAdapter);
 
-    try {
-      // set user and password
-      getProjectSet().setUserAndPassword(getUsername(), getPassword());
+    // set user and password
+    getProjectSet().setUserAndPassword(getUsername(), getPassword());
 
-      if (getCommand().getValue().equals(CHECKOUT)) {
-        checkoutProjectSet(getDestination(), getProjectSet(), isDeleteExistingProjects());
-      } else if (getCommand().getValue().equals(UPDATE)) {
-        updateProjectSet(getDestination(), getProjectSet());
-      }
-      if (getCommand().getValue().equals(EXPORT)) {
-        exportProjectSet(getDestination(), getProjectSet(), isDeleteExistingProjects());
-      }
-    } catch (BuildException ex) {
-      throw ex;
-    } catch (Exception e) {
-      A4ELogging.error(e.getMessage());
-      throw new BuildException(e.getMessage(), e);
+    if (getCommand().getValue().equals(CHECKOUT)) {
+      checkoutProjectSet(getDestination(), getProjectSet(), isDeleteExistingProjects());
+    } else if (getCommand().getValue().equals(UPDATE)) {
+      updateProjectSet(getDestination(), getProjectSet());
+    }
+    if (getCommand().getValue().equals(EXPORT)) {
+      exportProjectSet(getDestination(), getProjectSet(), isDeleteExistingProjects());
     }
   }
 

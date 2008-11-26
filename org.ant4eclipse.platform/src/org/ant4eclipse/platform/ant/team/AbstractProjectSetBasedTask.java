@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.ant.team;
 
 import java.io.File;
 
-import org.ant4eclipse.ant.Ant4EclipseTask;
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.platform.ant.delegate.ProjectSetDelegate;
 import org.ant4eclipse.platform.model.resource.Workspace;
@@ -25,7 +25,7 @@ import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractProjectSetBasedTask extends Ant4EclipseTask {
+public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTask {
 
   private final ProjectSetDelegate _projectSetBase;
 
