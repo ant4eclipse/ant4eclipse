@@ -76,5 +76,5 @@ public abstract class AbstractAnt4EclipseTask extends Task {
    * 
    * @see Task#execute()
    */
-  protected abstract void doExecute() throws Ant4EclipseException;
+  protected abstract void doExecute();
 }
