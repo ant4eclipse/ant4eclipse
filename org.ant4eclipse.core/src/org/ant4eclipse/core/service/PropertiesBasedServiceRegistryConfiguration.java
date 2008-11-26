@@ -11,7 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.service;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 
 /**
  * The PropertiesBasedServiceRegistryConfiguration configures the ServiceRegistry with properties from
@@ -26,6 +27,8 @@ import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
  */
 public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegistryConfiguration {
 
+  private final Ant4EclipseConfiguration _ant4EclipseConfiguration;
+
   /**
    * The prefix of properties that should be interpreted as service description.
    * 
@@ -37,16 +40,22 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
    * </pre>
    * 
    */
-  public static final String PROPERTY_PREFIX = "service";
+  public static final String             PROPERTY_PREFIX = "service";
+
+  public PropertiesBasedServiceRegistryConfiguration(Ant4EclipseConfiguration ant4EclipseConfiguration) {
+    Assert.notNull(ant4EclipseConfiguration);
+
+    this._ant4EclipseConfiguration = ant4EclipseConfiguration;
+  }
 
   public void configure(ConfigurationContext context) {
 
     // get all properties describing a service
-    Ant4EclipseConfigurationProperties configProperties = Ant4EclipseConfigurationProperties.getInstance();
-    Iterable<String[]> serviceProperties = configProperties.getAllProperties(PROPERTY_PREFIX);
+    Iterable<String[]> serviceProperties = this._ant4EclipseConfiguration.getAllProperties(PROPERTY_PREFIX);
 
     // Iterate over all service descriptions found
     for (String[] serviceProperty : serviceProperties) {
+
       String serviceInterfaceName = serviceProperty[0];
       String serviceImplementationName = serviceProperty[1];
 
