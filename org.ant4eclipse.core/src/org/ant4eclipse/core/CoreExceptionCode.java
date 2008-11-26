@@ -42,6 +42,12 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("The service '%s' could not be initialized: '%s'")
   public static CoreExceptionCode COULD_NOT_INITIALIZE_SERVICE;
 
+  @NLSMessage("Paramter '%s' must be set on task '%s'")
+  public static CoreExceptionCode PARAMETER_MUST_BE_SET_ON_TASK;
+
+  @NLSMessage("Paramter '%s' must be set on type '%s'")
+  public static CoreExceptionCode PARAMETER_MUST_BE_SET_ON_TYPE;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }
