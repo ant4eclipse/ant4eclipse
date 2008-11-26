@@ -13,8 +13,7 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-
-import org.ant4eclipse.ant.TaskHelper;
+import org.ant4eclipse.core.ant.TaskHelper;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
 
@@ -192,19 +191,13 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
   /**
    * {@inheritDoc}
    */
-  public void execute() throws BuildException {
+  public void doExecute() {
 
     requireWorkspaceAndProjectNameOrProjectSet();
     requirePathIdOrPropertySet();
 
-    try {
-      final File[] resolvedPath = resolvePath();
-      setResolvedPath(resolvedPath);
-    } catch (final BuildException ex) {
-      throw ex;
-    } catch (final Exception e) {
-      throw new BuildException(e.getMessage(), e);
-    }
+    final File[] resolvedPath = resolvePath();
+    setResolvedPath(resolvedPath);
 
     if (isPathIdSet()) {
       populatePathId();
@@ -244,5 +237,5 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * @throws Exception
    *           The resolving process failed for some reason.
    */
-  protected abstract File[] resolvePath() throws Exception;
+  protected abstract File[] resolvePath();
 }

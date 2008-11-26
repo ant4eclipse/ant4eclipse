@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -113,7 +112,7 @@ public class GetProjectDirectoryTask extends AbstractProjectBasedTask {
   /**
    * {@inheritDoc}
    */
-  public void execute() throws BuildException {
+  public void doExecute() {
 
     requireWorkspaceAndProjectNameOrProjectSet();
     requirePathIdOrPropertySet();

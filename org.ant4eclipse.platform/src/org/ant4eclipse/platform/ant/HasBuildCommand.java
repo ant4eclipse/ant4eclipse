@@ -13,22 +13,19 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-
-import org.ant4eclipse.ant.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseCondition;
 import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.ProjectComponent;
-import org.apache.tools.ant.taskdefs.condition.Condition;
 
 /**
  * <p>
- * The HasBuildCommand implements a condition to test whether a eclipse project has a specific build command or not
+ * {@link HasBuildCommand} implements a condition to test whether a eclipse project has a specific build command or not
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class HasBuildCommand extends ProjectComponent implements Condition {
+public class HasBuildCommand extends AbstractAnt4EclipseCondition {
 
   /** Comment for <code>_projectDelegate</code> */
   private final ProjectDelegate _projectDelegate;
@@ -40,7 +37,6 @@ public class HasBuildCommand extends ProjectComponent implements Condition {
    * Creates a new instance of type HasBuildCommand.
    */
   public HasBuildCommand() {
-    Ant4EclipseConfiguration.configureAnt4Eclipse(getProject());
     this._projectDelegate = new ProjectDelegate(this);
   }
 
@@ -49,17 +45,11 @@ public class HasBuildCommand extends ProjectComponent implements Condition {
    * 
    * @return <code>true</code> if the eclipse project contains the requested buildCommand.
    */
-  public boolean eval() throws BuildException {
+  public boolean doEval() {
     this._projectDelegate.requireWorkspaceAndProjectNameOrProjectSet();
     requireBuildCommandSet();
-    try {
-      final EclipseProject project = this._projectDelegate.getEclipseProject();
-      return project.hasBuildCommand(this._buildCommand);
-    } catch (final BuildException e) {
-      throw e;
-    } catch (final Exception e) {
-      throw new BuildException(e.getMessage(), e);
-    }
+    final EclipseProject project = this._projectDelegate.getEclipseProject();
+    return project.hasBuildCommand(this._buildCommand);
   }
 
   /**

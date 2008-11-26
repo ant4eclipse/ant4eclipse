@@ -13,19 +13,17 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-import org.ant4eclipse.ant.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseCondition;
 import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.ProjectComponent;
-import org.apache.tools.ant.taskdefs.condition.Condition;
 
 /**
  * An ant condition that allows to check if a project has a specific nature.
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class HasNature extends ProjectComponent implements Condition {
+public class HasNature extends AbstractAnt4EclipseCondition {
 
   /** the project delegate */
   private final ProjectDelegate _projectDelegate;
@@ -43,8 +41,7 @@ public class HasNature extends ProjectComponent implements Condition {
   /**
    * {@inheritDoc}
    */
-  public boolean eval() throws BuildException {
-    Ant4EclipseConfiguration.configureAnt4Eclipse(getProject());
+  public boolean doEval() throws BuildException {
     this._projectDelegate.requireWorkspaceAndProjectNameOrProjectSet();
     requireNatureSet();
     try {
