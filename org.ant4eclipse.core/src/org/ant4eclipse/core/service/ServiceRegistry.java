@@ -118,6 +118,19 @@ public class ServiceRegistry {
 
   /**
    * <p>
+   * Returns <code>true</code> if a service with the identifier <code>serviceType.getName()</code> is registered.
+   * </p>
+   * 
+   * @param <T>
+   * @param serviceType
+   * @return
+   */
+  public <T> boolean hasService(Class<T> serviceType) {
+    return hasService(serviceType.getName());
+  }
+
+  /**
+   * <p>
    * </p>
    * 
    * @param serviceIdentifier
@@ -125,6 +138,20 @@ public class ServiceRegistry {
    */
   public final boolean hasService(final String serviceIdentifier) {
     return this._serviceMap.containsKey(serviceIdentifier);
+  }
+
+  /**
+   * <p>
+   * Returns the service with the identifier <code>serviceType.getName()</code>.
+   * </p>
+   * 
+   * @param <T>
+   * @param serviceType
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  public <T> T getService(Class<T> serviceType) {
+    return (T) getService(serviceType.getName());
   }
 
   /**
@@ -287,17 +314,14 @@ public class ServiceRegistry {
         assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] muss ungleich null sein!");
       }
 
-      for (int i = 0; i < serviceIdentifier.length; i++) {
-        final Object object = serviceIdentifier[i];
-
+      for (final String object : serviceIdentifier) {
         if (ServiceRegistry.this._serviceMap.containsKey(object)) {
           throw new NoUniqueIdentifierException("Identifier \"" + serviceIdentifier
               + "\" is not unique: it is already used!");
         }
       }
 
-      for (int i = 0; i < serviceIdentifier.length; i++) {
-        final String object = serviceIdentifier[i];
+      for (final String object : serviceIdentifier) {
         ServiceRegistry.this._serviceMap.put(object, service);
         ServiceRegistry.this._serviceOrdering.add(service);
       }
