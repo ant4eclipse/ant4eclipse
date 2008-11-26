@@ -15,9 +15,9 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
@@ -55,7 +55,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   private Map<String, TeamProjectSetFactory> _factories;
 
   public void initialize() {
-    Iterable<String[]> teamProviders = Ant4EclipseConfigurationProperties.getInstance().getAllProperties(
+    Iterable<String[]> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration().getAllProperties(
         TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
