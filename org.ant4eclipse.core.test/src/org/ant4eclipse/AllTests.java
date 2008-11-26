@@ -1,7 +1,5 @@
 package org.ant4eclipse;
 
-
-import org.ant4eclipse.core.Ant4EclipseConfigurationPropertiesTest;
 import org.ant4eclipse.core.AssertTest;
 import org.ant4eclipse.core.dependencygraph.DependencyGraphTest;
 import org.ant4eclipse.core.logging.A4ELogging_FailureTest;
@@ -13,8 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { JarUtilitiesTest.class, Ant4EclipseConfigurationPropertiesTest.class, AssertTest.class,
-    XQueryHandlerTest.class, UtilitiesTest.class, ServiceRegistryTest.class, A4ELogging_FailureTest.class,
-    DependencyGraphTest.class })
+@Suite.SuiteClasses( { JarUtilitiesTest.class, AssertTest.class, XQueryHandlerTest.class, UtilitiesTest.class,
+    ServiceRegistryTest.class, A4ELogging_FailureTest.class, DependencyGraphTest.class })
 public class AllTests {
 }

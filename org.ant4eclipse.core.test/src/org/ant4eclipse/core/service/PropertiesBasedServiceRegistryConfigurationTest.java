@@ -18,15 +18,16 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
-
-import org.ant4eclipse.core.Ant4EclipseConfigurationProperties;
-import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
+import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class PropertiesBasedServiceRegistryConfigurationTest {
+
+  private Ant4EclipseConfiguration _ant4EclipseConfiguration;
 
   @Before
   public void setupTestProperties() {
@@ -36,12 +37,12 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
     properties.setProperty("service.TestServiceB", TestServiceBImpl.class.getName());
     properties.setProperty("noservice.TestServiceC", "Not a service");
 
-    Ant4EclipseConfigurationProperties.initialize(properties);
+    _ant4EclipseConfiguration = new Ant4EclipseConfigurationImpl(properties);
   }
 
   @After
   public void dispose() {
-    Ant4EclipseConfigurationProperties.dispose();
+    _ant4EclipseConfiguration = null;
   }
 
   @Test
@@ -50,7 +51,8 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
     DummyContext context = new DummyContext();
 
     // Execute configure
-    PropertiesBasedServiceRegistryConfiguration config = new PropertiesBasedServiceRegistryConfiguration();
+    PropertiesBasedServiceRegistryConfiguration config = new PropertiesBasedServiceRegistryConfiguration(
+        _ant4EclipseConfiguration);
     config.configure(context);
 
     // Make sure only given services have been registered
