@@ -1,4 +1,4 @@
-#Sun Nov 16 16:17:16 CET 2008
+#Wed Nov 26 19:40:23 CET 2008
 block_filters=Source Directive
 eclipse.preferences.version=1
 flush_interval=1000
@@ -7,6 +7,7 @@ include_filter=**/*.java
 init_string=
 init_string_default=true
 init_string_project_relative=true
+instrumentation_enabled=true
 output_root=.clover/bin
 output_root_same_as_project=true
 should_qualify_java_lang=true
