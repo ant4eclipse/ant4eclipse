@@ -9,28 +9,27 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant;
+package org.ant4eclipse.core.ant;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.DataType;
 
 /**
- * Baseclass for all ant4eclipse task.
+ * Base type for all ant4eclipse types.
  * 
  * <p>
- * This tasks configures the ant4eclipse logging when the Ant project has been set.
+ * Used to configure ant4eclipse runtime environment if necessary
  * 
- * @author Nils Hartmann
+ * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class Ant4EclipseTask extends Task {
+public abstract class AbstractAnt4EclipseDataType extends DataType {
 
-  public Ant4EclipseTask() {
-    super();
+  public AbstractAnt4EclipseDataType(final Project project) {
+    setProject(project);
+
+    // configure ant4eclipse
+    Ant4EclipseConfigurator.configureAnt4Eclipse(project);
   }
 
-  public void setProject(final Project project) {
-    super.setProject(project);
-
-    Ant4EclipseConfiguration.configureAnt4Eclipse(getProject());
-  }
 }

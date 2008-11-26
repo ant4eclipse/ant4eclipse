@@ -9,11 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant;
-
+package org.ant4eclipse.core.ant;
 
 import org.ant4eclipse.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.core.util.MessageCreator;
+import org.apache.tools.ant.BuildEvent;
+import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Target;
 import org.apache.tools.ant.Task;
@@ -21,7 +22,7 @@ import org.apache.tools.ant.Task;
 /**
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class AntBasedLogger implements Ant4EclipseLogger {
+public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
 
   private Project                   _project = null;
 
@@ -29,6 +30,7 @@ public class AntBasedLogger implements Ant4EclipseLogger {
 
   public AntBasedLogger(final Project project) {
     this._project = project;
+    this._project.addBuildListener(this);
   }
 
   public void setContext(final Object context) {
@@ -216,6 +218,34 @@ public class AntBasedLogger implements Ant4EclipseLogger {
    */
   public void error(final String msg) {
     log(msg, Project.MSG_ERR);
+  }
+
+  public void taskStarted(final BuildEvent event) {
+    setContext(event.getTask());
+  }
+
+  public void taskFinished(final BuildEvent event) {
+    setContext(null);
+  }
+
+  public void targetStarted(final BuildEvent event) {
+    setContext(event.getTarget());
+  }
+
+  public void targetFinished(final BuildEvent event) {
+    setContext(null);
+  }
+
+  public void messageLogged(final BuildEvent event) {
+    //
+  }
+
+  public void buildStarted(final BuildEvent event) {
+    //
+  }
+
+  public void buildFinished(final BuildEvent event) {
+    //
   }
 
   /**
