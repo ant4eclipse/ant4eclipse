@@ -13,15 +13,13 @@ package org.ant4eclipse.jdt.ant.type;
 
 import java.io.File;
 
-
-import org.ant4eclipse.ant.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrariesFileParser;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrary;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Path;
 
 /**
@@ -29,25 +27,21 @@ import org.apache.tools.ant.types.Path;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class UserLibraryPath extends DataType {
+public class UserLibraryPath extends AbstractAnt4EclipseDataType {
 
   private static final String PREFIX = "org.eclipse.jdt.USER_LIBRARY/";
 
   private File                _userlibfile;
 
-  private final Project       _project;
-
   /**
-   * Simply initialises this new type.
+   * Simply initializes this new type.
    * 
    * @param project
    *          The project this type applies to.
    */
   public UserLibraryPath(final Project project) {
-    super();
-    this._project = project;
+    super(project);
     this._userlibfile = null;
-    Ant4EclipseConfiguration.configureAnt4Eclipse(project);
   }
 
   /**
@@ -75,14 +69,14 @@ public class UserLibraryPath extends DataType {
       final UserLibrariesFileParser parser = new UserLibrariesFileParser(this._userlibfile);
       final UserLibraries userlibs = parser.getUserLibraries();
       final String[] libs = userlibs.getAvailableLibraries();
-      for (int i = 0; i < libs.length; i++) {
-        final UserLibrary library = userlibs.getLibrary(libs[i]);
+      for (final String lib : libs) {
+        final UserLibrary library = userlibs.getLibrary(lib);
         final Archive[] archives = library.getArchives();
-        final Path path = new Path(this._project);
-        for (int j = 0; j < archives.length; j++) {
-          path.createPathElement().setLocation(archives[j].getPath());
+        final Path path = new Path(getProject());
+        for (final Archive archive : archives) {
+          path.createPathElement().setLocation(archive.getPath());
         }
-        getProject().addReference(PREFIX + libs[i], path);
+        getProject().addReference(PREFIX + lib, path);
       }
     } catch (final Exception ex) {
       A4ELogging.error("Failed to load userlibraries file.\n'%s'.", ex);

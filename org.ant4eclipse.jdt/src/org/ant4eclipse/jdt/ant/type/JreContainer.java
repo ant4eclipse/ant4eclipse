@@ -13,9 +13,8 @@ package org.ant4eclipse.jdt.ant.type;
 
 import java.io.File;
 
-
-import org.ant4eclipse.ant.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
@@ -24,7 +23,6 @@ import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Path;
 
 /**
@@ -32,11 +30,9 @@ import org.apache.tools.ant.types.Path;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class JreContainer extends DataType {
+public class JreContainer extends AbstractAnt4EclipseDataType {
 
-  private final Project _project;
-
-  private String        _defaultJre;
+  private String _defaultJre;
 
   /**
    * Simply initialises this new type.
@@ -45,10 +41,8 @@ public class JreContainer extends DataType {
    *          The project this type applies to.
    */
   public JreContainer(final Project project) {
-    super();
-    this._project = project;
+    super(project);
     this._defaultJre = null;
-    Ant4EclipseConfiguration.configureAnt4Eclipse(project);
   }
 
   /**
@@ -93,10 +87,10 @@ public class JreContainer extends DataType {
       javaRuntimeRegistry.setDefaultJavaRuntime(runtime.getId());
     }
 
-    final Path path = new Path(this._project);
+    final Path path = new Path(getProject());
     final File[] libraries = javaRuntime.getLibraries();
-    for (int i = 0; i < libraries.length; i++) {
-      path.createPathElement().setLocation(libraries[i]);
+    for (final File librarie : libraries) {
+      path.createPathElement().setLocation(librarie);
     }
 
     getProject().addReference(ContainerTypes.VMTYPE_PREFIX + runtime.getId(), path);
