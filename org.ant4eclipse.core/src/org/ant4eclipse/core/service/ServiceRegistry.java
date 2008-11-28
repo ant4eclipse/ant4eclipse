@@ -10,7 +10,6 @@ import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
-import org.ant4eclipse.core.util.MessageCreator;
 
 /**
  * <p>
@@ -266,8 +265,7 @@ public class ServiceRegistry {
    */
   private static void assertTrue(final boolean condition, final String msg) {
     if (!condition) {
-      final String errmsg = MessageCreator.createMessage("Precondition violated: %s", msg);
-      throw new RuntimeException(errmsg);
+      throw new RuntimeException(String.format("Precondition violated: %s", msg));
     }
   }
 

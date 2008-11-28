@@ -14,8 +14,6 @@ package org.ant4eclipse.core;
 import java.io.File;
 
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.MessageCreator;
-
 
 /**
  * <p>
@@ -107,8 +105,7 @@ public class Assert {
   public static void exists(final File file) {
     notNull(file);
     if (!file.exists()) {
-      final String msg = MessageCreator
-          .createMessage("Precondition violated: %s has to exist!", file.getAbsolutePath());
+      final String msg = String.format("Precondition violated: %s has to exist!", file.getAbsolutePath());
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -125,8 +122,8 @@ public class Assert {
   public static void isFile(final File file) {
     Assert.exists(file);
     if (!file.isFile()) {
-      final String msg = MessageCreator.createMessage("Precondition violated: %s has to be a file, not a directory!",
-          file.getAbsolutePath());
+      final String msg = String.format("Precondition violated: %s has to be a file, not a directory!", file
+          .getAbsolutePath());
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -143,8 +140,8 @@ public class Assert {
   public static void isDirectory(final File file) {
     Assert.exists(file);
     if (!file.isDirectory()) {
-      final String msg = MessageCreator.createMessage("Precondition violated: %s has to be a directory, not a file!",
-          file.getAbsolutePath());
+      final String msg = String.format("Precondition violated: %s has to be a directory, not a file!", file
+          .getAbsolutePath());
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -162,9 +159,8 @@ public class Assert {
    */
   public static void assertTrue(final boolean condition, final String msg) {
     if (!condition) {
-      final String errmsg = MessageCreator.createMessage("Precondition violated: %s", msg);
       // A4ELogging.debug(errmsg);
-      throw new RuntimeException(errmsg);
+      throw new RuntimeException(String.format("Precondition violated: %s", msg));
     }
   }
 
@@ -182,8 +178,8 @@ public class Assert {
    */
   public static void inRange(final int value, final int from, final int to) {
     if ((value < from) || (value > to)) {
-      final String msg = MessageCreator.createMessage("Precondition violated: %d must be within the range %d..%d !",
-          new Object[] { new Integer(value), new Integer(from), new Integer(to) });
+      final String msg = String.format("Precondition violated: %d must be within the range %d..%d !", new Object[] {
+          new Integer(value), new Integer(from), new Integer(to) });
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }

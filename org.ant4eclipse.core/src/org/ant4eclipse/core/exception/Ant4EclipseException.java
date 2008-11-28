@@ -11,16 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.core.exception;
 
-import org.ant4eclipse.core.util.MessageCreator;
 
 public class Ant4EclipseException extends RuntimeException {
 
   /** serialVersionUID */
-  private static final long           serialVersionUID = -2322126644590371742L;
+  private static final long   serialVersionUID = -2322126644590371742L;
 
   private final ExceptionCode _exceptionCode;
 
-  private final Object[]              _args;
+  private final Object[]      _args;
 
   public Ant4EclipseException(final ExceptionCode exceptionCode, final Throwable cause, final Object... args) {
     super(cause);
@@ -59,8 +58,9 @@ public class Ant4EclipseException extends RuntimeException {
     return this._args;
   }
 
+  @Override
   public String getMessage() {
-    return MessageCreator.createMessage(this._exceptionCode.getMessage(), this._args);
+    return String.format(this._exceptionCode.getMessage(), this._args);
   }
 
   // /**

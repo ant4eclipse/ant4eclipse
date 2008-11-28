@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.Ant4EclipseLogger;
-import org.ant4eclipse.core.util.MessageCreator;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
@@ -24,244 +24,222 @@ import org.apache.tools.ant.Task;
  */
 public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
 
+  /** the ant project */
   private Project                   _project = null;
 
+  /** the (thread local) context */
   private final ThreadLocal<Object> _context = new ThreadLocal<Object>();
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param project
+   */
   public AntBasedLogger(final Project project) {
+    Assert.notNull(project);
+
     this._project = project;
     this._project.addBuildListener(this);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setContext(final Object context) {
     this._context.set(context);
   }
 
   /**
-   * Returns true if the debugging is enabled.
-   * 
-   * @return true <=> Debugging is enabled.
+   * {@inheritDoc}
    */
   public boolean isDebuggingEnabled() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isTraceingEnabled() {
     return true;
   }
 
   /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          An error message.
+   * {@inheritDoc}
    */
   public void debug(final String msg) {
     log(msg, Project.MSG_VERBOSE);
   }
 
   /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
+   * {@inheritDoc}
    */
   public void debug(final String msg, final Object arg) {
-    debug(MessageCreator.createMessage(msg, arg));
+    debug(String.format(msg, arg));
   }
 
   /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          A formatting message.
-   * @param args
-   *          The arguments used for the formatted message.
+   * {@inheritDoc}
    */
   public void debug(final String msg, final Object[] args) {
-    debug(MessageCreator.createMessage(msg, args));
+    debug(String.format(msg, args));
   }
 
   /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          A formatting message.
-   * @param args
-   *          The arguments used for the formatted message.
+   * {@inheritDoc}
    */
   public void trace(final String msg, final Object[] args) {
-    trace(MessageCreator.createMessage(msg, args));
+    trace(String.format(msg, args));
   }
 
   /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
+   * {@inheritDoc}
    */
   public void trace(final String msg, final Object obj) {
-    trace(MessageCreator.createMessage(msg, obj));
+    trace(String.format(msg, obj));
   }
 
   /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          A trace message.
+   * {@inheritDoc}
    */
   public void trace(final String msg) {
     log(msg, Project.MSG_DEBUG);
   }
 
   /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          A formatting message.
-   * @param args
-   *          The arguments used for the formatted message.
+   * {@inheritDoc}
    */
   public void info(final String msg, final Object[] args) {
-    info(MessageCreator.createMessage(msg, args));
+    info(String.format(msg, args));
   }
 
   /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
+   * {@inheritDoc}
    */
   public void info(final String msg, final Object obj) {
-    info(MessageCreator.createMessage(msg, obj));
+    info(String.format(msg, obj));
   }
 
   /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          An error message.
+   * {@inheritDoc}
    */
   public void info(final String msg) {
     log(msg, Project.MSG_INFO);
   }
 
   /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          A formatting message.
-   * @param args
-   *          The arguments used for the formatted message.
+   * {@inheritDoc}
    */
   public void warn(final String msg, final Object[] args) {
-    warn(MessageCreator.createMessage(msg, args));
+    warn(String.format(msg, args));
   }
 
   /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
+   * {@inheritDoc}
    */
   public void warn(final String msg, final Object obj) {
-    warn(MessageCreator.createMessage(msg, obj));
+    warn(String.format(msg, obj));
   }
 
   /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          An error message.
+   * {@inheritDoc}
    */
   public void warn(final String msg) {
     log(msg, Project.MSG_WARN);
   }
 
   /**
-   * Dumps error information.
-   * 
-   * @param msg
-   *          A formatting message.
-   * @param args
-   *          The arguments used for the formatted message.
+   * {@inheritDoc}
    */
   public void error(final String msg, final Object[] args) {
-    error(MessageCreator.createMessage(msg, args));
+    error(String.format(msg, args));
   }
 
   /**
-   * Dumps error information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
+   * {@inheritDoc}
    */
   public void error(final String msg, final Object obj) {
-    error(MessageCreator.createMessage(msg, obj));
+    error(String.format(msg, obj));
   }
 
   /**
-   * Dumps error information.
-   * 
-   * @param msg
-   *          An error message.
+   * {@inheritDoc}
    */
   public void error(final String msg) {
     log(msg, Project.MSG_ERR);
   }
 
+  /**
+   * @see org.apache.tools.ant.BuildListener#taskStarted(org.apache.tools.ant.BuildEvent)
+   */
   public void taskStarted(final BuildEvent event) {
     setContext(event.getTask());
   }
 
+  /**
+   * @see org.apache.tools.ant.BuildListener#taskFinished(org.apache.tools.ant.BuildEvent)
+   */
   public void taskFinished(final BuildEvent event) {
     setContext(null);
   }
 
+  /**
+   * @see org.apache.tools.ant.BuildListener#targetStarted(org.apache.tools.ant.BuildEvent)
+   */
   public void targetStarted(final BuildEvent event) {
     setContext(event.getTarget());
   }
 
+  /**
+   * @see org.apache.tools.ant.BuildListener#targetFinished(org.apache.tools.ant.BuildEvent)
+   */
   public void targetFinished(final BuildEvent event) {
     setContext(null);
   }
 
+  /**
+   * @see org.apache.tools.ant.BuildListener#messageLogged(org.apache.tools.ant.BuildEvent)
+   */
   public void messageLogged(final BuildEvent event) {
-    //
-  }
-
-  public void buildStarted(final BuildEvent event) {
-    //
-  }
-
-  public void buildFinished(final BuildEvent event) {
-    //
+    // emtpy method block - we don't need this event here...
   }
 
   /**
+   * @see org.apache.tools.ant.BuildListener#buildStarted(org.apache.tools.ant.BuildEvent)
+   */
+  public void buildStarted(final BuildEvent event) {
+    // emtpy method block - we don't need this event here...
+  }
+
+  /**
+   * @see org.apache.tools.ant.BuildListener#buildFinished(org.apache.tools.ant.BuildEvent)
+   */
+  public void buildFinished(final BuildEvent event) {
+    // emtpy method block - we don't need this event here...
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
    * @param msg
    * @param msgLevel
    */
   private void log(final String msg, final int msgLevel) {
-    if (this._project != null) {
-      final Object ctx = this._context.get();
-      if (ctx instanceof Task) {
-        this._project.log((Task) ctx, msg, msgLevel);
-      } else if (ctx instanceof Target) {
-        this._project.log((Target) ctx, msg, msgLevel);
-      } else {
-        this._project.log(msg, msgLevel);
-      }
+    // retrieve the context
+    final Object ctx = this._context.get();
+
+    // log with task context
+    if (ctx instanceof Task) {
+      this._project.log((Task) ctx, msg, msgLevel);
+    }
+    // log with target context
+    else if (ctx instanceof Target) {
+      this._project.log((Target) ctx, msg, msgLevel);
+    }
+    // log without context
+    else {
+      this._project.log(msg, msgLevel);
     }
   }
 } /* ENDCLASS */
