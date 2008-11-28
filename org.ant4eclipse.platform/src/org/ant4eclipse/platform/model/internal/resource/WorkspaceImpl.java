@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.MessageCreator;
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
@@ -76,7 +75,7 @@ public final class WorkspaceImpl implements Workspace {
 
   public EclipseProject[] getAllProjects(final Class<? extends ProjectRole> projectRole) {
     Assert.notNull(projectRole);
-    Assert.assertTrue(ProjectRole.class.isAssignableFrom(projectRole), MessageCreator.createMessage(
+    Assert.assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
         "Class '%s' must be assignable from class '%s'", new Object[] { projectRole.getClass().getName(),
             ProjectRole.class.getName() }));
 

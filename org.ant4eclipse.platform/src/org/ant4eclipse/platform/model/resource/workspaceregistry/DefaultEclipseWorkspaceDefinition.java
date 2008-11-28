@@ -19,9 +19,7 @@ import java.util.List;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.MessageCreator;
 import org.ant4eclipse.platform.model.internal.resource.workspaceregistry.LocationFileParser;
-
 
 /**
  * 
@@ -66,8 +64,8 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
     File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {
       public boolean accept(final File file) {
         final boolean accepted = file.isDirectory() && !file.getName().equals(".metadata") && isProjectDirectory(file);
-        final String message = MessageCreator
-            .createMessage(
+        final String message = String
+            .format(
                 "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
                 new Object[] { file.getAbsolutePath(), Boolean.valueOf(accepted) });
         A4ELogging.debug(message);
@@ -85,8 +83,8 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
       directories = this._metadataLocationDirectory.listFiles(new FileFilter() {
         public boolean accept(final File file) {
           final boolean accepted = file.isDirectory() && isLocationDirectory(file);
-          final String message = MessageCreator
-              .createMessage(
+          final String message = String
+              .format(
                   "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
                   new Object[] { file.getAbsolutePath(), Boolean.valueOf(accepted) });
           A4ELogging.debug(message);
