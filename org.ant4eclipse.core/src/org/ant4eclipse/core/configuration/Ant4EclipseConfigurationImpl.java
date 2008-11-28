@@ -10,19 +10,25 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 
+/**
+ * <p>
+ * Implementation of the {@link Ant4EclipseConfiguration} interface.
+ * </p>
+ * 
+ * @author Nils Hartmann (nils@nilshartmann.net)
+ */
 public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
+  /** the path of ant4eclipse configurations */
   public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
 
-  /**
-   * <b>All</b> configuration properties
-   */
+  /** <b>All</b> configuration properties */
   private final Properties   _properties;
 
   /**
-   * Used to construct a new instance of {@link Ant4EclipseConfigurationProperties}.
-   * 
-   * To get an instance of Ant4EclipseConfigurationProperties use {@link #getInstance()} instead
+   * <p>
+   * Creates a new instance of type {@link Ant4EclipseConfigurationProperties}.
+   * </p>
    * 
    * @param properties
    *          The backing properties
@@ -34,16 +40,17 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     this._properties = properties;
   }
 
+  /**
+   * <p>
+   * Creates a new instance of type {@link Ant4EclipseConfigurationProperties}.
+   * </p>
+   */
   public Ant4EclipseConfigurationImpl() {
     this._properties = loadConfigurationProperties();
   }
 
   /**
-   * Returns the property with the given name or null if there is no such property
-   * 
-   * @param propertyName
-   *          The name of the property
-   * @return The property or null if there is no such property
+   * {@inheritDoc}
    */
   public String getProperty(String propertyName) {
     if (propertyName == null) {
@@ -54,11 +61,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   }
 
   /**
-   * Checks if there is a property with the given name
-   * 
-   * @param propertyName
-   *          The name of the property to check
-   * @return true if there is a property with the given name otherwise false
+   * {@inheritDoc}
    */
   public boolean hasProperty(String propertyName) {
     if (propertyName == null) {
@@ -69,14 +72,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   }
 
   /**
-   * Returns an {@link Iterable} that contains all properties whose names start with prefix.
-   * <p>
-   * The returned {@link Iterable} contains a String-array with two items: the first is the property key (with prefix
-   * removed!) the second is the property value.
-   * 
-   * @param prefix
-   *          The prefix that selected the properties. If it doesn't end with a "." a "." is added
-   * @return see above
+   * {@inheritDoc}
    */
   public Iterable<String[]> getAllProperties(String prefix) {
     if (prefix == null) {
@@ -102,7 +98,9 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   }
 
   /**
+   * <p>
    * Returns an Enumeration of URLs pointing to all configuration property files found on the classpath
+   * </p>
    * 
    * @return An enumeration, never null
    */
@@ -115,10 +113,12 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   }
 
   /**
+   * <p>
    * Loads the properties from <b>all</b> configuration files that can be found on the classpath.
-   * 
+   * </p>
    * <p>
    * The properties will be merged into one {@link Properties} object
+   * </p>
    * 
    * @return A Property object containing all loaded properties
    */
