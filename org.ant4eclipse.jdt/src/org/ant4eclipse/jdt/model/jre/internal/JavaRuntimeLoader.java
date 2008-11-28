@@ -27,7 +27,6 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
-
 public class JavaRuntimeLoader {
   /**  */
   private static final String JAVA_SPECIFICATION_NAME         = "java.specification.name";
@@ -57,7 +56,7 @@ public class JavaRuntimeLoader {
 
     final String outfileName = System.getProperty("java.io.tmpdir") + "\\ant4eclipse_jdk_props_"
         + Math.round(Math.random() * 1000000000);
-    System.out.println(outfileName);
+    // System.out.println(outfileName);
 
     final JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
     javaLauncher.setMainClass("net.sf.ant4eclipse.model.jdt.jre.internal.support.LibraryDetector");
@@ -88,14 +87,14 @@ public class JavaRuntimeLoader {
     // final String javaendorseddirs = values[3];
     final Version javaSpecificationVersion = new Version(values[4]);
 
-    final List files = new LinkedList();
+    final List<File> files = new LinkedList<File>();
     addFiles(sunbootclasspath, false, files);
     addFiles(javaextdirs, true, files);
 
     // addFiles(javaendorseddirs);
     // TODO: ext-libs!!
 
-    final File[] libraries = (File[]) files.toArray(new File[0]);
+    final File[] libraries = files.toArray(new File[0]);
 
     //
     final Properties properties = new Properties();
@@ -114,12 +113,12 @@ public class JavaRuntimeLoader {
     return javaRuntime;
   }
 
-  private static void addFiles(final String path, final boolean addChildrenIfDirectory, final List list) {
+  private static void addFiles(final String path, final boolean addChildrenIfDirectory, final List<File> list) {
 
     final String[] fileNames = path.split(File.pathSeparator);
 
-    for (int i = 0; i < fileNames.length; i++) {
-      final File file = new File(fileNames[i]);
+    for (final String fileName : fileNames) {
+      final File file = new File(fileName);
       if (file.exists()) {
 
         if (file.isFile() && !list.contains(file)) {
@@ -130,8 +129,7 @@ public class JavaRuntimeLoader {
               return name.endsWith(".jar");
             }
           });
-          for (int j = 0; j < children.length; j++) {
-            final File child = children[j];
+          for (final File child : children) {
             if (child.isFile() && !list.contains(child)) {
               list.add(child);
             }
@@ -160,13 +158,13 @@ public class JavaRuntimeLoader {
       // Note that the CDC spec appears not to require VM implementations to set the
       // javax.microedition properties!! So we will try to fall back to the
       // java.specification.name property, but this is pretty ridiculous!!
-      String javaSpecVersion = systemProperties.getProperty(JAVA_SPECIFICATION_VERSION); //$NON-NLS-1$
+      String javaSpecVersion = systemProperties.getProperty(JAVA_SPECIFICATION_VERSION);
       // set the profile and EE based off of the java.specification.version
       // TODO We assume J2ME Foundation and J2SE here. need to support other profiles J2EE ...
       if (javaSpecVersion != null) {
         final StringTokenizer st = new StringTokenizer(javaSpecVersion, " _-"); //$NON-NLS-1$
         javaSpecVersion = st.nextToken();
-        final String javaSpecName = systemProperties.getProperty(JAVA_SPECIFICATION_NAME); //$NON-NLS-1$
+        final String javaSpecName = systemProperties.getProperty(JAVA_SPECIFICATION_NAME);
         if ("J2ME Foundation Specification".equals(javaSpecName)) {
           vmProfile = "CDC-" + javaSpecVersion + "_Foundation-" + javaSpecVersion; //$NON-NLS-1$ //$NON-NLS-2$
         } else {
@@ -199,7 +197,7 @@ public class JavaRuntimeLoader {
     if ((stringList == null) || (stringList.trim().length() == 0)) {
       return new String[0];
     }
-    final ArrayList list = new ArrayList();
+    final ArrayList<String> list = new ArrayList<String>();
     final StringTokenizer tokens = new StringTokenizer(stringList, separator);
     while (tokens.hasMoreTokens()) {
       final String token = tokens.nextToken().trim();
@@ -207,6 +205,6 @@ public class JavaRuntimeLoader {
         list.add(token);
       }
     }
-    return (String[]) list.toArray(new String[list.size()]);
+    return list.toArray(new String[list.size()]);
   }
 }

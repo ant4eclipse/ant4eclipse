@@ -26,7 +26,6 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.ClassLoadingHelper;
 import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
 
-
 /**
  * <p>
  * An instance of type {@link JavaExecuter} can be used to execute a java application with a specific java runtime
@@ -211,9 +210,9 @@ public class JavaExecuter {
     cmd.append(this._classpathEntries[0].getAbsolutePath());
     cmd.append(" ");
     cmd.append(this._mainClass);
-    for (int i = 0; i < this._args.length; i++) {
+    for (final String _arg : this._args) {
       cmd.append(" ");
-      cmd.append(this._args[i]);
+      cmd.append(_arg);
     }
 
     // execute
@@ -296,8 +295,7 @@ public class JavaExecuter {
 
     // throw Ant4EclipseException
     if ((result == null) || !result.exists()) {
-      throw new Ant4EclipseException(JdtModelExceptionCode.INVALID_JRE_DIRECTORY, new String[] { this._jreDirectory
-          .getAbsolutePath() });
+      throw new Ant4EclipseException(JdtModelExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath());
     }
 
     // return result
@@ -319,11 +317,11 @@ public class JavaExecuter {
 
     // read the ls output
 
-    final List sysOut = new LinkedList();
+    final List<String> sysOut = new LinkedList<String>();
     String line;
     while ((line = bufferedreader.readLine()) != null) {
       sysOut.add(line);
     }
-    return (String[]) sysOut.toArray(new String[0]);
+    return sysOut.toArray(new String[0]);
   }
 }

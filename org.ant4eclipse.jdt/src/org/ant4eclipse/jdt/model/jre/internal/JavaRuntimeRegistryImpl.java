@@ -13,7 +13,6 @@ package org.ant4eclipse.jdt.model.jre.internal;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
@@ -24,7 +23,6 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
-
 /**
  * JavaRuntimeRegistry --
  * 
@@ -34,13 +32,13 @@ import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
   /** the default java runtime key **/
-  private String    _defaultJavaRuntimeKey = null;
+  private String                         _defaultJavaRuntimeKey = null;
 
   /** the java runtime cache */
-  private final Map /* String, JavaRuntime */_javaRuntimeCache;
+  private final Map<String, JavaRuntime> _javaRuntimeCache;
 
   /** the java profile cache */
-  private final Map /* String, JavaProfile */_javaProfileCache;
+  private final Map<String, JavaProfile> _javaProfileCache;
 
   /**
    * <p>
@@ -50,15 +48,15 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   public JavaRuntimeRegistryImpl() {
 
     // create hash maps
-    this._javaRuntimeCache = new HashMap();
-    this._javaProfileCache = new HashMap();
+    this._javaRuntimeCache = new HashMap<String, JavaRuntime>();
+    this._javaProfileCache = new HashMap<String, JavaProfile>();
 
     // read all known profiles
     final JavaProfile[] javaProfiles = JavaProfileReader.readAllProfiles();
 
     // add profiles to profile cache
-    for (int i = 0; i < javaProfiles.length; i++) {
-      this._javaProfileCache.put(javaProfiles[i].getName(), javaProfiles[i]);
+    for (final JavaProfile javaProfile : javaProfiles) {
+      this._javaProfileCache.put(javaProfile.getName(), javaProfile);
     }
   }
 
@@ -107,7 +105,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // return if a java profile exists
     if (this._javaProfileCache.containsKey(path)) {
-      final JavaProfile javaProfile = (JavaProfile) this._javaProfileCache.get(path);
+      final JavaProfile javaProfile = this._javaProfileCache.get(path);
       if (getJavaRuntime(javaProfile) != null) {
         return true;
       }
@@ -137,13 +135,13 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // return true if a java runtime exists
     if (this._javaRuntimeCache.containsKey(path)) {
-      return (JavaRuntime) this._javaRuntimeCache.get(path);
+      return this._javaRuntimeCache.get(path);
     }
 
     // return if a java profile exists
     if (this._javaProfileCache.containsKey(path)) {
 
-      final JavaProfile javaProfile = (JavaProfile) this._javaProfileCache.get(path);
+      final JavaProfile javaProfile = this._javaProfileCache.get(path);
       return getJavaRuntime(javaProfile);
     }
 
@@ -157,7 +155,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   public JavaProfile getJavaProfile(final String path) {
     Assert.nonEmpty(path);
 
-    return (JavaProfile) this._javaProfileCache.get(path);
+    return this._javaProfileCache.get(path);
   }
 
   /**
@@ -171,7 +169,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // search for default key
     if ((this._defaultJavaRuntimeKey != null) && this._javaRuntimeCache.containsKey(this._defaultJavaRuntimeKey)) {
-      return (JavaRuntime) this._javaRuntimeCache.get(this._defaultJavaRuntimeKey);
+      return this._javaRuntimeCache.get(this._defaultJavaRuntimeKey);
     }
 
     // TODO:
@@ -208,10 +206,10 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     final String profileName = javaProfile.getName();
 
     // iterate over java runtime cache
-    for (final Iterator iterator = this._javaRuntimeCache.values().iterator(); iterator.hasNext();) {
+    for (final Object element : this._javaRuntimeCache.values()) {
 
       // get the java runtime
-      final JavaRuntime javaRuntime = (JavaRuntime) iterator.next();
+      final JavaRuntime javaRuntime = (JavaRuntime) element;
 
       if (javaRuntime.getJavaProfile().getExecutionEnvironmentNames().contains(profileName)) {
 

@@ -21,7 +21,6 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 
-
 /**
  * <p>
  * Taken from Framework!
@@ -47,17 +46,17 @@ public class JavaProfileReader {
 
     final String[] profiles = javaProfiles.split(",");
 
-    final List result = new LinkedList();
+    final List<JavaProfileImpl> result = new LinkedList<JavaProfileImpl>();
 
-    for (int i = 0; i < profiles.length; i++) {
-      final String profile = profiles[i].trim();
+    for (final String profile2 : profiles) {
+      final String profile = profile2.trim();
       if ((profile != null) && !profile.equals("")) {
         final Properties props = Utilities.readPropertiesFromClasspath("profiles/" + profile);
         result.add(new JavaProfileImpl(props));
       }
     }
 
-    return (JavaProfile[]) result.toArray(new JavaProfile[0]);
+    return result.toArray(new JavaProfile[0]);
   }
 
   /**

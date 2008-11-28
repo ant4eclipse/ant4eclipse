@@ -111,7 +111,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * @see org.ant4eclipse.jdt.model.jre.JavaProfile#getExecutionEnvironments()
    */
-  public List getExecutionEnvironmentNames() {
+  public List<String> getExecutionEnvironmentNames() {
     return Collections.unmodifiableList(this._executionEnvironments);
   }
 

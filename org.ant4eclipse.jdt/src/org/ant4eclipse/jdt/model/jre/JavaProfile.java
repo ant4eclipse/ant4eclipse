@@ -72,7 +72,7 @@ public interface JavaProfile {
    * 
    * @return a list of execution environment names that this java profile is a super set of.
    */
-  public List getExecutionEnvironmentNames();
+  public List<String> getExecutionEnvironmentNames();
 
   /**
    * <p>
