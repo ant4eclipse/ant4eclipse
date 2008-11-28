@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.ant4eclipse.ant.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.jdt.tools.ejc.CompileJobResult;
 import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
 import org.ant4eclipse.jdt.tools.ejc.CompileJobDescription.SourceFile;
@@ -23,7 +23,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
   public boolean execute() {
 
-    Ant4EclipseConfiguration.configureAnt4Eclipse(getProject());
+    Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
 
     // source path is not supported!
     if (getJavac().getSourcepath() != null) {
