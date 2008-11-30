@@ -13,6 +13,7 @@ package org.ant4eclipse.core.service;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.util.Utilities;
 
 /**
  * The PropertiesBasedServiceRegistryConfiguration configures the ServiceRegistry with properties from
@@ -60,41 +61,11 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
       String serviceImplementationName = serviceProperty[1];
 
       // instantiate new service instance
-      Object serviceInstance = createServiceInstance(serviceImplementationName);
+      Object serviceInstance = Utilities.newInstance(serviceImplementationName);
 
       // register new service
       context.registerService(serviceInstance, serviceInterfaceName);
     }
 
   }
-
-  /**
-   * Creates a new instance of the given service implementation.
-   * 
-   * <p>
-   * The service class must have a public default constructor that will be used to instantiate the service
-   * 
-   * @param serviceImplementationName
-   *          The name of the service class
-   * @return the new service instance
-   */
-  protected Object createServiceInstance(String serviceImplementationName) {
-    Class<?> serviceType;
-    try {
-      serviceType = Class.forName(serviceImplementationName);
-    } catch (Exception ex) {
-      throw new RuntimeException("Could not load service implementation class '" + serviceImplementationName + "': "
-          + ex, ex);
-    }
-
-    Object instance;
-    try {
-      instance = serviceType.newInstance();
-    } catch (Exception ex) {
-      throw new RuntimeException("Could not instantiate service '" + serviceType + "': " + ex, ex);
-    }
-
-    return instance;
-  }
-
 }

@@ -36,17 +36,45 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("The class '%s' could not be loaded: '%s'")
   public static CoreExceptionCode COULD_NOT_LOAD_CLASS;
 
-  @NLSMessage("The class '%s' could not be instantiated using its default constructor: '%s'")
+  @NLSMessage("The class '%s' could not be instantiated using constructor '%s'")
   public static CoreExceptionCode COULD_NOT_INSTANTIATE_CLASS;
 
-  @NLSMessage("The service '%s' could not be initialized: '%s'")
-  public static CoreExceptionCode COULD_NOT_INITIALIZE_SERVICE;
-
-  @NLSMessage("Paramter '%s' must be set on task '%s'")
+  @NLSMessage("Parameter '%s' must be set on task '%s'")
   public static CoreExceptionCode PARAMETER_MUST_BE_SET_ON_TASK;
 
-  @NLSMessage("Paramter '%s' must be set on type '%s'")
+  @NLSMessage("Parameter '%s' must be set on type '%s'")
   public static CoreExceptionCode PARAMETER_MUST_BE_SET_ON_TYPE;
+
+  /** service registry related exception codes **/
+
+  @NLSMessage("Service registry has to be initialized.")
+  public static CoreExceptionCode SERVICE_REGISTRY_HAS_TO_BE_INITIALIZED;
+
+  @NLSMessage("Service registry has to be disposed.")
+  public static CoreExceptionCode SERVICE_REGISTRY_HAS_TO_BE_DISPOSED;
+
+  @NLSMessage("Service identifier '%s' is not unique.")
+  public static CoreExceptionCode SERVICE_IDENTIFIER_IS_NOT_UNIQUE;
+
+  @NLSMessage("Service '%s' could not be initialized.")
+  public static CoreExceptionCode SERVICE_COULD_NOT_BE_INITIALIZED;
+
+  @NLSMessage("Service '%s' could not be diposed.")
+  public static CoreExceptionCode SERVICE_COULD_NOT_BE_DISPOSED;
+
+  @NLSMessage("Service '%s' is not available.")
+  public static CoreExceptionCode SERVICE_NOT_AVAILABLE;
+
+  /** assert related exception codes **/
+
+  @NLSMessage("Precondition violated: Object has to be set.")
+  public static CoreExceptionCode ASSERT_NOT_NULL_FAILED;
+
+  @NLSMessage("Precondition violated: Parameter '%s' has to be set.")
+  public static CoreExceptionCode ASSERT_PARAMETER_NOT_NULL_FAILED;
+
+  @NLSMessage("Precondition violated: %s")
+  public static CoreExceptionCode ASSERT_TRUE_FAILED;
 
   static {
     NLS.initialize(CoreExceptionCode.class);

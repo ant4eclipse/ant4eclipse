@@ -1,13 +1,13 @@
 package org.ant4eclipse.core.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.service.ServiceNotAvailableException;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ServiceRegistryTest {
 
@@ -21,9 +21,7 @@ public class ServiceRegistryTest {
     ServiceRegistry.configure(new ServiceRegistryConfiguration() {
 
       public void configure(ConfigurationContext context) {
-
         context.registerService(object1, "test1");
-
         context.registerService(object2, new String[] { "test2", "test3" });
       }
     });
@@ -40,11 +38,38 @@ public class ServiceRegistryTest {
     try {
       ServiceRegistry.instance().getService("not there");
       fail();
-    } catch (ServiceNotAvailableException e) {
-      // 
+    } catch (Ant4EclipseException e) {
+      assertEquals("Service 'not there' is not available.", e.getMessage());
     }
 
     ServiceRegistry.reset();
+  }
+
+  @Test
+  public void testNullService() {
+    try {
+      // 
+      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+        public void configure(ConfigurationContext context) {
+          context.registerService(null, "null");
+        }
+      });
+      fail();
+    } catch (Exception e) {
+      assertEquals(e.getMessage(), "Precondition violated: Parameter 'service' has to be set.");
+    }
+
+    try {
+      // 
+      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+        public void configure(ConfigurationContext context) {
+          context.registerService("null", (String) null);
+        }
+      });
+      fail();
+    } catch (Exception e) {
+      assertEquals(e.getMessage(), "Precondition violated: Parameter 'serviceIdentifier' has to be set.");
+    }
   }
 
   @Test
@@ -72,17 +97,28 @@ public class ServiceRegistryTest {
     ServiceRegistry.configure(new ServiceRegistryConfiguration() {
 
       public void configure(ConfigurationContext context) {
-
-        context.registerService(dummyService, "test1");
+        context.registerService(dummyService, DummyService.class.getName());
       }
     });
 
-    DummyService service = (DummyService) ServiceRegistry.instance().getService("test1");
+    assertTrue(ServiceRegistry.instance().hasService(DummyService.class.getName()));
+    DummyService service = (DummyService) ServiceRegistry.instance().getService(DummyService.class.getName());
+    assertEquals(dummyService, service);
+    assertTrue(dummyService.isInitialized());
 
+    assertTrue(ServiceRegistry.instance().hasService(DummyService.class));
+    service = ServiceRegistry.instance().getService(DummyService.class);
     assertEquals(dummyService, service);
     assertTrue(dummyService.isInitialized());
 
     ServiceRegistry.reset();
+    assertFalse(ServiceRegistry.isConfigured());
+    try {
+      ServiceRegistry.reset();
+      fail();
+    } catch (Exception e) {
+      assertEquals("Precondition violated: ServiceRegistry has to be configured.", e.getMessage());
+    }
   }
 
   /**

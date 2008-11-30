@@ -68,12 +68,12 @@ public class Assert {
   public static void instanceOf(String parameterName, Object parameter, Class<?> expectedType) {
     if (parameter == null) {
       throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
-          + expectedType + "' but was null");
+          + expectedType.getName() + "' but was null");
     }
 
     if (!expectedType.isInstance(parameter)) {
       throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
-          + expectedType + "' but is a '" + expectedType.getName() + "'");
+          + expectedType.getName() + "' but is a '" + parameter.getClass().getName() + "'");
     }
   }
 

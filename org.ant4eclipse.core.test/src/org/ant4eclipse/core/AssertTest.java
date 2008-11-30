@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import javax.swing.JFrame;
+
 import org.ant4eclipse.testframework.Ant4EclipseTestCase;
 import org.junit.Test;
 
@@ -24,6 +26,26 @@ public class AssertTest extends Ant4EclipseTestCase {
       Assert.notNull(null);
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: Object has to be set!", e.getMessage());
+    }
+  }
+
+  @Test
+  public void testInstanceOf() {
+    Assert.instanceOf("parameter", new JFrame(), JFrame.class);
+
+    try {
+      Assert.instanceOf("parameter", new Object(), JFrame.class);
+    } catch (RuntimeException e) {
+      assertEquals(
+          "Precondition violated: Parameter 'parameter' should be of type 'javax.swing.JFrame' but is a 'java.lang.Object'",
+          e.getMessage());
+    }
+
+    try {
+      Assert.instanceOf("parameter", null, JFrame.class);
+    } catch (RuntimeException e) {
+      assertEquals("Precondition violated: Parameter 'parameter' should be of type 'javax.swing.JFrame' but was null",
+          e.getMessage());
     }
   }
 

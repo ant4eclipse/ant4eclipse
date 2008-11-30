@@ -32,7 +32,6 @@ import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationCo
  * <p>
  * After configuring the registry, services can be requested.
  * </p>
- * TODO Make ServiceRegistry Keys Class-Objects
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
@@ -62,7 +61,7 @@ public class ServiceRegistry {
    *          the service registry configuration
    */
   public static void configure(final ServiceRegistryConfiguration configuration) {
-    notNull("Parameter 'configuration' has to be set!", configuration);
+    parameterNotNull("configuration", configuration);
     assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
 
     _instance = new ServiceRegistry();
@@ -90,10 +89,8 @@ public class ServiceRegistry {
   public static void reset() {
     assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
 
-    // dispose instance if instance is initialized
-    if (_instance.isInitialized()) {
-      _instance.dispose();
-    }
+    // if the service registry is configured, it is also initialized and needs to be disposed
+    _instance.dispose();
 
     // set configured = false;
     _configured = false;
@@ -161,11 +158,11 @@ public class ServiceRegistry {
    * @return
    * @throws ServiceNotAvailableException
    */
-  public final Object getService(final String serviceIdentifier) throws ServiceNotAvailableException {
+  public final Object getService(final String serviceIdentifier) {
     final Object result = this._serviceMap.get(serviceIdentifier);
 
     if (result == null) {
-      throw new ServiceNotAvailableException("Service '" + serviceIdentifier + "' is not available!");
+      throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceIdentifier);
     }
 
     return result;
@@ -197,7 +194,7 @@ public class ServiceRegistry {
         try {
           ((Lifecycle) service).initialize();
         } catch (final Exception e) {
-          throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INITIALIZE_SERVICE, e, service.getClass()
+          throw new Ant4EclipseException(CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, e, service.getClass()
               .getName(), e.getMessage());
         }
       }
@@ -211,7 +208,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void dispose() {
-    assertTrue(isInitialized(), "dispose() darf nur aufgerufen werden, wenn isInitialized() == true !");
+    assertTrue(isInitialized(), "Service registry is not initialized.");
 
     final Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -221,8 +218,8 @@ public class ServiceRegistry {
         try {
           ((Lifecycle) service).dispose();
         } catch (final Exception e) {
-          // TODO: FEHLERBEHANDLUNG!!!
-          e.printStackTrace();
+          throw new Ant4EclipseException(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED, e, service.getClass()
+              .getName(), e.getMessage());
         }
       }
     }
@@ -247,9 +244,9 @@ public class ServiceRegistry {
    * @param object
    *          the object that must be set.
    */
-  private static void notNull(final String message, final Object object) {
-    if (object == null) {
-      throw new RuntimeException("Precondition violated: " + message);
+  private static void parameterNotNull(final String parameterName, final Object parameter) {
+    if (parameter == null) {
+      throw new Ant4EclipseException(CoreExceptionCode.ASSERT_PARAMETER_NOT_NULL_FAILED, parameterName);
     }
   }
 
@@ -265,7 +262,7 @@ public class ServiceRegistry {
    */
   private static void assertTrue(final boolean condition, final String msg) {
     if (!condition) {
-      throw new RuntimeException(String.format("Precondition violated: %s", msg));
+      throw new Ant4EclipseException(CoreExceptionCode.ASSERT_TRUE_FAILED, msg);
     }
   }
 
@@ -289,23 +286,22 @@ public class ServiceRegistry {
     public final void registerService(final Object service, final String serviceIdentifier) {
       assertTrue(!ServiceRegistry.this._isInitialized,
           "Environment darf noch nicht initialisiert sein, wenn ein Service angemeldet wird!");
-      assertTrue(service != null, "Parameter service muss ungleich null sein!");
-      assertTrue(serviceIdentifier != null, "Parameter serviceIdentifier muss ungleich null sein!");
+      parameterNotNull("service", service);
+      parameterNotNull("serviceIdentifier", serviceIdentifier);
 
       if (!ServiceRegistry.this._serviceMap.containsKey(serviceIdentifier)) {
         ServiceRegistry.this._serviceMap.put(serviceIdentifier, service);
         ServiceRegistry.this._serviceOrdering.add(service);
       } else {
-        throw new NoUniqueIdentifierException("Identifier \"" + serviceIdentifier
-            + "\" is not unique: it is already used!");
+        throw new Ant4EclipseException(CoreExceptionCode.SERVICE_IDENTIFIER_IS_NOT_UNIQUE, serviceIdentifier);
       }
     }
 
     public final void registerService(final Object service, final String[] serviceIdentifier) {
       assertTrue(!ServiceRegistry.this._isInitialized,
           "Environment darf noch nicht initialisiert sein, wenn ein Service angemeldet wird!");
-      assertTrue(service != null, "Parameter service muss ungleich null sein!");
-      assertTrue(serviceIdentifier != null, "Parameter serviceIdentifier muss ungleich null sein!");
+      parameterNotNull("service", service);
+      parameterNotNull("serviceIdentifier", serviceIdentifier);
       assertTrue(serviceIdentifier.length > 0, "Länge des Parameters serviceIdentifier muss grösser als 0 sein!");
 
       for (int i = 0; i < serviceIdentifier.length; i++) {
@@ -314,8 +310,7 @@ public class ServiceRegistry {
 
       for (final String object : serviceIdentifier) {
         if (ServiceRegistry.this._serviceMap.containsKey(object)) {
-          throw new NoUniqueIdentifierException("Identifier \"" + serviceIdentifier
-              + "\" is not unique: it is already used!");
+          throw new Ant4EclipseException(CoreExceptionCode.SERVICE_IDENTIFIER_IS_NOT_UNIQUE, (Object) serviceIdentifier);
         }
       }
 

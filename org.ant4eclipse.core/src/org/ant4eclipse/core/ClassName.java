@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
-
 /**
  * <p>
  * Represents a <b>qualified</b> class name.
@@ -54,7 +53,7 @@ public final class ClassName {
    * @return the qualified class name. Never null.
    */
   public String getQualifiedClassName() {
-    return this._packageName + "." + this._className;
+    return this._packageName.equals("") ? this._className : this._packageName + "." + this._className;
   }
 
   /**
@@ -131,8 +130,8 @@ public final class ClassName {
   public int hashCode() {
     final int PRIME = 31;
     int result = 1;
-    result = PRIME * result + ((this._className == null) ? 0 : this._className.hashCode());
-    result = PRIME * result + ((this._packageName == null) ? 0 : this._packageName.hashCode());
+    result = PRIME * result + this._className.hashCode();
+    result = PRIME * result + this._packageName.hashCode();
     return result;
   }
 
@@ -151,18 +150,10 @@ public final class ClassName {
       return false;
     }
     final ClassName other = (ClassName) obj;
-    if (this._className == null) {
-      if (other._className != null) {
-        return false;
-      }
-    } else if (!this._className.equals(other._className)) {
+    if (!this._className.equals(other._className)) {
       return false;
     }
-    if (this._packageName == null) {
-      if (other._packageName != null) {
-        return false;
-      }
-    } else if (!this._packageName.equals(other._packageName)) {
+    if (!this._packageName.equals(other._packageName)) {
       return false;
     }
     return true;
@@ -179,13 +170,13 @@ public final class ClassName {
     Assert.nonEmpty(qualifiedClassName);
 
     final int v = qualifiedClassName.lastIndexOf('.');
-    String packageName = null;
+    String packageName = "";
     if (v != -1) {
       packageName = qualifiedClassName.substring(0, v);
     }
-    if ((packageName == null) || (packageName.length() < 1)) {
-      throw new IllegalStateException("Default packages not supported! Classname was:'" + qualifiedClassName + "'");
-    }
+    // if ((packageName == null) || (packageName.length() < 1)) {
+    // throw new IllegalStateException("Default packages not supported! Classname was:'" + qualifiedClassName + "'");
+    // }
 
     final String className = qualifiedClassName.substring(v + 1);
     return new String[] { packageName, className };
@@ -202,7 +193,7 @@ public final class ClassName {
    *          the class name.
    */
   private ClassName(final String packageName, final String className) {
-    Assert.nonEmpty(packageName);
+    Assert.notNull(packageName);
     Assert.nonEmpty(className);
 
     this._packageName = packageName;

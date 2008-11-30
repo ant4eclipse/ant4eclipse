@@ -6,13 +6,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.exception.ExceptionCode;
 
 /**
@@ -86,8 +86,7 @@ public abstract class NLS {
     Map<String, Field> nlsFields = new Hashtable<String, Field>();
 
     // Detect NLS fields (public String fields)
-    for (int i = 0; i < fields.length; i++) {
-      Field field = fields[i];
+    for (Field field : fields) {
       if (isNLSField(field)) {
         nlsFields.put(field.getName(), field);
       }
@@ -111,8 +110,7 @@ public abstract class NLS {
     // is missing in the properties-file)
     // Assign a dummy message to fields that don't have a message to
     // avoid null pointer at runtime
-    for (Iterator<Map.Entry<String, Field>> it = nlsFields.entrySet().iterator(); it.hasNext();) {
-      Map.Entry<String, Field> entry = it.next();
+    for (Entry<String, Field> entry : nlsFields.entrySet()) {
       String fieldName = entry.getKey().toString();
       if (!messages.containsKey(fieldName)) {
         Field field = entry.getValue();
@@ -122,7 +120,6 @@ public abstract class NLS {
           field.set(null, getFieldValue(field, defaultMessage));
         } catch (Exception ex) {
           // should not happen
-          System.err.println("Error setting the missing message value for: " + field.getName());
         }
       }
     }
@@ -196,7 +193,9 @@ public abstract class NLS {
     try {
       object = constructor.newInstance(message);
     } catch (Exception ex) {
-      throw new RuntimeException("Could not instantiate class '" + type.getName() + "': " + ex, ex);
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, ex, type.getName(), type
+          .getSimpleName()
+          + "(String)");
     }
 
     return object;
@@ -257,8 +256,9 @@ public abstract class NLS {
       while (true) {
         result.add('_' + nl + EXTENSION);
         lastSeparator = nl.lastIndexOf('_');
-        if (lastSeparator == -1)
+        if (lastSeparator == -1) {
           break;
+        }
         nl = nl.substring(0, lastSeparator);
       }
       // add the empty suffix last (most general)
@@ -267,8 +267,9 @@ public abstract class NLS {
     }
     root = root.replace('.', '/');
     String[] variants = new String[nlSuffixes.length];
-    for (int i = 0; i < variants.length; i++)
+    for (int i = 0; i < variants.length; i++) {
       variants[i] = root + nlSuffixes[i];
+    }
     return variants;
   }
 
@@ -284,8 +285,7 @@ public abstract class NLS {
    *          file names to read
    */
   private static void loadProperties(Properties messages, String[] variants) {
-    for (int i = 0; i < variants.length; i++) {
-      String variant = variants[i];
+    for (String variant : variants) {
       InputStream is = null;
       try {
         is = Thread.currentThread().getContextClassLoader().getResourceAsStream(variant);
@@ -327,21 +327,22 @@ public abstract class NLS {
     private final Map<String, Field> _fields;
 
     public MessageProperties(Class<?> targetClass, Map<String, Field> fields) {
-      _targetClass = targetClass;
-      _fields = fields;
+      this._targetClass = targetClass;
+      this._fields = fields;
     }
 
+    @Override
     public synchronized Object put(Object key, Object value) {
       if (this.containsKey(key)) {
         // the given field as already been set. simply return it's first value (we don't want to override)
         return super.get(key);
       }
 
-      Field field = _fields.get(key);
+      Field field = this._fields.get(key);
 
       if (field == null) {
         // Property not known
-        System.out.println("Message-Property '" + key + "' existiert nicht an Ziel-Klasse '" + _targetClass + "'");
+        System.out.println("Message-Property '" + key + "' existiert nicht an Ziel-Klasse '" + this._targetClass + "'");
         return null;
       }
 
@@ -360,15 +361,4 @@ public abstract class NLS {
       return null;
     }
   }
-
-  public static void main(String[] args) {
-    try {
-      String[] variants = buildVariants("MyClass");
-      System.out.println(Arrays.asList(variants));
-    } catch (Exception ex) {
-      System.err.println("Exception caught in main: " + ex);
-      ex.printStackTrace();
-    }
-  }
-
 }
