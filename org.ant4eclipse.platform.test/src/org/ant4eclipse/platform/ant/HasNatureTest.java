@@ -14,9 +14,6 @@ public class HasNatureTest extends AbstractPlatformBuildFileTest {
     super.setUp();
 
     setupBuildFile("hasNature.xml");
-    _workspaceDir = getTestEnvironment().createSubDirectory("workspace");
-    getProject().setProperty("workspaceDir", _workspaceDir.getAbsolutePath());
-
     new EclipseProjectBuilder("simpleproject").withNature("org.ant4eclipse.testnature").createIn(_workspaceDir);
   }
 

@@ -31,6 +31,11 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
   /** - */
   private ClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
+  public GetEclipseClassPathTask() {
+    super();
+    this._classpathContainerArgumentDelegate = new ClasspathContainerArgumentDelegate();
+  }
+
   /**
    * @param id
    */
@@ -75,7 +80,7 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() throws Exception {
+  protected File[] resolvePath() {
 
     final Properties properties = this._classpathContainerArgumentDelegate.getAsProperties();
 

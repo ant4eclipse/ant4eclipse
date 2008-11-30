@@ -17,7 +17,6 @@ import java.security.CodeSource;
 
 import org.ant4eclipse.core.Assert;
 
-
 public class ClassLoadingHelper {
 
   private static final String METHOD_GET_CLASSPATH                      = "getClasspath";
@@ -47,7 +46,7 @@ public class ClassLoadingHelper {
     }
     // 'normal' class loader: just retrieve the code source
     else {
-      final CodeSource codeSource = ClassLoadingHelper.class.getProtectionDomain().getCodeSource();
+      final CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
       return new String[] { codeSource.getLocation().getFile() };
     }
   }

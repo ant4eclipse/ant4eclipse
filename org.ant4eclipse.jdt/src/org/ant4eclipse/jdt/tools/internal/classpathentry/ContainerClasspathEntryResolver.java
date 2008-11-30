@@ -14,18 +14,16 @@ package org.ant4eclipse.jdt.tools.internal.classpathentry;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ManifestHelper;
-import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
+import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
-
 
 /**
  * ContainerClasspathEntryResolver --
@@ -34,50 +32,13 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
  */
 public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResolver implements Lifecycle {
 
+  public final static String               CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX = "containerResolver";
+
   /** the static container resolver list */
-  private static List _containerresolver = new LinkedList();
+  private List<ClasspathContainerResolver> _containerresolver;
 
   /** indicates if the resolver is initialized or not */
-  private boolean     _isInitialized     = false;
-
-  static {
-    try {
-      final Properties properties = new Properties();
-      properties.load(ContainerClasspathEntryResolver.class
-          .getResourceAsStream("/net/sf/ant4eclipse/containerresolver.properties"));
-
-      // TODO
-      Assert
-          .assertTrue(properties.containsKey("containerresolver"),
-              "Property 'containerresolver' has to be defined in property file '/net/sf/ant4eclipse/containerresolver.properties'!");
-
-      final ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(properties
-          .getProperty("containerresolver"));
-
-      for (int i = 0; i < elements.length; i++) {
-        final ManifestHeaderElement manifestHeaderElement = elements[i];
-        final String[] classNames = manifestHeaderElement.getValues();
-        for (int j = 0; j < classNames.length; j++) {
-          final String className = classNames[j];
-          final Class clazz = ContainerClasspathEntryResolver.class.getClassLoader().loadClass(className);
-          final Object instance = clazz.newInstance();
-          // TODO ASSERT
-          addContainerResolver((ClasspathContainerResolver) instance);
-        }
-      }
-    } catch (final Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
-   * @param containerClasspathEntryResolver
-   */
-  public static void addContainerResolver(final ClasspathContainerResolver classpathContainerResolver) {
-    if (!_containerresolver.contains(classpathContainerResolver)) {
-      _containerresolver.add(classpathContainerResolver);
-    }
-  }
+  private boolean                          _isInitialized                            = false;
 
   /**
    * <p>
@@ -85,7 +46,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    * </p>
    */
   public ContainerClasspathEntryResolver() {
-    // emtpy constructor
+    initialize();
   }
 
   /**
@@ -113,14 +74,14 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     }
 
     if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("_containerresolver: " + _containerresolver);
+      A4ELogging.debug("_containerresolver: " + this._containerresolver);
     }
 
     // set 'handled' to false
     boolean handled = false;
 
     // iterate over all registered container resolvers
-    final Iterator iterator = _containerresolver.iterator();
+    final Iterator iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
 
       final ClasspathContainerResolver classpathContainerResolver = (ClasspathContainerResolver) iterator.next();
@@ -152,8 +113,26 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    * {@inheritDoc}
    */
   public void initialize() {
+    this._containerresolver = new LinkedList<ClasspathContainerResolver>();
+
+    final Iterable<String[]> containerResolverEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
+        .getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
+
+    final List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
+
+// Instantiate all ProjectRoleIdentifiers
+    for (final String[] containerResolverEntry : containerResolverEntries) {
+      // we're not interested in the key of a roleidentifier. only the classname (value of the entry) is relevant
+      final String containerResolverClassName = containerResolverEntry[1];
+      final ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverClassName);
+      A4ELogging.trace("Register ClasspathContainerResolver '%s'", new Object[] { resolver });
+      containerResolvers.add(resolver);
+    }
+
+    this._containerresolver = containerResolvers;
+
     // initialize all registered container resolvers
-    final Iterator iterator = _containerresolver.iterator();
+    final Iterator iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
       final ClasspathContainerResolver classpathContainerResolver = (ClasspathContainerResolver) iterator.next();
       if (classpathContainerResolver instanceof Lifecycle) {
@@ -176,7 +155,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    */
   public void dispose() {
     // initialize all registered container resolvers
-    final Iterator iterator = _containerresolver.iterator();
+    final Iterator iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
       final ClasspathContainerResolver classpathContainerResolver = (ClasspathContainerResolver) iterator.next();
       if (classpathContainerResolver instanceof Lifecycle) {

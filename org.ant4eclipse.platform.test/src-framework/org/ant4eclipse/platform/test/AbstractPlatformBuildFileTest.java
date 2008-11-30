@@ -31,6 +31,12 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
   private TestEnvironment _testEnvironment;
 
   /**
+   * The workspace directory
+   * 
+   */
+  private File            _workspaceDir;
+
+  /**
    * Returns the name of the build file for a test case.
    * 
    * <p>
@@ -50,11 +56,15 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
   @Override
   public void setUp() throws Exception {
     _testEnvironment = new TestEnvironment();
+    _workspaceDir = getTestEnvironment().createSubDirectory("workspace");
   }
 
   /**
    * Copies the given build.xml-file from the classpath to the testenvironment's root directory and configures the ant
    * project
+   * 
+   * <p>
+   * This methods sets the build project property <tt>workspaceDir</tt> to the workspace directory
    * 
    * @param unqualifiedBuildFileName
    *          the unqualified name of the build file, that must be accessible from classpath
@@ -66,6 +76,7 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
     String buildFileContent = FileHelper.getResource(qualifiedBuildFileName);
     File buildFile = _testEnvironment.createFile(unqualifiedBuildFileName, buildFileContent);
     configureProject(buildFile.getAbsolutePath());
+    getProject().setProperty("workspaceDir", _workspaceDir.getAbsolutePath());
   }
 
   /**
@@ -85,6 +96,15 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
    */
   protected TestEnvironment getTestEnvironment() {
     return this._testEnvironment;
+  }
+
+  /**
+   * Returns the workspace directory that will be created for each test case
+   * 
+   * @return
+   */
+  protected File getWorkspaceDir() {
+    return this._workspaceDir;
   }
 
 }

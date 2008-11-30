@@ -68,7 +68,7 @@ public class Version {
         }
       }
     } catch (final NoSuchElementException e) {
-      throw new IllegalArgumentException("invalid format"); //$NON-NLS-1$
+      throw new IllegalArgumentException("invalid version format '" + version + "'"); //$NON-NLS-1$
     }
 
     this._major = major != -1 ? new Integer(major) : null;
@@ -93,6 +93,7 @@ public class Version {
     return this._qualifier;
   }
 
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
@@ -103,6 +104,7 @@ public class Version {
     return result;
   }
 
+  @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
       return true;
@@ -148,6 +150,7 @@ public class Version {
   /**
    * @see java.lang.Object#toString()
    */
+  @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append(this._major);

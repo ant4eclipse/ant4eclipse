@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<project name="getEclipseClasspath-test" basedir="." default="foo">
+
+	<!-- definition of condition HasNature -->
+	<typedef name="getEclipseClasspath"
+	         classname="org.ant4eclipse.jdt.ant.GetEclipseClassPathTask"
+	/>
+	
+	<target name="test-simple">
+		<getEclipseClasspath workspace="${workspaceDir}"
+			projectName="simpleproject"
+			property="classpath"/>
+	</target>
+
+	<!-- default dummy target -->
+	<target name="foo" />
+</project>

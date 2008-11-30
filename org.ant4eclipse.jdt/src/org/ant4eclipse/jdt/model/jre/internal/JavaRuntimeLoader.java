@@ -26,6 +26,7 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
+import org.ant4eclipse.jdt.model.jre.internal.support.LibraryDetector;
 
 public class JavaRuntimeLoader {
   /**  */
@@ -54,12 +55,12 @@ public class JavaRuntimeLoader {
     Assert.nonEmpty(id);
     Assert.isDirectory(location);
 
-    final String outfileName = System.getProperty("java.io.tmpdir") + "\\ant4eclipse_jdk_props_"
-        + Math.round(Math.random() * 1000000000);
+    final String outfileName = System.getProperty("java.io.tmpdir") + "\\ant4eclipse_jdk_props_" +
+        Math.round(Math.random() * 1000000000);
     // System.out.println(outfileName);
 
     final JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
-    javaLauncher.setMainClass("net.sf.ant4eclipse.model.jdt.jre.internal.support.LibraryDetector");
+    javaLauncher.setMainClass(LibraryDetector.class.getName());
     javaLauncher.setArgs(new String[] { outfileName });
     javaLauncher.execute();
 
