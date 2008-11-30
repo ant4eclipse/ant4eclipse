@@ -16,9 +16,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.Iterator;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
@@ -33,27 +34,82 @@ import org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder;
  */
 public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
 
-  private final List<String>      _classpathEntries;
-
-  private final List<SourceClass> _sourceClasses;
+  private final List<String>               _classpathEntries;
 
   /**
+   * Holds all SourceClasses (grouped by their source folders) that should be added to this project.
+   * 
+   * <ul>
+   * <li>Key: the source folder
+   * <li>Value: {@link SourceClasses} the SourceClasses in the source folder
+   * </ul>
+   */
+  private final Map<String, SourceClasses> _sourceClasses;
+
+  /**
+   * Returns a "pre-configured" {@link JdtEclipseProjectBuilder}, that already has set:
+   * <ul>
+   * <li>a java builder</li>
+   * <li>the java nature
+   * <li>
+   * <li>the JRE container classpath entry</li>
+   * <li>a source folder (<tt>src</tt>)</li>
+   * <li>a default output folder (<tt>bin</tt>)</li>
+   * </ul>
+   * 
+   * The builder returned can be used to further customize the project
+   * 
+   * @param projectName
+   *          The name of the project
+   * @return the pre-configured JdtEclipseProjectBuilder
+   */
+  public static JdtEclipseProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
+    return new JdtEclipseProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src",
+        false).withOutputClasspathEntry("bin");
+  }
+
+  /**
+   * Constructs a new JdtEclipseProjectBuilder instance with the project name.
+   * 
+   * <p>
+   * The constructor adds a {@link #withJavaBuilder() javaBuilder} and a {@link #withJavaNature() javaNature} to the
+   * project
+   * 
    * @param projectName
    */
   public JdtEclipseProjectBuilder(String projectName) {
     super(projectName);
 
-    this._sourceClasses = new LinkedList<SourceClass>();
+    this._sourceClasses = new Hashtable<String, SourceClasses>();
     this._classpathEntries = new LinkedList<String>();
+
+    // All JDT-Projects have a java builder and a java nature
+    withJavaNature();
+    withJavaBuilder();
+
   }
 
-  public SourceClass withSourceClass(String className) {
+  /**
+   * Adds a {@link SourceClass} to this project
+   * 
+   * @param sourceFolder
+   *          the sourcefolder for this class
+   * @param className
+   *          The full qualified classname for this class
+   * @return the {@link SourceClass} instance
+   */
+  public SourceClass withSourceClass(String sourceFolder, String className) {
     SourceClass sourceClass = new SourceClass(this, className);
-    _sourceClasses.add(sourceClass);
+    SourceClasses sourceClasses = _sourceClasses.get(sourceFolder);
+    if (sourceClasses == null) {
+      sourceClasses = new SourceClasses();
+      this._sourceClasses.put(sourceFolder, sourceClasses);
+    }
+    sourceClasses.addSourceClass(sourceClass);
     return sourceClass;
   }
 
-  public JdtEclipseProjectBuilder withJavaBuilder() {
+  protected JdtEclipseProjectBuilder withJavaBuilder() {
     return (JdtEclipseProjectBuilder) withBuilder("org.eclipse.jdt.core.javabuilder");
   }
 
@@ -74,7 +130,7 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
     return this;
   }
 
-  public JdtEclipseProjectBuilder withJavaNature() {
+  protected JdtEclipseProjectBuilder withJavaNature() {
     return (JdtEclipseProjectBuilder) withNature(JavaProjectRole.JAVA_NATURE);
   }
 
@@ -104,6 +160,7 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
   }
 
   /**
+   * Adds a JRE_CONTAINER to the classpath
    * 
    * @return
    */
@@ -111,21 +168,38 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
     return withClasspathEntry("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER'/>");
   }
 
+  /**
+   * Adds a JRE_CONTAINER with the given containerName to the classpath
+   * 
+   * @return
+   */
+  public JdtEclipseProjectBuilder withJreContainerClasspathEntry(String containerName) {
+    return withClasspathEntry(format("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>",
+        containerName));
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder#createArtefacts(java.io.File)
+   */
   @Override
   protected void createArtefacts(File projectDir) throws Exception {
     super.createArtefacts(projectDir);
 
     createClasspathFile(projectDir);
 
-    Iterator<SourceClass> it = _sourceClasses.iterator();
-    while (it.hasNext()) {
-      SourceClass sourceClass = it.next();
-      createSourceClass(projectDir, sourceClass);
+    for (Map.Entry<String, SourceClasses> entry : _sourceClasses.entrySet()) {
+      String sourceFolder = entry.getKey();
+      List<SourceClass> sourceClasses = entry.getValue().getSourceClasses();
+      for (SourceClass sourceClass : sourceClasses) {
+        createSourceClass(projectDir, sourceFolder, sourceClass);
+      }
     }
   }
 
-  protected void createSourceClass(File projectDir, SourceClass sourceClass) throws Exception {
-    File sourceDir = new File(projectDir, "source");
+  protected void createSourceClass(File projectDir, String sourceFolder, SourceClass sourceClass) throws Exception {
+    File sourceDir = new File(projectDir, sourceFolder);
     if (!sourceDir.exists()) {
       sourceDir.mkdirs();
     }
@@ -162,6 +236,27 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
 
     File dotClasspathFile = new File(projectDir, ".classpath");
     FileHelper.createFile(dotClasspathFile, dotClasspath.toString());
+  }
+
+  /**
+   * Holds a list of {@link SourceClass SourceClasses}
+   * 
+   * @author Nils Hartmann (nils@nilshartmann.net)
+   */
+  class SourceClasses {
+    private final List<SourceClass> _sourceClasses;
+
+    public SourceClasses() {
+      this._sourceClasses = new LinkedList<SourceClass>();
+    }
+
+    public void addSourceClass(SourceClass sourceClass) {
+      this._sourceClasses.add(sourceClass);
+    }
+
+    public List<SourceClass> getSourceClasses() {
+      return this._sourceClasses;
+    }
   }
 
 }

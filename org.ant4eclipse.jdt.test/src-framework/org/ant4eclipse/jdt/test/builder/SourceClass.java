@@ -45,9 +45,9 @@ import org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder;
  * @version $Revision: 1.5 $
  */
 public class SourceClass {
-  private final String                _className;
+  private final String                   _className;
 
-  private final List<String>                  _usedClasses;
+  private final List<String>             _usedClasses;
 
   private final JdtEclipseProjectBuilder _eclipseProjectCreator;
 
@@ -75,7 +75,7 @@ public class SourceClass {
    * 
    * @return
    */
-  public String generateUsageCode() {
+  String generateUsageCode() {
     StringBuffer source = new StringBuffer();
     Iterator<String> it = _usedClasses.iterator();
     while (it.hasNext()) {
