@@ -11,16 +11,20 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test.builder;
 
+import static java.lang.String.format;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Vector;
@@ -82,7 +86,6 @@ public class FileHelper {
     if (!directory.mkdirs()) {
       throw new RuntimeException("Directory '" + directory + "' could not be created for an unkown reason");
     }
-
   }
 
   public static void createFile(File file, String content) throws IOException {
@@ -191,6 +194,34 @@ public class FileHelper {
     stream.read(content);
     stream.close();
     return content;
+  }
+
+  /**
+   * Returns the content of the resource from the classpath
+   * 
+   * @param resourceName
+   *          the name of the resource that should be loaded from the classpath
+   * @return the content of the resource
+   * @throws IOException
+   *           if the file not exits or if an I/O error occurs.
+   */
+  public static String getResource(String resourceName) throws IOException {
+
+    InputStream inputStream = FileHelper.class.getResourceAsStream("/" + resourceName);
+    if (inputStream == null) {
+      throw new FileNotFoundException(format("Resource '%s' not found on classpath!", resourceName));
+    }
+
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    int b;
+    while ((b = inputStream.read()) != -1) {
+      out.write(b);
+    }
+    out.flush();
+    out.close();
+
+    inputStream.close();
+    return out.toString();
   }
 
   /**

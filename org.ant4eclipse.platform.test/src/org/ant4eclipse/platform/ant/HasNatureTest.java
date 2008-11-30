@@ -2,23 +2,22 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.apache.tools.ant.BuildFileTest;
+import org.ant4eclipse.platform.test.AbstractPlatformBuildFileTest;
+import org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder;
 
-public class HasNatureTest extends BuildFileTest {
+public class HasNatureTest extends AbstractPlatformBuildFileTest {
 
-  public void setUp() {
-    configureProject("src/org/ant4eclipse/platform/ant/hasNature.xml");
-
-    File workspaceDir = new File("C:/TEMP/a4e");
-
-    getProject().setProperty("workspaceDir", workspaceDir.getAbsolutePath());
-  }
+  private File _workspaceDir;
 
   @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
-    ServiceRegistry.reset();
+  public void setUp() throws Exception {
+    super.setUp();
+
+    setupBuildFile("hasNature.xml");
+    _workspaceDir = getTestEnvironment().createSubDirectory("workspace");
+    getProject().setProperty("workspaceDir", _workspaceDir.getAbsolutePath());
+
+    new EclipseProjectBuilder("simpleproject").withNature("org.ant4eclipse.testnature").createIn(_workspaceDir);
   }
 
   public void testNonexistingNature() {
@@ -28,63 +27,4 @@ public class HasNatureTest extends BuildFileTest {
   public void testExistingNature() {
     expectLog("testExistingNature", "OK");
   }
-
-  // protected void setUp() throws Exception {
-  // super.setUp();
-  // getTestEnvironment().copyFromResourceDirToWorkspace("projects/simpleworkspace");
-  // }
-
-  //    
-  //    
-  // public void testHasNature_3() throws Exception {
-  //
-  // StringBuffer target = new StringBuffer();
-  // target.append("<target name='test'>");
-  // target.append(" <if>");
-  // target.append("  <hasNature project='${basedir}/../simpleproject' nature='nonexistingnature' />");
-  // target.append("  <then><echo message=\"FAIL\"/></then>");
-  // target.append("  <else><echo message=\"OK\"/></else>");
-  // target.append(" </if>");
-  // target.append("</target>");
-  //
-  // getBuildFile().addTarget(target.toString());
-  // getBuildFile().execute(this, "simpleproject");
-  //
-  // expectLog("OK");
-  // }
-  //    
-  // public void testHasNature_4() throws Exception {
-  //
-  // StringBuffer target = new StringBuffer();
-  // target.append("<target name='test'>");
-  // target.append(" <if>");
-  // target.append("  <hasNature project='${basedir}/../simpleproject' nature='org.eclipse.jdt.core.javanature' />");
-  // target.append("  <then><echo message=\"OK\"/></then>");
-  // target.append("  <else><echo message=\"FAIL\"/></else>");
-  // target.append(" </if>");
-  // target.append("</target>");
-  //
-  // getBuildFile().addTarget(target.toString());
-  // getBuildFile().execute(this, "simpleproject");
-  //
-  // expectLog("OK");
-  // }
-  //
-  //
-  // public void testHasNature_5() throws Exception {
-  //
-  // StringBuffer target = new StringBuffer();
-  // target.append("<target name='test'>");
-  // target.append(" <if>");
-  // target.append("  <hasNature project='${basedir}/../simpleproject' nature='java' />");
-  // target.append("  <then><echo message=\"OK\"/></then>");
-  // target.append("  <else><echo message=\"FAIL\"/></else>");
-  // target.append(" </if>");
-  // target.append("</target>");
-  //
-  // getBuildFile().addTarget(target.toString());
-  // getBuildFile().execute(this, "simpleproject");
-  //
-  // expectLog("OK");
-  // }
 }

@@ -9,13 +9,14 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.test.builder;
+package org.ant4eclipse.platform.test;
 
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.io.IOException;
 
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.platform.test.builder.FileHelper;
 
 /**
  * The Test Environment contains a set of folder that are created before and removed after a test case.
@@ -50,16 +51,29 @@ public class TestEnvironment {
     if (_rootDir.exists()) {
       removeDirectoryTree(_rootDir);
     }
-    A4ELogging.debug("Create test dir: " + _rootDir);
+    // A4ELogging.debug("Create test dir: " + _rootDir);
     FileHelper.createDirectory(_rootDir);
   }
 
   public void dispose() throws Exception {
     if (_rootDir != null && REMOVE_ON_DISPOSE) {
-      A4ELogging.debug("Remove test dir: " + _rootDir);
+      // A4ELogging.debug("Remove test dir: " + _rootDir);
       removeDirectoryTree(_rootDir);
       _rootDir = null;
     }
+  }
+
+  /**
+   * Creates the file fileName with the given content in the root folder of the test environment
+   * 
+   * @param fileName
+   * @param content
+   * @throws IOException
+   */
+  public File createFile(String fileName, String content) throws IOException {
+    File outFile = new File(_rootDir, fileName);
+    FileHelper.createFile(outFile, content);
+    return outFile;
   }
 
   public File createSubDirectory(String name) {
@@ -84,6 +98,10 @@ public class TestEnvironment {
         }
       }
     }
+  }
+
+  public File getRootDir() {
+    return this._rootDir;
   }
 
 }

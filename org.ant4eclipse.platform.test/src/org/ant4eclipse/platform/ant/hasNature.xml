@@ -24,7 +24,7 @@
 		<condition property="hasNature">
 			<hasNature workspace='${workspaceDir}'
 			           projectName='simpleproject'
-			           nature='org.eclipse.jdt.core.javanature'
+			           nature='org.ant4eclipse.testnature'
 			/>
 		</condition>
 		<fail unless="hasNature">FAILURE</fail>
