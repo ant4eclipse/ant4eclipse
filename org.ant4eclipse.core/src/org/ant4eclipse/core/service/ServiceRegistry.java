@@ -66,8 +66,13 @@ public class ServiceRegistry {
 
     _instance = new ServiceRegistry();
     configuration.configure(_instance.new ConfigurationContextImpl());
-    _instance.initialize();
     _configured = true;
+    try {
+      _instance.initialize();
+    } catch (RuntimeException exception) {
+      _configured = false;
+      throw exception;
+    }
   }
 
   /**
