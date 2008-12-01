@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.ejc;
 
-import org.ant4eclipse.core.NLS;
-import org.ant4eclipse.core.NLSMessage;
 import org.ant4eclipse.core.exception.ExceptionCode;
+import org.ant4eclipse.core.nls.NLS;
+import org.ant4eclipse.core.nls.NLSMessage;
 
 /**
  * <p>
