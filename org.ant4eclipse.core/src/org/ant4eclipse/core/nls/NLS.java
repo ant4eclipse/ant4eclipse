@@ -1,4 +1,4 @@
-package org.ant4eclipse.core;
+package org.ant4eclipse.core.nls;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
+import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.exception.ExceptionCode;
 
@@ -139,12 +140,10 @@ public abstract class NLS {
    */
   private static String getDefaultMessage(Field field) {
     NLSMessage nlsMessage = field.getAnnotation(NLSMessage.class);
-
-    if (nlsMessage == null || nlsMessage.value() == null) {
-      // Set a dummy message to avoid NPE
-      return "[WARN: No (default) message for field '" + field + "' found]";
-    }
-
+    // if (nlsMessage == null || nlsMessage.value() == null) {
+    // // Set a dummy message to avoid NPE
+    // return "[WARN: No (default) message for field '" + field + "' found]";
+    // }
     return nlsMessage.value();
   }
 
