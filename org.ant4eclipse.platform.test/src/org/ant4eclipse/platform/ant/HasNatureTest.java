@@ -1,20 +1,16 @@
 package org.ant4eclipse.platform.ant;
 
-import java.io.File;
-
 import org.ant4eclipse.platform.test.AbstractPlatformBuildFileTest;
 import org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder;
 
 public class HasNatureTest extends AbstractPlatformBuildFileTest {
-
-  private File _workspaceDir;
 
   @Override
   public void setUp() throws Exception {
     super.setUp();
 
     setupBuildFile("hasNature.xml");
-    new EclipseProjectBuilder("simpleproject").withNature("org.ant4eclipse.testnature").createIn(_workspaceDir);
+    new EclipseProjectBuilder("simpleproject").withNature("org.ant4eclipse.testnature").createIn(getWorkspaceDir());
   }
 
   public void testNonexistingNature() {
