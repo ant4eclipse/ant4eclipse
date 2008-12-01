@@ -70,6 +70,7 @@ public class MacroExecutionDelegate extends AbstractAntDelegate {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void removeProperty(final String name) {
     Hashtable properties = null;
     // Ant 1.5 stores properties in Project
@@ -148,6 +149,7 @@ public class MacroExecutionDelegate extends AbstractAntDelegate {
    * @exception NoSuchFieldException
    *              Darn, nothing to fondle.
    */
+  @SuppressWarnings("unchecked")
   private Field getField(final Class thisClass, final String fieldName) throws NoSuchFieldException {
     if (thisClass == null) {
       throw new NoSuchFieldException("Invalid field : " + fieldName);
