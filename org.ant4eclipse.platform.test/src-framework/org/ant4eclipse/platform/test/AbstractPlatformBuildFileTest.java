@@ -59,6 +59,17 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
     _workspaceDir = getTestEnvironment().createSubDirectory("workspace");
   }
 
+  @Override
+  protected void runTest() throws Throwable {
+    try {
+      super.runTest();
+    } catch (Throwable t) {
+      System.err.println(getName() + " throws exception (" + t + "). Output:");
+      System.err.println(getError());
+      throw t;
+    }
+  }
+
   /**
    * Copies the given build.xml-file from the classpath to the testenvironment's root directory and configures the ant
    * project

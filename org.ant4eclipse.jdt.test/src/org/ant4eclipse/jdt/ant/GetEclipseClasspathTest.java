@@ -25,12 +25,7 @@ public class GetEclipseClasspathTest extends AbstractJDTBuildFileTest {
   }
 
   public void testSimple() throws Exception {
-    try {
-      executeTarget("test-simple");
-    } catch (Exception ex) {
-      System.err.println(getFullLog());
-      throw ex;
-    }
+    executeTarget("test-simple");
     String classpath = getProject().getProperty("classpath");
     System.out.println(classpath);
     assertNotNull(classpath);
