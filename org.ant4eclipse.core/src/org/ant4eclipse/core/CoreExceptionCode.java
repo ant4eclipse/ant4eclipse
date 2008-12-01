@@ -12,6 +12,8 @@
 package org.ant4eclipse.core;
 
 import org.ant4eclipse.core.exception.ExceptionCode;
+import org.ant4eclipse.core.nls.NLS;
+import org.ant4eclipse.core.nls.NLSMessage;
 
 public class CoreExceptionCode extends ExceptionCode {
 
