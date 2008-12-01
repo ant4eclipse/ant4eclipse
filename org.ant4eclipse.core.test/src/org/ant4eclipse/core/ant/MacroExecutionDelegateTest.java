@@ -1,12 +1,12 @@
 package org.ant4eclipse.core.ant;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.ant4eclipse.core.ant.delegate.MacroExecutionDelegate;
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildFileTest;
+import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 public class MacroExecutionDelegateTest extends BuildFileTest {
@@ -19,34 +19,29 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
     expectLog("testMacroExecute", "${hurz.test}test${hurz.test}test${hurz.test}");
   }
 
-  public static class MacroExecuteTask extends AbstractAnt4EclipseTask {
+  public static class MacroExecuteTask extends AbstractAnt4EclipseTask implements DynamicElement {
 
     private MacroExecutionDelegate _macroExecutionDelegate;
 
-    private List<MacroDef>         _macroDefs;
+    private Map<String, MacroDef>  _macroDefs;
 
     public MacroExecuteTask() {
       _macroExecutionDelegate = new MacroExecutionDelegate(this);
-      _macroDefs = new LinkedList<MacroDef>();
+      _macroDefs = new HashMap<String, MacroDef>();
     }
 
     @Override
     protected void doExecute() {
-
-      for (MacroDef macroDef : _macroDefs) {
+      for (MacroDef macroDef : _macroDefs.values()) {
         Map<String, String> scopedProperties = new HashMap<String, String>();
         scopedProperties.put("test", "test");
         _macroExecutionDelegate.executeMacroInstance(macroDef, "hurz", scopedProperties);
       }
-
     }
 
-    /**
-     * @return
-     */
-    public Object createTestSequential() {
+    public Object createDynamicElement(String name) throws BuildException {
       MacroDef macroDef = this._macroExecutionDelegate.createMacroDef();
-      _macroDefs.add(macroDef);
+      _macroDefs.put(name, macroDef);
       return macroDef.createSequential();
     }
   }

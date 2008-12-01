@@ -8,23 +8,26 @@
 
 	<!-- test testNonexistingNature -->
 	<target name="testMacroExecute">
+		
 		<echo>${hurz.test}</echo>
 		
 		<macroExecute>
-			<testSequential>
+		    <org.eclipse.jdt.core.javabuilder>
 				<echo>${hurz.test}</echo>
-			</testSequential>
+		    </org.eclipse.jdt.core.javabuilder>
 		</macroExecute>
 		
 		<echo>${hurz.test}</echo>
 		
 		<macroExecute>
-			<testSequential>
+		    <org.eclipse.jdt.core.javabuilder>
 				<echo>${hurz.test}</echo>
-			</testSequential>
+		    </org.eclipse.jdt.core.javabuilder>
 		</macroExecute>
 		
+
 		<echo>${hurz.test}</echo>
+		
 	</target>
 
 </project>
