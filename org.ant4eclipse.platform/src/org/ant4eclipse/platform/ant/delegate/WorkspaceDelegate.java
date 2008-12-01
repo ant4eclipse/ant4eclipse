@@ -17,6 +17,7 @@ import java.util.Hashtable;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.TaskHelper;
+import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;

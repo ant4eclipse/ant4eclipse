@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.Target;
 import org.apache.tools.ant.Task;
