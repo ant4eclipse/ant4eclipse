@@ -54,31 +54,28 @@ public class Ant4EclipseConfigurator {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new DefaultAnt4EclipseLogger(),
           ant4EclipseConfigurationProperties != null ? new Ant4EclipseConfigurationImpl(
-              ant4EclipseConfigurationProperties) : new Ant4EclipseConfigurationImpl());
+              ant4EclipseConfigurationProperties) : new Ant4EclipseConfigurationImpl(new Properties()));
     }
   }
 
   private static void configureAnt4Eclipse(final Ant4EclipseLogger logger, final Ant4EclipseConfiguration configuration) {
 
-    if (!ServiceRegistry.isConfigured()) {
+    // configure
+    ServiceRegistry.configure(new ServiceRegistryConfiguration() {
 
-      // configure
-      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      public void configure(final ConfigurationContext context) {
 
-        public void configure(final ConfigurationContext context) {
+        // 1. add Ant4EclipseLogger
+        context.registerService(logger, Ant4EclipseLogger.class.getName());
 
-          // 1. add Ant4EclipseLogger
-          context.registerService(logger, Ant4EclipseLogger.class.getName());
+        // 2. add Ant4EclipseConfiguration
+        context.registerService(configuration, Ant4EclipseConfiguration.class.getName());
 
-          // 2. add Ant4EclipseConfiguration
-          context.registerService(configuration, Ant4EclipseConfiguration.class.getName());
-
-          // 3. Configure services from properties
-          PropertiesBasedServiceRegistryConfiguration propertiesConfiguration = new PropertiesBasedServiceRegistryConfiguration(
-              configuration);
-          propertiesConfiguration.configure(context);
-        }
-      });
-    }
+        // 3. Configure services from properties
+        PropertiesBasedServiceRegistryConfiguration propertiesConfiguration = new PropertiesBasedServiceRegistryConfiguration(
+            configuration);
+        propertiesConfiguration.configure(context);
+      }
+    });
   }
 }

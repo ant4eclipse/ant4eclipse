@@ -66,8 +66,8 @@ public class ServiceRegistry {
 
     _instance = new ServiceRegistry();
     configuration.configure(_instance.new ConfigurationContextImpl());
-    _configured = true;
     _instance.initialize();
+    _configured = true;
   }
 
   /**
@@ -218,8 +218,8 @@ public class ServiceRegistry {
         try {
           ((Lifecycle) service).dispose();
         } catch (final Exception e) {
-          throw new Ant4EclipseException(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED, e, service.getClass()
-              .getName(), e.getMessage());
+          // no need to do anything here...
+          System.err.println(String.format(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED.getMessage(), service));
         }
       }
     }
@@ -279,7 +279,7 @@ public class ServiceRegistry {
   /**
    * ConfigurationContextImpl --
    * 
-   * @author admin
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   protected class ConfigurationContextImpl implements ConfigurationContext {
 
