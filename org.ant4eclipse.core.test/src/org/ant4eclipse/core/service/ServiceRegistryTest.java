@@ -86,6 +86,45 @@ public class ServiceRegistryTest {
     } catch (Exception e) {
       //
     }
+    try {
+      // 
+      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+        public void configure(ConfigurationContext context) {
+          context.registerService(new Object(), "test1");
+          context.registerService(new Object(), "test1");
+        }
+      });
+      fail();
+    } catch (Exception e) {
+      //
+    }
+  }
+
+  @Test
+  public void testInitialitationException() {
+    try {
+      // 
+      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+        public void configure(ConfigurationContext context) {
+          context.registerService(new NonInitialitationDummyService(), "test1");
+        }
+      });
+      fail();
+    } catch (Exception e) {
+      assertEquals(
+          "Service 'org.ant4eclipse.core.service.ServiceRegistryTest$NonInitialitationDummyService' could not be initialized.",
+          e.getMessage());
+    }
+  }
+
+  @Test
+  public void testDisposeException() {
+    ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      public void configure(ConfigurationContext context) {
+        context.registerService(new NonDisposeDummyService(), "test1");
+      }
+    });
+    ServiceRegistry.reset();
   }
 
   @Test
@@ -137,6 +176,18 @@ public class ServiceRegistryTest {
 
     public boolean isInitialized() {
       return _initialized;
+    }
+  }
+
+  public class NonInitialitationDummyService extends DummyService {
+    public void initialize() {
+      throw new RuntimeException();
+    }
+  }
+
+  public class NonDisposeDummyService extends DummyService {
+    public void dispose() {
+      throw new RuntimeException();
     }
   }
 }

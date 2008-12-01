@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.util;
+package org.ant4eclipse.core.nls;
 
 import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.NLSMessage;
-import org.ant4eclipse.core.NLS;
+import org.ant4eclipse.core.nls.NLS;
+import org.ant4eclipse.core.nls.NLSMessage;
 
 public class TestMessages {
 

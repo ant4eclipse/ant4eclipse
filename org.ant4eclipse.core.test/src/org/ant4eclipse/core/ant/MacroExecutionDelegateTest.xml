@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<project name="testAntCall" basedir=".">
+
+	<typedef name="macroExecute"
+	         classname="org.ant4eclipse.core.ant.MacroExecutionDelegateTest$MacroExecuteTask"
+	/>
+
+	<!-- test testNonexistingNature -->
+	<target name="testMacroExecute">
+		<echo>${hurz.test}</echo>
+		
+		<macroExecute>
+			<testSequential>
+				<echo>${hurz.test}</echo>
+			</testSequential>
+		</macroExecute>
+		
+		<echo>${hurz.test}</echo>
+		
+		<macroExecute>
+			<testSequential>
+				<echo>${hurz.test}</echo>
+			</testSequential>
+		</macroExecute>
+		
+		<echo>${hurz.test}</echo>
+	</target>
+
+</project>
