@@ -7,11 +7,16 @@
 	         classname="org.ant4eclipse.jdt.ant.GetEclipseClassPathTask"
 	/>
 	
-	<target name="test-simple">
+	<target name="getEclipseClasspath">
 		<getEclipseClasspath workspace="${workspaceDir}"
-			projectName="simpleproject"
+			pathSeparator="${pathSeparator}"
+			runtime="${runtimeClasspath}"
+			projectName="${projectName}"
 			property="classpath"/>
 	</target>
+	
+	
+
 
 	<!-- default dummy target -->
 	<target name="foo" />
