@@ -74,13 +74,18 @@ public class EclipseProjectBuilder {
 
   /**
    * Creates this project
+   * 
+   * @param destinationDirectory
+   *          the directory where this project(directory) should be created to
+   * @return The project directory
    */
-  public void createIn(File destinationDirectory) throws Exception {
+  public File createIn(File destinationDirectory) throws Exception {
     Assert.isDirectory(destinationDirectory);
     final File projectDir = new File(destinationDirectory, _projectName);
     FileHelper.createDirectory(projectDir);
 
     createArtefacts(projectDir);
+    return projectDir;
   }
 
   protected void createArtefacts(File projectDir) throws Exception {
