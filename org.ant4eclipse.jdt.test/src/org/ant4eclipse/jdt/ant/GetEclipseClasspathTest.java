@@ -40,20 +40,25 @@ public class GetEclipseClasspathTest extends AbstractJDTBuildFileTest {
   }
 
   public void testSimple() throws Exception {
-    String classpath = executeTestTarget("simpleproject", false);
+    String classpath = executeTestTarget("simpleproject", false, false);
     assertClasspath(classpath, _simpleProjectBinDir);
+  }
+
+  public void testSimple_Relative() throws Exception {
+    String classpath = executeTestTarget("simpleproject", false, true);
+    assertClasspath(classpath, new File("simpleproject/bin"));
   }
 
   public void testSimple_TwoClassFolders() throws Exception {
     File projectcDir = JdtEclipseProjectBuilder.getPreConfiguredJdtBuilder("projectc").withSrcClasspathEntry("gen-src",
         "gen-classes", false).createIn(getWorkspaceDir());
-    String classpath = executeTestTarget("projectc", false);
+    String classpath = executeTestTarget("projectc", false, false);
     assertClasspath(classpath, new File(projectcDir, "bin"), new File(projectcDir, "gen-classes"));
 
   }
 
   public void test_WithProjectReferences() throws Exception {
-    String classpath = executeTestTarget("projectb", false);
+    String classpath = executeTestTarget("projectb", false, false);
     assertClasspath(classpath, _projectBBinDir, _simpleProjectBinDir);
   }
 
@@ -63,7 +68,7 @@ public class GetEclipseClasspathTest extends AbstractJDTBuildFileTest {
     File projectcDir = JdtEclipseProjectBuilder.getPreConfiguredJdtBuilder("projectc").withSrcClasspathEntry(
         "/projectb", false).createIn(getWorkspaceDir());
 
-    String classpath = executeTestTarget("projectc", false);
+    String classpath = executeTestTarget("projectc", false, false);
     File projectCBinDir = new File(projectcDir, "bin");
     assertClasspath(classpath, projectCBinDir, _projectBBinDir);
   }
@@ -75,7 +80,7 @@ public class GetEclipseClasspathTest extends AbstractJDTBuildFileTest {
     File projectcDir = JdtEclipseProjectBuilder.getPreConfiguredJdtBuilder("projectc").withSrcClasspathEntry(
         "/projectb", false).createIn(getWorkspaceDir());
 
-    String classpath = executeTestTarget("projectc", true);
+    String classpath = executeTestTarget("projectc", true, false);
     File projectCBinDir = new File(projectcDir, "bin");
     assertClasspath(classpath, projectCBinDir, _projectBBinDir, _simpleProjectBinDir);
   }
@@ -99,10 +104,11 @@ public class GetEclipseClasspathTest extends AbstractJDTBuildFileTest {
     }
   }
 
-  protected String executeTestTarget(String projectName, boolean runtimeClasspath) throws Exception {
+  protected String executeTestTarget(String projectName, boolean runtimeClasspath, boolean relative) throws Exception {
     getProject().setProperty("projectName", projectName);
     getProject().setProperty("runtimeClasspath", Boolean.toString(runtimeClasspath));
     getProject().setProperty("pathSeparator", TEST_PATH_SEPARATOR);
+    getProject().setProperty("relative", Boolean.toString(relative));
 
     executeTarget("getEclipseClasspath");
 

@@ -9,6 +9,7 @@
 	
 	<target name="getEclipseClasspath">
 		<getEclipseClasspath workspace="${workspaceDir}"
+			relative="${relative}"
 			pathSeparator="${pathSeparator}"
 			runtime="${runtimeClasspath}"
 			projectName="${projectName}"
