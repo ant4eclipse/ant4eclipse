@@ -1,5 +1,7 @@
 package org.ant4eclipse.platform;
 
+import org.ant4eclipse.platform.ant.ExecuteProjectBuildersTaskTest;
+import org.ant4eclipse.platform.ant.GetProjectDirecoryTest;
 import org.ant4eclipse.platform.ant.HasNatureTest;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifierRegistryTest;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRootTest;
@@ -8,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { HasNatureTest.class, ProjectRoleIdentifierRegistryTest.class, CvsRootTest.class,
-    ProjectSetFileParserImplTest.class })
+@Suite.SuiteClasses( { ExecuteProjectBuildersTaskTest.class, HasNatureTest.class, GetProjectDirecoryTest.class,
+    ProjectRoleIdentifierRegistryTest.class, CvsRootTest.class, ProjectSetFileParserImplTest.class })
 public class AllTests {
 }

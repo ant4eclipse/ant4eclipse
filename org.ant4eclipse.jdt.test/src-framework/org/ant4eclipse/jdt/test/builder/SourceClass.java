@@ -16,14 +16,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.ClassName;
+import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 import org.ant4eclipse.platform.test.builder.StringTemplate;
-import org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder;
 
 /**
  * Represents a dummy Java-Source file. This can be used to generate Source-File to test the compilation process.
  * 
  * <p>
- * Use {@link JdtEclipseProjectBuilder#withSourceClass(String)} to create a Source class. The creation of a Sourceclass
+ * Use {@link JdtProjectBuilder#withSourceClass(String)} to create a Source class. The creation of a Sourceclass
  * must be finished with {@link #finishClass()} which returns the original EclipseProjectCreator.
  * 
  * <p>
@@ -49,9 +49,9 @@ public class SourceClass {
 
   private final List<String>             _usedClasses;
 
-  private final JdtEclipseProjectBuilder _eclipseProjectCreator;
+  private final JdtProjectBuilder _eclipseProjectCreator;
 
-  public SourceClass(JdtEclipseProjectBuilder eclipseProjectCreator, String className) {
+  public SourceClass(JdtProjectBuilder eclipseProjectCreator, String className) {
     _eclipseProjectCreator = eclipseProjectCreator;
     _usedClasses = new LinkedList<String>();
     _className = className;
@@ -62,7 +62,7 @@ public class SourceClass {
     return this;
   }
 
-  public JdtEclipseProjectBuilder finishClass() {
+  public JdtProjectBuilder finishClass() {
     return _eclipseProjectCreator;
   }
 

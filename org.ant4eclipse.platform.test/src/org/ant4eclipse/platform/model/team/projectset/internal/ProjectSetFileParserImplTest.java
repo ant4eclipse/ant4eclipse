@@ -15,10 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
-import org.ant4eclipse.testframework.Ant4EclipseTestCase;
+import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
-public class ProjectSetFileParserImplTest extends Ant4EclipseTestCase {
+public class ProjectSetFileParserImplTest extends ConfigurableAnt4EclipseTestCase {
 
   @Test
   public void test_Factories() {

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.test.builder.builder;
+package org.ant4eclipse.platform.test.builder;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -19,7 +19,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.platform.test.builder.FileHelper;
 
 /**
  * Creates Eclipse projects for test purposes.

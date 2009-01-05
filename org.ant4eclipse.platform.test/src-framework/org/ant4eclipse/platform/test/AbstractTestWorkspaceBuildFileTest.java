@@ -22,19 +22,27 @@ import org.apache.tools.ant.BuildFileTest;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class AbstractPlatformBuildFileTest extends BuildFileTest {
+public abstract class AbstractTestWorkspaceBuildFileTest extends BuildFileTest {
+
+  private TestWorkspace _testWorkspace;
 
   /**
-   * The testenvironment.
-   * 
+   * Creates the Test Environment before execution of a test case
    */
-  private TestEnvironment _testEnvironment;
+  @Override
+  public void setUp() throws Exception {
+    this._testWorkspace = new TestWorkspace();
+  }
 
   /**
-   * The workspace directory
-   * 
+   * Disposes the test environment and resets the {@link ServiceRegistry}
    */
-  private File            _workspaceDir;
+  @Override
+  protected void tearDown() throws Exception {
+    super.tearDown();
+    this._testWorkspace.dispose();
+    ServiceRegistry.reset();
+  }
 
   /**
    * Returns the name of the build file for a test case.
@@ -48,15 +56,6 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
    */
   protected String getProjectBuildFile(String unqualifiedName) {
     return getClass().getPackage().getName().replace('.', '/') + "/" + unqualifiedName;
-  }
-
-  /**
-   * Creates the Test Environment before execution of a test case
-   */
-  @Override
-  public void setUp() throws Exception {
-    _testEnvironment = new TestEnvironment();
-    _workspaceDir = getTestEnvironment().createSubDirectory("workspace");
   }
 
   @Override
@@ -85,37 +84,21 @@ public class AbstractPlatformBuildFileTest extends BuildFileTest {
   protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
     String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
     String buildFileContent = FileHelper.getResource(qualifiedBuildFileName);
-    File buildFile = _testEnvironment.createFile(unqualifiedBuildFileName, buildFileContent);
+    File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
     configureProject(buildFile.getAbsolutePath());
-    getProject().setProperty("workspaceDir", _workspaceDir.getAbsolutePath());
+    getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
   }
 
   /**
-   * Disposes the test environment and resets the {@link ServiceRegistry}
-   */
-  @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
-    _testEnvironment.dispose();
-    ServiceRegistry.reset();
-  }
-
-  /**
-   * Returns a {@link TestEnvironment} for this test case.
+   * Returns a {@link TestWorkspace} for this test case.
    * 
    * @return
    */
-  protected TestEnvironment getTestEnvironment() {
-    return this._testEnvironment;
+  protected TestWorkspace getTestWorkspace() {
+    return this._testWorkspace;
   }
 
-  /**
-   * Returns the workspace directory that will be created for each test case
-   * 
-   * @return
-   */
-  protected File getWorkspaceDir() {
-    return this._workspaceDir;
+  protected File getTestWorkspaceDirectory() {
+    return this._testWorkspace.getRootDir();
   }
-
 }

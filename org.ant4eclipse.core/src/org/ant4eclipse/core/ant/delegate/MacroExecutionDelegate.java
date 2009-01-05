@@ -51,22 +51,26 @@ public class MacroExecutionDelegate extends AbstractAntDelegate {
     instance.setMacroDef(macroDef);
 
     // set scopes properties
-    Iterator<Map.Entry<String, String>> iterator = scopedProperties.entrySet().iterator();
-    while (iterator.hasNext()) {
-      final Map.Entry<String, String> entry = iterator.next();
-      final String key = (prefix + "." + entry.getKey());
-      final String value = entry.getValue();
-      getAntProject().setProperty(key, value);
+    if (scopedProperties != null) {
+      Iterator<Map.Entry<String, String>> iterator = scopedProperties.entrySet().iterator();
+      while (iterator.hasNext()) {
+        final Map.Entry<String, String> entry = iterator.next();
+        final String key = (prefix + "." + entry.getKey());
+        final String value = entry.getValue();
+        getAntProject().setProperty(key, value);
+      }
     }
 
     // execute macro instance
     instance.execute();
 
     // unset scopes properties
-    Iterator<String> keyIterator = scopedProperties.keySet().iterator();
-    while (keyIterator.hasNext()) {
-      final String key = (prefix + "." + keyIterator.next());
-      removeProperty(key);
+    if (scopedProperties != null) {
+      Iterator<String> keyIterator = scopedProperties.keySet().iterator();
+      while (keyIterator.hasNext()) {
+        final String key = (prefix + "." + keyIterator.next());
+        removeProperty(key);
+      }
     }
   }
 

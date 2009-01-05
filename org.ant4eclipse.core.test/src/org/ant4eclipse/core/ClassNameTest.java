@@ -19,10 +19,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 
-import org.ant4eclipse.testframework.Ant4EclipseTestCase;
 import org.junit.Test;
 
-public class ClassNameTest extends Ant4EclipseTestCase {
+public class ClassNameTest {
 
   @Test
   public void test_QualifiedName() {

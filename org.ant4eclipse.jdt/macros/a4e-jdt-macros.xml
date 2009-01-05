@@ -1,0 +1,34 @@
+<project>
+
+    <!-- = = = = = = = = = = = = = = = = =
+          macrodef: buildJavaProject          
+         = = = = = = = = = = = = = = = = = -->
+    <macrodef name="buildJavaProject">
+        <attribute name="targetplatform" />
+        <sequential>            
+            <executeFeature preExecuteFeaturePluginsTarget='pre.execute.feature.plugins'
+                            executeFeaturePluginTarget='execute.feature.plugin'
+                            postExecuteFeaturePluginsTarget='post.execute.feature.plugins'
+                            feature='${basedir}/examples/test/test.feature/feature.xml'
+                            workspace='${basedir}/examples/test'
+            >
+                <targetPlatform refid='@{targetplatform}' />
+            </executeFeature>
+        </sequential>
+    </macrodef>
+
+    <target name='pre.execute.feature.plugins'>
+        <echo message='pre.execute.feature' />
+    </target>
+
+    <target name='execute.feature.plugin'>
+        <echo message='${plugin.id}:${plugin.version}:${plugin.resolvedversion}:${plugin.isSource}:${plugin.filename} - '
+        />
+    </target>
+
+    <target name='post.execute.feature.plugins'>
+        <echo message='post.execute.feature' />
+    </target>
+
+
+</project>

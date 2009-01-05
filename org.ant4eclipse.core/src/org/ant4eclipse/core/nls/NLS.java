@@ -140,10 +140,10 @@ public abstract class NLS {
    */
   private static String getDefaultMessage(Field field) {
     NLSMessage nlsMessage = field.getAnnotation(NLSMessage.class);
-    // if (nlsMessage == null || nlsMessage.value() == null) {
-    // // Set a dummy message to avoid NPE
-    // return "[WARN: No (default) message for field '" + field + "' found]";
-    // }
+    if (nlsMessage == null || nlsMessage.value() == null) {
+      // Set a dummy message to avoid NPE
+      return "[WARN: No (default) message for field '" + field + "' found]";
+    }
     return nlsMessage.value();
   }
 

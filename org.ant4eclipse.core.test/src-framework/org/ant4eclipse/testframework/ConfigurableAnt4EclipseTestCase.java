@@ -26,7 +26,7 @@ import org.junit.Before;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class Ant4EclipseTestCase {
+public class ConfigurableAnt4EclipseTestCase {
 
   /**
    * This setup method sets up the {@link Ant4EclipseConfigurationProperties} and the {@link ServiceRegistry}.
@@ -37,7 +37,12 @@ public class Ant4EclipseTestCase {
    */
   @Before
   public void setup() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse(customAnt4EclipseConfiguration(new Properties()));
+    Properties properties = customAnt4EclipseConfiguration(new Properties());
+    if (properties == null) {
+      Ant4EclipseConfigurator.configureAnt4Eclipse();
+    } else {
+      Ant4EclipseConfigurator.configureAnt4Eclipse(properties);
+    }
   }
 
   @After
@@ -52,6 +57,10 @@ public class Ant4EclipseTestCase {
     }
   }
 
+  /**
+   * @param properties
+   * @return
+   */
   protected Properties customAnt4EclipseConfiguration(Properties properties) {
     return null;
   }

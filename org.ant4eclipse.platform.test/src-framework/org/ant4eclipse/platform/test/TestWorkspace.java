@@ -25,14 +25,14 @@ import org.ant4eclipse.platform.test.builder.FileHelper;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class TestEnvironment {
+public class TestWorkspace {
 
   /**
    * should {@link #dispose()} remove the created directories?
    * 
    * can be set to <tt>false</tt> to avoid removing the directories (can be useful for debug purposes)
    */
-  private final static boolean REMOVE_ON_DISPOSE = false;
+  private boolean _removeOnDispose = true;
 
   /**
    * The root directory of the test environment
@@ -40,26 +40,31 @@ public class TestEnvironment {
    * <p>
    * <b>NOTE!</b> this directory will be deleted recursivley!
    */
-  private File                 _rootDir;
+  private File    _rootDir;
 
-  public TestEnvironment() throws Exception {
+  public TestWorkspace() throws Exception {
+    init();
+  }
+
+  public TestWorkspace(boolean removeOnDispose) throws Exception {
+    this._removeOnDispose = removeOnDispose;
     init();
   }
 
   protected void init() throws Exception {
-    _rootDir = new File(System.getProperty("java.io.tmpdir"), "a4etest");
-    if (_rootDir.exists()) {
-      removeDirectoryTree(_rootDir);
+    this._rootDir = new File(System.getProperty("java.io.tmpdir"), "a4etest");
+    if (this._rootDir.exists()) {
+      removeDirectoryTree(this._rootDir);
     }
-    System.out.println("Create test dir: " + _rootDir);
-    FileHelper.createDirectory(_rootDir);
+    System.out.println("Create test dir: " + this._rootDir);
+    FileHelper.createDirectory(this._rootDir);
   }
 
   public void dispose() throws Exception {
-    if (_rootDir != null && REMOVE_ON_DISPOSE) {
-      System.out.println("Remove test dir: " + _rootDir);
-      removeDirectoryTree(_rootDir);
-      _rootDir = null;
+    if (this._rootDir != null && this._removeOnDispose) {
+      System.out.println("Remove test dir: " + this._rootDir);
+      removeDirectoryTree(this._rootDir);
+      this._rootDir = null;
     }
   }
 
@@ -71,7 +76,7 @@ public class TestEnvironment {
    * @throws IOException
    */
   public File createFile(String fileName, String content) throws IOException {
-    File outFile = new File(_rootDir, fileName);
+    File outFile = new File(this._rootDir, fileName);
     FileHelper.createFile(outFile, content);
     return outFile;
   }
@@ -79,12 +84,16 @@ public class TestEnvironment {
   public File createSubDirectory(String name) {
     assertNotNull(name);
 
-    File subdir = new File(_rootDir, name);
+    File subdir = new File(this._rootDir, name);
     FileHelper.createDirectory(subdir);
     return subdir;
   }
 
-  protected void removeDirectoryTree(File directory) throws Exception {
+  public File getRootDir() {
+    return this._rootDir;
+  }
+
+  private void removeDirectoryTree(File directory) throws Exception {
     if (directory != null && directory.exists()) {
       System.gc();
       FileHelper.removeDirectoryTree(directory.getAbsolutePath());
@@ -99,9 +108,4 @@ public class TestEnvironment {
       }
     }
   }
-
-  public File getRootDir() {
-    return this._rootDir;
-  }
-
 }

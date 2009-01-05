@@ -18,10 +18,10 @@ import java.util.Properties;
 
 import org.ant4eclipse.platform.model.internal.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.testframework.Ant4EclipseTestCase;
+import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
-public class ProjectRoleIdentifierRegistryTest extends Ant4EclipseTestCase {
+public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTestCase {
 
   @Override
   protected Properties customAnt4EclipseConfiguration(Properties properties) {

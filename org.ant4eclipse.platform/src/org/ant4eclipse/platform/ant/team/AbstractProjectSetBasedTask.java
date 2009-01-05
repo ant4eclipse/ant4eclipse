@@ -19,7 +19,6 @@ import org.ant4eclipse.platform.ant.delegate.ProjectSetDelegate;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
-
 /**
  * Base class for all tasks working with project sets
  * 
@@ -111,19 +110,4 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public void setWorkspace(final File workspace) {
     this._projectSetBase.setWorkspace(workspace);
   }
-
-  // /**
-  // * <p>
-  // * Enables/disables the initial workspace initialisation.
-  // * </p>
-  // *
-  // * @param enable
-  // * <code>true</code> if the workspace should be initialised.
-  // *
-  // * @see ProjectBase#getEclipseProject()
-  // */
-  // public void setInitialiseWorkspace(final boolean enable) {
-  // // TODO:
-  // this._projectSetBase.setInitialiseWorkspace(enable);
-  // }
 }

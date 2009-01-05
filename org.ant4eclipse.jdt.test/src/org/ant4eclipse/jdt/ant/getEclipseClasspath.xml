@@ -6,18 +6,16 @@
 	<typedef name="getEclipseClasspath"
 	         classname="org.ant4eclipse.jdt.ant.GetEclipseClassPathTask"
 	/>
-	
+
 	<target name="getEclipseClasspath">
 		<getEclipseClasspath workspace="${workspaceDir}"
-			relative="${relative}"
-			pathSeparator="${pathSeparator}"
-			runtime="${runtimeClasspath}"
-			projectName="${projectName}"
-			property="classpath"/>
+		                     relative="${relative}"
+		                     pathSeparator="${pathSeparator}"
+		                     runtime="${runtimeClasspath}"
+		                     projectName="${projectName}"
+		                     property="classpath"
+		/>
 	</target>
-	
-	
-
 
 	<!-- default dummy target -->
 	<target name="foo" />

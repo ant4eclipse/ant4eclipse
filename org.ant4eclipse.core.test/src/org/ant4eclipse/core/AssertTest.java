@@ -6,13 +6,13 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
-import org.ant4eclipse.testframework.Ant4EclipseTestCase;
+import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class AssertTest extends Ant4EclipseTestCase {
+public class AssertTest extends ConfigurableAnt4EclipseTestCase {
 
   /**
    * 

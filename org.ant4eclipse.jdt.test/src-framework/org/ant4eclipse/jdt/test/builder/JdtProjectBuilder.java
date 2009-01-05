@@ -23,16 +23,16 @@ import java.util.Map;
 
 import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 import org.ant4eclipse.platform.test.builder.FileHelper;
 import org.ant4eclipse.platform.test.builder.StringTemplate;
-import org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder;
 
 /**
  * Adds JDT-specific features to {@link EclipseProjectBuilder}
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
+public class JdtProjectBuilder extends EclipseProjectBuilder {
 
   private final List<String>               _classpathEntries;
 
@@ -47,7 +47,7 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
   private final Map<String, SourceClasses> _sourceClasses;
 
   /**
-   * Returns a "pre-configured" {@link JdtEclipseProjectBuilder}, that already has set:
+   * Returns a "pre-configured" {@link JdtProjectBuilder}, that already has set:
    * <ul>
    * <li>a java builder</li>
    * <li>the java nature
@@ -63,8 +63,8 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
    *          The name of the project
    * @return the pre-configured JdtEclipseProjectBuilder
    */
-  public static JdtEclipseProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
-    return new JdtEclipseProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src",
+  public static JdtProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
+    return new JdtProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src",
         false).withOutputClasspathEntry("bin");
   }
 
@@ -77,7 +77,7 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
    * 
    * @param projectName
    */
-  public JdtEclipseProjectBuilder(String projectName) {
+  public JdtProjectBuilder(String projectName) {
     super(projectName);
 
     this._sourceClasses = new Hashtable<String, SourceClasses>();
@@ -109,8 +109,8 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
     return sourceClass;
   }
 
-  protected JdtEclipseProjectBuilder withJavaBuilder() {
-    return (JdtEclipseProjectBuilder) withBuilder("org.eclipse.jdt.core.javabuilder");
+  protected JdtProjectBuilder withJavaBuilder() {
+    return (JdtProjectBuilder) withBuilder("org.eclipse.jdt.core.javabuilder");
   }
 
   /**
@@ -123,38 +123,38 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
    *          The xml-entry
    * @return this
    */
-  public JdtEclipseProjectBuilder withClasspathEntry(String entry) {
+  public JdtProjectBuilder withClasspathEntry(String entry) {
     assertNotNull(entry);
 
     _classpathEntries.add(entry);
     return this;
   }
 
-  protected JdtEclipseProjectBuilder withJavaNature() {
-    return (JdtEclipseProjectBuilder) withNature(JavaProjectRole.JAVA_NATURE);
+  protected JdtProjectBuilder withJavaNature() {
+    return (JdtProjectBuilder) withNature(JavaProjectRole.JAVA_NATURE);
   }
 
-  public JdtEclipseProjectBuilder withSrcClasspathEntry(String path, boolean exported) {
+  public JdtProjectBuilder withSrcClasspathEntry(String path, boolean exported) {
     String line = format("<classpathentry kind='src' path='%s' exported='%s'/>", path, exported);
     return withClasspathEntry(line);
   }
 
-  public JdtEclipseProjectBuilder withSrcClasspathEntry(String path, String output, boolean exported) {
+  public JdtProjectBuilder withSrcClasspathEntry(String path, String output, boolean exported) {
     String line = format("<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output, exported);
     return withClasspathEntry(line);
   }
 
-  public JdtEclipseProjectBuilder withContainerClasspathEntry(String path) {
+  public JdtProjectBuilder withContainerClasspathEntry(String path) {
     String line = format("<classpathentry kind='con' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
-  public JdtEclipseProjectBuilder withVarClasspathEntry(String path) {
+  public JdtProjectBuilder withVarClasspathEntry(String path) {
     String line = format("<classpathentry kind='var' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
-  public JdtEclipseProjectBuilder withOutputClasspathEntry(String path) {
+  public JdtProjectBuilder withOutputClasspathEntry(String path) {
     String line = format(" <classpathentry kind='output' path='%s'/>", path);
     return withClasspathEntry(line);
   }
@@ -164,7 +164,7 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
    * 
    * @return
    */
-  public JdtEclipseProjectBuilder withJreContainerClasspathEntry() {
+  public JdtProjectBuilder withJreContainerClasspathEntry() {
     return withClasspathEntry("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER'/>");
   }
 
@@ -173,7 +173,7 @@ public class JdtEclipseProjectBuilder extends EclipseProjectBuilder {
    * 
    * @return
    */
-  public JdtEclipseProjectBuilder withJreContainerClasspathEntry(String containerName) {
+  public JdtProjectBuilder withJreContainerClasspathEntry(String containerName) {
     return withClasspathEntry(format("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>",
         containerName));
   }
