@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<project name="build.ant4eclipse"
+         basedir=".."
+         default="build.ant4eclipse"
+         xmlns:ant4eclipse="antlib:org.ant4eclipse">
+
+	<taskdef uri="antlib:org.ant4eclipse"
+	         resource="org/ant4eclipse/antlib.xml"
+	         classpath="R:\workspaces\a4e\org.ant4eclipse.core\bin;R:\workspaces\a4e\org.ant4eclipse.platform\bin;R:\workspaces\a4e\org.ant4eclipse.jdt\bin" />
+
+	<target name="build.ant4eclipse">
+		
+		<ant4eclipse:executeJdtProject workspace="${basedir}"
+		                               projectname="org.ant4eclipse.core">
+
+			<ant4eclipse:forEachOutputDirectory>
+				
+				<echo>${executeJdtProject.output.directory}</echo>
+				<echo>${executeJdtProject.classpath.relative.runtime}</echo>
+				<echo>${executeJdtProject.classpath.absolute.runtime}</echo>
+				<echo>${executeJdtProject.classpath.relative.compiletime}</echo>
+				<echo>${executeJdtProject.classpath.absolute.compiletime}</echo>
+			
+			</ant4eclipse:forEachOutputDirectory>
+			
+			<ant4eclipse:forEachSourceDirectory>
+			
+				<echo>${executeJdtProject.source.directory}</echo>
+				<echo>${executeJdtProject.classpath}</echo>
+			
+			</ant4eclipse:forEachSourceDirectory>
+
+		</ant4eclipse:executeJdtProject>
+	
+	</target>
+	
+</project>
