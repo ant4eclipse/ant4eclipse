@@ -12,6 +12,7 @@
 package org.ant4eclipse.core.ant.delegate;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,12 +51,27 @@ public class MacroExecutionDelegate extends AbstractAntDelegate {
     instance.setOwningTarget(((Task) getProjectComponent()).getOwningTarget());
     instance.setMacroDef(macroDef);
 
+    // we need a temporary map here to store all those properties that have to be reset after executing the macro
+    Map<String, String> propertiesToReset = null;
+
     // set scopes properties
     if (scopedProperties != null) {
+
+      propertiesToReset = new HashMap<String, String>();
+
+      // iterate over all scoped properties
       Iterator<Map.Entry<String, String>> iterator = scopedProperties.entrySet().iterator();
       while (iterator.hasNext()) {
+
         final Map.Entry<String, String> entry = iterator.next();
         final String key = (prefix + "." + entry.getKey());
+
+        // store the property if it already exists
+        String existingProperty = getAntProject().getProperty(key);
+        if (existingProperty != null) {
+          propertiesToReset.put(key, existingProperty);
+        }
+
         final String value = entry.getValue();
         getAntProject().setProperty(key, value);
       }
@@ -70,6 +86,11 @@ public class MacroExecutionDelegate extends AbstractAntDelegate {
       while (keyIterator.hasNext()) {
         final String key = (prefix + "." + keyIterator.next());
         removeProperty(key);
+
+        // reset the property if it existed before executing the macro
+        if (propertiesToReset.containsKey(key)) {
+          getAntProject().setProperty(key, propertiesToReset.get(key));
+        }
       }
     }
   }

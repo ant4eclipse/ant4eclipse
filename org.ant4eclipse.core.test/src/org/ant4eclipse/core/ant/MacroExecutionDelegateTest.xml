@@ -9,23 +9,35 @@
 	<!-- test testNonexistingNature -->
 	<target name="testMacroExecute">
 		
+		<!-- expecting 'initial' -->
 		<echo>${hurz.test}</echo>
 		
-		<macroExecute>
+		<macroExecute prefix="test1">
 		    <org.eclipse.jdt.core.javabuilder>
+		    	<!-- expecting 'test1.test' -->
+				<echo>${hurz.test}</echo>
+				<macroExecute prefix="test2">
+				    <org.eclipse.jdt.core.javabuilder>
+				    	<!-- expecting 'test2.test' -->
+						<echo>${hurz.test}</echo>
+				    </org.eclipse.jdt.core.javabuilder>
+				</macroExecute>
+		    	<!-- expecting 'test1.test' -->
 				<echo>${hurz.test}</echo>
 		    </org.eclipse.jdt.core.javabuilder>
 		</macroExecute>
 		
+		<!-- expecting 'initial' -->
 		<echo>${hurz.test}</echo>
 		
-		<macroExecute>
+		<macroExecute prefix="test3">
 		    <org.eclipse.jdt.core.javabuilder>
+		    	<!-- expecting 'test3.test' -->
 				<echo>${hurz.test}</echo>
 		    </org.eclipse.jdt.core.javabuilder>
 		</macroExecute>
 		
-
+		<!-- expecting 'initial' -->
 		<echo>${hurz.test}</echo>
 		
 	</target>

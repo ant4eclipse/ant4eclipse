@@ -13,10 +13,11 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
 
   public void setUp() {
     configureProject("src/org/ant4eclipse/core/ant/MacroExecutionDelegateTest.xml");
+    getProject().setProperty("hurz.test", "initial");
   }
 
   public void testMacroExecute() {
-    expectLog("testMacroExecute", "${hurz.test}test${hurz.test}test${hurz.test}");
+    expectLog("testMacroExecute", "initialtest1.testtest2.testtest1.testinitialtest3.testinitial");
   }
 
   public static class MacroExecuteTask extends AbstractAnt4EclipseTask implements DynamicElement {
@@ -25,16 +26,25 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
 
     private Map<String, MacroDef>  _macroDefs;
 
+    private String                 _prefix;
+
     public MacroExecuteTask() {
       _macroExecutionDelegate = new MacroExecutionDelegate(this);
       _macroDefs = new HashMap<String, MacroDef>();
+    }
+
+    /**
+     * @param prefix
+     */
+    public void setPrefix(String prefix) {
+      _prefix = prefix;
     }
 
     @Override
     protected void doExecute() {
       for (MacroDef macroDef : _macroDefs.values()) {
         Map<String, String> scopedProperties = new HashMap<String, String>();
-        scopedProperties.put("test", "test");
+        scopedProperties.put("test", _prefix + ".test");
         _macroExecutionDelegate.executeMacroInstance(macroDef, "hurz", scopedProperties);
       }
     }
