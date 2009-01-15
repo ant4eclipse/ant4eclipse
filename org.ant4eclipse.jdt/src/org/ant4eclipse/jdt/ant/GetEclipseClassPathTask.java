@@ -16,7 +16,7 @@ import java.util.Properties;
 
 import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgument;
 import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgumentDelegate;
-import org.ant4eclipse.jdt.tools.ClasspathResolver;
+import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.platform.ant.AbstractGetProjectPathTask;
 
@@ -84,8 +84,8 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
 
     final Properties properties = this._classpathContainerArgumentDelegate.getAsProperties();
 
-    final ResolvedClasspath resolvedClasspath = ClasspathResolver.resolveProjectClasspath(getEclipseProject(),
-        isRelative(), isRuntime(), properties);
+    final ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath(getEclipseProject(), isRelative(),
+        isRuntime(), properties);
 
     return resolvedClasspath.getClasspathFiles();
   }

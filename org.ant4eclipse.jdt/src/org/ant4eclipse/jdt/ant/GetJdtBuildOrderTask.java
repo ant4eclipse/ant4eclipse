@@ -16,7 +16,7 @@ import java.util.StringTokenizer;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.tools.BuildOrderResolver;
+import org.ant4eclipse.jdt.tools.alt.BuildOrderResolver;
 import org.ant4eclipse.platform.ant.team.AbstractProjectSetBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -26,7 +26,11 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class GetBuildOrderTask extends AbstractProjectSetBasedTask {
+/**
+ * @author admin
+ * 
+ */
+public class GetJdtBuildOrderTask extends AbstractProjectSetBasedTask {
 
 	/** Comment for <code>_buildorderProperty</code> */
 	private String _buildorderProperty;
