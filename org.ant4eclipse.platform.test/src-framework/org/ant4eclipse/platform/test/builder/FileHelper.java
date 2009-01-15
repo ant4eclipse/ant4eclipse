@@ -47,7 +47,7 @@ public class FileHelper {
    * @throws Exception
    *           if an error occurs.
    */
-  public static void removeDirectoryTree(String directoryName) throws Exception {
+  public static void removeDirectoryTree(String directoryName) {
 
     File directory = new File(directoryName);
 
@@ -56,7 +56,7 @@ public class FileHelper {
     }
 
     if (!directory.isDirectory()) {
-      throw new Exception("'" + directory + "' is not a directory");
+      throw new RuntimeException("'" + directory + "' is not a directory");
     }
 
     String[] fileList = directory.list();
@@ -88,21 +88,25 @@ public class FileHelper {
     }
   }
 
-  public static void createFile(File file, String content) throws IOException {
+  public static void createFile(File file, String content) {
     Assert.notNull(file);
     Assert.notNull(content);
 
-    if (!file.exists()) {
-      if (!file.createNewFile()) {
-        throw new RuntimeException("Could not create file: " + file);
+    try {
+      if (!file.exists()) {
+        if (!file.createNewFile()) {
+          throw new RuntimeException("Could not create file: " + file);
+        }
       }
+
+      FileWriter fileWriter = new FileWriter(file);
+
+      fileWriter.write(content);
+      fileWriter.flush();
+      fileWriter.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
     }
-
-    FileWriter fileWriter = new FileWriter(file);
-
-    fileWriter.write(content);
-    fileWriter.flush();
-    fileWriter.close();
   }
 
   /**
@@ -123,7 +127,7 @@ public class FileHelper {
    * @throws Exception
    *           if an error occurs during creation.
    */
-  public static void createFile(String directoryName, String fileName, byte[] content) throws Exception {
+  public static void createFile(String directoryName, String fileName, byte[] content) {
 
     File fileOut = new File(directoryName + File.separator + fileName);
 
@@ -133,10 +137,16 @@ public class FileHelper {
       fileOut.delete();
     }
 
-    FileOutputStream fout = new FileOutputStream(fileOut);
+    try {
+      FileOutputStream fout = new FileOutputStream(fileOut);
 
-    fout.write(content);
-    fout.close();
+      fout.write(content);
+      fout.close();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
 
     // System.out.println("Created file " + directoryName + "\\" + fileName);
   }
@@ -159,8 +169,7 @@ public class FileHelper {
    * @throws Exception
    *           if an error occurs during creation.
    */
-  public static void createFile(String directoryName, String fileName, ByteArrayOutputStream byteStream)
-      throws Exception {
+  public static void createFile(String directoryName, String fileName, ByteArrayOutputStream byteStream) {
 
     File fileOut = new File(directoryName + File.separator + fileName);
 
@@ -170,9 +179,15 @@ public class FileHelper {
       fileOut.delete();
     }
 
-    FileOutputStream fout = new FileOutputStream(fileOut);
-    byteStream.writeTo(fout);
-    fout.close();
+    try {
+      FileOutputStream fout = new FileOutputStream(fileOut);
+      byteStream.writeTo(fout);
+      fout.close();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
 
   }
 
@@ -185,14 +200,20 @@ public class FileHelper {
    * @throws IOException
    *           if the file not exits or if an I/O error occurs.
    */
-  public static byte[] getFile(String fileName) throws IOException {
+  public static byte[] getFile(String fileName) {
     File file = new File(fileName);
     int dim = (int) file.length();
     byte[] content = new byte[dim];
 
-    BufferedInputStream stream = new BufferedInputStream(new FileInputStream(fileName));
-    stream.read(content);
-    stream.close();
+    try {
+      BufferedInputStream stream = new BufferedInputStream(new FileInputStream(fileName));
+      stream.read(content);
+      stream.close();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
     return content;
   }
 
@@ -205,63 +226,80 @@ public class FileHelper {
    * @throws IOException
    *           if the file not exits or if an I/O error occurs.
    */
-  public static String getResource(String resourceName) throws IOException {
+  public static String getResource(String resourceName) {
 
     InputStream inputStream = FileHelper.class.getResourceAsStream("/" + resourceName);
     if (inputStream == null) {
-      throw new FileNotFoundException(format("Resource '%s' not found on classpath!", resourceName));
+      throw new RuntimeException(format("Resource '%s' not found on classpath!", resourceName));
     }
 
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    int b;
-    while ((b = inputStream.read()) != -1) {
-      out.write(b);
-    }
-    out.flush();
-    out.close();
+    ByteArrayOutputStream out;
+    try {
+      out = new ByteArrayOutputStream();
+      int b;
+      while ((b = inputStream.read()) != -1) {
+        out.write(b);
+      }
+      out.flush();
+      out.close();
 
-    inputStream.close();
+      inputStream.close();
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
     return out.toString();
   }
 
   /**
    * Returns the content of the file specified.
    */
-  public static byte[] getFileFiltered(String fileName, char tokenSep, Map filter) throws IOException {
-    File file = new File(fileName);
-    BufferedReader reader = new BufferedReader(new FileReader(file));
-    String line = null;
-    StringBuffer buffer = new StringBuffer();
-    while ((line = reader.readLine()) != null) {
-      try {
-        line = replaceTokens(line, tokenSep, filter);
-      } catch (NoSuchElementException e) {
-        A4ELogging.debug(e.getMessage());
-        throw new RuntimeException("Could filter file " + fileName + ": " + e, e);
+  public static byte[] getFileFiltered(String fileName, char tokenSep, Map filter) {
+    try {
+      File file = new File(fileName);
+      BufferedReader reader = new BufferedReader(new FileReader(file));
+      String line = null;
+      StringBuffer buffer = new StringBuffer();
+      while ((line = reader.readLine()) != null) {
+        try {
+          line = replaceTokens(line, tokenSep, filter);
+        } catch (NoSuchElementException e) {
+          A4ELogging.debug(e.getMessage());
+          throw new RuntimeException("Could filter file " + fileName + ": " + e, e);
+        }
+        buffer.append(line);
+        buffer.append(System.getProperty("line.separator"));
       }
-      buffer.append(line);
-      buffer.append(System.getProperty("line.separator"));
+      return buffer.toString().getBytes();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
     }
-    return buffer.toString().getBytes();
   }
 
   /**
    * Returns the content of the file specified.
    */
-  public static byte[] getBinaryFileFiltered(String fileName, Map filter) throws IOException {
+  public static byte[] getBinaryFileFiltered(String fileName, Map filter) {
     File file = new File(fileName);
     ByteArrayOutputStream byteout = new ByteArrayOutputStream();
-    BufferedReader reader = new BufferedReader(new FileReader(file));
-    String line = reader.readLine();
-    while (line != null) {
-      String value = (String) filter.get(line);
-      if (value != null) {
-        byteout.write(BEGIN_CHUNK);
-        DataOutputStream dataout = new DataOutputStream(byteout);
-        dataout.writeUTF(value);
-        byteout.write(END_CHUNK);
+    try {
+      BufferedReader reader = new BufferedReader(new FileReader(file));
+      String line = reader.readLine();
+      while (line != null) {
+        String value = (String) filter.get(line);
+        if (value != null) {
+          byteout.write(BEGIN_CHUNK);
+          DataOutputStream dataout = new DataOutputStream(byteout);
+          dataout.writeUTF(value);
+          byteout.write(END_CHUNK);
+        }
+        line = reader.readLine();
       }
-      line = reader.readLine();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
     }
     return byteout.toByteArray();
   }
@@ -291,8 +329,8 @@ public class FileHelper {
       File f = files[i];
       if (f.isDirectory()) {
         String[] children = getAllFiles(f.getPath(), root);
-        for (int j = 0; j < children.length; j++) {
-          fileList.addElement(children[j]);
+        for (String element : children) {
+          fileList.addElement(element);
         }
       } else if (f.isFile()) {
         String fileName = f.getPath();
@@ -308,7 +346,7 @@ public class FileHelper {
     return (String[]) fileList.toArray(new String[0]);
   }
 
-  public static String replaceTokens(String line, char tokenSep, Map tokens) throws NoSuchElementException {
+  public static String replaceTokens(String line, char tokenSep, Map tokens) {
     boolean inToken = false;
 
     StringBuffer result = new StringBuffer();

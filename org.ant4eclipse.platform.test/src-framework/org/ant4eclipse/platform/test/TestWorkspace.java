@@ -42,16 +42,16 @@ public class TestWorkspace {
    */
   private File    _rootDir;
 
-  public TestWorkspace() throws Exception {
+  public TestWorkspace() {
     init();
   }
 
-  public TestWorkspace(boolean removeOnDispose) throws Exception {
+  public TestWorkspace(boolean removeOnDispose) {
     this._removeOnDispose = removeOnDispose;
     init();
   }
 
-  protected void init() throws Exception {
+  protected void init() {
     this._rootDir = new File(System.getProperty("java.io.tmpdir"), "a4etest");
     if (this._rootDir.exists()) {
       removeDirectoryTree(this._rootDir);
@@ -60,7 +60,7 @@ public class TestWorkspace {
     FileHelper.createDirectory(this._rootDir);
   }
 
-  public void dispose() throws Exception {
+  public void dispose() {
     if (this._rootDir != null && this._removeOnDispose) {
       System.out.println("Remove test dir: " + this._rootDir);
       removeDirectoryTree(this._rootDir);
@@ -75,7 +75,7 @@ public class TestWorkspace {
    * @param content
    * @throws IOException
    */
-  public File createFile(String fileName, String content) throws IOException {
+  public File createFile(String fileName, String content) {
     File outFile = new File(this._rootDir, fileName);
     FileHelper.createFile(outFile, content);
     return outFile;
@@ -93,19 +93,25 @@ public class TestWorkspace {
     return this._rootDir;
   }
 
-  private void removeDirectoryTree(File directory) throws Exception {
-    if (directory != null && directory.exists()) {
-      System.gc();
-      FileHelper.removeDirectoryTree(directory.getAbsolutePath());
-      if (directory.exists()) {
-        System.err.println("Warn! Could not remove directory '" + directory + "' trying again...");
+  private void removeDirectoryTree(File directory) {
+    try {
+      if (directory != null && directory.exists()) {
         System.gc();
-        Thread.sleep(1000);
         FileHelper.removeDirectoryTree(directory.getAbsolutePath());
         if (directory.exists()) {
-          System.err.println("WARN! UNABLE TO DELETE TEST DIRECTORY '" + directory + "'");
+          System.err.println("Warn! Could not remove directory '" + directory + "' trying again...");
+          System.gc();
+          Thread.sleep(1000);
+          FileHelper.removeDirectoryTree(directory.getAbsolutePath());
+          if (directory.exists()) {
+            System.err.println("WARN! UNABLE TO DELETE TEST DIRECTORY '" + directory + "'");
+          }
         }
       }
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage(), e);
     }
   }
 }

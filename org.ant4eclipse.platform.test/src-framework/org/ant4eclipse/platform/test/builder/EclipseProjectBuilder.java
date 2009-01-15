@@ -37,7 +37,7 @@ public class EclipseProjectBuilder {
 
   public EclipseProjectBuilder(final String projectName) {
     assertNotNull(projectName);
-    _projectName = projectName;
+    this._projectName = projectName;
     this._natures = new LinkedList<String>();
     this._builders = new LinkedList<String>();
 
@@ -55,7 +55,7 @@ public class EclipseProjectBuilder {
 
   public EclipseProjectBuilder withNature(String natureId) {
     assertNotNull(natureId);
-    _natures.add(natureId);
+    this._natures.add(natureId);
     return this;
   }
 
@@ -67,7 +67,7 @@ public class EclipseProjectBuilder {
   public EclipseProjectBuilder withBuilder(String buildCmd) {
     assertNotNull(buildCmd);
 
-    _builders.add(buildCmd);
+    this._builders.add(buildCmd);
     return this;
   }
 
@@ -78,32 +78,32 @@ public class EclipseProjectBuilder {
    *          the directory where this project(directory) should be created to
    * @return The project directory
    */
-  public File createIn(File destinationDirectory) throws Exception {
+  public File createIn(File destinationDirectory) {
     Assert.isDirectory(destinationDirectory);
-    final File projectDir = new File(destinationDirectory, _projectName);
+    final File projectDir = new File(destinationDirectory, this._projectName);
     FileHelper.createDirectory(projectDir);
 
     createArtefacts(projectDir);
     return projectDir;
   }
 
-  protected void createArtefacts(File projectDir) throws Exception {
+  protected void createArtefacts(File projectDir) {
     createProjectFile(projectDir);
   }
 
-  protected void createProjectFile(File projectDir) throws Exception {
+  protected void createProjectFile(File projectDir) {
     final StringBuffer dotProject = new StringBuffer();
     dotProject.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(NL).append("<projectDescription><name>")
-        .append(_projectName).append("</name>").append("<comment/><projects/>").append(NL).append("<buildSpec>")
+        .append(this._projectName).append("</name>").append("<comment/><projects/>").append(NL).append("<buildSpec>")
         .append(NL);
-    Iterator<String> it = _builders.iterator();
+    Iterator<String> it = this._builders.iterator();
     while (it.hasNext()) {
       final String builder = it.next();
       dotProject.append("<buildCommand><name>").append(builder).append("</name><arguments/></buildCommand>").append(NL);
     }
     dotProject.append("</buildSpec>").append(NL);
 
-    it = _natures.iterator();
+    it = this._natures.iterator();
     dotProject.append("<natures>").append(NL);
     while (it.hasNext()) {
       final String builder = it.next();
@@ -115,5 +115,4 @@ public class EclipseProjectBuilder {
     File dotProjectFile = new File(projectDir, ".project");
     FileHelper.createFile(dotProjectFile, dotProject.toString());
   }
-
 }
