@@ -12,8 +12,8 @@
 package org.ant4eclipse.platform.model.resource.workspaceregistry;
 
 import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.platform.model.resource.Workspace;
-
 
 /**
  * <p>
@@ -98,4 +98,20 @@ public interface WorkspaceRegistry extends Lifecycle {
    * @return the current {@link Workspace}.
    */
   public Workspace getCurrent();
+
+  /**
+   */
+  static class Helper {
+
+    /**
+     * <p>
+     * Fetches the {@link JavaRuntimeRegistry} instance from the {@link ServiceRegistry}.
+     * </p>
+     * 
+     * @return the registered {@link JavaRuntimeRegistry}
+     */
+    public static WorkspaceRegistry getRegistry() {
+      return (WorkspaceRegistry) ServiceRegistry.instance().getService(WorkspaceRegistry.class.getName());
+    }
+  }
 } /* ENDCLASS */

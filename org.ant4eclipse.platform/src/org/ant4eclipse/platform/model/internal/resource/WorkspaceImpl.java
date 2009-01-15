@@ -13,7 +13,6 @@ package org.ant4eclipse.platform.model.internal.resource;
 
 import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -61,8 +60,22 @@ public final class WorkspaceImpl implements Workspace {
   public EclipseProject[] getProjects(final String[] names, final boolean failOnMissingProjects) {
     Assert.notNull(names);
 
-    // TODO
-    return null;
+    List<EclipseProject> projects = new LinkedList<EclipseProject>();
+
+    for (String name : names) {
+      EclipseProject project = getProject(name);
+
+      if (project == null && failOnMissingProjects) {
+        // TODO
+        throw new RuntimeException("Missing Project '" + name + "'");
+      }
+
+      projects.add(project);
+    }
+
+    // getProject(final String name);
+    // projects.
+    return projects.toArray(new EclipseProject[0]);
   }
 
   /**
@@ -81,8 +94,7 @@ public final class WorkspaceImpl implements Workspace {
 
     final List<EclipseProject> result = new LinkedList<EclipseProject>();
     final Collection<EclipseProject> projects = this._projects.values();
-    for (final Iterator<EclipseProject> iterator = projects.iterator(); iterator.hasNext();) {
-      final EclipseProject eclipseProject = iterator.next();
+    for (EclipseProject eclipseProject : projects) {
       if (eclipseProject.hasRole(projectRole)) {
         result.add(eclipseProject);
       }
@@ -115,6 +127,7 @@ public final class WorkspaceImpl implements Workspace {
     this._projects.put(key, eclipseProject);
   }
 
+  @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
@@ -122,6 +135,7 @@ public final class WorkspaceImpl implements Workspace {
     return result;
   }
 
+  @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
       return true;

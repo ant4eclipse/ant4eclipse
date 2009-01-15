@@ -76,6 +76,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate {
    * @deprecated use {@link WorkspaceDelegate#setWorkspaceDirectory(File)} instead. This method is for backward
    *             compatibility only.
    */
+  @Deprecated
   public void setWorkspace(final File workspace) {
     setWorkspaceDirectory(workspace);
   }
@@ -245,20 +246,14 @@ public class WorkspaceDelegate extends AbstractAntDelegate {
       }
     }
 
-    if (!getWorkspaceRegistry().containsWorkspace(this._workspaceDirectory.getAbsolutePath())) {
-      this._workspace = getWorkspaceRegistry().registerWorkspace(this._workspaceDirectory.getAbsolutePath(),
-          new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
+    if (!WorkspaceRegistry.Helper.getRegistry().containsWorkspace(this._workspaceDirectory.getAbsolutePath())) {
+      this._workspace = WorkspaceRegistry.Helper.getRegistry().registerWorkspace(
+          this._workspaceDirectory.getAbsolutePath(), new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
     } else {
-      this._workspace = getWorkspaceRegistry().getWorkspace(this._workspaceDirectory.getAbsolutePath());
+      this._workspace = WorkspaceRegistry.Helper.getRegistry().getWorkspace(this._workspaceDirectory.getAbsolutePath());
     }
 
     this._baseinitialised = true;
-  }
-
-  public WorkspaceRegistry getWorkspaceRegistry() {
-    final WorkspaceRegistry workspaceRegistry = (WorkspaceRegistry) ServiceRegistry.instance().getService(
-        WorkspaceRegistry.class.getName());
-    return workspaceRegistry;
   }
 
   private EclipseVariableResolver getEclipseVariableResolver() {
