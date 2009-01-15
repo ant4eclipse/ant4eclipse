@@ -7,8 +7,6 @@ import static org.junit.Assert.fail;
 
 import java.util.List;
 
-
-import org.ant4eclipse.core.dependencygraph.DependencyGraph;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
@@ -100,5 +98,34 @@ public class DependencyGraphTest {
     assertFalse(edge_1.equals(edge_4));
 
     assertFalse(edge_1.equals(new RuntimeException()));
+  }
+
+  @Test
+  public void testForrest() {
+    String o1 = new String("o1");
+    String o2 = new String("o2");
+    String o3 = new String("o3");
+    String t1 = new String("t1");
+    String t2 = new String("t2");
+
+    DependencyGraph<String> graph = new DependencyGraph<String>();
+
+    graph.addVertex(o1);
+    graph.addVertex(o2);
+    graph.addVertex(o3);
+    graph.addVertex(t1);
+    graph.addVertex(t2);
+
+    graph.addEdge(o1, o2);
+    graph.addEdge(o2, o3);
+    graph.addEdge(t1, t2);
+
+    List<String> result = graph.calculateOrder();
+
+    assertEquals("o3", result.get(0));
+    assertEquals("t2", result.get(1));
+    assertEquals("o2", result.get(2));
+    assertEquals("t1", result.get(3));
+    assertEquals("o1", result.get(4));
   }
 }
