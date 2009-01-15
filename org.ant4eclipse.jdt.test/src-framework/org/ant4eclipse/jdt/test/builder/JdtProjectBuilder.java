@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,8 +65,8 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return the pre-configured JdtEclipseProjectBuilder
    */
   public static JdtProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
-    return new JdtProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src",
-        false).withOutputClasspathEntry("bin");
+    return new JdtProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src", false)
+        .withOutputClasspathEntry("bin");
   }
 
   /**
@@ -184,7 +185,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @see org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder#createArtefacts(java.io.File)
    */
   @Override
-  protected void createArtefacts(File projectDir) throws Exception {
+  protected void createArtefacts(File projectDir) {
     super.createArtefacts(projectDir);
 
     createClasspathFile(projectDir);
@@ -198,7 +199,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     }
   }
 
-  protected void createSourceClass(File projectDir, String sourceFolder, SourceClass sourceClass) throws Exception {
+  protected void createSourceClass(File projectDir, String sourceFolder, SourceClass sourceClass) {
     File sourceDir = new File(projectDir, sourceFolder);
     if (!sourceDir.exists()) {
       sourceDir.mkdirs();
@@ -213,7 +214,11 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     assertTrue(packageDir.isDirectory());
 
     File sourcefile = new File(sourceDir, className.asSourceFileName());
-    sourcefile.createNewFile();
+    try {
+      sourcefile.createNewFile();
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
 
     StringTemplate classTemplate = new StringTemplate();
     classTemplate.append("package ${packageName};").nl().append("public class ${className} {").nl().append(
@@ -225,7 +230,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     FileHelper.createFile(sourcefile, classTemplate.toString());
   }
 
-  protected void createClasspathFile(File projectDir) throws Exception {
+  protected void createClasspathFile(File projectDir) {
     final StringBuilder dotClasspath = new StringBuilder();
     dotClasspath.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(NL).append("<classpath>").append(NL);
 
