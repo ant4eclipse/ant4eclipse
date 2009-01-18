@@ -49,7 +49,7 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
     // List<EclipseProject> projects = ReferencedProjectsResolver.resolveReferencedProjects(workspace
     // .getProject("simpleproject3"), null);
 
-    List<EclipseProject> projects = JdtResolver.resolveJdtBuildOrder(workspace, new String[] { "simpleproject3",
+    List<EclipseProject> projects = JdtResolver.resolveBuildOrder(workspace, new String[] { "simpleproject3",
         "simpleproject2" }, null);
 
     assertEquals(2, projects.size());

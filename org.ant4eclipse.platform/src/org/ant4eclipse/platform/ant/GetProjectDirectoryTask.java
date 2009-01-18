@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
+import org.ant4eclipse.platform.ant.base.AbstractProjectBasedTask;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -112,9 +113,10 @@ public class GetProjectDirectoryTask extends AbstractProjectBasedTask {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void doExecute() {
 
-    requireWorkspaceAndProjectNameOrProjectSet();
+    requireWorkspaceAndProjectNameSet();
     requirePathIdOrPropertySet();
 
     final String path = getEclipseProject().getFolder().getAbsolutePath();

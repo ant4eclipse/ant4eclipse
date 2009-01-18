@@ -15,7 +15,7 @@ import java.io.File;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.platform.ant.AbstractGetProjectPathTask;
+import org.ant4eclipse.platform.ant.base.AbstractGetProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
@@ -100,6 +100,7 @@ public class GetOutputPathTask extends AbstractGetProjectPathTask {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] resolvePath() {
     final int relative = isRelative() ? EclipseProject.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
         : EclipseProject.ABSOLUTE;
@@ -132,7 +133,7 @@ public class GetOutputPathTask extends AbstractGetProjectPathTask {
       // try {
 
       final JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
-      final String[] pathNames = javaProjectRole.getAllOutputFolder();
+      final String[] pathNames = javaProjectRole.getAllOutputFolders();
       final File[] resolvedPathEntries = getEclipseProject().getChildren(pathNames, relative);
       return resolvedPathEntries;
 

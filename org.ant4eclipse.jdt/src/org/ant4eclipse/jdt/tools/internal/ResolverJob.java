@@ -5,7 +5,10 @@ import java.util.Properties;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
-public class ResolverJob {
+/**
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
+public final class ResolverJob {
 
   /** the root eclipse project */
   private final EclipseProject _rootProject;
@@ -19,6 +22,7 @@ public class ResolverJob {
   /** indicates whether the class path is a runtime class path or not */
   private final boolean        _runtimeClasspath;
 
+  /** - */
   private final Properties     _properties;
 
   /**

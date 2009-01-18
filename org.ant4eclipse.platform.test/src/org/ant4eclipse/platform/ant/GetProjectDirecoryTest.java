@@ -2,10 +2,10 @@ package org.ant4eclipse.platform.ant;
 
 import java.io.File;
 
-import org.ant4eclipse.platform.test.AbstractTestWorkspaceBuildFileTest;
+import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
-public class GetProjectDirecoryTest extends AbstractTestWorkspaceBuildFileTest {
+public class GetProjectDirecoryTest extends AbstractWorkspaceBasedBuildFileTest {
 
   @Override
   public void setUp() throws Exception {

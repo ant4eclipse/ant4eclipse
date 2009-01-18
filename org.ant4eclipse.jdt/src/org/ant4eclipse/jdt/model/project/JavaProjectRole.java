@@ -82,7 +82,7 @@ public interface JavaProjectRole extends ProjectRole {
    * @param allowMultipleFolder
    * @return
    */
-  public String[] getAllOutputFolder();
+  public String[] getAllOutputFolders();
 
   /**
    * @param sourceFolder

@@ -12,254 +12,125 @@
 package org.ant4eclipse.platform.ant.delegate;
 
 import java.io.File;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ant.TaskHelper;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
-import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
-import org.apache.tools.ant.types.PropertySet;
 
 /**
- * Base class for all Tasks working with an eclipse workspace.
- * 
- * @todo [19-Mar-2006:KASI] The dir separator must be used while setting the properties.
+ * <p>
+ * Delegate class for ant4eclipse tasks, conditions and types that require a workspace.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class WorkspaceDelegate extends AbstractAntDelegate {
 
-  /** ANT-Attribute */
+  /** the workspace directory (has to be defined in the ant build file) */
   private File      _workspaceDirectory;
 
-  /** ANT-Attribute */
-  private String    _pathseparator;
-
-  /** ANT-Attribute */
-  private String    _dirseparator;
-
-  /** ANT-Attribute */
-  private String    _variablesref;
-
+  /** the workspace instance */
   private Workspace _workspace;
 
-  private boolean   _baseinitialised;
-
   /**
-   * Prepares this basically workspace related functionality for the supplied ant component.
+   * <p>
+   * Creates a new instance of type {@link WorkspaceDelegate}.
+   * </p>
    * 
    * @param component
-   *          An ANT fragment: task, condition or a type.
+   *          the ant {@link ProjectComponent}
    */
   public WorkspaceDelegate(final ProjectComponent component) {
     super(component);
-    this._pathseparator = File.pathSeparator;
-    this._dirseparator = File.separator;
-
-    this._variablesref = null;
-    this._baseinitialised = false;
   }
 
   /**
-   * Sets the workspace for this task.
+   * <p>
+   * Sets the workspace directory.
+   * </p>
    * 
    * @param workspace
-   *          the workspace directory that should be associated with this Task
+   *          the workspace directory
    * 
    * @deprecated use {@link WorkspaceDelegate#setWorkspaceDirectory(File)} instead. This method is for backward
    *             compatibility only.
    */
   @Deprecated
-  public void setWorkspace(final File workspace) {
+  public final void setWorkspace(final File workspace) {
     setWorkspaceDirectory(workspace);
   }
 
   /**
-   * @param workspaceDirectory
+   * <p>
+   * Sets the workspace directory.
+   * </p>
+   * 
+   * @param workspace
+   *          the workspace directory
    */
-  public void setWorkspaceDirectory(final File workspaceDirectory) {
+  public final void setWorkspaceDirectory(final File workspaceDirectory) {
     this._workspaceDirectory = workspaceDirectory;
   }
 
   /**
-   * @return
+   * <p>
+   * Returns the workspace directory.
+   * </p>
+   * 
+   * @return the workspace directory.
    */
-  public File getWorkspaceDirectory() {
+  public final File getWorkspaceDirectory() {
     return this._workspaceDirectory;
   }
 
   /**
-   * Returns whether a workspace has been set to this task.
+   * <p>
+   * Returns <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
+   * </p>
    * 
-   * @return true <=> The workspace has been set.
+   * @return <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
    */
-  public boolean isWorkspaceDirectorySet() {
+  public final boolean isWorkspaceSet() {
     return this._workspaceDirectory != null;
   }
 
   /**
-   * Changes the path separator for this task.
-   * 
-   * @param newpathseparator
-   *          The new path separator.
+   * <p>
+   * Throws an {@link BuildException} if the workspace directory has not been set.
+   * </p>
    */
-  public void setPathSeparator(final String newpathseparator) {
-    Assert.nonEmpty(newpathseparator);
-    this._pathseparator = newpathseparator;
-  }
-
-  /**
-   * Returns the currently used path separator.
-   * 
-   * @return The currently used path separator.
-   */
-  public String getPathSeparator() {
-    return (this._pathseparator);
-  }
-
-  /**
-   * Changes the current directory separator.
-   * 
-   * @param newdirseparator
-   *          The new directory separator.
-   */
-  public void setDirSeparator(final String newdirseparator) {
-    Assert.nonEmpty(newdirseparator);
-    this._dirseparator = newdirseparator;
-  }
-
-  /**
-   * Returns the currently used directory separator.
-   * 
-   * @return The currently used directory separator.
-   */
-  public String getDirSeparator() {
-    return (this._dirseparator);
-  }
-
-  /**
-   * Sets a reference to the property set which allows to resolve Eclipse variables using an ANT property set.
-   * 
-   * @param ref
-   *          Name of the property set that will be used.
-   */
-  public void setVariablesRef(final String ref) {
-    this._variablesref = ref;
-  }
-
-  /**
-   * Returns the name of the property set used to resolve variables.
-   * 
-   * @return The name of the property set used to resolve variables. Maybe null.
-   */
-  public String getVariablesRef() {
-    return (this._variablesref);
-  }
-
-  /**
-   * Registers all ANT properties so they can be used within the resolving process for eclipse variables.
-   * 
-   * @param properties
-   *          A map (String, String) of ANT properties.
-   */
-  @SuppressWarnings("unchecked")
-  private void registerAntProperties(final Hashtable properties) {
-    final Enumeration<String> enumeration = properties.keys();
-    while (enumeration.hasMoreElements()) {
-      final String key = enumeration.nextElement();
-      final String value = (String) properties.get(key);
-      getEclipseVariableResolver().setEclipseVariable(key, value);
-    }
-  }
-
-  /**
-   * @return Currently associated workspace with this task.
-   */
-  public Workspace getWorkspace() {
-    init();
-    return this._workspace;
-  }
-
-  /**
-   * Returns whether a workspace has been set to this task.
-   * 
-   * @return true <=> The workspace has been set.
-   */
-  public boolean isWorkspaceSet() {
-    return getWorkspace() != null;
-  }
-
-  /**
-   * Invokes an exception in case the workspace has not been set.
-   */
-  public void requireWorkspaceSet() {
+  public final void requireWorkspaceSet() {
     if (!isWorkspaceSet()) {
-      throw new BuildException("workspace has to be set!");
+      // TODO!!
+      throw new BuildException("Workspace has to be set!");
     }
   }
 
   /**
-   * Changes the path property according to the developers requirements.
+   * <p>
+   * Returns the {@link Workspace} instance.
+   * </p>
    * 
-   * @param propertyname
-   *          The name of the property that has to be set.
-   * @param pathentries
-   *          The path entries containing the values.
+   * @return
    */
-  public void setPathProperty(final String propertyname, final File[] pathentries) {
-    final String resolvedpath = TaskHelper.convertToString(pathentries, getPathSeparator(), getDirSeparator(),
-        getAntProject());
-    getAntProject().setProperty(propertyname, resolvedpath);
-  }
+  public final Workspace getWorkspace() {
+    requireWorkspaceSet();
 
-  /**
-   * Changes the string property.
-   * 
-   * @param propertyname
-   *          The name of the property that has to be set.
-   * @param value
-   *          The value for the property.
-   */
-  public void setStringProperty(final String propertyname, final String value) {
-    getAntProject().setProperty(propertyname, value);
-  }
-
-  /**
-   * Does some initialisations on this class. This must be called before a task or condition makes an attempt to use it.
-   */
-  private void init() {
-    if (this._baseinitialised) {
-      return;
-    }
-    registerAntProperties(getAntProject().getProperties());
-    if (this._variablesref != null) {
-      final Object ref = getAntProject().getReference(this._variablesref);
-      if (ref instanceof PropertySet) {
-        registerAntProperties(((PropertySet) ref).getProperties());
+    if (this._workspace == null) {
+      if (!WorkspaceRegistry.Helper.getRegistry().containsWorkspace(this._workspaceDirectory.getAbsolutePath())) {
+        this._workspace = WorkspaceRegistry.Helper.getRegistry()
+            .registerWorkspace(this._workspaceDirectory.getAbsolutePath(),
+                new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
+      } else {
+        this._workspace = WorkspaceRegistry.Helper.getRegistry().getWorkspace(
+            this._workspaceDirectory.getAbsolutePath());
       }
     }
 
-    if (!WorkspaceRegistry.Helper.getRegistry().containsWorkspace(this._workspaceDirectory.getAbsolutePath())) {
-      this._workspace = WorkspaceRegistry.Helper.getRegistry().registerWorkspace(
-          this._workspaceDirectory.getAbsolutePath(), new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
-    } else {
-      this._workspace = WorkspaceRegistry.Helper.getRegistry().getWorkspace(this._workspaceDirectory.getAbsolutePath());
-    }
-
-    this._baseinitialised = true;
+    // return the Workspace instance
+    return this._workspace;
   }
-
-  private EclipseVariableResolver getEclipseVariableResolver() {
-    final EclipseVariableResolver resolver = (EclipseVariableResolver) ServiceRegistry.instance().getService(
-        EclipseVariableResolver.class.getName());
-    return resolver;
-  }
-
 } /* ENDCLASS */

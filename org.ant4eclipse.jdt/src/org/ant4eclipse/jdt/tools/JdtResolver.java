@@ -21,23 +21,28 @@ import org.ant4eclipse.jdt.tools.internal.classpathentry.VariableClasspathEntryR
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+/**
+ * @author
+ */
 public class JdtResolver {
 
+  /**
+   * @param project
+   * @param properties
+   * @return
+   */
   public static final List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
       final Properties properties) {
     Assert.notNull(project);
 
-    // create a ReferencedProjectsResolverJob
+    // create a ResolverJob
     final ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, properties);
 
     final ClasspathEntryResolverExecutor classpathEntryResolverExecutor = new ClasspathEntryResolverExecutor(false);
 
     classpathEntryResolverExecutor.resolve(job.getRootProject(), new ClasspathEntryResolver[] {
-    /* new VariableClasspathEntryResolver(), */new ContainerClasspathEntryResolver(),
-    /* new SourceClasspathEntryResolver(), */new ProjectClasspathEntryResolver(),
-    /*
-     * new LibraryClasspathEntryResolver(), new OutputClasspathEntryResolver()
-     */}, new ClasspathResolverContextImpl(classpathEntryResolverExecutor, job));
+        new ContainerClasspathEntryResolver(), new ProjectClasspathEntryResolver(), },
+        new ClasspathResolverContextImpl(classpathEntryResolverExecutor, job));
 
     return classpathEntryResolverExecutor.getReferencedProjects();
   }
@@ -75,7 +80,7 @@ public class JdtResolver {
     return resolvedClasspath;
   }
 
-  public static List<EclipseProject> resolveJdtBuildOrder(final Workspace workspace, final String[] projectNames,
+  public static List<EclipseProject> resolveBuildOrder(final Workspace workspace, final String[] projectNames,
       final Properties properties) {
 
     final EclipseProject[] eclipseProjects = workspace.getProjects(projectNames, true);

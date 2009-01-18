@@ -21,11 +21,12 @@ import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 /**
  * ProjectClasspathResolverJob --
  */
-public class ResolvedClasspathImpl implements ResolvedClasspath {
+public final class ResolvedClasspathImpl implements ResolvedClasspath {
 
   /** the list with all the resolved path entries */
   private final List<ResolvedClasspathEntry> _classpath;
 
+  /** - **/
   private final List<ResolvedClasspathEntry> _bootclasspath;
 
   /**

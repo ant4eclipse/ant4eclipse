@@ -14,9 +14,9 @@ package org.ant4eclipse.jdt.ant;
 import java.io.File;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
-import org.ant4eclipse.platform.test.AbstractTestWorkspaceBuildFileTest;
+import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
-public class GetEclipseClasspathTest extends AbstractTestWorkspaceBuildFileTest {
+public class GetEclipseClasspathTest extends AbstractWorkspaceBasedBuildFileTest {
 
 	public final static String TEST_PATH_SEPARATOR = "#";
 

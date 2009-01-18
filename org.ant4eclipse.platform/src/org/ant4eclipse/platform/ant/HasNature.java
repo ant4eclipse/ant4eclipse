@@ -41,8 +41,9 @@ public class HasNature extends AbstractAnt4EclipseCondition {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean doEval() throws BuildException {
-    this._projectDelegate.requireWorkspaceAndProjectNameOrProjectSet();
+    this._projectDelegate.requireWorkspaceAndProjectNameSet();
     requireNatureSet();
     try {
       final EclipseProject project = this._projectDelegate.getEclipseProject();
@@ -112,18 +113,8 @@ public class HasNature extends AbstractAnt4EclipseCondition {
    *          the workspace.
    * @deprecated
    */
+  @Deprecated
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
-  }
-
-  /**
-   * Sets the project.
-   * 
-   * @param project
-   *          the project.
-   * @deprecated
-   */
-  public void setProject(final File project) {
-    this._projectDelegate.setProject(project);
   }
 }

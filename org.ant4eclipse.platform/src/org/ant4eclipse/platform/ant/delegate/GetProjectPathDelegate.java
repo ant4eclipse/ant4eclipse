@@ -1,31 +1,21 @@
-/**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
- **********************************************************************/
-package org.ant4eclipse.platform.ant;
+package org.ant4eclipse.platform.ant.delegate;
 
 import java.io.File;
 
-import org.ant4eclipse.core.ant.TaskHelper;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
 
 /**
  * <p>
- * Abstract base class for all tasks that resolve paths from an eclipse project.
+ * Delegate class for all tasks, types and conditions that deal with project pathes.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTask {
-  /** the pathId */
+public class GetProjectPathDelegate extends ProjectPathDelegate {
+
+  /** the id of the path */
   private String  _pathId   = null;
 
   /** the property */
@@ -36,6 +26,13 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
 
   /** the resolved path entries */
   private File[]  _resolvedPath;
+
+  /**
+   * @param component
+   */
+  public GetProjectPathDelegate(final ProjectComponent component) {
+    super(component);
+  }
 
   /**
    * <p>
@@ -69,7 +66,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * 
    * @return true <=> The path ID has been set.
    */
-  protected final boolean isPathIdSet() {
+  public final boolean isPathIdSet() {
     return this._pathId != null;
   }
 
@@ -126,31 +123,8 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * 
    * @return <code>true</code> if the name of the property has been set.
    */
-  protected final boolean isPropertySet() {
+  public final boolean isPropertySet() {
     return this._property != null;
-  }
-
-  /**
-   * <p>
-   * Sets the path separator.
-   * </p>
-   * 
-   * @param pathSeparator
-   *          the path separator.
-   */
-  public final void setPathSeparator(final String pathSeparator) {
-    getProjectDelegate().setPathSeparator(pathSeparator);
-  }
-
-  /**
-   * <p>
-   * Returns <code>true</code> if the path separator has been set.
-   * </p>
-   * 
-   * @return <code>true</code> if the path separator has been set.
-   */
-  protected final boolean isPathSeparatorSet() {
-    return getProjectDelegate().getPathSeparator() != null;
   }
 
   /**
@@ -159,7 +133,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * thrown.
    * </p>
    */
-  protected final void requirePathIdOrPropertySet() {
+  public final void requirePathIdOrPropertySet() {
     if (!isPathIdSet() && !isPropertySet()) {
       throw new BuildException("At least one of 'pathId' or 'property' has to be set!");
     }
@@ -172,7 +146,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * 
    * @return A list of resolved pathes.
    */
-  protected final File[] getResolvedPath() {
+  public final File[] getResolvedPath() {
     return this._resolvedPath;
   }
 
@@ -184,28 +158,8 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * @param resolvedPath
    *          the resolved path entries.
    */
-  protected final void setResolvedPath(final File[] resolvedPath) {
+  public final void setResolvedPath(final File[] resolvedPath) {
     this._resolvedPath = resolvedPath;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void doExecute() {
-
-    requireWorkspaceAndProjectNameOrProjectSet();
-    requirePathIdOrPropertySet();
-
-    final File[] resolvedPath = resolvePath();
-    setResolvedPath(resolvedPath);
-
-    if (isPathIdSet()) {
-      populatePathId();
-    }
-
-    if (isPropertySet()) {
-      populateProperty();
-    }
   }
 
   /**
@@ -213,8 +167,11 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * Populates the property if specified.
    * </p>
    */
-  protected void populateProperty() {
-    getProjectDelegate().setPathProperty(getProperty(), getResolvedPath());
+  public final void populateProperty() {
+    if (isPropertySet()) {
+      final String resolvedpath = convertToString(getResolvedPath());
+      getAntProject().setProperty(getProperty(), resolvedpath);
+    }
   }
 
   /**
@@ -222,20 +179,10 @@ public abstract class AbstractGetProjectPathTask extends AbstractProjectBasedTas
    * Populates the path id if specified.
    * </p>
    */
-  protected void populatePathId() {
-    final Path resolvedPath = TaskHelper.convertToPath(getResolvedPath(), getProject());
-    getProject().addReference(getPathId(), resolvedPath);
+  public final void populatePathId() {
+    if (isPathIdSet()) {
+      final Path resolvedPath = convertToPath(getResolvedPath());
+      getAntProject().addReference(getPathId(), resolvedPath);
+    }
   }
-
-  /**
-   * <p>
-   * Resolves the current path.
-   * </p>
-   * 
-   * @return A list of resolved pathes.
-   * 
-   * @throws Exception
-   *           The resolving process failed for some reason.
-   */
-  protected abstract File[] resolvePath();
 }

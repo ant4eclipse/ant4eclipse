@@ -18,7 +18,7 @@ import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgument;
 import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
-import org.ant4eclipse.platform.ant.AbstractGetProjectPathTask;
+import org.ant4eclipse.platform.ant.base.AbstractGetProjectPathTask;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -56,16 +56,6 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
    */
   public void setRuntime(final boolean runtime) {
     this._runtime = runtime;
-  }
-
-  /**
-   * Changes the separator which has to be used to separate directory elements.
-   * 
-   * @param newseparator
-   *          The new separator for directory elements.
-   */
-  public void setDirSeparator(final String newseparator) {
-    getProjectDelegate().setDirSeparator(newseparator);
   }
 
   public ClasspathContainerArgument createContainerArg() {

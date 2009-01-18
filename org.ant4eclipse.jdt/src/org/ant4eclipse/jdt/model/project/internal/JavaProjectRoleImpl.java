@@ -166,7 +166,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
-  public String[] getAllOutputFolder() {
+  public String[] getAllOutputFolders() {
 
     final EntryResolver.Condition condition = new EntryResolver.Condition() {
       public String resolve(final RawClasspathEntry entry) {

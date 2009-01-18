@@ -9,14 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant.team;
+package org.ant4eclipse.platform.ant.base;
 
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.platform.ant.delegate.ProjectSetDelegate;
-import org.ant4eclipse.platform.model.resource.Workspace;
+import org.ant4eclipse.platform.ant.delegate.TeamProjectSetDelegate;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 /**
@@ -24,15 +23,15 @@ import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTask {
+public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4EclipseTask {
 
-  private final ProjectSetDelegate _projectSetBase;
+  private final TeamProjectSetDelegate _projectSetBase;
 
   /**
    * 
    */
-  public AbstractProjectSetBasedTask() {
-    this._projectSetBase = new ProjectSetDelegate(this);
+  public AbstractTeamProjectSetBasedTask() {
+    this._projectSetBase = new TeamProjectSetDelegate(this);
   }
 
   /**
@@ -40,7 +39,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    * 
    * @return The ProjectSetBase instance.
    */
-  protected ProjectSetDelegate getProjectSetBase() {
+  protected TeamProjectSetDelegate getProjectSetBase() {
     return (this._projectSetBase);
   }
 
@@ -53,16 +52,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    *           Reading the data failed for some reason.
    */
   public TeamProjectSet getProjectSet() {
-    return this._projectSetBase.getProjectSet();
-  }
-
-  /**
-   * Returns the Workspace instance associated with this task.
-   * 
-   * @return The Workspace instance associated with this task.
-   */
-  public Workspace getWorkspace() {
-    return this._projectSetBase.getWorkspace();
+    return this._projectSetBase.getTeamProjectSet();
   }
 
   /**
@@ -71,43 +61,20 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    * @return true <=> The project set has been set.
    */
   public boolean isProjectSetSet() {
-    return this._projectSetBase.isProjectSetSet();
-  }
-
-  /**
-   * Returns true if the Workspace has been set.
-   * 
-   * @return true <=> The Workspace has been set.
-   */
-  public boolean isWorkspaceSet() {
-    return this._projectSetBase.isWorkspaceSet();
+    return this._projectSetBase.isTeamProjectSetSet();
   }
 
   /**
    * 
    */
   public void requireProjectSetSet() {
-    this._projectSetBase.requireProjectSetSet();
-  }
-
-  /**
-   * 
-   */
-  public void requireWorkspaceSet() {
-    this._projectSetBase.requireWorkspaceSet();
+    this._projectSetBase.requireTeamProjectSetSet();
   }
 
   /**
    * @param projectSet
    */
   public void setProjectSet(final File projectSet) {
-    this._projectSetBase.setProjectSet(projectSet);
-  }
-
-  /**
-   * @param workspace
-   */
-  public void setWorkspace(final File workspace) {
-    this._projectSetBase.setWorkspace(workspace);
+    this._projectSetBase.setTeamProjectSet(projectSet);
   }
 }

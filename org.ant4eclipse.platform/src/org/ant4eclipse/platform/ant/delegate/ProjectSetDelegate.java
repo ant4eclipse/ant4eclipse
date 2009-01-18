@@ -11,25 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.delegate;
 
-import java.io.File;
-
-
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
- * Base class for all tasks working with project sets
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ProjectSetDelegate extends WorkspaceDelegate {
-  /**  */
-  private File           _projectSetFile;
+public class ProjectSetDelegate extends TeamProjectSetDelegate {
 
-  /**  */
-  private TeamProjectSet _projectSet;
+  private String[] _projectNames;
 
   /**
    * Creates a new instance of type ProjectSetBase
@@ -40,54 +31,29 @@ public class ProjectSetDelegate extends WorkspaceDelegate {
     super(component);
   }
 
-  /**
-   * @return Returns the psfFileName.
-   */
-  public final TeamProjectSet getProjectSet() {
-    if (this._projectSet == null) {
-      this._projectSet = readProjectSet();
-    }
-
-    return this._projectSet;
+  public final void setProjectNames(String[] projectNames) {
+    this._projectNames = projectNames;
   }
 
-  /**
-   * @param projectSet
-   *          The psfFileName to set.
-   */
-  public final void setProjectSet(final File projectSet) {
-    this._projectSetFile = projectSet;
+  public final String[] getProjectNames() {
+    return this._projectNames;
   }
 
-  /**
-   * Returns true if the project set has been set.
-   * 
-   * @return true <=> The project set has been set.
-   */
-  public final boolean isProjectSetSet() {
-    return this._projectSetFile != null;
+  public final boolean isProjectNamesSet() {
+    return this._projectNames != null;
   }
 
-  /**
-   * 
-   */
-  public final void requireProjectSetSet() {
-    if (!isProjectSetSet()) {
-      throw new BuildException("projectSet has to be set!");
+  public final void requireProjectNamesSet() {
+    if (!isProjectNamesSet()) {
+      // TODO
+      throw new BuildException("projectNames has to be set!");
     }
   }
 
-  /**
-   * Reads and parses the projectset for this task. The project set to load is determindes by the
-   * {@link #setProjectSet(File)}project set name.
-   * 
-   * @precondition Name of projectset file has to be set before.
-   * 
-   * @return Parsed projectset
-   */
-  private TeamProjectSet readProjectSet() {
-    requireProjectSetSet();
-    requireWorkspaceSet();
-    return TeamProjectSetFileParser.Helper.getInstance().parseTeamProjectSetFile(this._projectSetFile);
+  public final void requireTeamProjectSetOrProjectNamesSet() {
+    if (!isProjectNamesSet() && !isTeamProjectSetSet()) {
+      // TODO
+      throw new BuildException("projectNames or teamProjectSet has to be set!");
+    }
   }
 }

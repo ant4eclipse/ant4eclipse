@@ -45,8 +45,9 @@ public class HasBuildCommand extends AbstractAnt4EclipseCondition {
    * 
    * @return <code>true</code> if the eclipse project contains the requested buildCommand.
    */
+  @Override
   public boolean doEval() {
-    this._projectDelegate.requireWorkspaceAndProjectNameOrProjectSet();
+    this._projectDelegate.requireWorkspaceAndProjectNameSet();
     requireBuildCommandSet();
     final EclipseProject project = this._projectDelegate.getEclipseProject();
     return project.hasBuildCommand(this._buildCommand);
@@ -97,21 +98,12 @@ public class HasBuildCommand extends AbstractAnt4EclipseCondition {
    *          the workspace.
    * @deprecated
    */
+  @Deprecated
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspace(workspace);
   }
 
   public void setWorkspaceDirectory(final File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
-  }
-
-  /**
-   * Sets the project.
-   * 
-   * @param project
-   *          the project.
-   */
-  public void setProject(final File project) {
-    this._projectDelegate.setProject(project);
   }
 }

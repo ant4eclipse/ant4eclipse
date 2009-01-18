@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ant4eclipse.core.ant.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.base.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -33,7 +34,7 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
   protected void doExecute() {
 
     // check require fields
-    requireWorkspaceAndProjectNameOrProjectSet();
+    requireWorkspaceAndProjectNameSet();
 
     EclipseProject eclipseProject = getEclipseProject();
 
@@ -43,7 +44,7 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
       if (this._builderMacroDefs.containsKey(buildCommand.getName())) {
         MacroDef macroDef = this._builderMacroDefs.get(buildCommand.getName());
         // TODO: scoped Properties
-        this._delegate.executeMacroInstance(macroDef, buildCommand.getName(), null);
+        this._delegate.executeMacroInstance(macroDef, buildCommand.getName(), null, null);
       }
     }
   }

@@ -15,14 +15,15 @@ import java.util.Properties;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
 import org.junit.Before;
 
 /**
- * Superclass for all Ant4Eclipse test cases
- * 
  * <p>
- * This test case sets up the {@link Ant4EclipseConfigurationProperties} singleton and the {@link ServiceRegistry}
+ * Base class for all AntEclipse test cases that require a configured {@link ServiceRegistry} and are not executed via a
+ * {@link BuildFileTest}.
+ * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */

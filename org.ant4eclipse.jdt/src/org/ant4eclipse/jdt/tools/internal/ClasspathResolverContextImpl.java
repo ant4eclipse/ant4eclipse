@@ -8,6 +8,9 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+/**
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class ClasspathResolverContextImpl implements ClasspathResolverContext {
 
   private final ClasspathEntryResolverExecutor _executor;

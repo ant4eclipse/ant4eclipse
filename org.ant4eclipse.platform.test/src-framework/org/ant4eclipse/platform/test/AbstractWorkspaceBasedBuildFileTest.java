@@ -22,7 +22,7 @@ import org.apache.tools.ant.BuildFileTest;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public abstract class AbstractTestWorkspaceBuildFileTest extends BuildFileTest {
+public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest {
 
   private TestWorkspace _testWorkspace;
 

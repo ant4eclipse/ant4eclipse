@@ -5,34 +5,72 @@
          default="build.ant4eclipse"
          xmlns:ant4eclipse="antlib:org.ant4eclipse">
 
+	<taskdef resource="org/tigris/subversion/svnant/svnantlib.xml" />
+
 	<taskdef uri="antlib:org.ant4eclipse"
 	         resource="org/ant4eclipse/antlib.xml"
-	         classpath="R:\workspaces\a4e\org.ant4eclipse.core\bin;R:\workspaces\a4e\org.ant4eclipse.platform\bin;R:\workspaces\a4e\org.ant4eclipse.jdt\bin" />
+	         classpath="${basedir}\org.ant4eclipse.core\bin;${basedir}\org.ant4eclipse.platform\bin;${basedir}\org.ant4eclipse.jdt\bin;" />
+
+	<!--  -->
+	<property name="destination"
+	          value="${basedir}\org.ant4eclipse.build\destination" />
+
+	<!-- define your jdk location here -->
+	<ant4eclipse:jreContainer>
+		<jre id="jdk15" location="R:\software\jdk\jdk15" />
+	</ant4eclipse:jreContainer>
 
 	<target name="build.ant4eclipse">
-		
-		<ant4eclipse:executeJdtProject workspace="${basedir}"
-		                               projectname="org.ant4eclipse.core">
 
-			<ant4eclipse:forEachOutputDirectory>
-				
-				<echo>${executeJdtProject.output.directory}</echo>
-				<echo>${executeJdtProject.classpath.relative.runtime}</echo>
-				<echo>${executeJdtProject.classpath.absolute.runtime}</echo>
-				<echo>${executeJdtProject.classpath.relative.compiletime}</echo>
-				<echo>${executeJdtProject.classpath.absolute.compiletime}</echo>
-			
-			</ant4eclipse:forEachOutputDirectory>
-			
-			<ant4eclipse:forEachSourceDirectory>
-			
-				<echo>${executeJdtProject.source.directory}</echo>
-				<echo>${executeJdtProject.classpath}</echo>
-			
-			</ant4eclipse:forEachSourceDirectory>
+		<!--<delete dir="${destination}" quiet="true" />
+		<mkdir dir="${destination}" />
 
-		</ant4eclipse:executeJdtProject>
-	
+		<ant4eclipse:svnGetProjectSet username="gerdwuetherich"
+		                              password="r1nd3rf0nd"
+		                              command="export"
+		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet.psf"
+		                              destination="${destination}" /> -->
+
+		<ant4eclipse:executeProjectSet workspace="${destination}"
+		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet.psf">
+
+			<ant4eclipse:foreachproject>
+
+				<ant4eclipse:executeJdtProject workspace="${destination}"
+				                               projectname="${executeProjectSet.project.name}">
+
+					<ant4eclipse:forEachOutputDirectory>
+						<delete dir="${executeJdtProject.project.directory}/${executeJdtProject.output.directory}"
+						        quiet="true" />
+						<mkdir dir="${executeJdtProject.project.directory}/${executeJdtProject.output.directory}" />
+					</ant4eclipse:forEachOutputDirectory>
+
+					<!-- <ant4eclipse:forEachSourceDirectory>
+						  <javac srcdir="${src}"
+						         destdir="${build}"
+						         classpath="xyz.jar"
+						         debug="on"
+						         source="1.4"
+						  />
+						<echo>${executeProjectSet.project.name}</echo>
+						<echo>Source: ${executeJdtProject.source.directory}</echo>
+						<echo>${executeJdtProject.classpath.relative.runtime}</echo>
+						<echo>${executeJdtProject.classpath.absolute.runtime}</echo>
+						<echo>${executeJdtProject.classpath.relative.compiletime}</echo>
+						<echo>${executeJdtProject.classpath.absolute.compiletime}</echo>
+
+					</ant4eclipse:forEachSourceDirectory> -->
+					
+					<ant4eclipse:forAllSourceDirectories>
+					
+					</ant4eclipse:forAllSourceDirectories>
+
+				</ant4eclipse:executeJdtProject>
+
+			</ant4eclipse:foreachproject>
+
+		</ant4eclipse:executeProjectSet>
+
 	</target>
-	
+
 </project>

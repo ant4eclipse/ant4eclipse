@@ -1,9 +1,9 @@
 package org.ant4eclipse.platform.ant;
 
-import org.ant4eclipse.platform.test.AbstractTestWorkspaceBuildFileTest;
+import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
-public class ExecuteProjectBuildersTaskTest extends AbstractTestWorkspaceBuildFileTest {
+public class ExecuteProjectBuildersTaskTest extends AbstractWorkspaceBasedBuildFileTest {
 
   @Override
   public void setUp() throws Exception {

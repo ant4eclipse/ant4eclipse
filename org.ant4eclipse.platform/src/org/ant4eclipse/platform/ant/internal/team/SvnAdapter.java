@@ -70,12 +70,13 @@ public class SvnAdapter extends VcsAdapter {
    */
   public SvnAdapter(Project antProject, boolean javahl, boolean svnkit, String dateFormatter, String dateTimeZone) {
     super(antProject);
-    _javahl = javahl;
-    _svnkit = svnkit;
-    _dateFormatter = dateFormatter;
-    _dateTimeZone = dateTimeZone;
+    this._javahl = javahl;
+    this._svnkit = svnkit;
+    this._dateFormatter = dateFormatter;
+    this._dateTimeZone = dateTimeZone;
   }
 
+  @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
@@ -110,6 +111,7 @@ public class SvnAdapter extends VcsAdapter {
 
   }
 
+  @Override
   protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
@@ -145,6 +147,7 @@ public class SvnAdapter extends VcsAdapter {
     }
   }
 
+  @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assert.isDirectory(destination);
     Assert.notNull(projectDescription);
@@ -186,14 +189,14 @@ public class SvnAdapter extends VcsAdapter {
   private SvnTask createSvnTask(SvnTeamProjectDescription projectDescription) {
 
     SvnTask svnTask = (SvnTask) getAntProject().createTask("svn");
-    svnTask.setJavahl(_javahl);
-    svnTask.setSvnkit(_svnkit);
-    if (_dateFormatter != null) {
-      svnTask.setDateFormatter(_dateFormatter);
+    svnTask.setJavahl(this._javahl);
+    svnTask.setJavasvn(this._svnkit);
+    if (this._dateFormatter != null) {
+      svnTask.setDateFormatter(this._dateFormatter);
     }
 
-    if (_dateTimeZone != null) {
-      svnTask.setDateTimezone(_dateTimeZone);
+    if (this._dateTimeZone != null) {
+      svnTask.setDateTimezone(this._dateTimeZone);
     }
 
     A4ELogging.debug("Created svnTask %s", svnTask);

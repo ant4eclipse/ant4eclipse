@@ -16,13 +16,14 @@ import java.io.File;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.platform.ant.base.AbstractTeamProjectSetBasedTask;
 import org.ant4eclipse.platform.ant.internal.team.VcsAdapter;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
-public abstract class AbstractGetProjectSetTask extends AbstractProjectSetBasedTask {
+public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBasedTask {
 
   /** Value for the 'command' parameter, that indicates that the projects should be checked out from version control */
   private static final String CHECKOUT                = "checkout";
