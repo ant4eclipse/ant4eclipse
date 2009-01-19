@@ -17,7 +17,7 @@
 
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
-		<jre id="jdk15" location="R:\software\jdk\jdk15" />
+		<jre id="jdk15" location="R:\ref\jdk_15" />
 	</ant4eclipse:jreContainer>
 
 	<target name="build.ant4eclipse">
@@ -26,7 +26,6 @@
 		<mkdir dir="${destination}" />
 
 		<ant4eclipse:svnGetProjectSet username="gerdwuetherich"
-		                              password="r1nd3rf0nd"
 		                              command="export"
 		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet.psf"
 		                              destination="${destination}" /> -->
@@ -34,7 +33,7 @@
 		<ant4eclipse:executeProjectSet workspace="${destination}"
 		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet.psf">
 
-			<ant4eclipse:foreachproject>
+			<ant4eclipse:forEachProject>
 
 				<ant4eclipse:executeJdtProject workspace="${destination}"
 				                               projectname="${executeProjectSet.project.name}">
@@ -67,7 +66,7 @@
 
 				</ant4eclipse:executeJdtProject>
 
-			</ant4eclipse:foreachproject>
+			</ant4eclipse:forEachProject>
 
 		</ant4eclipse:executeProjectSet>
 
