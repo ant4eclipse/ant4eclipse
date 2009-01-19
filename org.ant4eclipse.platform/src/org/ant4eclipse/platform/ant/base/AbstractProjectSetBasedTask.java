@@ -47,7 +47,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
     this._projectSetDelegate.requireTeamProjectSetOrProjectNamesSet();
   }
 
-  public final void setProjectNames(String[] projectNames) {
+  public final void setProjectNames(String projectNames) {
     this._projectSetDelegate.setProjectNames(projectNames);
   }
 

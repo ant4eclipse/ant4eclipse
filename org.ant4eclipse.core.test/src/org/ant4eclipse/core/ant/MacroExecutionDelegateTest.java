@@ -45,7 +45,9 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
       for (MacroDef macroDef : _macroDefs.values()) {
         Map<String, String> scopedProperties = new HashMap<String, String>();
         scopedProperties.put("test", _prefix + ".test");
-        _macroExecutionDelegate.executeMacroInstance(macroDef, "hurz", scopedProperties);
+        Map<String, Object> scopedReferences = new HashMap<String, Object>();
+        scopedReferences.put("test", _prefix + ".reference");
+        _macroExecutionDelegate.executeMacroInstance(macroDef, "hurz", scopedProperties, scopedReferences);
       }
     }
 

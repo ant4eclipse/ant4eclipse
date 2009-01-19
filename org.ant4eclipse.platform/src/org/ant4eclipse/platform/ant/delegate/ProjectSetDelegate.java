@@ -31,8 +31,21 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate {
     super(component);
   }
 
-  public final void setProjectNames(String[] projectNames) {
-    this._projectNames = projectNames;
+  public final void setProjectNames(String projectNames) {
+
+    //
+    if (projectNames == null) {
+      this._projectNames = new String[] {};
+    } else {
+      String[] names = projectNames.split(",");
+
+      // 
+      this._projectNames = new String[names.length];
+
+      for (int i = 0; i < names.length; i++) {
+        this._projectNames[i] = names[i].trim();
+      }
+    }
   }
 
   public final String[] getProjectNames() {

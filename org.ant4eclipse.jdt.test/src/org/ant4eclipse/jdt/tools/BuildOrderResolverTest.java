@@ -11,6 +11,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.ant4eclipse.platform.test.TestWorkspace;
+import org.ant4eclipse.platform.tools.BuildOrderResolver;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
@@ -49,7 +50,7 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
     // List<EclipseProject> projects = ReferencedProjectsResolver.resolveReferencedProjects(workspace
     // .getProject("simpleproject3"), null);
 
-    List<EclipseProject> projects = JdtResolver.resolveBuildOrder(workspace, new String[] { "simpleproject3",
+    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(workspace, new String[] { "simpleproject3",
         "simpleproject2" }, null);
 
     assertEquals(2, projects.size());

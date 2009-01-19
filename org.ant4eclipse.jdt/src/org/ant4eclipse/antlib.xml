@@ -6,5 +6,4 @@
 	<typedef name="getJdtClasspath" classname="org.ant4eclipse.jdt.ant.GetEclipseClassPathTask" />
 	<typedef name="getJdtClasspath" classname="org.ant4eclipse.jdt.ant.GetEclipseClassPathTask" />
 	<typedef name="executeJdtProject" classname="org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask" />
-	<typedef name="executeProjectSet" classname="org.ant4eclipse.jdt.ant.ExecuteProjectSetTask" />
 </antlib>

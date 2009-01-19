@@ -3,7 +3,8 @@
 	<typedef name="hasNature" classname="org.ant4eclipse.platform.ant.HasNature" />
 	<typedef name="hasBuildCommand" classname="org.ant4eclipse.platform.ant.HasBuildCommand" />
 	<typedef name="getProjectDirectory" classname="org.ant4eclipse.platform.ant.GetProjectDirectoryTask" />
-	<typedef name="executeProjectBuilders" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
+	<typedef name="executeProjectSet" classname="org.ant4eclipse.platform.ant.ExecuteProjectSetTask" />
+	<typedef name="executeBuildCommands" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
 	<typedef name="cvsGetProjectSet" classname="org.ant4eclipse.platform.ant.team.CvsGetProjectSetTask" />
 	<typedef name="svnGetProjectSet" classname="org.ant4eclipse.platform.ant.team.SvnGetProjectSetTask" />
 </antlib>
