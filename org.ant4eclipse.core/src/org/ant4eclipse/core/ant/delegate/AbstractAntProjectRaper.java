@@ -10,6 +10,12 @@ import org.ant4eclipse.core.Assert;
 import org.apache.tools.ant.Project;
 
 /**
+ * <p>
+ * Helper class that provides access to some internal ant project fields. During macro execution with the
+ * {@link MacroExecutionDelegate} several properties and references are (temporarily) set. Once the execution has
+ * finished, all properties and references have to be reset.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * 
  * @param <V>
@@ -93,6 +99,11 @@ public abstract class AbstractAntProjectRaper<V> {
     }
   }
 
+  /**
+   * <p>
+   * Unsets all
+   * </p>
+   */
   public final void unsetScopedValues() {
     Assert.assertTrue(this._scopedValues != null, "Scoped values must be set!");
 
