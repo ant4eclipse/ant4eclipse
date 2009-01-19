@@ -11,6 +11,8 @@
 	         resource="org/ant4eclipse/antlib.xml"
 	         classpath="${basedir}\org.ant4eclipse.core\bin;${basedir}\org.ant4eclipse.platform\bin;${basedir}\org.ant4eclipse.jdt\bin;" />
 
+	<property file="${basedir}\org.ant4eclipse.build\svn-pwd.properties" />
+
 	<!--  -->
 	<property name="destination"
 	          value="${basedir}\org.ant4eclipse.build\destination" />
@@ -22,16 +24,20 @@
 
 	<target name="build.ant4eclipse">
 
-		<!--<delete dir="${destination}" quiet="true" />
+		<!-- <delete dir="${destination}" quiet="true" />
 		<mkdir dir="${destination}" />
 
-		<ant4eclipse:svnGetProjectSet username="gerdwuetherich"
+		<ant4eclipse:svnGetProjectSet username="${svn.username}"
+									  password="${svn.password}"
 		                              command="export"
 		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet.psf"
 		                              destination="${destination}" /> -->
 
+		<!-- <ant4eclipse:executeProjectSet workspace="${destination}"
+		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet.psf"> -->
+
 		<ant4eclipse:executeProjectSet workspace="${destination}"
-		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet.psf">
+		                               projectNames="org.ant4eclipse.core,org.ant4eclipse.core.test,org.ant4eclipse.external, org.ant4eclipse.external.test,org.ant4eclipse.jdt,org.ant4eclipse.jdt.test,org.ant4eclipse.platform,org.ant4eclipse.platform.test">
 
 			<ant4eclipse:forEachProject>
 
@@ -59,9 +65,9 @@
 						<echo>${executeJdtProject.classpath.absolute.compiletime}</echo>
 
 					</ant4eclipse:forEachSourceDirectory> -->
-					
+
 					<ant4eclipse:forAllSourceDirectories>
-					
+
 					</ant4eclipse:forAllSourceDirectories>
 
 				</ant4eclipse:executeJdtProject>
