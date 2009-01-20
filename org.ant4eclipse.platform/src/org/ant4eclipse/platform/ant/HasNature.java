@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.ant;
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseCondition;
-import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
@@ -26,7 +26,7 @@ import org.apache.tools.ant.BuildException;
 public class HasNature extends AbstractAnt4EclipseCondition {
 
   /** the project delegate */
-  private final ProjectDelegate _projectDelegate;
+  private final EclipseProjectDelegate _projectDelegate;
 
   /** Comment for <code>_nature</code> */
   private String                _nature;
@@ -35,7 +35,7 @@ public class HasNature extends AbstractAnt4EclipseCondition {
    * Creates a new instance of type HasNature.
    */
   public HasNature() {
-    this._projectDelegate = new ProjectDelegate(this);
+    this._projectDelegate = new EclipseProjectDelegate(this);
   }
 
   /**
@@ -47,20 +47,7 @@ public class HasNature extends AbstractAnt4EclipseCondition {
     requireNatureSet();
     try {
       final EclipseProject project = this._projectDelegate.getEclipseProject();
-      boolean result = project.hasNature(this._nature);
-      // TODO: NICKNAME-HANDLING!!
-      // if (!result) {
-      // if ("java".equals(this._nature)) {
-      // result = project.hasNature(JavaProjectRole.JAVA_NATURE);
-      // } else if ("c".equals(this._nature)) {
-      // result = project.hasNature(CProjectRole.C_NATURE);
-      // } else if ("c++".equals(this._nature)) {
-      // result = project.hasNature(CProjectRole.CC_NATURE);
-      // } else if ("python".equals(this._nature)) {
-      // result = project.hasNature(PythonProjectRole.PYTHON_NATURE);
-      // }
-      // }
-      return (result);
+      return project.hasNature(this._nature);
     } catch (final BuildException e) {
       throw e;
     } catch (final Exception e) {
@@ -116,5 +103,9 @@ public class HasNature extends AbstractAnt4EclipseCondition {
   @Deprecated
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
+  }
+
+  public final void setWorkspaceDirectory(File workspaceDirectory) {
+    this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 }

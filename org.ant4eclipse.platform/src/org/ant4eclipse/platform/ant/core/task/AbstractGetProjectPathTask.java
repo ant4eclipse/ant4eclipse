@@ -9,12 +9,15 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant.base;
+package org.ant4eclipse.platform.ant.core.task;
 
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.platform.ant.delegate.GetProjectPathDelegate;
+import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
+import org.ant4eclipse.platform.ant.core.GetPathComponent;
+import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.GetPathDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -28,129 +31,141 @@ import org.apache.tools.ant.types.Path;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask {
+public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask implements GetPathComponent,
+    EclipseProjectComponent {
 
-  private final GetProjectPathDelegate _getProjectPathDelegate;
+  private final EclipseProjectDelegate _projectDelegate;
+
+  private final GetPathDelegate        _getPathDelegate;
 
   public AbstractGetProjectPathTask() {
     super();
-    this._getProjectPathDelegate = new GetProjectPathDelegate(this);
+    this._projectDelegate = new EclipseProjectDelegate(this);
+    this._getPathDelegate = new GetPathDelegate(this);
   }
 
   public final String getDirSeparator() {
-    return this._getProjectPathDelegate.getDirSeparator();
+    return this._getPathDelegate.getDirSeparator();
   }
 
   public EclipseProject getEclipseProject() throws BuildException {
-    return this._getProjectPathDelegate.getEclipseProject();
+    return this._projectDelegate.getEclipseProject();
   }
 
   public final String getPathId() {
-    return this._getProjectPathDelegate.getPathId();
+    return this._getPathDelegate.getPathId();
   }
 
   public final String getPathSeparator() {
-    return this._getProjectPathDelegate.getPathSeparator();
+    return this._getPathDelegate.getPathSeparator();
   }
 
   public final String getProperty() {
-    return this._getProjectPathDelegate.getProperty();
+    return this._getPathDelegate.getProperty();
   }
 
   public final File[] getResolvedPath() {
-    return this._getProjectPathDelegate.getResolvedPath();
+    return this._getPathDelegate.getResolvedPath();
   }
 
   public final Workspace getWorkspace() {
-    return this._getProjectPathDelegate.getWorkspace();
+    return this._projectDelegate.getWorkspace();
   }
 
   public final File getWorkspaceDirectory() {
-    return this._getProjectPathDelegate.getWorkspaceDirectory();
+    return this._projectDelegate.getWorkspaceDirectory();
   }
 
-  public final boolean isDirSeparatorset() {
-    return this._getProjectPathDelegate.isDirSeparatorset();
+  public final boolean isDirSeparatorSet() {
+    return this._getPathDelegate.isDirSeparatorSet();
   }
 
   public final boolean isPathIdSet() {
-    return this._getProjectPathDelegate.isPathIdSet();
+    return this._getPathDelegate.isPathIdSet();
   }
 
   public final boolean isPathSeparatorSet() {
-    return this._getProjectPathDelegate.isPathSeparatorSet();
+    return this._getPathDelegate.isPathSeparatorSet();
   }
 
   public final boolean isProjectNameSet() {
-    return this._getProjectPathDelegate.isProjectNameSet();
+    return this._projectDelegate.isProjectNameSet();
   }
 
   public final boolean isPropertySet() {
-    return this._getProjectPathDelegate.isPropertySet();
+    return this._getPathDelegate.isPropertySet();
   }
 
   public final boolean isRelative() {
-    return this._getProjectPathDelegate.isRelative();
+    return this._getPathDelegate.isRelative();
   }
 
   public final boolean isWorkspaceSet() {
-    return this._getProjectPathDelegate.isWorkspaceSet();
+    return this._projectDelegate.isWorkspaceSet();
   }
 
   public final void populatePathId() {
-    this._getProjectPathDelegate.populatePathId();
+    this._getPathDelegate.populatePathId();
   }
 
   public final void populateProperty() {
-    this._getProjectPathDelegate.populateProperty();
+    this._getPathDelegate.populateProperty();
   }
 
   public final void requirePathIdOrPropertySet() {
-    this._getProjectPathDelegate.requirePathIdOrPropertySet();
+    this._getPathDelegate.requirePathIdOrPropertySet();
   }
 
   public final void requireWorkspaceAndProjectNameSet() {
-    this._getProjectPathDelegate.requireWorkspaceAndProjectNameSet();
+    this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
   public final void requireWorkspaceSet() {
-    this._getProjectPathDelegate.requireWorkspaceSet();
+    this._projectDelegate.requireWorkspaceSet();
   }
 
   public final void setDirSeparator(String newdirseparator) {
-    this._getProjectPathDelegate.setDirSeparator(newdirseparator);
+    this._getPathDelegate.setDirSeparator(newdirseparator);
   }
 
   public final void setPathId(String id) {
-    this._getProjectPathDelegate.setPathId(id);
+    this._getPathDelegate.setPathId(id);
   }
 
   public final void setPathSeparator(String newpathseparator) {
-    this._getProjectPathDelegate.setPathSeparator(newpathseparator);
+    this._getPathDelegate.setPathSeparator(newpathseparator);
   }
 
   public final void setProjectName(String projectName) {
-    this._getProjectPathDelegate.setProjectName(projectName);
+    this._projectDelegate.setProjectName(projectName);
   }
 
   public final void setProperty(String property) {
-    this._getProjectPathDelegate.setProperty(property);
+    this._getPathDelegate.setProperty(property);
   }
 
   public final void setRelative(boolean relative) {
-    this._getProjectPathDelegate.setRelative(relative);
+    this._getPathDelegate.setRelative(relative);
   }
 
   public final void setResolvedPath(File[] resolvedPath) {
-    this._getProjectPathDelegate.setResolvedPath(resolvedPath);
+    this._getPathDelegate.setResolvedPath(resolvedPath);
   }
 
   public final void setWorkspace(File workspace) {
-    this._getProjectPathDelegate.setWorkspace(workspace);
+    this._projectDelegate.setWorkspace(workspace);
   }
 
   public final void setWorkspaceDirectory(File workspaceDirectory) {
-    this._getProjectPathDelegate.setWorkspaceDirectory(workspaceDirectory);
+    this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
+  }
+
+  public final Path convertToPath(File entry) {
+    return this._getPathDelegate.convertToPath(entry);
+  }
+
+  public final String convertToString(File entry) {
+    return this._getPathDelegate.convertToString(entry);
   }
 
   /**
@@ -174,16 +189,16 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     }
   }
 
-  protected final Path convertToPath(File[] entries) {
-    return this._getProjectPathDelegate.convertToPath(entries);
+  public final Path convertToPath(File[] entries) {
+    return this._getPathDelegate.convertToPath(entries);
   }
 
-  protected final String convertToString(File[] entries) {
-    return this._getProjectPathDelegate.convertToString(entries);
+  public final String convertToString(File[] entries) {
+    return this._getPathDelegate.convertToString(entries);
   }
 
-  protected final void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    this._getProjectPathDelegate.ensureRole(projectRoleClass);
+  public final void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
+    this._projectDelegate.ensureRole(projectRoleClass);
   }
 
   /**

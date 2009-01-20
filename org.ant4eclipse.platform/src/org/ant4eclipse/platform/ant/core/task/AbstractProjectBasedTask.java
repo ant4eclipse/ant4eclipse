@@ -9,12 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant.base;
+package org.ant4eclipse.platform.ant.core.task;
 
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -29,7 +29,7 @@ import org.apache.tools.ant.BuildException;
 public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask {
 
   /** Comment for <code>_projectSetBase</code> */
-  private final ProjectDelegate _projectBase;
+  private final EclipseProjectDelegate _projectBase;
 
   /**
    * <p>
@@ -38,7 +38,7 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask {
    */
   public AbstractProjectBasedTask() {
     super();
-    this._projectBase = new ProjectDelegate(this);
+    this._projectBase = new EclipseProjectDelegate(this);
   }
 
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {

@@ -16,7 +16,7 @@ import java.io.File;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.ant.base.AbstractTeamProjectSetBasedTask;
+import org.ant4eclipse.platform.ant.core.task.AbstractTeamProjectSetBasedTask;
 import org.ant4eclipse.platform.ant.internal.team.VcsAdapter;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
@@ -50,11 +50,11 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   private boolean             _deleteExistingProjects = true;
 
   public String getPassword() {
-    return _password;
+    return this._password;
   }
 
   public File getDestination() {
-    return _destination;
+    return this._destination;
   }
 
   /**
@@ -63,34 +63,34 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param destination
    */
   public void setDestination(File destination) {
-    _destination = destination;
+    this._destination = destination;
   }
 
   public void setPassword(String password) {
-    _password = password;
+    this._password = password;
   }
 
   public String getUsername() {
-    return _username;
+    return this._username;
   }
 
   public void setUsername(String username) {
-    _username = username;
+    this._username = username;
   }
 
   public boolean isDeleteExistingProjects() {
-    return _deleteExistingProjects;
+    return this._deleteExistingProjects;
   }
 
   public void setDeleteExistingProjects(boolean deleteExistingProjects) {
-    _deleteExistingProjects = deleteExistingProjects;
+    this._deleteExistingProjects = deleteExistingProjects;
   }
 
   /**
    * @return Returns the command.
    */
   public VcsCommand getCommand() {
-    return _command;
+    return this._command;
   }
 
   /**
@@ -100,7 +100,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   public void setCommand(VcsCommand command) {
     Assert.notNull(command);
 
-    _command = command;
+    this._command = command;
   }
 
   /**
@@ -112,6 +112,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   /**
    * {@inheritDoc}
    */
+  @Override
   public void doExecute() throws BuildException {
     // check mandatory attributes..
     requireDestinationSet();
@@ -119,8 +120,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     requireCommandSet();
     checkPrereqs();
 
-    _vcsAdapter = createVcsAdapter();
-    A4ELogging.debug("using version control adapter = ", _vcsAdapter);
+    this._vcsAdapter = createVcsAdapter();
+    A4ELogging.debug("using version control adapter = ", this._vcsAdapter);
 
     // set user and password
     getProjectSet().setUserAndPassword(getUsername(), getPassword());
@@ -171,9 +172,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
 
     TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
 
-    for (int i = 0; i < _teamProjectDescription.length; i++) {
-      TeamProjectDescription teamProjectDescription = _teamProjectDescription[i];
-      _vcsAdapter.checkoutProject(destination, teamProjectDescription, deleteExisting);
+    for (TeamProjectDescription teamProjectDescription : _teamProjectDescription) {
+      this._vcsAdapter.checkoutProject(destination, teamProjectDescription, deleteExisting);
     }
   }
 
@@ -189,9 +189,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
-    for (int i = 0; i < descriptions.length; i++) {
-      TeamProjectDescription description = descriptions[i];
-      _vcsAdapter.exportProject(destination, description, deleteExisting);
+    for (TeamProjectDescription description : descriptions) {
+      this._vcsAdapter.exportProject(destination, description, deleteExisting);
     }
   }
 
@@ -205,9 +204,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
-    for (int i = 0; i < descriptions.length; i++) {
-      TeamProjectDescription description = descriptions[i];
-      _vcsAdapter.updateProject(destination, description);
+    for (TeamProjectDescription description : descriptions) {
+      this._vcsAdapter.updateProject(destination, description);
     }
   }
 
@@ -231,6 +229,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getValues() {
       return new String[] { CHECKOUT, UPDATE, EXPORT };
     }

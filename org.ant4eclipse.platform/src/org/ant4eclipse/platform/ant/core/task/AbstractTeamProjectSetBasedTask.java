@@ -9,13 +9,14 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant.base;
+package org.ant4eclipse.platform.ant.core.task;
 
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.platform.ant.delegate.TeamProjectSetDelegate;
+import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
+import org.ant4eclipse.platform.ant.core.delegate.TeamProjectSetDelegate;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 /**
@@ -23,7 +24,8 @@ import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4EclipseTask {
+public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4EclipseTask implements
+    TeamProjectSetComponent {
 
   private final TeamProjectSetDelegate _projectSetBase;
 
@@ -75,6 +77,22 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
    * @param projectSet
    */
   public void setProjectSet(final File projectSet) {
+    this._projectSetBase.setTeamProjectSet(projectSet);
+  }
+
+  public final TeamProjectSet getTeamProjectSet() {
+    return this._projectSetBase.getTeamProjectSet();
+  }
+
+  public final boolean isTeamProjectSetSet() {
+    return this._projectSetBase.isTeamProjectSetSet();
+  }
+
+  public final void requireTeamProjectSetSet() {
+    this._projectSetBase.requireTeamProjectSetSet();
+  }
+
+  public final void setTeamProjectSet(File projectSet) {
     this._projectSetBase.setTeamProjectSet(projectSet);
   }
 }

@@ -9,23 +9,21 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant;
-
-import java.io.File;
-
-import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
+package org.ant4eclipse.platform.ant.core;
 
 /**
- * <p>
- * Can be used to resolve the root diretory fo a given project.
- * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetProjectDirectoryTask extends AbstractGetProjectPathTask {
+public interface ProjectSetComponent extends TeamProjectSetComponent {
 
-  @Override
-  protected File[] resolvePath() {
-    return new File[] { getEclipseProject().getFolder() };
-  }
+  public void setProjectNames(String projectNames);
+
+  public String[] getProjectNames();
+
+  public boolean isProjectNamesSet();
+
+  public void requireProjectNamesSet();
+
+  public void requireTeamProjectSetOrProjectNamesSet();
 }

@@ -3,8 +3,8 @@ package org.ant4eclipse.platform.ant;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ant4eclipse.core.ant.delegate.MacroExecutionDelegate;
-import org.ant4eclipse.platform.ant.base.AbstractProjectBasedTask;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -26,8 +26,16 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
    * 
    */
   public ExecuteProjectBuildersTask() {
-    this._delegate = new MacroExecutionDelegate(this);
+    this._delegate = new MacroExecutionDelegate(this, "executeBuildCommands");
     this._builderMacroDefs = new HashMap<String, MacroDef>();
+  }
+
+  public String getPrefix() {
+    return this._delegate.getPrefix();
+  }
+
+  public void setPrefix(String prefix) {
+    this._delegate.setPrefix(prefix);
   }
 
   @Override
@@ -44,7 +52,7 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
       if (this._builderMacroDefs.containsKey(buildCommand.getName())) {
         MacroDef macroDef = this._builderMacroDefs.get(buildCommand.getName());
         // TODO: scoped Properties
-        this._delegate.executeMacroInstance(macroDef, buildCommand.getName(), null, null);
+        this._delegate.executeMacroInstance(macroDef, null);
       }
     }
   }

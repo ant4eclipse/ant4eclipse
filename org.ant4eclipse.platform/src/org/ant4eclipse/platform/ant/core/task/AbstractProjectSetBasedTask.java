@@ -1,10 +1,10 @@
-package org.ant4eclipse.platform.ant.base;
+package org.ant4eclipse.platform.ant.core.task;
 
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.platform.ant.delegate.ProjectSetDelegate;
-import org.ant4eclipse.platform.ant.delegate.WorkspaceDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.ProjectSetDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 

@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.ant;
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseCondition;
-import org.ant4eclipse.platform.ant.delegate.ProjectDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
@@ -28,7 +28,7 @@ import org.apache.tools.ant.BuildException;
 public class HasBuildCommand extends AbstractAnt4EclipseCondition {
 
   /** Comment for <code>_projectDelegate</code> */
-  private final ProjectDelegate _projectDelegate;
+  private final EclipseProjectDelegate _projectDelegate;
 
   /** Comment for <code>__buildCommand</code> */
   private String                _buildCommand;
@@ -37,7 +37,7 @@ public class HasBuildCommand extends AbstractAnt4EclipseCondition {
    * Creates a new instance of type HasBuildCommand.
    */
   public HasBuildCommand() {
-    this._projectDelegate = new ProjectDelegate(this);
+    this._projectDelegate = new EclipseProjectDelegate(this);
   }
 
   /**
