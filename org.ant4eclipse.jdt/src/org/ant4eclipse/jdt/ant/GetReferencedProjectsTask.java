@@ -18,7 +18,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.jdt.tools.alt.ReferencedProjectsResolver;
-import org.ant4eclipse.platform.ant.base.AbstractProjectBasedTask;
+import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;

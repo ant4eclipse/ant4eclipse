@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.ant4eclipse.core.ant.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
-import org.ant4eclipse.platform.ant.base.AbstractProjectPathTask;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
@@ -34,10 +34,10 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask {
   private Map<String, String>               _scopedProperties;
 
   /**
-	 * 
-	 */
+   * 
+   */
   public ExecuteJdtProjectTask() {
-    this._delegate = new MacroExecutionDelegate(this);
+    this._delegate = new MacroExecutionDelegate(this, "executeJdtProject");
     this._macroDefs = new LinkedList<ScopedMacroDefinition>();
   }
 
@@ -158,8 +158,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask {
       scopedProperties.put("output.directory", this._javaProjectRole.getOutputFolderForSourceFolder(sourceFolder));
       scopedProperties.putAll(this._scopedProperties);
 
-      this._delegate.executeMacroInstance(macroDef, "executeJdtProject", scopedProperties,
-          new HashMap<String, Object>());
+      this._delegate.executeMacroInstance(macroDef, null);
     }
   }
 
@@ -193,8 +192,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask {
       scopedProperties.put("output.directory", outFolder);
       scopedProperties.putAll(this._scopedProperties);
 
-      this._delegate.executeMacroInstance(macroDef, "executeJdtProject", scopedProperties,
-          new HashMap<String, Object>());
+      this._delegate.executeMacroInstance(macroDef, null);
     }
   }
 

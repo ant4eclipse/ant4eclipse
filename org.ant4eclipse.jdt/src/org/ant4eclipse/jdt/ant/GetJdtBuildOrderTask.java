@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.jdt.tools.alt.BuildOrderResolver;
-import org.ant4eclipse.platform.ant.base.AbstractTeamProjectSetBasedTask;
+import org.ant4eclipse.platform.ant.core.task.AbstractTeamProjectSetBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;

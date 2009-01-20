@@ -37,9 +37,21 @@
 		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet.psf"> -->
 
 		<ant4eclipse:executeProjectSet workspace="${destination}"
-		                               projectNames="org.ant4eclipse.core,org.ant4eclipse.core.test,org.ant4eclipse.external, org.ant4eclipse.external.test,org.ant4eclipse.jdt,org.ant4eclipse.jdt.test,org.ant4eclipse.platform,org.ant4eclipse.platform.test">
+		                               projectNames="org.ant4eclipse.core,org.ant4eclipse.core.test,org.ant4eclipse.external, org.ant4eclipse.external.test,org.ant4eclipse.jdt,org.ant4eclipse.jdt.test,org.ant4eclipse.platform,org.ant4eclipse.platform.test"
+									   prefix="hurz">
 
 			<ant4eclipse:forEachProject>
+
+				<echo>${hurz.project.directory}</echo>
+
+				<!-- <delete>
+					<fileset dir="${executeProjectSet.project.directory}" defaultexcludes="no">
+						<include name="**/.svn/**" />
+					</fileset>
+					<dirset dir="${executeProjectSet.project.directory}" defaultexcludes="no">
+						<include name="**/.svn/**" />
+					</dirset>
+				</delete>
 
 				<ant4eclipse:executeJdtProject workspace="${destination}"
 				                               projectname="${executeProjectSet.project.name}">
@@ -50,13 +62,14 @@
 						<mkdir dir="${executeJdtProject.project.directory}/${executeJdtProject.output.directory}" />
 					</ant4eclipse:forEachOutputDirectory>
 
-					<!-- <ant4eclipse:forEachSourceDirectory>
-						  <javac srcdir="${src}"
-						         destdir="${build}"
-						         classpath="xyz.jar"
-						         debug="on"
-						         source="1.4"
-						  />
+					<ant4eclipse:forEachSourceDirectory>
+						<javac srcdir="${src}"
+						       destdir="${build}"
+						       classpath="xyz.jar"
+						       bootclasspath=""
+						       debug="on"
+						       source="1.4"/>
+						<echo>HILFE</echo>
 						<echo>${executeProjectSet.project.name}</echo>
 						<echo>Source: ${executeJdtProject.source.directory}</echo>
 						<echo>${executeJdtProject.classpath.relative.runtime}</echo>
@@ -64,13 +77,13 @@
 						<echo>${executeJdtProject.classpath.relative.compiletime}</echo>
 						<echo>${executeJdtProject.classpath.absolute.compiletime}</echo>
 
-					</ant4eclipse:forEachSourceDirectory> -->
+					</ant4eclipse:forEachSourceDirectory>
 
 					<ant4eclipse:forAllSourceDirectories>
 
 					</ant4eclipse:forAllSourceDirectories>
 
-				</ant4eclipse:executeJdtProject>
+				</ant4eclipse:executeJdtProject> -->
 
 			</ant4eclipse:forEachProject>
 

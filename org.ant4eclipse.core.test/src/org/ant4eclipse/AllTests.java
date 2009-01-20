@@ -7,7 +7,6 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseConditionTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataTypeTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest;
 import org.ant4eclipse.core.ant.AntCallTest;
-import org.ant4eclipse.core.ant.MacroExecutionDelegateTest;
 import org.ant4eclipse.core.dependencygraph.DependencyGraphTest;
 import org.ant4eclipse.core.logging.A4ELogging_FailureTest;
 import org.ant4eclipse.core.nls.NLSTest;
@@ -24,7 +23,6 @@ import org.junit.runners.Suite;
     XQueryHandlerTest.class, JarUtilitiesTest.class, UtilitiesTest.class,
     PropertiesBasedServiceRegistryConfigurationTest.class, ServiceRegistryTest.class, NLSTest.class,
     A4ELogging_FailureTest.class, DependencyGraphTest.class, AbstractAnt4EclipseConditionTest.class,
-    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class,
-    MacroExecutionDelegateTest.class })
+    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
 public class AllTests {
 }

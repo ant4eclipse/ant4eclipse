@@ -18,7 +18,7 @@ import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgument;
 import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
-import org.ant4eclipse.platform.ant.base.AbstractGetProjectPathTask;
+import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)

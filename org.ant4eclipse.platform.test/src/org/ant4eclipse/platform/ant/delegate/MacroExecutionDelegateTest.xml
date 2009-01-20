@@ -3,7 +3,7 @@
 <project name="testAntCall" basedir=".">
 
 	<typedef name="macroExecute"
-	         classname="org.ant4eclipse.core.ant.MacroExecutionDelegateTest$MacroExecuteTask"
+	         classname="org.ant4eclipse.platform.ant.delegate.MacroExecutionDelegateTest$MacroExecuteTask"
 	/>
 
 	<!-- test testNonexistingNature -->
