@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.internal.resource.variable;
+package org.ant4eclipse.platform.internal.model.resource.variable;
 
 import java.io.File;
 import java.util.Enumeration;

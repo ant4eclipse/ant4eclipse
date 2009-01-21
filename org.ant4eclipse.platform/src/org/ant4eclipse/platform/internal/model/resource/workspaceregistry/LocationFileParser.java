@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.internal.resource.workspaceregistry;
+package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -20,7 +20,7 @@ import java.net.URISyntaxException;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.model.internal.resource.ChunkyFile;
+import org.ant4eclipse.platform.internal.model.resource.ChunkyFile;
 
 /**
  * Reads a ".location" file which provides the position of an external project from eclipse's .metadata directory.

@@ -1,4 +1,4 @@
-package org.ant4eclipse.platform.tools.internal;
+package org.ant4eclipse.platform.internal.tools;
 
 import java.util.LinkedList;
 import java.util.List;

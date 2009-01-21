@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant.internal.team;
+package org.ant4eclipse.platform.internal.ant.team;
 
 /**
  * <p>

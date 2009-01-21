@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.internal.resource;
+package org.ant4eclipse.platform.internal.model.resource;
 
 /**
  * Represents a "linked resource" of an eclipse project

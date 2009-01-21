@@ -9,15 +9,15 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.internal.resource.workspaceregistry;
+package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
 import java.io.File;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.model.internal.resource.EclipseProjectImpl;
-import org.ant4eclipse.platform.model.internal.resource.WorkspaceImpl;
-import org.ant4eclipse.platform.model.internal.resource.role.ProjectRoleIdentifierRegistry;
+import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
+import org.ant4eclipse.platform.internal.model.resource.WorkspaceImpl;
+import org.ant4eclipse.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**

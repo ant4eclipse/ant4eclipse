@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
-import org.ant4eclipse.platform.ant.internal.team.SvnAdapter;
-import org.ant4eclipse.platform.ant.internal.team.VcsAdapter;
+import org.ant4eclipse.platform.internal.ant.team.SvnAdapter;
+import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 
 /**
  * SvnGetProjectSetTask 

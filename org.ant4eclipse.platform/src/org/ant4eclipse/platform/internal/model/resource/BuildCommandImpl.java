@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.internal.resource;
+package org.ant4eclipse.platform.internal.model.resource;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
