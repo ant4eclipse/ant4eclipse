@@ -22,68 +22,44 @@
 		<jre id="jdk15" location="R:\ref\jdk_15" />
 	</ant4eclipse:jreContainer>
 
+
+	<!-- ================================= 
+          target: build.ant4eclipse              
+         ================================= -->
 	<target name="build.ant4eclipse">
 
-		<!-- <delete dir="${destination}" quiet="true" />
-		<mkdir dir="${destination}" />
-
-		<ant4eclipse:svnGetProjectSet username="${svn.username}"
-									  password="${svn.password}"
-		                              command="export"
-		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet.psf"
-		                              destination="${destination}" /> -->
-
-		<!-- <ant4eclipse:executeProjectSet workspace="${destination}"
-		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet.psf"> -->
-
 		<ant4eclipse:executeProjectSet workspace="${destination}"
-		                               projectNames="org.ant4eclipse.core,org.ant4eclipse.core.test,org.ant4eclipse.external, org.ant4eclipse.external.test,org.ant4eclipse.jdt,org.ant4eclipse.jdt.test,org.ant4eclipse.platform,org.ant4eclipse.platform.test"
-									   prefix="hurz">
+		                               projectNames="org.ant4eclipse.core,org.ant4eclipse.core.test,org.ant4eclipse.external, org.ant4eclipse.external.test,org.ant4eclipse.platform,org.ant4eclipse.platform.test">
 
 			<ant4eclipse:forEachProject>
-
-				<echo>${hurz.project.directory}</echo>
-
-				<!-- <delete>
-					<fileset dir="${executeProjectSet.project.directory}" defaultexcludes="no">
-						<include name="**/.svn/**" />
-					</fileset>
-					<dirset dir="${executeProjectSet.project.directory}" defaultexcludes="no">
-						<include name="**/.svn/**" />
-					</dirset>
-				</delete>
 
 				<ant4eclipse:executeJdtProject workspace="${destination}"
 				                               projectname="${executeProjectSet.project.name}">
 
 					<ant4eclipse:forEachOutputDirectory>
-						<delete dir="${executeJdtProject.project.directory}/${executeJdtProject.output.directory}"
+						<echo>Scrubbing directory "${executeJdtProject.output.directory}"</echo>
+						<delete dir="${executeJdtProject.output.directory}"
 						        quiet="true" />
-						<mkdir dir="${executeJdtProject.project.directory}/${executeJdtProject.output.directory}" />
+						<mkdir dir="${executeJdtProject.output.directory}" />
 					</ant4eclipse:forEachOutputDirectory>
 
-					<ant4eclipse:forEachSourceDirectory>
-						<javac srcdir="${src}"
-						       destdir="${build}"
-						       classpath="xyz.jar"
-						       bootclasspath=""
-						       debug="on"
-						       source="1.4"/>
-						<echo>HILFE</echo>
-						<echo>${executeProjectSet.project.name}</echo>
-						<echo>Source: ${executeJdtProject.source.directory}</echo>
-						<echo>${executeJdtProject.classpath.relative.runtime}</echo>
-						<echo>${executeJdtProject.classpath.absolute.runtime}</echo>
-						<echo>${executeJdtProject.classpath.relative.compiletime}</echo>
-						<echo>${executeJdtProject.classpath.absolute.compiletime}</echo>
-
-					</ant4eclipse:forEachSourceDirectory>
 
 					<ant4eclipse:forAllSourceDirectories>
+						<echo>Compiling jdt project "${executeJdtProject.project.name}"</echo>
+						<javac destdir="${executeJdtProject.output.directory}"
+						       debug="on"
+						       source="1.5">
+							<src refid="executeJdtProject.source.directories.path" />
+							<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+						</javac>
 
+						<echo>Copying resources from jdt project "${executeJdtProject.project.name}"</echo>
+						<copy todir="${executeJdtProject.output.directory}">
+						    <resources refid="executeJdtProject.source.directories.path"/>
+						</copy>
 					</ant4eclipse:forAllSourceDirectories>
 
-				</ant4eclipse:executeJdtProject> -->
+				</ant4eclipse:executeJdtProject>
 
 			</ant4eclipse:forEachProject>
 
