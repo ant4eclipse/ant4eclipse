@@ -70,8 +70,8 @@ public class MacroExecutionDelegate extends AbstractAntDelegate implements Macro
    * @param scopedReferences
    */
   public void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
-
     Assert.notNull(macroDef);
+    Assert.notNull(macroExecutionValues);
 
     // create MacroInstance
     final MacroInstance instance = new MacroInstance();

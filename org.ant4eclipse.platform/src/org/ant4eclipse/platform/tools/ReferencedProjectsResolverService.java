@@ -1,7 +1,6 @@
 package org.ant4eclipse.platform.tools;
 
 import java.util.List;
-import java.util.Properties;
 
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -15,7 +14,8 @@ public interface ReferencedProjectsResolverService {
    * @param properties
    * @return
    */
-  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final Properties properties);
+  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
+      final List<Object> additionalElements);
 
   /**
    */

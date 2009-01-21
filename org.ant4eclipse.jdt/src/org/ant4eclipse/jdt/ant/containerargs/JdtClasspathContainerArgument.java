@@ -1,6 +1,9 @@
 package org.ant4eclipse.jdt.ant.containerargs;
 
-public class ClasspathContainerArgument {
+/**
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
+public class JdtClasspathContainerArgument {
 
   private String key;
 

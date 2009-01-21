@@ -152,6 +152,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     this._getPathDelegate.setResolvedPath(resolvedPath);
   }
 
+  @SuppressWarnings("deprecation")
   public final void setWorkspace(File workspace) {
     this._projectDelegate.setWorkspace(workspace);
   }

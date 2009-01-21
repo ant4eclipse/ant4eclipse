@@ -1,38 +1,59 @@
 package org.ant4eclipse.platform.ant;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.platform.ant.core.delegate.PathDelegate;
+import org.ant4eclipse.platform.ant.core.PathComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+/**
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class PlatformExecutorValuesProvider {
 
-  public static final String PROJECT_NAME           = "project.name";
+  /** the key for the project name property */
+  public static final String  PROJECT_NAME           = "project.name";
 
-  public static final String PROJECT_DIRECTORY      = "project.directory";
+  /** the key for the project directory property */
+  public static final String  PROJECT_DIRECTORY      = "project.directory";
 
-  public static final String PROJECT_DIRECTORY_PATH = "project.directory.path";
+  /** the key for the project directory path */
+  public static final String  PROJECT_DIRECTORY_PATH = "project.directory.path";
 
-  private final PathDelegate _pathDelegate;
+  /** the internally used path component */
+  private final PathComponent _pathComponent;
 
-  public PlatformExecutorValuesProvider(PathDelegate pathDelegate) {
+  /**
+   * <p>
+   * The path delegate.
+   * </p>
+   * 
+   * @param pathComponent
+   */
+  public PlatformExecutorValuesProvider(PathComponent pathComponent) {
+    Assert.notNull(pathComponent);
 
-    this._pathDelegate = pathDelegate;
+    this._pathComponent = pathComponent;
   }
 
-  public MacroExecutionValues getExecutorValues(EclipseProject eclipseProject) {
-
-    MacroExecutionValues executorValues = new MacroExecutionValues();
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param eclipseProject
+   * @param executionValues
+   */
+  public void provideExecutorValues(EclipseProject eclipseProject, MacroExecutionValues executionValues) {
+    Assert.notNull(eclipseProject);
+    Assert.notNull(executionValues);
 
     // create scoped properties
-    executorValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName());
-    executorValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY,
-        this._pathDelegate.convertToString(eclipseProject.getFolder()));
+    executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName());
+    executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY,
+        this._pathComponent.convertToString(eclipseProject.getFolder()));
 
     // create scoped references
-    executorValues.getReferences().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY_PATH,
-        this._pathDelegate.convertToPath(eclipseProject.getFolder()));
-
-    return executorValues;
+    executionValues.getReferences().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY_PATH,
+        this._pathComponent.convertToPath(eclipseProject.getFolder()));
   }
 
 }

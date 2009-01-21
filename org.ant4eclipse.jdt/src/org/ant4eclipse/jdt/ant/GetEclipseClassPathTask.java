@@ -14,8 +14,8 @@ package org.ant4eclipse.jdt.ant;
 import java.io.File;
 import java.util.Properties;
 
-import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgument;
-import org.ant4eclipse.jdt.ant.containerargs.ClasspathContainerArgumentDelegate;
+import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgument;
+import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
@@ -29,11 +29,11 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
   private boolean                            _runtime = false;
 
   /** - */
-  private ClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
+  private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
   public GetEclipseClassPathTask() {
     super();
-    this._classpathContainerArgumentDelegate = new ClasspathContainerArgumentDelegate();
+    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
   }
 
   /**
@@ -58,9 +58,9 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
     this._runtime = runtime;
   }
 
-  public ClasspathContainerArgument createContainerArg() {
+  public JdtClasspathContainerArgument createContainerArg() {
     if (this._classpathContainerArgumentDelegate == null) {
-      this._classpathContainerArgumentDelegate = new ClasspathContainerArgumentDelegate();
+      this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
     }
 
     return this._classpathContainerArgumentDelegate.createContainerArg();

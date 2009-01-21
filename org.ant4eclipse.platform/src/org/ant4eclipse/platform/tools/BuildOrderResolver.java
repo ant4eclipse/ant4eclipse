@@ -3,7 +3,6 @@ package org.ant4eclipse.platform.tools;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import org.ant4eclipse.core.dependencygraph.DependencyGraph;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -31,7 +30,7 @@ public class BuildOrderResolver {
    * @return
    */
   public static final List<EclipseProject> resolveBuildOrder(final Workspace workspace, final String[] projectNames,
-      final Properties properties) {
+      final List<Object> additionalElements) {
 
     // retrieve all eclipse projects from the workspace
     final EclipseProject[] eclipseProjects = workspace.getProjects(projectNames, true);
@@ -44,7 +43,7 @@ public class BuildOrderResolver {
 
       // resolve referenced projects
       final List<EclipseProject> referencedProjects = ReferencedProjectsResolverService.Helper.getService()
-          .resolveReferencedProjects(eclipseProject, properties);
+          .resolveReferencedProjects(eclipseProject, additionalElements);
 
       // add referenced projects to the dependency graph
       for (final EclipseProject referencedProject : referencedProjects) {

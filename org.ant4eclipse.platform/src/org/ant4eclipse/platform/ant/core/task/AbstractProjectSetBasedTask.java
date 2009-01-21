@@ -75,6 +75,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
     this._workspaceDelegate.requireWorkspaceSet();
   }
 
+  @SuppressWarnings("deprecation")
   public void setWorkspace(File workspace) {
     this._workspaceDelegate.setWorkspace(workspace);
   }

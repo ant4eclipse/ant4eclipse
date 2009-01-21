@@ -2,7 +2,6 @@ package org.ant4eclipse.platform.internal.tools;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
@@ -27,14 +26,14 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
    * @see org.ant4eclipse.platform.tools.ReferencedProjectsResolverService#resolveReferencedProjects(org.ant4eclipse.platform.model.resource.EclipseProject,
    *      java.util.Properties)
    */
-  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, Properties properties) {
+  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
     init();
 
     List<EclipseProject> result = new LinkedList<EclipseProject>();
 
     for (ReferencedProjectsResolver resolver : this._referencedProjectsResolvers) {
       if (resolver.canHandle(project)) {
-        List<EclipseProject> referencedProjects = resolver.resolveReferencedProjects(project, properties);
+        List<EclipseProject> referencedProjects = resolver.resolveReferencedProjects(project, additionalElements);
         result.addAll(referencedProjects);
       }
     }

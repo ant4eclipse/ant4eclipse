@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgument;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.internal.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.jdt.tools.internal.classpathentry.ContainerClasspathEntryResolver;
@@ -29,8 +30,18 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    * @param properties
    * @return
    */
-  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final Properties properties) {
+  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
+      final List<Object> additionalElements) {
     Assert.notNull(project);
+
+    final Properties properties = new Properties();
+
+    for (final Object object : additionalElements) {
+      if (object instanceof JdtClasspathContainerArgument) {
+        final JdtClasspathContainerArgument argument = (JdtClasspathContainerArgument) object;
+        properties.put(argument.getKey(), argument.getValue());
+      }
+    }
 
     // create a ResolverJob
     final ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, properties);
