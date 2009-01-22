@@ -188,7 +188,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void initialize() {
-    assertTrue(!isInitialized(), "initialize() darf nicht aufgerufen werden, wenn isInitialized() == true !");
+    assertTrue(!isInitialized(), "Service registry already has been initialized!");
 
     final Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -289,8 +289,7 @@ public class ServiceRegistry {
   protected class ConfigurationContextImpl implements ConfigurationContext {
 
     public final void registerService(final Object service, final String serviceIdentifier) {
-      assertTrue(!ServiceRegistry.this._isInitialized,
-          "Environment darf noch nicht initialisiert sein, wenn ein Service angemeldet wird!");
+      assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       parameterNotNull("service", service);
       parameterNotNull("serviceIdentifier", serviceIdentifier);
 
@@ -303,14 +302,13 @@ public class ServiceRegistry {
     }
 
     public final void registerService(final Object service, final String[] serviceIdentifier) {
-      assertTrue(!ServiceRegistry.this._isInitialized,
-          "Environment darf noch nicht initialisiert sein, wenn ein Service angemeldet wird!");
+      assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       parameterNotNull("service", service);
       parameterNotNull("serviceIdentifier", serviceIdentifier);
-      assertTrue(serviceIdentifier.length > 0, "Länge des Parameters serviceIdentifier muss grösser als 0 sein!");
+      assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
 
       for (int i = 0; i < serviceIdentifier.length; i++) {
-        assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] muss ungleich null sein!");
+        assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
       }
 
       for (final String object : serviceIdentifier) {
