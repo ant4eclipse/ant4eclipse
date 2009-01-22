@@ -2,12 +2,11 @@ package org.ant4eclipse.jdt.ant;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgument;
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
@@ -65,7 +64,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
     return this._jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
-  public Map<String, Object> getJdtClasspathContainerArguments() {
+  public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }
 

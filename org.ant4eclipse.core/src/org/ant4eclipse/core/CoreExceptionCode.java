@@ -26,7 +26,7 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Duplicate entry '%s' in file '%s'")
   public static CoreExceptionCode X_QUERY_DUCPLICATE_ENTRY_EXCEPTION;
 
-  @NLSMessage("The specified graph contains cyclic dependencies (f.e. '%s').")
+  @NLSMessage("The specified graph contains cyclic dependencies (e.g. '%s').")
   public static CoreExceptionCode CYCLIC_DEPENDENCIES_EXCEPTION;
 
   @NLSMessage("Path '%s' must not be a file")
@@ -47,7 +47,7 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Parameter '%s' must be set on type '%s'")
   public static CoreExceptionCode PARAMETER_MUST_BE_SET_ON_TYPE;
 
-  /** service registry related exception codes **/
+  /** service registry related exception codes * */
 
   @NLSMessage("Service registry has to be initialized.")
   public static CoreExceptionCode SERVICE_REGISTRY_HAS_TO_BE_INITIALIZED;
@@ -67,7 +67,7 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Service '%s' is not available.")
   public static CoreExceptionCode SERVICE_NOT_AVAILABLE;
 
-  /** assert related exception codes **/
+  /** assert related exception codes * */
 
   @NLSMessage("Precondition violated: Object has to be set.")
   public static CoreExceptionCode ASSERT_NOT_NULL_FAILED;

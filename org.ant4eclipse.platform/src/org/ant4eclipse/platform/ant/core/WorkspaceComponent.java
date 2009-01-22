@@ -79,7 +79,7 @@ public interface WorkspaceComponent {
    * Returns the {@link Workspace} instance.
    * </p>
    * 
-   * @return
+   * @return the {@link Workspace} instance.
    */
   public Workspace getWorkspace();
 }

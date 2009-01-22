@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.dependencygraph.DependencyGraph;
+import org.ant4eclipse.core.dependencygraph.DependencyGraph.VertexRenderer;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
@@ -30,20 +31,31 @@ public class BuildOrderResolver {
    * @return
    */
   public static final List<EclipseProject> resolveBuildOrder(final Workspace workspace, final String[] projectNames,
-      final List<Object> additionalElements) {
+      final String[] referenceTypes, final List<Object> additionalElements) {
 
     // retrieve all eclipse projects from the workspace
     final EclipseProject[] eclipseProjects = workspace.getProjects(projectNames, true);
 
     // create a dependency graph
-    final DependencyGraph<EclipseProject> dependencyGraph = new DependencyGraph<EclipseProject>();
+    final DependencyGraph<EclipseProject> dependencyGraph = new DependencyGraph<EclipseProject>(
+        new VertexRenderer<EclipseProject>() {
+          public String renderVertex(EclipseProject eclipseProject) {
+            return eclipseProject.getSpecifiedName();
+          }
+        });
 
     // iterate over the eclipse projects
     for (final EclipseProject eclipseProject : eclipseProjects) {
 
+      if (!dependencyGraph.containsVertex(eclipseProject)) {
+        dependencyGraph.addVertex(eclipseProject);
+      }
+
       // resolve referenced projects
-      final List<EclipseProject> referencedProjects = ReferencedProjectsResolverService.Helper.getService()
-          .resolveReferencedProjects(eclipseProject, additionalElements);
+      final List<EclipseProject> referencedProjects = referenceTypes != null ? ReferencedProjectsResolverService.Helper
+          .getService().resolveReferencedProjects(eclipseProject, referenceTypes, additionalElements)
+          : ReferencedProjectsResolverService.Helper.getService().resolveReferencedProjects(eclipseProject,
+              additionalElements);
 
       // add referenced projects to the dependency graph
       for (final EclipseProject referencedProject : referencedProjects) {

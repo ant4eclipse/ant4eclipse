@@ -3,12 +3,13 @@ package org.ant4eclipse.platform.ant.core.task;
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.platform.ant.core.ProjectSetComponent;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectSetDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
-public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTask {
+public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTask implements ProjectSetComponent {
 
   private final ProjectSetDelegate _projectSetDelegate;
 

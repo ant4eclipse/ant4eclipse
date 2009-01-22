@@ -7,4 +7,5 @@
 	<typedef name="executeBuildCommands" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
 	<typedef name="cvsGetProjectSet" classname="org.ant4eclipse.platform.ant.team.CvsGetProjectSetTask" />
 	<typedef name="svnGetProjectSet" classname="org.ant4eclipse.platform.ant.team.SvnGetProjectSetTask" />
+	<typedef name="getBuildOrder" classname="org.ant4eclipse.platform.ant.GetBuildOrderTask" />
 </antlib>

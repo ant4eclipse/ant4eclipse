@@ -22,7 +22,7 @@ import org.apache.tools.ant.BuildException;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetOutputPathTask extends AbstractGetProjectPathTask {
+public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
 
   /** DEFAULT_FOLDER */
   private static final String DEFAULT_FOLDER        = "defaultFolder";

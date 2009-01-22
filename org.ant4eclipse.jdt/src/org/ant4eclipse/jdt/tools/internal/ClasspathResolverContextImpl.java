@@ -1,10 +1,11 @@
 package org.ant4eclipse.jdt.tools.internal;
 
 import java.util.EmptyStackException;
-import java.util.Properties;
+import java.util.List;
 
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
@@ -70,8 +71,8 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
-  public Properties getProperties() {
-    return this._resolverJob.getProperties();
+  public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
+    return this._resolverJob.getJdtClasspathContainerArguments();
   }
 
   /**

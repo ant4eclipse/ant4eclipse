@@ -1,9 +1,9 @@
 package org.ant4eclipse.jdt.ant.containerargs;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContainerArgumentComponent {
 
@@ -28,16 +28,9 @@ public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContai
   /**
    * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#getContainerArguments()
    */
-  public Map<String, Object> getJdtClasspathContainerArguments() {
-    // create result
-    final Map<String, Object> containerArguments = new HashMap<String, Object>();
-
-    // put all arguments in the result
-    for (final JdtClasspathContainerArgument classpathContainerArgument : this._containerArguments) {
-      containerArguments.put(classpathContainerArgument.getKey(), classpathContainerArgument.getValue());
-    }
+  public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
 
     // return result
-    return containerArguments;
+    return this._containerArguments;
   }
 }

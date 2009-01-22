@@ -6,8 +6,37 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
+ * <p>
+ * Resolves all projects that are directly referenced by the specified project.
+ * </p>
  */
 public interface ReferencedProjectsResolverService {
+
+  /**
+   * <p>
+   * </p>
+   * <p>
+   * E.g. {"platform", "jdt"}
+   * </p>
+   * 
+   * @return
+   */
+  public String[] getReferenceTypes();
+
+  /**
+   * <p>
+   * </p>
+   * <p>
+   * </p>
+   * 
+   * @param project
+   * @param referenceTypes
+   *          e.g. {"platform", "jdt"}
+   * @param additionalElements
+   * @return
+   */
+  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project, String[] referenceTypes,
+      final List<Object> additionalElements);
 
   /**
    * @param project

@@ -1,8 +1,9 @@
 package org.ant4eclipse.jdt.tools;
 
-import java.util.Properties;
+import java.util.List;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.jdt.tools.internal.ClasspathEntryResolverExecutor;
 import org.ant4eclipse.jdt.tools.internal.ClasspathResolverContextImpl;
 import org.ant4eclipse.jdt.tools.internal.ResolvedClasspathImpl;
@@ -35,12 +36,13 @@ public class JdtResolver {
    * @return the resolved class path
    */
   public static final ResolvedClasspath resolveProjectClasspath(final EclipseProject project,
-      final boolean resolveRelative, final boolean isRuntimeClasspath, final Properties properties) {
+      final boolean resolveRelative, final boolean isRuntimeClasspath,
+      final List<JdtClasspathContainerArgument> classpathContainerArguments) {
     Assert.notNull(project);
 
     // create a ResolverJob
     final ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
-        properties);
+        classpathContainerArguments);
 
     final ClasspathEntryResolverExecutor executor = new ClasspathEntryResolverExecutor(true);
     final ResolvedClasspathImpl resolvedClasspath = new ResolvedClasspathImpl();

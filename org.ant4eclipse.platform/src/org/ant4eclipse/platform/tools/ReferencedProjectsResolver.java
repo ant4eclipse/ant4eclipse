@@ -5,6 +5,10 @@ import java.util.List;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
+ * <p>
+ * A {@link ReferencedProjectsResolver} is used to resolve projects that are (directly) referenced by given project.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface ReferencedProjectsResolver {

@@ -17,7 +17,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**
  * <p>
- * 
+ * The {@link WorkspaceRegistry} is used to maintain workspaces.
  * </p>
  */
 public interface WorkspaceRegistry extends Lifecycle {
@@ -100,15 +100,18 @@ public interface WorkspaceRegistry extends Lifecycle {
   public Workspace getCurrent();
 
   /**
+   * <p>
+   * Helper class to retrieve the {@link WorkspaceRegistry}.
+   * </p>
    */
   static class Helper {
 
     /**
      * <p>
-     * Fetches the {@link JavaRuntimeRegistry} instance from the {@link ServiceRegistry}.
+     * Fetches the {@link WorkspaceRegistry} instance from the {@link ServiceRegistry}.
      * </p>
      * 
-     * @return the registered {@link JavaRuntimeRegistry}
+     * @return the registered {@link WorkspaceRegistry}
      */
     public static WorkspaceRegistry getRegistry() {
       return (WorkspaceRegistry) ServiceRegistry.instance().getService(WorkspaceRegistry.class.getName());

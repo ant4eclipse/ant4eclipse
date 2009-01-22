@@ -5,46 +5,47 @@ import java.util.List;
 
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.platform.ant.DynamicElementContributor;
+import org.ant4eclipse.platform.ant.SubElementContribution;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.ProjectComponent;
 
-public class DynamicElementDelegate extends AbstractAntDelegate implements DynamicElement {
+/**
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
+public class SubElementDelegate extends AbstractAntDelegate implements DynamicElement {
 
   /** The prefix of properties that holds a DynamicElementContributor class name */
-  public final static String              DYNAMIC_ELEMENT_CONTRIBUTOR_PREFIX = "dynamicElementContributor";
+  public final static String           SUB_ELEMENT_CONTRIBUTOR_PREFIX = "subElementContributor";
 
   /** - */
-  private List<DynamicElementContributor> _dynamicElementContributors;
+  private List<SubElementContribution> _subElementContributors;
 
   /** - */
-  private List<Object>                    _dynamicElements;
+  private List<Object>                 _subElements;
 
   /**
    * @param component
    */
-  public DynamicElementDelegate(ProjectComponent component) {
+  public SubElementDelegate(ProjectComponent component) {
     super(component);
 
     init();
   }
 
-  public List<Object> getDynamicElements() {
-    return this._dynamicElements;
+  public List<Object> getSubElements() {
+    return this._subElements;
   }
 
   public Object createDynamicElement(String name) throws BuildException {
 
-    for (DynamicElementContributor dynamicElementContributor : this._dynamicElementContributors) {
-      if (dynamicElementContributor.canHandle(name, getProjectComponent())) {
-        return dynamicElementContributor.createDynamicElement(name, getProjectComponent());
+    for (SubElementContribution dynamicElementContributor : this._subElementContributors) {
+      if (dynamicElementContributor.canHandleSubElement(name, getProjectComponent())) {
+        return dynamicElementContributor.createSubElement(name, getProjectComponent());
       }
     }
 
-    // TODO: BuildException?
     return null;
   }
 
@@ -54,24 +55,23 @@ public class DynamicElementDelegate extends AbstractAntDelegate implements Dynam
   protected void init() {
 
     // create the lists of dynamic elements
-    this._dynamicElements = new LinkedList<Object>();
+    this._subElements = new LinkedList<Object>();
 
     // get all properties that defines a DynamicElementContributor
     Iterable<String[]> dynamicElementContributorEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(DYNAMIC_ELEMENT_CONTRIBUTOR_PREFIX);
+        .getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
 
-    final List<DynamicElementContributor> dynamicElementContributors = new LinkedList<DynamicElementContributor>();
+    final List<SubElementContribution> dynamicElementContributors = new LinkedList<SubElementContribution>();
 
     // Instantiate all ProjectRoleIdentifiers
     for (String[] dynamicElementContributorEntry : dynamicElementContributorEntries) {
       // we're not interested in the key of a DynamicElementContributor, only the class name (value of the entry) is
       // relevant
       String dynamicElementContributorClassName = dynamicElementContributorEntry[1];
-      DynamicElementContributor dynamicElementContributor = Utilities.newInstance(dynamicElementContributorClassName);
-      A4ELogging.trace("Register ProjectRoleIdentifier '%s'", new Object[] { dynamicElementContributor });
+      SubElementContribution dynamicElementContributor = Utilities.newInstance(dynamicElementContributorClassName);
       dynamicElementContributors.add(dynamicElementContributor);
     }
 
-    this._dynamicElementContributors = dynamicElementContributors;
+    this._subElementContributors = dynamicElementContributors;
   }
 }

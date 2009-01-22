@@ -12,26 +12,27 @@
 package org.ant4eclipse.jdt.ant;
 
 import java.io.File;
-import java.util.Properties;
+import java.util.List;
 
-import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgument;
+import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
+public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements JdtClasspathContainerArgumentComponent {
 
   /** Indicates whether the class path should be resolved as a runtime class path or not */
-  private boolean                            _runtime = false;
+  private boolean                                     _runtime = false;
 
   /** - */
-  private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
+  private final JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
-  public GetEclipseClassPathTask() {
+  public GetJdtClassPathTask() {
     super();
     this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
   }
@@ -58,12 +59,18 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
     this._runtime = runtime;
   }
 
-  public JdtClasspathContainerArgument createContainerArg() {
-    if (this._classpathContainerArgumentDelegate == null) {
-      this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
-    }
+  /**
+   * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#createJdtClasspathContainerArgument()
+   */
+  public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
+    return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
+  }
 
-    return this._classpathContainerArgumentDelegate.createContainerArg();
+  /**
+   * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#getJdtClasspathContainerArguments()
+   */
+  public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
+    return this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }
 
   /**
@@ -72,10 +79,8 @@ public class GetEclipseClassPathTask extends AbstractGetProjectPathTask {
   @Override
   protected File[] resolvePath() {
 
-    final Properties properties = this._classpathContainerArgumentDelegate.getAsProperties();
-
     final ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath(getEclipseProject(), isRelative(),
-        isRuntime(), properties);
+        isRuntime(), this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments());
 
     return resolvedClasspath.getClasspathFiles();
   }

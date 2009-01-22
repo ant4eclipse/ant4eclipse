@@ -3,12 +3,12 @@
 <project name="getEclipseClasspath-test" basedir="." default="foo">
 
 	<!-- definition of condition HasNature -->
-	<typedef name="getEclipseClasspath"
-	         classname="org.ant4eclipse.jdt.ant.GetEclipseClassPathTask"
+	<typedef name="getJdtClassPath"
+	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask"
 	/>
 
-	<target name="getEclipseClasspath">
-		<getEclipseClasspath workspace="${workspaceDir}"
+	<target name="getJdtClassPath">
+		<getJdtClassPath workspace="${workspaceDir}"
 		                     relative="${relative}"
 		                     pathSeparator="${pathSeparator}"
 		                     runtime="${runtimeClasspath}"

@@ -1,11 +1,11 @@
 package org.ant4eclipse.jdt.tools.internal;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgument;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.jdt.tools.internal.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.jdt.tools.internal.classpathentry.ContainerClasspathEntryResolver;
 import org.ant4eclipse.jdt.tools.internal.classpathentry.ProjectClasspathEntryResolver;
@@ -34,17 +34,17 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
       final List<Object> additionalElements) {
     Assert.notNull(project);
 
-    final Properties properties = new Properties();
+    final List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
 
     for (final Object object : additionalElements) {
       if (object instanceof JdtClasspathContainerArgument) {
         final JdtClasspathContainerArgument argument = (JdtClasspathContainerArgument) object;
-        properties.put(argument.getKey(), argument.getValue());
+        classpathContainerArguments.add(argument);
       }
     }
 
     // create a ResolverJob
-    final ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, properties);
+    final ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, classpathContainerArguments);
 
     final ClasspathEntryResolverExecutor classpathEntryResolverExecutor = new ClasspathEntryResolverExecutor(false);
 

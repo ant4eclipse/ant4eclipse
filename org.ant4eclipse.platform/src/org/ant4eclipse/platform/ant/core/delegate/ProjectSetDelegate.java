@@ -49,8 +49,9 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
     }
   }
 
+  // TODO
   public final String[] getProjectNames() {
-    return this._projectNames;
+    return isTeamProjectSetSet() ? getTeamProjectSet().getProjectNames() : this._projectNames;
   }
 
   public final boolean isProjectNamesSet() {

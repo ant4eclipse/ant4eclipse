@@ -1,7 +1,8 @@
 package org.ant4eclipse.jdt.tools.internal;
 
-import java.util.Properties;
+import java.util.List;
 
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
@@ -11,19 +12,19 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 public final class ResolverJob {
 
   /** the root eclipse project */
-  private final EclipseProject _rootProject;
+  private final EclipseProject                      _rootProject;
 
   /** the workspace that contains all projects */
-  private final Workspace      _workspace;
+  private final Workspace                           _workspace;
 
   /** indicates whether the class path should be resolved relative or absolute */
-  private final boolean        _relative;
+  private final boolean                             _relative;
 
   /** indicates whether the class path is a runtime class path or not */
-  private final boolean        _runtimeClasspath;
+  private final boolean                             _runtimeClasspath;
 
   /** - */
-  private final Properties     _properties;
+  private final List<JdtClasspathContainerArgument> _classpathContainerArguments;
 
   /**
    * @param rootProject
@@ -32,13 +33,13 @@ public final class ResolverJob {
    * @param runtime
    */
   public ResolverJob(final EclipseProject rootProject, final Workspace workspace, final boolean relative,
-      final boolean runtime, final Properties properties) {
+      final boolean runtime, final List<JdtClasspathContainerArgument> classpathContainerArguments) {
 
     this._rootProject = rootProject;
     this._workspace = workspace;
     this._relative = relative;
     this._runtimeClasspath = runtime;
-    this._properties = properties;
+    this._classpathContainerArguments = classpathContainerArguments;
   }
 
   /**
@@ -72,7 +73,7 @@ public final class ResolverJob {
   /**
    * @return the properties
    */
-  public final Properties getProperties() {
-    return this._properties;
+  public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
+    return this._classpathContainerArguments;
   }
 }

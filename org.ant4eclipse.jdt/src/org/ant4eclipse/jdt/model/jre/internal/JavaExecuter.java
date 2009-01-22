@@ -28,12 +28,10 @@ import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
 
 /**
  * <p>
- * An instance of type {@link JavaExecuter} can be used to execute a java
- * application with a specific java runtime environment. You have to specify the
- * directory that contains the java runtime within the constructor of this
- * class. To set the java class that should be executed you have to call
- * <code>setMainClass(String)</code>. To set class path entries you can use
- * one of the <code>setClasspathEntries()</code>.
+ * An instance of type {@link JavaExecuter} can be used to execute a java application with a specific java runtime
+ * environment. You have to specify the directory that contains the java runtime within the constructor of this class.
+ * To set the java class that should be executed you have to call <code>setMainClass(String)</code>. To set class
+ * path entries you can use one of the <code>setClasspathEntries()</code>.
  * </p>
  * <p>
  * Example: <code><pre>
@@ -44,14 +42,12 @@ import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
  * </pre></code>
  * </p>
  * <p>
- * It is also possible to create a new instance that is already configured with
- * the ant4eclipse class path.
+ * It is also possible to create a new instance that is already configured with the ant4eclipse class path.
  * </p>
  * <p>
  * Example: <code><pre>
  * final JavaExecuter javaExecuter = JavaExecuter.createWithA4eClasspath(location);
- * javaExecuter
- * 		.setMainClass(&quot;net.sf.ant4eclipse.model.jdt.jre.internal.support.LibraryDetector&quot;);
+ * javaExecuter.setMainClass(&quot;net.sf.ant4eclipse.model.jdt.jre.internal.support.LibraryDetector&quot;);
  * javaExecuter.execute();
  * </pre></code>
  * </p>
@@ -60,289 +56,275 @@ import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
  */
 public class JavaExecuter {
 
-	/** the directory of the java runtime environment */
-	private final File _jreDirectory;
+  /** the directory of the java runtime environment */
+  private final File _jreDirectory;
 
-	/** the class path entries */
-	private File[] _classpathEntries;
+  /** the class path entries */
+  private File[]     _classpathEntries;
 
-	/** the qualified name of the main class */
-	private String _mainClass;
+  /** the qualified name of the main class */
+  private String     _mainClass;
 
-	/** the program arguments */
-	private String[] _args = new String[0];
+  /** the program arguments */
+  private String[]   _args = new String[0];
 
-	/** the system out result */
-	private String[] _systemOut;
+  /** the system out result */
+  private String[]   _systemOut;
 
-	/** the system err result */
-	private String[] _systemErr;
+  /** the system err result */
+  private String[]   _systemErr;
 
-	/**
-	 * <p>
-	 * Returns a new {@link JavaExecuter} that has the ant4eclipse classes set
-	 * on the class path.
-	 * </p>
-	 * 
-	 * @param jreLocation
-	 *            the location of the java runtime
-	 * 
-	 * @return a new {@link JavaExecuter}
-	 */
-	public static JavaExecuter createWithA4eClasspath(final File jreLocation) {
-		Assert.isDirectory(jreLocation);
+  /**
+   * <p>
+   * Returns a new {@link JavaExecuter} that has the ant4eclipse classes set on the class path.
+   * </p>
+   * 
+   * @param jreLocation
+   *          the location of the java runtime
+   * 
+   * @return a new {@link JavaExecuter}
+   */
+  public static JavaExecuter createWithA4eClasspath(final File jreLocation) {
+    Assert.isDirectory(jreLocation);
 
-		// check if the location points to a JDK (instead a JRE)...
-		File jreDirectory = new File(jreLocation, "jre");
-		if (!jreDirectory.isDirectory()) {
-			jreDirectory = jreLocation;
-		}
+    // check if the location points to a JDK (instead a JRE)...
+    File jreDirectory = new File(jreLocation, "jre");
+    if (!jreDirectory.isDirectory()) {
+      jreDirectory = jreLocation;
+    }
 
-		// create new java launcher
-		final JavaExecuter javaExecuter = new JavaExecuter(jreDirectory);
+    // create new java launcher
+    final JavaExecuter javaExecuter = new JavaExecuter(jreDirectory);
 
-		// resolve the class path entries
-		final String[] classpathentries = ClassLoadingHelper
-				.getClasspathEntriesFor(JavaRuntimeImpl.class);
-		javaExecuter.setClasspathEntries(classpathentries);
+    // resolve the class path entries
+    final String[] classpathentries = ClassLoadingHelper.getClasspathEntriesFor(JavaRuntimeImpl.class);
+    javaExecuter.setClasspathEntries(classpathentries);
 
-		// return result
-		return javaExecuter;
-	}
+    // return result
+    return javaExecuter;
+  }
 
-	/**
-	 * <p>
-	 * Creates a new instance of type {@link JavaExecuter}.
-	 * </p>
-	 * 
-	 * @param jreDirectory
-	 *            the directory of the java runtime.
-	 */
-	public JavaExecuter(final File jreDirectory) {
-		Assert.isDirectory(jreDirectory);
+  /**
+   * <p>
+   * Creates a new instance of type {@link JavaExecuter}.
+   * </p>
+   * 
+   * @param jreDirectory
+   *          the directory of the java runtime.
+   */
+  public JavaExecuter(final File jreDirectory) {
+    Assert.isDirectory(jreDirectory);
 
-		this._jreDirectory = jreDirectory;
-	}
+    this._jreDirectory = jreDirectory;
+  }
 
-	/**
-	 * <p>
-	 * Sets the specified class path entries.
-	 * </p>
-	 * 
-	 * @param classpathEntries
-	 *            the class path entries
-	 */
-	public void setClasspathEntries(final String[] classpathEntries) {
-		Assert.notNull(classpathEntries);
+  /**
+   * <p>
+   * Sets the specified class path entries.
+   * </p>
+   * 
+   * @param classpathEntries
+   *          the class path entries
+   */
+  public void setClasspathEntries(final String[] classpathEntries) {
+    Assert.notNull(classpathEntries);
 
-		// create file array
-		final File[] files = new File[classpathEntries.length];
-		for (int i = 0; i < classpathEntries.length; i++) {
-			files[i] = new File(classpathEntries[i]);
-		}
+    // create file array
+    final File[] files = new File[classpathEntries.length];
+    for (int i = 0; i < classpathEntries.length; i++) {
+      files[i] = new File(classpathEntries[i]);
+    }
 
-		// sets the class path entries
-		setClasspathEntries(files);
-	}
+    // sets the class path entries
+    setClasspathEntries(files);
+  }
 
-	/**
-	 * <p>
-	 * Sets the specified class path entry.
-	 * </p>
-	 * 
-	 * @param classpathEntry
-	 *            the class path entry
-	 */
-	public void setClasspathEntries(final File classpathEntry) {
-		Assert.notNull(classpathEntry);
+  /**
+   * <p>
+   * Sets the specified class path entry.
+   * </p>
+   * 
+   * @param classpathEntry
+   *          the class path entry
+   */
+  public void setClasspathEntries(final File classpathEntry) {
+    Assert.notNull(classpathEntry);
 
-		setClasspathEntries(new File[] { classpathEntry });
-	}
+    setClasspathEntries(new File[] { classpathEntry });
+  }
 
-	/**
-	 * <p>
-	 * Sets the specified class path entries.
-	 * </p>
-	 * 
-	 * @param classpathEntries
-	 *            the class path entries
-	 */
-	public void setClasspathEntries(final File[] classpathEntries) {
-		Assert.notNull(classpathEntries);
+  /**
+   * <p>
+   * Sets the specified class path entries.
+   * </p>
+   * 
+   * @param classpathEntries
+   *          the class path entries
+   */
+  public void setClasspathEntries(final File[] classpathEntries) {
+    Assert.notNull(classpathEntries);
 
-		this._classpathEntries = classpathEntries;
-	}
+    this._classpathEntries = classpathEntries;
+  }
 
-	/**
-	 * <p>
-	 * Specifies the main class that should be executed.
-	 * </p>
-	 * 
-	 * @param mainClass
-	 *            the main class
-	 */
-	public void setMainClass(final String mainClass) {
-		Assert.notNull(mainClass);
+  /**
+   * <p>
+   * Specifies the main class that should be executed.
+   * </p>
+   * 
+   * @param mainClass
+   *          the main class
+   */
+  public void setMainClass(final String mainClass) {
+    Assert.notNull(mainClass);
 
-		this._mainClass = mainClass;
-	}
+    this._mainClass = mainClass;
+  }
 
-	/**
-	 * <p>
-	 * Specifies the program arguments.
-	 * </p>
-	 * 
-	 * @param args
-	 *            the program arguments.
-	 */
-	public void setArgs(final String[] args) {
-		Assert.notNull(args);
+  /**
+   * <p>
+   * Specifies the program arguments.
+   * </p>
+   * 
+   * @param args
+   *          the program arguments.
+   */
+  public void setArgs(final String[] args) {
+    Assert.notNull(args);
 
-		this._args = args;
-	}
+    this._args = args;
+  }
 
-	/**
-	 * @throws IOException
-	 */
-	public void execute() {
+  /**
+   * @throws IOException
+   */
+  public void execute() {
 
-		// get runtime
-		final Runtime runtime = Runtime.getRuntime();
+    // get runtime
+    final Runtime runtime = Runtime.getRuntime();
 
-		// create java command
-		final StringBuffer cmd = new StringBuffer();
-		cmd.append(getJavaExecutable().getAbsolutePath());
-		cmd.append(" -cp ");
-		for (final File file : this._classpathEntries) {
-			cmd.append(file.getAbsolutePath());
-			cmd.append(file.pathSeparatorChar);
-		}
-		cmd.append(" ");
-		cmd.append(this._mainClass);
-		for (final String _arg : this._args) {
-			cmd.append(" ");
-			cmd.append(_arg);
-		}
+    // create java command
+    final StringBuffer cmd = new StringBuffer();
+    cmd.append(getJavaExecutable().getAbsolutePath());
+    cmd.append(" -cp ");
+    for (final File file : this._classpathEntries) {
+      cmd.append(file.getAbsolutePath());
+      cmd.append(File.pathSeparatorChar);
+    }
+    cmd.append(" ");
+    cmd.append(this._mainClass);
+    for (final String _arg : this._args) {
+      cmd.append(" ");
+      cmd.append(_arg);
+    }
 
-		// execute
-		try {
-			// debug
-			A4ELogging.debug("JavaExecuter.execute(): Executing '%s'.", cmd
-					.toString());
+    // execute
+    try {
+      // debug
+      A4ELogging.debug("JavaExecuter.execute(): Executing '%s'.", cmd.toString());
 
-			final Process proc = runtime.exec(cmd.toString(),
-					new String[] { "JavaHome=" });
+      final Process proc = runtime.exec(cmd.toString(), new String[] { "JavaHome=" });
 
-			// wait for result
-			proc.waitFor();
+      // wait for result
+      proc.waitFor();
 
-			// read out and err stream
-			this._systemOut = extractFromInputStream(proc.getInputStream());
-			this._systemErr = extractFromInputStream(proc.getErrorStream());
+      // read out and err stream
+      this._systemOut = extractFromInputStream(proc.getInputStream());
+      this._systemErr = extractFromInputStream(proc.getErrorStream());
 
-			// debug
-			A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.",
-					Arrays.asList(this._systemOut));
-			A4ELogging.debug("JavaExecuter.execute(): System.err -> '%s'.",
-					Arrays.asList(this._systemErr));
+      // debug
+      A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList(this._systemOut));
+      A4ELogging.debug("JavaExecuter.execute(): System.err -> '%s'.", Arrays.asList(this._systemErr));
 
-		} catch (final IOException e) {
-			// throw Ant4EclipseException
-			throw new Ant4EclipseException(
-					JdtModelExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION,
-					new Object[] { cmd.toString() }, e);
-		} catch (final InterruptedException e) {
-			// throw Ant4EclipseException
-			throw new Ant4EclipseException(
-					JdtModelExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION,
-					new Object[] { cmd.toString() }, e);
-		}
-	}
+    } catch (final IOException e) {
+      // throw Ant4EclipseException
+      throw new Ant4EclipseException(JdtModelExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, new Object[] { cmd
+          .toString() }, e);
+    } catch (final InterruptedException e) {
+      // throw Ant4EclipseException
+      throw new Ant4EclipseException(JdtModelExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, new Object[] { cmd
+          .toString() }, e);
+    }
+  }
 
-	/**
-	 * <p>
-	 * Returns the output that was written to system out as a string array .
-	 * </p>
-	 * 
-	 * @return the output that was written to system out as a string array .
-	 */
-	public String[] getSystemOut() {
-		return this._systemOut;
-	}
+  /**
+   * <p>
+   * Returns the output that was written to system out as a string array .
+   * </p>
+   * 
+   * @return the output that was written to system out as a string array .
+   */
+  public String[] getSystemOut() {
+    return this._systemOut;
+  }
 
-	/**
-	 * <p>
-	 * Returns the output that was written to system err as a string array .
-	 * </p>
-	 * 
-	 * @return the output that was written to system err as a string array .
-	 */
-	public String[] getSystemErr() {
-		return this._systemErr;
-	}
+  /**
+   * <p>
+   * Returns the output that was written to system err as a string array .
+   * </p>
+   * 
+   * @return the output that was written to system err as a string array .
+   */
+  public String[] getSystemErr() {
+    return this._systemErr;
+  }
 
-	/**
-	 * <p>
-	 * Returns the java executable. If the java executable could not be
-	 * resolved, a {@link Ant4EclipseException} with the ExecptionCode
-	 * {@link JdtModelExceptionCode#INVALID_JRE_DIRECTORY} is thrown.
-	 * </p>
-	 * 
-	 * @return the java executable
-	 */
-	private File getJavaExecutable() {
-		// try 'bin/java'
-		File result = new File(this._jreDirectory, "bin/java");
+  /**
+   * <p>
+   * Returns the java executable. If the java executable could not be resolved, a {@link Ant4EclipseException} with the
+   * ExecptionCode {@link JdtModelExceptionCode#INVALID_JRE_DIRECTORY} is thrown.
+   * </p>
+   * 
+   * @return the java executable
+   */
+  private File getJavaExecutable() {
+    // try 'bin/java'
+    File result = new File(this._jreDirectory, "bin/java");
 
-		// try 'bin/java.exe'
-		if ((result == null) || !result.exists()) {
-			result = new File(this._jreDirectory, "bin/java.exe");
-		}
+    // try 'bin/java.exe'
+    if ((result == null) || !result.exists()) {
+      result = new File(this._jreDirectory, "bin/java.exe");
+    }
 
-		// try 'bin/j9'
-		if ((result == null) || !result.exists()) {
-			result = new File(this._jreDirectory, "bin/j9");
-		}
+    // try 'bin/j9'
+    if ((result == null) || !result.exists()) {
+      result = new File(this._jreDirectory, "bin/j9");
+    }
 
-		// try 'bin/j9.exe'
-		if ((result == null) || !result.exists()) {
-			result = new File(this._jreDirectory, "bin/j9.exe");
-		}
+    // try 'bin/j9.exe'
+    if ((result == null) || !result.exists()) {
+      result = new File(this._jreDirectory, "bin/j9.exe");
+    }
 
-		// throw Ant4EclipseException
-		if ((result == null) || !result.exists()) {
-			throw new Ant4EclipseException(
-					JdtModelExceptionCode.INVALID_JRE_DIRECTORY,
-					this._jreDirectory.getAbsolutePath());
-		}
+    // throw Ant4EclipseException
+    if ((result == null) || !result.exists()) {
+      throw new Ant4EclipseException(JdtModelExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath());
+    }
 
-		// return result
-		return result;
-	}
+    // return result
+    return result;
+  }
 
-	/**
-	 * <p>
-	 * Returns
-	 * </p>
-	 * 
-	 * @param inputstream
-	 * @return
-	 * @throws IOException
-	 */
-	private String[] extractFromInputStream(final InputStream inputstream)
-			throws IOException {
-		final InputStreamReader inputstreamreader = new InputStreamReader(
-				inputstream);
-		final BufferedReader bufferedreader = new BufferedReader(
-				inputstreamreader);
+  /**
+   * <p>
+   * Returns
+   * </p>
+   * 
+   * @param inputstream
+   * @return
+   * @throws IOException
+   */
+  private String[] extractFromInputStream(final InputStream inputstream) throws IOException {
+    final InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+    final BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
 
-		// read the ls output
+    // read the ls output
 
-		final List<String> sysOut = new LinkedList<String>();
-		String line;
-		while ((line = bufferedreader.readLine()) != null) {
-			sysOut.add(line);
-		}
-		return sysOut.toArray(new String[0]);
-	}
+    final List<String> sysOut = new LinkedList<String>();
+    String line;
+    while ((line = bufferedreader.readLine()) != null) {
+      sysOut.add(line);
+    }
+    return sysOut.toArray(new String[0]);
+  }
 }

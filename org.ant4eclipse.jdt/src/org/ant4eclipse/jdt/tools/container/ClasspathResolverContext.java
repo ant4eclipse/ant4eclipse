@@ -11,12 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.container;
 
-import java.util.Properties;
+import java.util.List;
 
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
-
 
 /**
  * <p>
@@ -95,7 +94,7 @@ public interface ClasspathResolverContext {
   /**
    * 
    */
-  public Properties getProperties();
+  public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
 
   /**
    * <p>

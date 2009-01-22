@@ -25,7 +25,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetSourcePathTask extends AbstractGetProjectPathTask {
+public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
 
   /** specifies if multiple source folders are supported */
   private boolean _allowMultipleFolders = false;
