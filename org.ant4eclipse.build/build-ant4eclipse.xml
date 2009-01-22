@@ -7,10 +7,13 @@
 	<taskdef resource="org/tigris/subversion/svnant/svnantlib.xml" />
 
 	<taskdef uri="antlib:org.ant4eclipse"
-	         resource="org/ant4eclipse/antlib.xml"
-	         classpath="${basedir}\org.ant4eclipse.build.tools\bin;${basedir}\org.ant4eclipse.core\bin;${basedir}\org.ant4eclipse.platform\bin;${basedir}\org.ant4eclipse.jdt\bin;" />
+	         resource="org/ant4eclipse/antlib.xml" />
+	<!-- classpath="${basedir}\org.ant4eclipse.core\bin;${basedir}\org.ant4eclipse.platform\bin;${basedir}\org.ant4eclipse.jdt\bin;" /> -->
 
 	<property file="${basedir}\org.ant4eclipse.build\svn-pwd.properties" />
+
+	<property name="build.compiler"
+	          value="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
 
 	<!--  -->
 	<property name="destination"
@@ -18,7 +21,7 @@
 
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
-		<jre id="jdk15" location="R:\ref\jdk_15" />
+		<jre id="jdk15" location="R:/software/jdk/jdk15" />
 	</ant4eclipse:jreContainer>
 
 
@@ -27,8 +30,14 @@
          ================================= -->
 	<target name="build.ant4eclipse">
 
-		<delete dir="${destination}/merged" quiet="true" />
-		<mkdir dir="${destination}/merged" />
+		<delete dir="${destination}" quiet="true" />
+		<mkdir dir="${destination}" />
+
+		<ant4eclipse:svnGetProjectSet username="${svn.username}"
+		                              password="${svn.password}"
+		                              command="export"
+		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
+		                              destination="${destination}" />
 
 		<ant4eclipse:executeProjectSet workspace="${destination}"
 		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
@@ -59,6 +68,12 @@
 							<src refid="executeJdtProject.source.directories.path" />
 							<bootclasspath refid="executeJdtProject.boot.classpath.path" />
 							<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+							<compilerarg value="@${basedir}/javaCompiler...args"
+							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
+							<compilerarg line="-log '${basedir}/buildlog.xml'"
+							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
+							<compilerarg line="-progress"
+							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
 						</javac>
 					</ant4eclipse:forAllSourceDirectories>
 
