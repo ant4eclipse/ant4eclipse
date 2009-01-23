@@ -18,7 +18,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.model.jre.internal.JavaProfileReader;
+import org.ant4eclipse.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.pde.model.pluginproject.Constants;
 import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
 

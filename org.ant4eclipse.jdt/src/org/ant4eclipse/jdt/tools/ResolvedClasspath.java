@@ -43,7 +43,7 @@ public interface ResolvedClasspath {
    * 
    * @return the boot class path
    */
-  public ResolvedClasspathEntry[] getBootClasspath();
+  public ResolvedClasspathEntry getBootClasspath();
 
   /**
    * @return

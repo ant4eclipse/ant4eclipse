@@ -114,5 +114,5 @@ public interface ClasspathResolverContext {
    * @param entry
    *          the entry to add.
    */
-  public void addBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
+  public void setBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
 }

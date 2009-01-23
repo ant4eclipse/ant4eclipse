@@ -112,7 +112,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
 
       final MacroExecutionValues executionValues = new MacroExecutionValues();
 
-      this._executorValuesProvider.provideExecutorValues(getJavaProjectRole().getEclipseProject(),
+      this._executorValuesProvider.provideExecutorValues(getJavaProjectRole(),
           this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments(), executionValues);
 
       executionValues.getProperties().put("source.directory",
@@ -136,28 +136,12 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
   }
 
   private void executeSourceDirectoriesScopedMacroDef(final MacroDef macroDef) {
+    if (getJavaProjectRole().getSourceFolders().length > 0) {
 
-    final String[] sourceFolders = getJavaProjectRole().getSourceFolders();
-
-    if (sourceFolders.length > 0) {
       final MacroExecutionValues executionValues = new MacroExecutionValues();
 
-      this._executorValuesProvider.provideExecutorValues(getJavaProjectRole().getEclipseProject(),
+      this._executorValuesProvider.provideSourceDirectoriesScopedExecutorValues(getJavaProjectRole(),
           this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments(), executionValues);
-
-      executionValues.getProperties().put("source.directories",
-          this.convertToString(getEclipseProject().getChildren(sourceFolders)));
-
-      executionValues.getReferences().put("source.directories.path",
-          this.convertToPath(getEclipseProject().getChildren(sourceFolders)));
-
-      final String outFolder = getJavaProjectRole().getDefaultOutputFolder();
-
-      executionValues.getProperties().put("output.directory",
-          this.convertToString(getEclipseProject().getChild(outFolder)));
-
-      executionValues.getReferences().put("output.directory.path",
-          this.convertToPath(getEclipseProject().getChild(outFolder)));
 
       this._macroExecutionDelegate.executeMacroInstance(macroDef, executionValues);
     }
@@ -177,7 +161,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
 
       final MacroExecutionValues executionValues = new MacroExecutionValues();
 
-      this._executorValuesProvider.provideExecutorValues(getJavaProjectRole().getEclipseProject(),
+      this._executorValuesProvider.provideExecutorValues(getJavaProjectRole(),
           this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments(), executionValues);
 
       executionValues.getProperties().put("output.directory",

@@ -14,9 +14,9 @@ package org.ant4eclipse.jdt.model.project;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.jdt.model.project.internal.JavaProjectRoleImpl;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 

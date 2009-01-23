@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.ejc;
 
-import org.ant4eclipse.jdt.tools.internal.ejc.EjcAdapterImpl;
+import org.ant4eclipse.jdt.internal.tools.ejc.EjcAdapterImpl;
 
 /**
  * <p>

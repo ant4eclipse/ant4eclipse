@@ -13,7 +13,7 @@ package org.ant4eclipse.jdt.model.jre;
 
 import java.io.File;
 
-import org.ant4eclipse.jdt.model.jre.internal.Version;
+import org.ant4eclipse.jdt.internal.model.jre.Version;
 
 
 /**

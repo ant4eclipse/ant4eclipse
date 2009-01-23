@@ -74,6 +74,8 @@ public interface JavaProfile {
    */
   public List<String> getExecutionEnvironmentNames();
 
+  public List<String> getSystemPackages();
+
   /**
    * <p>
    * Returns the java profile as a properties object. The following properties are defined:
@@ -97,7 +99,8 @@ public interface JavaProfile {
    * @param packageName
    *          the package name
    * 
-   * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code> otherwise.
+   * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code>
+   *         otherwise.
    */
   public boolean isSystemPackage(final String packageName);
 

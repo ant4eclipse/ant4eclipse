@@ -3,18 +3,18 @@ package org.ant4eclipse.jdt.tools;
 import java.util.List;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.jdt.internal.tools.ClasspathEntryResolverExecutor;
+import org.ant4eclipse.jdt.internal.tools.ClasspathResolverContextImpl;
+import org.ant4eclipse.jdt.internal.tools.ResolvedClasspathImpl;
+import org.ant4eclipse.jdt.internal.tools.ResolverJob;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.ContainerClasspathEntryResolver;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.LibraryClasspathEntryResolver;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.OutputClasspathEntryResolver;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.ProjectClasspathEntryResolver;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.SourceClasspathEntryResolver;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.VariableClasspathEntryResolver;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
-import org.ant4eclipse.jdt.tools.internal.ClasspathEntryResolverExecutor;
-import org.ant4eclipse.jdt.tools.internal.ClasspathResolverContextImpl;
-import org.ant4eclipse.jdt.tools.internal.ResolvedClasspathImpl;
-import org.ant4eclipse.jdt.tools.internal.ResolverJob;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.ClasspathEntryResolver;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.ContainerClasspathEntryResolver;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.LibraryClasspathEntryResolver;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.OutputClasspathEntryResolver;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.ProjectClasspathEntryResolver;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.SourceClasspathEntryResolver;
-import org.ant4eclipse.jdt.tools.internal.classpathentry.VariableClasspathEntryResolver;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**

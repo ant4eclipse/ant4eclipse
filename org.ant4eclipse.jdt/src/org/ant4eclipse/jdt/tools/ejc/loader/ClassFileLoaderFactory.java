@@ -13,9 +13,9 @@ package org.ant4eclipse.jdt.tools.ejc.loader;
 
 import java.io.File;
 
+import org.ant4eclipse.jdt.internal.tools.ejc.loader.ClasspathClassFileLoaderImpl;
+import org.ant4eclipse.jdt.internal.tools.ejc.loader.CompoundClassFileLoaderImpl;
 import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
-import org.ant4eclipse.jdt.tools.internal.ejc.loader.ClasspathClassFileLoaderImpl;
-import org.ant4eclipse.jdt.tools.internal.ejc.loader.CompoundClassFileLoaderImpl;
 
 /**
  * <p>

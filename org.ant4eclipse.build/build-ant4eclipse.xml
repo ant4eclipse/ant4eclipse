@@ -21,7 +21,8 @@
 
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
-		<jre id="jdk15" location="R:/software/jdk/jdk15" />
+		<jre id="jdk15" location="R:/ref/jdk_15" />
+		<jre id="jdk16" location="R:/ref/jdk_16" />
 	</ant4eclipse:jreContainer>
 
 
@@ -30,14 +31,14 @@
          ================================= -->
 	<target name="build.ant4eclipse">
 
-		<delete dir="${destination}" quiet="true" />
+		<!-- <delete dir="${destination}" quiet="true" />
 		<mkdir dir="${destination}" />
 
 		<ant4eclipse:svnGetProjectSet username="${svn.username}"
 		                              password="${svn.password}"
 		                              command="export"
 		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
-		                              destination="${destination}" />
+		                              destination="${destination}" /> -->
 
 		<ant4eclipse:executeProjectSet workspace="${destination}"
 		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
@@ -62,18 +63,22 @@
 						<echo>  - output directory   -> ${executeJdtProject.output.directory}</echo>
 						<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
 						<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
-						<javac destdir="${executeJdtProject.output.directory}"
+
+						<javac destdir="${executeJdtProject.default.output.directory}"
 						       debug="on"
 						       source="1.5">
+
 							<src refid="executeJdtProject.source.directories.path" />
 							<bootclasspath refid="executeJdtProject.boot.classpath.path" />
 							<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
-							<compilerarg value="@${basedir}/javaCompiler...args"
+
+							<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
 							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
-							<compilerarg line="-log '${basedir}/buildlog.xml'"
+
+							<!--<compilerarg line="-log '${basedir}/buildlog.xml'"
 							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
 							<compilerarg line="-progress"
-							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />
+							             compiler="org.ant4eclipse.jdt.ant.compiler.JDTCompilerAdapter" />-->
 						</javac>
 					</ant4eclipse:forAllSourceDirectories>
 

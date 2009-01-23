@@ -13,8 +13,8 @@ package org.ant4eclipse.jdt.ant;
 
 import java.io.File;
 
+import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.jdt.model.project.internal.JavaProjectRoleImpl;
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
