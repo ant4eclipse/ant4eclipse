@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.tools.ejc;
+package org.ant4eclipse.jdt.ejc.internal.tools;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,11 +18,11 @@ import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobDescription;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobResult;
-import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobDescription.SourceFile;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.CompileJobDescription;
+import org.ant4eclipse.jdt.ejc.CompileJobResult;
+import org.ant4eclipse.jdt.ejc.EjcAdapter;
+import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
 import org.eclipse.jdt.internal.compiler.Compiler;
 import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
 import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;

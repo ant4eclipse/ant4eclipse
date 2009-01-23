@@ -9,9 +9,9 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc;
+package org.ant4eclipse.jdt.ejc;
 
-import org.ant4eclipse.jdt.internal.tools.ejc.EjcAdapterImpl;
+import org.ant4eclipse.jdt.ejc.internal.tools.EjcAdapterImpl;
 
 /**
  * <p>

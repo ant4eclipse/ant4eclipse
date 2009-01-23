@@ -9,13 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc;
+package org.ant4eclipse.jdt.ejc;
 
 import java.io.File;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
 
 /**
  * <p>

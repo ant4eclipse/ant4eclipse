@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.internal.ant.compiler.CompilerArguments;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
@@ -123,7 +122,6 @@ public class JdtExecutorValuesProvider {
 
     if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
       // TODO
-      System.err.println(cpAbsoluteCompiletime.getBootClasspath().getAccessRestrictions().asFormattedString());
       compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
           .getAccessRestrictions().asFormattedString());
     }

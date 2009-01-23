@@ -1,9 +1,9 @@
-package org.ant4eclipse.jdt.internal.ant.compiler;
+package org.ant4eclipse.jdt.ejc.internal.ant;
 
 import java.util.Map;
 
-import org.ant4eclipse.jdt.tools.ejc.CompileJobDescription;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.CompileJobDescription;
 
 /**
  * <p>

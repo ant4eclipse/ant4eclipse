@@ -1,4 +1,4 @@
-package org.ant4eclipse.jdt.internal.ant.compiler;
+package org.ant4eclipse.jdt.ant;
 
 import java.io.File;
 import java.util.HashMap;

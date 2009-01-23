@@ -9,13 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc.loader;
+package org.ant4eclipse.jdt.ejc;
 
 import java.io.File;
 
-import org.ant4eclipse.jdt.internal.tools.ejc.loader.ClasspathClassFileLoaderImpl;
-import org.ant4eclipse.jdt.internal.tools.ejc.loader.CompoundClassFileLoaderImpl;
-import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
+import org.ant4eclipse.jdt.ejc.internal.tools.loader.ClasspathClassFileLoaderImpl;
+import org.ant4eclipse.jdt.ejc.internal.tools.loader.CompoundClassFileLoaderImpl;
+import org.ant4eclipse.jdt.ejc.internal.tools.loader.FilteringClassFileLoader;
 
 /**
  * <p>
@@ -65,5 +65,9 @@ public class ClassFileLoaderFactory {
    */
   public static ClassFileLoader createCompoundClassFileLoader(final ClassFileLoader[] classFileLoaders) {
     return new CompoundClassFileLoaderImpl(classFileLoaders);
+  }
+
+  public static ClassFileLoader createFilteringClassFileLoader(final ClassFileLoader classFileLoader, String filter) {
+    return new FilteringClassFileLoader(classFileLoader, filter);
   }
 }

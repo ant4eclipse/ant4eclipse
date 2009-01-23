@@ -1,4 +1,4 @@
-package org.ant4eclipse.jdt.ant.compiler;
+package org.ant4eclipse.jdt.ejc.ant;
 
 import java.io.File;
 import java.util.Iterator;
@@ -6,14 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.jdt.internal.ant.compiler.AntCompileJobDescription;
-import org.ant4eclipse.jdt.internal.ant.compiler.CompilerArguments;
-import org.ant4eclipse.jdt.internal.tools.ejc.loader.FilteringClassFileLoader;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobResult;
-import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobDescription.SourceFile;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoaderFactory;
+import org.ant4eclipse.jdt.ant.CompilerArguments;
+import org.ant4eclipse.jdt.ejc.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.ClassFileLoaderFactory;
+import org.ant4eclipse.jdt.ejc.CompileJobResult;
+import org.ant4eclipse.jdt.ejc.EjcAdapter;
+import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
+import org.ant4eclipse.jdt.ejc.internal.ant.AntCompileJobDescription;
+import org.ant4eclipse.jdt.ejc.internal.tools.loader.FilteringClassFileLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.types.Path;
@@ -21,8 +21,15 @@ import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
+  /** the refid key for the additional compiler arguments */
   private static final String COMPILER_ARGS_REFID_KEY = "compiler.args.refid";
 
   public boolean execute() {
@@ -40,7 +47,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // configure ant4eclipse
     Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
 
-    final CompilerArguments compilerArguments = (CompilerArguments) getProject().getReference(compilerArgsRefid);
+    CompilerArguments compilerArguments = (CompilerArguments) getProject().getReference(compilerArgsRefid);
 
     if (compilerArguments == null) {
       // TODO

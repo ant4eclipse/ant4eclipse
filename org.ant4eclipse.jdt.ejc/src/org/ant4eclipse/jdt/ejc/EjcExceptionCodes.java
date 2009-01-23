@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc;
+package org.ant4eclipse.jdt.ejc;
 
 import org.ant4eclipse.core.exception.ExceptionCode;
 import org.ant4eclipse.core.nls.NLS;

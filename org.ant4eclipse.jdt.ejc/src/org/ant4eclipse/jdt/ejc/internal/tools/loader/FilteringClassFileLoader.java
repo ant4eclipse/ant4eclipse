@@ -1,12 +1,12 @@
-package org.ant4eclipse.jdt.internal.tools.ejc.loader;
+package org.ant4eclipse.jdt.ejc.internal.tools.loader;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.ClassName;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFile;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
-import org.ant4eclipse.jdt.tools.ejc.loader.ModifiableClassFile;
+import org.ant4eclipse.jdt.ejc.ClassFile;
+import org.ant4eclipse.jdt.ejc.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.internal.tools.ModifiableClassFile;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.eclipse.jdt.internal.compiler.env.AccessRule;
@@ -52,21 +52,21 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   }
 
   /**
-   * @see org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader#getAllPackages()
+   * @see org.ant4eclipse.jdt.ejc.ClassFileLoader#getAllPackages()
    */
   public String[] getAllPackages() {
     return this._classFileLoader.getAllPackages();
   }
 
   /**
-   * @see org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader#hasPackage(java.lang.String)
+   * @see org.ant4eclipse.jdt.ejc.ClassFileLoader#hasPackage(java.lang.String)
    */
   public boolean hasPackage(final String packageName) {
     return this._classFileLoader.hasPackage(packageName);
   }
 
   /**
-   * @see org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader#loadClass(org.ant4eclipse.core.ClassName)
+   * @see org.ant4eclipse.jdt.ejc.ClassFileLoader#loadClass(org.ant4eclipse.core.ClassName)
    */
   public ClassFile loadClass(final ClassName className) {
 

@@ -9,10 +9,10 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.tools.ejc.loader;
+package org.ant4eclipse.jdt.ejc.internal.tools.loader;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.tools.ejc.loader.ModifiableClassFile;
+import org.ant4eclipse.jdt.ejc.internal.tools.ModifiableClassFile;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**

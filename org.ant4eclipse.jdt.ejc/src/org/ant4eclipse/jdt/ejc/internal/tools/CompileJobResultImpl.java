@@ -9,9 +9,9 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.tools.ejc;
+package org.ant4eclipse.jdt.ejc.internal.tools;
 
-import org.ant4eclipse.jdt.tools.ejc.CompileJobResult;
+import org.ant4eclipse.jdt.ejc.CompileJobResult;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
 public class CompileJobResultImpl implements CompileJobResult {

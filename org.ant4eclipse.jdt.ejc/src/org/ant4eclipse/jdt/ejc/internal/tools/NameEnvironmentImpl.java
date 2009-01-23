@@ -9,13 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.tools.ejc;
+package org.ant4eclipse.jdt.ejc.internal.tools;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFile;
-import org.ant4eclipse.jdt.tools.ejc.loader.ClassFileLoader;
+import org.ant4eclipse.jdt.ejc.ClassFile;
+import org.ant4eclipse.jdt.ejc.ClassFileLoader;
 import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
 

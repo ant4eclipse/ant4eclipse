@@ -12,8 +12,8 @@
 package org.ant4eclipse.pde.tools.ejc;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobResult;
-import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
+import org.ant4eclipse.jdt.ejc.tools.CompileJobResult;
+import org.ant4eclipse.jdt.ejc.tools.EjcAdapter;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**

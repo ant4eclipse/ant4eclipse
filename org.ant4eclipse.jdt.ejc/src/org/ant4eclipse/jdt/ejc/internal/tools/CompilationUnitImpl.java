@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.tools.ejc;
+package org.ant4eclipse.jdt.ejc.internal.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,8 +22,8 @@ import java.util.StringTokenizer;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.tools.ejc.EjcExceptionCodes;
-import org.ant4eclipse.jdt.tools.ejc.CompileJobDescription.SourceFile;
+import org.ant4eclipse.jdt.ejc.EjcExceptionCodes;
+import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
 import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
 
 /**

@@ -9,9 +9,8 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc.loader;
+package org.ant4eclipse.jdt.ejc;
 
-import org.ant4eclipse.jdt.tools.ejc.EjcAdapter;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
 

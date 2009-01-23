@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.tools.ejc;
+package org.ant4eclipse.jdt.ejc.internal.tools;
 
 import java.io.File;
 import java.io.FileOutputStream;

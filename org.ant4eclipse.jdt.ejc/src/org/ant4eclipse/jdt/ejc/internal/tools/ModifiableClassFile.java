@@ -9,33 +9,27 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools.ejc;
+package org.ant4eclipse.jdt.ejc.internal.tools;
+
+import org.ant4eclipse.jdt.ejc.ClassFile;
+import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**
  * <p>
- * The {@link CompileJobResult} represents a compile job result.
+ * Extends the interface {@link ClassFile} so that one could set an access restriction.
  * </p>
  * 
- * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
-public interface CompileJobResult {
+public interface ModifiableClassFile extends ClassFile {
 
   /**
    * <p>
-   * Returns <code>true</code>, if the compile job was successful, <code>false</code> otherwise.
+   * Sets the given access restriction.
    * </p>
    * 
-   * @return <code>true</code>, if the compile job was successful, <code>false</code> otherwise.
+   * @param accessRestriction
+   *          the {@link AccessRestriction}.
    */
-  public boolean succeeded();
-
-  /**
-   * <p>
-   * Dumps problems.
-   * </p>
-   * 
-   * @deprecated must be replaced with a more intelligent API.
-   */
-  @Deprecated
-  public void dumpProblems();
+  public void setAccessRestriction(final AccessRestriction accessRestriction);
 }
