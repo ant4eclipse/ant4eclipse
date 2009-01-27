@@ -32,7 +32,7 @@ import org.apache.tools.ant.types.DataType;
 public class TargetPlatformDefinition extends DataType {
 
   /** the list of all locations */
-  private List _locations;
+  private List<Location> _locations;
 
   /**
    * <p>
@@ -40,7 +40,7 @@ public class TargetPlatformDefinition extends DataType {
    * </p>
    */
   public TargetPlatformDefinition() {
-    _locations = new LinkedList();
+    _locations = new LinkedList<Location>();
   }
 
   /**
@@ -101,7 +101,7 @@ public class TargetPlatformDefinition extends DataType {
    */
   protected TargetPlatformDefinition getRef(Project p) {
     if (!isChecked()) {
-      Stack stk = new Stack();
+      Stack<DataType> stk = new Stack<DataType>();
       stk.push(this);
       dieOnCircularReference(stk, p);
     }
@@ -120,6 +120,7 @@ public class TargetPlatformDefinition extends DataType {
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   public static class Location extends DataType {
+
     /** the location path */
     private File _directory;
 

@@ -567,24 +567,24 @@ public class TargetDefinition {
   public static class Content {
 
     /** wheather all plugins should be used or not */
-    private boolean _useAllPlugins;
+    private boolean      _useAllPlugins;
 
     /**  */
-    private List    _plugins;
+    private List<String> _plugins;
 
     /** */
-    private List    _features;
+    private List<String> _features;
 
     /** */
-    private List    _extraLocations;
+    private List<String> _extraLocations;
 
     /**
      * 
      */
     public Content() {
-      this._plugins = new LinkedList();
-      this._features = new LinkedList();
-      this._extraLocations = new LinkedList();
+      this._plugins = new LinkedList<String>();
+      this._features = new LinkedList<String>();
+      this._extraLocations = new LinkedList<String>();
     }
 
     /**

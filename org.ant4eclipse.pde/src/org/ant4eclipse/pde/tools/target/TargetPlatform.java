@@ -15,7 +15,7 @@ import org.eclipse.osgi.service.resolver.State;
 
 /**
  * <p>
- * A target platform contains different plug-in sets. It defines the target, against which plug-ins will be compiled and
+ * A target platform contains different plug-in sets. It defines the target, against which plug-ins can be compiled and
  * tested.
  * </p>
  * 

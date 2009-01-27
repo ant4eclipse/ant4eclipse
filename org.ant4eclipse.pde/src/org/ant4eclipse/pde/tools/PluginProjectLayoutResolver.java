@@ -89,7 +89,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   public File[] resolveBundleClasspathEntries() {
 
     // declare result
-    final List result = new LinkedList();
+    final List<File> result = new LinkedList<File>();
 
     // resolve the bundle class path
     final String bundleClasspath[] = ManifestHelper.getBundleClasspath(this._manifest);

@@ -10,6 +10,7 @@ import java.util.Map;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -196,7 +197,7 @@ public class ClasspathHelper {
           entry = new File(bundleSource.getClasspathRoot(), entryName);
         }
         if (entry.exists()) {
-          context.addClasspathEntry(entry);
+          context.addClasspathEntry(new ResolvedClasspathEntry(entry));
         } else {
           A4ELogging.debug("Not adding non-existant entry '%s'", entry);
         }

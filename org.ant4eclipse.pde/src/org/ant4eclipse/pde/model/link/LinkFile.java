@@ -16,23 +16,26 @@ import java.io.File;
 import org.ant4eclipse.core.Assert;
 
 /**
- * LinkFile is a representation of a *.link-File that is used by eclipse
- * to link (external) directories into a platform location 
+ * <p>
+ * LinkFile is a representation of a *.link-File that is used by eclipse to link (external) directories into a platform
+ * location.
+ * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class LinkFile {
-  
+
   /**
    * The directory path beneath _destination that contains the plugins
+   * 
    * @see #getPluginsDirectory()
    */
-  public final static String PLUGINS_DIRECTORY="eclipse/plugins";
-  
+  public final static String PLUGINS_DIRECTORY = "eclipse/plugins";
+
   /**
    * The path to the destination directory.
    */
-  private final File _destination;
+  private final File         _destination;
 
   public LinkFile(final File destination) {
     Assert.notNull(destination);
@@ -40,20 +43,22 @@ public class LinkFile {
   }
 
   /**
-   * Checks if the destination directory is valid. 
+   * Checks if the destination directory is valid.
    * 
-   * <p>A destination is valid if it is an existing directory
-   * that contains an eclipse/plugins folder.
+   * <p>
+   * A destination is valid if it is an existing directory that contains an eclipse/plugins folder.
+   * 
    * @return true if this is a valid destination
    */
   public boolean isValidDestination() {
     return getPluginsDirectory().isDirectory();
   }
-  
+
   /**
-   * Returns the plugins directory inside the destination
-   * directory. 
-   * <p>Note:The plugins directory might not exist
+   * Returns the plugins directory inside the destination directory.
+   * <p>
+   * Note:The plugins directory might not exist
+   * 
    * @return The plugins directory
    * @see #isValidDestination()
    * @see #PLUGINS_DIRECTORY
@@ -91,7 +96,5 @@ public class LinkFile {
       return false;
     return true;
   }
-  
-  
 
 }

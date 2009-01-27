@@ -100,7 +100,8 @@ public class BuildPropertiesParser {
       properties.load(inputStream);
       return properties;
     } catch (final IOException ioe) {
-      throw new FileParserException(ioe.getMessage(), ioe);
+      // TODO
+      throw new RuntimeException(ioe.getMessage(), ioe);
     } finally {
       try {
         if (inputStream != null) {

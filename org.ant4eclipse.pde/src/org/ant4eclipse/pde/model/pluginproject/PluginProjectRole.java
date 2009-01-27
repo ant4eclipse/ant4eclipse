@@ -19,7 +19,8 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * <p>
- * Implements the eclipse plugin role. The plugin role contains the PluginDescriptor and the build properties.
+ * Implements the eclipse plug-in project role. The plug-in project role contains the BundleDescription and the build
+ * properties.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -32,14 +33,16 @@ public class PluginProjectRole extends AbstractProjectRole {
   /** PLUGIN_PROJECT_ROLE_NAME */
   public static final String      PLUGIN_PROJECT_ROLE_NAME = "PluginProjectRole";
 
-  /** the BundleDescription of the underlying plugin project */
+  /** the BundleDescription of the underlying plug-in project */
   private final BundleDescription _bundleDescription;
 
   /** the build properties */
   private PluginBuildProperties   _buildProperties;
 
   /**
-   * Returns the plugin project role. If a plugin project role is not set, an exception will be thrown.
+   * <p>
+   * Returns the plug-in project role. If a plug-in project role is not set, an exception will be thrown.
+   * </p>
    * 
    * @return the plugin project role.
    */
@@ -51,9 +54,11 @@ public class PluginProjectRole extends AbstractProjectRole {
   }
 
   /**
-   * Returns whether a plugin project role is set or not.
+   * <p>
+   * Returns whether a plug-in project role is set or not.
+   * </p>
    * 
-   * @return whether a plugin project role is set or not.
+   * @return whether a plug-in project role is set or not.
    */
   public static final boolean hasPluginProjectRole(final EclipseProject eclipseProject) {
     Assert.notNull(eclipseProject);
@@ -81,25 +86,31 @@ public class PluginProjectRole extends AbstractProjectRole {
 
   /**
    * <p>
-   * Returns the unresolved BundleDescription.
+   * Returns the BundleDescription.
    * </p>
    * 
-   * @return the plugin descriptor.
+   * @return BundleDescription.
    */
   public BundleDescription getBundleDescription() {
     return this._bundleDescription;
   }
 
   /**
-   * Returns true if the build properties have been set.
+   * <p>
+   * Returns <code>true</code> if the build properties have been set.
+   * </p>
    * 
-   * @return true <=> The build properties have been set.
+   * @return <code>true</code> if the build properties have been set.
    */
   public boolean hasBuildProperties() {
     return this._buildProperties != null;
   }
 
   /**
+   * <p>
+   * Returns the build properties.
+   * </p>
+   * 
    * @return Returns the buildProperties.
    */
   public PluginBuildProperties getBuildProperties() {

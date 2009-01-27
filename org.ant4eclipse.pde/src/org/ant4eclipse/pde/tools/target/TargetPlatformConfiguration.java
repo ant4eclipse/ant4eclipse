@@ -28,13 +28,13 @@ import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
 public class TargetPlatformConfiguration {
 
   /** - */
-  private boolean   _preferProjects = true;
+  private boolean                   _preferProjects = true;
 
   /** - */
-  private final Map _configurationProperties;
+  private final Map<Object, Object> _configurationProperties;
 
   /** - */
-  private boolean   _isLocked       = false;
+  private boolean                   _isLocked       = false;
 
   /**
    * 
@@ -42,7 +42,7 @@ public class TargetPlatformConfiguration {
   public TargetPlatformConfiguration() {
     this._preferProjects = true;
 
-    this._configurationProperties = new HashMap();
+    this._configurationProperties = new HashMap<Object, Object>();
 
     this._configurationProperties.putAll(JavaProfileReader.readDefaultProfile().getProperties());
 
@@ -99,10 +99,10 @@ public class TargetPlatformConfiguration {
   public Properties getConfigurationProperties() {
     final Properties result = new Properties();
 
-    final Set entrySet = this._configurationProperties.entrySet();
-    final Iterator iterator = entrySet.iterator();
+    final Set<Map.Entry<Object, Object>> entrySet = this._configurationProperties.entrySet();
+    final Iterator<Map.Entry<Object, Object>> iterator = entrySet.iterator();
     while (iterator.hasNext()) {
-      final Map.Entry entry = (Map.Entry) iterator.next();
+      final Map.Entry<Object, Object> entry = iterator.next();
       result.put(entry.getKey(), entry.getValue());
     }
 

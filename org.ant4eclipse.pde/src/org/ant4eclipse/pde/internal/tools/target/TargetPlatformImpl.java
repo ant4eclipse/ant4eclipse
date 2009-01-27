@@ -17,9 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.swing.text.Utilities;
-
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.target.TargetPlatform;
 import org.ant4eclipse.pde.tools.target.TargetPlatformConfiguration;
@@ -43,7 +42,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private final BundleSet     _pluginProjectSet;
 
   /** contains a list of all the binary bundle sets that belong to this target location */
-  private List                _binaryBundleSets;
+  private List<BundleSet>                _binaryBundleSets;
 
   /** - */
   TargetPlatformConfiguration _configuration;
@@ -68,7 +67,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     if (binaryBundleSets != null) {
       this._binaryBundleSets = Arrays.asList(binaryBundleSets);
     } else {
-      this._binaryBundleSets = new LinkedList();
+      this._binaryBundleSets = new LinkedList<BundleSet> ();
     }
 
     this._configuration = configuration;
@@ -109,7 +108,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
         this._pluginProjectSet.initialize();
       }
 
-      for (final Iterator iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
+      for (final Iterator<BundleSet>  iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
         final BundleSet bundleSet = (BundleSet) iterator.next();
         bundleSet.initialize();
       }
@@ -147,7 +146,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   private BundleDescription[] getAllBundleDescriptions(final boolean preferProjects) {
 
-    final List result = new LinkedList();
+    final List<BundleDescription>  result = new LinkedList<BundleDescription> ();
 
     if (this._pluginProjectSet != null) {
       final BundleDescription[] descriptions = this._pluginProjectSet.getAllBundleDescriptions();
@@ -157,7 +156,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
       }
     }
 
-    for (final Iterator iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
+    for (final Iterator<BundleSet> iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
       final BundleSet bundleSet = (BundleSet) iterator.next();
 
       final BundleDescription[] descriptions = bundleSet.getAllBundleDescriptions();
