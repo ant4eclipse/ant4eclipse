@@ -8,37 +8,26 @@
 
 	<taskdef uri="antlib:org.ant4eclipse"
 	         resource="org/ant4eclipse/antlib.xml" />
-	<!-- classpath="${basedir}\org.ant4eclipse.core\bin;${basedir}\org.ant4eclipse.platform\bin;${basedir}\org.ant4eclipse.jdt\bin;" /> -->
 
-	<property file="${basedir}\org.ant4eclipse.build\svn-pwd.properties" />
+	<!-- define environment properties -->
+	<property file="${basedir}\org.ant4eclipse.build\environment.properties" />
 
+	<!-- define general properties -->
 	<property name="build.compiler"
-	          value="org.ant4eclipse.jdt.ejc.ant.JDTCompilerAdapter" />
-
-	<!--  -->
+	          value="org.ant4eclipse.jdt.ejc.JDTCompilerAdapter" />
 	<property name="destination"
 	          value="${basedir}\org.ant4eclipse.build\destination" />
 
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
-		<jre id="jdk15" location="R:/software/jdk/jdk15" />
-		<jre id="jdk16" location="R:/software/jdk/jdk16" />
+		<jre id="jdk15" location="${jdk15.location}" />
+		<jre id="jdk16" location="${jdk16.location}" />
 	</ant4eclipse:jreContainer>
-
 
 	<!-- ================================= 
           target: build.ant4eclipse              
          ================================= -->
 	<target name="build.ant4eclipse">
-
-		<delete dir="${destination}" quiet="true" />
-		<mkdir dir="${destination}" />
-
-		<ant4eclipse:svnGetProjectSet username="${svn.username}"
-		                              password="${svn.password}"
-		                              command="export"
-		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
-		                              destination="${destination}" />
 
 		<ant4eclipse:executeProjectSet workspace="${destination}"
 		                               teamprojectset="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
@@ -73,7 +62,7 @@
 							<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
 
 							<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
-							             compiler="org.ant4eclipse.jdt.ejc.ant.JDTCompilerAdapter" />
+							             compiler="org.ant4eclipse.jdt.ejc.JDTCompilerAdapter" />
 						</javac>
 					</ant4eclipse:forAllSourceDirectories>
 
@@ -109,5 +98,23 @@
 		</ant4eclipse:executeProjectSet>
 
 	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: export.ant4eclipse                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="export.ant4eclipse" if="${export.ant4eclipse}">
+
+		<echo>Export ant4eclipse from SVN...</echo>
+
+		<!-- <delete dir="${destination}" quiet="true" />
+		<mkdir dir="${destination}" />
+
+		<ant4eclipse:svnGetProjectSet username="${svn.username}"
+		                              password="${svn.password}"
+		                              command="export"
+		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
+		                              destination="${destination}" /> -->
+	</target>
+
 
 </project>
