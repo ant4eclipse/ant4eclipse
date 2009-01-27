@@ -106,14 +106,14 @@
 
 		<echo>Export ant4eclipse from SVN...</echo>
 
-		<!-- <delete dir="${destination}" quiet="true" />
+		<delete dir="${destination}" quiet="true" />
 		<mkdir dir="${destination}" />
 
 		<ant4eclipse:svnGetProjectSet username="${svn.username}"
 		                              password="${svn.password}"
 		                              command="export"
 		                              projectSet="${basedir}/org.ant4eclipse.build/projectSet-main.psf"
-		                              destination="${destination}" /> -->
+		                              destination="${destination}" />
 	</target>
 
 
