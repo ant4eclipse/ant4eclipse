@@ -1,4 +1,4 @@
-package org.ant4eclipse.jdt.ejc.ant;
+package org.ant4eclipse.jdt.ejc;
 
 import java.io.File;
 import java.util.Iterator;
@@ -7,10 +7,6 @@ import java.util.List;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.jdt.ant.CompilerArguments;
-import org.ant4eclipse.jdt.ejc.ClassFileLoader;
-import org.ant4eclipse.jdt.ejc.ClassFileLoaderFactory;
-import org.ant4eclipse.jdt.ejc.CompileJobResult;
-import org.ant4eclipse.jdt.ejc.EjcAdapter;
 import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
 import org.ant4eclipse.jdt.ejc.internal.ant.AntCompileJobDescription;
 import org.ant4eclipse.jdt.ejc.internal.tools.loader.FilteringClassFileLoader;
@@ -32,6 +28,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /** the refid key for the additional compiler arguments */
   private static final String COMPILER_ARGS_REFID_KEY = "compiler.args.refid";
 
+  /* (non-Javadoc)
+   * @see org.apache.tools.ant.taskdefs.compilers.CompilerAdapter#execute()
+   */
   public boolean execute() {
 
     // CompilerArguments
