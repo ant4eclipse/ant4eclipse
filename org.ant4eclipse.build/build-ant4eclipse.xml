@@ -14,7 +14,7 @@
 
 	<!-- define general properties -->
 	<property name="build.compiler"
-	          value="org.ant4eclipse.jdt.ejc.JDTCompilerAdapter" />
+	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 	<property name="destination"
 	          value="${basedir}\org.ant4eclipse.build\destination" />
 	<property name="teamprojectset"
@@ -64,7 +64,7 @@
 							<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
 
 							<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
-							             compiler="org.ant4eclipse.jdt.ejc.JDTCompilerAdapter" />
+							             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 						</javac>
 					</ant4eclipse:forAllSourceDirectories>
 
