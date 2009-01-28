@@ -9,9 +9,9 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc.internal.tools;
+package org.ant4eclipse.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.jdt.ejc.ClassFile;
+import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**

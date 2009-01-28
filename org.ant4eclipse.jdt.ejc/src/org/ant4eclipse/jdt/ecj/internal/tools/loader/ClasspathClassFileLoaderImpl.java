@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc.internal.tools.loader;
+package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -26,8 +26,8 @@ import java.util.jar.JarFile;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ClassName;
-import org.ant4eclipse.jdt.ejc.ClassFile;
-import org.ant4eclipse.jdt.ejc.ClassFileLoader;
+import org.ant4eclipse.jdt.ecj.ClassFile;
+import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 
 /**
  * <p>

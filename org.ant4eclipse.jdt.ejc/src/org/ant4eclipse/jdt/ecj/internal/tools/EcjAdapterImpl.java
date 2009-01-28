@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc.internal.tools;
+package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,11 +18,11 @@ import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.ejc.ClassFileLoader;
-import org.ant4eclipse.jdt.ejc.CompileJobDescription;
-import org.ant4eclipse.jdt.ejc.CompileJobResult;
-import org.ant4eclipse.jdt.ejc.EjcAdapter;
-import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
+import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.jdt.ecj.CompileJobDescription;
+import org.ant4eclipse.jdt.ecj.CompileJobResult;
+import org.ant4eclipse.jdt.ecj.EcjAdapter;
+import org.ant4eclipse.jdt.ecj.CompileJobDescription.SourceFile;
 import org.eclipse.jdt.internal.compiler.Compiler;
 import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
 import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;
@@ -33,7 +33,7 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 
 /**
- * The {@link EjcAdapterImpl} can be used to compile eclipse projects with the eclipse java compiler (ejc). It provides
+ * The {@link EcjAdapterImpl} can be used to compile eclipse projects with the eclipse java compiler (ejc). It provides
  * support for
  * <ul>
  * <li>setting the compiler options as specified in the eclipse project or in the global settings</li>
@@ -42,7 +42,7 @@ import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class EjcAdapterImpl implements EjcAdapter {
+public final class EcjAdapterImpl implements EcjAdapter {
 
   /*
    * (non-Javadoc)

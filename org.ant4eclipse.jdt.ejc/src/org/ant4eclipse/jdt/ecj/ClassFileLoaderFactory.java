@@ -9,13 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc;
+package org.ant4eclipse.jdt.ecj;
 
 import java.io.File;
 
-import org.ant4eclipse.jdt.ejc.internal.tools.loader.ClasspathClassFileLoaderImpl;
-import org.ant4eclipse.jdt.ejc.internal.tools.loader.CompoundClassFileLoaderImpl;
-import org.ant4eclipse.jdt.ejc.internal.tools.loader.FilteringClassFileLoader;
+import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
+import org.ant4eclipse.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
+import org.ant4eclipse.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
 
 /**
  * <p>
@@ -36,7 +36,7 @@ public class ClassFileLoaderFactory {
    *          the file, that represents the source (e.g. a jar file, the root directory of an "exploded" bundle or the
    *          root directory of an eclipse project) for the {@link ClassFileLoader}.
    * @param type
-   *          the type of the source. Possible values are {@link EjcAdapter#LIBRARY} and {@link EjcAdapter#PROJECT}.
+   *          the type of the source. Possible values are {@link EcjAdapter#LIBRARY} and {@link EcjAdapter#PROJECT}.
    * @param classpathEntries
    *          the class path entries for the {@link ClassFileLoader}.
    * 

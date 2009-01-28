@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc;
+package org.ant4eclipse.jdt.ecj;
 
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
@@ -27,8 +27,8 @@ public interface ClassFile {
 
   /**
    * <p>
-   * Returns the type of the bundle this class file was loaded from. Possible values are {@link EjcAdapter#LIBRARY} and
-   * {@link EjcAdapter#PROJECT}.
+   * Returns the type of the bundle this class file was loaded from. Possible values are {@link EcjAdapter#LIBRARY} and
+   * {@link EcjAdapter#PROJECT}.
    * </p>
    * 
    * @return the type of the bundle this class file was loaded from.

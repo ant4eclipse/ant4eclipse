@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc.internal.tools;
+package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,8 +22,8 @@ import java.util.StringTokenizer;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.ejc.EjcExceptionCodes;
-import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
+import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.jdt.ecj.CompileJobDescription.SourceFile;
 import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
 
 /**
@@ -130,10 +130,10 @@ public class CompilationUnitImpl implements ICompilationUnit {
         result.append("\n");
       }
     } catch (final UnsupportedEncodingException e) {
-      throw new Ant4EclipseException(EjcExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new Object[] {
+      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new Object[] {
           new String(this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding() });
     } catch (final IOException e) {
-      throw new Ant4EclipseException(EjcExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new Object[] {
+      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new Object[] {
           new String(this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding() });
     }
     return result.toString().toCharArray();

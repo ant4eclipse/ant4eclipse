@@ -9,18 +9,18 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc;
+package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.jdt.ejc.internal.tools.EjcAdapterImpl;
+import org.ant4eclipse.jdt.ecj.internal.tools.EcjAdapterImpl;
 
 /**
  * <p>
- * Instances of type {@link EjcAdapter} can be used to compile a given source tree with the eclipse java compiler.
+ * Instances of type {@link EcjAdapter} can be used to compile a given source tree with the eclipse java compiler.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public interface EjcAdapter {
+public interface EcjAdapter {
 
   /** constants to describe PROJECT type */
   public static final byte PROJECT = 1;
@@ -40,7 +40,7 @@ public interface EjcAdapter {
 
   /**
    * <p>
-   * Inner factory to allow the creation of new {@link EjcAdapter} instances.
+   * Inner factory to allow the creation of new {@link EcjAdapter} instances.
    * </p>
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -49,13 +49,13 @@ public interface EjcAdapter {
 
     /**
      * <p>
-     * Creates a new instance of type {@link EjcAdapter}
+     * Creates a new instance of type {@link EcjAdapter}
      * </p>
      * 
-     * @return a new instance of type {@link EjcAdapter}.
+     * @return a new instance of type {@link EcjAdapter}.
      */
-    public static EjcAdapter create() {
-      return new EjcAdapterImpl();
+    public static EcjAdapter create() {
+      return new EcjAdapterImpl();
     }
   }
 }

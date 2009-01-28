@@ -9,13 +9,14 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ejc.internal.tools.loader;
+package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.zip.ZipFile;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.ejc.ClassFile;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
+import org.eclipse.jdt.internal.compiler.classfmt.ClassFormatException;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
 
 /**
@@ -23,20 +24,28 @@ import org.eclipse.jdt.internal.compiler.env.IBinaryType;
  * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
-public class FileClassFileImpl extends AbstractClassFileImpl implements ClassFile {
+public class JarClassFileImpl extends AbstractClassFileImpl {
 
-  /** the class file */
-  private final File _classfile;
+  /** the zip file */
+  private final ZipFile _zipFile;
+
+  /** the zip entry name */
+  private final String  _zipEntryName;
 
   /**
-   * @param classfile
+   * @param zipEntryName
+   * @param zipFile
    */
-  public FileClassFileImpl(final File classfile, final String libraryLocation, final byte libraryType) {
+  public JarClassFileImpl(final String zipEntryName, final ZipFile zipFile, final String libraryLocation,
+      final byte libraryType) {
+
     super(libraryLocation, libraryType);
 
-    Assert.exists(classfile);
+    Assert.nonEmpty(zipEntryName);
+    Assert.notNull(zipFile);
 
-    this._classfile = classfile;
+    this._zipEntryName = zipEntryName;
+    this._zipFile = zipFile;
   }
 
   /**
@@ -44,9 +53,13 @@ public class FileClassFileImpl extends AbstractClassFileImpl implements ClassFil
    */
   public final IBinaryType getBinaryType() {
     try {
-      return ClassFileReader.read(this._classfile, true);
-    } catch (final Exception e) {
-      // return null if an exception occurs
+      return ClassFileReader.read(this._zipFile, this._zipEntryName, true);
+    } catch (final ClassFormatException e) {
+      // TODO
+      e.printStackTrace();
+      return null;
+    } catch (final IOException e) {
+      // TODO
       e.printStackTrace();
       return null;
     }
@@ -58,16 +71,19 @@ public class FileClassFileImpl extends AbstractClassFileImpl implements ClassFil
   @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
-    buffer.append("[FileClassFileImpl:");
+    buffer.append("[JarClassFileImpl:");
     buffer.append(" bundleLocation: ");
     buffer.append(getLibraryLocation());
     buffer.append(" bundleType: ");
     buffer.append(getLibraryType());
     buffer.append(" accessRestriction: ");
     buffer.append(getAccessRestriction());
-    buffer.append(" classfile: ");
-    buffer.append(this._classfile);
+    buffer.append(" zipFile: ");
+    buffer.append(this._zipFile);
+    buffer.append(" zipEntryName: ");
+    buffer.append(this._zipEntryName);
     buffer.append("]");
     return buffer.toString();
   }
+
 }

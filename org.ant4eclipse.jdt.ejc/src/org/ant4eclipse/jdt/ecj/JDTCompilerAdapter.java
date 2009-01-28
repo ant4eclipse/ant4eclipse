@@ -1,4 +1,4 @@
-package org.ant4eclipse.jdt.ejc;
+package org.ant4eclipse.jdt.ecj;
 
 import java.io.File;
 import java.util.Iterator;
@@ -7,9 +7,9 @@ import java.util.List;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.jdt.ant.CompilerArguments;
-import org.ant4eclipse.jdt.ejc.CompileJobDescription.SourceFile;
-import org.ant4eclipse.jdt.ejc.internal.ant.AntCompileJobDescription;
-import org.ant4eclipse.jdt.ejc.internal.tools.loader.FilteringClassFileLoader;
+import org.ant4eclipse.jdt.ecj.CompileJobDescription.SourceFile;
+import org.ant4eclipse.jdt.ecj.internal.ant.AntCompileJobDescription;
+import org.ant4eclipse.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.types.Path;
@@ -73,7 +73,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       sourceFiles.add(sourceFile);
     }
 
-    final EjcAdapter ejcAdapter = EjcAdapter.Factory.create();
+    final EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
 
     final AntCompileJobDescription compileJobDescription = new AntCompileJobDescription();
     compileJobDescription.setSourceFiles(sourceFiles.toArray(new SourceFile[0]));
@@ -124,7 +124,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       if (fileResource.getFile().exists()) {
         // TODO: LIBRARY AND PROJECT
         final ClassFileLoader myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
-            .getFile(), EjcAdapter.LIBRARY);
+            .getFile(), EcjAdapter.LIBRARY);
         classFileLoaderList.add(myclassFileLoader);
       }
     }
@@ -142,7 +142,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       final FileResource fileResource = iterator.next();
       if (fileResource.getFile().exists()) {
         final ClassFileLoader classFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
-            .getFile(), EjcAdapter.LIBRARY);
+            .getFile(), EcjAdapter.LIBRARY);
         bootClassFileLoaders.add(classFileLoader);
       }
     }
