@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.pde.tools.target.TargetPlatform;
 import org.ant4eclipse.pde.tools.target.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
@@ -29,27 +30,30 @@ import org.ant4eclipse.platform.model.resource.Workspace;
  * The {@link TargetPlatformRegistryImpl} can be used to retrieve instances of type {@link TargetPlatform}. The registry
  * also implements a map that stores instances that already have been requested.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
   /** the current {@link TargetPlatform}, maybe null **/
-  private TargetPlatform _currentTargetPlatform;
+  private TargetPlatform                              _currentTargetPlatform;
 
   /** the cache for plug-in project sets **/
-  private final Map      _pluginProjectSetMap = new HashMap();
+  private final Map                                   _pluginProjectSetMap        = new HashMap();
 
   /** the cache for **/
-  private final Map      _binaryBundleSetMap  = new HashMap();
+  private final Map                                   _binaryBundleSetMap         = new HashMap();
 
   /** the static map with all target platforms currently resolved */
-  private final Map      _targetPlatformMap   = new HashMap();
+  private final Map                                   _targetPlatformMap          = new HashMap();
+
+  /** */
+  private final Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see net.sf.ant4eclipse.tools.pde.target.TargetPlatformRegistry#getCurrent()
    */
   public TargetPlatform getCurrent() {
@@ -69,6 +73,8 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
     Assert.assertTrue((workspace != null) || (targetLocations != null),
         "Parameter workspace or targetLocations has to be set !");
+
+    System.err.println(Arrays.asList(targetLocations));
 
     // TargetPlatformKey
     final TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
@@ -93,6 +99,30 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     this._binaryBundleSetMap.clear();
     //
     this._targetPlatformMap.clear();
+
+    this._targetPlatformDefnitionMap.clear();
+  }
+
+  public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
+    _targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
+
+  }
+
+  public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
+      TargetPlatformConfiguration targetPlatformConfiguration) {
+
+    TargetPlatformDefinition targetPlatformDefinition = _targetPlatformDefnitionMap
+        .get(targetPlatformDefinitionIdentifier);
+
+    return getInstance(workspace, targetPlatformDefinition.getLocations(), targetPlatformConfiguration);
+  }
+
+  public TargetPlatformDefinition getTargetPlatformDefinition(String identifier) {
+    return _targetPlatformDefnitionMap.get(identifier);
+  }
+
+  public boolean hasTargetPlatformDefinition(String identifier) {
+    return _targetPlatformDefnitionMap.containsKey(identifier);
   }
 
   private PluginProjectSet getPluginProjectSet(final Workspace workspace) {
@@ -127,13 +157,13 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       result.add(getBinaryPluginSet(files[i]));
     }
 
-    // 
+    //
     return (BinaryBundleSet[]) result.toArray(new BinaryBundleSet[0]);
   }
 
   /**
    * TargetPlatformKey --
-   * 
+   *
    * @author Wuetherich-extern
    */
   private class TargetPlatformKey {

@@ -15,10 +15,12 @@ import java.io.File;
 import java.util.jar.Manifest;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.ejc.tools.loader.ClassFileLoader;
-import org.ant4eclipse.jdt.ejc.tools.loader.ClassFileLoaderFactory;
-import org.ant4eclipse.jdt.ejc.tools.loader.CompoundClassFileLoaderImpl;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.pde.osgi.BundleLayoutResolver;
+import org.ant4eclipse.pde.osgi.ExplodedBundleLayoutResolver;
+import org.ant4eclipse.pde.osgi.JaredBundleLayoutResolver;
+import org.ant4eclipse.pde.osgi.internal.ClassFileLoaderFactory;
+import org.ant4eclipse.pde.osgi.internal.FilteredClasspathClassFileLoader;
 import org.ant4eclipse.pde.tools.ClasspathHelper;
 import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 import org.ant4eclipse.pde.tools.target.TargetPlatform;
@@ -225,7 +227,7 @@ public class EclipseLibraryCompileJobDescription extends AbstractOsgiProjectBase
    * <p>
    * Returns a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
    * </p>
-   * 
+   *
    * @param bundleDescription
    *          the given {@link BundleDescription}.
    * @return a {@link BundleLayoutResolver} for the given {@link BundleDescription}.

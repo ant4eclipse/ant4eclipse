@@ -23,7 +23,7 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  * <p>
  * Abstract base implementation for all {@link BundleSet BundleSets}.
  * </p>
- * 
+ *
  * @author Nils Hartmann (nils@nilshartmann.net)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
@@ -42,7 +42,7 @@ public abstract class AbstractBundleSet implements BundleSet {
    * <p>
    * Creates a new instance of type {@link AbstractBundleSet}.
    * </p>
-   * 
+   *
    * @param id
    *          the identifier of this {@link BundleSet}
    */
@@ -173,12 +173,15 @@ public abstract class AbstractBundleSet implements BundleSet {
    * <p>
    * Adds the given {@link BundleDescription} to the {@link BundleSet}.
    * </p>
-   * 
+   *
    * @param bundleDescription
    *          the {@link BundleDescription} to add.
    */
   protected final void addBundleDescription(final BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
+
+    // TODO
+    System.err.println(bundleDescription.getUserObject());
 
     this._bundleDescriptonList.add(bundleDescription);
   }

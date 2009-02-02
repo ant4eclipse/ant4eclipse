@@ -21,11 +21,12 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.ManifestHelper;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.pde.osgi.BundleLayoutResolver;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * The {@link PluginProjectLayoutResolver} implements a {@link BundleLayoutResolver} for eclipse plug-in projects.
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class PluginProjectLayoutResolver implements BundleLayoutResolver {
@@ -40,7 +41,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * <p>
    * Creates a new instance of type {@link PluginProjectLayoutResolver}.
    * </p>
-   * 
+   *
    * @param project
    *          the eclipse plug-in project that has to be resolved
    */

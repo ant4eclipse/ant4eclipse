@@ -21,6 +21,7 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.target.TargetPlatform;
+import org.ant4eclipse.pde.tools.target.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
@@ -29,7 +30,7 @@ import org.eclipse.osgi.service.resolver.State;
  * <p>
  * ContainerResolver for resolving the 'org.eclipse.pde.core.requiredPlugins' container.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class RequiredPluginsResolver implements ClasspathContainerResolver {
@@ -54,11 +55,15 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
         PluginProjectRole.class);
     final BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
 
-    JdtClasspathContainerArgument containerArguments = context.getJdtClasspathContainerArgument("target.plugin");
+    JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
 
     TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
 
-    TargetPlatform targetPlatform = registry.get;
+    Assert.notNull(registry);
+    Assert.notNull(containerArgument);
+
+    TargetPlatform targetPlatform = registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
+        new TargetPlatformConfiguration());
 
     State state = targetPlatform.getState();
 
@@ -66,6 +71,6 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     final BundleDescription resolvedBundleDescription = state.getBundle(bundleDescription.getSymbolicName(),
         bundleDescription.getVersion());
 
-    ClasspathHelper.resolveBundleClasspath(context, resolvedBundleDescription);
+    new ClasspathHelper().resolveBundleClasspath(context, resolvedBundleDescription);
   }
 }

@@ -25,13 +25,17 @@
 		<location dir="${target.platform.location}" />
 	</ant4eclipse:targetPlatform>
 
-	<!-- ================================= 
-          target: build              
+	<!-- =================================
+          target: build
          ================================= -->
 	<target name="build">
 
 		<ant4eclipse:executeJdtProject workspace="${basedir}/workspace"
 		                               projectname="example-bundle">
+
+
+			<ant4eclipse:jdtClasspathContainerArgument key="target.platform"
+			                                           value="target.platform" />
 
 			<ant4eclipse:forEachOutputDirectory>
 				<echo>Scrubbing directory "${executeJdtProject.output.directory}"</echo>
@@ -41,7 +45,7 @@
 			</ant4eclipse:forEachOutputDirectory>
 
 
-			<!-- <ant4eclipse:forAllSourceDirectories>
+			<ant4eclipse:forAllSourceDirectories>
 				<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
 				<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
 				<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
@@ -61,7 +65,7 @@
 				</javac>
 			</ant4eclipse:forAllSourceDirectories>
 
-			<ant4eclipse:forEachSourceDirectory>
+			<!-- <ant4eclipse:forEachSourceDirectory>
 				<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
 				<copy todir="${executeJdtProject.output.directory}">
 					<fileset dir="${executeJdtProject.source.directory}">
