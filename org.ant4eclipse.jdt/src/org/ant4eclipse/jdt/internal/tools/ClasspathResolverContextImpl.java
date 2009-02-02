@@ -3,6 +3,7 @@ package org.ant4eclipse.jdt.internal.tools;
 import java.util.EmptyStackException;
 import java.util.List;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
@@ -73,6 +74,20 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
    */
   public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._resolverJob.getJdtClasspathContainerArguments();
+  }
+
+  public JdtClasspathContainerArgument getJdtClasspathContainerArgument(final String key) {
+    Assert.nonEmpty(key);
+
+    final List<JdtClasspathContainerArgument> arguments = this._resolverJob.getJdtClasspathContainerArguments();
+
+    for (final JdtClasspathContainerArgument jdtClasspathContainerArgument : arguments) {
+      if (key.equals(jdtClasspathContainerArgument.getKey())) {
+        return jdtClasspathContainerArgument;
+      }
+    }
+
+    return null;
   }
 
   /**

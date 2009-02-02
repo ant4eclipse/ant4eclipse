@@ -96,6 +96,8 @@ public interface ClasspathResolverContext {
    */
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
 
+  public JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
+
   /**
    * <p>
    * Adds a resolved class path entry to the class path.
