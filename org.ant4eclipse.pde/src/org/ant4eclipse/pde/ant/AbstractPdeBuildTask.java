@@ -26,7 +26,7 @@ import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 public class AbstractPdeBuildTask extends AbstractProjectBasedTask {
 
   /** the target platform definition */
-  private TargetPlatformDefinition _targetPlatformDefinition;
+  private TargetPlatformDefinitionDataType _targetPlatformDefinition;
 
   /**
    * <p>
@@ -63,12 +63,12 @@ public class AbstractPdeBuildTask extends AbstractProjectBasedTask {
    */
   public final void setTargetPlatformLocation(final File targetPlatformLocation) {
     Assert.isDirectory(targetPlatformLocation);
-    final TargetPlatformDefinition platformDefinition = new TargetPlatformDefinition();
-    platformDefinition.addConfiguredLocation(new TargetPlatformDefinition.Location(targetPlatformLocation));
+    final TargetPlatformDefinitionDataType platformDefinition = new TargetPlatformDefinitionDataType();
+    platformDefinition.addConfiguredLocation(new TargetPlatformDefinitionDataType.Location(targetPlatformLocation));
     this.addTargetPlatform(platformDefinition);
   }
 
-  public final void addTargetPlatform(final TargetPlatformDefinition platformDefinition) {
+  public final void addTargetPlatform(final TargetPlatformDefinitionDataType platformDefinition) {
     Assert.notNull(platformDefinition);
 
     this._targetPlatformDefinition = platformDefinition;

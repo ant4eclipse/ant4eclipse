@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools.target;
 
-import java.io.File;
-
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType;
+import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**
@@ -29,6 +29,33 @@ public interface TargetPlatformRegistry {
 
   /**
    * <p>
+   * </p>
+   * 
+   * @param identifier
+   * @param targetPlatformDefinition
+   */
+  public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param identifier
+   * @return
+   */
+  public boolean hasTargetPlatformDefinition(String identifier);
+
+  /**
+   * <p>
+   * Returns the {@link TargetPlatformDefinitionDataType}.
+   * </p>
+   * 
+   * @return
+   */
+  public TargetPlatformDefinition getTargetPlatformDefinition(String identifier);
+
+  /**
+   * <p>
    * Returns an instance of TargetPlatform with the given targetLocation and workspace.
    * <p>
    * 
@@ -40,7 +67,7 @@ public interface TargetPlatformRegistry {
    * 
    * @return the TargetPlatform
    */
-  public TargetPlatform getInstance(final Workspace workspace, final File[] targetLocation,
+  public TargetPlatform getInstance(final Workspace workspace, String targetPlatformDefinitionIdentifier,
       TargetPlatformConfiguration targetPlatformConfiguration);
 
   /**

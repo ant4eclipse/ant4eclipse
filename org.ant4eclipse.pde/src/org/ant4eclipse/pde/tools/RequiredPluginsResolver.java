@@ -21,6 +21,7 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.target.TargetPlatform;
+import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
 
@@ -53,13 +54,11 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
         PluginProjectRole.class);
     final BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
 
-    TargetPlatform targetPlatform = null;
+    JdtClasspathContainerArgument containerArguments = context.getJdtClasspathContainerArgument("target.plugin");
 
-    List<JdtClasspathContainerArgument> containerArguments = context.getJdtClasspathContainerArguments();
-    for (JdtClasspathContainerArgument jdtClasspathContainerArgument : containerArguments) {
+    TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
 
-      jdtClasspathContainerArgument.getKey();
-    }
+    TargetPlatform targetPlatform = registry.get;
 
     State state = targetPlatform.getState();
 

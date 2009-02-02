@@ -24,6 +24,13 @@ import org.eclipse.osgi.service.resolver.State;
  */
 public interface TargetPlatform {
 
+  /**
+   * <p>
+   * Returns the {@link TargetPlatformConfiguration} for this {@link TargetPlatform}.
+   * </p>
+   * 
+   * @return
+   */
   public TargetPlatformConfiguration getTargetPlatformConfiguration();
 
   public State getState();

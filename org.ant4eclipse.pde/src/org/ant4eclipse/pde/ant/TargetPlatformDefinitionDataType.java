@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Stack;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
+import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
@@ -29,33 +32,33 @@ import org.apache.tools.ant.types.DataType;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class TargetPlatformDefinition extends DataType {
+public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataType {
 
-  /** the list of all locations */
-  private List<Location> _locations;
+  private TargetPlatformDefinition _targetPlatformDefinition;
 
   /**
-   * <p>
-   * Creates a new instance of type TargetPlatformDefinition.
-   * </p>
+   * @param project
    */
-  public TargetPlatformDefinition() {
-    _locations = new LinkedList<Location>();
+  public TargetPlatformDefinitionDataType(Project project) {
+    super(project);
+
+    _targetPlatformDefinition = new TargetPlatformDefinition();
   }
 
   /**
    * <p>
-   * Sets the id of the target platfrom location.
+   * Sets the id of the target platform location.
    * </p>
    * 
    * @param id
-   *          the id of the target platfrom location.
+   *          the id of the target platform location.
    */
   public void setId(String id) {
     Assert.assertTrue(!isReference(), "Attribute 'refid' must not be set together with attribute 'id'!");
     Assert.nonEmpty(id);
 
-    getProject().addReference(id, this);
+    TargetPlatformRegistry targetPlatformRegistry = TargetPlatformRegistry.Helper.getRegistry();
+    targetPlatformRegistry.addTargetPlatformDefinition(id, _targetPlatformDefinition);
   }
 
   /**
@@ -67,50 +70,50 @@ public class TargetPlatformDefinition extends DataType {
   public void addConfiguredLocation(Location location) {
     Assert.notNull(location);
 
-    if (!_locations.contains(location)) {
-      _locations.add(location);
-    }
+//    if (!_locations.contains(location)) {
+//      _locations.add(location);
+//    }
   }
 
-  /**
-   * <p>
-   * Returns all the locations defined in this target platfrom location.
-   * </p>
-   * 
-   * @return all the locations defined in this target platfrom location.
-   */
-  public final File[] getLocations() {
-    if (isReference()) {
-      return getRef(getProject()).getLocations();
-    } else {
-      File[] files = new File[_locations.size()];
+//  /**
+//   * <p>
+//   * Returns all the locations defined in this target platfrom location.
+//   * </p>
+//   * 
+//   * @return all the locations defined in this target platfrom location.
+//   */
+//  public final File[] getLocations() {
+//    if (isReference()) {
+//      return getRef(getProject()).getLocations();
+//    } else {
+//      File[] files = new File[_locations.size()];
+//
+//      for (int i = 0; i < files.length; i++) {
+//        Location location = (Location) _locations.get(i);
+//        files[i] = location.getDirectory();
+//      }
+//
+//      return files;
+//    }
+//  }
 
-      for (int i = 0; i < files.length; i++) {
-        Location location = (Location) _locations.get(i);
-        files[i] = location.getDirectory();
-      }
-
-      return files;
-    }
-  }
-
-  /**
-   * Performs the check for circular references and returns the referenced FileSet.
-   * 
-   * @param p
-   */
-  protected TargetPlatformDefinition getRef(Project p) {
-    if (!isChecked()) {
-      Stack<DataType> stk = new Stack<DataType>();
-      stk.push(this);
-      dieOnCircularReference(stk, p);
-    }
-    Object o = getRefid().getReferencedObject(p);
-    if (!getClass().isAssignableFrom(o.getClass())) {
-      throw new BuildException(getRefid().getRefId() + " doesn\'t denote a TargetPlatformDefinition");
-    }
-    return (TargetPlatformDefinition) o;
-  }
+//  /**
+//   * Performs the check for circular references and returns the referenced FileSet.
+//   * 
+//   * @param p
+//   */
+//  protected TargetPlatformDefinitionDataType getRef(Project p) {
+//    if (!isChecked()) {
+//      Stack<DataType> stk = new Stack<DataType>();
+//      stk.push(this);
+//      dieOnCircularReference(stk, p);
+//    }
+//    Object o = getRefid().getReferencedObject(p);
+//    if (!getClass().isAssignableFrom(o.getClass())) {
+//      throw new BuildException(getRefid().getRefId() + " doesn\'t denote a TargetPlatformDefinition");
+//    }
+//    return (TargetPlatformDefinitionDataType) o;
+//  }
 
   /**
    * <p>
