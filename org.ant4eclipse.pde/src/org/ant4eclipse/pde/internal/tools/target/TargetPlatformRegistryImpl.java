@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.pde.tools.TargetPlatform;
+import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
-import org.ant4eclipse.pde.tools.target.TargetPlatform;
-import org.ant4eclipse.pde.tools.target.TargetPlatformConfiguration;
-import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
+import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**
@@ -74,7 +74,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     Assert.assertTrue((workspace != null) || (targetLocations != null),
         "Parameter workspace or targetLocations has to be set !");
 
-    System.err.println(Arrays.asList(targetLocations));
+    //System.err.println(Arrays.asList(targetLocations));
 
     // TargetPlatformKey
     final TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);

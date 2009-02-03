@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.tools.target;
+package org.ant4eclipse.pde.tools;
 
 import java.util.HashMap;
 import java.util.Iterator;

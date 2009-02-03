@@ -1,4 +1,4 @@
-package org.ant4eclipse.pde.tools;
+package org.ant4eclipse.pde.old;
 
 import java.io.File;
 import java.util.HashMap;

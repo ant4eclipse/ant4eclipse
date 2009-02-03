@@ -77,8 +77,6 @@ public class BundleSource {
     Assert.notNull(source);
     Assert.notNull(bundleManifest);
 
-    System.err.println("Source: " + source);
-
     this._source = source;
     this._bundleManifest = bundleManifest;
     if (source instanceof File) {

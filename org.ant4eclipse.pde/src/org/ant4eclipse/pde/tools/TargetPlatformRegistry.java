@@ -9,11 +9,10 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.tools.target;
+package org.ant4eclipse.pde.tools;
 
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType;
-import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**

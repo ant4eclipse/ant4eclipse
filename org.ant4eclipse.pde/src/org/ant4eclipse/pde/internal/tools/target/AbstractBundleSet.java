@@ -181,8 +181,6 @@ public abstract class AbstractBundleSet implements BundleSet {
     Assert.notNull(bundleDescription);
 
     // TODO
-    System.err.println(bundleDescription.getUserObject());
-
     this._bundleDescriptonList.add(bundleDescription);
   }
 }

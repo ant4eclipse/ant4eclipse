@@ -20,9 +20,6 @@ import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
-import org.ant4eclipse.pde.tools.target.TargetPlatform;
-import org.ant4eclipse.pde.tools.target.TargetPlatformConfiguration;
-import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
 
@@ -71,6 +68,6 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     final BundleDescription resolvedBundleDescription = state.getBundle(bundleDescription.getSymbolicName(),
         bundleDescription.getVersion());
 
-    new ClasspathHelper().resolveBundleClasspath(context, resolvedBundleDescription);
+    new BundleClasspathResolver().resolveBundleClasspath(context, resolvedBundleDescription);
   }
 }

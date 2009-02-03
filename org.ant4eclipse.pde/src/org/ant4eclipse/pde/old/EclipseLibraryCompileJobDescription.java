@@ -21,9 +21,9 @@ import org.ant4eclipse.pde.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.pde.osgi.JaredBundleLayoutResolver;
 import org.ant4eclipse.pde.osgi.internal.ClassFileLoaderFactory;
 import org.ant4eclipse.pde.osgi.internal.FilteredClasspathClassFileLoader;
-import org.ant4eclipse.pde.tools.ClasspathHelper;
+import org.ant4eclipse.pde.tools.BundleClasspathResolver;
 import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
-import org.ant4eclipse.pde.tools.target.TargetPlatform;
+import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
@@ -102,7 +102,7 @@ public class EclipseLibraryCompileJobDescription extends AbstractOsgiProjectBase
     // // // required bundle and imported via Import-Package must not be treated as
     // // // split packages."
 
-    final BundleDescription[] requiredBundles = ClasspathHelper.getAllRequiredBundles(bundleDescription);
+    final BundleDescription[] requiredBundles = BundleClasspathResolver.getAllRequiredBundles(bundleDescription);
     for (int i = 0; i < requiredBundles.length; i++) {
 
       final BundleDescription requiredBundle = requiredBundles[i];
@@ -118,7 +118,7 @@ public class EclipseLibraryCompileJobDescription extends AbstractOsgiProjectBase
 
       if (requiredBundle.getHost() != null) {
         // required bundle is a fragment: add packages of host as well
-        final ExportPackageDescription[] fragmentPackages = ClasspathHelper.getPackagesFromHost(requiredBundle
+        final ExportPackageDescription[] fragmentPackages = BundleClasspathResolver.getPackagesFromHost(requiredBundle
             .getHost());
 
         for (int j = 0; j < fragmentPackages.length; j++) {

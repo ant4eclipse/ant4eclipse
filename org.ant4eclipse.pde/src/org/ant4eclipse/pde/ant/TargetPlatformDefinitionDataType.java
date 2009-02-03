@@ -16,7 +16,7 @@ import java.io.File;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
-import org.ant4eclipse.pde.tools.target.TargetPlatformRegistry;
+import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
 
