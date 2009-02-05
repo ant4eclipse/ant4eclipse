@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.osgi.internal;
+package org.ant4eclipse.pde.old;
 
 import net.sf.ant4eclipse.core.Assert;
 import net.sf.ant4eclipse.tools.core.ejc.loader.ClassName;

@@ -33,5 +33,12 @@ public interface TargetPlatform {
    */
   public TargetPlatformConfiguration getTargetPlatformConfiguration();
 
+  /**
+   * <p>
+   * Returns the resolved state.
+   * </p>
+   * 
+   * @return
+   */
   public State getState();
 }

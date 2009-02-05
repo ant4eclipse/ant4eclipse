@@ -19,8 +19,6 @@ import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.osgi.BundleLayoutResolver;
 import org.ant4eclipse.pde.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.pde.osgi.JaredBundleLayoutResolver;
-import org.ant4eclipse.pde.osgi.internal.ClassFileLoaderFactory;
-import org.ant4eclipse.pde.osgi.internal.FilteredClasspathClassFileLoader;
 import org.ant4eclipse.pde.tools.BundleClasspathResolver;
 import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 import org.ant4eclipse.pde.tools.TargetPlatform;

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.osgi.internal;
+package org.ant4eclipse.pde.old;
 
 import java.util.HashMap;
 import java.util.Map;

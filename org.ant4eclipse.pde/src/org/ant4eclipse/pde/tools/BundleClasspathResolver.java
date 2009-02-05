@@ -1,12 +1,17 @@
 package org.ant4eclipse.pde.tools;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
-import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.osgi.BundleLayoutResolver;
 import org.ant4eclipse.pde.osgi.ExplodedBundleLayoutResolver;
@@ -16,230 +21,262 @@ import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 
 /**
- * Tools for resolving bundle classpathes
- *
+ * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class BundleClasspathResolver {
 
   /** */
-  private List<BundleDescription> _resolvedBundles;
+  private Map<BundleDescription, BundleDependency> _resolvedBundles;
 
   /**
    * <p>
    * </p>
    */
   public BundleClasspathResolver() {
-    _resolvedBundles = new LinkedList<BundleDescription>();
+    _resolvedBundles = new HashMap<BundleDescription, BundleDependency>();
   }
 
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param context
    * @param resolvedBundleDescription
    */
-  public void resolveBundleClasspath(final ClasspathResolverContext context, final BundleDescription bundleDescription) {
+  public List<BundleDependency> resolveBundleClasspath(final BundleDescription bundleDescription) {
 
-    Assert.notNull(context);
     Assert.notNull(bundleDescription);
 
     if (!bundleDescription.isResolved()) {
       throw new RuntimeException("bundle not resolved");
     }
 
-    // add all packages that are imported...
+    // Step 1: add all packages that are imported...
     for (ExportPackageDescription exportPackageDescription : bundleDescription.getResolvedImports()) {
-      // TODO: Access Restrictions
-      addBundleToClasspath(context, exportPackageDescription.getSupplier());
+
+      addExportedPackage(exportPackageDescription);
     }
 
-    // add all packages that come from required bundles...
+    // Step 2: add all packages that come from required bundles...
     for (BundleDescription requiredBundle : bundleDescription.getResolvedRequires()) {
 
-      // TODO: Access Restrictions
-      addBundleToClasspath(context, requiredBundle);
+      addAllExportedPackages(requiredBundle);
 
-      // add all reexported bundles also...
+      // add all re-exported bundles also...
       for (BundleDescription reexportedBundle : getReexportedBundles(requiredBundle)) {
 
-        // TODO: Access Restrictions
-        addBundleToClasspath(context, reexportedBundle);
+        addAllExportedPackages(reexportedBundle);
       }
     }
 
-    // add the bundle itself to the classpath
-    addBundleToClasspath(context, bundleDescription);
+    // Step 3: add the bundle itself to the class path
+    // addBundleToClasspath(context, bundleDescription);
+
+    return null;
   }
 
   private BundleDescription[] getReexportedBundles(final BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
     Assert.assertTrue(bundleDescription.isResolved(), "Bundle must be resolved!");
 
-    final List<BundleDescription> result = new LinkedList<BundleDescription>();
+    // define the result set
+    final Set<BundleDescription> resultSet = new LinkedHashSet<BundleDescription>();
 
-    final BundleSpecification[] requiredBundles = bundleDescription.getRequiredBundles();
-    for (int i = 0; i < requiredBundles.length; i++) {
-      final BundleSpecification specification = requiredBundles[i];
+    // iterate over all required bundles
+    for (BundleSpecification specification : bundleDescription.getRequiredBundles()) {
+
+      // only add exported entries
       if (specification.isExported()) {
+
+        // get the bundle description
         final BundleDescription reexportedBundle = (BundleDescription) specification.getSupplier();
-        if (!result.contains(reexportedBundle)) {
-          result.add(reexportedBundle);
-        }
-        final BundleDescription reexportedBundles[] = getReexportedBundles(reexportedBundle);
-        for (int j = 0; j < reexportedBundles.length; j++) {
-          final BundleDescription description = reexportedBundles[j];
-          if (!result.contains(description)) {
-            result.add(description);
-          }
+
+        // add the bundle description
+        resultSet.add(reexportedBundle);
+
+        // add all re-exported bundle description recursively
+        for (BundleDescription rereexportedBundle : getReexportedBundles(reexportedBundle)) {
+          resultSet.add(rereexportedBundle);
         }
       }
     }
 
-    final BundleDescription[] fragments = bundleDescription.getFragments();
-    for (int i = 0; i < fragments.length; i++) {
-      final BundleDescription fragment = fragments[i];
-      if (!result.contains(fragment)) {
-        result.add(fragment);
-      }
-      final BundleDescription reexportedBundles[] = getReexportedBundles(fragment);
-      for (int j = 0; j < reexportedBundles.length; j++) {
-        final BundleDescription reexportedBundle = reexportedBundles[j];
-        if (!result.contains(reexportedBundle)) {
-          result.add(reexportedBundle);
-        }
+    // iterate over all attached fragments
+    for (BundleDescription fragment : bundleDescription.getFragments()) {
+
+      // add the fragment
+      // TODO should we really add the fragment here ?
+      // -> fragments are added 'automatically' in BundleDependency.getResolvedClasspathEntry()
+      resultSet.add(fragment);
+
+      // add all re-exported bundles
+      for (BundleDescription reexportedBundle : getReexportedBundles(fragment)) {
+        resultSet.add(reexportedBundle);
       }
     }
 
-    return (BundleDescription[]) result.toArray(new BundleDescription[result.size()]);
+    // return the result
+    return (BundleDescription[]) resultSet.toArray(new BundleDescription[resultSet.size()]);
   }
 
   /**
    * @param context
    * @param bundleDescription
    */
-  private void addBundleToClasspath(final ClasspathResolverContext context, final BundleDescription bundleDescription) {
+  private void addAllExportedPackages(final BundleDescription bundleDescription) {
 
-    if (_resolvedBundles.contains(bundleDescription)) {
+    System.err.println(bundleDescription);
+    
+    BundleDescription host = getHost(bundleDescription);
+
+    if (_resolvedBundles.containsKey(host)) {
       return;
     }
 
-    _resolvedBundles.add(bundleDescription);
+    //_resolvedBundles.add(bundleDescription);
+    
+    // bundleDescription.getExportPackages()
 
-    // handle fragments
-    BundleDescription host = null;
-    BundleDescription[] fragments = null;
-
-    // bundle description describes a fragment ->
-    // choose host as main bundle description and add fragments
-    if (bundleDescription.getHost() != null) {
-      host = bundleDescription.getHost().getHosts()[0];
-      fragments = host.getFragments();
-    }
-    // bundle description describes a host ->
-    // just add fragments
-    else {
-      host = bundleDescription;
-      fragments = bundleDescription.getFragments();
-    }
-
-    addBundleToClasspath(context, host, fragments);
-
-    // TODO!!
-    // JarUtilities.expandBundle(bundleDescription);
-    // final BundleSource bundleSource = BundleSource.getBundleSource(bundleDescription);
-    // if (bundleSource.isEclipseProject()) {
-    // final EclipseProject project = bundleSource.getAsEclipseProject();
-    // if (JavaProjectRole.Helper.hasJavaProjectRole(project)) {
-    // context.resolveProjectClasspath(project);
-    // }
-    // } else {
-    // final String[] classpathEntries = bundleSource.getBundleClasspath();
-    // for (int j = 0; j < classpathEntries.length; j++) {
-    // final String entryName = classpathEntries[j];
-    // File entry;
-    // if (".".equals(entryName)) {
-    // entry = bundleSource.getClasspathRoot();
-    // } else {
-    // entry = new File(bundleSource.getClasspathRoot(), entryName);
-    // }
-    // System.err.println(entry);
-    // if (entry.exists()) {
-    // // TODO: ACCESS RESTRICTIONS
-    // context.addClasspathEntry(new ResolvedClasspathEntry(entry));
-    // } else {
-    // A4ELogging.debug("Not adding non-existant entry '%s'", entry);
-    // }
-    // }
+    // BundleLayoutResolver layoutResolver = getBundleLayoutResolver(host);
+    //
+    // // context.addClasspathEntry(new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries()));
+    //
+    // for (BundleDescription fragment : fragments) {
+    // layoutResolver = getBundleLayoutResolver(fragment);
+    // // context.addClasspathEntry(new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries()));
     // }
   }
 
-  /**
-   * @param host
-   * @param fragments
-   * @param filtered
-   * @return
-   */
-  private void addBundleToClasspath(final ClasspathResolverContext context, final BundleDescription host,
-      final BundleDescription[] fragments) {
-
-    BundleLayoutResolver layoutResolver = getBundleLayoutResolver(host);
-
-    context.addClasspathEntry(new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries()));
-
-    for (BundleDescription fragment : fragments) {
-      layoutResolver = getBundleLayoutResolver(fragment);
-      context.addClasspathEntry(new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries()));
-    }
+  private void addExportedPackage(ExportPackageDescription exportPackageDescription) {
+    // TODO Auto-generated method stub
+    
+    System.err.println(exportPackageDescription);
   }
 
   /**
    * <p>
-   * Returns a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
+   * Returns the host for the given {@link BundleDescription}.
    * </p>
-   *
+   * 
    * @param bundleDescription
-   *          the given {@link BundleDescription}.
-   * @return a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
+   * @return
    */
-  private BundleLayoutResolver getBundleLayoutResolver(final BundleDescription bundleDescription) {
+  private BundleDescription getHost(BundleDescription bundleDescription) {
 
-    // get the bundle source
-    final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
-
-    // get the location
-    final File location = getLocation(bundleDescription);
-
-    // eclipse project -> PluginProjectLayoutResolver
-    if (bundleSource.isEclipseProject()) {
-      return new PluginProjectLayoutResolver(bundleSource.getAsEclipseProject());
+    // bundle description describes a fragment ->
+    // choose host as main bundle description
+    if (bundleDescription.getHost() != null) {
+      return bundleDescription.getHost().getHosts()[0];
     }
-    // directory -> ExplodedBundleLayoutResolver
-    else if (location.isDirectory()) {
-      return new ExplodedBundleLayoutResolver(location);
-    }
-    // jar -> JaredBundleLayoutResolver
+    // bundle description describes a host ->
+    // return bundle description
     else {
-      // TODO: EXPANSION DIR!!
-      return new JaredBundleLayoutResolver(location, new File("c:\\temp"));
+      return bundleDescription;
     }
   }
 
   /**
-   * @param bundleDescription
-   * @return
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  private File getLocation(final BundleDescription bundleDescription) {
+  public class BundleDependency {
 
-    // get the bundle source
-    final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+    /** the host */
+    private BundleDescription _host;
 
-    // get the location
-    final File result = bundleSource.isEclipseProject() ? bundleSource.getAsEclipseProject().getFolder() : bundleSource
-        .getAsFile();
+    /** list of all imported packages */
+    private Set<String>       _importedPackages;
 
-    // return result
-    return result;
+    /** list of all packages that are imported through 'RequireBundle' */
+    private Set<String>       _packagesImportedThroughRequireBundle;
+
+    /**
+     * 
+     */
+    public BundleDependency() {
+
+      _importedPackages = new LinkedHashSet<String>();
+      _packagesImportedThroughRequireBundle = new LinkedHashSet<String>();
+    }
+
+    /**
+     * <p>
+     * Returns the {@link ResolvedClasspathEntry}.
+     * </p>
+     * 
+     * @return
+     */
+    public ResolvedClasspathEntry getResolvedClasspathEntry() {
+
+      List<File> files = new LinkedList<File>();
+      BundleLayoutResolver layoutResolver = getBundleLayoutResolver(_host);
+      files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+
+      for (BundleDescription fragment : _host.getFragments()) {
+        layoutResolver = getBundleLayoutResolver(fragment);
+        files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+      }
+
+      // TODO
+      AccessRestrictions accessRestrictions = new AccessRestrictions();
+
+      ResolvedClasspathEntry resolvedClasspathEntry = new ResolvedClasspathEntry(files.toArray(new File[0]),
+          accessRestrictions);
+      return resolvedClasspathEntry;
+    }
+
+    /**
+     * <p>
+     * Returns a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
+     * </p>
+     * 
+     * @param bundleDescription
+     *          the given {@link BundleDescription}.
+     * @return a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
+     */
+    private BundleLayoutResolver getBundleLayoutResolver(final BundleDescription bundleDescription) {
+
+      // get the bundle source
+      final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+
+      // get the location
+      final File location = getLocation(bundleDescription);
+
+      // eclipse project -> PluginProjectLayoutResolver
+      if (bundleSource.isEclipseProject()) {
+        return new PluginProjectLayoutResolver(bundleSource.getAsEclipseProject());
+      }
+      // directory -> ExplodedBundleLayoutResolver
+      else if (location.isDirectory()) {
+        return new ExplodedBundleLayoutResolver(location);
+      }
+      // jar -> JaredBundleLayoutResolver
+      else {
+        // TODO: EXPANSION DIR!!
+        return new JaredBundleLayoutResolver(location, new File("c:\\temp"));
+      }
+    }
+
+    /**
+     * <p>
+     * Returns the location for the given {@link BundleDescription}.
+     * </p>
+     * 
+     * @param bundleDescription
+     *          the {@link BundleDescription}
+     * @return the location for the given {@link BundleDescription}.
+     */
+    private File getLocation(final BundleDescription bundleDescription) {
+
+      // get the bundle source
+      final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+
+      // get the location
+      final File result = bundleSource.isEclipseProject() ? bundleSource.getAsEclipseProject().getFolder()
+          : bundleSource.getAsFile();
+
+      // return result
+      return result;
+    }
   }
 }

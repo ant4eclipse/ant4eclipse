@@ -22,6 +22,7 @@ import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
+import org.eclipse.osgi.service.resolver.StateDelta;
 
 /**
  * <p>
@@ -68,6 +69,6 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     final BundleDescription resolvedBundleDescription = state.getBundle(bundleDescription.getSymbolicName(),
         bundleDescription.getVersion());
 
-    new BundleClasspathResolver().resolveBundleClasspath(context, resolvedBundleDescription);
+    new BundleClasspathResolver().resolveBundleClasspath(resolvedBundleDescription);
   }
 }
