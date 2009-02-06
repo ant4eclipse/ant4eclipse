@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import java.io.File;
-
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 
 /**
@@ -25,63 +22,69 @@ import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
  */
 public class AbstractPdeBuildTask extends AbstractProjectBasedTask {
 
-  /** the target platform definition */
-  private TargetPlatformDefinitionDataType _targetPlatformDefinition;
+  @Override
+  protected void doExecute() {
+    // TODO Auto-generated method stub
 
-  /**
-   * <p>
-   * Creates a new instance of type AbstractPdeBuildTask.
-   * </p>
-   * 
-   */
-  public AbstractPdeBuildTask() {
-    super();
   }
 
-  /**
-   * <p>
-   * Returns the target platform against which the workspace plugins will be compiled and tested.
-   * </p>
-   * 
-   * @return the target platform against which the workspace plugins will be compiled and tested.
-   */
-  public final File[] getTargetPlatformLocations() {
-    if (this._targetPlatformDefinition != null) {
-      return this._targetPlatformDefinition.getLocations();
-    } else {
-      return new File[] {};
-    }
-  }
-
-  /**
-   * <p>
-   * Sets the target platform against which the workspace plugins will be compiled and tested.
-   * </p>
-   * 
-   * @param targetPlatformLocation
-   *          the target platform against which the workspace plugins will be compiled and tested.
-   */
-  public final void setTargetPlatformLocation(final File targetPlatformLocation) {
-    Assert.isDirectory(targetPlatformLocation);
-    final TargetPlatformDefinitionDataType platformDefinition = new TargetPlatformDefinitionDataType();
-    platformDefinition.addConfiguredLocation(new TargetPlatformDefinitionDataType.Location(targetPlatformLocation));
-    this.addTargetPlatform(platformDefinition);
-  }
-
-  public final void addTargetPlatform(final TargetPlatformDefinitionDataType platformDefinition) {
-    Assert.notNull(platformDefinition);
-
-    this._targetPlatformDefinition = platformDefinition;
-  }
-
-  /**
-   * <p>
-   * Returns whether the target platform location is set.
-   * </p>
-   * 
-   * @return whether the target platform location is set.
-   */
-  public final boolean isTargetPlatformLocationSet() {
-    return this._targetPlatformDefinition != null;
-  }
+  // /** the target platform definition */
+  // private TargetPlatformDefinitionDataType _targetPlatformDefinition;
+  //
+  // /**
+  // * <p>
+  // * Creates a new instance of type AbstractPdeBuildTask.
+  // * </p>
+  // *
+  // */
+  // public AbstractPdeBuildTask() {
+  // super();
+  // }
+  //
+  // /**
+  // * <p>
+  // * Returns the target platform against which the workspace plugins will be compiled and tested.
+  // * </p>
+  // *
+  // * @return the target platform against which the workspace plugins will be compiled and tested.
+  // */
+  // public final File[] getTargetPlatformLocations() {
+  // if (this._targetPlatformDefinition != null) {
+  // return this._targetPlatformDefinition.getLocations();
+  // } else {
+  // return new File[] {};
+  // }
+  // }
+  //
+  // /**
+  // * <p>
+  // * Sets the target platform against which the workspace plugins will be compiled and tested.
+  // * </p>
+  // *
+  // * @param targetPlatformLocation
+  // * the target platform against which the workspace plugins will be compiled and tested.
+  // */
+  // public final void setTargetPlatformLocation(final File targetPlatformLocation) {
+  // Assert.isDirectory(targetPlatformLocation);
+  // final TargetPlatformDefinitionDataType platformDefinition = new TargetPlatformDefinitionDataType();
+  // platformDefinition.addConfiguredLocation(new TargetPlatformDefinitionDataType.Location(targetPlatformLocation));
+  // this.addTargetPlatform(platformDefinition);
+  // }
+  //
+  // public final void addTargetPlatform(final TargetPlatformDefinitionDataType platformDefinition) {
+  // Assert.notNull(platformDefinition);
+  //
+  // this._targetPlatformDefinition = platformDefinition;
+  // }
+  //
+  // /**
+  // * <p>
+  // * Returns whether the target platform location is set.
+  // * </p>
+  // *
+  // * @return whether the target platform location is set.
+  // */
+  // public final boolean isTargetPlatformLocationSet() {
+  // return this._targetPlatformDefinition != null;
+  // }
 }
