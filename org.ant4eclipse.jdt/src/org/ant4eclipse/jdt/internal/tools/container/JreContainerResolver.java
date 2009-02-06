@@ -12,8 +12,8 @@
 package org.ant4eclipse.jdt.internal.tools.container;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.ContainerTypes;
@@ -71,10 +71,10 @@ public class JreContainerResolver implements ClasspathContainerResolver {
     AccessRestrictions accessRestrictions = null;
 
     if (javaRuntimeRegistry.hasJavaProfile(profileKey)) {
-      final List<String> publicPackages = new LinkedList<String>();
+      final Set<String> publicPackages = new LinkedHashSet<String>();
       publicPackages.add("java");
       publicPackages.addAll(javaRuntimeRegistry.getJavaProfile(profileKey).getSystemPackages());
-      accessRestrictions = new AccessRestrictions(publicPackages, new LinkedList<String>(), true);
+      accessRestrictions = new AccessRestrictions(publicPackages, new LinkedHashSet<String>(), true);
     }
 
     context.setBootClasspathEntry(new ResolvedClasspathEntry(libraries, accessRestrictions));

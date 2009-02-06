@@ -13,8 +13,8 @@ package org.ant4eclipse.jdt.tools;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.ant4eclipse.core.Assert;
 
@@ -111,23 +111,23 @@ public class ResolvedClasspathEntry {
   public static class AccessRestrictions {
 
     /** - */
-    private boolean            _excludeAll = true;
+    private boolean           _excludeAll = true;
 
     /** - */
-    private final List<String> _publicPackages;
+    private final Set<String> _publicPackages;
 
     /** - */
-    private final List<String> _privatePackages;
+    private final Set<String> _privatePackages;
 
     public AccessRestrictions() {
-      this._publicPackages = new LinkedList<String>();
-      this._privatePackages = new LinkedList<String>();
+      this._publicPackages = new LinkedHashSet<String>();
+      this._privatePackages = new LinkedHashSet<String>();
     }
 
-    public AccessRestrictions(final List<String> publicPackages, final List<String> privatePackages,
+    public AccessRestrictions(final Set<String> publicPackages, final Set<String> privatePackages,
         final boolean excludeAll) {
 
-      // TODO TYPEN !!
+      // TODO SUPPORT FOR TYPES (exclusion/inclusion of classes/interfaces)!!
 
       this._publicPackages = publicPackages;
       this._privatePackages = privatePackages;
@@ -138,11 +138,19 @@ public class ResolvedClasspathEntry {
       return this._excludeAll;
     }
 
-    public List<String> getPublicPackages() {
+    public void addPublicPackage(final String name) {
+      this._publicPackages.add(name);
+    }
+
+    public void addPrivatePackage(final String name) {
+      this._privatePackages.add(name);
+    }
+
+    public Set<String> getPublicPackages() {
       return this._publicPackages;
     }
 
-    public List<String> getPrivatePackages() {
+    public Set<String> getPrivatePackages() {
       return this._privatePackages;
     }
 
