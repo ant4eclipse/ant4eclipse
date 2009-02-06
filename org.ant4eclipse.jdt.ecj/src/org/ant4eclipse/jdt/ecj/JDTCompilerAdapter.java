@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.jdt.ant.CompilerArguments;
-import org.ant4eclipse.jdt.ecj.CompileJobDescription.SourceFile;
-import org.ant4eclipse.jdt.ecj.internal.ant.AntCompileJobDescription;
 import org.ant4eclipse.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
@@ -75,7 +73,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     final EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
 
-    final AntCompileJobDescription compileJobDescription = new AntCompileJobDescription();
+    final DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
     compileJobDescription.setSourceFiles(sourceFiles.toArray(new SourceFile[0]));
     // TODO
     final CompilerOptions compilerOptions = new CompilerOptions();

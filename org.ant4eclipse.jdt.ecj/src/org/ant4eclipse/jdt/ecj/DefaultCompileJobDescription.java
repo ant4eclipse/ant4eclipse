@@ -1,9 +1,7 @@
-package org.ant4eclipse.jdt.ecj.internal.ant;
+package org.ant4eclipse.jdt.ecj;
 
 import java.util.Map;
 
-import org.ant4eclipse.jdt.ecj.ClassFileLoader;
-import org.ant4eclipse.jdt.ecj.CompileJobDescription;
 
 /**
  * <p>
@@ -11,7 +9,7 @@ import org.ant4eclipse.jdt.ecj.CompileJobDescription;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class AntCompileJobDescription implements CompileJobDescription {
+public class DefaultCompileJobDescription implements CompileJobDescription {
 
   private ClassFileLoader     _classFileLoader;
 

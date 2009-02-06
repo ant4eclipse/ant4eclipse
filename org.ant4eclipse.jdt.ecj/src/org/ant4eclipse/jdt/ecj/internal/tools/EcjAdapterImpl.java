@@ -22,7 +22,7 @@ import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.jdt.ecj.EcjAdapter;
-import org.ant4eclipse.jdt.ecj.CompileJobDescription.SourceFile;
+import org.ant4eclipse.jdt.ecj.SourceFile;
 import org.eclipse.jdt.internal.compiler.Compiler;
 import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
 import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;
