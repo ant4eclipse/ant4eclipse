@@ -15,24 +15,25 @@ import java.util.List;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.model.ContainerTypes;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
+import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
-import org.eclipse.osgi.service.resolver.StateDelta;
 
 /**
  * <p>
  * ContainerResolver for resolving the 'org.eclipse.pde.core.requiredPlugins' container.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
+  /** the constant for the container type 'org.eclipse.pde.core.requiredPlugins' */
   public static final String CONTAINER_TYPE_PDE_REQUIRED_PLUGINS = "org.eclipse.pde.core.requiredPlugins";
 
   /**
@@ -49,26 +50,41 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   public void resolveContainer(final ClasspathEntry classpathEntry, final ClasspathResolverContext context) {
     Assert.notNull(context);
 
+    // get the PluginProjectRole
     final PluginProjectRole pluginProjectRole = (PluginProjectRole) context.getCurrentProject().getRole(
         PluginProjectRole.class);
+
+    // get the BundleDescription
     final BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
 
+    // get the target platform argument
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
 
+    // get the TargetPlatformRegistry
     TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
 
+    // TODO!! ERROR MESSAGE
     Assert.notNull(registry);
     Assert.notNull(containerArgument);
 
+    // get the TargetPlatform
     TargetPlatform targetPlatform = registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
         new TargetPlatformConfiguration());
 
+    // get the state
     State state = targetPlatform.getState();
 
     // get the resolved bundle description...
     final BundleDescription resolvedBundleDescription = state.getBundle(bundleDescription.getSymbolicName(),
         bundleDescription.getVersion());
 
-    new BundleClasspathResolver().resolveBundleClasspath(resolvedBundleDescription);
+    // resolve the bundle
+    List<BundleDependency> bundleDependencies = new BundleDependenciesResolver()
+        .resolveBundleClasspath(resolvedBundleDescription);
+
+    // add all ResolvedClasspathEntries to the class path
+    for (BundleDependency bundleDependency : bundleDependencies) {
+      context.addClasspathEntry(bundleDependency.getResolvedClasspathEntry());
+    }
   }
 }

@@ -1,4 +1,4 @@
-package org.ant4eclipse.pde.tools;
+package org.ant4eclipse.pde.internal.tools;
 
 import java.io.File;
 import java.util.Arrays;
@@ -10,35 +10,44 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
+import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.pde.osgi.BundleLayoutResolver;
-import org.ant4eclipse.pde.osgi.ExplodedBundleLayoutResolver;
-import org.ant4eclipse.pde.osgi.JaredBundleLayoutResolver;
+import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 
 /**
+ * <p>
+ * </p>
  * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class BundleClasspathResolver {
+public class BundleDependenciesResolver {
 
-  /** */
+  /** the map of all resolved bundles */
   private Map<BundleDescription, BundleDependency> _resolvedBundles;
+
+  private Set<String>                              _allImportedPackages;
 
   /**
    * <p>
+   * 
    * </p>
    */
-  public BundleClasspathResolver() {
+  public BundleDependenciesResolver() {
     _resolvedBundles = new HashMap<BundleDescription, BundleDependency>();
+    _allImportedPackages = new LinkedHashSet<String>();
   }
 
   /**
    * <p>
+   * 
    * </p>
    * 
    * @param context
@@ -55,25 +64,25 @@ public class BundleClasspathResolver {
     // Step 1: add all packages that are imported...
     for (ExportPackageDescription exportPackageDescription : bundleDescription.getResolvedImports()) {
 
-      addExportedPackage(exportPackageDescription);
+      addImportedPackage(exportPackageDescription);
     }
 
     // Step 2: add all packages that come from required bundles...
     for (BundleDescription requiredBundle : bundleDescription.getResolvedRequires()) {
 
-      addAllExportedPackages(requiredBundle);
+      addRequiredBundle(requiredBundle);
 
       // add all re-exported bundles also...
       for (BundleDescription reexportedBundle : getReexportedBundles(requiredBundle)) {
 
-        addAllExportedPackages(reexportedBundle);
+        addRequiredBundle(reexportedBundle);
       }
     }
 
     // Step 3: add the bundle itself to the class path
     // addBundleToClasspath(context, bundleDescription);
 
-    return null;
+    return new LinkedList<BundleDependency>(_resolvedBundles.values());
   }
 
   private BundleDescription[] getReexportedBundles(final BundleDescription bundleDescription) {
@@ -124,34 +133,60 @@ public class BundleClasspathResolver {
    * @param context
    * @param bundleDescription
    */
-  private void addAllExportedPackages(final BundleDescription bundleDescription) {
+  private void addRequiredBundle(final BundleDescription bundleDescription) {
 
-    System.err.println(bundleDescription);
-    
-    BundleDescription host = getHost(bundleDescription);
+    // TODO
+    // // OSGi Service Platform, Core Specification Release 4, Version 4.1, 3.13.1 Require-Bundle:
+    // // //
+    // // // "A bundle may both import packages (via Import-Package) and require one
+    // // // or more bundles (via Require-Bundle), but if a package is imported via
+    // // // Import-Package, it is not also visible via Require-Bundle: Import-Package
+    // // // takes priority over Require-Bundle, and packages which are exported by a
+    // // // required bundle and imported via Import-Package must not be treated as
+    // // // split packages."
 
-    if (_resolvedBundles.containsKey(host)) {
-      return;
-    }
+    // get bundle dependency
+    BundleDependency bundleDependency = getBundleDependency(bundleDescription);
 
-    //_resolvedBundles.add(bundleDescription);
-    
-    // bundleDescription.getExportPackages()
-
-    // BundleLayoutResolver layoutResolver = getBundleLayoutResolver(host);
-    //
-    // // context.addClasspathEntry(new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries()));
-    //
-    // for (BundleDescription fragment : fragments) {
-    // layoutResolver = getBundleLayoutResolver(fragment);
-    // // context.addClasspathEntry(new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries()));
-    // }
+    // set the 'required bundle' flag
+    bundleDependency.setRequiredBundle(true);
   }
 
-  private void addExportedPackage(ExportPackageDescription exportPackageDescription) {
-    // TODO Auto-generated method stub
-    
-    System.err.println(exportPackageDescription);
+  /**
+   * @param exportPackageDescription
+   */
+  private void addImportedPackage(ExportPackageDescription exportPackageDescription) {
+
+    // get bundle dependency
+    BundleDependency bundleDependency = getBundleDependency(exportPackageDescription.getSupplier());
+
+    // add the imported package
+    bundleDependency.addImportedPackage(exportPackageDescription.getName());
+
+    _allImportedPackages.add(exportPackageDescription.getName());
+  }
+
+  /**
+   * <p>
+   * Returns the {@link BundleDependency}.
+   * </p>
+   * 
+   * @param bundleDescription
+   * @return
+   */
+  private BundleDependency getBundleDependency(BundleDescription bundleDescription) {
+    Assert.notNull(bundleDescription);
+
+    // get host
+    BundleDescription host = getHost(bundleDescription);
+
+    // create BundleDependency if necessary
+    if (!_resolvedBundles.containsKey(host)) {
+      _resolvedBundles.put(host, new BundleDependency(host, _allImportedPackages));
+    }
+
+    // return BundleDependency
+    return _resolvedBundles.get(host);
   }
 
   /**
@@ -184,19 +219,46 @@ public class BundleClasspathResolver {
     /** the host */
     private BundleDescription _host;
 
-    /** list of all imported packages */
+    /** list of imported packages for this bundle dependency */
     private Set<String>       _importedPackages;
 
-    /** list of all packages that are imported through 'RequireBundle' */
-    private Set<String>       _packagesImportedThroughRequireBundle;
+    /** list of all imported packages */
+    private Set<String>       _allImportedPackages;
+
+    /** - */
+    private boolean           _isRequiredBundle;
 
     /**
      * 
      */
-    public BundleDependency() {
+    public BundleDependency(BundleDescription host, Set<String> allImportedPackages) {
+      Assert.notNull(host);
 
+      _host = host;
+      _isRequiredBundle = false;
       _importedPackages = new LinkedHashSet<String>();
-      _packagesImportedThroughRequireBundle = new LinkedHashSet<String>();
+      _allImportedPackages = allImportedPackages;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isRequiredBundle() {
+      return _isRequiredBundle;
+    }
+
+    /**
+     * @param isRequiredBundle
+     */
+    public void setRequiredBundle(boolean isRequiredBundle) {
+      _isRequiredBundle = isRequiredBundle;
+    }
+
+    /**
+     * @param packageName
+     */
+    public void addImportedPackage(String packageName) {
+      _importedPackages.add(packageName);
     }
 
     /**
@@ -208,21 +270,44 @@ public class BundleClasspathResolver {
      */
     public ResolvedClasspathEntry getResolvedClasspathEntry() {
 
+      System.err.println(toString());
+
       List<File> files = new LinkedList<File>();
+      AccessRestrictions accessRestrictions = new AccessRestrictions();
+
+      for (String importedPackage : _importedPackages) {
+        accessRestrictions.addPublicPackage(importedPackage);
+      }
+
       BundleLayoutResolver layoutResolver = getBundleLayoutResolver(_host);
       files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+      if (_isRequiredBundle) {
+        addAllExportedPackages(accessRestrictions, _host);
+      }
 
       for (BundleDescription fragment : _host.getFragments()) {
         layoutResolver = getBundleLayoutResolver(fragment);
         files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+        if (_isRequiredBundle) {
+          addAllExportedPackages(accessRestrictions, fragment);
+        }
       }
 
-      // TODO
-      AccessRestrictions accessRestrictions = new AccessRestrictions();
+      System.err.println(accessRestrictions);
 
-      ResolvedClasspathEntry resolvedClasspathEntry = new ResolvedClasspathEntry(files.toArray(new File[0]),
-          accessRestrictions);
-      return resolvedClasspathEntry;
+      return new ResolvedClasspathEntry(files.toArray(new File[0]), accessRestrictions);
+    }
+
+    private void addAllExportedPackages(AccessRestrictions accessRestrictions, BundleDescription bundleDescription) {
+
+      // TODO getSelectedExports()?
+      ExportPackageDescription[] exportPackageDescriptions = bundleDescription.getSelectedExports();
+
+      for (ExportPackageDescription exportPackageDescription : exportPackageDescriptions) {
+        if (!_allImportedPackages.contains(exportPackageDescription.getName())) {
+          accessRestrictions.addPublicPackage(exportPackageDescription.getName());
+        }
+      }
     }
 
     /**
@@ -277,6 +362,22 @@ public class BundleClasspathResolver {
 
       // return result
       return result;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+      StringBuffer buffer = new StringBuffer();
+      buffer.append("[BundleDependency:");
+      buffer.append(" _host: ");
+      buffer.append(_host);
+      buffer.append(" _accessiblePackages: ");
+      buffer.append(_importedPackages);
+      buffer.append(" _isRequiredBundle: ");
+      buffer.append(_isRequiredBundle);
+      buffer.append("]");
+      return buffer.toString();
     }
   }
 }

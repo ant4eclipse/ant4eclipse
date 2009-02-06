@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.internal.tools.target;
+package org.ant4eclipse.pde.internal.tools;
 
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
