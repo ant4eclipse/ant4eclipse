@@ -1,6 +1,5 @@
 package org.ant4eclipse.jdt.ant;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent;
@@ -8,44 +7,41 @@ import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentDelega
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
+import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
+import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
+enum Scope {
+  SOURCE_DIRECTORY, TARGET_DIRECTORY, SOURCE_DIRECTORIES, TARGET_DIRECTORIES;
+}
+
 /**
- * @author
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements JdtClasspathContainerArgumentComponent,
-    DynamicElement {
+public class ExecuteJdtProjectTask extends AbstractExecuteProjectTask<Scope> implements
+    JdtClasspathContainerArgumentComponent, DynamicElement {
 
-  private enum Scope {
-    SOURCE_DIRECTORY, TARGET_DIRECTORY, SOURCE_DIRECTORIES, TARGET_DIRECTORIES;
-  }
-
-  /** the {@link MacroExecutionDelegate} */
-  private final MacroExecutionDelegate                _macroExecutionDelegate;
-
+  /** - */
   private final JdtClasspathContainerArgumentDelegate _jdtClasspathContainerArgumentDelegate;
 
+  /** - */
   private final JdtExecutorValuesProvider             _executorValuesProvider;
-
-  /* list of all macro definitions */
-  private final List<ScopedMacroDefinition<Scope>>    _macroDefs;
 
   /**
    * 
    */
   public ExecuteJdtProjectTask() {
-    this._macroExecutionDelegate = new MacroExecutionDelegate(this, "executeJdtProject");
-    this._macroDefs = new LinkedList<ScopedMacroDefinition<Scope>>();
 
     this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
-
     this._executorValuesProvider = new JdtExecutorValuesProvider(this);
   }
 
+  /**
+   * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
+   */
   public Object createDynamicElement(final String name) throws BuildException {
     if ("ForEachSourceDirectory".equalsIgnoreCase(name)) {
       return createMacroDef(Scope.SOURCE_DIRECTORY);
@@ -75,7 +71,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
     requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
-    for (final ScopedMacroDefinition<Scope> scopedMacroDefinition : this._macroDefs) {
+    for (final ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
       final MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
@@ -90,6 +86,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
         executeSourceDirectoriesScopedMacroDef(macroDef);
         break;
       case TARGET_DIRECTORIES:
+        // TODO!
         // executeOutputDirectoriesScopedMacroDef(macroDef);
         break;
       default:
@@ -131,7 +128,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
           this.convertToPath(getEclipseProject().getChild(
               getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
 
-      this._macroExecutionDelegate.executeMacroInstance(macroDef, executionValues);
+      executeMacroInstance(macroDef, executionValues);
     }
   }
 
@@ -143,7 +140,7 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
       this._executorValuesProvider.provideSourceDirectoriesScopedExecutorValues(getJavaProjectRole(),
           this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments(), executionValues);
 
-      this._macroExecutionDelegate.executeMacroInstance(macroDef, executionValues);
+      executeMacroInstance(macroDef, executionValues);
     }
   }
 
@@ -170,16 +167,17 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
       executionValues.getReferences().put("output.directory.path",
           this.convertToPath(getEclipseProject().getChild(outFolder)));
 
-      this._macroExecutionDelegate.executeMacroInstance(macroDef, executionValues);
+      executeMacroInstance(macroDef, executionValues);
     }
   }
 
-  private Object createMacroDef(final Scope scope) {
-    final MacroDef macroDef = this._macroExecutionDelegate.createMacroDef();
-    this._macroDefs.add(new ScopedMacroDefinition<Scope>(macroDef, scope));
-    return macroDef.createSequential();
-  }
-
+  /**
+   * <p>
+   * Helper method that returns the {@link JavaProjectRole} role for the set {@link EclipseProject}.
+   * </p>
+   * 
+   * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
+   */
   private JavaProjectRole getJavaProjectRole() {
     return JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
   }

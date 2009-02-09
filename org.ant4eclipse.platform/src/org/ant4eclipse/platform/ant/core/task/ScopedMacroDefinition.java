@@ -1,4 +1,4 @@
-package org.ant4eclipse.jdt.ant;
+package org.ant4eclipse.platform.ant.core.task;
 
 import org.apache.tools.ant.taskdefs.MacroDef;
 
