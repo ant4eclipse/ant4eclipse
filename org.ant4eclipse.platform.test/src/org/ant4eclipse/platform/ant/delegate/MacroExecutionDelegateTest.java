@@ -1,15 +1,13 @@
 package org.ant4eclipse.platform.ant.delegate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.DynamicElement;
-import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 public class MacroExecutionDelegateTest extends BuildFileTest {
 
@@ -25,39 +23,32 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
 
   public static class MacroExecuteTask extends AbstractAnt4EclipseTask implements DynamicElement {
 
-    private final MacroExecutionDelegate _macroExecutionDelegate;
-
-    private final Map<String, MacroDef>  _macroDefs;
-
-    private String                       _prefix;
+    private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
     public MacroExecuteTask() {
-      this._macroExecutionDelegate = new MacroExecutionDelegate(this, "hurz");
-      this._macroDefs = new HashMap<String, MacroDef>();
+      this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "hurz");
     }
 
     /**
      * @param prefix
      */
     public void setPrefix(String prefix) {
-      this._prefix = prefix;
+      this._macroExecutionDelegate.setPrefix(prefix);
     }
 
     @Override
     protected void doExecute() {
-      for (MacroDef macroDef : this._macroDefs.values()) {
+      for (ScopedMacroDefinition<String> scopedMacroDefinition : this._macroExecutionDelegate
+          .getScopedMacroDefinitions()) {
 
         MacroExecutionValues values = new MacroExecutionValues();
-        values.getProperties().put("test", this._prefix + ".test");
-        values.getReferences().put("test", this._prefix + ".reference");
-        this._macroExecutionDelegate.executeMacroInstance(macroDef, values);
+        values.getProperties().put("test", this._macroExecutionDelegate.getPrefix() + ".test");
+        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(), values);
       }
     }
 
-    public Object createDynamicElement(String name) throws BuildException {
-      MacroDef macroDef = this._macroExecutionDelegate.createMacroDef();
-      this._macroDefs.put(name, macroDef);
-      return macroDef.createSequential();
+    public NestedSequential createDynamicElement(String name) throws BuildException {
+      return this._macroExecutionDelegate.createScopedMacroDefinition(name);
     }
   }
 }

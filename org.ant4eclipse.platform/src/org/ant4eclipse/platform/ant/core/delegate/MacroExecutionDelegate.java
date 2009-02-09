@@ -11,21 +11,29 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntReferencesRaper;
+import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroInstance;
+import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 /**
  */
-public class MacroExecutionDelegate extends AbstractAntDelegate implements MacroExecutionComponent {
+public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements MacroExecutionComponent<E> {
 
-  private String _prefix = null;
+  private String                               _prefix = null;
+
+  /** list of all macro definitions */
+  private final List<ScopedMacroDefinition<E>> _macroDefs;
 
   /**
    * @param component
@@ -34,6 +42,14 @@ public class MacroExecutionDelegate extends AbstractAntDelegate implements Macro
     super(task);
 
     this._prefix = prefix;
+    this._macroDefs = new LinkedList<ScopedMacroDefinition<E>>();
+  }
+
+  /**
+   * @param component
+   */
+  public MacroExecutionDelegate(final Task task) {
+    this(task, null);
   }
 
   /**
@@ -51,16 +67,21 @@ public class MacroExecutionDelegate extends AbstractAntDelegate implements Macro
   }
 
   /**
-   * <p>
-   * Creates a new instance of type {@link MacroDef}.
-   * </p>
-   * 
-   * @return a new instance of type {@link MacroDef}.
+   * @return
    */
-  public MacroDef createMacroDef() {
+  public List<ScopedMacroDefinition<E>> getScopedMacroDefinitions() {
+    return this._macroDefs;
+  }
+
+  /**
+   * @param scope
+   * @return
+   */
+  public NestedSequential createScopedMacroDefinition(final E scope) {
     final MacroDef macroDef = new MacroDef();
     macroDef.setProject(getAntProject());
-    return macroDef;
+    this._macroDefs.add(new ScopedMacroDefinition<E>(macroDef, scope));
+    return macroDef.createSequential();
   }
 
   /**

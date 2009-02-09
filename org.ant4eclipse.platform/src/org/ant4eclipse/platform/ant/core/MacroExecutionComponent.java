@@ -11,11 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
+import java.util.List;
+
+import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 /**
  */
-public interface MacroExecutionComponent {
+public interface MacroExecutionComponent<E> {
 
   /**
    * @return
@@ -27,14 +31,9 @@ public interface MacroExecutionComponent {
    */
   public void setPrefix(String prefix);
 
-  /**
-   * <p>
-   * Creates a new instance of type {@link MacroDef}.
-   * </p>
-   * 
-   * @return a new instance of type {@link MacroDef}.
-   */
-  public MacroDef createMacroDef();
+  public NestedSequential createScopedMacroDefinition(final E scope);
+
+  public List<ScopedMacroDefinition<E>> getScopedMacroDefinitions();
 
   /**
    * @param macroDef

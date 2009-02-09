@@ -2,7 +2,7 @@ package org.ant4eclipse.platform.ant.core.task;
 
 import org.apache.tools.ant.taskdefs.MacroDef;
 
-public class ScopedMacroDefinition<E extends Enum<E>> {
+public class ScopedMacroDefinition<E> {
 
   /** the macro definition */
   private final MacroDef _macroDef;
