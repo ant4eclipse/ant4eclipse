@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<antlib>
+	<typedef name="mergeProperties" classname="org.ant4eclipse.build.tools.MergeProperties" />
+	<typedef name="mergeAntlibXml" classname="org.ant4eclipse.build.tools.MergeAntlibXml" />
+</antlib>
