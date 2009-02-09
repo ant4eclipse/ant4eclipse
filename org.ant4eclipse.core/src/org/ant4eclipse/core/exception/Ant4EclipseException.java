@@ -21,7 +21,7 @@ public class Ant4EclipseException extends RuntimeException {
   private final Object[]      _args;
 
   public Ant4EclipseException(final ExceptionCode exceptionCode, final Throwable cause, final Object... args) {
-    super();
+    super(cause);
 
     this._exceptionCode = exceptionCode;
     this._args = args;
@@ -73,20 +73,20 @@ public class Ant4EclipseException extends RuntimeException {
     return String.format(this._exceptionCode.getMessage(), this._args);
   }
 
-  @Override
-  public String toString() {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append("[Ant4EclipseException:");
-    buffer.append(" exceptionCode: ");
-    buffer.append(this._exceptionCode);
-    buffer.append(" args: ");
-    buffer.append(" { ");
-    for (int i0 = 0; (this._args != null) && (i0 < this._args.length); i0++) {
-      buffer.append(" [" + i0 + "]: ");
-      buffer.append(this._args[i0]);
-    }
-    buffer.append(" } ");
-    buffer.append("]");
-    return buffer.toString();
-  }
+  // @Override
+  // public String toString() {
+  // final StringBuffer buffer = new StringBuffer();
+  // buffer.append("[Ant4EclipseException:");
+  // buffer.append(" exceptionCode: ");
+  // buffer.append(this._exceptionCode);
+  // buffer.append(" args: ");
+  // buffer.append(" { ");
+  // for (int i0 = 0; (this._args != null) && (i0 < this._args.length); i0++) {
+  // buffer.append(" [" + i0 + "]: ");
+  // buffer.append(this._args[i0]);
+  // }
+  // buffer.append(" } ");
+  // buffer.append("]");
+  // return buffer.toString();
+  // }
 }
