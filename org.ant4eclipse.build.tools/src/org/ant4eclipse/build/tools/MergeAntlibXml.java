@@ -1,18 +1,14 @@
 package org.ant4eclipse.build.tools;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -21,14 +17,25 @@ import org.apache.tools.ant.types.ResourceCollection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
+/**
+ * <p>
+ * Merges a given set of antlib.xml files in one target file.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class MergeAntlibXml extends AbstractMergeTask {
 
+  /** the result document */
   private Document _result           = null;
 
+  /** the node that contains the result typedefs */
   private Node     _resultAntlibNode = null;
 
+  /**
+   * @see org.ant4eclipse.build.tools.AbstractMergeTask#doExecute()
+   */
   @SuppressWarnings("unchecked")
   public void doExecute() throws Exception {
 
@@ -37,7 +44,7 @@ public class MergeAntlibXml extends AbstractMergeTask {
     _resultAntlibNode = _result.createElement("antlib");
     _result.appendChild(_resultAntlibNode);
 
-    // 
+    // process the specified files
     for (ResourceCollection resourceCollection : getResourceCollections()) {
       for (Iterator iterator = resourceCollection.iterator(); iterator.hasNext();) {
         Resource resource = (Resource) iterator.next();
@@ -49,7 +56,16 @@ public class MergeAntlibXml extends AbstractMergeTask {
     writeFile();
   }
 
-  private void loadFile(InputStream inputStream) throws SAXException, IOException, ParserConfigurationException {
+  /**
+   * <p>
+   * Adds the typedefs defined in the given input stream to the result document.
+   * </p>
+   * 
+   * @param inputStream
+   * 
+   * @throws Exception
+   */
+  private void loadFile(InputStream inputStream) throws Exception {
     // parse the document
     Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
 
@@ -57,6 +73,10 @@ public class MergeAntlibXml extends AbstractMergeTask {
     visit(document, 0);
   }
 
+  /**
+   * @param node
+   * @param level
+   */
   private void visit(Node node, int level) {
     NodeList nl = node.getChildNodes();
 
@@ -75,10 +95,17 @@ public class MergeAntlibXml extends AbstractMergeTask {
     }
   }
 
-  private void writeFile() throws TransformerFactoryConfigurationError, TransformerException {
+  /**
+   * <p>
+   * Writes the result document to disc.
+   * </p>
+   * 
+   * @throws Exception
+   */
+  private void writeFile() throws Exception {
 
     log("Writing file '" + getDestinationFile() + "'");
-    
+
     // Prepare the DOM document for writing
     Source source = new DOMSource(_result);
 

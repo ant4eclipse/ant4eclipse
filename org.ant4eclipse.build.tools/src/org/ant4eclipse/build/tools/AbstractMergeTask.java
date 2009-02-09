@@ -10,50 +10,74 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.ResourceCollection;
 
+/**
+ * <p>
+ * Implements the abstract base class for merge tasks.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public abstract class AbstractMergeTask extends Task {
 
-  /**  */
+  /** the resource collections */
   private List<ResourceCollection> _resourceCollections;
 
-  /** determines where final properties are saved */
-  private File                       _destinationFile;
+  /** the destination file */
+  private File                     _destinationFile;
 
-  /** */
+  /**
+   * <p>
+   * Creates a new instance of type {@link AbstractMergeTask}.
+   * </p>
+   */
   public AbstractMergeTask() {
-    //
+
+    // create the resource collection list
     _resourceCollections = new LinkedList<ResourceCollection>();
   }
 
   /**
-   * Add a set of files to copy.
+   * <p>
+   * Adds a set of files.
+   * </p>
    * 
    * @param set
-   *          a set of files to copy.
+   *          a set of files.
    */
   public void addFileset(FileSet set) {
     add(set);
   }
 
   /**
-   * Add a collection of files to copy.
+   * <p>
+   * Adds a collection of files.
+   * </p>
    * 
-   * @param res
-   *          a resource collection to copy.
-   * @since Ant 1.7
+   * @param resourceCollection
+   *          a resource collection.
    */
-  public void add(ResourceCollection res) {
-    _resourceCollections.add(res);
+  public void add(ResourceCollection resourceCollection) {
+    _resourceCollections.add(resourceCollection);
   }
 
+  /**
+   * <p>
+   * Sets the destination file.
+   * </p>
+   * 
+   * @param destinationFile
+   *          the destination file.
+   */
   public void setDestinationFile(File destinationFile) {
     _destinationFile = destinationFile;
   }
-  
+
   /**
    * <p>
+   * Returns the resource collections.
    * </p>
    * 
-   * @return
+   * @return the resource collections.
    */
   public List<ResourceCollection> getResourceCollections() {
     return _resourceCollections;
@@ -61,16 +85,21 @@ public abstract class AbstractMergeTask extends Task {
 
   /**
    * <p>
+   * The destination file.
    * </p>
    * 
-   * @return
+   * @return the destination file.
    */
   public File getDestinationFile() {
     return _destinationFile;
   }
 
+  /**
+   * @see org.apache.tools.ant.Task#execute()
+   */
   public final void execute() throws BuildException {
 
+    // Validates that the task parameters are valid.
     validate();
 
     try {
@@ -81,10 +110,19 @@ public abstract class AbstractMergeTask extends Task {
     }
   }
 
+  /**
+   * <p>
+   * Abstract method. Subclasses of this class must override this method.
+   * </p>
+   * 
+   * @throws Exception
+   */
   protected abstract void doExecute() throws Exception;
 
   /**
+   * <p>
    * Validate that the task parameters are valid.
+   * </p>
    * 
    * @throws BuildException
    *           if parameters are invalid
