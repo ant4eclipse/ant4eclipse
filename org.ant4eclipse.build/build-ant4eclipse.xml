@@ -87,8 +87,19 @@
 
 						<copy toDir="${destination}/merged/cfg/${executeJdtProject.project.name}">
 							<fileset dir="${executeJdtProject.output.directory}">
+								<include name="**/antlib.xml" />
+								<include name="**/ant4eclipse-configuration.properties" />
+							</fileset>
+						</copy>
+
+						<copy toDir="${destination}/merged/classes">
+							<fileset dir="${executeJdtProject.output.directory}">
+								<include name="**/*.profile" />
+								<include name="**/*.list" />
 								<include name="**/*.xml" />
 								<include name="**/*.properties" />
+								<exclude name="**/antlib.xml" />
+								<exclude name="**/ant4eclipse-configuration.properties" />
 							</fileset>
 						</copy>
 					</ant4eclipse:forEachOutputDirectory>
