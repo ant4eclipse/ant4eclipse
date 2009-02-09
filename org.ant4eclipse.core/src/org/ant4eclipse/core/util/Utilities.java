@@ -19,7 +19,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -29,7 +28,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-
 
 /**
  * <p>
@@ -75,8 +73,8 @@ public class Utilities {
       // delete the children
       final File[] children = file.listFiles();
       if (children != null) {
-        for (int i = 0; i < children.length; i++) {
-          result = result && delete(children[i]);
+        for (File element : children) {
+          result = result && delete(element);
         }
       }
     }
@@ -150,9 +148,6 @@ public class Utilities {
     final String[] fromstr = frompath.replace('\\', '/').split("/");
     final String[] tostr = topath.replace('\\', '/').split("/");
 
-    System.err.println(Arrays.asList(fromstr));
-    System.err.println(Arrays.asList(tostr));
-
     if (!fromstr[0].equals(tostr[0])) {
       // we're not working on the same device
       /**
@@ -198,7 +193,8 @@ public class Utilities {
 
   /**
    * <p>
-   * Check if a String has text. More specifically, returns <code>true</code> if the string not <code>null<code>, it's <code>length is > 0</code>,
+   * Check if a String has text. More specifically, returns <code>true</code> if the string not
+   * <code>null<code>, it's <code>length is > 0</code>,
    * and it has at least one non-whitespace character.
    * </p>
    * <p>
@@ -383,22 +379,21 @@ public class Utilities {
     try {
       clazz = Class.forName(className);
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_LOAD_CLASS, new Object[] { className, ex.toString() });
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_LOAD_CLASS, ex, new Object[] { className,
+          ex.toString() });
     }
 
     // try to instantiate using default cstr...
     T object = null;
 
     try {
-
       object = (T) clazz.newInstance();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, new Object[] { className,
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, ex, new Object[] { className,
           ex.toString() });
     }
 
     // return the constructed object
     return object;
-
   }
 }
