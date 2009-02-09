@@ -99,6 +99,26 @@
 
 		</ant4eclipse:executeProjectSet>
 
+		<!-- merge all ant4eclipse.properties -->
+		<ant4eclipse:mergeProperties destinationFile="${destination}/merged/classes/org/ant4eclipse/ant4eclipse-configuration.properties">
+			<fileset dir="${destination}/merged/cfg">
+				<include name="**/ant4eclipse-configuration.properties" />
+				<exclude name="ant4eclipse-configuration.properties" />
+			</fileset>
+		</ant4eclipse:mergeProperties>
+
+		<!-- merge all antlib.xml -->
+		<ant4eclipse:mergeAntlibXml destinationFile="${destination}/merged/classes/org/ant4eclipse/antlib.xml">
+			<fileset dir="${destination}/merged/cfg">
+				<include name="**/antlib.xml" />
+				<exclude name="antlib.xml" />
+			</fileset>
+		</ant4eclipse:mergeAntlibXml>
+
+		<!-- build the jar file -->
+		<jar destfile="${destination}/ant4eclipse.jar"
+		     basedir="${destination}/merged/classes" />
+
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 
