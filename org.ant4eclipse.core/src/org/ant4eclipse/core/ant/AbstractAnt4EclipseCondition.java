@@ -1,10 +1,8 @@
 package org.ant4eclipse.core.ant;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
-import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.condition.Condition;
 
 /**
@@ -37,9 +35,6 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
    * <code>org.apache.tools.ant.taskdefs.condition.Condition</code>. Overwrite this method to implement own condition
    * logic.
    * </p>
-   * 
-   * @throws Ant4EclipseException
-   *           in case something fails
    * 
    * @see Task#execute()
    */
