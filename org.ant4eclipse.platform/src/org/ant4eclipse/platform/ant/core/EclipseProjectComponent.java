@@ -12,12 +12,26 @@
 package org.ant4eclipse.platform.ant.core;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 
 /**
  * <p>
- * Delegate class for ant4eclipse tasks, conditions and types that require a eclipse project.
+ * Interface for all ant4eclipse tasks, conditions and types that require a eclipse project. As this component is a
+ * subclass of {@link WorkspaceComponent}, so the {@link EclipseProjectComponent} requires that a valid
+ * {@link Workspace} is set.
+ * </p>
+ * 
+ * <p>
+ * E.g. if an ant task implements this interface, you are able to set a workspace and a project name on this component,
+ * e.g.:
+ * 
+ * <pre><code>
+ * &lt;myTask workspace=&quot;c:/dev/workspace&quot; projectName=&quot;myProject&quot; /&gt;
+ * </code>
+ * </pre>
+ * 
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)

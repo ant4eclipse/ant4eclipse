@@ -30,42 +30,45 @@
          ================================= -->
 	<target name="build">
 
-		<ant4eclipse:executeJdtProject workspace="${basedir}/workspace"
-		                               projectname="example-bundle">
-
-
-			<ant4eclipse:jdtClasspathContainerArgument key="target.platform"
-			                                           value="target.platform" />
+		<ant4eclipse:executePluginProject workspace="${basedir}/workspace"
+		                                  projectname="example-bundle"
+		                                  targetPlatformId="target.platform">
 
 			<ant4eclipse:forEachOutputDirectory>
-				<echo>Scrubbing directory "${executeJdtProject.output.directory}"</echo>
-				<delete dir="${executeJdtProject.output.directory}"
+				<echo>Scrubbing directory "${executePluginProject.output.directory}"</echo>
+				<delete dir="${executePluginProject.output.directory}"
 				        quiet="true" />
-				<mkdir dir="${executeJdtProject.output.directory}" />
+				<mkdir dir="${executePluginProject.output.directory}" />
 			</ant4eclipse:forEachOutputDirectory>
 
 
-			<ant4eclipse:forAllSourceDirectories>
-				<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
-				<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
-				<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
-				<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
-				<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
+			<ant4eclipse:forEachLibrary>
+				<echo>ant4eclipse:forEachLibrary</echo>
+				<echo>Compiling jdt project '${executePluginProject.project.name}' - '${executePluginProject.library.name}'</echo>
+				<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
+				<echo>  - output directory   -> ${executePluginProject.output.directories}</echo>
+				<echo>  - bootclasspath      -> ${executePluginProject.boot.classpath}</echo>
+				<echo>  - classpath          -> ${executePluginProject.classpath.absolute.compiletime}</echo>
 
-				<javac destdir="${executeJdtProject.default.output.directory}"
+				<javac destdir="${executePluginProject.default.output.directory}"
 				       debug="on"
 				       source="1.5">
 
-					<src refid="executeJdtProject.source.directories.path" />
-					<bootclasspath refid="executeJdtProject.boot.classpath.path" />
-					<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+					<src refid="executePluginProject.source.directories.path" />
+					<bootclasspath refid="executePluginProject.boot.classpath.path" />
+					<classpath refid="executePluginProject.classpath.absolute.compiletime.path" />
 
-					<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
+					<compilerarg value="compiler.args.refid=executePluginProject.compiler.args"
 					             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 				</javac>
+
+			</ant4eclipse:forEachLibrary>
+
+			<!-- <ant4eclipse:forAllSourceDirectories>
+
 			</ant4eclipse:forAllSourceDirectories>
 
-			<!-- <ant4eclipse:forEachSourceDirectory>
+			<ant4eclipse:forEachSourceDirectory>
 				<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
 				<copy todir="${executeJdtProject.output.directory}">
 					<fileset dir="${executeJdtProject.source.directory}">
@@ -90,7 +93,7 @@
 				</copy>
 			</ant4eclipse:forEachOutputDirectory> -->
 
-		</ant4eclipse:executeJdtProject>
+		</ant4eclipse:executePluginProject>
 
 	</target>
 

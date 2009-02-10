@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
+import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
-import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -29,7 +29,7 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
   /**
-   *
+   * 
    */
   public ExecuteProjectBuildersTask() {
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeBuildCommands");
@@ -62,7 +62,7 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
    * @throws BuildException
    */
   public Object createDynamicElement(String name) {
-    return this._macroExecutionDelegate.createScopedMacroDefinition(name);
+    return createScopedMacroDefinition(name);
   }
 
   @Override

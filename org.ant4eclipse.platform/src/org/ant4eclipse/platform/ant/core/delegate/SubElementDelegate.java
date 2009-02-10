@@ -7,14 +7,14 @@ import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.platform.ant.SubElementContribution;
+import org.ant4eclipse.platform.ant.core.SubElementComponent;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class SubElementDelegate extends AbstractAntDelegate implements DynamicElement {
+public class SubElementDelegate extends AbstractAntDelegate implements SubElementComponent {
 
   /** The prefix of properties that holds a DynamicElementContributor class name */
   public final static String           SUB_ELEMENT_CONTRIBUTOR_PREFIX = "subElementContributor";
@@ -42,7 +42,9 @@ public class SubElementDelegate extends AbstractAntDelegate implements DynamicEl
 
     for (SubElementContribution dynamicElementContributor : this._subElementContributors) {
       if (dynamicElementContributor.canHandleSubElement(name, getProjectComponent())) {
-        return dynamicElementContributor.createSubElement(name, getProjectComponent());
+        Object subElement = dynamicElementContributor.createSubElement(name, getProjectComponent());
+        this._subElements.add(subElement);
+        return subElement;
       }
     }
 

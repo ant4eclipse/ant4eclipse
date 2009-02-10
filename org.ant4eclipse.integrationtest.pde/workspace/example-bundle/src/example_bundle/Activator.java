@@ -25,7 +25,7 @@ public class Activator implements BundleActivator {
 		Preferences preferences = service.getSystemPreferences();
 		
 		preferences.put(COLOR, "lavender");
-		
+		org.osgi.service.url.URLStreamHandlerService urlStreamHandlerService = null;
 		System.out.println("My favourite color is: " + preferences.get(COLOR, "")); 
 	}
 	

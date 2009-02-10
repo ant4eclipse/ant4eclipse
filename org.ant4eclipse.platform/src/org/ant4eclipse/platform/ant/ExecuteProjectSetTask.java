@@ -5,35 +5,34 @@ import java.util.List;
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
+import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
+import org.ant4eclipse.platform.ant.core.SubElementComponent;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetPathBasedTask;
-import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
-
-enum Scope {
-  PROJECT;
-}
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask implements DynamicElement,
-    ProjectReferenceAwareComponent, MacroExecutionComponent<Scope> {
+public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask implements MacroExecutionComponent<Scope>,
+    SubElementComponent, ProjectReferenceAwareComponent {
 
   /** the {@link MacroExecutionDelegate} */
   private final MacroExecutionDelegate<Scope>  _macroExecutionDelegate;
 
+  /** the {@link SubElementDelegate} */
   private final SubElementDelegate             _subElementDelegate;
 
+  /** the {@link ProjectReferenceAwareDelegate} */
   private final ProjectReferenceAwareDelegate  _projectReferenceAwareDelegate;
 
+  /** the {@link PlatformExecutorValuesProvider} */
   private final PlatformExecutorValuesProvider _platformExecutorValuesProvider;
 
   /**
@@ -125,4 +124,15 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementDelegate.createDynamicElement(name);
   }
+}
+
+/**
+ * <p>
+ * Within the ExecuteProjectSetTask, we only have the PROJECT scope.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
+enum Scope {
+  PROJECT;
 }

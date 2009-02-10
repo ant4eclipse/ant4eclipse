@@ -18,7 +18,16 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * <p>
- * Interface for ant4eclipse tasks, conditions and types that require a workspace.
+ * Interface for ant4eclipse tasks, conditions and types that require a {@link Workspace}.
+ * </p>
+ * <p>
+ * E.g. if an ant task implements this interface, you are able to set a workspace on this task:
+ * 
+ * <pre><code>
+ * &lt;myTask workspace=&quot;c:/dev/workspace&quot; /&gt;
+ * </code>
+ * </pre>
+ * 
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)

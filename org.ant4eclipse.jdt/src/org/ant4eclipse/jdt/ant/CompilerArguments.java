@@ -8,11 +8,14 @@ import org.ant4eclipse.core.Assert;
 
 public class CompilerArguments {
 
-  private final Map<File, File> _outputFolderMap;
+  private final Map<File, File>   _outputFolderMap;
 
-  private String                _bootClassPathAccessRestrictions;
+  private final Map<File, String> _accessRestrictions;
+
+  private String                  _bootClassPathAccessRestrictions;
 
   public CompilerArguments() {
+    this._accessRestrictions = new HashMap<File, String>();
     this._outputFolderMap = new HashMap<File, File>();
   }
 
@@ -38,5 +41,18 @@ public class CompilerArguments {
     Assert.nonEmpty(bootClassPathAccessRestrictions);
 
     this._bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
+  }
+
+  public boolean hasAccessRestrictions(final File classpathentry) {
+    return this._accessRestrictions.containsKey(classpathentry);
+  }
+
+  public String getAccessRestrictions(final File classpathentry) {
+    return this._accessRestrictions.get(classpathentry);
+  }
+
+  public void addAccessRestrictions(final File classpathentry, final String accessRestrictions) {
+    System.err.println("AccessRestriction: " + classpathentry + " - " + accessRestrictions);
+    this._accessRestrictions.put(classpathentry, accessRestrictions);
   }
 }

@@ -16,19 +16,19 @@ import java.util.List;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
+import org.ant4eclipse.platform.ant.core.SubElementComponent;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DynamicElement;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements DynamicElement,
+public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements SubElementComponent,
     ProjectReferenceAwareComponent {
 
   /** the delegate used for handling sub elements (e.g. &lt;jdtClasspathContainerArgument&gt; */

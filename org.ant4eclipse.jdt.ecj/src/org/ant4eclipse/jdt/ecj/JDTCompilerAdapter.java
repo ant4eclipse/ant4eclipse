@@ -17,6 +17,8 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 
 /**
  * <p>
+ * Implements a javac compiler adapter for the eclipse compiler for java (ecj). The usage of the ecj has several
+ * advantages over
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -26,7 +28,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /** the refid key for the additional compiler arguments */
   private static final String COMPILER_ARGS_REFID_KEY = "compiler.args.refid";
 
-  /* (non-Javadoc)
+  /**
    * @see org.apache.tools.ant.taskdefs.compilers.CompilerAdapter#execute()
    */
   public boolean execute() {
@@ -88,7 +90,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     compileJobResult.dumpProblems();
 
     if (!compileJobResult.succeeded()) {
-      throw new BuildException();
+      throw new BuildException("Compilation was not successful!");
     }
 
     return true;
@@ -123,7 +125,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // TODO: LIBRARY AND PROJECT
         final ClassFileLoader myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
             .getFile(), EcjAdapter.LIBRARY);
-        classFileLoaderList.add(myclassFileLoader);
+
+        if (compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
+          classFileLoaderList.add(new FilteringClassFileLoader(myclassFileLoader, compilerArguments
+              .getAccessRestrictions(fileResource.getFile())));
+        } else {
+          classFileLoaderList.add(myclassFileLoader);
+        }
       }
     }
 
@@ -131,6 +139,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     return ClassFileLoaderFactory.createCompoundClassFileLoader(classFileLoaderList.toArray(new ClassFileLoader[0]));
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param compilerArguments
+   * @return
+   */
   private ClassFileLoader createBootClassLoader(final CompilerArguments compilerArguments) {
     final Path bootclasspath = getJavac().getBootclasspath();
 
@@ -144,6 +159,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         bootClassFileLoaders.add(classFileLoader);
       }
     }
+
+    System.err.println(compilerArguments.getBootClassPathAccessRestrictions());
 
     final ClassFileLoader classFileLoader = ClassFileLoaderFactory.createCompoundClassFileLoader(bootClassFileLoaders
         .toArray(new ClassFileLoader[0]));

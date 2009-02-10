@@ -7,6 +7,8 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
@@ -125,6 +127,17 @@ public class JdtExecutorValuesProvider {
       compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
           .getAccessRestrictions().asFormattedString());
     }
+
+    final ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
+    for (final ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries) {
+      if (resolvedClasspathEntry.hasAccessRestrictions()) {
+        final AccessRestrictions accessRestrictions = resolvedClasspathEntry.getAccessRestrictions();
+        for (final File file : resolvedClasspathEntry.getEntries()) {
+          compilerArguments.addAccessRestrictions(file, accessRestrictions.asFormattedString());
+        }
+      }
+    }
+
     executionValues.getProperties().put(BOOT_CLASSPATH,
         this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
     executionValues.getProperties().put(CLASSPATH_ABSOLUTE_COMPILETIME,

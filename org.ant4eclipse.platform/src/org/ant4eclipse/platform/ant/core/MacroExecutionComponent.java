@@ -13,7 +13,6 @@ package org.ant4eclipse.platform.ant.core;
 
 import java.util.List;
 
-import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 

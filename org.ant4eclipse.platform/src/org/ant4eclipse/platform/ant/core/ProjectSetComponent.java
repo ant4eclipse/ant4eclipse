@@ -26,5 +26,4 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
   public void requireProjectNamesSet();
 
   public void requireTeamProjectSetOrProjectNamesSet();
-
 }

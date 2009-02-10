@@ -58,6 +58,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     final BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
 
     // get the target platform argument
+    // TODO
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
 
     // get the TargetPlatformRegistry

@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <antlib>
 	<typedef name="targetPlatform" classname="org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType" />
+	<typedef name="executePluginProject" classname="org.ant4eclipse.pde.ant.ExecutePluginProjectTask" />
 </antlib>

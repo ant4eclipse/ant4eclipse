@@ -6,22 +6,24 @@ import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentCompon
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
+import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
-import org.ant4eclipse.platform.ant.core.task.ScopedMacroDefinition;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements JdtClasspathContainerArgumentComponent,
-    DynamicElement {
+    DynamicElement, MacroExecutionComponent<String> {
 
-  private final MacroExecutionDelegate<Scope>         _macroExecutionDelegate;
+  private final MacroExecutionDelegate<String>        _macroExecutionDelegate;
 
   /** - */
   private final JdtClasspathContainerArgumentDelegate _jdtClasspathContainerArgumentDelegate;
@@ -29,36 +31,65 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
   /** - */
   private final JdtExecutorValuesProvider             _executorValuesProvider;
 
-  enum Scope {
-    SOURCE_DIRECTORY, TARGET_DIRECTORY, SOURCE_DIRECTORIES, TARGET_DIRECTORIES;
-  }
+  public static final String                          SCOPE_SOURCE_DIRECTORY   = "SCOPE_SOURCE_DIRECTORY";
+
+  public static final String                          SCOPE_TARGET_DIRECTORY   = "SCOPE_TARGET_DIRECTORY";
+
+  public static final String                          SCOPE_SOURCE_DIRECTORIES = "SCOPE_SOURCE_DIRECTORIES";
+
+  public static final String                          SCOPE_TARGET_DIRECTORIES = "SCOPE_TARGET_DIRECTORIES";
 
   /**
-   *
+   * 
    */
   public ExecuteJdtProjectTask() {
 
-    this._macroExecutionDelegate = new MacroExecutionDelegate<Scope>(this, "executeJdtProject");
+    this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeJdtProject");
 
     this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
+
     this._executorValuesProvider = new JdtExecutorValuesProvider(this);
   }
 
   /**
    * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
    */
-  public Object createDynamicElement(final String name) throws BuildException {
+  public final Object createDynamicElement(final String name) throws BuildException {
     if ("ForEachSourceDirectory".equalsIgnoreCase(name)) {
-      return this._macroExecutionDelegate.createScopedMacroDefinition(Scope.SOURCE_DIRECTORY);
+      return this._macroExecutionDelegate.createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORY);
     } else if ("ForEachOutputDirectory".equalsIgnoreCase(name)) {
-      return this._macroExecutionDelegate.createScopedMacroDefinition(Scope.TARGET_DIRECTORY);
+      return this._macroExecutionDelegate.createScopedMacroDefinition(SCOPE_TARGET_DIRECTORY);
     } else if ("ForAllSourceDirectories".equalsIgnoreCase(name)) {
-      return this._macroExecutionDelegate.createScopedMacroDefinition(Scope.SOURCE_DIRECTORIES);
+      return this._macroExecutionDelegate.createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORIES);
     } else if ("ForAllOutputDirectories".equalsIgnoreCase(name)) {
-      return this._macroExecutionDelegate.createScopedMacroDefinition(Scope.TARGET_DIRECTORIES);
+      return this._macroExecutionDelegate.createScopedMacroDefinition(SCOPE_TARGET_DIRECTORIES);
     }
 
+    return onCreateDynamicElement(name);
+  }
+
+  protected Object onCreateDynamicElement(final String name) {
     return null;
+  }
+
+  public NestedSequential createScopedMacroDefinition(final String scope) {
+    return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
+  }
+
+  public void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
+    this._macroExecutionDelegate.executeMacroInstance(macroDef, macroExecutionValues);
+  }
+
+  public List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
+    return this._macroExecutionDelegate.getScopedMacroDefinitions();
+  }
+
+  public String getPrefix() {
+    return this._macroExecutionDelegate.getPrefix();
+  }
+
+  public void setPrefix(final String prefix) {
+    this._macroExecutionDelegate.setPrefix(prefix);
   }
 
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
@@ -76,30 +107,31 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
     requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
-    for (final ScopedMacroDefinition<Scope> scopedMacroDefinition : this._macroExecutionDelegate
+    for (final ScopedMacroDefinition<String> scopedMacroDefinition : this._macroExecutionDelegate
         .getScopedMacroDefinitions()) {
 
       final MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
-      switch (scopedMacroDefinition.getScope()) {
-      case SOURCE_DIRECTORY:
+      if (SCOPE_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeSourceDirectoryScopedMacroDef(macroDef);
-        break;
-      case TARGET_DIRECTORY:
+      } else if (SCOPE_TARGET_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeOutputDirectoryScopedMacroDef(macroDef);
-        break;
-      case SOURCE_DIRECTORIES:
+      } else if (SCOPE_SOURCE_DIRECTORIES.equals(scopedMacroDefinition.getScope())) {
         executeSourceDirectoriesScopedMacroDef(macroDef);
-        break;
-      case TARGET_DIRECTORIES:
+      } else if (SCOPE_TARGET_DIRECTORIES.equals(scopedMacroDefinition.getScope())) {
         // TODO!
         // executeOutputDirectoriesScopedMacroDef(macroDef);
-        break;
-      default:
-        // TODO
-        throw new RuntimeException("");
+      } else {
+        if (!onExecuteScopeMacroDefintion(scopedMacroDefinition)) {
+          // TODO
+          throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
+        }
       }
     }
+  }
+
+  protected boolean onExecuteScopeMacroDefintion(final ScopedMacroDefinition<String> scopedMacroDefinition) {
+    return false;
   }
 
   /**
@@ -186,5 +218,9 @@ public class ExecuteJdtProjectTask extends AbstractProjectPathTask implements Jd
    */
   private JavaProjectRole getJavaProjectRole() {
     return JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
+  }
+
+  public JdtExecutorValuesProvider getExecutorValuesProvider() {
+    return this._executorValuesProvider;
   }
 }
