@@ -46,7 +46,7 @@
 				<echo>ant4eclipse:forEachLibrary</echo>
 				<echo>Compiling jdt project '${executePluginProject.project.name}' - '${executePluginProject.library.name}'</echo>
 				<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
-				<echo>  - output directory   -> ${executePluginProject.output.directories}</echo>
+				<echo>  - output directories   -> ${executePluginProject.output.directories}</echo>
 				<echo>  - bootclasspath      -> ${executePluginProject.boot.classpath}</echo>
 				<echo>  - classpath          -> ${executePluginProject.classpath.absolute.compiletime}</echo>
 
