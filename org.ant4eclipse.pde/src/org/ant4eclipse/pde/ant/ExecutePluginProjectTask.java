@@ -121,47 +121,6 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     // }
   }
 
-  //
-  // private CallTarget createExecuteLibraryCallTarget(final Library library) {
-  // Assert.notNull(library);
-  //
-  // final Map parameters = new HashMap();
-  //
-  // parameters.put("library.name", library.getName());
-  //
-  // if (library.getOutput() != null) {
-  // parameters.put("library.output", arrayAsString(library.getOutput(), ","));
-  // }
-  //
-  // if (library.getSource() != null) {
-  // parameters.put("library.source", arrayAsString(library.getSource(), ","));
-  // }
-  //
-  // return this._executeBuildDelegate.createCallTarget(this.getOwningTarget(), this._executeLibraryTarget, true, true,
-  // parameters);
-  // }
-  //
-  // /**
-  // * <p>
-  // * </p>
-  // *
-  // * @param objects
-  // * @param delimiter
-  // * @return
-  // */
-  // private String arrayAsString(final Object[] objects, final String delimiter) {
-  // final StringBuffer buffer = new StringBuffer();
-  //
-  // for (int i = 0; i < objects.length; i++) {
-  // buffer.append(objects[i]);
-  // if (i < objects.length - 1) {
-  // buffer.append(delimiter);
-  // }
-  // }
-  //
-  // return buffer.toString();
-  // }
-
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
 
     // 2. Get libraries
