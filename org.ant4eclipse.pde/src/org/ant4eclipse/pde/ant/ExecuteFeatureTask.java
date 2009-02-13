@@ -17,10 +17,16 @@ package org.ant4eclipse.pde.ant;
  * The {@link ExecuteFeatureTask} can be used to iterate over a feature. It implements a loop over all the bundle and/or
  * plug-in-projects contained in a <code>feature.xml</code> file.
  * <p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ExecuteFeatureTask extends AbstractPdeBuildTask {
+
+  @Override
+  protected void doExecute() {
+    // TODO Auto-generated method stub
+
+  }
 
 //  /** the file that represents the feature to build (that may is null) */
 //  private File                       _feature;
@@ -73,7 +79,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //   * <p>
 //   * Sets the <code>feature.xml</code> file that should be executed.
 //   * </p>
-//   * 
+//   *
 //   * @param feature
 //   *          the <code>feature.xml</code> file that should be executed.
 //   */
@@ -85,7 +91,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //   * <p>
 //   * Returns <code>true</code>, if a <code>feature.xml</code> file is set.
 //   * </p>
-//   * 
+//   *
 //   * @return <code>true</code>, if a <code>feature.xml</code> file is set.
 //   */
 //  public boolean isFeatureSet() {
@@ -103,7 +109,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //   * <p>
 //   * Sets the name of the ant target that should be called for each plug-in.
 //   * </p>
-//   * 
+//   *
 //   * @param executeFeaturePluginTarget
 //   *          the name of the ant target that should be called to build each plug-in.
 //   */
@@ -228,7 +234,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //  }
 //
 //  /**
-//   * 
+//   *
 //   */
 //  private void checkRequiredFields() {
 //    if (isFeatureSet()) {
@@ -302,7 +308,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //   * <p>
 //   * Creates a {@link CallTarget} for the specified plug-in.
 //   * </p>
-//   * 
+//   *
 //   * @param plugin
 //   *          the plugin to create a CallTarget.
 //   * @param targetName
@@ -379,7 +385,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //   * <p>
 //   * Inner class that holds the {@link BundleDescription} that is associated with a given feature {@link Plugin}.
 //   * </p>
-//   * 
+//   *
 //   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
 //   */
 //  private class PluginAndBundleDescription {
@@ -394,7 +400,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //     * <p>
 //     * Creates a new instance of type {@link PluginAndBundleDescription}.
 //     * </p>
-//     * 
+//     *
 //     * @param bundleDescription
 //     *          the {@link BundleDescription}
 //     * @param plugin
@@ -412,7 +418,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //     * <p>
 //     * Returns the {@link Plugin}.
 //     * </p>
-//     * 
+//     *
 //     * @return the {@link Plugin}.
 //     */
 //    public Plugin getPlugin() {
@@ -423,7 +429,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask {
 //     * <p>
 //     * Returns the {@link getBundleDescription}.
 //     * </p>
-//     * 
+//     *
 //     * @return the {@link getBundleDescription}.
 //     */
 //    public BundleDescription getBundleDescription() {
