@@ -15,15 +15,15 @@ import java.io.File;
 
 import org.ant4eclipse.jdt.ant.CompilerArguments;
 import org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask;
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.taskdefs.MacroDef;
+import org.osgi.framework.Version;
 
 public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements TargetPlatformAwareComponent {
 
@@ -32,7 +32,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
   public static final String          SCOPE_LIBRARY = "SCOPE_LIBRARY";
 
   public ExecutePluginProjectTask() {
-    super();
+    super("executePluginProject");
 
     _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
@@ -60,8 +60,6 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
 
   @Override
   protected void doExecute() {
-
-    setPrefix("executePluginProject");
 
     // TODO: CHECK!
     JdtClasspathContainerArgument containerArgument = createJdtClasspathContainerArgument();
@@ -124,15 +122,19 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
 
     // 2. Get libraries
-    final PluginProjectRole pluginProjectRole = PluginProjectRole.getPluginProjectRole(getEclipseProject());
+    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
     final PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
     final Library[] libraries = pluginBuildProperties.getOrderedLibraries();
 
     for (Library library : libraries) {
 
       final MacroExecutionValues executionValues = new MacroExecutionValues();
-      
+
       executionValues.getProperties().put("library.name", library.getName());
+
+      if (library.isSelf()) {
+        executionValues.getProperties().put("library.isSelf", "true");
+      }
 
       CompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
           getJdtClasspathContainerArguments(), executionValues);
@@ -155,16 +157,5 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
 
       executeMacroInstance(macroDef, executionValues);
     }
-  }
-
-  /**
-   * <p>
-   * Helper method that returns the {@link JavaProjectRole} role for the set {@link EclipseProject}.
-   * </p>
-   * 
-   * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
-   */
-  private JavaProjectRole getJavaProjectRole() {
-    return JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
   }
 }

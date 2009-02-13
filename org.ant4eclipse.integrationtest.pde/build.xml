@@ -41,10 +41,8 @@
 				<mkdir dir="${executePluginProject.output.directory}" />
 			</ant4eclipse:forEachOutputDirectory>
 
-
-			<ant4eclipse:forEachLibrary>
-				<echo>ant4eclipse:forEachLibrary</echo>
-				<echo>Compiling jdt project '${executePluginProject.project.name}' - '${executePluginProject.library.name}'</echo>
+			<ant4eclipse:forAllSourceDirectories>
+				<echo>Compiling jdt project '${executePluginProject.project.name}'</echo>
 				<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
 				<echo>  - output directories   -> ${executePluginProject.output.directories}</echo>
 				<echo>  - bootclasspath      -> ${executePluginProject.boot.classpath}</echo>
@@ -61,61 +59,74 @@
 					<compilerarg value="compiler.args.refid=executePluginProject.compiler.args"
 					             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 				</javac>
-
-				<ant4eclipse:executeLibrary workspace="${basedir}/workspace"
-				                            projectname="${executePluginProject.project.name}"
-				                            library="${executePluginProject.library.name}">
-
-					<ant4eclipse:forEachSourceDirectory>
-
-					</ant4eclipse:forEachSourceDirectory>
-
-					<ant4eclipse:forEachOutputDirectory>
-
-					</ant4eclipse:forEachOutputDirectory>
-
-					<ant4eclipse:forAllSourceDirectory>
-
-					</ant4eclipse:forAllSourceDirectory>
-
-					<ant4eclipse:forAllOutputDirectory>
-
-					</ant4eclipse:forAllOutputDirectory>
-
-				</ant4eclipse:executeLibrary>
-
-			</ant4eclipse:forEachLibrary>
-
-			<!-- <ant4eclipse:forAllSourceDirectories>
-
 			</ant4eclipse:forAllSourceDirectories>
-
+			
 			<ant4eclipse:forEachSourceDirectory>
 				<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
-				<copy todir="${executeJdtProject.output.directory}">
-					<fileset dir="${executeJdtProject.source.directory}">
+				<copy todir="${executePluginProject.output.directory}">
+					<fileset dir="${executePluginProject.source.directory}">
 						<exclude name="**/*.java" />
 					</fileset>
 				</copy>
 			</ant4eclipse:forEachSourceDirectory>
 
-			<ant4eclipse:forEachOutputDirectory>
-				<echo>Copying '${executeJdtProject.output.directory}'</echo>
-				<copy toDir="${destination}/merged/classes">
-					<fileset dir="${executeJdtProject.output.directory}">
-						<include name="**/*.class" />
-					</fileset>
-				</copy>
-
-				<copy toDir="${destination}/merged/cfg/${executeJdtProject.project.name}">
-					<fileset dir="${executeJdtProject.output.directory}">
-						<include name="**/*.xml" />
-						<include name="**/*.properties" />
-					</fileset>
-				</copy>
-			</ant4eclipse:forEachOutputDirectory> -->
+			<ant4eclipse:forEachLibrary>
+				<!-- jar nested library (will return immediatly if library is 'self' [the '.' library]) -->
+				<antcall target="jarNestedLibrary" />
+				<!-- pack the root library -->
+				<antcall target="packSelf" />
+			</ant4eclipse:forEachLibrary>
 
 		</ant4eclipse:executePluginProject>
+
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	     target: jarNestedLibrary                      
+	     - - - - - - - - - - - - - - - - - -->
+	<target name="jarNestedLibrary"
+	        unless="executePluginProject.library.isSelf">
+
+		<ant4eclipse:executeLibrary workspace="${basedir}/workspace"
+		                            projectname="${executePluginProject.project.name}"
+		                            libraryname="${executePluginProject.library.name}"
+		                            targetPlatformId="target.platform">
+
+			<ant4eclipse:forEachOutputDirectory>
+				<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
+				<copy todir="d:/plugins/temp/${executePluginProject.library.name}">
+					<fileset dir="${executeLibrary.output.directory}" />
+				</copy>
+			</ant4eclipse:forEachOutputDirectory>
+
+		</ant4eclipse:executeLibrary>
+
+		<delete file="d:/plugins/destination/${executePluginProject.library.name}/${executePluginProject.library.name}"
+		        quiet="true" />
+		<mkdir dir="d:/plugins/destination/${executePluginProject.library.name}" />
+		
+		<jar destfile="d:/plugins/destination/${executePluginProject.library.name}/${executePluginProject.library.name}"
+		     basedir="d:/plugins/temp/${executePluginProject.library.name}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	     target: packSelf                      
+	     - - - - - - - - - - - - - - - - - -->
+	<target name="packSelf" if="executePluginProject.library.isSelf">
+
+		<ant4eclipse:executeLibrary workspace="${basedir}/workspace"
+		                            projectname="${executePluginProject.project.name}"
+		                            libraryname="${executePluginProject.library.name}"
+		                            targetPlatformId="target.platform">
+
+			<ant4eclipse:forEachOutputDirectory>
+				<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
+				<copy todir="d:/plugins/destination/${executePluginProject.library.name}_version">
+					<fileset dir="${executeLibrary.output.directory}" />
+				</copy>
+			</ant4eclipse:forEachOutputDirectory>
+
+		</ant4eclipse:executeLibrary>
 
 	</target>
 

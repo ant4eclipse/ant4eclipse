@@ -32,32 +32,32 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   // private String _srcExcludes;
 
   /** list of libraries */
-  private Map      _libraries;
+  private Map<String, Library> _libraries;
 
   // /** (deprecated) same effect than extra.<library> except that the entries are applied to all libraries */
   // private List _jarsExtraClasspath;
 
   /** defines the order in which jars should be compiled (in case there are multiple libraries) */
-  private String[] _jarsCompileOrder;
-  
+  private String[]             _jarsCompileOrder;
+
   /** Returns the javac source level for this plugin (If not set, 1.3 is the default value) */
-  private String _javacSource = "1.3";
-  
+  private String               _javacSource = "1.3";
+
   /** Returns the class compatibility level. (if not set 1.2 is the default value) */
-  private String _javacTarget = "1.2";
+  private String               _javacTarget = "1.2";
 
   /**
    * 
    */
   public PluginBuildProperties() {
-    _libraries = new HashMap();
+    _libraries = new HashMap<String, Library>();
   }
 
   /**
    * @return Returns the libraries.
    */
-  public Map getLibraries() {
-    return _libraries;
+  public Library[] getLibraries() {
+    return _libraries.values().toArray(new Library[0]);
   }
 
   /**
@@ -71,23 +71,26 @@ public class PluginBuildProperties extends AbstractBuildProperties {
       _libraries.put(library.getName(), library);
     }
   }
-  
+
   /**
-   * Returns the library with the given name or null if no such
-   * library exists.
-   * @param libraryName (eq. "." or "library1.jar")
+   * Returns the library with the given name or null if no such library exists.
+   * 
+   * @param libraryName
+   *          (eq. "." or "library1.jar")
    * @return The Library object or null if no such library exists
    */
   public Library getLibrary(String libraryName) {
     Assert.notNull(libraryName);
-    
-    return (Library)_libraries.get(libraryName);
+
+    return (Library) _libraries.get(libraryName);
   }
 
   /**
    * Returns whether the given library exists in this build properties.
-   * @param libraryName (eg. "." or "library1.jar")
-   * @return true or false 
+   * 
+   * @param libraryName
+   *          (eg. "." or "library1.jar")
+   * @return true or false
    */
   public boolean hasLibrary(String libraryName) {
     Assert.notNull(libraryName);
@@ -95,20 +98,18 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     return _libraries.containsKey(libraryName);
   }
 
-
   /**
    * @return Returns the jarsCompileOrder.
    */
   public String[] getJarsCompileOrder() {
     return _jarsCompileOrder;
   }
-  
+
   /**
-   * Returns the libraries specified in this build.properties
-   * as specified by jarsCompileOrder or unordered if that
+   * Returns the libraries specified in this build.properties as specified by jarsCompileOrder or unordered if that
    * property is not set
    * 
-   * @return  An ordered list of libraries specified in the 'build.properties' file. 
+   * @return An ordered list of libraries specified in the 'build.properties' file.
    */
   public Library[] getOrderedLibraries() {
     // build libraries
@@ -116,7 +117,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     Collection libraries = null;
     if (jars == null || jars.length < 1) {
       // no build order specified, hope we don't need one...
-      libraries = getLibraries().values();
+      libraries = _libraries.values();
     } else {
       libraries = new LinkedList();
       for (int i = 0; i < jars.length; i++) {
@@ -124,11 +125,12 @@ public class PluginBuildProperties extends AbstractBuildProperties {
         if (library != null) {
           libraries.add(library);
         } else {
-          A4ELogging.warn("Library '%s' specified in 'jars.compile.order' is not in defined in build.properties!", jars[i]);
+          A4ELogging.warn("Library '%s' specified in 'jars.compile.order' is not in defined in build.properties!",
+              jars[i]);
         }
       }
     }
-    return (Library[])libraries.toArray(new Library[libraries.size()]);
+    return (Library[]) libraries.toArray(new Library[libraries.size()]);
   }
 
   /**
@@ -255,8 +257,6 @@ public class PluginBuildProperties extends AbstractBuildProperties {
       buffer.append("]");
       return buffer.toString();
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -336,9 +336,9 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     void setExclude(String exclude) {
       _exclude = exclude;
     }
-    
+
     /**
-     * @return whether this library points to the "root" library 
+     * @return whether this library points to the "root" library
      * 
      */
     public boolean isSelf() {
@@ -368,7 +368,5 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   public void setJavacTarget(String javacTarget) {
     _javacTarget = javacTarget;
   }
-  
-  
 
 }

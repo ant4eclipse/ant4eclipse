@@ -15,9 +15,9 @@ import java.io.File;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.pde.model.link.LinkFile;
 import org.ant4eclipse.pde.model.link.LinkFileFactory;
-import org.ant4eclipse.pde.model.pluginproject.BundleDescriptionLoader;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**

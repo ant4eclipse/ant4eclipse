@@ -13,6 +13,8 @@ package org.ant4eclipse.pde.model.pluginproject;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.pde.internal.model.pluginproject.BundleDescriptionLoader;
+import org.ant4eclipse.pde.internal.model.pluginproject.PluginProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -47,7 +49,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
       throw new RuntimeException(e.getMessage(), e);
     }
 
-    final PluginProjectRole pluginProjectRole = new PluginProjectRole(project, description);
+    final PluginProjectRole pluginProjectRole = new PluginProjectRoleImpl(project, description);
 
     // TODO: umbauen...
     if (project.hasChild(BuildPropertiesParser.BUILD_PROPERTIES)) {

@@ -58,8 +58,8 @@ public final class PluginProjectSet extends AbstractBundleSet {
     // add all plugin projects to plugin list and exported package list
     for (int i = 0; i < eclipseProjects.length; i++) {
       final EclipseProject project = eclipseProjects[i];
-      if (PluginProjectRole.hasPluginProjectRole(project)) {
-        final BundleDescription bundleDescription = PluginProjectRole.getPluginProjectRole(project)
+      if (PluginProjectRole.Helper.hasPluginProjectRole(project)) {
+        final BundleDescription bundleDescription = PluginProjectRole.Helper.getPluginProjectRole(project)
             .getBundleDescription();
         addBundleDescription(bundleDescription);
       }

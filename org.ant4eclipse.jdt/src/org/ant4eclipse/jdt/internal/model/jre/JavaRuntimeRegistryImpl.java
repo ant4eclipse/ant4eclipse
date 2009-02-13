@@ -31,7 +31,7 @@ import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
  */
 public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
-  /** the default java runtime key **/
+  /** the default java runtime key * */
   private String                         _defaultJavaRuntimeKey = null;
 
   /** the java runtime cache */
@@ -175,7 +175,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // TODO:
     // A4ELogging
     // .warn(
-    // "No java runtime could be found for eclipse project '%s'. Possible reasons are: either there is no JRE_CONTAINER specified on the classpath or there is no JavaRuntime registered for the specified JRE_CONTAINER. Trying to use JRE from java.home"
+    // "No java runtime could be found for eclipse project '%s'. Possible reasons are: either there is no JRE_CONTAINER
+    // specified on the classpath or there is no JavaRuntime registered for the specified JRE_CONTAINER. Trying to use
+    // JRE from java.home"
     // ,
     // this._eclipseProject.getName());
 
@@ -253,7 +255,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     if (this._javaRuntimeCache.containsKey(id)) {
       // TODO
-      throw new RuntimeException("");
+      // throw new RuntimeException("JavaRuntime with key '" + id + "' already registered.");
+      return this._javaRuntimeCache.get(id);
     }
 
     // store java runtime
