@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<project name="build"
+         basedir="."
+         xmlns:ant4eclipse="antlib:org.ant4eclipse"
+         xmlns:antcontrib="antlib:net.sf.antcontrib">
+
+	<taskdef uri="antlib:net.sf.antcontrib"
+	         resource="net/sf/antcontrib/antlib.xml" />
+
+	<taskdef uri="antlib:org.ant4eclipse"
+	         resource="org/ant4eclipse/antlib.xml" />
+
+	<!-- define general properties -->
+	<property name="build.compiler"
+	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+
+	<!-- =================================
+          target: buildPlugin
+         ================================= -->
+	<macrodef name="buildPlugin">
+		<attribute name="workspace" />
+		<attribute name="projectname" />
+		<attribute name="targetPlatformId" />
+		<attribute name="destination" />
+		<sequential>
+
+			<property name="ant4eclipse.contextQualifier" value="321654987" />
+
+			<!-- execute the plug-in project -->
+			<ant4eclipse:executePluginProject workspace="@{workspace}"
+			                                  projectname="@{projectname}"
+			                                  targetPlatformId="@{targetPlatformId}">
+
+				<!-- scrub all output directories -->
+				<ant4eclipse:forEachOutputDirectory>
+					<echo>Scrubbing directory "${executePluginProject.output.directory}"</echo>
+					<delete dir="${executePluginProject.output.directory}"
+					        quiet="true" />
+					<mkdir dir="${executePluginProject.output.directory}" />
+				</ant4eclipse:forEachOutputDirectory>
+
+				<!-- compile the sources -->
+				<ant4eclipse:forAllSourceDirectories>
+					<echo>Compiling jdt project '${executePluginProject.project.name}'</echo>
+					<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
+					<echo>  - output directories   -> ${executePluginProject.output.directories}</echo>
+					<echo>  - bootclasspath      -> ${executePluginProject.boot.classpath}</echo>
+					<echo>  - classpath          -> ${executePluginProject.classpath.absolute.compiletime}</echo>
+
+					<javac destdir="${executePluginProject.default.output.directory}"
+					       debug="on"
+					       source="1.5">
+
+						<src refid="executePluginProject.source.directories.path" />
+						<bootclasspath refid="executePluginProject.boot.classpath.path" />
+						<classpath refid="executePluginProject.classpath.absolute.compiletime.path" />
+
+						<compilerarg value="compiler.args.refid=executePluginProject.compiler.args"
+						             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+					</javac>
+				</ant4eclipse:forAllSourceDirectories>
+
+				<!-- copy all ressources -->
+				<ant4eclipse:forEachSourceDirectory>
+					<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
+					<copy todir="${executePluginProject.output.directory}">
+						<fileset dir="${executePluginProject.source.directory}">
+							<exclude name="**/*.java" />
+						</fileset>
+					</copy>
+				</ant4eclipse:forEachSourceDirectory>
+
+				<!-- build libraries -->
+				<ant4eclipse:forEachLibrary>
+
+					<antcontrib:if>
+						<istrue value="${executePluginProject.library.isSelf}" />
+						<antcontrib:then>
+
+							<ant4eclipse:executeLibrary workspace="@{workspace}"
+							                            projectname="${executePluginProject.project.name}"
+							                            libraryname="${executePluginProject.library.name}"
+							                            targetPlatformId="@{targetPlatformId}">
+
+								<ant4eclipse:forEachOutputDirectory>
+									<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
+									<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
+										<fileset dir="${executeLibrary.output.directory}" />
+									</copy>
+								</ant4eclipse:forEachOutputDirectory>
+
+							</ant4eclipse:executeLibrary>
+
+							<!-- TODO -->
+							<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF">
+								<fileset dir="${executePluginProject.project.directory}/META-INF" />
+							</copy>
+
+							<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
+							          mode="update">
+								<attribute name="Bundle-Version"
+								           value="${executePluginProject.bundle.effective.version}" />
+							</manifest>
+
+
+						</antcontrib:then>
+						<antcontrib:else>
+
+							<ant4eclipse:executeLibrary workspace="@{workspace}"
+							                            projectname="${executePluginProject.project.name}"
+							                            libraryname="${executePluginProject.library.name}"
+							                            targetPlatformId="@{targetPlatformId}">
+
+								<ant4eclipse:forEachOutputDirectory>
+									<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
+									<copy todir="@{destination}/temp/${executePluginProject.library.name}">
+										<fileset dir="${executeLibrary.output.directory}" />
+									</copy>
+								</ant4eclipse:forEachOutputDirectory>
+
+							</ant4eclipse:executeLibrary>
+
+							<delete file="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
+							        quiet="true" />
+							<mkdir dir="@{destination}/plugins/${executePluginProject.library.name}" />
+
+							<jar destfile="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
+							     basedir="@{destination}/temp/${executePluginProject.library.name}" />
+
+							<move file="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
+							      todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+
+							<delete dir="@{destination}/plugins/${executePluginProject.library.name}" />
+
+						</antcontrib:else>
+					</antcontrib:if>
+
+				</ant4eclipse:forEachLibrary>
+
+			</ant4eclipse:executePluginProject>
+		</sequential>
+	</macrodef>
+
+</project>

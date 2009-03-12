@@ -49,6 +49,20 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     _targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
 
+  @Override
+  protected void addAdditionalExecutionValues(MacroExecutionValues executionValues) {
+    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+
+    // "calculate" effective version, that is the version with replaced qualifier
+    final Version effectiveVersion = PdeBuildHelper.resolveVersion(pluginProjectRole.getBundleDescription()
+        .getVersion(), pluginProjectRole.getBuildProperties().getQualifier());
+
+    // TODO
+    executionValues.getProperties().put("bundle.effective.version", effectiveVersion.toString());
+    executionValues.getProperties().put("bundle.version",
+        pluginProjectRole.getBundleDescription().getVersion().toString());
+  }
+
   protected Object onCreateDynamicElement(final String name) {
 
     if ("ForEachLibrary".equalsIgnoreCase(name)) {
@@ -76,10 +90,6 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     requireWorkspaceAndProjectNameSet();
     ensureRole(PluginProjectRole.class);
 
-    // // "calculate" effective version, that is the version with replaced qualifier
-    // final Version effectiveVersion = PdeBuildHelper.resolveVersion(getPluginDescriptor().getVersion(),
-    // this._buildProperties.getQualifier());
-    //
     // // pass effectiveVErsion's qualifier instead of build.properties qualifier to make sure
     // // the value will be used that was calculated just before
     // this._pluginDirectory = PdeBuildHelper.getExistingPluginDestDirectory(getDestDirectory(), getPluginDescriptor()
@@ -154,6 +164,8 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
         final File outputFolder = getEclipseProject().getChild(outputFolderName);
         compilerArguments.addSourceFolder(sourceFolder, outputFolder);
       }
+
+      addAdditionalExecutionValues(executionValues);
 
       executeMacroInstance(macroDef, executionValues);
     }

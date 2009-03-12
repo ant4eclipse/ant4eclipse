@@ -51,6 +51,10 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
     return false;
   }
 
+  protected void addAdditionalExecutionValues(final MacroExecutionValues executionValues) {
+    //
+  }
+
   @Override
   protected void doExecute() {
 
@@ -112,6 +116,8 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
           this.convertToPath(getEclipseProject().getChild(
               getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
 
+      addAdditionalExecutionValues(executionValues);
+
       executeMacroInstance(macroDef, executionValues);
     }
   }
@@ -123,6 +129,8 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
 
       getExecutorValuesProvider().provideSourceDirectoriesScopedExecutorValues(getJavaProjectRole(),
           getJdtClasspathContainerArguments(), executionValues);
+
+      addAdditionalExecutionValues(executionValues);
 
       executeMacroInstance(macroDef, executionValues);
     }
@@ -150,6 +158,8 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
 
       executionValues.getReferences().put("output.directory.path",
           this.convertToPath(getEclipseProject().getChild(outFolder)));
+
+      addAdditionalExecutionValues(executionValues);
 
       executeMacroInstance(macroDef, executionValues);
     }
