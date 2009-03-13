@@ -92,10 +92,15 @@
 							</ant4eclipse:executeLibrary>
 
 							<!-- TODO -->
-							<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF">
-								<fileset dir="${executePluginProject.project.directory}/META-INF" />
+							<filelist id="executePluginProject.binary.included.files"
+							          dir="${executePluginProject.project.directory}"
+							          files="META-INF/MANIFEST.MF,OSGI-INF/component.xml" />
+
+							<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
+								<filelist refid="executePluginProject.binary.included.files" />
 							</copy>
 
+							<!-- 'patch' the manifest with the effective bundle version -->
 							<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
 							          mode="update">
 								<attribute name="Bundle-Version"

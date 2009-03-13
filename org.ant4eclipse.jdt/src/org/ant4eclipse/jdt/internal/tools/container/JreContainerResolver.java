@@ -65,16 +65,17 @@ public class JreContainerResolver implements ClasspathContainerResolver {
     }
 
     // TODO
-    final File[] libraries = javaRuntime.getLibraries();
-    final String profileKey = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
-
     AccessRestrictions accessRestrictions = null;
+    final File[] libraries = javaRuntime.getLibraries();
 
-    if (javaRuntimeRegistry.hasJavaProfile(profileKey)) {
-      final Set<String> publicPackages = new LinkedHashSet<String>();
-      publicPackages.add("java");
-      publicPackages.addAll(javaRuntimeRegistry.getJavaProfile(profileKey).getSystemPackages());
-      accessRestrictions = new AccessRestrictions(publicPackages, new LinkedHashSet<String>(), true);
+    if (!path.equals(ContainerTypes.JRE_CONTAINER)) {
+      final String profileKey = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
+      if (javaRuntimeRegistry.hasJavaProfile(profileKey)) {
+        final Set<String> publicPackages = new LinkedHashSet<String>();
+        publicPackages.add("java");
+        publicPackages.addAll(javaRuntimeRegistry.getJavaProfile(profileKey).getSystemPackages());
+        accessRestrictions = new AccessRestrictions(publicPackages, new LinkedHashSet<String>(), true);
+      }
     }
 
     context.setBootClasspathEntry(new ResolvedClasspathEntry(libraries, accessRestrictions));

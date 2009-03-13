@@ -12,6 +12,8 @@
 package org.ant4eclipse.pde.ant;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import org.ant4eclipse.jdt.ant.CompilerArguments;
 import org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask;
@@ -23,6 +25,7 @@ import org.ant4eclipse.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.types.FileList;
 import org.osgi.framework.Version;
 
 public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements TargetPlatformAwareComponent {
@@ -90,11 +93,6 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     requireWorkspaceAndProjectNameSet();
     ensureRole(PluginProjectRole.class);
 
-    // // pass effectiveVErsion's qualifier instead of build.properties qualifier to make sure
-    // // the value will be used that was calculated just before
-    // this._pluginDirectory = PdeBuildHelper.getExistingPluginDestDirectory(getDestDirectory(), getPluginDescriptor()
-    // .getSymbolicName(), effectiveVersion);
-
     // execute scoped macro definitions
     if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
       executeLibraryScopedMacroDef(scopedMacroDefinition.getMacroDef());
@@ -102,31 +100,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     } else {
       return false;
     }
-    // copy resources
-    // exclude the Library entries as they are already copied by the LibraryBuilder
-    // final List includes = new LinkedList();
-    // for (int i = 0; i < this._buildProperties.getBinaryIncludes().length; i++) {
-    // final String include = this._buildProperties.getBinaryIncludes()[i];
-    // if (!this._buildProperties.hasLibrary(include)) {
-    // includes.add(include);
-    // }
-    // }
-    //
-    // final boolean copyResources = this._pluginBuildListener.preCopyResources(getPluginDescriptor(), (String[])
-    // includes
-    // .toArray(new String[0]), this._buildProperties.getBinaryExcludes(), this._pluginDirectory);
-    // if (copyResources) {
-    // this._pluginResourceBuilder.buildResources(getPluginDescriptor(), (String[]) includes.toArray(new String[0]),
-    // this._buildProperties.getBinaryExcludes(), this._pluginDirectory);
-    // this._pluginBuildListener.postCopyResources(getPluginDescriptor(), (String[]) includes.toArray(new String[0]),
-    // this._buildProperties.getBinaryExcludes(), this._pluginDirectory);
-    // } else {
-    // A4ELogging.debug("Copying resources of '%s' has been skipped", this._bundleDescription.getSymbolicName());
-    // }
-    //
-    // if (getPluginDescriptor().getVersion().getQualifier().length() > 0) {
-    // fixManifest(this._pluginDirectory, effectiveVersion);
-    // }
+
   }
 
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
@@ -135,39 +109,58 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
     final PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
     final Library[] libraries = pluginBuildProperties.getOrderedLibraries();
+    final List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
 
     for (Library library : libraries) {
 
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
+      if (binaryIncludes.contains(library.getName())) {
 
-      executionValues.getProperties().put("library.name", library.getName());
+        final MacroExecutionValues executionValues = new MacroExecutionValues();
 
-      if (library.isSelf()) {
-        executionValues.getProperties().put("library.isSelf", "true");
+        executionValues.getProperties().put("library.name", library.getName());
+
+        if (library.isSelf()) {
+          executionValues.getProperties().put("library.isSelf", "true");
+          
+          computeBinaryIncludeFilelist();
+        }
+
+        CompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
+            getJdtClasspathContainerArguments(), executionValues);
+
+        File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
+        File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
+
+        executionValues.getProperties().put("source.directories", this.convertToString(sourceFiles));
+        executionValues.getProperties().put("output.directories", this.convertToString(outputFiles));
+
+        executionValues.getReferences().put("source.directories.path", this.convertToPath(sourceFiles));
+        executionValues.getReferences().put("output.directories.path", this.convertToPath(outputFiles));
+
+        for (final String sourceFolderName : library.getSource()) {
+          final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
+          final File sourceFolder = getEclipseProject().getChild(sourceFolderName);
+          final File outputFolder = getEclipseProject().getChild(outputFolderName);
+          compilerArguments.addSourceFolder(sourceFolder, outputFolder);
+        }
+
+        addAdditionalExecutionValues(executionValues);
+
+        executeMacroInstance(macroDef, executionValues);
       }
-
-      CompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
-          getJdtClasspathContainerArguments(), executionValues);
-
-      File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
-      File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
-
-      executionValues.getProperties().put("source.directories", this.convertToString(sourceFiles));
-      executionValues.getProperties().put("output.directories", this.convertToString(outputFiles));
-
-      executionValues.getReferences().put("source.directories.path", this.convertToPath(sourceFiles));
-      executionValues.getReferences().put("output.directories.path", this.convertToPath(outputFiles));
-
-      for (final String sourceFolderName : library.getSource()) {
-        final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
-        final File sourceFolder = getEclipseProject().getChild(sourceFolderName);
-        final File outputFolder = getEclipseProject().getChild(outputFolderName);
-        compilerArguments.addSourceFolder(sourceFolder, outputFolder);
-      }
-
-      addAdditionalExecutionValues(executionValues);
-
-      executeMacroInstance(macroDef, executionValues);
     }
+  }
+
+  private void computeBinaryIncludeFilelist() {
+    // TODO
+    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+    final PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
+    final Library[] libraries = pluginBuildProperties.getOrderedLibraries();
+    final List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
+    
+    FileList fileList = new FileList();
+    fileList.setDir(getEclipseProject().getFolder());
+    
+    
   }
 }

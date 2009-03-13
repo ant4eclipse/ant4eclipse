@@ -32,6 +32,11 @@
 		             projectname="example-bundle"
 		             targetplatformid="target.platform"
 		             destination="d:/plugins" />
+		
+		<buildPlugin workspace="${basedir}/workspace"
+		             projectname="testproject"
+		             targetplatformid="target.platform"
+		             destination="d:/plugins" />
 
 	</target>
 
