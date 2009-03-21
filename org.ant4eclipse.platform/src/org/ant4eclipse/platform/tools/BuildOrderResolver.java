@@ -47,6 +47,8 @@ public class BuildOrderResolver {
     // iterate over the eclipse projects
     for (final EclipseProject eclipseProject : eclipseProjects) {
 
+      System.err.println("TEST: Project " + eclipseProject.getSpecifiedName());
+
       if (!dependencyGraph.containsVertex(eclipseProject)) {
         dependencyGraph.addVertex(eclipseProject);
       }
@@ -59,6 +61,9 @@ public class BuildOrderResolver {
 
       // add referenced projects to the dependency graph
       for (final EclipseProject referencedProject : referencedProjects) {
+
+        System.err.println("  TEST: References " + referencedProject.getSpecifiedName());
+
         if (!dependencyGraph.containsVertex(referencedProject)) {
           dependencyGraph.addVertex(referencedProject);
         }
