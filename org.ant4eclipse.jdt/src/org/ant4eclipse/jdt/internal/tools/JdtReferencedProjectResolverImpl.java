@@ -52,6 +52,8 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
         new ContainerClasspathEntryResolver(), new ProjectClasspathEntryResolver(), },
         new ClasspathResolverContextImpl(classpathEntryResolverExecutor, job));
 
+    System.err.println(" Resolved: " + classpathEntryResolverExecutor.getReferencedProjects());
+
     return classpathEntryResolverExecutor.getReferencedProjects();
   }
 }
