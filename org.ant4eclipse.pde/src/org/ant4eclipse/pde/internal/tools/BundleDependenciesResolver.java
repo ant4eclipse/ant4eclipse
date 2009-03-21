@@ -17,6 +17,7 @@ import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
@@ -24,7 +25,7 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 /**
  * <p>
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -37,7 +38,7 @@ public class BundleDependenciesResolver {
 
   /**
    * <p>
-   * 
+   *
    * </p>
    */
   public BundleDependenciesResolver() {
@@ -47,9 +48,9 @@ public class BundleDependenciesResolver {
 
   /**
    * <p>
-   * 
+   *
    * </p>
-   * 
+   *
    * @param context
    * @param resolvedBundleDescription
    */
@@ -170,7 +171,7 @@ public class BundleDependenciesResolver {
    * <p>
    * Returns the {@link BundleDependency}.
    * </p>
-   * 
+   *
    * @param bundleDescription
    * @return
    */
@@ -193,7 +194,7 @@ public class BundleDependenciesResolver {
    * <p>
    * Returns the host for the given {@link BundleDescription}.
    * </p>
-   * 
+   *
    * @param bundleDescription
    * @return
    */
@@ -229,7 +230,7 @@ public class BundleDependenciesResolver {
     private boolean           _isRequiredBundle;
 
     /**
-     * 
+     *
      */
     public BundleDependency(BundleDescription host, Set<String> allImportedPackages) {
       Assert.notNull(host);
@@ -238,6 +239,28 @@ public class BundleDependenciesResolver {
       _isRequiredBundle = false;
       _importedPackages = new LinkedHashSet<String>();
       _allImportedPackages = allImportedPackages;
+    }
+
+    public List<EclipseProject> getReferencedPluginProjects() {
+
+      List<EclipseProject> result = new LinkedList<EclipseProject>();
+
+      // get the bundle source
+      final BundleSource bundleSource = (BundleSource) _host.getUserObject();
+
+      if (bundleSource.isEclipseProject()) {
+        result.add(bundleSource.getAsEclipseProject());
+      }
+
+      for (BundleDescription fragment : _host.getFragments()) {
+        final BundleSource fragmentSource = (BundleSource) fragment.getUserObject();
+
+        if (fragmentSource.isEclipseProject()) {
+          result.add(fragmentSource.getAsEclipseProject());
+        }
+      }
+
+      return result;
     }
 
     /**
@@ -265,7 +288,7 @@ public class BundleDependenciesResolver {
      * <p>
      * Returns the {@link ResolvedClasspathEntry}.
      * </p>
-     * 
+     *
      * @return
      */
     public ResolvedClasspathEntry getResolvedClasspathEntry() {
@@ -314,7 +337,7 @@ public class BundleDependenciesResolver {
      * <p>
      * Returns a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
      * </p>
-     * 
+     *
      * @param bundleDescription
      *          the given {@link BundleDescription}.
      * @return a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
@@ -346,7 +369,7 @@ public class BundleDependenciesResolver {
      * <p>
      * Returns the location for the given {@link BundleDescription}.
      * </p>
-     * 
+     *
      * @param bundleDescription
      *          the {@link BundleDescription}
      * @return the location for the given {@link BundleDescription}.

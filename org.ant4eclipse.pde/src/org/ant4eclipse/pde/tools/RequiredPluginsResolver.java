@@ -21,6 +21,7 @@ import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
 
@@ -28,7 +29,7 @@ import org.eclipse.osgi.service.resolver.State;
  * <p>
  * ContainerResolver for resolving the 'org.eclipse.pde.core.requiredPlugins' container.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class RequiredPluginsResolver implements ClasspathContainerResolver {
@@ -85,6 +86,12 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
     // add all ResolvedClasspathEntries to the class path
     for (BundleDependency bundleDependency : bundleDependencies) {
+
+      List<EclipseProject> referencedPluginProjects = bundleDependency.getReferencedPluginProjects();
+      for (EclipseProject referencedPluginProject : referencedPluginProjects) {
+        context.addReferencedProjects(referencedPluginProject);
+      }
+
       context.addClasspathEntry(bundleDependency.getResolvedClasspathEntry());
     }
   }

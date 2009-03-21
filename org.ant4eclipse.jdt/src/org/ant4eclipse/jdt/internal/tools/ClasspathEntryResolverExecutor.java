@@ -16,14 +16,17 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
- * 
+ *
  */
 public class ClasspathEntryResolverExecutor {
 
   /** stack of 'current projects' */
   private final Stack<EclipseProject> _currentProject;
 
-  /** list with all projects that already have been parsed */
+  /** list with all projects that are referenced */
+  private final List<EclipseProject>  _resolvedProjects;
+
+  /** list with all projects that already have been resolved */
   private final List<EclipseProject>  _referencedProjects;
 
   /** array that contains all resolvers for raw class path entries * */
@@ -36,9 +39,10 @@ public class ClasspathEntryResolverExecutor {
   private final boolean               _failOnNonHandledEntry;
 
   /**
-   * 
+   *
    */
   public ClasspathEntryResolverExecutor(final boolean failOnNonHandledEntry) {
+    this._resolvedProjects = new LinkedList<EclipseProject>();
     this._referencedProjects = new LinkedList<EclipseProject>();
     this._currentProject = new Stack<EclipseProject>();
 
@@ -67,7 +71,18 @@ public class ClasspathEntryResolverExecutor {
    * @return
    */
   public List<EclipseProject> getReferencedProjects() {
-    return this._referencedProjects;
+
+    final List<EclipseProject> result = new LinkedList<EclipseProject>();
+
+    result.addAll(this._resolvedProjects);
+
+    for (final EclipseProject eclipseProject : this._referencedProjects) {
+      if (!result.contains(eclipseProject)) {
+        result.add(eclipseProject);
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -78,7 +93,7 @@ public class ClasspathEntryResolverExecutor {
       final ClasspathResolverContext classpathResolverContext) {
 
     // Initialize the ProjectClasspathResolver instance
-    this._referencedProjects.clear();
+    this._resolvedProjects.clear();
     this._currentProject.clear();
 
     this._entryResolvers = classpathEntryResolvers;
@@ -102,6 +117,14 @@ public class ClasspathEntryResolverExecutor {
     }
   }
 
+  public final void addReferencedProject(final EclipseProject project) {
+    Assert.notNull(project);
+
+    if (!this._referencedProjects.contains(project)) {
+      this._referencedProjects.add(project);
+    }
+  }
+
   /**
    * @param project
    */
@@ -116,11 +139,11 @@ public class ClasspathEntryResolverExecutor {
       return;
     }
 
-    if (this._referencedProjects.contains(project)) {
+    if (this._resolvedProjects.contains(project)) {
       return;
     }
 
-    this._referencedProjects.add(project);
+    this._resolvedProjects.add(project);
     this._currentProject.push(project);
 
     final JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(project);

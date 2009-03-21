@@ -92,7 +92,7 @@ public interface ClasspathResolverContext {
   public void resolveProjectClasspath(EclipseProject project);
 
   /**
-   * 
+   *
    */
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
 
@@ -107,6 +107,8 @@ public interface ClasspathResolverContext {
    *          the entry to add.
    */
   public void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
+
+  public void addReferencedProjects(EclipseProject eclipseProject);
 
   /**
    * <p>

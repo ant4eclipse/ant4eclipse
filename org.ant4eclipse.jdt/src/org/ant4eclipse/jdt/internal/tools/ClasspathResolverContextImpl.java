@@ -112,4 +112,8 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
       this._resolvedClasspath.addClasspathEntry(resolvedClasspathEntry);
     }
   }
+
+  public void addReferencedProjects(final EclipseProject eclipseProject) {
+    this._executor.addReferencedProject(eclipseProject);
+  }
 }
