@@ -142,6 +142,13 @@
 
 				</ant4eclipse:forEachLibrary>
 
+				<!--TODO -->
+				<ant4eclipse:forAllSourceDirectories>
+					<jar destfile="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
+					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+
+					<delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+				</ant4eclipse:forAllSourceDirectories>
 			</ant4eclipse:executePluginProject>
 		</sequential>
 	</macrodef>
