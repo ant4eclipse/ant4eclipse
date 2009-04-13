@@ -160,7 +160,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       }
     }
 
-    System.err.println(compilerArguments.getBootClassPathAccessRestrictions());
+//    System.err.println(compilerArguments.getBootClassPathAccessRestrictions());
 
     final ClassFileLoader classFileLoader = ClassFileLoaderFactory.createCompoundClassFileLoader(bootClassFileLoaders
         .toArray(new ClassFileLoader[0]));
