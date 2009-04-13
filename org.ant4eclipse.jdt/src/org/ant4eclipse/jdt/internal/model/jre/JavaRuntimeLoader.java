@@ -80,7 +80,7 @@ public class JavaRuntimeLoader {
     }
 
     final String result = contents.toString();
-    System.out.println(result);
+// System.out.println(result);
     final String[] values = result.split("\\|");
     final Version javaVersion = new Version(values[0]);
     final String sunbootclasspath = values[1];

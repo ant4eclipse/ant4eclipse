@@ -293,7 +293,7 @@ public class BundleDependenciesResolver {
      */
     public ResolvedClasspathEntry getResolvedClasspathEntry() {
 
-      System.err.println(toString());
+//      System.err.println(toString());
 
       List<File> files = new LinkedList<File>();
       AccessRestrictions accessRestrictions = new AccessRestrictions();
@@ -316,7 +316,7 @@ public class BundleDependenciesResolver {
         }
       }
 
-      System.err.println(accessRestrictions);
+//      System.err.println(accessRestrictions);
 
       return new ResolvedClasspathEntry(files.toArray(new File[0]), accessRestrictions);
     }
