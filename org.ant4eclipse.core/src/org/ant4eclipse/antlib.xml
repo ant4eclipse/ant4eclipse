@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
 <antlib>
 	<typedef name="antCall" classname="org.ant4eclipse.core.ant.AntCall" />
-	<typedef name="multiDirFileSet" classname="org.ant4eclipse.core.ant.MultipleDirectoriesFileSet" />
 </antlib>
