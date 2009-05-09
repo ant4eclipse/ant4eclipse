@@ -73,6 +73,7 @@
 				<!-- build libraries -->
 				<ant4eclipse:forEachLibrary>
 
+					<!-- special case: "self"-library -->
 					<antcontrib:if>
 						<istrue value="${executePluginProject.library.isSelf}" />
 						<antcontrib:then>
@@ -84,31 +85,15 @@
 
 								<ant4eclipse:forEachOutputDirectory>
 									<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
-									<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
+									<copy todir="${executePluginProject.project.directory}/@dot">
 										<fileset dir="${executeLibrary.output.directory}" />
 									</copy>
 								</ant4eclipse:forEachOutputDirectory>
 
 							</ant4eclipse:executeLibrary>
 
-							<!-- TODO -->
-							<filelist id="executePluginProject.binary.included.files"
-							          dir="${executePluginProject.project.directory}"
-							          files="META-INF/MANIFEST.MF,OSGI-INF/component.xml" />
-
-							<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
-								<filelist refid="executePluginProject.binary.included.files" />
-							</copy>
-
-							<!-- 'patch' the manifest with the effective bundle version -->
-							<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
-							          mode="update">
-								<attribute name="Bundle-Version"
-								           value="${executePluginProject.bundle.effective.version}" />
-							</manifest>
-
-
 						</antcontrib:then>
+						<!-- default case: "ordinary" library -->
 						<antcontrib:else>
 
 							<ant4eclipse:executeLibrary workspace="@{workspace}"
@@ -133,7 +118,7 @@
 							     basedir="@{destination}/temp/${executePluginProject.library.name}" />
 
 							<move file="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
-							      todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+							      todir="${executePluginProject.project.directory}" />
 
 							<delete dir="@{destination}/plugins/${executePluginProject.library.name}" />
 
@@ -142,13 +127,36 @@
 
 				</ant4eclipse:forEachLibrary>
 
-				<!--TODO -->
+				<!--TODO
 				<ant4eclipse:forAllSourceDirectories>
 					<jar destfile="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
 					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
 
 					<delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+				</ant4eclipse:forAllSourceDirectories> -->
+
+				<ant4eclipse:forAllSourceDirectories>
+
+					<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
+						<ant4eclipse:pluginProjectFileSet workspace="@{workspace}"
+						                                  projectname="${executePluginProject.project.name}"
+						                                  includes="${executePluginProject.build.properties.binary.includes}"
+						                                  excludes="${executePluginProject.build.properties.binary.excludes}" />
+					</copy>
+
+					<!-- 'patch' the manifest with the effective bundle version -->
+					<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
+					          mode="update">
+						<attribute name="Bundle-Version"
+						           value="${executePluginProject.bundle.effective.version}" />
+					</manifest>
+
+					<jar destfile="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
+					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+
+					<delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
 				</ant4eclipse:forAllSourceDirectories>
+
 			</ant4eclipse:executePluginProject>
 		</sequential>
 	</macrodef>

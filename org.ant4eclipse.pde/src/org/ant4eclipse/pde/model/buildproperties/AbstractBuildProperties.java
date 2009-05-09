@@ -13,11 +13,10 @@ package org.ant4eclipse.pde.model.buildproperties;
 
 import org.ant4eclipse.core.Assert;
 
-
 /**
- * Instances of this class epresents the "common properties" that are used by plugins and features
- * as described in the "Plug-in Development Environment Guide"-Help.
- * 
+ * Instances of this class epresents the "common properties" that are used by plugins and features as described in the
+ * "Plug-in Development Environment Guide"-Help.
+ *
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  * @spec Eclipse Help - PDE Guide - "Feature and Plug-in Build Configuration Properties"
  */
@@ -53,10 +52,10 @@ public class AbstractBuildProperties {
   private String        _qualifier        = CONTEXT_QUALIFIER;
 
   /**
-   * 
+   *
    */
   public AbstractBuildProperties() {
-    // 
+    //
   }
 
   /**
@@ -74,6 +73,28 @@ public class AbstractBuildProperties {
     return _binIncludes;
   }
 
+  public String getBinaryExcludesAsString() {
+    StringBuffer buffer = new StringBuffer();
+    for (int i = 0; i < _binExcludes.length; i++) {
+      buffer.append(_binExcludes[i]);
+      if (i + 1 < _binExcludes.length) {
+        buffer.append(",");
+      }
+    }
+    return buffer.toString();
+  }
+
+  public String getBinaryIncludesAsString() {
+    StringBuffer buffer = new StringBuffer();
+    for (int i = 0; i < _binIncludes.length; i++) {
+      buffer.append(_binIncludes[i]);
+      if (i + 1 < _binIncludes.length) {
+        buffer.append(",");
+      }
+    }
+    return buffer.toString();
+  }
+
   /**
    * @return Returns the qualifier.
    */
@@ -87,7 +108,7 @@ public class AbstractBuildProperties {
   public boolean isContextQualifier() {
     return isContextQualifer(_qualifier);
   }
-  
+
   public static boolean isContextQualifer(String qualifier) {
     return CONTEXT_QUALIFIER.equals(qualifier);
   }
@@ -98,7 +119,7 @@ public class AbstractBuildProperties {
   public boolean isNoneQualifier() {
     return isNoneQualifier(_qualifier);
   }
-  
+
   public static boolean isNoneQualifier(String qualifier) {
     return NONE_QUALIFIER.equals(qualifier);
   }

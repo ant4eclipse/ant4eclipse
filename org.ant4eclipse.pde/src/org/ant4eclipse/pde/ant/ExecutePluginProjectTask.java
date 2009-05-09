@@ -64,6 +64,12 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     executionValues.getProperties().put("bundle.effective.version", effectiveVersion.toString());
     executionValues.getProperties().put("bundle.version",
         pluginProjectRole.getBundleDescription().getVersion().toString());
+
+    PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
+    executionValues.getProperties()
+        .put("build.properties.binary.includes", buildProperties.getBinaryIncludesAsString());
+    executionValues.getProperties()
+        .put("build.properties.binary.excludes", buildProperties.getBinaryExcludesAsString());
   }
 
   protected Object onCreateDynamicElement(final String name) {
@@ -121,7 +127,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
 
         if (library.isSelf()) {
           executionValues.getProperties().put("library.isSelf", "true");
-          
+
           computeBinaryIncludeFilelist();
         }
 
@@ -157,10 +163,9 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     final PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
     final Library[] libraries = pluginBuildProperties.getOrderedLibraries();
     final List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
-    
+
     FileList fileList = new FileList();
     fileList.setDir(getEclipseProject().getFolder());
-    
-    
+
   }
 }
