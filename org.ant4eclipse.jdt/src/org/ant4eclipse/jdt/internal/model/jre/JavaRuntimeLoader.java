@@ -55,8 +55,8 @@ public class JavaRuntimeLoader {
     Assert.nonEmpty(id);
     Assert.isDirectory(location);
 
-    final String outfileName = System.getProperty("java.io.tmpdir") + "\\ant4eclipse_jdk_props_" +
-        Math.round(Math.random() * 1000000000);
+    final String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"
+        + Math.round(Math.random() * 1000000000);
     // System.out.println(outfileName);
 
     final JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
@@ -80,7 +80,7 @@ public class JavaRuntimeLoader {
     }
 
     final String result = contents.toString();
-// System.out.println(result);
+    // System.out.println(result);
     final String[] values = result.split("\\|");
     final Version javaVersion = new Version(values[0]);
     final String sunbootclasspath = values[1];
