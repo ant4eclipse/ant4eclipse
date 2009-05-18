@@ -2,28 +2,82 @@ package org.ant4eclipse.platform.ant.core.delegate.helper;
 
 import java.util.Hashtable;
 
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.apache.tools.ant.Project;
 
+/**
+ * <p>
+ * Helper class that provides access to the ant project's property field. During macro execution with the
+ * {@link MacroExecutionDelegate} several properties are (temporarily) set. Once the execution has finished, all
+ * properties have to be reset.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
 
+  /**
+   * <p>
+   * Creates a new instance of type {@link AntPropertiesRaper}.
+   * </p>
+   * 
+   * @param antProject
+   *          the ant project
+   */
   public AntPropertiesRaper(Project antProject) {
     super(antProject);
 
+    // set the value accessor
     setValueAccessor(new AntProjectValueAccessor<String>() {
+
+      /**
+       * <p>
+       * Returns the ant project property with the given key
+       * </p>
+       * 
+       * @param key
+       *          the key
+       */
       public String getValue(String key) {
         return getAntProject().getProperty(key);
       }
 
+      /**
+       * <p>
+       * Sets the given value as a ant project property with the given key.
+       * </p>
+       * 
+       * @param key
+       *          the key
+       * @param value
+       *          the value to set
+       */
       public void setValue(String key, String value) {
         getAntProject().setProperty(key, value);
       }
 
+      /**
+       * <p>
+       * Removes the given value from the ant project properties.
+       * </p>
+       * 
+       * @param key
+       *          the key
+       */
       public void unsetValue(String key) {
         removeProperty(key);
       }
     });
   }
 
+  /**
+   * <p>
+   * Removes the given value from the ant project properties.
+   * </p>
+   * 
+   * @param key
+   *          the key
+   */
   @SuppressWarnings("unchecked")
   private void removeProperty(final String name) {
     Hashtable properties = null;

@@ -100,8 +100,8 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     return this._getPathDelegate.isRelative();
   }
 
-  public final boolean isWorkspaceSet() {
-    return this._projectDelegate.isWorkspaceSet();
+  public final boolean isWorkspaceDirectorySet() {
+    return this._projectDelegate.isWorkspaceDirectorySet();
   }
 
   public final void populatePathId() {
@@ -120,8 +120,8 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
-  public final void requireWorkspaceSet() {
-    this._projectDelegate.requireWorkspaceSet();
+  public final void requireWorkspaceDirectorySet() {
+    this._projectDelegate.requireWorkspaceDirectorySet();
   }
 
   public final void setDirSeparator(String newdirseparator) {

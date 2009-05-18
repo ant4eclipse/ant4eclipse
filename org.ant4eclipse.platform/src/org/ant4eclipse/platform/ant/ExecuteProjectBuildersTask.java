@@ -29,7 +29,7 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
   /**
-   * 
+   *
    */
   public ExecuteProjectBuildersTask() {
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeBuildCommands");
@@ -76,9 +76,13 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
     BuildCommand[] buildCommands = eclipseProject.getBuildCommands();
 
     for (BuildCommand buildCommand : buildCommands) {
+      System.err.println(buildCommand);
       if (this._builderMacroDefs.containsKey(buildCommand.getName())) {
         MacroDef macroDef = this._builderMacroDefs.get(buildCommand.getName());
-        // TODO: scoped Properties
+
+        // MacroExecutionValues values = new MacroExecutionValues();
+        // values.getProperties().put("", buildCommand.getName());
+
         this._macroExecutionDelegate.executeMacroInstance(macroDef, null);
       }
     }

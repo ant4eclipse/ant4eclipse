@@ -100,12 +100,15 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     instance.setOwningTarget(((Task) getProjectComponent()).getOwningTarget());
     instance.setMacroDef(macroDef);
 
+    // create raper
     AntPropertiesRaper antPropertiesRaper = new AntPropertiesRaper(getAntProject());
     AntReferencesRaper antReferencesRaper = new AntReferencesRaper(getAntProject());
 
+    // set scoped values
     antPropertiesRaper.setScopedValues(macroExecutionValues.getProperties(), this._prefix);
     antReferencesRaper.setScopedValues(macroExecutionValues.getReferences(), this._prefix);
 
+    // execute macro instance
     instance.execute();
 
     // unset scoped values

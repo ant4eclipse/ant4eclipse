@@ -94,7 +94,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * 
    * @return <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
    */
-  public final boolean isWorkspaceSet() {
+  public final boolean isWorkspaceDirectorySet() {
     return this._workspaceDirectory != null;
   }
 
@@ -103,10 +103,10 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * Throws an {@link BuildException} if the workspace directory has not been set.
    * </p>
    */
-  public final void requireWorkspaceSet() {
-    if (!isWorkspaceSet()) {
+  public final void requireWorkspaceDirectorySet() {
+    if (!isWorkspaceDirectorySet()) {
       // TODO!!
-      throw new BuildException("Workspace has to be set!");
+      throw new BuildException("Workspace directory has to be set!");
     }
   }
 
@@ -118,7 +118,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * @return
    */
   public final Workspace getWorkspace() {
-    requireWorkspaceSet();
+    requireWorkspaceDirectorySet();
 
     if (this._workspace == null) {
       if (!WorkspaceRegistry.Helper.getRegistry().containsWorkspace(this._workspaceDirectory.getAbsolutePath())) {

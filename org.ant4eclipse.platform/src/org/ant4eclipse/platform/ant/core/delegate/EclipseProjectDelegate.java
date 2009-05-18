@@ -73,8 +73,9 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    * </p>
    */
   public final void requireWorkspaceAndProjectNameSet() {
-    if (!isWorkspaceSet() || !isProjectNameSet()) {
-      throw new BuildException("You have to specify the workspace and projectName attributes!");
+    if (!isWorkspaceDirectorySet() || !isProjectNameSet()) {
+      // TODO
+      throw new BuildException("You have to specify the workspacedirectory and projectName attributes!");
     }
   }
 

@@ -65,15 +65,15 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   }
 
   public boolean isWorkspaceDirectorySet() {
-    return this._workspaceDelegate.isWorkspaceSet();
+    return this._workspaceDelegate.isWorkspaceDirectorySet();
   }
 
   public boolean isWorkspaceSet() {
-    return this._workspaceDelegate.isWorkspaceSet();
+    return this._workspaceDelegate.isWorkspaceDirectorySet();
   }
 
   public void requireWorkspaceSet() {
-    this._workspaceDelegate.requireWorkspaceSet();
+    this._workspaceDelegate.requireWorkspaceDirectorySet();
   }
 
   @SuppressWarnings("deprecation")

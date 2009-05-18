@@ -16,7 +16,6 @@ import java.util.Map;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-
 /**
  * <p>
  * </p>
@@ -71,5 +70,10 @@ public interface EclipseVariableResolver extends Lifecycle {
    */
   public Map<String, String> getEclipseVariables(final EclipseProject project);
 
+  /**
+   * <p>
+   * Clears the variable resolver.
+   * </p>
+   */
   public void clear();
 } /* ENDCLASS */

@@ -74,14 +74,14 @@ public interface WorkspaceComponent {
    * 
    * @return <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
    */
-  public boolean isWorkspaceSet();
+  public boolean isWorkspaceDirectorySet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the workspace directory has not been set.
    * </p>
    */
-  public void requireWorkspaceSet();
+  public void requireWorkspaceDirectorySet();
 
   /**
    * <p>

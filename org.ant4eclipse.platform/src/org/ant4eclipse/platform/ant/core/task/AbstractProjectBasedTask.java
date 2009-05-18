@@ -62,7 +62,7 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask {
   }
 
   public final boolean isWorkspaceDirectorySet() {
-    return this._projectBase.isWorkspaceSet();
+    return this._projectBase.isWorkspaceDirectorySet();
   }
 
   public final void requireWorkspaceAndProjectNameSet() {
@@ -70,7 +70,7 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask {
   }
 
   public final void requireWorkspaceDirectorySet() {
-    this._projectBase.requireWorkspaceSet();
+    this._projectBase.requireWorkspaceDirectorySet();
   }
 
   public final void setProjectName(String projectName) {

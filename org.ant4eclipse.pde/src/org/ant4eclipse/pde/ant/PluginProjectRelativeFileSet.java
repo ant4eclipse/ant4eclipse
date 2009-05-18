@@ -120,10 +120,10 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
 
   /**
    * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#isWorkspaceSet()
+   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#isWorkspaceDirectorySet()
    */
   public final boolean isWorkspaceSet() {
-    return _eclipseProjectDelegate.isWorkspaceSet();
+    return _eclipseProjectDelegate.isWorkspaceDirectorySet();
   }
 
   /**
@@ -136,10 +136,10 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
 
   /**
    *
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#requireWorkspaceSet()
+   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#requireWorkspaceDirectorySet()
    */
   public final void requireWorkspaceSet() {
-    _eclipseProjectDelegate.requireWorkspaceSet();
+    _eclipseProjectDelegate.requireWorkspaceDirectorySet();
   }
 
   /**

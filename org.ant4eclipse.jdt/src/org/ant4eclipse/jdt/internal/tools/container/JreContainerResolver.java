@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.ContainerTypes;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
@@ -52,7 +53,7 @@ public class JreContainerResolver implements ClasspathContainerResolver {
       javaRuntime = javaRuntimeRegistry.getJavaRuntime(key);
       if (javaRuntime == null) {
         // TODO
-        System.err.println("FEHLER");
+        A4ELogging.warn("Could not find JRE for " + path + ". Using default JRE!");
         javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
       }
     } else {
@@ -61,7 +62,7 @@ public class JreContainerResolver implements ClasspathContainerResolver {
 
     if (javaRuntime == null) {
       // TODO
-      throw new RuntimeException("FEHLER");
+      throw new RuntimeException("Could not find JRE for " + path + ".");
     }
 
     // TODO

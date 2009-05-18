@@ -20,14 +20,15 @@ public class BuildOrderResolver {
 
   /**
    * <p>
-   * Resolves the build order with the given name.
+   * Resolves the build order of the projects with the given names.
    * </p>
    * 
    * @param workspace
    *          the workspace
    * @param projectNames
-   *          the project names
-   * @param properties
+   *          an array with the names of all projects that should be sorted.
+   * @param referenceTypes
+   * @param additionalElements
    * @return
    */
   public static final List<EclipseProject> resolveBuildOrder(final Workspace workspace, final String[] projectNames,
@@ -61,8 +62,6 @@ public class BuildOrderResolver {
 
       // add referenced projects to the dependency graph
       for (final EclipseProject referencedProject : referencedProjects) {
-
-        // System.err.println("  TEST: References " + referencedProject.getSpecifiedName());
 
         if (!dependencyGraph.containsVertex(referencedProject)) {
           dependencyGraph.addVertex(referencedProject);

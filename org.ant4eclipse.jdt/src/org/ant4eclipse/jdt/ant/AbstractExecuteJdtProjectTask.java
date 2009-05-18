@@ -32,7 +32,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractProjectPathT
   private final JdtExecutorValuesProvider             _executorValuesProvider;
 
   /**
-   * 
+   *
    */
   public AbstractExecuteJdtProjectTask(final String prefix) {
     Assert.notNull(prefix);

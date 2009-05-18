@@ -61,13 +61,13 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    */
   private boolean            _recursive        = true;
 
-  /** The property used to describe the unavailable projects. */
-  private String             _unavailableProjects;
-
-  /**
-   * Use the specified name of an Eclipse project rather than it's filesystem name.
-   */
-  private boolean            _specifiedNames   = false;
+  // /** The property used to describe the unavailable projects. */
+  // private String _unavailableProjects;
+  //
+  // /**
+  // * Use the specified name of an Eclipse project rather than it's filesystem name.
+  // */
+  // private boolean _specifiedNames = false;
 
   /**
    * <p>
@@ -92,29 +92,29 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     this._property = property;
   }
 
-  /**
-   * <p>
-   * Sets the name of an ANT property that will hold the list of projects that are not available.
-   * </p>
-   * 
-   * @param property
-   *          the name of an ANT property that will hold the list of projects that are not available.
-   */
-  public void setUnavailableProjects(final String property) {
-    this._unavailableProjects = property;
-  }
-
-  /**
-   * <p>
-   * Enables the use of specified names which might differ from the project name within the file system.
-   * </p>
-   * 
-   * @param specifiednames
-   *          <code>true</code> <=> Create the list using the specified names.
-   */
-  public void setSpecifiedNames(final boolean specifiednames) {
-    this._specifiedNames = specifiednames;
-  }
+  // /**
+  // * <p>
+  // * Sets the name of an ANT property that will hold the list of projects that are not available.
+  // * </p>
+  // *
+  // * @param property
+  // * the name of an ANT property that will hold the list of projects that are not available.
+  // */
+  // public void setUnavailableProjects(final String property) {
+  // this._unavailableProjects = property;
+  // }
+  //
+  // /**
+  // * <p>
+  // * Enables the use of specified names which might differ from the project name within the file system.
+  // * </p>
+  // *
+  // * @param specifiednames
+  // * <code>true</code> <=> Create the list using the specified names.
+  // */
+  // public void setSpecifiedNames(final boolean specifiednames) {
+  // this._specifiedNames = specifiednames;
+  // }
 
   /**
    * <p>

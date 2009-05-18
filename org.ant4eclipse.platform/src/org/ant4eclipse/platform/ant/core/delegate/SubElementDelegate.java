@@ -25,20 +25,25 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
   /** - */
   private List<Object>                 _subElements;
 
+  /** - */
+  private boolean                      _initialized                   = false;
+
   /**
    * @param component
    */
   public SubElementDelegate(ProjectComponent component) {
     super(component);
-
-    init();
   }
 
   public List<Object> getSubElements() {
+    init();
+
     return this._subElements;
   }
 
   public Object createDynamicElement(String name) throws BuildException {
+
+    init();
 
     for (SubElementContribution dynamicElementContributor : this._subElementContributors) {
       if (dynamicElementContributor.canHandleSubElement(name, getProjectComponent())) {
@@ -55,6 +60,10 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
    * Loads the configured RoleIdentifiers
    */
   protected void init() {
+
+    if (this._initialized) {
+      return;
+    }
 
     // create the lists of dynamic elements
     this._subElements = new LinkedList<Object>();
@@ -75,5 +84,7 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
     }
 
     this._subElementContributors = dynamicElementContributors;
+
+    this._initialized = true;
   }
 }

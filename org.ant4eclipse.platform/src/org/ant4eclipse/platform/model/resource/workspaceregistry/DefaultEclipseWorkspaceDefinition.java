@@ -22,7 +22,9 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.internal.model.resource.workspaceregistry.LocationFileParser;
 
 /**
- * 
+ * <p>
+ * Implements a {@link WorkspaceDefinition} for the 'standard' eclipse workspace.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
@@ -93,8 +95,8 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
       });
 
       // add the resolved linked directories to the result
-      for (int i = 0; i < directories.length; i++) {
-        final File linkedProject = LocationFileParser.getProjectDirectory(new File(directories[i], ".location"));
+      for (File directorie : directories) {
+        final File linkedProject = LocationFileParser.getProjectDirectory(new File(directorie, ".location"));
         if ((linkedProject != null) && !result.contains(linkedProject)) {
           result.add(linkedProject);
         }
