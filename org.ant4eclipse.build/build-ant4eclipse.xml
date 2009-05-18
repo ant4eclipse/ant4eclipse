@@ -17,14 +17,13 @@
 	<property name="build.compiler"
 	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 	<property name="destination"
-	          value="${basedir}\org.ant4eclipse.build\destination" />
+	          value="${basedir}/org.ant4eclipse.build/destination" />
 	<property name="teamprojectset"
 	          value="${basedir}/org.ant4eclipse.build/projectSet-main.psf" />
 
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
-		<jre id="jdk15" location="${jdk15.location}" />
-		<jre id="jdk16" location="${jdk16.location}" />
+		<jre id="jdk16" location="/usr/lib/jvm/java-6-sun" />
 	</ant4eclipse:jreContainer>
 
 	<!-- =================================
