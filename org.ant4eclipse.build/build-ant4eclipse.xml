@@ -31,6 +31,9 @@
          ================================= -->
 	<target name="build.ant4eclipse">
 
+		<delete dir="${destination}" quiet="true" />
+		<mkdir dir="${destination}" />
+
 		<tstamp>
 			<format property="build.time" pattern="yyyyMMdd-HHmm" unit="hour" />
 		</tstamp>
