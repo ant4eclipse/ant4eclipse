@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
 
-
 /**
  * This class provides the content of a user library configuration.
  * 
@@ -24,65 +23,64 @@ import org.ant4eclipse.core.Assert;
  */
 public final class UserLibraries {
 
-	private Map _libraries;
+  private final Map<String, UserLibrary> _libraries;
 
-	/**
-	 * Initialises this data structure used to collect the content of an eclipse
-	 * user library configuration file.
-	 */
-	public UserLibraries() {
-		_libraries = new Hashtable();
-	}
+  /**
+   * Initialises this data structure used to collect the content of an eclipse user library configuration file.
+   */
+  public UserLibraries() {
+    this._libraries = new Hashtable<String, UserLibrary>();
+  }
 
-	/**
-	 * Adds the supplied user library entry to this collecting data structure.
-	 * 
-	 * @param userlibrary
-	 *            The user library entry which shall be added.
-	 */
-	public void addLibrary(UserLibrary userlibrary) {
-		Assert.notNull(userlibrary);
+  /**
+   * Adds the supplied user library entry to this collecting data structure.
+   * 
+   * @param userlibrary
+   *          The user library entry which shall be added.
+   */
+  public void addLibrary(final UserLibrary userlibrary) {
+    Assert.notNull(userlibrary);
 
-		_libraries.put(userlibrary.getName(), userlibrary);
-	}
+    this._libraries.put(userlibrary.getName(), userlibrary);
+  }
 
-	/**
-	 * Returns true if there's a specific library entry available.
-	 * 
-	 * @param name
-	 *            The name of the desired library.
-	 * 
-	 * @return true <=> A library with the supplied name is available.
-	 */
-	public boolean hasLibrary(String name) {
-		Assert.notNull(name);
+  /**
+   * Returns true if there's a specific library entry available.
+   * 
+   * @param name
+   *          The name of the desired library.
+   * 
+   * @return true <=> A library with the supplied name is available.
+   */
+  public boolean hasLibrary(final String name) {
+    Assert.notNull(name);
 
-		return (_libraries.containsKey(name));
-	}
+    return (this._libraries.containsKey(name));
+  }
 
-	/**
-	 * Returns a user library entry associated with the supplied name.
-	 * 
-	 * @param name
-	 *            The name used to access this user library.
-	 * 
-	 * @return The associated user library entry.
-	 */
-	public UserLibrary getLibrary(String name) {
-		Assert.notNull(name);
-		
-		return ((UserLibrary) _libraries.get(name));
-	}
+  /**
+   * Returns a user library entry associated with the supplied name.
+   * 
+   * @param name
+   *          The name used to access this user library.
+   * 
+   * @return The associated user library entry.
+   */
+  public UserLibrary getLibrary(final String name) {
+    Assert.notNull(name);
 
-	/**
-	 * Returns a list with the names of the available libraries.
-	 * 
-	 * @return A list with the names of the available libraries.
-	 */
-	public String[] getAvailableLibraries() {
-		String[] result = new String[_libraries.size()];
-		_libraries.keySet().toArray(result);
-		return (result);
-	}
+    return (this._libraries.get(name));
+  }
+
+  /**
+   * Returns a list with the names of the available libraries.
+   * 
+   * @return A list with the names of the available libraries.
+   */
+  public String[] getAvailableLibraries() {
+    final String[] result = new String[this._libraries.size()];
+    this._libraries.keySet().toArray(result);
+    return (result);
+  }
 
 } /* ENDCLASS */
