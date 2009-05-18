@@ -38,13 +38,13 @@
 			<format property="build.time" pattern="yyyyMMdd-HHmm" unit="hour" />
 		</tstamp>
 
-		<ant4eclipse:executeProjectSet workspace="${destination}"
+		<ant4eclipse:executeProjectSet workspace="${basedir}"
 		                               teamprojectset="${teamprojectset}"
 		                               projectReferenceTypes="jdt">
 
 			<ant4eclipse:forEachProject>
 
-				<ant4eclipse:executeJdtProject workspace="${destination}"
+				<ant4eclipse:executeJdtProject workspace="${basedir}"
 				                               projectname="${executeProjectSet.project.name}">
 
 					<ant4eclipse:forEachOutputDirectory>
