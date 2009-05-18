@@ -7,12 +7,6 @@
 	<taskdef uri="antlib:org.ant4eclipse"
 	         resource="org/ant4eclipse/antlib.xml" />
 
-	<!-- define environment properties -->
-	<property file="${basedir}\org.ant4eclipse.build\environment.properties" />
-
-	<!-- define version properties -->
-	<property file="${basedir}\org.ant4eclipse.build\version.properties" />
-
 	<!-- define general properties -->
 	<property name="build.compiler"
 	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
@@ -134,7 +128,7 @@
 		</ant4eclipse:mergeAntlibXml>
 
 		<!-- build the jar file -->
-		<jar destfile="${destination}/org.ant4eclipse_${version}-${build.time}.jar"
+		<jar destfile="${destination}/org.ant4eclipse_${revision}.jar"
 		     basedir="${destination}/merged/classes" />
 
 	</target>
