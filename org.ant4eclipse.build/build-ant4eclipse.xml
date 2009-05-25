@@ -134,7 +134,7 @@
 		                               teamprojectset="${teamprojectset}"
 		                               projectReferenceTypes="jdt">
 			<ant4eclipse:forEachProject>
-				<copy todir="${destination}/macros">
+				<copy todir="${destination}/macros" flatten="true">
 					<fileset dir="${basedir}/${executeProjectSet.project.name}">
 						<include name="macros/*"/>
 					</fileset>
