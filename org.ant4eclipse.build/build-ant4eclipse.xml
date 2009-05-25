@@ -128,6 +128,20 @@
 		<!-- delete the 'merged' directory -->
 		<delete dir="${destination}/merged" quiet="true" />
 
+
+		<!-- copy macros -->
+		<ant4eclipse:executeProjectSet workspace="${basedir}"
+		                               teamprojectset="${teamprojectset}"
+		                               projectReferenceTypes="jdt">
+
+			<ant4eclipse:forEachProject>
+				<copy todir="${destination}/macros">
+					<fileset dir="${basedir}/${executeProjectSet.project.name}/macros" />
+				</copy>
+			</ant4eclipse:forEachProject>
+
+		</ant4eclipse:executeProjectSet>
+
 		<!-- copy libaries -->
 		<mkdir dir="${destination}/libs" />
 		<copy toDir="${destination}/libs" flatten="true">
