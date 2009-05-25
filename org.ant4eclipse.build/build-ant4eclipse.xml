@@ -23,14 +23,8 @@
 	<!-- =================================
           target: build.ant4eclipse
          ================================= -->
-	<target name="build.ant4eclipse">
+	<target name="build.ant4eclipse" depends="prepare">
 
-		<delete dir="${destination}" quiet="true" />
-		<mkdir dir="${destination}" />
-
-		<tstamp>
-			<format property="build.time" pattern="yyyyMMdd-HHmm" unit="hour" />
-		</tstamp>
 
 		<ant4eclipse:executeProjectSet workspace="${basedir}"
 		                               teamprojectset="${teamprojectset}"
@@ -131,21 +125,43 @@
 		<jar destfile="${destination}/org.ant4eclipse_${revision}.jar"
 		     basedir="${destination}/merged/classes" />
 
+		<!-- delete the 'merged' directory -->
 		<delete dir="${destination}/merged" quiet="true" />
 
-		<mkdir dir="${destination}/libs"/>
-		<copy toDir="${destination}/libs">
+		<!-- copy libaries -->
+		<mkdir dir="${destination}/libs" />
+		<copy toDir="${destination}/libs" flatten="true">
 			<fileset dir="${basedir}/org.ant4eclipse.external/libs">
 				<include name="ant-contrib/*.jar" />
+				<include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
 				<include name="ejc/*.jar" />
+				<include name="ejc/ECJ-LICENSE-epl-v10.html" />
 				<include name="equinox/*.jar" />
+				<include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
+				<exclude name="equinox/*source*.jar" />
 			</fileset>
 		</copy>
 
-		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip" >
-		    <fileset dir="${destination}" excludes="${destination}/org.ant4eclipse_${revision}.zip"/>
+		<!-- zip the result -->
+		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
+			<fileset dir="${destination}"
+			         excludes="${destination}/org.ant4eclipse_${revision}.zip" />
 		</zip>
 
 	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: prepare
+         - - - - - - - - - - - - - - - - - -->
+	<target name="prepare">
+
+		<delete dir="${destination}" quiet="true" />
+		<mkdir dir="${destination}" />
+
+		<tstamp>
+			<format property="build.time" pattern="yyyyMMdd-HHmm" unit="hour" />
+		</tstamp>
+	</target>
+
 
 </project>
