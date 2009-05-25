@@ -131,6 +131,21 @@
 		<jar destfile="${destination}/org.ant4eclipse_${revision}.jar"
 		     basedir="${destination}/merged/classes" />
 
+		<delete dir="${destination}/merged" quiet="true" />
+
+		<mkdir dir="${destination}/libs"/>
+		<copy toDir="${destination}/libs">
+			<fileset dir="${basedir}/org.ant4eclipse.external/libs">
+				<include name="ant-contrib/*.jar" />
+				<include name="ejc/*.jar" />
+				<include name="equinox/*.jar" />
+			</fileset>
+		</copy>
+
+		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip" >
+		    <fileset dir="${destination}" excludes="${destination}/org.ant4eclipse_${revision}.zip"/>
+		</zip>
+
 	</target>
 
 </project>
