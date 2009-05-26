@@ -7,4 +7,9 @@
 	<typedef name="getJdtOutputPath" classname="org.ant4eclipse.jdt.ant.GetJdtOutputPathTask" />
 	<typedef name="getJdtSourcePath" classname="org.ant4eclipse.jdt.ant.GetJdtSourcePathTask" />
 	<typedef name="executeJdtProject" classname="org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask" />
+
+	<typedef name="getEclipseClasspath" classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+	<typedef name="getOutputpath" classname="org.ant4eclipse.jdt.ant.GetJdtOutputPathTask" />
+	<typedef name="getSourcepath" classname="org.ant4eclipse.jdt.ant.GetJdtSourcePathTask" />
+
 </antlib>
