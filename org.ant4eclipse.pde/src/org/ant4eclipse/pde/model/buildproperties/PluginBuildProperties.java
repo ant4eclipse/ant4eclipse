@@ -47,7 +47,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   private String               _javacTarget = "1.2";
 
   /**
-   * 
+   *
    */
   public PluginBuildProperties() {
     _libraries = new HashMap<String, Library>();
@@ -74,7 +74,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
 
   /**
    * Returns the library with the given name or null if no such library exists.
-   * 
+   *
    * @param libraryName
    *          (eq. "." or "library1.jar")
    * @return The Library object or null if no such library exists
@@ -87,7 +87,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
 
   /**
    * Returns whether the given library exists in this build properties.
-   * 
+   *
    * @param libraryName
    *          (eg. "." or "library1.jar")
    * @return true or false
@@ -108,18 +108,18 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   /**
    * Returns the libraries specified in this build.properties as specified by jarsCompileOrder or unordered if that
    * property is not set
-   * 
+   *
    * @return An ordered list of libraries specified in the 'build.properties' file.
    */
   public Library[] getOrderedLibraries() {
     // build libraries
     String[] jars = getJarsCompileOrder();
-    Collection libraries = null;
+    Collection<Library> libraries = null;
     if (jars == null || jars.length < 1) {
       // no build order specified, hope we don't need one...
       libraries = _libraries.values();
     } else {
-      libraries = new LinkedList();
+      libraries = new LinkedList<Library>();
       for (int i = 0; i < jars.length; i++) {
         Library library = getLibrary(jars[i]);
         if (library != null) {
@@ -147,7 +147,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * <p>
    * Implements a plugin library.
    * </p>
-   * 
+   *
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   public static class Library {
@@ -305,7 +305,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * <p>
      * Sets the file that will be used as a manifest for the library.
      * </p>
-     * 
+     *
      * @param manifest
      *          the manifest to set.
      */
@@ -339,7 +339,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
 
     /**
      * @return whether this library points to the "root" library
-     * 
+     *
      */
     public boolean isSelf() {
       return ".".equals(getName());
@@ -347,7 +347,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   }
 
   /**
-   * 
+   *
    * @return the source compatibility level or 1.3 (default value); never null
    */
   public String getJavacSource() {

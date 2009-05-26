@@ -29,18 +29,18 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * The BuildPropertiesParser reads and interprets the build.properties file of a Plugin Project.
- * 
+ *
  * <p>
  * The build.properties-file is automatically read when an EclipseProject with the {@link PluginProjectRole} is opened.
- * 
+ *
  * <p>
  * The properties can be received from an opened EclipseProject using:
- * 
+ *
  * <pre>
- *   PluginBuildProperties buildProperties = 
+ *   PluginBuildProperties buildProperties =
  *       PluginProjectRole.getPluginProjectRole(eclipseProject).getBuildProperties()
  * </pre>
- * 
+ *
  * @see #parsePluginBuildProperties(EclipseProject)
  * @see PluginProjectRole#getBuildProperties()
  */
@@ -51,11 +51,11 @@ public class BuildPropertiesParser {
   /**
    * Reads the build.properties of the given eclipse project. After the properties have been read they are assigned to
    * the project's PluginRole and can be accessed using {@link PluginProjectRole#getBuildProperties()}.
-   * 
+   *
    * <p>
    * <b>Note</b>: <code>The build.properties</code> is automatically read when an EclipseProject containing the
    * PluginRole is opened. <b>There is normally no need to call this method otherwise.</b>
-   * 
+   *
    * @param project
    *          The eclipse project. Has to be a plugin project
    * @throws FileParserException
@@ -72,11 +72,11 @@ public class BuildPropertiesParser {
   /**
    * Reads the build.properties of the given eclipse project. After the properties have been read they are assigned to
    * the project's PluginRole and can be accessed using {@link PluginProjectRole#getBuildProperties()}.
-   * 
+   *
    * <p>
    * <b>Note</b>: <code>The build.properties</code> is automatically read when an EclipseProject containing the
    * PluginRole is opened. <b>There is normally no need to call this method otherwise.</b>
-   * 
+   *
    * @param featureProjectRole
    *          the featureProjectRole
    * @see PluginProjectRole#getBuildProperties()
@@ -118,7 +118,7 @@ public class BuildPropertiesParser {
    * Initializes the buildProperties with the build properties read from the given input stream (typically a
    * FileInputStream to a "build.properties" file). The input stream must be processable via java.util.Property's
    * load(InputStream) method.
-   * 
+   *
    * <p>
    * This method is mainly public to make it accessible from tests (?)
    * </p>
@@ -142,7 +142,7 @@ public class BuildPropertiesParser {
     buildProperties.setJavacTarget(javacTarget);
 
     // set libraries
-    final Iterator iterator = properties.keySet().iterator();
+    final Iterator<?> iterator = properties.keySet().iterator();
     while (iterator.hasNext()) {
       final String key = (String) iterator.next();
 
@@ -204,7 +204,7 @@ public class BuildPropertiesParser {
       return new String[] {};
     }
 
-    final List result = new LinkedList();
+    final List<String> result = new LinkedList<String>();
 
     final StringTokenizer tokenizer = new StringTokenizer(content, delimiter);
     while (tokenizer.hasMoreTokens()) {

@@ -24,7 +24,7 @@ import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * LinkFileFactory provides methods to find and parse link files
- * 
+ *
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class LinkFileFactory {
@@ -32,7 +32,7 @@ public class LinkFileFactory {
   /**
    * Returns LinkFile instances for each .link-file in the "links" subdirectory of the given directory. If either the
    * directory doesn't exist or it doesn't contain a "links" directory, an empty array is returned.
-   * 
+   *
    * @param directory
    *          The directory that contains the "links" subdirectory
    * @return An array of LinkFile objects representing all .link-files found in the directory.
@@ -53,7 +53,7 @@ public class LinkFileFactory {
       }
     });
 
-    final List result = new LinkedList();
+    final List<LinkFile> result = new LinkedList<LinkFile>();
 
     for (int i = 0; i < links.length; i++) {
       final File link = links[i];
@@ -70,19 +70,19 @@ public class LinkFileFactory {
   /**
    * Parses the given linkFile and returns a LinkFile instance. If the link file doesn't contain a "path=" entry null is
    * returned.
-   * 
+   *
    * <p>
    * Note that ths LinkFile returned might point to an "invalid" directory, for example if the directory the "path="
    * attribute points to, doesn't exists. Use {@link LinkFile#isValidDestination()} to check if the destination is
    * valid.
-   * 
+   *
    * <p>
    * From the eclipse online help:
    * "The link file is a java.io.Properties format file which defines the path to the installed extension."
-   * 
+   *
    * @return The LinkFile representing the target destination defined in the link file or null if the link file doesn't
    *         contain a path.
-   * 
+   *
    */
   public static LinkFile parseLinkFile(final File linkFile) {
     Assert.isFile(linkFile);

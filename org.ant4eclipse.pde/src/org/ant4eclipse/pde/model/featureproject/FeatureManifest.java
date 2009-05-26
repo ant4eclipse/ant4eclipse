@@ -29,69 +29,69 @@ import org.osgi.framework.Version;
 public class FeatureManifest {
 
   /** required feature identifier (eg. com.xyz.myfeature) */
-  private String  _id;
+  private String       _id;
 
   /** required component version (eg. 1.0.3) */
-  private Version _version;
+  private Version      _version;
 
   /** optional displayable label (name) */
-  private String  label;
+  private String       label;
 
   /**
    * optional display label identifying the organization providing this component
    */
-  private String  _providerName;
+  private String       _providerName;
 
   /** optional image to use when displaying information about the feature */
-  private String  _image;
+  private String       _image;
 
   /** optional operating system specification */
-  private String  _operatingSystem;
+  private String       _operatingSystem;
 
   /** optional machine architecture specification */
-  private String  _machineArchitecture;
+  private String       _machineArchitecture;
 
   /** optional windowing system specification */
-  private String  _windowingSystem;
+  private String       _windowingSystem;
 
   /** optional locale specification */
-  private String  _locale;
+  private String       _locale;
 
   /**
    * optional reference to another feature identifier used to select the default installation location for this feature
    */
-  private String  _colocationAffinity;
+  private String       _colocationAffinity;
 
   /**
    * optional indication specifying whether this feature can be used as a primary feature
    */
-  private boolean _primary;
+  private boolean      _primary;
 
   /**
    * optional flag that, if "true", indicates that the feature cannot be installed in a group with other features
    */
-  private boolean _exclusive;
+  private boolean      _exclusive;
 
   /**
    * optional identifier of the Eclipse application that is to be used during startup when the declaring feature is the
    * primary feature
    */
-  private String  _application;
+  private String       _application;
 
   /**
    * optional identifier that represents the id of the plug-in listed in the feature that is used to carry branding
    * information for the feature
    */
-  private String  _plugin;
+  private String       _plugin;
 
   /** list of referenced plugins */
-  private List    _plugins;
+  private List<Plugin> _plugins;
 
   /**
    * Creates a new instance of type Feature.
    */
   public FeatureManifest() {
-    _plugins = new LinkedList();
+    _plugins = new LinkedList<Plugin>();
   }
 
   /**
@@ -322,9 +322,9 @@ public class FeatureManifest {
 
     /** required plug-in version */
     private Version _version;
-    
+
     /** effective version (that is version with replaced 'qualifier') **/
-    private String _effectiveVersion;
+    private String  _effectiveVersion;
 
     /** optional specification indicating if this entry is a plug-in fragment */
     private boolean _fragment = false;
@@ -437,7 +437,7 @@ public class FeatureManifest {
     public boolean hasWindowingSystem() {
       return _windowingSystem != null;
     }
-    
+
     public String getEffectiveVersion() {
       return _effectiveVersion;
     }

@@ -12,11 +12,8 @@
 package org.ant4eclipse.pde.model.pluginproject;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
@@ -25,7 +22,7 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  * Implements the eclipse plug-in project role. The plug-in project role contains the BundleDescription and the build
  * properties.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface PluginProjectRole extends ProjectRole {
@@ -40,7 +37,7 @@ public interface PluginProjectRole extends ProjectRole {
    * <p>
    * Returns the BundleDescription.
    * </p>
-   * 
+   *
    * @return BundleDescription.
    */
   public BundleDescription getBundleDescription();
@@ -49,7 +46,7 @@ public interface PluginProjectRole extends ProjectRole {
    * <p>
    * Returns <code>true</code> if the build properties have been set.
    * </p>
-   * 
+   *
    * @return <code>true</code> if the build properties have been set.
    */
   public boolean hasBuildProperties();
@@ -58,7 +55,7 @@ public interface PluginProjectRole extends ProjectRole {
    * <p>
    * Returns the build properties.
    * </p>
-   * 
+   *
    * @return Returns the buildProperties.
    */
   public PluginBuildProperties getBuildProperties();
@@ -72,10 +69,11 @@ public interface PluginProjectRole extends ProjectRole {
 
   /**
    * <p>
-   * Helper class that provides methods for retrieving the {@link PluginProjectRole} from a given {@link EclipseProject}.
+   * Helper class that provides methods for retrieving the {@link PluginProjectRole} from a given {@link EclipseProject}
+   * .
    * </p>
-   * 
-   * 
+   *
+   *
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   public static class Helper {
@@ -84,7 +82,7 @@ public interface PluginProjectRole extends ProjectRole {
      * <p>
      * Returns the {@link PluginProjectRole}. If a {@link PluginProjectRole} is not set, an exception will be thrown.
      * </p>
-     * 
+     *
      * @return the plugin project role.
      */
     public static final PluginProjectRole getPluginProjectRole(final EclipseProject eclipseProject) {
@@ -98,7 +96,7 @@ public interface PluginProjectRole extends ProjectRole {
      * <p>
      * Returns whether a {@link PluginProjectRole} is set or not.
      * </p>
-     * 
+     *
      * @return Returns whether a {@link PluginProjectRole} is set or not.
      */
     public static final boolean hasPluginProjectRole(final EclipseProject eclipseProject) {
