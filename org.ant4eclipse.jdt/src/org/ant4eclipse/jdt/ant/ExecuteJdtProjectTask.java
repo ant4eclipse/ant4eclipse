@@ -43,14 +43,34 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
     return onCreateDynamicElement(name);
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param name
+   * @return
+   */
   protected Object onCreateDynamicElement(final String name) {
     return null;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param scopedMacroDefinition
+   * @return
+   */
   protected boolean onExecuteScopeMacroDefintion(final ScopedMacroDefinition<String> scopedMacroDefinition) {
     return false;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param executionValues
+   */
   protected void addAdditionalExecutionValues(final MacroExecutionValues executionValues) {
     //
   }

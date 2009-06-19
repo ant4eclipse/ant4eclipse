@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 
-
 public class EntryResolver {
 
   /**
@@ -25,19 +24,19 @@ public class EntryResolver {
    */
   public static String[] resolveEntries(final Condition condition, final JavaProjectRoleImpl javaProjectRole) {
 
-    final List result = new LinkedList();
+    final List<String> result = new LinkedList<String>();
 
     final RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
 
-    for (int i = 0; i < rawClasspathEntries.length; i++) {
+    for (final RawClasspathEntry rawClasspathEntrie : rawClasspathEntries) {
 
-      final String path = condition.resolve(rawClasspathEntries[i]);
+      final String path = condition.resolve(rawClasspathEntrie);
 
       if (path != null) {
         result.add(path);
       }
     }
-    return (String[]) result.toArray(new String[0]);
+    return result.toArray(new String[0]);
   }
 
   /**

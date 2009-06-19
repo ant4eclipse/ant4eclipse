@@ -20,6 +20,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.ContainerTypes;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
@@ -28,7 +29,6 @@ import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
-
 
 /**
  * <p>
@@ -40,10 +40,10 @@ import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProjectRole {
 
   /**  */
-  public static final String NAME = "JavaProjectRole";
+  public static final String         NAME = "JavaProjectRole";
 
   /** the class path entries */
-  private final List        /* EclipseClasspathEntry */_eclipseClasspathEntries;
+  private final List<ClasspathEntry> _eclipseClasspathEntries;
 
   /**
    * <p>
@@ -55,7 +55,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   public JavaProjectRoleImpl(final EclipseProject eclipseProject) {
     super(NAME, eclipseProject);
-    this._eclipseClasspathEntries = new LinkedList();
+    this._eclipseClasspathEntries = new LinkedList<ClasspathEntry>();
   }
 
   /**
@@ -69,16 +69,15 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   public RawClasspathEntry[] getRawClasspathEntries() {
-    return (RawClasspathEntry[]) this._eclipseClasspathEntries.toArray(new RawClasspathEntry[0]);
+    return this._eclipseClasspathEntries.toArray(new RawClasspathEntry[0]);
   }
 
   /**
    * {@inheritDoc}
    */
   public RawClasspathEntry[] getRawClasspathEntries(final int entrykind) {
-    final LinkedList templist = new LinkedList();
-    for (int i = 0; i < this._eclipseClasspathEntries.size(); i++) {
-      final RawClasspathEntry entry = (RawClasspathEntry) this._eclipseClasspathEntries.get(i);
+    final LinkedList<ClasspathEntry> templist = new LinkedList<ClasspathEntry>();
+    for (final ClasspathEntry entry : templist) {
       if (entry.getEntryKind() == entrykind) {
         templist.add(entry);
       }
@@ -276,6 +275,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[JavaProjectRole:");
@@ -290,6 +290,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = super.hashCode();
     hashCode = 31 * hashCode + (this._eclipseClasspathEntries == null ? 0 : this._eclipseClasspathEntries.hashCode());
@@ -299,6 +300,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -350,8 +352,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   private RawClasspathEntry getJreClasspathEntry() {
     final RawClasspathEntry[] containerEntries = getRawClasspathEntries(RawClasspathEntry.CPE_CONTAINER);
 
-    for (int i = 0; i < containerEntries.length; i++) {
-      final RawClasspathEntry entry = containerEntries[i];
+    for (final RawClasspathEntry entry : containerEntries) {
       if (entry.getPath().startsWith(ContainerTypes.JRE_CONTAINER)) {
         return entry;
       }

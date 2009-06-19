@@ -26,12 +26,15 @@ import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
 /**
- * ContainerClasspathEntryResolver --
+ * <p>
+ * The {@link ContainerClasspathEntryResolver} is responsible for resolving container class path entries.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResolver implements Lifecycle {
 
+  /** CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX */
   public final static String               CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX = "containerResolver";
 
   /** the static container resolver list */
@@ -81,10 +84,10 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     boolean handled = false;
 
     // iterate over all registered container resolvers
-    final Iterator iterator = this._containerresolver.iterator();
+    final Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
 
-      final ClasspathContainerResolver classpathContainerResolver = (ClasspathContainerResolver) iterator.next();
+      final ClasspathContainerResolver classpathContainerResolver = iterator.next();
 
       if (A4ELogging.isDebuggingEnabled()) {
         A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Try " + classpathContainerResolver);
@@ -120,21 +123,28 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
 
     final List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
 
-// Instantiate all ProjectRoleIdentifiers
+    // Instantiate all Container Resolvers
     for (final String[] containerResolverEntry : containerResolverEntries) {
-      // we're not interested in the key of a roleidentifier. only the classname (value of the entry) is relevant
+
+      // we're not interested in the key of a container resolver, only the class name (value of the entry) is relevant
       final String containerResolverClassName = containerResolverEntry[1];
+
+      // create new instance
       final ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverClassName);
+
+      // trace
       A4ELogging.trace("Register ClasspathContainerResolver '%s'", new Object[] { resolver });
+
+      // add resolver
       containerResolvers.add(resolver);
     }
 
     this._containerresolver = containerResolvers;
 
     // initialize all registered container resolvers
-    final Iterator iterator = this._containerresolver.iterator();
+    final Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
-      final ClasspathContainerResolver classpathContainerResolver = (ClasspathContainerResolver) iterator.next();
+      final ClasspathContainerResolver classpathContainerResolver = iterator.next();
       if (classpathContainerResolver instanceof Lifecycle) {
         ((Lifecycle) classpathContainerResolver).initialize();
       }
@@ -155,9 +165,9 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    */
   public void dispose() {
     // initialize all registered container resolvers
-    final Iterator iterator = this._containerresolver.iterator();
+    final Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
-      final ClasspathContainerResolver classpathContainerResolver = (ClasspathContainerResolver) iterator.next();
+      final ClasspathContainerResolver classpathContainerResolver = iterator.next();
       if (classpathContainerResolver instanceof Lifecycle) {
         ((Lifecycle) classpathContainerResolver).dispose();
       }
