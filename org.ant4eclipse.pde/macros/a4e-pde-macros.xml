@@ -127,14 +127,6 @@
 
 				</ant4eclipse:forEachLibrary>
 
-				<!--TODO
-				<ant4eclipse:forAllSourceDirectories>
-					<jar destfile="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
-					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
-
-					<delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
-				</ant4eclipse:forAllSourceDirectories> -->
-
 				<ant4eclipse:forAllSourceDirectories>
 
 					<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
@@ -143,6 +135,8 @@
 						                                  includes="${executePluginProject.build.properties.binary.includes}"
 						                                  excludes="${executePluginProject.build.properties.binary.excludes}" />
 					</copy>
+
+					<delete dir="${executePluginProject.project.directory}/@dot" quiet="true"/>
 
 					<!-- 'patch' the manifest with the effective bundle version -->
 					<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
