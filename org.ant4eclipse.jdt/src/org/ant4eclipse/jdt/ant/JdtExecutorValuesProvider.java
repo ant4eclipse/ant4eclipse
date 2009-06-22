@@ -116,9 +116,9 @@ public class JdtExecutorValuesProvider {
     final ResolvedClasspath cpAbsoluteCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole
         .getEclipseProject(), false, false, jdtClasspathContainerArguments);
     final ResolvedClasspath cpRelativeCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole
-        .getEclipseProject(), false, true, jdtClasspathContainerArguments);
+        .getEclipseProject(), true, false, jdtClasspathContainerArguments);
     final ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(
-        javaProjectRole.getEclipseProject(), true, false, jdtClasspathContainerArguments);
+        javaProjectRole.getEclipseProject(), false, true, jdtClasspathContainerArguments);
     final ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(
         javaProjectRole.getEclipseProject(), true, true, jdtClasspathContainerArguments);
 
