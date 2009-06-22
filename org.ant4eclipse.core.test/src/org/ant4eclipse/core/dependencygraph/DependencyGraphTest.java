@@ -52,7 +52,7 @@ public class DependencyGraphTest {
   }
 
   /**
-   * 
+   *
    */
   @Test
   public void testCyclicDependencyGraph() {
@@ -74,7 +74,7 @@ public class DependencyGraphTest {
       graph.calculateOrder();
       fail();
     } catch (Ant4EclipseException e) {
-      assertEquals("The specified graph contains cyclic dependencies (f.e. 'o1 -> o2 -> o3 -> o1').", e.getMessage());
+      assertEquals("The specified graph contains cyclic dependencies (e.g. 'o1 -> o2 -> o3 -> o1').", e.getMessage());
     }
   }
 
