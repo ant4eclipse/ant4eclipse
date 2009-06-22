@@ -105,74 +105,43 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     final int relative = isRelative() ? EclipseProject.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
         : EclipseProject.ABSOLUTE;
 
+    // resolve output folder for source folder
     if (FOR_SOURCE_FOLDER.equals(this._resolve)) {
       requireSourceFolderSet();
-
-      // try {
 
       final JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
 
       final String pathName = javaProjectRole.getOutputFolderForSourceFolder(getSourceFolder());
       final File resolvedPathEntry = getEclipseProject().getChild(pathName, relative);
       return new File[] { resolvedPathEntry };
-      // TODO
-      // } catch (final MultipleFolderException e) {
-      // final StringBuffer buffer = new StringBuffer();
-      // buffer.append("Project '");
-      // buffer.append(getEclipseProject().getName());
-      // buffer.append("' contains multiple output folder for source folder '");
-      // buffer.append(getSourceFolder());
-      // buffer.append("'!");
-      // throw new BuildException(buffer.toString());
-      // } catch (final BuildException ex) {
-      // throw ex;
-      // } catch (final Exception e) {
-      // throw new BuildException(e.getMessage());
-      // }
-    } else if (ALL.equals(this._resolve)) {
-      // try {
 
+    }
+    // resolve all output folder
+    else if (ALL.equals(this._resolve)) {
       final JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
       final String[] pathNames = javaProjectRole.getAllOutputFolders();
-      final File[] resolvedPathEntries = getEclipseProject().getChildren(pathNames, relative);
-      return resolvedPathEntries;
 
-      // TODO
-      // } catch (final MultipleFolderException e) {
-      // A4ELogging.debug(e.getMessage());
-      // final StringBuffer buffer = new StringBuffer();
-      // buffer.append("Project '");
-      // buffer.append(getEclipseProject().getName());
-      // buffer.append("' contains multiple output folder! ");
-      // buffer.append("If you want to allow this, ");
-      // buffer.append(" set allowMultipleFolder='true'!");
-      // throw new BuildException(buffer.toString());
-      // } catch (final BuildException ex) {
-      // throw ex;
-      // } catch (final Exception e) {
-      // throw new BuildException(e.getMessage());
-      // }
-    } else {
+      // TODO: Externalise messages
+      if (pathNames.length > 1 && !isAllowMultipleFolders()) {
+        final StringBuffer buffer = new StringBuffer();
+        buffer.append("Project '");
+        buffer.append(getEclipseProject().getSpecifiedName());
+        buffer.append("' contains multiple output folder! ");
+        buffer.append("If you want to allow this, ");
+        buffer.append(" set allowMultipleFolder='true'!");
+        throw new BuildException(buffer.toString());
+      }
+
+      return getEclipseProject().getChildren(pathNames, relative);
+    } else
+    // resolve default folder
+    {
       Assert.assertTrue(DEFAULT_FOLDER.equals(this._resolve), "Illegal value for attribute resolve!");
-      // try {
+
       final JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
       final String path = javaProjectRole.getDefaultOutputFolder();
       final File resolvedPathEntry = getEclipseProject().getChild(path, relative);
       return new File[] { resolvedPathEntry };
-      // TODO
-      // } catch (final MultipleFolderException e) {
-      // A4ELogging.debug(e.getMessage());
-      // // Should never happen here...
-      // final StringBuffer buffer = new StringBuffer();
-      // buffer.append("Project '");
-      // buffer.append(getEclipseProject().getName());
-      // buffer.append("' contains multiple default output folder! ");
-      // throw new BuildException(buffer.toString());
-      // } catch (final BuildException ex) {
-      // throw ex;
-      // } catch (final Exception e) {
-      // throw new BuildException(e.getMessage());
-      // }
     }
   }
 }
