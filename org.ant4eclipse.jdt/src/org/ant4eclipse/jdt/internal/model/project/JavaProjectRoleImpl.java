@@ -77,7 +77,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   public RawClasspathEntry[] getRawClasspathEntries(final int entrykind) {
     final LinkedList<ClasspathEntry> templist = new LinkedList<ClasspathEntry>();
-    for (final ClasspathEntry entry : templist) {
+    for (final ClasspathEntry entry : this._eclipseClasspathEntries) {
       if (entry.getEntryKind() == entrykind) {
         templist.add(entry);
       }
