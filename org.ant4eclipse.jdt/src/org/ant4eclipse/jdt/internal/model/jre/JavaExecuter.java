@@ -30,8 +30,8 @@ import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
  * <p>
  * An instance of type {@link JavaExecuter} can be used to execute a java application with a specific java runtime
  * environment. You have to specify the directory that contains the java runtime within the constructor of this class.
- * To set the java class that should be executed you have to call <code>setMainClass(String)</code>. To set class
- * path entries you can use one of the <code>setClasspathEntries()</code>.
+ * To set the java class that should be executed you have to call <code>setMainClass(String)</code>. To set class path
+ * entries you can use one of the <code>setClasspathEntries()</code>.
  * </p>
  * <p>
  * Example: <code><pre>
@@ -97,7 +97,19 @@ public class JavaExecuter {
     final JavaExecuter javaExecuter = new JavaExecuter(jreDirectory);
 
     // resolve the class path entries
-    final String[] classpathentries = ClassLoadingHelper.getClasspathEntriesFor(JavaRuntimeImpl.class);
+    String[] classpathentries = ClassLoadingHelper.getClasspathEntriesFor(JavaRuntimeImpl.class);
+
+    // TODO
+    // patch for the usage with clover instrumented classes...
+    final String ant4eclipseCloverPath = System.getProperty("clover.path");
+    if (ant4eclipseCloverPath != null) {
+      final String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split(File.pathSeparator);
+      final String[] finalEntries = new String[ant4eclipseCloverPathEntries.length + classpathentries.length];
+      System.arraycopy(ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length);
+      System.arraycopy(classpathentries, 0, finalEntries, ant4eclipseCloverPathEntries.length, classpathentries.length);
+      classpathentries = finalEntries;
+    }
+
     javaExecuter.setClasspathEntries(classpathentries);
 
     // return result
@@ -231,6 +243,9 @@ public class JavaExecuter {
       // read out and err stream
       this._systemOut = extractFromInputStream(proc.getInputStream());
       this._systemErr = extractFromInputStream(proc.getErrorStream());
+
+      // TODO
+      System.err.println(Arrays.asList(this._systemErr));
 
       // debug
       A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList(this._systemOut));

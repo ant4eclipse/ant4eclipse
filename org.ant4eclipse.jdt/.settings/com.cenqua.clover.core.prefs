@@ -1,6 +1,7 @@
-#Mon Jun 22 23:22:24 CEST 2009
+#Mon Jun 22 23:26:54 CEST 2009
 block_filters=Source Directive
 eclipse.preferences.version=1
+exclude_filter=org/ant4eclipse/jdt/internal/model/jre/**/*.java
 flush_interval=1000
 flush_policy=0
 include_filter=**/*.java
@@ -9,5 +10,5 @@ init_string_default=true
 init_string_project_relative=true
 instrumentation_enabled=true
 output_root=.clover/bin
-output_root_same_as_project=false
+output_root_same_as_project=true
 should_qualify_java_lang=true
