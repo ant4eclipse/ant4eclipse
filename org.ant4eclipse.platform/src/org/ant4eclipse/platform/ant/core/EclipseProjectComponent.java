@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
+import java.io.File;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -27,9 +29,10 @@ import org.apache.tools.ant.BuildException;
  * E.g. if an ant task implements this interface, you are able to set a workspace and a project name on this component,
  * e.g.:
  * 
- * <pre><code>
+ * <pre>
+ * &lt;code&gt;
  * &lt;myTask workspace=&quot;c:/dev/workspace&quot; projectName=&quot;myProject&quot; /&gt;
- * </code>
+ * &lt;/code&gt;
  * </pre>
  * 
  * </p>
@@ -37,6 +40,19 @@ import org.apache.tools.ant.BuildException;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface EclipseProjectComponent extends WorkspaceComponent {
+
+  /**
+   * <p>
+   * Sets the project.
+   * </p>
+   * 
+   * @param project
+   *          the project.
+   * 
+   * @deprecated use setWorkspaceDirectory() and setProjectName() instead!
+   */
+  @Deprecated
+  public void setProject(File projectPath);
 
   /**
    * <p>

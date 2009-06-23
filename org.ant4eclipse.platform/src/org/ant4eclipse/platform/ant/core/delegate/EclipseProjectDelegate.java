@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
+import java.io.File;
+
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -42,6 +46,13 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    */
   public EclipseProjectDelegate(final ProjectComponent component) {
     super(component);
+  }
+
+  /**
+   * @see org.ant4eclipse.platform.ant.core.EclipseProjectComponent#setProject(java.io.File)
+   */
+  public void setProject(File projectPath) {
+    throw new Ant4EclipseException(PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT);
   }
 
   /**

@@ -140,6 +140,14 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     this._projectDelegate.setProjectName(projectName);
   }
 
+  /**
+   * @param projectPath
+   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#setProject(java.io.File)
+   */
+  public void setProject(File projectPath) {
+    this._projectDelegate.setProject(projectPath);
+  }
+
   public final void setProperty(String property) {
     this._getPathDelegate.setProperty(property);
   }

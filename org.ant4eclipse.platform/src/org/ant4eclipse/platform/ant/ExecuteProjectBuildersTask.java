@@ -1,8 +1,6 @@
 package org.ant4eclipse.platform.ant;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
@@ -10,30 +8,32 @@ import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 /**
- * @author
+ * <p>
+ * Executes all the project builders that are defined in an eclipse project.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask implements DynamicElement,
     MacroExecutionComponent<String> {
-
-  /** list of all builder macro definitions */
-  private final Map<String, MacroDef>          _builderMacroDefs;
 
   /** the {@link MacroExecutionDelegate} */
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
   /**
-   *
+   * <p>
+   * Creates a new instance of type {@link ExecuteProjectBuildersTask}.
+   * </p>
    */
   public ExecuteProjectBuildersTask() {
+    // create the delegate
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeBuildCommands");
-    this._builderMacroDefs = new HashMap<String, MacroDef>();
   }
 
   public String getPrefix() {
@@ -62,7 +62,8 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
    * @throws BuildException
    */
   public Object createDynamicElement(String name) {
-    return createScopedMacroDefinition(name);
+    NestedSequential sequential = createScopedMacroDefinition(name);
+    return sequential;
   }
 
   @Override
@@ -71,20 +72,39 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
     // check require fields
     requireWorkspaceAndProjectNameSet();
 
-    EclipseProject eclipseProject = getEclipseProject();
-
-    BuildCommand[] buildCommands = eclipseProject.getBuildCommands();
+    // get all build commands
+    BuildCommand[] buildCommands = getEclipseProject().getBuildCommands();
 
     for (BuildCommand buildCommand : buildCommands) {
-      System.err.println(buildCommand);
-      if (this._builderMacroDefs.containsKey(buildCommand.getName())) {
-        MacroDef macroDef = this._builderMacroDefs.get(buildCommand.getName());
 
-        // MacroExecutionValues values = new MacroExecutionValues();
+      ScopedMacroDefinition<String> macroDefinition = getScopedMacroDefinition(buildCommand.getName());
+
+      if (macroDefinition != null) {
+        MacroDef macroDef = macroDefinition.getMacroDef();
+
+        MacroExecutionValues values = new MacroExecutionValues();
         // values.getProperties().put("", buildCommand.getName());
 
-        this._macroExecutionDelegate.executeMacroInstance(macroDef, null);
+        this._macroExecutionDelegate.executeMacroInstance(macroDef, values);
+      } else {
+        throw new BuildException();
       }
     }
+  }
+
+  /**
+   * @param name
+   * @return
+   */
+  protected ScopedMacroDefinition<String> getScopedMacroDefinition(String name) {
+    //
+    List<ScopedMacroDefinition<String>> list = getScopedMacroDefinitions();
+
+    for (ScopedMacroDefinition<String> scopedMacroDefinition : list) {
+      if (name.equalsIgnoreCase(scopedMacroDefinition.getScope())) {
+        return scopedMacroDefinition;
+      }
+    }
+    return null;
   }
 }

@@ -11,31 +11,29 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-import java.io.File;
-
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseCondition;
-import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
+import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
+import org.ant4eclipse.platform.ant.core.condition.AbstractProjectBasedCondition;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
 /**
+ * <p>
  * An ant condition that allows to check if a project has a specific nature.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class HasNature extends AbstractAnt4EclipseCondition {
-
-  /** the project delegate */
-  private final EclipseProjectDelegate _projectDelegate;
+public class HasNature extends AbstractProjectBasedCondition implements EclipseProjectComponent {
 
   /** Comment for <code>_nature</code> */
-  private String                _nature;
+  private String _nature;
 
   /**
+   * <p>
    * Creates a new instance of type HasNature.
+   * </p>
    */
   public HasNature() {
-    this._projectDelegate = new EclipseProjectDelegate(this);
   }
 
   /**
@@ -43,10 +41,10 @@ public class HasNature extends AbstractAnt4EclipseCondition {
    */
   @Override
   public boolean doEval() throws BuildException {
-    this._projectDelegate.requireWorkspaceAndProjectNameSet();
+    requireWorkspaceAndProjectNameSet();
     requireNatureSet();
     try {
-      final EclipseProject project = this._projectDelegate.getEclipseProject();
+      final EclipseProject project = getEclipseProject();
       return project.hasNature(this._nature);
     } catch (final BuildException e) {
       throw e;
@@ -56,7 +54,9 @@ public class HasNature extends AbstractAnt4EclipseCondition {
   }
 
   /**
+   * <p>
    * Sets the nature to check for.
+   * </p>
    * 
    * @param nature
    *          the nature to set.
@@ -66,7 +66,9 @@ public class HasNature extends AbstractAnt4EclipseCondition {
   }
 
   /**
+   * <p>
    * Returns <code>true</code> if the nature has been set.
+   * </p>
    * 
    * @return <code>true</code> if the nature has been set.
    */
@@ -75,37 +77,13 @@ public class HasNature extends AbstractAnt4EclipseCondition {
   }
 
   /**
+   * <p>
    * Makes sure the nature attribute has been set. Otherwise throws a BuildException
+   * </p>
    */
   public final void requireNatureSet() {
     if (!isNatureSet()) {
       throw new BuildException("Attribute 'nature' has to be set!");
     }
-  }
-
-  /**
-   * Sets the name of the project.
-   * 
-   * @param project
-   *          the name of the project.
-   */
-  public void setProjectName(final String project) {
-    this._projectDelegate.setProjectName(project);
-  }
-
-  /**
-   * Sets the workspace.
-   * 
-   * @param workspace
-   *          the workspace.
-   * @deprecated
-   */
-  @Deprecated
-  public void setWorkspace(final File workspace) {
-    this._projectDelegate.setWorkspaceDirectory(workspace);
-  }
-
-  public final void setWorkspaceDirectory(File workspaceDirectory) {
-    this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 }

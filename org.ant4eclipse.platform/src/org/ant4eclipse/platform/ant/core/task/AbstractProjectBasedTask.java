@@ -14,6 +14,7 @@ package org.ant4eclipse.platform.ant.core.task;
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
@@ -26,7 +27,7 @@ import org.apache.tools.ant.BuildException;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask {
+public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask implements EclipseProjectComponent {
 
   /** Comment for <code>_projectSetBase</code> */
   private final EclipseProjectDelegate _projectBase;
@@ -86,4 +87,11 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask {
     this._projectBase.setWorkspaceDirectory(workspaceDirectory);
   }
 
+  /**
+   * @param projectPath
+   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#setProject(java.io.File)
+   */
+  public void setProject(File projectPath) {
+    this._projectBase.setProject(projectPath);
+  }
 }

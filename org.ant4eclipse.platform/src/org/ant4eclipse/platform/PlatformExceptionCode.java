@@ -22,6 +22,9 @@ public class PlatformExceptionCode extends ExceptionCode {
 
   public static String                MISSING_REPOSITORY      = "Missing repository";
 
+  @NLSMessage("The usage of the 'project' attribute is not supported anymore. Please use the 'workspaceDirectory' and 'projectName' attributes instead.")
+  public static PlatformExceptionCode DEPRECATED_USAGE_OF_SET_PROJECT;
+
   @NLSMessage("There are two projects with the same specified name: '%s', '%s' ")
   public static PlatformExceptionCode PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS;
 
