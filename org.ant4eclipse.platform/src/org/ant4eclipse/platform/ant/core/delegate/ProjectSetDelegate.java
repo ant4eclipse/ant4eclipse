@@ -16,22 +16,30 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
+ * <p>
+ * Delegate class for all tasks, types and conditions that deal with pathes.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ProjectSetDelegate extends TeamProjectSetDelegate implements ProjectSetComponent {
 
+  /** the name of alle projects that belong to a project set */
   private String[] _projectNames;
 
   /**
-   * Creates a new instance of type ProjectSetBase
+   * Creates a new instance of type {@link ProjectSetDelegate}.
    * 
    * @param component
+   *          the project component
    */
   public ProjectSetDelegate(final ProjectComponent component) {
     super(component);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setProjectNames(String projectNames) {
 
     //
@@ -40,7 +48,7 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
     } else {
       String[] names = projectNames.split(",");
 
-      // 
+      //
       this._projectNames = new String[names.length];
 
       for (int i = 0; i < names.length; i++) {
@@ -49,15 +57,23 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
     }
   }
 
-  // TODO
+  /**
+   * {@inheritDoc}
+   */
   public final String[] getProjectNames() {
     return isTeamProjectSetSet() ? getTeamProjectSet().getProjectNames() : this._projectNames;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final boolean isProjectNamesSet() {
     return this._projectNames != null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void requireProjectNamesSet() {
     if (!isProjectNamesSet()) {
       // TODO
@@ -65,6 +81,9 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void requireTeamProjectSetOrProjectNamesSet() {
     if (!isProjectNamesSet() && !isTeamProjectSetSet()) {
       // TODO

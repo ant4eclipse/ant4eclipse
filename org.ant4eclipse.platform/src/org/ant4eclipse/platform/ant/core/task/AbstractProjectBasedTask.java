@@ -47,14 +47,14 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
   /**
    * {@inheritDoc}
    */
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
+  public final void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     this._eclipseProjectDelegate.ensureRole(projectRoleClass);
   }
 
   /**
    * {@inheritDoc}
    */
-  public EclipseProject getEclipseProject() throws BuildException {
+  public final EclipseProject getEclipseProject() throws BuildException {
     return this._eclipseProjectDelegate.getEclipseProject();
   }
 
@@ -125,7 +125,8 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
   /**
    * {@inheritDoc}
    */
-  public void setProject(File projectPath) {
+  @Deprecated
+  public final void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);
   }
 }

@@ -23,9 +23,10 @@ import org.apache.tools.ant.BuildException;
  * <p>
  * E.g. if an ant task implements this interface, you are able to set a workspace on this task:
  * 
- * <pre><code>
+ * <pre>
+ * &lt;code&gt;
  * &lt;myTask workspace=&quot;c:/dev/workspace&quot; /&gt;
- * </code>
+ * &lt;/code&gt;
  * </pre>
  * 
  * </p>

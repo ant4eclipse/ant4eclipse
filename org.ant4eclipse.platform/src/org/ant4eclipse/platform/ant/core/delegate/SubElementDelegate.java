@@ -12,6 +12,10 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
+ * <p>
+ * Delegate class for all tasks and types working with (dymanic) sub elements.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class SubElementDelegate extends AbstractAntDelegate implements SubElementComponent {
@@ -19,48 +23,67 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
   /** The prefix of properties that holds a DynamicElementContributor class name */
   public final static String           SUB_ELEMENT_CONTRIBUTOR_PREFIX = "subElementContributor";
 
-  /** - */
-  private List<SubElementContribution> _subElementContributors;
+  /** the list of all sub element contributors */
+  private List<SubElementContribution> _subElementContributions;
 
-  /** - */
+  /** list that holds all parsed sub elements */
   private List<Object>                 _subElements;
 
-  /** - */
+  /** indicates if this instance has been initialized or not */
   private boolean                      _initialized                   = false;
 
   /**
+   * <p>
+   * Creates a new instance of type {@link SubElementDelegate}.
+   * </p>
+   * 
    * @param component
+   *          the project component
    */
   public SubElementDelegate(ProjectComponent component) {
     super(component);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public List<Object> getSubElements() {
     init();
 
     return this._subElements;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Object createDynamicElement(String name) throws BuildException {
 
+    // initialize the delegate
     init();
 
-    for (SubElementContribution dynamicElementContributor : this._subElementContributors) {
-      if (dynamicElementContributor.canHandleSubElement(name, getProjectComponent())) {
-        Object subElement = dynamicElementContributor.createSubElement(name, getProjectComponent());
+    // iterate over all known SubElementContributions
+    for (SubElementContribution subElementContribution : this._subElementContributions) {
+
+      // if the subElementContribution can handle the element -> handle it
+      if (subElementContribution.canHandleSubElement(name, getProjectComponent())) {
+        Object subElement = subElementContribution.createSubElement(name, getProjectComponent());
         this._subElements.add(subElement);
         return subElement;
       }
     }
 
+    // no subElementContribution was able to handle the element -> return null
     return null;
   }
 
   /**
-   * Loads the configured RoleIdentifiers
+   * <p>
+   * Loads the configured subElementContributors.
+   * </p>
    */
   protected void init() {
 
+    // Return if already initialized
     if (this._initialized) {
       return;
     }
@@ -68,23 +91,26 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
     // create the lists of dynamic elements
     this._subElements = new LinkedList<Object>();
 
-    // get all properties that defines a DynamicElementContributor
-    Iterable<String[]> dynamicElementContributorEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
+    // get all properties that defines a SubElementContributor
+    Iterable<String[]> subElementContributionEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
         .getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
 
-    final List<SubElementContribution> dynamicElementContributors = new LinkedList<SubElementContribution>();
+    final List<SubElementContribution> subElementContributions = new LinkedList<SubElementContribution>();
 
-    // Instantiate all ProjectRoleIdentifiers
-    for (String[] dynamicElementContributorEntry : dynamicElementContributorEntries) {
+    // Instantiate the subElementContributions
+    for (String[] subElementContributionDefinition : subElementContributionEntries) {
+
       // we're not interested in the key of a DynamicElementContributor, only the class name (value of the entry) is
       // relevant
-      String dynamicElementContributorClassName = dynamicElementContributorEntry[1];
-      SubElementContribution dynamicElementContributor = Utilities.newInstance(dynamicElementContributorClassName);
-      dynamicElementContributors.add(dynamicElementContributor);
+      String dynamicElementContributorClassName = subElementContributionDefinition[1];
+      SubElementContribution subElementContribution = Utilities.newInstance(dynamicElementContributorClassName);
+      subElementContributions.add(subElementContribution);
     }
 
-    this._subElementContributors = dynamicElementContributors;
+    // assign subElementContributions
+    this._subElementContributions = subElementContributions;
 
+    // set initialized
     this._initialized = true;
   }
 }

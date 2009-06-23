@@ -11,19 +11,57 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
+import org.apache.tools.ant.BuildException;
+
 /**
+ * <p>
+ * Extends the interface {@link TeamProjectSetComponent} and allows to set a list of project names to define a project
+ * set.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface ProjectSetComponent extends TeamProjectSetComponent {
 
+  /**
+   * <p>
+   * Sets the list of project names.
+   * </p>
+   * 
+   * @param projectNames
+   *          a comma separated list of project names.
+   */
   public void setProjectNames(String projectNames);
 
+  /**
+   * <p>
+   * Returns the list of project names.
+   * </p>
+   * 
+   * @return the list of project names.
+   */
   public String[] getProjectNames();
 
+  /**
+   * <p>
+   * Returns <code>true</code>, if the project names are set.
+   * </p>
+   * 
+   * @return <code>true</code>, if the project names are set.
+   */
   public boolean isProjectNamesSet();
 
+  /**
+   * <p>
+   * Throws an {@link BuildException} if the project names are not set.
+   * </p>
+   */
   public void requireProjectNamesSet();
 
+  /**
+   * <p>
+   * Throws an {@link BuildException} if the project names and team project set are not set.
+   * </p>
+   */
   public void requireTeamProjectSetOrProjectNamesSet();
 }

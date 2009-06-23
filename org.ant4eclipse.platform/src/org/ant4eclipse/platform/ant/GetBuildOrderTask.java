@@ -129,7 +129,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   // }
 
   /**
-   * 
+   *
    */
   public final void requireBuildorderPropertySet() {
     if (!isBuildorderPropertySet()) {
@@ -142,6 +142,14 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementDelegate.createDynamicElement(name);
+  }
+
+  /**
+   * @return
+   * @see org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate#getSubElements()
+   */
+  public List<Object> getSubElements() {
+    return this._subElementDelegate.getSubElements();
   }
 
   // protected void requireProjectSetOrProjectNamesSet() {

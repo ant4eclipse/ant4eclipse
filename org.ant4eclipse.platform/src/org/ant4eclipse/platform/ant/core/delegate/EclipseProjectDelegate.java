@@ -49,39 +49,29 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   }
 
   /**
-   * @see org.ant4eclipse.platform.ant.core.EclipseProjectComponent#setProject(java.io.File)
+   * {@inheritDoc}
    */
+  @Deprecated
   public void setProject(File projectPath) {
     throw new Ant4EclipseException(PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT);
   }
 
   /**
-   * <p>
-   * Sets the project name.
-   * </p>
-   * 
-   * @param projectName
-   *          the project name.
+   * {@inheritDoc}
    */
   public final void setProjectName(final String projectName) {
     this._projectName = projectName;
   }
 
   /**
-   * <p>
-   * Returns <code>true</code> if the project name has been set.
-   * </p>
-   * 
-   * @return <code>true</code> if the project name has been set.
+   * {@inheritDoc}
    */
   public final boolean isProjectNameSet() {
     return this._projectName != null;
   }
 
   /**
-   * <p>
-   * Throws an {@link BuildException} if the workspace directory or the project name is not set.
-   * </p>
+   * {@inheritDoc}
    */
   public final void requireWorkspaceAndProjectNameSet() {
     if (!isWorkspaceDirectorySet() || !isProjectNameSet()) {
@@ -91,14 +81,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   }
 
   /**
-   * <p>
-   * Returns the associated eclipse project.
-   * </p>
-   * 
-   * @return the associated eclipse project.
-   * 
-   * @throws BuildException
-   *           if the eclipse project with the given name does not exist in the given workspace.
+   * {@inheritDoc}
    */
   public EclipseProject getEclipseProject() throws BuildException {
 
@@ -117,12 +100,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   }
 
   /**
-   * <p>
-   * Ensures that the associated project has the specified project role.
-   * </p>
-   * 
-   * @param projectRoleClass
-   *          the project role class
+   * {@inheritDoc}
    */
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     if (!getEclipseProject().hasRole(projectRoleClass)) {

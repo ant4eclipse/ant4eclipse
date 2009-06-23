@@ -49,15 +49,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   }
 
   /**
-   * <p>
-   * Sets the workspace directory.
-   * </p>
-   * 
-   * @param workspace
-   *          the workspace directory
-   * 
-   * @deprecated use {@link WorkspaceDelegate#setWorkspaceDirectory(File)} instead. This method is for backward
-   *             compatibility only.
+   * {@inheritDoc}
    */
   @Deprecated
   public final void setWorkspace(final File workspace) {
@@ -65,43 +57,28 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   }
 
   /**
-   * <p>
-   * Sets the workspace directory.
-   * </p>
-   * 
-   * @param workspace
-   *          the workspace directory
+   * {@inheritDoc}
    */
   public final void setWorkspaceDirectory(final File workspaceDirectory) {
     this._workspaceDirectory = workspaceDirectory;
   }
 
   /**
-   * <p>
-   * Returns the workspace directory.
-   * </p>
-   * 
-   * @return the workspace directory.
+   * {@inheritDoc}
    */
   public final File getWorkspaceDirectory() {
     return this._workspaceDirectory;
   }
 
   /**
-   * <p>
-   * Returns <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
-   * </p>
-   * 
-   * @return <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
+   * {@inheritDoc}
    */
   public final boolean isWorkspaceDirectorySet() {
     return this._workspaceDirectory != null;
   }
 
   /**
-   * <p>
-   * Throws an {@link BuildException} if the workspace directory has not been set.
-   * </p>
+   * {@inheritDoc}
    */
   public final void requireWorkspaceDirectorySet() {
     if (!isWorkspaceDirectorySet()) {
@@ -111,11 +88,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   }
 
   /**
-   * <p>
-   * Returns the {@link Workspace} instance.
-   * </p>
-   * 
-   * @return
+   * {@inheritDoc}
    */
   public final Workspace getWorkspace() {
     requireWorkspaceDirectorySet();

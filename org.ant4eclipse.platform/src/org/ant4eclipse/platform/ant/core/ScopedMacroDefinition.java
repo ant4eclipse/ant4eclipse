@@ -5,11 +5,13 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
  * <p>
+ * Associates a ant {@link MacroDef} with a scope.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * 
  * @param <E>
+ *          the scope type
  */
 public class ScopedMacroDefinition<E> {
 
@@ -21,6 +23,7 @@ public class ScopedMacroDefinition<E> {
 
   /**
    * <p>
+   * Creates a new instance of type {@link ScopedMacroDefinition}.
    * </p>
    * 
    * @param macroDefinition
@@ -35,14 +38,22 @@ public class ScopedMacroDefinition<E> {
   }
 
   /**
-   * @return
+   * <p>
+   * Returns the macro definition.
+   * </p>
+   * 
+   * @return the macro definition.
    */
   public MacroDef getMacroDef() {
     return this._macroDef;
   }
 
   /**
-   * @return
+   * <p>
+   * Returns the scope.
+   * </p>
+   * 
+   * @return the scope.
    */
   public E getScope() {
     return this._scope;

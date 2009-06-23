@@ -14,7 +14,7 @@ import org.apache.tools.ant.types.Path;
 public interface PathComponent {
 
   /**
-   * Changes the path separator for this task.
+   * Sets the path separator for this task.
    * 
    * @param newpathseparator
    *          The new path separator.
@@ -38,7 +38,9 @@ public interface PathComponent {
   public boolean isPathSeparatorSet();
 
   /**
-   * Changes the current directory separator.
+   * <p>
+   * Sets the current directory separator.
+   * </p>
    * 
    * @param newdirseparator
    *          The new directory separator.
@@ -46,49 +48,70 @@ public interface PathComponent {
   public void setDirSeparator(String newdirseparator);
 
   /**
+   * <p>
    * Returns the currently used directory separator.
+   * </p>
    * 
-   * @return The currently used directory separator.
+   * @return the currently used directory separator.
    */
   public String getDirSeparator();
 
   /**
-   * @return
+   * <p>
+   * Returns <code>true</code> if the directory separator has been set.
+   * </p>
+   * 
+   * @return <code>true</code> if the directory separator has been set.
    */
   public boolean isDirSeparatorSet();
 
+  /**
+   * <p>
+   * Converts a {@link File} to a String.
+   * </p>
+   * <p>
+   * This method can be used to convert an eclipse class path to a String, which could be used in an ant property.
+   * </p>
+   * 
+   * @param entry
+   *          the file
+   * @return a string
+   */
   public String convertToString(File entry);
 
   /**
-   * Converts an array of ResolvedClasspathEntry-objects to a String. The entries are separated by the separator char.
-   * 
-   * This method can be used to convert a complete eclipse classpath to a String, which could be used in an ant
-   * property.
+   * <p>
+   * Converts an array of {@link File Files} to a String.
+   * </p>
+   * <p>
+   * This method can be used to convert an eclipse class path to a String, which could be used in an ant property.
+   * </p>
    * 
    * @param entries
-   *          The resolved pathes that shall be converted.
-   * @param pathseparator
-   *          The separator which shall be used for each path element.
-   * @param dirseparator
-   *          The separator which shall be used for each directory element.
-   * @param project
-   *          The associated project.
-   * 
-   * @return A String containing the pathes.
+   *          the file array
+   * @return a string
    */
   public String convertToString(File[] entries);
 
+  /**
+   * <p>
+   * Converts a{@link File} to an ant path.
+   * </p>
+   * 
+   * @param entry
+   *          the file
+   * @return a ant path
+   */
   public Path convertToPath(File entry);
 
   /**
-   * Converts the supplied resolved pathes to a Path instance.
+   * <p>
+   * Converts an array of {@link File Files} to an ant path.
+   * </p>
    * 
    * @param entries
-   *          The resolved pathes that shall be converted.
-   * @param project
-   *          The associated project.
-   * 
-   * @return The Path instance containing the supplied pathes.
+   *          the file array
+   * @return a ant path
    */
   public Path convertToPath(File[] entries);
 }

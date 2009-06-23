@@ -125,6 +125,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Deprecated
   public void setProject(File projectPath) {
     this._projectDelegate.setProject(projectPath);
   }

@@ -21,19 +21,24 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
- * Base class for all tasks working with project sets
+ * <p>
+ * Delegate class for all tasks working with project sets
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamProjectSetComponent {
-  /**  */
+
+  /** the team project set file */
   private File           _teamProjectSetFile;
 
-  /**  */
+  /** the team project set */
   private TeamProjectSet _teamProjectSet;
 
   /**
+   * <p>
    * Creates a new instance of type ProjectSetBase
+   * </p>
    * 
    * @param component
    */
@@ -42,7 +47,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
   }
 
   /**
-   * @return Returns the psfFileName.
+   * {@inheritDoc}
    */
   public final TeamProjectSet getTeamProjectSet() {
     if (this._teamProjectSet == null) {
@@ -53,24 +58,21 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
   }
 
   /**
-   * @param projectSet
-   *          The psfFileName to set.
+   * {@inheritDoc}
    */
   public final void setTeamProjectSet(final File projectSet) {
     this._teamProjectSetFile = projectSet;
   }
 
   /**
-   * Returns true if the project set has been set.
-   * 
-   * @return true <=> The project set has been set.
+   * {@inheritDoc}
    */
   public final boolean isTeamProjectSetSet() {
     return this._teamProjectSetFile != null;
   }
 
   /**
-   * 
+   * {@inheritDoc}
    */
   public final void requireTeamProjectSetSet() {
     if (!isTeamProjectSetSet()) {
@@ -79,12 +81,14 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
   }
 
   /**
-   * Reads and parses the projectset for this task. The project set to load is determindes by the
-   * {@link #setTeamProjectSet(File)}project set name.
+   * <p>
+   * Reads and parses the project set for this delegate. The project set to load is determines by the
+   * {@link #setTeamProjectSet(File)} project set name.
+   * </p>
    * 
-   * @precondition Name of projectset file has to be set before.
+   * @precondition Name of project set file has to be set before.
    * 
-   * @return Parsed projectset
+   * @return the {@link TeamProjectSet}
    */
   private TeamProjectSet readTeamProjectSet() {
     requireTeamProjectSetSet();

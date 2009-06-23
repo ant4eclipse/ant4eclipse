@@ -29,22 +29,22 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
 
   /**
    * <p>
+   * Creates a new instance of type {@link PathDelegate}.
    * </p>
    * 
    * @param component
+   *          the ProjectComponent
    */
   public PathDelegate(final ProjectComponent component) {
     super(component);
 
+    // set default separators
     this._pathSeparator = File.pathSeparator;
     this._dirSeparator = File.separator;
   }
 
   /**
-   * Changes the path separator for this task.
-   * 
-   * @param newpathseparator
-   *          The new path separator.
+   * {@inheritDoc}
    */
   public final void setPathSeparator(final String newpathseparator) {
     Assert.nonEmpty(newpathseparator);
@@ -53,30 +53,21 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   }
 
   /**
-   * Returns the currently used path separator.
-   * 
-   * @return The currently used path separator.
+   * {@inheritDoc}
    */
   public final String getPathSeparator() {
     return (this._pathSeparator);
   }
 
   /**
-   * <p>
-   * Returns <code>true</code> if the path separator has been set.
-   * </p>
-   * 
-   * @return <code>true</code> if the path separator has been set.
+   * {@inheritDoc}
    */
   public final boolean isPathSeparatorSet() {
     return this._pathSeparator != null;
   }
 
   /**
-   * Changes the current directory separator.
-   * 
-   * @param newdirseparator
-   *          The new directory separator.
+   * {@inheritDoc}
    */
   public final void setDirSeparator(final String newdirseparator) {
     Assert.nonEmpty(newdirseparator);
@@ -85,38 +76,28 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   }
 
   /**
-   * Returns the currently used directory separator.
-   * 
-   * @return The currently used directory separator.
+   * {@inheritDoc}
    */
   public final String getDirSeparator() {
     return (this._dirSeparator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final boolean isDirSeparatorSet() {
     return (this._dirSeparator != null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String convertToString(final File entry) {
     return convertToString(new File[] { entry });
   }
 
   /**
-   * Converts an array of ResolvedClasspathEntry-objects to a String. The entries are separated by the separator char.
-   * 
-   * This method can be used to convert a complete eclipse classpath to a String, which could be used in an ant
-   * property.
-   * 
-   * @param entries
-   *          The resolved pathes that shall be converted.
-   * @param pathseparator
-   *          The separator which shall be used for each path element.
-   * @param dirseparator
-   *          The separator which shall be used for each directory element.
-   * @param project
-   *          The associated project.
-   * 
-   * @return A String containing the pathes.
+   * {@inheritDoc}
    */
   public final String convertToString(final File[] entries) {
     Assert.notNull(entries);
@@ -146,19 +127,15 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
     return buffer.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final Path convertToPath(final File entry) {
     return convertToPath(new File[] { entry });
   }
 
   /**
-   * Converts the supplied resolved pathes to a Path instance.
-   * 
-   * @param entries
-   *          The resolved pathes that shall be converted.
-   * @param project
-   *          The associated project.
-   * 
-   * @return The Path instance containing the supplied pathes.
+   * {@inheritDoc}
    */
   public final Path convertToPath(final File[] entries) {
     Assert.notNull(entries);

@@ -124,6 +124,15 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementDelegate.createDynamicElement(name);
   }
+
+  /**
+   * @return
+   * @see org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate#getSubElements()
+   */
+  public List<Object> getSubElements() {
+    return this._subElementDelegate.getSubElements();
+  }
+
 }
 
 /**

@@ -27,16 +27,32 @@ import org.apache.tools.ant.taskdefs.MacroInstance;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 /**
+ * <p>
+ * Delegate class for all tasks, types and conditions that execute macros.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * 
+ * @param <E>
+ *          the scope
  */
 public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements MacroExecutionComponent<E> {
 
+  /** the prefix for all scoped properties and references */
   private String                               _prefix = null;
 
   /** list of all macro definitions */
   private final List<ScopedMacroDefinition<E>> _macroDefs;
 
   /**
-   * @param component
+   * <p>
+   * Creates a new instance of type {@link MacroExecutionDelegate}.
+   * </p>
+   * 
+   * @param task
+   *          the task
+   * @param prefix
+   *          the prefix for all scoped properties and references
    */
   public MacroExecutionDelegate(final Task task, String prefix) {
     super(task);
@@ -46,36 +62,40 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   }
 
   /**
-   * @param component
+   * <p>
+   * Creates a new instance of type {@link MacroExecutionDelegate}.
+   * </p>
+   * 
+   * @param task
+   *          the task
    */
   public MacroExecutionDelegate(final Task task) {
     this(task, null);
   }
 
   /**
-   * @return
+   * {@inheritDoc}
    */
   public String getPrefix() {
     return this._prefix;
   }
 
   /**
-   * @param prefix
+   * {@inheritDoc}
    */
   public void setPrefix(String prefix) {
     this._prefix = prefix;
   }
 
   /**
-   * @return
+   * {@inheritDoc}
    */
   public List<ScopedMacroDefinition<E>> getScopedMacroDefinitions() {
     return this._macroDefs;
   }
 
   /**
-   * @param scope
-   * @return
+   * {@inheritDoc}
    */
   public NestedSequential createScopedMacroDefinition(final E scope) {
     final MacroDef macroDef = new MacroDef();
@@ -85,10 +105,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   }
 
   /**
-   * @param macroDef
-   * @param prefix
-   * @param scopedProperties
-   * @param scopedReferences
+   * {@inheritDoc}
    */
   public void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
     Assert.notNull(macroDef);

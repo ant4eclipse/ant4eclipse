@@ -258,6 +258,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Deprecated
   public void setProject(File projectPath) {
     this._projectDelegate.setProject(projectPath);
   }
