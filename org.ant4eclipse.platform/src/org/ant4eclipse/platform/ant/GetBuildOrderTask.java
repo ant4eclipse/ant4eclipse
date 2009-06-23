@@ -25,6 +25,10 @@ import org.ant4eclipse.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
 
 /**
+ * <p>
+ * Calculates the build order for a set of projects.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -34,60 +38,87 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /** the delegate used for handling sub elements (e.g. &lt;jdtClasspathContainerArgument&gt; */
   private final SubElementDelegate            _subElementDelegate;
 
+  /** the project reference delegate */
   private final ProjectReferenceAwareDelegate _projectReferenceAwareDelegate;
 
   /** the property that should hold the ordered projects */
   private String                              _buildorderProperty;
 
-  // /** - */
-  // private NonJavaProjectHandling _nonjavaProjectHandling;
+  /** indicates if all projects in the workspace should be ordered */
+  private boolean                             _allprojects;
 
+  /**
+   * <p>
+   * Creates a new instance of type {@link GetBuildOrderTask}.
+   * </p>
+   */
   public GetBuildOrderTask() {
     super();
 
+    // create delegates
     this._subElementDelegate = new SubElementDelegate(this);
-
     this._projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
   }
 
-  public String[] getProjectReferenceTypes() {
-    return this._projectReferenceAwareDelegate.getProjectReferenceTypes();
-  }
-
-  public boolean isProjectReferenceTypesSet() {
-    return this._projectReferenceAwareDelegate.isProjectReferenceTypesSet();
-  }
-
-  public void requireProjectReferenceTypesSet() {
-    this._projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
-  }
-
+  /**
+   * {@inheritDoc}
+   */
   public void setProjectReferenceTypes(String buildOrderReferenceTypes) {
     this._projectReferenceAwareDelegate.setProjectReferenceTypes(buildOrderReferenceTypes);
   }
 
-  // public NonJavaProjectHandling getNonJavaProjectHandling() {
-  // if (this._nonjavaProjectHandling == null) {
-  // this._nonjavaProjectHandling = new NonJavaProjectHandling("fail");
-  // }
-  // return this._nonjavaProjectHandling;
-  // }
-  //
-  // public void setNonJavaProjectHandling(final NonJavaProjectHandling nonjavaProjectHandling) {
-  // this._nonjavaProjectHandling = nonjavaProjectHandling;
-  // }
-
-  // /**
-  // * Changes a flag which indicates whether all projects within a workspace shall be recognized or not.
-  // *
-  // * @param allprojects
-  // * true <=> Take all projects within the workspace into account.
-  // */
-  // public void setAllProjects(final boolean allprojects) {
-  // this._allprojects = allprojects;
-  // }
+  /**
+   * {@inheritDoc}
+   */
+  public String[] getProjectReferenceTypes() {
+    return this._projectReferenceAwareDelegate.getProjectReferenceTypes();
+  }
 
   /**
+   * {@inheritDoc}
+   */
+  public boolean isProjectReferenceTypesSet() {
+    return this._projectReferenceAwareDelegate.isProjectReferenceTypesSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void requireProjectReferenceTypesSet() {
+    this._projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Object createDynamicElement(String name) throws BuildException {
+    return this._subElementDelegate.createDynamicElement(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public List<Object> getSubElements() {
+    return this._subElementDelegate.getSubElements();
+  }
+
+  /**
+   * <p>
+   * Changes a flag which indicates whether all projects within a workspace should be ordered or not.
+   * </p>
+   * 
+   * @param allprojects
+   *          <code>true</code> if all projects within the workspace should be taken.
+   */
+  public void setAllProjects(final boolean allprojects) {
+    this._allprojects = allprojects;
+  }
+
+  /**
+   * <p>
+   * Sets the property that holds the ordered project names.
+   * </p>
+   * 
    * @param buildorderProperty
    */
   public final void setBuildorderProperty(final String buildorderProperty) {
@@ -116,20 +147,10 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
     return ((this._buildorderProperty != null) && (this._buildorderProperty.length() > 0));
   }
 
-  // public String getProjectNames() {
-  // return this._projectNames;
-  // }
-  //
-  // public void setProjectNames(final String projectNames) {
-  // this._projectNames = projectNames;
-  // }
-  //
-  // public boolean isProjectNamesSet() {
-  // return ((this._projectNames != null) && (this._projectNames.length() > 0));
-  // }
-
   /**
-   *
+   * <p>
+   * Throws a {@link BuildException} if the build order property is not set.
+   * </p>
    */
   public final void requireBuildorderPropertySet() {
     if (!isBuildorderPropertySet()) {
@@ -138,31 +159,21 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   }
 
   /**
-   * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
+   * <p>
+   * Throws a {@link BuildException} if neither 'allprojects' nor 'teamProjectSet' nor 'projectNames' are set.
+   * </p>
    */
-  public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementDelegate.createDynamicElement(name);
+  protected void requireAllProjectsOrProjectSetOrProjectNamesSet() {
+    if (!this._allprojects) {
+      requireTeamProjectSetOrProjectNamesSet();
+    }
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate#getSubElements()
+   * <p>
+   * Executes the GetBuildOrderTask.
+   * </p>
    */
-  public List<Object> getSubElements() {
-    return this._subElementDelegate.getSubElements();
-  }
-
-  // protected void requireProjectSetOrProjectNamesSet() {
-  // if (!this._allprojects) {
-  // if (!isProjectSetSet() && !isProjectNamesSet()) {
-  // throw new BuildException("Missing parameter: neither 'projectSet' nor 'projectNames' has been set.");
-  // }
-  // if (isProjectSetSet() && isProjectNamesSet()) {
-  // throw new BuildException("Duplicate parameter: either 'projectSet' or 'projectNames' must be set.");
-  // }
-  // }
-  // }
-
   @Override
   protected void doExecute() {
     requireWorkspaceSet();
@@ -174,6 +185,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
         getProjectNames(), this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate
             .getSubElements());
 
+    // set property
     getProject().setProperty(this._buildorderProperty, convertToString(orderedProjects, ','));
   }
 
@@ -189,8 +201,11 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   private String convertToString(final List<EclipseProject> projects, final char separator) {
     Assert.notNull(projects);
+
+    // create StringBuffer
     final StringBuffer buffer = new StringBuffer();
 
+    // construct result
     for (Iterator<EclipseProject> iterator = projects.iterator(); iterator.hasNext();) {
       EclipseProject eclipseProject = iterator.next();
       buffer.append(eclipseProject.getFolderName());
@@ -202,29 +217,4 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
     // return result
     return buffer.toString();
   }
-
-  // public static class NonJavaProjectHandling extends EnumeratedAttribute {
-  //
-  // public NonJavaProjectHandling() {
-  // // needed by Ant to instantiate
-  // }
-  //
-  // public NonJavaProjectHandling(final String value) {
-  // super();
-  // setValue(value);
-  // }
-  //
-  // /**
-  // * {@inheritDoc}
-  // */
-  // @Override
-  // public String[] getValues() {
-  // return new String[] { "fail", "ignore", "prepend", "append" };
-  // }
-  //
-  // public int asBuildOrderResolverConstant() {
-  // return getIndex() + 1;
-  // }
-  //
-  // }
 }
