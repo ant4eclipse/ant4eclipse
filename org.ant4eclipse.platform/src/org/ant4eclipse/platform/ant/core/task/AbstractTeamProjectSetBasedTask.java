@@ -14,85 +14,83 @@ package org.ant4eclipse.platform.ant.core.task;
 import java.io.File;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
 import org.ant4eclipse.platform.ant.core.delegate.TeamProjectSetDelegate;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 /**
+ * <p>
  * Base class for all tasks working with project sets
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4EclipseTask implements
     TeamProjectSetComponent {
 
-  private final TeamProjectSetDelegate _projectSetBase;
+  /** the project set delegate */
+  private final TeamProjectSetDelegate _projectSetDelegate;
 
   /**
-   * 
+   *
    */
   public AbstractTeamProjectSetBasedTask() {
-    this._projectSetBase = new TeamProjectSetDelegate(this);
+    this._projectSetDelegate = new TeamProjectSetDelegate(this);
   }
 
   /**
-   * Returns the ProjectSetBase which allows to do configurations related to a project set.
-   * 
-   * @return The ProjectSetBase instance.
-   */
-  protected TeamProjectSetDelegate getProjectSetBase() {
-    return (this._projectSetBase);
-  }
-
-  /**
-   * Returns the TeamProjectSet instance associated with this task.
-   * 
-   * @return The TeamProjectSet instance associated with this task.
-   * 
-   * @throws Ant4EclipseException
-   *           Reading the data failed for some reason.
+   * {@inheritDoc}
    */
   public TeamProjectSet getProjectSet() {
-    return this._projectSetBase.getTeamProjectSet();
+    return this._projectSetDelegate.getTeamProjectSet();
   }
 
   /**
-   * Returns true if the project set has been set.
-   * 
-   * @return true <=> The project set has been set.
+   * {@inheritDoc}
    */
   public boolean isProjectSetSet() {
-    return this._projectSetBase.isTeamProjectSetSet();
+    return this._projectSetDelegate.isTeamProjectSetSet();
   }
 
   /**
-   * 
+   * {@inheritDoc}
    */
   public void requireProjectSetSet() {
-    this._projectSetBase.requireTeamProjectSetSet();
+    this._projectSetDelegate.requireTeamProjectSetSet();
   }
 
   /**
-   * @param projectSet
+   * {@inheritDoc}
    */
   public void setProjectSet(final File projectSet) {
-    this._projectSetBase.setTeamProjectSet(projectSet);
+    this._projectSetDelegate.setTeamProjectSet(projectSet);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final TeamProjectSet getTeamProjectSet() {
-    return this._projectSetBase.getTeamProjectSet();
+    return this._projectSetDelegate.getTeamProjectSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final boolean isTeamProjectSetSet() {
-    return this._projectSetBase.isTeamProjectSetSet();
+    return this._projectSetDelegate.isTeamProjectSetSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void requireTeamProjectSetSet() {
-    this._projectSetBase.requireTeamProjectSetSet();
+    this._projectSetDelegate.requireTeamProjectSetSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setTeamProjectSet(File projectSet) {
-    this._projectSetBase.setTeamProjectSet(projectSet);
+    this._projectSetDelegate.setTeamProjectSet(projectSet);
   }
 }

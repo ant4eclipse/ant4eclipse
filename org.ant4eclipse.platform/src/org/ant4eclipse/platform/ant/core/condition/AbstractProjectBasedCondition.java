@@ -23,6 +23,10 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 
 /**
+ * <p>
+ * Abstract condition for all project based conditions.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseCondition implements WorkspaceComponent,
@@ -32,109 +36,96 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   private final EclipseProjectDelegate _projectDelegate;
 
   /**
+   * <p>
    * Creates a new instance of type {@link AbstractProjectBasedCondition}.
+   * </p>
    */
   public AbstractProjectBasedCondition() {
     this._projectDelegate = new EclipseProjectDelegate(this);
   }
 
   /**
-   * Sets the name of the project.
-   * 
-   * @param project
-   *          the name of the project.
+   * {@inheritDoc}
    */
   public void setProjectName(final String project) {
     this._projectDelegate.setProjectName(project);
   }
 
   /**
-   * Sets the workspace.
-   * 
-   * @param workspace
-   *          the workspace.
-   * @deprecated
+   * {@inheritDoc}
    */
   @Deprecated
   public void setWorkspace(final File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setWorkspaceDirectory(File workspaceDirectory) {
     this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
   /**
-   * @param projectRoleClass
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#ensureRole(java.lang.Class)
+   * {@inheritDoc}
    */
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     this._projectDelegate.ensureRole(projectRoleClass);
   }
 
   /**
-   * @return
-   * @throws BuildException
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#getEclipseProject()
+   * {@inheritDoc}
    */
   public EclipseProject getEclipseProject() throws BuildException {
     return this._projectDelegate.getEclipseProject();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#getWorkspace()
+   * {@inheritDoc}
    */
   public final Workspace getWorkspace() {
     return this._projectDelegate.getWorkspace();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#getWorkspaceDirectory()
+   * {@inheritDoc}
    */
   public final File getWorkspaceDirectory() {
     return this._projectDelegate.getWorkspaceDirectory();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#isProjectNameSet()
+   * {@inheritDoc}
    */
   public final boolean isProjectNameSet() {
     return this._projectDelegate.isProjectNameSet();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#isWorkspaceDirectorySet()
+   * {@inheritDoc}
    */
   public final boolean isWorkspaceDirectorySet() {
     return this._projectDelegate.isWorkspaceDirectorySet();
   }
 
   /**
-   * 
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#requireWorkspaceAndProjectNameSet()
+   * {@inheritDoc}
    */
   public final void requireWorkspaceAndProjectNameSet() {
     this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
   /**
-   * 
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#requireWorkspaceDirectorySet()
+   * {@inheritDoc}
    */
   public final void requireWorkspaceDirectorySet() {
     this._projectDelegate.requireWorkspaceDirectorySet();
   }
 
   /**
-   * @param projectPath
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#setProject(java.io.File)
+   * {@inheritDoc}
    */
   public void setProject(File projectPath) {
     this._projectDelegate.setProject(projectPath);
   }
-
 }

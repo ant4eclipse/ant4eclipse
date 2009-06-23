@@ -29,8 +29,8 @@ import org.apache.tools.ant.BuildException;
  */
 public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask implements EclipseProjectComponent {
 
-  /** Comment for <code>_projectSetBase</code> */
-  private final EclipseProjectDelegate _projectBase;
+  /** the project delegate */
+  private final EclipseProjectDelegate _eclipseProjectDelegate;
 
   /**
    * <p>
@@ -39,59 +39,93 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    */
   public AbstractProjectBasedTask() {
     super();
-    this._projectBase = new EclipseProjectDelegate(this);
-  }
 
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    this._projectBase.ensureRole(projectRoleClass);
-  }
-
-  public EclipseProject getEclipseProject() throws BuildException {
-    return this._projectBase.getEclipseProject();
-  }
-
-  public final Workspace getWorkspace() {
-    return this._projectBase.getWorkspace();
-  }
-
-  public final File getWorkspaceDirectory() {
-    return this._projectBase.getWorkspaceDirectory();
-  }
-
-  public final boolean isProjectNameSet() {
-    return this._projectBase.isProjectNameSet();
-  }
-
-  public final boolean isWorkspaceDirectorySet() {
-    return this._projectBase.isWorkspaceDirectorySet();
-  }
-
-  public final void requireWorkspaceAndProjectNameSet() {
-    this._projectBase.requireWorkspaceAndProjectNameSet();
-  }
-
-  public final void requireWorkspaceDirectorySet() {
-    this._projectBase.requireWorkspaceDirectorySet();
-  }
-
-  public final void setProjectName(String projectName) {
-    this._projectBase.setProjectName(projectName);
-  }
-
-  @SuppressWarnings("deprecation")
-  public final void setWorkspace(File workspace) {
-    this._projectBase.setWorkspace(workspace);
-  }
-
-  public final void setWorkspaceDirectory(File workspaceDirectory) {
-    this._projectBase.setWorkspaceDirectory(workspaceDirectory);
+    // create delegate
+    this._eclipseProjectDelegate = new EclipseProjectDelegate(this);
   }
 
   /**
-   * @param projectPath
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#setProject(java.io.File)
+   * {@inheritDoc}
+   */
+  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
+    this._eclipseProjectDelegate.ensureRole(projectRoleClass);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public EclipseProject getEclipseProject() throws BuildException {
+    return this._eclipseProjectDelegate.getEclipseProject();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final Workspace getWorkspace() {
+    return this._eclipseProjectDelegate.getWorkspace();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final File getWorkspaceDirectory() {
+    return this._eclipseProjectDelegate.getWorkspaceDirectory();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final boolean isProjectNameSet() {
+    return this._eclipseProjectDelegate.isProjectNameSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final boolean isWorkspaceDirectorySet() {
+    return this._eclipseProjectDelegate.isWorkspaceDirectorySet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void requireWorkspaceAndProjectNameSet() {
+    this._eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void requireWorkspaceDirectorySet() {
+    this._eclipseProjectDelegate.requireWorkspaceDirectorySet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void setProjectName(String projectName) {
+    this._eclipseProjectDelegate.setProjectName(projectName);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @SuppressWarnings("deprecation")
+  public final void setWorkspace(File workspace) {
+    this._eclipseProjectDelegate.setWorkspace(workspace);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void setWorkspaceDirectory(File workspaceDirectory) {
+    this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public void setProject(File projectPath) {
-    this._projectBase.setProject(projectPath);
+    this._eclipseProjectDelegate.setProject(projectPath);
   }
 }

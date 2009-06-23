@@ -26,50 +26,87 @@ import org.apache.tools.ant.types.Path;
  */
 public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask implements PathComponent {
 
+  /** the path delegate */
   private final PathDelegate _pathDelegate;
 
+  /**
+   * <p>
+   * Creates a new instance of type {@link AbstractProjectPathTask}.
+   * </p>
+   */
   public AbstractProjectPathTask() {
     super();
 
+    // create the delegate
     this._pathDelegate = new PathDelegate(this);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String getDirSeparator() {
     return this._pathDelegate.getDirSeparator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String getPathSeparator() {
     return this._pathDelegate.getPathSeparator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final boolean isDirSeparatorSet() {
     return this._pathDelegate.isDirSeparatorSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final boolean isPathSeparatorSet() {
     return this._pathDelegate.isPathSeparatorSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setDirSeparator(String newdirseparator) {
     this._pathDelegate.setDirSeparator(newdirseparator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setPathSeparator(String newpathseparator) {
     this._pathDelegate.setPathSeparator(newpathseparator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final Path convertToPath(File[] entries) {
     return this._pathDelegate.convertToPath(entries);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String convertToString(File[] entries) {
     return this._pathDelegate.convertToString(entries);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final Path convertToPath(File entry) {
     return this._pathDelegate.convertToPath(entry);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String convertToString(File entry) {
     return this._pathDelegate.convertToString(entry);
   }
