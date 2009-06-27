@@ -1,9 +1,9 @@
 package org.ant4eclipse.platform.ant;
 
-import java.io.File;
-
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
+
+import java.io.File;
 
 public class GetProjectDirecoryTest extends AbstractWorkspaceBasedBuildFileTest {
 

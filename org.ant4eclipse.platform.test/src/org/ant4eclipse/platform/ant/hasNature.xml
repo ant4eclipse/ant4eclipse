@@ -31,6 +31,18 @@
 		<echo>OK</echo>
 	</target>
 
+	<!-- test project attribute -->
+	<target name='testProjectAttribute'>
+		<condition property="hasNature">
+			<hasNature workspace='${workspaceDir}'
+			           project='D:\test'
+			           nature='org.ant4eclipse.testnature'
+			/>
+		</condition>
+		<fail unless="hasNature">FAILURE</fail>
+		<echo>OK</echo>
+	</target>
+
 	<!-- default dummy target -->
 	<target name="foo" />
 </project>

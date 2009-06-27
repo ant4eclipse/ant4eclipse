@@ -1,10 +1,10 @@
 package org.ant4eclipse.platform.test.builder;
 
+import org.ant4eclipse.core.Assert;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.ant4eclipse.core.Assert;
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)

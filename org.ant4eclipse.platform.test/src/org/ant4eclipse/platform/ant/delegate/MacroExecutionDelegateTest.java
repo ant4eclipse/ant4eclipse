@@ -1,9 +1,11 @@
 package org.ant4eclipse.platform.ant.delegate;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.DynamicElement;
@@ -18,10 +20,16 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
   }
 
   public void testMacroExecute() {
-    expectLog("testMacroExecute", "initialtest1.testtest2.testtest1.testinitialtest3.testinitial");
+    MacroExecuteTask.counter = 0;
+    expectLog("testMacroExecute", "initial!0.test!1.test!0.test!initial!2.test!initial");
   }
 
+  /**
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   */
   public static class MacroExecuteTask extends AbstractAnt4EclipseTask implements DynamicElement {
+
+    public static int                            counter = 0;
 
     private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
@@ -42,7 +50,8 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
           .getScopedMacroDefinitions()) {
 
         MacroExecutionValues values = new MacroExecutionValues();
-        values.getProperties().put("test", this._macroExecutionDelegate.getPrefix() + ".test");
+        values.getProperties().put("test", counter + ".test");
+        counter++;
         this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(), values);
       }
     }

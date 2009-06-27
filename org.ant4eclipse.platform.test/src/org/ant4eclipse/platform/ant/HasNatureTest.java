@@ -3,6 +3,8 @@ package org.ant4eclipse.platform.ant;
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
+import org.apache.tools.ant.BuildException;
+
 public class HasNatureTest extends AbstractWorkspaceBasedBuildFileTest {
 
   @Override
@@ -21,5 +23,15 @@ public class HasNatureTest extends AbstractWorkspaceBasedBuildFileTest {
 
   public void testExistingNature() {
     expectLog("testExistingNature", "OK");
+  }
+
+  public void testProjectAttribute() {
+    try {
+      expectLog("testProjectAttribute", "OK");
+    } catch (BuildException e) {
+      // ok
+      return;
+    }
+    fail();
   }
 }

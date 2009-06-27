@@ -13,12 +13,14 @@ package org.ant4eclipse.platform.test.builder;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.testframework.FileHelper;
+
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.Assert;
 
 /**
  * Creates Eclipse projects for test purposes.
@@ -41,6 +43,13 @@ public class EclipseProjectBuilder {
     this._natures = new LinkedList<String>();
     this._builders = new LinkedList<String>();
 
+  }
+
+  /**
+   * @return the projectName
+   */
+  public String getProjectName() {
+    return this._projectName;
   }
 
   // /**

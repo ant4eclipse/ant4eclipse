@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<project name="execute-project-builders-test" basedir="." default="foo">
+
+	<!-- definition of condition HasNature -->
+	<typedef name="executeProjectSet" classname="org.ant4eclipse.platform.ant.ExecuteProjectSetTask" />
+
+	<target name="executeProjectSet">
+
+		<executeProjectSet workspace="${workspaceDir}"
+				           teamprojectset="projectSet.psf" >
+
+			  <forEachProject>
+			    <echo>${executeProjectSet.project.name}</echo>
+			  </forEachProject>
+
+
+		</executeProjectSet>
+
+	</target>
+
+	<!-- default dummy target -->
+	<target name="foo" />
+</project>

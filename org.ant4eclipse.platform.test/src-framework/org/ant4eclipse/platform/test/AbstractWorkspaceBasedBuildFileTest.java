@@ -11,11 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test;
 
-import java.io.File;
-
 import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.platform.test.builder.FileHelper;
+
+import org.ant4eclipse.testframework.FileHelper;
+import org.ant4eclipse.testframework.TestDirectory;
 import org.apache.tools.ant.BuildFileTest;
+
+import java.io.File;
 
 /**
  * Baseclass for all buildfile-based tests in the platform layer
@@ -24,14 +26,14 @@ import org.apache.tools.ant.BuildFileTest;
  */
 public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest {
 
-  private TestWorkspace _testWorkspace;
+  private TestDirectory _testWorkspace;
 
   /**
    * Creates the Test Environment before execution of a test case
    */
   @Override
   public void setUp() throws Exception {
-    this._testWorkspace = new TestWorkspace();
+    this._testWorkspace = new TestDirectory();
   }
 
   /**
@@ -41,7 +43,9 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   protected void tearDown() throws Exception {
     super.tearDown();
     this._testWorkspace.dispose();
-    ServiceRegistry.reset();
+    if (ServiceRegistry.isConfigured()) {
+      ServiceRegistry.reset();
+    }
   }
 
   /**
@@ -90,11 +94,11 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   }
 
   /**
-   * Returns a {@link TestWorkspace} for this test case.
+   * Returns a {@link TestDirectory} for this test case.
    * 
    * @return
    */
-  protected TestWorkspace getTestWorkspace() {
+  protected TestDirectory getTestWorkspace() {
     return this._testWorkspace;
   }
 

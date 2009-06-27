@@ -15,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
