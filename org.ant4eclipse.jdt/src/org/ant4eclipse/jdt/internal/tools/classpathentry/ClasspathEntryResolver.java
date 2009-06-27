@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.jdt.model.*;
+import org.ant4eclipse.jdt.model.project.*;
+import org.ant4eclipse.jdt.tools.container.*;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ public interface ClasspathEntryResolver {
    *          the class path entry to resolve.
    * @return <code>true</code>, if this {@link ClasspathEntryResolver} can resolve the given {@link ClasspathEntry}.
    */
-  public boolean canResolve(ClasspathEntry classpathEntry);
+  boolean canResolve(ClasspathEntry classpathEntry);
 
   /**
    * <p>
@@ -47,5 +47,5 @@ public interface ClasspathEntryResolver {
    * @param context
    *          the {@link ClasspathResolverContext}
    */
-  public void resolve(ClasspathEntry classpathEntry, final ClasspathResolverContext context);
+  void resolve(ClasspathEntry classpathEntry, final ClasspathResolverContext context);
 }

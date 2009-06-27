@@ -1,6 +1,6 @@
 package org.ant4eclipse.core.configuration;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.service.*;
 
 /**
  * <p>
@@ -20,7 +20,7 @@ public interface Ant4EclipseConfiguration {
    *          The name of the property
    * @return The property or <code>null</code> if there is no such property
    */
-  public String getProperty(String propertyName);
+  String getProperty(String propertyName);
 
   /**
    * <p>
@@ -31,7 +31,7 @@ public interface Ant4EclipseConfiguration {
    *          The name of the property to check
    * @return <code>true</code> if there is a property with the given name otherwise <code>false</code>
    */
-  public boolean hasProperty(String propertyName);
+  boolean hasProperty(String propertyName);
 
   /**
    * <p>
@@ -46,7 +46,7 @@ public interface Ant4EclipseConfiguration {
    *          The prefix that selected the properties. If it doesn't end with a "." a "." is added
    * @return see above
    */
-  public Iterable<String[]> getAllProperties(String prefix);
+  Iterable<String[]> getAllProperties(String prefix);
 
   /**
    * <p>

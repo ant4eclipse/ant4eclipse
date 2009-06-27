@@ -11,20 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.exception.*;
+import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.util.*;
+import org.ant4eclipse.jdt.model.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ClassLoadingHelper;
-import org.ant4eclipse.jdt.model.JdtModelExceptionCode;
+import java.io.*;
+import java.util.*;
 
 /**
  * <p>
@@ -297,22 +291,22 @@ public class JavaExecuter {
     File result = new File(this._jreDirectory, "bin/java");
 
     // try 'bin/java.exe'
-    if ((result == null) || !result.exists()) {
+    if (!result.exists()) {
       result = new File(this._jreDirectory, "bin/java.exe");
     }
 
     // try 'bin/j9'
-    if ((result == null) || !result.exists()) {
+    if (!result.exists()) {
       result = new File(this._jreDirectory, "bin/j9");
     }
 
     // try 'bin/j9.exe'
-    if ((result == null) || !result.exists()) {
+    if (!result.exists()) {
       result = new File(this._jreDirectory, "bin/j9.exe");
     }
 
     // throw Ant4EclipseException
-    if ((result == null) || !result.exists()) {
+    if (!result.exists()) {
       throw new Ant4EclipseException(JdtModelExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath());
     }
 

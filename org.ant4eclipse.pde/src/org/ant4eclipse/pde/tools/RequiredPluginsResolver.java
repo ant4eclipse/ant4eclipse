@@ -29,7 +29,7 @@ import org.eclipse.osgi.service.resolver.State;
  * <p>
  * ContainerResolver for resolving the 'org.eclipse.pde.core.requiredPlugins' container.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class RequiredPluginsResolver implements ClasspathContainerResolver {

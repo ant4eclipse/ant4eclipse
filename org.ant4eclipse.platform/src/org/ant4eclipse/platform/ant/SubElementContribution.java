@@ -1,6 +1,6 @@
 package org.ant4eclipse.platform.ant;
 
-import org.apache.tools.ant.ProjectComponent;
+import org.apache.tools.ant.*;
 
 /**
  * <p>
@@ -16,15 +16,15 @@ public interface SubElementContribution {
 
   /**
    * <p>
-   * Must return <code>true</code> if this {@link SubElementContribution} can handle the sub element with the given
-   * name for the given {@link ProjectComponent}.
+   * Must return <code>true</code> if this {@link SubElementContribution} can handle the sub element with the given name
+   * for the given {@link ProjectComponent}.
    * </p>
    * 
    * @param name
    * @param component
    * @return
    */
-  public boolean canHandleSubElement(String name, ProjectComponent component);
+  boolean canHandleSubElement(String name, ProjectComponent component);
 
   /**
    * <p>
@@ -35,5 +35,5 @@ public interface SubElementContribution {
    *          the element name
    * @return the element created
    */
-  public Object createSubElement(String name, ProjectComponent component);
+  Object createSubElement(String name, ProjectComponent component);
 }

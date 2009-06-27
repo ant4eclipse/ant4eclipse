@@ -1,7 +1,7 @@
 package org.ant4eclipse.platform.ant.core;
 
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
-import org.apache.tools.ant.BuildException;
+import org.ant4eclipse.platform.tools.*;
+import org.apache.tools.ant.*;
 
 /**
  * <p>
@@ -23,7 +23,7 @@ public interface ProjectReferenceAwareComponent {
    * @param referenceTypes
    *          a comma separated list of reference type (e.g. 'jdt, platform').
    */
-  public void setProjectReferenceTypes(String referenceTypes);
+  void setProjectReferenceTypes(String referenceTypes);
 
   /**
    * <p>
@@ -32,7 +32,7 @@ public interface ProjectReferenceAwareComponent {
    * 
    * @return the set reference types.
    */
-  public String[] getProjectReferenceTypes();
+  String[] getProjectReferenceTypes();
 
   /**
    * <p>
@@ -41,12 +41,12 @@ public interface ProjectReferenceAwareComponent {
    * 
    * @return <code>true</code>, if the project reference types are set.
    */
-  public boolean isProjectReferenceTypesSet();
+  boolean isProjectReferenceTypesSet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the project reference types are not set.
    * </p>
    */
-  public void requireProjectReferenceTypesSet();
+  void requireProjectReferenceTypesSet();
 }

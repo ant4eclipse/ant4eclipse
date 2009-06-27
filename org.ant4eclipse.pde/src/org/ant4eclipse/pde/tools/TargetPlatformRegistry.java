@@ -33,7 +33,7 @@ public interface TargetPlatformRegistry {
    * @param identifier
    * @param targetPlatformDefinition
    */
-  public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition);
+  void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition);
 
   /**
    * <p>
@@ -42,7 +42,7 @@ public interface TargetPlatformRegistry {
    * @param identifier
    * @return
    */
-  public boolean hasTargetPlatformDefinition(String identifier);
+  boolean hasTargetPlatformDefinition(String identifier);
 
   /**
    * <p>
@@ -51,7 +51,7 @@ public interface TargetPlatformRegistry {
    * 
    * @return
    */
-  public TargetPlatformDefinition getTargetPlatformDefinition(String identifier);
+  TargetPlatformDefinition getTargetPlatformDefinition(String identifier);
 
   /**
    * <p>
@@ -66,18 +66,18 @@ public interface TargetPlatformRegistry {
    * 
    * @return the TargetPlatform
    */
-  public TargetPlatform getInstance(final Workspace workspace, String targetPlatformDefinitionIdentifier,
+  TargetPlatform getInstance(final Workspace workspace, String targetPlatformDefinitionIdentifier,
       TargetPlatformConfiguration targetPlatformConfiguration);
 
   /**
    * Removes all target platforms from the factory.
    */
-  public void clear();
+  void clear();
 
   /**
    * @param id
    */
-  public void setCurrent(TargetPlatform targetPlatform);
+  void setCurrent(TargetPlatform targetPlatform);
 
   /**
    * <p>
@@ -87,7 +87,7 @@ public interface TargetPlatformRegistry {
    * 
    * @return the current Application Platform. If no current platform is in use an exception will be thrown.
    */
-  public TargetPlatform getCurrent();
+  TargetPlatform getCurrent();
 
   /**
    * <p>
@@ -96,7 +96,7 @@ public interface TargetPlatformRegistry {
    * 
    * @return
    */
-  public boolean hasCurrent();
+  boolean hasCurrent();
 
   /**
    */

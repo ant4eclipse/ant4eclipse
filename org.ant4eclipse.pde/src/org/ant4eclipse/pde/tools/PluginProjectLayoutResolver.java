@@ -26,7 +26,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * The {@link PluginProjectLayoutResolver} implements a {@link BundleLayoutResolver} for eclipse plug-in projects.
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class PluginProjectLayoutResolver implements BundleLayoutResolver {
@@ -41,7 +41,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * <p>
    * Creates a new instance of type {@link PluginProjectLayoutResolver}.
    * </p>
-   *
+   * 
    * @param project
    *          the eclipse plug-in project that has to be resolved
    */
@@ -126,6 +126,6 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     }
 
     // return result
-    return (File[]) result.toArray(new File[result.size()]);
+    return result.toArray(new File[result.size()]);
   }
 }

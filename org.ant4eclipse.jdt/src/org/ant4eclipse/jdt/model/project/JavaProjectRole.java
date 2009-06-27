@@ -11,15 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.project;
 
-import java.util.Map;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.jdt.internal.model.project.*;
+import org.ant4eclipse.jdt.model.jre.*;
+import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.platform.model.resource.role.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
-import org.ant4eclipse.jdt.model.jre.JavaProfile;
-import org.ant4eclipse.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-
+import java.util.*;
 
 /**
  * JavaProjectRole --
@@ -29,21 +27,21 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 public interface JavaProjectRole extends ProjectRole {
 
   /**  */
-  public static final String JAVA_NATURE = "org.eclipse.jdt.core.javanature";
+  String JAVA_NATURE = "org.eclipse.jdt.core.javanature";
 
   /**
    * Returns whether classpath entries are set or not.
    * 
    * @return Returns whether classpath entries are set or not.
    */
-  public boolean hasRawClasspathEntries();
+  boolean hasRawClasspathEntries();
 
   /**
    * Returns the eclipse classpath entries.
    * 
    * @return returns the eclipse classpath entries.
    */
-  public RawClasspathEntry[] getRawClasspathEntries();
+  RawClasspathEntry[] getRawClasspathEntries();
 
   /**
    * Returns a list of EclipseClasspathEntry of a specifiy kind.
@@ -53,7 +51,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return A list of entries providing entries of the desired type.
    */
-  public RawClasspathEntry[] getRawClasspathEntries(final int entrykind);
+  RawClasspathEntry[] getRawClasspathEntries(final int entrykind);
 
   /**
    * Returns the java runtime for this eclipse project or null if no runtime specified or if no such java runtime has
@@ -61,40 +59,40 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return
    */
-  public JavaRuntime getJavaRuntime();
+  JavaRuntime getJavaRuntime();
 
   /**
    * @return
    */
-  public JavaProfile getJavaProfile();
+  JavaProfile getJavaProfile();
 
   /**
    * @return
    */
-  public Map getCompilerOptions();
+  Map<String, String> getCompilerOptions();
 
   /**
    * @return
    */
-  public String[] getSourceFolders();
+  String[] getSourceFolders();
 
   /**
    * @param allowMultipleFolder
    * @return
    */
-  public String[] getAllOutputFolders();
+  String[] getAllOutputFolders();
 
   /**
    * @param sourceFolder
    * @return
    */
-  public String getOutputFolderForSourceFolder(String sourceFolder);
+  String getOutputFolderForSourceFolder(String sourceFolder);
 
   /**
    * @param resolveRelative
    * @return
    */
-  public String getDefaultOutputFolder();
+  String getDefaultOutputFolder();
 
   /**
    * <p>

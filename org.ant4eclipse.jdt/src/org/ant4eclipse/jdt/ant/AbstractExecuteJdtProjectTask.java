@@ -18,21 +18,32 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 /**
+ * <p>
+ * Abstract base class for all tasks that allow to iterate over a JDT (or JDT-based) project. This class can be
+ * subclassed to implement a custom executor task for specific project types (e.g. PDE plug-in projects).
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public abstract class AbstractExecuteJdtProjectTask extends AbstractProjectPathTask implements
     JdtClasspathContainerArgumentComponent, DynamicElement, MacroExecutionComponent<String> {
 
+  /** the macro execution delegate */
   private final MacroExecutionDelegate<String>        _macroExecutionDelegate;
 
-  /** - */
+  /** the class path container argument delegates */
   private final JdtClasspathContainerArgumentDelegate _jdtClasspathContainerArgumentDelegate;
 
-  /** - */
+  /** the JDT executor values provider */
   private final JdtExecutorValuesProvider             _executorValuesProvider;
 
   /**
-   *
+   * <p>
+   * Creates a new instance of type {@link AbstractExecuteJdtProjectTask}.
+   * </p>
+   * 
+   * @param prefix
+   *          the prefix for all scoped values
    */
   public AbstractExecuteJdtProjectTask(final String prefix) {
     Assert.notNull(prefix);

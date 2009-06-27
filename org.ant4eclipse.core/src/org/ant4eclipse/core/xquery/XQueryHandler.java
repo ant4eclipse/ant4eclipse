@@ -11,25 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.core.xquery;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Vector;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.exception.*;
+import org.ant4eclipse.core.logging.*;
+import org.xml.sax.*;
+import org.xml.sax.helpers.*;
 
-import javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
+import javax.xml.parsers.*;
 
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
-import org.xml.sax.helpers.DefaultHandler;
+import java.io.*;
+import java.util.*;
 
 /**
  * <p>
@@ -90,6 +81,7 @@ public class XQueryHandler extends DefaultHandler {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void startDocument() throws SAXException {
     this._depth = 0;
     for (int i = 0; i < this._queries.size(); i++) {
@@ -104,6 +96,7 @@ public class XQueryHandler extends DefaultHandler {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void startElement(final String uri, final String localname, final String qname, final Attributes attributes)
       throws SAXException {
 
@@ -119,6 +112,7 @@ public class XQueryHandler extends DefaultHandler {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void endElement(final String uri, final String localname, final String qname) throws SAXException {
 
     this._depth--;
@@ -138,6 +132,7 @@ public class XQueryHandler extends DefaultHandler {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void characters(final char[] ch, final int start, final int length) throws SAXException {
     this._buffer.append(ch, start, length);
   }
@@ -184,8 +179,7 @@ public class XQueryHandler extends DefaultHandler {
     }
   }
 
-  private static SAXParserFactory getSAXParserFactory() throws FactoryConfigurationError, ParserConfigurationException,
-      SAXNotRecognizedException, SAXNotSupportedException {
+  private static SAXParserFactory getSAXParserFactory() throws FactoryConfigurationError {
 
     if (factory == null) {
       factory = SAXParserFactory.newInstance();

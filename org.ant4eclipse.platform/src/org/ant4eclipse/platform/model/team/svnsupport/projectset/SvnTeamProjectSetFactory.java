@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.svnsupport.projectset;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.exception.*;
+import org.ant4eclipse.platform.*;
+import org.ant4eclipse.platform.model.team.projectset.*;
 
 /**
  * Parses a Project Set-File provided by the Subversive Eclipse Plugin and the Subclipse Eclipse Plugin
@@ -67,7 +66,8 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
     String[] parts = reference.split(",");
 
     if (parts.length < 3) {
-      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_PSF_REFERENCE, "three", parts.length, reference);
+      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_PSF_REFERENCE, "three", Integer
+          .valueOf(parts.length), reference);
     }
 
     String url = parts[URL];

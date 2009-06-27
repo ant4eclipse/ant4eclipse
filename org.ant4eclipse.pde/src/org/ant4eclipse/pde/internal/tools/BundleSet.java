@@ -34,7 +34,7 @@ public interface BundleSet {
    * 
    * @return the id of the bundle.
    */
-  public Object getId();
+  Object getId();
 
   /**
    * <p>
@@ -45,14 +45,14 @@ public interface BundleSet {
    * consuming operation since all bundles in the bundle set have to be parsed.
    * </p>
    */
-  public void initialize();
+  void initialize();
 
   /**
    * <p>
    * Invalidates this bundle set. Invalidating a bundle set forces it to be refreshed the next time it is accessed.
    * </p>
    */
-  public void invalidate();
+  void invalidate();
 
   /**
    * <p>
@@ -61,14 +61,14 @@ public interface BundleSet {
    * 
    * @return <code>true</code> if the bundle set has been initialized, <code>false</code> otherwise.
    */
-  public boolean isInitialised();
+  boolean isInitialised();
 
   /**
    * <p>
    * Refreshes the bundle set (which means that the bundles will be reed from the underlying location again).
    * </p>
    */
-  public void refresh();
+  void refresh();
 
   /**
    * <p>
@@ -77,7 +77,7 @@ public interface BundleSet {
    * 
    * @return all {@link BundleDescription BundleDescriptions} that are contained in this bundle set.
    */
-  public BundleDescription[] getAllBundleDescriptions();
+  BundleDescription[] getAllBundleDescriptions();
 
   /**
    * <p>
@@ -88,5 +88,5 @@ public interface BundleSet {
    *          the symbolic name.
    * @return <code>true</code> if the {@link BundleSet} contains a Bundle with the given symbolic name.
    */
-  public boolean contains(String symbolicName);
+  boolean contains(String symbolicName);
 }

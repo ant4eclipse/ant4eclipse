@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.variable;
 
-import java.util.Map;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.platform.model.resource.*;
 
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import java.util.*;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param value
    *          The value of the variable. A value of null causes the variable to be removed.
    */
-  public void setEclipseVariable(final String key, final String value);
+  void setEclipseVariable(final String key, final String value);
 
   /**
    * Substitutes all occurences of an eclipse <b>variable</b> (aka as <b>property</b> in ant)in the given string.
@@ -50,7 +50,7 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param otherProperties
    *          Table with variable names as keys and their values as values. Might be null.
    */
-  public String resolveEclipseVariables(final String string, final EclipseProject project,
+  String resolveEclipseVariables(final String string, final EclipseProject project,
       final Map<String, String> otherProperties);
 
   /**
@@ -58,7 +58,7 @@ public interface EclipseVariableResolver extends Lifecycle {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  public Map<String, String> getEclipseVariables();
+  Map<String, String> getEclipseVariables();
 
   /**
    * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
@@ -68,12 +68,12 @@ public interface EclipseVariableResolver extends Lifecycle {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  public Map<String, String> getEclipseVariables(final EclipseProject project);
+  Map<String, String> getEclipseVariables(final EclipseProject project);
 
   /**
    * <p>
    * Clears the variable resolver.
    * </p>
    */
-  public void clear();
+  void clear();
 } /* ENDCLASS */

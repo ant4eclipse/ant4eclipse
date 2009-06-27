@@ -60,7 +60,7 @@ public class BinaryBundleSet extends AbstractBundleSet {
     // 1. read plugin from target location
     // TODO: ERROR-HANDLING...
     File pluginsDirectory = new File(this._targetPlatformLocation, DEFAULT_PLUGIN_DIRECTORY);
-    if ((pluginsDirectory == null) || !pluginsDirectory.exists()) {
+    if (!pluginsDirectory.exists()) {
       pluginsDirectory = this._targetPlatformLocation;
     }
     if ((pluginsDirectory != null) && pluginsDirectory.exists()) {

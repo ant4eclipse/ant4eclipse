@@ -55,7 +55,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   }
 
   /**
-   * @see org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceDefinition#getProjectFolders()
+   * {@inheritDoc}
    */
   public File[] getProjectFolders() {
 
@@ -121,6 +121,9 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   }
 
   /**
+   * <p>
+   * </p>
+   * 
    * @param directory
    * @return
    */

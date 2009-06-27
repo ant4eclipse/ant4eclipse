@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource;
 
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.platform.model.resource.role.*;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ public interface Workspace {
    *          the name of the {@link EclipseProject}
    * @return <code>true</code>, if the workspace contains a project with the given name.
    */
-  public boolean hasProject(final String projectName);
+  boolean hasProject(final String projectName);
 
   /**
    * <p>
@@ -50,7 +50,7 @@ public interface Workspace {
    * 
    * @return the {@link EclipseProject} associated with the specified name.
    */
-  public EclipseProject getProject(final String projectName);
+  EclipseProject getProject(final String projectName);
 
   /**
    * <p>
@@ -64,7 +64,7 @@ public interface Workspace {
    *          the {@link Workspace}.
    * @return an array of {@link EclipseProject EclipseProjects} with the specified project names.
    */
-  public EclipseProject[] getProjects(final String[] projectNames, final boolean failOnMissingProjects);
+  EclipseProject[] getProjects(final String[] projectNames, final boolean failOnMissingProjects);
 
   /**
    * <p>
@@ -73,7 +73,7 @@ public interface Workspace {
    * 
    * @return all the {@link EclipseProject EclipseProjects} that are contained in the {@link Workspace}.
    */
-  public EclipseProject[] getAllProjects();
+  EclipseProject[] getAllProjects();
 
   /**
    * <p>
@@ -86,6 +86,6 @@ public interface Workspace {
    *          the class of the project role. Has to be assignable from class {@link ProjectRole}.
    * @return all the @link EclipseProject EclipseProjects} with the specified project role.
    */
-  public EclipseProject[] getAllProjects(final Class<? extends ProjectRole> projectRole);
+  EclipseProject[] getAllProjects(final Class<? extends ProjectRole> projectRole);
 
 } /* ENDCLASS */

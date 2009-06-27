@@ -1,8 +1,8 @@
 package org.ant4eclipse.platform.ant.core;
 
-import java.util.List;
+import org.apache.tools.ant.*;
 
-import org.apache.tools.ant.DynamicElement;
+import java.util.*;
 
 /**
  * <p>
@@ -20,5 +20,5 @@ public interface SubElementComponent extends DynamicElement {
    * 
    * @return a list with all known sub elements.
    */
-  public List<Object> getSubElements();
+  List<Object> getSubElements();
 }

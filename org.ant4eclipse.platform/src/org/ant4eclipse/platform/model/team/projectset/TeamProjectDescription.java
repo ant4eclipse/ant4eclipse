@@ -27,6 +27,6 @@ public interface TeamProjectDescription {
    * 
    * @return Returns the name of the project.
    */
-  public String getProjectName();
+  String getProjectName();
 
 }

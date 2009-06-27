@@ -87,6 +87,7 @@ public class BundleDescriptionLoader {
    * @param manifest
    * @return
    */
+  @SuppressWarnings("unchecked")
   private static Properties convertManifest(final Manifest manifest) {
     final Attributes attributes = manifest.getMainAttributes();
     final Iterator iter = attributes.keySet().iterator();

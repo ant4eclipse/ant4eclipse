@@ -11,23 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.util.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.JarUtilities;
-import org.ant4eclipse.core.util.ManifestHelper;
+import java.io.*;
+import java.util.*;
+import java.util.jar.*;
 
 /**
  * <p>
  * Implements a {@link BundleLayoutResolver} for jared bundles.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JaredBundleLayoutResolver implements BundleLayoutResolver {
@@ -48,7 +44,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * <p>
    * Creates a new instance of type {@link JaredBundleLayoutResolver}.
    * </p>
-   *
+   * 
    * @param location
    *          the location of the jar file
    * @param expansionDirectory
@@ -108,7 +104,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * <p>
    * Returns if the contained jar file has to be unwrapped or not.
    * </p>
-   *
+   * 
    * @return <code>true</code> if the contained jar file has to be unwrapped, <code>false</code> otherwise.
    */
   private boolean needExpansion() {
@@ -133,7 +129,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * <p>
    * Expands the jared bundle to the expansion directory and returns all files that belongs to the bundle class path.
    * </p>
-   *
+   * 
    * @return all files that belongs to the bundle class path.
    */
   private File[] expand() {
@@ -161,15 +157,15 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     final String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
 
     // add class path entries to the result
-    for (int i = 0; i < bundleClasspathEntries.length; i++) {
+    for (String bundleClasspathEntrie : bundleClasspathEntries) {
 
       // add 'self'
-      if (".".equals(bundleClasspathEntries[i])) {
+      if (".".equals(bundleClasspathEntrie)) {
         result.add(destination);
       }
       // add entry
       else {
-        final File classpathEntry = new File(destination, bundleClasspathEntries[i]);
+        final File classpathEntry = new File(destination, bundleClasspathEntrie);
         if (classpathEntry.exists()) {
           result.add(classpathEntry);
         }
@@ -177,6 +173,6 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     }
 
     // return result
-    return (File[]) result.toArray(new File[0]);
+    return result.toArray(new File[0]);
   }
 }

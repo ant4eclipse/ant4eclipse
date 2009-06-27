@@ -52,7 +52,7 @@ public class CompilerArguments {
   }
 
   public void addAccessRestrictions(final File classpathentry, final String accessRestrictions) {
-// System.err.println("AccessRestriction: " + classpathentry + " - " + accessRestrictions);
+    // System.err.println("AccessRestriction: " + classpathentry + " - " + accessRestrictions);
     this._accessRestrictions.put(classpathentry, accessRestrictions);
   }
 }

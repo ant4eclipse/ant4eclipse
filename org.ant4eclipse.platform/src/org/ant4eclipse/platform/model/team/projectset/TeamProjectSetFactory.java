@@ -30,7 +30,7 @@ public interface TeamProjectSetFactory {
    *          The name of the team project set
    * @return The new TeamProjectSet-instance without any TeamProjectDescription
    */
-  public TeamProjectSet createTeamProjectSet(String projectSetName);
+  TeamProjectSet createTeamProjectSet(String projectSetName);
 
   /**
    * Creates a TeamProjectDescription for the given reference-String and adds it to the team project set
@@ -40,6 +40,6 @@ public interface TeamProjectSetFactory {
    * @param reference
    *          The reference string read out of the Project Set-File
    */
-  public void addTeamProjectDescription(TeamProjectSet projectSet, String reference);
+  void addTeamProjectDescription(TeamProjectSet projectSet, String reference);
 
 }

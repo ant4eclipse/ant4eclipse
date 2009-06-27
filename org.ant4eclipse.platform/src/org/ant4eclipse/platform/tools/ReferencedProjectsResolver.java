@@ -1,8 +1,8 @@
 package org.ant4eclipse.platform.tools;
 
-import java.util.List;
+import org.ant4eclipse.platform.model.resource.*;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import java.util.*;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public interface ReferencedProjectsResolver {
    * @return <code>true</code> if the {@link ReferencedProjectsResolver} can resolve referenced projects for the given
    *         project, otherwise <code>false</code>.
    */
-  public boolean canHandle(final EclipseProject project);
+  boolean canHandle(final EclipseProject project);
 
   /**
    * <p>
@@ -46,6 +46,5 @@ public interface ReferencedProjectsResolver {
    *          in some cases it is necessary to provide additional information to resolve referenced projects.
    * @return
    */
-  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
-      final List<Object> additionalElements);
+  List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final List<Object> additionalElements);
 }

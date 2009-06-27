@@ -26,16 +26,16 @@ public interface Ant4EclipseLogger {
   /**
    * @param context
    */
-  public void setContext(Object context);
+  void setContext(Object context);
 
   /**
    * Returns true if the debugging is enabled.
    * 
    * @return true <=> Debugging is enabled.
    */
-  public boolean isDebuggingEnabled();
+  boolean isDebuggingEnabled();
 
-  public boolean isTraceingEnabled();
+  boolean isTraceingEnabled();
 
   /**
    * Dumps traceing information.
@@ -43,7 +43,7 @@ public interface Ant4EclipseLogger {
    * @param msg
    *          A trace message.
    */
-  public void trace(String msg);
+  void trace(String msg);
 
   /**
    * Dumps traceing information.
@@ -53,7 +53,7 @@ public interface Ant4EclipseLogger {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public void trace(String msg, Object[] args);
+  void trace(String msg, Object[] args);
 
   /**
    * Dumps traceing information.
@@ -63,7 +63,7 @@ public interface Ant4EclipseLogger {
    * @param obj
    *          A single argument.
    */
-  public void trace(String msg, Object obj);
+  void trace(String msg, Object obj);
 
   /**
    * Dumps debugging information.
@@ -71,7 +71,7 @@ public interface Ant4EclipseLogger {
    * @param msg
    *          An error message.
    */
-  public void debug(String msg);
+  void debug(String msg);
 
   /**
    * Dumps debugging information.
@@ -81,7 +81,7 @@ public interface Ant4EclipseLogger {
    * @param obj
    *          A single argument.
    */
-  public void debug(String msg, Object obj);
+  void debug(String msg, Object obj);
 
   /**
    * Dumps debugging information.
@@ -91,7 +91,7 @@ public interface Ant4EclipseLogger {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public void debug(String msg, Object[] args);
+  void debug(String msg, Object[] args);
 
   /**
    * Dumps informational text.
@@ -99,7 +99,7 @@ public interface Ant4EclipseLogger {
    * @param msg
    *          An error message.
    */
-  public void info(String msg);
+  void info(String msg);
 
   /**
    * Dumps informational text.
@@ -109,7 +109,7 @@ public interface Ant4EclipseLogger {
    * @param obj
    *          A single argument.
    */
-  public void info(String msg, Object obj);
+  void info(String msg, Object obj);
 
   /**
    * Dumps informational text.
@@ -119,7 +119,7 @@ public interface Ant4EclipseLogger {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public void info(String msg, Object[] args);
+  void info(String msg, Object[] args);
 
   /**
    * Dumps warning information.
@@ -127,7 +127,7 @@ public interface Ant4EclipseLogger {
    * @param msg
    *          An error message.
    */
-  public void warn(String msg);
+  void warn(String msg);
 
   /**
    * Dumps warning information.
@@ -137,7 +137,7 @@ public interface Ant4EclipseLogger {
    * @param obj
    *          A single argument.
    */
-  public void warn(String msg, Object obj);
+  void warn(String msg, Object obj);
 
   /**
    * Dumps warning information.
@@ -147,7 +147,7 @@ public interface Ant4EclipseLogger {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public void warn(String msg, Object[] args);
+  void warn(String msg, Object[] args);
 
   /**
    * Dumps error information.
@@ -157,7 +157,7 @@ public interface Ant4EclipseLogger {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public void error(String msg, Object[] args);
+  void error(String msg, Object[] args);
 
   /**
    * Dumps error information.
@@ -167,7 +167,7 @@ public interface Ant4EclipseLogger {
    * @param obj
    *          A single argument.
    */
-  public void error(String msg, Object obj);
+  void error(String msg, Object obj);
 
   /**
    * Dumps error information.
@@ -175,5 +175,6 @@ public interface Ant4EclipseLogger {
    * @param msg
    *          An error message.
    */
-  public void error(String msg);
+  void error(String msg);
+
 } /* ENDCLASS */

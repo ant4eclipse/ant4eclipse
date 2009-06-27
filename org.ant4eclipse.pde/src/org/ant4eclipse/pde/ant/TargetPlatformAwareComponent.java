@@ -27,7 +27,7 @@ public interface TargetPlatformAwareComponent {
    * @param targetPlatformLocation
    *          the target platform against which the workspace plugins will be compiled and tested.
    */
-  public void setTargetPlatformId(final String targetPlatformId);
+  void setTargetPlatformId(final String targetPlatformId);
 
   /**
    * <p>
@@ -36,7 +36,7 @@ public interface TargetPlatformAwareComponent {
    * 
    * @return whether the target platform location is set.
    */
-  public boolean isTargetPlatformId();
+  boolean isTargetPlatformId();
 
-  public String getTargetPlatformId();
+  String getTargetPlatformId();
 }

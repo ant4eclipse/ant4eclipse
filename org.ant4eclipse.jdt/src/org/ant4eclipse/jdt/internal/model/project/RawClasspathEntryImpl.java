@@ -17,7 +17,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-
 /**
  * Encapsulates an entry in a Java project classpath.
  * 

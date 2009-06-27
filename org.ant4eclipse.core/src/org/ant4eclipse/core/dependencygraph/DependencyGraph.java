@@ -21,7 +21,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-
 /**
  * <p>
  * A {@link DependencyGraph} can be used to serialize tree structures. The tree will be transformed in a linear

@@ -309,8 +309,9 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * Returns all package names (including parent package names) for the specified package.
    * </p>
    * <p>
-   * <b>Example:</b><br/> Given the package name <code>net.sf.ant4eclipse.tools</code> this method will return {"net",
-   * "net.sf", "net.sf.ant4eclipse", "net.sf.ant4eclipse.tools"}.
+   * <b>Example:</b><br/>
+   * Given the package name <code>net.sf.ant4eclipse.tools</code> this method will return {"net", "net.sf",
+   * "net.sf.ant4eclipse", "net.sf.ant4eclipse.tools"}.
    * </p>
    * 
    * @param packageName

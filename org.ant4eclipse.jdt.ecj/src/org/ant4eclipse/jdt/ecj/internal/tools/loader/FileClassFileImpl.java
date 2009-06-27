@@ -14,7 +14,6 @@ package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 import java.io.File;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
 
@@ -23,7 +22,7 @@ import org.eclipse.jdt.internal.compiler.env.IBinaryType;
  * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
-public class FileClassFileImpl extends AbstractClassFileImpl implements ClassFile {
+public class FileClassFileImpl extends AbstractClassFileImpl {
 
   /** the class file */
   private final File _classfile;

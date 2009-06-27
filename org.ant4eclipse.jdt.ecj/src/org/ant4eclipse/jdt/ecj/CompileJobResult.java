@@ -27,7 +27,7 @@ public interface CompileJobResult {
    * 
    * @return <code>true</code>, if the compile job was successful, <code>false</code> otherwise.
    */
-  public boolean succeeded();
+  boolean succeeded();
 
   /**
    * <p>
@@ -37,5 +37,5 @@ public interface CompileJobResult {
    * @deprecated must be replaced with a more intelligent API.
    */
   @Deprecated
-  public void dumpProblems();
+  void dumpProblems();
 }

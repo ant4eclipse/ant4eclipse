@@ -16,7 +16,7 @@ import org.ant4eclipse.core.Assert;
 /**
  * Instances of this class epresents the "common properties" that are used by plugins and features as described in the
  * "Plug-in Development Environment Guide"-Help.
- *
+ * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  * @spec Eclipse Help - PDE Guide - "Feature and Plug-in Build Configuration Properties"
  */

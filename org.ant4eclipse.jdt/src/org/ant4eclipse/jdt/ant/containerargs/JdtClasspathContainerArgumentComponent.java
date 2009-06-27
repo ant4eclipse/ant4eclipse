@@ -1,8 +1,8 @@
 package org.ant4eclipse.jdt.ant.containerargs;
 
-import java.util.List;
+import org.ant4eclipse.jdt.tools.container.*;
 
-import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+import java.util.*;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -15,7 +15,7 @@ public interface JdtClasspathContainerArgumentComponent {
    * 
    * @return
    */
-  public JdtClasspathContainerArgument createJdtClasspathContainerArgument();
+  JdtClasspathContainerArgument createJdtClasspathContainerArgument();
 
   /**
    * <p>
@@ -23,5 +23,5 @@ public interface JdtClasspathContainerArgumentComponent {
    * 
    * @return
    */
-  public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
+  List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
 }

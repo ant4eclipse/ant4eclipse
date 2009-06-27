@@ -16,7 +16,6 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 
-
 /**
  * Implements the cvs role of a project.
  * 

@@ -134,15 +134,11 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
       getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
           executionValues);
 
-      executionValues.getProperties().put(
-          "output.directory",
-          this.convertToString(getEclipseProject().getChild(
-              libraryOutputDirectory)));
+      executionValues.getProperties().put("output.directory",
+          this.convertToString(getEclipseProject().getChild(libraryOutputDirectory)));
 
-      executionValues.getReferences().put(
-          "output.directory.path",
-          this.convertToPath(getEclipseProject().getChild(
-              libraryOutputDirectory)));
+      executionValues.getReferences().put("output.directory.path",
+          this.convertToPath(getEclipseProject().getChild(libraryOutputDirectory)));
 
       executeMacroInstance(macroDef, executionValues);
     }

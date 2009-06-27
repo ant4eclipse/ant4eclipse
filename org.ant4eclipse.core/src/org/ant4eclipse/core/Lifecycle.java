@@ -13,9 +13,9 @@ package org.ant4eclipse.core;
 
 public interface Lifecycle {
 
-  public void initialize();
+  void initialize();
 
-  public boolean isInitialized();
+  boolean isInitialized();
 
-  public void dispose();
+  void dispose();
 }

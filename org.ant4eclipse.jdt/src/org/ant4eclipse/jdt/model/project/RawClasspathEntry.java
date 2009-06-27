@@ -11,58 +11,57 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.project;
 
-import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-
+import org.ant4eclipse.jdt.model.*;
+import org.ant4eclipse.platform.model.resource.*;
 
 public interface RawClasspathEntry extends ClasspathEntry {
 
   /** the constant for a Container-ClasspathEntry */
-  public static final int CPE_CONTAINER = 0;
+  int CPE_CONTAINER = 0;
 
   /** the constant for a Library-ClasspathEntry */
-  public static final int CPE_LIBRARY   = 1;
+  int CPE_LIBRARY   = 1;
 
   /** the constant for a EclipseProject-ClasspathEntry */
-  public static final int CPE_PROJECT   = 2;
+  int CPE_PROJECT   = 2;
 
   /** the constant for a Source-ClasspathEntry */
-  public static final int CPE_SOURCE    = 3;
+  int CPE_SOURCE    = 3;
 
   /** the constant for a Variable-ClasspathEntry */
-  public static final int CPE_VARIABLE  = 4;
+  int CPE_VARIABLE  = 4;
 
   /** the constant for an Output-ClasspathEntry */
-  public static final int CPE_OUTPUT    = 5;
+  int CPE_OUTPUT    = 5;
 
-  public EclipseProject getDeclaringEclipseProject();
+  EclipseProject getDeclaringEclipseProject();
 
-  public EclipseProject getReferencedEclipseProject();
+  EclipseProject getReferencedEclipseProject();
 
   /**
    * @return
    */
-  public boolean isProjectRelative();
+  boolean isProjectRelative();
 
-  public String getProjectRelativePath();
+  String getProjectRelativePath();
 
   /**
    * Returns whether or not the entry has an output location.
    * 
    * @return true <=> This entry has an output location.
    */
-  public boolean hasOutputLocation();
+  boolean hasOutputLocation();
 
   /**
    * Returns the output location.
    * 
    * @return the output location.
    */
-  public String getOutputLocation();
+  String getOutputLocation();
 
   /**
    * @return Returns the exported.
    */
-  public boolean isExported();
+  boolean isExported();
 
 }

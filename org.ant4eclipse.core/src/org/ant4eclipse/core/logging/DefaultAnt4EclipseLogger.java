@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
-
 public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
   public static final int LOG_LEVEL_ERROR   = 0;

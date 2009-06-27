@@ -16,7 +16,6 @@ import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-
 /**
  * <p>
  * Implements a {@link ClasspathEntryResolver} that resolves class path entries to eclipse projects.

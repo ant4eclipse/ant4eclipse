@@ -20,10 +20,9 @@ package org.ant4eclipse.jdt.model;
 public interface ContainerTypes {
 
   /** Reference to JRE specific classpathes. */
-  String                     JRE_CONTAINER = "org.eclipse.jdt.launching.JRE_CONTAINER";
+  String JRE_CONTAINER = "org.eclipse.jdt.launching.JRE_CONTAINER";
 
   /** VMTYPE_PREFIX */
-  public static final String VMTYPE_PREFIX = ContainerTypes.JRE_CONTAINER
-                                               + "/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/";
+  String VMTYPE_PREFIX = ContainerTypes.JRE_CONTAINER + "/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/";
 
 } /* ENDINTERFACE */

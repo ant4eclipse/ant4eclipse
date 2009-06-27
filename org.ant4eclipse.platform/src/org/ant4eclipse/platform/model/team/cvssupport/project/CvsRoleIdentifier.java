@@ -18,7 +18,6 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 
-
 /**
  * Identifier for a CVS role.
  * 

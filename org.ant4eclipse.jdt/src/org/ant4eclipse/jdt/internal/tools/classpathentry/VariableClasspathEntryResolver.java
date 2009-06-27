@@ -19,7 +19,7 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
 
   public boolean canResolve(final ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_VARIABLE)
-        /*|| isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_VARIABLE)*/;
+    /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_VARIABLE) */;
   }
 
   public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {

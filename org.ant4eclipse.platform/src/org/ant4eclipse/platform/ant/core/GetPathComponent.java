@@ -1,6 +1,6 @@
 package org.ant4eclipse.platform.ant.core;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * <p>
@@ -19,7 +19,7 @@ public interface GetPathComponent extends PathComponent {
    * @param id
    *          the path ID
    */
-  public void setPathId(String id);
+  void setPathId(String id);
 
   /**
    * <p>
@@ -28,7 +28,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return The path ID for this task.
    */
-  public String getPathId();
+  String getPathId();
 
   /**
    * <p>
@@ -37,7 +37,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return true <=> The path ID has been set.
    */
-  public boolean isPathIdSet();
+  boolean isPathIdSet();
 
   /**
    * <p>
@@ -46,7 +46,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return <code>true</code> if the path should be resolved relative to the workspace.
    */
-  public boolean isRelative();
+  boolean isRelative();
 
   /**
    * <p>
@@ -56,7 +56,7 @@ public interface GetPathComponent extends PathComponent {
    * @param relative
    *          whether the path should be resolved relative to the workspace.
    */
-  public void setRelative(boolean relative);
+  void setRelative(boolean relative);
 
   /**
    * <p>
@@ -66,7 +66,7 @@ public interface GetPathComponent extends PathComponent {
    * @param property
    *          the name of the property that should hold the resolved path.
    */
-  public void setProperty(String property);
+  void setProperty(String property);
 
   /**
    * <p>
@@ -75,7 +75,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return the name of the property that should hold the resolved path.
    */
-  public String getProperty();
+  String getProperty();
 
   /**
    * <p>
@@ -84,7 +84,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return <code>true</code> if the name of the property has been set.
    */
-  public boolean isPropertySet();
+  boolean isPropertySet();
 
   /**
    * <p>
@@ -92,7 +92,7 @@ public interface GetPathComponent extends PathComponent {
    * thrown.
    * </p>
    */
-  public void requirePathIdOrPropertySet();
+  void requirePathIdOrPropertySet();
 
   /**
    * <p>
@@ -101,7 +101,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return A list of resolved pathes.
    */
-  public File[] getResolvedPath();
+  File[] getResolvedPath();
 
   /**
    * <p>
@@ -111,19 +111,19 @@ public interface GetPathComponent extends PathComponent {
    * @param resolvedPath
    *          the resolved path entries.
    */
-  public void setResolvedPath(File[] resolvedPath);
+  void setResolvedPath(File[] resolvedPath);
 
   /**
    * <p>
    * Populates the property if specified.
    * </p>
    */
-  public void populateProperty();
+  void populateProperty();
 
   /**
    * <p>
    * Populates the path id if specified.
    * </p>
    */
-  public void populatePathId();
+  void populatePathId();
 }

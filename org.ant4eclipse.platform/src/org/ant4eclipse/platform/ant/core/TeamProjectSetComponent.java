@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import java.io.File;
+import org.ant4eclipse.platform.model.team.projectset.*;
+import org.apache.tools.ant.*;
 
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-import org.apache.tools.ant.BuildException;
+import java.io.*;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public interface TeamProjectSetComponent {
    * 
    * @return the team project set.
    */
-  public TeamProjectSet getTeamProjectSet();
+  TeamProjectSet getTeamProjectSet();
 
   /**
    * <p>
@@ -42,7 +42,7 @@ public interface TeamProjectSetComponent {
    * @param projectSet
    *          the team project set file.
    */
-  public void setTeamProjectSet(File projectSetFile);
+  void setTeamProjectSet(File projectSetFile);
 
   /**
    * <p>
@@ -51,12 +51,12 @@ public interface TeamProjectSetComponent {
    * 
    * @return <code>true</code>, if the project set has been set.
    */
-  public boolean isTeamProjectSetSet();
+  boolean isTeamProjectSetSet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the team project set is not set.
    * </p>
    */
-  public void requireTeamProjectSetSet();
+  void requireTeamProjectSetSet();
 }

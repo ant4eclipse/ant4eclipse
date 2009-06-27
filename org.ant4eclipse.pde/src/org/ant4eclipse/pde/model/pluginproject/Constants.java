@@ -14,20 +14,20 @@ package org.ant4eclipse.pde.model.pluginproject;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class Constants {
+public interface Constants {
 
-  public static final String OSGI_BUNDLE_MANIFEST       = "META-INF/MANIFEST.MF";
+  String OSGI_BUNDLE_MANIFEST       = "META-INF/MANIFEST.MF";
 
-  public static final String BUNDLE_SYMBOLICNAME        = "Bundle-SymbolicName";
+  String BUNDLE_SYMBOLICNAME        = "Bundle-SymbolicName";
 
-  public static final String SYSTEM_BUNDLE_SYMBOLICNAME = "system.bundle";
+  String SYSTEM_BUNDLE_SYMBOLICNAME = "system.bundle";
 
-  public static final String PROP_OS                    = "osgi.os";             //$NON-NLS-1$
+  String PROP_OS                    = "osgi.os";             //$NON-NLS-1$
 
-  public static final String PROP_WS                    = "osgi.ws";             //$NON-NLS-1$
+  String PROP_WS                    = "osgi.ws";             //$NON-NLS-1$
 
-  public static final String PROP_NL                    = "osgi.nl";             //$NON-NLS-1$
+  String PROP_NL                    = "osgi.nl";             //$NON-NLS-1$
 
-  public static final String PROP_ARCH                  = "osgi.arch";           //$NON-NLS-1$
+  String PROP_ARCH                  = "osgi.arch";           //$NON-NLS-1$
 
 }

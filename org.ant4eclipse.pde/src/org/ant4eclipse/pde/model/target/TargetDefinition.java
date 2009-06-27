@@ -598,21 +598,21 @@ public class TargetDefinition {
      * @return
      */
     public String[] getPlugins() {
-      return (String[]) this._plugins.toArray(new String[0]);
+      return this._plugins.toArray(new String[0]);
     }
 
     /**
      * @return
      */
     public String[] getFeatures() {
-      return (String[]) this._features.toArray(new String[0]);
+      return this._features.toArray(new String[0]);
     }
 
     /**
      * @return
      */
     public String[] getExtraLocations() {
-      return (String[]) this._extraLocations.toArray(new String[0]);
+      return this._extraLocations.toArray(new String[0]);
     }
 
     /**

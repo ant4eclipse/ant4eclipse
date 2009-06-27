@@ -11,34 +11,34 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import java.io.File;
-import java.util.jar.Manifest;
+import java.io.*;
+import java.util.jar.*;
 
 /**
  * <p>
  * A bundle layout resolver can be used to resolve the layout of a specific bundle type (e.g. jared bundle, exploded
  * bundle, eclipse plug-in project).
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface BundleLayoutResolver {
 
   /** constants to describe PROJECT type */
-  public static final byte PROJECT = 1;
+  byte PROJECT = 1;
 
   /** constants to describe LIBRARY type */
-  public static final byte LIBRARY = 2;
+  byte LIBRARY = 2;
 
   /**
    * <p>
    * Returns the type of the contained bundle ({@link BundleLayoutResolver#PROJECT} or
    * {@link BundleLayoutResolver#LIBRARY}).
    * </p>
-   *
+   * 
    * @return the type of the contained bundle.
    */
-  public byte getType();
+  byte getType();
 
   /**
    * <p>
@@ -47,10 +47,10 @@ public interface BundleLayoutResolver {
    * <p>
    * This method must return a value != <code>null</code>.
    * </p>
-   *
+   * 
    * @return the location.
    */
-  public File getLocation();
+  File getLocation();
 
   /**
    * <p>
@@ -59,10 +59,10 @@ public interface BundleLayoutResolver {
    * <p>
    * This method must return a value != <code>null</code>.
    * </p>
-   *
+   * 
    * @return the manifest.
    */
-  public Manifest getManifest();
+  Manifest getManifest();
 
   /**
    * <p>
@@ -71,8 +71,9 @@ public interface BundleLayoutResolver {
    * <p>
    * This method must return a value != <code>null</code>.
    * </p>
-   *
+   * 
    * @return the resolved bundle class path.
    */
-  public File[] resolveBundleClasspathEntries();
+  File[] resolveBundleClasspathEntries();
+
 }

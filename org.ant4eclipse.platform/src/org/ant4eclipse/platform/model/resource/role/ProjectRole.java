@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.role;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.*;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ public interface ProjectRole {
    * 
    * @return the name of the {@link ProjectRole}.
    */
-  public String getName();
+  String getName();
 
   /**
    * <p>
@@ -39,5 +39,5 @@ public interface ProjectRole {
    * 
    * @return the {@link EclipseProject} this {@link ProjectRole} belongs to.
    */
-  public EclipseProject getEclipseProject();
+  EclipseProject getEclipseProject();
 } /* ENDCLASS */

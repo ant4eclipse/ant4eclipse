@@ -16,7 +16,6 @@ import java.io.File;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
 
-
 /**
  * Parsing class used to process an eclipse user library configuration file.
  * 

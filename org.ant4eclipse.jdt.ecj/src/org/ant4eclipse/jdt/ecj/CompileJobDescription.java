@@ -13,7 +13,6 @@ package org.ant4eclipse.jdt.ecj;
 
 import java.util.Map;
 
-
 /**
  * <p>
  * A {@link CompileJobDescription} describes a compile job that can be executed with the eclipse java compiler.
@@ -30,7 +29,7 @@ public interface CompileJobDescription {
    * 
    * @return the compiler options for the compile job.
    */
-  public Map<String, String> getCompilerOptions();
+  Map<String, String> getCompilerOptions();
 
   /**
    * <p>
@@ -39,7 +38,7 @@ public interface CompileJobDescription {
    * 
    * @return an array of directories that contains the source files that should be compiled.
    */
-  public SourceFile[] getSourceFiles();
+  SourceFile[] getSourceFiles();
 
   /**
    * <p>
@@ -50,5 +49,5 @@ public interface CompileJobDescription {
    * @return the {@link ClassFileLoader} that is responsible to load binary classes that are requested during the
    *         compilation process.
    */
-  public ClassFileLoader getClassFileLoader();
+  ClassFileLoader getClassFileLoader();
 }

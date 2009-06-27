@@ -27,5 +27,5 @@ public interface ProjectNature {
    * 
    * @return the name of the {@link ProjectNature}.
    */
-  public String getName();
+  String getName();
 } /* ENDCLASS */

@@ -31,5 +31,5 @@ public interface ModifiableClassFile extends ClassFile {
    * @param accessRestriction
    *          the {@link AccessRestriction}.
    */
-  public void setAccessRestriction(final AccessRestriction accessRestriction);
+  void setAccessRestriction(final AccessRestriction accessRestriction);
 }

@@ -21,12 +21,12 @@ public interface ClasspathEntry {
    * 
    * @return the entryKind.
    */
-  public int getEntryKind();
+  int getEntryKind();
 
   /**
    * Returns the path.
    * 
    * @return the path.
    */
-  public String getPath();
+  String getPath();
 }

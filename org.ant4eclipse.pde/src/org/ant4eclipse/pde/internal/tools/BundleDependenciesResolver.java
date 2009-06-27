@@ -25,7 +25,7 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 /**
  * <p>
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -38,7 +38,7 @@ public class BundleDependenciesResolver {
 
   /**
    * <p>
-   *
+   * 
    * </p>
    */
   public BundleDependenciesResolver() {
@@ -48,9 +48,9 @@ public class BundleDependenciesResolver {
 
   /**
    * <p>
-   *
+   * 
    * </p>
-   *
+   * 
    * @param context
    * @param resolvedBundleDescription
    */
@@ -127,7 +127,7 @@ public class BundleDependenciesResolver {
     }
 
     // return the result
-    return (BundleDescription[]) resultSet.toArray(new BundleDescription[resultSet.size()]);
+    return resultSet.toArray(new BundleDescription[resultSet.size()]);
   }
 
   /**
@@ -171,7 +171,7 @@ public class BundleDependenciesResolver {
    * <p>
    * Returns the {@link BundleDependency}.
    * </p>
-   *
+   * 
    * @param bundleDescription
    * @return
    */
@@ -194,7 +194,7 @@ public class BundleDependenciesResolver {
    * <p>
    * Returns the host for the given {@link BundleDescription}.
    * </p>
-   *
+   * 
    * @param bundleDescription
    * @return
    */
@@ -288,12 +288,12 @@ public class BundleDependenciesResolver {
      * <p>
      * Returns the {@link ResolvedClasspathEntry}.
      * </p>
-     *
+     * 
      * @return
      */
     public ResolvedClasspathEntry getResolvedClasspathEntry() {
 
-//      System.err.println(toString());
+      // System.err.println(toString());
 
       List<File> files = new LinkedList<File>();
       AccessRestrictions accessRestrictions = new AccessRestrictions();
@@ -316,7 +316,7 @@ public class BundleDependenciesResolver {
         }
       }
 
-//      System.err.println(accessRestrictions);
+      // System.err.println(accessRestrictions);
 
       return new ResolvedClasspathEntry(files.toArray(new File[0]), accessRestrictions);
     }
@@ -337,7 +337,7 @@ public class BundleDependenciesResolver {
      * <p>
      * Returns a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
      * </p>
-     *
+     * 
      * @param bundleDescription
      *          the given {@link BundleDescription}.
      * @return a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
@@ -369,7 +369,7 @@ public class BundleDependenciesResolver {
      * <p>
      * Returns the location for the given {@link BundleDescription}.
      * </p>
-     *
+     * 
      * @param bundleDescription
      *          the {@link BundleDescription}
      * @return the location for the given {@link BundleDescription}.

@@ -15,36 +15,35 @@ import org.ant4eclipse.platform.internal.ant.team.SvnAdapter;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 
 /**
- * SvnGetProjectSetTask 
+ * SvnGetProjectSetTask
  * 
- * <p>Note: svnant 1.1.0 is required to work with this task !
+ * <p>
+ * Note: svnant 1.1.0 is required to work with this task !
  * 
  * @author nils (nils@nilshartmann.net)
  */
 public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
- 
+
   /**
-   * Set to false to use command line client interface instead of JNI JavaHL binding.  
-   * Defaults to true
+   * Set to false to use command line client interface instead of JNI JavaHL binding. Defaults to true
    */
-  private boolean _javahl = true;
-  
+  private boolean _javahl        = true;
+
   /**
-   * Set to false to use command line client interface instead of JavaSVN binding.
-   * Defaults to false
+   * Set to false to use command line client interface instead of JavaSVN binding. Defaults to false
    */
-  private boolean _javasvn = true;
-  
+  private boolean _javasvn       = true;
+
   /**
    * formatter definition used to format/parse dates (e.g. when revision is specified as date).
    */
-  private String _dateFormatter = null;
-  
+  private String  _dateFormatter = null;
+
   /**
    * time zone used to format/parse dates (e.g. when revision is specified as date).
    */
-  private String _dateTimeZone = null;
-  
+  private String  _dateTimeZone  = null;
+
   public String getDateFormatter() {
     return _dateFormatter;
   }

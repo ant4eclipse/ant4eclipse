@@ -20,7 +20,7 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
  * Implements a javac compiler adapter for the eclipse compiler for java (ecj). The usage of the ecj has several
  * advantages over
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JDTCompilerAdapter extends DefaultCompilerAdapter {
@@ -144,7 +144,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param compilerArguments
    * @return
    */

@@ -18,7 +18,6 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectSet;
 
-
 public class CvsTeamProjectSet extends AbstractTeamProjectSet {
 
   public CvsTeamProjectSet(String name) {

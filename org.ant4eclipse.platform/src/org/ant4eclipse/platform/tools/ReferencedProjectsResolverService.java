@@ -1,9 +1,9 @@
 package org.ant4eclipse.platform.tools;
 
-import java.util.List;
+import org.ant4eclipse.core.service.*;
+import org.ant4eclipse.platform.model.resource.*;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import java.util.*;
 
 /**
  * <p>
@@ -21,7 +21,7 @@ public interface ReferencedProjectsResolverService {
    * 
    * @return
    */
-  public String[] getReferenceTypes();
+  String[] getReferenceTypes();
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public interface ReferencedProjectsResolverService {
    * @param additionalElements
    * @return
    */
-  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project, String[] referenceTypes,
+  List<EclipseProject> resolveReferencedProjects(final EclipseProject project, String[] referenceTypes,
       final List<Object> additionalElements);
 
   /**
@@ -43,8 +43,7 @@ public interface ReferencedProjectsResolverService {
    * @param properties
    * @return
    */
-  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
-      final List<Object> additionalElements);
+  List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final List<Object> additionalElements);
 
   /**
    */

@@ -11,23 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.StringTokenizer;
-import java.util.Map.Entry;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.exception.*;
+import org.ant4eclipse.core.logging.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.Map.*;
 
 /**
  * <p>
@@ -193,8 +184,7 @@ public class Utilities {
 
   /**
    * <p>
-   * Check if a String has text. More specifically, returns <code>true</code> if the string not
-   * <code>null<code>, it's <code>length is > 0</code>,
+   * Check if a String has text. More specifically, returns <code>true</code> if the string not <code>null<code>, it's <code>length is > 0</code>,
    * and it has at least one non-whitespace character.
    * </p>
    * <p>
@@ -293,7 +283,7 @@ public class Utilities {
     return (buffer.toString());
   }
 
-  public static Properties readProperties(final File propertiesFile) {
+  public static Map<String, String> readProperties(final File propertiesFile) {
     FileInputStream fis = null;
     Properties result = null;
     try {
@@ -315,7 +305,11 @@ public class Utilities {
         }
       }
     }
-    return result;
+    Map<String, String> nresult = new Hashtable<String, String>();
+    for (Map.Entry<Object, Object> entry : result.entrySet()) {
+      nresult.put((String) entry.getKey(), (String) entry.getValue());
+    }
+    return nresult;
   }
 
   public static Properties readPropertiesFromClasspath(final String name) {

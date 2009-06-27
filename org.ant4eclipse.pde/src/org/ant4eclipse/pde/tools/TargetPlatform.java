@@ -31,7 +31,7 @@ public interface TargetPlatform {
    * 
    * @return
    */
-  public TargetPlatformConfiguration getTargetPlatformConfiguration();
+  TargetPlatformConfiguration getTargetPlatformConfiguration();
 
   /**
    * <p>
@@ -40,5 +40,5 @@ public interface TargetPlatform {
    * 
    * @return
    */
-  public State getState();
+  State getState();
 }

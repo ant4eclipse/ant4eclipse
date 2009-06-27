@@ -27,14 +27,13 @@ import org.osgi.framework.Version;
  * 
  */
 public class PdeBuildHelper {
-  
+
   /**
-   * Name of the system property that might contain a value that is used to replace
-   * the ".qualifier" string in a Version. (if no property has been set a timestamp will be
-   * used)
+   * Name of the system property that might contain a value that is used to replace the ".qualifier" string in a
+   * Version. (if no property has been set a timestamp will be used)
    */
   public static final String CONTEXT_QUALIFIER_PROPERTY = "ant4eclipse.contextQualifier";
-  
+
   /**
    * Returns the destination directory for the given plugin, that is destDir/plugins/pluginFileName, where
    * pluginFileName is <code>smybolicname_version</code>
@@ -111,8 +110,9 @@ public class PdeBuildHelper {
   /**
    * Returns the file name that can be used either as target directory- or jar-name for this i.e.
    * "com.mycompany.mybundle_1.2.3". An extension (like ".jar" is not added).
-   *
-   * @param effectiveVersion The resolved version (i.e. with replaced qualifier)
+   * 
+   * @param effectiveVersion
+   *          The resolved version (i.e. with replaced qualifier)
    * @return The filename for this bundle
    */
   private static String getFileName(String id, Version effectiveVersion) {
@@ -123,36 +123,40 @@ public class PdeBuildHelper {
     pluginFileName.append(effectiveVersion.toString());
     return pluginFileName.toString();
   }
-  
+
   /**
    * Returns a "resolved" string representation of the given Version instance.
    * 
-   * <p>In the string returned the "qualifier" part of the version will be replaced according to
-   * the string passed in the qualifier argument that usualy will contain the "qualifier" property
-   * from the build.properties of a plugin or feature project.
-   * <p>If there is no ".qualifier" in the version the version will returned unchanged. This
-   * is also true if the version is already "resolved", that a Version  "1.2.3.20061117" would
-   * be returned unchanged.
+   * <p>
+   * In the string returned the "qualifier" part of the version will be replaced according to the string passed in the
+   * qualifier argument that usualy will contain the "qualifier" property from the build.properties of a plugin or
+   * feature project.
+   * <p>
+   * If there is no ".qualifier" in the version the version will returned unchanged. This is also true if the version is
+   * already "resolved", that a Version "1.2.3.20061117" would be returned unchanged.
    * 
-   * <p>If the <code>qualifier</code> parameter is:
+   * <p>
+   * If the <code>qualifier</code> parameter is:
    * <ul>
-   * <li><b>null</b> or <b>"context"</b> the ".qualifier" in the version will be replaced by a
-   * "context qualifier", that is the current date</li>
+   * <li><b>null</b> or <b>"context"</b> the ".qualifier" in the version will be replaced by a "context qualifier", that
+   * is the current date</li>
    * <li><b>"none"</b> the ".qualifier" string from the version will be removed</li>
    * <li><b>any other value</b>: the ".qualifier" will be replaced by this value</li>
-   * </ul>. 
+   * </ul>.
    * 
-   * @param version The version to resolve
-   * @param qualifier The qualifier argument from the build.properties. Might be null
+   * @param version
+   *          The version to resolve
+   * @param qualifier
+   *          The qualifier argument from the build.properties. Might be null
    * @return
    */
   public static Version resolveVersion(Version version, String qualifier) {
     Assert.notNull(qualifier);
-    
+
     Version qualifiedVersion = null;
-    
+
     if (hasUnresolvedQualifier(version)) {
-      if (qualifier==null||AbstractBuildProperties.isContextQualifer(qualifier)) {
+      if (qualifier == null || AbstractBuildProperties.isContextQualifer(qualifier)) {
         qualifier = getResolvedContextQualifier();
       } else if (AbstractBuildProperties.isNoneQualifier(qualifier)) {
         qualifier = null;
@@ -162,13 +166,13 @@ public class PdeBuildHelper {
       // no ".qualifier" in original version -> return unchanged
       qualifiedVersion = version;
     }
-    
+
     return qualifiedVersion;
   }
-  
+
   public static boolean hasUnresolvedQualifier(Version version) {
     Assert.notNull(version);
-    
+
     return (version != null && "qualifier".equals(version.getQualifier()));
   }
 
@@ -176,9 +180,9 @@ public class PdeBuildHelper {
    * Returns a qualifier that should be used if the plugin's version contains the word "qualifier" as qualifier.
    * <p>
    * 
-   * <p>The context qualifier can explizitly set by using the ant4eclipse.contextQualifier System property.
-   * Note that this is intended mainly for testing, since otherwise you can specify a qualifier in the
-   * build.properties
+   * <p>
+   * The context qualifier can explizitly set by using the ant4eclipse.contextQualifier System property. Note that this
+   * is intended mainly for testing, since otherwise you can specify a qualifier in the build.properties
    */
   public static String getResolvedContextQualifier() {
     String contextQualifier = System.getProperty(CONTEXT_QUALIFIER_PROPERTY);

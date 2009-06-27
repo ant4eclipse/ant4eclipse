@@ -13,7 +13,6 @@ package org.ant4eclipse.platform.internal.ant.team;
 
 import java.io.File;
 
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Utilities;

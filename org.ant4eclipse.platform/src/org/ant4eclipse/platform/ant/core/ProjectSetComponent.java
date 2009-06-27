@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.*;
 
 /**
  * <p>
@@ -31,7 +31,7 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
    * @param projectNames
    *          a comma separated list of project names.
    */
-  public void setProjectNames(String projectNames);
+  void setProjectNames(String projectNames);
 
   /**
    * <p>
@@ -40,7 +40,7 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
    * 
    * @return the list of project names.
    */
-  public String[] getProjectNames();
+  String[] getProjectNames();
 
   /**
    * <p>
@@ -49,19 +49,19 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
    * 
    * @return <code>true</code>, if the project names are set.
    */
-  public boolean isProjectNamesSet();
+  boolean isProjectNamesSet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the project names are not set.
    * </p>
    */
-  public void requireProjectNamesSet();
+  void requireProjectNamesSet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the project names and team project set are not set.
    * </p>
    */
-  public void requireTeamProjectSetOrProjectNamesSet();
+  void requireTeamProjectSetOrProjectNamesSet();
 }

@@ -2,7 +2,6 @@ package org.ant4eclipse.jdt.ecj;
 
 import java.util.Map;
 
-
 /**
  * <p>
  * </p>

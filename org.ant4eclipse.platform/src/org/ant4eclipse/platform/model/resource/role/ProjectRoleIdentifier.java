@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.role;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.*;
 
 /**
  * <p>
@@ -34,7 +34,7 @@ public interface ProjectRoleIdentifier {
    * 
    * @return <code>true</code> if the role is applicable for the eclipse project.
    */
-  public boolean isRoleSupported(EclipseProject project);
+  boolean isRoleSupported(EclipseProject project);
 
   /**
    * <p>
@@ -44,5 +44,5 @@ public interface ProjectRoleIdentifier {
    * @param project
    *          the eclipse project.
    */
-  public ProjectRole createRole(final EclipseProject project);
+  ProjectRole createRole(final EclipseProject project);
 } /* ENDCLASS */

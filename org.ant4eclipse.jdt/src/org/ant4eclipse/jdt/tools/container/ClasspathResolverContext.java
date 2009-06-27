@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.container;
 
-import java.util.List;
+import org.ant4eclipse.jdt.tools.*;
+import org.ant4eclipse.platform.model.resource.*;
 
-import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
+import java.util.*;
 
 /**
  * <p>
@@ -34,7 +33,7 @@ public interface ClasspathResolverContext {
    * 
    * @return <code>true</code> if the the class path should be resolved relative to the workspace.
    */
-  public boolean isWorkspaceRelative();
+  boolean isWorkspaceRelative();
 
   /**
    * <p>
@@ -43,7 +42,7 @@ public interface ClasspathResolverContext {
    * 
    * @return <code>true</code> if the the class path is a runtime class path.
    */
-  public boolean isRuntime();
+  boolean isRuntime();
 
   /**
    * <p>
@@ -52,7 +51,7 @@ public interface ClasspathResolverContext {
    * 
    * @return the current {@link Workspace}.
    */
-  public Workspace getWorkspace();
+  Workspace getWorkspace();
 
   /**
    * <p>
@@ -61,7 +60,7 @@ public interface ClasspathResolverContext {
    * 
    * @return <code>true</code>, if a current project is set.
    */
-  public boolean hasCurrentProject();
+  boolean hasCurrentProject();
 
   /**
    * <p>
@@ -70,7 +69,7 @@ public interface ClasspathResolverContext {
    * 
    * @return The current {@link EclipseProject}. Maybe null.
    */
-  public EclipseProject getCurrentProject();
+  EclipseProject getCurrentProject();
 
   /**
    * <p>
@@ -79,7 +78,7 @@ public interface ClasspathResolverContext {
    * 
    * @return <code>true</code> if the current project is the root project.
    */
-  public boolean isCurrentProjectRoot();
+  boolean isCurrentProjectRoot();
 
   /**
    * <p>
@@ -89,14 +88,14 @@ public interface ClasspathResolverContext {
    * @param project
    *          the (java-)project which class path should be resolved.
    */
-  public void resolveProjectClasspath(EclipseProject project);
+  void resolveProjectClasspath(EclipseProject project);
 
   /**
    *
    */
-  public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
+  List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
 
-  public JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
+  JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
 
   /**
    * <p>
@@ -106,9 +105,9 @@ public interface ClasspathResolverContext {
    * @param entry
    *          the entry to add.
    */
-  public void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
+  void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
 
-  public void addReferencedProjects(EclipseProject eclipseProject);
+  void addReferencedProjects(EclipseProject eclipseProject);
 
   /**
    * <p>
@@ -118,5 +117,5 @@ public interface ClasspathResolverContext {
    * @param entry
    *          the entry to add.
    */
-  public void setBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
+  void setBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
 }

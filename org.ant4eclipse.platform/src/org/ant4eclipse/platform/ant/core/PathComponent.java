@@ -1,8 +1,8 @@
 package org.ant4eclipse.platform.ant.core;
 
-import java.io.File;
+import org.apache.tools.ant.types.*;
 
-import org.apache.tools.ant.types.Path;
+import java.io.*;
 
 /**
  * <p>
@@ -19,14 +19,14 @@ public interface PathComponent {
    * @param newpathseparator
    *          The new path separator.
    */
-  public void setPathSeparator(final String newpathseparator);
+  void setPathSeparator(final String newpathseparator);
 
   /**
    * Returns the currently used path separator.
    * 
    * @return The currently used path separator.
    */
-  public String getPathSeparator();
+  String getPathSeparator();
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public interface PathComponent {
    * 
    * @return <code>true</code> if the path separator has been set.
    */
-  public boolean isPathSeparatorSet();
+  boolean isPathSeparatorSet();
 
   /**
    * <p>
@@ -45,7 +45,7 @@ public interface PathComponent {
    * @param newdirseparator
    *          The new directory separator.
    */
-  public void setDirSeparator(String newdirseparator);
+  void setDirSeparator(String newdirseparator);
 
   /**
    * <p>
@@ -54,7 +54,7 @@ public interface PathComponent {
    * 
    * @return the currently used directory separator.
    */
-  public String getDirSeparator();
+  String getDirSeparator();
 
   /**
    * <p>
@@ -63,7 +63,7 @@ public interface PathComponent {
    * 
    * @return <code>true</code> if the directory separator has been set.
    */
-  public boolean isDirSeparatorSet();
+  boolean isDirSeparatorSet();
 
   /**
    * <p>
@@ -77,7 +77,7 @@ public interface PathComponent {
    *          the file
    * @return a string
    */
-  public String convertToString(File entry);
+  String convertToString(File entry);
 
   /**
    * <p>
@@ -91,7 +91,7 @@ public interface PathComponent {
    *          the file array
    * @return a string
    */
-  public String convertToString(File[] entries);
+  String convertToString(File[] entries);
 
   /**
    * <p>
@@ -102,7 +102,7 @@ public interface PathComponent {
    *          the file
    * @return a ant path
    */
-  public Path convertToPath(File entry);
+  Path convertToPath(File entry);
 
   /**
    * <p>
@@ -113,5 +113,5 @@ public interface PathComponent {
    *          the file array
    * @return a ant path
    */
-  public Path convertToPath(File[] entries);
+  Path convertToPath(File[] entries);
 }

@@ -16,7 +16,6 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
-
 public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
 
   /** the cvsRoot for the project * */

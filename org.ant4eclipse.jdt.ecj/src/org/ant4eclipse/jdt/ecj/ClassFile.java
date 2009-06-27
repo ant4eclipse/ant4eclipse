@@ -33,7 +33,7 @@ public interface ClassFile {
    * 
    * @return the type of the bundle this class file was loaded from.
    */
-  public byte getLibraryType();
+  byte getLibraryType();
 
   /**
    * <p>
@@ -42,7 +42,7 @@ public interface ClassFile {
    * 
    * @return the location of the bundle this class file was loaded from.
    */
-  public String getLibraryLocation();
+  String getLibraryLocation();
 
   /**
    * <p>
@@ -51,7 +51,7 @@ public interface ClassFile {
    * 
    * @return this class file as an {@link IBinaryType}.
    */
-  public IBinaryType getBinaryType();
+  IBinaryType getBinaryType();
 
   /**
    * <p>
@@ -60,7 +60,7 @@ public interface ClassFile {
    * 
    * @return whether there exists an access restriction for this class file or not.
    */
-  public boolean hasAccessRestriction();
+  boolean hasAccessRestriction();
 
   /**
    * <p>
@@ -69,5 +69,5 @@ public interface ClassFile {
    * 
    * @return the access restriction for this class file or <code>null</code> if no access restriction exists.
    */
-  public AccessRestriction getAccessRestriction();
+  AccessRestriction getAccessRestriction();
 }

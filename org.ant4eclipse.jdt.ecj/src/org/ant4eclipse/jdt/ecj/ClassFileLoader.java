@@ -32,7 +32,7 @@ public interface ClassFileLoader {
    * 
    * @return all packages that can be loaded from this {@link ClassFileLoader}.
    */
-  public String[] getAllPackages();
+  String[] getAllPackages();
 
   /**
    * <p>
@@ -42,7 +42,7 @@ public interface ClassFileLoader {
    * 
    * @return <code>true</code> if the package is available via this {@link ClassFileLoader}
    */
-  public boolean hasPackage(String packageName);
+  boolean hasPackage(String packageName);
 
   /**
    * Returns an instance of type {@link ClassFile} that represents the specified class or <code>null</code> if no such
@@ -53,5 +53,5 @@ public interface ClassFileLoader {
    * @return an instance of type {@link ClassFile} that represents the specified class or <code>null</code> if the class
    *         is not available.
    */
-  public ClassFile loadClass(ClassName className);
+  ClassFile loadClass(ClassName className);
 }

@@ -127,7 +127,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
   }
 
   /**
-   *
+   * 
    * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#requireWorkspaceAndProjectNameSet()
    */
   public final void requireWorkspaceAndProjectNameSet() {
@@ -135,7 +135,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
   }
 
   /**
-   *
+   * 
    * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#requireWorkspaceDirectorySet()
    */
   public final void requireWorkspaceSet() {

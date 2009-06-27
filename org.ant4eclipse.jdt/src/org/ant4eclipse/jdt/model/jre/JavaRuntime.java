@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
-import java.io.File;
+import org.ant4eclipse.jdt.internal.model.jre.*;
 
-import org.ant4eclipse.jdt.internal.model.jre.Version;
-
+import java.io.*;
 
 /**
  * <p>
@@ -37,28 +36,28 @@ import org.ant4eclipse.jdt.internal.model.jre.Version;
 public interface JavaRuntime {
 
   /** constant for the specification version '1.0' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_0 = new Version("1.0");
+  Version JAVA_SPECIFICATION_VERSION_1_0 = new Version("1.0");
 
   /** constant for the specification version '1.1' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_1 = new Version("1.1");
+  Version JAVA_SPECIFICATION_VERSION_1_1 = new Version("1.1");
 
   /** constant for the specification version '1.2' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_2 = new Version("1.2");
+  Version JAVA_SPECIFICATION_VERSION_1_2 = new Version("1.2");
 
   /** constant for the specification version '1.3' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_3 = new Version("1.3");
+  Version JAVA_SPECIFICATION_VERSION_1_3 = new Version("1.3");
 
   /** constant for the specification version '1.4' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_4 = new Version("1.4");
+  Version JAVA_SPECIFICATION_VERSION_1_4 = new Version("1.4");
 
   /** constant for the specification version '1.5' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_5 = new Version("1.5");
+  Version JAVA_SPECIFICATION_VERSION_1_5 = new Version("1.5");
 
   /** constant for the specification version '1.6' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_6 = new Version("1.6");
+  Version JAVA_SPECIFICATION_VERSION_1_6 = new Version("1.6");
 
   /** constant for the specification version '1.7' */
-  public static final Version JAVA_SPECIFICATION_VERSION_1_7 = new Version("1.7");
+  Version JAVA_SPECIFICATION_VERSION_1_7 = new Version("1.7");
 
   /**
    * <p>
@@ -67,7 +66,7 @@ public interface JavaRuntime {
    * 
    * @return The the id of the {@link JavaRuntime}.
    */
-  public String getId();
+  String getId();
 
   /**
    * <p>
@@ -76,7 +75,7 @@ public interface JavaRuntime {
    * 
    * @return the location of the {@link JavaRuntime}.
    */
-  public File getLocation();
+  File getLocation();
 
   /**
    * <p>
@@ -85,7 +84,7 @@ public interface JavaRuntime {
    * 
    * @return all libraries that are available on the boot class path.
    */
-  public File[] getLibraries();
+  File[] getLibraries();
 
   /**
    * <p>
@@ -94,7 +93,7 @@ public interface JavaRuntime {
    * 
    * @return the version of this java runtime.
    */
-  public Version getJavaVersion();
+  Version getJavaVersion();
 
   /**
    * <p>
@@ -104,7 +103,7 @@ public interface JavaRuntime {
    * 
    * @return the specification version of this java runtime.
    */
-  public Version getSpecificationVersion();
+  Version getSpecificationVersion();
 
   /**
    * <p>
@@ -114,5 +113,5 @@ public interface JavaRuntime {
    * 
    * @return the java profile that describes this java runtime.
    */
-  public JavaProfile getJavaProfile();
+  JavaProfile getJavaProfile();
 }

@@ -15,7 +15,6 @@ import java.io.File;
 
 import org.ant4eclipse.core.Assert;
 
-
 /**
  * Simple library entry within the user library configuration file.
  * 

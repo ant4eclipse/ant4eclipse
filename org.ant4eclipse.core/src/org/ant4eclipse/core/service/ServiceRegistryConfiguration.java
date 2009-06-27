@@ -26,14 +26,14 @@ public interface ServiceRegistryConfiguration {
    * @param context
    *          the configuration context
    */
-  public void configure(final ConfigurationContext context);
+  void configure(final ConfigurationContext context);
 
   /**
    * ConfigurationContext --
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  public interface ConfigurationContext {
+  interface ConfigurationContext {
 
     /**
      * <p>
@@ -46,7 +46,7 @@ public interface ServiceRegistryConfiguration {
      * @param serviceIdentifier
      *          the service identifier
      */
-    public void registerService(Object service, String serviceIdentifier);
+    void registerService(Object service, String serviceIdentifier);
 
     /**
      * <p>
@@ -59,6 +59,8 @@ public interface ServiceRegistryConfiguration {
      * @param serviceIdentifiers
      *          the service identifiers
      */
-    public void registerService(Object service, String[] serviceIdentifiers);
+    void registerService(Object service, String[] serviceIdentifiers);
+
   }
+
 }

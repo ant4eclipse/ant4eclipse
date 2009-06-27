@@ -12,15 +12,14 @@ import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 public class PlatformReferencedProjectsResolver implements ReferencedProjectsResolver {
 
   /**
-   * @see org.ant4eclipse.platform.tools.ReferencedProjectsResolver#canHandle(org.ant4eclipse.platform.model.resource.EclipseProject)
+   * {@inheritDoc}
    */
   public boolean canHandle(EclipseProject project) {
     return true;
   }
 
   /**
-   * @see org.ant4eclipse.platform.tools.ReferencedProjectsResolver#resolveReferencedProjects(org.ant4eclipse.platform.model.resource.EclipseProject,
-   *      java.util.List)
+   * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
 

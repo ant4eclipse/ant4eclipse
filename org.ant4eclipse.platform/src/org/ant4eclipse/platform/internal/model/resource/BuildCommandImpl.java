@@ -14,7 +14,6 @@ package org.ant4eclipse.platform.internal.model.resource;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 
-
 /**
  * <p>
  * Encapsulates an build command of an eclipse java project.

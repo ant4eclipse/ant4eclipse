@@ -11,13 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.core.xquery;
 
-import java.util.Arrays;
-import java.util.Vector;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.exception.*;
+import org.xml.sax.*;
 
-
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.xml.sax.Attributes;
+import java.util.*;
 
 /**
  * This object stores a simple query used to access XML content. These queries will be visited by the SAXParser, so they
@@ -394,6 +392,7 @@ public class XQuery {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     return (this._xquery);
   }
@@ -489,7 +488,7 @@ public class XQuery {
 
       // increment the current value
       final Vector<String> values = XQuery.this._values;
-      final String lastval = (String) values.get(values.size() - 1);
+      final String lastval = values.get(values.size() - 1);
       final int value = Integer.parseInt(lastval);
       values.set(values.size() - 1, String.valueOf(value + 1));
 

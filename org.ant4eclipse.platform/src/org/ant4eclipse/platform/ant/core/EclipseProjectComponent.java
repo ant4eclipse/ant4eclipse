@@ -11,12 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import java.io.File;
+import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.platform.model.resource.role.*;
+import org.apache.tools.ant.*;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.apache.tools.ant.BuildException;
+import java.io.*;
 
 /**
  * <p>
@@ -52,7 +51,7 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @deprecated use setWorkspaceDirectory() and setProjectName() instead!
    */
   @Deprecated
-  public void setProject(File projectPath);
+  void setProject(File projectPath);
 
   /**
    * <p>
@@ -62,7 +61,7 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @param projectName
    *          the project name.
    */
-  public void setProjectName(String projectName);
+  void setProjectName(String projectName);
 
   /**
    * <p>
@@ -71,14 +70,14 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * 
    * @return <code>true</code> if the project name has been set.
    */
-  public boolean isProjectNameSet();
+  boolean isProjectNameSet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the workspace directory or the project name is not set.
    * </p>
    */
-  public void requireWorkspaceAndProjectNameSet();
+  void requireWorkspaceAndProjectNameSet();
 
   /**
    * <p>
@@ -90,7 +89,7 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @throws BuildException
    *           if the eclipse project with the given name does not exist in the given workspace.
    */
-  public EclipseProject getEclipseProject();
+  EclipseProject getEclipseProject();
 
   /**
    * <p>
@@ -100,5 +99,5 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @param projectRoleClass
    *          the project role class
    */
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass);
+  void ensureRole(Class<? extends ProjectRole> projectRoleClass);
 }

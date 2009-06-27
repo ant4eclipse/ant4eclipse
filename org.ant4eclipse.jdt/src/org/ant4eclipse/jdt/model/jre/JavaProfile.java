@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * <p>
@@ -26,34 +25,34 @@ import java.util.Properties;
 public interface JavaProfile {
 
   /** the constant for the java profile 'JavaSE-1.6' */
-  public static final String JAVA_PROFILE_JavaSE_1_6             = "JavaSE-1.6";
+  String JAVA_PROFILE_JavaSE_1_6             = "JavaSE-1.6";
 
   /** the constant for the java profile 'J2SE-1.5' */
-  public static final String JAVA_PROFILE_J2SE_1_5               = "J2SE-1.5";
+  String JAVA_PROFILE_J2SE_1_5               = "J2SE-1.5";
 
   /** the constant for the java profile 'J2SE-1.4' */
-  public static final String JAVA_PROFILE_J2SE_1_4               = "J2SE-1.4";
+  String JAVA_PROFILE_J2SE_1_4               = "J2SE-1.4";
 
   /** the constant for the java profile 'J2SE-1.3' */
-  public static final String JAVA_PROFILE_J2SE_1_3               = "J2SE-1.3";
+  String JAVA_PROFILE_J2SE_1_3               = "J2SE-1.3";
 
   /** the constant for the java profile 'J2SE-1.2' */
-  public static final String JAVA_PROFILE_J2SE_1_2               = "J2SE-1.2";
+  String JAVA_PROFILE_J2SE_1_2               = "J2SE-1.2";
 
   /** the constant for the java profile 'JRE-1.1' */
-  public static final String JAVA_PROFILE_JRE_1_1                = "JRE-1.1";
+  String JAVA_PROFILE_JRE_1_1                = "JRE-1.1";
 
   /** the constant for the java profile 'CDC-1.1_Foundation-1.1' */
-  public static final String JAVA_PROFILE_CDC_1_1_Foundation_1_1 = "CDC-1.1_Foundation-1.1";
+  String JAVA_PROFILE_CDC_1_1_Foundation_1_1 = "CDC-1.1_Foundation-1.1";
 
   /** the constant for the java profile 'CDC-1.0_Foundation-1.0' */
-  public static final String JAVA_PROFILE_CDC_1_0_Foundation_1_0 = "CDC-1.0_Foundation-1.0";
+  String JAVA_PROFILE_CDC_1_0_Foundation_1_0 = "CDC-1.0_Foundation-1.0";
 
   /** the constant for the java profile 'OSGi_Minimum-1.0' */
-  public static final String JAVA_PROFILE_OSGi_Minimum_1_0       = "OSGi_Minimum-1.0";
+  String JAVA_PROFILE_OSGi_Minimum_1_0       = "OSGi_Minimum-1.0";
 
   /** the constant for the java profile 'OSGi_Minimum-1.1' */
-  public static final String JAVA_PROFILE_OSGi_Minimum_1_1       = "OSGi_Minimum-1.1";
+  String JAVA_PROFILE_OSGi_Minimum_1_1       = "OSGi_Minimum-1.1";
 
   /**
    * <p>
@@ -62,7 +61,7 @@ public interface JavaProfile {
    * 
    * @return the name of the java profile.
    */
-  public String getName();
+  String getName();
 
   /**
    * <p>
@@ -72,9 +71,9 @@ public interface JavaProfile {
    * 
    * @return a list of execution environment names that this java profile is a super set of.
    */
-  public List<String> getExecutionEnvironmentNames();
+  List<String> getExecutionEnvironmentNames();
 
-  public List<String> getSystemPackages();
+  List<String> getSystemPackages();
 
   /**
    * <p>
@@ -89,7 +88,7 @@ public interface JavaProfile {
    * 
    * @return the java profile as properties.
    */
-  public Properties getProperties();
+  Properties getProperties();
 
   /**
    * <p>
@@ -99,10 +98,9 @@ public interface JavaProfile {
    * @param packageName
    *          the package name
    * 
-   * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code> otherwise.
    */
-  public boolean isSystemPackage(final String packageName);
+  boolean isSystemPackage(final String packageName);
 
   /**
    * <p>
@@ -114,5 +112,5 @@ public interface JavaProfile {
    * 
    * @return <code>true</code>, if the specified package name is must be delegated to the boot class loader.
    */
-  public boolean isDelegatedToBootClassLoader(final String packageName);
+  boolean isDelegatedToBootClassLoader(final String packageName);
 }

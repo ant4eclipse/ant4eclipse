@@ -23,14 +23,14 @@ public interface TeamProjectSet {
    * 
    * @return Returns the name of the TeamProjectSet.
    */
-  public String getName();
+  String getName();
 
   /**
    * Returns the TeamProjectDescriptions.
    * 
    * @return Returns the TeamProjectDescriptions.
    */
-  public TeamProjectDescription[] getTeamProjectDescriptions();
+  TeamProjectDescription[] getTeamProjectDescriptions();
 
   /**
    * Returns a TeamProjectDescription by the given name.
@@ -39,14 +39,14 @@ public interface TeamProjectSet {
    *          the name of the TeamProjectDescription to return.
    * @return Returns a TeamProjectDescription by the given name.
    */
-  public TeamProjectDescription getTeamProjectDescriptionByName(String name);
+  TeamProjectDescription getTeamProjectDescriptionByName(String name);
 
   /**
    * Returns a list of project names.
    * 
    * @return A list of project names.
    */
-  public String[] getProjectNames();
+  String[] getProjectNames();
 
   /**
    * Sets the user and password that should be used when this Team Project Set will be checked out.
@@ -56,6 +56,6 @@ public interface TeamProjectSet {
    * @param pwd
    *          the password might be null
    */
-  public void setUserAndPassword(String user, String pwd);
+  void setUserAndPassword(String user, String pwd);
 
 }

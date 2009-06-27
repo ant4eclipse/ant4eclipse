@@ -29,7 +29,8 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
  * <ul>
  * <li><b>org.osgi.framework.system.packages:</b> The system property <code>org.osgi.framework.system.packages</code>
  * contains the export packages descriptions for the system bundle. This property employs the standard Export-Package
- * manifest header syntax: <br/><br/>
+ * manifest header syntax: <br/>
+ * <br/>
  * 
  * <code>org.osgi.framework.system.packages ::= package-description ( ',' package-description )* </code><br/>
  * 

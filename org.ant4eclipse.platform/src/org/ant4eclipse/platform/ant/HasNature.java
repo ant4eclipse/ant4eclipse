@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
-import org.ant4eclipse.platform.ant.core.condition.AbstractProjectBasedCondition;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.apache.tools.ant.BuildException;
+import org.ant4eclipse.platform.ant.core.condition.*;
+import org.ant4eclipse.platform.model.resource.*;
+import org.apache.tools.ant.*;
 
 /**
  * <p>
@@ -23,7 +22,7 @@ import org.apache.tools.ant.BuildException;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class HasNature extends AbstractProjectBasedCondition implements EclipseProjectComponent {
+public class HasNature extends AbstractProjectBasedCondition {
 
   /** Comment for <code>_nature</code> */
   private String _nature;

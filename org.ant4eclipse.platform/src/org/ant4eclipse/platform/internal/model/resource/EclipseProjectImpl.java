@@ -24,7 +24,6 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-
 /**
  * Encapsultes a project. A project contains a workspace and is represented by a directory in this workspace. A project
  * can have multiple natures and multiple roles.
@@ -34,40 +33,40 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 public final class EclipseProjectImpl implements EclipseProject {
 
   /** The name of the projects <tt>.settings</tt> folder */
-  public static final String SETTINGS_FOLDER_NAME = ".settings";
+  public static final String             SETTINGS_FOLDER_NAME = ".settings";
 
   /** the workspace that contains this project */
-  private final Workspace    _workspace;
+  private final Workspace                _workspace;
 
   /** the file that represents this project */
-  private final File         _projectDirectory;
+  private final File                     _projectDirectory;
 
   /** the project name specified in the project description */
-  private String             _specifiedName;
+  private String                         _specifiedName;
 
   /** the <tt>.settings</tt> folder of the project or <tt>null<tt> if there is no <tt>.settings</tt> folder */
-  private final File         _settingsFolder;
+  private final File                     _settingsFolder;
 
   /** the project comment */
-  private String             _comment;
+  private String                         _comment;
 
   /** the list of project natures */
-  private final List<ProjectNature>         _natures;
+  private final List<ProjectNature>      _natures;
 
   /** the list of project roles */
-  private final List<ProjectRole>         _roles;
+  private final List<ProjectRole>        _roles;
 
   /** the list of buildCommands */
-  private final List<BuildCommand>         _buildCommands;
+  private final List<BuildCommand>       _buildCommands;
 
   /** the referenced project specified in the project description */
-  private final List<String>         _referencedProjects;
+  private final List<String>             _referencedProjects;
 
   /** the linked resources specified in the project description */
-  private final List<LinkedResourceImpl>         _linkedResources;
+  private final List<LinkedResourceImpl> _linkedResources;
 
   /** the names of the linked resource. used for the mapping */
-  private final List<String>         _linkedResourceNames;
+  private final List<String>             _linkedResourceNames;
 
   /**
    * Creates a new instance of type project.

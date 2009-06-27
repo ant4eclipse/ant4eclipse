@@ -32,7 +32,7 @@ import org.ant4eclipse.core.exception.ExceptionCode;
  * public class MyClass {
  *   public static String myMessage;
  *   public static ExceptionCode myExceptionCode;
- *   
+ * 
  *   static {
  *     initialize(MyClass.class)
  *   }
@@ -53,7 +53,7 @@ import org.ant4eclipse.core.exception.ExceptionCode;
  *   public static String myMessage;
  *   &#064;NLSMessage(&quot;My default exception code&quot;)
  *   public static ExceptionCode myExceptionCode;
- *   
+ * 
  *   static {
  *     initialize(MyClass.class)
  *   }
@@ -301,7 +301,6 @@ public abstract class NLS {
           } catch (IOException ex) {
             // ignore
           }
-          is = null;
         }
       }
     }

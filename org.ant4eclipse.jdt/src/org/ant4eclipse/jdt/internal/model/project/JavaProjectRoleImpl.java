@@ -11,24 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.service.*;
+import org.ant4eclipse.core.util.*;
+import org.ant4eclipse.jdt.model.*;
+import org.ant4eclipse.jdt.model.jre.*;
+import org.ant4eclipse.jdt.model.project.*;
+import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.platform.model.resource.role.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.model.ContainerTypes;
-import org.ant4eclipse.jdt.model.jre.JavaProfile;
-import org.ant4eclipse.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
+import java.io.*;
+import java.util.*;
 
 /**
  * <p>
@@ -131,9 +125,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
-  public Map getCompilerOptions() {
+  public Map<String, String> getCompilerOptions() {
 
-    Map result = null;
+    Map<String, String> result = null;
 
     // read project-specific compiler settings if available
     final File settingsDir = getEclipseProject().getChild(".settings");

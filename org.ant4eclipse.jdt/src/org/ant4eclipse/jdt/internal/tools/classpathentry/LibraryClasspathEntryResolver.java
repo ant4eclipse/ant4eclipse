@@ -17,7 +17,6 @@ import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
-
 /**
  * 
  */

@@ -23,7 +23,7 @@ import org.osgi.framework.Version;
  * contain any code. They merely describe a set of plug-ins that provide the function for the feature and information
  * about how to update it. Features are packaged in a feature archive file and described using a feature manifest.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class FeatureManifest {
@@ -96,7 +96,7 @@ public class FeatureManifest {
 
   /**
    * Returns the name of the application.
-   *
+   * 
    * @return The name of the application.
    */
   public String getApplication() {
@@ -105,7 +105,7 @@ public class FeatureManifest {
 
   /**
    * Returns a reference to another feature.
-   *
+   * 
    * @return A reference to another feature.
    */
   public String getColocationAffinity() {
@@ -128,7 +128,7 @@ public class FeatureManifest {
 
   /**
    * Returns the location of an associated image.
-   *
+   * 
    * @return The location of an associated image.
    */
   public String getImage() {
@@ -158,7 +158,7 @@ public class FeatureManifest {
 
   /**
    * Returns the plugin used for this feature.
-   *
+   * 
    * @return The plugin used for this feature.
    */
   public String getPlugin() {
@@ -167,7 +167,7 @@ public class FeatureManifest {
 
   /**
    * Returns true if this feature is a primary one.
-   *
+   * 
    * @return true <=> This feature is a primary one.
    */
   public boolean isPrimary() {
@@ -190,7 +190,7 @@ public class FeatureManifest {
 
   /**
    * Returns the name of the windowing system.
-   *
+   * 
    * @return The name of the windowing system.
    */
   public String getWindowingSystem() {
@@ -208,7 +208,7 @@ public class FeatureManifest {
    * @return all the referenced plugins.
    */
   public Plugin[] getPlugins() {
-    return (Plugin[]) _plugins.toArray(new Plugin[0]);
+    return _plugins.toArray(new Plugin[0]);
   }
 
   /**

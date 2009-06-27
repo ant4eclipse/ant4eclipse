@@ -27,7 +27,7 @@ public interface BuildCommand {
    * 
    * @return the name of the build command.
    */
-  public String getName();
+  String getName();
 
   /**
    * <p>
@@ -36,7 +36,7 @@ public interface BuildCommand {
    * 
    * @return the triggers as a comma-separated list
    */
-  public String getTriggers();
+  String getTriggers();
 
   /**
    * <p>
@@ -45,5 +45,5 @@ public interface BuildCommand {
    * 
    * @return <code>true</code> if builder has triggers set.
    */
-  public boolean hasTriggers();
+  boolean hasTriggers();
 } /* ENDCLASS */

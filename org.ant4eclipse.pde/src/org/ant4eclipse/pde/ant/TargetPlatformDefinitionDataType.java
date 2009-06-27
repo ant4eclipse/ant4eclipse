@@ -25,7 +25,7 @@ import org.apache.tools.ant.types.DataType;
  * Represents a definition of a target platfrom. A target platfrom contains one or more locations. Each location must
  * contain bundles in a subdirectory named 'plugins'.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataType {
@@ -45,7 +45,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    * <p>
    * Sets the id of the target platform location.
    * </p>
-   *
+   * 
    * @param id
    *          the id of the target platform location.
    */
@@ -60,7 +60,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param location
    */
   public void addConfiguredLocation(Location location) {
@@ -117,7 +117,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    * <p>
    * Implements a target platform location.
    * </p>
-   *
+   * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   public static class Location extends DataType {
@@ -138,7 +138,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * <p>
      * Creates a new instance of type Location.
      * </p>
-     *
+     * 
      * @param directory
      *          the directory.
      */
@@ -150,9 +150,9 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
 
     /**
      * <p>
-     *
+     * 
      * </p>
-     *
+     * 
      * @return
      */
     public File getDirectory() {
@@ -163,7 +163,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * <p>
      * Sets the directory.
      * </p>
-     *
+     * 
      * @param directory
      */
     public void setDir(File directory) {
@@ -176,7 +176,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * <p>
      * Returns <code>true</code>, if the directory is set, <code>false</code> otherwise.
      * </p>
-     *
+     * 
      * @return <code>true</code>, if the directory is set, <code>false</code> otherwise.
      */
     public boolean hasDirectory() {

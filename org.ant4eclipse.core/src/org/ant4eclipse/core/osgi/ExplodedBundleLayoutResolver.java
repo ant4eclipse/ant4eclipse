@@ -11,20 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.jar.Manifest;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.util.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.ManifestHelper;
+import java.io.*;
+import java.util.*;
+import java.util.jar.*;
 
 /**
  * <p>
  * Implements a {@link BundleLayoutResolver} for exploded bundles.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
@@ -39,7 +37,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    * <p>
    * Creates a new instances of type {@link ExplodedBundleLayoutResolver}.
    * </p>
-   *
+   * 
    * @param location
    *          the root directory of the exploded bundle.
    */
@@ -82,7 +80,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * <p>
    * </p>
-   *
+   * 
    * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#resolveBundleClasspathEntries(java.io.File)
    */
   public File[] resolveBundleClasspathEntries() {
@@ -94,15 +92,15 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
     final String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
 
     // add class path entries to the result
-    for (int i = 0; i < bundleClasspathEntries.length; i++) {
+    for (String bundleClasspathEntrie : bundleClasspathEntries) {
 
       // add 'self'
-      if (".".equals(bundleClasspathEntries[i])) {
+      if (".".equals(bundleClasspathEntrie)) {
         result.add(this._location);
       }
       // add entry
       else {
-        final File classpathEntry = new File(this._location, bundleClasspathEntries[i]);
+        final File classpathEntry = new File(this._location, bundleClasspathEntrie);
         if (classpathEntry.exists()) {
           result.add(classpathEntry);
         }
@@ -110,6 +108,6 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
     }
 
     // return result
-    return (File[]) result.toArray(new File[0]);
+    return result.toArray(new File[0]);
   }
 }

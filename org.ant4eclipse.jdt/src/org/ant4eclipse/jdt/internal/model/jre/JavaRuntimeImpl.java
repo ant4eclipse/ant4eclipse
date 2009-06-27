@@ -17,7 +17,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 
-
 /**
  * <p>
  * Defines a java runtime environment.

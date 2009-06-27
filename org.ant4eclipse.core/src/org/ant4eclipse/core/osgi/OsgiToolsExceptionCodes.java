@@ -13,7 +13,6 @@ package org.ant4eclipse.core.osgi;
 
 import org.ant4eclipse.core.exception.ExceptionCode;
 
-
 public class OsgiToolsExceptionCodes extends ExceptionCode {
 
   public static OsgiToolsExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND = new OsgiToolsExceptionCodes(

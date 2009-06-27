@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.platform.model.resource.Workspace;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.service.*;
+import org.ant4eclipse.platform.model.resource.*;
 
 /**
  * <p>
@@ -34,7 +34,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    *          the workspace definition
    * @return the new {@link Workspace} instance
    */
-  public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition);
+  Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition);
 
   /**
    * <p>
@@ -47,7 +47,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    * @return <code>true</code> if the registry contains a {@link Workspace} that is registered under the specified
    *         identifier.
    */
-  public boolean containsWorkspace(String id);
+  boolean containsWorkspace(String id);
 
   /**
    * <p>
@@ -59,7 +59,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    *          the identifier.
    * @return the {@link Workspace} that is registered under the given identifier.
    */
-  public Workspace getWorkspace(String id);
+  Workspace getWorkspace(String id);
 
   /**
    * <p>
@@ -69,7 +69,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    * @param currentWorkspace
    *          the workspace.
    */
-  public void setCurrent(Workspace currentWorkspace);
+  void setCurrent(Workspace currentWorkspace);
 
   /**
    * <p>
@@ -79,7 +79,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    * @param specified
    *          the identifier of the workspace.
    */
-  public void setCurrent(String id);
+  void setCurrent(String id);
 
   /**
    * <p>
@@ -88,7 +88,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    * 
    * @return <code>true</code> if a current workspace is set.
    */
-  public boolean hasCurrent();
+  boolean hasCurrent();
 
   /**
    * <p>
@@ -97,7 +97,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    * 
    * @return the current {@link Workspace}.
    */
-  public Workspace getCurrent();
+  Workspace getCurrent();
 
   /**
    * <p>

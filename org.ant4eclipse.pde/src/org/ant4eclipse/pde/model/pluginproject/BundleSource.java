@@ -24,7 +24,7 @@ import org.osgi.framework.Constants;
 /**
  * The {@link BundleSource} wraps the source of a bundle (e.g. an eclipse plug-in project, a jared bundle or an exploded
  * bundle).
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class BundleSource {
@@ -34,7 +34,7 @@ public class BundleSource {
    * Extracts the {@link BundleSource} for the given {@link BundleDescription}. If the bundle source is not set, a
    * {@link RuntimeException} will be thrown.
    * </p>
-   *
+   * 
    * @param bundleDescription
    *          the bundle description.
    * @return the bundle source.
@@ -67,7 +67,7 @@ public class BundleSource {
    * <p>
    * Creates a new instance of type {@link BundleSource}.
    * </p>
-   *
+   * 
    * @param source
    *          the bundle source (e.g. an eclipse plug-in project, a jared bundle or an exploded bundle)
    * @param bundleManifest
@@ -90,7 +90,7 @@ public class BundleSource {
    * <p>
    * Returns the bundle source. The result type can be {@link EclipseProject} or {@link File}.
    * </p>
-   *
+   * 
    * @return the bundle source.
    */
   public Object getSource() {
@@ -101,7 +101,7 @@ public class BundleSource {
    * <p>
    * Returns <code>true</code>, if the bundle source is of type {@link EclipseProject}.
    * </p>
-   *
+   * 
    * @return <code>true</code>, if the bundle source is of type {@link EclipseProject}.
    */
   public boolean isEclipseProject() {
@@ -113,7 +113,7 @@ public class BundleSource {
    * Returns the bundle source as an {@link EclipseProject}. If the bundle source is not an instance of type
    * {@link EclipseProject}, a {@link RuntimeException} will be thrown.
    * </p>
-   *
+   * 
    * @return the bundle source.
    */
   public EclipseProject getAsEclipseProject() {
@@ -127,7 +127,7 @@ public class BundleSource {
    * Returns the bundle source as an {@link File}. If the bundle source is not an instance of type {@link File}, a
    * {@link RuntimeException} will be thrown.
    * </p>
-   *
+   * 
    * @return the bundle source.
    */
   public File getAsFile() {
@@ -140,7 +140,7 @@ public class BundleSource {
    * <p>
    * Returns the bundle manifest.
    * </p>
-   *
+   * 
    * @return the bundle manifest.
    */
   public Manifest getBundleManifest() {
@@ -152,7 +152,7 @@ public class BundleSource {
    * Returns <code>true</code> if a class path root has already been set. If this methods returns <code>false</code> it
    * indicates that the {@link JarUtilities} hasn't run on this bundle yet.
    * </p>
-   *
+   * 
    * @return <code>true</code> if a class path root has already been set.
    */
   public boolean hasClasspathRoot() {
@@ -163,7 +163,7 @@ public class BundleSource {
    * <p>
    * Returns the class path root or <code>null</code>. The class path root is set through the {@link JarUtilities}.
    * </p>
-   *
+   * 
    * @return the class path root or <code>null</code>.
    */
   public File getClasspathRoot() {
@@ -177,7 +177,7 @@ public class BundleSource {
    * <p>
    * Note: this method should only be called through the {@link JarUtilities}.
    * </p>
-   *
+   * 
    * @param classpathRoot
    *          the class path root
    */
@@ -193,7 +193,7 @@ public class BundleSource {
    * Returns the 'Bundle-Classpath' entries or <code>.</code> if no 'Bundle-Classpath' has been specified (default
    * value).
    * </p>
-   *
+   * 
    * @return the 'Bundle-Classpath' entries or <code>.</code> if no 'Bundle-Classpath' has been specified.
    */
   public String[] getBundleClasspath() {
@@ -216,7 +216,7 @@ public class BundleSource {
    * Returns the name of the bundle as specified in the 'Bundle-Name' header or the bundles Symbolic-Name if no
    * 'Bundle-Name' header is specified.
    * </p>
-   *
+   * 
    * @return the name of the bundle as specified in the 'Bundle-Name' header or the bundles Symbolic-Name if no
    *         'Bundle-Name' header is specified.
    */

@@ -30,7 +30,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
  * The {@link TargetPlatformRegistryImpl} can be used to retrieve instances of type {@link TargetPlatform}. The registry
  * also implements a map that stores instances that already have been requested.
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -39,22 +39,14 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /** the current {@link TargetPlatform}, maybe null **/
   private TargetPlatform                              _currentTargetPlatform;
 
-  /** the cache for plug-in project sets **/
-  private final Map                                   _pluginProjectSetMap        = new HashMap();
-
-  /** the cache for **/
-  private final Map                                   _binaryBundleSetMap         = new HashMap();
-
   /** the static map with all target platforms currently resolved */
-  private final Map                                   _targetPlatformMap          = new HashMap();
+  private final Map<Object, BundleSet>                _targetPlatformMap          = new HashMap<Object, BundleSet>();
 
   /** */
   private final Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see net.sf.ant4eclipse.tools.pde.target.TargetPlatformRegistry#getCurrent()
+  /**
+   * {@inheritDoc}
    */
   public TargetPlatform getCurrent() {
     return this._currentTargetPlatform;
@@ -74,7 +66,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     Assert.assertTrue((workspace != null) || (targetLocations != null),
         "Parameter workspace or targetLocations has to be set !");
 
-    //System.err.println(Arrays.asList(targetLocations));
+    // System.err.println(Arrays.asList(targetLocations));
 
     // TargetPlatformKey
     final TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
@@ -93,13 +85,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * Removes all target platforms from the factory.
    */
   public void clear() {
-    //
-    this._pluginProjectSetMap.clear();
-    //
-    this._binaryBundleSetMap.clear();
-    //
     this._targetPlatformMap.clear();
-
     this._targetPlatformDefnitionMap.clear();
   }
 
@@ -150,7 +136,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   private BinaryBundleSet[] getBinaryPluginSet(final File[] files) {
 
     //
-    final List result = new LinkedList();
+    final List<BinaryBundleSet> result = new LinkedList<BinaryBundleSet>();
 
     //
     for (int i = 0; i < files.length; i++) {
@@ -158,12 +144,12 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     }
 
     //
-    return (BinaryBundleSet[]) result.toArray(new BinaryBundleSet[0]);
+    return result.toArray(new BinaryBundleSet[0]);
   }
 
   /**
    * TargetPlatformKey --
-   *
+   * 
    * @author Wuetherich-extern
    */
   private class TargetPlatformKey {

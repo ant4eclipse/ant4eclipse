@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
-import java.io.File;
+import org.ant4eclipse.core.service.*;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-
+import java.io.*;
 
 /**
  * <p>
@@ -32,19 +31,19 @@ public interface JavaRuntimeRegistry {
    * @param isDefault
    * @return
    */
-  public JavaRuntime registerJavaRuntime(final String id, final File location, final boolean isDefault);
+  JavaRuntime registerJavaRuntime(final String id, final File location, final boolean isDefault);
 
   /**
    * @param id
    * @param location
    * @return
    */
-  public JavaRuntime registerJavaRuntime(final String id, final File location);
+  JavaRuntime registerJavaRuntime(final String id, final File location);
 
   /**
    * @param id
    */
-  public void setDefaultJavaRuntime(final String id);
+  void setDefaultJavaRuntime(final String id);
 
   /**
    * <p>
@@ -55,7 +54,7 @@ public interface JavaRuntimeRegistry {
    *          the id
    * @return <code>true</code> if the java runtime with the given id is known.
    */
-  public boolean hasJavaRuntime(final String id);
+  boolean hasJavaRuntime(final String id);
 
   /**
    * <p>
@@ -66,7 +65,7 @@ public interface JavaRuntimeRegistry {
    *          the id
    * @return the java runtime with the given path or <code>null</code> if no such java runtime is registered.
    */
-  public JavaRuntime getJavaRuntime(final String id);
+  JavaRuntime getJavaRuntime(final String id);
 
   /**
    * <p>
@@ -79,26 +78,26 @@ public interface JavaRuntimeRegistry {
    * 
    * @return the default java runtime. Never null.
    */
-  public JavaRuntime getDefaultJavaRuntime();
+  JavaRuntime getDefaultJavaRuntime();
 
   /**
    * @param id
    * @return
    */
-  public boolean hasJavaProfile(final String id);
+  boolean hasJavaProfile(final String id);
 
   /**
    * @param id
    * @return
    */
-  public JavaProfile getJavaProfile(final String id);
+  JavaProfile getJavaProfile(final String id);
 
   /**
    * <p>
    * Clears the java runtime cache. The java profile cache will <b>not</b> be cleared.
    * </p>
    */
-  public void clear();
+  void clear();
 
   /**
    */

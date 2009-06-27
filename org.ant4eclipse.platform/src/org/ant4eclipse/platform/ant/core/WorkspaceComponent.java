@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import java.io.File;
+import org.ant4eclipse.platform.model.resource.*;
+import org.apache.tools.ant.*;
 
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.apache.tools.ant.BuildException;
+import java.io.*;
 
 /**
  * <p>
@@ -47,7 +47,7 @@ public interface WorkspaceComponent {
    *             compatibility only.
    */
   @Deprecated
-  public void setWorkspace(final File workspace);
+  void setWorkspace(final File workspace);
 
   /**
    * <p>
@@ -57,7 +57,7 @@ public interface WorkspaceComponent {
    * @param workspace
    *          the workspace directory
    */
-  public void setWorkspaceDirectory(final File workspaceDirectory);
+  void setWorkspaceDirectory(final File workspaceDirectory);
 
   /**
    * <p>
@@ -66,7 +66,7 @@ public interface WorkspaceComponent {
    * 
    * @return the workspace directory.
    */
-  public File getWorkspaceDirectory();
+  File getWorkspaceDirectory();
 
   /**
    * <p>
@@ -75,14 +75,14 @@ public interface WorkspaceComponent {
    * 
    * @return <code>true</code> if the workspace directory is set, <code>false</code> otherwise.
    */
-  public boolean isWorkspaceDirectorySet();
+  boolean isWorkspaceDirectorySet();
 
   /**
    * <p>
    * Throws an {@link BuildException} if the workspace directory has not been set.
    * </p>
    */
-  public void requireWorkspaceDirectorySet();
+  void requireWorkspaceDirectorySet();
 
   /**
    * <p>
@@ -91,5 +91,5 @@ public interface WorkspaceComponent {
    * 
    * @return the {@link Workspace} instance.
    */
-  public Workspace getWorkspace();
+  Workspace getWorkspace();
 }

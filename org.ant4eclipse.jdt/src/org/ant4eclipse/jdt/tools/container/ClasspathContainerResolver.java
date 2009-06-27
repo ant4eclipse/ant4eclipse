@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.container;
 
-import org.ant4eclipse.jdt.model.ClasspathEntry;
+import org.ant4eclipse.jdt.model.*;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public interface ClasspathContainerResolver {
    *          the {@link ClasspathEntry} that should be resolved
    * @return <code>true</code>, if this {@link ClasspathContainerResolver} can resolve the given {@link ClasspathEntry}.
    */
-  public boolean canResolveContainer(ClasspathEntry classpathEntry);
+  boolean canResolveContainer(ClasspathEntry classpathEntry);
 
   /**
    * <p>
@@ -45,5 +45,5 @@ public interface ClasspathContainerResolver {
    * @param context
    *          the {@link ClasspathResolverContext}
    */
-  public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context);
+  void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context);
 }

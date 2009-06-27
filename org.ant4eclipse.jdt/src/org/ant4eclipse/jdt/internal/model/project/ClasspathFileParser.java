@@ -18,7 +18,6 @@ import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
 
-
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */

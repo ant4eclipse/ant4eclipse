@@ -1,16 +1,11 @@
 package org.ant4eclipse.core.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
+import org.ant4eclipse.core.*;
 
-import org.ant4eclipse.core.Assert;
-
+import java.io.*;
+import java.util.*;
+import java.util.jar.*;
+import java.util.zip.*;
 
 /**
  * <p>
@@ -80,7 +75,7 @@ public class JarUtilities {
     }
   }
 
-  private static void writeFile(InputStream inputStream, final File file) throws IOException {
+  private static void writeFile(InputStream inputStream, final File file) {
     Assert.notNull(inputStream);
     Assert.isFile(file);
 

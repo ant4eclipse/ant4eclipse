@@ -23,10 +23,10 @@ import org.ant4eclipse.jdt.ecj.internal.tools.EcjAdapterImpl;
 public interface EcjAdapter {
 
   /** constants to describe PROJECT type */
-  public static final byte PROJECT = 1;
+  byte PROJECT = 1;
 
   /** constants to describe LIBRARY type */
-  public static final byte LIBRARY = 2;
+  byte LIBRARY = 2;
 
   /**
    * <p>
@@ -36,7 +36,7 @@ public interface EcjAdapter {
    * @param description
    *          the {@link CompileJobDescription} that describes the compile job.
    */
-  public CompileJobResult compile(CompileJobDescription description);
+  CompileJobResult compile(CompileJobDescription description);
 
   /**
    * <p>

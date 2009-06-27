@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource;
 
-import java.io.File;
+import org.ant4eclipse.platform.model.resource.role.*;
 
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-
+import java.io.*;
 
 /**
  * <p>
@@ -28,13 +27,13 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 public interface EclipseProject {
 
   /** the constant ABSOLUTE */
-  public static final int ABSOLUTE                                      = 0;
+  int ABSOLUTE                                      = 0;
 
   /** the constant PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME */
-  public static final int PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME    = 1;
+  int PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME    = 1;
 
   /** the constant PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME */
-  public static final int PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME = 2;
+  int PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME = 2;
 
   /**
    * <p>
@@ -43,7 +42,7 @@ public interface EclipseProject {
    * 
    * @return the workspace this {@link EclipseProject} belongs to.
    */
-  public Workspace getWorkspace();
+  Workspace getWorkspace();
 
   /**
    * <p>
@@ -53,7 +52,7 @@ public interface EclipseProject {
    * 
    * @return the name specified name of the project.
    */
-  public String getSpecifiedName();
+  String getSpecifiedName();
 
   /**
    * <p>
@@ -62,7 +61,7 @@ public interface EclipseProject {
    * 
    * @return the name of the project folder.
    */
-  public String getFolderName();
+  String getFolderName();
 
   /**
    * <p>
@@ -71,7 +70,7 @@ public interface EclipseProject {
    * 
    * @return Returns the folder that represents this project.
    */
-  public File getFolder();
+  File getFolder();
 
   /**
    * <p>
@@ -80,7 +79,7 @@ public interface EclipseProject {
    * 
    * @return the comment that is maybe set in the <code>.project</code> file.
    */
-  public String getComment();
+  String getComment();
 
   /**
    * <p>
@@ -89,7 +88,7 @@ public interface EclipseProject {
    * 
    * @return Returns whether this project exists.
    */
-  public boolean exists();
+  boolean exists();
 
   /**
    * <p>
@@ -100,7 +99,7 @@ public interface EclipseProject {
    *          the path of child
    * @return Returns whether this project has a child with the given path.
    */
-  public boolean hasChild(final String path);
+  boolean hasChild(final String path);
 
   /**
    * <p>
@@ -112,7 +111,7 @@ public interface EclipseProject {
    * 
    * @return Returns the child of this project with the given path.
    */
-  public File getChild(final String path);
+  File getChild(final String path);
 
   /**
    * <p>
@@ -121,7 +120,7 @@ public interface EclipseProject {
    * @param path
    * @return
    */
-  public File[] getChildren(final String[] path);
+  File[] getChildren(final String[] path);
 
   /**
    * <p>
@@ -135,7 +134,7 @@ public interface EclipseProject {
    * 
    * @return Returns the child of this project with the given path.
    */
-  public File getChild(final String path, final int relative);
+  File getChild(final String path, final int relative);
 
   /**
    * <p>
@@ -145,7 +144,7 @@ public interface EclipseProject {
    * @param relative
    * @return
    */
-  public File[] getChildren(final String[] path, final int relative);
+  File[] getChildren(final String[] path, final int relative);
 
   /**
    * <p>
@@ -156,7 +155,7 @@ public interface EclipseProject {
    *          the name of the file inside the <tt>.settings</tt> file
    * @return true if there is such a file otherwise false
    */
-  public boolean hasSettingsFile(final String settingsFileName);
+  boolean hasSettingsFile(final String settingsFileName);
 
   /**
    * <p>
@@ -169,7 +168,7 @@ public interface EclipseProject {
    * 
    * @throws RuntimeException
    */
-  public File getSettingsFile(final String settingsFileName) throws RuntimeException;
+  File getSettingsFile(final String settingsFileName) throws RuntimeException;
 
   /**
    * <p>
@@ -179,7 +178,7 @@ public interface EclipseProject {
    * @param natureName
    * @return Returns whether the nature with the specified name is set or not.
    */
-  public boolean hasNature(final String natureName);
+  boolean hasNature(final String natureName);
 
   /**
    * <p>
@@ -189,7 +188,7 @@ public interface EclipseProject {
    * @param nature
    * @return Returns whether the specified nature is set or not.
    */
-  public boolean hasNature(final ProjectNature nature);
+  boolean hasNature(final ProjectNature nature);
 
   /**
    * <p>
@@ -198,7 +197,7 @@ public interface EclipseProject {
    * 
    * @return Returns the project natures of the project.
    */
-  public ProjectNature[] getNatures();
+  ProjectNature[] getNatures();
 
   /**
    * <p>
@@ -209,7 +208,7 @@ public interface EclipseProject {
    * @return Returns whether the role of the given type is set or not.
    * 
    */
-  public boolean hasRole(final Class<? extends ProjectRole> projectRoleClass);
+  boolean hasRole(final Class<? extends ProjectRole> projectRoleClass);
 
   /**
    * <p>
@@ -219,7 +218,7 @@ public interface EclipseProject {
    * @param projectRoleClass
    * @return Returns the role of the given type. If the role is not set, an exception will be thrown.
    */
-  public ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass);
+  ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass);
 
   /**
    * <p>
@@ -228,7 +227,7 @@ public interface EclipseProject {
    * 
    * @return Returns the roles of this project.
    */
-  public ProjectRole[] getRoles();
+  ProjectRole[] getRoles();
 
   /**
    * <p>
@@ -238,7 +237,7 @@ public interface EclipseProject {
    * @param commandName
    * @return Returns whether the build command with the specified name is set or not.
    */
-  public boolean hasBuildCommand(final String commandName);
+  boolean hasBuildCommand(final String commandName);
 
   /**
    * <p>
@@ -250,7 +249,7 @@ public interface EclipseProject {
    * 
    * @return Returns whether the specified build command is set or not.
    */
-  public boolean hasBuildCommand(final BuildCommand command);
+  boolean hasBuildCommand(final BuildCommand command);
 
   /**
    * <p>
@@ -259,7 +258,7 @@ public interface EclipseProject {
    * 
    * @return Returns the build commands of this project.
    */
-  public BuildCommand[] getBuildCommands();
+  BuildCommand[] getBuildCommands();
 
   /**
    * <p>
@@ -268,5 +267,6 @@ public interface EclipseProject {
    * 
    * @return A list of all reference project names.
    */
-  public String[] getReferencedProjects();
+  String[] getReferencedProjects();
+
 } /* ENDCLASS */

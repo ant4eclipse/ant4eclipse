@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools;
 
-import java.io.File;
+import java.io.*;
 
 /**
  * <p>
@@ -29,12 +29,12 @@ public interface ResolvedClasspath {
    * 
    * @return the class path entries.
    */
-  public ResolvedClasspathEntry[] getClasspath();
+  ResolvedClasspathEntry[] getClasspath();
 
   /**
    * @return
    */
-  public File[] getClasspathFiles();
+  File[] getClasspathFiles();
 
   /**
    * <p>
@@ -43,10 +43,10 @@ public interface ResolvedClasspath {
    * 
    * @return the boot class path
    */
-  public ResolvedClasspathEntry getBootClasspath();
+  ResolvedClasspathEntry getBootClasspath();
 
   /**
    * @return
    */
-  public File[] getBootClasspathFiles();
+  File[] getBootClasspathFiles();
 }

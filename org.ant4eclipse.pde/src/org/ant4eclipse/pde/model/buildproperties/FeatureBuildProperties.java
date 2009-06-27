@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.buildproperties;
 
-
 /**
  * Represents the build.properties of a feature project
  * 
@@ -19,7 +18,7 @@ package org.ant4eclipse.pde.model.buildproperties;
  * @version $Revision: 1.2 $
  */
 public class FeatureBuildProperties extends AbstractBuildProperties {
-  
+
   // TODO add additional feature properties
 
 }

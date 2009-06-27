@@ -23,26 +23,26 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  * <p>
  * Abstract base implementation for all {@link BundleSet BundleSets}.
  * </p>
- *
+ * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public abstract class AbstractBundleSet implements BundleSet {
 
   /** the list that contains all the bundle descriptions */
-  private final List   _bundleDescriptonList;
+  private final List<BundleDescription> _bundleDescriptonList;
 
   /** indicates whether or not the platform is initialized */
-  private boolean      _isInitialised = false;
+  private boolean                       _isInitialised = false;
 
   /** the id of the BundleSet */
-  private final Object _id;
+  private final Object                  _id;
 
   /**
    * <p>
    * Creates a new instance of type {@link AbstractBundleSet}.
    * </p>
-   *
+   * 
    * @param id
    *          the identifier of this {@link BundleSet}
    */
@@ -51,7 +51,7 @@ public abstract class AbstractBundleSet implements BundleSet {
     Assert.notNull(id);
 
     this._id = id;
-    this._bundleDescriptonList = new LinkedList();
+    this._bundleDescriptonList = new LinkedList<BundleDescription>();
   }
 
   /**
@@ -118,7 +118,7 @@ public abstract class AbstractBundleSet implements BundleSet {
    */
   public final BundleDescription[] getAllBundleDescriptions() {
     initialize();
-    return (BundleDescription[]) this._bundleDescriptonList.toArray(new BundleDescription[0]);
+    return this._bundleDescriptonList.toArray(new BundleDescription[0]);
   }
 
   /**
@@ -129,10 +129,10 @@ public abstract class AbstractBundleSet implements BundleSet {
 
     initialize();
 
-    final Iterator iterator = this._bundleDescriptonList.iterator();
+    final Iterator<BundleDescription> iterator = this._bundleDescriptonList.iterator();
 
     while (iterator.hasNext()) {
-      final BundleDescription description = (BundleDescription) iterator.next();
+      final BundleDescription description = iterator.next();
       if (symbolicName.equals(description.getSymbolicName())
       /*
        * TODO || "system.bundle".equals(symbolicName) && description.isSystemBundle()
@@ -152,12 +152,12 @@ public abstract class AbstractBundleSet implements BundleSet {
 
     initialize();
 
-    final List result = new LinkedList();
+    final List<BundleDescription> result = new LinkedList<BundleDescription>();
 
-    final Iterator iterator = this._bundleDescriptonList.iterator();
+    final Iterator<BundleDescription> iterator = this._bundleDescriptonList.iterator();
 
     while (iterator.hasNext()) {
-      final BundleDescription description = (BundleDescription) iterator.next();
+      final BundleDescription description = iterator.next();
       if (symbolicName.equals(description.getSymbolicName())
       /*
        * TODO || "system.bundle".equals(symbolicName) && description.isSystemBundle()
@@ -166,14 +166,14 @@ public abstract class AbstractBundleSet implements BundleSet {
       }
     }
 
-    return (BundleDescription[]) result.toArray(new BundleDescription[0]);
+    return result.toArray(new BundleDescription[0]);
   }
 
   /**
    * <p>
    * Adds the given {@link BundleDescription} to the {@link BundleSet}.
    * </p>
-   *
+   * 
    * @param bundleDescription
    *          the {@link BundleDescription} to add.
    */

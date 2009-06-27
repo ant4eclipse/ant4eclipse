@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
-
 import org.ant4eclipse.platform.internal.ant.team.CvsAdapter;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 import org.apache.tools.ant.BuildException;
@@ -20,28 +19,30 @@ import org.apache.tools.ant.BuildException;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
-  
-  private boolean _cvsQuiet = false;
+
+  private boolean _cvsQuiet       = false;
+
   private boolean _cvsReallyQuiet = false;
-  private String _tag = null;
-  
+
+  private String  _tag            = null;
+
   public boolean isCvsQuiet() {
-	return _cvsQuiet;
-}
+    return _cvsQuiet;
+  }
 
   public void setCvsQuiet(boolean cvsQuiet) {
-	_cvsQuiet = cvsQuiet;
+    _cvsQuiet = cvsQuiet;
   }
 
   public boolean isCvsReallyQuiet() {
-	return _cvsReallyQuiet;
+    return _cvsReallyQuiet;
   }
 
   public void setCvsReallyQuiet(boolean cvsReallyQuiet) {
-	_cvsReallyQuiet = cvsReallyQuiet;
+    _cvsReallyQuiet = cvsReallyQuiet;
   }
 
-/**
+  /**
    * @return Returns the cvsPwd.
    */
   public String getCvsPwd() {
@@ -62,23 +63,21 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   public String getCvsUser() {
     return getUsername();
   }
-  
-  
 
   public String getTag() {
     return _tag;
-}
+  }
 
   public void setTag(String tag) {
     this._tag = tag;
-}
+  }
 
-/**
+  /**
    * @param cvsUser
    *          The cvsUser to set.
    */
   public void setCvsUser(String cvsUser) {
-   setUsername(cvsUser);
+    setUsername(cvsUser);
   }
 
   protected VcsAdapter createVcsAdapter() {
@@ -90,13 +89,12 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   protected void checkPrereqs() {
     requiresCvsUserSet();
   }
-  
+
   private void requiresCvsUserSet() {
     // check that cvsuser is set..
     if (getUsername() == null) {
       throw new BuildException("cvsuser has to be set!");
     }
   }
-  
-  
+
 }

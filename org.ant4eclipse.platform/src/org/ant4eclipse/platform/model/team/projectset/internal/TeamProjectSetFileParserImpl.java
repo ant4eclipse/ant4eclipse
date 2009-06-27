@@ -11,22 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
-import java.io.File;
-import java.util.Hashtable;
-import java.util.Map;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.configuration.*;
+import org.ant4eclipse.core.exception.*;
+import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.util.*;
+import org.ant4eclipse.core.xquery.*;
+import org.ant4eclipse.platform.*;
+import org.ant4eclipse.platform.model.team.projectset.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
-import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
+import java.io.*;
+import java.util.*;
 
 /**
  * Reads an eclipse team project set file and constructs a
@@ -111,8 +106,8 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
     final String[] projects = referenceQuery.getResult();
 
     // create TeamProjectDescriptions for each project
-    for (int i = 0; i < projects.length; i++) {
-      projectSetFactory.addTeamProjectDescription(projectSet, projects[i]);
+    for (String project : projects) {
+      projectSetFactory.addTeamProjectDescription(projectSet, project);
     }
 
     return projectSet;
@@ -122,11 +117,11 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   public TeamProjectSetFactory getFactoryForProvider(String providerId) {
     Assert.notNull("Parameter 'providerId' must not be null", providerId);
 
-    if (!_factories.containsKey(providerId)) {
+    if (!this._factories.containsKey(providerId)) {
       throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);
     }
 
-    return (TeamProjectSetFactory) _factories.get(providerId);
+    return this._factories.get(providerId);
   }
 
 }
