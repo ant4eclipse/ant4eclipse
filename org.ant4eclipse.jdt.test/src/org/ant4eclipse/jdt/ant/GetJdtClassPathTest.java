@@ -13,16 +13,21 @@ package org.ant4eclipse.jdt.ant;
 
 import java.io.File;
 
+import org.ant4eclipse.jdt.ant.base.AbstractJdtClassPathTest;
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
-import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
-public class GetJdtClassPathTest extends AbstractWorkspaceBasedBuildFileTest {
+/**
+ * <p>
+ * Tests, if the JDT classpath container
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
+public class GetJdtClassPathTest extends AbstractJdtClassPathTest {
 
-  public final static String TEST_PATH_SEPARATOR = "#";
+  private File _simpleProjectBinDir;
 
-  private File               _simpleProjectBinDir;
-
-  private File               _projectBBinDir;
+  private File _projectBBinDir;
 
   @Override
   public void setUp() throws Exception {
@@ -35,8 +40,6 @@ public class GetJdtClassPathTest extends AbstractWorkspaceBasedBuildFileTest {
     File projectbDir = JdtProjectBuilder.getPreConfiguredJdtBuilder("projectb").withSrcClasspathEntry("/simpleproject",
         false).createIn(getTestWorkspaceDirectory());
     _projectBBinDir = new File(projectbDir, "bin");
-
-    setupBuildFile("getEclipseClasspath.xml");
   }
 
   public void testSimple() throws Exception {
@@ -53,8 +56,9 @@ public class GetJdtClassPathTest extends AbstractWorkspaceBasedBuildFileTest {
     File projectcDir = JdtProjectBuilder.getPreConfiguredJdtBuilder("projectc").withSrcClasspathEntry("gen-src",
         "gen-classes", false).createIn(getTestWorkspaceDirectory());
     String classpath = executeTestTarget("projectc", false, false);
-    assertClasspath(classpath, new File(projectcDir, "bin"), new File(projectcDir, "gen-classes"));
 
+    // class path must contain 'bin' and 'gen-classes'
+    assertClasspath(classpath, new File(projectcDir, "bin"), new File(projectcDir, "gen-classes"));
   }
 
   public void test_WithProjectReferences() throws Exception {
@@ -85,38 +89,5 @@ public class GetJdtClassPathTest extends AbstractWorkspaceBasedBuildFileTest {
     String classpath = executeTestTarget("projectc", true, false);
     File projectCBinDir = new File(projectcDir, "bin");
     assertClasspath(classpath, projectCBinDir, _projectBBinDir, _simpleProjectBinDir);
-  }
-
-  /**
-   * Makes sure that the given classpath contains the expected entries
-   * 
-   * @param classpath
-   * @param expectedEntries
-   */
-  protected void assertClasspath(String classpath, File... expectedEntries) {
-    assertNotNull(classpath);
-    String[] classpathItems = classpath.split(TEST_PATH_SEPARATOR);
-    assertEquals(expectedEntries.length, classpathItems.length);
-
-    for (int i = 0; i < expectedEntries.length; i++) {
-      File expectedDir = expectedEntries[i];
-      File classpathItem = new File(classpathItems[i]);
-      assertEquals(String.format("Classpath-Item '%d' does not match. Expected: '%s' Actual: '%s'", i, expectedDir,
-          classpathItem), expectedDir, classpathItem);
-    }
-  }
-
-  protected String executeTestTarget(String projectName, boolean runtimeClasspath, boolean relative) throws Exception {
-    getProject().setProperty("projectName", projectName);
-    getProject().setProperty("runtimeClasspath", Boolean.toString(runtimeClasspath));
-    getProject().setProperty("pathSeparator", TEST_PATH_SEPARATOR);
-    getProject().setProperty("relative", Boolean.toString(relative));
-
-    executeTarget("getJdtClassPath");
-
-    String classpath = getProject().getProperty("classpath");
-    System.out.println(classpath);
-    assertNotNull(classpath);
-    return classpath;
   }
 }

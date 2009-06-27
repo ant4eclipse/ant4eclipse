@@ -23,8 +23,8 @@ import org.ant4eclipse.platform.test.builder.StringTemplate;
  * Represents a dummy Java-Source file. This can be used to generate Source-File to test the compilation process.
  * 
  * <p>
- * Use {@link JdtProjectBuilder#withSourceClass(String)} to create a Source class. The creation of a Sourceclass
- * must be finished with {@link #finishClass()} which returns the original EclipseProjectCreator.
+ * Use {@link JdtProjectBuilder#withSourceClass(String)} to create a Source class. The creation of a Sourceclass must be
+ * finished with {@link #finishClass()} which returns the original EclipseProjectCreator.
  * 
  * <p>
  * Complete Example:
@@ -36,7 +36,7 @@ import org.ant4eclipse.platform.test.builder.StringTemplate;
  *     withSourceClass("a.A").finishClass() // create class a.A
  *     withSourceClass("b.B").withClassUsed("a.A").finishClass() // create b.B that used a.A
  *     create(); // create the project including the source files
- * 
+ *
  * </code>
  * 
  * 
@@ -45,9 +45,10 @@ import org.ant4eclipse.platform.test.builder.StringTemplate;
  * @version $Revision: 1.5 $
  */
 public class SourceClass {
-  private final String                   _className;
 
-  private final List<String>             _usedClasses;
+  private final String            _className;
+
+  private final List<String>      _usedClasses;
 
   private final JdtProjectBuilder _eclipseProjectCreator;
 

@@ -1,0 +1,77 @@
+/**********************************************************************
+ * Copyright (c) 2005-2008 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
+package org.ant4eclipse.jdt.ant.base;
+
+import java.io.File;
+
+import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
+
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
+public abstract class AbstractJdtTest extends AbstractWorkspaceBasedBuildFileTest {
+
+  /* TEST_PATH_SEPARATOR */
+  public final static String TEST_PATH_SEPARATOR = File.pathSeparator;
+
+  /* TEST_DIR_SEPARATOR */
+  public final static String TEST_DIR_SEPARATOR  = File.separator;
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest#setupBuildFile(java.lang.String)
+   */
+  @Override
+  protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
+    super.setupBuildFile(unqualifiedBuildFileName);
+
+    getProject().setProperty("pathSeparator", TEST_PATH_SEPARATOR);
+    getProject().setProperty("dirSeparator", TEST_DIR_SEPARATOR);
+  }
+
+  protected void assertClasspath(String classpath, File... expectedEntries) {
+    assertClasspath(classpath, TEST_PATH_SEPARATOR, TEST_DIR_SEPARATOR, expectedEntries);
+  }
+
+  protected String normalize(String path) {
+    path = path.replace("/", TEST_PATH_SEPARATOR);
+    path = path.replace("\\", TEST_PATH_SEPARATOR);
+    return path;
+  }
+
+  /**
+   * <p>
+   * Makes sure that the given class path contains the expected entries
+   * </p>
+   * 
+   * @param classpath
+   * @param expectedEntries
+   */
+  protected void assertClasspath(String classpath, String pathSeparator, String dirSeparator, File... expectedEntries) {
+
+    assertNotNull(classpath);
+
+    String[] classpathItems = classpath.split(pathSeparator);
+    assertEquals(expectedEntries.length, classpathItems.length);
+
+    for (int i = 0; i < expectedEntries.length; i++) {
+      File expectedDir = expectedEntries[i];
+      File classpathItem = new File(classpathItems[i]);
+      assertEquals(String.format("Classpath-Item '%d' does not match. Expected: '%s' Actual: '%s'", i, expectedDir,
+          classpathItem), expectedDir, classpathItem);
+    }
+  }
+}

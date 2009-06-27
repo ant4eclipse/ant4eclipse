@@ -10,20 +10,20 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
-import org.ant4eclipse.platform.test.TestWorkspace;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.Test;
 
 public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
 
-  private TestWorkspace _testWorkspace;
+  private TestDirectory _testWorkspace;
 
   @Override
   public void setup() {
     super.setup();
 
-    _testWorkspace = new TestWorkspace();
+    _testWorkspace = new TestDirectory();
 
     JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject1").createIn(_testWorkspace.getRootDir());
     JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject2").withClasspathEntry(

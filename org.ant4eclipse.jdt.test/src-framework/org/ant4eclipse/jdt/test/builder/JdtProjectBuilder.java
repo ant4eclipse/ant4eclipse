@@ -25,8 +25,8 @@ import java.util.Map;
 import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
-import org.ant4eclipse.platform.test.builder.FileHelper;
 import org.ant4eclipse.platform.test.builder.StringTemplate;
+import org.ant4eclipse.testframework.FileHelper;
 
 /**
  * Adds JDT-specific features to {@link EclipseProjectBuilder}
@@ -87,7 +87,6 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     // All JDT-Projects have a java builder and a java nature
     withJavaNature();
     withJavaBuilder();
-
   }
 
   /**
