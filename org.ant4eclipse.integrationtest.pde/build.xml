@@ -4,7 +4,7 @@
          default="build"
          xmlns:ant4eclipse="antlib:org.ant4eclipse">
 
-	<import file="${basedir}/../org.ant4eclipse.pde/macros/pde-macros.xml" />
+	<import file="${basedir}/../org.ant4eclipse.pde/macros/a4e-pde-macros.xml" />
 
 	<!-- define environment properties -->
 	<property file="${basedir}\environment.properties" />
@@ -32,7 +32,7 @@
 		             projectname="example-bundle"
 		             targetplatformid="target.platform"
 		             destination="d:/plugins" />
-		
+
 		<buildPlugin workspace="${basedir}/workspace"
 		             projectname="testproject"
 		             targetplatformid="target.platform"
