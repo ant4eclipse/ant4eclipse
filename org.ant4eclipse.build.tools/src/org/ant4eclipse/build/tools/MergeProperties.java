@@ -115,7 +115,7 @@ public class MergeProperties extends AbstractMergeTask {
       try {
         // write original file with updated values
         while (iterate.hasNext()) {
-          Property fc = (Property) iterate.next();
+          Property fc = iterate.next();
           if (fc.comment != null && !fc.comment.equals("")) {
             p.println();
             p.print(fc.comment);
