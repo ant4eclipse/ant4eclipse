@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import java.io.File;
-
 import org.ant4eclipse.core.service.ServiceRegistry;
+
 import org.apache.tools.ant.BuildFileTest;
+
+import java.io.File;
 
 /**
  * Baseclass for all buildfile-based tests in the platform layer

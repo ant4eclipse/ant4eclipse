@@ -1,10 +1,11 @@
 package org.ant4eclipse.core;
 
-import java.util.Properties;
-
 import org.ant4eclipse.core.service.ServiceRegistry;
+
 import org.apache.tools.ant.Project;
 import org.junit.Test;
+
+import java.util.Properties;
 
 public class Ant4EclipseConfiguratorTest {
 

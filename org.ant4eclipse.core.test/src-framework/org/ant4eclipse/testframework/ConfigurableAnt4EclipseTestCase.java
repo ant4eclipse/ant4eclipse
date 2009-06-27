@@ -11,13 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import java.util.Properties;
-
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
+
 import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
 import org.junit.Before;
+
+import java.util.Properties;
 
 /**
  * <p>

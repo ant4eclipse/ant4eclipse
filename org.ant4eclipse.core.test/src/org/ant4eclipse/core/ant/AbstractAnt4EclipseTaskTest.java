@@ -3,6 +3,7 @@ package org.ant4eclipse.core.ant;
 import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.service.ServiceRegistry;
+
 import org.apache.tools.ant.BuildFileTest;
 
 public class AbstractAnt4EclipseTaskTest extends BuildFileTest {

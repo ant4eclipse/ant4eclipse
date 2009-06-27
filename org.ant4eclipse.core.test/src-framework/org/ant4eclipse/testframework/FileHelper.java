@@ -13,6 +13,9 @@ package org.ant4eclipse.testframework;
 
 import static java.lang.String.format;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -28,9 +31,6 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Vector;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 public class FileHelper {
 
@@ -253,7 +253,7 @@ public class FileHelper {
   /**
    * Returns the content of the file specified.
    */
-  public static byte[] getFileFiltered(String fileName, char tokenSep, Map filter) {
+  public static byte[] getFileFiltered(String fileName, char tokenSep, Map<String, String> filter) {
     try {
       File file = new File(fileName);
       BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -280,14 +280,14 @@ public class FileHelper {
   /**
    * Returns the content of the file specified.
    */
-  public static byte[] getBinaryFileFiltered(String fileName, Map filter) {
+  public static byte[] getBinaryFileFiltered(String fileName, Map<String, String> filter) {
     File file = new File(fileName);
     ByteArrayOutputStream byteout = new ByteArrayOutputStream();
     try {
       BufferedReader reader = new BufferedReader(new FileReader(file));
       String line = reader.readLine();
       while (line != null) {
-        String value = (String) filter.get(line);
+        String value = filter.get(line);
         if (value != null) {
           byteout.write(BEGIN_CHUNK);
           DataOutputStream dataout = new DataOutputStream(byteout);
@@ -317,7 +317,7 @@ public class FileHelper {
    */
   public static String[] getAllFiles(String directory, String root) {
 
-    Vector fileList = new Vector();
+    Vector<String> fileList = new Vector<String>();
 
     File[] files = new File(directory).listFiles();
 
@@ -343,10 +343,10 @@ public class FileHelper {
       }
     }
 
-    return (String[]) fileList.toArray(new String[0]);
+    return fileList.toArray(new String[fileList.size()]);
   }
 
-  public static String replaceTokens(String line, char tokenSep, Map tokens) {
+  public static String replaceTokens(String line, char tokenSep, Map<String, String> tokens) {
     boolean inToken = false;
 
     StringBuffer result = new StringBuffer();
@@ -362,7 +362,7 @@ public class FileHelper {
           continue;
         }
         inToken = false;
-        String replaceValue = (String) tokens.get(currentToken.toString());
+        String replaceValue = tokens.get(currentToken.toString());
         if (replaceValue == null) {
           // No value found for current token; include error message
           throw new NoSuchElementException("NO VALUE FOUND FOR TOKEN: " + currentToken + "!");

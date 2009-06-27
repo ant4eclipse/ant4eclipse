@@ -17,9 +17,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-import java.util.LinkedList;
-
 import org.junit.Test;
+
+import java.util.LinkedList;
 
 public class ClassNameTest {
 
@@ -93,7 +93,7 @@ public class ClassNameTest {
     assertTrue(className2.equals(className1));
 
     assertFalse(className1.equals(null));
-    assertFalse(className1.equals(new LinkedList()));
+    assertFalse(className1.equals(new LinkedList<Object>()));
     assertFalse(className1.equals(ClassName.fromQualifiedClassName("com.wuetherich.Test")));
     assertFalse(className1.equals(ClassName.fromQualifiedClassName("net.sf.ant4eclipse.ClasspathTaskTest")));
     assertFalse(className1.equals(ClassName.fromQualifiedClassName("com.wuetherich.ClasspathTask")));

@@ -1,8 +1,12 @@
-#Mon Nov 17 21:50:04 CET 2008
+#Sat Jun 27 21:26:54 CEST 2009
 eclipse.preferences.version=1
 editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
 formatter_profile=_Ant4Eclipse Code Formatter Profile
 formatter_settings_version=11
+org.eclipse.jdt.ui.ignorelowercasenames=true
+org.eclipse.jdt.ui.importorder=org.ant4eclipse.core.test;org.ant4eclipse.core;org.ant4eclipse.build.tools;org.ant4eclipse.build;org.ant4eclipse.external.test;org.ant4eclipse.external;org.ant4eclipse.integrationtest.pde;org.ant4eclipse.jdt.test;org.ant4eclipse.jdt.ecj;org.ant4eclipse.jdt;org.ant4eclipse.pde.test;org.ant4eclipse.pde;org.ant4eclipse.platform.test;org.ant4eclipse.platform;org.ant4eclipse.cdt.test;org.ant4eclipse.cdt;com;org;javax;java;
+org.eclipse.jdt.ui.ondemandthreshold=99
+org.eclipse.jdt.ui.staticondemandthreshold=99
 sp_cleanup.add_default_serial_version_id=true
 sp_cleanup.add_generated_serial_version_id=false
 sp_cleanup.add_missing_annotations=true

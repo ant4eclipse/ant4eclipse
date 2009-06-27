@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import org.junit.Test;
 
 public class ServiceRegistryTest {

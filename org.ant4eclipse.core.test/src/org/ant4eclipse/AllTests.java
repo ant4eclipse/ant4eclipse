@@ -15,6 +15,7 @@ import org.ant4eclipse.core.service.ServiceRegistryTest;
 import org.ant4eclipse.core.util.JarUtilitiesTest;
 import org.ant4eclipse.core.util.UtilitiesTest;
 import org.ant4eclipse.core.xquery.XQueryHandlerTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

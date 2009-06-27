@@ -2,14 +2,14 @@ package org.ant4eclipse.core.util;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.jar.JarFile;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 public class JarUtilitiesTest {
 

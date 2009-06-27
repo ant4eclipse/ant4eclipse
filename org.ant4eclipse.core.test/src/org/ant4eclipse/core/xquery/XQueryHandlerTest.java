@@ -16,11 +16,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
-import java.io.InputStream;
-
 import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import org.junit.Test;
+
+import java.io.InputStream;
 
 /**
  * A simple handler used to verify the functionality of the XQueryHandler class.

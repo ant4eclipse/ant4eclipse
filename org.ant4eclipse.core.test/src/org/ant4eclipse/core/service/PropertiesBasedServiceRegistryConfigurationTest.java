@@ -14,16 +14,17 @@ package org.ant4eclipse.core.service;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Properties;
-
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Properties;
 
 public class PropertiesBasedServiceRegistryConfigurationTest {
 

@@ -2,12 +2,12 @@ package org.ant4eclipse.core;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
+import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.junit.Test;
 
 import javax.swing.JFrame;
 
-import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
-import org.junit.Test;
+import java.io.File;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
