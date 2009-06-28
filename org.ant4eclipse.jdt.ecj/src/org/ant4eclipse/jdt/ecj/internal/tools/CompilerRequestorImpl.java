@@ -88,8 +88,8 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
           fileOutputStream.flush();
           fileOutputStream.close();
         } catch (final IOException ioe) {
-          A4ELogging.error("Could not write classfile '%s': %s", new String[] { classFileName.toString(),
-              ioe.toString() });
+          A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(),
+              ioe.toString());
           ioe.printStackTrace();
           this._compilationSuccessful = false;
         }

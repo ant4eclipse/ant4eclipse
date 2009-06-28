@@ -81,7 +81,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[], char[][])
    */
   public NameEnvironmentAnswer findType(final char[] typeName, final char[][] packageName) {
-    A4ELogging.trace("findType('%s', %s)", new String[] { new String(typeName), asString(packageName) });
+    A4ELogging.trace("findType('%s', %s)", new String(typeName), asString(packageName));
 
     final StringBuffer result = new StringBuffer();
     if (packageName != null) {
@@ -105,7 +105,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#isPackage(char[][], char[])
    */
   public boolean isPackage(final char[][] parentPackageName, final char[] packageName) {
-    A4ELogging.trace("isPackage('%s', %s)", new String[] { asString(parentPackageName), new String(packageName) });
+    A4ELogging.trace("isPackage('%s', %s)", asString(parentPackageName), new String(packageName));
 
     String qualifiedPackageName = toJavaName(parentPackageName);
     if (qualifiedPackageName.length() > 0) {

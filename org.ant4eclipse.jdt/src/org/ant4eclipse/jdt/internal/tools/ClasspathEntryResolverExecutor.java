@@ -1,19 +1,16 @@
 package org.ant4eclipse.jdt.internal.tools;
 
-import java.util.EmptyStackException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.logging.*;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
-import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.*;
+import org.ant4eclipse.jdt.model.*;
+import org.ant4eclipse.jdt.model.project.*;
+import org.ant4eclipse.jdt.tools.container.*;
+
+import org.ant4eclipse.platform.model.resource.*;
+
+import java.util.*;
 
 /**
  *
@@ -135,7 +132,7 @@ public class ClasspathEntryResolverExecutor {
       // TODO it should be configurable if the task fails on circular
       // dependencies
       // TODO detect which projects reference each other
-      A4ELogging.warn("Circular dependency detected! Project: '%s'", new String[] { project.getFolderName() });
+      A4ELogging.warn("Circular dependency detected! Project: '%s'", project.getFolderName());
       return;
     }
 
