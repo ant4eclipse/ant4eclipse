@@ -11,14 +11,26 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.exception.*;
-import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.util.Map.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.Map.Entry;
 
 /**
  * <p>
@@ -37,7 +49,41 @@ public class Utilities {
     // Prevent instantiation of this class.
   }
 
-  public static URL toURL(final File file) {
+  /**
+   * Closes the supplied stream if it's available.
+   * 
+   * @param stream
+   *          The stream that has to be closed. Maybe <code>null</code>.
+   */
+  public static final void close(final InputStream stream) {
+    if (stream != null) {
+      try {
+        stream.close();
+      } catch (final IOException ex) {
+        // generally not interesting so a warning is apropriate here
+        A4ELogging.warn(ex.getMessage());
+      }
+    }
+  }
+
+  /**
+   * Closes the supplied stream if it's available.
+   * 
+   * @param stream
+   *          The stream that has to be closed. Maybe <code>null</code>.
+   */
+  public static final void close(final OutputStream stream) {
+    if (stream != null) {
+      try {
+        stream.close();
+      } catch (final IOException ex) {
+        // generally not interesting so a warning is apropriate here
+        A4ELogging.warn(ex.getMessage());
+      }
+    }
+  }
+
+  public static final URL toURL(final File file) {
     Assert.notNull(file);
     final URI uri = file.toURI();
     try {
@@ -90,7 +136,7 @@ public class Utilities {
     return (result);
   }
 
-  public static boolean hasChild(File directory, final String childName) {
+  public static final boolean hasChild(File directory, final String childName) {
     String[] children = directory.list(new FilenameFilter() {
       public boolean accept(File dir, String name) {
         return name.equals(childName);
@@ -100,7 +146,7 @@ public class Utilities {
     return (children.length > 0);
   }
 
-  public static File getChild(File directory, final String childName) {
+  public static final File getChild(File directory, final String childName) {
     File[] children = directory.listFiles(new FilenameFilter() {
       public boolean accept(File dir, String name) {
         return name.equals(childName);
@@ -283,7 +329,7 @@ public class Utilities {
     return (buffer.toString());
   }
 
-  public static Map<String, String> readProperties(final File propertiesFile) {
+  public static final Map<String, String> readProperties(final File propertiesFile) {
     FileInputStream fis = null;
     Properties result = null;
     try {
@@ -294,8 +340,7 @@ public class Utilities {
       fis.close();
       A4ELogging.debug("Read compiler settings from '%s'", propertiesFile.getAbsolutePath());
     } catch (final IOException ex) {
-      A4ELogging.warn("Could not load settings file '%s': '%s", new String[] { propertiesFile.getAbsolutePath(),
-          ex.toString() });
+      A4ELogging.warn("Could not load settings file '%s': '%s", propertiesFile.getAbsolutePath(), ex.toString());
     } finally {
       if (fis != null) {
         try {
@@ -312,7 +357,7 @@ public class Utilities {
     return nresult;
   }
 
-  public static Properties readPropertiesFromClasspath(final String name) {
+  public static final Properties readPropertiesFromClasspath(final String name) {
 
     final ClassLoader classLoader = Utilities.class.getClassLoader();
 
@@ -339,7 +384,7 @@ public class Utilities {
    * 
    * @param directory
    */
-  public static void mkdirs(final File directory) {
+  public static final void mkdirs(final File directory) {
     Assert.notNull("The parameter 'directory' must not be null", directory);
     if (directory.isDirectory()) {
       return; // already there
@@ -364,7 +409,7 @@ public class Utilities {
    * @return
    */
   @SuppressWarnings("unchecked")
-  public static <T> T newInstance(String className) {
+  public static final <T> T newInstance(String className) {
     Assert.notNull("The parameter 'className' must not be null", className);
 
     Class<?> clazz = null;
