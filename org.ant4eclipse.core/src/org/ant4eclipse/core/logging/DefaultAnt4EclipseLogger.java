@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
+import java.io.*;
+
 public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
   public static final int LOG_LEVEL_ERROR   = 0;
@@ -25,113 +27,113 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
   private static String[] LEVEL_DESCIRPTION = new String[] { "ERROR", "WARN", "INFO", "DEBUG", "TRACE" };
 
-  private final int       _logLevel;
+  private int             _logLevel;
+
+  private PrintStream     _printer;
 
   /**
-   * @param logLevel
+   * Sets up this logger implementation to make use of standard output.
    */
-  public DefaultAnt4EclipseLogger(final int logLevel) {
-    this._logLevel = logLevel;
-  }
-
   public DefaultAnt4EclipseLogger() {
-    this._logLevel = LOG_LEVEL_TRACE;
+    this(null);
   }
 
   /**
-   * @see org.ant4eclipse.core.logging.Ant4EclipseLogger#isDebuggingEnabled()
+   * Sets up this logger implementation to make use of a specified printer.
+   * 
+   * @param printer
+   *          The printer that will be used for the output. If <code>null</code> the standard output is used.
+   */
+  public DefaultAnt4EclipseLogger(final PrintStream printer) {
+    this._logLevel = LOG_LEVEL_TRACE;
+    this._printer = printer;
+    if (this._printer == null) {
+      this._printer = System.out;
+    }
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public boolean isDebuggingEnabled() {
     return this._logLevel >= LOG_LEVEL_DEBUG;
   }
 
   /**
-   * @see org.ant4eclipse.core.logging.Ant4EclipseLogger#isTraceingEnabled()
+   * {@inheritDoc}
    */
   public boolean isTraceingEnabled() {
     return this._logLevel >= LOG_LEVEL_TRACE;
   }
 
   /**
-   * @see org.ant4eclipse.core.logging.Ant4EclipseLogger#setContext(java.lang.Object)
+   * Changes the current loglevel for this logger.
+   * 
+   * @param loglevel
+   *          The new log level to be used for this logger.
+   */
+  public void setLogLevel(final int loglevel) {
+    this._logLevel = loglevel;
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public void setContext(final Object context) {
     //
   }
 
-  public void debug(final String msg, final Object obj) {
+  /**
+   * {@inheritDoc}
+   */
+  public void debug(final String msg, final Object... args) {
     if (isDebuggingEnabled()) {
-      debug(String.format(msg, obj));
+      log(LOG_LEVEL_DEBUG, msg, args);
     }
   }
 
-  public void debug(final String msg, final Object[] args) {
-    if (isDebuggingEnabled()) {
-      debug(String.format(msg, args));
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public void error(final String msg, final Object... args) {
+    log(LOG_LEVEL_ERROR, msg, args);
   }
 
-  public void debug(final String msg) {
-    if (isDebuggingEnabled()) {
-      log(msg, LOG_LEVEL_DEBUG);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public void info(final String msg, final Object... args) {
+    log(LOG_LEVEL_INFO, msg, args);
   }
 
-  public void error(final String msg, final Object obj) {
-    error(String.format(msg, obj));
-  }
-
-  public void error(final String msg, final Object[] args) {
-    error(String.format(msg, args));
-  }
-
-  public void error(final String msg) {
-    log(msg, LOG_LEVEL_ERROR);
-  }
-
-  public void info(final String msg, final Object obj) {
-    error(String.format(msg, obj));
-  }
-
-  public void info(final String msg, final Object[] args) {
-    error(String.format(msg, args));
-  }
-
-  public void info(final String msg) {
-    log(msg, LOG_LEVEL_INFO);
-  }
-
-  public void trace(final String msg, final Object[] args) {
+  /**
+   * {@inheritDoc}
+   */
+  public void trace(final String msg, final Object... args) {
     if (isTraceingEnabled()) {
-      trace(String.format(msg, args));
+      log(LOG_LEVEL_TRACE, msg, args);
     }
   }
 
-  public void trace(final String msg, final Object obj) {
-    if (isTraceingEnabled()) {
-      trace(String.format(msg, obj));
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public void warn(final String msg, final Object... args) {
+    log(LOG_LEVEL_WARN, msg, args);
   }
 
-  public void trace(final String msg) {
-    if (isTraceingEnabled()) {
-      log(msg, LOG_LEVEL_TRACE);
-    }
+  /**
+   * Dumps a log into the console.
+   * 
+   * @param level
+   *          The level as declared by one of the level constants above.
+   * @param msg
+   *          The formatting message.
+   * @param args
+   *          The arguments to be used for the formatting message.
+   */
+  private void log(final int level, final String msg, final Object... args) {
+    this._printer.println("[" + LEVEL_DESCIRPTION[level] + "] " + String.format(msg, args));
   }
 
-  public void warn(final String msg, final Object obj) {
-    warn(String.format(msg, obj));
-  }
-
-  public void warn(final String msg, final Object[] args) {
-    warn(String.format(msg, args));
-  }
-
-  public void warn(final String msg) {
-    log(msg, LOG_LEVEL_WARN);
-  }
-
-  protected void log(final String msg, final int level) {
-    System.out.println("[" + LEVEL_DESCIRPTION[level] + "] " + msg);
-  }
-}
+} /* ENDCLASS */

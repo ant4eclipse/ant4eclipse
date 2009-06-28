@@ -24,157 +24,75 @@ package org.ant4eclipse.core.logging;
 public interface Ant4EclipseLogger {
 
   /**
+   * Applies a contextual object which might provide additional information to some output.
+   * 
    * @param context
+   *          A contextual object providing additional information. Maybe <code>null</code>.
    */
   void setContext(Object context);
 
   /**
-   * Returns true if the debugging is enabled.
+   * Returns <code>true</code> if the debugging is enabled.
    * 
-   * @return true <=> Debugging is enabled.
+   * @return <code>true</code> <=> Debugging is enabled.
    */
   boolean isDebuggingEnabled();
 
+  /**
+   * Returns <code>true</code> if tracing is enabled.
+   * 
+   * @return <code>true</code> <=> Tracing is enabled.
+   */
   boolean isTraceingEnabled();
 
   /**
    * Dumps traceing information.
    * 
    * @param msg
-   *          A trace message.
-   */
-  void trace(String msg);
-
-  /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  void trace(String msg, Object[] args);
-
-  /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  void trace(String msg, Object obj);
+  void trace(String msg, Object... args);
 
   /**
    * Dumps debugging information.
    * 
    * @param msg
-   *          An error message.
-   */
-  void debug(String msg);
-
-  /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  void debug(String msg, Object obj);
-
-  /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  void debug(String msg, Object[] args);
+  void debug(String msg, Object... args);
 
   /**
    * Dumps informational text.
    * 
    * @param msg
-   *          An error message.
-   */
-  void info(String msg);
-
-  /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  void info(String msg, Object obj);
-
-  /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  void info(String msg, Object[] args);
+  void info(String msg, Object... args);
 
   /**
    * Dumps warning information.
    * 
    * @param msg
-   *          An error message.
-   */
-  void warn(String msg);
-
-  /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  void warn(String msg, Object obj);
-
-  /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  void warn(String msg, Object[] args);
+  void warn(String msg, Object... args);
 
   /**
    * Dumps error information.
    * 
    * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  void error(String msg, Object[] args);
-
-  /**
-   * Dumps error information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  void error(String msg, Object obj);
-
-  /**
-   * Dumps error information.
-   * 
-   * @param msg
-   *          An error message.
-   */
-  void error(String msg);
+  void error(String msg, Object... args);
 
 } /* ENDCLASS */

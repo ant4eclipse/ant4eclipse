@@ -11,13 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.Ant4EclipseLogger;
-import org.apache.tools.ant.BuildEvent;
-import org.apache.tools.ant.BuildListener;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Target;
-import org.apache.tools.ant.Task;
+import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.logging.*;
+
+import org.apache.tools.ant.*;
 
 /**
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
@@ -67,179 +64,110 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
-  public void debug(final String msg) {
-    log(msg, Project.MSG_VERBOSE);
+  public void debug(final String msg, final Object... args) {
+    log(Project.MSG_VERBOSE, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void debug(final String msg, final Object arg) {
-    debug(String.format(msg, arg));
+  public void trace(final String msg, final Object... args) {
+    log(Project.MSG_DEBUG, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void debug(final String msg, final Object[] args) {
-    debug(String.format(msg, args));
+  public void info(final String msg, final Object... args) {
+    log(Project.MSG_INFO, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void trace(final String msg, final Object[] args) {
-    trace(String.format(msg, args));
+  public void warn(final String msg, final Object... args) {
+    log(Project.MSG_WARN, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void trace(final String msg, final Object obj) {
-    trace(String.format(msg, obj));
+  public void error(final String msg, final Object... args) {
+    log(Project.MSG_ERR, msg, args);
   }
 
   /**
    * {@inheritDoc}
-   */
-  public void trace(final String msg) {
-    log(msg, Project.MSG_DEBUG);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void info(final String msg, final Object[] args) {
-    info(String.format(msg, args));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void info(final String msg, final Object obj) {
-    info(String.format(msg, obj));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void info(final String msg) {
-    log(msg, Project.MSG_INFO);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void warn(final String msg, final Object[] args) {
-    warn(String.format(msg, args));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void warn(final String msg, final Object obj) {
-    warn(String.format(msg, obj));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void warn(final String msg) {
-    log(msg, Project.MSG_WARN);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void error(final String msg, final Object[] args) {
-    error(String.format(msg, args));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void error(final String msg, final Object obj) {
-    error(String.format(msg, obj));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void error(final String msg) {
-    log(msg, Project.MSG_ERR);
-  }
-
-  /**
-   * @see org.apache.tools.ant.BuildListener#taskStarted(org.apache.tools.ant.BuildEvent)
    */
   public void taskStarted(final BuildEvent event) {
     setContext(event.getTask());
   }
 
   /**
-   * @see org.apache.tools.ant.BuildListener#taskFinished(org.apache.tools.ant.BuildEvent)
+   * {@inheritDoc}
    */
   public void taskFinished(final BuildEvent event) {
     setContext(null);
   }
 
   /**
-   * @see org.apache.tools.ant.BuildListener#targetStarted(org.apache.tools.ant.BuildEvent)
+   * {@inheritDoc}
    */
   public void targetStarted(final BuildEvent event) {
     setContext(event.getTarget());
   }
 
   /**
-   * @see org.apache.tools.ant.BuildListener#targetFinished(org.apache.tools.ant.BuildEvent)
+   * {@inheritDoc}
    */
   public void targetFinished(final BuildEvent event) {
     setContext(null);
   }
 
   /**
-   * @see org.apache.tools.ant.BuildListener#messageLogged(org.apache.tools.ant.BuildEvent)
+   * {@inheritDoc}
    */
   public void messageLogged(final BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
 
   /**
-   * @see org.apache.tools.ant.BuildListener#buildStarted(org.apache.tools.ant.BuildEvent)
+   * {@inheritDoc}
    */
   public void buildStarted(final BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
 
   /**
-   * @see org.apache.tools.ant.BuildListener#buildFinished(org.apache.tools.ant.BuildEvent)
+   * {@inheritDoc}
    */
   public void buildFinished(final BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
 
   /**
-   * <p>
-   * </p>
+   * Logs the supplied message using the currently configured context.
    * 
-   * @param msg
    * @param msgLevel
+   *          The message level used for the logging.
+   * @param msg
+   *          The message which has to be dumped. Neither <code>null</code> nor empty.
+   * @param args
+   *          The arguments used to format the message.
    */
-  private void log(final String msg, final int msgLevel) {
+  private void log(final int msgLevel, final String msg, final Object... args) {
     // retrieve the context
     final Object ctx = this._context.get();
-
-    // log with task context
     if (ctx instanceof Task) {
-      this._project.log((Task) ctx, msg, msgLevel);
-    }
-    // log with target context
-    else if (ctx instanceof Target) {
-      this._project.log((Target) ctx, msg, msgLevel);
-    }
-    // log without context
-    else {
-      this._project.log(msg, msgLevel);
+      // log with task context
+      this._project.log((Task) ctx, String.format(msg, args), msgLevel);
+    } else if (ctx instanceof Target) {
+      // log with target context
+      this._project.log((Target) ctx, String.format(msg, args), msgLevel);
+    } else {
+      // log without context
+      this._project.log(String.format(msg, args), msgLevel);
     }
   }
+
 } /* ENDCLASS */

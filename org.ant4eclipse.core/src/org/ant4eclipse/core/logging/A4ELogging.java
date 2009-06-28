@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.service.*;
 
 /**
  * <p>
@@ -24,14 +24,19 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 public class A4ELogging {
 
   /**
-   * Returns true if the debugging is enabled.
+   * Returns <code>true</code> if the debugging is enabled.
    * 
-   * @return true <=> Debugging is enabled.
+   * @return <code>true</code> <=> Debugging is enabled.
    */
   public static final boolean isDebuggingEnabled() {
     return getLogger().isDebuggingEnabled();
   }
 
+  /**
+   * Returns <code>true</code> if tracing is enabled.
+   * 
+   * @return <code>true</code> <=> Tracing is enabled.
+   */
   public static final boolean isTraceingEnabled() {
     return getLogger().isTraceingEnabled();
   }
@@ -40,173 +45,69 @@ public class A4ELogging {
    * Dumps traceing information.
    * 
    * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void trace(final String msg, final Object[] args) {
+  public static final void trace(final String msg, final Object... args) {
     getLogger().trace(msg, args);
   }
 
   /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  public static final void trace(final String msg, final Object obj) {
-    getLogger().trace(msg, obj);
-  }
-
-  /**
    * Dumps debugging information.
    * 
    * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void debug(final String msg, final Object[] args) {
+  public static final void debug(final String msg, final Object... args) {
     getLogger().debug(msg, args);
   }
 
   /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  public static final void debug(final String msg, final Object obj) {
-    getLogger().debug(msg, obj);
-  }
-
-  /**
-   * Dumps traceing information.
-   * 
-   * @param msg
-   *          A trace message.
-   */
-  public static final void trace(final String msg) {
-    getLogger().trace(msg);
-  }
-
-  /**
-   * Dumps debugging information.
-   * 
-   * @param msg
-   *          An error message.
-   */
-  public static final void debug(final String msg) {
-    getLogger().debug(msg);
-  }
-
-  /**
    * Dumps informational text.
    * 
    * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void info(final String msg, final Object[] args) {
+  public static final void info(final String msg, final Object... args) {
     getLogger().info(msg, args);
   }
 
   /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  public static final void info(final String msg, final Object obj) {
-    getLogger().info(msg, obj);
-  }
-
-  /**
-   * Dumps informational text.
-   * 
-   * @param msg
-   *          An error message.
-   */
-  public static final void info(final String msg) {
-    getLogger().info(msg);
-  }
-
-  /**
    * Dumps warning information.
    * 
    * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void warn(final String msg, final Object[] args) {
+  public static final void warn(final String msg, final Object... args) {
     getLogger().warn(msg, args);
   }
 
   /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
-   */
-  public static final void warn(final String msg, final Object obj) {
-    getLogger().warn(msg, obj);
-  }
-
-  /**
-   * Dumps warning information.
-   * 
-   * @param msg
-   *          An error message.
-   */
-  public static final void warn(final String msg) {
-    getLogger().warn(msg);
-  }
-
-  /**
    * Dumps error information.
    * 
    * @param msg
-   *          A formatting message.
+   *          A formatting message. Neither <code>null</code> nor empty.
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void error(final String msg, final Object[] args) {
+  public static final void error(final String msg, final Object... args) {
     getLogger().error(msg, args);
   }
 
   /**
-   * Dumps error information.
+   * Returns an instance of a logger currently provided by the registry.
    * 
-   * @param msg
-   *          An error message.
-   * @param obj
-   *          A single argument.
+   * @return An instance of a logger currently provided by the registry. Not <code>null</code>.
    */
-  public static final void error(final String msg, final Object obj) {
-    getLogger().error(msg, obj);
-  }
-
-  /**
-   * Dumps error information.
-   * 
-   * @param msg
-   *          An error message.
-   */
-  public static final void error(final String msg) {
-    getLogger().error(msg);
-  }
-
-  private static Ant4EclipseLogger getLogger() {
+  private static final Ant4EclipseLogger getLogger() {
     return (Ant4EclipseLogger) ServiceRegistry.instance().getService(Ant4EclipseLogger.class.getName());
   }
+
 } /* ENDCLASS */
