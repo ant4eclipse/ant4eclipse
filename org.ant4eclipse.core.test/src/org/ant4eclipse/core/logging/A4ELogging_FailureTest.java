@@ -13,6 +13,8 @@ import org.junit.Test;
 
 public class A4ELogging_FailureTest {
 
+  private static final Class<?> SERVICE_TYPE = Ant4EclipseLogger.class;
+
   @Before
   public void configureServiceRegistry() {
     ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
@@ -36,7 +38,7 @@ public class A4ELogging_FailureTest {
       A4ELogging.debug("Test");
       fail();
     } catch (Ant4EclipseException exception) {
-      assertEquals("Service 'org.ant4eclipse.core.logging.Ant4EclipseLogger' is not available.", exception.getMessage());
+      assertEquals(String.format("Service '%s' is not available.", SERVICE_TYPE.getName()), exception.getMessage());
     }
   }
 }
