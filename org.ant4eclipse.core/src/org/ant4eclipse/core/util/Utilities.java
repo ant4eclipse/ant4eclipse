@@ -330,6 +330,26 @@ public class Utilities {
   }
 
   /**
+   * Reads the properties from the supplied resource.
+   * 
+   * @param resource
+   *          The resource providing the content. Not <code>null</code>.
+   * 
+   * @return A map of properties providing the settings. Not <code>null</code>.
+   */
+  public static final Map<String, String> readProperties(final URL resource) throws IOException {
+    InputStream instream = null;
+    Map<String, String> result = null;
+    try {
+      instream = resource.openStream();
+      result = readProperties(instream);
+    } finally {
+      close(instream);
+    }
+    return result;
+  }
+
+  /**
    * Reads the properties from the supplied InputStream instance.
    * 
    * @param propertiesFile
