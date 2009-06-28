@@ -329,28 +329,61 @@ public class Utilities {
     return (buffer.toString());
   }
 
+  /**
+   * Reads the properties from the supplied InputStream instance.
+   * 
+   * @param propertiesFile
+   *          The File providing the content. Not <code>null</code>.
+   * 
+   * @return A map of properties providing the read content. If <code>null</code> the settings could not be loaded.
+   */
   public static final Map<String, String> readProperties(final File propertiesFile) {
     FileInputStream fis = null;
-    Properties result = null;
+    Map<String, String> result = null;
     try {
       fis = new FileInputStream(propertiesFile);
-      final Properties pref = new Properties();
-      pref.load(fis);
-      result = pref;
-      fis.close();
-      A4ELogging.debug("Read compiler settings from '%s'", propertiesFile.getAbsolutePath());
+      result = readProperties(fis);
+      A4ELogging.debug("Read settings from '%s'", propertiesFile.getAbsolutePath());
     } catch (final IOException ex) {
+      /**
+       * @todo [28-Jun-2009:KASI] The caller should handle this exception has he has the knowledge how this should be
+       *       treated.
+       */
       A4ELogging.warn("Could not load settings file '%s': '%s", propertiesFile.getAbsolutePath(), ex.toString());
     } finally {
       close(fis);
     }
-    Map<String, String> nresult = new Hashtable<String, String>();
-    for (Map.Entry<Object, Object> entry : result.entrySet()) {
-      nresult.put((String) entry.getKey(), (String) entry.getValue());
-    }
-    return nresult;
+    return result;
   }
 
+  /**
+   * Reads the properties from the supplied InputStream instance.
+   * 
+   * @param instream
+   *          The InputStream providing the content. Maybe <code>null</code>.
+   * 
+   * @return A map of properties providing the read content. Not <code>null</code>.
+   * 
+   * @throws IOException
+   *           Loading the properties from the InputStream failed.
+   */
+  public static final Map<String, String> readProperties(final InputStream instream) throws IOException {
+    Map<String, String> result = new Hashtable<String, String>();
+    if (instream != null) {
+      Properties properties = new Properties();
+      properties.load(instream);
+      for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+        result.put((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @todo [28-Jun-2009:KASI] The return type should be Map<String,String> in order to provide a datatype making use of
+   *       generics. This would cause some changes within APIs which are uncritical but I don't intend to rewrite APIs
+   *       without further discussion.
+   */
   public static final Properties readPropertiesFromClasspath(final String name) {
 
     final ClassLoader classLoader = Utilities.class.getClassLoader();
