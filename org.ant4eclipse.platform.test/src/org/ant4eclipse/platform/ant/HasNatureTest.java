@@ -15,6 +15,17 @@ public class HasNatureTest extends AbstractWorkspaceBasedBuildFileTest {
 
     new EclipseProjectBuilder("simpleproject").withNature("org.ant4eclipse.testnature").createIn(
         getTestWorkspaceDirectory());
+
+    new EclipseProjectBuilder("gwtproject").withNature("com.google.gwt.eclipse.core.gwtNature").createIn(
+        getTestWorkspaceDirectory());
+  }
+
+  public void testGwtNatureLong() {
+    expectLog("testGwtNatureLong", "OK");
+  }
+
+  public void testGwtNatureShort() {
+    expectLog("testGwtNatureShort", "OK");
   }
 
   public void testNonexistingNature() {
