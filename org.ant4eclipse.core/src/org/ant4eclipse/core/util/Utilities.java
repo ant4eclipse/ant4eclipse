@@ -342,13 +342,7 @@ public class Utilities {
     } catch (final IOException ex) {
       A4ELogging.warn("Could not load settings file '%s': '%s", propertiesFile.getAbsolutePath(), ex.toString());
     } finally {
-      if (fis != null) {
-        try {
-          fis.close();
-        } catch (final IOException ioe) {
-          // don't care...
-        }
-      }
+      close(fis);
     }
     Map<String, String> nresult = new Hashtable<String, String>();
     for (Map.Entry<Object, Object> entry : result.entrySet()) {
@@ -371,7 +365,7 @@ public class Utilities {
 
     try {
       profileProperties.load(inputStream);
-      inputStream.close();
+      close(inputStream);
       return profileProperties;
     } catch (final Exception e) {
       e.printStackTrace();
