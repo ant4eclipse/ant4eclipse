@@ -9,6 +9,7 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest;
 import org.ant4eclipse.core.ant.AntCallTest;
 import org.ant4eclipse.core.dependencygraph.DependencyGraphTest;
 import org.ant4eclipse.core.logging.A4ELogging_FailureTest;
+import org.ant4eclipse.core.logging.LoggingUsageTest;
 import org.ant4eclipse.core.nls.NLSTest;
 import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfigurationTest;
 import org.ant4eclipse.core.service.ServiceRegistryTest;
@@ -23,7 +24,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( { ClassNameTest.class, AssertTest.class, Ant4EclipseConfiguratorTest.class,
     XQueryHandlerTest.class, JarUtilitiesTest.class, UtilitiesTest.class,
     PropertiesBasedServiceRegistryConfigurationTest.class, ServiceRegistryTest.class, NLSTest.class,
-    A4ELogging_FailureTest.class, DependencyGraphTest.class, AbstractAnt4EclipseConditionTest.class,
-    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+    A4ELogging_FailureTest.class, LoggingUsageTest.class, DependencyGraphTest.class,
+    AbstractAnt4EclipseConditionTest.class, AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class,
+    AntCallTest.class })
 public class AllTests {
 }
