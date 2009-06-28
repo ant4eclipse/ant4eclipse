@@ -3,7 +3,6 @@ package org.ant4eclipse.core.configuration;
 import org.ant4eclipse.core.util.Utilities;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -131,11 +130,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
       URL url = propertyFiles.nextElement();
 
       try {
-        Properties properties = new Properties();
-        InputStream is = url.openStream();
-        properties.load(is);
-        allProperties.putAll(properties);
-        Utilities.close(is);
+        allProperties.putAll(Utilities.readProperties(url));
       } catch (IOException io) {
         throw new RuntimeException("Could not read ant4eclipse configuration properties from " + url + ": " + io, io);
       }

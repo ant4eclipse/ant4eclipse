@@ -21,6 +21,7 @@ import java.util.Properties;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 /**
  * LinkFileFactory provides methods to find and parse link files
@@ -96,13 +97,7 @@ public class LinkFileFactory {
     } catch (final IOException ioe) {
       throw new RuntimeException("could not read " + linkFile.getAbsolutePath() + ": " + ioe, ioe);
     } finally {
-      if (inputStream != null) {
-        try {
-          inputStream.close();
-        } catch (final IOException ioe) {
-          // ignore
-        }
-      }
+      Utilities.close(inputStream);
     }
     final String path = p.getProperty("path");
     if (path == null) {
