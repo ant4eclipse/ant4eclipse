@@ -11,9 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-import org.ant4eclipse.platform.ant.core.condition.*;
-import org.ant4eclipse.platform.model.resource.*;
-import org.apache.tools.ant.*;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.platform.ant.core.condition.AbstractProjectBasedCondition;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.apache.tools.ant.BuildException;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * <p>
@@ -24,8 +33,11 @@ import org.apache.tools.ant.*;
  */
 public class HasNature extends AbstractProjectBasedCondition {
 
-  /** Comment for <code>_nature</code> */
-  private String _nature;
+  private static final String        RESOURCE_NATURES = "platform/natures.properties";
+
+  private static Map<String, String> NATURES          = null;
+
+  private String                     _nature;
 
   /**
    * <p>
@@ -33,6 +45,23 @@ public class HasNature extends AbstractProjectBasedCondition {
    * </p>
    */
   public HasNature() {
+    if (NATURES == null) {
+      // load abbreviations for the nature
+      URL resource = HasNature.class.getClassLoader().getResource(RESOURCE_NATURES);
+      if (resource != null) {
+        try {
+          NATURES = Utilities.readProperties(resource);
+        } catch (IOException ex) {
+          A4ELogging.error("failed to load nature abbreviations from '%s'. cause: %s", resource.toExternalForm(), ex
+              .getMessage());
+        }
+      }
+      if (NATURES == null) {
+        // there was a failure or no natures list with abbreviations,
+        // so create an instance to prevent further instantiations
+        NATURES = new Hashtable<String, String>();
+      }
+    }
   }
 
   /**
@@ -44,7 +73,21 @@ public class HasNature extends AbstractProjectBasedCondition {
     requireNatureSet();
     try {
       final EclipseProject project = getEclipseProject();
-      return project.hasNature(this._nature);
+      if (project.hasNature(this._nature)) {
+        // the nature matches directly
+        return true;
+      } else {
+        // try if the user supplied an abbreviation
+        String abbreviation = this._nature.toLowerCase();
+        if (NATURES.containsKey(abbreviation)) {
+          // check the nature with the full id now
+          String natureid = NATURES.get(abbreviation);
+          return project.hasNature(natureid);
+        } else {
+          // there's no mapping so we don't have an abbreviation here
+          return false;
+        }
+      }
     } catch (final BuildException e) {
       throw e;
     } catch (final Exception e) {
