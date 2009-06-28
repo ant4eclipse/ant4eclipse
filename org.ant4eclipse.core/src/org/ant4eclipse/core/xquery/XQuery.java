@@ -11,11 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.core.xquery;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.exception.*;
-import org.xml.sax.*;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-import java.util.*;
+import org.xml.sax.Attributes;
+
+import java.util.Arrays;
+import java.util.Vector;
 
 /**
  * This object stores a simple query used to access XML content. These queries will be visited by the SAXParser, so they
@@ -26,6 +28,8 @@ import java.util.*;
  * @techres [03-Feb-2006:KASI] Only one indexed element is allowed within a query.
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
+ * 
+ * @todo [28-Jun-2009:KASI] Check if there's a way to replace this using the xpath querying provided with update jdks.
  */
 public class XQuery {
 
