@@ -1,11 +1,15 @@
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.Assert;
 
-import java.io.*;
-import java.util.*;
-import java.util.jar.*;
-import java.util.zip.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 /**
  * <p>
@@ -65,11 +69,7 @@ public class JarUtilities {
         try {
           writeFile(inputStream, destFile);
         } finally {
-          try {
-            inputStream.close();
-          } catch (final IOException ioe) {
-            // ignore
-          }
+          Utilities.close(inputStream);
         }
       }
     }
@@ -88,29 +88,16 @@ public class JarUtilities {
       while ((count = inputStream.read(buffer, 0, buffer.length)) > 0) {
         fos.write(buffer, 0, count);
       }
-
-      fos.close();
-      fos = null;
-
-      inputStream.close();
-      inputStream = null;
     } catch (final IOException e) {
+      /**
+       * @todo [28-Jun-2009:KASI] The original code didn't take care of this, since it only closed the streams (now done
+       *       within the finally sequence). Nevertheless the resource might not have been copied completely, so there's
+       *       need to be a valid treatment.
+       */
+    } finally {
       // close open streams
-      if (fos != null) {
-        try {
-          fos.close();
-        } catch (final IOException ee) {
-          // nothing to do here
-        }
-      }
-
-      if (inputStream != null) {
-        try {
-          inputStream.close();
-        } catch (final IOException ee) {
-          // nothing to do here
-        }
-      }
+      Utilities.close(fos);
+      Utilities.close(inputStream);
     }
   }
 

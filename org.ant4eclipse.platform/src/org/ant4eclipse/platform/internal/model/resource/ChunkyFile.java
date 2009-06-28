@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource;
 
-import java.util.Vector;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.File;
-
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Vector;
 
 /**
  * Simple representation for chunk based files as internally used by the Eclipse framework.
@@ -27,12 +27,12 @@ import org.ant4eclipse.core.logging.A4ELogging;
  */
 public class ChunkyFile {
 
-  private static final byte[] BEGIN_CHUNK = { 64, -79, -117, -127, 35, -68, 0, 20, 26, 37, -106, -25, -93, -109, -66,
-      30                                 };
+  private static final byte[]  BEGIN_CHUNK = { 64, -79, -117, -127, 35, -68, 0, 20, 26, 37, -106, -25, -93, -109, -66,
+      30                                  };
 
-  private static final byte[] END_CHUNK   = { -64, 88, -5, -13, 35, -68, 0, 20, 26, 81, -13, -116, 123, -69, 119, -58 };
+  private static final byte[]  END_CHUNK   = { -64, 88, -5, -13, 35, -68, 0, 20, 26, 81, -13, -116, 123, -69, 119, -58 };
 
-  private Vector<byte[]>      _chunkdata;
+  private final Vector<byte[]> _chunkdata;
 
   /**
    * Creates a chunked representation of the supplied file.
@@ -44,7 +44,7 @@ public class ChunkyFile {
    *           Reading the file failed for some reason.
    */
   public ChunkyFile(File source) throws IOException {
-    _chunkdata = new Vector<byte[]>();
+    this._chunkdata = new Vector<byte[]>();
     byte[] data = new byte[(int) source.length()];
     InputStream input = null;
     try {
@@ -55,9 +55,7 @@ public class ChunkyFile {
       A4ELogging.error(ex.getMessage());
       throw (ex);
     } finally {
-      if (input != null) {
-        input.close();
-      }
+      Utilities.close(input);
     }
   }
 
@@ -67,7 +65,7 @@ public class ChunkyFile {
    * @return The number of available chunks.
    */
   public int getChunkCount() {
-    return (_chunkdata.size());
+    return (this._chunkdata.size());
   }
 
   /**
@@ -79,8 +77,8 @@ public class ChunkyFile {
    * @return The chunk data. null if the index wasn't valid.
    */
   public byte[] getChunk(int index) {
-    if ((index >= 0) && (index < _chunkdata.size())) {
-      return _chunkdata.get(index);
+    if ((index >= 0) && (index < this._chunkdata.size())) {
+      return this._chunkdata.get(index);
     }
     return (null);
   }
@@ -99,7 +97,7 @@ public class ChunkyFile {
       if (end != -1) {
         byte[] data = new byte[end - ptr];
         System.arraycopy(content, ptr, data, 0, data.length);
-        _chunkdata.add(data);
+        this._chunkdata.add(data);
         ptr = end + END_CHUNK.length;
       }
       ptr = find(content, BEGIN_CHUNK, ptr);

@@ -1,5 +1,7 @@
 package org.ant4eclipse.core.configuration;
 
+import org.ant4eclipse.core.util.Utilities;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -133,11 +135,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
         InputStream is = url.openStream();
         properties.load(is);
         allProperties.putAll(properties);
-        try {
-          is.close();
-        } catch (IOException ie) {
-          // ignore
-        }
+        Utilities.close(is);
       } catch (IOException io) {
         throw new RuntimeException("Could not read ant4eclipse configuration properties from " + url + ": " + io, io);
       }

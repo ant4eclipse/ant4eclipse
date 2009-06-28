@@ -13,6 +13,10 @@ package org.ant4eclipse.platform.test.builder;
 
 import static java.lang.String.format;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -28,9 +32,6 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Vector;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 public class FileHelper {
 
@@ -233,19 +234,17 @@ public class FileHelper {
       throw new RuntimeException(format("Resource '%s' not found on classpath!", resourceName));
     }
 
-    ByteArrayOutputStream out;
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
     try {
-      out = new ByteArrayOutputStream();
       int b;
       while ((b = inputStream.read()) != -1) {
         out.write(b);
       }
-      out.flush();
-      out.close();
-
-      inputStream.close();
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
+    } finally {
+      Utilities.close(out);
+      Utilities.close(inputStream);
     }
     return out.toString();
   }

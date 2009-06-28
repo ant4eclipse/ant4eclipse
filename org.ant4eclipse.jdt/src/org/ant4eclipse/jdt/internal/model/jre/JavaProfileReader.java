@@ -11,15 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.jdt.model.jre.JavaProfile;
+
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.jdt.model.jre.JavaProfile;
 
 /**
  * <p>
@@ -84,7 +85,7 @@ public class JavaProfileReader {
     final Properties profileProperties = new Properties();
     try {
       profileProperties.load(inputStream);
-      inputStream.close();
+      Utilities.close(inputStream);
     } catch (final Exception e) {
       throw new RuntimeException(e.getMessage(), e);
     }

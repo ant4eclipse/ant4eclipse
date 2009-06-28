@@ -1,5 +1,10 @@
 package org.ant4eclipse.core.nls;
 
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.exception.ExceptionCode;
+import org.ant4eclipse.core.util.Utilities;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -11,10 +16,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
-
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.exception.ExceptionCode;
 
 /**
  * <p>
@@ -295,13 +296,7 @@ public abstract class NLS {
         System.err.println("Could not read properties file '" + variant + "': " + ex);
         continue;
       } finally {
-        if (is != null) {
-          try {
-            is.close();
-          } catch (IOException ex) {
-            // ignore
-          }
-        }
+        Utilities.close(is);
       }
     }
   }
