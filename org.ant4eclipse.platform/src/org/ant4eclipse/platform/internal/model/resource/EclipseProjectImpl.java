@@ -11,18 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.service.ServiceRegistry;
+
+import org.ant4eclipse.platform.internal.model.resource.role.NatureNicknameRegistry;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.ProjectNature;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Encapsultes a project. A project contains a workspace and is represented by a directory in this workspace. A project
@@ -272,7 +275,7 @@ public final class EclipseProjectImpl implements EclipseProject {
       return (result);
     }
 
-    // 
+    //
     if (relative == PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
       if (path.length() == 0) {
         path = ".";
@@ -328,13 +331,13 @@ public final class EclipseProjectImpl implements EclipseProject {
   public boolean hasNature(final String natureName) {
     Assert.notNull(natureName);
 
-    final ProjectNature projectNature = new ProjectNatureImpl(natureName);
-
-    return hasNature(projectNature);
+    return hasNature(new ProjectNatureImpl(natureName));
   }
 
   /**
+   * <p>
    * Returns whether the specified nature is set or not.
+   * </p>
    * 
    * @param nature
    * @return Returns whether the specified nature is set or not.
@@ -342,7 +345,26 @@ public final class EclipseProjectImpl implements EclipseProject {
   public boolean hasNature(final ProjectNature nature) {
     Assert.notNull(nature);
 
-    return this._natures.contains(nature);
+    // nature unknown:
+    if (!this._natures.contains(nature)) {
+
+      NatureNicknameRegistry nicknameRegistry = ServiceRegistry.instance().getService(NatureNicknameRegistry.class);
+
+      // try if the user supplied an abbreviation
+      String abbreviation = nature.getName().toLowerCase();
+      if (nicknameRegistry.hasNatureForNickname(abbreviation)) {
+        // check the nature with the full id now
+        return hasNature(nicknameRegistry.getNatureForNickname(abbreviation));
+      } else {
+        // there's no mapping so we don't have an abbreviation here
+        return false;
+      }
+    }
+
+    // nature known:
+    else {
+      return true;
+    }
   }
 
   /**
@@ -545,6 +567,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[EclipseProject:");
@@ -559,6 +582,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -588,6 +612,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + (this._workspace == null ? 0 : this._workspace.hashCode());
