@@ -11,14 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import java.io.File;
-
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
+import java.io.File;
+
 /**
+ * <p>
  * 
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolver {
 

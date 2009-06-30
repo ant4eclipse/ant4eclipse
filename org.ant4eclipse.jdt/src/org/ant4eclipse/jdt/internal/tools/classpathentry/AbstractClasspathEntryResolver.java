@@ -11,38 +11,26 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import java.io.File;
+
 /**
- * AbstractRawClasspathEntryResolver --
+ * <p>
+ * Abstract base class for all {@link ClasspathEntryResolver ClasspathEntryResolvers}.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public abstract class AbstractClasspathEntryResolver implements ClasspathEntryResolver {
-
-  // /**
-  // * Modifies the resolved class path for the resource with the specified path. The resource has to reside in the
-  // * workspace.
-  // *
-  // * @param path
-  // * the path of the resource.
-  // * @deprecated use resolveProjectResource instead
-  // */
-  // protected final void resolveWorkspaceResource(final String path, final ClasspathResolverContext context) {
-  // Assert.notNull(path);
-  //
-  // final File resource = context.getWorkspace().getChild(path, context.isRelative());
-  // final ResolvedClasspathEntry entry = new ResolvedClasspathEntryImpl(context.getCurrentProject(), resource);
-  // context.addResolvedClasspathEntry(entry);
-  // }
 
   /**
    * <p>
@@ -113,6 +101,15 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
         || (isRawClasspathEntry(entry) && ((RawClasspathEntry) entry).isExported());
   }
 
+  /**
+   * <p>
+   * Helper method. Returns the {@link JavaProjectRole} of the current project.
+   * </p>
+   * 
+   * @param context
+   *          the {@link ClasspathResolverContext}
+   * @return the {@link JavaProjectRole} of the current project.
+   */
   protected JavaProjectRole getCurrentJavaProjectRole(final ClasspathResolverContext context) {
     return JavaProjectRole.Helper.getJavaProjectRole(context.getCurrentProject());
   }

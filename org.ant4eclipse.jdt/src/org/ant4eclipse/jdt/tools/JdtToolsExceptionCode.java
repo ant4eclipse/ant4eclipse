@@ -31,6 +31,9 @@ public class JdtToolsExceptionCode extends ExceptionCode {
   @NLSMessage("Project '%s'  references the unknown project '%s'")
   public static JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION;
 
+  @NLSMessage("The class path of project '%s' contains a class path variable '%s' that is not bound.")
+  public static JdtToolsExceptionCode UNBOUND_CLASS_PATH_VARIABLE;
+
   static {
     NLS.initialize(JdtToolsExceptionCode.class);
   }

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<project name="getEclipseClasspath-test" basedir="." default="foo">
+
+	<!-- definition of type classpathVariables -->
+	<typedef name="classpathVariables"
+	         classname="org.ant4eclipse.jdt.ant.type.ClasspathVariablesType" />
+
+	<typedef name="getJdtClassPath"
+	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+
+
+	<target name="getJdtClassPath">
+
+		<classpathVariables>
+			<classpathVariable name="BRUNO_WALTER" path="${workspaceDir}/bruno_walter" />
+			<classpathVariable name="VAR2" path="${workspaceDir}/var2" />
+		</classpathVariables>
+
+		<getJdtClassPath workspace="${workspaceDir}"
+		                 relative="${relative}"
+		                 pathSeparator="${pathSeparator}"
+		                 runtime="${runtimeClasspath}"
+		                 projectName="${projectName}"
+		                 property="classpath" />
+	</target>
+
+	<!-- default dummy target -->
+	<target name="foo" />
+</project>

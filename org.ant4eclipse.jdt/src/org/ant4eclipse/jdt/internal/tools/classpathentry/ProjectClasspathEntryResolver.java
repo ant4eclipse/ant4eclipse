@@ -14,6 +14,7 @@ package org.ant4eclipse.jdt.internal.tools.classpathentry;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
@@ -26,7 +27,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolver {
 
   /**
-   * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#canResolve(org.ant4eclipse.jdt.model.ClasspathEntry)
+   * {@inheritDoc}
    */
   public boolean canResolve(final ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_PROJECT)

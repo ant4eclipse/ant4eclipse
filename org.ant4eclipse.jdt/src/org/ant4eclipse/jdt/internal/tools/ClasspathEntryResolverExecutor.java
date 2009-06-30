@@ -1,19 +1,28 @@
 package org.ant4eclipse.jdt.internal.tools;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.logging.A4ELogging;
 
-import org.ant4eclipse.jdt.internal.tools.classpathentry.*;
-import org.ant4eclipse.jdt.model.*;
-import org.ant4eclipse.jdt.model.project.*;
-import org.ant4eclipse.jdt.tools.container.*;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
+import org.ant4eclipse.jdt.model.ClasspathEntry;
+import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
+import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import java.util.*;
+import java.util.EmptyStackException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 /**
- *
+ * <p>
+ * 
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ClasspathEntryResolverExecutor {
 

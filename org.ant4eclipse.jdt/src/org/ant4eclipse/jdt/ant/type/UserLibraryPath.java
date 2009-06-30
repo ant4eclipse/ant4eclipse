@@ -11,16 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant.type;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrariesFileParser;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrary;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
 
 /**
  * Simple path extension that allows to be configured using an eclipse configuration file.
