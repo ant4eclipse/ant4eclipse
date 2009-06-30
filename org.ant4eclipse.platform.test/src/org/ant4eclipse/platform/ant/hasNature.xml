@@ -5,12 +5,12 @@
   <typedef name="hasNature" classname="org.ant4eclipse.platform.ant.HasNature" />
 
   <!-- test gwtNatureLong -->
-  <target name='testGwtNatureLong'>
+  <target name='testJdtNatureLong'>
     <condition property="hasNature">
-      <hasNature 
-        workspace='${workspaceDir}' 
-        projectName='gwtproject' 
-        nature='com.google.gwt.eclipse.core.gwtNature' 
+      <hasNature
+        workspace='${workspaceDir}'
+        projectName='jdtproject'
+        nature='org.eclipse.jdt.core.javanature'
       />
     </condition>
     <fail unless="hasNature">FAILURE</fail>
@@ -18,12 +18,12 @@
   </target>
 
   <!-- test gwtNatureShort -->
-  <target name='testGwtNatureShort'>
+  <target name='testJdtNatureShort'>
     <condition property="hasNature">
-      <hasNature 
-        workspace='${workspaceDir}' 
-        projectName='gwtproject' 
-        nature='gwt' 
+      <hasNature
+        workspace='${workspaceDir}'
+        projectName='jdtproject'
+        nature='java'
       />
     </condition>
     <fail unless="hasNature">FAILURE</fail>
@@ -33,10 +33,10 @@
   <!-- test testNonexistingNature -->
   <target name="testNonexistingNature">
     <condition property="hasNature">
-      <hasNature 
-        workspace='${workspaceDir}' 
-        projectName='simpleproject' 
-        nature='nonexistingnature' 
+      <hasNature
+        workspace='${workspaceDir}'
+        projectName='simpleproject'
+        nature='nonexistingnature'
       />
     </condition>
     <fail if="hasNature">FAILURE</fail>
@@ -46,10 +46,10 @@
   <!-- test existingNature -->
   <target name='testExistingNature'>
     <condition property="hasNature">
-      <hasNature 
-        workspace='${workspaceDir}' 
-        projectName='simpleproject' 
-        nature='org.ant4eclipse.testnature' 
+      <hasNature
+        workspace='${workspaceDir}'
+        projectName='simpleproject'
+        nature='org.ant4eclipse.testnature'
       />
     </condition>
     <fail unless="hasNature">FAILURE</fail>
@@ -59,10 +59,10 @@
   <!-- test project attribute -->
   <target name='testProjectAttribute'>
     <condition property="hasNature">
-      <hasNature 
-        workspace='${workspaceDir}' 
-        project='D:\test' 
-        nature='org.ant4eclipse.testnature' 
+      <hasNature
+        workspace='${workspaceDir}'
+        project='D:\test'
+        nature='org.ant4eclipse.testnature'
       />
     </condition>
     <fail unless="hasNature">FAILURE</fail>
@@ -71,5 +71,5 @@
 
   <!-- default dummy target -->
   <target name="foo" />
-  
+
 </project>
