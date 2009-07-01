@@ -11,38 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.userlibrary;
 
-import java.util.Hashtable;
-import java.util.Map;
-
-import org.ant4eclipse.core.Assert;
-
 /**
  * This class provides the content of a user library configuration.
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public final class UserLibraries {
-
-  private final Map<String, UserLibrary> _libraries;
-
-  /**
-   * Initialises this data structure used to collect the content of an eclipse user library configuration file.
-   */
-  public UserLibraries() {
-    this._libraries = new Hashtable<String, UserLibrary>();
-  }
-
-  /**
-   * Adds the supplied user library entry to this collecting data structure.
-   * 
-   * @param userlibrary
-   *          The user library entry which shall be added.
-   */
-  public void addLibrary(final UserLibrary userlibrary) {
-    Assert.notNull(userlibrary);
-
-    this._libraries.put(userlibrary.getName(), userlibrary);
-  }
+public interface UserLibraries {
 
   /**
    * Returns true if there's a specific library entry available.
@@ -52,11 +26,7 @@ public final class UserLibraries {
    * 
    * @return true <=> A library with the supplied name is available.
    */
-  public boolean hasLibrary(final String name) {
-    Assert.notNull(name);
-
-    return (this._libraries.containsKey(name));
-  }
+  public boolean hasLibrary(final String name);
 
   /**
    * Returns a user library entry associated with the supplied name.
@@ -66,21 +36,13 @@ public final class UserLibraries {
    * 
    * @return The associated user library entry.
    */
-  public UserLibrary getLibrary(final String name) {
-    Assert.notNull(name);
-
-    return (this._libraries.get(name));
-  }
+  public UserLibrary getLibrary(final String name);
 
   /**
    * Returns a list with the names of the available libraries.
    * 
    * @return A list with the names of the available libraries.
    */
-  public String[] getAvailableLibraries() {
-    final String[] result = new String[this._libraries.size()];
-    this._libraries.keySet().toArray(result);
-    return (result);
-  }
+  public String[] getAvailableLibraries();
 
 } /* ENDCLASS */

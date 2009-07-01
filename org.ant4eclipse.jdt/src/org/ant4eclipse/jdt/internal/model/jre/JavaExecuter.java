@@ -11,14 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.exception.*;
-import org.ant4eclipse.core.logging.*;
-import org.ant4eclipse.core.util.*;
-import org.ant4eclipse.jdt.model.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.ClassLoadingHelper;
 
-import java.io.*;
-import java.util.*;
+import org.ant4eclipse.jdt.JdtModelExceptionCode;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>

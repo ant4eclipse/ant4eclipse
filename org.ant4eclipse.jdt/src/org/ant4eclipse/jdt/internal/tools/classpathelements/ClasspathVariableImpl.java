@@ -1,8 +1,8 @@
-package org.ant4eclipse.jdt.internal.model.classpathvariables;
+package org.ant4eclipse.jdt.internal.tools.classpathelements;
 
 import org.ant4eclipse.core.Assert;
 
-import org.ant4eclipse.jdt.model.classpathvariables.ClasspathVariable;
+import org.ant4eclipse.jdt.tools.classpathelements.ClassPathVariable;
 
 import java.io.File;
 
@@ -13,7 +13,7 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ClasspathVariableImpl implements ClasspathVariable {
+public class ClasspathVariableImpl implements ClassPathVariable {
 
   /** the name of the class path variable */
   private final String _name;

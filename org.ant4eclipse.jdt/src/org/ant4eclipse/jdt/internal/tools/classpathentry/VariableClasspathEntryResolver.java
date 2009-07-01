@@ -13,12 +13,12 @@ package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.jdt.JdtToolsExceptionCode;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.model.classpathvariables.ClasspathVariable;
-import org.ant4eclipse.jdt.model.classpathvariables.ClasspathVariablesRegistry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.jdt.tools.JdtToolsExceptionCode;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
+import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
+import org.ant4eclipse.jdt.tools.classpathelements.ClassPathVariable;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
 import java.io.File;
@@ -67,11 +67,11 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
     }
 
     // get variablesRegistry
-    final ClasspathVariablesRegistry variablesRegistry = ClasspathVariablesRegistry.Helper.getRegistry();
+    final ClassPathElementsRegistry elementsRegistry = ClassPathElementsRegistry.Helper.getRegistry();
 
     // resolve variable
-    if (variablesRegistry.hasClassPathVariable(variable)) {
-      final ClasspathVariable classpathVariable = variablesRegistry.getClassPathVariable(variable);
+    if (elementsRegistry.hasClassPathVariable(variable)) {
+      final ClassPathVariable classpathVariable = elementsRegistry.getClassPathVariable(variable);
       if (tail != null) {
         context.addClasspathEntry(new ResolvedClasspathEntry(new File(classpathVariable.getPath(), tail)));
       } else {

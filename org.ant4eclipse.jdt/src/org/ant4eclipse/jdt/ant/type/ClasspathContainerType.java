@@ -18,7 +18,7 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ClasspathVariablesType extends AbstractAnt4EclipseDataType {
+public class ClasspathContainerType extends AbstractAnt4EclipseDataType {
 
   /**
    * <p>
@@ -27,7 +27,7 @@ public class ClasspathVariablesType extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public ClasspathVariablesType(final Project project) {
+  public ClasspathContainerType(final Project project) {
     super(project);
   }
 

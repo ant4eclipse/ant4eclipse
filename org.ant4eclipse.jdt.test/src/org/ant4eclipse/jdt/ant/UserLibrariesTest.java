@@ -23,14 +23,14 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
+public class UserLibrariesTest extends AbstractJdtClassPathTest {
 
   @Override
   public void setUp() throws Exception {
     super.setUp();
 
     // set up the build file
-    setupBuildFile("classpathVariables.xml");
+    setupBuildFile("userLibraries.xml");
   }
 
   /**
@@ -41,16 +41,37 @@ public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
    */
   public void testClasspathVariables() throws Exception {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withVarClasspathEntry("BRUNO_WALTER")
-        .withVarClasspathEntry("VAR2/test").createIn(getTestWorkspaceDirectory());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withContainerClasspathEntry(
+        "org.eclipse.jdt.USER_LIBRARY/testLibrary").createIn(getTestWorkspaceDirectory());
+
+    //
+    getTestWorkspace().createFile("myUserLibraries.xml", getContent());
 
     // set the properties
     getProject().setProperty("projectName", "project");
 
     // execute target
     String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "bruno_walter"),
-        new File(getTestWorkspaceDirectory(), "var2/test"));
+    System.err.println(classpath);
+    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "haensel"));
   }
 
+  private String getContent() {
+
+    String pathDir = getTestWorkspaceDirectory().getAbsolutePath() + File.separatorChar + "haensel";
+
+    getTestWorkspace().createSubDirectory("haensel");
+
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
+    buffer.append("<eclipse-userlibraries version=\"2\">");
+    buffer.append("<library name=\"testLibrary\" systemlibrary=\"true\">");
+    buffer.append("<archive path=\"");
+    buffer.append(pathDir);
+    buffer.append("\"/>");
+    buffer.append("</library>");
+    buffer.append("</eclipse-userlibraries>");
+
+    return buffer.toString();
+  }
 }

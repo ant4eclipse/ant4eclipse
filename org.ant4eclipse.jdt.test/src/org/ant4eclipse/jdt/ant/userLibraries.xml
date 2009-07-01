@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<project name="getEclipseClasspath-test" basedir="." default="foo">
+
+	<!-- definition of type userLibraries -->
+	<typedef name="userLibraries"
+	         classname="org.ant4eclipse.jdt.ant.type.UserLibraryPath" />
+
+	<typedef name="getJdtClassPath"
+	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+
+	<target name="getJdtClassPath">
+
+		<!-- definition of type classpathVariables -->
+		<userLibraries userlibraries="${workspaceDir}/myUserLibraries.xml" />
+
+		<getJdtClassPath workspace="${workspaceDir}"
+		                 relative="${relative}"
+		                 pathSeparator="${pathSeparator}"
+		                 runtime="${runtimeClasspath}"
+		                 projectName="${projectName}"
+		                 property="classpath" />
+	</target>
+
+	<!-- default dummy target -->
+	<target name="foo" />
+</project>

@@ -18,6 +18,7 @@ import org.ant4eclipse.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrariesFileParser;
 import org.ant4eclipse.jdt.model.userlibrary.UserLibrary;
+import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
@@ -68,8 +69,9 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    */
   private void loadConfigurationFile() {
     try {
-      final UserLibrariesFileParser parser = new UserLibrariesFileParser(this._userlibfile);
-      final UserLibraries userlibs = parser.getUserLibraries();
+      final UserLibrariesFileParser parser = UserLibrariesFileParser.Helper.getUserLibrariesFileParser();
+
+      final UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile);
       final String[] libs = userlibs.getAvailableLibraries();
       for (final String lib : libs) {
         final UserLibrary library = userlibs.getLibrary(lib);
@@ -78,7 +80,13 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
         for (final Archive archive : archives) {
           path.createPathElement().setLocation(archive.getPath());
         }
+
+        // add it as an ant path
         getProject().addReference(PREFIX + lib, path);
+
+        // add it to the ClassPathElementsRegistry
+        ClassPathElementsRegistry.Helper.getRegistry().registerClassPathContainer(PREFIX + library.getName(),
+            library.getArchiveFiles());
       }
     } catch (final Exception ex) {
       A4ELogging.error("Failed to load userlibraries file.\n'%s'.", ex);
