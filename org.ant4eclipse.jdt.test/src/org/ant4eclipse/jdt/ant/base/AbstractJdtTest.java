@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant.base;
 
-import java.io.File;
+import org.ant4eclipse.platform.test.*;
 
-import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
+import java.io.*;
 
 /**
  * <p>
@@ -70,8 +70,8 @@ public abstract class AbstractJdtTest extends AbstractWorkspaceBasedBuildFileTes
     for (int i = 0; i < expectedEntries.length; i++) {
       File expectedDir = expectedEntries[i];
       File classpathItem = new File(classpathItems[i]);
-      assertEquals(String.format("Classpath-Item '%d' does not match. Expected: '%s' Actual: '%s'", i, expectedDir,
-          classpathItem), expectedDir, classpathItem);
+      assertEquals(String.format("Classpath-Item '%d' does not match. Expected: '%s' Actual: '%s'", Integer.valueOf(i),
+          expectedDir, classpathItem), expectedDir, classpathItem);
     }
   }
 }
