@@ -43,7 +43,8 @@ public interface ReferencedProjectsResolver {
    * @param project
    *          the project
    * @param additionalElements
-   *          in some cases it is necessary to provide additional information to resolve referenced projects.
+   *          in some cases it is necessary to provide additional information to resolve referenced projects. Maybe
+   *          <code>null</code>.
    * 
    * @todo [07-Jul-2009:KASI] The parameter 'additionalElements' makes no sense since it has not been specified. An API
    *       as provided through this interface needs to make clear what has to be done with the provided data.
