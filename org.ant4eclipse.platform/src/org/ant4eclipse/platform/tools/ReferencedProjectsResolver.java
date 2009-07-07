@@ -1,8 +1,8 @@
 package org.ant4eclipse.platform.tools;
 
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * <p>
@@ -44,6 +44,10 @@ public interface ReferencedProjectsResolver {
    *          the project
    * @param additionalElements
    *          in some cases it is necessary to provide additional information to resolve referenced projects.
+   * 
+   * @todo [07-Jul-2009:KASI] The parameter 'additionalElements' makes no sense since it has not been specified. An API
+   *       as provided through this interface needs to make clear what has to be done with the provided data.
+   * 
    * @return
    */
   List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final List<Object> additionalElements);
