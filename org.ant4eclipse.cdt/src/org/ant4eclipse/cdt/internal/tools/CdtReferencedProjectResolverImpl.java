@@ -11,30 +11,22 @@
  **********************************************************************/
 package org.ant4eclipse.cdt.internal.tools;
 
+import org.ant4eclipse.platform.internal.tools.PlatformReferencedProjectsResolver;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
-
-import java.util.List;
 
 /**
- * <p>Resolver implementation for the cdt.</p>
+ * <p>Resolver implementation for the cdt. Currently the cdt doesn't support any kind of specific containers 
+ * used to access other projects, so the referenced projects are used in general.</p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class CdtReferencedProjectResolverImpl implements ReferencedProjectsResolver {
+public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjectsResolver {
 
   /**
    * {@inheritDoc}
    */
   public boolean canHandle(EclipseProject project) {
     return CdtUtilities.isCRelatedProject(project);
-  }
-
-  /**
-   * {@inheritDoc} 
-   */
-  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
-    return null;
   }
 
 } /* ENDCLASS */
