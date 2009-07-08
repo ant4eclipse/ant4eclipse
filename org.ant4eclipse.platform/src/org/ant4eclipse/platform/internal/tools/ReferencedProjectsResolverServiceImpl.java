@@ -1,15 +1,16 @@
 package org.ant4eclipse.platform.internal.tools;
 
+import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
+import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -59,6 +60,12 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
    * Loads the configured RoleIdentifiers
    */
   protected void init() {
+
+    /**
+     * @todo [08-Jul-2009:KASI] We need a statement regarding multithreading and the use of A4E. Just in case someone
+     *       might use A4E in a parallel task this might cause issues if not synchronized. Nevertheless this is unlikely
+     *       to happen.
+     */
 
     if (this._initialized) {
       return;
