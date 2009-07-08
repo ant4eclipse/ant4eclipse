@@ -1,9 +1,10 @@
 package org.ant4eclipse.platform.tools;
 
-import org.ant4eclipse.core.service.*;
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.core.service.ServiceRegistry;
 
-import java.util.*;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.util.List;
 
 /**
  * <p>
