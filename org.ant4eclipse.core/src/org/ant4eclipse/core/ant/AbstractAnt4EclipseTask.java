@@ -13,6 +13,7 @@ package org.ant4eclipse.core.ant;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -59,10 +60,21 @@ public abstract class AbstractAnt4EclipseTask extends Task {
   @Override
   public final void execute() throws BuildException {
     try {
+      preconditions();
       doExecute();
     } catch (Exception ex) {
       throw new BuildException(ex.toString(), ex);
     }
+  }
+
+  /**
+   * Will be called prior to the execution of an ant task. If this method detects a misconfiguration it is supposed to
+   * throw a BuildException with an appropriate message. Descending classes need to call the method of the super class.
+   * 
+   * @throws BuildException
+   *           The exception
+   */
+  protected void preconditions() throws BuildException {
   }
 
   /**
