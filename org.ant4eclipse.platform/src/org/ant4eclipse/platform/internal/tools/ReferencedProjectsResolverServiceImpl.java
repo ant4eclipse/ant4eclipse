@@ -8,10 +8,12 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -34,7 +36,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
       List<Object> additionalElements) {
     init();
 
-    List<EclipseProject> result = new LinkedList<EclipseProject>();
+    Set<EclipseProject> result = new HashSet<EclipseProject>();
 
     for (String referenceType : referenceTypes) {
       if (this._referencedProjectsResolvers.containsKey(referenceType)) {
@@ -50,8 +52,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
         A4ELogging.warn("The reference type '%s' is not supported.", referenceType);
       }
     }
-
-    return result;
+    return new ArrayList<EclipseProject>(result);
   }
 
   /**
