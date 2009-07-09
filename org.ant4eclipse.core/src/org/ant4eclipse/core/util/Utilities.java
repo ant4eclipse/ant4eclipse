@@ -264,6 +264,25 @@ public class Utilities {
   }
 
   /**
+   * Alters the supplied String to make sure that it has a value.
+   * 
+   * @param input
+   *          The String that might be altered. Maybe <code>null</code>.
+   * 
+   * @return <code>null</code> in case there's no value or a String which contains at least one valuable character.
+   */
+  public static final String cleanup(final String input) {
+    String result = input;
+    if (result != null) {
+      result = result.trim();
+      if (result.length() == 0) {
+        result = null;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Replaces a character with a specified string.
    * 
    * @param input
