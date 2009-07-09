@@ -1,6 +1,7 @@
 package org.ant4eclipse.platform.internal.tools;
 
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -41,7 +42,12 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
         if (resolver.canHandle(project)) {
           List<EclipseProject> referencedProjects = resolver.resolveReferencedProjects(project, additionalElements);
           result.addAll(referencedProjects);
+        } else {
+          A4ELogging.debug("The reference type '%s' can't handle project '%s'.", referenceType, project
+              .getSpecifiedName());
         }
+      } else {
+        A4ELogging.warn("The reference type '%s' is not supported.", referenceType);
       }
     }
 
