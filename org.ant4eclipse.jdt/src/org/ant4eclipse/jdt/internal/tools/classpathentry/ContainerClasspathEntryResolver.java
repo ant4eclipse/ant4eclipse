@@ -11,19 +11,20 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -35,7 +36,7 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResolver implements Lifecycle {
 
   /** CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX */
-  public final static String               CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX = "containerResolver";
+  public static final String               CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX = "containerResolver";
 
   /** the static container resolver list */
   private List<ClasspathContainerResolver> _containerresolver;

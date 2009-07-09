@@ -30,7 +30,7 @@ public class LinkFile {
    * 
    * @see #getPluginsDirectory()
    */
-  public final static String PLUGINS_DIRECTORY = "eclipse/plugins";
+  public static final String PLUGINS_DIRECTORY = "eclipse/plugins";
 
   /**
    * The path to the destination directory.

@@ -12,25 +12,25 @@ import java.util.Map;
 public class StringTemplate {
 
   /** - */
-  private static String       PREFIX  = "${";
+  private static String             PREFIX  = "${";
 
   /** - */
-  private static String       POSTFIX = "}";
+  private static String             POSTFIX = "}";
 
-  public final static String  NL      = System.getProperty("line.separator");
-
-  /** - */
-  private StringBuilder       _stringTemplate;
+  public static final String        NL      = System.getProperty("line.separator");
 
   /** - */
-  private Map<String, String> _stringsToReplace;
+  private final StringBuilder       _stringTemplate;
+
+  /** - */
+  private final Map<String, String> _stringsToReplace;
 
   /**
    * 
    */
   public StringTemplate() {
-    _stringTemplate = new StringBuilder();
-    _stringsToReplace = new HashMap<String, String>();
+    this._stringTemplate = new StringBuilder();
+    this._stringsToReplace = new HashMap<String, String>();
   }
 
   /**
@@ -41,7 +41,7 @@ public class StringTemplate {
 
     Assert.notNull(content);
 
-    _stringTemplate.append(content);
+    this._stringTemplate.append(content);
   }
 
   /**
@@ -50,7 +50,7 @@ public class StringTemplate {
   public StringTemplate append(String content) {
     Assert.notNull(content);
 
-    _stringTemplate.append(content);
+    this._stringTemplate.append(content);
     return this;
   }
 
@@ -60,7 +60,7 @@ public class StringTemplate {
    * @return
    */
   public StringTemplate nl() {
-    _stringTemplate.append(NL);
+    this._stringTemplate.append(NL);
     return this;
 
   }
@@ -73,19 +73,20 @@ public class StringTemplate {
     Assert.notNull(name);
     Assert.notNull(value);
 
-    _stringsToReplace.put(name, value);
+    this._stringsToReplace.put(name, value);
   }
 
+  @Override
   public String toString() {
 
-    String template = _stringTemplate.toString();
-    Iterator<String> iterator = _stringsToReplace.keySet().iterator();
+    String template = this._stringTemplate.toString();
+    Iterator<String> iterator = this._stringsToReplace.keySet().iterator();
 
     while (iterator.hasNext()) {
 
       String name = iterator.next();
       String stringToReplace = PREFIX + name + POSTFIX;
-      String value = _stringsToReplace.get(name);
+      String value = this._stringsToReplace.get(name);
 
       int index = template.indexOf(stringToReplace);
       while (index != -1) {

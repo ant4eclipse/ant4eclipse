@@ -11,13 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.exception.*;
-import org.ant4eclipse.core.logging.*;
-import org.ant4eclipse.platform.*;
-import org.ant4eclipse.platform.model.team.projectset.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
-import java.util.*;
+import org.ant4eclipse.platform.PlatformExceptionCode;
+import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
+import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+
+import java.util.StringTokenizer;
 
 /**
  * Parses a ProjectSetFile provided by the default Eclipse CVS plugin
@@ -27,16 +31,16 @@ import java.util.*;
 public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
   /** REPOSITORY_LOCATION */
-  private final static int REPOSITORY_LOCATION        = 1;
+  private static final int REPOSITORY_LOCATION        = 1;
 
   /** PROJECT_NAME_IN_REPOSITORY */
-  private final static int PROJECT_NAME_IN_REPOSITORY = 2;
+  private static final int PROJECT_NAME_IN_REPOSITORY = 2;
 
   /** PROJECT_NAME_IN_WORKSPACE */
-  private final static int PROJECT_NAME_IN_WORKSPACE  = 3;
+  private static final int PROJECT_NAME_IN_WORKSPACE  = 3;
 
   /** BRANCH_OR_VERSION_TAG */
-  private final static int BRANCH_OR_VERSION_TAG      = 4;
+  private static final int BRANCH_OR_VERSION_TAG      = 4;
 
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
     Assert.notNull(projectSetName);

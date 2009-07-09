@@ -16,7 +16,7 @@ import java.util.Map;
 public class NatureNicknameRegistry implements Lifecycle {
 
   /** The prefix of properties that holds a nature nickname */
-  public final static String  NATURE_NICKNAME_PREFIX = "natureNickname";
+  public static final String  NATURE_NICKNAME_PREFIX = "natureNickname";
 
   /** all known nicknames */
   private Map<String, String> _nicknames;

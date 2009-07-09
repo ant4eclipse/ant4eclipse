@@ -23,11 +23,11 @@ import org.apache.tools.ant.types.resources.FileResource;
  */
 public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection {
 
-  private final static String    SEPARATOR           = ",";
+  private static final String    SEPARATOR           = ",";
 
-  private final static String    SELF                = ".";
+  private static final String    SELF                = ".";
 
-  private final static String    SELF_REPRESENTATION = "@dot";
+  private static final String    SELF_REPRESENTATION = "@dot";
 
   private boolean                _computed           = false;
 

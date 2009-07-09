@@ -11,15 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.role;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The ProjectRoleIdentifierRegistry holds all known {@link ProjectRoleIdentifier}s. It can be used to apply roles to
@@ -32,7 +33,7 @@ public class ProjectRoleIdentifierRegistry {
   /**
    * The prefix of properties that holds a RoleIdentifier class name
    */
-  public final static String              ROLEIDENTIFIER_PREFIX = "roleidentifier";
+  public static final String              ROLEIDENTIFIER_PREFIX = "roleidentifier";
 
   /**
    * All known {@link ProjectRoleIdentifier}
@@ -50,7 +51,7 @@ public class ProjectRoleIdentifierRegistry {
    *          The project that shall be modified.
    */
   public void applyRoles(final EclipseProjectImpl project) {
-    for (ProjectRoleIdentifier projectRoleIdentifier : _projectRoleIdentifiers) {
+    for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
       if (projectRoleIdentifier.isRoleSupported(project)) {
         final ProjectRole projectRole = projectRoleIdentifier.createRole(project);
         project.addRole(projectRole);
@@ -59,7 +60,7 @@ public class ProjectRoleIdentifierRegistry {
   }
 
   public Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
-    return _projectRoleIdentifiers;
+    return this._projectRoleIdentifiers;
   }
 
   /**

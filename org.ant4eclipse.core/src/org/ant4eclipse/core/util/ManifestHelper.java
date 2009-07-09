@@ -11,10 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.*;
+import org.ant4eclipse.core.Assert;
 
-import java.util.*;
-import java.util.jar.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.jar.Manifest;
 
 /**
  * <p>
@@ -59,7 +62,7 @@ public class ManifestHelper {
    * The attribute value may be retrieved from the <code>Dictionary</code> object returned by the
    * <code>Bundle.getHeaders</code> method.
    */
-  public final static String BUNDLE_SYMBOLICNAME = "Bundle-SymbolicName";
+  public static final String BUNDLE_SYMBOLICNAME = "Bundle-SymbolicName";
 
   /**
    * <p>

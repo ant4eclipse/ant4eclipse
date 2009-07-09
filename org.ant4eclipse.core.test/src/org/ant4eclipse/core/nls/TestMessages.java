@@ -17,7 +17,7 @@ public class TestMessages {
 
   public static String            A_MESSAGE;
 
-  public final static String      A_CONSTANT = "A constant";
+  public static final String      A_CONSTANT = "A constant";
 
   @NLSMessage("A message with default")
   public static String            A_MESSAGE_WITH_DEFAULT;

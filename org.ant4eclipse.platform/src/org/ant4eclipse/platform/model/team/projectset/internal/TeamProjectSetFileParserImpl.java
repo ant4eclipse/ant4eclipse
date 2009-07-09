@@ -11,17 +11,23 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.configuration.*;
-import org.ant4eclipse.core.exception.*;
-import org.ant4eclipse.core.logging.*;
-import org.ant4eclipse.core.util.*;
-import org.ant4eclipse.core.xquery.*;
-import org.ant4eclipse.platform.*;
-import org.ant4eclipse.platform.model.team.projectset.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.core.xquery.XQuery;
+import org.ant4eclipse.core.xquery.XQueryHandler;
 
-import java.io.*;
-import java.util.*;
+import org.ant4eclipse.platform.PlatformExceptionCode;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
+
+import java.io.File;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Reads an eclipse team project set file and constructs a
@@ -42,7 +48,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * The property must have the (eclipse) provider id as key (after the suffix) and the implementation class name as
    * value
    */
-  public final static String                 TEAMPROVIDER_PREFIX = "teamprovider";
+  public static final String                 TEAMPROVIDER_PREFIX = "teamprovider";
 
   /**
    * A Map containing all registered {@link TeamProjectSetFactory} instances

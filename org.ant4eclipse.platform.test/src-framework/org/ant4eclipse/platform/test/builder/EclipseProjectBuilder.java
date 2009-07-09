@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class EclipseProjectBuilder {
 
-  public final static String NL = System.getProperty("line.separator");
+  public static final String NL = System.getProperty("line.separator");
 
   private final String       _projectName;
 

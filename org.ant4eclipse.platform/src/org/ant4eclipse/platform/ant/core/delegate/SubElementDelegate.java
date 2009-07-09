@@ -1,15 +1,17 @@
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.platform.ant.SubElementContribution;
 import org.ant4eclipse.platform.ant.core.SubElementComponent;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -21,7 +23,7 @@ import org.apache.tools.ant.ProjectComponent;
 public class SubElementDelegate extends AbstractAntDelegate implements SubElementComponent {
 
   /** The prefix of properties that holds a DynamicElementContributor class name */
-  public final static String           SUB_ELEMENT_CONTRIBUTOR_PREFIX = "subElementContributor";
+  public static final String           SUB_ELEMENT_CONTRIBUTOR_PREFIX = "subElementContributor";
 
   /** the list of all sub element contributors */
   private List<SubElementContribution> _subElementContributions;

@@ -13,7 +13,9 @@ package org.ant4eclipse.platform.ant;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
@@ -27,13 +29,13 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
 public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
 
   /** the default seperator */
-  public final static String DEFAULT_SEPARATOR = ",";
+  public static final String DEFAULT_SEPARATOR = ",";
 
   /** read projects from classpath (default) */
-  public final static String SOURCE_CLASSPATH  = "classpath";
+  public static final String SOURCE_CLASSPATH  = "classpath";
 
   /** read projects from .project file */
-  public final static String SOURCE_PROJECT    = "project";
+  public static final String SOURCE_PROJECT    = "project";
 
   /**
    * The name of an ant property that will hold the list of referenced projects

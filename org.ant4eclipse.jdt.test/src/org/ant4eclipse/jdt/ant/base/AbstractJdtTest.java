@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant.base;
 
-import org.ant4eclipse.platform.test.*;
+import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * <p>
@@ -23,11 +23,11 @@ import java.io.*;
  */
 public abstract class AbstractJdtTest extends AbstractWorkspaceBasedBuildFileTest {
 
-  /* TEST_PATH_SEPARATOR */
-  public final static String TEST_PATH_SEPARATOR = File.pathSeparator;
+  /** TEST_PATH_SEPARATOR */
+  public static final String TEST_PATH_SEPARATOR = File.pathSeparator;
 
-  /* TEST_DIR_SEPARATOR */
-  public final static String TEST_DIR_SEPARATOR  = File.separator;
+  /** TEST_DIR_SEPARATOR */
+  public static final String TEST_DIR_SEPARATOR  = File.separator;
 
   /*
    * (non-Javadoc)
