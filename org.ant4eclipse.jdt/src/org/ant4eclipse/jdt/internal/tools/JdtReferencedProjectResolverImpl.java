@@ -57,6 +57,9 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
 
     // System.err.println(" Resolved: " + classpathEntryResolverExecutor.getReferencedProjects());
 
-    return classpathEntryResolverExecutor.getReferencedProjects();
+    // we need to remove the calling project, since the api states that only referenced projects have to be returned
+    final List<EclipseProject> result = classpathEntryResolverExecutor.getReferencedProjects();
+    result.remove(project);
+    return result;
   }
 }
