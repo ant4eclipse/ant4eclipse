@@ -501,4 +501,25 @@ public class Utilities {
     // return the constructed object
     return object;
   }
+
+  /**
+   * Checks whether a specific literal is part of a list of allowed values.
+   * 
+   * @param candidate
+   *          The literal which has to be tested. Not <code>null</code>.
+   * @param allowed
+   *          A list of allowed values. Not <code>null</code>.
+   * 
+   * @return <code>true</code> <=> The supplied literal is part of the allowed values.
+   */
+  public static final boolean contains(final String candidate, final String... allowed) {
+    Assert.notNull("The parameter 'candidate' must not be null", candidate);
+    Assert.notNull("The parameter 'allowed' must not be null", allowed);
+    for (String part : allowed) {
+      if (candidate.equals(part)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
