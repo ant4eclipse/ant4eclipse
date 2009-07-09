@@ -99,7 +99,7 @@ public class ManifestHelper {
 
     final String manifestValue = manifest.getMainAttributes().getValue(header);
 
-    if ((manifestValue == null) || manifestValue.trim().equals("")) {
+    if ((manifestValue == null) || "".equals(manifestValue.trim())) {
       return new ManifestHeaderElement[0];
     }
 

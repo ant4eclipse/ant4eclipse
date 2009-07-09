@@ -11,15 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.workspaceregistry;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.platform.internal.model.resource.workspaceregistry.LocationFileParser;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.internal.model.resource.workspaceregistry.LocationFileParser;
 
 /**
  * <p>
@@ -65,7 +66,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
     // read all directories in the workspace directory
     File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {
       public boolean accept(final File file) {
-        final boolean accepted = file.isDirectory() && !file.getName().equals(".metadata") && isProjectDirectory(file);
+        final boolean accepted = file.isDirectory() && !".metadata".equals(file.getName()) && isProjectDirectory(file);
         final String message = String
             .format(
                 "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",

@@ -51,7 +51,7 @@ public class JavaProfileReader {
 
     for (final String profile2 : profiles) {
       final String profile = profile2.trim();
-      if ((profile != null) && !profile.equals("")) {
+      if ((profile != null) && !"".equals(profile)) {
         final Properties props = Utilities.readPropertiesFromClasspath("profiles/" + profile);
         result.add(new JavaProfileImpl(props));
       }

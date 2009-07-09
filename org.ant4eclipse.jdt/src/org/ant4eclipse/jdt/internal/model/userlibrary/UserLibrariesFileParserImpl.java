@@ -73,10 +73,10 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
         final ArchiveImpl archive = new ArchiveImpl(new File(pathes[j]));
         userlib.addArchive(archive);
 
-        if ((sources[j] != null) && (!sources[j].trim().equals(""))) {
+        if ((sources[j] != null) && (!"".equals(sources[j].trim()))) {
           archive.setSource(new File(sources[j]));
         }
-        if ((javadocs[j] != null) && (!javadocs[j].trim().equals(""))) {
+        if ((javadocs[j] != null) && (!"".equals(javadocs[j].trim()))) {
           archive.setJavaDoc(javadocs[j]);
         }
 

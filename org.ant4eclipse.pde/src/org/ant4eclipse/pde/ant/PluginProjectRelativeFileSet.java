@@ -192,12 +192,12 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
 
     requireWorkspaceAndProjectNameSet();
 
-    if (_includes == null || _includes.trim().equals("")) {
+    if (_includes == null || "".equals(_includes.trim())) {
       return;
       // throw new BuildException("You have to specify the includes attribute!");
     }
 
-    if (_excludes != null && !_excludes.trim().equals("")) {
+    if (_excludes != null && !"".equals(_excludes.trim())) {
       StringTokenizer stringTokenizer = new StringTokenizer(_excludes, SEPARATOR);
       int count = stringTokenizer.countTokens();
       _excludedPattern = new String[count];
