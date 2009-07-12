@@ -1,21 +1,24 @@
 package org.ant4eclipse.jdt.ant;
 
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.util.List;
 
 /**
  * <p>

@@ -2,6 +2,7 @@ package org.ant4eclipse.jdt.ant;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 

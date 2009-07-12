@@ -19,24 +19,18 @@ import java.io.File;
 
 /**
  * <p>
- * Tests, if the JDT classpath container
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTest {
-
-  /** - */
-  private File _simpleProjectBinDir;
+public class ClasspathContainersTest extends AbstractJdtClassPathTest {
 
   @Override
   public void setUp() throws Exception {
     super.setUp();
 
-    JdtProjectBuilder builder = JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject")
-        .withContainerClasspathEntry("UnkownContainer");
-
-    _simpleProjectBinDir = new File(builder.createIn(getTestWorkspaceDirectory()), "bin");
+    // set up the build file
+    setupBuildFile("classpathContainers.xml");
   }
 
   /**
@@ -45,13 +39,16 @@ public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTes
    * 
    * @throws Exception
    */
-  public void testSimple() throws Exception {
-    try {
-      String classpath = executeTestTarget("simpleproject", false, false);
-      assertClasspath(classpath, _simpleProjectBinDir);
-    } catch (Exception e) {
-      return;
-    }
-    fail();
+  public void testClasspathContainers() throws Exception {
+    // create simple project 'project' with a source directory 'src' and a output directory 'bin'
+    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withContainerClasspathEntry("testContainer").createIn(
+        getTestWorkspaceDirectory());
+
+    // set the properties
+    getProject().setProperty("projectName", "project");
+
+    // execute target
+    String classpath = executeTestTarget("project", true, true);
+    assertClasspath(classpath, new File("project/bin"), new File("D:\\test\\hurz.jar"));
   }
 }

@@ -7,6 +7,9 @@ import java.io.File;
  * Encapsulates a class path variable. A class path variable can be added to a project's class path. It can be used to
  * define the location of a folder or a JAR file that isn't part of the workspace.
  * </p>
+ * <p>
+ * This interface is <b>not</b> intended to be implemented by clients.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */

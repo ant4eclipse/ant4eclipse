@@ -1,10 +1,10 @@
 package org.ant4eclipse.jdt.ant;
 
+import org.ant4eclipse.core.Assert;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.ant4eclipse.core.Assert;
 
 public class CompilerArguments {
 

@@ -1,9 +1,9 @@
 package org.ant4eclipse.jdt.ant.containerargs;
 
+import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContainerArgumentComponent {
 

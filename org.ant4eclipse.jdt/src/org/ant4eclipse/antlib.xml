@@ -3,7 +3,8 @@
 
   <typedef name="userLibraries" classname="org.ant4eclipse.jdt.ant.type.UserLibraryPath" />
   <typedef name="jreContainer" classname="org.ant4eclipse.jdt.ant.type.JreContainer" />
-  <typedef name="classpathVariables" classname="org.ant4eclipse.jdt.ant.type.ClasspathVariablesType" />
+  <typedef name="jdtClassPathVariable" classname="org.ant4eclipse.jdt.ant.type.JdtClassPathVariableType" />
+  <typedef name="jdtClassPathContainer" classname="org.ant4eclipse.jdt.ant.type.JdtClassPathContainerType" />
 
   <typedef name="getJdtClassPath" classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
   <typedef name="getJdtOutputPath" classname="org.ant4eclipse.jdt.ant.GetJdtOutputPathTask" />

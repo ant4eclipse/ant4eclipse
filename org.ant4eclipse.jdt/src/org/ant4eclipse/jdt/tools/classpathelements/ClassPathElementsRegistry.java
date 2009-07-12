@@ -11,6 +11,9 @@ import java.util.List;
  * <p>
  * The {@link ClassPathElementsRegistry} allows to register class path container and variables:
  * </p>
+ * <p>
+ * This interface is <b>not</b> intended to be implemented by clients.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
