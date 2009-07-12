@@ -87,7 +87,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * {@inheritDoc}
    */
   @Override
-  protected void validate() {
+  protected void doValidate() {
     // assert path set
     if (this._path == null) {
       // TODO: NLS

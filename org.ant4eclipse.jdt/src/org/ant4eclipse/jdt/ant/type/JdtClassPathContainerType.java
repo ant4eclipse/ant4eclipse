@@ -77,7 +77,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    */
 
   @Override
-  protected void validate() {
+  protected void doValidate() {
     // TODO: validate
 
     final ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
