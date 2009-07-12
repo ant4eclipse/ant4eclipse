@@ -36,6 +36,9 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
   /** - */
   private static Object                           instancesLock = new Object();
 
+  /** - */
+  private boolean                                 _validated    = false;
+
   /**
    * <p>
    * Creates a new instance of type AbstractAnt4EclipseDataType.
@@ -46,6 +49,10 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
   public AbstractAnt4EclipseDataType(final Project project) {
     setProject(project);
 
+    // add instance
+    synchronized (instancesLock) {
+      instances.add(this);
+    }
     // configure ant4eclipse
     Ant4EclipseConfigurator.configureAnt4Eclipse(project);
 
@@ -57,16 +64,39 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
 
   /**
    * <p>
-   * Override this method to validate an instance of Ant4EclipseDataType
    * </p>
+   * 
+   * @return the validated
    */
-  protected void validate() {
-    // empty default implementation
+  public boolean isValidated() {
+    return this._validated;
   }
 
   /**
    * <p>
-   * Validates all registered AbstractAnt4EclipseDataTypes
+   * </p>
+   */
+  public final void validate() {
+    if (this._validated) {
+      return;
+    }
+
+    doValidate();
+
+    this._validated = true;
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  protected void doValidate() {
+    //
+  }
+
+  /**
+   * <p>
+   * Validates all registered {@link AbstractAnt4EclipseDataType}.
    * </p>
    */
   static void validateAll() {

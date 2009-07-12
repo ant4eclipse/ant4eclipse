@@ -19,10 +19,11 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
    * @see org.apache.tools.ant.taskdefs.condition.Condition#eval()
    */
   public final boolean eval() throws BuildException {
+    // Validates the Ant4EclipseDataTypes
+    AbstractAnt4EclipseDataType.validateAll();
+
     // configure ant4eclipse
     Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
-
-    AbstractAnt4EclipseDataType.validateAll();
 
     // delegate the implementation
     try {
