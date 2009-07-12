@@ -60,6 +60,8 @@ public abstract class AbstractAnt4EclipseTask extends Task {
   @Override
   public final void execute() throws BuildException {
     try {
+      // Validates the Ant4EclipseDatattypes
+      AbstractAnt4EclipseDataType.validateAll();
       preconditions();
       doExecute();
     } catch (Exception ex) {
