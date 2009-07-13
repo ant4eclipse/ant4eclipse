@@ -15,9 +15,13 @@
 	<property name="teamprojectset"
 	          value="${basedir}/org.ant4eclipse.build/projectSet-main.psf" />
 
+	<!-- load the build properties -->
+	<property file="${basedir}/org.ant4eclipse.build/build.properties"/>
+	<property file="${basedir}/org.ant4eclipse.build/default-build.properties"/>
+
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
-		<jre id="jdk16" location="/usr/lib/jvm/java-6-sun" />
+		<jre id="jdk16" location="${jdk16.location}" />
 	</ant4eclipse:jreContainer>
 
 	<!-- =================================
