@@ -12,19 +12,25 @@
 package org.ant4eclipse.jdt.model;
 
 /**
- * {@link ClasspathEntry}
+ * <p>
+ * Defines a {@link ClasspathEntry}.
+ * </p>
  */
 public interface ClasspathEntry {
 
   /**
+   * <p>
    * Returns the entryKind.
+   * </p>
    * 
    * @return the entryKind.
    */
   int getEntryKind();
 
   /**
+   * <p>
    * Returns the path.
+   * </p>
    * 
    * @return the path.
    */

@@ -11,7 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
-import java.util.*;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * <p>
@@ -73,6 +74,13 @@ public interface JavaProfile {
    */
   List<String> getExecutionEnvironmentNames();
 
+  /**
+   * <p>
+   * Returns all specified system packages.
+   * </p>
+   * 
+   * @return
+   */
   List<String> getSystemPackages();
 
   /**
