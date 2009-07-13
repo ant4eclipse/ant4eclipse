@@ -13,8 +13,10 @@ package org.ant4eclipse.jdt.model.project;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.jdt.internal.model.project.ClasspathFileParser;
 import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
@@ -32,6 +34,11 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    * <p>
    * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.jdt.core.javanature"</code>.
    * </p>
+   * 
+   * @param project
+   *          the eclipse project that should be tested.
+   * 
+   * @return <code>true</code> if the role is applicable for the eclipse project.
    */
   public boolean isRoleSupported(final EclipseProject project) {
     return (project.hasNature(JavaProjectRole.JAVA_NATURE));

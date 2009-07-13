@@ -11,9 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.project;
 
-import org.ant4eclipse.jdt.model.*;
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.jdt.model.ClasspathEntry;
 
+/**
+ * <p>
+ * Represents a raw class path entry as defined in the underlying <code>.classpath</code> file.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public interface RawClasspathEntry extends ClasspathEntry {
 
   /** the constant for a Container-ClasspathEntry */
@@ -34,33 +40,30 @@ public interface RawClasspathEntry extends ClasspathEntry {
   /** the constant for an Output-ClasspathEntry */
   int CPE_OUTPUT    = 5;
 
-  EclipseProject getDeclaringEclipseProject();
-
-  EclipseProject getReferencedEclipseProject();
-
   /**
-   * @return
-   */
-  boolean isProjectRelative();
-
-  String getProjectRelativePath();
-
-  /**
+   * <p>
    * Returns whether or not the entry has an output location.
+   * </p>
    * 
-   * @return true <=> This entry has an output location.
+   * @return <code>true</code>, if this entry has an output location.
    */
   boolean hasOutputLocation();
 
   /**
-   * Returns the output location.
+   * <p>
+   * Returns the output location or <code>null</code>, if no output location exists.
+   * </p>
    * 
    * @return the output location.
    */
   String getOutputLocation();
 
   /**
-   * @return Returns the exported.
+   * <p>
+   * Returns <code>true</code>, if this class path entry is exported.
+   * </p>
+   * 
+   * @return <code>true</code>, if this class path entry is exported.
    */
   boolean isExported();
 

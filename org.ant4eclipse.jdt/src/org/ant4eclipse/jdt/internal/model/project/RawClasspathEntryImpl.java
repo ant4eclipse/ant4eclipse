@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.io.File;
 
 /**
  * Encapsulates an entry in a Java project classpath.
@@ -118,21 +118,21 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
     }
   }
 
-  public final boolean isProjectRelative() {
-    return false;
-  }
-
-  public EclipseProject getDeclaringEclipseProject() {
-    return null;
-  }
-
-  public EclipseProject getReferencedEclipseProject() {
-    return null;
-  }
-
-  public String getProjectRelativePath() {
-    return null;
-  }
+  // public final boolean isProjectRelative() {
+  // return false;
+  // }
+  //
+  // public EclipseProject getDeclaringEclipseProject() {
+  // return null;
+  // }
+  //
+  // public EclipseProject getReferencedEclipseProject() {
+  // return null;
+  // }
+  //
+  // public String getProjectRelativePath() {
+  // return null;
+  // }
 
   /*
    * (non-Javadoc)
@@ -213,6 +213,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[EclipseClasspathEntry:");
@@ -231,6 +232,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(final Object o) {
     if (this == o) {
       return true;
@@ -251,6 +253,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + (this._path == null ? 0 : this._path.hashCode());

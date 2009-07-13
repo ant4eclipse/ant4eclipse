@@ -11,40 +11,51 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.project;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.jdt.internal.model.project.*;
-import org.ant4eclipse.jdt.model.jre.*;
-import org.ant4eclipse.platform.model.resource.*;
-import org.ant4eclipse.platform.model.resource.role.*;
+import org.ant4eclipse.core.Assert;
 
-import java.util.*;
+import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
+import org.ant4eclipse.jdt.model.jre.JavaProfile;
+import org.ant4eclipse.jdt.model.jre.JavaRuntime;
+
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
+import java.util.Map;
 
 /**
- * JavaProjectRole --
+ * <p>
+ * Implements the java project role.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface JavaProjectRole extends ProjectRole {
 
-  /**  */
+  /** the java nature id */
   String JAVA_NATURE = "org.eclipse.jdt.core.javanature";
 
   /**
-   * Returns whether classpath entries are set or not.
+   * <p>
+   * Returns whether class path entries are set or not.
+   * </p>
    * 
-   * @return Returns whether classpath entries are set or not.
+   * @return Returns whether class path entries are set or not.
    */
   boolean hasRawClasspathEntries();
 
   /**
-   * Returns the eclipse classpath entries.
+   * <p>
+   * Returns the eclipse class path entries.
+   * </p>
    * 
-   * @return returns the eclipse classpath entries.
+   * @return returns the eclipse class path entries.
    */
   RawClasspathEntry[] getRawClasspathEntries();
 
   /**
-   * Returns a list of EclipseClasspathEntry of a specifiy kind.
+   * <p>
+   * Returns a list of EclipseClasspathEntry of a specific kind.
+   * </p>
    * 
    * @param entrykind
    *          The kind of the desired entries.
@@ -54,43 +65,69 @@ public interface JavaProjectRole extends ProjectRole {
   RawClasspathEntry[] getRawClasspathEntries(final int entrykind);
 
   /**
+   * <p>
    * Returns the java runtime for this eclipse project or null if no runtime specified or if no such java runtime has
    * been registered.
+   * </p>
    * 
-   * @return
+   * @return the java runtime for this eclipse project or null if no runtime specified or if no such java runtime has
+   *         been registered.
    */
   JavaRuntime getJavaRuntime();
 
   /**
-   * @return
+   * <p>
+   * Returns the {@link JavaProfile}.
+   * </p>
+   * 
+   * @return the {@link JavaProfile}.
    */
   JavaProfile getJavaProfile();
 
   /**
-   * @return
+   * <p>
+   * Returns a map with the compiler options or <code>null</code> if no such options exist.
+   * </p>
+   * 
+   * @return a map with the compiler options or <code>null</code> if no such options exist.
    */
   Map<String, String> getCompilerOptions();
 
   /**
-   * @return
+   * <p>
+   * Returns the source folders for this project.
+   * </p>
+   * 
+   * @return the source folders for this project.
    */
   String[] getSourceFolders();
 
   /**
-   * @param allowMultipleFolder
-   * @return
+   * <p>
+   * Returns the output folders for this project.
+   * </p>
+   * 
+   * @return the output folders for this project.
    */
   String[] getAllOutputFolders();
 
   /**
+   * <p>
+   * Returns the output folder for a specific source folder.
+   * </p>
+   * 
    * @param sourceFolder
-   * @return
+   *          the source folder
+   * @return the output folder for a specific source folder.
    */
   String getOutputFolderForSourceFolder(String sourceFolder);
 
   /**
-   * @param resolveRelative
-   * @return
+   * <p>
+   * Returns the default output folder.
+   * </p>
+   * 
+   * @return the default output folder
    */
   String getDefaultOutputFolder();
 
