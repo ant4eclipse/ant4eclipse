@@ -11,13 +11,11 @@ import org.apache.tools.ant.taskdefs.MacroDef;
  */
 public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
 
-  public static final String SCOPE_SOURCE_DIRECTORY   = "SCOPE_SOURCE_DIRECTORY";
+  public static final String SCOPE_SOURCE_DIRECTORY = "SCOPE_SOURCE_DIRECTORY";
 
-  public static final String SCOPE_TARGET_DIRECTORY   = "SCOPE_TARGET_DIRECTORY";
+  public static final String SCOPE_TARGET_DIRECTORY = "SCOPE_TARGET_DIRECTORY";
 
-  public static final String SCOPE_SOURCE_DIRECTORIES = "SCOPE_SOURCE_DIRECTORIES";
-
-  public static final String SCOPE_TARGET_DIRECTORIES = "SCOPE_TARGET_DIRECTORIES";
+  public static final String SCOPE_PROJECT          = "SCOPE_PROJECT";
 
   public ExecuteJdtProjectTask() {
     super("executeJdtProject");
@@ -35,10 +33,8 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
       return createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORY);
     } else if ("ForEachOutputDirectory".equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_TARGET_DIRECTORY);
-    } else if ("ForAllSourceDirectories".equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORIES);
-    } else if ("ForAllOutputDirectories".equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_TARGET_DIRECTORIES);
+    } else if ("ForProject".equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_PROJECT);
     }
 
     return onCreateDynamicElement(name);
@@ -91,11 +87,8 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
         executeSourceDirectoryScopedMacroDef(macroDef);
       } else if (SCOPE_TARGET_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeOutputDirectoryScopedMacroDef(macroDef);
-      } else if (SCOPE_SOURCE_DIRECTORIES.equals(scopedMacroDefinition.getScope())) {
-        executeSourceDirectoriesScopedMacroDef(macroDef);
-      } else if (SCOPE_TARGET_DIRECTORIES.equals(scopedMacroDefinition.getScope())) {
-        // TODO!
-        // executeOutputDirectoriesScopedMacroDef(macroDef);
+      } else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
+        executeProjectScopedMacroDef(macroDef);
       } else {
         if (!onExecuteScopeMacroDefintion(scopedMacroDefinition)) {
           // TODO
@@ -143,7 +136,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
     }
   }
 
-  private void executeSourceDirectoriesScopedMacroDef(final MacroDef macroDef) {
+  private void executeProjectScopedMacroDef(final MacroDef macroDef) {
     if (getJavaProjectRole().getSourceFolders().length > 0) {
 
       final MacroExecutionValues executionValues = new MacroExecutionValues();
