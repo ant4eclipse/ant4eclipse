@@ -47,7 +47,7 @@
 					</ant4eclipse:forEachOutputDirectory>
 
 
-					<ant4eclipse:forAllSourceDirectories>
+					<ant4eclipse:forProject>
 						<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
 						<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
 						<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
@@ -65,7 +65,7 @@
 							<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
 							             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 						</javac>
-					</ant4eclipse:forAllSourceDirectories>
+					</ant4eclipse:forProject>
 
 					<ant4eclipse:forEachSourceDirectory>
 						<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
