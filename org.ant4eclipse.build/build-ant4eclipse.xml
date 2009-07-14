@@ -2,22 +2,10 @@
 <project name="build.ant4eclipse"
          basedir=".."
          default="build.ant4eclipse"
-         xmlns:ant4eclipse="antlib:org.ant4eclipse"
-         xmlns:antcontrib="antlib:net.sf.antcontrib">
-
-	<taskdef uri="antlib:net.sf.antcontrib"
-	         resource="net/sf/antcontrib/antlib.xml" />
+         xmlns:ant4eclipse="antlib:org.ant4eclipse">
 
 	<taskdef uri="antlib:org.ant4eclipse"
 	         resource="org/ant4eclipse/antlib.xml" />
-
-	<!-- define general properties -->
-	<property name="build.compiler"
-	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
-	<property name="destination"
-	          value="${basedir}/org.ant4eclipse.build/destination" />
-	<property name="teamprojectset"
-	          value="${basedir}/org.ant4eclipse.build/projectSet-main.psf" />
 
 	<!-- load the build properties -->
 	<property file="${basedir}/org.ant4eclipse.build/build.properties" />
@@ -33,88 +21,14 @@
          ================================= -->
 	<target name="build.ant4eclipse" depends="prepare">
 
-
+		<!-- iterate over the project set -->
 		<ant4eclipse:executeProjectSet workspace="${basedir}"
 		                               teamprojectset="${teamprojectset}"
 		                               projectReferenceTypes="jdt">
 
+			<!-- build each project contained in the project set -->
 			<ant4eclipse:forEachProject>
-
-				<ant4eclipse:executeJdtProject workspace="${basedir}"
-				                               projectname="${executeProjectSet.project.name}">
-
-					<ant4eclipse:forEachOutputDirectory>
-						<echo>Scrubbing directory "${executeJdtProject.output.directory}"</echo>
-						<delete dir="${executeJdtProject.output.directory}"
-						        quiet="true" />
-						<mkdir dir="${executeJdtProject.output.directory}" />
-					</ant4eclipse:forEachOutputDirectory>
-
-
-					<ant4eclipse:forProject>
-						<antcontrib:if>
-							<isset property="executeJdtProject.source.directories" />
-							<antcontrib:then>
-								<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
-								<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
-								<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
-								<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
-								<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
-
-								<javac destdir="${executeJdtProject.default.output.directory}"
-								       debug="on"
-								       source="1.5">
-
-									<src refid="executeJdtProject.source.directories.path" />
-									<bootclasspath refid="executeJdtProject.boot.classpath.path" />
-									<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
-
-									<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
-									             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
-								</javac>
-
-							</antcontrib:then>
-						</antcontrib:if>
-					</ant4eclipse:forProject>
-
-					<ant4eclipse:forEachSourceDirectory>
-						<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
-						<copy todir="${executeJdtProject.output.directory}">
-							<fileset dir="${executeJdtProject.source.directory}">
-								<exclude name="**/*.java" />
-							</fileset>
-						</copy>
-					</ant4eclipse:forEachSourceDirectory>
-
-					<ant4eclipse:forEachOutputDirectory>
-						<echo>Copying '${executeJdtProject.output.directory}'</echo>
-						<copy toDir="${destination}/merged/classes">
-							<fileset dir="${executeJdtProject.output.directory}">
-								<include name="**/*.class" />
-							</fileset>
-						</copy>
-
-						<copy toDir="${destination}/merged/cfg/${executeJdtProject.project.name}">
-							<fileset dir="${executeJdtProject.output.directory}">
-								<include name="**/antlib.xml" />
-								<include name="**/ant4eclipse-configuration.properties" />
-							</fileset>
-						</copy>
-
-						<copy toDir="${destination}/merged/classes">
-							<fileset dir="${executeJdtProject.output.directory}">
-								<include name="**/*.profile" />
-								<include name="**/*.list" />
-								<include name="**/*.xml" />
-								<include name="**/*.properties" />
-								<exclude name="**/antlib.xml" />
-								<exclude name="**/ant4eclipse-configuration.properties" />
-							</fileset>
-						</copy>
-					</ant4eclipse:forEachOutputDirectory>
-
-				</ant4eclipse:executeJdtProject>
-
+				<antcall target="buildProject" inheritrefs="true" />
 			</ant4eclipse:forEachProject>
 
 		</ant4eclipse:executeProjectSet>
@@ -183,14 +97,113 @@
           target: prepare
          - - - - - - - - - - - - - - - - - -->
 	<target name="prepare">
-
 		<delete dir="${destination}" quiet="true" />
 		<mkdir dir="${destination}" />
-
-		<tstamp>
-			<format property="build.time" pattern="yyyyMMdd-HHmm" unit="hour" />
-		</tstamp>
 	</target>
 
+	<!-- - - - - - - - - - - - - - - - - -
+          target: buildProject
+         - - - - - - - - - - - - - - - - - -->
+	<target name="buildProject">
+		<ant4eclipse:executeJdtProject workspace="${basedir}"
+		                               projectname="${executeProjectSet.project.name}">
+
+			<ant4eclipse:forEachOutputDirectory>
+				<antcall target="cleanOutputDirectories" inheritrefs="true" />
+			</ant4eclipse:forEachOutputDirectory>
+
+			<ant4eclipse:forProject>
+				<antcall target="compileProject" inheritrefs="true" />
+			</ant4eclipse:forProject>
+
+			<ant4eclipse:forEachSourceDirectory>
+				<antcall target="copyResources" inheritrefs="true" />
+			</ant4eclipse:forEachSourceDirectory>
+
+			<ant4eclipse:forEachOutputDirectory>
+				<antcall target="copyToMergeDirectory" inheritrefs="true" />
+			</ant4eclipse:forEachOutputDirectory>
+
+		</ant4eclipse:executeJdtProject>
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: cleanOutputDirectories
+         - - - - - - - - - - - - - - - - - -->
+	<target name="cleanOutputDirectories">
+		<echo>Scrubbing directory "${executeJdtProject.output.directory}"</echo>
+
+		<delete dir="${executeJdtProject.output.directory}" quiet="true" />
+		<mkdir dir="${executeJdtProject.output.directory}" />
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: compileProject
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compileProject" if="executeJdtProject.source.directories">
+		<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
+		<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
+		<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
+		<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
+		<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
+
+		<javac destdir="${executeJdtProject.default.output.directory}"
+		       debug="on"
+		       source="1.5">
+
+			<src refid="executeJdtProject.source.directories.path" />
+			<bootclasspath refid="executeJdtProject.boot.classpath.path" />
+			<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+
+			<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
+			             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+		</javac>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: copyResources
+         - - - - - - - - - - - - - - - - - -->
+	<target name="copyResources">
+		<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
+
+		<copy todir="${executeJdtProject.output.directory}">
+			<fileset dir="${executeJdtProject.source.directory}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: copyToMergeDirectory
+         - - - - - - - - - - - - - - - - - -->
+	<target name="copyToMergeDirectory">
+		<echo>Copying '${executeJdtProject.output.directory}'</echo>
+
+		<copy toDir="${destination}/merged/classes">
+			<fileset dir="${executeJdtProject.output.directory}">
+				<include name="**/*.class" />
+			</fileset>
+		</copy>
+
+		<copy toDir="${destination}/merged/cfg/${executeJdtProject.project.name}">
+			<fileset dir="${executeJdtProject.output.directory}">
+				<include name="**/antlib.xml" />
+				<include name="**/ant4eclipse-configuration.properties" />
+			</fileset>
+		</copy>
+
+		<copy toDir="${destination}/merged/classes">
+			<fileset dir="${executeJdtProject.output.directory}">
+				<include name="**/*.profile" />
+				<include name="**/*.list" />
+				<include name="**/*.xml" />
+				<include name="**/*.properties" />
+				<exclude name="**/antlib.xml" />
+				<exclude name="**/ant4eclipse-configuration.properties" />
+			</fileset>
+		</copy>
+	</target>
 
 </project>
