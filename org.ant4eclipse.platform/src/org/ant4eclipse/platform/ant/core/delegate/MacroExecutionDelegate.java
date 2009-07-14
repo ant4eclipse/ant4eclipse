@@ -11,20 +11,22 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntReferencesRaper;
+
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroInstance;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -107,7 +109,19 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
-  public void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
+  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
+    Assert.notNull(macroDef);
+    Assert.notNull(provider);
+
+    MacroExecutionValues values = new MacroExecutionValues();
+
+    executeMacroInstance(macroDef, provider.provideMacroExecutionValues(values));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  private void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
     Assert.notNull(macroDef);
     Assert.notNull(macroExecutionValues);
 

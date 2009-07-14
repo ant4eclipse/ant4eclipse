@@ -11,10 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import org.apache.tools.ant.taskdefs.*;
-import org.apache.tools.ant.taskdefs.MacroDef.*;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 
-import java.util.*;
+import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.util.List;
 
 /**
  */
@@ -34,11 +36,13 @@ public interface MacroExecutionComponent<E> {
 
   List<ScopedMacroDefinition<E>> getScopedMacroDefinitions();
 
-  /**
-   * @param macroDef
-   * @param prefix
-   * @param scopedProperties
-   * @param scopedReferences
-   */
-  void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues);
+  // /**
+  // * @param macroDef
+  // * @param prefix
+  // * @param scopedProperties
+  // * @param scopedReferences
+  // */
+  // void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues);
+
+  void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValuesProvider provider);
 }

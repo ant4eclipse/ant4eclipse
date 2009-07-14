@@ -8,9 +8,9 @@ import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
-import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
@@ -69,8 +69,8 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractProjectPathT
   /**
    * {@inheritDoc}
    */
-  public final void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
-    this._macroExecutionDelegate.executeMacroInstance(macroDef, macroExecutionValues);
+  public void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValuesProvider provider) {
+    this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
   }
 
   /**

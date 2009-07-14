@@ -2,6 +2,7 @@ package org.ant4eclipse.jdt.ant;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
@@ -12,7 +13,7 @@ import org.apache.tools.ant.taskdefs.MacroDef;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
+public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask implements JdtExecutorValues {
 
   /** the constant for SCOPE_PROJECT_ELEMENT_NAME */
   private static final String SCOPE_PROJECT_ELEMENT_NAME          = "ForProject";
@@ -85,6 +86,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
    * @return
    */
   protected Object onCreateDynamicElement(final String name) {
+    // default implementation returns null
     return null;
   }
 
@@ -96,6 +98,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
    * @return
    */
   protected boolean onExecuteScopeMacroDefintion(final ScopedMacroDefinition<String> scopedMacroDefinition) {
+    // default implementation returns false
     return false;
   }
 
@@ -106,7 +109,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
    * @param executionValues
    */
   protected void addAdditionalExecutionValues(final MacroExecutionValues executionValues) {
-    //
+    // adds additional execution values
   }
 
   /**
@@ -152,34 +155,39 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
    */
   private void executeSourceDirectoryScopedMacroDef(final MacroDef macroDef) {
 
-    final String[] sourceFolders = getJavaProjectRole().getSourceFolders();
+    for (final String sourceFolder : getJavaProjectRole().getSourceFolders()) {
 
-    for (final String sourceFolder : sourceFolders) {
+      // execute macro
+      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
+        public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
-      getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-          executionValues);
+          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values);
 
-      executionValues.getProperties().put("source.directory",
-          this.convertToString(getEclipseProject().getChild(sourceFolder)));
+          // add source and output directory
+          values.getProperties().put(SOURCE_DIRECTORY_NAME, sourceFolder);
+          values.getProperties().put(SOURCE_DIRECTORY, convertToString(getEclipseProject().getChild(sourceFolder)));
+          values.getProperties().put(OUTPUT_DIRECTORY_NAME, sourceFolder);
+          values.getProperties().put(
+              OUTPUT_DIRECTORY,
+              convertToString(getEclipseProject().getChild(
+                  getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
 
-      executionValues.getProperties().put(
-          "output.directory",
-          this.convertToString(getEclipseProject().getChild(
-              getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
+          // refs
+          values.getReferences().put(SOURCE_DIRECTORY_PATH, convertToPath(getEclipseProject().getChild(sourceFolder)));
+          values.getReferences().put(
+              OUTPUT_DIRECTORY_PATH,
+              convertToPath(getEclipseProject().getChild(
+                  getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
 
-      executionValues.getReferences().put("source.directory.path",
-          this.convertToPath(getEclipseProject().getChild(sourceFolder)));
+          // add additional execution values if necessary
+          addAdditionalExecutionValues(values);
 
-      executionValues.getReferences().put(
-          "output.directory.path",
-          this.convertToPath(getEclipseProject().getChild(
-              getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
-
-      addAdditionalExecutionValues(executionValues);
-
-      executeMacroInstance(macroDef, executionValues);
+          // return the values
+          return values;
+        }
+      });
     }
   }
 
@@ -191,38 +199,56 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
    */
   private void executeOutputDirectoryScopedMacroDef(final MacroDef macroDef) {
 
-    final String[] outFolders = getJavaProjectRole().getAllOutputFolders();
+    // iterate over all output folders
+    for (final String outFolder : getJavaProjectRole().getAllOutputFolders()) {
 
-    for (final String outFolder : outFolders) {
+      // execute macro
+      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
+        public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
-      getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-          executionValues);
+          // get the default jdt executor values
+          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values);
 
-      executionValues.getProperties().put("output.directory",
-          this.convertToString(getEclipseProject().getChild(outFolder)));
+          // add output directory
+          values.getProperties().put(OUTPUT_DIRECTORY_NAME, outFolder);
+          values.getProperties().put(OUTPUT_DIRECTORY, convertToString(getEclipseProject().getChild(outFolder)));
+          values.getReferences().put(OUTPUT_DIRECTORY_PATH, convertToPath(getEclipseProject().getChild(outFolder)));
 
-      executionValues.getReferences().put("output.directory.path",
-          this.convertToPath(getEclipseProject().getChild(outFolder)));
+          // call template method
+          addAdditionalExecutionValues(values);
 
-      addAdditionalExecutionValues(executionValues);
-
-      executeMacroInstance(macroDef, executionValues);
+          // return the values
+          return values;
+        }
+      });
     }
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param macroDef
+   */
   private void executeProjectScopedMacroDef(final MacroDef macroDef) {
-    if (getJavaProjectRole().getSourceFolders().length > 0) {
 
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
+    // execute macro
+    executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-      getExecutorValuesProvider().provideSourceDirectoriesScopedExecutorValues(getJavaProjectRole(),
-          getJdtClasspathContainerArguments(), executionValues);
+      public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
-      addAdditionalExecutionValues(executionValues);
+        // get the default jdt executor values
+        getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
+            values);
 
-      executeMacroInstance(macroDef, executionValues);
-    }
+        // add additional execution values if necessary
+        addAdditionalExecutionValues(values);
+
+        // return the values
+        return values;
+      }
+    });
   }
 }

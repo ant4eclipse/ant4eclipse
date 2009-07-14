@@ -1,17 +1,19 @@
 package org.ant4eclipse.platform.ant;
 
-import java.util.List;
-
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.util.List;
 
 /**
  * <p>
@@ -48,8 +50,11 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
     return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
   }
 
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues) {
-    this._macroExecutionDelegate.executeMacroInstance(macroDef, macroExecutionValues);
+  /**
+   * {@inheritDoc}
+   */
+  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
+    this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
   }
 
   public List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
@@ -80,12 +85,13 @@ public class ExecuteProjectBuildersTask extends AbstractProjectBasedTask impleme
       ScopedMacroDefinition<String> macroDefinition = getScopedMacroDefinition(buildCommand.getName());
 
       if (macroDefinition != null) {
-        MacroDef macroDef = macroDefinition.getMacroDef();
-
-        MacroExecutionValues values = new MacroExecutionValues();
-        // values.getProperties().put("", buildCommand.getName());
-
-        this._macroExecutionDelegate.executeMacroInstance(macroDef, values);
+        this._macroExecutionDelegate.executeMacroInstance(macroDefinition.getMacroDef(),
+            new MacroExecutionValuesProvider() {
+              public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+                // values.getProperties().put("", buildCommand.getName());
+                return values;
+              }
+            });
       } else {
         throw new BuildException();
       }

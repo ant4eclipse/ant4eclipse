@@ -24,6 +24,8 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
+
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileList;
 import org.osgi.framework.Version;
@@ -117,42 +119,47 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     final Library[] libraries = pluginBuildProperties.getOrderedLibraries();
     final List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
 
-    for (Library library : libraries) {
+    for (final Library library : libraries) {
 
       if (binaryIncludes.contains(library.getName())) {
 
-        final MacroExecutionValues executionValues = new MacroExecutionValues();
+        executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-        executionValues.getProperties().put("library.name", library.getName());
+          public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
-        if (library.isSelf()) {
-          executionValues.getProperties().put("library.isSelf", "true");
 
-          computeBinaryIncludeFilelist();
-        }
+            values.getProperties().put("library.name", library.getName());
 
-        CompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
-            getJdtClasspathContainerArguments(), executionValues);
+            if (library.isSelf()) {
+              values.getProperties().put("library.isSelf", "true");
 
-        File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
-        File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
+              computeBinaryIncludeFilelist();
+            }
 
-        executionValues.getProperties().put("source.directories", this.convertToString(sourceFiles));
-        executionValues.getProperties().put("output.directories", this.convertToString(outputFiles));
+            CompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
+                getJdtClasspathContainerArguments(), values);
 
-        executionValues.getReferences().put("source.directories.path", this.convertToPath(sourceFiles));
-        executionValues.getReferences().put("output.directories.path", this.convertToPath(outputFiles));
+            File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
+            File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
 
-        for (final String sourceFolderName : library.getSource()) {
-          final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
-          final File sourceFolder = getEclipseProject().getChild(sourceFolderName);
-          final File outputFolder = getEclipseProject().getChild(outputFolderName);
-          compilerArguments.addSourceFolder(sourceFolder, outputFolder);
-        }
+            values.getProperties().put("source.directories", convertToString(sourceFiles));
+            values.getProperties().put("output.directories", convertToString(outputFiles));
 
-        addAdditionalExecutionValues(executionValues);
+            values.getReferences().put("source.directories.path", convertToPath(sourceFiles));
+            values.getReferences().put("output.directories.path", convertToPath(outputFiles));
 
-        executeMacroInstance(macroDef, executionValues);
+            for (final String sourceFolderName : library.getSource()) {
+              final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
+              final File sourceFolder = getEclipseProject().getChild(sourceFolderName);
+              final File outputFolder = getEclipseProject().getChild(outputFolderName);
+              compilerArguments.addSourceFolder(sourceFolder, outputFolder);
+            }
+
+            addAdditionalExecutionValues(values);
+
+            return values;
+          }
+        });
       }
     }
   }

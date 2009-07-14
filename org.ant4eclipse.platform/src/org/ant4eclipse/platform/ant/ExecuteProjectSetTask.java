@@ -1,21 +1,23 @@
 package org.ant4eclipse.platform.ant;
 
-import java.util.List;
-
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.SubElementComponent;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetPathBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.util.List;
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
@@ -76,8 +78,11 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
   }
 
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues) {
-    this._macroExecutionDelegate.executeMacroInstance(macroDef, macroExecutionValues);
+  /**
+   * {@inheritDoc}
+   */
+  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
+    this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
   }
 
   public List<ScopedMacroDefinition<Scope>> getScopedMacroDefinitions() {
@@ -98,14 +103,19 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     for (final ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {
       for (final EclipseProject eclipseProject : projects) {
 
-        // create the macro execution values
-        MacroExecutionValues macroExecutionValues = new MacroExecutionValues();
-
-        // set the values
-        this._platformExecutorValuesProvider.provideExecutorValues(eclipseProject, macroExecutionValues);
-
         // execute macro instance
-        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(), macroExecutionValues);
+        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(),
+            new MacroExecutionValuesProvider() {
+
+              public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+                // set the values
+                ExecuteProjectSetTask.this._platformExecutorValuesProvider
+                    .provideExecutorValues(eclipseProject, values);
+
+                // return result
+                return values;
+              }
+            });
       }
     }
   }

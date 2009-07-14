@@ -7,6 +7,7 @@ import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
@@ -96,30 +97,34 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
   private void executeLibrarySourceDirectoryScopedMacroDef(MacroDef macroDef) {
     final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
 
-    for (String librarySourceDirectory : library.getSource()) {
+    for (final String librarySourceDirectory : library.getSource()) {
 
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
+      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-      getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-          executionValues);
+        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
-      executionValues.getProperties().put("source.directory",
-          this.convertToString(getEclipseProject().getChild(librarySourceDirectory)));
+          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values);
 
-      executionValues.getProperties().put(
-          "output.directory",
-          this.convertToString(getEclipseProject().getChild(
-              getJavaProjectRole().getOutputFolderForSourceFolder(librarySourceDirectory))));
+          values.getProperties().put("source.directory",
+              convertToString(getEclipseProject().getChild(librarySourceDirectory)));
 
-      executionValues.getReferences().put("source.directory.path",
-          this.convertToPath(getEclipseProject().getChild(librarySourceDirectory)));
+          values.getProperties().put(
+              "output.directory",
+              convertToString(getEclipseProject().getChild(
+                  getJavaProjectRole().getOutputFolderForSourceFolder(librarySourceDirectory))));
 
-      executionValues.getReferences().put(
-          "output.directory.path",
-          this.convertToPath(getEclipseProject().getChild(
-              getJavaProjectRole().getOutputFolderForSourceFolder(librarySourceDirectory))));
+          values.getReferences().put("source.directory.path",
+              convertToPath(getEclipseProject().getChild(librarySourceDirectory)));
 
-      executeMacroInstance(macroDef, executionValues);
+          values.getReferences().put(
+              "output.directory.path",
+              convertToPath(getEclipseProject().getChild(
+                  getJavaProjectRole().getOutputFolderForSourceFolder(librarySourceDirectory))));
+
+          return values;
+        }
+      });
     }
   }
 
@@ -127,20 +132,24 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
 
     final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
 
-    for (String libraryOutputDirectory : library.getOutput()) {
+    for (final String libraryOutputDirectory : library.getOutput()) {
 
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
+      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-      getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-          executionValues);
+        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
-      executionValues.getProperties().put("output.directory",
-          this.convertToString(getEclipseProject().getChild(libraryOutputDirectory)));
+          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values);
 
-      executionValues.getReferences().put("output.directory.path",
-          this.convertToPath(getEclipseProject().getChild(libraryOutputDirectory)));
+          values.getProperties().put("output.directory",
+              convertToString(getEclipseProject().getChild(libraryOutputDirectory)));
 
-      executeMacroInstance(macroDef, executionValues);
+          values.getReferences().put("output.directory.path",
+              convertToPath(getEclipseProject().getChild(libraryOutputDirectory)));
+
+          return values;
+        }
+      });
     }
   }
 
@@ -156,7 +165,7 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
    * <p>
    * Helper method that returns the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    * </p>
-   * 
+   *
    * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    */
   protected final PluginProjectRole getPluginProjectRole() {

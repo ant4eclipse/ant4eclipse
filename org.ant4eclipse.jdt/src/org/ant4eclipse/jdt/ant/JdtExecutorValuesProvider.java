@@ -16,37 +16,7 @@ import org.ant4eclipse.platform.ant.core.PathComponent;
 import java.io.File;
 import java.util.List;
 
-public class JdtExecutorValuesProvider {
-
-  /** reference id for the CompilerArgument */
-  public static final String                   COMPILER_ARGS                       = "compiler.args";
-
-  /** */
-  public static final String                   CLASSPATH_RELATIVE_RUNTIME_PATH     = "classpath.relative.runtime.path";
-
-  public static final String                   CLASSPATH_ABSOLUTE_RUNTIME_PATH     = "classpath.absolute.runtime.path";
-
-  public static final String                   CLASSPATH_RELATIVE_COMPILETIME_PATH = "classpath.relative.compiletime.path";
-
-  public static final String                   CLASSPATH_ABSOLUTE_COMPILETIME_PATH = "classpath.absolute.compiletime.path";
-
-  public static final String                   BOOT_CLASSPATH_PATH                 = "boot.classpath.path";
-
-  private static final String                  DEFAULT_OUTPUT_DIRECTORY_PATH       = "default.output.directory.path";
-
-  public static final String                   CLASSPATH_RELATIVE_RUNTIME          = "classpath.relative.runtime";
-
-  public static final String                   CLASSPATH_ABSOLUTE_RUNTIME          = "classpath.absolute.runtime";
-
-  public static final String                   CLASSPATH_RELATIVE_COMPILETIME      = "classpath.relative.compiletime";
-
-  public static final String                   CLASSPATH_ABSOLUTE_COMPILETIME      = "classpath.absolute.compiletime";
-
-  public static final String                   BOOT_CLASSPATH                      = "boot.classpath";
-
-  private static final String                  DEFAULT_OUTPUT_DIRECTORY            = "default.output.directory";
-
-  private static final String                  DEFAULT_OUTPUT_DIRECTORY_NAME       = "default.output.directory.name";
+public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
   /** the internally used path component */
   private final PathComponent                  _pathComponent;
@@ -65,34 +35,6 @@ public class JdtExecutorValuesProvider {
     Assert.notNull(pathComponent);
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(pathComponent);
     this._pathComponent = pathComponent;
-  }
-
-  public void provideSourceDirectoriesScopedExecutorValues(final JavaProjectRole javaProjectRole,
-      final List<JdtClasspathContainerArgument> jdtClasspathContainerArguments,
-      final MacroExecutionValues executionValues) {
-
-    if (javaProjectRole.getSourceFolders().length > 0) {
-
-      final CompilerArguments compilerArguments = provideExecutorValues(javaProjectRole,
-          jdtClasspathContainerArguments, executionValues);
-
-      executionValues.getProperties().put(
-          "source.directories",
-          this._pathComponent.convertToString(javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getSourceFolders())));
-
-      executionValues.getReferences().put(
-          "source.directories.path",
-          this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getSourceFolders())));
-
-      for (final String sourceFolderName : javaProjectRole.getSourceFolders()) {
-        final String outputFolderName = javaProjectRole.getOutputFolderForSourceFolder(sourceFolderName);
-        final File sourceFolder = javaProjectRole.getEclipseProject().getChild(sourceFolderName);
-        final File outputFolder = javaProjectRole.getEclipseProject().getChild(outputFolderName);
-        compilerArguments.addSourceFolder(sourceFolder, outputFolder);
-      }
-    }
   }
 
   /**
@@ -170,6 +112,26 @@ public class JdtExecutorValuesProvider {
         this._pathComponent.convertToString(defaultOutputFolder));
     executionValues.getReferences().put(DEFAULT_OUTPUT_DIRECTORY_PATH,
         this._pathComponent.convertToPath(defaultOutputFolder));
+
+    if (javaProjectRole.getSourceFolders().length > 0) {
+
+      executionValues.getProperties().put(
+          SOURCE_DIRECTORIES,
+          this._pathComponent.convertToString(javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getSourceFolders())));
+
+      executionValues.getReferences().put(
+          SOURCE_DIRECTORIES_PATH,
+          this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getSourceFolders())));
+
+      for (final String sourceFolderName : javaProjectRole.getSourceFolders()) {
+        final String outputFolderName = javaProjectRole.getOutputFolderForSourceFolder(sourceFolderName);
+        final File sourceFolder = javaProjectRole.getEclipseProject().getChild(sourceFolderName);
+        final File outputFolder = javaProjectRole.getEclipseProject().getChild(outputFolderName);
+        compilerArguments.addSourceFolder(sourceFolder, outputFolder);
+      }
+    }
 
     // return compilerArguments
     return compilerArguments;
