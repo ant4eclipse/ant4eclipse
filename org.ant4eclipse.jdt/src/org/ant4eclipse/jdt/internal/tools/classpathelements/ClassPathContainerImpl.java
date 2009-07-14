@@ -6,7 +6,7 @@ import java.io.File;
 
 /**
  * <p>
- * Implementation of a class path container.
+ * Implementation of {@link ClassPathContainer}.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -21,11 +21,13 @@ public class ClassPathContainerImpl implements ClassPathContainer {
 
   /**
    * <p>
-   * Creates a new instance of type ClassPathContainerImpl.
+   * Creates a new instance of type {@link ClassPathContainerImpl}.
    * </p>
    * 
    * @param name
+   *          the name of the class path container
    * @param pathEntries
+   *          the path entries
    */
   public ClassPathContainerImpl(final String name, final File[] pathEntries) {
     super();

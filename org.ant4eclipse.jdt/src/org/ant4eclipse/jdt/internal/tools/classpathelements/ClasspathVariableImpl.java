@@ -8,7 +8,7 @@ import java.io.File;
 
 /**
  * <p>
- * Encapsulates a class path variable.
+ * Implementation of {@link ClassPathVariable}.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
