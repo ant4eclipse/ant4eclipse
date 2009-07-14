@@ -14,23 +14,24 @@ import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * 
+ */
 public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResolver {
 
   /**
-   * @see org.ant4eclipse.platform.tools.ReferencedProjectsResolver#canHandle(org.ant4eclipse.platform.model.resource.EclipseProject)
+   * {@inheritDoc}
    */
   public boolean canHandle(final EclipseProject project) {
     return JavaProjectRole.Helper.hasJavaProjectRole(project);
   }
 
   /**
-   * <p>
-   * Returns a list that contains all directly referenced projects of the given project.
-   * </p>
-   * 
-   * @param project
-   * @param properties
-   * @return
+   * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
       final List<Object> additionalElements) {
@@ -54,8 +55,6 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
     classpathEntryResolverExecutor.resolve(job.getRootProject(), new ClasspathEntryResolver[] {
         new ContainerClasspathEntryResolver(), new ProjectClasspathEntryResolver(), },
         new ClasspathResolverContextImpl(classpathEntryResolverExecutor, job));
-
-    // System.err.println(" Resolved: " + classpathEntryResolverExecutor.getReferencedProjects());
 
     // we need to remove the calling project, since the api states that only referenced projects have to be returned
     final List<EclipseProject> result = classpathEntryResolverExecutor.getReferencedProjects();

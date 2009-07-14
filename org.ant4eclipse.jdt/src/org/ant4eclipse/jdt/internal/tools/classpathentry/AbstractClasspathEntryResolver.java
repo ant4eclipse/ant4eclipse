@@ -81,8 +81,13 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
   // }
 
   /**
+   * <p>
+   * Returns <code>true</code>, if the given entry is instance of type {@link ClasspathEntry}.
+   * </p>
+   * 
    * @param entry
-   * @return
+   *          the class path entry
+   * @return <code>true</code>, if the given entry is instance of type {@link ClasspathEntry}.
    */
   protected final boolean isRawClasspathEntry(final ClasspathEntry entry) {
     return (entry instanceof RawClasspathEntry);
@@ -96,6 +101,17 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
   // return (entry instanceof RuntimeClasspathEntry);
   // }
 
+  /**
+   * <p>
+   * Returns <code>true</code>, if the class path entry is visible.
+   * </p>
+   * 
+   * @param entry
+   *          the entry
+   * @param context
+   *          the resolver context
+   * @return <code>true</code>, if the class path entry is visible.
+   */
   protected final boolean isClasspathEntryVisible(final ClasspathEntry entry, final ClasspathResolverContext context) {
     return context.isRuntime() || context.isCurrentProjectRoot() /* || isRuntimeClasspathEntry(entry) */
         || (isRawClasspathEntry(entry) && ((RawClasspathEntry) entry).isExported());

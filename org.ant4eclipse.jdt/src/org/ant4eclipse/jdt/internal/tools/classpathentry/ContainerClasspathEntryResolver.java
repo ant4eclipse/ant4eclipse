@@ -28,7 +28,8 @@ import java.util.List;
 
 /**
  * <p>
- * The {@link ContainerClasspathEntryResolver} is responsible for resolving container class path entries.
+ * The {@link ContainerClasspathEntryResolver} is responsible for resolving container class path entries (class path
+ * entries of kind 'con', e.g. &lt;classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/&gt;).
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)

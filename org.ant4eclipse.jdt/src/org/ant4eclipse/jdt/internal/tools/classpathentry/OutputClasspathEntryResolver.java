@@ -17,9 +17,9 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
 /**
  * <p>
- * Implements a {@link ClasspathEntryResolver} to resolve class path entries of type
- * {@link RawClasspathEntry#CPE_OUTPUT}. Due to the fact the the output locations of eclipse java project are already
- * resolved by the {@link SourceClasspathEntryResolver}, this {@link ClasspathEntryResolver} implements a simple NOOP.
+ * Implements a {@link ClasspathEntryResolver} to resolve class path entries of kind 'output'. Due to the fact the the
+ * output locations of eclipse java project are already resolved by the {@link SourceClasspathEntryResolver}, this
+ * {@link ClasspathEntryResolver} implements a simple NOOP.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -27,7 +27,7 @@ import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 public class OutputClasspathEntryResolver extends AbstractClasspathEntryResolver {
 
   /**
-   * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#canResolve(org.ant4eclipse.jdt.model.ClasspathEntry)
+   * {@inheritDoc}
    */
   public boolean canResolve(final ClasspathEntry entry) {
     // only suitable for raw class path entries of kind CPE_OUTPUT
@@ -35,8 +35,7 @@ public class OutputClasspathEntryResolver extends AbstractClasspathEntryResolver
   }
 
   /**
-   * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#resolve(org.ant4eclipse.jdt.model.ClasspathEntry,
-   *      org.ant4eclipse.jdt.tools.container.ClasspathResolverContext)
+   * {@inheritDoc}
    */
   public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
     // nothing to do here - handled within the Source Handler

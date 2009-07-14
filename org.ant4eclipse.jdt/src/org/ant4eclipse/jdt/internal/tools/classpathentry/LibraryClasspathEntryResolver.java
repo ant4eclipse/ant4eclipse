@@ -19,7 +19,10 @@ import java.io.File;
 
 /**
  * <p>
- * 
+ * The {@link ContainerClasspathEntryResolver} is responsible for resolving library class path entries (class path
+ * entries of kind 'lib' where path doesn't point to an eclipse project, e.g. &lt;classpathentry kind="lib"
+ * path="/org.ant4eclipse.external/libs/ant/apache-ant-1.7.1.jar"
+ * sourcepath="/org.ant4eclipse.external/libs/ant/apache-ant-1.7.1-src.zip"/&gt;).
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -39,7 +42,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
   private static int           PROJECT_RELATIVE_PATH   = 2;
 
   /**
-   * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#canResolve(org.ant4eclipse.jdt.model.ClasspathEntry)
+   * {@inheritDoc}
    */
   public boolean canResolve(final ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_LIBRARY)
@@ -47,8 +50,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
   }
 
   /**
-   * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#resolve(org.ant4eclipse.jdt.model.ClasspathEntry,
-   *      org.ant4eclipse.jdt.tools.container.ClasspathResolverContext)
+   * {@inheritDoc}
    */
   public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
 
