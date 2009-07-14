@@ -23,6 +23,12 @@ import java.util.List;
  */
 public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
 
+  /** - */
+  private Union  _resources = null;
+
+  /** - */
+  private String _name;
+
   /**
    * <p>
    * Creates a new instance of type {@link JdtClassPathContainerType}.
@@ -33,10 +39,6 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
   public JdtClassPathContainerType(final Project project) {
     super(project);
   }
-
-  private Union  resources = null;
-
-  private String _name;
 
   /**
    * <p>
@@ -66,26 +68,26 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    *          resource collection to add.
    */
   public void add(final ResourceCollection rc) {
-    if (this.resources == null) {
-      this.resources = new Union();
+    if (this._resources == null) {
+      this._resources = new Union();
     }
-    this.resources.add(rc);
+    this._resources.add(rc);
   }
 
   /**
    * {@inheritDoc}
    */
-
   @Override
   protected void doValidate() {
     // TODO: validate
 
+    // fetch the ClassPathElementsRegistry
     final ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
 
+    // fetch the provided files
     final List<File> files = new LinkedList<File>();
-
     @SuppressWarnings("unchecked")
-    final Iterator iterator = this.resources.iterator();
+    final Iterator iterator = this._resources.iterator();
     while (iterator.hasNext()) {
       final FileResource fileResource = (FileResource) iterator.next();
       files.add(fileResource.getFile());

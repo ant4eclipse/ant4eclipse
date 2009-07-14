@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
@@ -23,6 +19,10 @@ import org.ant4eclipse.jdt.JdtModelExceptionCode;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JavaRuntimeRegistry --
@@ -115,22 +115,15 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return false;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean hasJavaProfile(final String path) {
     Assert.nonEmpty(path);
 
     return this._javaProfileCache.containsKey(path);
   }
 
-  /**
-   * <p>
-   * Returns the runtime with the given path.
-   * </p>
-   * 
-   * @param id
-   *          the path under this java runtime is stored, e.g.
-   *          <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
-   * @return the java runtime with the given path or <code>null</code> if no such java runtime is registered.
-   */
   public JavaRuntime getJavaRuntime(final String path) {
     Assert.nonEmpty(path);
 

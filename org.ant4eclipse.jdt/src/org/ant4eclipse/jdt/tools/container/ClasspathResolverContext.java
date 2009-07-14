@@ -11,10 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools.container;
 
-import org.ant4eclipse.jdt.tools.*;
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 
-import java.util.*;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.Workspace;
+
+import java.util.List;
 
 /**
  * <p>
@@ -95,6 +97,13 @@ public interface ClasspathResolverContext {
    */
   List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param key
+   * @return
+   */
   JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
 
   /**
@@ -107,6 +116,12 @@ public interface ClasspathResolverContext {
    */
   void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param eclipseProject
+   */
   void addReferencedProjects(EclipseProject eclipseProject);
 
   /**

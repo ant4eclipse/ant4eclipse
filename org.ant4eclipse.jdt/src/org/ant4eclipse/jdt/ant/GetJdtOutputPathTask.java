@@ -23,17 +23,21 @@ import org.apache.tools.ant.BuildException;
 import java.io.File;
 
 /**
+ * <p>
+ * The {@link GetJdtOutputPathTask} can be used to resolve the output path of a given eclipse java project.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
 
-  /** DEFAULT_FOLDER */
+  /** the constant for 'DEFAULT_FOLDER' */
   private static final String DEFAULT_FOLDER        = "defaultFolder";
 
-  /** ALL */
+  /** the constant for 'ALL' */
   private static final String ALL                   = "all";
 
-  /** FOR_SOURCE_FOLDER */
+  /** the constant for 'FOR_SOURCE_FOLDER' */
   private static final String FOR_SOURCE_FOLDER     = "forSourceFolder";
 
   /** defaultFolder, all, forSourceFolder */
@@ -42,19 +46,25 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
   /** sourceFolder */
   private String              _sourceFolder;
 
-  /** - */
+  /** indicates if multiple output folders should be allowed or not */
   private boolean             _allowMultipleFolders = false;
 
   /**
-   * Returns true if multiple folders are allowed.
+   * <p>
+   * Returns <code>true</code> if multiple folders are allowed.
+   * </p>
    * 
-   * @return true <=> Multiple folders are allowed.
+   * @return <code>true</code> if multiple folders are allowed.
    */
   public boolean isAllowMultipleFolders() {
     return this._allowMultipleFolders;
   }
 
   /**
+   * <p>
+   * Sets if multiple folders are allowed.
+   * </p>
+   * 
    * @param allowMultipleFolders
    */
   public void setAllowMultipleFolders(final boolean allowMultipleFolders) {
@@ -62,12 +72,18 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
   }
 
   /**
+   * <p>
+   * Sets the resolution scope.
+   * </p>
+   * 
    * @param resolve
+   *          the resolution scope.
    */
   public final void setResolve(final String resolve) {
     if (DEFAULT_FOLDER.equals(resolve) || FOR_SOURCE_FOLDER.equals(resolve) || ALL.equals(resolve)) {
       this._resolve = resolve;
     } else {
+      // TODO: NLS
       throw new BuildException("Attribute resolve must have one of the following values: '" + FOR_SOURCE_FOLDER
           + "', '" + ALL + "' or '" + DEFAULT_FOLDER + "'!");
     }
@@ -75,27 +91,47 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
   }
 
   /**
-   * Returns the location of the source folder.
+   * <p>
+   * Returns the source folder.
+   * </p>
    * 
-   * @return The location of the source folder.
+   * @return the source folder.
    */
   public final String getSourceFolder() {
     return this._sourceFolder;
   }
 
   /**
+   * <p>
+   * Sets the source folder.
+   * </p>
+   * 
    * @param sourceFolder
+   *          the source folder.
    */
   public final void setSourceFolder(final String sourceFolder) {
     this._sourceFolder = sourceFolder;
   }
 
+  /**
+   * <p>
+   * Returns <code>true</code> if the source folder is set.
+   * </p>
+   * 
+   * @return <code>true</code> if the source folder is set.
+   */
   public final boolean isSourceFolderSet() {
     return this._sourceFolder != null;
   }
 
+  /**
+   * <p>
+   * Requires that the source folder is set.
+   * </p>
+   */
   protected final void requireSourceFolderSet() {
     if (!isSourceFolderSet()) {
+      // TODO: NLS
       throw new BuildException("Attribute 'sourceFolder' has to be set if resolve='forSourceFolder'!");
     }
   }
@@ -124,7 +160,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
       final JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
       final String[] pathNames = javaProjectRole.getAllOutputFolders();
 
-      // TODO: Externalise messages
+      // TODO: NLS
       if (pathNames.length > 1 && !isAllowMultipleFolders()) {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("Project '");

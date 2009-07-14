@@ -51,37 +51,59 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractProjectPathT
   public AbstractExecuteJdtProjectTask(final String prefix) {
     Assert.notNull(prefix);
 
+    // create the delegates
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, prefix);
-
     this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
 
+    // create the JdtExecutorValuesProvider
     this._executorValuesProvider = new JdtExecutorValuesProvider(this);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final NestedSequential createScopedMacroDefinition(final String scope) {
     return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
     this._macroExecutionDelegate.executeMacroInstance(macroDef, macroExecutionValues);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
     return this._macroExecutionDelegate.getScopedMacroDefinitions();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String getPrefix() {
     return this._macroExecutionDelegate.getPrefix();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setPrefix(final String prefix) {
     this._macroExecutionDelegate.setPrefix(prefix);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }
@@ -97,6 +119,13 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractProjectPathT
     return JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
   }
 
+  /**
+   * <p>
+   * Returns the {@link JdtExecutorValuesProvider}.
+   * </p>
+   * 
+   * @return the {@link JdtExecutorValuesProvider}.
+   */
   protected final JdtExecutorValuesProvider getExecutorValuesProvider() {
     return this._executorValuesProvider;
   }

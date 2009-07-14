@@ -7,44 +7,81 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
+ * <p>
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
 
-  public static final String SCOPE_SOURCE_DIRECTORY = "SCOPE_SOURCE_DIRECTORY";
+  /** the constant for SCOPE_PROJECT_ELEMENT_NAME */
+  private static final String SCOPE_PROJECT_ELEMENT_NAME          = "ForProject";
 
-  public static final String SCOPE_TARGET_DIRECTORY = "SCOPE_TARGET_DIRECTORY";
+  /** the constant for SCOPE_TARGET_DIRECTORY_ELEMENT_NAME */
+  private static final String SCOPE_TARGET_DIRECTORY_ELEMENT_NAME = "ForEachOutputDirectory";
 
-  public static final String SCOPE_PROJECT          = "SCOPE_PROJECT";
+  /** the constant for SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME */
+  private static final String SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME = "ForEachSourceDirectory";
 
+  /** the constant for SCOPE_SOURCE_DIRECTORY */
+  public static final String  SCOPE_SOURCE_DIRECTORY              = "SCOPE_SOURCE_DIRECTORY";
+
+  /** the constant for SCOPE_TARGET_DIRECTORY */
+  public static final String  SCOPE_TARGET_DIRECTORY              = "SCOPE_TARGET_DIRECTORY";
+
+  /** the constant for SCOPE_PROJECT */
+  public static final String  SCOPE_PROJECT                       = "SCOPE_PROJECT";
+
+  /**
+   * <p>
+   * Creates a new instance of type {@link ExecuteJdtProjectTask}.
+   * </p>
+   */
   public ExecuteJdtProjectTask() {
     super("executeJdtProject");
   }
 
+  /**
+   * <p>
+   * Creates a new instance of type {@link ExecuteJdtProjectTask}.
+   * </p>
+   * 
+   * @param prefix
+   *          the prefix
+   */
   protected ExecuteJdtProjectTask(final String prefix) {
     super(prefix);
   }
 
   /**
-   * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
+   * {@inheritDoc}
    */
   public final Object createDynamicElement(final String name) throws BuildException {
-    if ("ForEachSourceDirectory".equalsIgnoreCase(name)) {
+
+    // handle SCOPE_SOURCE_DIRECTORY
+    if (SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORY);
-    } else if ("ForEachOutputDirectory".equalsIgnoreCase(name)) {
+    }
+    // handle SCOPE_TARGET_DIRECTORY
+    else if (SCOPE_TARGET_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_TARGET_DIRECTORY);
-    } else if ("ForProject".equalsIgnoreCase(name)) {
+    }
+    // handle SCOPE_PROJECT
+    else if (SCOPE_PROJECT_ELEMENT_NAME.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_PROJECT);
     }
 
+    // delegate to template method
     return onCreateDynamicElement(name);
   }
 
   /**
    * <p>
+   * Override this method to provide support for additional sub-elements defined in an ant build file.
    * </p>
    * 
    * @param name
+   *          the name of the sub element
    * @return
    */
   protected Object onCreateDynamicElement(final String name) {
@@ -72,6 +109,9 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
     //
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doExecute() {
 
@@ -83,15 +123,22 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
 
       final MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
+      // execute SCOPE_SOURCE_DIRECTORY
       if (SCOPE_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeSourceDirectoryScopedMacroDef(macroDef);
-      } else if (SCOPE_TARGET_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
+      }
+      // execute SCOPE_TARGET_DIRECTORY
+      else if (SCOPE_TARGET_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeOutputDirectoryScopedMacroDef(macroDef);
-      } else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
+      }
+      // execute SCOPE_PROJECT
+      else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
         executeProjectScopedMacroDef(macroDef);
-      } else {
+      }
+      // delegate to template method
+      else {
         if (!onExecuteScopeMacroDefintion(scopedMacroDefinition)) {
-          // TODO
+          // TODO: NLS
           throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
         }
       }
@@ -136,20 +183,6 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
     }
   }
 
-  private void executeProjectScopedMacroDef(final MacroDef macroDef) {
-    if (getJavaProjectRole().getSourceFolders().length > 0) {
-
-      final MacroExecutionValues executionValues = new MacroExecutionValues();
-
-      getExecutorValuesProvider().provideSourceDirectoriesScopedExecutorValues(getJavaProjectRole(),
-          getJdtClasspathContainerArguments(), executionValues);
-
-      addAdditionalExecutionValues(executionValues);
-
-      executeMacroInstance(macroDef, executionValues);
-    }
-  }
-
   /**
    * <p>
    * </p>
@@ -172,6 +205,20 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask {
 
       executionValues.getReferences().put("output.directory.path",
           this.convertToPath(getEclipseProject().getChild(outFolder)));
+
+      addAdditionalExecutionValues(executionValues);
+
+      executeMacroInstance(macroDef, executionValues);
+    }
+  }
+
+  private void executeProjectScopedMacroDef(final MacroDef macroDef) {
+    if (getJavaProjectRole().getSourceFolders().length > 0) {
+
+      final MacroExecutionValues executionValues = new MacroExecutionValues();
+
+      getExecutorValuesProvider().provideSourceDirectoriesScopedExecutorValues(getJavaProjectRole(),
+          getJdtClasspathContainerArguments(), executionValues);
 
       addAdditionalExecutionValues(executionValues);
 

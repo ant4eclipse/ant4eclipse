@@ -23,6 +23,10 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * <p>
+ * Resolves a class path from a underlying jdt project.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements JdtClasspathContainerArgumentComponent {
@@ -30,45 +34,65 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   /** Indicates whether the class path should be resolved as a runtime class path or not */
   private boolean                                     _runtime = false;
 
-  /** - */
+  /** the {@link JdtClasspathContainerArgumentDelegate} */
   private final JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
+  /**
+   * <p>
+   * Creates a new instance of type {@link GetJdtClassPathTask}.
+   * </p>
+   */
   public GetJdtClassPathTask() {
     super();
+
+    // create the JdtClasspathContainerArgumentDelegate
     this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
   }
 
   /**
+   * <p>
+   * Sets the class path id.
+   * </p>
+   * 
    * @param id
+   *          the class path id
    */
   public void setClasspathId(final String id) {
     super.setPathId(id);
   }
 
   /**
-   * @return Returns the runtime.
+   * <p>
+   * Returns if a runtime path should be resolved or not.
+   * </p>
+   * 
+   * @return if a runtime path should be resolved or not.
    */
   public boolean isRuntime() {
     return this._runtime;
   }
 
   /**
+   * <p>
+   * Returns if a runtime path should be resolved or not.
+   * </p>
+   * 
    * @param runtime
-   *          The runtime to set.
+   *          if a runtime path should be resolved or not.
    */
   public void setRuntime(final boolean runtime) {
     this._runtime = runtime;
   }
 
   /**
-   * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#createJdtClasspathContainerArgument()
+   * {@inheritDoc}
    */
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
   /**
-   * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#getJdtClasspathContainerArguments()
+   * {@inheritDoc}
    */
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments();
@@ -80,9 +104,11 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   @Override
   protected File[] resolvePath() {
 
+    // resolve the path
     final ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath(getEclipseProject(), isRelative(),
         isRuntime(), this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments());
 
+    // return the path files
     return resolvedClasspath.getClasspathFiles();
   }
 }

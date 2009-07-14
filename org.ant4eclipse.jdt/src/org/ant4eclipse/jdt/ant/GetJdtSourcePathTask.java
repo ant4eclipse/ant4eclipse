@@ -21,7 +21,7 @@ import java.io.File;
 
 /**
  * <p>
- * Can be used to resolve the source path of a given eclipse java or c project.
+ * The {@link GetJdtSourcePathTask} can be used to resolve the source path of a given eclipse java project.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -59,22 +59,25 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
    */
   @Override
   protected File[] resolvePath() {
+
+    // set relative flag
     final int relative = isRelative() ? EclipseProject.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
         : EclipseProject.ABSOLUTE;
 
-    final EclipseProject project = getEclipseProject();
-    File[] javaresult = new File[0];
-    final File[] cresult = new File[0];
-    if (project.hasRole(JavaProjectRoleImpl.class)) {
+    // the 'default' result
+    File[] result = new File[0];
 
-      final JavaProjectRole javaProjectRole = (JavaProjectRole) project.getRole(JavaProjectRole.class);
+    // resolve the source path
+    if (getEclipseProject().hasRole(JavaProjectRoleImpl.class)) {
+
+      final JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
       final String[] paths = javaProjectRole.getSourceFolders();
-      javaresult = getEclipseProject().getChildren(paths, relative);
+      result = getEclipseProject().getChildren(paths, relative);
 
-      if ((javaresult.length > 1) && !isAllowMultipleFolders()) {
+      if ((result.length > 1) && !isAllowMultipleFolders()) {
         final StringBuffer buffer = new StringBuffer();
         buffer.append("Project '");
-        buffer.append(project.getFolderName());
+        buffer.append(getEclipseProject().getFolderName());
         buffer.append("' contains multiple SourceFolders! ");
         buffer.append("If you want to allow this, you have to");
         buffer.append(" set allowMultipleFolders='true'!");
@@ -83,9 +86,6 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
       }
     }
 
-    final File[] result = new File[javaresult.length + cresult.length];
-    System.arraycopy(javaresult, 0, result, 0, javaresult.length);
-    System.arraycopy(cresult, 0, result, javaresult.length, cresult.length);
     return (result);
   }
 }
