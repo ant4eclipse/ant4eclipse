@@ -65,22 +65,22 @@ public interface JavaRuntimeRegistry {
 
   /**
    * <p>
-   * Returns <code>true</code> if a java runtime is registered with the given path.
+   * Returns <code>true</code> if a java runtime is registered with the given id.
    * </p>
    * 
    * @param id
-   *          the id
+   *          the id under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
    * @return <code>true</code> if the java runtime with the given id is known.
    */
   boolean hasJavaRuntime(final String id);
 
   /**
    * <p>
-   * Returns the runtime with the given path.
+   * Returns the runtime with the given id.
    * </p>
    * 
    * @param id
-   *          the path under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
+   *          the id under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
    * @return the java runtime with the given path or <code>null</code> if no such java runtime is registered.
    */
   JavaRuntime getJavaRuntime(final String id);

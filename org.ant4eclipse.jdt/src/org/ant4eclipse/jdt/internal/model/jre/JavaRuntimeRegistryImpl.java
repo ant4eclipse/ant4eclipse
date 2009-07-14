@@ -25,7 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JavaRuntimeRegistry --
+ * <p>
+ * Implementation of the {@link JavaRuntimeRegistry}.
+ * </p>
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -62,7 +64,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   }
 
   /**
-   * @return
+   * {@inheritDoc}
    */
   public JavaRuntime registerJavaRuntime(final String id, final File location, final boolean isDefault) {
     Assert.nonEmpty(id);
@@ -75,10 +77,16 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return registerJavaRuntime(javaRuntime, isDefault);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public JavaRuntime registerJavaRuntime(final String id, final File location) {
     return registerJavaRuntime(id, location, false);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setDefaultJavaRuntime(final String id) {
     Assert.notNull(id);
     Assert.assertTrue(hasJavaRuntime(id), "No JavaRuntime with id '" + id + "' registered!");
@@ -87,14 +95,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   }
 
   /**
-   * <p>
-   * Returns <code>true</code> if a java runtime is registered with the given path.
-   * </p>
-   * 
-   * @param path
-   *          the path under this java runtime is stored, e.g.
-   *          <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
-   * @return <code>true</code> if the java runtime with the given id is known.
+   * {@inheritDoc}
    */
   public boolean hasJavaRuntime(final String path) {
     Assert.nonEmpty(path);
@@ -124,6 +125,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return this._javaProfileCache.containsKey(path);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public JavaRuntime getJavaRuntime(final String path) {
     Assert.nonEmpty(path);
 
@@ -143,8 +147,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   }
 
   /**
-   * @param path
-   * @return
+   * {@inheritDoc}
    */
   public JavaProfile getJavaProfile(final String path) {
     Assert.nonEmpty(path);
@@ -153,11 +156,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   }
 
   /**
-   * <p>
-   * 
-   * </p>
-   * 
-   * @return
+   * {@inheritDoc}
    */
   public JavaRuntime getDefaultJavaRuntime() {
 
@@ -186,14 +185,19 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   }
 
   /**
-   * <p>
-   * Clears the java runtime cache. The java profile cache will <b>not</b> be cleared.
-   * </p>
+   * {@inheritDoc}
    */
   public void clear() {
     this._javaRuntimeCache.clear();
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param javaProfile
+   * @return
+   */
   private JavaRuntime getJavaRuntime(final JavaProfile javaProfile) {
 
     // result
@@ -222,6 +226,14 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return result;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param javaRuntime
+   * @param profileName
+   * @return
+   */
   private int getIndex(final JavaRuntime javaRuntime, final String profileName) {
     int index = javaRuntime.getJavaProfile().getExecutionEnvironmentNames().indexOf(profileName);
     index = javaRuntime.getJavaProfile().getExecutionEnvironmentNames().size() - index;
@@ -230,7 +242,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
   /**
    * <p>
-   * Registers the specified {@link JavaRuntimeImpl}.
+   * Registers the specified {@link JavaRuntime}.
    * </p>
    * 
    * @param javaRuntime
@@ -271,7 +283,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * properly set, <code>null</code> will be returned instead.
    * </p>
    * 
-   * @return
+   * @return the {@link JavaRuntime} or <code>null</code> if no such {@link JavaRuntime} exists.
    */
   private JavaRuntime getJavaRuntimeFromJavaHome() {
 
