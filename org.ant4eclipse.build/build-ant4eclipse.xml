@@ -2,7 +2,11 @@
 <project name="build.ant4eclipse"
          basedir=".."
          default="build.ant4eclipse"
-         xmlns:ant4eclipse="antlib:org.ant4eclipse">
+         xmlns:ant4eclipse="antlib:org.ant4eclipse"
+         xmlns:antcontrib="antlib:net.sf.antcontrib">
+
+	<taskdef uri="antlib:net.sf.antcontrib"
+	         resource="net/sf/antcontrib/antlib.xml" />
 
 	<taskdef uri="antlib:org.ant4eclipse"
 	         resource="org/ant4eclipse/antlib.xml" />
@@ -16,8 +20,8 @@
 	          value="${basedir}/org.ant4eclipse.build/projectSet-main.psf" />
 
 	<!-- load the build properties -->
-	<property file="${basedir}/org.ant4eclipse.build/build.properties"/>
-	<property file="${basedir}/org.ant4eclipse.build/default-build.properties"/>
+	<property file="${basedir}/org.ant4eclipse.build/build.properties" />
+	<property file="${basedir}/org.ant4eclipse.build/default-build.properties" />
 
 	<!-- define your jdk location here -->
 	<ant4eclipse:jreContainer>
@@ -48,23 +52,29 @@
 
 
 					<ant4eclipse:forProject>
-						<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
-						<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
-						<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
-						<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
-						<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
+						<antcontrib:if>
+							<isset property="executeJdtProject.source.directories" />
+							<antcontrib:then>
+								<echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
+								<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
+								<echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
+								<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
+								<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
 
-						<javac destdir="${executeJdtProject.default.output.directory}"
-						       debug="on"
-						       source="1.5">
+								<javac destdir="${executeJdtProject.default.output.directory}"
+								       debug="on"
+								       source="1.5">
 
-							<src refid="executeJdtProject.source.directories.path" />
-							<bootclasspath refid="executeJdtProject.boot.classpath.path" />
-							<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+									<src refid="executeJdtProject.source.directories.path" />
+									<bootclasspath refid="executeJdtProject.boot.classpath.path" />
+									<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
 
-							<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
-							             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
-						</javac>
+									<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
+									             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+								</javac>
+
+							</antcontrib:then>
+						</antcontrib:if>
 					</ant4eclipse:forProject>
 
 					<ant4eclipse:forEachSourceDirectory>
@@ -140,7 +150,7 @@
 			<ant4eclipse:forEachProject>
 				<copy todir="${destination}/macros" flatten="true">
 					<fileset dir="${basedir}/${executeProjectSet.project.name}">
-						<include name="macros/*"/>
+						<include name="macros/*" />
 					</fileset>
 				</copy>
 			</ant4eclipse:forEachProject>
