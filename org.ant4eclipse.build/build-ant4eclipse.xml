@@ -21,7 +21,7 @@
          ================================= -->
 	<target name="build.ant4eclipse" depends="prepare">
 
-		<!-- iterate over the project set -->
+		<!-- Step 1: iterate over the project set and build each project -->
 		<ant4eclipse:executeProjectSet workspace="${basedir}"
 		                               teamprojectset="${teamprojectset}"
 		                               projectReferenceTypes="jdt">
@@ -33,63 +33,11 @@
 
 		</ant4eclipse:executeProjectSet>
 
-		<!-- merge all ant4eclipse.properties -->
-		<ant4eclipse:mergeProperties destinationFile="${destination}/merged/classes/org/ant4eclipse/ant4eclipse-configuration.properties">
-			<fileset dir="${destination}/merged/cfg">
-				<include name="**/ant4eclipse-configuration.properties" />
-				<exclude name="ant4eclipse-configuration.properties" />
-			</fileset>
-		</ant4eclipse:mergeProperties>
+		<!-- Step 2: mergeModules -->
+		<antcall target="mergeModules" inheritrefs="true" />
 
-		<!-- merge all antlib.xml -->
-		<ant4eclipse:mergeAntlibXml destinationFile="${destination}/merged/classes/org/ant4eclipse/antlib.xml">
-			<fileset dir="${destination}/merged/cfg">
-				<include name="**/antlib.xml" />
-				<exclude name="antlib.xml" />
-			</fileset>
-		</ant4eclipse:mergeAntlibXml>
-
-		<!-- build the jar file -->
-		<jar destfile="${destination}/org.ant4eclipse_${revision}.jar"
-		     basedir="${destination}/merged/classes" />
-
-		<!-- delete the 'merged' directory -->
-		<delete dir="${destination}/merged" quiet="true" />
-
-
-		<!-- copy macros -->
-		<ant4eclipse:executeProjectSet workspace="${basedir}"
-		                               teamprojectset="${teamprojectset}"
-		                               projectReferenceTypes="jdt">
-			<ant4eclipse:forEachProject>
-				<copy todir="${destination}/macros" flatten="true">
-					<fileset dir="${basedir}/${executeProjectSet.project.name}">
-						<include name="macros/*" />
-					</fileset>
-				</copy>
-			</ant4eclipse:forEachProject>
-
-		</ant4eclipse:executeProjectSet>
-
-		<!-- copy libaries -->
-		<mkdir dir="${destination}/libs" />
-		<copy toDir="${destination}/libs" flatten="true">
-			<fileset dir="${basedir}/org.ant4eclipse.external/libs">
-				<include name="ant-contrib/*.jar" />
-				<include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
-				<include name="ejc/*.jar" />
-				<include name="ejc/ECJ-LICENSE-epl-v10.html" />
-				<include name="equinox/*.jar" />
-				<include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
-				<exclude name="equinox/*source*.jar" />
-			</fileset>
-		</copy>
-
-		<!-- zip the result -->
-		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
-			<fileset dir="${destination}"
-			         excludes="${destination}/org.ant4eclipse_${revision}.zip" />
-		</zip>
+		<!-- Step 3: buildDistribution -->
+		<antcall target="buildDistribution" inheritrefs="true" />
 
 	</target>
 
@@ -105,26 +53,34 @@
           target: buildProject
          - - - - - - - - - - - - - - - - - -->
 	<target name="buildProject">
+		<echo>Building project "${executeProjectSet.project.name}"</echo>
+
 		<ant4eclipse:executeJdtProject workspace="${basedir}"
 		                               projectname="${executeProjectSet.project.name}">
 
+			<!-- Step 1: clean output directories -->
 			<ant4eclipse:forEachOutputDirectory>
 				<antcall target="cleanOutputDirectories" inheritrefs="true" />
 			</ant4eclipse:forEachOutputDirectory>
 
+			<!-- Step 2: compile the project -->
 			<ant4eclipse:forProject>
 				<antcall target="compileProject" inheritrefs="true" />
 			</ant4eclipse:forProject>
 
+			<!-- Step 3: copy resources -->
 			<ant4eclipse:forEachSourceDirectory>
 				<antcall target="copyResources" inheritrefs="true" />
 			</ant4eclipse:forEachSourceDirectory>
 
+			<!-- Step 4: copy outfolders to the merge directory -->
 			<ant4eclipse:forEachOutputDirectory>
 				<antcall target="copyToMergeDirectory" inheritrefs="true" />
 			</ant4eclipse:forEachOutputDirectory>
 
 		</ant4eclipse:executeJdtProject>
+
+		<echo>Project "${executeProjectSet.project.name}" built</echo>
 	</target>
 
 
@@ -204,6 +160,75 @@
 				<exclude name="**/ant4eclipse-configuration.properties" />
 			</fileset>
 		</copy>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: mergeModules
+         - - - - - - - - - - - - - - - - - -->
+	<target name="mergeModules">
+
+		<!-- merge all ant4eclipse.properties -->
+		<ant4eclipse:mergeProperties destinationFile="${destination}/merged/classes/org/ant4eclipse/ant4eclipse-configuration.properties">
+			<fileset dir="${destination}/merged/cfg">
+				<include name="**/ant4eclipse-configuration.properties" />
+				<exclude name="ant4eclipse-configuration.properties" />
+			</fileset>
+		</ant4eclipse:mergeProperties>
+
+		<!-- merge all antlib.xml -->
+		<ant4eclipse:mergeAntlibXml destinationFile="${destination}/merged/classes/org/ant4eclipse/antlib.xml">
+			<fileset dir="${destination}/merged/cfg">
+				<include name="**/antlib.xml" />
+				<exclude name="antlib.xml" />
+			</fileset>
+		</ant4eclipse:mergeAntlibXml>
+
+		<!-- build the jar file -->
+		<jar destfile="${destination}/org.ant4eclipse_${revision}.jar"
+		     basedir="${destination}/merged/classes" />
+
+		<!-- delete the 'merged' directory -->
+		<delete dir="${destination}/merged" quiet="true" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: buildDistribution
+         - - - - - - - - - - - - - - - - - -->
+	<target name="buildDistribution">
+
+		<!-- copy macros -->
+		<ant4eclipse:executeProjectSet workspace="${basedir}"
+		                               teamprojectset="${teamprojectset}"
+		                               projectReferenceTypes="jdt">
+			<ant4eclipse:forEachProject>
+				<copy todir="${destination}/macros" flatten="true">
+					<fileset dir="${basedir}/${executeProjectSet.project.name}">
+						<include name="macros/*" />
+					</fileset>
+				</copy>
+			</ant4eclipse:forEachProject>
+
+		</ant4eclipse:executeProjectSet>
+
+		<!-- copy libaries -->
+		<mkdir dir="${destination}/libs" />
+		<copy toDir="${destination}/libs" flatten="true">
+			<fileset dir="${basedir}/org.ant4eclipse.external/libs">
+				<include name="ant-contrib/*.jar" />
+				<include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
+				<include name="ejc/*.jar" />
+				<include name="ejc/ECJ-LICENSE-epl-v10.html" />
+				<include name="equinox/*.jar" />
+				<include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
+				<exclude name="equinox/*source*.jar" />
+			</fileset>
+		</copy>
+
+		<!-- zip the result -->
+		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
+			<fileset dir="${destination}"
+			         excludes="${destination}/org.ant4eclipse_${revision}.zip" />
+		</zip>
 	</target>
 
 </project>
