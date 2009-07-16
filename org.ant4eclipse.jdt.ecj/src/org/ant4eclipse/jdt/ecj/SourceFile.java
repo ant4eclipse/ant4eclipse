@@ -8,7 +8,7 @@ import org.ant4eclipse.core.Assert;
  * <p>
  * Describes a source file that should be compiled.
  * </p>
- * 
+ *
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class SourceFile {
@@ -32,7 +32,7 @@ public class SourceFile {
    * <p>
    * Creates a new instance of type {@link SourceFile}.
    * </p>
-   * 
+   *
    * @param sourceFolder
    *          the folder that contains the source file
    * @param sourceFileName
@@ -59,7 +59,7 @@ public class SourceFile {
    * <p>
    * Creates a new instance of type {@link SourceFile} with the default encoding.
    * </p>
-   * 
+   *
    * @param sourceFolder
    *          the folder that contains the source file
    * @param sourceFileName
@@ -75,7 +75,7 @@ public class SourceFile {
    * <p>
    * Returns the source folder.
    * </p>
-   * 
+   *
    * @return the source folder.
    */
   public File getSourceFolder() {
@@ -86,7 +86,7 @@ public class SourceFile {
    * <p>
    * Returns the source file name.
    * </p>
-   * 
+   *
    * @return the source file name.
    */
   public String getSourceFileName() {
@@ -97,7 +97,7 @@ public class SourceFile {
    * <p>
    * Returns the source file.
    * </p>
-   * 
+   *
    * @return the source file.
    */
   public File getSourceFile() {
@@ -108,7 +108,7 @@ public class SourceFile {
    * <p>
    * Returns the destination folder.
    * </p>
-   * 
+   *
    * @return the destination folder.
    */
   public File getDestinationFolder() {
@@ -119,7 +119,7 @@ public class SourceFile {
    * <p>
    * Returns the file encoding.
    * </p>
-   * 
+   *
    * @return the file encoding.
    */
   public String getEncoding() {
@@ -127,7 +127,7 @@ public class SourceFile {
   }
 
   /**
-   * 
+   *
    */
   @Override
   public String toString() {
