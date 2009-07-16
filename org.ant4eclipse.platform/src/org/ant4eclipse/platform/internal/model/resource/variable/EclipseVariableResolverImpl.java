@@ -11,15 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.variable;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
+
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 
 /**
  * <p>
@@ -32,29 +33,36 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /** a mapping for the eclipse variables */
   private final Map<String, String> _eclipsevariables = new Hashtable<String, String>();
 
+  /**
+   * {@inheritDoc}
+   */
   public void clear() {
     this._eclipsevariables.clear();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void dispose() {
     //
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void initialize() {
     //
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isInitialized() {
     return false;
   }
 
   /**
-   * Changes a variable for this instance.
-   * 
-   * @param key
-   *          The name of the variable.
-   * @param value
-   *          The value of the variable. A value of null causes the variable to be removed.
+   * {@inheritDoc}
    */
   public final void setEclipseVariable(final String key, final String value) {
     if (value == null) {
@@ -65,20 +73,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   }
 
   /**
-   * Substitutes all occurences of an eclipse <b>variable</b> (aka as <b>property</b> in ant)in the given string.
-   * 
-   * The value for a variable in <code>string</code> is first searched in <code>otherProperties</code>. If the value
-   * cannot be found there it will be resolved as eclipse would do it.
-   * 
-   * If a variable contains an <b>argument</b> (<code>${workspace_loc:/path/to/myWorkspace}</code>) the <b>argument</b>
-   * is ignored.
-   * 
-   * @param string
-   *          The string with variables
-   * @param project
-   *          The project that should be used for resolving variables like <code>project_loc</code>
-   * @param otherProperties
-   *          Table with variable names as keys and their values as values. Might be null.
+   * {@inheritDoc}
    */
   public final String resolveEclipseVariables(final String string, final EclipseProject project,
       final Map<String, String> otherProperties) {
@@ -98,21 +93,14 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   }
 
   /**
-   * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
-   * 
-   * @return The map providing the necessary (key, value) pairs.
+   * {@inheritDoc}
    */
   public final Map<String, String> getEclipseVariables() {
     return (getEclipseVariables(null));
   }
 
   /**
-   * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
-   * 
-   * @param project
-   *          The Eclipse project allowing to produce some project specific variables.
-   * 
-   * @return The map providing the necessary (key, value) pairs.
+   * {@inheritDoc}
    */
   public final Map<String, String> getEclipseVariables(final EclipseProject project) {
     final Map<String, String> eclipseVariables = new Hashtable<String, String>();
@@ -131,7 +119,12 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   }
 
   /**
-   * from org.apache.tools.ant.PropertyHelper
+   * <p>
+   * </p>
+   * 
+   * @param value
+   * @param properties
+   * @return
    */
   private final String resolveProperties(final String value, final Map<String, String> properties) {
 
