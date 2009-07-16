@@ -17,6 +17,7 @@ import org.ant4eclipse.core.nls.NLSMessage;
 
 /**
  * <p>
+ * ExceptionCodes for JDT tools.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
