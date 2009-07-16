@@ -22,33 +22,45 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class JdtToolsExceptionCode extends ExceptionCode {
+public class JdtExceptionCode extends ExceptionCode {
+
+  @NLSMessage("The specified directory '%s' doesn't point to a valid java runtime environment.")
+  public static JdtExceptionCode INVALID_JRE_DIRECTORY;
+
+  @NLSMessage("Project '%s' must have a java project role.")
+  public static JdtExceptionCode NO_JAVA_PROJECT_ROLE;
+
+  @NLSMessage("Default java runtime could not be resolved!")
+  public static JdtExceptionCode NO_DEFAULT_JAVA_RUNTIME_EXCEPTION;
+
+  @NLSMessage("Exception while executing java launcher ('%s')")
+  public static JdtExceptionCode JAVA_LAUNCHER_EXECUTION_EXCEPTION;
 
   /** BUILD_ORDER_EXCEPTION */
   @NLSMessage("The specified directory '%s' doesn't point to a valid java runtime environment.")
-  public static JdtToolsExceptionCode BUILD_ORDER_EXCEPTION;
+  public static JdtExceptionCode BUILD_ORDER_EXCEPTION;
 
   /** REFERENCE_TO_UNKNOWN_PROJECT */
   @NLSMessage("Project '%s'  references the unknown project '%s'")
-  public static JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION;
+  public static JdtExceptionCode REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION;
 
   @NLSMessage("Set of projects contains cyclic dependencies!")
-  public static JdtToolsExceptionCode CYCLIC_DEPENDENCIES_EXCEPTION;
+  public static JdtExceptionCode CYCLIC_DEPENDENCIES_EXCEPTION;
 
   @NLSMessage("Project '%s'  references the unknown project '%s'")
-  public static JdtToolsExceptionCode REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION;
+  public static JdtExceptionCode REFERENCE_TO_UNKNOWN_BUNDLE_EXCEPTION;
 
   @NLSMessage("The class path of project '%s' contains a class path variable '%s' that is not bound.")
-  public static JdtToolsExceptionCode UNBOUND_CLASS_PATH_VARIABLE;
+  public static JdtExceptionCode UNBOUND_CLASS_PATH_VARIABLE;
 
   static {
-    NLS.initialize(JdtToolsExceptionCode.class);
+    NLS.initialize(JdtExceptionCode.class);
   }
 
   /**
    * @param message
    */
-  private JdtToolsExceptionCode(final String message) {
+  private JdtExceptionCode(final String message) {
     super(message);
   }
 }

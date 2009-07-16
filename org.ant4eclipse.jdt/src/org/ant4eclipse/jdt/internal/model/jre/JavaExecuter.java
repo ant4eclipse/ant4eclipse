@@ -16,7 +16,7 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.ClassLoadingHelper;
 
-import org.ant4eclipse.jdt.JdtModelExceptionCode;
+import org.ant4eclipse.jdt.JdtExceptionCode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -254,12 +254,12 @@ public class JavaExecuter {
 
     } catch (final IOException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(JdtModelExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, new Object[] { cmd
-          .toString() }, e);
+      throw new Ant4EclipseException(JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION,
+          new Object[] { cmd.toString() }, e);
     } catch (final InterruptedException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(JdtModelExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, new Object[] { cmd
-          .toString() }, e);
+      throw new Ant4EclipseException(JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION,
+          new Object[] { cmd.toString() }, e);
     }
   }
 
@@ -314,7 +314,7 @@ public class JavaExecuter {
 
     // throw Ant4EclipseException
     if (!result.exists()) {
-      throw new Ant4EclipseException(JdtModelExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath());
+      throw new Ant4EclipseException(JdtExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath());
     }
 
     // return result

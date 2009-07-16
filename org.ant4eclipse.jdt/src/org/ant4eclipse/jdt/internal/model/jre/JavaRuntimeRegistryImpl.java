@@ -15,7 +15,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
-import org.ant4eclipse.jdt.JdtModelExceptionCode;
+import org.ant4eclipse.jdt.JdtExceptionCode;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
@@ -181,7 +181,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // no java runtime available - throw RuntimeException
-    throw new Ant4EclipseException(JdtModelExceptionCode.NO_DEFAULT_JAVA_RUNTIME_EXCEPTION);
+    throw new Ant4EclipseException(JdtExceptionCode.NO_DEFAULT_JAVA_RUNTIME_EXCEPTION);
   }
 
   /**

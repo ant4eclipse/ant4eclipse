@@ -13,7 +13,7 @@ package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-import org.ant4eclipse.jdt.JdtToolsExceptionCode;
+import org.ant4eclipse.jdt.JdtExceptionCode;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
@@ -80,7 +80,7 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
     }
     // throw exception if variable is unbound
     else {
-      throw new Ant4EclipseException(JdtToolsExceptionCode.UNBOUND_CLASS_PATH_VARIABLE, context.getCurrentProject()
+      throw new Ant4EclipseException(JdtExceptionCode.UNBOUND_CLASS_PATH_VARIABLE, context.getCurrentProject()
           .getSpecifiedName(), variable);
     }
   }
