@@ -15,6 +15,12 @@ import org.ant4eclipse.core.exception.ExceptionCode;
 import org.ant4eclipse.core.nls.NLS;
 import org.ant4eclipse.core.nls.NLSMessage;
 
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class JdtToolsExceptionCode extends ExceptionCode {
 
   /** BUILD_ORDER_EXCEPTION */
