@@ -127,7 +127,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
   }
 
   /**
-   * 
+   *
    * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#requireWorkspaceAndProjectNameSet()
    */
   public final void requireWorkspaceAndProjectNameSet() {
@@ -135,7 +135,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
   }
 
   /**
-   * 
+   *
    * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#requireWorkspaceDirectorySet()
    */
   public final void requireWorkspaceSet() {
@@ -173,8 +173,6 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
 
   public Iterator<Resource> iterator() {
     computeFileSet();
-
-    System.err.println(_resourceList);
 
     return _resourceList.iterator();
   }
@@ -223,7 +221,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
         File file = getEclipseProject().getChild(token);
 
         if (file.isFile()) {
-          _resourceList.add(new FileResource(file));
+          _resourceList.add(new FileResource(getEclipseProject().getFolder(), token ));
         } else {
           // scan directory
           DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -235,6 +233,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
           directoryScanner.addDefaultExcludes();
           directoryScanner.scan();
           String[] files = directoryScanner.getIncludedFiles();
+
           for (String name : files) {
             if (token.equals(SELF_REPRESENTATION)) {
               _resourceList.add(new FileResource(file, name));

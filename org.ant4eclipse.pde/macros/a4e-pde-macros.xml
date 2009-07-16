@@ -14,6 +14,7 @@
 	<property name="build.compiler"
 	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 
+
 	<!-- =================================
           target: buildPlugin
          ================================= -->
@@ -40,10 +41,10 @@
 				</ant4eclipse:forEachOutputDirectory>
 
 				<!-- compile the sources -->
-				<ant4eclipse:forAllSourceDirectories>
-					<echo>Compiling jdt project '${executePluginProject.project.name}'</echo>
+				<ant4eclipse:forProject>
+					<echo>Compiling pde project '${executePluginProject.project.name}'</echo>
 					<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
-					<echo>  - output directories   -> ${executePluginProject.output.directories}</echo>
+					<echo>  - output directories -> ${executePluginProject.default.output.directory}</echo>
 					<echo>  - bootclasspath      -> ${executePluginProject.boot.classpath}</echo>
 					<echo>  - classpath          -> ${executePluginProject.classpath.absolute.compiletime}</echo>
 
@@ -58,11 +59,11 @@
 						<compilerarg value="compiler.args.refid=executePluginProject.compiler.args"
 						             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 					</javac>
-				</ant4eclipse:forAllSourceDirectories>
+				</ant4eclipse:forProject>
 
 				<!-- copy all ressources -->
 				<ant4eclipse:forEachSourceDirectory>
-					<echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
+					<echo>Copying resources from directory '${executePluginProject.source.directory}'</echo>
 					<copy todir="${executePluginProject.output.directory}">
 						<fileset dir="${executePluginProject.source.directory}">
 							<exclude name="**/*.java" />
@@ -127,16 +128,18 @@
 
 				</ant4eclipse:forEachLibrary>
 
-				<ant4eclipse:forAllSourceDirectories>
+				<ant4eclipse:forProject>
 
-					<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}">
+					<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}"
+					      overwrite="true">
 						<ant4eclipse:pluginProjectFileSet workspace="@{workspace}"
 						                                  projectname="${executePluginProject.project.name}"
 						                                  includes="${executePluginProject.build.properties.binary.includes}"
 						                                  excludes="${executePluginProject.build.properties.binary.excludes}" />
 					</copy>
 
-					<delete dir="${executePluginProject.project.directory}/@dot" quiet="true"/>
+					<delete dir="${executePluginProject.project.directory}/@dot"
+					        quiet="true" />
 
 					<!-- 'patch' the manifest with the effective bundle version -->
 					<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
@@ -146,10 +149,11 @@
 					</manifest>
 
 					<jar destfile="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
-					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}"
+					     manifest="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF" />
 
-					<delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
-				</ant4eclipse:forAllSourceDirectories>
+					<!-- <delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" /> -->
+				</ant4eclipse:forProject>
 
 			</ant4eclipse:executePluginProject>
 		</sequential>
