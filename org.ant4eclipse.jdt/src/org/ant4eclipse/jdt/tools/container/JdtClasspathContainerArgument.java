@@ -1,45 +1,72 @@
 package org.ant4eclipse.jdt.tools.container;
 
 /**
+ * <p>
+ * Represents a jdt class path container argument.
+ * </p>
+ * <p>
+ * Some class path containes require additional information to be resolved. E.g. the PDE container (RequiredPlugins)
+ * needs a reference to a valid target platform against a plug-in project will be resolved.
+ * JdtClasspathContainerArguments allow to provides such values.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JdtClasspathContainerArgument {
 
+  /** the key */
   private String key;
 
+  /** the value */
   private String value;
 
   /**
-   * @return the key
+   * <p>
+   * Returns the key of the {@link JdtClasspathContainerArgument}.
+   * </p>
+   * 
+   * @return the key.
    */
   public final String getKey() {
     return this.key;
   }
 
   /**
+   * <p>
+   * Sets the key of the {@link JdtClasspathContainerArgument}.
+   * </p>
+   * 
    * @param key
-   *          the key to set
    */
   public final void setKey(final String key) {
     this.key = key;
   }
 
   /**
-   * @return the value
+   * <p>
+   * Returns the value of the {@link JdtClasspathContainerArgument}.
+   * </p>
+   * 
+   * @return the value of the {@link JdtClasspathContainerArgument}.
    */
   public final String getValue() {
     return this.value;
   }
 
   /**
+   * <p>
+   * Sets the value of the {@link JdtClasspathContainerArgument}.
+   * </p>
+   * 
    * @param value
-   *          the value to set
+   *          the value of the {@link JdtClasspathContainerArgument}.
    */
   public final void setValue(final String value) {
     this.value = value;
   }
 
   /**
+   * {@inheritDoc}
    */
   @Override
   public String toString() {

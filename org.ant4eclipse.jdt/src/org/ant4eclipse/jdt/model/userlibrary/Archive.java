@@ -25,20 +25,20 @@ public interface Archive {
    * 
    * @return The location of the classes. Maybe a directory or a Jar.
    */
-  public File getPath();
+  File getPath();
 
   /**
    * Returns the location of the sources.
    * 
    * @return The location of the sources.
    */
-  public File getSource();
+  File getSource();
 
   /**
    * Returns the location of the java docs.
    * 
    * @return The location of the java docs.
    */
-  public String getJavaDoc();
+  String getJavaDoc();
 
 } /* ENDCLASS */

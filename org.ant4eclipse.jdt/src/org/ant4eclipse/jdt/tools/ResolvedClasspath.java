@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * <p>
@@ -32,7 +32,11 @@ public interface ResolvedClasspath {
   ResolvedClasspathEntry[] getClasspath();
 
   /**
-   * @return
+   * <p>
+   * Convenience method that returns all files contained in the resolved class path entries as a single array.
+   * </p>
+   * 
+   * @return all files contained in the resolved class path entries as a single array.
    */
   File[] getClasspathFiles();
 
@@ -46,7 +50,11 @@ public interface ResolvedClasspath {
   ResolvedClasspathEntry getBootClasspath();
 
   /**
-   * @return
+   * <p>
+   * Convenience method that returns all files contained in the resolved boot class path entries as a single array.
+   * </p>
+   * 
+   * @return all files contained in the resolved boot class path entries as a single array.
    */
   File[] getBootClasspathFiles();
 }

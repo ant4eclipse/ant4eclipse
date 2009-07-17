@@ -58,6 +58,10 @@ public class JdtExceptionCode extends ExceptionCode {
   }
 
   /**
+   * <p>
+   * Creates a new instance of type JdtExceptionCode.
+   * </p>
+   * 
    * @param message
    */
   private JdtExceptionCode(final String message) {

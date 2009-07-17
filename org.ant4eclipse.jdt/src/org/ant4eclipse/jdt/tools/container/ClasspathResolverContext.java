@@ -84,6 +84,26 @@ public interface ClasspathResolverContext {
 
   /**
    * <p>
+   * Returns the (optional) list of {@link JdtClasspathContainerArgument JdtClasspathContainerArguments}.
+   * </p>
+   * 
+   * @return the (optional) list of {@link JdtClasspathContainerArgument JdtClasspathContainerArguments}.
+   */
+  List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
+
+  /**
+   * <p>
+   * Returns the {@link JdtClasspathContainerArgument} with the given key.
+   * </p>
+   * 
+   * @param key
+   *          the key.
+   * @return the {@link JdtClasspathContainerArgument} with the given key.
+   */
+  JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
+
+  /**
+   * <p>
    * Resolves the class path for a (java-)project.
    * </p>
    * 
@@ -93,18 +113,14 @@ public interface ClasspathResolverContext {
   void resolveProjectClasspath(EclipseProject project);
 
   /**
-   *
-   */
-  List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
-
-  /**
    * <p>
+   * Adds a referenced eclipse project to the class path <b>without</b> resolving it.
    * </p>
    * 
-   * @param key
-   * @return
+   * @param eclipseProject
+   *          the eclipse project.
    */
-  JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
+  void addReferencedProjects(EclipseProject eclipseProject);
 
   /**
    * <p>
@@ -115,14 +131,6 @@ public interface ClasspathResolverContext {
    *          the entry to add.
    */
   void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
-
-  /**
-   * <p>
-   * </p>
-   * 
-   * @param eclipseProject
-   */
-  void addReferencedProjects(EclipseProject eclipseProject);
 
   /**
    * <p>

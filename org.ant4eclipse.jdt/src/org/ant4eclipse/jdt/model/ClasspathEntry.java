@@ -13,7 +13,7 @@ package org.ant4eclipse.jdt.model;
 
 /**
  * <p>
- * Defines a {@link ClasspathEntry}.
+ * Defines an unresolved {@link ClasspathEntry}.
  * </p>
  */
 public interface ClasspathEntry {

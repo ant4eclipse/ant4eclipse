@@ -25,27 +25,27 @@ public interface UserLibrary {
    * 
    * @return The name of this user library.
    */
-  public String getName();
+  String getName();
 
   /**
    * Returns true if this library affects the boot class path.
    * 
    * @return true <=> This library affects the boot class path.
    */
-  public boolean isSystemLibrary();
+  boolean isSystemLibrary();
 
   /**
    * Returns a list of archives that are registered with this library entry.
    * 
    * @return A list of archives that are registered with this library entry.
    */
-  public Archive[] getArchives();
+  Archive[] getArchives();
 
   /**
    * Returns a list of archive files that are registered with this library entry.
    * 
    * @return A list of archive files that are registered with this library entry.
    */
-  public File[] getArchiveFiles();
+  File[] getArchiveFiles();
 
 } /* ENDCLASS */
