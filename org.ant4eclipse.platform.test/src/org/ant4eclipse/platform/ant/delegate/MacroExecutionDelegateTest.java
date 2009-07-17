@@ -5,6 +5,7 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildFileTest;
@@ -49,10 +50,15 @@ public class MacroExecutionDelegateTest extends BuildFileTest {
       for (ScopedMacroDefinition<String> scopedMacroDefinition : this._macroExecutionDelegate
           .getScopedMacroDefinitions()) {
 
-        MacroExecutionValues values = new MacroExecutionValues();
-        values.getProperties().put("test", counter + ".test");
-        counter++;
-        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(), values);
+        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(),
+            new MacroExecutionValuesProvider() {
+
+              public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+                values.getProperties().put("test", counter + ".test");
+                counter++;
+                return values;
+              }
+            });
       }
     }
 
