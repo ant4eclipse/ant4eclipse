@@ -48,6 +48,19 @@ public class ClassFileLoaderFactory {
     return new ClasspathClassFileLoaderImpl(source, type, classpathEntries);
   }
 
+  /**
+   * <p>
+   * Creates an new instance of type {@link ClassFileLoader}, that can load {@link ClassFile ClassFiles} from a jar file
+   * or directory.
+   * </p>
+   * 
+   * @param entry
+   *          the class path entry for the {@link ClassFileLoader}.
+   * @param type
+   *          the type of the source. Possible values are {@link EcjAdapter#LIBRARY} and {@link EcjAdapter#PROJECT}.
+   * 
+   * @return a new instance of type {@link ClassFileLoader}.
+   */
   public static ClassFileLoader createClasspathClassFileLoader(final File entry, final byte type) {
     return new ClasspathClassFileLoaderImpl(entry, type);
   }
@@ -67,6 +80,18 @@ public class ClassFileLoaderFactory {
     return new CompoundClassFileLoaderImpl(classFileLoaders);
   }
 
+  /**
+   * <p>
+   * Creates an new instance of type {@link ClassFileLoader}, that can filter the access to classes in an underlying
+   * class file loader.
+   * </p>
+   * 
+   * @param classFileLoader
+   *          the underlying class file loader
+   * @param filter
+   *          the filter
+   * @return the class file loader
+   */
   public static ClassFileLoader createFilteringClassFileLoader(final ClassFileLoader classFileLoader, String filter) {
     return new FilteringClassFileLoader(classFileLoader, filter);
   }

@@ -45,8 +45,10 @@ public interface ClassFileLoader {
   boolean hasPackage(String packageName);
 
   /**
+   * <p>
    * Returns an instance of type {@link ClassFile} that represents the specified class or <code>null</code> if no such
    * class can be found.
+   * </p>
    * 
    * @param className
    *          The class name of the class that should be loaded.
