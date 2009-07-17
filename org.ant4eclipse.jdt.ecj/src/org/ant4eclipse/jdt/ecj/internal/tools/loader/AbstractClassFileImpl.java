@@ -16,7 +16,9 @@ import org.ant4eclipse.jdt.ecj.internal.tools.ModifiableClassFile;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**
+ * <p>
  * {@link AbstractClassFileImpl} is the base class of all the class file implementations.
+ * </p>
  * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
@@ -49,35 +51,35 @@ public abstract class AbstractClassFileImpl implements ModifiableClassFile {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFile#getLibraryLocation()
+   * {@inheritDoc}
    */
   public String getLibraryLocation() {
     return this._libraryLocation;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFile#getLibraryType()
+   * {@inheritDoc}
    */
   public byte getLibraryType() {
     return this._libraryType;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFile#getAccessRestriction()
+   * {@inheritDoc}
    */
   public final AccessRestriction getAccessRestriction() {
     return this._accessRestriction;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFile#hasAccessRestriction()
+   * {@inheritDoc}
    */
   public final boolean hasAccessRestriction() {
     return this._accessRestriction != null;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ModifiableClassFile#setAccessRestriction(org.eclipse.jdt.internal.compiler.env.AccessRestriction)
+   * {@inheritDoc}
    */
   public final void setAccessRestriction(final AccessRestriction accessRestriction) {
     this._accessRestriction = accessRestriction;

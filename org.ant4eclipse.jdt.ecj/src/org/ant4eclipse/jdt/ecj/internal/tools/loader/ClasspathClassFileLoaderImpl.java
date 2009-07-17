@@ -51,6 +51,14 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   /** maps packages to package providers */
   private Map<String, PackageProvider> _allPackages;
 
+  /**
+   * <p>
+   * Creates a new instance of type ClasspathClassFileLoaderImpl. 
+   * </p>
+   *
+   * @param entry the file entry
+   * @param type type
+   */
   public ClasspathClassFileLoaderImpl(final File entry, final byte type) {
     Assert.exists(entry);
 
@@ -90,14 +98,14 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFileLoader#hasPackage(java.lang.String)
+   * {@inheritDoc}
    */
   public boolean hasPackage(final String packageName) {
     return this._allPackages.containsKey(packageName);
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFileLoader#getAllPackages()
+   * {@inheritDoc}
    */
   public String[] getAllPackages() {
     final Set<String> keys = this._allPackages.keySet();
@@ -106,8 +114,9 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
 
   /**
    * <p>
+   * Sets the location.
    * </p>
-   * 
+   *
    * @param location
    */
   protected void setLocation(final File location) {
@@ -116,6 +125,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
 
   /**
    * <p>
+   * Sets the type.
    * </p>
    * 
    * @param type
@@ -194,9 +204,6 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
         }
       }
     }
-
-    // trace
-    // System.out.println("Packages: " + this._allPackages.keySet());
   }
 
   /**
@@ -416,9 +423,11 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   /**
-   * PackageProvider --
-   * 
+   * <p>
+   * </p>
+   *
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   *
    */
   public class PackageProvider {
 
