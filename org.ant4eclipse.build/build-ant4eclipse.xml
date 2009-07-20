@@ -106,8 +106,7 @@
 		<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
 
 		<javac destdir="${executeJdtProject.default.output.directory}"
-		       debug="on"
-		       source="1.5">
+		       debug="on">
 
 			<src refid="executeJdtProject.source.directories.path" />
 			<bootclasspath refid="executeJdtProject.boot.classpath.path" />

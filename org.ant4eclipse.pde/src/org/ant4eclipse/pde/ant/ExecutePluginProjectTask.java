@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import org.ant4eclipse.jdt.ant.CompilerArguments;
+import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
@@ -136,7 +136,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
               computeBinaryIncludeFilelist();
             }
 
-            CompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
+            EcjAdditionalCompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
                 getJdtClasspathContainerArguments(), values);
 
             File[] sourceFiles = getEclipseProject().getChildren(library.getSource());

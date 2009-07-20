@@ -45,7 +45,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * @param jdtClasspathContainerArguments
    * @param executionValues
    */
-  public CompilerArguments provideExecutorValues(final JavaProjectRole javaProjectRole,
+  public EcjAdditionalCompilerArguments provideExecutorValues(final JavaProjectRole javaProjectRole,
       final List<JdtClasspathContainerArgument> jdtClasspathContainerArguments,
       final MacroExecutionValues executionValues) {
 
@@ -53,7 +53,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     this._platformExecutorValuesProvider.provideExecutorValues(javaProjectRole.getEclipseProject(), executionValues);
 
     // create compiler arguments
-    final CompilerArguments compilerArguments = new CompilerArguments();
+    final EcjAdditionalCompilerArguments compilerArguments = new EcjAdditionalCompilerArguments();
     executionValues.getReferences().put(COMPILER_ARGS, compilerArguments);
 
     // resolve (boot) class path

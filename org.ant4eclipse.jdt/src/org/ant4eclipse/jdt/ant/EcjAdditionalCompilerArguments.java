@@ -14,13 +14,13 @@ import java.util.Map;
  * used.
  * </p>
  * <p>
- * Whenever ant4eclipse computes a class path for an eclipse java project, an instance of type {@link CompilerArguments}
+ * Whenever ant4eclipse computes a class path for an eclipse java project, an instance of type {@link EcjAdditionalCompilerArguments}
  * is created and stored as a reference in the current ant project.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class CompilerArguments {
+public class EcjAdditionalCompilerArguments {
 
   /** maps source folders to output folders */
   private final Map<File, File>   _outputFolderMap;
@@ -39,7 +39,7 @@ public class CompilerArguments {
    * Creates a new instance of type CompilerArguments.
    * </p>
    */
-  public CompilerArguments() {
+  public EcjAdditionalCompilerArguments() {
     // create the maps
     this._accessRestrictions = new HashMap<File, String>();
     this._outputFolderMap = new HashMap<File, File>();
@@ -176,7 +176,7 @@ public class CompilerArguments {
 
   /**
    * <p>
-   * Adds the compiler options to the {@link CompilerArguments}.
+   * Adds the compiler options to the {@link EcjAdditionalCompilerArguments}.
    * </p>
    * 
    * @param compilerOptions
