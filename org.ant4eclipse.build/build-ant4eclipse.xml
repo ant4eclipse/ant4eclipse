@@ -106,7 +106,8 @@
 		<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
 
 		<javac destdir="${executeJdtProject.default.output.directory}"
-		       debug="on">
+		       debug="on"
+		       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
 
 			<src refid="executeJdtProject.source.directories.path" />
 			<bootclasspath refid="executeJdtProject.boot.classpath.path" />

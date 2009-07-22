@@ -2,7 +2,9 @@ package org.ant4eclipse.jdt.ecj;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.StopWatch;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
@@ -30,6 +32,7 @@ import java.util.Map;
  */
 public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
+  /** the compiler argument separator */
   private static final String COMPILER_ARGS_SEPARATOR = "=";
 
   /** the refid key for the additional compiler arguments */
@@ -44,12 +47,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   @SuppressWarnings( { "deprecation", "unchecked" })
   public boolean execute() {
 
-    // Step 1: Asserts
-    // source path is not supported!
-    if (getJavac().getSourcepath() != null) {
-      // TODO: NLS
-      throw new BuildException("getJavac().getSourcepath() != null");
-    }
+    // Step 1: check preconditions
+    preconditions();
 
     // Step 2: Configure ant4eclipse
     Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
@@ -61,18 +60,28 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     final EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
 
     // Step 5: create CompileJobDescription
+
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start();
+
     final DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
     compileJobDescription.setSourceFiles(getSourceFilesToCompile(ecjAdditionalCompilerArguments));
     compileJobDescription.setCompilerOptions(getCompilerOptions());
     compileJobDescription.setClassFileLoader(createClassFileLoader(ecjAdditionalCompilerArguments));
 
+    System.err.println("Setup: " + stopWatch.getElapsedTime());
+
     // Step 6: Compile
     final CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
 
+    System.err.println("Compile: " + stopWatch.getElapsedTime());
+
     // Step 7: dump result
     compileJobResult.dumpProblems();
+
+    // throw Exception if compilation was not successful
     if (!compileJobResult.succeeded()) {
-      throw new BuildException("Compilation was not successful!");
+      throw new Ant4EclipseException(EcjExceptionCodes.COMPILATION_WAS_NOT_SUCCESFUL);
     }
 
     // Step 8: Return
@@ -81,6 +90,37 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
   /**
    * <p>
+   * Checks the preconditions of the JDTCompilerAdapter
+   * </p>
+   * 
+   * @throws BuildException
+   */
+  private void preconditions() throws BuildException {
+
+    // source path is not supported!
+    if (getJavac().getSourcepath() != null) {
+      // TODO: NLS
+      throw new BuildException("getJavac().getSourcepath() != null");
+    }
+  }
+
+  /**
+   * <p>
+   * Creates the compiler options for the JDT compiler.
+   * </p>
+   * <p>
+   * The compiler options are defined here:
+   * <ul>
+   * <li><a href="http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.isv/guide/jdt_api_options.htm">JDT Core
+   * options</a></li>
+   * <li>
+   * <a href=
+   * "http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/ref-preferences-compiler.htm"
+   * >Java Compiler Preferences </a></li>
+   * <li>
+   * <a href="http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/compiler/ref-preferences-errors-warnings.htm"
+   * >Java Compiler Errors/Warnings Preferences</a></li>
+   * </ul>
    * </p>
    * 
    * @return
@@ -88,6 +128,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   @SuppressWarnings("unchecked")
   private Map getCompilerOptions() {
 
+    // Step 1: create result
     CompilerOptions compilerOptions = null;
 
     // 
@@ -102,27 +143,45 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     // create default
     if (compilerOptions == null) {
+
+      // get the source option
+      getJavac().getSource();
+      // get the target option
+      getJavac().getTarget();
+
+      // create compiler options
       compilerOptions = new CompilerOptions();
+      // see: http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.isv/guide/jdt_api_options.htm#compatibility
+      CompilerOptions.versionToJdkLevel("1.5");
       compilerOptions.complianceLevel = ClassFileConstants.JDK1_5;
       compilerOptions.sourceLevel = ClassFileConstants.JDK1_5;
       compilerOptions.targetJDK = ClassFileConstants.JDK1_5;
     }
 
+    System.err.println(compilerOptions.toString());
+
+    // return the compiler options
     return compilerOptions.getMap();
   }
 
   /**
    * <p>
+   * Returns an array with all the source files to compile.
    * </p>
    * 
    * @param compilerArguments
-   * @return
+   *          can be null
+   * @return the source files to compile
    */
   private SourceFile[] getSourceFilesToCompile(EcjAdditionalCompilerArguments compilerArguments) {
-    Assert.notNull(compilerArguments);
+
+    // get default destination folder
+    File defaultDestinationFolder = getJavac().getDestdir();
 
     // get the files to compile
     final List<SourceFile> sourceFiles = new LinkedList<SourceFile>();
+
+    // iterate over all the source files and create SourceFile
     for (final File file : getJavac().getFileList()) {
 
       // get the source folder
@@ -132,8 +191,15 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       final String sourceFileName = file.getAbsolutePath().substring(
           sourceFolder.getAbsolutePath().length() + File.separator.length());
 
-      sourceFiles.add(new SourceFile(sourceFolder, sourceFileName, compilerArguments.getOutputFolder(sourceFolder)));
+      // get the destination folder
+      File destinationFolder = compilerArguments != null ? compilerArguments.getOutputFolder(sourceFolder)
+          : defaultDestinationFolder;
+
+      // add the new source file
+      sourceFiles.add(new SourceFile(sourceFolder, sourceFileName, destinationFolder));
     }
+
+    // return the result
     return sourceFiles.toArray(new SourceFile[0]);
   }
 
@@ -171,19 +237,19 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * </p>
    * 
    * @param compilerArguments
-   *          the compiler arguments.
+   *          the compiler arguments, can be <code>null</code>.
    * @return the class file loader.
    */
   @SuppressWarnings("unchecked")
   private ClassFileLoader createClassFileLoader(final EcjAdditionalCompilerArguments compilerArguments) {
 
-    // create class file loader list
+    // Step 1: create class file loader list
     final List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
 
-    // add boot class loader
+    // Step 2: add boot class loader
     classFileLoaderList.add(createBootClassLoader(compilerArguments));
 
-    // add class loader for class path entries
+    // Step 3: add class loader for class path entries
     for (final Iterator iterator = getJavac().getClasspath().iterator(); iterator.hasNext();) {
 
       // get the file resource
@@ -197,7 +263,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
             .getFile(), EcjAdapter.LIBRARY);
 
         // create and add FilteringClassFileLoader is necessary
-        if (compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
+        if (compilerArguments != null && compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
           classFileLoaderList.add(ClassFileLoaderFactory.createFilteringClassFileLoader(myclassFileLoader,
               compilerArguments.getAccessRestrictions(fileResource.getFile())));
         }
@@ -208,7 +274,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       }
     }
 
-    // return the compound class file loader
+    // Step 4: return the compound class file loader
     return ClassFileLoaderFactory.createCompoundClassFileLoader(classFileLoaderList.toArray(new ClassFileLoader[0]));
   }
 
@@ -218,19 +284,19 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * </p>
    * 
    * @param compilerArguments
-   *          the compiler arguments
+   *          the compiler arguments , can be <code>null</code>.
    * @return the boot class loader
    */
   @SuppressWarnings("unchecked")
   private ClassFileLoader createBootClassLoader(final EcjAdditionalCompilerArguments compilerArguments) {
 
-    // get the boot class path as specified in the javac task
+    // Step 1: get the boot class path as specified in the javac task
     final Path bootclasspath = getJavac().getBootclasspath();
 
-    // create ClassFileLoaders for each entry in the boot class path
+    // Step 2: create ClassFileLoaders for each entry in the boot class path
     final List<ClassFileLoader> bootClassFileLoaders = new LinkedList<ClassFileLoader>();
 
-    // iterate over the boot class path entries as specified in the ant path
+    // Step 3: iterate over the boot class path entries as specified in the ant path
     for (final Iterator<FileResource> iterator = bootclasspath.iterator(); iterator.hasNext();) {
 
       // get the file resource
@@ -244,18 +310,19 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       }
     }
 
-    // debug
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Boot class path access restrictions: '%s'", compilerArguments
-          .getBootClassPathAccessRestrictions());
-    }
-
-    // create compound class file loader
+    // Step 4: create compound class file loader
     final ClassFileLoader classFileLoader = ClassFileLoaderFactory.createCompoundClassFileLoader(bootClassFileLoaders
         .toArray(new ClassFileLoader[0]));
 
-    // create FilteringClassFileLoader is necessary
-    if (compilerArguments.hasBootClassPathAccessRestrictions()) {
+    // Step 5: create FilteringClassFileLoader is necessary
+    if (compilerArguments != null && compilerArguments.hasBootClassPathAccessRestrictions()) {
+
+      // Step 4: debug
+      if (A4ELogging.isDebuggingEnabled()) {
+        A4ELogging.debug("Boot class path access restrictions: '%s'", compilerArguments
+            .getBootClassPathAccessRestrictions());
+      }
+
       return ClassFileLoaderFactory.createFilteringClassFileLoader(classFileLoader, compilerArguments
           .getBootClassPathAccessRestrictions());
     }
@@ -321,7 +388,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * {@link EcjAdditionalCompilerArguments} are set when a JDT class path is resolved by ant4eclipse.
    * </p>
    * <p>
-   * If not {@link EcjAdditionalCompilerArguments} are set, an Exception will be thrown.
+   * If no {@link EcjAdditionalCompilerArguments} are set, <code>null</code> will be returned.
    * </p>
    * 
    * @return the {@link EcjAdditionalCompilerArguments}
@@ -331,10 +398,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // Step 1: Fetch the CompilerArgument key
     String compilerArgsRefid = extractJavacCompilerArg(COMPILER_ARGS_REFID_KEY, null);
 
-    // Step 2: Throw exception if null
+    // Step 2: Return null, if no EcjAdditionalCompilerArguments are set
     if (compilerArgsRefid == null) {
-      // TODO: NLS
-      throw new RuntimeException();
+      return null;
     }
 
     // Step 3: Fetch the compiler arguments
@@ -343,8 +409,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     // Step 4: Throw exception if null
     if (compilerArguments == null) {
-      // TODO: NLS
-      throw new RuntimeException();
+      throw new Ant4EclipseException(EcjExceptionCodes.NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT, compilerArgsRefid);
     }
 
     // Step 5: Return the result

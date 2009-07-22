@@ -23,6 +23,9 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class EcjExceptionCodes extends ExceptionCode {
+  
+  @NLSMessage("The ant reference id '%s' doesn't point to an EcjAdditionalCompilerArguments object.")
+  public static EcjExceptionCodes NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT;
 
   @NLSMessage("The file '%s' with global compiler settings could not be found.")
   public static EcjExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND_EXCEPTION;
@@ -30,6 +33,9 @@ public class EcjExceptionCodes extends ExceptionCode {
   @NLSMessage("Unable to read content of compilation unit '%s' in source folder '%s' with encoding '%s'.")
   public static EcjExceptionCodes UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION;
 
+  @NLSMessage("Compilation was not successful.")
+  public static EcjExceptionCodes COMPILATION_WAS_NOT_SUCCESFUL;  
+  
   static {
     NLS.initialize(EcjExceptionCodes.class);
   }
