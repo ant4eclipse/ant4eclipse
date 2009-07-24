@@ -4,7 +4,6 @@ import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StopWatch;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
@@ -60,21 +59,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     final EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
 
     // Step 5: create CompileJobDescription
-
-    StopWatch stopWatch = new StopWatch();
-    stopWatch.start();
-
     final DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
     compileJobDescription.setSourceFiles(getSourceFilesToCompile(ecjAdditionalCompilerArguments));
     compileJobDescription.setCompilerOptions(getCompilerOptions());
     compileJobDescription.setClassFileLoader(createClassFileLoader(ecjAdditionalCompilerArguments));
 
-    System.err.println("Setup: " + stopWatch.getElapsedTime());
-
     // Step 6: Compile
     final CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
-
-    System.err.println("Compile: " + stopWatch.getElapsedTime());
 
     // Step 7: dump result
     compileJobResult.dumpProblems();
@@ -144,21 +135,30 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // create default
     if (compilerOptions == null) {
 
-      // get the source option
-      getJavac().getSource();
-      // get the target option
-      getJavac().getTarget();
-
       // create compiler options
       compilerOptions = new CompilerOptions();
+
+      // debug
+      if (getJavac().getDebug()) {
+        compilerOptions.produceDebugAttributes = ClassFileConstants.ATTR_SOURCE | ClassFileConstants.ATTR_LINES
+            | ClassFileConstants.ATTR_VARS;
+      } else {
+        compilerOptions.produceDebugAttributes = 0x0;
+      }
+      // TODO
       // see: http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.isv/guide/jdt_api_options.htm#compatibility
-      CompilerOptions.versionToJdkLevel("1.5");
-      compilerOptions.complianceLevel = ClassFileConstants.JDK1_5;
-      compilerOptions.sourceLevel = ClassFileConstants.JDK1_5;
-      compilerOptions.targetJDK = ClassFileConstants.JDK1_5;
+
+      // get the source option
+      compilerOptions.sourceLevel = CompilerOptions.versionToJdkLevel(getJavac().getSource());
+
+      // get the target option
+      long targetLevel = CompilerOptions.versionToJdkLevel(getJavac().getTarget());
+      compilerOptions.complianceLevel = targetLevel;
+      compilerOptions.targetJDK = targetLevel;
     }
 
-    System.err.println(compilerOptions.toString());
+    // TODO:
+    A4ELogging.info("Using the following compile options:\n %s", compilerOptions.toString());
 
     // return the compiler options
     return compilerOptions.getMap();
