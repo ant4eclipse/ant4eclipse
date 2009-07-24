@@ -25,8 +25,6 @@
 		<attribute name="destination" />
 		<sequential>
 
-			<property name="ant4eclipse.contextQualifier" value="321654987" />
-
 			<!-- execute the plug-in project -->
 			<ant4eclipse:executePluginProject workspace="@{workspace}"
 			                                  projectname="@{projectname}"
@@ -159,4 +157,60 @@
 		</sequential>
 	</macrodef>
 
+
+	<!-- =================================
+          target: buildFeature
+         ================================= -->
+	<macrodef name="buildFeature">
+		<attribute name="workspace" />
+		<attribute name="projectname" />
+		<attribute name="targetPlatformId" />
+		<attribute name="destination" />
+		<sequential>
+
+			<ant4eclipse:executeFeatureProject workspacedirectory="@{workspace}"
+			                                   projectname="@{projectname}"
+			                                   targetplatformid="@{targetPlatformId}">
+
+				<ant4eclipse:forRootFeature>
+					<!-- <echo>ant4eclipse:forRootFeature</echo> -->
+				</ant4eclipse:forRootFeature>
+
+				<ant4eclipse:forEachPlugin>
+
+					<antcontrib:if>
+						<istrue value="${executeFeatureProject.plugin.isSource}" />
+						<antcontrib:then>
+							<echo>To Build:</echo>
+							<echo>${executeFeatureProject.plugin.id}</echo>
+							<echo>${executeFeatureProject.plugin.resolvedversion}</echo>
+							<echo>${executeFeatureProject.plugin.file}</echo>
+							<!-- <echo>${executeFeatureProject.plugin.isSource}</echo>
+							<echo>${executeFeatureProject.plugin.file}</echo>
+							<echo>${executeFeatureProject.plugin.filename}</echo>
+							<echo>${executeFeatureProject.plugin.version}</echo>
+							<echo>${executeFeatureProject.plugin.resolvedversion}</echo>
+							<echo>${executeFeatureProject.plugin.downloadsize}</echo>
+							<echo>${executeFeatureProject.plugin.installsize}</echo>
+							<echo>${executeFeatureProject.plugin.windowingsystem}</echo>
+							<echo>${executeFeatureProject.plugin.machinearchitecture}</echo>
+							<echo>${executeFeatureProject.plugin.operatingsystem}</echo>
+							<echo>${executeFeatureProject.plugin.locale}</echo>
+							<echo>${executeFeatureProject.plugin.fragment}</echo>
+							<echo>${executeFeatureProject.plugin.unpack}</echo> -->
+						</antcontrib:then>
+						<antcontrib:else>
+							<echo>To Copy:</echo>
+							<echo>${executeFeatureProject.plugin.id}</echo>
+							<echo>${executeFeatureProject.plugin.resolvedversion}</echo>
+							<echo>${executeFeatureProject.plugin.file}</echo>
+						</antcontrib:else>
+					</antcontrib:if>
+
+				</ant4eclipse:forEachPlugin>
+
+			</ant4eclipse:executeFeatureProject>
+
+		</sequential>
+	</macrodef>
 </project>

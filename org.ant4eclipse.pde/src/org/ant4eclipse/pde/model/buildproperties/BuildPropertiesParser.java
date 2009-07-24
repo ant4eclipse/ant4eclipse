@@ -22,6 +22,8 @@ import java.util.StringTokenizer;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
@@ -87,7 +89,8 @@ public class BuildPropertiesParser {
     final Properties buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
     final FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
     initializeAbstractBuildProperties(buildProperties, featureBuildProperties);
-    featureProjectRole.setBuildProperties(featureBuildProperties);
+    // TODO
+    ((FeatureProjectRoleImpl)featureProjectRole).setBuildProperties(featureBuildProperties);
   }
 
   private static Properties loadBuildProperties(final EclipseProject eclipseProject) {

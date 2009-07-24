@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -42,7 +44,8 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
   public ProjectRole createRole(final EclipseProject project) {
     A4ELogging.debug("FeatureProjectRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
-    final FeatureProjectRole featureProjectRole = new FeatureProjectRole(project);
+    
+    final FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
 
     final File featureDescription = featureProjectRole.getFeatureXml();
 

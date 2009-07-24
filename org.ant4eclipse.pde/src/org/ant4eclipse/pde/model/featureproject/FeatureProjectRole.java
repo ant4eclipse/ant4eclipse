@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.featureproject;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
+import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
 /**
  * <p>
@@ -25,58 +25,13 @@ import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class FeatureProjectRole extends AbstractProjectRole {
-
-  private final EclipseProject   _project;
+public interface FeatureProjectRole extends ProjectRole {
 
   /** PLUGIN_NATURE */
-  public static final String     FEATURE_NATURE            = "org.eclipse.pde.FeatureNature";
+  public static final String FEATURE_NATURE            = "org.eclipse.pde.FeatureNature";
 
   /** PLUGIN_PROJECT_ROLE_NAME */
-  public static final String     FEATURE_PROJECT_ROLE_NAME = "FeatureProjectRole";
-
-  /** the feature */
-  private FeatureManifest        _feature;
-
-  /** the build properties */
-  private FeatureBuildProperties _buildProperties;
-
-  /**
-   * Returns the feature project role. If a feature project role is not set, an exception will be thrown.
-   * 
-   * @return Returns the feature project role.
-   */
-  public static FeatureProjectRole getFeatureProjectRole(final EclipseProject eclipseProject) {
-    Assert.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have FeatureProjectRole!");
-
-    return (FeatureProjectRole) eclipseProject.getRole(FeatureProjectRole.class);
-  }
-
-  /**
-   * Returns whether a feature project role is set or not.
-   * 
-   * @return Returns whether a feature project role is set or not.
-   */
-  public static boolean hasFeatureProjectRole(final EclipseProject eclipseProject) {
-    Assert.notNull(eclipseProject);
-
-    return eclipseProject.hasRole(FeatureProjectRole.class);
-  }
-
-  /**
-   * <p>
-   * Creates a new instance of type FeatureProjectRole.
-   * </p>
-   * 
-   * @param eclipseProject
-   *          the plugin project.
-   */
-  public FeatureProjectRole(final EclipseProject eclipseProject) {
-    super(FEATURE_PROJECT_ROLE_NAME, eclipseProject);
-    Assert.notNull(eclipseProject);
-    this._project = eclipseProject;
-  }
+  public static final String FEATURE_PROJECT_ROLE_NAME = "FeatureProjectRole";
 
   /**
    * <p>
@@ -85,50 +40,51 @@ public class FeatureProjectRole extends AbstractProjectRole {
    * 
    * @return the feature manifest.
    */
-  public FeatureManifest getFeature() {
-    return this._feature;
-  }
-
-  /**
-   * <p>
-   * Sets the feature manifest of feature project.
-   * </p>
-   * 
-   * @param featuremanifest
-   *          the feature manifest to set.
-   */
-  void setFeature(final FeatureManifest featuremanifest) {
-    Assert.notNull(featuremanifest);
-
-    this._feature = featuremanifest;
-  }
+  public FeatureManifest getFeature();
 
   /**
    * @return
    */
-  public boolean hasBuildProperties() {
-    return this._buildProperties != null;
-  }
+  public boolean hasBuildProperties();
 
   /**
    * @return Returns the buildProperties.
    */
-  public FeatureBuildProperties getBuildProperties() {
-    return this._buildProperties;
-  }
+  public FeatureBuildProperties getBuildProperties();
 
   /**
    * <p>
-   * Sets the build properties.
    * </p>
+   * 
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  // TODO: should not be public to the rest of ant4eclipse!
-  public void setBuildProperties(final FeatureBuildProperties buildProperties) {
-    this._buildProperties = buildProperties;
-  }
+  public static class Helper {
 
-  public File getFeatureXml() {
-    return this._project.getChild("feature.xml");
-  }
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param eclipseProject
+     * @return
+     */
+    public static final FeatureProjectRole getFeatureProjectRole(final EclipseProject eclipseProject) {
+      Assert.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
+          + "\" must have FeatureProjectRole!");
 
+      return (FeatureProjectRole) eclipseProject.getRole(FeatureProjectRole.class);
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param eclipseProject
+     * @return
+     */
+    public static final boolean hasFeatureProjectRole(final EclipseProject eclipseProject) {
+      Assert.notNull(eclipseProject);
+
+      return eclipseProject.hasRole(FeatureProjectRole.class);
+    }
+  }
 }

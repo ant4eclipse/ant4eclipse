@@ -13,6 +13,8 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 
+import org.apache.tools.ant.BuildException;
+
 /**
  * <p>
  * Abstract base class for PDE build tasks.
@@ -60,5 +62,12 @@ public abstract class AbstractPdeBuildTask extends AbstractProjectPathTask {
 
   public final String getTargetPlatformId() {
     return _targetPlatformId;
+  }
+
+  public final void requireTargetPlatformIdSet() {
+    if (!isTargetPlatformId()) {
+      // TODO!!
+      throw new BuildException("Attribute targetPlatformId has to be set!");
+    }
   }
 }

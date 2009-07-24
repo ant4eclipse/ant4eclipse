@@ -26,6 +26,7 @@ import org.osgi.framework.Version;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
+// TODO: Move to internal...
 public class FeatureManifest {
 
   /** required feature identifier (eg. com.xyz.myfeature) */
@@ -37,9 +38,7 @@ public class FeatureManifest {
   /** optional displayable label (name) */
   private String       label;
 
-  /**
-   * optional display label identifying the organization providing this component
-   */
+  /** optional display label identifying the organization providing this component */
   private String       _providerName;
 
   /** optional image to use when displaying information about the feature */
@@ -57,26 +56,14 @@ public class FeatureManifest {
   /** optional locale specification */
   private String       _locale;
 
-  /**
-   * optional reference to another feature identifier used to select the default installation location for this feature
-   */
+  /** optional reference to another feature identifier used to select the default installation location for this feature */
   private String       _colocationAffinity;
 
-  /**
-   * optional indication specifying whether this feature can be used as a primary feature
-   */
+  /** optional indication specifying whether this feature can be used as a primary feature */
   private boolean      _primary;
 
-  /**
-   * optional flag that, if "true", indicates that the feature cannot be installed in a group with other features
-   */
+  /** optional flag that, if "true", indicates that the feature cannot be installed in a group with other features */
   private boolean      _exclusive;
-
-  /**
-   * optional identifier of the Eclipse application that is to be used during startup when the declaring feature is the
-   * primary feature
-   */
-  private String       _application;
 
   /**
    * optional identifier that represents the id of the plug-in listed in the feature that is used to carry branding
@@ -84,18 +71,46 @@ public class FeatureManifest {
    */
   private String       _plugin;
 
-  /** list of referenced plugins */
+  /**
+   * optional identifier of the Eclipse application that is to be used during startup when the declaring feature is the
+   * primary feature
+   */
+  private String       _application;
+
+  // install-handler?
+
+  // description?
+
+  // copyright?
+
+  // license?
+
+  // url?
+
+  // includes*
+
+  // requires?
+
+  /** list of referenced plug-ins */
   private List<Plugin> _plugins;
 
+  // data*
+
   /**
-   * Creates a new instance of type Feature.
+   * <p>
+   * Creates a new instance of type FeatureManifest.
+   * </p>
    */
   public FeatureManifest() {
+
+    // initialize plug-in list
     _plugins = new LinkedList<Plugin>();
   }
 
   /**
+   * <p>
    * Returns the name of the application.
+   * </p>
    * 
    * @return The name of the application.
    */
@@ -104,9 +119,10 @@ public class FeatureManifest {
   }
 
   /**
-   * Returns a reference to another feature.
+   * <p>
+   * </p>
    * 
-   * @return A reference to another feature.
+   * @return
    */
   public String getColocationAffinity() {
     return _colocationAffinity;
@@ -316,15 +332,19 @@ public class FeatureManifest {
     _plugins.add(plugin);
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   */
   public static class Plugin {
+
     /** required plug-in identifier */
     private String  _id;
 
     /** required plug-in version */
     private Version _version;
-
-    /** effective version (that is version with replaced 'qualifier') **/
-    private String  _effectiveVersion;
 
     /** optional specification indicating if this entry is a plug-in fragment */
     private boolean _fragment = false;
@@ -359,29 +379,64 @@ public class FeatureManifest {
      */
     private boolean _unpack   = true;
 
+    /** effective version (that is version with replaced 'qualifier') **/
+    private String  _effectiveVersion;
+
     /**
+     * <p>
      * Creates a new instance of type Plugin.
+     * </p>
      */
     public Plugin() {
       super();
     }
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getDownloadSize() {
       return _downloadSize;
     }
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean isFragment() {
       return _fragment;
     }
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getId() {
       return _id;
     }
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getInstallSize() {
       return _installSize;
     }
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getLocale() {
       return _locale;
     }

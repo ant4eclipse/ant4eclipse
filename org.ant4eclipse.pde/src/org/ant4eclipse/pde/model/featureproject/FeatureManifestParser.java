@@ -20,7 +20,7 @@ import org.osgi.framework.Version;
 
 /**
  * <p>
- * Implements a parser for feature mainfest files.
+ * Implements a parser for feature manifest files.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
