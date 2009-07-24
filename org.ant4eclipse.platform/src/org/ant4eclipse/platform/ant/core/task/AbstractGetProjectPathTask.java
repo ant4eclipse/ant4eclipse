@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.task;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.GetPathComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
@@ -21,8 +20,11 @@ import org.ant4eclipse.platform.ant.core.delegate.GetPathDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
 
 /**
  * <p>
@@ -58,7 +60,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
    * Resolves the current path.
    * </p>
    * 
-   * @return A list of resolved pathes.
+   * @return A list of resolved pathes. Not <code>null</code>.
    */
   protected abstract File[] resolvePath();
 
