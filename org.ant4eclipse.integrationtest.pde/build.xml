@@ -25,7 +25,7 @@
          ================================= -->
 	<target name="build">
 
-		<delete dir="d:/plugins" quiet="true" />
+		<!-- <delete dir="d:/plugins" quiet="true" />
 		<mkdir dir="d:/plugins" />
 
 		<buildPlugin workspace="${basedir}/workspace"
@@ -36,7 +36,12 @@
 		<buildPlugin workspace="${basedir}/workspace"
 		             projectname="testproject"
 		             targetplatformid="target.platform"
-		             destination="d:/plugins" />
+		             destination="d:/plugins" /> -->
+
+		<buildFeature workspace="${basedir}/workspace"
+		              projectname="test.feature"
+		              targetplatformid="target.platform"
+		              destination="d:/plugins" />
 
 	</target>
 
