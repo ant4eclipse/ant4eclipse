@@ -68,11 +68,18 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
    * {@inheritDoc}
    */
   @Override
-  public void doExecute() {
-
+  protected void preconditions() throws BuildException {
+    super.preconditions();
     // check requires attributes
     requireWorkspaceAndProjectNameSet();
     requirePathIdOrPropertySet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void doExecute() {
 
     // resolve path
     final File[] resolvedPath = resolvePath();
