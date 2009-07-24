@@ -9,25 +9,39 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.internal.tools;
+package org.ant4eclipse.cdt.ant;
 
-import org.ant4eclipse.platform.internal.tools.PlatformReferencedProjectsResolver;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
+
+import org.ant4eclipse.cdt.internal.tools.CdtUtilities;
+
+import org.apache.tools.ant.BuildException;
+
+import java.io.File;
 
 /**
- * <p>Resolver implementation for the cdt. Currently the cdt doesn't support any kind of specific containers 
- * used to access other projects, so the referenced projects are used in general.</p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 //@com.kasisoft.lgpl.tools.diagnostic.KDiagnostic(loggername="cdt")
-public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjectsResolver {
+public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
 
   /**
    * {@inheritDoc}
    */
-  public boolean canHandle(EclipseProject project) {
-    return CdtUtilities.isCRelatedProject(project);
+  protected void preconditions() throws BuildException {
+    super.preconditions();
+    if (!CdtUtilities.isCRelatedProject(getEclipseProject())) {
+      throw new BuildException(String.format("The project '%s' must have the c or c++ project role!", getEclipseProject()
+          .getSpecifiedName()));
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  protected File[] resolvePath() {
+    return new File[0];
   }
 
 } /* ENDCLASS */

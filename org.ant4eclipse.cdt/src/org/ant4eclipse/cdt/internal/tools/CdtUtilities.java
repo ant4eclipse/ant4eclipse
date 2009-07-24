@@ -23,6 +23,7 @@ import org.ant4eclipse.cdt.model.project.CProjectRole;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
+//@com.kasisoft.lgpl.tools.diagnostic.KDiagnostic(loggername="cdt")
 public class CdtUtilities {
 
   /**
