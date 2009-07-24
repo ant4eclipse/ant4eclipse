@@ -16,6 +16,9 @@ import java.io.InputStream;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
+
+import org.ant4eclipse.pde.internal.model.featureproject.FeatureManifestImpl;
+
 import org.osgi.framework.Version;
 
 /**
@@ -41,7 +44,7 @@ public class FeatureManifestParser {
   public static FeatureManifest parseFeature(InputStream inputStream) {
     Assert.notNull(inputStream);
 
-    FeatureManifest feature = new FeatureManifest();
+    FeatureManifestImpl feature = new FeatureManifestImpl();
 
     XQueryHandler queryhandler = new XQueryHandler();
 
@@ -101,7 +104,7 @@ public class FeatureManifestParser {
     String[] pluginUnpacks = pluginUnpackQuery.getResult();
 
     for (int i = 0; i < pluginIds.length; i++) {
-      FeatureManifest.Plugin plugin = new FeatureManifest.Plugin();
+      FeatureManifestImpl.PluginImpl plugin = new FeatureManifestImpl.PluginImpl();
       plugin.setId(pluginIds[i]);
       plugin.setVersion(new Version(pluginVersions[i]));
       plugin.setFragment(Boolean.valueOf(pluginFragments[i]).booleanValue());
