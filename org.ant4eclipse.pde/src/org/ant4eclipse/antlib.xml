@@ -4,5 +4,5 @@
 	<typedef name="executePluginProject" classname="org.ant4eclipse.pde.ant.ExecutePluginProjectTask" />
 	<typedef name="executeFeatureProject" classname="org.ant4eclipse.pde.ant.ExecuteFeatureProjectTask" />
 	<typedef name="executeLibrary" classname="org.ant4eclipse.pde.ant.ExecuteLibraryTask" />
-	<typedef name="pluginProjectFileSet" classname="org.ant4eclipse.pde.ant.PluginProjectRelativeFileSet" />
+	<typedef name="pdeProjectFileSet" classname="org.ant4eclipse.pde.ant.PdeProjectFileSet" />
 </antlib>

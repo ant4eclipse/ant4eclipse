@@ -21,7 +21,7 @@ import org.apache.tools.ant.types.resources.FileResource;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection {
+public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection {
 
   private static final String    SEPARATOR           = ",";
 
@@ -41,7 +41,7 @@ public class PluginProjectRelativeFileSet extends AbstractAnt4EclipseDataType im
 
   private List<Resource>         _resourceList;
 
-  public PluginProjectRelativeFileSet(final Project project) {
+  public PdeProjectFileSet(final Project project) {
     super(project);
     _eclipseProjectDelegate = new EclipseProjectDelegate(this);
     _resourceList = new LinkedList<Resource>();

@@ -17,7 +17,7 @@
       [Enter License Description here.]
    </license>
 
-   <includes
+   <!-- <includes
          id="org.eclipse.help"
          version="0.0.0"/>
 
@@ -26,7 +26,7 @@
       <import plugin="com.ibm.icu.source"/>
       <import plugin="com.jcraft.jsch"/>
       <import feature="org.eclipse.help.source" version="1.1.0.v20090602-7e7eFAlFEx2XZoYqwI68e2F"/>
-   </requires>
+   </requires> -->
 
    <plugin
          id="org.eclipse.osgi"
@@ -41,6 +41,13 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+         
+   <plugin
+         id="example_bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>         
 
    <plugin
          id="org.eclipse.osgi.services"

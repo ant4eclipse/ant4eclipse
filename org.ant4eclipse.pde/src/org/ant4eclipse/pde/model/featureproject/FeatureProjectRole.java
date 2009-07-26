@@ -40,10 +40,14 @@ public interface FeatureProjectRole extends ProjectRole {
    * 
    * @return the feature manifest.
    */
-  public FeatureManifest getFeature();
+  public FeatureManifest getFeatureManifest();
 
   /**
-   * @return
+   * <p>
+   * Returns <code>true</code> if the feature project has build properties, <code>false</code> otherwise.
+   * </p>
+   * 
+   * @return <code>true</code> if the feature project has build properties, <code>false</code> otherwise.
    */
   public boolean hasBuildProperties();
 

@@ -225,8 +225,8 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * @return all the referenced plugins.
    */
-  public Plugin[] getPlugins() {
-    return _plugins.toArray(new Plugin[0]);
+  public List<Plugin> getPlugins() {
+    return _plugins;
   }
 
   /**

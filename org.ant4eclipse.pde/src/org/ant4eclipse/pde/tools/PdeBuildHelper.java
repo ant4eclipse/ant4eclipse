@@ -34,28 +34,29 @@ public class PdeBuildHelper {
    */
   public static final String CONTEXT_QUALIFIER_PROPERTY = "ant4eclipse.contextQualifier";
 
-  /**
-   * Returns the destination directory for the given plugin, that is destDir/plugins/pluginFileName, where
-   * pluginFileName is <code>smybolicname_version</code>
-   * 
-   * <p>
-   * If the directory does not exist it will be created. If the directory cannot be created a BuildException will be
-   * thrown
-   * </p>
-   * 
-   * @destdir An existing destination directory.
-   * @param effectiveVersion
-   *          Plugin version - must be "resolved", i.e. with replaced qualifier
-   * @return An existing directory for the plugin
-   */
-  public static File getExistingPluginDestDirectory(File destdir, String symbolicPluginName, Version effectiveVersion) {
-    Assert.notNull(destdir);
-    Assert.notNull(symbolicPluginName);
-    Assert.notNull(effectiveVersion);
-
-    File pluginsDir = getExistingDirectory(destdir, "plugins", symbolicPluginName, effectiveVersion);
-    return pluginsDir;
-  }
+  // /**
+  // * Returns the destination directory for the given plugin, that is destDir/plugins/pluginFileName, where
+  // * pluginFileName is <code>smybolicname_version</code>
+  // *
+  // * <p>
+  // * If the directory does not exist it will be created. If the directory cannot be created a BuildException will be
+  // * thrown
+  // * </p>
+  // *
+  // * @destdir An existing destination directory.
+  // * @param effectiveVersion
+  // * Plugin version - must be "resolved", i.e. with replaced qualifier
+  // * @return An existing directory for the plugin
+  // */
+  // public static File getExistingPluginDestDirectory(File destdir, String symbolicPluginName, Version
+  // effectiveVersion) {
+  // Assert.notNull(destdir);
+  // Assert.notNull(symbolicPluginName);
+  // Assert.notNull(effectiveVersion);
+  //
+  // File pluginsDir = getExistingDirectory(destdir, "plugins", symbolicPluginName, effectiveVersion);
+  // return pluginsDir;
+  // }
 
   /**
    * Returns the destination directory for the given feature, that is destDir/features/featureFileName, where

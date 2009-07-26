@@ -4,41 +4,52 @@
          xmlns:ant4eclipse="antlib:org.ant4eclipse"
          xmlns:antcontrib="antlib:net.sf.antcontrib">
 
+	<!-- define antcontrib tasks -->
 	<taskdef uri="antlib:net.sf.antcontrib"
 	         resource="net/sf/antcontrib/antlib.xml" />
 
+	<!-- define ant4eclipse tasks -->
 	<taskdef uri="antlib:org.ant4eclipse"
 	         resource="org/ant4eclipse/antlib.xml" />
-
-	<!-- define general properties -->
-	<property name="build.compiler"
-	          value="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
-
 
 	<!-- =================================
           target: buildPlugin
          ================================= -->
-	<macrodef name="buildPlugin">
-		<attribute name="workspace" />
-		<attribute name="projectname" />
-		<attribute name="targetPlatformId" />
-		<attribute name="destination" />
+	<macrodef name="buildPlugin" description="builds a single plug-in project.">
+		<attribute name="workspaceDirectory"
+		           description="Absolute path of the workspace directory." />
+		<attribute name="projectName"
+		           description="The name of the eclipse plug-in project." />
+		<attribute name="targetPlatformId"
+		           description="The target platform id." />
+		<attribute name="destination"
+		           description="Name of the directory that will contain the plugin after building (same as the 'Destination directory' in the PDE-Export wizzard in Eclipse). The plugin will be built in to destDir/plugins/pluginName." />
+		<attribute name="packageAsJar"
+		           default="true"
+		           description="If set to true the feature will be packaged as a jar file. Otherwise it will be an exploded directory" />
 		<sequential>
 
-			<!-- execute the plug-in project -->
-			<ant4eclipse:executePluginProject workspace="@{workspace}"
-			                                  projectname="@{projectname}"
+			<!-- step 1: definition of some directory properties -->
+			<property name="plugins.directory" value="plugins" />
+			<property name="temp.directory" value="temp" />
+			<property name="self.directory" value="@dot" />
+
+
+			<!-- step 2: execute the plug-in project -->
+			<ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
+			                                  projectName="@{projectName}"
 			                                  targetPlatformId="@{targetPlatformId}">
 
-				<!-- scrub all output directories -->
+				<!-- step 2.1: scrub all output directories -->
 				<ant4eclipse:forEachOutputDirectory>
-					<echo>Scrubbing directory "${executePluginProject.output.directory}"</echo>
+					<echo>Scrubbing directory '${executePluginProject.output.directory}'</echo>
+
 					<delete dir="${executePluginProject.output.directory}"
 					        quiet="true" />
 					<mkdir dir="${executePluginProject.output.directory}" />
 				</ant4eclipse:forEachOutputDirectory>
 
-				<!-- compile the sources -->
+				<!-- step 2.2: compile the sources -->
 				<ant4eclipse:forProject>
 					<echo>Compiling pde project '${executePluginProject.project.name}'</echo>
 					<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
@@ -48,7 +59,8 @@
 
 					<javac destdir="${executePluginProject.default.output.directory}"
 					       debug="on"
-					       source="1.5">
+					       source="1.5"
+					       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
 
 						<src refid="executePluginProject.source.directories.path" />
 						<bootclasspath refid="executePluginProject.boot.classpath.path" />
@@ -59,9 +71,10 @@
 					</javac>
 				</ant4eclipse:forProject>
 
-				<!-- copy all ressources -->
+				<!-- step 2.3: copy all ressources from the source folders to the output folders -->
 				<ant4eclipse:forEachSourceDirectory>
-					<echo>Copying resources from directory '${executePluginProject.source.directory}'</echo>
+					<echo>Copying resources from directory '${executePluginProject.source.directory}' to '${executePluginProject.output.directory}'</echo>
+
 					<copy todir="${executePluginProject.output.directory}">
 						<fileset dir="${executePluginProject.source.directory}">
 							<exclude name="**/*.java" />
@@ -69,7 +82,7 @@
 					</copy>
 				</ant4eclipse:forEachSourceDirectory>
 
-				<!-- build libraries -->
+				<!-- step 2.4: build the libraries -->
 				<ant4eclipse:forEachLibrary>
 
 					<!-- special case: "self"-library -->
@@ -77,14 +90,15 @@
 						<istrue value="${executePluginProject.library.isSelf}" />
 						<antcontrib:then>
 
-							<ant4eclipse:executeLibrary workspace="@{workspace}"
+							<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
 							                            projectname="${executePluginProject.project.name}"
 							                            libraryname="${executePluginProject.library.name}"
 							                            targetPlatformId="@{targetPlatformId}">
 
 								<ant4eclipse:forEachOutputDirectory>
 									<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
-									<copy todir="${executePluginProject.project.directory}/@dot">
+
+									<copy todir="${executePluginProject.project.directory}/${self.directory}">
 										<fileset dir="${executeLibrary.output.directory}" />
 									</copy>
 								</ant4eclipse:forEachOutputDirectory>
@@ -95,62 +109,75 @@
 						<!-- default case: "ordinary" library -->
 						<antcontrib:else>
 
-							<ant4eclipse:executeLibrary workspace="@{workspace}"
+							<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
 							                            projectname="${executePluginProject.project.name}"
 							                            libraryname="${executePluginProject.library.name}"
 							                            targetPlatformId="@{targetPlatformId}">
 
 								<ant4eclipse:forEachOutputDirectory>
 									<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
-									<copy todir="@{destination}/temp/${executePluginProject.library.name}">
+									<copy todir="@{destination}/${temp.directory}/${executePluginProject.library.name}">
 										<fileset dir="${executeLibrary.output.directory}" />
 									</copy>
 								</ant4eclipse:forEachOutputDirectory>
 
 							</ant4eclipse:executeLibrary>
 
-							<delete file="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
+							<delete file="@{destination}/${plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
 							        quiet="true" />
-							<mkdir dir="@{destination}/plugins/${executePluginProject.library.name}" />
+							<mkdir dir="@{destination}/${plugins.directory}/${executePluginProject.library.name}" />
 
-							<jar destfile="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
-							     basedir="@{destination}/temp/${executePluginProject.library.name}" />
+							<jar destfile="@{destination}/${plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
+							     basedir="@{destination}/${temp.directory}/${executePluginProject.library.name}" />
 
-							<move file="@{destination}/plugins/${executePluginProject.library.name}/${executePluginProject.library.name}"
+							<move file="@{destination}/${plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
 							      todir="${executePluginProject.project.directory}" />
 
-							<delete dir="@{destination}/plugins/${executePluginProject.library.name}" />
+							<delete dir="@{destination}/${plugins.directory}/${executePluginProject.library.name}" />
+							<delete dir="@{destination}/${temp.directory}/" />
 
 						</antcontrib:else>
 					</antcontrib:if>
 
 				</ant4eclipse:forEachLibrary>
 
+				<!-- step 2.5: pack the bundle -->
 				<ant4eclipse:forProject>
 
-					<copy todir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}"
+					<!-- step 2.5.1: copy the (in the build.properties) specified content to the destination directory -->
+					<copy todir="@{destination}/${plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}"
 					      overwrite="true">
-						<ant4eclipse:pluginProjectFileSet workspace="@{workspace}"
-						                                  projectname="${executePluginProject.project.name}"
-						                                  includes="${executePluginProject.build.properties.binary.includes}"
-						                                  excludes="${executePluginProject.build.properties.binary.excludes}" />
+
+						<!-- file set defined by the projects build properties -->
+						<ant4eclipse:pdeProjectFileSet workspace="@{workspaceDirectory}"
+						                               projectname="${executePluginProject.project.name}"
+						                               includes="${executePluginProject.build.properties.binary.includes}"
+						                               excludes="${executePluginProject.build.properties.binary.excludes}" />
 					</copy>
 
-					<delete dir="${executePluginProject.project.directory}/@dot"
+					<delete dir="${executePluginProject.project.directory}/${self.directory}"
 					        quiet="true" />
 
 					<!-- 'patch' the manifest with the effective bundle version -->
-					<manifest file="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
+					<manifest file="@{destination}/${plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF"
 					          mode="update">
 						<attribute name="Bundle-Version"
 						           value="${executePluginProject.bundle.effective.version}" />
 					</manifest>
 
-					<jar destfile="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
-					     basedir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}"
-					     manifest="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF" />
+					<antcontrib:if>
+						<istrue value="@{packageAsJar}" />
+						<antcontrib:then>
 
-					<!-- <delete dir="@{destination}/plugins/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" /> -->
+							<jar destfile="@{destination}/${plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}.jar"
+							     basedir="@{destination}/${plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}"
+							     manifest="@{destination}/${plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}/META-INF/MANIFEST.MF" />
+
+							<delete dir="@{destination}/${plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.effective.version}" />
+
+						</antcontrib:then>
+					</antcontrib:if>
+
 				</ant4eclipse:forProject>
 
 			</ant4eclipse:executePluginProject>
@@ -159,55 +186,95 @@
 
 
 	<!-- =================================
-          target: buildFeature
+          target      : buildFeature
+          description : Builds an eclipse feature project. Each contained plug-in project will be build.
          ================================= -->
 	<macrodef name="buildFeature">
-		<attribute name="workspace" />
-		<attribute name="projectname" />
+		<attribute name="workspaceDirectory" />
+		<attribute name="projectName" />
 		<attribute name="targetPlatformId" />
 		<attribute name="destination" />
+		<attribute name="skipBuildFeature" default="false" />
+		<attribute name="packageAsJar" default="true" />
 		<sequential>
 
-			<ant4eclipse:executeFeatureProject workspacedirectory="@{workspace}"
-			                                   projectname="@{projectname}"
+			<ant4eclipse:executeFeatureProject workspaceDirectory="@{workspaceDirectory}"
+			                                   projectName="@{projectName}"
 			                                   targetplatformid="@{targetPlatformId}">
 
+				<!-- scrub destination directory  -->
 				<ant4eclipse:forRootFeature>
-					<!-- <echo>ant4eclipse:forRootFeature</echo> -->
+					<echo>Scrubbing directory '@{destination}'</echo>
+
+					<delete dir="@{destination}" quiet="true" />
+					<mkdir dir="@{destination}" />
 				</ant4eclipse:forRootFeature>
 
+				<!-- process each defined plug-in  -->
 				<ant4eclipse:forEachPlugin>
-
 					<antcontrib:if>
 						<istrue value="${executeFeatureProject.plugin.isSource}" />
 						<antcontrib:then>
-							<echo>To Build:</echo>
-							<echo>${executeFeatureProject.plugin.id}</echo>
-							<echo>${executeFeatureProject.plugin.resolvedversion}</echo>
-							<echo>${executeFeatureProject.plugin.file}</echo>
-							<!-- <echo>${executeFeatureProject.plugin.isSource}</echo>
-							<echo>${executeFeatureProject.plugin.file}</echo>
-							<echo>${executeFeatureProject.plugin.filename}</echo>
-							<echo>${executeFeatureProject.plugin.version}</echo>
-							<echo>${executeFeatureProject.plugin.resolvedversion}</echo>
-							<echo>${executeFeatureProject.plugin.downloadsize}</echo>
-							<echo>${executeFeatureProject.plugin.installsize}</echo>
-							<echo>${executeFeatureProject.plugin.windowingsystem}</echo>
-							<echo>${executeFeatureProject.plugin.machinearchitecture}</echo>
-							<echo>${executeFeatureProject.plugin.operatingsystem}</echo>
-							<echo>${executeFeatureProject.plugin.locale}</echo>
-							<echo>${executeFeatureProject.plugin.fragment}</echo>
-							<echo>${executeFeatureProject.plugin.unpack}</echo> -->
+							<echo>Building plug-in project '${executeFeatureProject.plugin.filename} (${executeFeatureProject.plugin.id}_${executeFeatureProject.plugin.resolvedversion})' </echo>
+
+							<buildPlugin workspaceDirectory="@{workspaceDirectory}"
+							             projectName="${executeFeatureProject.plugin.filename}"
+							             targetplatformid="@{targetPlatformId}"
+							             destination="@{destination}" />
 						</antcontrib:then>
 						<antcontrib:else>
-							<echo>To Copy:</echo>
-							<echo>${executeFeatureProject.plugin.id}</echo>
-							<echo>${executeFeatureProject.plugin.resolvedversion}</echo>
-							<echo>${executeFeatureProject.plugin.file}</echo>
+							<echo>Copying bundle '${executeFeatureProject.plugin.file} (${executeFeatureProject.plugin.id}_${executeFeatureProject.plugin.resolvedversion})' </echo>
+
+							<copy todir="@{destination}/${plugins.directory}"
+							      file="${executeFeatureProject.plugin.file}"
+							      flatten="true" />
 						</antcontrib:else>
 					</antcontrib:if>
 
 				</ant4eclipse:forEachPlugin>
+
+				<!-- Step 3: Build feature itself -->
+				<ant4eclipse:forRootFeature>
+
+					<!-- skip this step if parameter '@{skipBuildFeature}' is 'true' -->
+					<antcontrib:if>
+						<isfalse value="@{skipBuildFeature}" />
+						<antcontrib:then>
+
+							<!-- Step 3.1: Copy all files defined in the build.properties to the destination directory  -->
+							<copy todir="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}"
+							      overwrite="true">
+
+								<!-- file set defined by the projects build properties -->
+								<ant4eclipse:pdeProjectFileSet workspace="@{workspaceDirectory}"
+								                               projectname="@{projectName}"
+								                               includes="${executeFeatureProject.build.properties.binary.includes}"
+								                               excludes="${executeFeatureProject.build.properties.binary.excludes}" />
+							</copy>
+
+							<!-- Step 3.2: Patch the feature.xml -->
+							<echo>${executeFeatureProject.feature.plugins.effective.versions}</echo>
+
+							<!-- Step 3.3: Package the feature as a jar -->
+							<antcontrib:if>
+
+								<!-- skip this step if 'packageAsJar' is 'false' -->
+								<istrue value="@{packageAsJar}" />
+								<antcontrib:then>
+
+									<!-- jar the feature -->
+									<jar destfile="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}.jar"
+									     basedir="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}" />
+
+									<!-- delete the base directory -->
+									<delete dir="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}" />
+
+								</antcontrib:then>
+							</antcontrib:if>
+						</antcontrib:then>
+					</antcontrib:if>
+				</ant4eclipse:forRootFeature>
+
 
 			</ant4eclipse:executeFeatureProject>
 

@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
@@ -26,6 +27,8 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
+
+import javax.security.auth.login.Configuration;
 
 /**
  * <p>
@@ -39,16 +42,49 @@ import org.eclipse.osgi.service.resolver.StateObjectFactory;
 public final class TargetPlatformImpl implements TargetPlatform {
 
   /** the bundle set that contains the plug-in projects */
-  private final BundleSet     _pluginProjectSet;
+  private final BundleSet             _pluginProjectSet;
 
   /** contains a list of all the binary bundle sets that belong to this target location */
-  private List<BundleSet>     _binaryBundleSets;
+  private List<BundleSet>             _binaryBundleSets;
 
-  /** - */
-  TargetPlatformConfiguration _configuration;
+  /** the target platform configuration */
+  private TargetPlatformConfiguration _configuration;
 
-  /** - */
-  private State               _state;
+  /** the state object */
+  private State                       _state;
+
+  /**
+   * <p>
+   * Creates a new instance of type {@link TargetPlatformImpl}.
+   * </p>
+   * 
+   * @param pluginProjectSet
+   *          the set of all plug-in projects contained in the workspace, may <code>null</code>.
+   * @param binaryBundleSets
+   *          an array of bundle sets that contain the binary bundles, may <code>null</code>.
+   * @param configuration
+   *          the {@link Configuration} of this target platform
+   */
+  public TargetPlatformImpl(final BundleSet pluginProjectSet, final BundleSet[] binaryBundleSets,
+      final TargetPlatformConfiguration configuration) {
+    Assert.notNull(configuration);
+
+    // set the plug-in project set
+    this._pluginProjectSet = pluginProjectSet;
+
+    // set the binary bundle sets
+    if (binaryBundleSets != null) {
+      this._binaryBundleSets = Arrays.asList(binaryBundleSets);
+    } else {
+      this._binaryBundleSets = new LinkedList<BundleSet>();
+    }
+
+    // set the configuration
+    this._configuration = configuration;
+
+    // initialize
+    initialize();
+  }
 
   /**
    * <p>
@@ -57,49 +93,35 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * 
    * @param pluginProjectSet
    *          the bundle set that contains the plug-in projects
-   * @param binaryBundleSets
-   *          the binary bundle sets that belong to this target location
-   */
-  public TargetPlatformImpl(final BundleSet pluginProjectSet, final BundleSet[] binaryBundleSets,
-      final TargetPlatformConfiguration configuration) {
-    this._pluginProjectSet = pluginProjectSet;
-
-    if (binaryBundleSets != null) {
-      this._binaryBundleSets = Arrays.asList(binaryBundleSets);
-    } else {
-      this._binaryBundleSets = new LinkedList<BundleSet>();
-    }
-
-    this._configuration = configuration;
-
-    initialize();
-  }
-
-  /**
-   * <p>
-   * Creates a new instance of type TargetPlatform.
-   * </p>
-   * 
-   * @param pluginProjectSet
-   *          the bundle set that contains the plug-in projects
    * @param binaryPluginSet
    *          the binary bundle sets that belong to this target location
+   * @param configuration
+   *          the {@link Configuration} of this target platform
    */
   public TargetPlatformImpl(final BundleSet pluginProjectSet, final BundleSet binaryPluginSet,
       final TargetPlatformConfiguration configuration) {
+
+    // delegate
     this(pluginProjectSet, (binaryPluginSet != null ? new BundleSet[] { binaryPluginSet } : null), configuration);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public State getState() {
     return this._state;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public TargetPlatformConfiguration getTargetPlatformConfiguration() {
     return this._configuration;
   }
 
   /**
-   * {@inheritDoc}
+   * <p>
+   * </p>
    */
   private void initialize() {
     if (this._state == null) {
@@ -117,23 +139,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
   }
 
-  // /**
-  // * {@inheritDoc}
-  // */
-  // public void invalidate() {
-  // this._isInitialised = false;
-  //
-  // if (this._pluginProjectSet != null) {
-  // this._pluginProjectSet.invalidate();
-  // }
-  //
-  // for (final Iterator iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
-  // ((BundleSet) iterator.next()).invalidate();
-  // }
-  // }
-
   /**
-   * {@inheritDoc}
+   * <p>
+   * </p>
+   * 
    */
   public void refresh() {
 
@@ -142,58 +151,63 @@ public final class TargetPlatformImpl implements TargetPlatform {
   }
 
   /**
-   * {@inheritDoc}
+   * <p>
+   * Returns a list with a {@link BundleDescription BundleDescriptions} of each bundle that is contained in the plug-in
+   * project set or the binary bundle sets.
+   * </p>
+   * 
+   * @param preferProjects
+   *          indicates of plug-in projects should be preferred over binary bundles or not.
+   * @return a list with a {@link BundleDescription BundleDescriptions} of each bundle that is contained in the plug-in
+   *         project set or the binary bundle sets.
    */
-  private BundleDescription[] getAllBundleDescriptions(final boolean preferProjects) {
+  private List<BundleDescription> getAllBundleDescriptions(final boolean preferProjects) {
 
+    // step 1: create the result list
     final List<BundleDescription> result = new LinkedList<BundleDescription>();
 
+    // step 2: add plug-in projects from the plug-in projects list to the result
     if (this._pluginProjectSet != null) {
-      final BundleDescription[] descriptions = this._pluginProjectSet.getAllBundleDescriptions();
-      for (int i = 0; i < descriptions.length; i++) {
-        final BundleDescription description = descriptions[i];
-        result.add(description);
-      }
+      result.addAll(Arrays.asList(this._pluginProjectSet.getAllBundleDescriptions()));
     }
 
-    for (final Iterator<BundleSet> iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
-      final BundleSet bundleSet = iterator.next();
+    // step 3: add bundles from binary bundle sets to the result
+    for (BundleSet binaryBundleSet : _binaryBundleSets) {
 
-      final BundleDescription[] descriptions = bundleSet.getAllBundleDescriptions();
-
-      for (int i = 0; i < descriptions.length; i++) {
-        final BundleDescription description = descriptions[i];
+      for (BundleDescription bundleDescription : binaryBundleSet.getAllBundleDescriptions()) {
         if ((this._pluginProjectSet != null) && preferProjects
-            && this._pluginProjectSet.contains(description.getSymbolicName())) {
+            && this._pluginProjectSet.contains(bundleDescription.getSymbolicName())) {
           // TODO: WARNING AUSGEBEN?
         } else {
-          result.add(description);
+          result.add(bundleDescription);
         }
       }
     }
 
-    return result.toArray(new BundleDescription[result.size()]);
+    // step 4: return the result
+    return result;
   }
 
   /**
-   * {@inheritDoc}
+   * <p>
+   * </p>
+   * 
+   * @return
    */
   private State resolve() {
 
-    // create new state
+    // step 1: create new state
     final State state = StateObjectFactory.defaultFactory.createState(true);
 
-    // add all bundle descriptions to the state
-    final BundleDescription[] descriptions = getAllBundleDescriptions(this._configuration.isPreferProjects());
-    for (int i = 0; i < descriptions.length; i++) {
-      final BundleDescription description = descriptions[i];
-      final BundleDescription copy = StateObjectFactory.defaultFactory.createBundleDescription(description);
-      copy.setUserObject(description.getUserObject());
+    for (BundleDescription bundleDescription : getAllBundleDescriptions(this._configuration.isPreferProjects())) {
+      final BundleDescription copy = StateObjectFactory.defaultFactory.createBundleDescription(bundleDescription);
+      copy.setUserObject(bundleDescription.getUserObject());
       if (!state.addBundle(copy)) {
-        throw new RuntimeException("Could not add bundle '" + description + "' to state!");
+        // TODO: NLS
+        throw new RuntimeException("Could not add bundle '" + bundleDescription + "' to state!");
       }
       if (A4ELogging.isTraceingEnabled()) {
-        A4ELogging.trace("Copied bundle to state: '%s'", getBundleInfo(description));
+        A4ELogging.trace("Copied bundle to state: '%s'", getBundleInfo(bundleDescription));
       }
     }
 

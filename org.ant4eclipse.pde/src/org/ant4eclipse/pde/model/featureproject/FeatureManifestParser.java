@@ -31,15 +31,14 @@ import org.osgi.framework.Version;
 public class FeatureManifestParser {
 
   /**
+   * <p>
    * Creates a FeatureManifest instance from the supplied content.
+   * </p>
    * 
    * @param inputStream
    *          The stream which provides the content.
    * 
    * @return a Feature instance providing the content.
-   * 
-   * @throws FileParserException
-   *           Parsing failed for some reason.
    */
   public static FeatureManifest parseFeature(InputStream inputStream) {
     Assert.notNull(inputStream);

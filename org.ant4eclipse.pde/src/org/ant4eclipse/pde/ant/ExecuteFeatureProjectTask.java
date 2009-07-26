@@ -14,10 +14,12 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
@@ -39,6 +41,7 @@ import org.osgi.framework.Version;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -54,12 +57,20 @@ import java.util.Map;
 public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements DynamicElement,
     MacroExecutionComponent<String> {
 
+  /** the plug-in scope */
   private static final String                  SCOPE_PLUGIN       = "SCOPE_PLUGIN";
 
+  /** the root feature scope */
   private static final String                  SCOPE_ROOT_FEATURE = "SCOPE_ROOT_FEATURE";
 
   /** the macro execution delegate */
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
+
+  /** - */
+  private List<PluginAndBundleDescription>     _pluginAndBundleDescriptions;
+
+  /** - */
+  private String                               _pluginsEffectiveVersions;
 
   /**
    * <p>
@@ -107,6 +118,9 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
     _macroExecutionDelegate.setPrefix(prefix);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Object createDynamicElement(final String name) {
 
     if ("ForEachPlugin".equalsIgnoreCase(name)) {
@@ -123,8 +137,21 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
    */
   public void doExecute() {
 
-    // 2. resolve (ordered) BundleDescriptions for plug-ins
-    final PluginAndBundleDescription[] pluginAndBundleDescriptions = getBundleDesciptionsForFeaturePlugins();
+    // find the plug-ins
+    _pluginAndBundleDescriptions = getPluginAndBundleDescriptions();
+
+    StringBuilder builder = new StringBuilder();
+    for (Iterator<PluginAndBundleDescription> iterator = _pluginAndBundleDescriptions.iterator(); iterator.hasNext();) {
+      PluginAndBundleDescription description = iterator.next();
+      builder.append(description.getPlugin().getId());
+      builder.append("=");
+      builder.append(PdeBuildHelper.resolveVersion(description.getBundleDescription().getVersion(), PdeBuildHelper
+          .getResolvedContextQualifier()));
+      if (iterator.hasNext()) {
+        builder.append(";");
+      }
+    }
+    _pluginsEffectiveVersions = builder.toString();
 
     // execute scoped macro definitions
     for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
@@ -134,17 +161,29 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
       } else if (SCOPE_PLUGIN.equals(scopedMacroDefinition.getScope())) {
         executePluginScopedMacroDef(scopedMacroDefinition.getMacroDef());
       } else {
-        // TODO
+        // TODO: NLS
         throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
       }
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  protected void preconditions() throws BuildException {
+    requireWorkspaceAndProjectNameSet();
+    requireTargetPlatformIdSet();
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param macroDef
+   */
   private void executePluginScopedMacroDef(MacroDef macroDef) {
 
-    PluginAndBundleDescription[] pluginAndBundleDescriptions = getBundleDesciptionsForFeaturePlugins();
-
-    for (final PluginAndBundleDescription pluginAndBundleDescription : pluginAndBundleDescriptions) {
+    for (final PluginAndBundleDescription pluginAndBundleDescription : _pluginAndBundleDescriptions) {
 
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
@@ -212,11 +251,41 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
     }
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param macroDef
+   */
   private void executeRootFeatureScopedMacroDef(MacroDef macroDef) {
+    PdeBuildHelper.getResolvedContextQualifier();
+
     // execute macro
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
       public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
+
+        final FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper
+            .getFeatureProjectRole(getEclipseProject());
+
+        FeatureManifest manifest = featureProjectRole.getFeatureManifest();
+        values.getProperties().put("feature.id", manifest.getId());
+        values.getProperties().put("feature.version", manifest.getVersion().toString());
+        Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(manifest.getVersion(), PdeBuildHelper
+            .getResolvedContextQualifier());
+        values.getProperties().put("feature.effective.version", resolvedFeatureVersion.toString());
+        values.getProperties().put("feature.plugins.effective.versions", _pluginsEffectiveVersions);
+
+        // if (manifest) {
+        values.getProperties().put("feature.label", manifest.getLabel());
+        // }
+        // if (condition) {
+        values.getProperties().put("feature.providername", manifest.getProviderName());
+        // }
+
+        FeatureBuildProperties buildProperties = featureProjectRole.getBuildProperties();
+        values.getProperties().put("build.properties.binary.includes", buildProperties.getBinaryIncludesAsString());
+        values.getProperties().put("build.properties.binary.excludes", buildProperties.getBinaryExcludesAsString());
 
         // return the values
         return values;
@@ -225,15 +294,16 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
   }
 
   /**
+   * <p>
+   * </p>
+   * 
    * @return
    */
-  private PluginAndBundleDescription[] getBundleDesciptionsForFeaturePlugins() {
+  private List<PluginAndBundleDescription> getPluginAndBundleDescriptions() {
 
-    // 1. Parse the feature
-    FeatureManifest feature = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject()).getFeature();
-
-    // 2. Get all defined plug-in descriptions
-    final Plugin[] featurePlugins = feature.getPlugins();
+    // 1. Parse the feature manifest
+    FeatureManifest featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject())
+        .getFeatureManifest();
 
     // 3. Initialize target platform
     final TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
@@ -245,34 +315,32 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
     final State state = targetPlatform.getState();
 
     // 4. Retrieve BundlesDescriptions for feature plug-ins
-    final Map map = new HashMap();
-    final List bundleDescriptions = new LinkedList();
+    final Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
+    final List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
 
-    for (int i = 0; i < featurePlugins.length; i++) {
-      final Plugin plugin = featurePlugins[i];
+    for (Plugin plugin : featureManifest.getPlugins()) {
 
       // if a plug-in reference uses a version, the exact version must be found in the workspace
       // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
-      BundleDescription bundleDescription = null;
-      if (plugin.getVersion().equals(Version.emptyVersion)) {
-        // find newest plug-in
-        bundleDescription = state.getBundle(plugin.getId(), null);
-      } else {
-        bundleDescription = state.getBundle(plugin.getId(), plugin.getVersion());
-      }
+      BundleDescription bundleDescription = state.getBundle(plugin.getId(), plugin.getVersion().equals(
+          Version.emptyVersion) ? null : plugin.getVersion());
+
+      // TODO: NLS
       if (bundleDescription == null) {
         throw new BuildException("Could not find bundle with id '" + plugin.getId() + "' and version '"
             + plugin.getVersion() + "' in workspace!");
       }
+
+      // TODO: NLS
       Assert.assertTrue(bundleDescription.isResolved(), "asd");
       bundleDescriptions.add(bundleDescription);
       map.put(bundleDescription, plugin);
     }
-    final BundleDescription[] featureBundles = (BundleDescription[]) bundleDescriptions
-        .toArray(new BundleDescription[0]);
 
     // 5. Sort the bundles
-    final Object[][] cycles = state.getStateHelper().sortBundles(featureBundles);
+    final BundleDescription[] sortedbundleDescriptions = (BundleDescription[]) bundleDescriptions
+        .toArray(new BundleDescription[0]);
+    final Object[][] cycles = state.getStateHelper().sortBundles(sortedbundleDescriptions);
     // warn on circular dependencies
     if ((cycles != null) && (cycles.length > 0)) {
       // TODO: better error messages
@@ -283,39 +351,15 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
     }
 
     // 6.1 create result
-    final List result = new LinkedList();
-
-    // 6.2 populate result
-    for (int i = 0; i < featureBundles.length; i++) {
-      final BundleDescription bundleDescription = featureBundles[i];
-      final Plugin plugin = (Plugin) map.get(bundleDescription);
+    final List<PluginAndBundleDescription> result = new LinkedList<PluginAndBundleDescription>();
+    for (BundleDescription bundleDescription : sortedbundleDescriptions) {
       final PluginAndBundleDescription pluginAndBundleDescription = new PluginAndBundleDescription(bundleDescription,
-          plugin);
+          map.get(bundleDescription));
       result.add(pluginAndBundleDescription);
     }
 
     // 6.3 return result
-    return (PluginAndBundleDescription[]) result.toArray(new PluginAndBundleDescription[0]);
-  }
-
-  /**
-   *
-   */
-  protected void preconditions() throws BuildException {
-    requireWorkspaceAndProjectNameSet();
-    requireTargetPlatformIdSet();
-
-    // if (isFeatureSet()) {
-    // requireWorkspaceSet();
-    // if (!this._feature.exists()) {
-    // throw new BuildException("Wrong parameter: Feature '" + this._feature + "' has to exist.");
-    // }
-    // if (!this._feature.isFile()) {
-    // throw new BuildException("Wrong parameter: Feature '" + this._feature + "' has to be a file.");
-    // }
-    // } else {
-    // requireWorkspaceAndProjectNameOrProjectSet();
-    // }
+    return result;
   }
 
   /**
@@ -364,10 +408,10 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
 
     /**
      * <p>
-     * Returns the {@link getBundleDescription}.
+     * Returns the {@link BundleDescription}.
      * </p>
      * 
-     * @return the {@link getBundleDescription}.
+     * @return the {@link BundleDescription}.
      */
     public BundleDescription getBundleDescription() {
       return this._bundleDescription;

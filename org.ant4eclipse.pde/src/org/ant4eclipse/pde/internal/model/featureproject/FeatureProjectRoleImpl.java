@@ -82,7 +82,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * 
    * @return the feature manifest.
    */
-  public FeatureManifest getFeature() {
+  public FeatureManifest getFeatureManifest() {
     return this._feature;
   }
 

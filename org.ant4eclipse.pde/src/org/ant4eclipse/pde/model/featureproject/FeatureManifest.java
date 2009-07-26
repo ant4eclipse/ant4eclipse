@@ -13,6 +13,8 @@ package org.ant4eclipse.pde.model.featureproject;
 
 import org.osgi.framework.Version;
 
+import java.util.List;
+
 /**
  * <p>
  * A feature is a way of grouping and describing different functionality that makes up a product. Features do not
@@ -112,7 +114,7 @@ public interface FeatureManifest {
   /**
    * @return all the referenced plugins.
    */
-  public Plugin[] getPlugins();
+  public List<Plugin> getPlugins();
 
   /**
    * <p>
