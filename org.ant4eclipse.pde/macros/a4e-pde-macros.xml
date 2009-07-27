@@ -190,12 +190,21 @@
           description : Builds an eclipse feature project. Each contained plug-in project will be build.
          ================================= -->
 	<macrodef name="buildFeature">
-		<attribute name="workspaceDirectory" />
-		<attribute name="projectName" />
-		<attribute name="targetPlatformId" />
-		<attribute name="destination" />
-		<attribute name="skipBuildFeature" default="false" />
-		<attribute name="packageAsJar" default="true" />
+		<attribute name="workspaceDirectory"
+		           description="Absolute path of the workspace directory." />
+		<attribute name="projectName"
+		           description="The name of the eclipse plug-in project." />
+		<attribute name="targetPlatformId"
+		           description="The target platform id." />
+		<attribute name="destination"
+		           description="Name of the directory that will contain the feature after building (same as the 'Destination directory' in the eclipse PDE Export Wizard)." />
+		<attribute name="skipBuildFeature"
+		           default="false"
+		           description="Set to true if the feature itself should not be built. In this case the task only builds the defined plugins but won't build the feature." />
+		<attribute name="packageAsJar"
+		           default="true"
+		           description="If set to true the feature will be packaged as a jar file. Otherwise it will be an exploded directory" />
+
 		<sequential>
 
 			<ant4eclipse:executeFeatureProject workspaceDirectory="@{workspaceDirectory}"
@@ -253,7 +262,8 @@
 							</copy>
 
 							<!-- Step 3.2: Patch the feature.xml -->
-							<echo>${executeFeatureProject.feature.plugins.effective.versions}</echo>
+							<ant4eclipse:patchFeatureManifest featureXmlFile="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}/feature.xml"
+							                                  pluginVersions="${executeFeatureProject.feature.plugins.effective.versions}" />
 
 							<!-- Step 3.3: Package the feature as a jar -->
 							<antcontrib:if>
@@ -274,7 +284,6 @@
 						</antcontrib:then>
 					</antcontrib:if>
 				</ant4eclipse:forRootFeature>
-
 
 			</ant4eclipse:executeFeatureProject>
 

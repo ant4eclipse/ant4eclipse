@@ -1,200 +1,364 @@
 package org.ant4eclipse.pde.ant;
 
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
+
+import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
+import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.Workspace;
+import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.Reference;
+import org.apache.tools.ant.types.Resource;
+import org.apache.tools.ant.types.ResourceCollection;
+import org.apache.tools.ant.types.resources.FileResource;
+
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.Resource;
-import org.apache.tools.ant.types.ResourceCollection;
-import org.apache.tools.ant.types.resources.FileResource;
-
 /**
+ * <p>
+ * The {@link PdeProjectFileSet} type can be used to define plug-in project relative file sets.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection {
+public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection,
+    EclipseProjectComponent {
 
-  private static final String    SEPARATOR           = ",";
+  /** the separator for inclusion and exclusion pattern */
+  private static final String    SEPARATOR              = ",";
 
-  private static final String    SELF                = ".";
+  /** the bundle root (self) */
+  private static final String    SELF                   = ".";
 
-  private static final String    SELF_REPRESENTATION = "@dot";
+  /** the name of the (default) self directory */
+  private static final String    DEFAULT_SELF_DIRECTORY = "@dot";
 
-  private boolean                _computed           = false;
-
-  private EclipseProjectDelegate _eclipseProjectDelegate;
-
+  /** the ant attribute 'includes' */
   private String                 _includes;
 
+  /** the ant attribute 'excludes' */
   private String                 _excludes;
 
+  /** the ant attribute 'useDefaultExcludes' */
+  private boolean                _useDefaultExcludes;
+
+  /** the ant attribute 'caseSensitive' */
+  private boolean                _caseSensitive;
+
+  /** the exclusion pattern as an array */
   private String[]               _excludedPattern;
 
+  /** the result resource list */
   private List<Resource>         _resourceList;
 
+  /** the eclipse project delegate */
+  private EclipseProjectDelegate _eclipseProjectDelegate;
+
+  /** indicates if the file list already has been computed */
+  private boolean                _fileListComputed      = false;
+
+  /**
+   * <p>
+   * Creates a new instance of type {@link PdeProjectFileSet}.
+   * </p>
+   * 
+   * @param project
+   *          the ant project
+   */
   public PdeProjectFileSet(final Project project) {
     super(project);
+
+    // create the project delegate
     _eclipseProjectDelegate = new EclipseProjectDelegate(this);
+
+    // create the result list
     _resourceList = new LinkedList<Resource>();
   }
 
   /**
-   * @return the includes
+   * {@inheritDoc}
+   */
+  @Override
+  public void setRefid(Reference ref) {
+    if (_includes != null && !"".equals(_includes)) {
+      throw tooManyAttributes();
+    }
+    if (_excludes != null && !"".equals(_excludes)) {
+      throw tooManyAttributes();
+    }
+
+    super.setRefid(ref);
+  }
+
+  /**
+   * <p>
+   * Returns the inclusion pattern.
+   * </p>
+   * 
+   * @return the inclusion pattern.
    */
   public String getIncludes() {
     return _includes;
   }
 
   /**
+   * <p>
+   * Sets the inclusion pattern.
+   * </p>
+   * 
    * @param includes
-   *          the includes to set
+   *          the inclusion pattern
    */
   public void setIncludes(String includes) {
+    if (isReference()) {
+      throw tooManyAttributes();
+    }
+
     this._includes = includes;
   }
 
   /**
-   * @return the excludes
+   * <p>
+   * Returns the exclusion pattern.
+   * </p>
+   * 
+   * @return the exclusion pattern.
    */
   public String getExcludes() {
     return _excludes;
   }
 
   /**
+   * <p>
+   * Sets the inclusion pattern.
+   * </p>
+   * 
    * @param excludes
-   *          the excludes to set
+   *          the exclusion pattern
    */
   public void setExcludes(String excludes) {
+    if (isReference()) {
+      throw tooManyAttributes();
+    }
+
     _excludes = excludes;
   }
 
   /**
-   * @param projectRoleClass
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#ensureRole(java.lang.Class)
+   * <p>
+   * Sets whether default exclusions should be used or not.
+   * </p>
+   * 
+   * @param useDefaultExcludes
+   *          <code>boolean</code>.
+   */
+  public synchronized void setDefaultexcludes(boolean useDefaultExcludes) {
+    if (isReference()) {
+      throw tooManyAttributes();
+    }
+
+    this._useDefaultExcludes = useDefaultExcludes;
+  }
+
+  /**
+   * <p>
+   * Whether default exclusions should be used or not.
+   * </p>
+   * 
+   * @return the default exclusions value.
+   */
+  public synchronized boolean getDefaultexcludes() {
+    return (isReference()) ? getRef(getProject()).getDefaultexcludes() : _useDefaultExcludes;
+  }
+
+  /**
+   * <p>
+   * Sets case sensitivity of the file system.
+   * </p>
+   * 
+   * @param caseSensitive
+   *          <code>boolean</code>.
+   */
+  public synchronized void setCaseSensitive(boolean caseSensitive) {
+    if (isReference()) {
+      throw tooManyAttributes();
+    }
+    this._caseSensitive = caseSensitive;
+  }
+
+  /**
+   * <p>
+   * Find out if the file set is case sensitive.
+   * </p>
+   * 
+   * @return <code>boolean</code> indicating whether the file set is case sensitive.
+   */
+  public synchronized boolean isCaseSensitive() {
+    return (isReference()) ? getRef(getProject()).isCaseSensitive() : _caseSensitive;
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     _eclipseProjectDelegate.ensureRole(projectRoleClass);
   }
 
   /**
-   * @return
-   * @throws BuildException
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#getEclipseProject()
+   * {@inheritDoc}
    */
   public EclipseProject getEclipseProject() throws BuildException {
     return _eclipseProjectDelegate.getEclipseProject();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#getWorkspace()
+   * {@inheritDoc}
    */
   public final Workspace getWorkspace() {
     return _eclipseProjectDelegate.getWorkspace();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#getWorkspaceDirectory()
+   * {@inheritDoc}
    */
   public final File getWorkspaceDirectory() {
     return _eclipseProjectDelegate.getWorkspaceDirectory();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#isProjectNameSet()
+   * {@inheritDoc}
    */
   public final boolean isProjectNameSet() {
     return _eclipseProjectDelegate.isProjectNameSet();
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#isWorkspaceDirectorySet()
+   * {@inheritDoc}
    */
-  public final boolean isWorkspaceSet() {
+  public final boolean isWorkspaceDirectorySet() {
     return _eclipseProjectDelegate.isWorkspaceDirectorySet();
   }
 
   /**
-   *
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#requireWorkspaceAndProjectNameSet()
+   * {@inheritDoc}
    */
   public final void requireWorkspaceAndProjectNameSet() {
     _eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
   /**
-   *
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#requireWorkspaceDirectorySet()
+   * {@inheritDoc}
    */
-  public final void requireWorkspaceSet() {
+  public final void requireWorkspaceDirectorySet() {
     _eclipseProjectDelegate.requireWorkspaceDirectorySet();
   }
 
   /**
-   * @param projectName
-   * @see org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate#setProjectName(java.lang.String)
+   * {@inheritDoc}
+   */
+  @Deprecated
+  public void setProject(File projectPath) {
+    _eclipseProjectDelegate.setProject(projectPath);
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public final void setProjectName(String projectName) {
     _eclipseProjectDelegate.setProjectName(projectName);
   }
 
   /**
-   * @param workspace
-   * @deprecated
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#setWorkspace(java.io.File)
+   * {@inheritDoc}
    */
+  @Deprecated
   public final void setWorkspace(File workspace) {
     _eclipseProjectDelegate.setWorkspace(workspace);
   }
 
   /**
-   * @param workspaceDirectory
-   * @see org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate#setWorkspaceDirectory(java.io.File)
+   * {@inheritDoc}
    */
   public final void setWorkspaceDirectory(File workspaceDirectory) {
     _eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isFilesystemOnly() {
     return true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Iterator<Resource> iterator() {
     computeFileSet();
 
     return _resourceList.iterator();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public int size() {
     computeFileSet();
 
     return _resourceList.size();
   }
 
-  private void computeFileSet() {
-    if (_computed) {
+  /**
+   * <p>
+   * Performs the check for circular references and returns the referenced {@link PdeProjectFileSet}.
+   * </p>
+   * 
+   * @param p
+   *          the current project
+   * @return the referenced {@link PdeProjectFileSet}
+   */
+  protected PdeProjectFileSet getRef(Project p) {
+    return (PdeProjectFileSet) getCheckedRef(p);
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  protected void clear() {
+    _resourceList.clear();
+    _fileListComputed = false;
+  }
+
+  /**
+   * <p>
+   * Computes the file set.
+   * </p>
+   */
+  protected void computeFileSet() {
+
+    // return if file list already is computed
+    if (_fileListComputed) {
       return;
     }
 
+    // require workspace and project name set
     requireWorkspaceAndProjectNameSet();
 
+    // nothing to do if no inclusion pattern is defined
     if (_includes == null || "".equals(_includes.trim())) {
       return;
-      // throw new BuildException("You have to specify the includes attribute!");
     }
 
+    // split the exclusion pattern
     if (_excludes != null && !"".equals(_excludes.trim())) {
       StringTokenizer stringTokenizer = new StringTokenizer(_excludes, SEPARATOR);
       int count = stringTokenizer.countTokens();
@@ -208,42 +372,61 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
       _excludes = null;
     }
 
+    // clear the resource list
     _resourceList.clear();
+
+    // iterate over the included pattern set
     StringTokenizer stringTokenizer = new StringTokenizer(_includes, SEPARATOR);
     while (stringTokenizer.hasMoreTokens()) {
       String token = stringTokenizer.nextToken().trim();
+
       // 'patch' the dot
       if (token.equals(SELF)) {
-        token = SELF_REPRESENTATION;
+        token = DEFAULT_SELF_DIRECTORY;
       }
 
+      // 'process' the token
       if (getEclipseProject().hasChild(token)) {
+
+        // get the project child with the given name
         File file = getEclipseProject().getChild(token);
 
         if (file.isFile()) {
-          _resourceList.add(new FileResource(getEclipseProject().getFolder(), token ));
+          // if the child is a file, just add it to the list
+          _resourceList.add(new FileResource(getEclipseProject().getFolder(), token));
         } else {
-          // scan directory
+          // if the child is a directory, scan the directory
           DirectoryScanner directoryScanner = new DirectoryScanner();
+          // set base directory
           directoryScanner.setBasedir(file);
+          // set case sensitive
+          directoryScanner.setCaseSensitive(this._caseSensitive);
+          // set includes
           directoryScanner.setIncludes(null);
-
-          // TODO: exlude-patterns
+          // set excludes
           directoryScanner.addExcludes(_excludedPattern);
-          directoryScanner.addDefaultExcludes();
+          // set default excludes
+          if (this._useDefaultExcludes) {
+            directoryScanner.addDefaultExcludes();
+          }
+          // do the job
           directoryScanner.scan();
+
+          // get the included files and add it to the resource list
           String[] files = directoryScanner.getIncludedFiles();
 
-          for (String name : files) {
-            if (token.equals(SELF_REPRESENTATION)) {
-              _resourceList.add(new FileResource(file, name));
+          for (String fileName : files) {
+            if (token.equals(DEFAULT_SELF_DIRECTORY)) {
+              _resourceList.add(new FileResource(file, fileName));
             } else {
-              _resourceList.add(new FileResource(file.getParentFile(), token + File.separatorChar + name));
+              _resourceList.add(new FileResource(file.getParentFile(), token + File.separatorChar + fileName));
             }
           }
         }
       }
     }
-    _computed = true;
+
+    // set _fileListComputed
+    _fileListComputed = true;
   }
 }

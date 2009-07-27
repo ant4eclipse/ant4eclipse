@@ -15,6 +15,10 @@ import java.io.File;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 import org.apache.tools.ant.Project;
@@ -22,22 +26,32 @@ import org.apache.tools.ant.types.DataType;
 
 /**
  * <p>
- * Represents a definition of a target platfrom. A target platfrom contains one or more locations. Each location must
- * contain bundles in a subdirectory named 'plugins'.
+ * Represents a definition of a target platform. A target platform contains one or more locations. Each location must
+ * contain bundles in a sub-directory named 'plug-ins'.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataType {
 
+  /** the target platform definition */
   private TargetPlatformDefinition _targetPlatformDefinition;
 
+  /** the id of the target platform */
+  private String                   _id;
+
   /**
+   * <p>
+   * Creates a new instance of type {@link TargetPlatformDefinitionDataType}.
+   * </p>
+   * 
    * @param project
+   *          the ant project
    */
   public TargetPlatformDefinitionDataType(Project project) {
     super(project);
 
+    // create a new TargetPlatformDefinition
     _targetPlatformDefinition = new TargetPlatformDefinition();
   }
 
@@ -50,11 +64,25 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    *          the id of the target platform location.
    */
   public void setId(String id) {
-    Assert.assertTrue(!isReference(), "Attribute 'refid' must not be set together with attribute 'id'!");
-    Assert.nonEmpty(id);
+    if (isReference()) {
+      throw tooManyAttributes();
+    }
 
+    _id = id;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void doValidate() {
+    if (_id == null || "".equals(_id)) {
+      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id");
+    }
+
+    // add the target platform definition
     TargetPlatformRegistry targetPlatformRegistry = TargetPlatformRegistry.Helper.getRegistry();
-    targetPlatformRegistry.addTargetPlatformDefinition(id, _targetPlatformDefinition);
+    targetPlatformRegistry.addTargetPlatformDefinition(_id, _targetPlatformDefinition);
   }
 
   /**
@@ -67,51 +95,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     Assert.notNull(location);
 
     _targetPlatformDefinition.addLocation(location.getDirectory());
-
-    // if (!_locations.contains(location)) {
-    // _locations.add(location);
-    // }
   }
-
-  // /**
-  // * <p>
-  // * Returns all the locations defined in this target platfrom location.
-  // * </p>
-  // *
-  // * @return all the locations defined in this target platfrom location.
-  // */
-  // public final File[] getLocations() {
-  // if (isReference()) {
-  // return getRef(getProject()).getLocations();
-  // } else {
-  // File[] files = new File[_locations.size()];
-  //
-  // for (int i = 0; i < files.length; i++) {
-  // Location location = (Location) _locations.get(i);
-  // files[i] = location.getDirectory();
-  // }
-  //
-  // return files;
-  // }
-  // }
-
-  // /**
-  // * Performs the check for circular references and returns the referenced FileSet.
-  // *
-  // * @param p
-  // */
-  // protected TargetPlatformDefinitionDataType getRef(Project p) {
-  // if (!isChecked()) {
-  // Stack<DataType> stk = new Stack<DataType>();
-  // stk.push(this);
-  // dieOnCircularReference(stk, p);
-  // }
-  // Object o = getRefid().getReferencedObject(p);
-  // if (!getClass().isAssignableFrom(o.getClass())) {
-  // throw new BuildException(getRefid().getRefId() + " doesn\'t denote a TargetPlatformDefinition");
-  // }
-  // return (TargetPlatformDefinitionDataType) o;
-  // }
 
   /**
    * <p>
@@ -127,7 +111,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
 
     /**
      * <p>
-     * Creates a new instance of type TargetPlatformLocation.
+     * Creates a new instance of type {@link Location}.
      * </p>
      */
     public Location() {
@@ -136,7 +120,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
 
     /**
      * <p>
-     * Creates a new instance of type Location.
+     * Creates a new instance of type {@link Location}.
      * </p>
      * 
      * @param directory
@@ -150,10 +134,10 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
 
     /**
      * <p>
-     * 
+     * Returns the directory.
      * </p>
      * 
-     * @return
+     * @return the directory
      */
     public File getDirectory() {
       return _directory;
@@ -165,6 +149,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * </p>
      * 
      * @param directory
+     *          the directory
      */
     public void setDir(File directory) {
       Assert.isDirectory(directory);
@@ -184,7 +169,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * {@inheritDoc}
      */
     public int hashCode() {
       final int PRIME = 31;
@@ -194,7 +179,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * {@inheritDoc}
      */
     public boolean equals(Object obj) {
       if (this == obj)
@@ -213,7 +198,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * {@inheritDoc}
      */
     public String toString() {
       StringBuffer result = new StringBuffer();

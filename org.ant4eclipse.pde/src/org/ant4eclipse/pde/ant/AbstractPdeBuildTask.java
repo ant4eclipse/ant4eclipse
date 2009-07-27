@@ -11,9 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-import org.apache.tools.ant.BuildException;
+import org.ant4eclipse.pde.PdeExceptionCode;
+
+import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 
 /**
  * <p>
@@ -39,11 +41,11 @@ public abstract class AbstractPdeBuildTask extends AbstractProjectPathTask {
 
   /**
    * <p>
-   * Sets the target platform against which the workspace plugins will be compiled and tested.
+   * Sets the target platform against which the workspace plug-ins will be compiled and tested.
    * </p>
    * 
-   * @param targetPlatformLocation
-   *          the target platform against which the workspace plugins will be compiled and tested.
+   * @param targetPlatformId
+   *          the target platform against which the workspace plug-ins will be compiled and tested.
    */
   public final void setTargetPlatformId(final String targetPlatformId) {
     _targetPlatformId = targetPlatformId;
@@ -60,14 +62,25 @@ public abstract class AbstractPdeBuildTask extends AbstractProjectPathTask {
     return this._targetPlatformId != null;
   }
 
+  /**
+   * <p>
+   * Returns the id of the target platform.
+   * </p>
+   * 
+   * @return id of the target platform.
+   */
   public final String getTargetPlatformId() {
     return _targetPlatformId;
   }
 
+  /**
+   * <p>
+   * Throws an {@link Ant4EclipseException} if the field '<code>_targetPlatformId</code>' is not set
+   * </p>
+   */
   public final void requireTargetPlatformIdSet() {
     if (!isTargetPlatformId()) {
-      // TODO!!
-      throw new BuildException("Attribute targetPlatformId has to be set!");
+      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "targetPlatformId");
     }
   }
 }

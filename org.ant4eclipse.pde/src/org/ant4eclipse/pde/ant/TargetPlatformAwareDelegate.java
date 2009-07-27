@@ -13,6 +13,7 @@ package org.ant4eclipse.pde.ant;
 
 /**
  * <p>
+ * Default implementation of the interface {@link TargetPlatformAwareComponent}.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -24,7 +25,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
 
   /**
    * <p>
-   * Creates a new instance of type AbstractPdeBuildTask.
+   * Creates a new instance of type {@link TargetPlatformAwareDelegate}.
    * </p>
    * 
    */
@@ -33,28 +34,22 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   }
 
   /**
-   * <p>
-   * Sets the target platform against which the workspace plugins will be compiled and tested.
-   * </p>
-   * 
-   * @param targetPlatformLocation
-   *          the target platform against which the workspace plugins will be compiled and tested.
+   * {@inheritDoc}
    */
   public final void setTargetPlatformId(final String targetPlatformId) {
     _targetPlatformId = targetPlatformId;
   }
 
   /**
-   * <p>
-   * Returns whether the target platform location is set.
-   * </p>
-   * 
-   * @return whether the target platform location is set.
+   * {@inheritDoc}
    */
   public final boolean isTargetPlatformId() {
     return this._targetPlatformId != null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String getTargetPlatformId() {
     return _targetPlatformId;
   }

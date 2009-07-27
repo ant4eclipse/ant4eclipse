@@ -13,6 +13,7 @@ package org.ant4eclipse.pde.ant;
 
 /**
  * <p>
+ * Defines the common interface for all target platform aware components.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -21,11 +22,11 @@ public interface TargetPlatformAwareComponent {
 
   /**
    * <p>
-   * Sets the target platform against which the workspace plugins will be compiled and tested.
+   * Sets the target platform against which the workspace plug-ins will be compiled and tested.
    * </p>
    * 
-   * @param targetPlatformLocation
-   *          the target platform against which the workspace plugins will be compiled and tested.
+   * @param targetPlatformId
+   *          the id of the target platform against which the workspace plug-ins will be compiled and tested.
    */
   void setTargetPlatformId(final String targetPlatformId);
 
@@ -38,5 +39,12 @@ public interface TargetPlatformAwareComponent {
    */
   boolean isTargetPlatformId();
 
+  /**
+   * <p>
+   * Returns the target platform id or <code>null</code>, if no target platform id has been set.
+   * </p>
+   * 
+   * @return the target platform id or <code>null</code>, if no target platform id has been set.
+   */
   String getTargetPlatformId();
 }
