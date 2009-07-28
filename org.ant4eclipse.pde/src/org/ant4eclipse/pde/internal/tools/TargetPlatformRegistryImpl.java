@@ -40,7 +40,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   private TargetPlatform                              _currentTargetPlatform;
 
   /** the static map with all target platforms currently resolved */
-  private final Map<Object, BundleSet>                _targetPlatformMap          = new HashMap<Object, BundleSet>();
+  private final Map<Object, BundleAndFeatureSet>                _targetPlatformMap          = new HashMap<Object, BundleAndFeatureSet>();
 
   /** */
   private final Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
@@ -60,6 +60,15 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     this._currentTargetPlatform = targetPlatform;
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   * @param workspace
+   * @param targetLocations
+   * @param targetPlatformConfiguration
+   * @return
+   */
   public TargetPlatform getInstance(final Workspace workspace, final File[] targetLocations,
       final TargetPlatformConfiguration targetPlatformConfiguration) {
 
@@ -74,9 +83,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       return (TargetPlatform) this._targetPlatformMap.get(key);
     }
 
-    final BundleSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
+    final BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
 
-    final BundleSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
+    final BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
 
     return new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets, targetPlatformConfiguration);
   }
@@ -111,32 +120,32 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     return _targetPlatformDefnitionMap.containsKey(identifier);
   }
 
-  private PluginProjectSet getPluginProjectSet(final Workspace workspace) {
+  private PluginAndFeatureProjectSet getPluginProjectSet(final Workspace workspace) {
 
     if (!this._targetPlatformMap.containsKey(workspace)) {
-      this._targetPlatformMap.put(workspace, new PluginProjectSet(workspace));
+      this._targetPlatformMap.put(workspace, new PluginAndFeatureProjectSet(workspace));
     }
 
-    return (PluginProjectSet) this._targetPlatformMap.get(workspace);
+    return (PluginAndFeatureProjectSet) this._targetPlatformMap.get(workspace);
   }
 
-  private BinaryBundleSet getBinaryPluginSet(final File file) {
+  private BinaryBundleAndFeatureSet getBinaryPluginSet(final File file) {
 
     if (!this._targetPlatformMap.containsKey(file)) {
-      this._targetPlatformMap.put(file, new BinaryBundleSet(file));
+      this._targetPlatformMap.put(file, new BinaryBundleAndFeatureSet(file));
     }
 
-    return (BinaryBundleSet) this._targetPlatformMap.get(file);
+    return (BinaryBundleAndFeatureSet) this._targetPlatformMap.get(file);
   }
 
   /**
    * @param files
    * @return
    */
-  private BinaryBundleSet[] getBinaryPluginSet(final File[] files) {
+  private BinaryBundleAndFeatureSet[] getBinaryPluginSet(final File[] files) {
 
     //
-    final List<BinaryBundleSet> result = new LinkedList<BinaryBundleSet>();
+    final List<BinaryBundleAndFeatureSet> result = new LinkedList<BinaryBundleAndFeatureSet>();
 
     //
     for (int i = 0; i < files.length; i++) {
@@ -144,7 +153,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     }
 
     //
-    return result.toArray(new BinaryBundleSet[0]);
+    return result.toArray(new BinaryBundleAndFeatureSet[0]);
   }
 
   /**

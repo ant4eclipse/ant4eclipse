@@ -64,28 +64,28 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#getType()
+   * {@inheritDoc}
    */
   public byte getType() {
     return PROJECT;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#getManifest()
+   * {@inheritDoc}
    */
   public Manifest getManifest() {
     return this._manifest;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#getLocation()
+   * {@inheritDoc}
    */
   public File getLocation() {
     return this._eclipseProject.getFolder();
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#resolveBundleClasspathEntries()
+   * {@inheritDoc}
    */
   public File[] resolveBundleClasspathEntries() {
 

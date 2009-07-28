@@ -73,6 +73,17 @@ public class FeatureManifestParser {
     XQuery pluginInstallSizeQuery = queryhandler.createQuery("//feature/{plugin}/@install-size");
     XQuery pluginUnpackQuery = queryhandler.createQuery("//feature/{plugin}/@unpack");
 
+    
+    XQuery includesIdQuery = queryhandler.createQuery("//feature/{includes}/@id");
+    XQuery includesVersionQuery = queryhandler.createQuery("//feature/{includes}/@version");
+    XQuery includesNameQuery = queryhandler.createQuery("//feature/{includes}/@name");
+    XQuery includesOptionalQuery = queryhandler.createQuery("//feature/{includes}/@optional");
+    XQuery includesSearchLocationQuery = queryhandler.createQuery("//feature/{includes}/@search-location");
+    XQuery includesOsQuery = queryhandler.createQuery("//feature/{includes}/@os");
+    XQuery includesArchQuery = queryhandler.createQuery("//feature/{includes}/@arch");
+    XQuery includesWsQuery = queryhandler.createQuery("//feature/{includes}/@ws");
+    XQuery includesNlQuery = queryhandler.createQuery("//feature/{includes}/@nl");
+    
     // parse the file
     XQueryHandler.queryInputStream(inputStream, queryhandler);
 
@@ -115,6 +126,30 @@ public class FeatureManifestParser {
       plugin.setInstallSize(pluginInstallSizes[i]);
       plugin.setUnpack(Boolean.valueOf(pluginUnpacks[i]).booleanValue());
       feature.addPlugin(plugin);
+    }
+    
+    String[] includesId = includesIdQuery.getResult();
+    String[] includesVersion = includesVersionQuery.getResult();
+    String[] includesName = includesNameQuery.getResult();
+    String[] includesOptional = includesOptionalQuery.getResult();
+    String[] includesSearchLocation = includesSearchLocationQuery.getResult();
+    String[] includesOs = includesOsQuery.getResult();
+    String[] includesArch = includesArchQuery.getResult();
+    String[] includesWs = includesWsQuery.getResult();
+    String[] includesNl = includesNlQuery.getResult();
+
+    for (int i = 0; i < includesId.length; i++) {
+      FeatureManifestImpl.IncludesImpl includes = new FeatureManifestImpl.IncludesImpl();
+      includes.setId(includesId[i]);
+      includes.setVersion(new Version(includesVersion[i]));
+      includes.setName(includesName[i]);
+      includes.setOptional(Boolean.valueOf(includesOptional[i]).booleanValue());
+      includes.setSearchLocation(includesSearchLocation[i]);
+      includes.setOperatingSystem(includesOs[i]);
+      includes.setMachineArchitecture(includesArch[i]);
+      includes.setWindowingSystem(includesWs[i]);
+      includes.setLocale(includesNl[i]);
+      feature.addIncludes(includes);
     }
 
     return feature;

@@ -12,21 +12,23 @@
 package org.ant4eclipse.pde.internal.tools;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
-import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * <p>
- * A plug-in set implementation that represent plug-ins stored as eclipse projects in the workspace.
+ * A {@link BundleAndFeatureSet} implementation that represent the plug-ins and features that are contained in the
+ * workspace as eclipse projects.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public final class PluginProjectSet extends AbstractBundleSet {
+public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSet {
 
   /** the workspace which contains the projects to build */
   private final Workspace _workspace;
@@ -37,31 +39,33 @@ public final class PluginProjectSet extends AbstractBundleSet {
    * </p>
    * 
    * @param workspace
-   *          the workspace that will be used.
+   *          the {@link Workspace}
    */
-  public PluginProjectSet(final Workspace workspace) {
-    super(workspace);
-    A4ELogging.trace("PluginProjectSet<init>(%s)", workspace);
+  public PluginAndFeatureProjectSet(final Workspace workspace) {
     Assert.notNull(workspace);
 
     this._workspace = workspace;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.pde.internal.target.AbstractBundleSet#readBundles()
+   * {@inheritDoc}
    */
-  protected void readBundles() {
+  protected void readBundlesAndFeatures() {
 
-    // read all projects from workspace...
+    // get all projects...
     final EclipseProject[] eclipseProjects = this._workspace.getAllProjects();
 
-    // add all plugin projects to plugin list and exported package list
-    for (int i = 0; i < eclipseProjects.length; i++) {
-      final EclipseProject project = eclipseProjects[i];
-      if (PluginProjectRole.Helper.hasPluginProjectRole(project)) {
-        final BundleDescription bundleDescription = PluginProjectRole.Helper.getPluginProjectRole(project)
-            .getBundleDescription();
-        addBundleDescription(bundleDescription);
+    // add all plug-in projects
+    for (EclipseProject eclipseProject : eclipseProjects) {
+
+      // add plug-in projects
+      if (PluginProjectRole.Helper.hasPluginProjectRole(eclipseProject)) {
+        addBundleDescription(PluginProjectRole.Helper.getPluginProjectRole(eclipseProject).getBundleDescription());
+      }
+      // add feature projects
+      else if (FeatureProjectRole.Helper.hasFeatureProjectRole(eclipseProject)) {
+        FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(eclipseProject);
+        addFeaturesDescription(new FeatureDescription(eclipseProject, featureProjectRole.getFeatureManifest()));
       }
     }
   }

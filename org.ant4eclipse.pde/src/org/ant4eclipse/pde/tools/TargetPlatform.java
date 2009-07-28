@@ -11,7 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
+import org.ant4eclipse.core.util.Pair;
+
+import org.ant4eclipse.pde.internal.tools.FeatureDescription;
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
+
+import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
+
+import java.util.List;
 
 /**
  * <p>
@@ -41,4 +50,51 @@ public interface TargetPlatform {
    * @return
    */
   State getState();
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param id
+   * @param version
+   * @return
+   */
+  FeatureDescription getFeatureDescription(String id, String version);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param id
+   * @param version
+   * @return
+   */
+  boolean hasFeatureDescription(String id, String version);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param id
+   * @return the {@link FeatureDescription} for a feature with the given id.
+   */
+  FeatureDescription getFeatureDescription(String id);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param id
+   * @return <code>true</code> if a {@link FeatureDescription} for a feature with the given id exists.
+   */
+  boolean hasFeatureDescription(String id);
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param manifest
+   * @return
+   */
+  ResolvedFeature resolveFeature(FeatureManifest manifest);
 }

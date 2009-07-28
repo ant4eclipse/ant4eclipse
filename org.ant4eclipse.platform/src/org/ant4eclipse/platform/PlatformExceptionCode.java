@@ -14,6 +14,7 @@ package org.ant4eclipse.platform;
 import org.ant4eclipse.core.exception.ExceptionCode;
 import org.ant4eclipse.core.nls.NLS;
 import org.ant4eclipse.core.nls.NLSMessage;
+
 import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
 
 public class PlatformExceptionCode extends ExceptionCode {
@@ -27,6 +28,9 @@ public class PlatformExceptionCode extends ExceptionCode {
 
   @NLSMessage("There are two projects with the same specified name: '%s', '%s' ")
   public static PlatformExceptionCode PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS;
+
+  @NLSMessage("Unknown execution scope '%s'")
+  public static PlatformExceptionCode UNKNOWN_EXECUTION_SCOPE;
 
   @NLSMessage("Error while executing CVS '%s' command: '%s' ")
   public static TeamExceptionCode     ERROR_WHILE_EXECUTING_CVS_COMMAND;

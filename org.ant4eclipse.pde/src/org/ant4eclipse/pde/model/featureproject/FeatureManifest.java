@@ -115,6 +115,14 @@ public interface FeatureManifest {
    * @return all the referenced plugins.
    */
   public List<Plugin> getPlugins();
+  
+  /**
+   * <p>
+   * </p>
+   *
+   * @return
+   */
+  public List<Includes> getIncludes();
 
   /**
    * <p>
@@ -164,34 +172,204 @@ public interface FeatureManifest {
      */
     public String getLocale();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getMachineArchitecture();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getOperatingSystem();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean isUnpack();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public Version getVersion();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getWindowingSystem();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasDownloadSize();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasId();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasInstallSize();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasLocale();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasMachineArchitecture();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasOperatingSystem();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasVersion();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public boolean hasWindowingSystem();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
     public String getEffectiveVersion();
 
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param effectiveVersion
+     */
     public void setEffectiveVersion(String effectiveVersion);
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   */
+  public static interface Includes {
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the id
+     */
+    public String getId();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the version
+     */
+    public Version getVersion();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the name
+     */
+    public String getName();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the optional
+     */
+    public boolean isOptional();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the searchLocation
+     */
+    public String getSearchLocation();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the operatingSystem
+     */
+    public String getOperatingSystem();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the machineArchitecture
+     */
+    public String getMachineArchitecture();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the windowingSystem
+     */
+    public String getWindowingSystem();
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the locale
+     */
+    public String getLocale();
   }
 }

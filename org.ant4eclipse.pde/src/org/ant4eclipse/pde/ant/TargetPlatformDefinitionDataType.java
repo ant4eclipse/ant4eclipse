@@ -11,18 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
+
+import java.io.File;
 
 /**
  * <p>
@@ -87,9 +87,10 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
 
   /**
    * <p>
+   * Adds a {@link Location}.
    * </p>
    * 
-   * @param location
+   * @param location the {@link Location} to add.
    */
   public void addConfiguredLocation(Location location) {
     Assert.notNull(location);

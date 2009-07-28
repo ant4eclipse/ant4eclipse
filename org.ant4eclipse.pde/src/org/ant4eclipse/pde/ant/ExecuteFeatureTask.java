@@ -11,19 +11,22 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.util.Pair;
 
+import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.PdeBuildHelper;
+import org.ant4eclipse.pde.tools.ResolvedFeature;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
@@ -35,49 +38,61 @@ import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.osgi.service.resolver.State;
 import org.osgi.framework.Version;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
- * The {@link ExecuteFeatureProjectTask} can be used to iterate over a feature. It implements a loop over all the bundle
+ * The {@link ExecuteFeatureTask} can be used to iterate over a feature. It implements a loop over all the bundles
  * and/or plug-in-projects contained in a <code>feature.xml</code> file.
  * <p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements DynamicElement,
-    MacroExecutionComponent<String> {
+public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicElement, MacroExecutionComponent<String> {
 
   /** the plug-in scope */
-  private static final String                  SCOPE_PLUGIN       = "SCOPE_PLUGIN";
+  private static final String                  SCOPE_PLUGIN                = "SCOPE_PLUGIN";
+
+  /** the plug-in scope element name */
+  private static final String                  SCOPE_NAME_PLUGIN           = "ForEachPlugin";
 
   /** the root feature scope */
-  private static final String                  SCOPE_ROOT_FEATURE = "SCOPE_ROOT_FEATURE";
+  private static final String                  SCOPE_ROOT_FEATURE          = "SCOPE_ROOT_FEATURE";
+
+  /** the root feature scope element name */
+  private static final String                  SCOPE_NAME_ROOT_FEATURE     = "ForRootFeature";
+
+  /** the included feature scope */
+  private static final String                  SCOPE_INCLUDED_FEATURE      = "SCOPE_INCLUDED_FEATURE";
+
+  /** the included feature scope element name */
+  private static final String                  SCOPE_NAME_INCLUDED_FEATURE = "ForEachIncludedFeature";
+
+  /** the id of the feature to build (either featureId or projectName has to be set) */
+  private String                               _featureId;
+
+  /** the version of the feature to build (must be used together with featureId) */
+  private String                               _version;
 
   /** the macro execution delegate */
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
-  /** - */
-  private List<PluginAndBundleDescription>     _pluginAndBundleDescriptions;
+  /** the resolved feature */
+  private ResolvedFeature                      _resolvedFeature;
 
-  /** - */
+  /** a semicolon separated list of bundle-symbolicNames and versions */
   private String                               _pluginsEffectiveVersions;
 
   /**
    * <p>
-   * Creates a new instance of type ExecuteFeatureProjectTask.
+   * Creates a new instance of type {@link ExecuteFeatureTask}.
    * </p>
    */
-  public ExecuteFeatureProjectTask() {
+  public ExecuteFeatureTask() {
 
     // create the delegates
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeFeatureProject");
@@ -123,10 +138,12 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
    */
   public Object createDynamicElement(final String name) {
 
-    if ("ForEachPlugin".equalsIgnoreCase(name)) {
+    if (SCOPE_NAME_PLUGIN.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_PLUGIN);
-    } else if ("ForRootFeature".equalsIgnoreCase(name)) {
+    } else if (SCOPE_NAME_ROOT_FEATURE.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_ROOT_FEATURE);
+    } else if (SCOPE_NAME_INCLUDED_FEATURE.equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_INCLUDED_FEATURE);
     }
 
     return null;
@@ -137,15 +154,16 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
    */
   public void doExecute() {
 
-    // find the plug-ins
-    _pluginAndBundleDescriptions = getPluginAndBundleDescriptions();
+    resolveFeature();
 
+    // TODO: extract method
     StringBuilder builder = new StringBuilder();
-    for (Iterator<PluginAndBundleDescription> iterator = _pluginAndBundleDescriptions.iterator(); iterator.hasNext();) {
-      PluginAndBundleDescription description = iterator.next();
-      builder.append(description.getPlugin().getId());
+    for (Iterator<Pair<Plugin, BundleDescription>> iterator = _resolvedFeature.getPluginToBundleDescptionList()
+        .iterator(); iterator.hasNext();) {
+      Pair<Plugin, BundleDescription> description = iterator.next();
+      builder.append(description.getFirst().getId());
       builder.append("=");
-      builder.append(PdeBuildHelper.resolveVersion(description.getBundleDescription().getVersion(), PdeBuildHelper
+      builder.append(PdeBuildHelper.resolveVersion(description.getSecond().getVersion(), PdeBuildHelper
           .getResolvedContextQualifier()));
       if (iterator.hasNext()) {
         builder.append(";");
@@ -160,9 +178,10 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
         executeRootFeatureScopedMacroDef(scopedMacroDefinition.getMacroDef());
       } else if (SCOPE_PLUGIN.equals(scopedMacroDefinition.getScope())) {
         executePluginScopedMacroDef(scopedMacroDefinition.getMacroDef());
+      } else if (SCOPE_INCLUDED_FEATURE.equals(scopedMacroDefinition.getScope())) {
+        executeIncludedFeatureScopedMacroDef(scopedMacroDefinition.getMacroDef());
       } else {
-        // TODO: NLS
-        throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
+        throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope());
       }
     }
   }
@@ -171,19 +190,37 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
    * {@inheritDoc}
    */
   protected void preconditions() throws BuildException {
-    requireWorkspaceAndProjectNameSet();
+
+    // require workspace directory set...
+    requireWorkspaceDirectorySet();
+
+    // // require project name *or* feature set...
+    // if ((!isProjectNameSet() && _feature == null) || isProjectNameSet() && _feature != null) {
+    // // TODO: NLS
+    // throw new BuildException("You have to specify either the projectName or the feature attribute!");
+    // }
+    //
+    // // require feature exists (if set) ...
+    // if (_feature != null && !_feature.exists()) {
+    // // TODO: NLS
+    // throw new BuildException("Attribute feature has to contain a path to an existing feature!");
+    // }
+
+    // require target platform id set...
     requireTargetPlatformIdSet();
   }
 
   /**
    * <p>
+   * Execute plug-in scoped macro definition.
    * </p>
    * 
    * @param macroDef
    */
   private void executePluginScopedMacroDef(MacroDef macroDef) {
 
-    for (final PluginAndBundleDescription pluginAndBundleDescription : _pluginAndBundleDescriptions) {
+    for (final Pair<Plugin, BundleDescription> pluginAndBundleDescription : _resolvedFeature
+        .getPluginToBundleDescptionList()) {
 
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
@@ -191,9 +228,8 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
         public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
           // TODO: References
-
-          final BundleDescription bundleDescription = pluginAndBundleDescription.getBundleDescription();
-          final Plugin plugin = pluginAndBundleDescription.getPlugin();
+          final Plugin plugin = pluginAndBundleDescription.getFirst();
+          final BundleDescription bundleDescription = pluginAndBundleDescription.getSecond();
 
           // add plug-in id
           if (plugin.hasId()) {
@@ -258,7 +294,6 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
    * @param macroDef
    */
   private void executeRootFeatureScopedMacroDef(MacroDef macroDef) {
-    PdeBuildHelper.getResolvedContextQualifier();
 
     // execute macro
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
@@ -293,128 +328,35 @@ public class ExecuteFeatureProjectTask extends AbstractPdeBuildTask implements D
     });
   }
 
+  private void executeIncludedFeatureScopedMacroDef(MacroDef macroDef) {
+    // TODO Auto-generated method stub
+
+  }
+
   /**
    * <p>
    * </p>
    * 
    * @return
    */
-  private List<PluginAndBundleDescription> getPluginAndBundleDescriptions() {
+  private void resolveFeature() {
 
-    // 1. Parse the feature manifest
-    FeatureManifest featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject())
-        .getFeatureManifest();
-
-    // 3. Initialize target platform
+    // 1. Initialize target platform
     final TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
     configuration.setPreferProjects(true);
     final TargetPlatform targetPlatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
         getTargetPlatformId(), configuration);
 
-    // 3.1 resolve state
-    final State state = targetPlatform.getState();
+    // 3.
+    FeatureManifest featureManifest = null;
 
-    // 4. Retrieve BundlesDescriptions for feature plug-ins
-    final Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
-    final List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
-
-    for (Plugin plugin : featureManifest.getPlugins()) {
-
-      // if a plug-in reference uses a version, the exact version must be found in the workspace
-      // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
-      BundleDescription bundleDescription = state.getBundle(plugin.getId(), plugin.getVersion().equals(
-          Version.emptyVersion) ? null : plugin.getVersion());
-
-      // TODO: NLS
-      if (bundleDescription == null) {
-        throw new BuildException("Could not find bundle with id '" + plugin.getId() + "' and version '"
-            + plugin.getVersion() + "' in workspace!");
-      }
-
-      // TODO: NLS
-      Assert.assertTrue(bundleDescription.isResolved(), "asd");
-      bundleDescriptions.add(bundleDescription);
-      map.put(bundleDescription, plugin);
+    if (isProjectNameSet()) {
+      featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject()).getFeatureManifest();
+    } else {
+      FeatureDescription featureDescription = targetPlatform.getFeatureDescription(_featureId, _version);
+      featureManifest = featureDescription.getFeatureManifest();
     }
 
-    // 5. Sort the bundles
-    final BundleDescription[] sortedbundleDescriptions = (BundleDescription[]) bundleDescriptions
-        .toArray(new BundleDescription[0]);
-    final Object[][] cycles = state.getStateHelper().sortBundles(sortedbundleDescriptions);
-    // warn on circular dependencies
-    if ((cycles != null) && (cycles.length > 0)) {
-      // TODO: better error messages
-      A4ELogging.warn("Detected circular dependencies:");
-      for (int i = 0; i < cycles.length; i++) {
-        A4ELogging.warn(Arrays.asList(cycles[i]).toString());
-      }
-    }
-
-    // 6.1 create result
-    final List<PluginAndBundleDescription> result = new LinkedList<PluginAndBundleDescription>();
-    for (BundleDescription bundleDescription : sortedbundleDescriptions) {
-      final PluginAndBundleDescription pluginAndBundleDescription = new PluginAndBundleDescription(bundleDescription,
-          map.get(bundleDescription));
-      result.add(pluginAndBundleDescription);
-    }
-
-    // 6.3 return result
-    return result;
-  }
-
-  /**
-   * <p>
-   * Inner class that holds the {@link BundleDescription} that is associated with a given feature {@link Plugin}.
-   * </p>
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  private class PluginAndBundleDescription {
-
-    /** the feature plug-in */
-    private final Plugin            _plugin;
-
-    /** the bundle description */
-    private final BundleDescription _bundleDescription;
-
-    /**
-     * <p>
-     * Creates a new instance of type {@link PluginAndBundleDescription}.
-     * </p>
-     * 
-     * @param bundleDescription
-     *          the {@link BundleDescription}
-     * @param plugin
-     *          the {@link Plugin}
-     */
-    public PluginAndBundleDescription(final BundleDescription bundleDescription, final Plugin plugin) {
-      Assert.notNull(bundleDescription);
-      Assert.notNull(plugin);
-
-      this._bundleDescription = bundleDescription;
-      this._plugin = plugin;
-    }
-
-    /**
-     * <p>
-     * Returns the {@link Plugin}.
-     * </p>
-     * 
-     * @return the {@link Plugin}.
-     */
-    public Plugin getPlugin() {
-      return this._plugin;
-    }
-
-    /**
-     * <p>
-     * Returns the {@link BundleDescription}.
-     * </p>
-     * 
-     * @return the {@link BundleDescription}.
-     */
-    public BundleDescription getBundleDescription() {
-      return this._bundleDescription;
-    }
+    _resolvedFeature = targetPlatform.resolveFeature(featureManifest);
   }
 }

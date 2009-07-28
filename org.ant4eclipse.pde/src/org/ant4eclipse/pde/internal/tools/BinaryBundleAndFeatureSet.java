@@ -11,51 +11,55 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.tools;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.pde.internal.model.pluginproject.BundleDescriptionLoader;
+import org.ant4eclipse.pde.internal.model.pluginproject.FeatureDescriptionLoader;
 import org.ant4eclipse.pde.model.link.LinkFile;
 import org.ant4eclipse.pde.model.link.LinkFileFactory;
+
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
+import java.io.File;
+
 /**
- * A {@link BundleSet} implementation that represent an Eclipse "Target Platform" containing binary plugins.
+ * <p>
+ * A {@link BundleAndFeatureSet} implementation that represent an eclipse target platform containing binary bundles and
+ * features.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class BinaryBundleSet extends AbstractBundleSet {
+public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
 
-  /** the constant that defines the default plugin directory */
-  public static final String DEFAULT_PLUGIN_DIRECTORY = "plugins";
+  /** the constant that defines the default plug-in directory */
+  public static final String DEFAULT_PLUGIN_DIRECTORY  = "plugins";
 
-  /** the location of the platform against which the workspace plugins will be compiled and tested */
+  /** the constant that defines the default feature directory */
+  public static final String DEFAULT_FEATURE_DIRECTORY = "features";
+
+  /** the location of the platform against which the workspace plug-ins will be compiled and tested */
   private final File         _targetPlatformLocation;
 
   /**
    * <p>
-   * Creates a new instance of type TargetPlatform with a specific workspace and an optional target platform location.
+   * Creates a new instance of type BinaryBundleAndFeatureSet.
    * </p>
    * 
-   * @param workspace
-   *          the workspace that will be used.
    * @param targetPlatformLocation
-   *          the optional target platform location.
+   *          the target platform location.
    */
-  public BinaryBundleSet(final File targetPlatformLocation) {
-    super(targetPlatformLocation);
-    A4ELogging.trace("BinaryPluginSet<init>(%s)", targetPlatformLocation);
+  public BinaryBundleAndFeatureSet(final File targetPlatformLocation) {
     Assert.isDirectory(targetPlatformLocation);
 
     this._targetPlatformLocation = targetPlatformLocation;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.pde.internal.target.AbstractBundleSet#readBundles()
+   * {@inheritDoc}
    */
-  protected void readBundles() {
+  protected void readBundlesAndFeatures() {
 
     // 1. read plugin from target location
     // TODO: ERROR-HANDLING...
@@ -92,6 +96,54 @@ public class BinaryBundleSet extends AbstractBundleSet {
             }
           }
         }
+      }
+    }
+
+    // 1. read features from target location
+    // TODO: ERROR-HANDLING...
+
+    // try to search features in the 'features' directory
+    File featuresDirectory = new File(this._targetPlatformLocation, DEFAULT_FEATURE_DIRECTORY);
+
+    // if the 'features' directory doesn't exist, use the target platform location
+    if (!featuresDirectory.exists()) {
+      featuresDirectory = this._targetPlatformLocation;
+    }
+
+    // 
+    readFeature(featuresDirectory);
+
+    // 2. read plugins from linked directories in target location
+    if (this._targetPlatformLocation != null) {
+
+      final LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
+
+      for (LinkFile linkFile : linkFiles) {
+
+        if (linkFile.isValidDestination()) {
+          readFeature(linkFile.getFeaturesDirectory());
+        }
+      }
+    }
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param directory
+   */
+  private void readFeature(File directory) {
+
+    if (directory == null || !directory.exists()) {
+      return;
+    }
+
+    for (File feature : directory.listFiles()) {
+      final FeatureDescription featureDescription = FeatureDescriptionLoader.parseFeature(feature);
+
+      if (featureDescription != null) {
+        addFeaturesDescription(featureDescription);
       }
     }
   }

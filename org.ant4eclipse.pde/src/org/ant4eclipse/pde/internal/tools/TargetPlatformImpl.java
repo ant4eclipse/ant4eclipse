@@ -12,21 +12,31 @@
 package org.ant4eclipse.pde.internal.tools;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.pde.tools.ResolvedFeature;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
+
+import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
+import org.osgi.framework.Version;
 
 import javax.security.auth.login.Configuration;
 
@@ -42,10 +52,10 @@ import javax.security.auth.login.Configuration;
 public final class TargetPlatformImpl implements TargetPlatform {
 
   /** the bundle set that contains the plug-in projects */
-  private final BundleSet             _pluginProjectSet;
+  private final BundleAndFeatureSet   _pluginProjectSet;
 
   /** contains a list of all the binary bundle sets that belong to this target location */
-  private List<BundleSet>             _binaryBundleSets;
+  private List<BundleAndFeatureSet>   _binaryBundleSets;
 
   /** the target platform configuration */
   private TargetPlatformConfiguration _configuration;
@@ -65,7 +75,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param configuration
    *          the {@link Configuration} of this target platform
    */
-  public TargetPlatformImpl(final BundleSet pluginProjectSet, final BundleSet[] binaryBundleSets,
+  public TargetPlatformImpl(final BundleAndFeatureSet pluginProjectSet, final BundleAndFeatureSet[] binaryBundleSets,
       final TargetPlatformConfiguration configuration) {
     Assert.notNull(configuration);
 
@@ -76,7 +86,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     if (binaryBundleSets != null) {
       this._binaryBundleSets = Arrays.asList(binaryBundleSets);
     } else {
-      this._binaryBundleSets = new LinkedList<BundleSet>();
+      this._binaryBundleSets = new LinkedList<BundleAndFeatureSet>();
     }
 
     // set the configuration
@@ -98,11 +108,12 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param configuration
    *          the {@link Configuration} of this target platform
    */
-  public TargetPlatformImpl(final BundleSet pluginProjectSet, final BundleSet binaryPluginSet,
+  public TargetPlatformImpl(final BundleAndFeatureSet pluginProjectSet, final BundleAndFeatureSet binaryPluginSet,
       final TargetPlatformConfiguration configuration) {
 
     // delegate
-    this(pluginProjectSet, (binaryPluginSet != null ? new BundleSet[] { binaryPluginSet } : null), configuration);
+    this(pluginProjectSet, (binaryPluginSet != null ? new BundleAndFeatureSet[] { binaryPluginSet } : null),
+        configuration);
   }
 
   /**
@@ -130,8 +141,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
         this._pluginProjectSet.initialize();
       }
 
-      for (final Iterator<BundleSet> iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
-        final BundleSet bundleSet = iterator.next();
+      for (final Iterator<BundleAndFeatureSet> iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
+        final BundleAndFeatureSet bundleSet = iterator.next();
         bundleSet.initialize();
       }
 
@@ -168,15 +179,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     // step 2: add plug-in projects from the plug-in projects list to the result
     if (this._pluginProjectSet != null) {
-      result.addAll(Arrays.asList(this._pluginProjectSet.getAllBundleDescriptions()));
+      result.addAll(this._pluginProjectSet.getAllBundleDescriptions());
     }
 
     // step 3: add bundles from binary bundle sets to the result
-    for (BundleSet binaryBundleSet : _binaryBundleSets) {
+    for (BundleAndFeatureSet binaryBundleSet : _binaryBundleSets) {
 
       for (BundleDescription bundleDescription : binaryBundleSet.getAllBundleDescriptions()) {
         if ((this._pluginProjectSet != null) && preferProjects
-            && this._pluginProjectSet.contains(bundleDescription.getSymbolicName())) {
+            && this._pluginProjectSet.containsBundle(bundleDescription.getSymbolicName())) {
           // TODO: WARNING AUSGEBEN?
         } else {
           result.add(bundleDescription);
@@ -186,6 +197,141 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     // step 4: return the result
     return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public FeatureDescription getFeatureDescription(String id, String version) {
+    Assert.nonEmpty(id);
+    Assert.nonEmpty(version);
+
+    // 
+    FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription(id, version);
+
+    // 
+    if (featureDescription != null) {
+      return featureDescription;
+    }
+
+    for (BundleAndFeatureSet bundleSet : _binaryBundleSets) {
+      featureDescription = bundleSet.getFeatureDescription(id, version);
+      if (featureDescription != null) {
+        return featureDescription;
+      }
+    }
+
+    //
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasFeatureDescription(String id, String version) {
+    return getFeatureDescription(id, version) != null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public FeatureDescription getFeatureDescription(String id) {
+    Assert.nonEmpty(id);
+
+    // 
+    FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription(id);
+
+    // 
+    if (featureDescription != null) {
+      return featureDescription;
+    }
+
+    // result
+    FeatureDescription result = null;
+
+    // iterate over feature descriptions
+    for (BundleAndFeatureSet bundleSet : _binaryBundleSets) {
+
+      // get the feature manifest
+      featureDescription = bundleSet.getFeatureDescription(id);
+
+      // if match -> set as result
+      if (featureDescription != null && featureDescription.getFeatureManifest().getId().equals(id)) {
+        if (result != null && result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+          result = featureDescription;
+        } else {
+          result = featureDescription;
+        }
+      }
+    }
+
+    // return result
+    return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasFeatureDescription(String id) {
+    return getFeatureDescription(id) != null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public ResolvedFeature resolveFeature(FeatureManifest manifest) {
+    Assert.notNull(manifest);
+    
+    ResolvedFeature resolvedFeature = new ResolvedFeature(); 
+    
+    // 4. Retrieve BundlesDescriptions for feature plug-ins
+    final Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
+    final List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
+
+    for (Plugin plugin : manifest.getPlugins()) {
+
+      // if a plug-in reference uses a version, the exact version must be found in the workspace
+      // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
+      BundleDescription bundleDescription = _state.getBundle(plugin.getId(), plugin.getVersion().equals(
+          Version.emptyVersion) ? null : plugin.getVersion());
+
+      // TODO: NLS
+      if (bundleDescription == null) {
+        throw new BuildException("Could not find bundle with id '" + plugin.getId() + "' and version '"
+            + plugin.getVersion() + "' in workspace or target platform!");
+      }
+
+      // TODO: NLS
+      Assert.assertTrue(bundleDescription.isResolved(), "bundle has to be resolved!");
+      bundleDescriptions.add(bundleDescription);
+      map.put(bundleDescription, plugin);
+    }
+
+    // 5. Sort the bundles
+    final BundleDescription[] sortedbundleDescriptions = (BundleDescription[]) bundleDescriptions
+        .toArray(new BundleDescription[0]);
+    final Object[][] cycles = _state.getStateHelper().sortBundles(sortedbundleDescriptions);
+    // warn on circular dependencies
+    if ((cycles != null) && (cycles.length > 0)) {
+      // TODO: better error messages
+      A4ELogging.warn("Detected circular dependencies:");
+      for (int i = 0; i < cycles.length; i++) {
+        A4ELogging.warn(Arrays.asList(cycles[i]).toString());
+      }
+    }
+
+    // 6.1 create result
+    final List<Pair<Plugin, BundleDescription>> result = new LinkedList<Pair<Plugin, BundleDescription>>();
+    for (BundleDescription bundleDescription : sortedbundleDescriptions) {
+      final Pair<Plugin, BundleDescription> pair = new Pair<Plugin, BundleDescription>(map.get(bundleDescription),
+          bundleDescription);
+      result.add(pair);
+    }
+
+    resolvedFeature.setPluginToBundleDescptionList(result);
+    
+    // 6.3 return result
+    return resolvedFeature;
   }
 
   /**

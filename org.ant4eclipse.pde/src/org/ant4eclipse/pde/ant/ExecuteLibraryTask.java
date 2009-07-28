@@ -11,6 +11,12 @@ import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
+/**
+ * <p>
+ * </p>
+ *
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
 
   public static final String          SCOPE_LIBRARY_SOURCE_DIRECTORY   = "SCOPE_LIBRARY_SOURCE_DIRECTORY";
@@ -23,8 +29,15 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
 
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
+  /** - */
   private String                      _libraryName;
 
+  /**
+   * <p>
+   * Creates a new instance of type ExecuteLibraryTask. 
+   * </p>
+   *
+   */
   public ExecuteLibraryTask() {
     super("executeLibrary");
 

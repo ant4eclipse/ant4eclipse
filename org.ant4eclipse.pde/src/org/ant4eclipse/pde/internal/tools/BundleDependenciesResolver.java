@@ -34,6 +34,7 @@ public class BundleDependenciesResolver {
   /** the map of all resolved bundles */
   private Map<BundleDescription, BundleDependency> _resolvedBundles;
 
+  /** - */
   private Set<String>                              _allImportedPackages;
 
   /**

@@ -30,30 +30,57 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileList;
 import org.osgi.framework.Version;
 
+/**
+ * <p>
+ * </p>
+ *
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ *
+ */
 public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements TargetPlatformAwareComponent {
 
+  /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
+  /** - */
   public static final String          SCOPE_LIBRARY = "SCOPE_LIBRARY";
 
+  /**
+   * <p>
+   * Creates a new instance of type ExecutePluginProjectTask. 
+   * </p>
+   *
+   */
   public ExecutePluginProjectTask() {
     super("executePluginProject");
 
     _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String getTargetPlatformId() {
     return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final boolean isTargetPlatformId() {
     return _targetPlatformAwareDelegate.isTargetPlatformId();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final void setTargetPlatformId(String targetPlatformId) {
     _targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void addAdditionalExecutionValues(MacroExecutionValues executionValues) {
     final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
@@ -74,6 +101,9 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
         .put("build.properties.binary.excludes", buildProperties.getBinaryExcludesAsString());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   protected Object onCreateDynamicElement(final String name) {
 
     if ("ForEachLibrary".equalsIgnoreCase(name)) {
@@ -83,6 +113,9 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doExecute() {
 
@@ -94,6 +127,9 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     super.doExecute();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected boolean onExecuteScopeMacroDefintion(ScopedMacroDefinition<String> scopedMacroDefinition) {
 
@@ -111,6 +147,12 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
 
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   * @param macroDef
+   */
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
 
     // 2. Get libraries
@@ -164,6 +206,11 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     }
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   */
   private void computeBinaryIncludeFilelist() {
     // TODO
     final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());

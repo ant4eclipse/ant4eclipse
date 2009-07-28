@@ -30,13 +30,22 @@ public class LinkFile {
    * 
    * @see #getPluginsDirectory()
    */
-  public static final String PLUGINS_DIRECTORY = "eclipse/plugins";
+  public static final String PLUGINS_DIRECTORY  = "eclipse/plugins";
+
+  public static final String FEATURES_DIRECTORY = "eclipse/features";
 
   /**
    * The path to the destination directory.
    */
   private final File         _destination;
 
+  /**
+   * <p>
+   * Creates a new instance of type LinkFile. 
+   * </p>
+   *
+   * @param destination
+   */
   public LinkFile(final File destination) {
     Assert.notNull(destination);
     _destination = destination;
@@ -65,6 +74,10 @@ public class LinkFile {
    */
   public File getPluginsDirectory() {
     return new File(_destination, PLUGINS_DIRECTORY);
+  }
+
+  public File getFeaturesDirectory() {
+    return new File(_destination, FEATURES_DIRECTORY);
   }
 
   /**

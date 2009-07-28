@@ -198,6 +198,9 @@
 		           description="The target platform id." />
 		<attribute name="destination"
 		           description="Name of the directory that will contain the feature after building (same as the 'Destination directory' in the eclipse PDE Export Wizard)." />
+		<attribute name="clearDestination"
+		           description="If set to true the destination will be cleared."
+		           default="false" />
 		<attribute name="skipBuildFeature"
 		           default="false"
 		           description="Set to true if the feature itself should not be built. In this case the task only builds the defined plugins but won't build the feature." />
@@ -207,19 +210,25 @@
 
 		<sequential>
 
-			<ant4eclipse:executeFeatureProject workspaceDirectory="@{workspaceDirectory}"
-			                                   projectName="@{projectName}"
-			                                   targetplatformid="@{targetPlatformId}">
+			<!-- executes the defined feature -->
+			<ant4eclipse:executeFeature workspaceDirectory="@{workspaceDirectory}"
+			                            projectName="@{projectName}"
+			                            targetPlatformId="@{targetPlatformId}">
 
-				<!-- scrub destination directory  -->
+				<!-- Step 1: Scrub destination directory  -->
 				<ant4eclipse:forRootFeature>
-					<echo>Scrubbing directory '@{destination}'</echo>
+					<antcontrib:if>
+						<istrue value="@{clearDestination}" />
+						<antcontrib:then>
+							<echo>Scrubbing directory '@{destination}'</echo>
 
-					<delete dir="@{destination}" quiet="true" />
-					<mkdir dir="@{destination}" />
+							<delete dir="@{destination}" quiet="true" />
+							<mkdir dir="@{destination}" />
+						</antcontrib:then>
+					</antcontrib:if>
 				</ant4eclipse:forRootFeature>
 
-				<!-- process each defined plug-in  -->
+				<!-- Step 2: Process each defined plug-in  -->
 				<ant4eclipse:forEachPlugin>
 					<antcontrib:if>
 						<istrue value="${executeFeatureProject.plugin.isSource}" />
@@ -285,7 +294,7 @@
 					</antcontrib:if>
 				</ant4eclipse:forRootFeature>
 
-			</ant4eclipse:executeFeatureProject>
+			</ant4eclipse:executeFeature>
 
 		</sequential>
 	</macrodef>

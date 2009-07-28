@@ -2,7 +2,7 @@
 <antlib>
 	<typedef name="targetPlatform" classname="org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType" />
 	<typedef name="executePluginProject" classname="org.ant4eclipse.pde.ant.ExecutePluginProjectTask" />
-	<typedef name="executeFeatureProject" classname="org.ant4eclipse.pde.ant.ExecuteFeatureProjectTask" />
+	<typedef name="executeFeature" classname="org.ant4eclipse.pde.ant.ExecuteFeatureTask" />
 	<typedef name="executeLibrary" classname="org.ant4eclipse.pde.ant.ExecuteLibraryTask" />
 	<typedef name="pdeProjectFileSet" classname="org.ant4eclipse.pde.ant.PdeProjectFileSet" />
 	<typedef name="patchFeatureManifest" classname="org.ant4eclipse.pde.ant.PatchFeatureManifestTask" />

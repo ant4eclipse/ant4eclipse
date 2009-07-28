@@ -17,6 +17,7 @@ import java.util.List;
 import org.ant4eclipse.core.Assert;
 
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
 
 import org.osgi.framework.Version;
 
@@ -32,52 +33,52 @@ import org.osgi.framework.Version;
 public class FeatureManifestImpl implements FeatureManifest {
 
   /** required feature identifier (eg. com.xyz.myfeature) */
-  private String       _id;
+  private String         _id;
 
   /** required component version (eg. 1.0.3) */
-  private Version      _version;
+  private Version        _version;
 
   /** optional displayable label (name) */
-  private String       label;
+  private String         label;
 
   /** optional display label identifying the organization providing this component */
-  private String       _providerName;
+  private String         _providerName;
 
   /** optional image to use when displaying information about the feature */
-  private String       _image;
+  private String         _image;
 
   /** optional operating system specification */
-  private String       _operatingSystem;
+  private String         _operatingSystem;
 
   /** optional machine architecture specification */
-  private String       _machineArchitecture;
+  private String         _machineArchitecture;
 
   /** optional windowing system specification */
-  private String       _windowingSystem;
+  private String         _windowingSystem;
 
   /** optional locale specification */
-  private String       _locale;
+  private String         _locale;
 
   /** optional reference to another feature identifier used to select the default installation location for this feature */
-  private String       _colocationAffinity;
+  private String         _colocationAffinity;
 
   /** optional indication specifying whether this feature can be used as a primary feature */
-  private boolean      _primary;
+  private boolean        _primary;
 
   /** optional flag that, if "true", indicates that the feature cannot be installed in a group with other features */
-  private boolean      _exclusive;
+  private boolean        _exclusive;
 
   /**
    * optional identifier that represents the id of the plug-in listed in the feature that is used to carry branding
    * information for the feature
    */
-  private String       _plugin;
+  private String         _plugin;
 
   /**
    * optional identifier of the Eclipse application that is to be used during startup when the declaring feature is the
    * primary feature
    */
-  private String       _application;
+  private String         _application;
 
   // install-handler?
 
@@ -89,12 +90,12 @@ public class FeatureManifestImpl implements FeatureManifest {
 
   // url?
 
-  // includes*
+  private List<Includes> _includes;
 
   // requires?
 
   /** list of referenced plug-ins */
-  private List<Plugin> _plugins;
+  private List<Plugin>   _plugins;
 
   // data*
 
@@ -107,6 +108,8 @@ public class FeatureManifestImpl implements FeatureManifest {
 
     // initialize plug-in list
     _plugins = new LinkedList<Plugin>();
+    
+    _includes = new LinkedList<Includes>();
   }
 
   /**
@@ -207,26 +210,31 @@ public class FeatureManifestImpl implements FeatureManifest {
   }
 
   /**
-   * Returns the name of the windowing system.
-   * 
-   * @return The name of the windowing system.
+   * {@inheritDoc}
    */
   public String getWindowingSystem() {
     return _windowingSystem;
   }
 
   /**
-   * @return displayable label (name).
+   * {@inheritDoc}
    */
   public String getLabel() {
     return label;
   }
 
   /**
-   * @return all the referenced plugins.
+   * {@inheritDoc}
    */
   public List<Plugin> getPlugins() {
     return _plugins;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public List<Includes> getIncludes() {
+    return _includes;
   }
 
   /**
@@ -332,6 +340,12 @@ public class FeatureManifestImpl implements FeatureManifest {
     Assert.notNull(plugin);
 
     _plugins.add(plugin);
+  }
+
+  public void addIncludes(Includes includes) {
+    Assert.notNull(includes);
+
+    _includes.add(includes);
   }
 
   /**
@@ -639,6 +653,230 @@ public class FeatureManifestImpl implements FeatureManifest {
 
     public void setWindowingSystem(String windowingSystem) {
       _windowingSystem = windowingSystem;
+    }
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   * 
+   */
+  public static class IncludesImpl implements Includes {
+
+    /** required feature identifier (eg. com.xyz.myfeature) */
+    private String  _id;
+
+    /** required component version (eg. 1.0.3) */
+    private Version _version;
+
+    /** optional name */
+    private String  _name;
+
+    private boolean _optional;
+
+    private String  _searchLocation;
+
+    /** optional operating system specification */
+    private String  _operatingSystem;
+
+    /** optional machine architecture specification */
+    private String  _machineArchitecture;
+
+    /** optional windowing system specification */
+    private String  _windowingSystem;
+
+    /** optional locale specification */
+    private String  _locale;
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the id
+     */
+    public String getId() {
+      return _id;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param id
+     *          the id to set
+     */
+    public void setId(String id) {
+      _id = id;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the version
+     */
+    public Version getVersion() {
+      return _version;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param version
+     *          the version to set
+     */
+    public void setVersion(Version version) {
+      _version = version;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the name
+     */
+    public String getName() {
+      return _name;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param name
+     *          the name to set
+     */
+    public void setName(String name) {
+      _name = name;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the optional
+     */
+    public boolean isOptional() {
+      return _optional;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param optional
+     *          the optional to set
+     */
+    public void setOptional(boolean optional) {
+      _optional = optional;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the searchLocation
+     */
+    public String getSearchLocation() {
+      return _searchLocation;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param searchLocation
+     *          the searchLocation to set
+     */
+    public void setSearchLocation(String searchLocation) {
+      _searchLocation = searchLocation;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the operatingSystem
+     */
+    public String getOperatingSystem() {
+      return _operatingSystem;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param operatingSystem
+     *          the operatingSystem to set
+     */
+    public void setOperatingSystem(String operatingSystem) {
+      _operatingSystem = operatingSystem;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the machineArchitecture
+     */
+    public String getMachineArchitecture() {
+      return _machineArchitecture;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param machineArchitecture
+     *          the machineArchitecture to set
+     */
+    public void setMachineArchitecture(String machineArchitecture) {
+      _machineArchitecture = machineArchitecture;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the windowingSystem
+     */
+    public String getWindowingSystem() {
+      return _windowingSystem;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param windowingSystem
+     *          the windowingSystem to set
+     */
+    public void setWindowingSystem(String windowingSystem) {
+      _windowingSystem = windowingSystem;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return the locale
+     */
+    public String getLocale() {
+      return _locale;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param locale
+     *          the locale to set
+     */
+    public void setLocale(String locale) {
+      _locale = locale;
     }
   }
 }
