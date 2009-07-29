@@ -11,15 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.task;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
 import org.apache.tools.ant.BuildException;
+
+import java.io.File;
 
 /**
  * <p>
@@ -47,63 +49,63 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
   /**
    * {@inheritDoc}
    */
-  public final void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
+  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     this._eclipseProjectDelegate.ensureRole(projectRoleClass);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final EclipseProject getEclipseProject() throws BuildException {
+  public EclipseProject getEclipseProject() throws BuildException {
     return this._eclipseProjectDelegate.getEclipseProject();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final Workspace getWorkspace() {
+  public Workspace getWorkspace() {
     return this._eclipseProjectDelegate.getWorkspace();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final File getWorkspaceDirectory() {
+  public File getWorkspaceDirectory() {
     return this._eclipseProjectDelegate.getWorkspaceDirectory();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final boolean isProjectNameSet() {
+  public boolean isProjectNameSet() {
     return this._eclipseProjectDelegate.isProjectNameSet();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final boolean isWorkspaceDirectorySet() {
+  public boolean isWorkspaceDirectorySet() {
     return this._eclipseProjectDelegate.isWorkspaceDirectorySet();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void requireWorkspaceAndProjectNameSet() {
+  public void requireWorkspaceAndProjectNameSet() {
     this._eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void requireWorkspaceDirectorySet() {
+  public void requireWorkspaceDirectorySet() {
     this._eclipseProjectDelegate.requireWorkspaceDirectorySet();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setProjectName(String projectName) {
+  public void setProjectName(String projectName) {
     this._eclipseProjectDelegate.setProjectName(projectName);
   }
 
@@ -111,14 +113,14 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    * {@inheritDoc}
    */
   @SuppressWarnings("deprecation")
-  public final void setWorkspace(File workspace) {
+  public void setWorkspace(File workspace) {
     this._eclipseProjectDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setWorkspaceDirectory(File workspaceDirectory) {
+  public void setWorkspaceDirectory(File workspaceDirectory) {
     this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
@@ -126,7 +128,7 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    * {@inheritDoc}
    */
   @Deprecated
-  public final void setProject(File projectPath) {
+  public void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);
   }
 }

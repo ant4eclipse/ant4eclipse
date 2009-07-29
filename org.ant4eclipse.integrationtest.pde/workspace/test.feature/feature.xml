@@ -17,16 +17,13 @@
       [Enter License Description here.]
    </license>
 
-   <!-- <includes
+   <includes
          id="org.eclipse.help"
          version="0.0.0"/>
 
-   <requires>
-      <import plugin="com.ibm.icu.source"/>
-      <import plugin="com.ibm.icu.source"/>
-      <import plugin="com.jcraft.jsch"/>
-      <import feature="org.eclipse.help.source" version="1.1.0.v20090602-7e7eFAlFEx2XZoYqwI68e2F"/>
-   </requires> -->
+   <includes
+         id="org.eclipse.cvs"
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.osgi"
@@ -34,20 +31,20 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="testproject"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="example_bundle"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.osgi.services"

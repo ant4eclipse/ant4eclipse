@@ -25,6 +25,7 @@ import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.ResolvedFeature;
@@ -37,8 +38,6 @@ import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
 import org.osgi.framework.Version;
-
-import javax.security.auth.login.Configuration;
 
 /**
  * <p>
@@ -202,9 +201,9 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
-  public FeatureDescription getFeatureDescription(String id, String version) {
+  public FeatureDescription getFeatureDescription(String id, Version version) {
     Assert.nonEmpty(id);
-    Assert.nonEmpty(version);
+    Assert.notNull(version);
 
     // 
     FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription(id, version);
@@ -228,7 +227,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
-  public boolean hasFeatureDescription(String id, String version) {
+  public boolean hasFeatureDescription(String id, Version version) {
     return getFeatureDescription(id, version) != null;
   }
 
@@ -257,7 +256,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
       // if match -> set as result
       if (featureDescription != null && featureDescription.getFeatureManifest().getId().equals(id)) {
-        if (result != null && result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+        if (result != null
+            && result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
           result = featureDescription;
         } else {
           result = featureDescription;
@@ -281,9 +281,51 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   public ResolvedFeature resolveFeature(FeatureManifest manifest) {
     Assert.notNull(manifest);
-    
-    ResolvedFeature resolvedFeature = new ResolvedFeature(); 
-    
+
+    ResolvedFeature resolvedFeature = new ResolvedFeature(manifest);
+
+    resolvePlugins(manifest, resolvedFeature);
+
+    resolveIncludes(manifest, resolvedFeature);
+
+    // 6.3 return result
+    return resolvedFeature;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param manifest
+   * @param resolvedFeature
+   */
+  private void resolveIncludes(FeatureManifest manifest, ResolvedFeature resolvedFeature) {
+
+    // TODO: DependencyGraph!!
+    final List<Pair<Includes, FeatureDescription>> result = new LinkedList<Pair<Includes, FeatureDescription>>();
+
+    for (Includes includes : manifest.getIncludes()) {
+
+      FeatureDescription featureDescription = null;
+
+      if (includes.getVersion().equals(Version.emptyVersion)) {
+        featureDescription = getFeatureDescription(includes.getId());
+      } else {
+        featureDescription = getFeatureDescription(includes.getId(), includes.getVersion());
+      }
+
+      if (featureDescription == null) {
+        // TODO: NLS
+        throw new RuntimeException();
+      } else {
+        result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
+      }
+    }
+
+    resolvedFeature.setIncludesToFeatureDescriptionList(result);
+  }
+
+  private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) throws BuildException {
     // 4. Retrieve BundlesDescriptions for feature plug-ins
     final Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
     final List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
@@ -329,9 +371,6 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
 
     resolvedFeature.setPluginToBundleDescptionList(result);
-    
-    // 6.3 return result
-    return resolvedFeature;
   }
 
   /**

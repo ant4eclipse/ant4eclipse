@@ -1,5 +1,6 @@
 package org.ant4eclipse.pde.tools;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.Pair;
 
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
@@ -21,8 +22,21 @@ public class ResolvedFeature {
 
   /**
    * <p>
+   * Creates a new instance of type ResolvedFeature. 
    * </p>
    *
+   * @param featureManifest
+   */
+  public ResolvedFeature(FeatureManifest featureManifest) {
+    Assert.notNull(featureManifest);
+
+    _featureManifest = featureManifest;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
    * @return the featureManifest
    */
   public FeatureManifest getFeatureManifest() {
@@ -32,17 +46,7 @@ public class ResolvedFeature {
   /**
    * <p>
    * </p>
-   *
-   * @param featureManifest the featureManifest to set
-   */
-  public void setFeatureManifest(FeatureManifest featureManifest) {
-    _featureManifest = featureManifest;
-  }
-
-  /**
-   * <p>
-   * </p>
-   *
+   * 
    * @return the pluginToBundleDescptionList
    */
   public List<Pair<Plugin, BundleDescription>> getPluginToBundleDescptionList() {
@@ -52,8 +56,9 @@ public class ResolvedFeature {
   /**
    * <p>
    * </p>
-   *
-   * @param pluginToBundleDescptionList the pluginToBundleDescptionList to set
+   * 
+   * @param pluginToBundleDescptionList
+   *          the pluginToBundleDescptionList to set
    */
   public void setPluginToBundleDescptionList(List<Pair<Plugin, BundleDescription>> pluginToBundleDescptionList) {
     _pluginToBundleDescptionList = pluginToBundleDescptionList;
@@ -62,7 +67,7 @@ public class ResolvedFeature {
   /**
    * <p>
    * </p>
-   *
+   * 
    * @return the includesToFeatureDescriptionList
    */
   public List<Pair<Includes, FeatureDescription>> getIncludesToFeatureDescriptionList() {
@@ -72,13 +77,13 @@ public class ResolvedFeature {
   /**
    * <p>
    * </p>
-   *
-   * @param includesToFeatureDescriptionList the includesToFeatureDescriptionList to set
+   * 
+   * @param includesToFeatureDescriptionList
+   *          the includesToFeatureDescriptionList to set
    */
   public void setIncludesToFeatureDescriptionList(
       List<Pair<Includes, FeatureDescription>> includesToFeatureDescriptionList) {
     _includesToFeatureDescriptionList = includesToFeatureDescriptionList;
   }
-  
-  
+
 }

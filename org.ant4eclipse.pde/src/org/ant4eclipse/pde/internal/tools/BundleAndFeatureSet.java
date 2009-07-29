@@ -12,6 +12,7 @@
 package org.ant4eclipse.pde.internal.tools;
 
 import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.osgi.framework.Version;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public interface BundleAndFeatureSet {
    *          the version of the feature
    * @return the {@link FeatureDescription}
    */
-  FeatureDescription getFeatureDescription(String featureId, String version);
+  FeatureDescription getFeatureDescription(String featureId, Version version);
 
   /**
    * <p>

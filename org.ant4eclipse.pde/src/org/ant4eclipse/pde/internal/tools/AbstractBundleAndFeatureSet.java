@@ -96,19 +96,19 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
-  public FeatureDescription getFeatureDescription(String featureId, String version) {
+  public FeatureDescription getFeatureDescription(String featureId, Version version) {
     Assert.nonEmpty(featureId);
-    Assert.nonEmpty(version);
+    Assert.notNull(version);
 
     // initialize if necessary
     initialize();
-    
+
     // iterate over feature list
     for (FeatureDescription featureDescription : _featureDescriptonList) {
 
       // return if match
       if (featureDescription.getFeatureManifest().getId().equals(featureId)
-          && featureDescription.getFeatureManifest().getVersion().equals(new Version(version))) {
+          && featureDescription.getFeatureManifest().getVersion().equals(version)) {
 
         return featureDescription;
       }
@@ -123,7 +123,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    */
   public FeatureDescription getFeatureDescription(String featureId) {
     Assert.nonEmpty(featureId);
-    
+
     // initialize if necessary
     initialize();
 

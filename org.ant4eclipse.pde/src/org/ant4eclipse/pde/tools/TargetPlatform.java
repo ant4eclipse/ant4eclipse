@@ -19,6 +19,7 @@ import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
+import org.osgi.framework.Version;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public interface TargetPlatform {
    * @param version
    * @return
    */
-  FeatureDescription getFeatureDescription(String id, String version);
+  FeatureDescription getFeatureDescription(String id, Version version);
 
   /**
    * <p>
@@ -69,7 +70,7 @@ public interface TargetPlatform {
    * @param version
    * @return
    */
-  boolean hasFeatureDescription(String id, String version);
+  boolean hasFeatureDescription(String id, Version version);
 
   /**
    * <p>

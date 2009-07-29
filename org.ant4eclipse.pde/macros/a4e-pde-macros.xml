@@ -35,12 +35,15 @@
 			<property name="self.directory" value="@dot" />
 
 
-			<!-- step 2: execute the plug-in project -->
+			<!-- step 2: execute the plug-in project 
+			     We use the ant4eclipse:executePluginProject task here to iterate over the 
+			     src and out directories of the eclipse plug-in project -->
 			<ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
 			                                  projectName="@{projectName}"
 			                                  targetPlatformId="@{targetPlatformId}">
 
-				<!-- step 2.1: scrub all output directories -->
+				<!-- step 2.1: scrub all output directories 
+				      Each defined output directory has to be cleared before we start the build. -->
 				<ant4eclipse:forEachOutputDirectory>
 					<echo>Scrubbing directory '${executePluginProject.output.directory}'</echo>
 
@@ -49,7 +52,10 @@
 					<mkdir dir="${executePluginProject.output.directory}" />
 				</ant4eclipse:forEachOutputDirectory>
 
-				<!-- step 2.2: compile the sources -->
+				<!-- step 2.2: compile the sources 
+				     We use the ant4eclipse:forProject element to compile the sources. 
+				     To support access restrictions and eclipse compiler warnings, we also use 
+				     the ant4eclipse JDTCompilerAdapter within the javac task. -->
 				<ant4eclipse:forProject>
 					<echo>Compiling pde project '${executePluginProject.project.name}'</echo>
 					<echo>  - source directories -> ${executePluginProject.source.directories}</echo>
@@ -58,20 +64,25 @@
 					<echo>  - classpath          -> ${executePluginProject.classpath.absolute.compiletime}</echo>
 
 					<javac destdir="${executePluginProject.default.output.directory}"
-					       debug="on"
-					       source="1.5"
 					       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
 
 						<src refid="executePluginProject.source.directories.path" />
 						<bootclasspath refid="executePluginProject.boot.classpath.path" />
 						<classpath refid="executePluginProject.classpath.absolute.compiletime.path" />
 
+						<!-- we have to pass in the reference to the additional compiler arguments -->
 						<compilerarg value="compiler.args.refid=executePluginProject.compiler.args"
+						             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+
+						<!-- we also have to pass path of the compiler options file to support project specific compiler options -->
+						<compilerarg value="compiler.options.file=${executePluginProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
 						             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 					</javac>
 				</ant4eclipse:forProject>
 
-				<!-- step 2.3: copy all ressources from the source folders to the output folders -->
+				<!-- step 2.3: copy all ressources from the source folders to the output folders 
+				     This step copies all resources (non *.java files) from the source directories to
+				     the source directories. -->
 				<ant4eclipse:forEachSourceDirectory>
 					<echo>Copying resources from directory '${executePluginProject.source.directory}' to '${executePluginProject.output.directory}'</echo>
 
@@ -82,10 +93,13 @@
 					</copy>
 				</ant4eclipse:forEachSourceDirectory>
 
-				<!-- step 2.4: build the libraries -->
+				<!-- step 2.4: pack the libraries 
+				     Due to the fact that you can have several libraries within your PDE project, we have 
+				     to pack the libraries before we pack the bundle itself -->
 				<ant4eclipse:forEachLibrary>
 
-					<!-- special case: "self"-library -->
+					<!-- special case: 'self'-library 
+					     The 'self'-library  is the bundle itself. -->
 					<antcontrib:if>
 						<istrue value="${executePluginProject.library.isSelf}" />
 						<antcontrib:then>
@@ -106,9 +120,11 @@
 							</ant4eclipse:executeLibrary>
 
 						</antcontrib:then>
+
 						<!-- default case: "ordinary" library -->
 						<antcontrib:else>
 
+							<!-- copy the content of the library to a temporary folder -->
 							<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
 							                            projectname="${executePluginProject.project.name}"
 							                            libraryname="${executePluginProject.library.name}"
@@ -123,16 +139,20 @@
 
 							</ant4eclipse:executeLibrary>
 
+							<!-- delete the library file if on exists -->
 							<delete file="@{destination}/${plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
 							        quiet="true" />
 							<mkdir dir="@{destination}/${plugins.directory}/${executePluginProject.library.name}" />
 
+							<!-- jar the library file if on exists -->
 							<jar destfile="@{destination}/${plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
 							     basedir="@{destination}/${temp.directory}/${executePluginProject.library.name}" />
 
+							<!-- move the jar file to the pde project folder project -->
 							<move file="@{destination}/${plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
 							      todir="${executePluginProject.project.directory}" />
 
+							<!-- finally delete the temp file -->
 							<delete dir="@{destination}/${plugins.directory}/${executePluginProject.library.name}" />
 							<delete dir="@{destination}/${temp.directory}/" />
 
@@ -141,7 +161,9 @@
 
 				</ant4eclipse:forEachLibrary>
 
-				<!-- step 2.5: pack the bundle -->
+				<!-- step 2.5: pack the bundle 
+				     Finally we have to pack the bundle. We use the ant4eclipse:pdeProjectFileSet here to copy all 
+				     specified files to the bundle. -->
 				<ant4eclipse:forProject>
 
 					<!-- step 2.5.1: copy the (in the build.properties) specified content to the destination directory -->
@@ -155,6 +177,7 @@
 						                               excludes="${executePluginProject.build.properties.binary.excludes}" />
 					</copy>
 
+					<!-- delete the (temporary) self-directory -->
 					<delete dir="${executePluginProject.project.directory}/${self.directory}"
 					        quiet="true" />
 
@@ -165,6 +188,8 @@
 						           value="${executePluginProject.bundle.effective.version}" />
 					</manifest>
 
+					<!-- if bundle should be packaged as a jar file (the default), we have to jar 
+					     the bundle in the next step. -->
 					<antcontrib:if>
 						<istrue value="@{packageAsJar}" />
 						<antcontrib:then>
@@ -184,7 +209,6 @@
 		</sequential>
 	</macrodef>
 
-
 	<!-- =================================
           target      : buildFeature
           description : Builds an eclipse feature project. Each contained plug-in project will be build.
@@ -193,7 +217,14 @@
 		<attribute name="workspaceDirectory"
 		           description="Absolute path of the workspace directory." />
 		<attribute name="projectName"
-		           description="The name of the eclipse plug-in project." />
+		           description="The name of the eclipse plug-in project."
+		           default="" />
+		<attribute name="featureId"
+		           description="The id of the feature"
+		           default="" />
+		<attribute name="featureVersion"
+		           description="The version of the feature"
+		           default="" />
 		<attribute name="targetPlatformId"
 		           description="The target platform id." />
 		<attribute name="destination"
@@ -213,6 +244,8 @@
 			<!-- executes the defined feature -->
 			<ant4eclipse:executeFeature workspaceDirectory="@{workspaceDirectory}"
 			                            projectName="@{projectName}"
+			                            featureId="@{featureId}"
+			                            featureVersion="@{featureVersion}"
 			                            targetPlatformId="@{targetPlatformId}">
 
 				<!-- Step 1: Scrub destination directory  -->
@@ -228,7 +261,21 @@
 					</antcontrib:if>
 				</ant4eclipse:forRootFeature>
 
-				<!-- Step 2: Process each defined plug-in  -->
+				<!-- Step 2: execute included features  -->
+				<ant4eclipse:forEachIncludedFeature>
+
+					<buildFeature workspaceDirectory="@{workspaceDirectory}"
+					              featureId="${executeFeatureProject.includes.id}"
+					              featureVersion="${executeFeatureProject.includes.effective.version}"
+					              targetPlatformId="@{targetPlatformId}"
+					              destination="@{destination}"
+					              packageAsJar="@{packageAsJar}" />
+
+					<echo>${executeFeatureProject.includes.version}</echo>
+					<echo>${executeFeatureProject.includes.effective.version}</echo>
+				</ant4eclipse:forEachIncludedFeature>
+
+				<!-- Step 3: Process each defined plug-in  -->
 				<ant4eclipse:forEachPlugin>
 					<antcontrib:if>
 						<istrue value="${executeFeatureProject.plugin.isSource}" />
@@ -251,7 +298,7 @@
 
 				</ant4eclipse:forEachPlugin>
 
-				<!-- Step 3: Build feature itself -->
+				<!-- Step 4: Build feature itself -->
 				<ant4eclipse:forRootFeature>
 
 					<!-- skip this step if parameter '@{skipBuildFeature}' is 'true' -->
@@ -259,7 +306,7 @@
 						<isfalse value="@{skipBuildFeature}" />
 						<antcontrib:then>
 
-							<!-- Step 3.1: Copy all files defined in the build.properties to the destination directory  -->
+							<!-- Step 4.1: Copy all files defined in the build.properties to the destination directory  -->
 							<copy todir="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}"
 							      overwrite="true">
 
@@ -270,11 +317,11 @@
 								                               excludes="${executeFeatureProject.build.properties.binary.excludes}" />
 							</copy>
 
-							<!-- Step 3.2: Patch the feature.xml -->
+							<!-- Step 4.2: Patch the feature.xml -->
 							<ant4eclipse:patchFeatureManifest featureXmlFile="@{destination}/features/${executeFeatureProject.feature.id}_${executeFeatureProject.feature.effective.version}/feature.xml"
 							                                  pluginVersions="${executeFeatureProject.feature.plugins.effective.versions}" />
 
-							<!-- Step 3.3: Package the feature as a jar -->
+							<!-- Step 4.3: Package the feature as a jar -->
 							<antcontrib:if>
 
 								<!-- skip this step if 'packageAsJar' is 'false' -->

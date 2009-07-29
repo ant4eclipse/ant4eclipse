@@ -13,11 +13,13 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Pair;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.PdeBuildHelper;
@@ -76,7 +78,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
   private String                               _featureId;
 
   /** the version of the feature to build (must be used together with featureId) */
-  private String                               _version;
+  private Version                              _featureVersion;
 
   /** the macro execution delegate */
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
@@ -85,7 +87,7 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
   private ResolvedFeature                      _resolvedFeature;
 
   /** a semicolon separated list of bundle-symbolicNames and versions */
-  private String                               _pluginsEffectiveVersions;
+  private String                               _resolvedBundleVersions;
 
   /**
    * <p>
@@ -134,6 +136,62 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
   }
 
   /**
+   * <p>
+   * </p>
+   * 
+   * @return the featureId
+   */
+  public String getFeatureId() {
+    return _featureId;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param featureId
+   *          the featureId to set
+   */
+  public void setFeatureId(String featureId) {
+    if (Utilities.hasText(featureId)) {
+      _featureId = featureId;
+    }
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return the version
+   */
+  public Version getFeatureVersion() {
+    return _featureVersion;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param version
+   *          the version to set
+   */
+  public void setFeatureVersion(String version) {
+    if (Utilities.hasText(version)) {
+      _featureVersion = new Version(version);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setProjectName(String projectName) {
+    if (Utilities.hasText(projectName)) {
+      super.setProjectName(projectName);
+    }
+  }
+
+  /**
    * {@inheritDoc}
    */
   public Object createDynamicElement(final String name) {
@@ -154,22 +212,8 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
    */
   public void doExecute() {
 
-    resolveFeature();
-
-    // TODO: extract method
-    StringBuilder builder = new StringBuilder();
-    for (Iterator<Pair<Plugin, BundleDescription>> iterator = _resolvedFeature.getPluginToBundleDescptionList()
-        .iterator(); iterator.hasNext();) {
-      Pair<Plugin, BundleDescription> description = iterator.next();
-      builder.append(description.getFirst().getId());
-      builder.append("=");
-      builder.append(PdeBuildHelper.resolveVersion(description.getSecond().getVersion(), PdeBuildHelper
-          .getResolvedContextQualifier()));
-      if (iterator.hasNext()) {
-        builder.append(";");
-      }
-    }
-    _pluginsEffectiveVersions = builder.toString();
+    _resolvedFeature = resolveFeature();
+    _resolvedBundleVersions = extractBundleVersions();
 
     // execute scoped macro definitions
     for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
@@ -194,20 +238,20 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
     // require workspace directory set...
     requireWorkspaceDirectorySet();
 
-    // // require project name *or* feature set...
-    // if ((!isProjectNameSet() && _feature == null) || isProjectNameSet() && _feature != null) {
-    // // TODO: NLS
-    // throw new BuildException("You have to specify either the projectName or the feature attribute!");
-    // }
-    //
-    // // require feature exists (if set) ...
-    // if (_feature != null && !_feature.exists()) {
-    // // TODO: NLS
-    // throw new BuildException("Attribute feature has to contain a path to an existing feature!");
-    // }
-
     // require target platform id set...
     requireTargetPlatformIdSet();
+
+    // require project name *or* featureId (and version) set...
+    if ((isProjectNameSet() && (_featureId != null || _featureVersion != null))) {
+      // TODO: NLS
+      throw new BuildException(
+          "You have to specify either the projectName or the featureId and featureVersion attributes!");
+    }
+    if ((!isProjectNameSet() && (_featureId == null || _featureVersion == null))) {
+      // TODO: NLS
+      throw new BuildException(
+          "You have to specify either the projectName or the featureId and featureVersion attributes!");
+    }
   }
 
   /**
@@ -300,16 +344,13 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
 
       public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
-        final FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper
-            .getFeatureProjectRole(getEclipseProject());
-
-        FeatureManifest manifest = featureProjectRole.getFeatureManifest();
+        FeatureManifest manifest = _resolvedFeature.getFeatureManifest();
         values.getProperties().put("feature.id", manifest.getId());
         values.getProperties().put("feature.version", manifest.getVersion().toString());
         Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(manifest.getVersion(), PdeBuildHelper
             .getResolvedContextQualifier());
         values.getProperties().put("feature.effective.version", resolvedFeatureVersion.toString());
-        values.getProperties().put("feature.plugins.effective.versions", _pluginsEffectiveVersions);
+        values.getProperties().put("feature.plugins.effective.versions", _resolvedBundleVersions);
 
         // if (manifest) {
         values.getProperties().put("feature.label", manifest.getLabel());
@@ -318,19 +359,50 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
         values.getProperties().put("feature.providername", manifest.getProviderName());
         // }
 
-        FeatureBuildProperties buildProperties = featureProjectRole.getBuildProperties();
-        values.getProperties().put("build.properties.binary.includes", buildProperties.getBinaryIncludesAsString());
-        values.getProperties().put("build.properties.binary.excludes", buildProperties.getBinaryExcludesAsString());
-
+        if (isProjectNameSet()) {
+          FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject());
+          FeatureBuildProperties buildProperties = featureProjectRole.getBuildProperties();
+          values.getProperties().put("build.properties.binary.includes", buildProperties.getBinaryIncludesAsString());
+          values.getProperties().put("build.properties.binary.excludes", buildProperties.getBinaryExcludesAsString());
+        }
         // return the values
         return values;
       }
     });
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param macroDef
+   */
   private void executeIncludedFeatureScopedMacroDef(MacroDef macroDef) {
-    // TODO Auto-generated method stub
 
+    for (final Pair<Includes, FeatureDescription> pair : _resolvedFeature.getIncludesToFeatureDescriptionList()) {
+
+      // execute macro
+      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+
+        public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
+
+          Includes includes = pair.getFirst();
+          FeatureManifest featureManifest = pair.getSecond().getFeatureManifest();
+
+          // add plug-in id
+          values.getProperties().put("includes.id", includes.getId());
+          values.getProperties().put("includes.version", includes.getVersion().toString());
+
+          Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(featureManifest.getVersion(), PdeBuildHelper
+              .getResolvedContextQualifier());
+
+          values.getProperties().put("includes.effective.version", resolvedFeatureVersion.toString());
+
+          // return the values
+          return values;
+        }
+      });
+    }
   }
 
   /**
@@ -339,24 +411,47 @@ public class ExecuteFeatureTask extends AbstractPdeBuildTask implements DynamicE
    * 
    * @return
    */
-  private void resolveFeature() {
+  private ResolvedFeature resolveFeature() {
 
-    // 1. Initialize target platform
+    // 1. initialize target platform
     final TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
     configuration.setPreferProjects(true);
     final TargetPlatform targetPlatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
         getTargetPlatformId(), configuration);
 
-    // 3.
+    // 2.
     FeatureManifest featureManifest = null;
 
     if (isProjectNameSet()) {
       featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject()).getFeatureManifest();
     } else {
-      FeatureDescription featureDescription = targetPlatform.getFeatureDescription(_featureId, _version);
+      FeatureDescription featureDescription = targetPlatform.getFeatureDescription(_featureId, _featureVersion);
       featureManifest = featureDescription.getFeatureManifest();
     }
 
-    _resolvedFeature = targetPlatform.resolveFeature(featureManifest);
+    // 3. return the result
+    return targetPlatform.resolveFeature(featureManifest);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  private String extractBundleVersions() {
+    StringBuilder builder = new StringBuilder();
+    for (Iterator<Pair<Plugin, BundleDescription>> iterator = _resolvedFeature.getPluginToBundleDescptionList()
+        .iterator(); iterator.hasNext();) {
+      Pair<Plugin, BundleDescription> description = iterator.next();
+      builder.append(description.getFirst().getId());
+      builder.append("=");
+      builder.append(PdeBuildHelper.resolveVersion(description.getSecond().getVersion(), PdeBuildHelper
+          .getResolvedContextQualifier()));
+      if (iterator.hasNext()) {
+        builder.append(";");
+      }
+    }
+    return builder.toString();
   }
 }
