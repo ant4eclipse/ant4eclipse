@@ -354,11 +354,15 @@ public final class EclipseProjectImpl implements EclipseProject {
       String abbreviation = nature.getName().toLowerCase();
       if (nicknameRegistry.hasNatureForNickname(abbreviation)) {
         // check the nature with the full id now
-        return hasNature(nicknameRegistry.getNatureForNickname(abbreviation));
-      } else {
-        // there's no mapping so we don't have an abbreviation here
-        return false;
+        String[] ids = nicknameRegistry.getNaturesForNickname(abbreviation);
+        for (String id : ids) {
+          if (hasNature(id)) {
+            return true;
+          }
+        }
       }
+      // there's no mapping so we don't have an abbreviation here
+      return false;
     }
 
     // nature known:
@@ -373,7 +377,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns the project natures of the project.
    */
   public ProjectNature[] getNatures() {
-    return this._natures.toArray(new ProjectNature[0]);
+    return this._natures.toArray(new ProjectNature[this._natures.size()]);
   }
 
   /**
@@ -391,7 +395,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return A list of all reference project names.
    */
   public String[] getReferencedProjects() {
-    return this._referencedProjects.toArray(new String[0]);
+    return this._referencedProjects.toArray(new String[this._referencedProjects.size()]);
   }
 
   /**
@@ -461,7 +465,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns the roles of this project.
    */
   public ProjectRole[] getRoles() {
-    return this._roles.toArray(new ProjectRole[0]);
+    return this._roles.toArray(new ProjectRole[this._roles.size()]);
   }
 
   /**

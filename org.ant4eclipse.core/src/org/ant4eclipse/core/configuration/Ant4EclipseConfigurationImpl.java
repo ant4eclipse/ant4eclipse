@@ -1,5 +1,6 @@
 package org.ant4eclipse.core.configuration;
 
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import java.io.IOException;
@@ -75,7 +76,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   /**
    * {@inheritDoc}
    */
-  public Iterable<String[]> getAllProperties(String prefix) {
+  public Iterable<Pair<String, String>> getAllProperties(String prefix) {
     if (prefix == null) {
       throw new IllegalArgumentException("Parameter 'prefix' must not be null ");
     }
@@ -84,14 +85,14 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     }
     Set<Entry<Object, Object>> entries = this._properties.entrySet();
 
-    final List<String[]> result = new LinkedList<String[]>();
+    final List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
 
     for (Entry<Object, Object> entry : entries) {
       String key = entry.getKey().toString();
       String value = entry.getValue().toString();
       if (key.startsWith(prefix)) {
         key = key.substring(prefix.length());
-        result.add(new String[] { key, value });
+        result.add(new Pair<String, String>(key, value));
       }
     }
 

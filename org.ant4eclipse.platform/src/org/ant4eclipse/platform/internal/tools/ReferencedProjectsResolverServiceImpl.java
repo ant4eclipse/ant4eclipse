@@ -2,6 +2,7 @@ package org.ant4eclipse.platform.internal.tools;
 
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -79,18 +80,18 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
     }
 
     // get all properties that defines a ReferencedProjectsResolver
-    Iterable<String[]> referencedProjectsResolverEntries = Ant4EclipseConfiguration.Helper
+    Iterable<Pair<String, String>> referencedProjectsResolverEntries = Ant4EclipseConfiguration.Helper
         .getAnt4EclipseConfiguration().getAllProperties(REFERENCED_PROJECTS_RESOLVER_PREFIX);
 
     final Map<String, ReferencedProjectsResolver> referencedProjectsResolvers = new HashMap<String, ReferencedProjectsResolver>();
 
     // Instantiate all ReferencedProjectsResolvers
-    for (String[] referencedProjectsResolverEntry : referencedProjectsResolverEntries) {
+    for (Pair<String, String> referencedProjectsResolverEntry : referencedProjectsResolverEntries) {
 
-      String referencedProjectsResolverClassName = referencedProjectsResolverEntry[1];
+      String referencedProjectsResolverClassName = referencedProjectsResolverEntry.getSecond();
       ReferencedProjectsResolver referencedProjectsResolver = Utilities
           .newInstance(referencedProjectsResolverClassName);
-      referencedProjectsResolvers.put(referencedProjectsResolverEntry[0], referencedProjectsResolver);
+      referencedProjectsResolvers.put(referencedProjectsResolverEntry.getFirst(), referencedProjectsResolver);
     }
 
     this._referencedProjectsResolvers = referencedProjectsResolvers;

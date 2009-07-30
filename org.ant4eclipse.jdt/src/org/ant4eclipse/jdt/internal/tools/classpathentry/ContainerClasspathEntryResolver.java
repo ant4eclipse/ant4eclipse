@@ -15,6 +15,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.model.ClasspathEntry;
@@ -120,19 +121,17 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   public void initialize() {
     this._containerresolver = new LinkedList<ClasspathContainerResolver>();
 
-    final Iterable<String[]> containerResolverEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
+    final Iterable<Pair<String, String>> containerResolverEntries = Ant4EclipseConfiguration.Helper
+        .getAnt4EclipseConfiguration().getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
 
     final List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
 
     // Instantiate all Container Resolvers
-    for (final String[] containerResolverEntry : containerResolverEntries) {
+    for (final Pair<String, String> containerResolverEntry : containerResolverEntries) {
 
       // we're not interested in the key of a container resolver, only the class name (value of the entry) is relevant
-      final String containerResolverClassName = containerResolverEntry[1];
-
-      // create new instance
-      final ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverClassName);
+      // to create new instance
+      final ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverEntry.getSecond());
 
       // trace
       A4ELogging.trace("Register ClasspathContainerResolver '%s'", new Object[] { resolver });

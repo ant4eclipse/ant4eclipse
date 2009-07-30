@@ -2,6 +2,7 @@ package org.ant4eclipse.platform.ant.core.delegate;
 
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.ant.SubElementContribution;
@@ -94,18 +95,18 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
     this._subElements = new LinkedList<Object>();
 
     // get all properties that defines a SubElementContributor
-    Iterable<String[]> subElementContributionEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
+    Iterable<Pair<String, String>> subElementContributionEntries = Ant4EclipseConfiguration.Helper
+        .getAnt4EclipseConfiguration().getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
 
     final List<SubElementContribution> subElementContributions = new LinkedList<SubElementContribution>();
 
     // Instantiate the subElementContributions
-    for (String[] subElementContributionDefinition : subElementContributionEntries) {
+    for (Pair<String, String> subElementContributionDefinition : subElementContributionEntries) {
 
       // we're not interested in the key of a DynamicElementContributor, only the class name (value of the entry) is
       // relevant
-      String dynamicElementContributorClassName = subElementContributionDefinition[1];
-      SubElementContribution subElementContribution = Utilities.newInstance(dynamicElementContributorClassName);
+      SubElementContribution subElementContribution = Utilities.newInstance(subElementContributionDefinition
+          .getSecond());
       subElementContributions.add(subElementContribution);
     }
 

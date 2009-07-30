@@ -16,6 +16,7 @@ import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
@@ -56,17 +57,14 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   private Map<String, TeamProjectSetFactory> _factories;
 
   public void initialize() {
-    Iterable<String[]> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration().getAllProperties(
+    Iterable<Pair<String,String>> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration().getAllProperties(
         TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
-    for (String[] teamProvider : teamProviders) {
-      String providerId = teamProvider[0];
-      String implementationClassName = teamProvider[1];
-
-      TeamProjectSetFactory factory = Utilities.newInstance(implementationClassName);
-      A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", new Object[] { factory, providerId });
-      providers.put(providerId, factory);
+    for (Pair<String,String> teamProvider : teamProviders) {
+      TeamProjectSetFactory factory = Utilities.newInstance(teamProvider.getSecond());
+      A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", factory, teamProvider.getFirst() );
+      providers.put(teamProvider.getFirst(), factory);
     }
 
     this._factories = providers;

@@ -13,6 +13,7 @@ package org.ant4eclipse.core.service;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 /**
@@ -52,19 +53,16 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
   public void configure(ConfigurationContext context) {
 
     // get all properties describing a service
-    Iterable<String[]> serviceProperties = this._ant4EclipseConfiguration.getAllProperties(PROPERTY_PREFIX);
+    Iterable<Pair<String, String>> serviceProperties = this._ant4EclipseConfiguration.getAllProperties(PROPERTY_PREFIX);
 
     // Iterate over all service descriptions found
-    for (String[] serviceProperty : serviceProperties) {
-
-      String serviceInterfaceName = serviceProperty[0];
-      String serviceImplementationName = serviceProperty[1];
+    for (Pair<String, String> serviceProperty : serviceProperties) {
 
       // instantiate new service instance
-      Object serviceInstance = Utilities.newInstance(serviceImplementationName);
+      Object serviceInstance = Utilities.newInstance(serviceProperty.getSecond());
 
       // register new service
-      context.registerService(serviceInstance, serviceInterfaceName);
+      context.registerService(serviceInstance, serviceProperty.getFirst());
     }
 
   }

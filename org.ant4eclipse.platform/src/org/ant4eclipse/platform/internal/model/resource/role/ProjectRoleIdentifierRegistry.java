@@ -13,6 +13,7 @@ package org.ant4eclipse.platform.internal.model.resource.role;
 
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
@@ -68,16 +69,15 @@ public class ProjectRoleIdentifierRegistry {
    */
   protected void init() {
     // get all properties that defines a ProjectRoleIdentifier
-    Iterable<String[]> roleidentifierEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(ROLEIDENTIFIER_PREFIX);
+    Iterable<Pair<String, String>> roleidentifierEntries = Ant4EclipseConfiguration.Helper
+        .getAnt4EclipseConfiguration().getAllProperties(ROLEIDENTIFIER_PREFIX);
 
     final List<ProjectRoleIdentifier> roleIdentifiers = new LinkedList<ProjectRoleIdentifier>();
 
     // Instantiate all ProjectRoleIdentifiers
-    for (String[] roleidentifierEntry : roleidentifierEntries) {
+    for (Pair<String, String> roleidentifierEntry : roleidentifierEntries) {
       // we're not interested in the key of a roleidentifier. only the classname (value of the entry) is relevant
-      String roleidentiferClassName = roleidentifierEntry[1];
-      ProjectRoleIdentifier roleIdentifier = Utilities.newInstance(roleidentiferClassName);
+      ProjectRoleIdentifier roleIdentifier = Utilities.newInstance(roleidentifierEntry.getSecond());
       A4ELogging.trace("Register ProjectRoleIdentifier '%s'", new Object[] { roleIdentifier });
       roleIdentifiers.add(roleIdentifier);
     }

@@ -1,6 +1,7 @@
 package org.ant4eclipse.core.configuration;
 
-import org.ant4eclipse.core.service.*;
+import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.Pair;
 
 /**
  * <p>
@@ -46,7 +47,7 @@ public interface Ant4EclipseConfiguration {
    *          The prefix that selected the properties. If it doesn't end with a "." a "." is added
    * @return see above
    */
-  Iterable<String[]> getAllProperties(String prefix);
+  Iterable<Pair<String, String>> getAllProperties(String prefix);
 
   /**
    * <p>
