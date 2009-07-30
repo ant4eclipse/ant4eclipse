@@ -3,8 +3,11 @@ package org.ant4eclipse.platform.internal.model.resource.role;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Pair;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,13 +19,13 @@ import java.util.Map;
 public class NatureNicknameRegistry implements Lifecycle {
 
   /** The prefix of properties that holds a nature nickname */
-  public static final String  NATURE_NICKNAME_PREFIX = "natureNickname";
+  public static final String        NATURE_NICKNAME_PREFIX = "natureNickname";
 
   /** all known nicknames */
-  private Map<String, String> _nicknames;
+  private Map<String, List<String>> _nicknames;
 
   /** - */
-  private boolean             _initialized           = false;
+  private boolean                   _initialized           = false;
 
   /**
    * {@inheritDoc}
@@ -33,15 +36,20 @@ public class NatureNicknameRegistry implements Lifecycle {
     }
 
     // get all properties that defines a nature nickname
-    Iterable<String[]> natureNicknameEntries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(NATURE_NICKNAME_PREFIX);
+    Iterable<Pair<String, String>> natureNicknameEntries = Ant4EclipseConfiguration.Helper
+        .getAnt4EclipseConfiguration().getAllProperties(NATURE_NICKNAME_PREFIX);
 
-    final Map<String, String> nicknames = new HashMap<String, String>();
-    for (String[] natureNicknameEntry : natureNicknameEntries) {
-      String nature = natureNicknameEntry[0];
-      String nickname = natureNicknameEntry[1];
+    final Map<String, List<String>> nicknames = new Hashtable<String, List<String>>();
+    for (Pair<String, String> natureNicknameEntry : natureNicknameEntries) {
+      String nature = natureNicknameEntry.getFirst();
+      String nickname = natureNicknameEntry.getSecond();
       A4ELogging.trace("Register nickname '%s' for nature '%s'", nickname, nature);
-      nicknames.put(nickname, nature);
+      List<String> natureids = nicknames.get(nickname);
+      if (natureids == null) {
+        natureids = new ArrayList<String>();
+        nicknames.put(nickname, natureids);
+      }
+      natureids.add(nature);
     }
 
     this._nicknames = nicknames;
@@ -83,7 +91,8 @@ public class NatureNicknameRegistry implements Lifecycle {
    * @param nickname
    * @return
    */
-  public String getNatureForNickname(String nickname) {
-    return this._nicknames.get(nickname);
+  public String[] getNaturesForNickname(String nickname) {
+    List<String> natureids = this._nicknames.get(nickname);
+    return natureids.toArray(new String[natureids.size()]);
   }
 }
