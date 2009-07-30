@@ -20,7 +20,6 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-//@com.kasisoft.lgpl.tools.diagnostic.KDiagnostic(loggername="cdt")
 public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjectsResolver {
 
   /**

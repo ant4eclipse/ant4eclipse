@@ -26,7 +26,6 @@ import org.ant4eclipse.cdt.internal.model.project.CCProjectRoleImpl;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-//@com.kasisoft.lgpl.tools.diagnostic.KDiagnostic(loggername="cdt")
 public final class CCRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
