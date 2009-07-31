@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
+
+import java.io.File;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -46,15 +46,15 @@ public class ClasspathFileParser {
     final String[] exporteds = exportedquery.getResult();
 
     for (int i = 0; i < exporteds.length; i++) {
+      final String path = Utilities.removeTrailingPathSeparator(pathes[i]);
       if (outputs[i] != null) {
-        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], Utilities
-            .removeTrailingPathSeparator(pathes[i]), Utilities.removeTrailingPathSeparator(outputs[i])));
+        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path, Utilities
+            .removeTrailingPathSeparator(outputs[i])));
       } else if (exporteds[i] != null) {
-        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], Utilities
-            .removeTrailingPathSeparator(pathes[i]), Boolean.valueOf(exporteds[i]).booleanValue()));
+        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path, Boolean
+            .parseBoolean(exporteds[i])));
       } else {
-        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], Utilities
-            .removeTrailingPathSeparator(pathes[i])));
+        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path));
       }
     }
   }
