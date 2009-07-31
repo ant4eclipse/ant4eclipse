@@ -20,6 +20,8 @@ public interface JdtExecutorValues {
 
   static final String SOURCE_DIRECTORIES_PATH             = "source.directories.path";
 
+  static final String OUTPUT_DIRECTORIES_PATH             = "output.directories.path";
+
   static final String OUTPUT_DIRECTORY_PATH               = "output.directory.path";
 
   static final String SOURCE_DIRECTORY_PATH               = "source.directory.path";
@@ -39,6 +41,8 @@ public interface JdtExecutorValues {
   static final String DEFAULT_OUTPUT_DIRECTORY_NAME       = "default.output.directory.name";
 
   static final String SOURCE_DIRECTORIES                  = "source.directories";
+
+  static final String OUTPUT_DIRECTORIES                  = "output.directories";
 
   static final String OUTPUT_DIRECTORY                    = "output.directory";
 

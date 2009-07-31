@@ -27,7 +27,15 @@ public class PdeExceptionCode extends ExceptionCode {
   /** the ant attribute is not set */
   @NLSMessage("Attribute '%s' is not set.")
   public static PdeExceptionCode ANT_ATTRIBUTE_NOT_SET;
-  
+
+  /** - */
+  @NLSMessage("You have to specify either attribute '%s' or attribute '%s'.")
+  public static PdeExceptionCode ANT_ATTRIBUTE_X_OR_Y;
+
+  /** - */
+  @NLSMessage("Could not find the feature manifest file for project '%s'.")
+  public static PdeExceptionCode FEATURE_MANIFEST_FILE_NOT_FOUND;
+
   static {
     NLS.initialize(PdeExceptionCode.class);
   }

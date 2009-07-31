@@ -344,7 +344,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * </p>
    */
   protected void computeFileSet() {
-
+    
     // return if file list already is computed
     if (_fileListComputed) {
       return;

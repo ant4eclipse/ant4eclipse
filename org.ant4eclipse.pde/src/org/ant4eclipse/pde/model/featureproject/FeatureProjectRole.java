@@ -52,12 +52,17 @@ public interface FeatureProjectRole extends ProjectRole {
   public boolean hasBuildProperties();
 
   /**
-   * @return Returns the buildProperties.
+   * <p>
+   * Returns the {@link FeatureBuildProperties}.
+   * </p>
+   * 
+   * @return the {@link FeatureBuildProperties}.
    */
   public FeatureBuildProperties getBuildProperties();
 
   /**
    * <p>
+   * Helper class to access the {@link FeatureProjectRole}.
    * </p>
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -66,24 +71,29 @@ public interface FeatureProjectRole extends ProjectRole {
 
     /**
      * <p>
+     * Returns the {@link FeatureProjectRole}.
      * </p>
      * 
      * @param eclipseProject
-     * @return
+     *          the eclipse project
+     * @return the {@link FeatureProjectRole}
      */
     public static final FeatureProjectRole getFeatureProjectRole(final EclipseProject eclipseProject) {
       Assert.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have FeatureProjectRole!");
 
+      // returns the feature project role
       return (FeatureProjectRole) eclipseProject.getRole(FeatureProjectRole.class);
     }
 
     /**
      * <p>
+     * Returns <code>true</code>, if the eclipse project contains a feature project role.
      * </p>
      * 
      * @param eclipseProject
-     * @return
+     *          the eclipse project
+     * @return <code>true</code> if the eclipse project contains a feature project role.
      */
     public static final boolean hasFeatureProjectRole(final EclipseProject eclipseProject) {
       Assert.notNull(eclipseProject);

@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 /**
  * <p>
  * Defines the common interface for all target platform aware components.
@@ -37,7 +39,7 @@ public interface TargetPlatformAwareComponent {
    * 
    * @return whether the target platform location is set.
    */
-  boolean isTargetPlatformId();
+  boolean isTargetPlatformIdSet();
 
   /**
    * <p>
@@ -47,4 +49,11 @@ public interface TargetPlatformAwareComponent {
    * @return the target platform id or <code>null</code>, if no target platform id has been set.
    */
   String getTargetPlatformId();
+  
+  /**
+   * <p>
+   * Throws an {@link Ant4EclipseException} if the field '<code>_targetPlatformId</code>' is not set
+   * </p>
+   */
+  void requireTargetPlatformIdSet();
 }

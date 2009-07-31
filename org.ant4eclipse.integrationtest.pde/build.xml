@@ -25,10 +25,10 @@
          ================================= -->
 	<target name="build">
 
-		<!-- <delete dir="d:/plugins" quiet="true" />
+		<delete dir="d:/plugins" quiet="true" />
 		<mkdir dir="d:/plugins" />		
 		
-		<buildPlugin workspace="${basedir}/workspace"
+		<!-- <buildPlugin workspace="${basedir}/workspace"
 		             projectname="example-bundle"
 		             targetplatformid="target.platform"
 		             destination="d:/plugins" />

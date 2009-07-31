@@ -25,6 +25,10 @@
          id="org.eclipse.cvs"
          version="0.0.0"/>
 
+   <includes
+         id="org.tmatesoft.svnkit"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.osgi"
          download-size="0"

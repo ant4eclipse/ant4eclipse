@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ResolvedFeature {
 
+  private Object                                   _source;
+
   private FeatureManifest                          _featureManifest;
 
   private List<Pair<Plugin, BundleDescription>>    _pluginToBundleDescptionList;
@@ -22,15 +24,23 @@ public class ResolvedFeature {
 
   /**
    * <p>
-   * Creates a new instance of type ResolvedFeature. 
+   * Creates a new instance of type ResolvedFeature.
    * </p>
-   *
+   * 
    * @param featureManifest
    */
-  public ResolvedFeature(FeatureManifest featureManifest) {
+  public ResolvedFeature(Object source, FeatureManifest featureManifest) {
+    Assert.notNull(source);
     Assert.notNull(featureManifest);
 
     _featureManifest = featureManifest;
+    _source = source;
+  }
+  
+  
+
+  public Object getSource() {
+    return _source;
   }
 
   /**

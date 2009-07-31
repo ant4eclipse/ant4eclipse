@@ -11,11 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -27,10 +22,17 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>
@@ -134,6 +136,30 @@ public class Utilities {
       result = false;
     }
     return (result);
+  }
+
+  public static final List<File> getAllChildren(final File file) {
+    Assert.notNull(file);
+
+    List<File> result = new LinkedList<File>();
+
+    if (file.isDirectory()) {
+
+      // add the children
+      final File[] children = file.listFiles();
+      if (children != null) {
+        for (File element : children) {
+          if (element.isFile()) {
+            result.add(element);
+          } else {
+            result.addAll(getAllChildren(element));
+          }
+        }
+      }
+    } else {
+      result.add(file);
+    }
+    return result;
   }
 
   public static final boolean hasChild(File directory, final String childName) {

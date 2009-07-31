@@ -1,10 +1,13 @@
 package org.ant4eclipse.pde.ant;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.jdt.ant.AbstractExecuteJdtProjectTask;
+import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
@@ -14,19 +17,31 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 /**
  * <p>
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
+public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements TargetPlatformAwareComponent,
+    JdtExecutorValues {
 
-  public static final String          SCOPE_LIBRARY_SOURCE_DIRECTORY   = "SCOPE_LIBRARY_SOURCE_DIRECTORY";
+  /** - */
+  private static final String         SCOPE_NAME_SOURCE_DIRECTORY = "ForEachSourceDirectory";
 
-  public static final String          SCOPE_LIBRARY_TARGET_DIRECTORY   = "SCOPE_LIBRARY_TARGET_DIRECTORY";
+  /** - */
+  private static final String         SCOPE_NAME_OUTPUT_DIRECTORY = "ForEachOutputDirectory";
 
-  public static final String          SCOPE_LIBRARY_SOURCE_DIRECTORIES = "SCOPE_LIBRARY_SOURCE_DIRECTORIES";
+  /** - */
+  private static final String         SCOPE_NAME_LIBRARY          = "ForEachLibrary";
 
-  public static final String          SCOPE_LIBRARY_TARGET_DIRECTORIES = "SCOPE_LIBRARY_TARGET_DIRECTORIES";
+  /** - */
+  public static final String          SCOPE_SOURCE_DIRECTORY      = "SCOPE_SOURCE_DIRECTORY";
 
+  /** - */
+  public static final String          SCOPE_OUTPUT_DIRECTORY      = "SCOPE_OUTPUT_DIRECTORY";
+
+  /** - */
+  public static final String          SCOPE_LIBRARY               = "SCOPE_LIBRARY";
+
+  /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
   /** - */
@@ -34,46 +49,76 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
 
   /**
    * <p>
-   * Creates a new instance of type ExecuteLibraryTask. 
+   * Creates a new instance of type {@link ExecuteLibraryTask}.
    * </p>
-   *
+   * 
    */
   public ExecuteLibraryTask() {
     super("executeLibrary");
 
+    // create the delegates
     _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public final String getTargetPlatformId() {
     return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
-  public final boolean isTargetPlatformId() {
-    return _targetPlatformAwareDelegate.isTargetPlatformId();
-  }
-
+  /**
+   * {@inheritDoc}
+   */
   public final void setTargetPlatformId(String targetPlatformId) {
     _targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public final boolean isTargetPlatformIdSet() {
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void requireTargetPlatformIdSet() {
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
   public String getLibraryName() {
     return _libraryName;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param libraryName
+   */
   public void setLibraryName(String libraryName) {
     _libraryName = libraryName;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Object createDynamicElement(final String name) {
 
-    if ("ForEachSourceDirectory".equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_LIBRARY_SOURCE_DIRECTORY);
-    } else if ("ForEachOutputDirectory".equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_LIBRARY_TARGET_DIRECTORY);
-    } else if ("ForAllSourceDirectories".equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_LIBRARY_SOURCE_DIRECTORIES);
-    } else if ("ForAllOutputDirectories".equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_LIBRARY_TARGET_DIRECTORIES);
+    if (SCOPE_NAME_SOURCE_DIRECTORY.equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORY);
+    } else if (SCOPE_NAME_OUTPUT_DIRECTORY.equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_OUTPUT_DIRECTORY);
+    } else if (SCOPE_NAME_LIBRARY.equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_LIBRARY);
     }
 
     return null;
@@ -93,16 +138,14 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
     // execute scoped macro definitions
     for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
-      if (SCOPE_LIBRARY_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
+      if (SCOPE_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeLibrarySourceDirectoryScopedMacroDef(scopedMacroDefinition.getMacroDef());
-      } else if (SCOPE_LIBRARY_TARGET_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
+      } else if (SCOPE_OUTPUT_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeLibraryTargetDirectoryScopedMacroDef(scopedMacroDefinition.getMacroDef());
-      } else if (SCOPE_LIBRARY_SOURCE_DIRECTORIES.equals(scopedMacroDefinition.getScope())) {
-        executeLibrarySourceDirectoriesScopedMacroDef(scopedMacroDefinition.getMacroDef());
-      } else if (SCOPE_LIBRARY_TARGET_DIRECTORIES.equals(scopedMacroDefinition.getScope())) {
-        executeLibraryTargetDirectoriesScopedMacroDef(scopedMacroDefinition.getMacroDef());
+      } else if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
+        executeLibraryScopedMacroDef(scopedMacroDefinition.getMacroDef());
       } else {
-        throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
+        throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope());
       }
     }
   }
@@ -119,19 +162,19 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
               values);
 
-          values.getProperties().put("source.directory",
+          values.getProperties().put(SOURCE_DIRECTORY,
               convertToString(getEclipseProject().getChild(librarySourceDirectory)));
 
           values.getProperties().put(
-              "output.directory",
+              OUTPUT_DIRECTORY,
               convertToString(getEclipseProject().getChild(
                   getJavaProjectRole().getOutputFolderForSourceFolder(librarySourceDirectory))));
 
-          values.getReferences().put("source.directory.path",
+          values.getReferences().put(SOURCE_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(librarySourceDirectory)));
 
           values.getReferences().put(
-              "output.directory.path",
+              OUTPUT_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(
                   getJavaProjectRole().getOutputFolderForSourceFolder(librarySourceDirectory))));
 
@@ -166,19 +209,22 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask {
     }
   }
 
-  private void executeLibrarySourceDirectoriesScopedMacroDef(MacroDef macroDef) {
-    System.err.println("SCOPE_SOURCE_DIRECTORIES");
+  /**
+   * <p>
+   * </p>
+   *
+   * @param macroDef
+   */
+  private void executeLibraryScopedMacroDef(MacroDef macroDef) {
+    // TODO Auto-generated method stub
+    
   }
-
-  private void executeLibraryTargetDirectoriesScopedMacroDef(MacroDef macroDef) {
-    System.err.println("SCOPE_TARGET_DIRECTORIES");
-  }
-
+  
   /**
    * <p>
    * Helper method that returns the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    * </p>
-   *
+   * 
    * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    */
   protected final PluginProjectRole getPluginProjectRole() {

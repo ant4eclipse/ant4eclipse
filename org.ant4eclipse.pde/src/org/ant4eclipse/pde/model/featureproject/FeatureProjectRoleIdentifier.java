@@ -16,8 +16,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -44,7 +46,7 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
   public ProjectRole createRole(final EclipseProject project) {
     A4ELogging.debug("FeatureProjectRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
-    
+
     final FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
 
     final File featureDescription = featureProjectRole.getFeatureXml();
@@ -53,9 +55,11 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
       final FeatureManifest feature = FeatureManifestParser.parseFeature(new FileInputStream(featureDescription));
       featureProjectRole.setFeature(feature);
     } catch (final FileNotFoundException e) {
-      // TODO A4eExcetpion
-      throw new RuntimeException(e.getMessage(), e);
+      throw new Ant4EclipseException(PdeExceptionCode.FEATURE_MANIFEST_FILE_NOT_FOUND, project.getFolder()
+          .getAbsolutePath());
     }
+
+    // parse build properties
     if (project.hasChild(BuildPropertiesParser.BUILD_PROPERTIES)) {
       BuildPropertiesParser.parseFeatureBuildProperties(featureProjectRole);
     }

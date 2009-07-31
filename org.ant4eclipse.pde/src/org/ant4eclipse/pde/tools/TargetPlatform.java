@@ -11,17 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.core.util.Pair;
-
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
-import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
-
-import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.State;
 import org.osgi.framework.Version;
-
-import java.util.List;
 
 /**
  * <p>
@@ -97,5 +90,5 @@ public interface TargetPlatform {
    * @param manifest
    * @return
    */
-  ResolvedFeature resolveFeature(FeatureManifest manifest);
+  ResolvedFeature resolveFeature(Object source, FeatureManifest manifest);
 }

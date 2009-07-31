@@ -279,10 +279,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
-  public ResolvedFeature resolveFeature(FeatureManifest manifest) {
+  public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
     Assert.notNull(manifest);
 
-    ResolvedFeature resolvedFeature = new ResolvedFeature(manifest);
+    ResolvedFeature resolvedFeature = new ResolvedFeature(source, manifest);
 
     resolvePlugins(manifest, resolvedFeature);
 

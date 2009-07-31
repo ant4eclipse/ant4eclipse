@@ -25,7 +25,6 @@ import org.ant4eclipse.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
-
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileList;
 import org.osgi.framework.Version;
@@ -33,23 +32,26 @@ import org.osgi.framework.Version;
 /**
  * <p>
  * </p>
- *
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
- *
  */
-public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements TargetPlatformAwareComponent {
+public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements TargetPlatformAwareComponent,
+    PdeExecutorValues {
+ 
+  /** - */
+  private static final String         SCOPE_NAME_LIBRARY               = "ForEachLibrary";
+
+  /** - */
+  public static final String          SCOPE_LIBRARY                    = "SCOPE_LIBRARY";
 
   /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
-  /** - */
-  public static final String          SCOPE_LIBRARY = "SCOPE_LIBRARY";
-
   /**
    * <p>
-   * Creates a new instance of type ExecutePluginProjectTask. 
+   * Creates a new instance of type ExecutePluginProjectTask.
    * </p>
-   *
+   * 
    */
   public ExecutePluginProjectTask() {
     super("executePluginProject");
@@ -67,8 +69,8 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
   /**
    * {@inheritDoc}
    */
-  public final boolean isTargetPlatformId() {
-    return _targetPlatformAwareDelegate.isTargetPlatformId();
+  public final boolean isTargetPlatformIdSet() {
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
   /**
@@ -76,6 +78,13 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
    */
   public final void setTargetPlatformId(String targetPlatformId) {
     _targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void requireTargetPlatformIdSet() {
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -90,15 +99,13 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
         .getVersion(), pluginProjectRole.getBuildProperties().getQualifier());
 
     // TODO
-    executionValues.getProperties().put("bundle.effective.version", effectiveVersion.toString());
-    executionValues.getProperties().put("bundle.version",
+    executionValues.getProperties().put(BUNDLE_RESOLVED_VERSION, effectiveVersion.toString());
+    executionValues.getProperties().put(BUNDLE_VERSION,
         pluginProjectRole.getBundleDescription().getVersion().toString());
 
     PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
-    executionValues.getProperties()
-        .put("build.properties.binary.includes", buildProperties.getBinaryIncludesAsString());
-    executionValues.getProperties()
-        .put("build.properties.binary.excludes", buildProperties.getBinaryExcludesAsString());
+    executionValues.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
+    executionValues.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
   }
 
   /**
@@ -106,7 +113,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
    */
   protected Object onCreateDynamicElement(final String name) {
 
-    if ("ForEachLibrary".equalsIgnoreCase(name)) {
+    if (SCOPE_NAME_LIBRARY.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_LIBRARY);
     }
 
@@ -150,7 +157,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param macroDef
    */
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
@@ -169,26 +176,26 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
 
           public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
-
-            values.getProperties().put("library.name", library.getName());
+            values.getProperties().put(LIBRARY_NAME, library.getName());
 
             if (library.isSelf()) {
-              values.getProperties().put("library.isSelf", "true");
-
+              values.getProperties().put(LIBRARY_IS_SELF, "true");
               computeBinaryIncludeFilelist();
+            } else {
+              values.getProperties().put(LIBRARY_IS_SELF, "false");
             }
 
-            EcjAdditionalCompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(),
-                getJdtClasspathContainerArguments(), values);
+            EcjAdditionalCompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(
+                getJavaProjectRole(), getJdtClasspathContainerArguments(), values);
 
             File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
             File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
 
-            values.getProperties().put("source.directories", convertToString(sourceFiles));
-            values.getProperties().put("output.directories", convertToString(outputFiles));
+            values.getProperties().put(SOURCE_DIRECTORIES, convertToString(sourceFiles));
+            values.getProperties().put(OUTPUT_DIRECTORIES, convertToString(outputFiles));
 
-            values.getReferences().put("source.directories.path", convertToPath(sourceFiles));
-            values.getReferences().put("output.directories.path", convertToPath(outputFiles));
+            values.getReferences().put(SOURCE_DIRECTORIES_PATH, convertToPath(sourceFiles));
+            values.getReferences().put(OUTPUT_DIRECTORIES_PATH, convertToPath(outputFiles));
 
             for (final String sourceFolderName : library.getSource()) {
               final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
@@ -209,7 +216,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
   /**
    * <p>
    * </p>
-   *
+   * 
    */
   private void computeBinaryIncludeFilelist() {
     // TODO

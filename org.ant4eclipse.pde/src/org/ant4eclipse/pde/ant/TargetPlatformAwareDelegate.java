@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.pde.PdeExceptionCode;
+
 /**
  * <p>
  * Default implementation of the interface {@link TargetPlatformAwareComponent}.
@@ -27,7 +30,6 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    * <p>
    * Creates a new instance of type {@link TargetPlatformAwareDelegate}.
    * </p>
-   * 
    */
   public TargetPlatformAwareDelegate() {
     super();
@@ -43,7 +45,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
-  public final boolean isTargetPlatformId() {
+  public final boolean isTargetPlatformIdSet() {
     return this._targetPlatformId != null;
   }
 
@@ -52,5 +54,14 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   public final String getTargetPlatformId() {
     return _targetPlatformId;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public final void requireTargetPlatformIdSet() {
+    if (!isTargetPlatformIdSet()) {
+      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "targetPlatformId");
+    }
   }
 }
