@@ -22,5 +22,5 @@ public interface ClassPathVariable extends ClassPathElement {
    * 
    * @return the path of the class path variable.
    */
-  public File getPath();
+  File getPath();
 }

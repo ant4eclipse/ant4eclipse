@@ -30,5 +30,5 @@ public interface ClassPathContainer extends ClassPathElement {
    * 
    * @return the files that belongs to the class path container.
    */
-  public File[] getPathEntries();
+  File[] getPathEntries();
 }

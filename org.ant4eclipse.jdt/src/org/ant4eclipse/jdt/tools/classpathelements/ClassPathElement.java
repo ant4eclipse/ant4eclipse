@@ -19,5 +19,5 @@ public interface ClassPathElement {
    * 
    * @return the name the name of the class path container
    */
-  public String getName();
+  String getName();
 }
