@@ -11,22 +11,20 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
-
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntReferencesRaper;
-
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroInstance;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>
@@ -100,7 +98,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   public NestedSequential createScopedMacroDefinition(final E scope) {
-    final MacroDef macroDef = new MacroDef();
+    final MacroDef macroDef = new ConditionalMacroDef();
     macroDef.setProject(getAntProject());
     this._macroDefs.add(new ScopedMacroDefinition<E>(macroDef, scope));
     return macroDef.createSequential();
@@ -113,6 +111,14 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     Assert.notNull(macroDef);
     Assert.notNull(provider);
 
+    if (macroDef instanceof ConditionalMacroDef) {
+      ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
+
+      if (!conditionalMacroDef.isIf() || conditionalMacroDef.isUnless()) {
+        return;
+      }
+    }
+
     MacroExecutionValues values = new MacroExecutionValues();
 
     executeMacroInstance(macroDef, provider.provideMacroExecutionValues(values));
@@ -124,6 +130,23 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   private void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
     Assert.notNull(macroDef);
     Assert.notNull(macroExecutionValues);
+
+    // TODO: LDPA-Filter support!
+    if (macroDef instanceof ConditionalMacroDef) {
+      ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
+
+      String filter = conditionalMacroDef.getFilter();
+
+      if (filter != null) {
+        String[] strings = filter.split("=");
+        if (strings.length == 2) {
+          String realValue = macroExecutionValues.getProperties().get(strings[0]);
+          if (!strings[1].equals(realValue)) {
+            return;
+          }
+        }
+      }
+    }
 
     // create MacroInstance
     final MacroInstance instance = new MacroInstance();
