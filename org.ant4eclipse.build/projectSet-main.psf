@@ -7,5 +7,6 @@
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.jdt.ecj,org.ant4eclipse.jdt.ecj"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.platform,org.ant4eclipse.platform"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pde,org.ant4eclipse.pde"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pydt,org.ant4eclipse.pydt"/>
 </provider>
 </psf>
