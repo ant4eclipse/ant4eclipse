@@ -32,7 +32,7 @@ public interface ClassPathElementsRegistry {
    * @param name
    * @param pathEntries
    */
-  public void registerClassPathContainer(String name, File[] pathEntries);
+  void registerClassPathContainer(String name, File[] pathEntries);
 
   /**
    * <p>
@@ -47,7 +47,7 @@ public interface ClassPathElementsRegistry {
    * @param name
    *          <code>true</code> if a class path container with the given name exists.
    */
-  public boolean hasClassPathContainer(String name);
+  boolean hasClassPathContainer(String name);
 
   /**
    * <p>
@@ -62,7 +62,7 @@ public interface ClassPathElementsRegistry {
    * @param name
    * @return
    */
-  public ClassPathContainer getClassPathContainer(String name);
+  ClassPathContainer getClassPathContainer(String name);
 
   /**
    * <p>
@@ -76,7 +76,7 @@ public interface ClassPathElementsRegistry {
    * 
    * @return a list with all defined class path containers.
    */
-  public List<ClassPathContainer> getClasspathContainer();
+  List<ClassPathContainer> getClasspathContainer();
 
   /**
    * <p>
@@ -88,7 +88,7 @@ public interface ClassPathElementsRegistry {
    * @param path
    *          the path
    */
-  public void registerClassPathVariable(String name, File path);
+  void registerClassPathVariable(String name, File path);
 
   /**
    * <p>
@@ -99,7 +99,7 @@ public interface ClassPathElementsRegistry {
    *          the name of the class path variable.
    * @return <code>true</code> if a class path variable with the given name exists.
    */
-  public boolean hasClassPathVariable(String name);
+  boolean hasClassPathVariable(String name);
 
   /**
    * <p>
@@ -110,7 +110,7 @@ public interface ClassPathElementsRegistry {
    *          the name of the class path variable.
    * @return the class path variable with the given name or <code>null</code>.
    */
-  public ClassPathVariable getClassPathVariable(String name);
+  ClassPathVariable getClassPathVariable(String name);
 
   /**
    * <p>
@@ -119,7 +119,7 @@ public interface ClassPathElementsRegistry {
    * 
    * @return a list with all defined class path variables.
    */
-  public List<ClassPathVariable> getClasspathVariables();
+  List<ClassPathVariable> getClasspathVariables();
 
   /**
    * <p>
