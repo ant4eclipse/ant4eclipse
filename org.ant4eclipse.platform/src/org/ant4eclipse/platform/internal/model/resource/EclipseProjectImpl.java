@@ -448,10 +448,10 @@ public final class EclipseProjectImpl implements EclipseProject {
 
     final Iterator<ProjectRole> iterator = this._roles.iterator();
 
-    AbstractProjectRole role = null;
+    ProjectRole role = null;
 
     while (iterator.hasNext()) {
-      role = (AbstractProjectRole) iterator.next();
+      role = iterator.next();
       if (projectRoleClass.isAssignableFrom(role.getClass())) {
         break;
       }
