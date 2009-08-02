@@ -24,8 +24,8 @@ public interface ReferencedProjectsResolverService {
 
   /**
    * <p>
-   * Returns a list of resolved projects that are directly or indirectly reference by a given project. Only the
-   * resolvers for the specified reference types will be used.
+   * Returns a list of resolved projects that are directly referenced by a given project. Only the resolvers for the
+   * specified reference types will be used.
    * </p>
    * 
    * @param project
@@ -33,17 +33,29 @@ public interface ReferencedProjectsResolverService {
    * @param referenceTypes
    *          e.g. {"platform", "jdt"}. If this list doesn't contain at least one entry, the returnvalue will be empty.
    * @param additionalElements
-   * @todo [02-Aug-2009:KASI] Still necessary to be described.
+   *          These elements are generally provided by subelements of a task. Each implementor of this interface is
+   *          responsible to verify that he's capable to handle these additional elements. Elements that cannot be
+   *          handled have to be ignored (meaning that no message is necessary in these cases).
    * 
-   * @return A list of all referenced projects. Not <code>null</code>.
+   * @return A list of all directly referenced projects. Not <code>null</code>.
    */
   List<EclipseProject> resolveReferencedProjects(final EclipseProject project, String[] referenceTypes,
       final List<Object> additionalElements);
 
   /**
+   * <p>
+   * Returns a list of resolved projects that are directly referenced by a given project. This resolving process is
+   * aware of all reference types.
+   * </p>
+   * 
    * @param project
-   * @param properties
-   * @return
+   *          The project which referenced projects will be looked up. Not <code>null</code>.
+   * @param additionalElements
+   *          These elements are generally provided by subelements of a task. Each implementor of this interface is
+   *          responsible to verify that he's capable to handle these additional elements. Elements that cannot be
+   *          handled have to be ignored (meaning that no message is necessary in these cases).
+   * 
+   * @return A list of all directly referenced projects. Not <code>null</code>.
    */
   List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final List<Object> additionalElements);
 
