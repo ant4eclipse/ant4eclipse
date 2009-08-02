@@ -11,6 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -20,6 +25,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -28,11 +34,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>
@@ -306,6 +307,31 @@ public class Utilities {
       }
     }
     return result;
+  }
+
+  /**
+   * Similar to {@link #cleanup(String)} the input is altered if necessary, so the returned list only consists of
+   * non-empty Strings. There's at least one String or the result is <code>null</code>.
+   * 
+   * @param input
+   *          The input array which might be altered. Maybe <code>null</code>.
+   * 
+   * @return A list of the input values which is either <code>null</code> or contains at least one non empty value.
+   */
+  public static final String[] cleanup(final String[] input) {
+    final List<String> result = new ArrayList<String>();
+    if (input != null) {
+      for (String element2 : input) {
+        final String element = cleanup(element2);
+        if (element != null) {
+          result.add(element);
+        }
+      }
+      if (result.isEmpty()) {
+        return null;
+      }
+    }
+    return result.toArray(new String[result.size()]);
   }
 
   /**
