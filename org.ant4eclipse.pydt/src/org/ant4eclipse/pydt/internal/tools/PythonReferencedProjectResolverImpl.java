@@ -42,8 +42,15 @@ public class PythonReferencedProjectResolverImpl extends PlatformReferencedProje
     if (PythonUtilities.isPyDevProject(project)) {
       // the PyDev project suite uses the original eclipse project references, so we go with the original implementation
       A4ELogging.debug("Resolving project '%s' for the PyDev framework.", project.getSpecifiedName());
-      return super.resolveReferencedProjects(project, additionalElements);
-    } else /* if(PythonUtilities.isPyDLTKProject(project)) */ {
+      final List<EclipseProject> result = super.resolveReferencedProjects(project, additionalElements);
+      // now we need to remove non PyDev projects
+      for (int i = result.size() - 1; i >= 0; i--) {
+        if (!PythonUtilities.isPyDevProject(result.get(i))) {
+          result.remove(i);
+        }
+      }
+      return result;
+    } else /* if(PythonUtilities.isPyDLTKProject(project)) */{
       A4ELogging.debug("Resolving project '%s' for the Python DLTK framework.", project.getSpecifiedName());
       // the Python DLTK generally provides explicit references to projects (similar to java)
       PythonProjectResolver resolver = new PythonProjectResolver(project.getWorkspace());
