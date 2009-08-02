@@ -574,4 +574,25 @@ public class Utilities {
     }
     return false;
   }
-}
+
+  /**
+   * Filters a list according to a specified type. The order is preserved.
+   * 
+   * @param input
+   *          The list which will be filtered. Not <code>null</code>.
+   * @param clazz
+   *          The type which must be matched by the list elements. Not <code>null</code>.
+   * 
+   * @return A list with the input elements that do match the specified type. Not <code>null</code>.
+   */
+  public static final List<Object> filter(final List<Object> input, final Class<?> clazz) {
+    final List<Object> result = new ArrayList<Object>();
+    for (int i = 0; i < input.size(); i++) {
+      if (clazz.isAssignableFrom(input.get(i).getClass())) {
+        result.add(input.get(i));
+      }
+    }
+    return result;
+  }
+
+} /* ENDCLASS */
