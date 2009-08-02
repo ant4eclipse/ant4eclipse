@@ -15,26 +15,27 @@ public interface ReferencedProjectsResolverService {
 
   /**
    * <p>
-   * </p>
-   * <p>
-   * E.g. {"platform", "jdt"}
+   * Returns a list of all currently supported reference types. F.e. {"platform","jdt"}.
    * </p>
    * 
-   * @return
+   * @return A list of all currently supported reference types. Not <code>null</code>.
    */
   String[] getReferenceTypes();
 
   /**
    * <p>
-   * </p>
-   * <p>
+   * Returns a list of resolved projects that are directly or indirectly reference by a given project. Only the
+   * resolvers for the specified reference types will be used.
    * </p>
    * 
    * @param project
+   *          The project which referenced projects will be looked up. Not <code>null</code>.
    * @param referenceTypes
-   *          e.g. {"platform", "jdt"}
+   *          e.g. {"platform", "jdt"}. If this list doesn't contain at least one entry, the returnvalue will be empty.
    * @param additionalElements
-   * @return
+   * @todo [02-Aug-2009:KASI] Still necessary to be described.
+   * 
+   * @return A list of all referenced projects. Not <code>null</code>.
    */
   List<EclipseProject> resolveReferencedProjects(final EclipseProject project, String[] referenceTypes,
       final List<Object> additionalElements);

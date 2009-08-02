@@ -39,19 +39,24 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
 
     Set<EclipseProject> result = new HashSet<EclipseProject>();
 
-    for (String referenceType : referenceTypes) {
-      if (this._referencedProjectsResolvers.containsKey(referenceType)) {
-        ReferencedProjectsResolver resolver = this._referencedProjectsResolvers.get(referenceType);
-        if (resolver.canHandle(project)) {
-          List<EclipseProject> referencedProjects = resolver.resolveReferencedProjects(project, additionalElements);
-          result.addAll(referencedProjects);
+    referenceTypes = Utilities.cleanup(referenceTypes);
+    if (referenceTypes != null) {
+      for (String referenceType : referenceTypes) {
+        if (this._referencedProjectsResolvers.containsKey(referenceType)) {
+          ReferencedProjectsResolver resolver = this._referencedProjectsResolvers.get(referenceType);
+          if (resolver.canHandle(project)) {
+            List<EclipseProject> referencedProjects = resolver.resolveReferencedProjects(project, additionalElements);
+            result.addAll(referencedProjects);
+          } else {
+            A4ELogging.debug("The reference type '%s' can't handle project '%s'.", referenceType, project
+                .getSpecifiedName());
+          }
         } else {
-          A4ELogging.debug("The reference type '%s' can't handle project '%s'.", referenceType, project
-              .getSpecifiedName());
+          A4ELogging.warn("The reference type '%s' is not supported.", referenceType);
         }
-      } else {
-        A4ELogging.warn("The reference type '%s' is not supported.", referenceType);
       }
+    } else {
+      A4ELogging.warn("The resolving process didn't come with at least one reference type.");
     }
     return new ArrayList<EclipseProject>(result);
   }
