@@ -2,6 +2,12 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public interface PdeExecutorValues extends JdtExecutorValues {
 
   /** - */
@@ -15,6 +21,27 @@ public interface PdeExecutorValues extends JdtExecutorValues {
 
   /** - */
   static final String FEATURE_IS_SOURCE                 = "feature.isSource";
+
+  /** - */
+  static final String FEATURE_NL                        = "feature.nl";
+
+  /** - */
+  static final String FEATURE_WS                        = "feature.ws";
+
+  /** - */
+  static final String FEATURE_ARCH                      = "feature.arch";
+
+  /** - */
+  static final String FEATURE_OS                        = "feature.os";
+
+  /** - */
+  static final String FEATURE_SEARCH_LOCATION           = "feature.search-location";
+
+  /** - */
+  static final String FEATURE_OPTIONAL                  = "feature.optional";
+
+  /** - */
+  static final String FEATURE_NAME                      = "feature.name";
 
   /** the path of the feature jar, directory or project directory */
   static final String FEATURE_FILE_PATH                 = "feature.file.path";

@@ -148,7 +148,7 @@
 					     basedir="@{destination}/${a4e.plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.resolved.version}"
 					     manifest="@{destination}/${a4e.plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.resolved.version}/META-INF/MANIFEST.MF" />
 				</ant4eclipse:forProject>
-				
+
 				<ant4eclipse:forProject if="@{packageAsJar}">
 					<delete dir="@{destination}/${a4e.plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.resolved.version}"
 					        quiet="true"
@@ -185,6 +185,10 @@
 			                            featureVersion="@{featureVersion}"
 			                            targetPlatformId="@{targetPlatformId}">
 
+				<ant4eclipse:forRootFeature>
+					<echo>Building feature '${executeFeature.feature.id}_${executeFeature.feature.version}'</echo>
+				</ant4eclipse:forRootFeature>
+
 				<!-- Step 1: Scrub destination directory  -->
 				<ant4eclipse:forRootFeature if="@{clearDestination}">
 					<echo>Scrubbing directory '@{destination}'</echo>
@@ -194,7 +198,7 @@
 
 				<!-- Step 2: Build included features  -->
 				<ant4eclipse:forEachIncludedFeature>
-					<echo>Building feature '${executeFeature.feature.id}}'</echo>
+					<echo> -> Building included feature '${executeFeature.feature.id}'</echo>
 					<buildFeature workspaceDirectory="@{workspaceDirectory}"
 					              featureId="${executeFeature.feature.id}"
 					              featureVersion="${executeFeature.feature.resolved.version}"
@@ -268,6 +272,11 @@
 
 				</ant4eclipse:forRootFeature>
 
+				
+				<ant4eclipse:forRootFeature>
+					<echo>Feature '${executeFeature.feature.id}_${executeFeature.feature.version}' successfully built.</echo>
+				</ant4eclipse:forRootFeature>
+				
 			</ant4eclipse:executeFeature>
 
 		</sequential>

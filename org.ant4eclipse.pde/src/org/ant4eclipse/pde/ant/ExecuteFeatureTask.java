@@ -465,9 +465,11 @@ public class ExecuteFeatureTask extends AbstractProjectPathTask implements Dynam
 
   /**
    * <p>
+   * Execute the macro definitions for each included feature.
    * </p>
    * 
    * @param macroDef
+   *          the macro definition to execute
    */
   private void executeIncludedFeatureScopedMacroDef(MacroDef macroDef) {
 
@@ -477,21 +479,30 @@ public class ExecuteFeatureTask extends AbstractProjectPathTask implements Dynam
       // execute macro definition
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-        /**
-         * {@inheritDoc}
-         */
         public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
-          // add plug-in id
+          // add the feature id
           values.getProperties().put(FEATURE_ID, pair.getFirst().getId());
+          // add the feature version
           values.getProperties().put(FEATURE_VERSION, pair.getFirst().getVersion().toString());
-
+          // add the resolved version
           Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(pair.getSecond().getFeatureManifest()
               .getVersion(), PdeBuildHelper.getResolvedContextQualifier());
-
           values.getProperties().put(FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString());
-
-          // TODO
+          // add the name
+          values.getProperties().put(FEATURE_NAME, pair.getFirst().getName());
+          // add the optional value
+          values.getProperties().put(FEATURE_OPTIONAL, Boolean.toString(pair.getFirst().isOptional()));
+          // add the searchLocation
+          values.getProperties().put(FEATURE_SEARCH_LOCATION, pair.getFirst().getSearchLocation());
+          // add the operatingSystem
+          values.getProperties().put(FEATURE_OS, pair.getFirst().getOperatingSystem());
+          // add the machineArchitecture
+          values.getProperties().put(FEATURE_ARCH, pair.getFirst().getMachineArchitecture());
+          // add the windowingSystem
+          values.getProperties().put(FEATURE_WS, pair.getFirst().getWindowingSystem());
+          // add the locale
+          values.getProperties().put(FEATURE_NL, pair.getFirst().getLocale());
 
           // return the values
           return values;
@@ -502,37 +513,47 @@ public class ExecuteFeatureTask extends AbstractProjectPathTask implements Dynam
 
   /**
    * <p>
+   * Resolves the specified feature description by matching each entry in the feature to a 'real' bundle in the target
+   * platform.
    * </p>
    * 
-   * @return
+   * @return the resolved feature
    */
   private ResolvedFeature resolveFeature() {
 
-    // 1. initialize target platform
+    // create a new target platform configuration
     final TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
     configuration.setPreferProjects(true);
+
+    // fetch the target platform
     final TargetPlatform targetPlatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
         getTargetPlatformId(), configuration);
 
-    // 2.
-    FeatureManifest featureManifest = null;
-
+    // let the target platform resolve the feature
+    // case 1: pde feature project
     if (isProjectNameSet()) {
-      featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject()).getFeatureManifest();
+      FeatureManifest featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject())
+          .getFeatureManifest();
       return targetPlatform.resolveFeature(getEclipseProject(), featureManifest);
-    } else {
+    }
+    // case 2: feature taken from the target platform
+    else {
       FeatureDescription featureDescription = targetPlatform.getFeatureDescription(_featureId, _featureVersion);
-      featureManifest = featureDescription.getFeatureManifest();
+      FeatureManifest featureManifest = featureDescription.getFeatureManifest();
       return targetPlatform.resolveFeature(featureDescription.getSource(), featureManifest);
     }
-
-    // 3. return the result
-
   }
 
   /**
    * <p>
-   * Creates a (comma-separated) list with bundles ids and resolved versions.
+   * Creates a (comma-separated) list with bundles ids and resolved versions, e.g.
+   * <code><pre>testproject=1.0.0;org.eclipse.osgi=3.4.2.R34x_v20080826-1230;org.eclipse.osgi.util=3.1.300.v20080303;org.eclipse.
+   * osgi.services=3.1.200.v20071203;example_bundle=1.0.0.200907270913.
+   * </pre><code>
+   * </p>
+   * <p>
+   * This list can be used within the {@link PatchFeatureManifestTask} to patch each bundle that has a version '0.0.0'
+   * (the default version).
    * </p>
    * 
    * @return a (comma-separated) list with bundles ids and resolved versions.

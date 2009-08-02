@@ -15,10 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
-import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
-
 import org.osgi.framework.Version;
 
 /**
@@ -108,7 +105,7 @@ public class FeatureManifestImpl implements FeatureManifest {
 
     // initialize plug-in list
     _plugins = new LinkedList<Plugin>();
-    
+
     _includes = new LinkedList<Includes>();
   }
 
@@ -674,9 +671,9 @@ public class FeatureManifestImpl implements FeatureManifest {
     /** optional name */
     private String  _name;
 
-    private boolean _optional;
+    private boolean _optional       = false;
 
-    private String  _searchLocation;
+    private String  _searchLocation = "root";
 
     /** optional operating system specification */
     private String  _operatingSystem;
