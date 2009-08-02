@@ -50,7 +50,7 @@ public class PythonProjectResolver {
   public PythonProjectResolver(final Workspace workspace) {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
     _workspace = workspace;
-    _args = new UsedProjectsArgumentComponent();
+    _args = UsedProjectsArgumentComponent.DEFAULT;
   }
 
   /**

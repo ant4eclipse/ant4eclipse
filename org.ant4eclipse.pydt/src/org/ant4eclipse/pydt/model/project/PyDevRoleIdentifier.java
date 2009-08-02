@@ -32,7 +32,7 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
    * <p>
-   * Returns <code>true</code> if the given project has the nature used by PyDev. 
+   * Returns <code>true</code> if the given project has the nature used by PyDev.
    * </p>
    */
   public boolean isRoleSupported(final EclipseProject project) {
@@ -51,5 +51,5 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
     PyDevParser.contributePathes(result);
     return result;
   }
-  
+
 } /* ENDCLASS */

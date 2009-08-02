@@ -20,16 +20,18 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  */
 public class UsedProjectsArgumentComponent {
 
-  public static final String ELEMENTNAME = "pydtReferencedProject";
+  public static final UsedProjectsArgumentComponent DEFAULT     = new UsedProjectsArgumentComponent();
+
+  public static final String                        ELEMENTNAME = "pydtReferencedProject";
 
   /** resolve projects that are declared as exported (thus their dependencies) */
-  private boolean            _export     = false;
+  private boolean                                   _export     = false;
 
   /** generally resolve all referenced projects */
-  private boolean            _all        = true;
+  private boolean                                   _all        = true;
 
   /** do not resolve dependencies of referenced projects (even if they're declared as exported) */
-  private boolean            _direct     = false;
+  private boolean                                   _direct     = false;
 
   /**
    * Only return directly referenced projects.
