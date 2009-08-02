@@ -12,6 +12,7 @@
 package org.ant4eclipse.pydt.internal.tools;
 
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.internal.tools.PlatformReferencedProjectsResolver;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -56,21 +57,32 @@ public class PythonReferencedProjectResolverImpl extends PlatformReferencedProje
       A4ELogging.debug("Resolving project '%s' for the Python DLTK framework.", project.getSpecifiedName());
       // the Python DLTK generally provides explicit references to projects (similar to java)
       PythonProjectResolver resolver = new PythonProjectResolver(project.getWorkspace());
-      resolver.setExport(isExport(additionalElements));
+      resolver.setArgs(getArgs(additionalElements));
       return resolver.resolve(project);
     }
   }
 
-  private boolean isExport(final List<Object> additionalElements) {
+  /**
+   * Returns the arguments used to control the resolving process.
+   * 
+   * @param additionalElements
+   *          Additional elements provided by the ant subsystem.
+   * 
+   * @return An instance controlling the resolving process. Not <code>null</code>.
+   */
+  private UsedProjectsArgumentComponent getArgs(final List<Object> additionalElements) {
     if (additionalElements != null) {
-      for (Object additional : additionalElements) {
-        if (additional instanceof UsedProjectsArgumentComponent) {
-          UsedProjectsArgumentComponent component = (UsedProjectsArgumentComponent) additional;
-          return component.isExport();
+      final List<Object> elements = Utilities.filter(additionalElements, UsedProjectsArgumentComponent.class);
+      if (!elements.isEmpty()) {
+        final UsedProjectsArgumentComponent args = (UsedProjectsArgumentComponent) elements.get(0);
+        if (elements.size() > 1) {
+          A4ELogging.warn("Only one element '%s' is allowed ! Using the first one: '%s'.",
+              UsedProjectsArgumentComponent.ELEMENTNAME, String.valueOf(args));
         }
+        return args;
       }
     }
-    return true;
+    return new UsedProjectsArgumentComponent();
   }
 
 } /* ENDCLASS */
