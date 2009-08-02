@@ -9,10 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt.ant.usedargs;
+package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.platform.ant.SubElementContribution;
 
+import org.ant4eclipse.pydt.ant.usedargs.UsedProjectsArgumentComponent;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
