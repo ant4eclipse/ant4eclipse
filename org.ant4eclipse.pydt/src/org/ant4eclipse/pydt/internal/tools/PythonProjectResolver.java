@@ -38,9 +38,16 @@ public class PythonProjectResolver {
 
   private Workspace         _workspace;
 
+  private boolean           _export;
+
   public PythonProjectResolver(final Workspace workspace) {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
     _workspace = workspace;
+    _export = true;
+  }
+
+  public void setExport(boolean newexport) {
+    _export = newexport;
   }
 
   private List<RawPathEntry> loadEntries(final EclipseProject project) {
@@ -80,7 +87,9 @@ public class PythonProjectResolver {
       if (entry.isExported() && (!exported.contains(entry))) {
         // extend the list with entries provided by the dependent project
         exported.add(entry);
-        entries.addAll(loadEntries(refproject));
+        if (_export) {
+          entries.addAll(loadEntries(refproject));
+        }
       }
     }
   }

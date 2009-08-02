@@ -16,6 +16,8 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.platform.internal.tools.PlatformReferencedProjectsResolver;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.pydt.ant.usedargs.UsedProjectsArgumentComponent;
+
 import java.util.List;
 
 /**
@@ -54,8 +56,21 @@ public class PythonReferencedProjectResolverImpl extends PlatformReferencedProje
       A4ELogging.debug("Resolving project '%s' for the Python DLTK framework.", project.getSpecifiedName());
       // the Python DLTK generally provides explicit references to projects (similar to java)
       PythonProjectResolver resolver = new PythonProjectResolver(project.getWorkspace());
+      resolver.setExport(isExport(additionalElements));
       return resolver.resolve(project);
     }
+  }
+
+  private boolean isExport(final List<Object> additionalElements) {
+    if (additionalElements != null) {
+      for (Object additional : additionalElements) {
+        if (additional instanceof UsedProjectsArgumentComponent) {
+          UsedProjectsArgumentComponent component = (UsedProjectsArgumentComponent) additional;
+          return component.isExport();
+        }
+      }
+    }
+    return true;
   }
 
 } /* ENDCLASS */
