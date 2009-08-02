@@ -12,7 +12,9 @@
 package org.ant4eclipse.pde.internal.model.pluginproject;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifestParser;
@@ -23,13 +25,23 @@ import java.io.FileInputStream;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
+/**
+ * <p>
+ * Helper class that loads a feature description from a given feature directory or feature jar file.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class FeatureDescriptionLoader {
 
   /**
-   * Parses the given feature (which might be a jar-file or a directory)
+   * <p>
+   * Parses the given feature file. If the file doesn't contain a feature manifest, <code>null</code> will be returned.
+   * </p>
    * 
    * @param file
-   * @return
+   *          the feature file
+   * @return the feature description
    */
   public static FeatureDescription parseFeature(final File file) {
     Assert.exists(file);
@@ -40,11 +52,23 @@ public class FeatureDescriptionLoader {
       return parseFeatureDirectory(file);
     }
 
-    // TODO: Logging
-    
+    // warn if feature description is null
+    A4ELogging.warn(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(), file
+        .getAbsoluteFile());
+
+    // return null
     return null;
   }
 
+  /**
+   * <p>
+   * Parses a {@link FeatureDescription} from a given feature jar file.
+   * </p>
+   * 
+   * @param file
+   *          the given feature jar file.
+   * @return the {@link FeatureDescription}
+   */
   private static FeatureDescription parseFeatureJarFile(final File file) {
     Assert.isFile(file);
 
@@ -52,35 +76,60 @@ public class FeatureDescriptionLoader {
       // create jar file
       final JarFile jarFile = new JarFile(file);
 
+      // get the feature manifest
       ZipEntry zipEntry = jarFile.getEntry(Constants.FEATURE_MANIFEST);
 
+      // return null if no feature manifest
+      if (zipEntry == null) {
+        return null;
+      }
+
+      // parse the feature manifest
       FeatureManifest featureManifest = FeatureManifestParser.parseFeature(jarFile.getInputStream(zipEntry));
+
+      // return the feature description
       return new FeatureDescription(file, featureManifest);
 
     } catch (Exception e) {
-      throw new RuntimeException();
+      // throw new RuntimeException();
       // TODO: handle exception
+      return null;
     }
-    // throw FileParserException since jar is no valid plugin jar
-    // TODO: Konfigurierbar machen!!
-    // throw new FileParserException("Could not parse plugin jar '" + file.getAbsolutePath()
-    // + "' since it contains neither a Bundle-Manifest nor a plugin.xml!");
   }
 
+  /**
+   * <p>
+   * Parses the feature description for the given (feature) directory. The directory must contain a valid
+   * <code>feature.xml</code> file, otherwise this method returns <code>null</code>.
+   * </p>
+   * 
+   * @param directory
+   *          the feature directory
+   * @return the {@link FeatureDescription} or <code>null</code>, if the directory doesn't contain a
+   *         <code>feature.xml</code> file, the method returns <code>null</code>.
+   */
   private static FeatureDescription parseFeatureDirectory(final File directory) {
-
     Assert.isDirectory(directory);
 
     try {
       // create jar file
       final File featureManifestFile = new File(directory, Constants.FEATURE_MANIFEST);
 
+      // return null if no feature manifest
+      if (!featureManifestFile.exists() || !featureManifestFile.isFile()) {
+        return null;
+      }
+
+      // parse the feature manifest
       FeatureManifest featureManifest = FeatureManifestParser.parseFeature(new FileInputStream(featureManifestFile));
+
+      // return the feature description
       return new FeatureDescription(directory, featureManifest);
 
     } catch (Exception e) {
-      throw new RuntimeException(e.getMessage(), e);
+      // throw new RuntimeException(e.getMessage(), e);
       // TODO: handle exception
+      return null;
     }
   }
 }

@@ -23,6 +23,7 @@ import java.util.jar.Manifest;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.model.pluginproject.Constants;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -117,7 +118,8 @@ public class BundleDescriptionLoader {
         description = parsePluginDirectory(file);
       }
       if (description == null) {
-        A4ELogging.warn("Plugin at '%s' doesn't contain MANIFEST-File. Will be ignored.", file.getAbsoluteFile());
+        A4ELogging.warn(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE.getMessage(), file
+            .getAbsoluteFile());
       }
     } catch (final FileNotFoundException e) {
       throw new RuntimeException(e.getMessage(), e);

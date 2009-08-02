@@ -30,9 +30,12 @@ public class PdeBuildHelper {
 
   /**
    * Name of the system property that might contain a value that is used to replace the ".qualifier" string in a
-   * Version. (if no property has been set a timestamp will be used)
+   * Version. (if no property has been set a time stamp will be used)
    */
   public static final String CONTEXT_QUALIFIER_PROPERTY = "ant4eclipse.contextQualifier";
+
+  /** - */
+  public static String       CONTEXT_QUALIFIER          = null;
 
   // /**
   // * Returns the destination directory for the given plugin, that is destDir/plugins/pluginFileName, where
@@ -186,11 +189,13 @@ public class PdeBuildHelper {
    * is intended mainly for testing, since otherwise you can specify a qualifier in the build.properties
    */
   public static String getResolvedContextQualifier() {
-    String contextQualifier = System.getProperty(CONTEXT_QUALIFIER_PROPERTY);
-    if (contextQualifier == null) {
-      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-      contextQualifier = simpleDateFormat.format(new Date());
+    if (CONTEXT_QUALIFIER == null) {
+      CONTEXT_QUALIFIER = System.getProperty(CONTEXT_QUALIFIER_PROPERTY);
+      if (CONTEXT_QUALIFIER == null) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+        CONTEXT_QUALIFIER = simpleDateFormat.format(new Date());
+      }
     }
-    return contextQualifier;
+    return CONTEXT_QUALIFIER;
   }
 }

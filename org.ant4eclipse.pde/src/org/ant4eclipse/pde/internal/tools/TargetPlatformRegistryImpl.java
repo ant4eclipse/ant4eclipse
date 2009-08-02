@@ -27,8 +27,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**
  * <p>
- * The {@link TargetPlatformRegistryImpl} can be used to retrieve instances of type {@link TargetPlatform}. The registry
- * also implements a map that stores instances that already have been requested.
+ * The {@link TargetPlatformRegistryImpl} can be used to retrieve instances of type {@link TargetPlatform}.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -40,9 +39,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   private TargetPlatform                              _currentTargetPlatform;
 
   /** the static map with all target platforms currently resolved */
-  private final Map<Object, BundleAndFeatureSet>                _targetPlatformMap          = new HashMap<Object, BundleAndFeatureSet>();
+  private final Map<Object, BundleAndFeatureSet>      _targetPlatformMap          = new HashMap<Object, BundleAndFeatureSet>();
 
-  /** */
+  /** the target platform definitions */
   private final Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
 
   /**
@@ -52,57 +51,39 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     return this._currentTargetPlatform;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean hasCurrent() {
     return this._currentTargetPlatform != null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setCurrent(final TargetPlatform targetPlatform) {
     this._currentTargetPlatform = targetPlatform;
   }
 
   /**
-   * <p>
-   * </p>
-   *
-   * @param workspace
-   * @param targetLocations
-   * @param targetPlatformConfiguration
-   * @return
-   */
-  public TargetPlatform getInstance(final Workspace workspace, final File[] targetLocations,
-      final TargetPlatformConfiguration targetPlatformConfiguration) {
-
-    Assert.assertTrue((workspace != null) || (targetLocations != null),
-        "Parameter workspace or targetLocations has to be set !");
-
-    // System.err.println(Arrays.asList(targetLocations));
-
-    // TargetPlatformKey
-    final TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
-    if (this._targetPlatformMap.containsKey(key)) {
-      return (TargetPlatform) this._targetPlatformMap.get(key);
-    }
-
-    final BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
-
-    final BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
-
-    return new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets, targetPlatformConfiguration);
-  }
-
-  /**
-   * Removes all target platforms from the factory.
+   * {@inheritDoc}
    */
   public void clear() {
     this._targetPlatformMap.clear();
     this._targetPlatformDefnitionMap.clear();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
     _targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
 
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       TargetPlatformConfiguration targetPlatformConfiguration) {
 
@@ -112,14 +93,27 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     return getInstance(workspace, targetPlatformDefinition.getLocations(), targetPlatformConfiguration);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public TargetPlatformDefinition getTargetPlatformDefinition(String identifier) {
     return _targetPlatformDefnitionMap.get(identifier);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean hasTargetPlatformDefinition(String identifier) {
     return _targetPlatformDefnitionMap.containsKey(identifier);
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param workspace
+   * @return
+   */
   private PluginAndFeatureProjectSet getPluginProjectSet(final Workspace workspace) {
 
     if (!this._targetPlatformMap.containsKey(workspace)) {
@@ -129,6 +123,48 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     return (PluginAndFeatureProjectSet) this._targetPlatformMap.get(workspace);
   }
 
+  /**
+   * <p>
+   * Returns an instance of type {@link TargetPlatform} with the specified configuration.
+   * </p>
+   * 
+   * @param workspace
+   *          the workspace instance
+   * @param targetLocations
+   *          the target locations
+   * @param targetPlatformConfiguration
+   *          the target platform configuration
+   * @return an instance of type {@link TargetPlatform} with the specified configuration.
+   */
+  private TargetPlatform getInstance(final Workspace workspace, final File[] targetLocations,
+      final TargetPlatformConfiguration targetPlatformConfiguration) {
+
+    Assert.assertTrue((workspace != null) || (targetLocations != null),
+        "Parameter workspace or targetLocations has to be set !");
+
+    // TargetPlatformKey
+    final TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
+    if (this._targetPlatformMap.containsKey(key)) {
+      return (TargetPlatform) this._targetPlatformMap.get(key);
+    }
+
+    // get the workspace bundle set
+    final BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
+
+    // get the binary bundle sets
+    final BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
+
+    // create and return the target platform instance
+    return new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets, targetPlatformConfiguration);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param file
+   * @return
+   */
   private BinaryBundleAndFeatureSet getBinaryPluginSet(final File file) {
 
     if (!this._targetPlatformMap.containsKey(file)) {
@@ -157,25 +193,46 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   }
 
   /**
-   * TargetPlatformKey --
+   * <p>
+   * The key of a target platform.
+   * </p>
    * 
-   * @author Wuetherich-extern
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   private class TargetPlatformKey {
 
+    /** the workspace */
     private final Workspace                   _workspace;
 
+    /** the target locations */
     private final File[]                      _targetLocations;
 
+    /** the target platform configuration */
     private final TargetPlatformConfiguration _targetPlatformConfiguration;
 
+    /**
+     * <p>
+     * Creates a new instance of type {@link TargetPlatformKey}.
+     * </p>
+     * 
+     * @param workspace
+     *          the workspace
+     * @param targetLocations
+     *          the target locations
+     * @param targetPlatformConfiguration
+     *          the target platform configuration
+     */
     public TargetPlatformKey(final Workspace workspace, final File[] targetLocations,
         final TargetPlatformConfiguration targetPlatformConfiguration) {
+
       this._targetLocations = targetLocations;
       this._targetPlatformConfiguration = targetPlatformConfiguration;
       this._workspace = workspace;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int hashCode() {
       final int prime = 31;
       int result = 1;
@@ -187,6 +244,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean equals(final Object obj) {
       if (this == obj) {
         return true;
@@ -221,10 +281,25 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       return true;
     }
 
+    /**
+     * <p>
+     * Helper method.
+     * </p>
+     * 
+     * @return the outer type
+     */
     private TargetPlatformRegistryImpl getOuterType() {
       return TargetPlatformRegistryImpl.this;
     }
 
+    /**
+     * <p>
+     * Helper method.
+     * </p>
+     * 
+     * @param array the object array
+     * @return
+     */
     private int hashCode(final Object[] array) {
       final int prime = 31;
       if (array == null) {

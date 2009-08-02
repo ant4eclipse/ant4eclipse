@@ -19,7 +19,8 @@ import org.ant4eclipse.core.Assert;
 
 /**
  * <p>
- * Represents a definition of a target platfrom. A target platfrom contains one or more locations.
+ * Represents a definition of a target platform. A target platform contains one or more locations that can contain
+ * features and/or plug-ins.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -29,24 +30,23 @@ public class TargetPlatformDefinition {
   /** the list of all locations */
   private List<File> _locations;
 
-  // /** */
-  // private List<TargetPlatformDefinition> _platformDefinitions;
-
   /**
    * <p>
-   * Creates a new instance of type TargetPlatformDefinition.
+   * Creates a new instance of type {@link TargetPlatformDefinition}.
    * </p>
    */
   public TargetPlatformDefinition() {
+    // create the locations list
     _locations = new LinkedList<File>();
-    // _platformDefinitions = new LinkedList<TargetPlatformDefinition>();
   }
 
   /**
    * <p>
+   * Adds a location to the target platform definition.
    * </p>
    * 
    * @param location
+   *          the location to add
    */
   public void addLocation(File location) {
     Assert.isDirectory(location);

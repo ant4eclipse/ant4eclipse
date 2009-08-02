@@ -23,6 +23,14 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class PdeExceptionCode extends ExceptionCode {
+  
+  /** - */
+  @NLSMessage("File '%s' doesn't contain a bundle manifest file and will be ignored.")
+  public static PdeExceptionCode WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE;
+
+  /** - */
+  @NLSMessage("File '%s' doesn't contain a feature manifest file and will be ignored.")
+  public static PdeExceptionCode WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE;
 
   /** the ant attribute is not set */
   @NLSMessage("Attribute '%s' is not set.")
