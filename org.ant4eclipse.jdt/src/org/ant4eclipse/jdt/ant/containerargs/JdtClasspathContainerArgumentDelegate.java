@@ -11,7 +11,7 @@ public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContai
   private final List<JdtClasspathContainerArgument> _containerArguments = new LinkedList<JdtClasspathContainerArgument>();
 
   /**
-   * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#createContainerArg()
+   * {@inheritDoc}
    */
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
 
@@ -26,7 +26,7 @@ public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContai
   }
 
   /**
-   * @see org.ant4eclipse.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent#getContainerArguments()
+   * {@inheritDoc}
    */
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
 
