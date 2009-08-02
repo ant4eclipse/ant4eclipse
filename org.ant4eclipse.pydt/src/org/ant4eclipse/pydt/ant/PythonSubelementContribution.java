@@ -21,20 +21,25 @@ import org.apache.tools.ant.ProjectComponent;
  */
 public class PythonSubelementContribution implements SubElementContribution {
 
-  private static final String NAME_PYTHON = "python";
+  /** @todo [02-Aug-2009:KASI] Why do we only get lowercase names ? */
+  private static final String NAME_REFERENCEDPROJECT = "pydtReferencedProject".toLowerCase();
 
   /**
    * {@inheritDoc}
    */
   public boolean canHandleSubElement(String name, ProjectComponent component) {
-    return NAME_PYTHON.equals(name);
+    return NAME_REFERENCEDPROJECT.equals(name);
   }
 
   /**
    * {@inheritDoc}
    */
   public Object createSubElement(String name, ProjectComponent component) {
-    return new UsedProjectsArgumentComponent();
+    if (NAME_REFERENCEDPROJECT.equals(name)) {
+      return new UsedProjectsArgumentComponent();
+    } else {
+      return null;
+    }
   }
 
 } /* ENDCLASS */
