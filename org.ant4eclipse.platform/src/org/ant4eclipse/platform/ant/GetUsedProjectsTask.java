@@ -61,7 +61,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
    * The reference type that is used for the resolving process of projects. A value of <code>null</code> means that all
    * reference types are being tried.
    */
-  private String              _referencetype;
+  private String[]            _referencetypes;
 
   /**
    * Changes the reference type used to influence the project resolving process.
@@ -69,8 +69,12 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
    * @param newreferencetype
    *          A reference type which depends on the current configuration of a4e.
    */
-  public void setReferencetype(final String newreferencetype) {
-    this._referencetype = Utilities.cleanup(newreferencetype);
+  public void setReferencetypes(final String newreferencetypes) {
+    String[] elements = null;
+    if (newreferencetypes != null) {
+      elements = newreferencetypes.split(",");
+    }
+    this._referencetypes = Utilities.cleanup(elements);
   }
 
   /**
@@ -138,10 +142,13 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
      *       themselves don't need to behave the same way.
      */
     requireWorkspaceAndProjectNameSet();
-    if (this._referencetype != null) {
+    if (this._referencetypes != null) {
       // check if we can use the provided reference type
-      if (!Utilities.contains(this._referencetype, getResolver().getReferenceTypes())) {
-        throw new BuildException("The 'referencetype' value '" + this._referencetype + "' is not supported.");
+      final String[] allowed = getResolver().getReferenceTypes();
+      for (String reftype : this._referencetypes) {
+        if (!Utilities.contains(reftype, allowed)) {
+          throw new BuildException("The 'referencetypes' value '" + reftype + "' is not supported.");
+        }
       }
     }
   }
@@ -157,9 +164,9 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
     }
 
     String[] types = getResolver().getReferenceTypes();
-    if (this._referencetype != null) {
+    if (this._referencetypes != null) {
       // there's a restriction provided by the user
-      types = new String[] { this._referencetype };
+      types = this._referencetypes;
     }
 
     EclipseProject project = getEclipseProject();
