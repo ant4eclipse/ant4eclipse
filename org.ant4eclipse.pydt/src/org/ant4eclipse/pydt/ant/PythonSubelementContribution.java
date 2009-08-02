@@ -19,7 +19,7 @@ import org.apache.tools.ant.ProjectComponent;
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class UsedProjectsArgumentContribution implements SubElementContribution {
+public class PythonSubelementContribution implements SubElementContribution {
 
   private static final String NAME_PYTHON = "python";
 
