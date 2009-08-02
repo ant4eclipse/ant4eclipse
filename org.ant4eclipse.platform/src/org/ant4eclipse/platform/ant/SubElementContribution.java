@@ -1,6 +1,6 @@
 package org.ant4eclipse.platform.ant;
 
-import org.apache.tools.ant.*;
+import org.apache.tools.ant.ProjectComponent;
 
 /**
  * <p>
@@ -21,6 +21,7 @@ public interface SubElementContribution {
    * </p>
    * 
    * @param name
+   *          The name of the subelement. Will always be lowercase. Neither <code>null</code> nor empty.
    * @param component
    * @return
    */
@@ -32,7 +33,7 @@ public interface SubElementContribution {
    * </p>
    * 
    * @param name
-   *          the element name
+   *          The name of the subelement. Will always be lowercase. Neither <code>null</code> nor empty.
    * @return the element created
    */
   Object createSubElement(String name, ProjectComponent component);
