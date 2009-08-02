@@ -13,6 +13,8 @@ package org.ant4eclipse.platform.ant;
 
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.platform.ant.core.SubElementComponent;
+import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
@@ -30,38 +32,40 @@ import java.util.List;
  * @author Nils Hartmann (nils@nilshartmann.net)
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class GetUsedProjectsTask extends AbstractProjectBasedTask {
+public class GetUsedProjectsTask extends AbstractProjectBasedTask implements SubElementComponent {
 
   /** the default seperator */
-  private final static String DEFAULT_SEPARATOR = ",";
+  private final static String      DEFAULT_SEPARATOR = ",";
 
   /**
    * The name of an ant property that will hold the list of referenced projects
    */
-  private String              _property;
+  private String                   _property;
 
   /**
    * An (optional) specified separator that is used to separate the project names (defaults to <b>
    * {@link #DEFAULT_SEPARATOR}</b>)
    */
-  private String              _separator;
-
-  /**
-   * (Optional - only with <code>source=project</code>) specifies if required projects should be resolve recursive.
-   * Defaults to true.
-   */
-  private boolean             _recursive        = true;
+  private String                   _separator;
 
   /**
    * Allows to enable self inclusion of the used project if set to <code>true</code>.
    */
-  private boolean             _selfinclude      = false;
+  private boolean                  _selfinclude;
 
   /**
    * The reference type that is used for the resolving process of projects. A value of <code>null</code> means that all
    * reference types are being tried.
    */
-  private String[]            _referencetypes;
+  private String[]                 _referencetypes;
+
+  private final SubElementDelegate _subElementDelegate;
+
+  public GetUsedProjectsTask() {
+    this._subElementDelegate = new SubElementDelegate(this);
+    this._referencetypes = null;
+    this._selfinclude = false;
+  }
 
   /**
    * Changes the reference type used to influence the project resolving process.
@@ -114,16 +118,17 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
   }
 
   /**
-   * <p>
-   * Specifies if required projects should be resolve recursive. This attibute is optional and has to be specified only
-   * when <code>source=project</code> . Defaults to true.
-   * </p>
-   * 
-   * @param recursive
-   *          <code>true</code> if required projects should be resolve recursive.
+   * {@inheritDoc}
    */
-  public void setRecursive(final boolean recursive) {
-    this._recursive = recursive;
+  public Object createDynamicElement(String name) throws BuildException {
+    return this._subElementDelegate.createDynamicElement(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public List<Object> getSubElements() {
+    return this._subElementDelegate.getSubElements();
   }
 
   /**
@@ -173,11 +178,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
     List<EclipseProject> referenced = new ArrayList<EclipseProject>();
 
     // load the directly referenced projects
-    referenced.addAll(getResolver().resolveReferencedProjects(project, types, null));
-    if (this._recursive) {
-      // collect indirectly referenced projects if necessary
-      collectReferencedProjects(types, referenced, 0);
-    }
+    referenced.addAll(getResolver().resolveReferencedProjects(project, types, getSubElements()));
 
     if (this._selfinclude) {
       // include ourselves as requested
@@ -196,35 +197,6 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask {
 
     getProject().setProperty(this._property, buffer.toString());
 
-  }
-
-  /**
-   * Recursively collects all referenced projects.
-   * 
-   * @param referencetypes
-   *          The reference types used to access their resolvers.
-   * @param candidates
-   *          The list with the projects that already have been processed. Not <code>null</code>.
-   * @param pos
-   *          The index within the list pointing to unresolved projects.
-   */
-  private void collectReferencedProjects(final String[] referencetypes, final List<EclipseProject> candidates,
-      final int pos) {
-    int newpos = candidates.size();
-    for (int i = pos; i < candidates.size(); i++) {
-      EclipseProject current = candidates.get(i);
-      List<EclipseProject> referenced = getResolver().resolveReferencedProjects(current, referencetypes, null);
-      for (int j = 0; j < referenced.size(); j++) {
-        if (!candidates.contains(referenced.get(j))) {
-          // don't add projects twice
-          candidates.add(referenced.get(j));
-        }
-      }
-    }
-    if (newpos < candidates.size()) {
-      // there are added projects, that needs to be resolved, too
-      collectReferencedProjects(referencetypes, candidates, newpos);
-    }
   }
 
   /**
