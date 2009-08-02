@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource;
 
-import org.ant4eclipse.platform.model.resource.role.*;
+import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * <p>
@@ -265,7 +265,7 @@ public interface EclipseProject {
    * Returns a list of all referenced project names.
    * </p>
    * 
-   * @return A list of all reference project names.
+   * @return A list of all reference project names. Not <code>null</code>.
    */
   String[] getReferencedProjects();
 
