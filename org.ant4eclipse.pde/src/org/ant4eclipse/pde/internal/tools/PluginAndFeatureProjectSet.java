@@ -42,6 +42,8 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
    *          the {@link Workspace}
    */
   public PluginAndFeatureProjectSet(final Workspace workspace) {
+    super("workspace");
+    
     Assert.notNull(workspace);
 
     this._workspace = workspace;

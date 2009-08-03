@@ -51,6 +51,8 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
    *          the target platform location.
    */
   public BinaryBundleAndFeatureSet(final File targetPlatformLocation) {
+    super("target platform location '" + targetPlatformLocation.getAbsolutePath() + "'");
+
     Assert.isDirectory(targetPlatformLocation);
 
     this._targetPlatformLocation = targetPlatformLocation;

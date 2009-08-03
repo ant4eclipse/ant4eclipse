@@ -49,11 +49,10 @@ public class BundleDependenciesResolver {
 
   /**
    * <p>
-   * 
    * </p>
-   * 
-   * @param context
-   * @param resolvedBundleDescription
+   *
+   * @param bundleDescription
+   * @return
    */
   public List<BundleDependency> resolveBundleClasspath(final BundleDescription bundleDescription) {
 

@@ -43,12 +43,22 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /** indicates whether or not the platform is initialized */
   private boolean                        _isInitialised = false;
 
+  /** a description of this BundleAndFeatureSet */
+  private String                         _description;
+
   /**
    * <p>
    * Creates a new instance of type {@link AbstractBundleAndFeatureSet}.
    * </p>
+   * 
+   * @param description
+   *          a description of this {@link BundleAndFeatureSet}
    */
-  protected AbstractBundleAndFeatureSet() {
+  protected AbstractBundleAndFeatureSet(String description) {
+    Assert.nonEmpty(description);
+
+    // set the description
+    _description = description;
 
     // create the bundle description list
     this._bundleDescriptonList = new LinkedList<BundleDescription>();
@@ -75,6 +85,9 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
       return;
     }
 
+    // debug
+    A4ELogging.info("Trying to read bundles and feature from '%s'.", _description);
+
     // create stop watch for debugging purpose
     StopWatch stopWatch = new StopWatch();
 
@@ -84,10 +97,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     stopWatch.stop();
 
     // debug
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Needed %s ms to read %s bundles and %s features from bundle set.", stopWatch.getElapsedTime(),
-          this._bundleDescriptonList.size(), this._featureDescriptonList.size());
-    }
+    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", stopWatch.getElapsedTime(),
+        this._bundleDescriptonList.size(), this._featureDescriptonList.size());
 
     // set initialized
     this._isInitialised = true;

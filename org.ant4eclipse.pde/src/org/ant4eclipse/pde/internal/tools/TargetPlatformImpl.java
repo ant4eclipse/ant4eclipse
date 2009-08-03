@@ -72,7 +72,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param binaryBundleSets
    *          an array of bundle sets that contain the binary bundles, may <code>null</code>.
    * @param configuration
-   *          the {@link Configuration} of this target platform
+   *          the {@link TargetPlatformConfiguration} of this target platform
    */
   public TargetPlatformImpl(final BundleAndFeatureSet pluginProjectSet, final BundleAndFeatureSet[] binaryBundleSets,
       final TargetPlatformConfiguration configuration) {
@@ -105,7 +105,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param binaryPluginSet
    *          the binary bundle sets that belong to this target location
    * @param configuration
-   *          the {@link Configuration} of this target platform
+   *          the {@link TargetPlatformConfiguration} of this target platform
    */
   public TargetPlatformImpl(final BundleAndFeatureSet pluginProjectSet, final BundleAndFeatureSet binaryPluginSet,
       final TargetPlatformConfiguration configuration) {
@@ -325,6 +325,14 @@ public final class TargetPlatformImpl implements TargetPlatform {
     resolvedFeature.setIncludesToFeatureDescriptionList(result);
   }
 
+  /**
+   * <p>
+   * </p>
+   *
+   * @param manifest
+   * @param resolvedFeature
+   * @throws BuildException
+   */
   private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) throws BuildException {
     // 4. Retrieve BundlesDescriptions for feature plug-ins
     final Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
@@ -409,29 +417,25 @@ public final class TargetPlatformImpl implements TargetPlatform {
     // log errors if any
     final BundleDescription[] bundleDescriptions = state.getBundles();
     // boolean allStatesResolved = true;
-    for (int i = 0; i < bundleDescriptions.length; i++) {
-      final BundleDescription description = bundleDescriptions[i];
-      final ResolverError[] errors = state.getResolverErrors(description);
-      if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
-        if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
-          A4ELogging.warn("Not using '%s' -- another version resolved", getBundleInfo(description));
-        } else {
-          // allStatesResolved = false;
-          A4ELogging.warn("Could not resolve '%s':", getBundleInfo(description));
-          for (int j = 0; j < errors.length; j++) {
-            final ResolverError error = errors[j];
-            A4ELogging.warn("  %s", error);
+    
+    if (A4ELogging.isDebuggingEnabled()) {
+      for (int i = 0; i < bundleDescriptions.length; i++) {
+        final BundleDescription description = bundleDescriptions[i];
+        final ResolverError[] errors = state.getResolverErrors(description);
+        if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
+          if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
+            A4ELogging.debug("Not using '%s' -- another version resolved", getBundleInfo(description));
+          } else {
+            // allStatesResolved = false;
+            A4ELogging.debug("Could not resolve '%s':", getBundleInfo(description));
+            for (int j = 0; j < errors.length; j++) {
+              final ResolverError error = errors[j];
+              A4ELogging.debug("  %s", error);
+            }
           }
         }
       }
     }
-
-    // fail on non resolved bundles
-    // if ((!allStatesResolved) && this._configuration.failOnNonResolvedBundles()) {
-    // // TODO: A4E-Exception
-    // throw new RuntimeException("Could not resolve all bundles");
-    // }
-
     // return the state
     return state;
   }
