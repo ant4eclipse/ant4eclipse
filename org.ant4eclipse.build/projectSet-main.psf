@@ -2,6 +2,7 @@
 <psf version="2.0">
 <provider id="org.tigris.subversion.subclipse.core.svnnature">
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.core,org.ant4eclipse.core"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.core.ldapfilter,org.ant4eclipse.core.ldapfilter"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.external,org.ant4eclipse.external"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.jdt,org.ant4eclipse.jdt"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.jdt.ecj,org.ant4eclipse.jdt.ecj"/>
