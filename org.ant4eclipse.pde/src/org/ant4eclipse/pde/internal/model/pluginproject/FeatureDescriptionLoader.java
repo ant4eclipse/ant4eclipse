@@ -52,10 +52,11 @@ public class FeatureDescriptionLoader {
       return parseFeatureDirectory(file);
     }
 
-    // warn if feature description is null
-    A4ELogging.warn(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(), file
-        .getAbsoluteFile());
-
+    if (A4ELogging.isDebuggingEnabled()) {
+      // warn if feature description is null
+      A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(), file
+          .getAbsoluteFile());
+    }
     // return null
     return null;
   }

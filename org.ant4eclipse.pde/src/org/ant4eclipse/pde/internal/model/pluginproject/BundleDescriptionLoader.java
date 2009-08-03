@@ -117,8 +117,8 @@ public class BundleDescriptionLoader {
       } else if (file.isDirectory()) {
         description = parsePluginDirectory(file);
       }
-      if (description == null) {
-        A4ELogging.warn(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE.getMessage(), file
+      if (description == null && A4ELogging.isDebuggingEnabled()) {
+        A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE.getMessage(), file
             .getAbsoluteFile());
       }
     } catch (final FileNotFoundException e) {
