@@ -24,29 +24,8 @@ public class CompileJobResultImpl implements CompileJobResult {
     return this._succeeded;
   }
 
-  /**
-   * <p>
-   * Dumps all given problems to the console.
-   * </p>
-   */
-  public void dumpProblems() {
-    if ((this._categorizedProblems != null) && (this._categorizedProblems.length > 0)) {
-      for (final CategorizedProblem problem : this._categorizedProblems) {
-        final StringBuffer line = new StringBuffer();
-        line.append("[");
-        if (problem.isWarning()) {
-          line.append("WARN");
-        } else if (problem.isError()) {
-          line.append("ERROR");
-        } else {
-          line.append("???");
-        }
-        line.append("] ");
-        line.append(problem.getOriginatingFileName()).append("#").append(problem.getSourceLineNumber()).append(": ")
-            .append(problem.getMessage());
-        System.out.println(line.toString());
-      }
-    }
+  public CategorizedProblem[] getCategorizedProblems() {
+    return _categorizedProblems == null ? new CategorizedProblem[0] : _categorizedProblems;
   }
 
   void setSucceeded(final boolean succeeded) {

@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
+
 /**
  * <p>
  * The {@link CompileJobResult} represents a compile job result.
@@ -31,11 +33,10 @@ public interface CompileJobResult {
 
   /**
    * <p>
-   * Dumps problems.
+   * Returns the {@link CategorizedProblem CategorizedProblems}.
    * </p>
    * 
-   * @deprecated must be replaced with a more intelligent API.
+   * @return the {@link CategorizedProblem CategorizedProblems}.
    */
-  @Deprecated
-  void dumpProblems();
+  public CategorizedProblem[] getCategorizedProblems();
 }

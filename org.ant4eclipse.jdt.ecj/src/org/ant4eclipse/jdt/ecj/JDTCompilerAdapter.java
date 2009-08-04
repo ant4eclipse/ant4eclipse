@@ -1,25 +1,28 @@
 package org.ant4eclipse.jdt.ecj;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.resources.FileResource;
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -30,6 +33,9 @@ import java.util.Map;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JDTCompilerAdapter extends DefaultCompilerAdapter {
+
+  /** - */
+  private static final String COMPILE_PROBLEM_MESSAGE = "----------\n%s. %s in %s (at line %s)\n%s\n%s\n%s\n";
 
   /** the compiler argument separator */
   private static final String COMPILER_ARGS_SEPARATOR = "=";
@@ -43,7 +49,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings( { "deprecation", "unchecked" })
+  @SuppressWarnings( { "unchecked" })
   public boolean execute() {
 
     // Step 1: check preconditions
@@ -60,7 +66,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     // Step 5: create CompileJobDescription
     final DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
-    compileJobDescription.setSourceFiles(getSourceFilesToCompile(ecjAdditionalCompilerArguments));
+    SourceFile[] sourceFiles = getSourceFilesToCompile(ecjAdditionalCompilerArguments);
+    compileJobDescription.setSourceFiles(sourceFiles);
     compileJobDescription.setCompilerOptions(getCompilerOptions());
     compileJobDescription.setClassFileLoader(createClassFileLoader(ecjAdditionalCompilerArguments));
 
@@ -68,7 +75,32 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     final CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
 
     // Step 7: dump result
-    compileJobResult.dumpProblems();
+    CategorizedProblem[] categorizedProblems = compileJobResult.getCategorizedProblems();
+
+    for (int i = 0; i < categorizedProblems.length; i++) {
+      CategorizedProblem categorizedProblem = categorizedProblems[i];
+
+      String fileName = new String(categorizedProblem.getOriginatingFileName());
+      for (SourceFile sourceFile : sourceFiles) {
+        if (fileName.equals(sourceFile.getSourceFileName())) {
+
+          Object[] args = new Object[7];
+          args[0] = new Integer(i + 1);
+          args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
+          args[2] = sourceFile.getSourceFile().getAbsolutePath();
+          args[3] = categorizedProblem.getSourceLineNumber();
+          String[] line = readLine(sourceFile, categorizedProblem.getSourceLineNumber(), categorizedProblem
+              .getSourceStart(), categorizedProblem.getSourceEnd());
+          args[4] = line[0];
+          args[5] = line[1];
+          args[6] = categorizedProblem.getMessage();
+          A4ELogging.error(COMPILE_PROBLEM_MESSAGE, args);
+          if (i + 1 == categorizedProblems.length) {
+            A4ELogging.error("----------");
+          }
+        }
+      }
+    }
 
     // throw Exception if compilation was not successful
     if (!compileJobResult.succeeded()) {
@@ -158,7 +190,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     }
 
     // TODO:
-    A4ELogging.info("Using the following compile options:\n %s", compilerOptions.toString());
+    // A4ELogging.info("Using the following compile options:\n %s", compilerOptions.toString());
 
     // return the compiler options
     return compilerOptions.getMap();
@@ -414,5 +446,54 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     // Step 5: Return the result
     return compilerArguments;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceFile
+   * @param lineNumber
+   * @param sourceStart
+   * @param sourceEnd
+   * @return
+   */
+  private String[] readLine(SourceFile sourceFile, int lineNumber, int sourceStart, int sourceEnd) {
+    Assert.notNull(sourceFile);
+
+    try {
+      // Open the file that is the first
+      // command line parameter
+      FileInputStream fstream = new FileInputStream(sourceFile.getSourceFile());
+      // Get the object of DataInputStream
+      DataInputStream in = new DataInputStream(fstream);
+      BufferedReader br = new BufferedReader(new InputStreamReader(in));
+      int lineStart = 0;
+      String strLine = "";
+      // Read File Line By Line
+      for (int i = 0; i < lineNumber; i++) {
+        String newLine = br.readLine();
+
+        lineStart = lineStart + strLine.length();
+        if (i + 1 != lineNumber) {
+          lineStart = lineStart + 1;
+        }
+        strLine = newLine;
+      }
+      // Close the input stream
+      in.close();
+      StringBuilder underscoreLine = new StringBuilder();
+      for (int i = lineStart; i < sourceStart; i++) {
+        underscoreLine.append(' ');
+      }
+      for (int i = sourceStart; i <= sourceEnd; i++) {
+        underscoreLine.append('^');
+      }
+      return new String[] { strLine, underscoreLine.toString() };
+    } catch (Exception e) {// Catch exception if any
+      return new String[] { "", "" };
+    } finally {
+
+    }
   }
 }
