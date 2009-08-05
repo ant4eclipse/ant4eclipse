@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
+import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
@@ -34,17 +36,19 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
  */
 public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
+  private static final String ANT4ECLIPSE_DEFAULT_FILE_ENCODING = "ant4eclipse.default.file.encoding";
+
   /** - */
-  private static final String COMPILE_PROBLEM_MESSAGE = "----------\n%s. %s in %s (at line %s)\n%s\n%s\n%s\n";
+  private static final String COMPILE_PROBLEM_MESSAGE           = "----------\n%s. %s in %s (at line %s)\n%s\n%s\n%s\n";
 
   /** the compiler argument separator */
-  private static final String COMPILER_ARGS_SEPARATOR = "=";
+  private static final String COMPILER_ARGS_SEPARATOR           = "=";
 
   /** the refid key for the additional compiler arguments */
-  private static final String COMPILER_ARGS_REFID_KEY = "compiler.args.refid";
+  private static final String COMPILER_ARGS_REFID_KEY           = "compiler.args.refid";
 
   /** - */
-  private static final String COMPILER_OPTIONS_FILE   = "compiler.options.file";
+  private static final String COMPILER_OPTIONS_FILE             = "compiler.options.file";
 
   /**
    * {@inheritDoc}
@@ -89,10 +93,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
           args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
           args[2] = sourceFile.getSourceFile().getAbsolutePath();
           args[3] = categorizedProblem.getSourceLineNumber();
-          String[] line = readLine(sourceFile, categorizedProblem.getSourceLineNumber(), categorizedProblem
-              .getSourceStart(), categorizedProblem.getSourceEnd());
-          args[4] = line[0];
-          args[5] = line[1];
+          String[] problematicLine = readProblematicLine(sourceFile, categorizedProblem);
+          args[4] = problematicLine[0];
+          args[5] = problematicLine[1];
           args[6] = categorizedProblem.getMessage();
           A4ELogging.error(COMPILE_PROBLEM_MESSAGE, args);
           if (i + 1 == categorizedProblems.length) {
@@ -228,7 +231,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
           : defaultDestinationFolder;
 
       // add the new source file
-      sourceFiles.add(new SourceFile(sourceFolder, sourceFileName, destinationFolder));
+      sourceFiles.add(new SourceFile(sourceFolder, sourceFileName, destinationFolder, getDefaultEncoding()));
     }
 
     // return the result
@@ -458,8 +461,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @param sourceEnd
    * @return
    */
-  private String[] readLine(SourceFile sourceFile, int lineNumber, int sourceStart, int sourceEnd) {
+  private String[] readProblematicLine(SourceFile sourceFile, CategorizedProblem categorizedProblem) {
     Assert.notNull(sourceFile);
+    Assert.notNull(categorizedProblem);
+
+    int lineNumber = categorizedProblem.getSourceLineNumber();
+    int sourceStart = categorizedProblem.getSourceStart();
+    int sourceEnd = categorizedProblem.getSourceEnd();
 
     try {
       // Open the file that is the first
@@ -492,8 +500,40 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       return new String[] { strLine, underscoreLine.toString() };
     } catch (Exception e) {// Catch exception if any
       return new String[] { "", "" };
-    } finally {
-
     }
+  }
+
+  /**
+   * <p>
+   * Helper method. Returns the default encoding of the eclipse workspace.
+   * </p>
+   * 
+   * @return the default encoding
+   */
+  private String getDefaultEncoding() {
+
+    // Step 1: is the 'ANT4ECLIPSE_DEFAULT_FILE_ENCODING' property set?
+    String property = getProject().getProperty(ANT4ECLIPSE_DEFAULT_FILE_ENCODING);
+    if (property != null) {
+      return property;
+    }
+
+    // Step 2: is the encoding set in the javac task?
+    String encoding = getJavac().getEncoding();
+    if (encoding != null) {
+      return encoding;
+    }
+
+    // Step 3: try to resolve the os specific eclipse encoding
+    if (Os.isFamily(Os.FAMILY_WINDOWS) && Charset.isSupported("Cp1252")) {
+      return "Cp1252";
+    } else if (Os.isFamily(Os.FAMILY_UNIX) && Charset.isSupported("UTF-8")) {
+      return "UTF-8";
+    } else if (Os.isFamily(Os.FAMILY_MAC) && Charset.isSupported("MacRoman")) {
+      return "MacRoman";
+    }
+
+    // Step 4: last resort: return the default file encoding
+    return System.getProperty("file.encoding");
   }
 }
