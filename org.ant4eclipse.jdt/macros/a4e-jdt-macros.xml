@@ -1,94 +1,88 @@
 <?xml version="1.0"?>
-<project name="a4e-jdt-macros"
-         basedir="."
-         xmlns:ant4eclipse="antlib:org.ant4eclipse"
-         xmlns:antcontrib="antlib:net.sf.antcontrib">
-
-	<!-- define antcontrib tasks -->
-	<taskdef uri="antlib:net.sf.antcontrib"
-	         resource="net/sf/antcontrib/antlib.xml" />
+<project name="a4e-jdt-macros" basedir="." xmlns:ant4eclipse="antlib:org.ant4eclipse">
 
 	<!-- define ant4eclipse tasks -->
-	<taskdef uri="antlib:org.ant4eclipse"
-	         resource="org/ant4eclipse/antlib.xml" />
+	<taskdef uri="antlib:org.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
-	
-	<!-- =================================
+
+	<!-- ==============================================================================================================
           macro: buildProjects
           
           builds a set of JDT-based eclipse project
-         ================================= -->
+          
+          Parameters:
+          - workspace: the root directory of the workspace that contains the JDT projects
+          - projectNames: a comma-separated list of all projects that should be built
+         ============================================================================================================== -->
 	<macrodef name="buildProjects" description="builds a set of JDT-based eclipse project">
 		<attribute name="workspace" />
 		<attribute name="projectNames" />
 		<sequential>
 
-		<echo>
+			<echo>
 			* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 			* * *  Buildings project @{projectNames}
 			* * *  in workspace      @{workspace}
 			* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  		</echo>	
+  		</echo>
 
-			<ant4eclipse:executeProjectSet workspace="@{workspace}"
-				projectnames="@{projectNames}" projectreferencetypes="jdt">
-				
+			<ant4eclipse:executeProjectSet workspace="@{workspace}" projectnames="@{projectNames}" projectreferencetypes="jdt">
+
 				<!-- build all projects -->
-	  		<ant4eclipse:forEachProject>
-	  			<buildProject workspace="${workspaceDir}" projectName="${executeProjectSet.project.name}"/>
-	  		</ant4eclipse:forEachProject>
+				<ant4eclipse:forEachProject>
+					<buildProject workspace="${workspaceDir}" projectName="${executeProjectSet.project.name}" />
+				</ant4eclipse:forEachProject>
 			</ant4eclipse:executeProjectSet>
 		</sequential>
 	</macrodef>
-	
+
 	<!-- =================================
           macro: buildProject
           
           builds a single JDT-based eclipse project
+          Parameters:
+          - workspace: the root directory of the workspace that contains the JDT project
+          - projectName: the name of the project that should be built (must exist in the workspace)
          ================================= -->
 	<macrodef name="buildProject" description="builds a single JDT-based eclipse project">
 		<attribute name="workspace" />
 		<attribute name="projectName" />
 		<sequential>
-			
-		<echo>
+
+			<echo>
 			* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 			* * *  Building project @{projectName}
 			* * *  in workspace     @{workspace}
 			* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-  		</echo>	
+  		</echo>
 
-			<ant4eclipse:executeJdtProject workspace="@{workspace}"
-		  	                   projectName="@{projectName}" >
-	  		
-	  		<!-- Step 1: clean output directories -->
-	  		<ant4eclipse:forEachOutputDirectory>
+			<ant4eclipse:executeJdtProject workspace="@{workspace}" projectName="@{projectName}">
+
+				<!-- Step 1: clean output directories -->
+				<ant4eclipse:forEachOutputDirectory>
 					<echo> * Cleaning output directory '${executeJdtProject.output.directory}'</echo>
-					<delete dir="${executeJdtProject.output.directory}"
-				       quiet="true" />
+					<delete dir="${executeJdtProject.output.directory}" quiet="true" />
 					<mkdir dir="${executeJdtProject.output.directory}" />
 				</ant4eclipse:forEachOutputDirectory>
 
-	  		<!-- Step 2: Compile the project using the eclipse java compiler (ejc) -->
-		  	<ant4eclipse:forProject>
-		  		<echo> * Compiling the project</echo>
-		  		<javac destdir="${executeJdtProject.default.output.directory}"
-		  		       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
-		  			 <!-- let ejc read compiler settings from the project's '.settings' directory -->
-		  			<compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
-		  		       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
-		  			<!-- set the source folders that are passed in from 'fromProject' -->
-		  		  <src refid="executeJdtProject.source.directories.path" />
-		  			
-		  			<!-- set the bootclasspath, i.e. the JRE we compile against -->
-		  		  <bootclasspath refid="executeJdtProject.boot.classpath.path" />
-		  			
-		  			<!-- set our compile-time classpath -->
-		  		  <classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
-		  		</javac>
-		  	</ant4eclipse:forProject>
+				<!-- Step 2: Compile the project using the eclipse java compiler (ejc) -->
+				<ant4eclipse:forProject>
+					<echo> * Compiling the project</echo>
+					<javac destdir="${executeJdtProject.default.output.directory}" compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
+						<!-- let ejc read compiler settings from the project's '.settings' directory -->
+						<compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs" compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+						<!-- set the source folders that are passed in from 'fromProject' -->
+						<src refid="executeJdtProject.source.directories.path" />
 
-	  		<!-- Step 3: Copy resources (non-java-files) from sourcedirectories to their output directories -->
+						<!-- set the bootclasspath, i.e. the JRE we compile against -->
+						<bootclasspath refid="executeJdtProject.boot.classpath.path" />
+
+						<!-- set our compile-time classpath -->
+						<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+					</javac>
+				</ant4eclipse:forProject>
+
+				<!-- Step 3: Copy resources (non-java-files) from sourcedirectories to their output directories -->
 				<ant4eclipse:forEachSourceDirectory>
 					<echo>Copying resources from directory '${executeJdtProject.source.directory}' to '${executeJdtProject.output.directory}'</echo>
 					<copy todir="${executeJdtProject.output.directory}">
@@ -97,7 +91,7 @@
 						</fileset>
 					</copy>
 				</ant4eclipse:forEachSourceDirectory>
-	  	</ant4eclipse:executeJdtProject>
+			</ant4eclipse:executeJdtProject>
 		</sequential>
 	</macrodef>
 </project>
