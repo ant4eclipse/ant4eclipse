@@ -11,6 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.jdt.ecj.SourceFile;
+
+import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,13 +27,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
-import org.ant4eclipse.jdt.ecj.SourceFile;
-import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
 
 /**
  * <p>
@@ -130,11 +132,11 @@ public class CompilationUnitImpl implements ICompilationUnit {
         result.append("\n");
       }
     } catch (final UnsupportedEncodingException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new Object[] {
-          new String(this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding() });
+      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new String(
+          this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     } catch (final IOException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new Object[] {
-          new String(this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding() });
+      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new String(
+          this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     }
     return result.toString().toCharArray();
   }
