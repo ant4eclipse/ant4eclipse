@@ -66,10 +66,7 @@
 			<!-- Step 2: call generate.source -->
 			<ant4eclipse:forProject>
 				<available file="${executeJdtProject.project.directory}/build.xml" property="build.file.exists"/>
-				<antcall target="generate.source" inheritrefs="true">
-					<param name="build.file.exists" value="${build.file.exists}"/>
-				</antcall>
-				
+				<antcall target="generate.source" inheritrefs="true" />
 			</ant4eclipse:forProject>
 			
 			<!-- Step 3: compile the project -->
@@ -106,9 +103,9 @@
 	<!-- - - - - - - - - - - - - - - - - -
           target: generate.source
          - - - - - - - - - - - - - - - - - -->
-	<target name="generate.source" if="${build.file.exists}">
+	<target name="generate.source" if="build.file.exists">
 		<echo>Calling target 'generate.source' in file '${executeJdtProject.project.directory}/build.xml'</echo>
-		<ant antfile="${executeJdtProject.project.directory}/build.xml" target="generate.source" inheritRefs="true"/>
+		<ant dir="${executeJdtProject.project.directory}" antfile="build.xml" target="generate.source" inheritRefs="true"/>
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - -
