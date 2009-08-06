@@ -52,9 +52,9 @@ public class PyDevParser {
 
     // prepare the access for the pathes
     final XQuery pathquery = queryhandler
-        .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_SOURCE_PATH']/path/text()");
+        .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_SOURCE_PATH']/path");
     final XQuery externalquery = queryhandler
-        .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH']/path/text()");
+        .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH']/path");
 
     // now fetch the necessary data
     XQueryHandler.queryFile(pydevproject, queryhandler);
