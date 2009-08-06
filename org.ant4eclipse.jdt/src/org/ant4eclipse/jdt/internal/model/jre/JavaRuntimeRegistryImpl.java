@@ -185,13 +185,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   }
 
   /**
-   * {@inheritDoc}
-   */
-  public void clear() {
-    this._javaRuntimeCache.clear();
-  }
-
-  /**
    * <p>
    * </p>
    * 

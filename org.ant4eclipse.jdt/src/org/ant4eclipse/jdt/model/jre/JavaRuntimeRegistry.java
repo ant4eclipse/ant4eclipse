@@ -122,13 +122,6 @@ public interface JavaRuntimeRegistry {
 
   /**
    * <p>
-   * Clears the java runtime cache. The java profile cache will <b>not</b> be cleared.
-   * </p>
-   */
-  void clear();
-
-  /**
-   * <p>
    * Helper class to fetch the {@link JavaRuntimeRegistry} instance from the {@link ServiceRegistry}.
    * </p>
    */
