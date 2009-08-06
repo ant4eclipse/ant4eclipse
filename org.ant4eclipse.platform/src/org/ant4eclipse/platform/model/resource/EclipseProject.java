@@ -26,14 +26,18 @@ import java.io.File;
  */
 public interface EclipseProject {
 
-  /** the constant ABSOLUTE */
-  int ABSOLUTE                                      = 0;
+  enum PathStyle {
 
-  /** the constant PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME */
-  int PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME    = 1;
+    /** the constant ABSOLUTE */
+    ABSOLUTE,
 
-  /** the constant PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME */
-  int PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME = 2;
+    /** the constant PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME */
+    PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME,
+
+    /** the constant PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME */
+    PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME;
+
+  }
 
   /**
    * <p>
@@ -134,7 +138,7 @@ public interface EclipseProject {
    * 
    * @return Returns the child of this project with the given path.
    */
-  File getChild(final String path, final int relative);
+  File getChild(final String path, final PathStyle relative);
 
   /**
    * <p>
@@ -144,7 +148,7 @@ public interface EclipseProject {
    * @param relative
    * @return
    */
-  File[] getChildren(final String[] path, final int relative);
+  File[] getChildren(final String[] path, final PathStyle relative);
 
   /**
    * <p>

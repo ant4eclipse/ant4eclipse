@@ -11,13 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import java.io.File;
-
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.io.File;
 
 /**
  * <p>
@@ -48,8 +49,8 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
     final String path = getCurrentJavaProjectRole(context).getOutputFolderForSourceFolder(entry.getPath());
 
     final File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(path,
-        EclipseProject.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(path,
-        EclipseProject.ABSOLUTE);
+        EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(
+        path, EclipseProject.PathStyle.ABSOLUTE);
 
     // TODO: ACCESS RESTRICTIONS
     context.addClasspathEntry(new ResolvedClasspathEntry(outputFolder));

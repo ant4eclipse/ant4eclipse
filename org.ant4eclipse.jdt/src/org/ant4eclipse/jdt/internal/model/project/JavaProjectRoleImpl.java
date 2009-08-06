@@ -11,18 +11,26 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.logging.*;
-import org.ant4eclipse.core.service.*;
-import org.ant4eclipse.core.util.*;
-import org.ant4eclipse.jdt.model.*;
-import org.ant4eclipse.jdt.model.jre.*;
-import org.ant4eclipse.jdt.model.project.*;
-import org.ant4eclipse.platform.model.resource.*;
-import org.ant4eclipse.platform.model.resource.role.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.Utilities;
 
-import java.io.*;
-import java.util.*;
+import org.ant4eclipse.jdt.model.ClasspathEntry;
+import org.ant4eclipse.jdt.model.ContainerTypes;
+import org.ant4eclipse.jdt.model.jre.JavaProfile;
+import org.ant4eclipse.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
+import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
+
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -226,15 +234,16 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
         A4ELogging.debug("Trying to resolve project child '" + getEclipseProject().getChild(entry.getPath())
             + "' as sourcefolder '" + sourceFolder + "'");
         // if (getEclipseProject().hasChild(entry.getPath())) {
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(), EclipseProject.ABSOLUTE).getPath())) {
+        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(), EclipseProject.PathStyle.ABSOLUTE)
+            .getPath())) {
           return getOutputFolder(entry);
         }
         if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
-            EclipseProject.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME).getPath())) {
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME).getPath())) {
           return getOutputFolder(entry);
         }
         if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
-            EclipseProject.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME).getPath())) {
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME).getPath())) {
           return getOutputFolder(entry);
         }
         // }

@@ -174,14 +174,14 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return Returns the child of this project with the given path.
    */
   public File getChild(final String path) {
-    return (getChild(path, ABSOLUTE));
+    return (getChild(path, PathStyle.ABSOLUTE));
   }
 
   public File[] getChildren(final String[] path) {
-    return getChildren(path, ABSOLUTE);
+    return getChildren(path, PathStyle.ABSOLUTE);
   }
 
-  public File[] getChildren(final String[] path, final int relative) {
+  public File[] getChildren(final String[] path, final PathStyle relative) {
     Assert.notNull(path);
 
     final File[] result = new File[path.length];
@@ -247,7 +247,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return Returns the child of this project with the given path.
    */
-  public File getChild(String path, final int relative) {
+  public File getChild(String path, final PathStyle relative) {
     Assert.notNull(path);
 
     String name = path;
@@ -261,27 +261,27 @@ public final class EclipseProjectImpl implements EclipseProject {
     // handle linked resource
     if (isLinkedResource(name)) {
       final LinkedResourceImpl resource = getLinkedResource(name);
-      if ((relative != ABSOLUTE) && (resource.getRelativeLocation() == null)) {
+      if ((relative != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null)) {
         // TODO
         throw (new RuntimeException("cannot calculate relative location for linked resource '" + name + "' !"));
       }
-      File result = new File(relative != ABSOLUTE ? resource.getRelativeLocation() : resource.getLocation());
+      File result = new File(relative != PathStyle.ABSOLUTE ? resource.getRelativeLocation() : resource.getLocation());
       if (rest != null) {
         result = new File(result, rest);
       }
-      if ((relative == ABSOLUTE) && (!result.isAbsolute())) {
+      if ((relative == PathStyle.ABSOLUTE) && (!result.isAbsolute())) {
         result = new File(this._projectDirectory, result.getPath());
       }
       return (result);
     }
 
     //
-    if (relative == PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
+    if (relative == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
       if (path.length() == 0) {
         path = ".";
       }
       return (new File(path));
-    } else if (relative == PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
+    } else if (relative == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
       return (new File(this._projectDirectory.getName(), path));
     }
 

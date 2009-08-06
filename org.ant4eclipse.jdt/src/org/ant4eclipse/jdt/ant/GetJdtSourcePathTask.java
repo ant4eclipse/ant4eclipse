@@ -75,8 +75,8 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
   protected File[] resolvePath() {
 
     // set relative flag
-    final int relative = isRelative() ? EclipseProject.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
-        : EclipseProject.ABSOLUTE;
+    final EclipseProject.PathStyle relative = isRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
+        : EclipseProject.PathStyle.ABSOLUTE;
 
     // resolve the source path
     final JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());

@@ -44,8 +44,8 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
       final ClasspathResolverContext context) {
     Assert.notNull(path);
 
-    final int relative = context.isWorkspaceRelative() ? EclipseProject.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME
-        : EclipseProject.ABSOLUTE;
+    final EclipseProject.PathStyle relative = context.isWorkspaceRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME
+        : EclipseProject.PathStyle.ABSOLUTE;
     final File child = project.getChild(path, relative);
     context.addClasspathEntry(new ResolvedClasspathEntry(child));
   }

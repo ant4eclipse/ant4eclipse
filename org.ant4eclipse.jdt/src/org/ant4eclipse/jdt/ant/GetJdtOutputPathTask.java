@@ -141,8 +141,8 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    */
   @Override
   public File[] resolvePath() {
-    final int relative = isRelative() ? EclipseProject.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
-        : EclipseProject.ABSOLUTE;
+    final EclipseProject.PathStyle relative = isRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
+        : EclipseProject.PathStyle.ABSOLUTE;
 
     // resolve output folder for source folder
     if (FOR_SOURCE_FOLDER.equals(this._resolve)) {
