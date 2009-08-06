@@ -40,6 +40,14 @@ public class PyDLTKParser {
 
   private static final String KIND_CONTAINER = "con";
 
+  /**
+   * Maps a textual representation of a record to the kind of reference known by us.
+   * 
+   * @param kind
+   *          The textual representation as supplied within the configuration file. Not <code>null</code>.
+   * 
+   * @return The kind of reference used for this type of record.
+   */
   private static final ReferenceKind getReferenceKind(final String kind) {
     if (KIND_SOURCE.equals(kind)) {
       return ReferenceKind.Source;
@@ -94,7 +102,7 @@ public class PyDLTKParser {
       final boolean isexported = Boolean.parseBoolean(exported[i]);
       final boolean isexternal = Boolean.parseBoolean(externals[i]);
       pythonrole.addRawPathEntry(new RawPathEntry(refkind, path, isexported, isexternal));
-      
+
     }
 
   }
