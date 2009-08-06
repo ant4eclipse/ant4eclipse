@@ -14,6 +14,7 @@ package org.ant4eclipse.pydt.internal.model.pyre;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
@@ -21,6 +22,7 @@ import org.apache.tools.ant.BuildException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -30,6 +32,11 @@ import java.util.Map;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
+
+  private static final String[]      EXENAMES                 = new String[] { "python", "pythonw", "ipy", "ipyw",
+      "jython"                                               };
+
+  private static final String[]      EXESUFFICES              = new String[] { "", ".exe", ".bat" };
 
   private static final String        MSG_NODEFAULTRUNTIME     = "A default python runtime could not be determined !";
 
@@ -43,9 +50,46 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
   private static final String        MSG_REGISTEREDRUNTIME    = "Registered runtime with id '%s' for the location '%s'.";
 
+  private static final String        MSG_MISSINGPYTHONLISTER  = "The python script 'lister.py' is not available on the classpath (org/ant4eclipse/pydt) !";
+
   private Map<String, PythonRuntime> _runtimes                = new Hashtable<String, PythonRuntime>();
 
   private String                     _defaultid               = null;
+
+  private File                       _pythonlister            = null;
+
+  public PythonRuntimeRegistryImpl() {
+    URL url = getClass().getResource("/org/ant4eclipse/pydt/lister.py");
+    if (url == null) {
+      throw new BuildException(MSG_MISSINGPYTHONLISTER);
+    }
+    try {
+      _pythonlister = File.createTempFile("lister", ".py");
+    } catch (IOException ex) {
+      throw new BuildException(ex);
+    }
+    Utilities.copy(url, _pythonlister);
+  }
+
+  /**
+   * Tries to determine the location of a python interpreter.
+   * 
+   * @param location
+   *          The location of a python installation. Not <code>null</code>.
+   * 
+   * @return The filesystem location of an interpreter or <code>null</code> if none could be found.
+   */
+  private File lookupInterpreter(final File location) {
+    for (String exename : EXENAMES) {
+      for (String suffix : EXESUFFICES) {
+        final File candidate = new File(location, exename + suffix);
+        if (candidate.isFile()) {
+          return candidate;
+        }
+      }
+    }
+    return null;
+  }
 
   /**
    * {@inheritDoc}
@@ -59,15 +103,21 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * {@inheritDoc}
    */
   public void registerRuntime(String id, File location) {
+
     Assert.nonEmpty(id);
     Assert.notNull(location);
+
     try {
       location = location.getCanonicalFile();
     } catch (IOException ex) {
       throw new ExtendedBuildException(MSG_CANONICALFILE, ex, location);
     }
+
     final PythonRuntime existing = getRuntime(id);
     if (existing != null) {
+
+      // check the current setting
+
       if (!location.equals(existing.getLocation())) {
         // same id for different locations is not allowed
         throw new ExtendedBuildException(MSG_DUPLICATERUNTIME, id, existing.getLocation(), location);
@@ -76,11 +126,24 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
         A4ELogging.debug(MSG_REPEATEDREGISTRATION, id, location);
         return;
       }
-    } else {
-      final PythonRuntime newruntime = new PythonRuntimeImpl(id, location);
-      A4ELogging.debug(MSG_REGISTEREDRUNTIME, id, location);
-      _runtimes.put(id, newruntime);
+
     }
+
+    // register the new runtime but we need to identify the corresponding libraries
+    final File interpreter = lookupInterpreter(location);
+    if (interpreter == null) {
+      throw new RuntimeException();
+    }
+
+    // StringBuffer output = new StringBuffer();
+    // int result = Utilities.execute(interpreter, output, _pythonlister.getAbsolutePath());
+    //
+    // System.err.println(output);
+
+    final PythonRuntime newruntime = new PythonRuntimeImpl(id, location);
+    A4ELogging.debug(MSG_REGISTEREDRUNTIME, id, location);
+    _runtimes.put(id, newruntime);
+
   }
 
   /**
@@ -113,5 +176,20 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
     Assert.nonEmpty(id);
     return _runtimes.get(id);
   }
+
+  // public static final void main(String[] args) throws Exception {
+  // Properties props = new Properties();
+  // File f = new File("Q:/workspace-a4e/sample/dummy/org/ant4eclipse/ant4eclipse-configuration.properties");
+  // props.load(new FileInputStream(f));
+  // System.err.println(props);
+  // Ant4EclipseConfigurator.configureAnt4Eclipse(props);
+  // // Ant4EclipseConfigurationImpl config = new Ant4EclipseConfigurationImpl(props);
+  // // ServiceRegistry.configure(new PropertiesBasedServiceRegistryConfiguration(config));
+  // PythonRuntimeRegistryImpl impl = new PythonRuntimeRegistryImpl();
+  // // impl.registerRuntime("def", new File("K:/programme/python/2.6"));
+  // // impl.registerRuntime("def", new File("K:/programme/python/3.1"));
+  // impl.registerRuntime("def", new File("K:/programme/ironpython/2.0"));
+  // // impl.registerRuntime("def", new File("K:/programme/jython/2.5"));
+  // }
 
 } /* ENDCLASS */
