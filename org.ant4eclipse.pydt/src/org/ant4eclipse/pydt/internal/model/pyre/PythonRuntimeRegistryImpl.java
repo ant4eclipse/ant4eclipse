@@ -41,6 +41,8 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
   private static final String        MSG_REPEATEDREGISTRATION = "A python runtime with the id '%s' and the location '%s' has been registered multiple times !";
 
+  private static final String        MSG_REGISTEREDRUNTIME    = "Registered runtime with id '%s' for the location '%s'.";
+
   private Map<String, PythonRuntime> _runtimes                = new Hashtable<String, PythonRuntime>();
 
   private String                     _defaultid               = null;
@@ -76,6 +78,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
       }
     } else {
       final PythonRuntime newruntime = new PythonRuntimeImpl(id, location);
+      A4ELogging.debug(MSG_REGISTEREDRUNTIME, id, location);
       _runtimes.put(id, newruntime);
     }
   }
