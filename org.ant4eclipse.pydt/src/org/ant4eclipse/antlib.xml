@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <antlib>
   <typedef name="getPydtSourcePath" classname="org.ant4eclipse.pydt.ant.GetPydtSourcePathTask" />
+  <typedef name="getPydtOutputPath" classname="org.ant4eclipse.pydt.ant.GetPydtOutputPathTask" />
 </antlib>
