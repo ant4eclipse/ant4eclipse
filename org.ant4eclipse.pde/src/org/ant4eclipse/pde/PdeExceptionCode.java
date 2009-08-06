@@ -44,6 +44,10 @@ public class PdeExceptionCode extends ExceptionCode {
   @NLSMessage("Could not find the feature manifest file for project '%s'.")
   public static PdeExceptionCode FEATURE_MANIFEST_FILE_NOT_FOUND;
 
+  /** - */
+  @NLSMessage("No target platform has been set. Please specify a target platform by using the <jdtclasspathcontainerargument>-subelement with 'target.platform' as key")
+  public static PdeExceptionCode NO_TARGET_PLATFORM_SET;
+  
   static {
     NLS.initialize(PdeExceptionCode.class);
   }

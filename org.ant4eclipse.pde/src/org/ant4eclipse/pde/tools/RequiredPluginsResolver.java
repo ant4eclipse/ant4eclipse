@@ -14,10 +14,12 @@ package org.ant4eclipse.pde.tools;
 import java.util.List;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
@@ -67,7 +69,10 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
     // TODO!! ERROR MESSAGE
     Assert.notNull(registry);
-    Assert.notNull(containerArgument);
+    
+    if (containerArgument == null) {
+      throw new Ant4EclipseException(PdeExceptionCode.NO_TARGET_PLATFORM_SET); 
+    }
 
     // get the TargetPlatform
     TargetPlatform targetPlatform = registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
