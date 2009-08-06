@@ -16,12 +16,14 @@ import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -45,6 +47,8 @@ import java.util.Map.Entry;
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
 public class Utilities {
+
+  public static final String LINESEPARATOR = System.getProperty("line.separator");
 
   /**
    * Prevent instantiation of this class.
@@ -624,5 +628,111 @@ public class Utilities {
       close(instream);
     }
   }
+
+  /**
+   * Executes a single command. The output stream can be captured within a buffer if desired. This method does
+   * <b>NOT</b> support to provide some input. Failures will cause exceptions.
+   * 
+   * @param exe
+   *          The location of the executable. Not <code>null</code>.
+   * @param output
+   *          A buffer for the output stream. Maybe <code>null</code>.
+   * @param args
+   *          The arguments for the execution. Maybe <code>null</code>.
+   * 
+   * @return The returncode of the executed file.
+   */
+  public static final int execute(final File exe, final StringBuffer output, final String... args) {
+    return execute(exe, output, null, args);
+  }
+
+  /**
+   * Executes a single command. The output and the error stream can be captured within buffers if desired. This method
+   * does <b>NOT</b> support to provide some input. Failures will cause exceptions.
+   * 
+   * @param exe
+   *          The location of the executable. Not <code>null</code>.
+   * @param output
+   *          A buffer for the output stream. Maybe <code>null</code>.
+   * @param error
+   *          A buffer for the error stream. Maybe <code>null</code>.
+   * @param args
+   *          The arguments for the execution. Maybe <code>null</code>.
+   * 
+   * @return The returncode of the executed file.
+   */
+  public static final int execute(final File exe, final StringBuffer output, final StringBuffer error,
+      final String... args) {
+
+    try {
+
+      String[] cmdarray = null;
+      if (args == null) {
+        cmdarray = new String[] { exe.getAbsolutePath() };
+      } else {
+        cmdarray = new String[args.length + 1];
+        cmdarray[0] = exe.getAbsolutePath();
+        System.arraycopy(args, 0, cmdarray, 1, args.length);
+      }
+
+      Process process = Runtime.getRuntime().exec(cmdarray);
+      OutputCopier outcopier = new OutputCopier(process.getInputStream(), output);
+      OutputCopier errcopier = new OutputCopier(process.getErrorStream(), error);
+      outcopier.start();
+      errcopier.start();
+      return process.waitFor();
+
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.EXECUTION_FAILURE, ex, exe);
+    }
+
+  }
+
+  /**
+   * Simple Thread extension that copies content from an InputStream into StringBuffer.
+   * 
+   * @author Daniel Kasmeroglu
+   */
+  private static class OutputCopier extends Thread {
+
+    private final BufferedReader _source;
+
+    private StringBuffer         _receiver;
+
+    /**
+     * Initalises this copiying process.
+     * 
+     * @param instream
+     *          The stream which provides the content. Not <code>null</code>.
+     * @param dest
+     *          The destination buffer used to get the output. Maybe <code>null</code>.
+     */
+    public OutputCopier(final InputStream instream, final StringBuffer dest) {
+      this._source = new BufferedReader(new InputStreamReader(instream));
+      this._receiver = dest;
+      if (this._receiver == null) {
+        this._receiver = new StringBuffer();
+      }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void run() {
+      try {
+        String line = this._source.readLine();
+        while (line != null) {
+          this._receiver.append(line);
+          this._receiver.append(LINESEPARATOR);
+          line = this._source.readLine();
+        }
+      } catch (IOException ex) {
+        /** @todo [06-Aug-2009:KASI] We might need something more precise here. */
+        throw new Ant4EclipseException(CoreExceptionCode.EXECUTION_FAILURE, ex);
+      }
+    }
+
+  } /* ENDCLASS */
 
 } /* ENDCLASS */

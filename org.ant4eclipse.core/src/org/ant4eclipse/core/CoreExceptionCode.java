@@ -78,8 +78,16 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Precondition violated: %s")
   public static CoreExceptionCode ASSERT_TRUE_FAILED;
 
+  /** utility function related exception codes. */
+
   @NLSMessage("Could not export resource '%s' into file '%s'.")
   public static CoreExceptionCode COULD_NOT_EXPORT_RESOURCE;
+
+  @NLSMessage("Launching the executable '%s' failed.")
+  public static CoreExceptionCode EXECUTION_FAILURE;
+
+  @NLSMessage("IO failed.")
+  public static CoreExceptionCode IO_FAILURE;
 
   static {
     NLS.initialize(CoreExceptionCode.class);
