@@ -13,12 +13,8 @@ package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 
-import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.internal.tools.PydtSourcepathResolver;
-import org.ant4eclipse.pydt.internal.tools.PythonUtilities;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedSourceEntry;
@@ -31,9 +27,7 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class GetPydtSourcePathTask extends AbstractGetProjectPathTask {
-
-  private static final String MSG_MISSINGROLE       = "The project '%s' must have the Python or PyDev project role!";
+public class GetPydtSourcePathTask extends AbstractPydtGetProjectPathTask {
 
   private static final String MSG_MULTIPLEFOLDERS   = "The Project '%s' contains multiple source folders ! If you want to allow this,"
                                                         + " you have to set allowMultipleFolders='true'!";
@@ -56,9 +50,6 @@ public class GetPydtSourcePathTask extends AbstractGetProjectPathTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (!PythonUtilities.isPythonRelatedProject(getEclipseProject())) {
-      throw new ExtendedBuildException(MSG_MISSINGROLE, getEclipseProject().getSpecifiedName());
-    }
     if (!_allowMultipleFolders) {
       final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
       final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
@@ -81,19 +72,6 @@ public class GetPydtSourcePathTask extends AbstractGetProjectPathTask {
       result[i] = getEclipseProject().getChild(resolved[i].getFolder(), getPathStyle());
     }
     return result;
-  }
-
-  /**
-   * Returns the PathStyle to be used for the path calculations.
-   * 
-   * @return The PathStyle to be used for the path calculations.
-   */
-  private EclipseProject.PathStyle getPathStyle() {
-    if (isRelative()) {
-      return EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME;
-    } else {
-      return EclipseProject.PathStyle.ABSOLUTE;
-    }
   }
 
 } /* ENDCLASS */
