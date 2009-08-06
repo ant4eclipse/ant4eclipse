@@ -18,6 +18,7 @@ import org.ant4eclipse.core.logging.A4ELogging;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -536,8 +537,7 @@ public class Utilities {
     try {
       clazz = Class.forName(className);
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_LOAD_CLASS, ex, new Object[] { className,
-          ex.toString() });
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_LOAD_CLASS, ex, className, ex.toString());
     }
 
     // try to instantiate using default cstr...
@@ -546,8 +546,7 @@ public class Utilities {
     try {
       object = (T) clazz.newInstance();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, ex, new Object[] { className,
-          ex.toString() });
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, ex, className, ex.toString());
     }
 
     // return the constructed object
@@ -593,6 +592,28 @@ public class Utilities {
       }
     }
     return result;
+  }
+
+  public static final void copy(final URL source, File dest) {
+    InputStream instream = null;
+    OutputStream outstream = null;
+    try {
+      instream = source.openStream();
+      outstream = new FileOutputStream(dest);
+      byte[] buffer = new byte[16384];
+      int read = instream.read(buffer);
+      while (read != -1) {
+        if (read > 0) {
+          outstream.write(buffer, 0, read);
+        }
+        read = instream.read();
+      }
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, ex, source.toExternalForm(), dest);
+    } finally {
+      close(outstream);
+      close(instream);
+    }
   }
 
 } /* ENDCLASS */
