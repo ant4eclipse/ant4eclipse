@@ -18,6 +18,6 @@ package org.ant4eclipse.pydt.model;
  */
 public enum ReferenceKind {
 
-  Source, Output, Library, Container, Project;
+  Source, Output, Library, Container, Project, Runtime;
 
 } /* ENDENUM */

@@ -40,6 +40,8 @@ public class PyDLTKParser {
 
   private static final String KIND_CONTAINER = "con";
 
+  private static final String KEY_RUNTIME    = "org.eclipse.dltk.launching.INTERPRETER_CONTAINER";
+
   /**
    * Maps a textual representation of a record to the kind of reference known by us.
    * 
@@ -90,8 +92,8 @@ public class PyDLTKParser {
     final String[] externals = externalquery.getResult();
 
     for (int i = 0; i < kinds.length; i++) {
-      final ReferenceKind refkind = getReferenceKind(kinds[i]);
-      final String path = Utilities.removeTrailingPathSeparator(pathes[i]);
+      ReferenceKind refkind = getReferenceKind(kinds[i]);
+      String path = Utilities.removeTrailingPathSeparator(pathes[i]);
       if (refkind == null) {
         // we currently don't provide support for this kind, so skip it. just log the skipped path so the user will know
         // whether this issue is relevant for him or not.
@@ -101,6 +103,16 @@ public class PyDLTKParser {
       }
       final boolean isexported = Boolean.parseBoolean(exported[i]);
       final boolean isexternal = Boolean.parseBoolean(externals[i]);
+      if (refkind == ReferenceKind.Container) {
+        // runtimes are declared as containers in Python DLTK
+        if (path.startsWith(KEY_RUNTIME)) {
+          refkind = ReferenceKind.Runtime;
+          path = path.substring(KEY_RUNTIME.length());
+          if (path.startsWith("/")) {
+            path = path.substring(1);
+          }
+        }
+      }
       pythonrole.addRawPathEntry(new RawPathEntry(refkind, path, isexported, isexternal));
       if ((refkind == ReferenceKind.Source) && (!isexternal)) {
         // the python DLTK framework has no output path declaration, so we're reusing
@@ -111,5 +123,4 @@ public class PyDLTKParser {
     }
 
   }
-
 } /* ENDCLASS */

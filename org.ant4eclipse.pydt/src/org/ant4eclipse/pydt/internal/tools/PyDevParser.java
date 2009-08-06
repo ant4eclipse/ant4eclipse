@@ -35,6 +35,8 @@ public class PyDevParser {
 
   private static final String[] LIBSUFFICES       = new String[] { "egg", "jar", "zip" };
 
+  private static final String   KEY_DEFAULT       = "Default";
+
   private static final String   NAME_PYDEVPROJECT = ".pydevproject";
 
   /**
@@ -55,12 +57,15 @@ public class PyDevParser {
         .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_SOURCE_PATH']/path");
     final XQuery externalquery = queryhandler
         .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH']/path");
+    final XQuery runtimequery = queryhandler
+        .createQuery("//pydev_project/pydev_property[@name='org.python.pydev.PYTHON_PROJECT_INTERPRETER']");
 
     // now fetch the necessary data
     XQueryHandler.queryFile(pydevproject, queryhandler);
 
     final String[] internalsourcepathes = pathquery.getResult();
     final String[] externalsourcepathes = externalquery.getResult();
+    String runtime = runtimequery.getSingleResult();
 
     // PyDev identifies the projects by workspace relative pathes, so we need to strip these
     // prefixes from the project names
@@ -93,6 +98,13 @@ public class PyDevParser {
       } else {
         pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Source, path, true, true));
       }
+    }
+
+    if ((runtime != null) && (runtime.length() > 0)) {
+      if (KEY_DEFAULT.equals(runtime)) {
+        runtime = "";
+      }
+      pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Runtime, runtime, true, false));
     }
 
     // PyDev uses the platform mechanism for referenced projects. this is somewhat unlikely
