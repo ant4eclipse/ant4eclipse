@@ -102,6 +102,11 @@ public class PyDLTKParser {
       final boolean isexported = Boolean.parseBoolean(exported[i]);
       final boolean isexternal = Boolean.parseBoolean(externals[i]);
       pythonrole.addRawPathEntry(new RawPathEntry(refkind, path, isexported, isexternal));
+      if ((refkind == ReferenceKind.Source) && (!isexternal)) {
+        // the python DLTK framework has no output path declaration, so we're reusing
+        // the source pathes located within the project
+        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Output, path, isexported, false));
+      }
 
     }
 
