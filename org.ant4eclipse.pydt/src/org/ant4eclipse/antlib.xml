@@ -1,5 +1,17 @@
 <?xml version="1.0"?>
 <antlib>
+ 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TASK DEFINITIONS                                                            -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  
   <typedef name="getPydtSourcePath" classname="org.ant4eclipse.pydt.ant.GetPydtSourcePathTask" />
   <typedef name="getPydtOutputPath" classname="org.ant4eclipse.pydt.ant.GetPydtOutputPathTask" />
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TYPE DEFINITIONS                                                            -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  
+  <typedef name="pythonContainer" classname="org.ant4eclipse.pydt.ant.type.PythonContainer" />
+  
 </antlib>
