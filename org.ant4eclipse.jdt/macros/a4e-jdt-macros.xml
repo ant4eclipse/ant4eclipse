@@ -5,16 +5,17 @@
 	<taskdef uri="antlib:org.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
 
-	<!-- ==============================================================================================================
-          macro: buildProjects
+	<!-- ===============================================================================================================
+          macro: buildJdtProjects
           
           builds a set of JDT-based eclipse project
           
           Parameters:
           - workspace: the root directory of the workspace that contains the JDT projects
           - projectNames: a comma-separated list of all projects that should be built
-         ============================================================================================================== -->
-	<macrodef name="buildProjects" description="builds a set of JDT-based eclipse project">
+         ============================================================================================================== 
+    -->
+	<macrodef name="buildJdtProjects" description="builds a set of JDT-based eclipse project">
 		<attribute name="workspace" />
 		<attribute name="projectNames" />
 		<sequential>
@@ -26,25 +27,28 @@
 			* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   		</echo>
 
-			<ant4eclipse:executeProjectSet workspace="@{workspace}" projectnames="@{projectNames}" projectreferencetypes="jdt">
+			<ant4eclipse:executeProjectSet workspace="@{workspace}"
+			                               projectnames="@{projectNames}"
+			                               projectreferencetypes="jdt">
 
 				<!-- build all projects -->
 				<ant4eclipse:forEachProject>
-					<buildProject workspace="${workspaceDir}" projectName="${executeProjectSet.project.name}" />
+					<buildJdtProject workspace="${workspaceDir}" projectName="${executeProjectSet.project.name}" />
 				</ant4eclipse:forEachProject>
 			</ant4eclipse:executeProjectSet>
 		</sequential>
 	</macrodef>
 
-	<!-- =================================
-          macro: buildProject
+	<!-- ===============================================================================================================
+          macro: buildJdtProject
           
           builds a single JDT-based eclipse project
           Parameters:
           - workspace: the root directory of the workspace that contains the JDT project
           - projectName: the name of the project that should be built (must exist in the workspace)
-         ================================= -->
-	<macrodef name="buildProject" description="builds a single JDT-based eclipse project">
+         ============================================================================================================== 
+    -->
+	<macrodef name="buildJdtProject" description="builds a single JDT-based eclipse project">
 		<attribute name="workspace" />
 		<attribute name="projectName" />
 		<sequential>
@@ -67,10 +71,12 @@
 
 				<!-- Step 2: Compile the project using the eclipse java compiler (ejc) -->
 				<ant4eclipse:forProject>
-					<echo> * Compiling the project</echo>
-					<javac destdir="${executeJdtProject.default.output.directory}" compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
+					<echo> * Compiling the project @{projectName}</echo>
+					<javac destdir="${executeJdtProject.default.output.directory}"
+					       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
 						<!-- let ejc read compiler settings from the project's '.settings' directory -->
-						<compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs" compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+						<compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
+						             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 						<!-- set the source folders that are passed in from 'fromProject' -->
 						<src refid="executeJdtProject.source.directories.path" />
 
