@@ -21,7 +21,7 @@ import org.ant4eclipse.core.Assert;
 public class ResolvedProjectEntry implements ResolvedPathEntry {
 
   private String _projectname;
-  
+
   /**
    * Sets up this entry with the name of the project.
    * 
@@ -32,7 +32,7 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
     Assert.nonEmpty(name);
     _projectname = name;
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -43,12 +43,12 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
   /**
    * Returns the specified name of the project.
    * 
-   * @return   The specified name of the project. Neither <code>null</code> nor empty.
+   * @return The specified name of the project. Neither <code>null</code> nor empty.
    */
   public String getProjectname() {
     return _projectname;
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -82,7 +82,7 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedProjectEntry:");
-    buffer.append(", _projectname: ");
+    buffer.append(" _projectname: ");
     buffer.append(_projectname);
     buffer.append("]");
     return buffer.toString();
