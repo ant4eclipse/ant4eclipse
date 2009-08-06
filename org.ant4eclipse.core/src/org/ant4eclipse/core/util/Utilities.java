@@ -594,6 +594,15 @@ public class Utilities {
     return result;
   }
 
+  /**
+   * This function copies the content of a resource into a file. This function will cause an exception in case of a
+   * failure.
+   * 
+   * @param source
+   *          The URL pointing to the resource. Not <code>null</code>.
+   * @param dest
+   *          The destination file where the copy shall be created. Not <code>null</code>.
+   */
   public static final void copy(final URL source, File dest) {
     InputStream instream = null;
     OutputStream outstream = null;
