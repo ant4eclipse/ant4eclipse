@@ -63,17 +63,23 @@
 				<antcall target="cleanOutputDirectories" inheritrefs="true" />
 			</ant4eclipse:forEachOutputDirectory>
 
-			<!-- Step 2: compile the project -->
+			<!-- Step 2: call generate.source -->
+			<ant4eclipse:forProject>
+				<available file="${executeJdtProject.project.directory}/build.xml" property="build.file.exists"/>
+				<antcall target="generate.source" inheritrefs="true" />
+			</ant4eclipse:forProject>
+			
+			<!-- Step 3: compile the project -->
 			<ant4eclipse:forProject>
 				<antcall target="compileProject" inheritrefs="true" />
 			</ant4eclipse:forProject>
 
-			<!-- Step 3: copy resources -->
+			<!-- Step 4: copy resources -->
 			<ant4eclipse:forEachSourceDirectory>
 				<antcall target="copyResources" inheritrefs="true" />
 			</ant4eclipse:forEachSourceDirectory>
 
-			<!-- Step 4: copy outfolders to the merge directory -->
+			<!-- Step 5: copy outfolders to the merge directory -->
 			<ant4eclipse:forEachOutputDirectory>
 				<antcall target="copyToMergeDirectory" inheritrefs="true" />
 			</ant4eclipse:forEachOutputDirectory>
@@ -93,7 +99,13 @@
 		<delete dir="${executeJdtProject.output.directory}" quiet="true" />
 		<mkdir dir="${executeJdtProject.output.directory}" />
 	</target>
-
+	
+	<!-- - - - - - - - - - - - - - - - - -
+          target: generate.source
+         - - - - - - - - - - - - - - - - - -->
+	<target name="generate.source" if="${build.file.exists}">
+		<ant antfile="${executeJdtProject.project.directory}/build.xml" target="generate.source" inheritRefs="true"/>
+	</target>
 
 	<!-- - - - - - - - - - - - - - - - - -
           target: compileProject

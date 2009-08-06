@@ -1,8 +1,15 @@
 package org.ant4eclipse.platform.ant.core.delegate;
 
+import java.io.StringReader;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.List;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ldapfilter.LdapFilter;
+import org.ant4eclipse.core.ldapfilter.ParseException;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.UnknownElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
@@ -67,7 +74,7 @@ public class ConditionalMacroDef extends MacroDef {
       }
 
       // set the conditional nested sequential
-      this._conditionalNestedSequential = new ConditionalNestedSequential();
+      this._conditionalNestedSequential = new ConditionalNestedSequential(this);
       field.set(this, this._conditionalNestedSequential);
 
       // return the result
@@ -89,13 +96,29 @@ public class ConditionalMacroDef extends MacroDef {
   public static class ConditionalNestedSequential extends MacroDef.NestedSequential {
 
     /** the sequential should only be executed if '_if == true' */
-    private boolean _if     = true;
+    private boolean                   _if     = true;
 
     /** the sequential should only be executed if '_unless == false' */
-    private boolean _unless = false;
+    private boolean                   _unless = false;
 
     /** a filter expression to filter the elements to execute a sequential for */
-    private String  _filter = null;
+    private String                    _filter = null;
+
+    /** the parent conditional macro definition */
+    private final ConditionalMacroDef _conditionalMacroDef;
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @param conditionalMacroDef
+     */
+    public ConditionalNestedSequential(ConditionalMacroDef conditionalMacroDef) {
+      super();
+      Assert.notNull(conditionalMacroDef);
+
+      this._conditionalMacroDef = conditionalMacroDef;
+    }
 
     /**
      * <p>
@@ -116,7 +139,37 @@ public class ConditionalMacroDef extends MacroDef {
      * @param filter
      *          the filter expression.
      */
+    @SuppressWarnings("unchecked")
     public void setFilter(String filter) {
+
+      // try to parse the filter
+      try {
+        new LdapFilter(new HashMap<String, String>(), new StringReader(filter)).validate();
+      }
+      // in case of an exception we have create an useful BuildException
+      catch (ParseException e) {
+        try {
+
+          // get the current UnknownElement
+          UnknownElement element = (UnknownElement) this._conditionalMacroDef.getProject().getThreadTask(
+              Thread.currentThread());
+
+          // search for the unknown element that causes the problem
+          for (UnknownElement unknownElement : (List<UnknownElement>) element.getChildren()) {
+            if (this.equals(unknownElement.getWrapper().getProxy())) {
+              throw new BuildException("Invalid filter '" + filter + "'.", unknownElement.getLocation());
+            }
+          }
+
+          // no element found -> throw simple BuildException
+          throw new BuildException("Invalid filter '" + filter + "'.");
+        } catch (Exception exception) {
+          // no element found -> throw simple BuildException
+          throw new BuildException("Invalid filter '" + filter + "'.");
+        }
+      }
+
+      // set the filter
       this._filter = filter;
     }
 

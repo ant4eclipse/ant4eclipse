@@ -4,6 +4,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.PathComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.ProjectNature;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -50,10 +51,11 @@ public class PlatformExecutorValuesProvider {
     executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName());
     executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY,
         this._pathComponent.convertToString(eclipseProject.getFolder()));
-
+    for (ProjectNature projectNature : eclipseProject.getNatures()) {
+      executionValues.getProperties().put(projectNature.getName(), Boolean.TRUE.toString());
+    }
     // create scoped references
     executionValues.getReferences().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY_PATH,
         this._pathComponent.convertToPath(eclipseProject.getFolder()));
   }
-
 }

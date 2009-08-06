@@ -74,7 +74,7 @@
 				</ant4eclipse:forEachSourceDirectory>
 
 				<!-- Step 1.4: Pack all libraries -->
-				<ant4eclipse:forEachLibrary filter="library.isSelf=false">
+				<ant4eclipse:forEachLibrary filter="(library.isSelf=false)">
 					<!-- Step 1.4.1: Copy the content of the library to a temporary folder -->
 					<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
 					                            projectname="${executePluginProject.project.name}"
@@ -103,7 +103,7 @@
 				</ant4eclipse:forEachLibrary>
 
 				<!-- Step 1.5: Pack the 'self'-library -->
-				<ant4eclipse:forEachLibrary filter="library.isSelf=true">
+				<ant4eclipse:forEachLibrary filter="(library.isSelf=true)">
 					<!-- just copy everything to the 'self' directory -->
 					<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
 					                            projectname="${executePluginProject.project.name}"
@@ -209,7 +209,7 @@
 
 				<!-- Step 3: Build the plug-ins  -->
 				<!-- Step 3.1: Build the plug-ins  -->
-				<ant4eclipse:forEachPlugin filter="plugin.isSource=true">
+				<ant4eclipse:forEachPlugin filter="(plugin.isSource=true)">
 					<echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolvedversion})' </echo>
 					<buildPlugin workspaceDirectory="@{workspaceDirectory}"
 					             projectName="${executeFeature.plugin.filename}"
@@ -219,7 +219,7 @@
 				</ant4eclipse:forEachPlugin>
 
 				<!-- Step 3.2: Copy plug-ins  -->
-				<ant4eclipse:forEachPlugin filter="plugin.isSource=false">
+				<ant4eclipse:forEachPlugin filter="(plugin.isSource=false)">
 					<echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolvedversion})' </echo>
 					<copy todir="@{destination}/${a4e.plugins.directory}">
 						<filelist refid="executeFeature.plugin.filelist" />
@@ -228,7 +228,7 @@
 
 				<!-- Step 4: Build feature itself -->
 				<ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
-				                            filter="feature.isSource=true">
+				                            filter="(feature.isSource=true)">
 					<!-- Step 4.1: Copy all files defined in the build.properties to the destination directory  -->
 					<copy todir="@{destination}/${a4e.features.directory}/${executeFeature.feature.id}_${executeFeature.feature.resolved.version}"
 					      overwrite="true">
@@ -262,7 +262,7 @@
 
 				<!-- if feature is already built, we only have to copy the jar / directory -->
 				<ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
-				                            filter="feature.isSource=false">
+				                            filter="(feature.isSource=false)">
 
 					<echo>Copying feature '${executeFeature.feature.file} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
 

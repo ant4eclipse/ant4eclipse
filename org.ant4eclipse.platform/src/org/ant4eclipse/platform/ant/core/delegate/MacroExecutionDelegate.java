@@ -11,16 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
+import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
+import org.ant4eclipse.core.ldapfilter.LdapFilter;
+import org.ant4eclipse.core.ldapfilter.ParseException;
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntReferencesRaper;
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroInstance;
@@ -131,19 +136,18 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     Assert.notNull(macroDef);
     Assert.notNull(macroExecutionValues);
 
-    // TODO: LDPA-Filter support!
     if (macroDef instanceof ConditionalMacroDef) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
 
       String filter = conditionalMacroDef.getFilter();
-
       if (filter != null) {
-        String[] strings = filter.split("=");
-        if (strings.length == 2) {
-          String realValue = macroExecutionValues.getProperties().get(strings[0]);
-          if (!strings[1].equals(realValue)) {
+        Map<String, String> properties = macroExecutionValues.getProperties();
+        try {
+          if (!(new LdapFilter(properties, new StringReader(filter)).validate())) {
             return;
           }
+        } catch (ParseException e) {
+          throw new BuildException(e.getMessage(), e);
         }
       }
     }
