@@ -16,6 +16,8 @@ import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.ant4eclipse.pydt.PydtFailures;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
@@ -31,6 +33,8 @@ import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
 import org.ant4eclipse.pydt.tools.PathEntryRegistry;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * General resolved for python.
@@ -84,6 +88,72 @@ public class PydtResolver {
       result[i] = resolve(entries[i]);
     }
     return result;
+  }
+
+  public File[] expand(final ResolvedPathEntry[] entries, final EclipseProject project) {
+    Assert.notNull(entries);
+    List<File> list = new ArrayList<File>();
+    for (ResolvedPathEntry entry : entries) {
+      expand(list, entry, project);
+    }
+    return list.toArray(new File[list.size()]);
+  }
+
+  private void expand(final List<File> receiver, final ResolvedPathEntry entry, final EclipseProject project) {
+    if (entry.getKind() == ReferenceKind.Container) {
+      expandContainer(receiver, (ResolvedContainerEntry) entry, project);
+    } else if (entry.getKind() == ReferenceKind.Library) {
+      expandLibrary(receiver, (ResolvedLibraryEntry) entry, project);
+    } else if (entry.getKind() == ReferenceKind.Output) {
+      expandOutput(receiver, (ResolvedOutputEntry) entry, project);
+    } else if (entry.getKind() == ReferenceKind.Project) {
+      expandProject(receiver, (ResolvedProjectEntry) entry, project);
+    } else if (entry.getKind() == ReferenceKind.Runtime) {
+      expandRuntime(receiver, (ResolvedRuntimeEntry) entry, project);
+    } else /* if (entry.getKind() == ReferenceKind.Source) */{
+      expandSource(receiver, (ResolvedSourceEntry) entry, project);
+    }
+  }
+
+  private void expandSource(List<File> receiver, ResolvedSourceEntry entry, EclipseProject project) {
+    final File sourcefolder = project.getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
+    receiver.add(sourcefolder);
+  }
+
+  private void expandRuntime(List<File> receiver, ResolvedRuntimeEntry entry, EclipseProject project) {
+    final File[] libraries = entry.getLibraries();
+    for (File lib : libraries) {
+      receiver.add(lib);
+    }
+  }
+
+  private void expandProject(List<File> receiver, ResolvedProjectEntry entry, EclipseProject project) {
+    if (entry.getProjectname().equals(project.getSpecifiedName())) {
+      receiver.add(project.getFolder());
+    } else {
+      final EclipseProject otherproject = project.getWorkspace().getProject(entry.getProjectname());
+      receiver.add(otherproject.getFolder());
+    }
+  }
+
+  private void expandOutput(List<File> receiver, ResolvedOutputEntry entry, EclipseProject project) {
+    final File outputfolder = project.getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
+    receiver.add(outputfolder);
+  }
+
+  private void expandLibrary(List<File> receiver, ResolvedLibraryEntry entry, EclipseProject project) {
+    File file = new File(entry.getLocation());
+    if (!file.isAbsolute()) {
+      file = project.getChild(entry.getLocation(), EclipseProject.PathStyle.ABSOLUTE);
+    }
+    receiver.add(file);
+  }
+
+  private void expandContainer(List<File> receiver, ResolvedContainerEntry entry, EclipseProject project) {
+    final File[] pathes = entry.getPathes();
+    for (File path : pathes) {
+      receiver.add(path);
+    }
   }
 
   /**

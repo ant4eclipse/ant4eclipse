@@ -11,7 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.apache.tools.ant.BuildException;
+import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
+import org.ant4eclipse.pydt.internal.tools.PydtResolver;
+import org.ant4eclipse.pydt.model.RawPathEntry;
+import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 
 import java.io.File;
 
@@ -25,16 +28,13 @@ public class GetPydtPythonPathTask extends AbstractPydtGetProjectPathTask {
   /**
    * {@inheritDoc}
    */
-  @Override
-  protected void preconditions() throws BuildException {
-    super.preconditions();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   protected File[] resolvePath() {
-    return null;
+    final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
+    final PydtResolver resolver = new PydtResolver();
+    final RawPathEntry[] entries = role.getRawPathEntries();
+    final ResolvedPathEntry[] resolved = resolver.resolve(entries);
+    final File[] result = resolver.expand(resolved, getEclipseProject());
+    return result;
   }
 
 } /* ENDCLASS */

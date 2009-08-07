@@ -2,5 +2,6 @@
 <antlib>
   <typedef name="getPydtSourcePath" classname="org.ant4eclipse.pydt.ant.GetPydtSourcePathTask" />
   <typedef name="getPydtOutputPath" classname="org.ant4eclipse.pydt.ant.GetPydtOutputPathTask" />
+  <typedef name="getPydtPythonPath" classname="org.ant4eclipse.pydt.ant.GetPydtPythonPathTask" />
   <typedef name="pythonContainer" classname="org.ant4eclipse.pydt.ant.type.PythonContainer" />
 </antlib>
