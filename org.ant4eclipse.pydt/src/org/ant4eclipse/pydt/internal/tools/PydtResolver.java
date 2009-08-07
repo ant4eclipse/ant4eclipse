@@ -19,6 +19,8 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.pydt.PydtFailures;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
+import org.ant4eclipse.pydt.model.ResolvedContainerEntry;
+import org.ant4eclipse.pydt.model.ResolvedLibraryEntry;
 import org.ant4eclipse.pydt.model.ResolvedOutputEntry;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 import org.ant4eclipse.pydt.model.ResolvedProjectEntry;
@@ -27,6 +29,8 @@ import org.ant4eclipse.pydt.model.ResolvedSourceEntry;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
 import org.ant4eclipse.pydt.tools.PathEntryRegistry;
+
+import java.io.File;
 
 /**
  * General resolved for python.
@@ -45,74 +49,6 @@ public class PydtResolver {
   public PydtResolver() {
     _pathregistry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
     _runtimeregistry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
-  }
-
-  /**
-   * Resolves the supplied entry to get access to a python runtime.
-   * 
-   * @param entry
-   *          The unresolved entry pointing to a python runtime. Not <code>null</code>.
-   * 
-   * @return A resolved entry identifying a python runtime. Not <code>null</code>.
-   */
-  private ResolvedRuntimeEntry resolveRuntime(final RawPathEntry entry) {
-    ResolvedRuntimeEntry result = (ResolvedRuntimeEntry) _pathregistry.getResolvedPathEntry(entry);
-    if (result == null) {
-      result = newResolvedRuntimeEntry(entry);
-      _pathregistry.registerResolvedPathEntry(entry, result);
-    }
-    return result;
-  }
-
-  /**
-   * Resolves the supplied entry to get access to a python project.
-   * 
-   * @param entry
-   *          The unresolved entry pointing to a python project. Not <code>null</code>.
-   * 
-   * @return A resolved entry identifying an output folder. Not <code>null</code>.
-   */
-  private ResolvedProjectEntry resolveProject(final RawPathEntry entry) {
-    ResolvedProjectEntry result = (ResolvedProjectEntry) _pathregistry.getResolvedPathEntry(entry);
-    if (result == null) {
-      result = newResolvedProjectEntry(entry);
-      _pathregistry.registerResolvedPathEntry(entry, result);
-    }
-    return result;
-  }
-
-  /**
-   * Resolves the supplied entry to get access to an output folder.
-   * 
-   * @param entry
-   *          The unresolved entry pointing to an output folder. Not <code>null</code>.
-   * 
-   * @return A resolved entry identifying an output folder. Not <code>null</code>.
-   */
-  private ResolvedOutputEntry resolveOutput(final RawPathEntry entry) {
-    ResolvedOutputEntry result = (ResolvedOutputEntry) _pathregistry.getResolvedPathEntry(entry);
-    if (result == null) {
-      result = newResolvedOutputEntry(entry);
-      _pathregistry.registerResolvedPathEntry(entry, result);
-    }
-    return result;
-  }
-
-  /**
-   * Resolves the supplied entry to get access to a source folder.
-   * 
-   * @param entry
-   *          The unresolved entry pointing to a source folder. Not <code>null</code>.
-   * 
-   * @return A resolved entry identifying a source folder. Not <code>null</code>.
-   */
-  private ResolvedSourceEntry resolveSource(final RawPathEntry entry) {
-    ResolvedSourceEntry result = (ResolvedSourceEntry) _pathregistry.getResolvedPathEntry(entry);
-    if (result == null) {
-      result = newResolvedSourceEntry(entry);
-      _pathregistry.registerResolvedPathEntry(entry, result);
-    }
-    return result;
   }
 
   /**
@@ -152,17 +88,42 @@ public class PydtResolver {
 
   private ResolvedPathEntry newResolvedEntry(final RawPathEntry entry) {
     if (entry.getKind() == ReferenceKind.Container) {
+      return newResolvedContainerEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Library) {
+      return newResolvedLibraryEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Output) {
-      return resolveOutput(entry);
+      return newResolvedOutputEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Project) {
-      return resolveProject(entry);
+      return newResolvedProjectEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Runtime) {
-      return resolveRuntime(entry);
+      return newResolvedRuntimeEntry(entry);
     } else /* if (entry.getKind() == ReferenceKind.Source) */{
-      return resolveSource(entry);
+      return newResolvedSourceEntry(entry);
     }
-    return null;
+  }
+
+  /**
+   * Creates a new record representing a path container.
+   * 
+   * @param entry
+   *          The raw entry. Not <code>null</code>.
+   * 
+   * @return A newly created record used to represent a path container. Not <code>null</code>.
+   */
+  private ResolvedContainerEntry newResolvedContainerEntry(final RawPathEntry entry) {
+    return new ResolvedContainerEntry(new File[0]);
+  }
+
+  /**
+   * Creates a new record representing a library.
+   * 
+   * @param entry
+   *          The raw entry. Not <code>null</code>.
+   * 
+   * @return A newly created record used to represent a library. Not <code>null</code>.
+   */
+  private ResolvedLibraryEntry newResolvedLibraryEntry(final RawPathEntry entry) {
+    return new ResolvedLibraryEntry(new File(entry.getValue()));
   }
 
   /**
