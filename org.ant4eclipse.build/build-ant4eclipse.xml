@@ -65,10 +65,11 @@
 
 			<!-- Step 2: call generate.source -->
 			<ant4eclipse:forProject>
-				<available file="${executeJdtProject.project.directory}/build.xml" property="build.file.exists"/>
+				<available file="${executeJdtProject.project.directory}/build.xml"
+				           property="build.file.exists" />
 				<antcall target="generate.source" inheritrefs="true" />
 			</ant4eclipse:forProject>
-			
+
 			<!-- Step 3: compile the project -->
 			<ant4eclipse:forProject>
 				<antcall target="compileProject" inheritrefs="true" />
@@ -99,13 +100,16 @@
 		<delete dir="${executeJdtProject.output.directory}" quiet="true" />
 		<mkdir dir="${executeJdtProject.output.directory}" />
 	</target>
-	
+
 	<!-- - - - - - - - - - - - - - - - - -
           target: generate.source
          - - - - - - - - - - - - - - - - - -->
 	<target name="generate.source" if="build.file.exists">
 		<echo>Calling target 'generate.source' in file '${executeJdtProject.project.directory}/build.xml'</echo>
-		<ant dir="${executeJdtProject.project.directory}" antfile="build.xml" target="generate.source" inheritRefs="true"/>
+		<ant dir="${executeJdtProject.project.directory}"
+		     antfile="build.xml"
+		     target="generate.source"
+		     inheritRefs="true" />
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - -
@@ -235,8 +239,8 @@
 			<fileset dir="${basedir}/org.ant4eclipse.external/libs">
 				<include name="ant-contrib/*.jar" />
 				<include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
-				<include name="ejc/*.jar" />
-				<include name="ejc/ECJ-LICENSE-epl-v10.html" />
+				<include name="ecj/*.jar" />
+				<include name="ecj/ECJ-LICENSE-epl-v10.html" />
 				<include name="equinox/*.jar" />
 				<include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
 				<exclude name="equinox/*source*.jar" />
@@ -248,6 +252,13 @@
 			<fileset dir="${destination}"
 			         excludes="${destination}/org.ant4eclipse_${revision}.zip" />
 		</zip>
+		
+		<!-- tar the zip -->
+		<tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz"
+		     compression="gzip">
+			<zipfileset src="${destination}/org.ant4eclipse_${revision}.zip" />
+		</tar>
+
 	</target>
 
 </project>
