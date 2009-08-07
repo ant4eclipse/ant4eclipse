@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
+import org.ant4eclipse.core.data.Version;
+
 import org.ant4eclipse.jdt.internal.model.jre.*;
 
 import java.io.*;

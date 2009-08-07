@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.internal.model.jre;
+package org.ant4eclipse.core.data;
 
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
