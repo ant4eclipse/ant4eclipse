@@ -47,14 +47,14 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
 
   private UsedProjectsArgumentComponent _args;
 
-  private PydtProjectResolver           _projectresolver;
+  private PydtResolver                  _resolver;
 
   /**
    * Initialises this resolver implementation.
    */
   public PythonReferencedProjectResolverImpl() {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
-    _projectresolver = new PydtProjectResolver();
+    _resolver = new PydtResolver();
     _workspace = null;
     _args = null;
   }
@@ -138,7 +138,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
       final RawPathEntry entry = entries.remove(0);
       if (!_registry.isResolved(entry)) {
         // until now it has not been resolved, so resolve and register it
-        _projectresolver.resolve(entry);
+        _resolver.resolve(entry);
       }
       // access the resolved path entry
       final ResolvedProjectEntry resolved = (ResolvedProjectEntry) _registry.getResolvedPathEntry(entry);

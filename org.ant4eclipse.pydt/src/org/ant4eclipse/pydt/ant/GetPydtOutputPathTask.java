@@ -15,11 +15,12 @@ import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
-import org.ant4eclipse.pydt.internal.tools.PydtOutputpathResolver;
+import org.ant4eclipse.pydt.internal.tools.PydtResolver;
 import org.ant4eclipse.pydt.internal.tools.PythonUtilities;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedOutputEntry;
+import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;
@@ -80,12 +81,13 @@ public class GetPydtOutputPathTask extends AbstractPydtGetProjectPathTask {
       A4ELogging.debug(MSG_PYDEV);
     }
     final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-    final PydtOutputpathResolver resolver = new PydtOutputpathResolver();
+    final PydtResolver resolver = new PydtResolver();
     final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Output);
-    final ResolvedOutputEntry[] resolved = resolver.resolve(entries);
+    final ResolvedPathEntry[] resolved = resolver.resolve(entries);
     final File[] result = new File[resolved.length];
     for (int i = 0; i < resolved.length; i++) {
-      result[i] = getEclipseProject().getChild(resolved[i].getFolder(), getPathStyle());
+      final ResolvedOutputEntry entry = (ResolvedOutputEntry) resolved[i];
+      result[i] = getEclipseProject().getChild(entry.getFolder(), getPathStyle());
     }
     return result;
   }
