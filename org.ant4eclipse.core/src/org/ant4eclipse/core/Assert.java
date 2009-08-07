@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
-import java.io.File;
-
 import org.ant4eclipse.core.logging.A4ELogging;
+
+import java.io.File;
 
 /**
  * <p>
@@ -179,7 +179,7 @@ public class Assert {
   public static void inRange(final int value, final int from, final int to) {
     if ((value < from) || (value > to)) {
       final String msg = String.format("Precondition violated: %d must be within the range %d..%d !", new Object[] {
-          new Integer(value), new Integer(from), new Integer(to) });
+          Integer.valueOf(value), Integer.valueOf(from), Integer.valueOf(to) });
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }

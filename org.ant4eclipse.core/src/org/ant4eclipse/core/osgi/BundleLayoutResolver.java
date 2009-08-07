@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import java.io.*;
-import java.util.jar.*;
+import java.io.File;
+import java.util.jar.Manifest;
 
 /**
  * <p>

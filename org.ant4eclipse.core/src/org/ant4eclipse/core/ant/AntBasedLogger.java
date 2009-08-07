@@ -11,10 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.logging.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.Ant4EclipseLogger;
 
-import org.apache.tools.ant.*;
+import org.apache.tools.ant.BuildEvent;
+import org.apache.tools.ant.BuildListener;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Target;
+import org.apache.tools.ant.Task;
 
 /**
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)

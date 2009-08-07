@@ -11,16 +11,22 @@
  **********************************************************************/
 package org.ant4eclipse.core.xquery;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.exception.*;
-import org.ant4eclipse.core.logging.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
-import javax.xml.parsers.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.*;
-import java.util.*;
+import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.SAXParserFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Vector;
 
 /**
  * <p>
