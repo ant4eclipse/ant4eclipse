@@ -19,7 +19,7 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PydtExceptionCode {
+public class PydtFailures {
 
   @NLSMessage("Project '%s' must have a python project role (either PyDev or Python DLTK).")
   public static String NO_PYTHON_PROJECT_ROLE;
@@ -28,7 +28,7 @@ public class PydtExceptionCode {
   public static String UNKNOWN_PYTHON_RUNTIME;
 
   static {
-    NLS.initialize(PydtExceptionCode.class);
+    NLS.initialize(PydtFailures.class);
   }
 
 } /* ENDCLASS */
