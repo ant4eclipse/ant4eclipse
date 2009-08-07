@@ -13,8 +13,6 @@ package org.ant4eclipse.pydt.model;
 
 import org.ant4eclipse.core.Assert;
 
-import java.io.File;
-
 /**
  * Resolved library record.
  * 
@@ -22,16 +20,16 @@ import java.io.File;
  */
 public class ResolvedLibraryEntry implements ResolvedPathEntry {
 
-  private File _location;
+  private String _location;
 
   /**
    * Sets up this entry with resolved location of a python library.
    * 
    * @param location
-   *          The location of the library.
+   *          The location of the library. Neither <code>null</code> nor empty.
    */
-  public ResolvedLibraryEntry(final File location) {
-    Assert.notNull(location);
+  public ResolvedLibraryEntry(final String location) {
+    Assert.nonEmpty(location);
     _location = location;
   }
 
@@ -45,9 +43,9 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
   /**
    * Returns the location of the library.
    * 
-   * @return The location of the library. Not <code>null</code>.
+   * @return The location of the library. Neither <code>null</code> nor empty.
    */
-  public File getLocation() {
+  public String getLocation() {
     return _location;
   }
 

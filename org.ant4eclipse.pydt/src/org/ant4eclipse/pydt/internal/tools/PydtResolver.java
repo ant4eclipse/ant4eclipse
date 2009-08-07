@@ -86,6 +86,14 @@ public class PydtResolver {
     return result;
   }
 
+  /**
+   * Creates a new resolved record for the supplied entry.
+   * 
+   * @param entry
+   *          The path entry which needs to be resolved. Not <code>null</code>.
+   * 
+   * @return A resolved entry. Not <code>null</code>.
+   */
   private ResolvedPathEntry newResolvedEntry(final RawPathEntry entry) {
     if (entry.getKind() == ReferenceKind.Container) {
       return newResolvedContainerEntry(entry);
@@ -123,7 +131,7 @@ public class PydtResolver {
    * @return A newly created record used to represent a library. Not <code>null</code>.
    */
   private ResolvedLibraryEntry newResolvedLibraryEntry(final RawPathEntry entry) {
-    return new ResolvedLibraryEntry(new File(entry.getValue()));
+    return new ResolvedLibraryEntry(entry.getValue());
   }
 
   /**
