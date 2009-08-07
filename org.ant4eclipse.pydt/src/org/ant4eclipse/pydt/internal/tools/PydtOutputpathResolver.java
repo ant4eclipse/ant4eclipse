@@ -46,7 +46,7 @@ public class PydtOutputpathResolver {
   public ResolvedOutputEntry resolve(final RawPathEntry entry) {
     Assert.notNull(entry);
     Assert.assertTrue(entry.getKind() == ReferenceKind.Output,
-        "Only parameters referring to ouput pathes are allowed !");
+        "Only parameters referring to output pathes are allowed !");
     ResolvedOutputEntry result = (ResolvedOutputEntry) _registry.getResolvedPathEntry(entry);
     if (result == null) {
       result = newResolvedOutputEntry(entry);
