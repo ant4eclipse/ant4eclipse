@@ -20,47 +20,54 @@ import java.util.StringTokenizer;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class Version {
 
   /** the major version */
-  private final Integer _major;
+  private Integer      _major;
 
   /** the minor version */
-  private final Integer _minor;
+  private Integer      _minor;
 
   /** the micro version */
-  private final Integer _micro;
+  private Integer      _micro;
 
   /** the qualifier version */
-  private final String  _qualifier;
+  private String       _qualifier;
+
+  private final String _str;
 
   /**
+   * Sets up this version information from the supplied formatted string. The format is as followed:<br/>
+   * 
+   * &lt;major&gt;['.'&lt;minor&gt;['.'&lt;micro&gt;['_'&lt;qualifier&gt;]]]
+   * 
+   * The meaning of the qualifier depends on the context where the version information is used.
+   * 
    * @param version
+   *          A formatted version string. Neither <code>null</code> nor empty.
    */
   public Version(final String version) {
-    int major = -1;
-    int minor = -1;
-    int micro = -1;
-    String qualifier = null;
+
+    this._major = Integer.valueOf(0);
+    this._minor = Integer.valueOf(0);
+    this._micro = Integer.valueOf(0);
+    this._qualifier = null;
 
     try {
-      final StringTokenizer st = new StringTokenizer(version, ".", true);
-      major = Integer.parseInt(st.nextToken());
-
+      final StringTokenizer st = new StringTokenizer(version, ".", false);
+      this._major = Integer.valueOf(st.nextToken());
       if (st.hasMoreTokens()) {
-        st.nextToken(); // consume delimiter
-        minor = Integer.parseInt(st.nextToken());
-
+        this._minor = Integer.valueOf(st.nextToken());
         if (st.hasMoreTokens()) {
-          st.nextToken(); // consume delimiter
 
           final String microWithQualifier = st.nextToken();
           final String[] splitted = microWithQualifier.split("_");
 
-          micro = Integer.parseInt(splitted[0]);
+          this._micro = Integer.valueOf(splitted[0]);
           if (splitted.length > 1) {
-            qualifier = splitted[1];
+            this._qualifier = splitted[1];
           }
           if (st.hasMoreTokens()) {
             throw new IllegalArgumentException("invalid format"); //$NON-NLS-1$
@@ -71,39 +78,68 @@ public class Version {
       throw new IllegalArgumentException("invalid version format '" + version + "'"); //$NON-NLS-1$
     }
 
-    this._major = major != -1 ? Integer.valueOf(major) : null;
-    this._minor = minor != -1 ? Integer.valueOf(minor) : null;
-    this._micro = micro != -1 ? Integer.valueOf(micro) : null;
-    this._qualifier = qualifier;
+    // create a textual representation
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append(this._major);
+    buffer.append(".");
+    buffer.append(this._minor);
+    buffer.append(".");
+    buffer.append(this._micro);
+    if (this._qualifier != null) {
+      buffer.append("_");
+      buffer.append(this._qualifier);
+    }
+    this._str = buffer.toString();
+
   }
 
+  /**
+   * Returns the major version.
+   * 
+   * @return The major version.
+   */
   public int getMajor() {
-    return this._major != null ? this._major.intValue() : 0;
+    return this._major.intValue();
   }
 
+  /**
+   * Returns the minor version.
+   * 
+   * @return The minor version.
+   */
   public int getMinor() {
-    return this._minor != null ? this._minor.intValue() : 0;
+    return this._minor.intValue();
   }
 
+  /**
+   * Returns the micro version.
+   * 
+   * @return The micro version.
+   */
   public int getMicro() {
-    return this._micro != null ? this._micro.intValue() : 0;
+    return this._micro.intValue();
   }
 
+  /**
+   * Returns the qualifier for this version.
+   * 
+   * @return The qualifier for this version. Maybe <code>null</code>.
+   */
   public String getQualifier() {
     return this._qualifier;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((this._major == null) ? 0 : this._major.hashCode());
-    result = prime * result + ((this._micro == null) ? 0 : this._micro.hashCode());
-    result = prime * result + ((this._minor == null) ? 0 : this._minor.hashCode());
-    result = prime * result + ((this._qualifier == null) ? 0 : this._qualifier.hashCode());
-    return result;
+    return this._str.hashCode();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
@@ -116,56 +152,15 @@ public class Version {
       return false;
     }
     final Version other = (Version) obj;
-    if (this._major == null) {
-      if (other._major != null) {
-        return false;
-      }
-    } else if (!this._major.equals(other._major)) {
-      return false;
-    }
-    if (this._micro == null) {
-      if (other._micro != null) {
-        return false;
-      }
-    } else if (!this._micro.equals(other._micro)) {
-      return false;
-    }
-    if (this._minor == null) {
-      if (other._minor != null) {
-        return false;
-      }
-    } else if (!this._minor.equals(other._minor)) {
-      return false;
-    }
-    if (this._qualifier == null) {
-      if (other._qualifier != null) {
-        return false;
-      }
-    } else if (!this._qualifier.equals(other._qualifier)) {
-      return false;
-    }
-    return true;
+    return this._str.equals(other._str);
   }
 
   /**
-   * @see java.lang.Object#toString()
+   * {@inheritDoc}
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append(this._major);
-    if (this._minor != null) {
-      buffer.append(".");
-      buffer.append(this._minor);
-    }
-    if (this._micro != null) {
-      buffer.append(".");
-      buffer.append(this._micro);
-    }
-    if (this._qualifier != null) {
-      buffer.append("_");
-      buffer.append(this._qualifier);
-    }
-    return buffer.toString();
+    return this._str;
   }
-}
+
+} /* ENDCLASS */
