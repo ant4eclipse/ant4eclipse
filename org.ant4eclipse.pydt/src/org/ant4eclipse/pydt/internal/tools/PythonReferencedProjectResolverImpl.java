@@ -47,11 +47,14 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
 
   private UsedProjectsArgumentComponent _args;
 
+  private PydtProjectResolver           _projectresolver;
+
   /**
    * Initialises this resolver implementation.
    */
   public PythonReferencedProjectResolverImpl() {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
+    _projectresolver = new PydtProjectResolver();
     _workspace = null;
     _args = null;
   }
@@ -135,7 +138,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
       final RawPathEntry entry = entries.remove(0);
       if (!_registry.isResolved(entry)) {
         // until now it has not been resolved, so resolve and register it
-        _registry.registerResolvedPathEntry(entry, resolveRawPathEntry(entry));
+        _projectresolver.resolve(entry);
       }
       // access the resolved path entry
       final ResolvedProjectEntry resolved = (ResolvedProjectEntry) _registry.getResolvedPathEntry(entry);
@@ -163,25 +166,6 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
 
     }
 
-  }
-
-  /**
-   * Creates a resolved project entry from the supplied raw entry.
-   * 
-   * @param entry
-   *          A raw entry used to refer to a project. Not <code>null</code>.
-   * 
-   * @return The resolved project entry equivalent. Not <code>null</code>.
-   */
-  private ResolvedProjectEntry resolveRawPathEntry(RawPathEntry entry) {
-    String value = entry.getValue();
-    if ((value.charAt(0) != '/') || (value.length() == 1)) {
-      /** @todo [02-Aug-2009:KASI] We need to cause an exception here. */
-      A4ELogging.warn("The raw projectname '%s' does not start conform to the required format '/' <identifier> !",
-          value);
-      return null;
-    }
-    return new ResolvedProjectEntry(value.substring(1));
   }
 
 } /* ENDCLASS */
