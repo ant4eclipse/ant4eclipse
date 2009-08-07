@@ -1,8 +1,8 @@
 package org.ant4eclipse.platform.ant.core;
 
-import org.apache.tools.ant.types.*;
+import org.apache.tools.ant.types.Path;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * <p>

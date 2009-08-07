@@ -4,5 +4,5 @@ import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 
 public interface MacroExecutionValuesProvider {
 
-  public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values);
+  MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values);
 }

@@ -71,9 +71,9 @@ public class Version {
       throw new IllegalArgumentException("invalid version format '" + version + "'"); //$NON-NLS-1$
     }
 
-    this._major = major != -1 ? new Integer(major) : null;
-    this._minor = minor != -1 ? new Integer(minor) : null;
-    this._micro = micro != -1 ? new Integer(micro) : null;
+    this._major = major != -1 ? Integer.valueOf(major) : null;
+    this._minor = minor != -1 ? Integer.valueOf(minor) : null;
+    this._micro = micro != -1 ? Integer.valueOf(micro) : null;
     this._qualifier = qualifier;
   }
 

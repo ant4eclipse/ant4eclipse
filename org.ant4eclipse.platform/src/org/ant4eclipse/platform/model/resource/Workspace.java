@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource;
 
-import org.ant4eclipse.platform.model.resource.role.*;
+import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
 /**
  * <p>

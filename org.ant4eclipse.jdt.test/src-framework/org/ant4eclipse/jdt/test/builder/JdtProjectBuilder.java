@@ -11,16 +11,25 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.test.builder;
 
-import static java.lang.String.*;
-import static org.junit.Assert.*;
+import static java.lang.String.format;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.jdt.model.project.*;
-import org.ant4eclipse.platform.test.builder.*;
+import org.ant4eclipse.core.ClassName;
+
+import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+
+import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
+import org.ant4eclipse.platform.test.builder.StringTemplate;
+
 import org.ant4eclipse.testframework.FileHelper;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Adds JDT-specific features to {@link EclipseProjectBuilder}

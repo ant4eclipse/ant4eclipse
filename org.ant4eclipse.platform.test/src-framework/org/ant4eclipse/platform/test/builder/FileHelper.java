@@ -11,14 +11,27 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test.builder;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.logging.*;
-import org.ant4eclipse.core.util.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Vector;
 
 public class FileHelper {
 

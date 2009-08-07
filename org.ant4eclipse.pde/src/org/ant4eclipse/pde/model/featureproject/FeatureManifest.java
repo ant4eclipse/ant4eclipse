@@ -33,7 +33,7 @@ public interface FeatureManifest {
    * 
    * @return The name of the application.
    */
-  public String getApplication();
+  String getApplication();
 
   /**
    * <p>
@@ -41,88 +41,88 @@ public interface FeatureManifest {
    * 
    * @return
    */
-  public String getColocationAffinity();
+  String getColocationAffinity();
 
   /**
    * @return flag that, if "true", indicates that the feature cannot be installed in a group with other features.
    */
-  public boolean isExclusive();
+  boolean isExclusive();
 
   /**
    * @return feature identifier (eg. com.xyz.myfeature), required
    */
-  public String getId();
+  String getId();
 
   /**
    * Returns the location of an associated image.
    * 
    * @return The location of an associated image.
    */
-  public String getImage();
+  String getImage();
 
   /**
    * @return locale specification.
    */
-  public String getLocale();
+  String getLocale();
 
   /**
    * @return optional machine architecture specification.
    */
-  public String getMachineArchitecture();
+  String getMachineArchitecture();
 
   /**
    * @return operating system specification.
    */
-  public String getOperatingSystem();
+  String getOperatingSystem();
 
   /**
    * Returns the plugin used for this feature.
    * 
    * @return The plugin used for this feature.
    */
-  public String getPlugin();
+  String getPlugin();
 
   /**
    * Returns true if this feature is a primary one.
    * 
    * @return true <=> This feature is a primary one.
    */
-  public boolean isPrimary();
+  boolean isPrimary();
 
   /**
    * @return display label identifying the organization providing this component.
    */
-  public String getProviderName();
+  String getProviderName();
 
   /**
    * @return component version (eg. 1.0.3), required
    */
-  public Version getVersion();
+  Version getVersion();
 
   /**
    * Returns the name of the windowing system.
    * 
    * @return The name of the windowing system.
    */
-  public String getWindowingSystem();
+  String getWindowingSystem();
 
   /**
    * @return displayable label (name).
    */
-  public String getLabel();
+  String getLabel();
 
   /**
    * @return all the referenced plugins.
    */
-  public List<Plugin> getPlugins();
-  
+  List<Plugin> getPlugins();
+
   /**
    * <p>
    * </p>
-   *
+   * 
    * @return
    */
-  public List<Includes> getIncludes();
+  List<Includes> getIncludes();
 
   /**
    * <p>
@@ -130,7 +130,7 @@ public interface FeatureManifest {
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  public static interface Plugin {
+  interface Plugin {
 
     /**
      * <p>
@@ -138,7 +138,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getDownloadSize();
+    String getDownloadSize();
 
     /**
      * <p>
@@ -146,7 +146,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean isFragment();
+    boolean isFragment();
 
     /**
      * <p>
@@ -154,7 +154,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getId();
+    String getId();
 
     /**
      * <p>
@@ -162,7 +162,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getInstallSize();
+    String getInstallSize();
 
     /**
      * <p>
@@ -170,7 +170,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getLocale();
+    String getLocale();
 
     /**
      * <p>
@@ -178,7 +178,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getMachineArchitecture();
+    String getMachineArchitecture();
 
     /**
      * <p>
@@ -186,7 +186,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getOperatingSystem();
+    String getOperatingSystem();
 
     /**
      * <p>
@@ -194,7 +194,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean isUnpack();
+    boolean isUnpack();
 
     /**
      * <p>
@@ -202,7 +202,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public Version getVersion();
+    Version getVersion();
 
     /**
      * <p>
@@ -210,7 +210,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getWindowingSystem();
+    String getWindowingSystem();
 
     /**
      * <p>
@@ -218,7 +218,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasDownloadSize();
+    boolean hasDownloadSize();
 
     /**
      * <p>
@@ -226,7 +226,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasId();
+    boolean hasId();
 
     /**
      * <p>
@@ -234,7 +234,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasInstallSize();
+    boolean hasInstallSize();
 
     /**
      * <p>
@@ -242,7 +242,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasLocale();
+    boolean hasLocale();
 
     /**
      * <p>
@@ -250,7 +250,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasMachineArchitecture();
+    boolean hasMachineArchitecture();
 
     /**
      * <p>
@@ -258,7 +258,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasOperatingSystem();
+    boolean hasOperatingSystem();
 
     /**
      * <p>
@@ -266,7 +266,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasVersion();
+    boolean hasVersion();
 
     /**
      * <p>
@@ -274,7 +274,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public boolean hasWindowingSystem();
+    boolean hasWindowingSystem();
 
     /**
      * <p>
@@ -282,7 +282,7 @@ public interface FeatureManifest {
      * 
      * @return
      */
-    public String getEffectiveVersion();
+    String getEffectiveVersion();
 
     /**
      * <p>
@@ -290,23 +290,23 @@ public interface FeatureManifest {
      * 
      * @param effectiveVersion
      */
-    public void setEffectiveVersion(String effectiveVersion);
+    void setEffectiveVersion(String effectiveVersion);
   }
 
   /**
    * <p>
    * </p>
-   *
+   * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  public static interface Includes {
+  interface Includes {
     /**
      * <p>
      * </p>
      * 
      * @return the id
      */
-    public String getId();
+    String getId();
 
     /**
      * <p>
@@ -314,7 +314,7 @@ public interface FeatureManifest {
      * 
      * @return the version
      */
-    public Version getVersion();
+    Version getVersion();
 
     /**
      * <p>
@@ -322,7 +322,7 @@ public interface FeatureManifest {
      * 
      * @return the name
      */
-    public String getName();
+    String getName();
 
     /**
      * <p>
@@ -330,7 +330,7 @@ public interface FeatureManifest {
      * 
      * @return the optional
      */
-    public boolean isOptional();
+    boolean isOptional();
 
     /**
      * <p>
@@ -338,7 +338,7 @@ public interface FeatureManifest {
      * 
      * @return the searchLocation
      */
-    public String getSearchLocation();
+    String getSearchLocation();
 
     /**
      * <p>
@@ -346,7 +346,7 @@ public interface FeatureManifest {
      * 
      * @return the operatingSystem
      */
-    public String getOperatingSystem();
+    String getOperatingSystem();
 
     /**
      * <p>
@@ -354,7 +354,7 @@ public interface FeatureManifest {
      * 
      * @return the machineArchitecture
      */
-    public String getMachineArchitecture();
+    String getMachineArchitecture();
 
     /**
      * <p>
@@ -362,7 +362,7 @@ public interface FeatureManifest {
      * 
      * @return the windowingSystem
      */
-    public String getWindowingSystem();
+    String getWindowingSystem();
 
     /**
      * <p>
@@ -370,6 +370,6 @@ public interface FeatureManifest {
      * 
      * @return the locale
      */
-    public String getLocale();
+    String getLocale();
   }
 }

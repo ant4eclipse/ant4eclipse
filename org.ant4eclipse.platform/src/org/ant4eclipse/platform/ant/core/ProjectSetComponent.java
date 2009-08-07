@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import org.apache.tools.ant.*;
+import org.apache.tools.ant.BuildException;
 
 /**
  * <p>

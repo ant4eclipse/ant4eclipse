@@ -11,16 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.platform.internal.model.resource.ChunkyFile;
+
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.platform.internal.model.resource.ChunkyFile;
 
 /**
  * Reads a ".location" file which provides the position of an external project from eclipse's .metadata directory.
@@ -144,8 +145,8 @@ public class LocationFileParser {
         return file;
       }
     } else {
-      A4ELogging.warn("the file '%s' contains %d chunks instead of a single one", new Object[] { locationfile,
-          new Integer(cf.getChunkCount()) });
+      A4ELogging.warn("the file '%s' contains %d chunks instead of a single one", locationfile, Integer.valueOf(cf
+          .getChunkCount()));
     }
 
     return null;

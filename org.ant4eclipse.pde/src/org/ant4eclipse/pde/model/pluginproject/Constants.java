@@ -16,8 +16,8 @@ package org.ant4eclipse.pde.model.pluginproject;
  */
 public interface Constants {
 
-  String FEATURE_MANIFEST       = "feature.xml";
-  
+  String FEATURE_MANIFEST           = "feature.xml";
+
   String OSGI_BUNDLE_MANIFEST       = "META-INF/MANIFEST.MF";
 
   String BUNDLE_SYMBOLICNAME        = "Bundle-SymbolicName";

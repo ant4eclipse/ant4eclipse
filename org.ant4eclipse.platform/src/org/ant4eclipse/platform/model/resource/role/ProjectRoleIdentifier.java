@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.role;
 
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * <p>
@@ -45,4 +45,5 @@ public interface ProjectRoleIdentifier {
    *          the eclipse project.
    */
   ProjectRole createRole(final EclipseProject project);
-} /* ENDCLASS */
+
+} /* ENDINTERFACE */

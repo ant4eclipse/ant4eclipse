@@ -11,15 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset;
 
-import org.ant4eclipse.core.service.*;
+import org.ant4eclipse.core.service.ServiceRegistry;
 
-import java.io.*;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+
+import java.io.File;
 
 public interface TeamProjectSetFileParser {
 
   TeamProjectSet parseTeamProjectSetFile(File psfFile);
 
-  public static class Helper {
+  class Helper {
     public static TeamProjectSetFileParser getInstance() {
       return (TeamProjectSetFileParser) ServiceRegistry.instance().getService(TeamProjectSetFileParser.class.getName());
     }

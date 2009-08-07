@@ -11,6 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.service.ServiceRegistry;
+
+import org.ant4eclipse.jdt.internal.model.jre.support.LibraryDetector;
+import org.ant4eclipse.jdt.model.jre.JavaProfile;
+import org.ant4eclipse.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,13 +28,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.jdt.internal.model.jre.support.LibraryDetector;
-import org.ant4eclipse.jdt.model.jre.JavaProfile;
-import org.ant4eclipse.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
 public class JavaRuntimeLoader {
   /**  */
@@ -171,7 +172,7 @@ public class JavaRuntimeLoader {
         } else {
           javaEdition = J2SE;
 
-          if (new Integer(javaSpecVersion.split("\\.")[1]).intValue() >= 6) {
+          if (Integer.parseInt(javaSpecVersion.split("\\.")[1]) >= 6) {
             javaEdition = JAVASE;
           }
 

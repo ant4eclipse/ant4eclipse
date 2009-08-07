@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.variable;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.core.Lifecycle;
 
-import java.util.*;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -70,10 +71,4 @@ public interface EclipseVariableResolver extends Lifecycle {
    */
   Map<String, String> getEclipseVariables(final EclipseProject project);
 
-  /**
-   * <p>
-   * Clears the variable resolver.
-   * </p>
-   */
-  void clear();
-} /* ENDCLASS */
+} /* ENDINTERFACE */

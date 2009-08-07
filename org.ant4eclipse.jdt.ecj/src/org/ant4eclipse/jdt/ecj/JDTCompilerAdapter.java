@@ -1,5 +1,22 @@
 package org.ant4eclipse.jdt.ecj;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
+import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.ant.types.Path;
+import org.apache.tools.ant.types.resources.FileResource;
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
+import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
+import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -10,21 +27,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
-import org.apache.tools.ant.taskdefs.condition.Os;
-import org.apache.tools.ant.types.Path;
-import org.apache.tools.ant.types.resources.FileResource;
-import org.eclipse.jdt.core.compiler.CategorizedProblem;
-import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
-import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 
 /**
  * <p>
@@ -89,10 +91,10 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         if (fileName.equals(sourceFile.getSourceFileName())) {
 
           Object[] args = new Object[7];
-          args[0] = new Integer(i + 1);
+          args[0] = Integer.valueOf(i + 1);
           args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
           args[2] = sourceFile.getSourceFile().getAbsolutePath();
-          args[3] = categorizedProblem.getSourceLineNumber();
+          args[3] = Integer.valueOf(categorizedProblem.getSourceLineNumber());
           String[] problematicLine = readProblematicLine(sourceFile, categorizedProblem);
           args[4] = problematicLine[0];
           args[5] = problematicLine[1];

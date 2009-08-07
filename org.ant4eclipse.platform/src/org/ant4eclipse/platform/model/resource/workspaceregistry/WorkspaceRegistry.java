@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.service.*;
-import org.ant4eclipse.platform.model.resource.*;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.service.ServiceRegistry;
+
+import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**
  * <p>
@@ -104,7 +105,7 @@ public interface WorkspaceRegistry extends Lifecycle {
    * Helper class to retrieve the {@link WorkspaceRegistry}.
    * </p>
    */
-  static class Helper {
+  class Helper {
 
     /**
      * <p>
@@ -117,4 +118,5 @@ public interface WorkspaceRegistry extends Lifecycle {
       return (WorkspaceRegistry) ServiceRegistry.instance().getService(WorkspaceRegistry.class.getName());
     }
   }
-} /* ENDCLASS */
+
+} /* ENDINTERFACE */

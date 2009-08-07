@@ -37,13 +37,6 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public void clear() {
-    this._eclipsevariables.clear();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   public void dispose() {
     //
   }
