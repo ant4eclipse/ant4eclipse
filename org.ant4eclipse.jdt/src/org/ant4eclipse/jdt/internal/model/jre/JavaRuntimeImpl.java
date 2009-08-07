@@ -154,4 +154,42 @@ public class JavaRuntimeImpl implements JavaRuntime {
     return buffer.toString();
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((this._id == null) ? 0 : this._id.hashCode());
+    result = prime * result + ((this._location == null) ? 0 : this._location.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final JavaRuntimeImpl other = (JavaRuntimeImpl) obj;
+    if (this._id == null) {
+      if (other._id != null) {
+        return false;
+      }
+    } else if (!this._id.equals(other._id)) {
+      return false;
+    }
+    if (this._location == null) {
+      if (other._location != null) {
+        return false;
+      }
+    } else if (!this._location.equals(other._location)) {
+      return false;
+    }
+    return true;
+  }
+
 } /* ENDCLASS */

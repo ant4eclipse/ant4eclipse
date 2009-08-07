@@ -72,8 +72,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     final JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location);
 
-    // TODO: logging
-
     return registerJavaRuntime(javaRuntime, isDefault);
   }
 
@@ -253,8 +251,15 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     final String id = javaRuntime.getId();
 
     if (this._javaRuntimeCache.containsKey(id)) {
-      // TODO
-      // throw new RuntimeException("JavaRuntime with key '" + id + "' already registered.");
+      final JavaRuntime runtime = this._javaRuntimeCache.get(id);
+
+      if (!runtime.equals(javaRuntime)) {
+
+        // throw an exception
+        // TODO
+        throw new RuntimeException("Duplicate definition of JavaRuntime with key '" + id + "'.");
+      }
+      // return previous instance
       return this._javaRuntimeCache.get(id);
     }
 
