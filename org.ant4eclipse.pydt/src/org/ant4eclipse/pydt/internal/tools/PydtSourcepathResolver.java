@@ -29,7 +29,7 @@ public class PydtSourcepathResolver {
   private PathEntryRegistry _registry;
 
   /**
-   * Initialises this resolve for source folders.
+   * Initialises this resolver for source folders.
    */
   public PydtSourcepathResolver() {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);

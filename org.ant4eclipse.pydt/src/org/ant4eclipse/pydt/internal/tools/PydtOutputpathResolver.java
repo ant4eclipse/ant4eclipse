@@ -29,7 +29,7 @@ public class PydtOutputpathResolver {
   private PathEntryRegistry _registry;
 
   /**
-   * Initialises this resolve for output folders.
+   * Initialises this resolver for output folders.
    */
   public PydtOutputpathResolver() {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
