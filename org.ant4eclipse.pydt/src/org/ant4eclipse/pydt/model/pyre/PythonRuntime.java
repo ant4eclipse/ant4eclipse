@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model.pyre;
 
+import org.ant4eclipse.core.data.Version;
+
 import java.io.File;
 
 /**
@@ -33,5 +35,19 @@ public interface PythonRuntime {
    * @return The location of the {@link PythonRuntime}. Not <code>null</code>.
    */
   File getLocation();
+
+  /**
+   * Returns the version of this runtime.
+   * 
+   * @return The version of this runtime. Not <code>null</code>.
+   */
+  Version getVersion();
+
+  /**
+   * Returns a list of all libraries used for this runtime. This might be an egg, a jar, a zip or a directory.
+   * 
+   * @return A list of all libraries. Not <code>null</code>.
+   */
+  File[] getLibraries();
 
 } /* ENDINTERFACE */

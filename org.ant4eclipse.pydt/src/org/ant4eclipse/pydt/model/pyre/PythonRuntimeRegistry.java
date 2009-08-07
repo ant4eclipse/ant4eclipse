@@ -28,8 +28,10 @@ public interface PythonRuntimeRegistry {
    *          The id of the python runtime. Neither <code>null</code> nor empty.
    * @param location
    *          The location of the runtime installation. Not <code>null</code> and must be a directory.
+   * @param sitepackages
+   *          <code>true</code> <=> Enable support for site packages on the runtime.
    */
-  void registerRuntime(final String id, final File location);
+  void registerRuntime(final String id, final File location, boolean sitepackages);
 
   /**
    * Sets the ID for the {@link PythonRuntime} that has to be used by default. If there's no runtime with the supplied

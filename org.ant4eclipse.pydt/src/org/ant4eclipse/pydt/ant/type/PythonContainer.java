@@ -28,7 +28,9 @@ import java.io.File;
  */
 public class PythonContainer extends AbstractAnt4EclipseDataType {
 
-  private String _defaultid;
+  private String  _defaultid;
+
+  private boolean _sitepackages;
 
   /**
    * Initialises this container using the supplied ant project.
@@ -39,6 +41,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
   public PythonContainer(Project project) {
     super(project);
     _defaultid = null;
+    _sitepackages = true;
   }
 
   /**
@@ -49,6 +52,16 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    */
   public void setDefault(final String defaultid) {
     _defaultid = defaultid;
+  }
+
+  /**
+   * Enables/disables the support for site packages.
+   * 
+   * @param enable
+   *          <code>true</code> <=> Site packages are enabled.
+   */
+  public void setSitePackages(final boolean enable) {
+    _sitepackages = enable;
   }
 
   /**
@@ -79,7 +92,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
     final PythonRuntimeRegistry registry = (PythonRuntimeRegistry) ServiceRegistry.instance().getService(
         PythonRuntimeRegistry.class.getName());
 
-    registry.registerRuntime(runtime._id, runtime._location);
+    registry.registerRuntime(runtime._id, runtime._location, _sitepackages);
 
     if (runtime._id.equals(_defaultid)) {
       registry.setDefaultRuntime(_defaultid);
