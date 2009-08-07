@@ -20,6 +20,8 @@ import org.ant4eclipse.core.Assert;
  */
 public class ResolvedLibraryEntry implements ResolvedPathEntry {
 
+  // the location is a position with filesystem which points to a project relative library when
+  // it's a relative path. otherwise it's pointing to an absolute path.
   private String _location;
 
   /**
