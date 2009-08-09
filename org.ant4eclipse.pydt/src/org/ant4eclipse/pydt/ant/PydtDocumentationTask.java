@@ -25,7 +25,6 @@ import org.apache.tools.ant.BuildException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
@@ -34,7 +33,7 @@ public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
 
   private static final String SCRIPT                 = "import sys\n" + "if __name__ == \"__main__\":\n"
                                                          + "  sys.path.append(\"%s\")\n" + "  from %s import cli\n"
-                                                         + "  sys.argv=[%s]\n" + "  cli.cli()\n";
+                                                         + "  sys.argv=[]\n%s" + "  cli.cli()\n";
 
   private static final String MSG_DOCS_NOT_SUPPORTED = "Generation of documentation is currently not supported for python with major version >= 3 !";
 
@@ -125,13 +124,18 @@ public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
     final File executable = runtime.getExecutable();
 
     Utilities.mkdirs(_destdir);
-    final String args = String.format("\"--html\", \"-o\", \"%s\", %s", pythonEscape(_destdir.getAbsolutePath()),
-        collectModules());
+
+    // setup some options for the commandline
+    final StringBuffer options = new StringBuffer();
+    appendOption(options, "--html");
+    appendOption(options, "-o");
+    appendOption(options, pythonEscape(_destdir.getAbsolutePath()));
+    collectModules(options);
 
     // generate the python script used to generate the documentation
     final File install = pythontools.getEpydocInstallation();
     final String name = Utilities.stripSuffix(install.getName());
-    final String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, args);
+    final String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, options);
 
     // save the script
     final File script = Utilities.createFile(code, ".py");
@@ -141,40 +145,46 @@ public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
 
   }
 
+  /**
+   * Makes sure that backslashes come in double packs. Otherwise the used interpreter may fail.
+   * 
+   * @param str
+   *          The path which requires to be altered. Neither <code>null</code> nor empty.
+   * 
+   * @return The altered path. Neither <code>null</code> nor empty.
+   */
   private String pythonEscape(String str) {
-    final StringTokenizer tokenizer = new StringTokenizer(str, "\\", true);
-    final StringBuffer buffer = new StringBuffer();
-    while (tokenizer.hasMoreTokens()) {
-      final String token = tokenizer.nextToken();
-      buffer.append(token);
-      if ("\\".equals(token)) {
-        buffer.append("\\");
-      }
-    }
-    return buffer.toString();
+    return str.replaceAll("\\\\", "\\\\\\\\");
+  }
+
+  /**
+   * Appends a single commandline option to a buffer.
+   * 
+   * @param buffer
+   *          The buffer used to be extended with an additional option. Not <code>null</code>.
+   * @param option
+   *          The option that has to be added. Neither <code>null</code> nor empty.
+   */
+  private void appendOption(final StringBuffer buffer, final String option) {
+    buffer.append("  sys.argv.append(\"" + option + "\")\n");
   }
 
   /**
    * Generates a comma separated list containing the modules used for the documentation generation.
    * 
-   * @return A comma separated list containing the modules used for the documentation generation. Neither
-   *         <code>null</code> nor empty.
+   * @param options
+   *          The buffer used to collect the package locations as single options added to the commandline. Not
+   *          <code>null</code>.
    */
-  private String collectModules() {
+  private void collectModules(final StringBuffer options) {
     final List<File> result = new ArrayList<File>();
     collectPackages(result, _sourcedir);
-    StringBuffer buffer = new StringBuffer();
     if (result.size() > 0) {
-      buffer.append("\"");
-      buffer.append(pythonEscape(result.get(0).getAbsolutePath()));
-      buffer.append("\"");
+      appendOption(options, pythonEscape(result.get(0).getAbsolutePath()));
       for (int i = 1; i < result.size(); i++) {
-        buffer.append(", \"");
-        buffer.append(pythonEscape(result.get(i).getAbsolutePath()));
-        buffer.append("\"");
+        appendOption(options, pythonEscape(result.get(i).getAbsolutePath()));
       }
     }
-    return buffer.toString();
   }
 
   /**
