@@ -49,7 +49,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
       final List<JdtClasspathContainerArgument> jdtClasspathContainerArguments,
       final MacroExecutionValues executionValues) {
 
-    // provide the executor values form the platform component
+    // provide the executor values from the platform component
     this._platformExecutorValuesProvider.provideExecutorValues(javaProjectRole.getEclipseProject(), executionValues);
 
     // create compiler arguments
