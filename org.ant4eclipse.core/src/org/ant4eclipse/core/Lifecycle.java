@@ -11,11 +11,27 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
+/**
+ * This interface must be implemented by services that are aware of a Lifecycle.
+ */
 public interface Lifecycle {
 
-  void initialize();
-
+  /**
+   * Returns <code>true</code> if the supplied service already has been initialised.
+   * 
+   * @return <code>true</code> <=> The service already has been initialised.
+   */
   boolean isInitialized();
 
+  /**
+   * Initialises this service.
+   */
+  void initialize();
+
+  /**
+   * Marks this service instance as disposable which means that it's no longer used by application code thus allowing to
+   * perform some cleanup operations here.
+   */
   void dispose();
-}
+
+} /* ENDINTERFACE */
