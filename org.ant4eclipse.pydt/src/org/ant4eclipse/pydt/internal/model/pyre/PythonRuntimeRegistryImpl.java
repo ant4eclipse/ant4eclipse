@@ -12,6 +12,7 @@
 package org.ant4eclipse.pydt.internal.model.pyre;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.data.Version;
 import org.ant4eclipse.core.logging.A4ELogging;
@@ -38,7 +39,7 @@ import java.util.Map;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
+public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecycle {
 
   private static final String        PROP_INTERPRETER            = "interpreter.";
 
@@ -53,8 +54,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
   private static final String        MSG_INVALIDDEFAULTID        = "A python runtime with the id '%s' needs to be registered first !";
 
   private static final String        MSG_MISSINGEXECUTABLES      = "The python properties file 'python.properties' lacks executable definitions for key '%s' !";
-
-  private static final String        MSG_MISSINGPYTHONLISTER     = "The python script 'lister.py' is not available on the classpath (org/ant4eclipse/pydt) !";
 
   private static final String        MSG_MISSINGPYTHONPROPERTIES = "The python properties file 'python.properties' is not available on the classpath (org/ant4eclipse/pydt) !";
 
@@ -84,56 +83,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
   private PythonInterpreter[]        _interpreters               = null;
 
-  /**
-   * Initialises this registry used to access python runtimes.
-   */
-  public PythonRuntimeRegistryImpl() {
-
-    // export the python lister script, so it can be executed in order to access the pythonpath
-    final URL listerurl = getClass().getResource("/org/ant4eclipse/pydt/lister.py");
-    if (listerurl == null) {
-      throw new BuildException(MSG_MISSINGPYTHONLISTER);
-    }
-    try {
-      _pythonlister = File.createTempFile("lister", ".py");
-      if (!_pythonlister.isAbsolute()) {
-        _pythonlister = _pythonlister.getAbsoluteFile();
-      }
-      _listerdir = _pythonlister.getParentFile();
-      _listerdir = _listerdir.getCanonicalFile();
-      _currentdir = new File(".");
-      _currentdir = _currentdir.getCanonicalFile();
-    } catch (IOException ex) {
-      throw new BuildException(ex);
-    }
-    Utilities.copy(listerurl, _pythonlister);
-
-    // load the python interpreter configurations
-    final URL cfgurl = getClass().getResource("/org/ant4eclipse/pydt/python.properties");
-    if (cfgurl == null) {
-      throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
-    }
-    try {
-      final Map<String, String> props = Utilities.readProperties(cfgurl);
-      final List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
-      for (final Map.Entry<String, String> entry : props.entrySet()) {
-        if (entry.getKey().startsWith(PROP_INTERPRETER)) {
-          final String name = entry.getKey().substring(PROP_INTERPRETER.length());
-          final String[] exes = Utilities.cleanup(entry.getValue().split(","));
-          if (exes == null) {
-            throw new ExtendedBuildException(MSG_MISSINGEXECUTABLES, entry.getKey());
-          }
-          Arrays.sort(exes);
-          interpreters.add(new PythonInterpreter(name, exes));
-        }
-      }
-      _interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
-      Arrays.sort(_interpreters);
-    } catch (IOException ex) {
-      throw new BuildException(ex);
-    }
-
-  }
+  private boolean                    _initialised                = false;
 
   /**
    * Tries to determine the location of a python interpreter.
@@ -345,6 +295,87 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    */
   public PythonInterpreter[] getSupportedInterpreters() {
     return _interpreters;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public PythonInterpreter lookupInterpreter(final PythonRuntime runtime) {
+    for (final PythonInterpreter interpreter : _interpreters) {
+      if (interpreter.lookup(runtime.getLocation()) != null) {
+        return interpreter;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void dispose() {
+    _runtimes.clear();
+    Utilities.delete(_pythonlister);
+    _defaultid = null;
+    _pythonlister = null;
+    _listerdir = null;
+    _currentdir = null;
+    _interpreters = null;
+    _initialised = false;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void initialize() {
+
+    // export the python lister script, so it can be executed in order to access the pythonpath
+    _pythonlister = Utilities.exportResource("/org/ant4eclipse/pydt/lister.py");
+    if (!_pythonlister.isAbsolute()) {
+      _pythonlister = _pythonlister.getAbsoluteFile();
+    }
+    _listerdir = _pythonlister.getParentFile();
+    _currentdir = new File(".");
+    try {
+      _listerdir = _listerdir.getCanonicalFile();
+      _currentdir = _currentdir.getCanonicalFile();
+    } catch (IOException ex) {
+      throw new BuildException(ex);
+    }
+
+    // load the python interpreter configurations
+    final URL cfgurl = getClass().getResource("/org/ant4eclipse/pydt/python.properties");
+    if (cfgurl == null) {
+      throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
+    }
+    try {
+      final Map<String, String> props = Utilities.readProperties(cfgurl);
+      final List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
+      for (final Map.Entry<String, String> entry : props.entrySet()) {
+        if (entry.getKey().startsWith(PROP_INTERPRETER)) {
+          final String name = entry.getKey().substring(PROP_INTERPRETER.length());
+          final String[] exes = Utilities.cleanup(entry.getValue().split(","));
+          if (exes == null) {
+            throw new ExtendedBuildException(MSG_MISSINGEXECUTABLES, entry.getKey());
+          }
+          Arrays.sort(exes);
+          interpreters.add(new PythonInterpreter(name, exes));
+        }
+      }
+      _interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
+      Arrays.sort(_interpreters);
+    } catch (IOException ex) {
+      throw new BuildException(ex);
+    }
+
+    _initialised = true;
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isInitialized() {
+    return _initialised;
   }
 
 } /* ENDCLASS */
