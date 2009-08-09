@@ -18,6 +18,7 @@ import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
 import org.junit.Before;
 
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -65,6 +66,27 @@ public class ConfigurableAnt4EclipseTestCase {
    */
   protected Properties customAnt4EclipseConfiguration(Properties properties) {
     return null;
+  }
+
+  /**
+   * Returns an {@link InputStream} to the given resource that must be specified relative to getClass()
+   * 
+   * @param name
+   * @return
+   */
+  protected InputStream getResource(String name) {
+    String packagename = "/" + getClass().getPackage().getName().replace('.', '/');
+
+    String qualifiedResourceName = packagename + "/" + name;
+
+    InputStream stream = getClass().getResourceAsStream(qualifiedResourceName);
+    if (stream == null) {
+      System.err.println("Resource '" + qualifiedResourceName + "' not found!");
+      throw new RuntimeException("Resource '" + qualifiedResourceName + "' not found!");
+    }
+
+    return stream;
+
   }
 
 }
