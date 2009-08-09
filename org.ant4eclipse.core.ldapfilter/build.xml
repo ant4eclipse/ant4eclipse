@@ -7,7 +7,7 @@
 	<target name="generate.source">
 		<echo>Generating source code for "${executeProjectSet.project.name}"</echo>
 		
-		<delete>
+		<delete quiet="true">
 			<fileset dir="${basedir}/src-gen">
 				<include name="**/*" />
 			</fileset>
