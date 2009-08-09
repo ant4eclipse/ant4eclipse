@@ -630,10 +630,8 @@ public class Utilities {
    *          The zip file which has to be unpacked. Not <code>null</code> and must be a file.
    * @param destdir
    *          The directory where the content shall be written to. Not <code>null</code>.
-   * @param delete
-   *          <code>true</code> <=> Delete the unpacked files when the vm exits.
    */
-  public static final void unpack(final File zipfile, File destdir, final boolean delete) {
+  public static final void unpack(final File zipfile, File destdir) {
     Assert.notNull(zipfile);
     Assert.notNull(destdir);
     final byte[] buffer = new byte[16384];
@@ -646,20 +644,11 @@ public class Utilities {
       while (entries.hasMoreElements()) {
         ZipEntry zentry = entries.nextElement();
         if (zentry.isDirectory()) {
-          final File dir = new File(destdir, zentry.getName());
-          mkdirs(dir);
-          if (delete) {
-            dir.deleteOnExit();
-          }
+          mkdirs(new File(destdir, zentry.getName()));
         } else {
           final File destfile = new File(destdir, zentry.getName());
-          final File dir = destfile.getParentFile();
-          mkdirs(dir);
+          mkdirs(destfile.getParentFile());
           copy(zip.getInputStream(zentry), new FileOutputStream(destfile), buffer);
-          if (delete) {
-            destfile.deleteOnExit();
-            dir.deleteOnExit();
-          }
         }
       }
     } catch (IOException ex) {
@@ -745,7 +734,6 @@ public class Utilities {
     try {
       final File result = File.createTempFile("a4e", suffix);
       copy(url, result);
-      result.deleteOnExit();
       return result.getCanonicalFile();
     } catch (IOException ex) {
       throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
