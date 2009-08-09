@@ -11,28 +11,27 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.model.pyre;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.data.Version;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.pydt.model.PythonInterpreter;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Implementation of a registry for {@link PythonRuntime} instances.
@@ -41,53 +40,58 @@ import java.util.Properties;
  */
 public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
-  private static final String[]      EXENAMES                 = new String[] { "python", "pythonw", "ipy", "ipyw",
-      "jython"                                               };
+  private static final String        PROP_INTERPRETER            = "interpreter.";
 
-  private static final String[]      EXESUFFICES              = new String[] { "", ".exe", ".bat" };
+  private static final String        MSG_CANONICALFILE           = "Failed to get a canonical filesystem location from the path '%s' !";
 
-  private static final String        MSG_CANONICALFILE        = "Failed to get a canonical filesystem location from the path '%s' !";
+  private static final String        MSG_DUPLICATERUNTIME        = "An attempt has been made to register a python runtime using the id '%s' with different locations: '%s' <-> '%s' !";
 
-  private static final String        MSG_DUPLICATERUNTIME     = "An attempt has been made to register a python runtime using the id '%s' with different locations: '%s' <-> '%s' !";
+  private static final String        MSG_FAILEDLAUNCHING         = "Failed to launch executable '%s' (returncode %d).\nOutput:\n%sError:\n%s";
 
-  private static final String        MSG_FAILEDLAUNCHING      = "Failed to launch executable '%s' (returncode %d).\nOutput:\n%sError:\n%s";
+  private static final String        MSG_FAILEDTOREADOUTPUT      = "Failed to read the output. Cause: %s";
 
-  private static final String        MSG_FAILEDTOREADOUTPUT   = "Failed to read the output. Cause: %s";
+  private static final String        MSG_INVALIDDEFAULTID        = "A python runtime with the id '%s' needs to be registered first !";
 
-  private static final String        MSG_INVALIDDEFAULTID     = "A python runtime with the id '%s' needs to be registered first !";
+  private static final String        MSG_MISSINGEXECUTABLES      = "The python properties file 'python.properties' lacks executable definitions for key '%s' !";
 
-  private static final String        MSG_MISSINGPYTHONLISTER  = "The python script 'lister.py' is not available on the classpath (org/ant4eclipse/pydt) !";
+  private static final String        MSG_MISSINGPYTHONLISTER     = "The python script 'lister.py' is not available on the classpath (org/ant4eclipse/pydt) !";
 
-  private static final String        MSG_NODEFAULTRUNTIME     = "A default python runtime could not be determined !";
+  private static final String        MSG_MISSINGPYTHONPROPERTIES = "The python properties file 'python.properties' is not available on the classpath (org/ant4eclipse/pydt) !";
 
-  private static final String        MSG_REGISTEREDRUNTIME    = "Registered runtime with id '%s' for the location '%s'.";
+  private static final String        MSG_NODEFAULTRUNTIME        = "A default python runtime could not be determined !";
 
-  private static final String        MSG_REPEATEDREGISTRATION = "A python runtime with the id '%s' and the location '%s' has been registered multiple times !";
+  private static final String        MSG_REGISTEREDRUNTIME       = "Registered runtime with id '%s' for the location '%s'.";
 
-  private static final String        MSG_UNSUPPORTEDRUNTIME   = "The python installation with the id '%s' and the location '%s' is not supported !";
+  private static final String        MSG_REPEATEDREGISTRATION    = "A python runtime with the id '%s' and the location '%s' has been registered multiple times !";
 
-  private static final String        MARKER_BEGIN             = "ANT4ECLIPSE-BEGIN";
+  private static final String        MSG_UNSUPPORTEDRUNTIME      = "The python installation with the id '%s' and the location '%s' is not supported !";
 
-  private static final String        MARKER_END               = "ANT4ECLIPSE-END";
+  private static final String        MARKER_BEGIN                = "ANT4ECLIPSE-BEGIN";
 
-  private static final String        NAME_SITEPACKAGES        = "site-packages";
+  private static final String        MARKER_END                  = "ANT4ECLIPSE-END";
 
-  private Map<String, PythonRuntime> _runtimes                = new Hashtable<String, PythonRuntime>();
+  private static final String        NAME_SITEPACKAGES           = "site-packages";
 
-  private String                     _defaultid               = null;
+  private Map<String, PythonRuntime> _runtimes                   = new Hashtable<String, PythonRuntime>();
 
-  private File                       _pythonlister            = null;
+  private String                     _defaultid                  = null;
 
-  private File                       _listerdir               = null;
+  private File                       _pythonlister               = null;
 
-  private File                       _currentdir              = null;
+  private File                       _listerdir                  = null;
+
+  private File                       _currentdir                 = null;
+
+  private PythonInterpreter[]        _interpreters               = null;
 
   /**
    * Initialises this registry used to access python runtimes.
    */
   public PythonRuntimeRegistryImpl() {
-    URL url = getClass().getResource("/org/ant4eclipse/pydt/lister.py");
-    if (url == null) {
+
+    // export the python lister script, so it can be executed in order to access the pythonpath
+    final URL listerurl = getClass().getResource("/org/ant4eclipse/pydt/lister.py");
+    if (listerurl == null) {
       throw new BuildException(MSG_MISSINGPYTHONLISTER);
     }
     try {
@@ -102,7 +106,33 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
     } catch (IOException ex) {
       throw new BuildException(ex);
     }
-    Utilities.copy(url, _pythonlister);
+    Utilities.copy(listerurl, _pythonlister);
+
+    // load the python interpreter configurations
+    final URL cfgurl = getClass().getResource("/org/ant4eclipse/pydt/python.properties");
+    if (cfgurl == null) {
+      throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
+    }
+    try {
+      final Map<String, String> props = Utilities.readProperties(cfgurl);
+      final List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
+      for (final Map.Entry<String, String> entry : props.entrySet()) {
+        if (entry.getKey().startsWith(PROP_INTERPRETER)) {
+          final String name = entry.getKey().substring(PROP_INTERPRETER.length());
+          final String[] exes = Utilities.cleanup(entry.getValue().split(","));
+          if (exes == null) {
+            throw new ExtendedBuildException(MSG_MISSINGEXECUTABLES, entry.getKey());
+          }
+          Arrays.sort(exes);
+          interpreters.add(new PythonInterpreter(name, exes));
+        }
+      }
+      _interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
+      Arrays.sort(_interpreters);
+    } catch (IOException ex) {
+      throw new BuildException(ex);
+    }
+
   }
 
   /**
@@ -114,12 +144,10 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * @return The filesystem location of an interpreter or <code>null</code> if none could be found.
    */
   private File lookupInterpreter(final File location) {
-    for (String exename : EXENAMES) {
-      for (String suffix : EXESUFFICES) {
-        final File candidate = new File(location, exename + suffix);
-        if (candidate.isFile()) {
-          return candidate;
-        }
+    for (final PythonInterpreter interpreter : _interpreters) {
+      final File result = interpreter.lookup(location);
+      if (result != null) {
+        return result;
       }
     }
     return null;
@@ -312,18 +340,11 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
     return _runtimes.get(id);
   }
 
-  public static final void main(String[] args) throws Exception {
-    Properties props = new Properties();
-    File f = new File("Q:/workspace-a4e/sample/dummy/org/ant4eclipse/ant4eclipse-configuration.properties");
-    props.load(new FileInputStream(f));
-    System.err.println(props);
-    Ant4EclipseConfigurator.configureAnt4Eclipse(props);
-    PythonRuntimeRegistryImpl impl = new PythonRuntimeRegistryImpl();
-    // impl.registerRuntime("def", new File("K:/programme/python/2.6"));
-    // impl.registerRuntime("def", new File("K:/programme/python/3.1"));
-    impl.registerRuntime("def", new File("K:/programme/ironpython/2.0"), false);
-    // impl.registerRuntime("def", new File("K:/programme/jython/2.5"));
-    System.err.println(impl.getRuntime("def"));
+  /**
+   * {@inheritDoc}
+   */
+  public PythonInterpreter[] getSupportedInterpreters() {
+    return _interpreters;
   }
 
 } /* ENDCLASS */

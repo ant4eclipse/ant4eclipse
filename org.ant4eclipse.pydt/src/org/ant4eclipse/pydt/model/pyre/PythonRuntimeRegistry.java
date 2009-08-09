@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model.pyre;
 
+import org.ant4eclipse.pydt.model.PythonInterpreter;
+
 import java.io.File;
 
 /**
@@ -69,5 +71,12 @@ public interface PythonRuntimeRegistry {
    * @return The default python runtime. Not <code>null</code>.
    */
   PythonRuntime getRuntime();
+
+  /**
+   * Returns a list of supported python interpreters.
+   * 
+   * @return A list of supported python interpreters. Not <code>null</code>.
+   */
+  PythonInterpreter[] getSupportedInterpreters();
 
 } /* ENDINTERFACE */
