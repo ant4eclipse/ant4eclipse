@@ -20,7 +20,7 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonInterpreter {
+public class PythonInterpreter implements Comparable<PythonInterpreter> {
 
   private static final String[] EXESUFFICES = new String[] { "", ".exe", ".bat" };
 
@@ -135,6 +135,13 @@ public class PythonInterpreter {
     }
     buffer.append("}]");
     return buffer.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public int compareTo(PythonInterpreter other) {
+    return _name.compareTo(other._name);
   }
 
 } /* ENDCLASS */
