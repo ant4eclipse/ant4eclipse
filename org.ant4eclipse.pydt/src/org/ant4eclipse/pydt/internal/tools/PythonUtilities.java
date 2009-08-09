@@ -12,12 +12,15 @@
 package org.ant4eclipse.pydt.internal.tools;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.service.ServiceRegistry;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
+import org.ant4eclipse.pydt.model.PythonInterpreter;
 import org.ant4eclipse.pydt.model.project.PyDLTKProjectRole;
 import org.ant4eclipse.pydt.model.project.PyDevProjectRole;
+import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
 
 /**
  * <p>
@@ -83,6 +86,16 @@ public class PythonUtilities {
     } else {
       return false;
     }
+  }
+
+  /**
+   * Returns a list of all known python interpreters.
+   * 
+   * @return A list of all known python interpreters. Not <code>null</code>.
+   */
+  public static final PythonInterpreter[] getPythonInterpreters() {
+    final PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
+    return registry.getSupportedInterpreters();
   }
 
 } /* ENDCLASS */
