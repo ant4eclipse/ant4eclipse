@@ -12,7 +12,7 @@
 package org.ant4eclipse.pydt.internal.tools;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ant.ExtendedBuildException;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 
@@ -267,7 +267,7 @@ public class PydtResolver {
     }
     if (runtime == null) {
       // now runtime available
-      throw new ExtendedBuildException(PydtFailures.UNKNOWN_PYTHON_RUNTIME, value);
+      throw new Ant4EclipseException(PydtFailures.UNKNOWN_PYTHON_RUNTIME, value);
     }
     return new ResolvedRuntimeEntry(runtime.getVersion(), runtime.getLibraries());
   }

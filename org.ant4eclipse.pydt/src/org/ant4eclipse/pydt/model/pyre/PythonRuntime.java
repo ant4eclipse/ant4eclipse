@@ -59,4 +59,11 @@ public interface PythonRuntime {
    */
   PythonInterpreter getInterpreter();
 
+  /**
+   * Returns the location of the executable responsible to launch the python scripts.
+   * 
+   * @return The location of the executable responsible to launch the python scripts. Not <code>null</code>.
+   */
+  File getExecutable();
+
 } /* ENDINTERFACE */

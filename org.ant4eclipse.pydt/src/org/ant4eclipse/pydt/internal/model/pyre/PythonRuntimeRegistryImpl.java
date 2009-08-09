@@ -47,11 +47,11 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
 
   private static final String        MSG_DUPLICATERUNTIME        = "An attempt has been made to register a python runtime using the id '%s' with different locations: '%s' <-> '%s' !";
 
-  private static final String        MSG_FAILEDLAUNCHING         = "Failed to launch executable '%s' (returncode %d).\nOutput:\n%sError:\n%s";
-
   private static final String        MSG_FAILEDTOREADOUTPUT      = "Failed to read the output. Cause: %s";
 
   private static final String        MSG_INVALIDDEFAULTID        = "A python runtime with the id '%s' needs to be registered first !";
+
+  private static final String        MSG_INVALIDOUTPUT           = "The executable '%s' produced invalid output.\nOutput:\n%sError:\n%s";
 
   private static final String        MSG_MISSINGEXECUTABLES      = "The python properties file 'python.properties' lacks executable definitions for key '%s' !";
 
@@ -151,17 +151,12 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     // launch the python lister script to access the python path
     StringBuffer output = new StringBuffer();
     StringBuffer error = new StringBuffer();
-    int result = Utilities.execute(interpreter, output, error, _pythonlister.getAbsolutePath());
-    if (result != 0) {
-      // returncode is not 0
-      A4ELogging.debug(MSG_FAILEDLAUNCHING, interpreter, Integer.valueOf(result), output, error);
-      throw new ExtendedBuildException(MSG_UNSUPPORTEDRUNTIME, id, location);
-    }
+    Utilities.execute(interpreter, output, error, _pythonlister.getAbsolutePath());
 
     String[] extraction = extractOutput(output.toString(), sitepackages);
     if (extraction == null) {
       // returncode is 0
-      A4ELogging.debug(MSG_FAILEDLAUNCHING, interpreter, Integer.valueOf(result), output, error);
+      A4ELogging.debug(MSG_INVALIDOUTPUT, interpreter, output, error);
       throw new ExtendedBuildException(MSG_UNSUPPORTEDRUNTIME, id, location);
     }
 

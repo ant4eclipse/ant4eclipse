@@ -36,6 +36,8 @@ class PythonRuntimeImpl implements PythonRuntime {
 
   private PythonInterpreter _interpreter;
 
+  private File              _executable;
+
   /**
    * Initialises this runtime implementation.
    * 
@@ -56,6 +58,7 @@ class PythonRuntimeImpl implements PythonRuntime {
     _location = location;
     _version = version;
     _interpreter = interpreter;
+    _executable = _interpreter.lookup(_location);
     _libs = libs;
     Arrays.sort(_libs);
   }
@@ -93,6 +96,13 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   public PythonInterpreter getInterpreter() {
     return _interpreter;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public File getExecutable() {
+    return _executable;
   }
 
   /**
