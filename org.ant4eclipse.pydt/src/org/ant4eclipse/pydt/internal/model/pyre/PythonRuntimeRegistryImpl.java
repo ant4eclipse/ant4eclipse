@@ -82,6 +82,9 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
   private File                       _currentdir              = null;
 
+  /**
+   * Initialises this registry used to access python runtimes.
+   */
   public PythonRuntimeRegistryImpl() {
     URL url = getClass().getResource("/org/ant4eclipse/pydt/lister.py");
     if (url == null) {
