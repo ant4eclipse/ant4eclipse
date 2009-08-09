@@ -20,33 +20,12 @@ public class Ant4EclipseException extends RuntimeException {
 
   private final Object[]      _args;
 
-  public Ant4EclipseException(final ExceptionCode exceptionCode, final Throwable cause, final Object... args) {
+  public Ant4EclipseException(final Throwable cause, final ExceptionCode exceptionCode, final Object... args) {
     super(cause);
 
     this._exceptionCode = exceptionCode;
     this._args = args;
 
-  }
-
-  /**
-   * @param exceptionCode
-   */
-  public Ant4EclipseException(final ExceptionCode exceptionCode) {
-    super();
-
-    this._exceptionCode = exceptionCode;
-    this._args = new Object[] {};
-  }
-
-  /**
-   * @param exceptionCode
-   * @param arg
-   */
-  public Ant4EclipseException(final ExceptionCode exceptionCode, final Object arg) {
-    super();
-
-    this._exceptionCode = exceptionCode;
-    this._args = new Object[] { arg };
   }
 
   /**
@@ -57,7 +36,7 @@ public class Ant4EclipseException extends RuntimeException {
     super();
 
     this._exceptionCode = exceptionCode;
-    this._args = args;
+    this._args = args != null ? args : new Object[0];
   }
 
   public ExceptionCode getExceptionCode() {

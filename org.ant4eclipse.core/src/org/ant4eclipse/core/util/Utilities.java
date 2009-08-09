@@ -792,11 +792,9 @@ public class Utilities {
    *          A buffer for the output stream. Maybe <code>null</code>.
    * @param args
    *          The arguments for the execution. Maybe <code>null</code>.
-   * 
-   * @return The returncode of the executed file.
    */
-  public static final int execute(final File exe, final StringBuffer output, final String... args) {
-    return execute(exe, output, null, args);
+  public static final void execute(final File exe, final StringBuffer output, final String... args) {
+    execute(exe, output, null, args);
   }
 
   /**
@@ -811,13 +809,18 @@ public class Utilities {
    *          A buffer for the error stream. Maybe <code>null</code>.
    * @param args
    *          The arguments for the execution. Maybe <code>null</code>.
-   * 
-   * @return The returncode of the executed file.
    */
-  public static final int execute(final File exe, final StringBuffer output, final StringBuffer error,
-      final String... args) {
+  public static final void execute(final File exe, StringBuffer output, StringBuffer error, final String... args) {
 
     try {
+
+      if (output == null) {
+        output = new StringBuffer();
+      }
+
+      if (error == null) {
+        error = new StringBuffer();
+      }
 
       String[] cmdarray = null;
       if (args == null) {
@@ -828,14 +831,16 @@ public class Utilities {
         System.arraycopy(args, 0, cmdarray, 1, args.length);
       }
 
-      String[] env = null; // new String[] { "PYTHONPATH=Q:/workspace-a4e/org.ant4eclipse.pydt/epydoc.egg" };
-
-      Process process = Runtime.getRuntime().exec(cmdarray, env);
+      Process process = Runtime.getRuntime().exec(cmdarray);
       OutputCopier outcopier = new OutputCopier(process.getInputStream(), output);
       OutputCopier errcopier = new OutputCopier(process.getErrorStream(), error);
       outcopier.start();
       errcopier.start();
-      return process.waitFor();
+      int result = process.waitFor();
+      if (result != 0) {
+        A4ELogging.error(CoreExceptionCode.LAUNCHING_FAILURE.getMessage(), exe, Integer.valueOf(result), output, error);
+        throw new Ant4EclipseException(CoreExceptionCode.LAUNCHING_FAILURE, exe, Integer.valueOf(result), output, error);
+      }
 
     } catch (Exception ex) {
       throw new Ant4EclipseException(CoreExceptionCode.EXECUTION_FAILURE, ex, exe);
@@ -852,7 +857,7 @@ public class Utilities {
 
     private final BufferedReader _source;
 
-    private StringBuffer         _receiver;
+    private final StringBuffer   _receiver;
 
     /**
      * Initalises this copiying process.
@@ -860,14 +865,11 @@ public class Utilities {
      * @param instream
      *          The stream which provides the content. Not <code>null</code>.
      * @param dest
-     *          The destination buffer used to get the output. Maybe <code>null</code>.
+     *          The destination buffer used to get the output. Not <code>null</code>.
      */
     public OutputCopier(final InputStream instream, final StringBuffer dest) {
       this._source = new BufferedReader(new InputStreamReader(instream));
       this._receiver = dest;
-      if (this._receiver == null) {
-        this._receiver = new StringBuffer();
-      }
     }
 
     /**

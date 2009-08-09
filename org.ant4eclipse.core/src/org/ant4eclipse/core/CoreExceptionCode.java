@@ -95,6 +95,9 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Unpacking the archive '%s' failed.")
   public static CoreExceptionCode UNPACKING_FAILED;
 
+  @NLSMessage("Failed to launch executable '%s' (returncode %d).\nOutput:\n%sError:\n%s")
+  public static CoreExceptionCode LAUNCHING_FAILURE;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }
