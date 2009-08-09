@@ -13,6 +13,7 @@ package org.ant4eclipse.pydt.internal.model.pyre;
 
 import org.ant4eclipse.core.data.Version;
 
+import org.ant4eclipse.pydt.model.PythonInterpreter;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
 
 import java.io.File;
@@ -25,13 +26,15 @@ import java.util.Arrays;
  */
 class PythonRuntimeImpl implements PythonRuntime {
 
-  private String  _id;
+  private String            _id;
 
-  private File    _location;
+  private File              _location;
 
-  private Version _version;
+  private Version           _version;
 
-  private File[]  _libs;
+  private File[]            _libs;
+
+  private PythonInterpreter _interpreter;
 
   /**
    * Initialises this runtime implementation.
@@ -44,11 +47,15 @@ class PythonRuntimeImpl implements PythonRuntime {
    *          The version of this runtime. Not <code>null</code>.
    * @param libs
    *          The libraries associated with this runtime. Not <code>null</code>.
+   * @param interpreter
+   *          The interpreter associated with this runtime. Not <code>null</code>.
    */
-  public PythonRuntimeImpl(final String id, final File location, final Version version, final File[] libs) {
+  public PythonRuntimeImpl(final String id, final File location, final Version version, final File[] libs,
+      final PythonInterpreter interpreter) {
     _id = id;
     _location = location;
     _version = version;
+    _interpreter = interpreter;
     _libs = libs;
     Arrays.sort(_libs);
   }
@@ -84,6 +91,13 @@ class PythonRuntimeImpl implements PythonRuntime {
   /**
    * {@inheritDoc}
    */
+  public PythonInterpreter getInterpreter() {
+    return _interpreter;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(final Object object) {
     if (this == object) {
@@ -108,6 +122,9 @@ class PythonRuntimeImpl implements PythonRuntime {
     if (_libs.length != other._libs.length) {
       return false;
     }
+    if (!_interpreter.equals(other._interpreter)) {
+      return false;
+    }
     for (int i = 0; i < _libs.length; i++) {
       if (!_libs[i].equals(other._libs[i])) {
         return false;
@@ -124,6 +141,7 @@ class PythonRuntimeImpl implements PythonRuntime {
     int result = _id.hashCode();
     result = 31 * result + _location.hashCode();
     result = 31 * result + _version.hashCode();
+    result = 31 * result + _interpreter.hashCode();
     for (int i = 0; i < _libs.length; i++) {
       result = 31 * result + _libs[i].hashCode();
     }
@@ -143,6 +161,8 @@ class PythonRuntimeImpl implements PythonRuntime {
     buffer.append(_location);
     buffer.append(", _version: ");
     buffer.append(_version);
+    buffer.append(", _interpreter: ");
+    buffer.append(_interpreter);
     buffer.append(", _libs: {");
     buffer.append(_libs[0]);
     for (int i = 1; i < _libs.length; i++) {

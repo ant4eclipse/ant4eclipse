@@ -91,13 +91,13 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * @param location
    *          The location of a python installation. Not <code>null</code>.
    * 
-   * @return The filesystem location of an interpreter or <code>null</code> if none could be found.
+   * @return The interpreter or <code>null</code> if none could be found.
    */
-  private File lookupInterpreter(final File location) {
+  private PythonInterpreter lookupInterpreter(final File location) {
     for (final PythonInterpreter interpreter : _interpreters) {
       final File result = interpreter.lookup(location);
       if (result != null) {
-        return result;
+        return interpreter;
       }
     }
     return null;
@@ -142,10 +142,11 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     }
 
     // register the new runtime but we need to identify the corresponding libraries
-    final File interpreter = lookupInterpreter(location);
-    if (interpreter == null) {
+    PythonInterpreter python = lookupInterpreter(location);
+    if (python == null) {
       throw new ExtendedBuildException(MSG_UNSUPPORTEDRUNTIME, id, location);
     }
+    final File interpreter = python.lookup(location);
 
     // launch the python lister script to access the python path
     StringBuffer output = new StringBuffer();
@@ -171,7 +172,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
       libs[i] = new File(extraction[i + 1]);
     }
 
-    final PythonRuntime newruntime = new PythonRuntimeImpl(id, location, version, libs);
+    final PythonRuntime newruntime = new PythonRuntimeImpl(id, location, version, libs, python);
     A4ELogging.debug(MSG_REGISTEREDRUNTIME, id, location);
     _runtimes.put(id, newruntime);
 
@@ -295,18 +296,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    */
   public PythonInterpreter[] getSupportedInterpreters() {
     return _interpreters;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public PythonInterpreter lookupInterpreter(final PythonRuntime runtime) {
-    for (final PythonInterpreter interpreter : _interpreters) {
-      if (interpreter.lookup(runtime.getLocation()) != null) {
-        return interpreter;
-      }
-    }
-    return null;
   }
 
   /**

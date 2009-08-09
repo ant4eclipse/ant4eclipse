@@ -79,14 +79,4 @@ public interface PythonRuntimeRegistry {
    */
   PythonInterpreter[] getSupportedInterpreters();
 
-  /**
-   * Looks for a PythonInterpreter that supports a specified runtime.
-   * 
-   * @param runtime
-   *          The runtime which needs to be supported by an interpreter. Not <code>null</code>.
-   * 
-   * @return The PythonInterpreter usable for the supplied runtime. Maybe <code>null</code> if no match could found.
-   */
-  PythonInterpreter lookupInterpreter(final PythonRuntime runtime);
-
 } /* ENDINTERFACE */

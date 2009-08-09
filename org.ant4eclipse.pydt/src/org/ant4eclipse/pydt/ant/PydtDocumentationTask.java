@@ -33,19 +33,17 @@ import java.util.StringTokenizer;
  */
 public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
 
-  private static final String SCRIPT                 = "import sys\n" + "if __name__ == \"__main__\":\n"
-                                                         + "  sys.path.append(\"%s\")\n" + "  from %s import cli\n"
-                                                         + "  sys.argv=[%s]\n" + "  cli.cli()\n";
+  private static final String SCRIPT               = "import sys\n" + "if __name__ == \"__main__\":\n"
+                                                       + "  sys.path.append(\"%s\")\n" + "  from %s import cli\n"
+                                                       + "  sys.argv=[%s]\n" + "  cli.cli()\n";
 
-  private static final String MSG_MISSINGATTRIBUTE   = "The attribute '%s' has not been set !";
+  private static final String MSG_MISSINGATTRIBUTE = "The attribute '%s' has not been set !";
 
-  private static final String MSG_MISSINGSOURCES     = "Neither the attribute 'sourcedir' nor a nested 'fileset' element has been specified !";
+  private static final String MSG_MISSINGSOURCES   = "Neither the attribute 'sourcedir' nor a nested 'fileset' element has been specified !";
 
-  private static final String MSG_NOTADIRECTORY      = "The path '%s' doesn't refer to a directory !";
+  private static final String MSG_NOTADIRECTORY    = "The path '%s' doesn't refer to a directory !";
 
-  private static final String MSG_UNKNOWNRUNTIME     = "The runtime with the id '%s' is not registered !";
-
-  private static final String MSG_UNSUPPORTEDRUNTIME = "The runtime with the id '%s' is not supported !";
+  private static final String MSG_UNKNOWNRUNTIME   = "The runtime with the id '%s' is not registered !";
 
   private String              _runtimeid;
 
@@ -142,10 +140,7 @@ public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
     final PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
     final PythonTools pythontools = ServiceRegistry.instance().getService(PythonTools.class);
     final PythonRuntime runtime = registry.getRuntime(_runtimeid);
-    final PythonInterpreter interpreter = registry.lookupInterpreter(runtime);
-    if (interpreter == null) {
-      throw new ExtendedBuildException(MSG_UNSUPPORTEDRUNTIME, _runtimeid);
-    }
+    final PythonInterpreter interpreter = runtime.getInterpreter();
     final File executable = interpreter.lookup(runtime.getLocation());
     String[] modules = collectModules();
     StringBuffer buffer = new StringBuffer();
@@ -158,8 +153,7 @@ public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
     _destdir.mkdirs();
     final String args = String.format("\"--html\", \"-o\", \"%s\", \"%s\"", pythonEscape(_destdir.getAbsolutePath()),
         buffer);
-    File install = pythontools.getEpydocInstallation();
-    install = new File(install.getParentFile(), "epydoc.zip");
+    final File install = pythontools.getEpydocInstallation();
     final String name = Utilities.stripSuffix(install.getName());
     final String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, args);
     final File script = Utilities.createFile(code, ".py");

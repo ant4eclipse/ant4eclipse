@@ -13,6 +13,8 @@ package org.ant4eclipse.pydt.model.pyre;
 
 import org.ant4eclipse.core.data.Version;
 
+import org.ant4eclipse.pydt.model.PythonInterpreter;
+
 import java.io.File;
 
 /**
@@ -49,5 +51,12 @@ public interface PythonRuntime {
    * @return A list of all libraries. Not <code>null</code>.
    */
   File[] getLibraries();
+
+  /**
+   * Returns a datastructure representing the associated python interpreter.
+   * 
+   * @return A datastructure representing the associated python interpreter. Not <code>null</code>.
+   */
+  PythonInterpreter getInterpreter();
 
 } /* ENDINTERFACE */
