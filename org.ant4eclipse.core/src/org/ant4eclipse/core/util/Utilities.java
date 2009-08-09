@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -37,6 +38,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * <p>
@@ -614,18 +617,180 @@ public class Utilities {
       instream = source.openStream();
       outstream = new FileOutputStream(dest);
       byte[] buffer = new byte[16384];
+      copy(instream, outstream, buffer);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, ex, source.toExternalForm(), dest);
+    }
+  }
+
+  /**
+   * Unpacks the content from the supplied zip file into the supplied destination directory.
+   * 
+   * @param zipfile
+   *          The zip file which has to be unpacked. Not <code>null</code> and must be a file.
+   * @param destdir
+   *          The directory where the content shall be written to. Not <code>null</code>.
+   * @param delete
+   *          <code>true</code> <=> Delete the unpacked files when the vm exits.
+   */
+  public static final void unpack(final File zipfile, File destdir, final boolean delete) {
+    Assert.notNull(zipfile);
+    Assert.notNull(destdir);
+    final byte[] buffer = new byte[16384];
+    try {
+      if (!destdir.isAbsolute()) {
+        destdir = destdir.getAbsoluteFile();
+      }
+      final ZipFile zip = new ZipFile(zipfile);
+      Enumeration<? extends ZipEntry> entries = zip.entries();
+      while (entries.hasMoreElements()) {
+        ZipEntry zentry = entries.nextElement();
+        if (zentry.isDirectory()) {
+          final File dir = new File(destdir, zentry.getName());
+          mkdirs(dir);
+          if (delete) {
+            dir.deleteOnExit();
+          }
+        } else {
+          final File destfile = new File(destdir, zentry.getName());
+          final File dir = destfile.getParentFile();
+          mkdirs(dir);
+          copy(zip.getInputStream(zentry), new FileOutputStream(destfile), buffer);
+          if (delete) {
+            destfile.deleteOnExit();
+            dir.deleteOnExit();
+          }
+        }
+      }
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.UNPACKING_FAILED, ex, zipfile);
+    }
+  }
+
+  /**
+   * Copies the complete content from an InputStream into an OutputStream using a specified buffer. Both streams will be
+   * closed after completion or in case an exception comes up.
+   * 
+   * @param instream
+   *          The InputStream providing the content. Not <code>null</code>.
+   * @param outstream
+   *          The OutputStream used to write the content to. Not <code>null</code>.
+   * @param buffer
+   *          The buffer used for the copying process. Not <code>null</code>.
+   * 
+   * @throws IOException
+   *           Copying failed for some reason.
+   */
+  public static final void copy(InputStream instream, final OutputStream outstream, byte[] buffer) throws IOException {
+    Assert.notNull(instream);
+    Assert.notNull(outstream);
+    Assert.notNull(buffer);
+    try {
       int read = instream.read(buffer);
       while (read != -1) {
         if (read > 0) {
           outstream.write(buffer, 0, read);
         }
-        read = instream.read();
+        read = instream.read(buffer);
       }
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, ex, source.toExternalForm(), dest);
     } finally {
       close(outstream);
       close(instream);
+    }
+  }
+
+  /**
+   * Exports a resource which resides on the classpath into a temporarily generated file. This file will be deleted when
+   * the vm will be exited. Therefore the file is just used temporarily. The resource itself must be accessible through
+   * the ClassLoader used to load this class. The suffix will be derived from the resource. If this resource doesn't
+   * contain a suffix the default value <i>.tmp</i> is used.
+   * 
+   * @param resource
+   *          The path for the resource. Must start with a <i>/</i> since each path is based on the root. Neither
+   *          <code>null</code> nor empty.
+   * 
+   * @return The file keeping the exported content.
+   */
+  public static final File exportResource(final String resource) {
+    Assert.nonEmpty(resource);
+    Assert.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
+    String suffix = ".tmp";
+    int lidx = resource.lastIndexOf('.');
+    if (lidx != -1) {
+      suffix = resource.substring(lidx);
+    }
+    return exportResource(resource, suffix);
+  }
+
+  /**
+   * Exports a resource which resides on the classpath into a temporarily generated file. This file will be deleted when
+   * the vm will be exited. Therefore the file is just used temporarily. The resource itself must be accessible through
+   * the ClassLoader used to load this class.
+   * 
+   * @param resource
+   *          The path for the resource. Must start with a <i>/</i> since each path is based on the root. Neither
+   *          <code>null</code> nor empty.
+   * @param suffix
+   *          The suffix used for the exported file. Neither <code>null</code> nor empty.
+   * 
+   * @return The file keeping the exported content.
+   */
+  public static final File exportResource(final String resource, final String suffix) {
+    Assert.nonEmpty(resource);
+    Assert.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
+    final URL url = Utilities.class.getResource(resource);
+    if (url == null) {
+      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
+    }
+    try {
+      final File result = File.createTempFile("a4e", suffix);
+      copy(url, result);
+      result.deleteOnExit();
+      return result.getCanonicalFile();
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+    }
+  }
+
+  /**
+   * Writes some content into a temporary File and gives access to it.
+   * 
+   * @param content
+   *          The content which has to be written. Neither <code>null</code> nor empty.
+   * @param suffix
+   *          The suffix used for the returned File. Neither <code>null</code> nor empty.
+   * 
+   * @return A temporary used file containing the supplied content. Not <code>null</code>.
+   */
+  public static final File createFile(final String content, final String suffix) {
+    OutputStream outstream = null;
+    try {
+      final File result = File.createTempFile("a4e", suffix);
+      outstream = new FileOutputStream(result);
+      outstream.write(content.getBytes());
+      return result.getCanonicalFile();
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+    } finally {
+      close(outstream);
+    }
+  }
+
+  /**
+   * Removes a suffix from a name if it has one.
+   * 
+   * @param name
+   *          The name which suffix has to be removed. Not <code>null</code>.
+   * 
+   * @return The name without the suffix.
+   */
+  public static final String stripSuffix(final String name) {
+    Assert.notNull(name);
+    int lidx = name.lastIndexOf('.');
+    if (lidx != -1) {
+      return name.substring(0, lidx);
+    } else {
+      return name;
     }
   }
 
@@ -675,7 +840,9 @@ public class Utilities {
         System.arraycopy(args, 0, cmdarray, 1, args.length);
       }
 
-      Process process = Runtime.getRuntime().exec(cmdarray);
+      String[] env = null; // new String[] { "PYTHONPATH=Q:/workspace-a4e/org.ant4eclipse.pydt/epydoc.egg" };
+
+      Process process = Runtime.getRuntime().exec(cmdarray, env);
       OutputCopier outcopier = new OutputCopier(process.getInputStream(), output);
       OutputCopier errcopier = new OutputCopier(process.getErrorStream(), error);
       outcopier.start();

@@ -89,6 +89,12 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("IO failed.")
   public static CoreExceptionCode IO_FAILURE;
 
+  @NLSMessage("The resource '%s' is not available on the classpath.")
+  public static CoreExceptionCode RESOURCE_NOT_ON_THE_CLASSPATH;
+
+  @NLSMessage("Unpacking the archive '%s' failed.")
+  public static CoreExceptionCode UNPACKING_FAILED;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }
