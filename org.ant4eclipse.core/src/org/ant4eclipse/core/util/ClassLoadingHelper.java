@@ -11,18 +11,36 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
+import org.ant4eclipse.core.Assert;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.CodeSource;
 
-import org.ant4eclipse.core.Assert;
-
+/**
+ * <p>
+ * Helper class that allows you to load classes either from the ant class loader or the standard class loader.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class ClassLoadingHelper {
 
+  /** the method 'getClasspath' */
   private static final String METHOD_GET_CLASSPATH                      = "getClasspath";
 
+  /** the class 'AntClassLoader' */
   private static final String CLASS_ORG_APACHE_TOOLS_ANT_ANTCLASSLOADER = "org.apache.tools.ant.AntClassLoader";
 
+  /**
+   * <p>
+   * Returns the class path entries for the specified class.
+   * </p>
+   * 
+   * @param clazz
+   *          the class
+   * @return the class path entries for the specified class.
+   */
   public static String[] getClasspathEntriesFor(final Class<?> clazz) {
     Assert.notNull(clazz);
 

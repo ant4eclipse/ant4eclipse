@@ -1,26 +1,53 @@
 package org.ant4eclipse.core.util;
 
+/**
+ * <p>
+ * Implements a stop watch.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class StopWatch {
 
-  private long    startTime   = 0;
+  /** the start time */
+  private long    startTime = 0;
 
-  private long    stopTime    = 0;
+  /** the stop time */
+  private long    stopTime  = 0;
 
-  private boolean _inProgress = false;
+  /** is the stop watch running? */
+  private boolean _running  = false;
 
+  /**
+   * <p>
+   * Starts the stop watch.
+   * </p>
+   */
   public void start() {
     this.startTime = System.currentTimeMillis();
-    this._inProgress = true;
+    this._running = true;
   }
 
+  /**
+   * <p>
+   * Stops the stop watch.
+   * </p>
+   */
   public void stop() {
     this.stopTime = System.currentTimeMillis();
-    this._inProgress = false;
+    this._running = false;
   }
 
+  /**
+   * <p>
+   * Returns the elapsed time.
+   * </p>
+   * 
+   * @return the elapsed time.
+   */
   public long getElapsedTime() {
     long elapsed;
-    if (this._inProgress) {
+    if (this._running) {
       elapsed = (System.currentTimeMillis() - this.startTime);
     } else {
       elapsed = (this.stopTime - this.startTime);

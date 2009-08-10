@@ -320,16 +320,4 @@ public class ManifestHelper {
     }
 
   }
-  //
-  // public static void main(final String[] args) {
-  // final String test = "test2;include:=\"Intern\"";
-  // // final String test = "test1;fest1;res1t=\"\\\"ferd1,nerd1\\\"\",tes2t;fest2;rest2=\"ferd2,nerd2\"";
-  //
-  // // System.out.println(test);
-  // final ManifestHeaderElement[] result = ManifestHelper.getManifestHeaderElements(test);
-  //
-  // for (int i = 0; i < result.length; i++) {
-  // System.err.println(i + " : " + result[i]);
-  // }
-  // }
 }
