@@ -17,29 +17,48 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * <p>
+ * Helper class that allows you to resolve referenced projects.
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ReferencedProjectsResolverServiceImpl implements ReferencedProjectsResolverService {
 
+  /** - */
   private static final String                     REFERENCED_PROJECTS_RESOLVER_PREFIX = "referencedProjectsResolver";
 
   /** - */
   private Map<String, ReferencedProjectsResolver> _referencedProjectsResolvers;
 
+  /** - */
   private boolean                                 _initialized                        = false;
 
+  /**
+   * {@inheritDoc}
+   */
   public String[] getReferenceTypes() {
+
+    // lazy initialization of the resolver services
     init();
+
+    // return all known reference types
     return this._referencedProjectsResolvers.keySet().toArray(new String[0]);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, String[] referenceTypes,
       List<Object> additionalElements) {
+
+    // lazy initialization of the resolver services
     init();
 
     Set<EclipseProject> result = new HashSet<EclipseProject>();
 
     referenceTypes = Utilities.cleanup(referenceTypes);
+
     if (referenceTypes != null) {
       for (String referenceType : referenceTypes) {
         if (this._referencedProjectsResolvers.containsKey(referenceType)) {
