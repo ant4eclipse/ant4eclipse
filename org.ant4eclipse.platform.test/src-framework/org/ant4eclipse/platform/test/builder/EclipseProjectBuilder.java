@@ -37,12 +37,14 @@ public class EclipseProjectBuilder {
 
   private final List<String> _builders;
 
+  private final List<String> _referencedProjects;
+
   public EclipseProjectBuilder(final String projectName) {
     assertNotNull(projectName);
     this._projectName = projectName;
     this._natures = new LinkedList<String>();
     this._builders = new LinkedList<String>();
-
+    this._referencedProjects = new LinkedList<String>();
   }
 
   /**
@@ -52,27 +54,18 @@ public class EclipseProjectBuilder {
     return this._projectName;
   }
 
-  // /**
-  // * TODO move to PDE layer
-  // *
-  // * @return
-  // */
-  // public EclipseProjectBuilder withRequiredPluginsContainer() {
-  // _requiredPluginsContainer = true;
-  // return this;
-  // }
-
   public EclipseProjectBuilder withNature(String natureId) {
     assertNotNull(natureId);
     this._natures.add(natureId);
     return this;
   }
 
-  //
-  // public EclipseProjectCreator withPluginNature() {
-  // return withJavaNature().withNature(PluginProjectRole.PLUGIN_NATURE);
-  // }
-  //
+  public EclipseProjectBuilder withProjectReference(String referencedProject) {
+    assertNotNull(referencedProject);
+    this._referencedProjects.add(referencedProject);
+    return this;
+  }
+
   public EclipseProjectBuilder withBuilder(String buildCmd) {
     assertNotNull(buildCmd);
 
@@ -103,8 +96,16 @@ public class EclipseProjectBuilder {
   protected void createProjectFile(File projectDir) {
     final StringBuffer dotProject = new StringBuffer();
     dotProject.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(NL).append("<projectDescription><name>")
-        .append(this._projectName).append("</name>").append("<comment/><projects/>").append(NL).append("<buildSpec>")
-        .append(NL);
+        .append(this._projectName).append("</name>").append("<comment/>").append(NL);
+
+    dotProject.append("<projects>");
+    for (String referencedProject : this._referencedProjects) {
+      dotProject.append("<project>").append(referencedProject).append("</project>").append(NL);
+    }
+
+    dotProject.append("</projects>").append(NL);
+
+    dotProject.append(NL).append("<buildSpec>").append(NL);
     Iterator<String> it = this._builders.iterator();
     while (it.hasNext()) {
       final String builder = it.next();

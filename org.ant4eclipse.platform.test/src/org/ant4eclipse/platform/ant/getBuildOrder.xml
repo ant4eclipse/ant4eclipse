@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<project name="execute-project-builders-test" basedir="." default="foo">
+
+	<!-- definition of condition HasNature -->
+	<typedef name="getBuildOrder"
+	         classname="org.ant4eclipse.platform.ant.GetBuildOrderTask" />
+
+	<target name="getBuildOrder">
+
+		<getBuildOrder workspace="${workspaceDir}"
+		               teamprojectset="projectSet.psf"
+		               buildOrderProperty="test" />
+
+		<echo>${test}</echo>
+
+	</target>
+
+	<!-- default dummy target -->
+	<target name="foo" />
+</project>
