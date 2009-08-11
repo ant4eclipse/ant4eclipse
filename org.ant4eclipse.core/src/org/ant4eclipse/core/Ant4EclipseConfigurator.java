@@ -31,6 +31,8 @@ import org.apache.tools.ant.Project;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class Ant4EclipseConfigurator {
+  
+  murks;
 
   /**
    * <p>
