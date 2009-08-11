@@ -177,11 +177,6 @@
 
 		<copy toDir="${destination}/merged/classes">
 			<fileset dir="${executeJdtProject.output.directory}">
-				<include name="**/*.profile" />
-				<include name="**/*.list" />
-				<include name="**/*.xml" />
-				<include name="**/*.properties" />
-				<include name="**/*.py" />
 				<exclude name="**/antlib.xml" />
 				<exclude name="**/ant4eclipse-configuration.properties" />
 			</fileset>
