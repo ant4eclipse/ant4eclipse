@@ -24,7 +24,7 @@ public interface Lifecycle {
   boolean isInitialized();
 
   /**
-   * Initialises this service.
+   * Initializes this service.
    */
   void initialize();
 

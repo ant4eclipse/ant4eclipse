@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.core.dependencygraph;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 /**
  * <p>
@@ -50,6 +50,9 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
+ * 
+ * @param <T>
+ *          the type of the vertices
  */
 public final class DependencyGraph<T> {
 
@@ -151,8 +154,8 @@ public final class DependencyGraph<T> {
     final boolean[][] matrix = new boolean[this._vertices.size()][this._vertices.size()];
 
     // fill the diagonale
-    for (int i = 0; i < matrix.length; i++) {
-      Arrays.fill(matrix[i], false);
+    for (boolean[] element : matrix) {
+      Arrays.fill(element, false);
     }
 
     // set each value to true iff there is a relationship form first to second...
@@ -313,8 +316,8 @@ public final class DependencyGraph<T> {
   private int sum(final boolean[] row) {
     int result = 0;
 
-    for (int i = 0; i < row.length; i++) {
-      if (row[i]) {
+    for (boolean element : row) {
+      if (element) {
         result++;
       }
     }
@@ -329,6 +332,9 @@ public final class DependencyGraph<T> {
    * </p>
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   * 
+   * @param <T>
+   *          the type of the vertices
    */
   public interface VertexRenderer<T> {
 
@@ -350,6 +356,9 @@ public final class DependencyGraph<T> {
    * </p>
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   * 
+   * @param <T>
+   *          the type of the vertices
    */
   public static class Edge<T> {
     /** parent */
@@ -401,6 +410,7 @@ public final class DependencyGraph<T> {
     /**
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode() {
       final int PRIME = 31;
       int result = 1;
@@ -413,6 +423,7 @@ public final class DependencyGraph<T> {
      * @see java.lang.Object#equals(java.lang.Object)
      */
 
+    @Override
     public boolean equals(final Object obj) {
       if (this == obj) {
         return true;
@@ -437,6 +448,7 @@ public final class DependencyGraph<T> {
     /**
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
       final StringBuffer result = new StringBuffer();
       result.append("[Edge");

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
-import java.util.Properties;
-
 import org.ant4eclipse.core.ant.AntBasedLogger;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
@@ -21,10 +19,14 @@ import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
+
 import org.apache.tools.ant.Project;
+
+import java.util.Properties;
 
 /**
  * <p>
+ * The class {@link Ant4EclipseConfigurator} provides static methods to configure Ant4Eclipse.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -34,9 +36,11 @@ public class Ant4EclipseConfigurator {
 
   /**
    * <p>
+   * Configures Ant4Eclipse in a ant based environment (the standard case).
    * </p>
    * 
    * @param project
+   *          the ant project
    */
   public static void configureAnt4Eclipse(final Project project) {
     if (!ServiceRegistry.isConfigured()) {
@@ -44,12 +48,25 @@ public class Ant4EclipseConfigurator {
     }
   }
 
+  /**
+   * <p>
+   * Configures Ant4Eclipse in a non-ant based environment.
+   * </p>
+   */
   public static void configureAnt4Eclipse() {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new DefaultAnt4EclipseLogger(), new Ant4EclipseConfigurationImpl());
     }
   }
 
+  /**
+   * <p>
+   * Configures Ant4Eclipse in a non-ant based environment.
+   * </p>
+   * 
+   * @param ant4EclipseConfigurationProperties
+   *          the configuration properties
+   */
   public static void configureAnt4Eclipse(final Properties ant4EclipseConfigurationProperties) {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new DefaultAnt4EclipseLogger(),
@@ -58,6 +75,16 @@ public class Ant4EclipseConfigurator {
     }
   }
 
+  /**
+   * <p>
+   * Configures Ant4Eclipse.
+   * </p>
+   * 
+   * @param logger
+   *          the {@link Ant4EclipseLogger}
+   * @param configuration
+   *          the {@link Ant4EclipseConfiguration}
+   */
   private static void configureAnt4Eclipse(final Ant4EclipseLogger logger, final Ant4EclipseConfiguration configuration) {
 
     // configure

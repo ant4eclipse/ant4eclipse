@@ -21,6 +21,9 @@ import org.apache.tools.ant.Location;
  */
 public class ExtendedBuildException extends BuildException {
 
+  /** - */
+  private static final long serialVersionUID = -7175682940553485951L;
+
   /**
    * Constructs a build exception with no descriptive information.
    */
@@ -89,6 +92,8 @@ public class ExtendedBuildException extends BuildException {
    *          A description of or information about the exception. Should not be <code>null</code>.
    * @param location
    *          The location in the project file where the error occurred. Must not be <code>null</code>.
+   * @param args
+   *          the message arguments
    */
   public ExtendedBuildException(String message, Location location, Object... args) {
     super(String.format(message, args), location);

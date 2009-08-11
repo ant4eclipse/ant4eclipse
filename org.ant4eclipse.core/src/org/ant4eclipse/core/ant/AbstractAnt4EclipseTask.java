@@ -55,7 +55,7 @@ public abstract class AbstractAnt4EclipseTask extends Task {
   }
 
   /**
-   * Delegates to {@link #doExecute()} where the actual task logic should be implemented.
+   * Delegates to the <code>doExecute()</code> method where the actual task logic should be implemented.
    */
   @Override
   public final void execute() throws BuildException {

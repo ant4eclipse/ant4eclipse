@@ -29,7 +29,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
   /**
    * <p>
-   * Creates a new instance of type {@link Ant4EclipseConfigurationProperties}.
+   * Creates a new instance of type {@link Ant4EclipseConfigurationImpl}.
    * </p>
    * 
    * @param properties
@@ -44,7 +44,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
   /**
    * <p>
-   * Creates a new instance of type {@link Ant4EclipseConfigurationProperties}.
+   * Creates a new instance of type {@link Ant4EclipseConfigurationImpl}.
    * </p>
    */
   public Ant4EclipseConfigurationImpl() {
