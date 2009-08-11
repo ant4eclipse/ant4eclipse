@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant;
 
-import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
+import java.io.File;
 
 import org.ant4eclipse.jdt.ant.base.AbstractJdtClassPathTest;
-
-import java.io.File;
+import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
 /**
  * <p>
@@ -49,6 +48,6 @@ public class ClasspathContainersTest extends AbstractJdtClassPathTest {
 
     // execute target
     String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File("D:\\test\\hurz.jar"));
+    assertClasspath(classpath, new File("project/bin"), new File(System.getProperty("java.io.tmpdir")));
   }
 }

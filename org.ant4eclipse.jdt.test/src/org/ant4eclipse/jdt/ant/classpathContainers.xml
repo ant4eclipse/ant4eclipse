@@ -11,7 +11,7 @@
 	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
 
 	<jdtClassPathContainer name="testContainer">
-		<fileset dir="D:\test" />
+		<fileset dir="${workspaceDir}" />
 	</jdtClassPathContainer>
 
 	<target name="getJdtClassPath">

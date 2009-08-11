@@ -61,7 +61,7 @@
     <condition property="hasNature">
       <hasNature
         workspace='${workspaceDir}'
-        project='D:\test'
+        project='test'
         nature='org.ant4eclipse.testnature'
       />
     </condition>
