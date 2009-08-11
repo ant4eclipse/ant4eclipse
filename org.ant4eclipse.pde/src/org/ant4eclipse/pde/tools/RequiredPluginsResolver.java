@@ -67,11 +67,8 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // get the TargetPlatformRegistry
     TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
 
-    // TODO!! ERROR MESSAGE
-    Assert.notNull(registry);
-    
     if (containerArgument == null) {
-      throw new Ant4EclipseException(PdeExceptionCode.NO_TARGET_PLATFORM_SET); 
+      throw new Ant4EclipseException(PdeExceptionCode.NO_TARGET_PLATFORM_SET);
     }
 
     // get the TargetPlatform
