@@ -48,6 +48,6 @@ public class ClasspathContainersTest extends AbstractJdtClassPathTest {
 
     // execute target
     String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File(System.getProperty("java.io.tmpdir")));
+    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "project/testFile.txt"));
   }
 }

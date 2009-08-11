@@ -10,12 +10,13 @@
 	<typedef name="getJdtClassPath"
 	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
 
-	<jdtClassPathContainer name="testContainer">
-		<fileset dir="${workspaceDir}" />
-	</jdtClassPathContainer>
+
 
 	<target name="getJdtClassPath">
-
+		<touch file="${workspaceDir}/${projectName}/testFile.txt"/>
+		<jdtClassPathContainer name="testContainer">
+			<fileset dir="${workspaceDir}" includes="${projectName}/testFile.txt"/>
+		</jdtClassPathContainer>
 		<getJdtClassPath workspace="${workspaceDir}"
 		                 relative="${relative}"
 		                 pathSeparator="${pathSeparator}"
