@@ -1,13 +1,13 @@
 package org.ant4eclipse.platform.ant.core.task;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.platform.ant.core.ProjectSetComponent;
-import org.ant4eclipse.platform.ant.core.delegate.ProjectSetDelegate;
-import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
+
+import org.ant4eclipse.platform.ant.core.WorkspaceProjectSetComponent;
+import org.ant4eclipse.platform.ant.core.delegate.WorkspaceProjectSetDelegate;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+
+import java.io.File;
 
 /**
  * <p>
@@ -16,13 +16,11 @@ import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTask implements ProjectSetComponent {
+public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTask implements
+    WorkspaceProjectSetComponent {
 
-  /** the project set delegate */
-  private final ProjectSetDelegate _projectSetDelegate;
-
-  /** the workspace delegate */
-  private final WorkspaceDelegate  _workspaceDelegate;
+  /** the workspace project set delegate */
+  private final WorkspaceProjectSetDelegate _workspaceProjectSetDelegate;
 
   /**
    * <p>
@@ -30,107 +28,121 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    * </p>
    */
   public AbstractProjectSetBasedTask() {
+
     // create the delegates
-    this._projectSetDelegate = new ProjectSetDelegate(this);
-    this._workspaceDelegate = new WorkspaceDelegate(this);
+    this._workspaceProjectSetDelegate = new WorkspaceProjectSetDelegate(this);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final String[] getProjectNames() {
-    return this._projectSetDelegate.getProjectNames();
+  public String[] getProjectNames() {
+    return this._workspaceProjectSetDelegate.getProjectNames();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final TeamProjectSet getTeamProjectSet() {
-    return this._projectSetDelegate.getTeamProjectSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final boolean isProjectNamesSet() {
-    return this._projectSetDelegate.isProjectNamesSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final boolean isTeamProjectSetSet() {
-    return this._projectSetDelegate.isTeamProjectSetSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void requireProjectNamesSet() {
-    this._projectSetDelegate.requireProjectNamesSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void requireTeamProjectSetSet() {
-    this._projectSetDelegate.requireTeamProjectSetSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void requireTeamProjectSetOrProjectNamesSet() {
-    this._projectSetDelegate.requireTeamProjectSetOrProjectNamesSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void setProjectNames(String projectNames) {
-    this._projectSetDelegate.setProjectNames(projectNames);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void setTeamProjectSet(File projectSet) {
-    this._projectSetDelegate.setTeamProjectSet(projectSet);
+  public TeamProjectSet getTeamProjectSet() {
+    return this._workspaceProjectSetDelegate.getTeamProjectSet();
   }
 
   /**
    * {@inheritDoc}
    */
   public Workspace getWorkspace() {
-    return this._workspaceDelegate.getWorkspace();
+    return this._workspaceProjectSetDelegate.getWorkspace();
   }
 
   /**
    * {@inheritDoc}
    */
   public File getWorkspaceDirectory() {
-    return this._workspaceDelegate.getWorkspaceDirectory();
+    return this._workspaceProjectSetDelegate.getWorkspaceDirectory();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isAllProjects() {
+    return this._workspaceProjectSetDelegate.isAllProjects();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isProjectNamesSet() {
+    return this._workspaceProjectSetDelegate.isProjectNamesSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isTeamProjectSetSet() {
+    return this._workspaceProjectSetDelegate.isTeamProjectSetSet();
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean isWorkspaceDirectorySet() {
-    return this._workspaceDelegate.isWorkspaceDirectorySet();
+    return this._workspaceProjectSetDelegate.isWorkspaceDirectorySet();
   }
 
   /**
    * {@inheritDoc}
    */
-  public boolean isWorkspaceSet() {
-    return this._workspaceDelegate.isWorkspaceDirectorySet();
+  public void requireAllProjectsOrProjectSetOrProjectNamesSet() {
+    this._workspaceProjectSetDelegate.requireAllProjectsOrProjectSetOrProjectNamesSet();
   }
 
   /**
    * {@inheritDoc}
    */
-  public void requireWorkspaceSet() {
-    this._workspaceDelegate.requireWorkspaceDirectorySet();
+  public void requireProjectNamesSet() {
+    this._workspaceProjectSetDelegate.requireProjectNamesSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void requireTeamProjectSetOrProjectNamesSet() {
+    this._workspaceProjectSetDelegate.requireTeamProjectSetOrProjectNamesSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void requireTeamProjectSetSet() {
+    this._workspaceProjectSetDelegate.requireTeamProjectSetSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void requireWorkspaceDirectorySet() {
+    this._workspaceProjectSetDelegate.requireWorkspaceDirectorySet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setAllProjects(boolean allprojects) {
+    this._workspaceProjectSetDelegate.setAllProjects(allprojects);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setProjectNames(String projectNames) {
+    this._workspaceProjectSetDelegate.setProjectNames(projectNames);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setTeamProjectSet(File projectSetFile) {
+    this._workspaceProjectSetDelegate.setTeamProjectSet(projectSetFile);
   }
 
   /**
@@ -138,14 +150,14 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    */
   @Deprecated
   public void setWorkspace(File workspace) {
-    this._workspaceDelegate.setWorkspace(workspace);
+    this._workspaceProjectSetDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
   public void setWorkspaceDirectory(File workspaceDirectory) {
-    this._workspaceDelegate.setWorkspaceDirectory(workspaceDirectory);
+    this._workspaceProjectSetDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
 }

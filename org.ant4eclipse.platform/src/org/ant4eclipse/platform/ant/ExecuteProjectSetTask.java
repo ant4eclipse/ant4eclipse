@@ -50,30 +50,51 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(getPathDelegate());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public String[] getProjectReferenceTypes() {
     return this._projectReferenceAwareDelegate.getProjectReferenceTypes();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isProjectReferenceTypesSet() {
     return this._projectReferenceAwareDelegate.isProjectReferenceTypesSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void requireProjectReferenceTypesSet() {
     this._projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setProjectReferenceTypes(String referenceTypes) {
     this._projectReferenceAwareDelegate.setProjectReferenceTypes(referenceTypes);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public String getPrefix() {
     return this._macroExecutionDelegate.getPrefix();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void setPrefix(String prefix) {
     this._macroExecutionDelegate.setPrefix(prefix);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public NestedSequential createScopedMacroDefinition(Scope scope) {
     return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
   }
@@ -85,6 +106,9 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public List<ScopedMacroDefinition<Scope>> getScopedMacroDefinitions() {
     return this._macroExecutionDelegate.getScopedMacroDefinitions();
   }
@@ -92,8 +116,8 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   @Override
   protected void doExecute() {
     // check required attributes
-    requireTeamProjectSetOrProjectNamesSet();
-    requireWorkspaceSet();
+    requireAllProjectsOrProjectSetOrProjectNamesSet();
+    requireWorkspaceDirectorySet();
 
     // calculate build order
     final List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
@@ -131,6 +155,9 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     return createScopedMacroDefinition(Scope.PROJECT);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementDelegate.createDynamicElement(name);
   }

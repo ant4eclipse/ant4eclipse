@@ -11,10 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-import java.util.Iterator;
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
 import org.ant4eclipse.platform.ant.core.SubElementComponent;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
@@ -22,7 +20,11 @@ import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
+
 import org.apache.tools.ant.BuildException;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * <p>
@@ -43,9 +45,6 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
 
   /** the property that should hold the ordered projects */
   private String                              _buildorderProperty;
-
-  /** indicates if all projects in the workspace should be ordered */
-  private boolean                             _allprojects;
 
   /**
    * <p>
@@ -104,18 +103,6 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
 
   /**
    * <p>
-   * Changes a flag which indicates whether all projects within a workspace should be ordered or not.
-   * </p>
-   * 
-   * @param allprojects
-   *          <code>true</code> if all projects within the workspace should be taken.
-   */
-  public void setAllProjects(final boolean allprojects) {
-    this._allprojects = allprojects;
-  }
-
-  /**
-   * <p>
    * Sets the property that holds the ordered project names.
    * </p>
    * 
@@ -160,24 +147,13 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
 
   /**
    * <p>
-   * Throws a {@link BuildException} if neither 'allprojects' nor 'teamProjectSet' nor 'projectNames' are set.
-   * </p>
-   */
-  protected void requireAllProjectsOrProjectSetOrProjectNamesSet() {
-    if (!this._allprojects) {
-      requireTeamProjectSetOrProjectNamesSet();
-    }
-  }
-
-  /**
-   * <p>
    * Executes the GetBuildOrderTask.
    * </p>
    */
   @Override
   protected void doExecute() {
-    requireWorkspaceSet();
-    requireTeamProjectSetOrProjectNamesSet();
+    requireWorkspaceDirectorySet();
+    requireAllProjectsOrProjectSetOrProjectNamesSet();
     requireBuildorderPropertySet();
 
     // calculate build order
