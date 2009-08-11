@@ -14,6 +14,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses( { GetJdtClassPathTest.class, GetJdtClassPath_UnkownContainerTest.class,
     ExecuteJdtProjectTest.class, ClasspathVariablesTest.class, ClasspathContainersTest.class,
-    BuildOrderResolverTest.class, UserLibrariesTest.class })
+    BuildOrderResolverTest.class, UserLibrariesTest.class. Murks.class })
 public class AllTests {
 }
