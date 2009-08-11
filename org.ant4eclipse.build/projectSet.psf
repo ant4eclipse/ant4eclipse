@@ -3,6 +3,7 @@
 <provider id="org.tigris.subversion.subclipse.core.svnnature">
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.core,org.ant4eclipse.core"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.core.test,org.ant4eclipse.core.test"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.core.ldapfilter,org.ant4eclipse.core.ldapfilter"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.external,org.ant4eclipse.external"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.external.test,org.ant4eclipse.external.test"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.jdt,org.ant4eclipse.jdt"/>
@@ -12,5 +13,6 @@
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.platform.test,org.ant4eclipse.platform.test"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pde,org.ant4eclipse.pde"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pde.test,org.ant4eclipse.pde.test"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pydt,org.ant4eclipse.pydt"/>
 </provider>
 </psf>
