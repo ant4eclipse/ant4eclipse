@@ -20,6 +20,8 @@
           target: build.ant4eclipse
          ================================= -->
 	<target name="build.ant4eclipse" depends="prepare">
+		
+		<echo>HUDSON_HOME: ${env.HUDSON_HOME}</echo>
 
 		<!-- Step 1: iterate over the project set and build each project -->
 		<ant4eclipse:executeProjectSet workspace="${basedir}"
