@@ -1,22 +1,25 @@
 package org.ant4eclipse.platform.ant.delegate;
 
+import org.ant4eclipse.core.ant.AbstractAnt4EclipseBuildFileTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
-
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
-public class MacroExecutionDelegateTest extends BuildFileTest {
+public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest {
 
   @Override
-  public void setUp() {
-    configureProject("src/org/ant4eclipse/platform/ant/delegate/MacroExecutionDelegateTest.xml");
+  protected String getBuildFileName() {
+    return "MacroExecutionDelegateTest.xml";
+  }
+
+  @Override
+  public void setUp() throws Exception {
+    super.setUp();
     getProject().setProperty("hurz.test", "initial");
   }
 
