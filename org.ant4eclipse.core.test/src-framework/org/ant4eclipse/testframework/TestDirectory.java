@@ -61,10 +61,15 @@ public class TestDirectory {
   }
 
   public void dispose() {
-    if (this._rootDir != null && this._removeOnDispose) {
-      System.out.println("Remove test dir: " + this._rootDir);
-      removeDirectoryTree(this._rootDir);
-      this._rootDir = null;
+    try {
+      if (this._rootDir != null && this._removeOnDispose) {
+        System.out.println("Remove test dir: " + this._rootDir);
+        removeDirectoryTree(this._rootDir);
+        this._rootDir = null;
+      }
+    } catch (Exception ex) {
+      System.err.println("WARN! Could not remove test directory " + _rootDir + ": " + ex);
+      ex.printStackTrace();
     }
   }
 

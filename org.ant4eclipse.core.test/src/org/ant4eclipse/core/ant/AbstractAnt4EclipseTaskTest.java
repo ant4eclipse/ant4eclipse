@@ -2,20 +2,12 @@ package org.ant4eclipse.core.ant;
 
 import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.service.ServiceRegistry;
 
-import org.apache.tools.ant.BuildFileTest;
-
-public class AbstractAnt4EclipseTaskTest extends BuildFileTest {
-
-  public void setUp() {
-    configureProject("src/org/ant4eclipse/core/ant/AbstractAnt4EclipseTaskTest.xml");
-  }
+public class AbstractAnt4EclipseTaskTest extends AbstractAnt4EclipseBuildFileTest {
 
   @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
-    ServiceRegistry.reset();
+  protected String getBuildFileName() {
+    return "AbstractAnt4EclipseTaskTest.xml";
   }
 
   public void testAbstractAnt4EclipseTask() {

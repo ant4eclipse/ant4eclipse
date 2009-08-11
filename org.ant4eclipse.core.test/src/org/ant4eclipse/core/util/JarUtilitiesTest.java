@@ -55,6 +55,6 @@ public class JarUtilitiesTest {
     assertTrue(new File(_expansionDirectory, "test.jar").exists());
     assertTrue(new File(_expansionDirectory, "test.txt").exists());
     assertTrue(new File(_expansionDirectory, "test2.jar").exists());
-    assertTrue(new File(_expansionDirectory, "META-INF/Manifest.mf").exists());
+    assertTrue(new File(_expansionDirectory, "META-INF/MANIFEST.MF").exists());
   }
 }

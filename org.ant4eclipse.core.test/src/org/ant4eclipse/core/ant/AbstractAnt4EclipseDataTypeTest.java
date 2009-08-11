@@ -1,20 +1,12 @@
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-
-import org.apache.tools.ant.BuildFileTest;
 import org.apache.tools.ant.Project;
 
-public class AbstractAnt4EclipseDataTypeTest extends BuildFileTest {
-
-  public void setUp() {
-    configureProject("src/org/ant4eclipse/core/ant/AbstractAnt4EclipseDataTypeTest.xml");
-  }
+public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFileTest {
 
   @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
-    ServiceRegistry.reset();
+  protected String getBuildFileName() {
+    return "AbstractAnt4EclipseDataTypeTest.xml";
   }
 
   public void testAbstractAnt4EclipseDataType() {

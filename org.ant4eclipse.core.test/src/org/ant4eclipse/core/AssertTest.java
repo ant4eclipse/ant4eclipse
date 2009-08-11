@@ -8,6 +8,7 @@ import org.junit.Test;
 import javax.swing.JFrame;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -31,13 +32,13 @@ public class AssertTest extends ConfigurableAnt4EclipseTestCase {
 
   @Test
   public void testInstanceOf() {
-    Assert.instanceOf("parameter", new JFrame(), JFrame.class);
+    Assert.instanceOf("parameter", "", String.class);
 
     try {
-      Assert.instanceOf("parameter", new Object(), JFrame.class);
+      Assert.instanceOf("parameter", new Object(), String.class);
     } catch (RuntimeException e) {
       assertEquals(
-          "Precondition violated: Parameter 'parameter' should be of type 'javax.swing.JFrame' but is a 'java.lang.Object'",
+          "Precondition violated: Parameter 'parameter' should be of type 'java.lang.String' but is a 'java.lang.Object'",
           e.getMessage());
     }
 
@@ -71,12 +72,19 @@ public class AssertTest extends ConfigurableAnt4EclipseTestCase {
   }
 
   /**
+   * @throws IOException
    * 
    */
   @Test
-  public void testExist() {
-    Assert.exists(new File(".classpath"));
-    Assert.exists(new File("resource"));
+  public void testExist() throws IOException {
+
+    File testFile = File.createTempFile("a4e-testExists", null);
+    testFile.deleteOnExit();
+
+    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
+
+    Assert.exists(testFile);
+    Assert.exists(testFile.getParentFile());
 
     try {
       Assert.exists(new File("NICHT_DA"));
@@ -87,18 +95,21 @@ public class AssertTest extends ConfigurableAnt4EclipseTestCase {
   }
 
   /**
+   * @throws IOException
    * 
    */
   @Test
-  public void testIsFile() {
+  public void testIsFile() throws IOException {
 
-    Assert.isFile(new File(".classpath"));
+    File testFile = File.createTempFile("a4e-testIsFile", null);
+    testFile.deleteOnExit();
+    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
 
     try {
-      Assert.isFile(new File("resource"));
+      Assert.isFile(testFile.getParentFile());
     } catch (RuntimeException e) {
-      String userDir = System.getProperty("user.dir") + File.separator;
-      assertEquals("Precondition violated: " + userDir + "resource has to be a file, not a directory!", e.getMessage());
+      assertEquals("Precondition violated: " + testFile.getParentFile().getAbsolutePath()
+          + " has to be a file, not a directory!", e.getMessage());
     }
 
     try {
@@ -110,18 +121,23 @@ public class AssertTest extends ConfigurableAnt4EclipseTestCase {
   }
 
   /**
+   * @throws IOException
    * 
    */
   @Test
-  public void testIsDirectory() {
+  public void testIsDirectory() throws IOException {
 
-    Assert.isDirectory(new File("resource"));
+    File testFile = File.createTempFile("a4e-testIsDirectory", null);
+    testFile.deleteOnExit();
+    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
+
+    Assert.isDirectory(testFile.getParentFile());
 
     try {
-      Assert.isDirectory(new File(".classpath"));
+      Assert.isDirectory(testFile);
     } catch (RuntimeException e) {
       String userDir = System.getProperty("user.dir") + File.separator;
-      assertEquals("Precondition violated: " + userDir + ".classpath has to be a directory, not a file!", e
+      assertEquals("Precondition violated: " + testFile.getAbsolutePath() + " has to be a directory, not a file!", e
           .getMessage());
     }
 
