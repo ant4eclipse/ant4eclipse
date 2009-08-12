@@ -12,6 +12,13 @@ import org.apache.tools.ant.ProjectComponent;
 
 import java.io.File;
 
+/**
+ * <p>
+ * Default implementation of the interface {@link WorkspaceProjectSetComponent}.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent {
 
   /** - */
@@ -21,11 +28,11 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   private final WorkspaceComponent  _workspaceComponent;
 
   /** - */
-  private boolean                   _allProjects;
+  private boolean                   _allWorkspaceProjects;
 
   /**
    * <p>
-   * Creates a new instance of type WorkspaceProjectSetDelegate.
+   * Creates a new instance of type {@link WorkspaceProjectSetDelegate}.
    * </p>
    * 
    * @param component
@@ -38,25 +45,25 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
-  public boolean isAllProjects() {
-    return this._allProjects;
+  public boolean isAllWorkspaceProjects() {
+    return this._allWorkspaceProjects;
   }
 
   /**
    * {@inheritDoc}
    */
-  public void requireAllProjectsOrProjectSetOrProjectNamesSet() {
-    if (!this._allProjects && !isProjectNamesSet() && !isTeamProjectSetSet()) {
+  public void requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet() {
+    if (!this._allWorkspaceProjects && !isProjectNamesSet() && !isTeamProjectSetSet()) {
       // TODO
-      throw new BuildException("allProjects or projectNames or teamProjectSet has to be set!");
+      throw new BuildException("allWorkspaceProjects or projectNames or teamProjectSet has to be set!");
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setAllProjects(boolean allprojects) {
-    this._allProjects = allprojects;
+  public void setAllWorkspaceProjects(boolean allprojects) {
+    this._allWorkspaceProjects = allprojects;
   }
 
   /**
@@ -65,7 +72,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   public String[] getProjectNames() {
 
     // if 'allProjects' return all workspace projects
-    if (this._allProjects) {
+    if (this._allWorkspaceProjects) {
       // get workspace projects
       EclipseProject[] projects = getWorkspace().getAllProjects();
       // create project names array

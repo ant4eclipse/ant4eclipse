@@ -17,26 +17,26 @@ public interface WorkspaceProjectSetComponent extends ProjectSetComponent, Works
    * workspace (regardless if a project set or project names are defined).
    * </p>
    * 
-   * @param allprojects
+   * @param allWorkspaceProjects
    *          the flag
    */
-  void setAllProjects(final boolean allprojects);
+  void setAllWorkspaceProjects(final boolean allWorkspaceProjects);
 
   /**
    * <p>
-   * Returns the 'allProjects' flag.
+   * Returns the 'allWorkspaceProjects' flag.
    * </p>
    * 
-   * @return the 'allProjects' flag.
+   * @return the 'allWorkspaceProjects' flag.
    */
-  boolean isAllProjects();
+  boolean isAllWorkspaceProjects();
 
   /**
    * <p>
-   * Throws an exception if neither <code>allProject</code> nor <code>projectSet</code> nor <code>projectNames</code>
-   * are set.
+   * Throws an exception if neither <code>allWorkspaceProjects</code> nor <code>projectSet</code> nor
+   * <code>projectNames</code> are set.
    * </p>
    * 
    */
-  void requireAllProjectsOrProjectSetOrProjectNamesSet();
+  void requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
 }

@@ -116,7 +116,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   @Override
   protected void doExecute() {
     // check required attributes
-    requireAllProjectsOrProjectSetOrProjectNamesSet();
+    requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
     requireWorkspaceDirectorySet();
 
     // calculate build order

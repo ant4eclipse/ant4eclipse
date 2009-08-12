@@ -64,8 +64,8 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   /**
    * {@inheritDoc}
    */
-  public boolean isAllProjects() {
-    return this._workspaceProjectSetDelegate.isAllProjects();
+  public boolean isAllWorkspaceProjects() {
+    return this._workspaceProjectSetDelegate.isAllWorkspaceProjects();
   }
 
   /**
@@ -92,8 +92,8 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   /**
    * {@inheritDoc}
    */
-  public void requireAllProjectsOrProjectSetOrProjectNamesSet() {
-    this._workspaceProjectSetDelegate.requireAllProjectsOrProjectSetOrProjectNamesSet();
+  public void requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet() {
+    this._workspaceProjectSetDelegate.requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
   }
 
   /**
@@ -127,8 +127,8 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   /**
    * {@inheritDoc}
    */
-  public void setAllProjects(boolean allprojects) {
-    this._workspaceProjectSetDelegate.setAllProjects(allprojects);
+  public void setAllWorkspaceProjects(boolean allprojects) {
+    this._workspaceProjectSetDelegate.setAllWorkspaceProjects(allprojects);
   }
 
   /**
