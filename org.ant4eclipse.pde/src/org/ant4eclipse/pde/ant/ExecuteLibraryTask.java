@@ -30,7 +30,7 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements
   private static final String         SCOPE_NAME_OUTPUT_DIRECTORY = "ForEachOutputDirectory";
 
   /** - */
-  private static final String         SCOPE_NAME_LIBRARY          = "ForEachLibrary";
+  private static final String         SCOPE_NAME_LIBRARY          = "ForEachPluginLibrary";
 
   /** - */
   public static final String          SCOPE_SOURCE_DIRECTORY      = "SCOPE_SOURCE_DIRECTORY";
@@ -39,7 +39,7 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements
   public static final String          SCOPE_OUTPUT_DIRECTORY      = "SCOPE_OUTPUT_DIRECTORY";
 
   /** - */
-  public static final String          SCOPE_LIBRARY               = "SCOPE_LIBRARY";
+  public static final String          SCOPE_PLUGIN_LIBRARY        = "SCOPE_PLUGIN_LIBRARY";
 
   /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
@@ -54,7 +54,7 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements
    * 
    */
   public ExecuteLibraryTask() {
-    super("executeLibrary");
+    super("executePluginLibrary");
 
     // create the delegates
     _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
@@ -118,7 +118,7 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements
     } else if (SCOPE_NAME_OUTPUT_DIRECTORY.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_OUTPUT_DIRECTORY);
     } else if (SCOPE_NAME_LIBRARY.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_LIBRARY);
+      return createScopedMacroDefinition(SCOPE_PLUGIN_LIBRARY);
     }
 
     return null;
@@ -142,7 +142,7 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements
         executeLibrarySourceDirectoryScopedMacroDef(scopedMacroDefinition.getMacroDef());
       } else if (SCOPE_OUTPUT_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeLibraryTargetDirectoryScopedMacroDef(scopedMacroDefinition.getMacroDef());
-      } else if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
+      } else if (SCOPE_PLUGIN_LIBRARY.equals(scopedMacroDefinition.getScope())) {
         executeLibraryScopedMacroDef(scopedMacroDefinition.getMacroDef());
       } else {
         throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope());
@@ -212,14 +212,14 @@ public class ExecuteLibraryTask extends AbstractExecuteJdtProjectTask implements
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param macroDef
    */
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
     // TODO Auto-generated method stub
-    
+
   }
-  
+
   /**
    * <p>
    * Helper method that returns the {@link JavaProjectRole} role for the set {@link EclipseProject}.

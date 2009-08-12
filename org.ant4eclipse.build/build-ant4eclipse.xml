@@ -12,9 +12,9 @@
 	<property file="${basedir}/org.ant4eclipse.build/default-build.properties" />
 
 	<!-- define your jdk location here -->
-	<ant4eclipse:jreContainer>
+	<ant4eclipse:installedJREs>
 		<jre id="jdk16" location="${jdk16.location}" />
-	</ant4eclipse:jreContainer>
+	</ant4eclipse:installedJREs>
 
 	<!-- =================================
           target: build.ant4eclipse

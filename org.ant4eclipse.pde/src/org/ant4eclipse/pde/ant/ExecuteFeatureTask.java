@@ -85,7 +85,7 @@ public class ExecuteFeatureTask extends AbstractProjectPathTask implements Dynam
   /** the macro execution delegate */
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
-  /** - */
+  /** the target platform delegate */
   private final TargetPlatformAwareDelegate    _targetPlatformAwareDelegate;
 
   /** the resolved feature */

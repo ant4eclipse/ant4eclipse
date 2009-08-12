@@ -39,7 +39,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     PdeExecutorValues {
  
   /** - */
-  private static final String         SCOPE_NAME_LIBRARY               = "ForEachLibrary";
+  private static final String         SCOPE_NAME_LIBRARY               = "ForEachPluginLibrary";
 
   /** - */
   public static final String          SCOPE_LIBRARY                    = "SCOPE_LIBRARY";
@@ -49,7 +49,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
 
   /**
    * <p>
-   * Creates a new instance of type ExecutePluginProjectTask.
+   * Creates a new instance of type {@link ExecutePluginProjectTask}.
    * </p>
    * 
    */

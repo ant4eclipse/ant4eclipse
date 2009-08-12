@@ -10,14 +10,15 @@
 	<property file="${basedir}\environment.properties" />
 
 	<!-- define your jdk location here -->
-	<ant4eclipse:jreContainer>
+	<ant4eclipse:installedJREs>
 		<jre id="jdk15" location="${jdk15.location}" />
 		<jre id="jdk16" location="${jdk16.location}" />
-	</ant4eclipse:jreContainer>
+	</ant4eclipse:installedJREs>
 
 	<!-- define the target platform location -->
 	<ant4eclipse:targetPlatform id="target.platform">
-		<location dir="${target.platform.location}" />
+		<location dir="${target.platform.location.1}" />
+		<location dir="${target.platform.location.2}" />	
 	</ant4eclipse:targetPlatform>
 
 	<!-- =================================

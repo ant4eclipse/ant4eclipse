@@ -74,19 +74,19 @@
 				</ant4eclipse:forEachSourceDirectory>
 
 				<!-- Step 1.4: Pack all libraries -->
-				<ant4eclipse:forEachLibrary filter="(library.isSelf=false)">
+				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=false)">
 					<!-- Step 1.4.1: Copy the content of the library to a temporary folder -->
-					<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
-					                            projectname="${executePluginProject.project.name}"
-					                            libraryname="${executePluginProject.library.name}"
-					                            targetPlatformId="@{targetPlatformId}">
+					<ant4eclipse:executePluginLibrary workspace="@{workspaceDirectory}"
+					                                  projectname="${executePluginProject.project.name}"
+					                                  libraryname="${executePluginProject.library.name}"
+					                                  targetPlatformId="@{targetPlatformId}">
 						<ant4eclipse:forEachOutputDirectory>
-							<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
+							<echo>Copying resources from directory '${executePluginLibrary.output.directory}'</echo>
 							<copy todir="@{destination}/${a4e.temp.directory}/${executePluginProject.library.name}">
-								<fileset dir="${executeLibrary.output.directory}" />
+								<fileset dir="${executePluginLibrary.output.directory}" />
 							</copy>
 						</ant4eclipse:forEachOutputDirectory>
-					</ant4eclipse:executeLibrary>
+					</ant4eclipse:executePluginLibrary>
 					<!-- Step 1.4.2: Delete the library file if on exists -->
 					<delete file="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
 					        quiet="true" />
@@ -100,23 +100,23 @@
 					<!-- Step 1.4.5: Finally delete the temp file -->
 					<delete dir="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}" />
 					<delete dir="@{destination}/${a4e.temp.directory}/" />
-				</ant4eclipse:forEachLibrary>
+				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- Step 1.5: Pack the 'self'-library -->
-				<ant4eclipse:forEachLibrary filter="(library.isSelf=true)">
+				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
 					<!-- just copy everything to the 'self' directory -->
-					<ant4eclipse:executeLibrary workspace="@{workspaceDirectory}"
+					<ant4eclipse:executePluginLibrary workspace="@{workspaceDirectory}"
 					                            projectname="${executePluginProject.project.name}"
 					                            libraryname="${executePluginProject.library.name}"
 					                            targetPlatformId="@{targetPlatformId}">
 						<ant4eclipse:forEachOutputDirectory>
-							<echo>Copying resources from directory '${executeLibrary.output.directory}'</echo>
+							<echo>Copying resources from directory '${executePluginLibrary.output.directory}'</echo>
 							<copy todir="${executePluginProject.project.directory}/${a4e.self.directory}">
-								<fileset dir="${executeLibrary.output.directory}" />
+								<fileset dir="${executePluginLibrary.output.directory}" />
 							</copy>
 						</ant4eclipse:forEachOutputDirectory>
-					</ant4eclipse:executeLibrary>
-				</ant4eclipse:forEachLibrary>
+					</ant4eclipse:executePluginLibrary>
+				</ant4eclipse:forEachPluginLibrary>
 
 				<!--  Step 1.6: Pack the bundle -->
 				<ant4eclipse:forProject>

@@ -316,7 +316,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
       if (featureDescription == null) {
         // TODO: NLS
-        throw new RuntimeException();
+        throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_" + includes.getVersion() + "'.");
       } else {
         result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
       }
