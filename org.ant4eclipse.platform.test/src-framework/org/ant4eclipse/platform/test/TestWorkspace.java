@@ -13,10 +13,10 @@ package org.ant4eclipse.platform.test;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.ant4eclipse.testframework.FileHelper;
+
 import java.io.File;
 import java.io.IOException;
-
-import org.ant4eclipse.platform.test.builder.FileHelper;
 
 /**
  * The Test Environment contains a set of folder that are created before and removed after a test case.
