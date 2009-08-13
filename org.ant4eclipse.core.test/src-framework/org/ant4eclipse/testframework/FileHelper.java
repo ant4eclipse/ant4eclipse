@@ -48,7 +48,7 @@ public class FileHelper {
    * @throws Exception
    *           if an error occurs.
    */
-  public static void removeDirectoryTree(String directoryName) {
+  public static final void removeDirectoryTree(String directoryName) {
 
     File directory = new File(directoryName);
 
@@ -74,7 +74,7 @@ public class FileHelper {
     directory.delete();
   }
 
-  public static void createDirectory(File directory) {
+  public static final void createDirectory(File directory) {
     Assert.notNull(directory);
 
     if (directory.isFile()) {
@@ -89,7 +89,7 @@ public class FileHelper {
     }
   }
 
-  public static void createFile(File file, String content) {
+  public static final void createFile(File file, String content) {
     Assert.notNull(file);
     Assert.notNull(content);
 
@@ -128,7 +128,7 @@ public class FileHelper {
    * @throws Exception
    *           if an error occurs during creation.
    */
-  public static void createFile(String directoryName, String fileName, byte[] content) {
+  public static final void createFile(String directoryName, String fileName, byte[] content) {
 
     File fileOut = new File(directoryName + File.separator + fileName);
 
@@ -170,7 +170,7 @@ public class FileHelper {
    * @throws Exception
    *           if an error occurs during creation.
    */
-  public static void createFile(String directoryName, String fileName, ByteArrayOutputStream byteStream) {
+  public static final void createFile(String directoryName, String fileName, ByteArrayOutputStream byteStream) {
 
     File fileOut = new File(directoryName + File.separator + fileName);
 
@@ -201,7 +201,7 @@ public class FileHelper {
    * @throws IOException
    *           if the file not exits or if an I/O error occurs.
    */
-  public static byte[] getFile(String fileName) {
+  public static final byte[] getFile(String fileName) {
     File file = new File(fileName);
     int dim = (int) file.length();
     byte[] content = new byte[dim];
@@ -227,7 +227,7 @@ public class FileHelper {
    * @throws IOException
    *           if the file not exits or if an I/O error occurs.
    */
-  public static String getResource(String resourceName) {
+  public static final String getResource(String resourceName) {
 
     InputStream inputStream = FileHelper.class.getResourceAsStream("/" + resourceName);
     if (inputStream == null) {
@@ -252,7 +252,7 @@ public class FileHelper {
   /**
    * Returns the content of the file specified.
    */
-  public static byte[] getFileFiltered(String fileName, char tokenSep, Map<String, String> filter) {
+  public static final byte[] getFileFiltered(String fileName, char tokenSep, Map<String, String> filter) {
     try {
       File file = new File(fileName);
       BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -279,7 +279,7 @@ public class FileHelper {
   /**
    * Returns the content of the file specified.
    */
-  public static byte[] getBinaryFileFiltered(String fileName, Map<String, String> filter) {
+  public static final byte[] getBinaryFileFiltered(String fileName, Map<String, String> filter) {
     File file = new File(fileName);
     ByteArrayOutputStream byteout = new ByteArrayOutputStream();
     try {
@@ -314,7 +314,7 @@ public class FileHelper {
    * 
    * @return String[] with the selected filenames. An zero-length array if no files are selected
    */
-  public static String[] getAllFiles(String directory, String root) {
+  public static final String[] getAllFiles(String directory, String root) {
 
     Vector<String> fileList = new Vector<String>();
 
@@ -345,7 +345,7 @@ public class FileHelper {
     return fileList.toArray(new String[fileList.size()]);
   }
 
-  public static String replaceTokens(String line, char tokenSep, Map<String, String> tokens) {
+  public static final String replaceTokens(String line, char tokenSep, Map<String, String> tokens) {
     boolean inToken = false;
 
     StringBuffer result = new StringBuffer();
