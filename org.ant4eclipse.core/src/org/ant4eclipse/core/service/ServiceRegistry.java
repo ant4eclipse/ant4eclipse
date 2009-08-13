@@ -199,7 +199,7 @@ public class ServiceRegistry {
         try {
           ((Lifecycle) service).initialize();
         } catch (final Exception e) {
-          throw new Ant4EclipseException(CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, e, service.getClass()
+          throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
               .getName());
         }
       }
