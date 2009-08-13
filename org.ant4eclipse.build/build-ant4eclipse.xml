@@ -66,7 +66,7 @@
 	<target name="buildProject">
 		<echo>Building project "${executeProjectSet.project.name}"</echo>
 		
-		<echo>Project ${executeProjectSet.project.name} -> ${_testProject}</echo>
+		<echo level="debug">Project ${executeProjectSet.project.name} -> ${_testProject}</echo>
 
 		<ant4eclipse:executeJdtProject workspace="${basedir}"
 		                               projectname="${executeProjectSet.project.name}">
@@ -120,11 +120,14 @@
 				<property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}"/>
 				<mkdir dir="${reports}"/>
  				
- 				<!-- Execute Tests -->
- 				<junit>
+ 				<!-- Execute Tests 
+ 				
+ 				     (Run themn from the project directory as Eclipse does it)
+ 				-->
+ 				<junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
  					<classpath refid="executeJdtProject.classpath.absolute.runtime.path"/>
 						<formatter type="xml"/>
- 					<batchtest fork="yes" todir="${reports}">
+ 					<batchtest todir="${reports}">
 						<fileset dir="${executeJdtProject.source.directory}">
  					  	<include name="**/AllTests.java"/>
  					  </fileset>
