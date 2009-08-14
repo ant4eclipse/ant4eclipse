@@ -1,20 +1,20 @@
 package org.ant4eclipse.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.logging.A4ELogging;
-
-import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
-import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
-
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-
 import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.jdt.JdtExceptionCode;
+import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
+import org.ant4eclipse.jdt.model.ClasspathEntry;
+import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * <p>
@@ -238,8 +238,8 @@ public class ClasspathEntryResolverExecutor {
       try {
         resolveClasspathEntry(classpathEntry);
       } catch (final Exception e) {
-        // TODO: NLS
-        throw new RuntimeException("Exception whilst resolving the classpath ", e);
+        throw new Ant4EclipseException(e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry,
+            (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage());
       }
     }
   }

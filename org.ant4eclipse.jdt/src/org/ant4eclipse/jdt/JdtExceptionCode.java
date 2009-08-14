@@ -53,6 +53,9 @@ public class JdtExceptionCode extends ExceptionCode {
   @NLSMessage("The class path of project '%s' contains a class path variable '%s' that is not bound.")
   public static JdtExceptionCode UNBOUND_CLASS_PATH_VARIABLE;
 
+  @NLSMessage("Exception whilst resolving the classpath entry '%s' of project '%s': '%s'")
+  public static JdtExceptionCode EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY;
+
   static {
     NLS.initialize(JdtExceptionCode.class);
   }
