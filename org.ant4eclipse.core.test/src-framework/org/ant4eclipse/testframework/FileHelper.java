@@ -29,6 +29,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Vector;
@@ -107,6 +110,38 @@ public class FileHelper {
       fileWriter.close();
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * This function stores a file under a specified location using a chosen encoding.
+   * 
+   * @param destination
+   *          The destination where the file has to be written to. Not <code>null</code>.
+   * @param content
+   *          The content that has to be written. Not <code>null</code>.
+   * @param encoding
+   *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
+   */
+  public static final void writeFile(final File destination, final String content, final String encoding) {
+    Assert.notNull(destination);
+    Assert.notNull(content);
+    Assert.nonEmpty(encoding);
+    OutputStream output = null;
+    Writer writer = null;
+    try {
+      // check if the file can be written
+      if (destination.exists() && (!destination.canWrite())) {
+        throw new RuntimeException("Could not create file: " + destination);
+      }
+      output = new FileOutputStream(destination);
+      writer = new OutputStreamWriter(output, encoding);
+      writer.write(content);
+    } catch (final IOException ex) {
+      throw new RuntimeException(ex.getMessage(), ex);
+    } finally {
+      Utilities.close(writer);
+      Utilities.close(output);
     }
   }
 
