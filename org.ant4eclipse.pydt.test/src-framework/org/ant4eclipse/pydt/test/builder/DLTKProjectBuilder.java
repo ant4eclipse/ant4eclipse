@@ -30,8 +30,8 @@ public class DLTKProjectBuilder extends EclipseProjectBuilder implements PythonP
    */
   public DLTKProjectBuilder(String projectName) {
     super(projectName);
-    withNature(PyDLTKProjectRole.PYDLTK_NATURE);
-    withBuilder(PyDLTKProjectRole.PYDLTK_BUILDCOMMAND);
+    withNature(PyDLTKProjectRole.NATURE);
+    withBuilder(PyDLTKProjectRole.BUILDCOMMAND);
   }
 
 } /* ENDCLASS */

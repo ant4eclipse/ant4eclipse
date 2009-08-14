@@ -20,8 +20,8 @@ import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
  */
 public interface PyDevProjectRole extends PythonProjectRole {
 
-  String PYDEV_NATURE       = "org.python.pydev.pythonNature";
+  String NATURE       = "org.python.pydev.pythonNature";
 
-  String PYDEV_BUILDCOMMAND = "org.python.pydev.PyDevBuilder";
+  String BUILDCOMMAND = "org.python.pydev.PyDevBuilder";
 
 } /* ENDINTERFACE */

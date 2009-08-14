@@ -20,8 +20,8 @@ import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
  */
 public interface PyDLTKProjectRole extends PythonProjectRole {
 
-  String PYDLTK_NATURE       = "org.eclipse.dltk.python.core.nature";
+  String NATURE       = "org.eclipse.dltk.python.core.nature";
 
-  String PYDLTK_BUILDCOMMAND = "org.eclipse.dltk.core.scriptbuilder";
+  String BUILDCOMMAND = "org.eclipse.dltk.core.scriptbuilder";
 
 } /* ENDINTERFACE */

@@ -30,8 +30,8 @@ public class PyDevProjectBuilder extends EclipseProjectBuilder implements Python
    */
   public PyDevProjectBuilder(String projectName) {
     super(projectName);
-    withNature(PyDevProjectRole.PYDEV_NATURE);
-    withBuilder(PyDevProjectRole.PYDEV_BUILDCOMMAND);
+    withNature(PyDevProjectRole.NATURE);
+    withBuilder(PyDevProjectRole.BUILDCOMMAND);
   }
 
 } /* ENDCLASS */
