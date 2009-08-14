@@ -141,7 +141,7 @@ public class Utilities {
       final File[] children = file.listFiles();
       if (children != null) {
         for (File element : children) {
-          result = result && delete(element);
+          result = delete(element) && result;
         }
       }
     }
@@ -150,8 +150,6 @@ public class Utilities {
     // if another process locked the file)
     int tries = 5;
     while ((!file.delete()) && (tries > 0)) {
-      // allow the garbage collector to cleanup potential references
-      System.gc();
       try {
         Thread.sleep(10);
       } catch (final InterruptedException ex) {
@@ -163,7 +161,7 @@ public class Utilities {
       A4ELogging.warn("Failed to delete '%s' !", file.getPath());
       result = false;
     }
-    return (result);
+    return result;
   }
 
   public static final List<File> getAllChildren(final File file) {
@@ -754,6 +752,26 @@ public class Utilities {
       final File result = File.createTempFile("a4e", suffix);
       copy(url, result);
       return result.getCanonicalFile();
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+    }
+  }
+
+  /**
+   * Creates a directory which can be used for temporary data.
+   * 
+   * @return A directory which can be used for temporary data. Not <code>null</code> and is a directory.
+   */
+  public static final File createTempDir() {
+    try {
+      final File result = File.createTempFile("a4e", "dir");
+      if (!delete(result)) {
+        throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      }
+      if (!result.mkdirs()) {
+        throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      }
+      return result;
     } catch (IOException ex) {
       throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
     }
