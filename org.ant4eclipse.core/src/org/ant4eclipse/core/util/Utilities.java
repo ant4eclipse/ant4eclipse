@@ -766,20 +766,20 @@ public class Utilities {
    *          The content which has to be written. Neither <code>null</code> nor empty.
    * @param suffix
    *          The suffix used for the returned File. Neither <code>null</code> nor empty.
+   * @param encoding
+   *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    * 
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
-  public static final File createFile(final String content, final String suffix) {
-    OutputStream outstream = null;
+  public static final File createFile(final String content, final String suffix, final String encoding) {
+    Assert.notNull(content);
+    Assert.nonEmpty(encoding);
     try {
       final File result = File.createTempFile("a4e", suffix);
-      outstream = new FileOutputStream(result);
-      outstream.write(content.getBytes());
+      writeFile(result, content, encoding);
       return result.getCanonicalFile();
     } catch (IOException ex) {
       throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
-    } finally {
-      close(outstream);
     }
   }
 
@@ -808,7 +808,7 @@ public class Utilities {
       writer = new OutputStreamWriter(output, encoding);
       writer.write(content);
     } catch (final IOException ex) {
-      throw new RuntimeException(ex.getMessage(), ex);
+      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
     } finally {
       Utilities.close(writer);
       Utilities.close(output);

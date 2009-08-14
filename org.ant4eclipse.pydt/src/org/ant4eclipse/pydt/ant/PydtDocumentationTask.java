@@ -138,7 +138,7 @@ public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
     final String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, options);
 
     // save the script
-    final File script = Utilities.createFile(code, ".py");
+    final File script = Utilities.createFile(code, ".py", "ASCII");
 
     // execute the script
     Utilities.execute(executable, null, script.getAbsolutePath());
