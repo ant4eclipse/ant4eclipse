@@ -15,6 +15,11 @@
 	<ant4eclipse:installedJREs>
 		<jre id="jdk16" location="${jdk16.location}" />
 	</ant4eclipse:installedJREs>
+	
+	<ant4eclipse:jdtClassPathLibrary name="org.eclipse.jdt.junit.JUNIT_CONTAINER/4">
+	  <fileset dir="${basedir}/org.ant4eclipse.external.test/libs/junit/junit-4.5.jar" />
+	</ant4eclipse:jdtClassPathLibrary>
+	
 
 	<!-- =================================
           target: build.ant4eclipse
