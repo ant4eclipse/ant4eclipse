@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt;
 
+import org.ant4eclipse.pydt.model.SourcePathTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -20,6 +21,6 @@ import org.junit.runners.Suite;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses( {})
+@Suite.SuiteClasses( { SourcePathTest.class })
 public class AllTests {
 } /* ENDCLASS */
