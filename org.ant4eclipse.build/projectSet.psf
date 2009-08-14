@@ -14,5 +14,6 @@
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pde,org.ant4eclipse.pde"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pde.test,org.ant4eclipse.pde.test"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pydt,org.ant4eclipse.pydt"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.pydt,org.ant4eclipse.pydt.test"/>
 </provider>
 </psf>
