@@ -15,9 +15,6 @@ import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
-import org.junit.After;
-import org.junit.Before;
-
 import java.io.File;
 
 /**
@@ -34,20 +31,6 @@ public class PythonWorkspace {
    */
   public PythonWorkspace() {
     _workspacedir = Utilities.createTempDir();
-  }
-
-  /**
-   * Prepares the workspace so the tests can be executed.
-   */
-  @Before
-  public void setup() {
-  }
-
-  /**
-   * Cleansup the workspace so temporarily generated code will be removed.
-   */
-  @After
-  public void cleanup() {
   }
 
   /**
@@ -69,7 +52,9 @@ public class PythonWorkspace {
   public void removeProject(final EclipseProjectBuilder projectbuilder) {
     final File dir = new File(_workspacedir, projectbuilder.getProjectName());
     if (dir.isDirectory()) {
-      Utilities.delete(dir);
+      if (!Utilities.delete(dir)) {
+        throw new RuntimeException(String.format("Failed to remove project '%s'.", projectbuilder.getProjectName()));
+      }
     }
   }
 
