@@ -13,6 +13,8 @@ package org.ant4eclipse.platform.test;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.testframework.FileHelper;
 
 import java.io.File;
@@ -54,7 +56,9 @@ public class TestWorkspace {
   protected void init() {
     this._rootDir = new File(System.getProperty("java.io.tmpdir"), "a4etest");
     if (this._rootDir.exists()) {
-      removeDirectoryTree(this._rootDir);
+      if (!Utilities.delete(this._rootDir)) {
+        throw new RuntimeException(String.format("Failed to delete directory '%s'.", this._rootDir));
+      }
     }
     System.out.println("Create test dir: " + this._rootDir);
     FileHelper.createDirectory(this._rootDir);
@@ -63,7 +67,9 @@ public class TestWorkspace {
   public void dispose() {
     if (this._rootDir != null && this._removeOnDispose) {
       System.out.println("Remove test dir: " + this._rootDir);
-      removeDirectoryTree(this._rootDir);
+      if (!Utilities.delete(this._rootDir)) {
+        throw new RuntimeException(String.format("Failed to delete directory '%s'.", this._rootDir));
+      }
       this._rootDir = null;
     }
   }
@@ -93,25 +99,4 @@ public class TestWorkspace {
     return this._rootDir;
   }
 
-  private void removeDirectoryTree(File directory) {
-    try {
-      if (directory != null && directory.exists()) {
-        System.gc();
-        FileHelper.removeDirectoryTree(directory.getAbsolutePath());
-        if (directory.exists()) {
-          System.err.println("Warn! Could not remove directory '" + directory + "' trying again...");
-          System.gc();
-          Thread.sleep(1000);
-          FileHelper.removeDirectoryTree(directory.getAbsolutePath());
-          if (directory.exists()) {
-            System.err.println("WARN! UNABLE TO DELETE TEST DIRECTORY '" + directory + "'");
-          }
-        }
-      }
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
-  }
 }

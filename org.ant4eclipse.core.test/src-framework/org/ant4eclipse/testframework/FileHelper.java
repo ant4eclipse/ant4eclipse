@@ -40,40 +40,6 @@ public class FileHelper {
 
   private static final byte[] END_CHUNK   = { -64, 88, -5, -13, 35, -68, 0, 20, 26, 81, -13, -116, 123, -69, 119, -58 };
 
-  /**
-   * Delete a directory, his subdirectory and all files.
-   * 
-   * @param directoryName
-   *          the name of the directory to remove.
-   * @throws Exception
-   *           if an error occurs.
-   */
-  public static final void removeDirectoryTree(String directoryName) {
-
-    File directory = new File(directoryName);
-
-    if (!directory.exists()) {
-      return;
-    }
-
-    if (!directory.isDirectory()) {
-      throw new RuntimeException("'" + directory + "' is not a directory");
-    }
-
-    String[] fileList = directory.list();
-    int numFile = fileList.length;
-    File f = null;
-    for (int i = 0; i < numFile; i++) {
-      f = new File(directoryName + File.separator + fileList[i]);
-      if (f.isDirectory()) {
-        removeDirectoryTree(f.getPath());
-      } else {
-        f.delete();
-      }
-    }
-    directory.delete();
-  }
-
   public static final void createDirectory(File directory) {
     Assert.notNull(directory);
 
