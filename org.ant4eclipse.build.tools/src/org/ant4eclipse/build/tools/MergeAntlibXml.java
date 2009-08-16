@@ -1,7 +1,11 @@
 package org.ant4eclipse.build.tools;
 
-import java.io.InputStream;
-import java.util.Iterator;
+import org.apache.tools.ant.types.Resource;
+import org.apache.tools.ant.types.ResourceCollection;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -12,11 +16,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.tools.ant.types.Resource;
-import org.apache.tools.ant.types.ResourceCollection;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * <p>
@@ -70,27 +71,19 @@ public class MergeAntlibXml extends AbstractMergeTask {
     Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
 
     // visit the nodes
-    visit(document, 0);
+    visit(document.getDocumentElement(), 0);
   }
 
   /**
    * @param node
    * @param level
    */
-  private void visit(Node node, int level) {
+  private void visit(Element node, int level) {
     NodeList nl = node.getChildNodes();
-
     for (int i = 0, cnt = nl.getLength(); i < cnt; i++) {
-
       if (level == 1 && nl.item(i) instanceof org.w3c.dom.Element) {
-
         Node importedNode = _result.importNode(nl.item(i), true);
-
         _resultAntlibNode.appendChild(importedNode);
-      }
-
-      if (level == 0) {
-        visit(nl.item(i), level + 1);
       }
     }
   }
