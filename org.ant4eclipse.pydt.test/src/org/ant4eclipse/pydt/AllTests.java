@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt;
 
-import org.ant4eclipse.pydt.model.SourcePathTest;
+import org.ant4eclipse.pydt.ant.SourcePathTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
