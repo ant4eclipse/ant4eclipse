@@ -22,14 +22,14 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonWorkspace {
+public class WorkspaceBuilder {
 
   private File _workspacedir;
 
   /**
    * Initialises this workspace.
    */
-  public PythonWorkspace() {
+  public WorkspaceBuilder() {
     _workspacedir = Utilities.createTempDir();
   }
 
