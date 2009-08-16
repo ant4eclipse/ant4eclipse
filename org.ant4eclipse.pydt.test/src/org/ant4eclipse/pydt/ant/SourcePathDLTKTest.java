@@ -24,14 +24,14 @@ import java.net.URL;
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathTest extends AbstractWorkspaceBasedTest {
+public class SourcePathDLTKTest extends AbstractWorkspaceBasedTest {
 
   private URL _sourcepathxml;
 
   /**
    * Initialises this set of tests.
    */
-  public SourcePathTest() {
+  public SourcePathDLTKTest() {
     super(true);
   }
 
