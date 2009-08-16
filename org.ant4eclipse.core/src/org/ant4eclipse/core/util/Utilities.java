@@ -53,7 +53,9 @@ import java.util.zip.ZipFile;
  */
 public class Utilities {
 
-  public static final String LINESEPARATOR = System.getProperty("line.separator");
+  public static final String PROP_A4ETEMPDIR = "ant4eclipse.temp";
+
+  public static final String LINESEPARATOR   = System.getProperty("line.separator");
 
   /**
    * Prevent instantiation of this class.
@@ -767,7 +769,15 @@ public class Utilities {
    */
   public static final File createTempDir() {
     try {
-      final File result = File.createTempFile("a4e", "dir");
+      File result = null;
+      final String tempdir = cleanup(System.getProperty(PROP_A4ETEMPDIR));
+      if (tempdir != null) {
+        final File dir = new File(tempdir);
+        mkdirs(dir);
+        result = File.createTempFile("a4e", "dir", dir);
+      } else {
+        result = File.createTempFile("a4e", "dir");
+      }
       if (!delete(result)) {
         throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
       }
