@@ -103,7 +103,11 @@ public class RawPathEntry {
     if (_external != other._external) {
       return false;
     }
-    return _value.equals(other._value);
+    if (_value == null) {
+      return other._value == null;
+    } else {
+      return _value.equals(other._value);
+    }
   }
 
   /**
@@ -117,7 +121,7 @@ public class RawPathEntry {
      */
     int result = 1;
     result = 31 * result + _kind.hashCode();
-    result = 31 * result + _value.hashCode();
+    result = 31 * result + (_value != null ? _value.hashCode() : 0);
     result = 31 * result + (_external ? 1 : 0);
     return result;
   }

@@ -113,6 +113,7 @@ public class PyDLTKParser {
           }
         }
       }
+      path = Utilities.cleanup(path);
       pythonrole.addRawPathEntry(new RawPathEntry(refkind, path, isexported, isexternal));
       if ((refkind == ReferenceKind.Source) && (!isexternal)) {
         // the python DLTK framework has no output path declaration, so we're reusing

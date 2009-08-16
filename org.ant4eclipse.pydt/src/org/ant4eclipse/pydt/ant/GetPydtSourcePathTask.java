@@ -71,7 +71,11 @@ public class GetPydtSourcePathTask extends AbstractPydtGetProjectPathTask {
     final File[] result = new File[resolved.length];
     for (int i = 0; i < resolved.length; i++) {
       final ResolvedSourceEntry entry = (ResolvedSourceEntry) resolved[i];
-      result[i] = getEclipseProject().getChild(entry.getFolder(), getPathStyle());
+      if (entry.getFolder() == null) {
+        result[i] = getEclipseProject().getFolder();
+      } else {
+        result[i] = getEclipseProject().getChild(entry.getFolder(), getPathStyle());
+      }
     }
     return result;
   }
