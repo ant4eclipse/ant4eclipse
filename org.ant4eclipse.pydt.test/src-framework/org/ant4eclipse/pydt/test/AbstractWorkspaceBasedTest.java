@@ -46,24 +46,12 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
 
   /**
    * Intialises this workspace based test.
-   */
-  public AbstractWorkspaceBasedTest() {
-    _dltk = true;
-  }
-
-  /**
-   * Switches between the used python implementation.
    * 
    * @param dltk
    *          <code>true</code> <=> Use the python dltk implementation.
    */
-  public void setDLTK(final boolean dltk) {
-    if (_dltk != dltk) {
-      _dltk = dltk;
-      if (_projectsuite != null) {
-        _projectsuite = new ProjectSuite(this, _dltk);
-      }
-    }
+  public AbstractWorkspaceBasedTest(final boolean dltk) {
+    _dltk = dltk;
   }
 
   /**

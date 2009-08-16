@@ -29,6 +29,13 @@ public class SourcePathTest extends AbstractWorkspaceBasedTest {
   private URL _sourcepathxml;
 
   /**
+   * Initialises this set of tests.
+   */
+  public SourcePathTest() {
+    super(true);
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Before
@@ -48,7 +55,6 @@ public class SourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectDLTK() {
-    setDLTK(true);
     final String projectname = createEmptyProject(_sourcepathxml);
     final BuildResult buildresult = execute(projectname, "get-source-path");
     final String[] content = buildresult.getTargetOutput("get-source-path");
@@ -58,7 +64,6 @@ public class SourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectPyDev() {
-    setDLTK(false);
     final String projectname = createEmptyProject(_sourcepathxml);
     final BuildResult buildresult = execute(projectname, "get-source-path");
     final String[] content = buildresult.getTargetOutput("get-source-path");
