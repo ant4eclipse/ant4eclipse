@@ -22,19 +22,19 @@ import java.io.File;
 import java.net.URL;
 
 /**
- * Tests for the ant task: 'getPythonSourcePath' using the Python DLTK implementation.
+ * Tests for the ant task: 'getPythonSourcePath' using the Python PyDev implementation.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathDLTKTest extends AbstractWorkspaceBasedTest {
+public class SourcePathPyDevTest extends AbstractWorkspaceBasedTest {
 
   private URL _sourcepathxml;
 
   /**
    * Initialises this set of tests.
    */
-  public SourcePathDLTKTest() {
-    super(true);
+  public SourcePathPyDevTest() {
+    super(false);
   }
 
   /**
@@ -61,7 +61,7 @@ public class SourcePathDLTKTest extends AbstractWorkspaceBasedTest {
     final BuildResult buildresult = execute(projectname, "get-source-path");
     final String[] content = buildresult.getTargetOutput("get-source-path");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.separator + "src", content[0]);
   }
 
 } /* ENDCLASS */
