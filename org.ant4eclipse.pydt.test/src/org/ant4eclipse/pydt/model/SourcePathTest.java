@@ -14,12 +14,10 @@ package org.ant4eclipse.pydt.model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathTest extends TestCase {
+public class SourcePathTest {
 
   @Test
   public void testDummy() {
