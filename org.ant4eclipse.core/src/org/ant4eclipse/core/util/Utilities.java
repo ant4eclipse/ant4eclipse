@@ -135,6 +135,9 @@ public class Utilities {
    */
   public static final boolean delete(final File file) {
     Assert.notNull(file);
+    if (!file.exists()) {
+      return true;
+    }
     boolean result = true;
     if (file.isDirectory()) {
       // delete the children
