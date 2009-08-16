@@ -18,7 +18,7 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.pydt.PydtFailures;
+import org.ant4eclipse.pydt.PydtExceptionCode;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedContainerEntry;
@@ -267,7 +267,7 @@ public class PydtResolver {
     }
     if (runtime == null) {
       // now runtime available
-      throw new Ant4EclipseException(PydtFailures.UNKNOWN_PYTHON_RUNTIME, value);
+      throw new Ant4EclipseException(PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, value);
     }
     return new ResolvedRuntimeEntry(runtime.getVersion(), runtime.getLibraries());
   }

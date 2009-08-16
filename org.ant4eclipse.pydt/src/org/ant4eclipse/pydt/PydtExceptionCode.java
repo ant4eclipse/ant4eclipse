@@ -20,19 +20,19 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PydtFailures extends ExceptionCode {
+public class PydtExceptionCode extends ExceptionCode {
 
   @NLSMessage("Project '%s' must have a python project role (either PyDev or Python DLTK).")
-  public static PydtFailures NO_PYTHON_PROJECT_ROLE;
+  public static PydtExceptionCode NO_PYTHON_PROJECT_ROLE;
 
   @NLSMessage("The python runtime with the id '%s' has not been registered (see 'pythonContainer').")
-  public static PydtFailures UNKNOWN_PYTHON_RUNTIME;
+  public static PydtExceptionCode UNKNOWN_PYTHON_RUNTIME;
 
   static {
-    NLS.initialize(PydtFailures.class);
+    NLS.initialize(PydtExceptionCode.class);
   }
 
-  private PydtFailures(String message) {
+  private PydtExceptionCode(String message) {
     super(message);
   }
 
