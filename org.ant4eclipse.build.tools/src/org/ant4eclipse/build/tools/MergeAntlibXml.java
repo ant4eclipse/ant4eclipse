@@ -71,17 +71,17 @@ public class MergeAntlibXml extends AbstractMergeTask {
     Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
 
     // visit the nodes
-    visit(document.getDocumentElement(), 0);
+    visit(document.getDocumentElement());
   }
 
   /**
    * @param node
    * @param level
    */
-  private void visit(Element node, int level) {
+  private void visit(Element node) {
     NodeList nl = node.getChildNodes();
     for (int i = 0, cnt = nl.getLength(); i < cnt; i++) {
-      if (level == 1 && nl.item(i) instanceof org.w3c.dom.Element) {
+      if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {
         Node importedNode = _result.importNode(nl.item(i), true);
         _resultAntlibNode.appendChild(importedNode);
       }
