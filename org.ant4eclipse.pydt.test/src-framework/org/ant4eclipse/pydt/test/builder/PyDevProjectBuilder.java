@@ -13,8 +13,6 @@ package org.ant4eclipse.pydt.test.builder;
 
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
-
 import org.ant4eclipse.pydt.model.project.PyDevProjectRole;
 
 import java.io.File;
@@ -26,7 +24,7 @@ import java.util.List;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PyDevProjectBuilder extends EclipseProjectBuilder implements PythonProjectBuilder {
+public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
 
   private static final String NAME_PYDEVPROJECT = ".pydevproject";
 

@@ -11,15 +11,59 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
+import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
+import org.ant4eclipse.pydt.test.BuildResult;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.net.URL;
 
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathTest {
+public class SourcePathTest extends AbstractWorkspaceBasedTest {
+
+  private URL _sourcepathxml;
+
+  /**
+   * {@inheritDoc}
+   */
+  @Before
+  public void setup() {
+    super.setup();
+    _sourcepathxml = getResource("/org/ant4eclipse/pydt/ant/sourcepath.xml");
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @After
+  public void teardown() {
+    super.teardown();
+    _sourcepathxml = null;
+  }
 
   @Test
-  public void testDummy() {
+  public void emptyProjectDLTK() {
+    setDLTK(true);
+    final String projectname = createEmptyProject(_sourcepathxml);
+    final BuildResult buildresult = execute(projectname, "get-source-path");
+    final String[] content = buildresult.getTargetOutput("get-source-path");
+    Assert.assertEquals(1, content.length);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectname, content[0]);
+  }
+
+  @Test
+  public void emptyProjectPyDev() {
+    setDLTK(false);
+    final String projectname = createEmptyProject(_sourcepathxml);
+    final BuildResult buildresult = execute(projectname, "get-source-path");
+    final String[] content = buildresult.getTargetOutput("get-source-path");
+    Assert.assertEquals(1, content.length);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.separator + "src", content[0]);
   }
 
 } /* ENDCLASS */

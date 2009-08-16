@@ -34,13 +34,36 @@ public class WorkspaceBuilder {
   }
 
   /**
+   * Returns the location of the workspace directory.
+   * 
+   * @return The location of the workspace directory. Not <code>null</code>.
+   */
+  public File getWorkspaceFolder() {
+    return _workspacedir;
+  }
+
+  /**
+   * Returns the location of a project folder.
+   * 
+   * @param projectname
+   *          The name of the corresponding project. Neither <code>null</code> nor empty.
+   * 
+   * @return The folder containing the projects content. Not <code>null</code>.
+   */
+  public File getProjectFolder(final String projectname) {
+    return new File(_workspacedir, projectname);
+  }
+
+  /**
    * Adds the supplied project to the workspace.
    * 
    * @param projectbuilder
    *          The project builder used to add a project. Not <code>null</code>.
+   * 
+   * @return The location of the project. Not <code>null</code>.
    */
-  public void addProject(final EclipseProjectBuilder projectbuilder) {
-    projectbuilder.createIn(_workspacedir);
+  public File addProject(final EclipseProjectBuilder projectbuilder) {
+    return projectbuilder.createIn(_workspacedir);
   }
 
   /**
@@ -55,6 +78,15 @@ public class WorkspaceBuilder {
       if (!Utilities.delete(dir)) {
         throw new RuntimeException(String.format("Failed to remove project '%s'.", projectbuilder.getProjectName()));
       }
+    }
+  }
+
+  /**
+   * Causes the disposal of the complete workspace.
+   */
+  public void dispose() {
+    if (!Utilities.delete(_workspacedir)) {
+      throw new RuntimeException(String.format("Failed to remove the workspace (%s).", _workspacedir.getPath()));
     }
   }
 

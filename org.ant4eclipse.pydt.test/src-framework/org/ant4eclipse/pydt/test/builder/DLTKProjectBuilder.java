@@ -13,8 +13,6 @@ package org.ant4eclipse.pydt.test.builder;
 
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
-
 import org.ant4eclipse.pydt.model.project.PyDLTKProjectRole;
 
 import java.io.File;
@@ -26,7 +24,7 @@ import java.util.List;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class DLTKProjectBuilder extends EclipseProjectBuilder implements PythonProjectBuilder {
+public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
 
   private static enum Kind {
     prj, src, con

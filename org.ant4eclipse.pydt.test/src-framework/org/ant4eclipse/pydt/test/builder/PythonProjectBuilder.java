@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.builder;
 
+import java.io.File;
+import java.net.URL;
+
 /**
  * Simple interface allowing to use the different varieties of python project natures to be tested using the same
  * testcode.
@@ -44,5 +47,23 @@ public interface PythonProjectBuilder {
    *          An additional source folder. Neither <code>null</code> nor empty.
    */
   void addSourceFolder(final String additionalfolder);
+
+  /**
+   * Populates the supplied workspace builder with the content of this project.
+   * 
+   * @param workspacebuilder
+   *          The workspace builder which should be made aware of this project. Not <code>null</code>.
+   * 
+   * @return The location of the project directory. Not <code>null</code>.
+   */
+  File populate(final WorkspaceBuilder workspacebuilder);
+
+  /**
+   * Stores a build script to the projects folder.
+   * 
+   * @param location
+   *          The location of the build script. Not <code>null</code>.
+   */
+  void setBuildScript(final URL location);
 
 } /* ENDINTERFACE */
