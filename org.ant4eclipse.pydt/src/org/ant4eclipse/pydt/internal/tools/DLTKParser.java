@@ -28,7 +28,7 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PyDLTKParser {
+public class DLTKParser {
 
   private static final String NAME_BUILDPATH = ".buildpath";
 
