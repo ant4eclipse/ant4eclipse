@@ -182,7 +182,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @After
   public void teardown() {
-    // dispose();
+    dispose();
     ServiceRegistry.reset();
     _dltk = false;
     _projectsuite = null;
