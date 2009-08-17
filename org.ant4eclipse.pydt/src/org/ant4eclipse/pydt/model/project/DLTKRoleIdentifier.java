@@ -28,7 +28,7 @@ import org.ant4eclipse.pydt.internal.tools.DLTKParser;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public final class PyDLTKRoleIdentifier implements ProjectRoleIdentifier {
+public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
    * <p>

@@ -13,7 +13,7 @@ package org.ant4eclipse.pydt.test.builder;
 
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.pydt.model.project.PyDLTKProjectRole;
+import org.ant4eclipse.pydt.model.project.DLTKProjectRole;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
    */
   public DLTKProjectBuilder(final String projectname) {
     super(projectname);
-    withNature(PyDLTKProjectRole.NATURE);
-    withBuilder(PyDLTKProjectRole.BUILDCOMMAND);
+    withNature(DLTKProjectRole.NATURE);
+    withBuilder(DLTKProjectRole.BUILDCOMMAND);
     _buildpathentries = new ArrayList<BuildPathEntry>();
     _sourceentry = new BuildPathEntry();
     _sourceentry._combine = true;
