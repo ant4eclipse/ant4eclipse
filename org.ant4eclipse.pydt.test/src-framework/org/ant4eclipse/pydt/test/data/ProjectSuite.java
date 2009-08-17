@@ -83,6 +83,7 @@ public class ProjectSuite implements ProjectSuiteApi {
     if (secondarymultiple) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
+    mainbuilder.useProject(secondaryname, true);
     mainbuilder.populate(_workspacebuilder);
     secondarybuilder.populate(_workspacebuilder);
     return mainname;
