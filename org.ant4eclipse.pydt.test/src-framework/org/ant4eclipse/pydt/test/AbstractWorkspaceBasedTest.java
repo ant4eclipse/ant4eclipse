@@ -78,9 +78,30 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @return A result containing the generated information from the target. Not <code>null</code>.
    */
   public BuildResult execute(final String projectname, final String target) {
+    return execute(projectname, target, null);
+  }
+
+  /**
+   * Executes the ant build script within a specific project.
+   * 
+   * @param projectname
+   *          The name of the project which script shall be executed. Neither <code>null</code> nor empty.
+   * @param target
+   *          The name of the target which has to be executed. Neither <code>null</code> nor empty.
+   * @param dirsep
+   *          A directory separator currently used for the replacement. If <code>null</code> the default
+   *          {@link File#separator} will be used.
+   * 
+   * @return A result containing the generated information from the target. Not <code>null</code>.
+   */
+  public BuildResult execute(final String projectname, final String target, String dirsep) {
 
     Assert.assertNotNull(projectname);
     Assert.assertNotNull(target);
+
+    if (dirsep == null) {
+      dirsep = File.separator;
+    }
 
     final File buildfile = getBuildFile(projectname);
 
@@ -91,7 +112,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
     setupProperties(project, projectname);
     extendDefinitions(project);
 
-    final BuildResult result = new BuildResult(getWorkspaceFolder());
+    final BuildResult result = new BuildResult(getWorkspaceFolder(), dirsep);
     result.assign(project);
 
     ProjectHelper.configureProject(project, buildfile);

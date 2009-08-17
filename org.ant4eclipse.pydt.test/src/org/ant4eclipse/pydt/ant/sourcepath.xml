@@ -41,4 +41,25 @@
     <echo>${sources}</echo>
   </target>
 
+  <target name="get-source-path-dirseparator">
+    <getPythonSourcePath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="sources"
+      dirseparator="@"
+    />
+    <echo>${sources}</echo>
+  </target>
+
+  <target name="get-source-path-multiple-folders-dirseparator">
+    <getPythonSourcePath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="sources"
+      allowmultiplefolders="true"
+      dirseparator="@"
+    />
+    <echo>${sources}</echo>
+  </target>
+
 </project>

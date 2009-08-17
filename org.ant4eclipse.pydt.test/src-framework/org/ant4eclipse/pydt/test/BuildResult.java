@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test;
 
+import org.ant4eclipse.core.util.Utilities;
+
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
@@ -40,16 +42,19 @@ public class BuildResult {
 
   private String                    _wsbackward;
 
+  private String                    _wsdirseparator;
+
   /**
    * Sets up this result which is generally used as a container for the information that comes up during the build
    * process.
    */
-  public BuildResult(final File workspacedir) {
+  public BuildResult(final File workspacedir, String dirseparator) {
     _listener = new AntBuildListener();
     _collected = new ArrayList<String>();
     _collectedbytarget = new Hashtable<String, List<String>>();
     _wsforward = workspacedir.getAbsolutePath().replace('\\', '/');
     _wsbackward = workspacedir.getAbsolutePath().replace('/', '\\');
+    _wsdirseparator = Utilities.replace(_wsforward, "/", dirseparator);
   }
 
   /**
@@ -86,26 +91,20 @@ public class BuildResult {
     project.addBuildListener(_listener);
   }
 
+  /**
+   * Adds the supplied line to the content. This function performs substitutions in order to replace absolute pathes
+   * through variable definitions.
+   * 
+   * @param list
+   *          The list which will be extended. Not <code>null</code>.
+   * @param line
+   *          The line that has to be added. Not <code>null</code>.
+   */
   private void addLine(final List<String> list, String line) {
-    line = replace(line, _wsforward, "${" + AntProperties.PROP_WORKSPACEDIR + "}");
-    line = replace(line, _wsbackward, "${" + AntProperties.PROP_WORKSPACEDIR + "}");
+    line = Utilities.replace(line, _wsforward, "${" + AntProperties.PROP_WORKSPACEDIR + "}");
+    line = Utilities.replace(line, _wsbackward, "${" + AntProperties.PROP_WORKSPACEDIR + "}");
+    line = Utilities.replace(line, _wsdirseparator, "${" + AntProperties.PROP_WORKSPACEDIR + "}");
     list.add(line);
-  }
-
-  private String replace(final String input, String search, String replacement) {
-    int idx = input.indexOf(search);
-    if (idx == -1) {
-      return input;
-    }
-    String before = "";
-    String after = "";
-    if (idx > 0) {
-      before = input.substring(0, idx);
-    }
-    if (idx + search.length() < input.length()) {
-      after = input.substring(idx + search.length());
-    }
-    return before + replacement + replace(after, search, replacement);
   }
 
   /**

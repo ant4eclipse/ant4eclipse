@@ -105,4 +105,28 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
     Assert.assertEquals("." + File.pathSeparator + "generated-source", content[0]);
   }
 
+  @Test
+  public void emptyProjectDirseparator() {
+    final String projectname = createEmptyProject(_sourcepathxml, false);
+    final BuildResult buildresult = execute(projectname, "get-source-path-dirseparator", "@");
+    final String[] content = buildresult.getTargetOutput("get-source-path-dirseparator");
+    Assert.assertEquals(1, content.length);
+    Assert.assertEquals("${workspacedir}@" + projectname, content[0]);
+  }
+
+  @Test(expected = BuildException.class)
+  public void emptyProjectMultipleFoldersFailureDirseparator() {
+    final String projectname = createEmptyProject(_sourcepathxml, true);
+    execute(projectname, "get-source-path-dirseparator", "@");
+  }
+
+  @Test
+  public void emptyProjectMultipleFoldersDirseparator() {
+    final String projectname = createEmptyProject(_sourcepathxml, true);
+    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
+    final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
+    Assert.assertEquals(1, content.length);
+    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname
+        + "@generated-source", content[0]);
+  }
 } /* ENDCLASS */
