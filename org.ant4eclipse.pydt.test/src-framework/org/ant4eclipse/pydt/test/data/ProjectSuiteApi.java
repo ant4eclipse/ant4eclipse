@@ -20,6 +20,9 @@ import java.net.URL;
  */
 public interface ProjectSuiteApi {
 
+  // the name to use for source folders with generated source
+  String NAME_GENERATEDSOURCE = "generated-source";
+
   /**
    * Creates a simple project which is practically empty.
    * 
@@ -31,5 +34,19 @@ public interface ProjectSuiteApi {
    * @return The name of the empty project. Neither <code>null</code> nor empty.
    */
   String createEmptyProject(final URL script, final boolean multiplefolders);
+
+  /**
+   * Creates two projects where project one depends from project two.
+   * 
+   * @param script
+   *          The location of an ANT build script. Maybe <code>null</code>.
+   * @param mainmultiple
+   *          <code>true</code> <=> Create multiple folders for the main project.
+   * @param secondarymultiple
+   *          <code>true</code> <=> Create multiple folders for the secondary project.
+   * 
+   * @return The name of the main project. Neither <code>null</code> nor empty.
+   */
+  String createComplexProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple);
 
 } /* ENDINTERFACE */

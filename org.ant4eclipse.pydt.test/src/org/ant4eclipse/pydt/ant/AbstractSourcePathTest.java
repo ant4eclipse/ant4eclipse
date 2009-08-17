@@ -78,7 +78,7 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.pathSeparator + "${workspacedir}"
-        + File.separator + projectname + File.separator + "generated-source", content[0]);
+        + File.separator + projectname + File.separator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
@@ -102,7 +102,7 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
     final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-relative");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("." + File.pathSeparator + "generated-source", content[0]);
+    Assert.assertEquals("." + File.pathSeparator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
@@ -126,7 +126,8 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
     final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname
-        + "@generated-source", content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname + "@"
+        + NAME_GENERATEDSOURCE, content[0]);
   }
+
 } /* ENDCLASS */

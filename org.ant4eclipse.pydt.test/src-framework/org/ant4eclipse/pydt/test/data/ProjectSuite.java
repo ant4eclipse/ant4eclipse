@@ -62,10 +62,30 @@ public class ProjectSuite implements ProjectSuiteApi {
     final PythonProjectBuilder builder = newProjectBuilder(result);
     builder.setBuildScript(script);
     if (multiplefolders) {
-      builder.addSourceFolder("generated-source");
+      builder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     builder.populate(_workspacebuilder);
     return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String createComplexProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
+    final String mainname = newName();
+    final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
+    mainbuilder.setBuildScript(script);
+    if (mainmultiple) {
+      mainbuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+    }
+    final String secondaryname = newName();
+    final PythonProjectBuilder secondarybuilder = newProjectBuilder(secondaryname);
+    if (secondarymultiple) {
+      secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+    }
+    mainbuilder.populate(_workspacebuilder);
+    secondarybuilder.populate(_workspacebuilder);
+    return mainname;
   }
 
   /**
