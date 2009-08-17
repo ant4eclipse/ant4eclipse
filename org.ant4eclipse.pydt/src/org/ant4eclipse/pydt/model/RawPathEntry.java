@@ -33,7 +33,7 @@ public class RawPathEntry {
    * @param refkind
    *          The kind of reference to the entity. Not <code>null</code>.
    * @param value
-   *          The value used to describe the entity (in most cases a simple path). Neither <code>null</code> nor empty.
+   *          The value used to describe the entity (in most cases a simple path).
    * @param export
    *          <code>true</code> <=> Contribute this record to dependant resources as well.
    * @param external
