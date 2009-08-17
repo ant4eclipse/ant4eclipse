@@ -150,7 +150,7 @@ public class PythonResolver {
       final EclipseProject.PathStyle pathstyle) {
     File sourcefolder = null;
     if (entry.getFolder() == null) {
-      sourcefolder = project.getFolder();
+      sourcefolder = project.getFolder(pathstyle);
     } else {
       sourcefolder = project.getChild(entry.getFolder(), pathstyle);
     }
@@ -174,10 +174,10 @@ public class PythonResolver {
   private void expandProject(final List<File> receiver, final ResolvedProjectEntry entry, final EclipseProject project,
       final EclipseProject.PathStyle pathstyle) {
     if (entry.getProjectname().equals(project.getSpecifiedName())) {
-      receiver.add(project.getFolder());
+      receiver.add(project.getFolder(pathstyle));
     } else {
       final EclipseProject otherproject = project.getWorkspace().getProject(entry.getProjectname());
-      receiver.add(otherproject.getFolder());
+      receiver.add(otherproject.getFolder(pathstyle));
     }
   }
 
