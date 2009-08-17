@@ -44,7 +44,11 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
     super(projectname);
     withNature(PyDevProjectRole.NATURE);
     withBuilder(PyDevProjectRole.BUILDCOMMAND);
-    _sourcepath = "/" + projectname + "/src";
+    /**
+     * @note [17-Aug-2009:KASI] By default the PyDev uses 'src' as a source folder. We don't imitate this here as this
+     *       allows to simplify the tests.
+     */
+    _sourcepath = "/" + projectname;
     _sourcepathes = new ArrayList<String>();
   }
 
