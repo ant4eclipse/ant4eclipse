@@ -11,57 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
-import org.ant4eclipse.pydt.test.BuildResult;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-import java.net.URL;
-
 /**
  * Tests for the ant task: 'getPythonSourcePath' using the Python DLTK implementation.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathDLTKTest extends AbstractWorkspaceBasedTest {
-
-  private URL _sourcepathxml;
+public class SourcePathDLTKTest extends AbstractSourcePathTest {
 
   /**
    * Initialises this set of tests.
    */
   public SourcePathDLTKTest() {
     super(true);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Before
-  public void setup() {
-    super.setup();
-    _sourcepathxml = getResource("/org/ant4eclipse/pydt/ant/sourcepath.xml");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @After
-  public void teardown() {
-    super.teardown();
-    _sourcepathxml = null;
-  }
-
-  @Test
-  public void emptyProject() {
-    final String projectname = createEmptyProject(_sourcepathxml);
-    final BuildResult buildresult = execute(projectname, "get-source-path");
-    final String[] content = buildresult.getTargetOutput("get-source-path");
-    Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname, content[0]);
   }
 
 } /* ENDCLASS */
