@@ -69,6 +69,15 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   }
 
   /**
+   * Removes the supplied raw (unresolved) path entry from this role implementation.
+   * 
+   * @param entry
+   */
+  public void removeRawPathEntry(final RawPathEntry entry) {
+    _rawpathentries.remove(entry);
+  }
+
+  /**
    * {@inheritDoc}
    */
   public RawPathEntry[] getRawPathEntries() {

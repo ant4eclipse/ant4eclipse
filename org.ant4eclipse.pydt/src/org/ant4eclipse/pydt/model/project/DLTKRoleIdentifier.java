@@ -32,7 +32,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
    * <p>
-   * Returns <code>true</code> if the given project has the nature of the Python DLTK framework. 
+   * Returns <code>true</code> if the given project has the nature of the Python DLTK framework.
    * </p>
    */
   public boolean isRoleSupported(final EclipseProject project) {
@@ -51,5 +51,11 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
     DLTKParser.contributePathes(result);
     return result;
   }
-  
+
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(final EclipseProject project) {
+  }
+
 } /* ENDCLASS */

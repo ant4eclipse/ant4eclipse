@@ -55,6 +55,13 @@ public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTe
     public boolean isRoleSupported(EclipseProject project) {
       return false;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void postProcess(final EclipseProject project) {
+    }
+
   }
 
 }

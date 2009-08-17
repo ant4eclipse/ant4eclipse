@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
@@ -19,6 +20,7 @@ import org.ant4eclipse.core.xquery.XQueryHandler;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRoleImpl;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
@@ -114,14 +116,24 @@ public class PyDevParser {
     // so we need to convert this information into corresponding entries while sorting out
     // the ones with the wrong natures
     final String[] projects = pythonrole.getEclipseProject().getReferencedProjects();
-    final Workspace workspace = pythonrole.getEclipseProject().getWorkspace();
     for (int i = 0; i < projects.length; i++) {
-      final EclipseProject refproject = workspace.getProject(projects[i]);
-      if (PythonUtilities.isPyDevProject(refproject)) {
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Project, "/" + projects[i], true, false));
-      }
+      pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Project, "/" + projects[i], true, false));
     }
 
+  }
+
+  static final void postProcess(final EclipseProject project) {
+    Assert.notNull(project);
+    final PythonProjectRoleImpl role = (PythonProjectRoleImpl) project.getRole(PythonProjectRole.class);
+    final Workspace workspace = project.getWorkspace();
+    final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Project);
+    for (RawPathEntry entry : entries) {
+      final String projectname = entry.getValue().substring(1);
+      final EclipseProject refproject = workspace.getProject(projectname);
+      if (!PythonUtilities.isPyDevProject(refproject)) {
+        role.removeRawPathEntry(entry);
+      }
+    }
   }
 
   /**

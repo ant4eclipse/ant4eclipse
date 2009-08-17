@@ -13,10 +13,13 @@ package org.ant4eclipse.platform.model.team.cvssupport.project;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
+import org.ant4eclipse.platform.model.team.cvssupport.project.CvsParser;
+import org.ant4eclipse.platform.model.team.cvssupport.project.CvsProjectRole;
 
 /**
  * Identifier for a CVS role.
@@ -43,6 +46,12 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
     final String tag = CvsParser.readTag(project);
     final CvsProjectRole cvsProjectRole = new CvsProjectRole(project, repositoryName, cvsRoot, tag);
     return cvsProjectRole;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(final EclipseProject project) {
   }
 
 } /* ENDCLASS */

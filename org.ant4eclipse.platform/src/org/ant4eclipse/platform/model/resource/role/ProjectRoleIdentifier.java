@@ -48,4 +48,13 @@ public interface ProjectRoleIdentifier {
    */
   ProjectRole createRole(final EclipseProject project);
 
+  /**
+   * This function will be invoked after each project within a workspace has been setup. Therefore each action that
+   * requires to access other projects within the workspace can be implemented here.
+   * 
+   * @param project
+   *          The project which role has to be modified if necessary. Not <code>null</code>.
+   */
+  void postProcess(final EclipseProject project);
+
 } /* ENDINTERFACE */

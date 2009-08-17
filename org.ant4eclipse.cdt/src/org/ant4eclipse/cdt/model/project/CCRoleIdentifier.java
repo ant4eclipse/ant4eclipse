@@ -13,6 +13,7 @@ package org.ant4eclipse.cdt.model.project;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
@@ -30,8 +31,7 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
    * <p>
-   * Returns <code>true</code> is the given project has the nature 
-   * <code>"org.eclipse.cdt.core.cnature"</code>.
+   * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.cdt.core.cnature"</code>.
    * </p>
    */
   public boolean isRoleSupported(final EclipseProject project) {
@@ -47,8 +47,14 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
     final CCProjectRoleImpl result = new CCProjectRoleImpl(project);
-//    ClasspathFileParser.parseClasspath(javaProjectRole);
+    // ClasspathFileParser.parseClasspath(javaProjectRole);
     return result;
   }
-  
+
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(final EclipseProject project) {
+  }
+
 } /* ENDCLASS */

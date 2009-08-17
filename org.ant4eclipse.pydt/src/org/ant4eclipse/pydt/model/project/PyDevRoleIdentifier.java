@@ -52,4 +52,10 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(final EclipseProject project) {
+  }
+
 } /* ENDCLASS */

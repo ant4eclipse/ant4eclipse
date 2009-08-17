@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.featureproject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
@@ -22,9 +18,14 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.BuildPropertiesParser;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * <p>
@@ -48,7 +49,6 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
     Assert.notNull(project);
 
     final FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
-
     final File featureDescription = featureProjectRole.getFeatureXml();
 
     try {
@@ -66,4 +66,11 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
 
     return featureProjectRole;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(final EclipseProject project) {
+  }
+
 } /* ENDCLASS */

@@ -56,4 +56,11 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
     ClasspathFileParser.parseClasspath(javaProjectRole);
     return javaProjectRole;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void postProcess(final EclipseProject project) {
+  }
+
 } /* ENDCLASS */

@@ -17,6 +17,7 @@ import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
@@ -60,6 +61,14 @@ public class ProjectRoleIdentifierRegistry {
     }
   }
 
+  public void postProcessRoles(final EclipseProject project) {
+    for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
+      if (projectRoleIdentifier.isRoleSupported(project)) {
+        projectRoleIdentifier.postProcess(project);
+      }
+    }
+  }
+
   public Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
     return this._projectRoleIdentifiers;
   }
@@ -78,7 +87,7 @@ public class ProjectRoleIdentifierRegistry {
     for (Pair<String, String> roleidentifierEntry : roleidentifierEntries) {
       // we're not interested in the key of a roleidentifier. only the classname (value of the entry) is relevant
       ProjectRoleIdentifier roleIdentifier = Utilities.newInstance(roleidentifierEntry.getSecond());
-      A4ELogging.trace("Register ProjectRoleIdentifier '%s'", new Object[] { roleIdentifier });
+      A4ELogging.trace("Register ProjectRoleIdentifier '%s'", roleIdentifier);
       roleIdentifiers.add(roleIdentifier);
     }
 

@@ -11,14 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.io.File;
 
 /**
  * A Factory that builds EclipseProjects
@@ -27,10 +28,10 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
  */
 public class ProjectFactory {
 
-  private ProjectRoleIdentifierRegistry _projectRoleIdentifierRegistry;
+  private final ProjectRoleIdentifierRegistry _projectRoleIdentifierRegistry;
 
   public ProjectFactory() {
-    _projectRoleIdentifierRegistry = new ProjectRoleIdentifierRegistry();
+    this._projectRoleIdentifierRegistry = new ProjectRoleIdentifierRegistry();
   }
 
   /**
@@ -44,8 +45,7 @@ public class ProjectFactory {
    */
   public EclipseProject readProjectFromWorkspace(final WorkspaceImpl workspace, final File projectDirectory) {
 
-    A4ELogging.trace("ProjectFactory: readProjectFromWorkspace(%s, %s)", new Object[] { workspace,
-        projectDirectory.getAbsolutePath() });
+    A4ELogging.trace("ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath());
 
     Assert.notNull(workspace);
     Assert.isDirectory(projectDirectory);
@@ -56,11 +56,23 @@ public class ProjectFactory {
     ProjectFileParser.parseProject(project);
 
     // apply role specific information
-    _projectRoleIdentifierRegistry.applyRoles(project);
+    this._projectRoleIdentifierRegistry.applyRoles(project);
 
     A4ELogging.trace("ProjectFactory: return '%s'", project);
     return project;
 
+  }
+
+  /**
+   * Performs a postprocessing for each registere project role. The project roles already have been setup but operations
+   * that might require to have access to other projects can be performed now.
+   * 
+   * @param project
+   *          The project which roles should be postprocessed. Not <code>null</code>.
+   */
+  public void postProcessRoleSetup(final EclipseProject project) {
+    A4ELogging.trace("ProjectFactory: postProcessRoleSetup(%s)", project.getSpecifiedName());
+    this._projectRoleIdentifierRegistry.postProcessRoles(project);
   }
 
 }

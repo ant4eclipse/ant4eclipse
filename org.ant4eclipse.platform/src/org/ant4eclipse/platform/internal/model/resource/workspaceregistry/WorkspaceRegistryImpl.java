@@ -11,18 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -106,9 +109,15 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
     }
 
     // read the projects and add them to the workspace
-    for (int i = 0; i < projectFolders.length; i++) {
-      final EclipseProject eclipseProject = _projectFactory.readProjectFromWorkspace(workspace, projectFolders[i]);
+    final List<EclipseProject> projects = new ArrayList<EclipseProject>();
+    for (File projectFolder : projectFolders) {
+      final EclipseProject eclipseProject = this._projectFactory.readProjectFromWorkspace(workspace, projectFolder);
+      projects.add(eclipseProject);
       workspace.registerEclipseProject(eclipseProject);
+    }
+
+    for (EclipseProject project : projects) {
+      this._projectFactory.postProcessRoleSetup(project);
     }
 
     // add the workspace to the registry
