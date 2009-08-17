@@ -57,10 +57,13 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public String createEmptyProject(final URL script) {
+  public String createEmptyProject(final URL script, final boolean multiplefolders) {
     final String result = newName();
     final PythonProjectBuilder builder = newProjectBuilder(result);
     builder.setBuildScript(script);
+    if (multiplefolders) {
+      builder.addSourceFolder("generated-source");
+    }
     builder.populate(_workspacebuilder);
     return result;
   }

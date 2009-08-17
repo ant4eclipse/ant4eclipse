@@ -161,7 +161,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @After
   public void teardown() {
-    dispose();
+    // dispose();
     ServiceRegistry.reset();
     _dltk = false;
     _projectsuite = null;
@@ -170,8 +170,8 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
-  public String createEmptyProject(final URL script) {
-    return _projectsuite.createEmptyProject(script);
+  public String createEmptyProject(final URL script, final boolean multiplefolders) {
+    return _projectsuite.createEmptyProject(script, multiplefolders);
   }
 
 } /* ENDCLASS */

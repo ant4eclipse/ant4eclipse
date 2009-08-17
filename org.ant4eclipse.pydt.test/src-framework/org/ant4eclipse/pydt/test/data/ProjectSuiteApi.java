@@ -25,9 +25,11 @@ public interface ProjectSuiteApi {
    * 
    * @param script
    *          The location of an ANT build script. Maybe <code>null</code>.
+   * @param multiplefolders
+   *          <code>true</code> <=> Create multiple source folders.
    * 
    * @return The name of the empty project. Neither <code>null</code> nor empty.
    */
-  String createEmptyProject(final URL script);
+  String createEmptyProject(final URL script, final boolean multiplefolders);
 
 } /* ENDINTERFACE */
