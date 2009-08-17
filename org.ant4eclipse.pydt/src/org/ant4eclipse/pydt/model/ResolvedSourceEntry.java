@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
-
 /**
  * Resolved record used to identify a source folder within a project.
  * 
@@ -41,7 +40,7 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
   /**
    * Returns the relative path of the folder within the project.
    * 
-   * @return The relative path of the folder. Neither <code>null</code> nor empty.
+   * @return The relative path of the folder. <code>null</code> or not empty.
    */
   public String getFolder() {
     return _folder;
