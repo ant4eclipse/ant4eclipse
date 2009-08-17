@@ -38,7 +38,9 @@ public interface ProjectRoleIdentifier {
 
   /**
    * <p>
-   * Creates the specific {@link ProjectRole} for the given {@link EclipseProject}.
+   * Creates the specific {@link ProjectRole} for the given {@link EclipseProject}. During the parsing process you must
+   * be aware that accessing other EclipseProject instances through the workspace is prohibited since that project
+   * itself might not have been created yet.
    * </p>
    * 
    * @param project
