@@ -36,12 +36,12 @@ public final class PyDLTKRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(final EclipseProject project) {
-    return (project.hasNature(PyDLTKProjectRole.NATURE));
+    return (project.hasNature(DLTKProjectRole.NATURE));
   }
 
   /**
    * <p>
-   * Adds a {@link PyDLTKProjectRole} to the given project and parses the pathes.
+   * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
    * </p>
    */
   public ProjectRole createRole(final EclipseProject project) {

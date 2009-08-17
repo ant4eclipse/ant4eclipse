@@ -18,7 +18,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.model.PythonInterpreter;
-import org.ant4eclipse.pydt.model.project.PyDLTKProjectRole;
+import org.ant4eclipse.pydt.model.project.DLTKProjectRole;
 import org.ant4eclipse.pydt.model.project.PyDevProjectRole;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
 
@@ -49,7 +49,7 @@ public class PythonUtilities {
    */
   public static final boolean isPythonRelatedProject(final EclipseProject project) {
     Assert.notNull(project);
-    return project.hasRole(PyDevProjectRole.class) || project.hasRole(PyDLTKProjectRole.class);
+    return project.hasRole(PyDevProjectRole.class) || project.hasRole(DLTKProjectRole.class);
   }
 
   /**
@@ -80,8 +80,8 @@ public class PythonUtilities {
    */
   public static final boolean isPyDLTKProject(final EclipseProject project) {
     Assert.notNull(project);
-    if (project.hasRole(PyDLTKProjectRole.class)) {
-      final PythonProjectRole role = (PythonProjectRole) project.getRole(PyDLTKProjectRole.class);
+    if (project.hasRole(DLTKProjectRole.class)) {
+      final PythonProjectRole role = (PythonProjectRole) project.getRole(DLTKProjectRole.class);
       return role.isDLTK();
     } else {
       return false;

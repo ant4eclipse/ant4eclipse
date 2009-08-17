@@ -16,7 +16,7 @@ import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
-import org.ant4eclipse.pydt.model.project.PyDLTKProjectRole;
+import org.ant4eclipse.pydt.model.project.DLTKProjectRole;
 import org.ant4eclipse.pydt.model.project.PyDevProjectRole;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.List;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonProjectRoleImpl extends AbstractProjectRole implements PyDLTKProjectRole, PyDevProjectRole {
+public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKProjectRole, PyDevProjectRole {
 
   public static final String NAME = "PythonProjectRole";
 

@@ -41,7 +41,7 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
    * <p>
-   * Adds a {@link PyDLTKProjectRole} to the given project and parses the pathes.
+   * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
    * </p>
    */
   public ProjectRole createRole(final EclipseProject project) {

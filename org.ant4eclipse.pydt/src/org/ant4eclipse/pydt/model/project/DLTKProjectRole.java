@@ -14,11 +14,11 @@ package org.ant4eclipse.pydt.model.project;
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 
 /**
- * PyDLTKProjectRole -- Python project role for the eclipse dltk framework.
+ * DLTKProjectRole -- Python project role for the eclipse dltk framework.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public interface PyDLTKProjectRole extends PythonProjectRole {
+public interface DLTKProjectRole extends PythonProjectRole {
 
   String NATURE       = "org.eclipse.dltk.python.core.nature";
 
