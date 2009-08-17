@@ -152,7 +152,7 @@ public class PythonResolver {
     if (entry.getFolder() == null) {
       sourcefolder = project.getFolder();
     } else {
-      sourcefolder = project.getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
+      sourcefolder = project.getChild(entry.getFolder(), pathstyle);
     }
     receiver.add(sourcefolder);
   }
@@ -186,7 +186,7 @@ public class PythonResolver {
    */
   private void expandOutput(final List<File> receiver, final ResolvedOutputEntry entry, final EclipseProject project,
       final EclipseProject.PathStyle pathstyle) {
-    final File outputfolder = project.getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
+    final File outputfolder = project.getChild(entry.getFolder(), pathstyle);
     receiver.add(outputfolder);
   }
 
@@ -197,7 +197,7 @@ public class PythonResolver {
       final EclipseProject.PathStyle pathstyle) {
     File file = new File(entry.getLocation());
     if (!file.isAbsolute()) {
-      file = project.getChild(entry.getLocation(), EclipseProject.PathStyle.ABSOLUTE);
+      file = project.getChild(entry.getLocation(), pathstyle);
     }
     receiver.add(file);
   }
