@@ -90,6 +90,16 @@ public class PythonResolver {
     return result;
   }
 
+  /**
+   * Translates the resolved path entries into filesystem pathes.
+   * 
+   * @param entries
+   *          A list of resolved path entries which have to be translated into filesystem pathes. Not <code>null</code>.
+   * @param project
+   *          The project containing these pathes. Not <code>null</code>.
+   * 
+   * @return A list of resolved filesystem locations. Not <code>null</code>.
+   */
   public File[] expand(final ResolvedPathEntry[] entries, final EclipseProject project) {
     Assert.notNull(entries);
     List<File> list = new ArrayList<File>();
@@ -99,6 +109,16 @@ public class PythonResolver {
     return list.toArray(new File[list.size()]);
   }
 
+  /**
+   * Translates a resolved path entry into a filesystem path.
+   * 
+   * @param receiver
+   *          A collecting datastructure for the results. Not <code>null</code>.
+   * @param entry
+   *          A resolved path entry which have to be translated into a filesystem path. Not <code>null</code>.
+   * @param project
+   *          The project containing these pathes. Not <code>null</code>.
+   */
   private void expand(final List<File> receiver, final ResolvedPathEntry entry, final EclipseProject project) {
     if (entry.getKind() == ReferenceKind.Container) {
       expandContainer(receiver, (ResolvedContainerEntry) entry, project);
@@ -115,11 +135,17 @@ public class PythonResolver {
     }
   }
 
+  /**
+   * @see #expand(ResolvedPathEntry[], EclipseProject)
+   */
   private void expandSource(List<File> receiver, ResolvedSourceEntry entry, EclipseProject project) {
     final File sourcefolder = project.getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
     receiver.add(sourcefolder);
   }
 
+  /**
+   * @see #expand(ResolvedPathEntry[], EclipseProject)
+   */
   private void expandRuntime(List<File> receiver, ResolvedRuntimeEntry entry, EclipseProject project) {
     final File[] libraries = entry.getLibraries();
     for (File lib : libraries) {
@@ -127,6 +153,9 @@ public class PythonResolver {
     }
   }
 
+  /**
+   * @see #expand(ResolvedPathEntry[], EclipseProject)
+   */
   private void expandProject(List<File> receiver, ResolvedProjectEntry entry, EclipseProject project) {
     if (entry.getProjectname().equals(project.getSpecifiedName())) {
       receiver.add(project.getFolder());
@@ -136,11 +165,17 @@ public class PythonResolver {
     }
   }
 
+  /**
+   * @see #expand(ResolvedPathEntry[], EclipseProject)
+   */
   private void expandOutput(List<File> receiver, ResolvedOutputEntry entry, EclipseProject project) {
     final File outputfolder = project.getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
     receiver.add(outputfolder);
   }
 
+  /**
+   * @see #expand(ResolvedPathEntry[], EclipseProject)
+   */
   private void expandLibrary(List<File> receiver, ResolvedLibraryEntry entry, EclipseProject project) {
     File file = new File(entry.getLocation());
     if (!file.isAbsolute()) {
@@ -149,6 +184,9 @@ public class PythonResolver {
     receiver.add(file);
   }
 
+  /**
+   * @see #expand(ResolvedPathEntry[], EclipseProject)
+   */
   private void expandContainer(List<File> receiver, ResolvedContainerEntry entry, EclipseProject project) {
     final File[] pathes = entry.getPathes();
     for (File path : pathes) {
