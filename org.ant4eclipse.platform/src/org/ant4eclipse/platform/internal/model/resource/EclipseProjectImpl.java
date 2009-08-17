@@ -144,6 +144,20 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  public File getFolder(final PathStyle pathstyle) {
+    Assert.notNull(pathstyle);
+    if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
+      return new File(".");
+    } else if (pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
+      return new File(this._projectDirectory.getName());
+    } else /* if (pathstyle == PathStyle.ABSOLUTE) */{
+      return this._projectDirectory.getAbsoluteFile();
+    }
+  }
+
+  /**
    * Returns whether this project exists. A project exists if the underlying file exists and if it is an directory.
    * 
    * @return Returns whether this project exists.

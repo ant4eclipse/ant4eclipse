@@ -77,6 +77,16 @@ public interface EclipseProject {
   File getFolder();
 
   /**
+   * Returns the folder that represents this project.
+   * 
+   * @param pathstyle
+   *          The format of the resolved File. Not <code>null</code>.
+   * 
+   * @return Returns the folder that represents this project. Not <code>null</code>.
+   */
+  File getFolder(final PathStyle pathstyle);
+
+  /**
    * <p>
    * Returns the comment that is maybe set in the <code>.project</code> file.
    * </p>
