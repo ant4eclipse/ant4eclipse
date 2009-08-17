@@ -47,14 +47,14 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
 
   private UsedProjectsArgumentComponent _args;
 
-  private PydtResolver                  _resolver;
+  private PythonResolver                  _resolver;
 
   /**
    * Initialises this resolver implementation.
    */
   public PythonReferencedProjectResolverImpl() {
     _registry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
-    _resolver = new PydtResolver();
+    _resolver = new PythonResolver();
     _workspace = null;
     _args = null;
   }

@@ -41,7 +41,7 @@ import java.util.List;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PydtResolver {
+public class PythonResolver {
 
   private PathEntryRegistry     _pathregistry;
 
@@ -50,7 +50,7 @@ public class PydtResolver {
   /**
    * Initialises this resolver.
    */
-  public PydtResolver() {
+  public PythonResolver() {
     _pathregistry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
     _runtimeregistry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
   }

@@ -15,7 +15,7 @@ import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
-import org.ant4eclipse.pydt.internal.tools.PydtResolver;
+import org.ant4eclipse.pydt.internal.tools.PythonResolver;
 import org.ant4eclipse.pydt.internal.tools.PythonUtilities;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
@@ -81,7 +81,7 @@ public class GetPydtOutputPathTask extends AbstractPydtGetProjectPathTask {
       A4ELogging.debug(MSG_PYDEV);
     }
     final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-    final PydtResolver resolver = new PydtResolver();
+    final PythonResolver resolver = new PythonResolver();
     final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Output);
     final ResolvedPathEntry[] resolved = resolver.resolve(entries);
     final File[] result = new File[resolved.length];
