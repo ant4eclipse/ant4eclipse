@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.internal.tools.PythonResolver;
 import org.ant4eclipse.pydt.model.RawPathEntry;
@@ -33,7 +35,7 @@ public class GetPydtPythonPathTask extends AbstractPydtGetProjectPathTask {
     final PythonResolver resolver = new PythonResolver();
     final RawPathEntry[] entries = role.getRawPathEntries();
     final ResolvedPathEntry[] resolved = resolver.resolve(entries);
-    final File[] result = resolver.expand(resolved, getEclipseProject());
+    final File[] result = resolver.expand(resolved, getEclipseProject(), EclipseProject.PathStyle.ABSOLUTE);
     return result;
   }
 
