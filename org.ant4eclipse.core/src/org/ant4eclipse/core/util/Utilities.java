@@ -217,6 +217,37 @@ public class Utilities {
   }
 
   /**
+   * Simple search replace method.
+   * 
+   * @param input
+   *          The text which should be altered. Not <code>null</code>.
+   * @param search
+   *          The text that has to be removed. Not <code>null</code>.
+   * @param replacement
+   *          The text which has to be used as a replacement. Not <code>null</code>.
+   * 
+   * @return The modified text. Not <code>null</code>.
+   */
+  public static final String replace(final String input, final String search, final String replacement) {
+    Assert.notNull(input);
+    Assert.notNull(search);
+    Assert.notNull(replacement);
+    final int idx = input.indexOf(search);
+    if (idx == -1) {
+      return input;
+    }
+    String before = "";
+    String after = "";
+    if (idx > 0) {
+      before = input.substring(0, idx);
+    }
+    if (idx + search.length() < input.length()) {
+      after = input.substring(idx + search.length());
+    }
+    return before + replacement + replace(after, search, replacement);
+  }
+
+  /**
    * Calculates a relative path for the supplied files.
    * 
    * @param fromfile
