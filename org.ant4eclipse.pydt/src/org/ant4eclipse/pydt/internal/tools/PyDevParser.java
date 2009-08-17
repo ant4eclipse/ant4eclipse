@@ -69,7 +69,7 @@ public class PyDevParser {
 
     // PyDev identifies the projects by workspace relative pathes, so we need to strip these
     // prefixes from the project names
-    final String prefix = "/" + pythonrole.getEclipseProject().getSpecifiedName() + "/";
+    final String prefix = "/" + pythonrole.getEclipseProject().getSpecifiedName();
 
     // a path can be a library or a source directory
     for (int i = 0; i < internalsourcepathes.length; i++) {
@@ -80,8 +80,11 @@ public class PyDevParser {
             path, prefix);
         continue;
       }
-      final String internalpath = path.substring(prefix.length());
-      if (isLibrary(internalpath)) {
+      String internalpath = Utilities.cleanup(path.substring(prefix.length()));
+      if ((internalpath != null) && internalpath.startsWith("/")) {
+        internalpath = Utilities.cleanup(internalpath.substring(1));
+      }
+      if ((internalpath != null) && isLibrary(internalpath)) {
         pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Library, internalpath, true, false));
       } else {
         pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Source, internalpath, true, false));
