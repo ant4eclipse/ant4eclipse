@@ -10,4 +10,35 @@
     <echo>${sources}</echo>
   </target>
 
+  <target name="get-source-path-multiple-folders">
+    <getPythonSourcePath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="sources"
+      allowmultiplefolders="true"
+    />
+    <echo>${sources}</echo>
+  </target>
+
+  <target name="get-source-path-relative">
+    <getPythonSourcePath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="sources"
+      relative="true"
+    />
+    <echo>${sources}</echo>
+  </target>
+
+  <target name="get-source-path-multiple-folders-relative">
+    <getPythonSourcePath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="sources"
+      allowmultiplefolders="true"
+      relative="true"
+    />
+    <echo>${sources}</echo>
+  </target>
+
 </project>
