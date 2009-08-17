@@ -92,20 +92,20 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   private void writeBuildpath(final File destination) {
     StringBuffer buffer = new StringBuffer();
     buffer.append("<?xml version=\"1.0\" encoding=\"" + ENC_UTF8 + "\"?>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("<buildpath>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("  ");
     buffer.append(_sourceentry);
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     for (int i = 0; i < _buildpathentries.size(); i++) {
       buffer.append("  ");
       buffer.append(_buildpathentries.get(i));
-      buffer.append(NL);
+      buffer.append(Utilities.NL);
     }
     buffer.append("  ");
     buffer.append(_runtime);
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("</buildpath>");
     Utilities.writeFile(destination, buffer.toString(), ENC_UTF8);
   }

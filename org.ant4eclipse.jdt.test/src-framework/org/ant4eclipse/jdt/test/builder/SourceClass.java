@@ -11,13 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.test.builder;
 
+import org.ant4eclipse.core.ClassName;
+import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.platform.test.builder.StringTemplate;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.ClassName;
-import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
-import org.ant4eclipse.platform.test.builder.StringTemplate;
 
 /**
  * Represents a dummy Java-Source file. This can be used to generate Source-File to test the compilation process.
@@ -81,7 +82,7 @@ public class SourceClass {
     Iterator<String> it = _usedClasses.iterator();
     while (it.hasNext()) {
       String usedClassName = it.next().toString();
-      source.append(asSource(ClassName.fromQualifiedClassName(usedClassName))).append(EclipseProjectBuilder.NL);
+      source.append(asSource(ClassName.fromQualifiedClassName(usedClassName))).append(Utilities.NL);
     }
     return source.toString();
   }

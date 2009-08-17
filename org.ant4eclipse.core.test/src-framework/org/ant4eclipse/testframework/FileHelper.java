@@ -232,7 +232,7 @@ public class FileHelper {
           throw new RuntimeException("Could filter file " + fileName + ": " + e, e);
         }
         buffer.append(line);
-        buffer.append(System.getProperty("line.separator"));
+        buffer.append(Utilities.NL);
       }
       return buffer.toString().getBytes();
     } catch (FileNotFoundException e) {

@@ -14,6 +14,7 @@ package org.ant4eclipse.platform.test.builder;
 import static org.junit.Assert.assertNotNull;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.testframework.FileHelper;
 
@@ -28,8 +29,6 @@ import java.util.List;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class EclipseProjectBuilder {
-
-  public static final String NL = System.getProperty("line.separator");
 
   private final String       _projectName;
 
@@ -95,32 +94,34 @@ public class EclipseProjectBuilder {
 
   protected void createProjectFile(File projectDir) {
     final StringBuffer dotProject = new StringBuffer();
-    dotProject.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(NL).append("<projectDescription><name>")
-        .append(this._projectName).append("</name>").append("<comment/>").append(NL);
+    dotProject.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(Utilities.NL).append(
+        "<projectDescription><name>").append(this._projectName).append("</name>").append("<comment/>").append(
+        Utilities.NL);
 
     dotProject.append("<projects>");
     for (String referencedProject : this._referencedProjects) {
-      dotProject.append("<project>").append(referencedProject).append("</project>").append(NL);
+      dotProject.append("<project>").append(referencedProject).append("</project>").append(Utilities.NL);
     }
 
-    dotProject.append("</projects>").append(NL);
+    dotProject.append("</projects>").append(Utilities.NL);
 
-    dotProject.append(NL).append("<buildSpec>").append(NL);
+    dotProject.append(Utilities.NL).append("<buildSpec>").append(Utilities.NL);
     Iterator<String> it = this._builders.iterator();
     while (it.hasNext()) {
       final String builder = it.next();
-      dotProject.append("<buildCommand><name>").append(builder).append("</name><arguments/></buildCommand>").append(NL);
+      dotProject.append("<buildCommand><name>").append(builder).append("</name><arguments/></buildCommand>").append(
+          Utilities.NL);
     }
-    dotProject.append("</buildSpec>").append(NL);
+    dotProject.append("</buildSpec>").append(Utilities.NL);
 
     it = this._natures.iterator();
-    dotProject.append("<natures>").append(NL);
+    dotProject.append("<natures>").append(Utilities.NL);
     while (it.hasNext()) {
       final String builder = it.next();
-      dotProject.append("<nature>").append(builder).append("</nature>").append(NL);
+      dotProject.append("<nature>").append(builder).append("</nature>").append(Utilities.NL);
     }
-    dotProject.append("</natures>").append(NL);
-    dotProject.append("</projectDescription>").append(NL);
+    dotProject.append("</natures>").append(Utilities.NL);
+    dotProject.append("</projectDescription>").append(Utilities.NL);
 
     File dotProjectFile = new File(projectDir, ".project");
     FileHelper.createFile(dotProjectFile, dotProject.toString());

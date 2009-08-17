@@ -55,7 +55,7 @@ public class Utilities {
 
   public static final String PROP_A4ETEMPDIR = "ant4eclipse.temp";
 
-  public static final String LINESEPARATOR   = System.getProperty("line.separator");
+  public static final String NL              = System.getProperty("line.separator");
 
   /**
    * Prevent instantiation of this class.
@@ -415,17 +415,16 @@ public class Utilities {
    */
   public static final String toString(final String title, final Properties properties) {
     final StringBuilder buffer = new StringBuilder();
-    final String linesep = System.getProperty("line.separator");
     if (title != null) {
       buffer.append(title);
-      buffer.append(linesep);
+      buffer.append(NL);
     }
     Iterator<Entry<Object, Object>> it = properties.entrySet().iterator();
     while (it.hasNext()) {
       Entry<Object, Object> entry = it.next();
       buffer.append("'").append(entry.getKey());
       buffer.append("' -> '").append(entry.getValue()).append("'");
-      buffer.append(linesep);
+      buffer.append(NL);
     }
     return (buffer.toString());
   }
@@ -963,7 +962,7 @@ public class Utilities {
         String line = this._source.readLine();
         while (line != null) {
           this._receiver.append(line);
-          this._receiver.append(LINESEPARATOR);
+          this._receiver.append(NL);
           line = this._source.readLine();
         }
       } catch (IOException ex) {

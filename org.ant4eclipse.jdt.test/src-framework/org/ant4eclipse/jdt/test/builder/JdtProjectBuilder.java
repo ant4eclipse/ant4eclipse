@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.ant4eclipse.core.ClassName;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
@@ -235,12 +236,13 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
 
   protected void createClasspathFile(File projectDir) {
     final StringBuilder dotClasspath = new StringBuilder();
-    dotClasspath.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(NL).append("<classpath>").append(NL);
+    dotClasspath.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(Utilities.NL).append("<classpath>")
+        .append(Utilities.NL);
 
     for (String entry : _classpathEntries) {
-      dotClasspath.append(entry).append(NL);
+      dotClasspath.append(entry).append(Utilities.NL);
     }
-    dotClasspath.append("</classpath>").append(NL);
+    dotClasspath.append("</classpath>").append(Utilities.NL);
 
     File dotClasspathFile = new File(projectDir, ".classpath");
     FileHelper.createFile(dotClasspathFile, dotClasspath.toString());

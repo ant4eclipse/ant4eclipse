@@ -75,29 +75,29 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   private void writePyDevProject(final File destination) {
     StringBuffer buffer = new StringBuffer();
     buffer.append("<?xml version=\"1.0\" encoding=\"" + ENC_UTF8 + "\" standalone=\"no\"?>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("<?eclipse-pydev version=\"1.0\"?>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("<pydev_project>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
 
     // write down the source pathes
     buffer.append("  <pydev_pathproperty name=\"org.python.pydev.PROJECT_SOURCE_PATH\">");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("    <path>" + _sourcepath + "</path>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     for (int i = 0; i < _sourcepathes.size(); i++) {
       buffer.append("    <path>" + _sourcepathes.get(i) + "</path>");
-      buffer.append(NL);
+      buffer.append(Utilities.NL);
     }
     buffer.append("  </pydev_pathproperty>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
 
     // write the runtime information
     buffer.append("<pydev_property name=\"org.python.pydev.PYTHON_PROJECT_VERSION\">python 2.6</pydev_property>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
     buffer.append("<pydev_property name=\"org.python.pydev.PYTHON_PROJECT_INTERPRETER\">Default</pydev_property>");
-    buffer.append(NL);
+    buffer.append(Utilities.NL);
 
     buffer.append("</pydev_project>");
     Utilities.writeFile(destination, buffer.toString(), ENC_UTF8);
