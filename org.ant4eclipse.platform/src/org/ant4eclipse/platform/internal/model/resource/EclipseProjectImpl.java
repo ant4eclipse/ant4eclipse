@@ -96,7 +96,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * @return Returns the specifiedName.
+   * {@inheritDoc}
    */
   public String getSpecifiedName() {
     return this._specifiedName;
@@ -111,7 +111,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * @return Returns the comment.
+   * {@inheritDoc}
    */
   public String getComment() {
     return this._comment;
@@ -126,18 +126,14 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns the name of the project
-   * 
-   * @return the name of the project
+   * {@inheritDoc}
    */
   public String getFolderName() {
     return this._projectDirectory.getName();
   }
 
   /**
-   * Returns the folder that represents this project.
-   * 
-   * @return Returns the folder that represents this project.
+   * {@inheritDoc}
    */
   public File getFolder() {
     return this._projectDirectory;
@@ -158,20 +154,14 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns whether this project exists. A project exists if the underlying file exists and if it is an directory.
-   * 
-   * @return Returns whether this project exists.
+   * {@inheritDoc}
    */
   public boolean exists() {
     return this._projectDirectory.isDirectory();
   }
 
   /**
-   * Returns whether this project has a child with the given path.
-   * 
-   * @param path
-   *          the path of child
-   * @return Returns whether this project has a child with the given path.
+   * {@inheritDoc}
    */
   public boolean hasChild(final String path) {
     Assert.notNull(path);
@@ -180,21 +170,22 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns the child of this project with the given path.
-   * 
-   * @param path
-   *          The child which shall be returned.
-   * 
-   * @return Returns the child of this project with the given path.
+   * {@inheritDoc}
    */
   public File getChild(final String path) {
     return (getChild(path, PathStyle.ABSOLUTE));
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public File[] getChildren(final String[] path) {
     return getChildren(path, PathStyle.ABSOLUTE);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public File[] getChildren(final String[] path, final PathStyle relative) {
     Assert.notNull(path);
 
@@ -211,27 +202,21 @@ public final class EclipseProjectImpl implements EclipseProject {
     return (this._settingsFolder != null);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.platform.resource.EclipseProject#hasSettingsFile(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
   public boolean hasSettingsFile(final String settingsFileName) {
     // check if settings folder exists
     if (!hasSettingsFolder()) {
       return false;
     }
-
     final File settingsFile = new File(this._settingsFolder, settingsFileName);
-
     // is it an existing file?
     return settingsFile.isFile();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.platform.resource.EclipseProject#getSettingsFile(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
   public File getSettingsFile(final String settingsFileName) throws RuntimeException {
     Assert.notNull("The parameter 'settingsFileName' must not be null", settingsFileName);
@@ -252,14 +237,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns the child of this project with the given path.
-   * 
-   * @param path
-   *          The child which shall be returned.
-   * @param relative
-   *          true <=> Create a relative location.
-   * 
-   * @return Returns the child of this project with the given path.
+   * {@inheritDoc}
    */
   public File getChild(String path, final PathStyle relative) {
     Assert.notNull(path);
@@ -337,24 +315,15 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns whether the nature with the specified name is set or not.
-   * 
-   * @param natureName
-   * @return Returns whether the nature with the specified name is set or not.
+   * {@inheritDoc}
    */
   public boolean hasNature(final String natureName) {
     Assert.notNull(natureName);
-
     return hasNature(new ProjectNatureImpl(natureName));
   }
 
   /**
-   * <p>
-   * Returns whether the specified nature is set or not.
-   * </p>
-   * 
-   * @param nature
-   * @return Returns whether the specified nature is set or not.
+   * {@inheritDoc}
    */
   public boolean hasNature(final ProjectNature nature) {
     Assert.notNull(nature);
@@ -386,9 +355,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns the project natures of the project.
-   * 
-   * @return Returns the project natures of the project.
+   * {@inheritDoc}
    */
   public ProjectNature[] getNatures() {
     return this._natures.toArray(new ProjectNature[this._natures.size()]);
@@ -404,9 +371,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns a list of all referenced project names.
-   * 
-   * @return A list of all reference project names.
+   * {@inheritDoc}
    */
   public String[] getReferencedProjects() {
     return this._referencedProjects.toArray(new String[this._referencedProjects.size()]);
@@ -428,32 +393,22 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns whether the role of the given type is set or not.
-   * 
-   * @param projectRoleClass
-   * @return Returns whether the role of the given type is set or not.
-   * 
+   * {@inheritDoc}
    */
   public boolean hasRole(final Class<? extends ProjectRole> projectRoleClass) {
     Assert.notNull(projectRoleClass);
-
     final Iterator<ProjectRole> iterator = this._roles.iterator();
-
     while (iterator.hasNext()) {
       final AbstractProjectRole role = (AbstractProjectRole) iterator.next();
       if (projectRoleClass.isAssignableFrom(role.getClass())) {
         return true;
       }
     }
-
     return false;
   }
 
   /**
-   * Returns the role of the given type. If the role is not set, an exception will be thrown.
-   * 
-   * @param projectRoleClass
-   * @return Returns the role of the given type. If the role is not set, an exception will be thrown.
+   * {@inheritDoc}
    */
   public ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass) {
     Assert.notNull(projectRoleClass);
@@ -474,9 +429,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns the roles of this project.
-   * 
-   * @return Returns the roles of this project.
+   * {@inheritDoc}
    */
   public ProjectRole[] getRoles() {
     return this._roles.toArray(new ProjectRole[this._roles.size()]);
@@ -495,37 +448,24 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns whether the build command with the specified name is set or not.
-   * 
-   * @param commandName
-   * @return Returns whether the build command with the specified name is set or not.
+   * {@inheritDoc}
    */
   public boolean hasBuildCommand(final String commandName) {
     Assert.notNull(commandName);
-
     final BuildCommand command = new BuildCommandImpl(commandName);
-
     return hasBuildCommand(command);
   }
 
   /**
-   * Returns whether the specified build command is set or not.
-   * 
-   * @param command
-   *          The command name that has to be tested.
-   * 
-   * @return Returns whether the specified build command is set or not.
+   * {@inheritDoc}
    */
   public boolean hasBuildCommand(final BuildCommand command) {
     Assert.notNull(command);
-
     return this._buildCommands.contains(command);
   }
 
   /**
-   * Returns the build commands of this project.
-   * 
-   * @return Returns the build commands of this project.
+   * {@inheritDoc}
    */
   public BuildCommand[] getBuildCommands() {
     return this._buildCommands.toArray(new BuildCommand[0]);
@@ -574,9 +514,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   /**
-   * Returns the workspace the project belongs to.
-   * 
-   * @return Returns the workspace the project belongs to.
+   * {@inheritDoc}
    */
   public Workspace getWorkspace() {
     return this._workspace;
