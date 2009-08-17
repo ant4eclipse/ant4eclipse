@@ -13,6 +13,7 @@ package org.ant4eclipse.pydt.test;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pydt.ant.GetPydtOutputPathTask;
 import org.ant4eclipse.pydt.ant.GetPydtPythonPathTask;
@@ -38,11 +39,16 @@ import java.net.URL;
  */
 public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implements ProjectSuiteApi {
 
-  private static final String NAME_BUILDXML = "build.xml";
+  /** @todo [17-Aug-2009:KASI] Maybe we should declare supported properties globally. */
+  private static final String PROP_DISPOSEONEXIT = "ant4eclipse.disposeonexit";
+
+  private static final String NAME_BUILDXML      = "build.xml";
 
   private boolean             _dltk;
 
   private ProjectSuite        _projectsuite;
+
+  private boolean             _disposeonexit;
 
   /**
    * Intialises this workspace based test.
@@ -52,6 +58,11 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   public AbstractWorkspaceBasedTest(final boolean dltk) {
     _dltk = dltk;
+    _disposeonexit = true;
+    final String val = Utilities.cleanup(System.getProperty(PROP_DISPOSEONEXIT));
+    if (val != null) {
+      _disposeonexit = !"false".equals(val);
+    }
   }
 
   /**
@@ -182,7 +193,9 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @After
   public void teardown() {
-    dispose();
+    if (_disposeonexit) {
+      dispose();
+    }
     ServiceRegistry.reset();
     _dltk = false;
     _projectsuite = null;
