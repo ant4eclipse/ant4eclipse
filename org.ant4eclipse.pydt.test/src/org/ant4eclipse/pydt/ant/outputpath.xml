@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<project name="outputpath" basedir="." default="get-output-path">
+
+  <target name="get-output-path">
+    <getPythonOutputPath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="output"
+    />
+    <echo>${output}</echo>
+  </target>
+
+  <target name="get-output-path-multiple-folders">
+    <getPythonOutputPath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="output"
+      allowmultiplefolders="true"
+    />
+    <echo>${output}</echo>
+  </target>
+
+  <target name="get-output-path-relative">
+    <getPythonOutputPath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="output"
+      relative="true"
+    />
+    <echo>${output}</echo>
+  </target>
+
+  <target name="get-output-path-multiple-folders-relative">
+    <getPythonOutputPath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="output"
+      allowmultiplefolders="true"
+      relative="true"
+    />
+    <echo>${output}</echo>
+  </target>
+
+  <target name="get-output-path-dirseparator">
+    <getPythonOutputPath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="output"
+      dirseparator="@"
+    />
+    <echo>${output}</echo>
+  </target>
+
+  <target name="get-output-path-multiple-folders-dirseparator">
+    <getPythonOutputPath
+      projectName="${projectname}"
+      workspace="${workspacedir}"
+      property="output"
+      allowmultiplefolders="true"
+      dirseparator="@"
+    />
+    <echo>${output}</echo>
+  </target>
+
+</project>
