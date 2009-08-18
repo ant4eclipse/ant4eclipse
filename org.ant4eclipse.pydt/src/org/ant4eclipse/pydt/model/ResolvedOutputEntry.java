@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
-import org.ant4eclipse.core.Assert;
 
 /**
  * Resolved record used to identify an output folder within a project.
@@ -26,10 +25,9 @@ public class ResolvedOutputEntry implements ResolvedPathEntry {
    * Sets up this entry with the relative path of the folder. The path is relative to the project.
    * 
    * @param foldername
-   *          The name of the folder. Neither <code>null</code> nor empty.
+   *          The name of the folder. <code>null</code> or not empty.
    */
   public ResolvedOutputEntry(final String foldername) {
-    Assert.nonEmpty(foldername);
     _folder = foldername;
   }
 
@@ -43,7 +41,7 @@ public class ResolvedOutputEntry implements ResolvedPathEntry {
   /**
    * Returns the relative path of the folder within the project.
    * 
-   * @return The relative path of the folder. Neither <code>null</code> nor empty.
+   * @return The relative path of the folder. <code>null</code> or not empty.
    */
   public String getFolder() {
     return _folder;

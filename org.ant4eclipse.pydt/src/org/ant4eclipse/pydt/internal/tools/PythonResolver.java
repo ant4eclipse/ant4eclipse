@@ -186,7 +186,12 @@ public class PythonResolver {
    */
   private void expandOutput(final List<File> receiver, final ResolvedOutputEntry entry, final EclipseProject project,
       final EclipseProject.PathStyle pathstyle) {
-    final File outputfolder = project.getChild(entry.getFolder(), pathstyle);
+    File outputfolder = null;
+    if (entry.getFolder() == null) {
+      outputfolder = project.getFolder(pathstyle);
+    } else {
+      outputfolder = project.getChild(entry.getFolder(), pathstyle);
+    }
     receiver.add(outputfolder);
   }
 
