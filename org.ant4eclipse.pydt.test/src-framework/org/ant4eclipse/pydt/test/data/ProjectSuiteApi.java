@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.data;
 
+import org.ant4eclipse.core.util.Pair;
+
 import java.net.URL;
 
 /**
@@ -47,7 +49,8 @@ public interface ProjectSuiteApi {
    * 
    * @return The name of the main project. Neither <code>null</code> nor empty.
    */
-  String createComplexProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple);
+  Pair<String, String> createComplexProject(final URL script, final boolean mainmultiple,
+      final boolean secondarymultiple);
 
   /**
    * Creates two projects where both projects depends on each other.
@@ -61,6 +64,6 @@ public interface ProjectSuiteApi {
    * 
    * @return The name of the main project. Neither <code>null</code> nor empty.
    */
-  String createCyclicProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple);
+  Pair<String, String> createCyclicProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple);
 
 } /* ENDINTERFACE */

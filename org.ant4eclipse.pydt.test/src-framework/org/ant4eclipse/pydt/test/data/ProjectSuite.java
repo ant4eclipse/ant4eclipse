@@ -12,6 +12,7 @@
 package org.ant4eclipse.pydt.test.data;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.Pair;
 
 import org.ant4eclipse.pydt.test.builder.DLTKProjectBuilder;
 import org.ant4eclipse.pydt.test.builder.PyDevProjectBuilder;
@@ -71,7 +72,7 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public String createComplexProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
+  public Pair<String, String> createComplexProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
     final String mainname = newName();
     final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
     mainbuilder.setBuildScript(script);
@@ -86,13 +87,13 @@ public class ProjectSuite implements ProjectSuiteApi {
     mainbuilder.useProject(secondaryname, true);
     mainbuilder.populate(_workspacebuilder);
     secondarybuilder.populate(_workspacebuilder);
-    return mainname;
+    return new Pair<String, String>(mainname, secondaryname);
   }
 
   /**
    * {@inheritDoc}
    */
-  public String createCyclicProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
+  public Pair<String, String> createCyclicProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
     final String mainname = newName();
     final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
     mainbuilder.setBuildScript(script);
@@ -108,7 +109,7 @@ public class ProjectSuite implements ProjectSuiteApi {
     secondarybuilder.useProject(mainname, true);
     mainbuilder.populate(_workspacebuilder);
     secondarybuilder.populate(_workspacebuilder);
-    return mainname;
+    return new Pair<String, String>(mainname, secondaryname);
   }
 
   /**

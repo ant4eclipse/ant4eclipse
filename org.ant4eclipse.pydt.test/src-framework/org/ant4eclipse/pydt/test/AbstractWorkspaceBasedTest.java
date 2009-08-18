@@ -13,6 +13,7 @@ package org.ant4eclipse.pydt.test;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pydt.ant.GetPydtOutputPathTask;
@@ -211,14 +212,16 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
-  public String createComplexProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple) {
+  public Pair<String, String> createComplexProject(final URL script, final boolean mainmultiple,
+      final boolean secondarymultiple) {
     return _projectsuite.createComplexProject(script, mainmultiple, secondarymultiple);
   }
 
   /**
    * {@inheritDoc}
    */
-  public String createCyclicProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple) {
+  public Pair<String, String> createCyclicProject(final URL script, final boolean mainmultiple,
+      final boolean secondarymultiple) {
     return _projectsuite.createCyclicProject(script, mainmultiple, secondarymultiple);
   }
 
