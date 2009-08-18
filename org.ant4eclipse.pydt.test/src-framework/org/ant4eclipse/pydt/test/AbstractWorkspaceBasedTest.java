@@ -215,4 +215,11 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
     return _projectsuite.createComplexProject(script, mainmultiple, secondarymultiple);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public String createCyclicProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple) {
+    return _projectsuite.createCyclicProject(script, mainmultiple, secondarymultiple);
+  }
+
 } /* ENDCLASS */
