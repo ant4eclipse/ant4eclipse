@@ -25,6 +25,11 @@ import java.net.URL;
 /**
  * Basic test implementation for the ant task: 'getPythonSourcePath'.
  * 
+ * <ul>
+ * <li>The <i>emptyXXX</i> tests do show the functionality of the task.</li>
+ * <li>The <i>complexXXX</i> tests do show that dependencies don't alter the source pathes.</li>
+ * </ul>
+ * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {

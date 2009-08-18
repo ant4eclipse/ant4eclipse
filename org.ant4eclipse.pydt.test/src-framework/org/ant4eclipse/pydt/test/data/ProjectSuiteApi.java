@@ -49,4 +49,18 @@ public interface ProjectSuiteApi {
    */
   String createComplexProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple);
 
+  /**
+   * Creates two projects where both projects depends on each other.
+   * 
+   * @param script
+   *          The location of an ANT build script. Maybe <code>null</code>.
+   * @param mainmultiple
+   *          <code>true</code> <=> Create multiple folders for the main project.
+   * @param secondarymultiple
+   *          <code>true</code> <=> Create multiple folders for the secondary project.
+   * 
+   * @return The name of the main project. Neither <code>null</code> nor empty.
+   */
+  String createCyclicProject(final URL script, final boolean mainmultiple, final boolean secondarymultiple);
+
 } /* ENDINTERFACE */

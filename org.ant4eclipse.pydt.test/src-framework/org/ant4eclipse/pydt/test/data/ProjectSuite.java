@@ -90,6 +90,28 @@ public class ProjectSuite implements ProjectSuiteApi {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  public String createCyclicProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
+    final String mainname = newName();
+    final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
+    mainbuilder.setBuildScript(script);
+    if (mainmultiple) {
+      mainbuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+    }
+    final String secondaryname = newName();
+    final PythonProjectBuilder secondarybuilder = newProjectBuilder(secondaryname);
+    if (secondarymultiple) {
+      secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+    }
+    mainbuilder.useProject(secondaryname, true);
+    secondarybuilder.useProject(mainname, true);
+    mainbuilder.populate(_workspacebuilder);
+    secondarybuilder.populate(_workspacebuilder);
+    return mainname;
+  }
+
+  /**
    * Creates a new instance of a PythonProjectBuilder with the supplied project name.
    * 
    * @param projectname
