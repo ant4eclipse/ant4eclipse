@@ -26,7 +26,7 @@ import java.util.List;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class GetPydtPythonPathTask extends AbstractPydtGetProjectPathTask {
+public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
 
   private boolean _ignoreruntime = false;
 

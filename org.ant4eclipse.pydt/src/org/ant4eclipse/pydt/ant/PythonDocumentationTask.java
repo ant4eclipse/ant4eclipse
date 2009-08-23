@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PydtDocumentationTask extends AbstractAnt4EclipseTask {
+public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
 
   private static final String SCRIPT                 = "import sys\n" + "if __name__ == \"__main__\":\n"
                                                          + "  sys.path.append(\"%s\")\n" + "  from %s import cli\n"
