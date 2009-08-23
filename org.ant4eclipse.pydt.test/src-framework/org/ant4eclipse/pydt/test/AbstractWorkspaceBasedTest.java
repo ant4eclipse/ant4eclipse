@@ -15,10 +15,10 @@ import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.pydt.ant.GetPydtOutputPathTask;
-import org.ant4eclipse.pydt.ant.GetPydtPythonPathTask;
-import org.ant4eclipse.pydt.ant.GetPydtSourcePathTask;
-import org.ant4eclipse.pydt.ant.PydtDocumentationTask;
+import org.ant4eclipse.pydt.ant.GetPythonOutputPathTask;
+import org.ant4eclipse.pydt.ant.GetPythonPathTask;
+import org.ant4eclipse.pydt.ant.GetPythonSourcePathTask;
+import org.ant4eclipse.pydt.ant.PythonDocumentationTask;
 import org.ant4eclipse.pydt.ant.type.PythonContainer;
 import org.ant4eclipse.pydt.test.builder.WorkspaceBuilder;
 import org.ant4eclipse.pydt.test.data.ProjectDescription;
@@ -155,10 +155,10 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    *          The project used to configure. Not <code>null</code>.
    */
   protected void extendDefinitions(final Project project) {
-    project.addTaskDefinition("getPythonSourcePath", GetPydtSourcePathTask.class);
-    project.addTaskDefinition("getPythonOutputPath", GetPydtOutputPathTask.class);
-    project.addTaskDefinition("getPythonPath", GetPydtPythonPathTask.class);
-    project.addTaskDefinition("pythonDoc", PydtDocumentationTask.class);
+    project.addTaskDefinition("getPythonSourcePath", GetPythonSourcePathTask.class);
+    project.addTaskDefinition("getPythonOutputPath", GetPythonOutputPathTask.class);
+    project.addTaskDefinition("getPythonPath", GetPythonPathTask.class);
+    project.addTaskDefinition("pythonDoc", PythonDocumentationTask.class);
     project.addDataTypeDefinition("pythonContainer", PythonContainer.class);
   }
 
