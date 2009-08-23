@@ -165,7 +165,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     entry._exported = true;
     entry._kind = Kind.lib;
     final String file = location.getFile();
-    int lidx = file.lastIndexOf(file, '/');
+    int lidx = file.lastIndexOf('/');
     entry._path = "lib/" + (lidx == -1 ? file : file.substring(lidx + 1));
     entry._source = location;
     _internallibs.add(entry);
