@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.core.util.Pair;
-
 import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
 import org.ant4eclipse.pydt.test.BuildResult;
+import org.ant4eclipse.pydt.test.data.ProjectDescription;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -67,7 +66,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProject() {
-    final String projectname = createEmptyProject(_pythonpathxml, 0);
+    final String projectname = createEmptyProject(_pythonpathxml, 0).getPrimaryProjectname();
     final BuildResult buildresult = execute(projectname, "get-python-path");
     final String[] content = buildresult.getTargetOutput("get-python-path");
     Assert.assertEquals(1, content.length);
@@ -76,7 +75,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectRelative() {
-    final String projectname = createEmptyProject(_pythonpathxml, 0);
+    final String projectname = createEmptyProject(_pythonpathxml, 0).getPrimaryProjectname();
     final BuildResult buildresult = execute(projectname, "get-python-path-relative");
     final String[] content = buildresult.getTargetOutput("get-python-path-relative");
     Assert.assertEquals(1, content.length);
@@ -85,7 +84,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectDirseparator() {
-    final String projectname = createEmptyProject(_pythonpathxml, 0);
+    final String projectname = createEmptyProject(_pythonpathxml, 0).getPrimaryProjectname();
     final BuildResult buildresult = execute(projectname, "get-python-path-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-python-path-dirseparator");
     Assert.assertEquals(1, content.length);
@@ -94,18 +93,18 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProject() {
-    final Pair<String, String> projectname = createComplexProject(_pythonpathxml, 0);
-    final BuildResult buildresult = execute(projectname.getFirst(), "get-python-path");
+    final ProjectDescription projectname = createComplexProject(_pythonpathxml, 0);
+    final BuildResult buildresult = execute(projectname.getPrimaryProjectname(), "get-python-path");
     final String[] content = buildresult.getTargetOutput("get-python-path");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname.getFirst() + File.pathSeparator
-        + "${workspacedir}" + File.separator + projectname.getSecond(), content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectname.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}" + File.separator + projectname.getSecondaryProjectname(), content[0]);
   }
 
   @Test
   public void complexProjectRelative() {
-    final Pair<String, String> projectname = createComplexProject(_pythonpathxml, 0);
-    final BuildResult buildresult = execute(projectname.getFirst(), "get-python-path-relative");
+    final ProjectDescription projectname = createComplexProject(_pythonpathxml, 0);
+    final BuildResult buildresult = execute(projectname.getPrimaryProjectname(), "get-python-path-relative");
     final String[] content = buildresult.getTargetOutput("get-python-path-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals(".", content[0]);
@@ -113,28 +112,28 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectDirseparator() {
-    final Pair<String, String> projectname = createComplexProject(_pythonpathxml, 0);
-    final BuildResult buildresult = execute(projectname.getFirst(), "get-python-path-dirseparator", "@");
+    final ProjectDescription projectname = createComplexProject(_pythonpathxml, 0);
+    final BuildResult buildresult = execute(projectname.getPrimaryProjectname(), "get-python-path-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-python-path-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname.getFirst() + File.pathSeparator + "${workspacedir}@"
-        + projectname.getSecond(), content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectname.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectname.getSecondaryProjectname(), content[0]);
   }
 
   @Test
   public void cyclicProject() {
-    final Pair<String, String> projectname = createCyclicProject(_pythonpathxml, 0);
-    final BuildResult buildresult = execute(projectname.getFirst(), "get-python-path");
+    final ProjectDescription projectname = createCyclicProject(_pythonpathxml, 0);
+    final BuildResult buildresult = execute(projectname.getPrimaryProjectname(), "get-python-path");
     final String[] content = buildresult.getTargetOutput("get-python-path");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname.getFirst() + File.pathSeparator
-        + "${workspacedir}" + File.separator + projectname.getSecond(), content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectname.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}" + File.separator + projectname.getSecondaryProjectname(), content[0]);
   }
 
   @Test
   public void cyclicProjectRelative() {
-    final Pair<String, String> projectname = createCyclicProject(_pythonpathxml, 0);
-    final BuildResult buildresult = execute(projectname.getFirst(), "get-python-path-relative");
+    final ProjectDescription projectname = createCyclicProject(_pythonpathxml, 0);
+    final BuildResult buildresult = execute(projectname.getPrimaryProjectname(), "get-python-path-relative");
     final String[] content = buildresult.getTargetOutput("get-python-path-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals(".", content[0]);
@@ -142,12 +141,12 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void cyclicProjectDirseparator() {
-    final Pair<String, String> projectname = createCyclicProject(_pythonpathxml, 0);
-    final BuildResult buildresult = execute(projectname.getFirst(), "get-python-path-dirseparator", "@");
+    final ProjectDescription projectname = createCyclicProject(_pythonpathxml, 0);
+    final BuildResult buildresult = execute(projectname.getPrimaryProjectname(), "get-python-path-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-python-path-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname.getFirst() + File.pathSeparator + "${workspacedir}@"
-        + projectname.getSecond(), content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectname.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectname.getSecondaryProjectname(), content[0]);
   }
 
 } /* ENDCLASS */

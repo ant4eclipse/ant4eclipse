@@ -13,7 +13,6 @@ package org.ant4eclipse.pydt.test;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pydt.ant.GetPydtOutputPathTask;
@@ -22,6 +21,7 @@ import org.ant4eclipse.pydt.ant.GetPydtSourcePathTask;
 import org.ant4eclipse.pydt.ant.PydtDocumentationTask;
 import org.ant4eclipse.pydt.ant.type.PythonContainer;
 import org.ant4eclipse.pydt.test.builder.WorkspaceBuilder;
+import org.ant4eclipse.pydt.test.data.ProjectDescription;
 import org.ant4eclipse.pydt.test.data.ProjectSuite;
 import org.ant4eclipse.pydt.test.data.ProjectSuiteApi;
 import org.apache.tools.ant.Project;
@@ -205,21 +205,21 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
-  public String createEmptyProject(final URL script, final int projectsettings) {
+  public ProjectDescription createEmptyProject(final URL script, final int projectsettings) {
     return _projectsuite.createEmptyProject(script, projectsettings);
   }
 
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createComplexProject(final URL script, final int projectsettings) {
+  public ProjectDescription createComplexProject(final URL script, final int projectsettings) {
     return _projectsuite.createComplexProject(script, projectsettings);
   }
 
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createCyclicProject(final URL script, final int projectsettings) {
+  public ProjectDescription createCyclicProject(final URL script, final int projectsettings) {
     return _projectsuite.createCyclicProject(script, projectsettings);
   }
 

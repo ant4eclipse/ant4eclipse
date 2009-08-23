@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.data;
 
-import org.ant4eclipse.core.util.Pair;
-
 import java.net.URL;
 
 /**
@@ -39,9 +37,9 @@ public interface ProjectSuiteApi {
    * @param projectsettings
    *          A list of flags used to control the creation of the project.
    * 
-   * @return The name of the empty project. Neither <code>null</code> nor empty.
+   * @return A description of the created project structures. Not <code>null</code>.
    */
-  String createEmptyProject(final URL script, final int projectsettings);
+  ProjectDescription createEmptyProject(final URL script, final int projectsettings);
 
   /**
    * Creates two projects where project one depends from project two.
@@ -51,9 +49,9 @@ public interface ProjectSuiteApi {
    * @param projectsettings
    *          A list of flags used to control the creation of the project.
    * 
-   * @return The name of the main project. Neither <code>null</code> nor empty.
+   * @return A description of the created project structures. Not <code>null</code>.
    */
-  Pair<String, String> createComplexProject(final URL script, final int projectsettings);
+  ProjectDescription createComplexProject(final URL script, final int projectsettings);
 
   /**
    * Creates two projects where both projects depends on each other.
@@ -63,8 +61,8 @@ public interface ProjectSuiteApi {
    * @param projectsettings
    *          A list of flags used to control the creation of the project.
    * 
-   * @return The name of the main project. Neither <code>null</code> nor empty.
+   * @return A description of the created project structures. Not <code>null</code>.
    */
-  Pair<String, String> createCyclicProject(final URL script, final int projectsettings);
+  ProjectDescription createCyclicProject(final URL script, final int projectsettings);
 
 } /* ENDINTERFACE */

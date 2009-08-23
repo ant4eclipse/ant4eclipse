@@ -12,7 +12,6 @@
 package org.ant4eclipse.pydt.test.data;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.Pair;
 
 import org.ant4eclipse.pydt.test.builder.DLTKProjectBuilder;
 import org.ant4eclipse.pydt.test.builder.PyDevProjectBuilder;
@@ -58,21 +57,23 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public String createEmptyProject(final URL script, final int projectsettings) {
-    final String result = newName();
-    final PythonProjectBuilder builder = newProjectBuilder(result);
+  public ProjectDescription createEmptyProject(final URL script, final int projectsettings) {
+    final String mainname = newName();
+    final PythonProjectBuilder builder = newProjectBuilder(mainname);
     builder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       builder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     builder.populate(_workspacebuilder);
+    final ProjectDescription result = new ProjectDescription();
+    result.setPrimaryProjectname(mainname);
     return result;
   }
 
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createComplexProject(final URL script, final int projectsettings) {
+  public ProjectDescription createComplexProject(final URL script, final int projectsettings) {
     final String mainname = newName();
     final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
     mainbuilder.setBuildScript(script);
@@ -87,13 +88,16 @@ public class ProjectSuite implements ProjectSuiteApi {
     mainbuilder.useProject(secondaryname, true);
     mainbuilder.populate(_workspacebuilder);
     secondarybuilder.populate(_workspacebuilder);
-    return new Pair<String, String>(mainname, secondaryname);
+    final ProjectDescription result = new ProjectDescription();
+    result.setPrimaryProjectname(mainname);
+    result.setSecondaryProjectname(secondaryname);
+    return result;
   }
 
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createCyclicProject(final URL script, final int projectsettings) {
+  public ProjectDescription createCyclicProject(final URL script, final int projectsettings) {
     final String mainname = newName();
     final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
     mainbuilder.setBuildScript(script);
@@ -109,7 +113,10 @@ public class ProjectSuite implements ProjectSuiteApi {
     secondarybuilder.useProject(mainname, true);
     mainbuilder.populate(_workspacebuilder);
     secondarybuilder.populate(_workspacebuilder);
-    return new Pair<String, String>(mainname, secondaryname);
+    final ProjectDescription result = new ProjectDescription();
+    result.setPrimaryProjectname(mainname);
+    result.setSecondaryProjectname(secondaryname);
+    return result;
   }
 
   /**
