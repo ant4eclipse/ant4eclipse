@@ -13,6 +13,7 @@ package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
 import org.ant4eclipse.pydt.test.BuildResult;
+import org.ant4eclipse.pydt.test.data.ProjectDescription;
 import org.apache.tools.ant.BuildException;
 import org.junit.After;
 import org.junit.Assert;
@@ -64,35 +65,35 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProject() {
-    final String projectname = createEmptyProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path");
     final String[] content = buildresult.getTargetOutput("get-source-path");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname(), content[0]);
   }
 
   @Test(expected = BuildException.class)
   public void emptyProjectMultipleFoldersFailure() {
-    final String projectname = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path");
   }
 
   @Test
   public void emptyProjectMultipleFolders() {
-    final String projectname = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.pathSeparator + "${workspacedir}"
-        + File.separator + projectname + File.separator + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.separator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void emptyProjectRelative() {
-    final String projectname = createEmptyProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals(".", content[0]);
@@ -100,16 +101,15 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test(expected = BuildException.class)
   public void emptyProjectMultipleFoldersRelativeFailure() {
-    final String projectname = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
   }
 
   @Test
   public void emptyProjectMultipleFoldersRelative() {
-    final String projectname = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-relative");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals("." + File.pathSeparator + NAME_GENERATEDSOURCE, content[0]);
@@ -117,80 +117,84 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectDirseparator() {
-    final String projectname = createEmptyProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator",
+        "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname(), content[0]);
   }
 
   @Test(expected = BuildException.class)
   public void emptyProjectMultipleFoldersFailureDirseparator() {
-    final String projectname = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator", "@");
   }
 
   @Test
   public void emptyProjectMultipleFoldersDirseparator() {
-    final String projectname = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
+    final ProjectDescription projectdescription = createEmptyProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname + "@"
-        + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectdescription.getPrimaryProjectname() + "@" + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void complexProject() {
-    final String projectname = createComplexProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path");
     final String[] content = buildresult.getTargetOutput("get-source-path");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname(), content[0]);
   }
 
   @Test(expected = BuildException.class)
   public void complexProjectMultipleFoldersFailure() {
-    final String projectname = createComplexProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path");
   }
 
   @Test(expected = BuildException.class)
   public void complexProjectMultipleFoldersBothFailure() {
-    final String projectname = createComplexProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path");
   }
 
   @Test
   public void complexProjectMultipleFolders() {
-    final String projectname = createComplexProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.pathSeparator + "${workspacedir}"
-        + File.separator + projectname + File.separator + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.separator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void complexProjectMultipleFoldersBoth() {
-    final String projectname = createComplexProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.pathSeparator + "${workspacedir}"
-        + File.separator + projectname + File.separator + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.separator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void complexProjectRelative() {
-    final String projectname = createComplexProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals(".", content[0]);
@@ -198,23 +202,24 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test(expected = BuildException.class)
   public void complexProjectMultipleFoldersRelativeFailure() {
-    final String projectname = createComplexProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
   }
 
   @Test(expected = BuildException.class)
   public void complexProjectMultipleFoldersRelativeBothFailure() {
-    final String projectname = createComplexProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
   }
 
   @Test
   public void complexProjectMultipleFoldersRelative() {
-    final String projectname = createComplexProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-relative");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals("." + File.pathSeparator + NAME_GENERATEDSOURCE, content[0]);
@@ -222,9 +227,10 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectMultipleFoldersRelativeBoth() {
-    final String projectname = createComplexProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-relative");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals("." + File.pathSeparator + NAME_GENERATEDSOURCE, content[0]);
@@ -232,98 +238,103 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectDirseparator() {
-    final String projectname = createComplexProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator",
+        "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname(), content[0]);
   }
 
   @Test(expected = BuildException.class)
   public void complexProjectMultipleFoldersFailureDirseparator() {
-    final String projectname = createComplexProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator", "@");
   }
 
   @Test(expected = BuildException.class)
   public void complexProjectMultipleFoldersBothFailureDirseparator() {
-    final String projectname = createComplexProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator", "@");
   }
 
   @Test
   public void complexProjectMultipleFoldersDirseparator() {
-    final String projectname = createComplexProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname + "@"
-        + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectdescription.getPrimaryProjectname() + "@" + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void complexProjectMultipleFoldersBothDirseparator() {
-    final String projectname = createComplexProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
+    final ProjectDescription projectdescription = createComplexProject(_sourcepathxml,
+        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname + "@"
-        + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectdescription.getPrimaryProjectname() + "@" + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void cyclicProject() {
-    final String projectname = createCyclicProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path");
     final String[] content = buildresult.getTargetOutput("get-source-path");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname(), content[0]);
   }
 
   @Test(expected = BuildException.class)
   public void cyclicProjectMultipleFoldersFailure() {
-    final String projectname = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path");
   }
 
   @Test(expected = BuildException.class)
   public void cyclicProjectMultipleFoldersBothFailure() {
-    final String projectname = createCyclicProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    execute(projectname, "get-source-path");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY
+        | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path");
   }
 
   @Test
   public void cyclicProjectMultipleFolders() {
-    final String projectname = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.pathSeparator + "${workspacedir}"
-        + File.separator + projectname + File.separator + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.separator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void cyclicProjectMultipleFoldersBoth() {
-    final String projectname = createCyclicProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY
+        | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectname + File.pathSeparator + "${workspacedir}"
-        + File.separator + projectname + File.separator + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+        + File.separator + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void cyclicProjectRelative() {
-    final String projectname = createCyclicProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals(".", content[0]);
@@ -331,23 +342,22 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test(expected = BuildException.class)
   public void cyclicProjectMultipleFoldersRelativeFailure() {
-    final String projectname = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
   }
 
   @Test(expected = BuildException.class)
   public void cyclicProjectMultipleFoldersRelativeBothFailure() {
-    final String projectname = createCyclicProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    execute(projectname, "get-source-path-relative");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY
+        | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-relative");
   }
 
   @Test
   public void cyclicProjectMultipleFoldersRelative() {
-    final String projectname = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-relative");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals("." + File.pathSeparator + NAME_GENERATEDSOURCE, content[0]);
@@ -355,9 +365,10 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void cyclicProjectMultipleFoldersRelativeBoth() {
-    final String projectname = createCyclicProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-relative");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY
+        | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-relative");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-relative");
     Assert.assertEquals(1, content.length);
     Assert.assertEquals("." + File.pathSeparator + NAME_GENERATEDSOURCE, content[0]);
@@ -365,47 +376,48 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void cyclicProjectDirseparator() {
-    final String projectname = createCyclicProject(_sourcepathxml, 0).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, 0);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator",
+        "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname(), content[0]);
   }
 
   @Test(expected = BuildException.class)
   public void cyclicProjectMultipleFoldersFailureDirseparator() {
-    final String projectname = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator", "@");
   }
 
   @Test(expected = BuildException.class)
   public void cyclicProjectMultipleFoldersBothFailureDirseparator() {
-    final String projectname = createCyclicProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    execute(projectname, "get-source-path-dirseparator", "@");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY
+        | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    execute(projectdescription.getPrimaryProjectname(), "get-source-path-dirseparator", "@");
   }
 
   @Test
   public void cyclicProjectMultipleFoldersDirseparator() {
-    final String projectname = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY)
-        .getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname + "@"
-        + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectdescription.getPrimaryProjectname() + "@" + NAME_GENERATEDSOURCE, content[0]);
   }
 
   @Test
   public void cyclicProjectMultipleFoldersBothDirseparator() {
-    final String projectname = createCyclicProject(_sourcepathxml,
-        KIND_MULTIPLESOURCEFOLDERSPRIMARY | KIND_MULTIPLESOURCEFOLDERSSECONDARY).getPrimaryProjectname();
-    final BuildResult buildresult = execute(projectname, "get-source-path-multiple-folders-dirseparator", "@");
+    final ProjectDescription projectdescription = createCyclicProject(_sourcepathxml, KIND_MULTIPLESOURCEFOLDERSPRIMARY
+        | KIND_MULTIPLESOURCEFOLDERSSECONDARY);
+    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(),
+        "get-source-path-multiple-folders-dirseparator", "@");
     final String[] content = buildresult.getTargetOutput("get-source-path-multiple-folders-dirseparator");
     Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectname + File.pathSeparator + "${workspacedir}@" + projectname + "@"
-        + NAME_GENERATEDSOURCE, content[0]);
+    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
+        + "${workspacedir}@" + projectdescription.getPrimaryProjectname() + "@" + NAME_GENERATEDSOURCE, content[0]);
   }
 
 } /* ENDCLASS */
