@@ -16,8 +16,11 @@ import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.pydt.model.project.PyDevProjectRole;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Builder which is used for the PyDev based python implementation.
@@ -33,6 +36,8 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   private String              _sourcepath;
 
   private List<String>        _sourcepathes;
+
+  private Map<String, URL>    _internallibs;
 
   /**
    * Initialises this builder using the supplied project name.
@@ -50,6 +55,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
      */
     _sourcepath = "/" + projectname;
     _sourcepathes = new ArrayList<String>();
+    _internallibs = new Hashtable<String, URL>();
   }
 
   /**
@@ -68,6 +74,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   protected void createArtefacts(final File projectdir) {
     super.createArtefacts(projectdir);
     writePyDevProject(new File(projectdir, NAME_PYDEVPROJECT));
+    writeInternalLibraries(projectdir);
   }
 
   /**
@@ -94,6 +101,10 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
       buffer.append("    <path>" + _sourcepathes.get(i) + "</path>");
       buffer.append(Utilities.NL);
     }
+    for (Map.Entry<String, URL> entry : _internallibs.entrySet()) {
+      buffer.append("    <path>/" + getProjectName() + "/" + entry.getKey() + "</path>");
+      buffer.append(Utilities.NL);
+    }
     buffer.append("  </pydev_pathproperty>");
     buffer.append(Utilities.NL);
 
@@ -108,6 +119,20 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   }
 
   /**
+   * Exports the internal libraries into the project folder.
+   * 
+   * @param destination
+   *          The destination directory of the project. Not <code>null</code> and must be a valid directory.
+   */
+  private void writeInternalLibraries(final File destination) {
+    for (Map.Entry<String, URL> entry : _internallibs.entrySet()) {
+      final File destfile = new File(destination, entry.getKey());
+      Utilities.mkdirs(destfile.getParentFile());
+      Utilities.copy(entry.getValue(), destfile);
+    }
+  }
+
+  /**
    * {@inheritDoc}
    */
   public void setSourceFolder(final String sourcename) {
@@ -119,6 +144,17 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
    */
   public void addSourceFolder(final String additionalfolder) {
     _sourcepathes.add("/" + getProjectName() + "/" + additionalfolder);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String importInternalLibrary(URL location) {
+    final String file = location.getFile();
+    final int lidx = file.lastIndexOf('/');
+    final String relative = "lib/" + (lidx != -1 ? file.substring(lidx + 1) : file);
+    _internallibs.put(relative, location);
+    return relative;
   }
 
 } /* ENDCLASS */

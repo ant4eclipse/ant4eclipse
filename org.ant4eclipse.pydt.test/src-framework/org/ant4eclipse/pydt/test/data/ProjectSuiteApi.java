@@ -20,11 +20,15 @@ import java.net.URL;
  */
 public interface ProjectSuiteApi {
 
-  // internal libraries, external libraries, external folders and runtimes
+  // external libraries, external folders and runtimes
 
   int    KIND_MULTIPLESOURCEFOLDERSPRIMARY   = 1 << 0;
 
   int    KIND_MULTIPLESOURCEFOLDERSSECONDARY = 1 << 1;
+
+  int    KIND_INTERNALLIBRARYPRIMARY         = 1 << 2;
+
+  int    KIND_INTERNALLIBRARYSECONDARY       = 1 << 3;
 
   // the name to use for source folders with generated source
   String NAME_GENERATEDSOURCE                = "generated-source";

@@ -16,6 +16,7 @@ import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.pydt.model.project.DLTKProjectRole;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +28,18 @@ import java.util.List;
 public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
 
   private static enum Kind {
-    prj, src, con
+    prj, src, con, lib
   }
 
   private static final String  NAME_BUILDPATH = ".buildpath";
 
   private static final String  ENC_UTF8       = "UTF-8";
 
+  private static final String  INDENT         = "  ";
+
   private List<BuildPathEntry> _buildpathentries;
+
+  private List<BuildPathEntry> _internallibs;
 
   private BuildPathEntry       _sourceentry;
 
@@ -50,6 +55,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     super(projectname);
     withNature(DLTKProjectRole.NATURE);
     withBuilder(DLTKProjectRole.BUILDCOMMAND);
+    _internallibs = new ArrayList<BuildPathEntry>();
     _buildpathentries = new ArrayList<BuildPathEntry>();
     _sourceentry = new BuildPathEntry();
     _sourceentry._combine = true;
@@ -81,6 +87,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   protected void createArtefacts(final File projectdir) {
     super.createArtefacts(projectdir);
     writeBuildpath(new File(projectdir, NAME_BUILDPATH));
+    writeInternalLibraries(projectdir);
   }
 
   /**
@@ -95,19 +102,39 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     buffer.append(Utilities.NL);
     buffer.append("<buildpath>");
     buffer.append(Utilities.NL);
-    buffer.append("  ");
+    buffer.append(INDENT);
     buffer.append(_sourceentry);
     buffer.append(Utilities.NL);
     for (int i = 0; i < _buildpathentries.size(); i++) {
-      buffer.append("  ");
+      buffer.append(INDENT);
       buffer.append(_buildpathentries.get(i));
       buffer.append(Utilities.NL);
     }
-    buffer.append("  ");
+    for (int i = 0; i < _internallibs.size(); i++) {
+      buffer.append(INDENT);
+      buffer.append(_internallibs.get(i));
+      buffer.append(Utilities.NL);
+    }
+    buffer.append(INDENT);
     buffer.append(_runtime);
     buffer.append(Utilities.NL);
     buffer.append("</buildpath>");
     Utilities.writeFile(destination, buffer.toString(), ENC_UTF8);
+  }
+
+  /**
+   * Exports the internal libraries into the project folder.
+   * 
+   * @param destination
+   *          The destination directory of the project. Not <code>null</code> and must be a valid directory.
+   */
+  private void writeInternalLibraries(final File destination) {
+    for (int i = 0; i < _internallibs.size(); i++) {
+      final BuildPathEntry entry = _internallibs.get(i);
+      final File destfile = new File(destination, entry._path);
+      Utilities.mkdirs(destfile.getParentFile());
+      Utilities.copy(entry._source, destfile);
+    }
   }
 
   /**
@@ -130,6 +157,22 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  public String importInternalLibrary(final URL location) {
+    final BuildPathEntry entry = new BuildPathEntry();
+    entry._combine = true;
+    entry._exported = true;
+    entry._kind = Kind.lib;
+    final String file = location.getFile();
+    int lidx = file.lastIndexOf(file, '/');
+    entry._path = "lib/" + (lidx == -1 ? file : file.substring(lidx + 1));
+    entry._source = location;
+    _internallibs.add(entry);
+    return entry._path;
+  }
+
+  /**
    * Declaration of an ordinary datastructure.
    */
   private static class BuildPathEntry {
@@ -141,6 +184,8 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     public boolean _exported;
 
     public boolean _combine;
+
+    public URL     _source;
 
     /**
      * {@inheritDoc}

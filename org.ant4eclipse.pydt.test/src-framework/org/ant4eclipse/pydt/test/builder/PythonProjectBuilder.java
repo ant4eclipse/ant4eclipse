@@ -66,4 +66,14 @@ public interface PythonProjectBuilder {
    */
   void setBuildScript(final URL location);
 
+  /**
+   * Adds an internal library to the project.
+   * 
+   * @param location
+   *          The location of the internal library. Not <code>null</code>.
+   * 
+   * @return The relative location within the project (project relative). Neither <code>null</code> nor empty.
+   */
+  String importInternalLibrary(final URL location);
+
 } /* ENDINTERFACE */

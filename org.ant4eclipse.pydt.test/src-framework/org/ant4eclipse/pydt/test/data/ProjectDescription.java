@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Descriptional datastructure allowing to compare the results of the ant tasks.
  * 
@@ -18,9 +21,11 @@ package org.ant4eclipse.pydt.test.data;
  */
 public class ProjectDescription {
 
-  private String _primaryprojectname;
+  private String       _primaryprojectname;
 
-  private String _secondaryprojectname;
+  private String       _secondaryprojectname;
+
+  private List<String> _internallibs;
 
   /**
    * Initialises this datastructure.
@@ -28,6 +33,26 @@ public class ProjectDescription {
   public ProjectDescription() {
     _primaryprojectname = null;
     _secondaryprojectname = null;
+    _internallibs = new ArrayList<String>();
+  }
+
+  /**
+   * Returns a list of all internal libraries. The pathes are workspace relative.
+   * 
+   * @return A list of all internal libararies. Not <code>null</code>.
+   */
+  public String[] getInternalLibs() {
+    return _internallibs.toArray(new String[_internallibs.size()]);
+  }
+
+  /**
+   * Adds an internal library declared as a workspace relative path.
+   * 
+   * @param internallib
+   *          An internal library declared as a workspace relative path. Neither <code>null</code> nor empty.
+   */
+  public void addInternalLibrary(final String internallib) {
+    _internallibs.add(internallib);
   }
 
   /**
