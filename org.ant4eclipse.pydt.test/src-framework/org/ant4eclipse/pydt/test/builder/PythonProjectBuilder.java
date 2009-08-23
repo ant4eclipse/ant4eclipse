@@ -23,6 +23,13 @@ import java.net.URL;
 public interface PythonProjectBuilder {
 
   /**
+   * Returns the name of the associated project.
+   * 
+   * @return The name of the associated project. Neither <code>null</code> nor empty.
+   */
+  String getProjectName();
+
+  /**
    * Establishs a project dependency to another project referred using the supplied name.
    * 
    * @param projectname

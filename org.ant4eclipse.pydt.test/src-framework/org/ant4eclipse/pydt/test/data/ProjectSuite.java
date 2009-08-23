@@ -90,6 +90,7 @@ public class ProjectSuite implements ProjectSuiteApi {
     primarybuilder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+      result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
       final String prefix = "/" + result.getPrimaryProjectname() + "/";
@@ -112,10 +113,12 @@ public class ProjectSuite implements ProjectSuiteApi {
     primarybuilder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+      result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     final PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+      result.addSourceFolder("/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
       final String prefix = "/" + result.getPrimaryProjectname() + "/";
@@ -146,10 +149,12 @@ public class ProjectSuite implements ProjectSuiteApi {
     primarybuilder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+      result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     final PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
+      result.addSourceFolder("/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
       final String prefix = "/" + result.getPrimaryProjectname() + "/";

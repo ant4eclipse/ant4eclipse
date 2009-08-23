@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.data;
 
+import org.ant4eclipse.core.util.Utilities;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class ProjectDescription {
 
   private List<String> _internallibs;
 
+  private List<String> _sourcefolders;
+
   /**
    * Initialises this datastructure.
    */
@@ -34,6 +39,26 @@ public class ProjectDescription {
     _primaryprojectname = null;
     _secondaryprojectname = null;
     _internallibs = new ArrayList<String>();
+    _sourcefolders = new ArrayList<String>();
+  }
+
+  /**
+   * Returns a list of all added source folders. The pathes are workspace relative.
+   * 
+   * @return A list of all added source folders. Not <code>null</code>.
+   */
+  public String[] getSourceFolders() {
+    return _sourcefolders.toArray(new String[_sourcefolders.size()]);
+  }
+
+  /**
+   * Adds a source folder path to this list. The path is workspace relative.
+   * 
+   * @param sourcefolder
+   *          A workspace relative path of the source. Neither <code>null</code> nor empty.
+   */
+  public void addSourceFolder(final String sourcefolder) {
+    _sourcefolders.add(Utilities.replace(Utilities.replace(sourcefolder, "\\", "/"), "/", File.separator));
   }
 
   /**
@@ -52,7 +77,7 @@ public class ProjectDescription {
    *          An internal library declared as a workspace relative path. Neither <code>null</code> nor empty.
    */
   public void addInternalLibrary(final String internallib) {
-    _internallibs.add(internallib);
+    _internallibs.add(Utilities.replace(Utilities.replace(internallib, "\\", "/"), "/", File.separator));
   }
 
   /**
