@@ -22,16 +22,13 @@ public interface ProjectSuiteApi {
 
   // external libraries, external folders and runtimes
 
-  int    KIND_MULTIPLESOURCEFOLDERSPRIMARY   = 1 << 0;
+  int KIND_MULTIPLESOURCEFOLDERSPRIMARY   = 1 << 0;
 
-  int    KIND_MULTIPLESOURCEFOLDERSSECONDARY = 1 << 1;
+  int KIND_MULTIPLESOURCEFOLDERSSECONDARY = 1 << 1;
 
-  int    KIND_INTERNALLIBRARYPRIMARY         = 1 << 2;
+  int KIND_INTERNALLIBRARYPRIMARY         = 1 << 2;
 
-  int    KIND_INTERNALLIBRARYSECONDARY       = 1 << 3;
-
-  // the name to use for source folders with generated source
-  String NAME_GENERATEDSOURCE                = "generated-source";
+  int KIND_INTERNALLIBRARYSECONDARY       = 1 << 3;
 
   /**
    * Creates a simple project which is practically empty.

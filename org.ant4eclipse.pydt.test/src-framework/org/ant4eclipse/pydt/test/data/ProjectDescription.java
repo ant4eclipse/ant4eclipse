@@ -48,7 +48,26 @@ public class ProjectDescription {
    * @return A list of all added source folders. Not <code>null</code>.
    */
   public String[] getSourceFolders() {
-    return _sourcefolders.toArray(new String[_sourcefolders.size()]);
+    return getSourceFolders(null);
+  }
+
+  /**
+   * Returns a list of all added source folders. The pathes are workspace relative.
+   * 
+   * @param dirseparator
+   *          The dirseparator to be used. If <code>null</code> the default {@link File#separator} will be used.
+   * 
+   * @return A list of all added source folders. Not <code>null</code>.
+   */
+  public String[] getSourceFolders(String dirseparator) {
+    if (dirseparator == null) {
+      dirseparator = File.separator;
+    }
+    final String[] result = new String[_sourcefolders.size()];
+    for (int i = 0; i < result.length; i++) {
+      result[i] = Utilities.replace(Utilities.replace(_sourcefolders.get(i), "\\", "/"), "/", dirseparator);
+    }
+    return result;
   }
 
   /**
@@ -58,7 +77,7 @@ public class ProjectDescription {
    *          A workspace relative path of the source. Neither <code>null</code> nor empty.
    */
   public void addSourceFolder(final String sourcefolder) {
-    _sourcefolders.add(Utilities.replace(Utilities.replace(sourcefolder, "\\", "/"), "/", File.separator));
+    _sourcefolders.add(sourcefolder);
   }
 
   /**
@@ -67,7 +86,26 @@ public class ProjectDescription {
    * @return A list of all internal libararies. Not <code>null</code>.
    */
   public String[] getInternalLibs() {
-    return _internallibs.toArray(new String[_internallibs.size()]);
+    return getInternalLibs(null);
+  }
+
+  /**
+   * Returns a list of all internal libraries. The pathes are workspace relative.
+   * 
+   * @param dirseparator
+   *          The dirseparator to be used. If <code>null</code> the default {@link File#separator} will be used.
+   * 
+   * @return A list of all internal libararies. Not <code>null</code>.
+   */
+  public String[] getInternalLibs(String dirseparator) {
+    if (dirseparator == null) {
+      dirseparator = File.separator;
+    }
+    final String[] result = new String[_internallibs.size()];
+    for (int i = 0; i < result.length; i++) {
+      result[i] = Utilities.replace(Utilities.replace(_internallibs.get(i), "\\", "/"), "/", dirseparator);
+    }
+    return result;
   }
 
   /**
@@ -77,7 +115,7 @@ public class ProjectDescription {
    *          An internal library declared as a workspace relative path. Neither <code>null</code> nor empty.
    */
   public void addInternalLibrary(final String internallib) {
-    _internallibs.add(Utilities.replace(Utilities.replace(internallib, "\\", "/"), "/", File.separator));
+    _internallibs.add(internallib);
   }
 
   /**

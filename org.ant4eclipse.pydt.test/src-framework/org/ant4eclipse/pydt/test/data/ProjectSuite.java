@@ -27,7 +27,10 @@ import java.text.DecimalFormat;
  */
 public class ProjectSuite implements ProjectSuiteApi {
 
-  private static final String NAME_PREFIX = "a4ePython%s";
+  private static final String NAME_PREFIX          = "a4ePython%s";
+
+  // the name to use for source folders with generated source
+  private static final String NAME_GENERATEDSOURCE = "generated-source";
 
   private WorkspaceBuilder    _workspacebuilder;
 
