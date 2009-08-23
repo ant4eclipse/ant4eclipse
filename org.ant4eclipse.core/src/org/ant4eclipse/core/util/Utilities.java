@@ -573,7 +573,7 @@ public class Utilities {
     }
 
     if (!directory.mkdirs()) {
-      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED);
+      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
     }
   }
 
