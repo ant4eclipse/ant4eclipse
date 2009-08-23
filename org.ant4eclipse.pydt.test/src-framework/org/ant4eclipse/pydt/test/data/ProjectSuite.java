@@ -58,11 +58,11 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public String createEmptyProject(final URL script, final boolean multiplefolders) {
+  public String createEmptyProject(final URL script, final int projectsettings) {
     final String result = newName();
     final PythonProjectBuilder builder = newProjectBuilder(result);
     builder.setBuildScript(script);
-    if (multiplefolders) {
+    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       builder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     builder.populate(_workspacebuilder);
@@ -72,16 +72,16 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createComplexProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
+  public Pair<String, String> createComplexProject(final URL script, final int projectsettings) {
     final String mainname = newName();
     final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
     mainbuilder.setBuildScript(script);
-    if (mainmultiple) {
+    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       mainbuilder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     final String secondaryname = newName();
     final PythonProjectBuilder secondarybuilder = newProjectBuilder(secondaryname);
-    if (secondarymultiple) {
+    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     mainbuilder.useProject(secondaryname, true);
@@ -93,16 +93,16 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createCyclicProject(URL script, boolean mainmultiple, boolean secondarymultiple) {
+  public Pair<String, String> createCyclicProject(final URL script, final int projectsettings) {
     final String mainname = newName();
     final PythonProjectBuilder mainbuilder = newProjectBuilder(mainname);
     mainbuilder.setBuildScript(script);
-    if (mainmultiple) {
+    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       mainbuilder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     final String secondaryname = newName();
     final PythonProjectBuilder secondarybuilder = newProjectBuilder(secondaryname);
-    if (secondarymultiple) {
+    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
     }
     mainbuilder.useProject(secondaryname, true);

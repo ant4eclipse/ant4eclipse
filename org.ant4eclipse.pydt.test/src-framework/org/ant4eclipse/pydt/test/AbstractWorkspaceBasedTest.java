@@ -205,24 +205,22 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
-  public String createEmptyProject(final URL script, final boolean multiplefolders) {
-    return _projectsuite.createEmptyProject(script, multiplefolders);
+  public String createEmptyProject(final URL script, final int projectsettings) {
+    return _projectsuite.createEmptyProject(script, projectsettings);
   }
 
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createComplexProject(final URL script, final boolean mainmultiple,
-      final boolean secondarymultiple) {
-    return _projectsuite.createComplexProject(script, mainmultiple, secondarymultiple);
+  public Pair<String, String> createComplexProject(final URL script, final int projectsettings) {
+    return _projectsuite.createComplexProject(script, projectsettings);
   }
 
   /**
    * {@inheritDoc}
    */
-  public Pair<String, String> createCyclicProject(final URL script, final boolean mainmultiple,
-      final boolean secondarymultiple) {
-    return _projectsuite.createCyclicProject(script, mainmultiple, secondarymultiple);
+  public Pair<String, String> createCyclicProject(final URL script, final int projectsettings) {
+    return _projectsuite.createCyclicProject(script, projectsettings);
   }
 
 } /* ENDCLASS */
