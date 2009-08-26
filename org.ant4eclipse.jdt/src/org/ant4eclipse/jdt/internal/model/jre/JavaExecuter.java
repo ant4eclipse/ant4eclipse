@@ -219,12 +219,12 @@ public class JavaExecuter {
     // create java command
     final StringBuffer cmd = new StringBuffer();
     cmd.append(getJavaExecutable().getAbsolutePath());
-    cmd.append(" -cp ");
+    cmd.append(" -cp \"");
     for (final File file : this._classpathEntries) {
       cmd.append(file.getAbsolutePath());
       cmd.append(File.pathSeparatorChar);
     }
-    cmd.append(" ");
+    cmd.append("\" ");
     cmd.append(this._mainClass);
     for (final String _arg : this._args) {
       cmd.append(" ");
@@ -245,8 +245,11 @@ public class JavaExecuter {
       this._systemOut = extractFromInputStream(proc.getInputStream());
       this._systemErr = extractFromInputStream(proc.getErrorStream());
 
-      // // TODO
-      // System.err.println(Arrays.asList(this._systemErr));
+      // log error...
+      if (this._systemErr != null && this._systemErr.length > 0) {
+        // TODO
+        throw new RuntimeException("ERROR: " + Arrays.asList(this._systemErr));
+      }
 
       // debug
       A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList(this._systemOut));

@@ -48,14 +48,21 @@ public class ClassLoadingHelper {
     final ClassLoader classLoader = clazz.getClassLoader();
     final Class<? extends ClassLoader> classLoaderClass = classLoader.getClass();
 
-    // AntClassLoader: we have to call 'getClasspath()', because the code source
-    // always is the 'ant.jar'
+    // AntClassLoader: we have to call 'getClasspath()', because the code
+    // source always is the 'ant.jar'
     if (classLoaderClass.getName().equals(CLASS_ORG_APACHE_TOOLS_ANT_ANTCLASSLOADER)) {
 
       try {
         final Method method = classLoaderClass.getDeclaredMethod(METHOD_GET_CLASSPATH, new Class[0]);
         final Object result = method.invoke(classLoader, new Object[0]);
         final String[] fileNames = result.toString().split(File.pathSeparator);
+
+        // patch the file names
+        for (int i = 0; i < fileNames.length; i++) {
+          fileNames[i] = patchFileName(fileNames[i]);
+        }
+
+        // return the file names
         return fileNames;
       } catch (final Exception e) {
         e.printStackTrace();
@@ -65,7 +72,22 @@ public class ClassLoadingHelper {
     // 'normal' class loader: just retrieve the code source
     else {
       final CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
-      return new String[] { codeSource.getLocation().getFile() };
+
+      // patch and return the file name
+      return new String[] { patchFileName(codeSource.getLocation().getFile()) };
     }
+  }
+
+  /**
+   * <p>
+   * Replaces any occurrence of a '%20' in the given string with an blank (' ').
+   * </p>
+   * 
+   * @param fileName
+   *          the file name
+   * @return the patched file name
+   */
+  private static String patchFileName(String fileName) {
+    return fileName.replaceAll("\\%20", " ");
   }
 }
