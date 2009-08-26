@@ -15,17 +15,17 @@
 	<ant4eclipse:installedJREs>
 		<jre id="jdk16" location="${jdk16.location}" />
 	</ant4eclipse:installedJREs>
-	
+
 	<ant4eclipse:jdtClassPathLibrary name="org.eclipse.jdt.junit.JUNIT_CONTAINER/4">
-	  <fileset dir="${basedir}/org.ant4eclipse.external.test/libs/junit" />
+		<fileset dir="${basedir}/org.ant4eclipse.external.test/libs/junit" />
 	</ant4eclipse:jdtClassPathLibrary>
-	
+
 
 	<!-- =================================
           target: build.ant4eclipse
          ================================= -->
 	<target name="build.ant4eclipse" depends="prepare">
-		
+
 		<!-- Step 1: iterate over the project set and build each project -->
 		<ant4eclipse:executeProjectSet workspace="${basedir}"
 		                               teamprojectset="${teamprojectset}"
@@ -33,18 +33,18 @@
 
 			<!-- build each non-test project contained in the project set -->
 			<ant4eclipse:forEachProject filter="(!(project.name=*.test))">
-				<antcall target="buildProject" inheritrefs="true"/>
+				<antcall target="buildProject" inheritrefs="true" />
 			</ant4eclipse:forEachProject>
 
 			<!-- build all test projects contained in the project set 
-			     and execute their test classes --> 
+			     and execute their test classes -->
 			<ant4eclipse:forEachProject filter="(project.name=*.test)">
 				<!-- build... -->
 				<antcall target="buildProject" inheritrefs="true">
-					<param name="_testProject" value="true"/>
+					<param name="_testProject" value="true" />
 				</antcall>
 				<!-- ...and test -->
-				<antcall target="testProject" inheritrefs="true"/>
+				<antcall target="testProject" inheritrefs="true" />
 			</ant4eclipse:forEachProject>
 		</ant4eclipse:executeProjectSet>
 
@@ -62,7 +62,7 @@
 	<target name="prepare">
 		<delete dir="${destination}" quiet="true" />
 		<mkdir dir="${destination}" />
-		<mkdir dir="${destination}/test-reports"/>
+		<mkdir dir="${destination}/test-reports" />
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - -
@@ -70,7 +70,7 @@
          - - - - - - - - - - - - - - - - - -->
 	<target name="buildProject">
 		<echo>Building project "${executeProjectSet.project.name}"</echo>
-		
+
 		<echo level="debug">Project ${executeProjectSet.project.name} -> ${_testProject}</echo>
 
 		<ant4eclipse:executeJdtProject workspace="${basedir}"
@@ -111,37 +111,39 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: testProject                      
          - - - - - - - - - - - - - - - - - -->
-   <target name="testProject">
-   	<echo>Running tests in project "${executeProjectSet.project.name}"</echo>
-    	
- 		<ant4eclipse:executeJdtProject workspace="${basedir}"
- 		                               projectname="${executeProjectSet.project.name}">
+	<target name="testProject">
+		<echo>Running tests in project "${executeProjectSet.project.name}"</echo>
 
- 			<ant4eclipse:forEachSourceDirectory>
+		<ant4eclipse:executeJdtProject workspace="${basedir}"
+		                               projectname="${executeProjectSet.project.name}">
 
- 				<!-- Create output directory for test report 
+			<ant4eclipse:forEachSourceDirectory>
+
+				<!-- Create output directory for test report 
  				     (One sub-dir for each project to avoid name collisions
  				-->
-				<property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}"/>
-				<mkdir dir="${reports}"/>
- 				
- 				<!-- Execute Tests 
+				<property name="reports"
+				          value="${destination}/test-reports/${executeProjectSet.project.name}" />
+				<mkdir dir="${reports}" />
+
+				<!-- Execute Tests 
  				
  				     (Run themn from the project directory as Eclipse does it)
  				-->
- 				<junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
- 					<classpath refid="executeJdtProject.classpath.absolute.runtime.path"/>
-						<formatter type="xml"/>
- 					<batchtest todir="${reports}">
+				<junit dir="${basedir}/${executeProjectSet.project.name}"
+				       fork="yes">
+					<classpath refid="executeJdtProject.classpath.absolute.runtime.path" />
+					<formatter type="xml" />
+					<batchtest todir="${reports}">
 						<fileset dir="${executeJdtProject.source.directory}">
- 					  	<include name="**/AllTests.java"/>
- 					  </fileset>
- 					</batchtest>
- 				</junit>	
- 			</ant4eclipse:forEachSourceDirectory>
-		</ant4eclipse:executeJdtProject>    	
-   </target>
-	
+							<include name="**/AllTests.java" />
+						</fileset>
+					</batchtest>
+				</junit>
+			</ant4eclipse:forEachSourceDirectory>
+		</ant4eclipse:executeJdtProject>
+	</target>
+
 
 	<!-- - - - - - - - - - - - - - - - - -
           target: cleanOutputDirectories
@@ -259,7 +261,7 @@
 		     basedir="${destination}/merged/classes" />
 
 		<!-- delete the 'merged' directory -->
-		<!-- delete dir="${destination}/merged" quiet="true" / -->
+		<delete dir="${destination}/merged" quiet="true" />
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - -
@@ -297,10 +299,13 @@
 
 		<!-- zip the result -->
 		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
-			<fileset dir="${destination}"
-			         excludes="${destination}/org.ant4eclipse_${revision}.zip" />
+			<fileset dir="${destination}">
+				<include name="**/*" />
+				<exclude name="org.ant4eclipse_${revision}.zip" />
+				<exclude name="test-reports/**/*" />
+			</fileset>
 		</zip>
-		
+
 		<!-- tar the zip -->
 		<tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz"
 		     compression="gzip">
