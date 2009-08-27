@@ -299,10 +299,10 @@
 
 		<!-- zip the result -->
 		<zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
-			<fileset dir="${destination}">
-				<include name="**/*" />
-				<exclude name="org.ant4eclipse_${revision}.zip" />
-				<exclude name="test-reports/**/*" />
+			<fileset dir="${destination}" >
+				<include name="libs/*" />
+				<include name="macros/*" />
+				<include name="org.ant4eclipse_*.jar" />
 			</fileset>
 		</zip>
 
