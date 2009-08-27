@@ -11,17 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.JarUtilities;
-import org.ant4eclipse.core.util.ManifestHelper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.JarUtilities;
+import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 /**
  * <p>
@@ -139,9 +140,19 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   private File[] expand() {
 
     // compute destination
-    final String symbolicName = ManifestHelper.getManifestHeader(this._manifest, ManifestHelper.BUNDLE_SYMBOLICNAME);
+    final ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(this._manifest,
+        ManifestHelper.BUNDLE_SYMBOLICNAME);
+
+    if (elements == null || elements.length == 0 || elements[0].getValues() == null
+        || elements[0].getValues().length == 0) {
+      // TODO: NLS
+      throw new RuntimeException("Invalid header '" + ManifestHelper.BUNDLE_SYMBOLICNAME + "' in bundle '"
+          + this._location + "'.");
+    }
+
     final String version = ManifestHelper.getManifestHeader(this._manifest, ManifestHelper.BUNDLE_VERSION);
-    final File destination = new File(this._expansionDirectory, symbolicName + "_" + version);
+
+    final File destination = new File(this._expansionDirectory, elements[0].getValues()[0] + "_" + version);
 
     // unwrap jar file
     try {
