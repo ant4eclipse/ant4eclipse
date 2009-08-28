@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.Assert;
-
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.CodeSource;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>
@@ -72,6 +73,13 @@ public class ClassLoadingHelper {
     // 'normal' class loader: just retrieve the code source
     else {
       final CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
+
+      String fileName = codeSource.getLocation().getFile();
+      String patchedfileName = patchFileName(fileName);
+
+      if (A4ELogging.isDebuggingEnabled()) {
+        A4ELogging.debug("Class path for class '%s' is '%s' (patched: '%s').", clazz, fileName, patchedfileName);
+      }
 
       // patch and return the file name
       return new String[] { patchFileName(codeSource.getLocation().getFile()) };

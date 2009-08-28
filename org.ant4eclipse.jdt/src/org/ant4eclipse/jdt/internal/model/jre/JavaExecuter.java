@@ -11,13 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ClassLoadingHelper;
-
-import org.ant4eclipse.jdt.JdtExceptionCode;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +19,12 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.ClassLoadingHelper;
+import org.ant4eclipse.jdt.JdtExceptionCode;
 
 /**
  * <p>
@@ -216,15 +215,30 @@ public class JavaExecuter {
     // get runtime
     final Runtime runtime = Runtime.getRuntime();
 
+    // create class path
+    final StringBuffer classpathBuffer = new StringBuffer();
+    for (int i = 0; i < this._classpathEntries.length; i++) {
+      final File file = this._classpathEntries[i];
+      classpathBuffer.append(file.getAbsolutePath());
+      if (i + 1 < this._classpathEntries.length) {
+        classpathBuffer.append(File.pathSeparatorChar);
+      }
+    }
+    final String classPath = classpathBuffer.toString();
+    final boolean classPathContainsBlanks = classPath.contains(" ");
+
     // create java command
     final StringBuffer cmd = new StringBuffer();
     cmd.append(getJavaExecutable().getAbsolutePath());
-    cmd.append(" -cp \"");
-    for (final File file : this._classpathEntries) {
-      cmd.append(file.getAbsolutePath());
-      cmd.append(File.pathSeparatorChar);
+    cmd.append(" -cp ");
+    if (classPathContainsBlanks) {
+      cmd.append("\"");
     }
-    cmd.append("\" ");
+    cmd.append(classPath);
+    if (classPathContainsBlanks) {
+      cmd.append("\"");
+    }
+    cmd.append(" ");
     cmd.append(this._mainClass);
     for (final String _arg : this._args) {
       cmd.append(" ");
