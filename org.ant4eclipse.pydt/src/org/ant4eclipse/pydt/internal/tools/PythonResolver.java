@@ -58,19 +58,21 @@ public class PythonResolver {
   /**
    * Resolves the supplied entry to get access to a source folder.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The unresolved entry pointing to a source folder. Not <code>null</code>.
-   * 
-   * @return A resolved entry identifying a source folder. Not <code>null</code>.
    */
-  private ResolvedPathEntry resolveImpl(final RawPathEntry entry) {
+  private void resolveImpl(final List<ResolvedPathEntry> receiver, final RawPathEntry entry) {
     Assert.notNull(entry);
     ResolvedPathEntry result = _pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
       result = newResolvedEntry(entry);
       _pathregistry.registerResolvedPathEntry(entry, result);
     }
-    return result;
+    if (!receiver.contains(result)) {
+      receiver.add(result);
+    }
   }
 
   /**
@@ -83,11 +85,11 @@ public class PythonResolver {
    */
   public ResolvedPathEntry[] resolve(final RawPathEntry... entries) {
     Assert.notNull(entries);
-    final ResolvedPathEntry[] result = new ResolvedPathEntry[entries.length];
+    final List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
     for (int i = 0; i < entries.length; i++) {
-      result[i] = resolveImpl(entries[i]);
+      resolveImpl(list, entries[i]);
     }
-    return result;
+    return list.toArray(new ResolvedPathEntry[list.size()]);
   }
 
   /**
