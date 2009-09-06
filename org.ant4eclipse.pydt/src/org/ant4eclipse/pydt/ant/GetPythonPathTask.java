@@ -11,16 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.internal.tools.PathExpander;
 import org.ant4eclipse.pydt.internal.tools.PythonResolver;
-import org.ant4eclipse.pydt.model.RawPathEntry;
-import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Basic task used to access the source path of a python project.
@@ -45,35 +40,11 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
    * {@inheritDoc}
    */
   protected File[] resolvePath() {
-    final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-    final PythonResolver resolver = new PythonResolver();
+    final PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, _ignoreruntime);
     final PathExpander expander = new PathExpander();
-    RawPathEntry[] entries = role.getRawPathEntries();
-    if (_ignoreruntime) {
-      // the runtimes shall be ignored, so don't resolve them
-      entries = removeRuntimeEntries(entries);
-    }
-    final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName(), entries);
+    final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName());
     final File[] result = expander.expand(resolved, getEclipseProject(), getPathStyle());
     return result;
-  }
-
-  /**
-   * Removes the runtime entries so they will not be used for the resolving process.
-   * 
-   * @param entries
-   *          A list of entries needed to be filtered. Not <code>null</code>.
-   * 
-   * @return A filtered list of entries not containing the {@link ReferenceKind#Runtime}.
-   */
-  private RawPathEntry[] removeRuntimeEntries(final RawPathEntry[] entries) {
-    List<RawPathEntry> list = new ArrayList<RawPathEntry>();
-    for (int i = 0; i < entries.length; i++) {
-      if (entries[i].getKind() != ReferenceKind.Runtime) {
-        list.add(entries[i]);
-      }
-    }
-    return list.toArray(new RawPathEntry[list.size()]);
   }
 
 } /* ENDCLASS */

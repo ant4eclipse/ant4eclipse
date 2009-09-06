@@ -81,9 +81,9 @@ public class GetPythonOutputPathTask extends AbstractPydtGetProjectPathTask {
       A4ELogging.debug(MSG_PYDEV);
     }
     final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-    final PythonResolver resolver = new PythonResolver();
+    final PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, true);
     final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Output);
-    final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName(), entries);
+    final ResolvedPathEntry[] resolved = resolver.resolve(entries);
     final File[] result = new File[resolved.length];
     for (int i = 0; i < resolved.length; i++) {
       final ResolvedOutputEntry entry = (ResolvedOutputEntry) resolved[i];

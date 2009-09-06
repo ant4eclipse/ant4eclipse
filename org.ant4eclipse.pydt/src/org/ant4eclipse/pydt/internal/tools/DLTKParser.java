@@ -73,6 +73,7 @@ public class DLTKParser {
    */
   public static final void contributePathes(final PythonProjectRoleImpl pythonrole) {
 
+    final String projectname = pythonrole.getEclipseProject().getSpecifiedName();
     final File buildpath = pythonrole.getEclipseProject().getChild(NAME_BUILDPATH);
 
     final XQueryHandler queryhandler = new XQueryHandler();
@@ -114,11 +115,11 @@ public class DLTKParser {
         }
       }
       path = Utilities.cleanup(path);
-      pythonrole.addRawPathEntry(new RawPathEntry(refkind, path, isexported, isexternal));
+      pythonrole.addRawPathEntry(new RawPathEntry(projectname, refkind, path, isexported, isexternal));
       if ((refkind == ReferenceKind.Source) && (!isexternal)) {
         // the python DLTK framework has no output path declaration, so we're reusing
         // the source pathes located within the project
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Output, path, isexported, false));
+        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Output, path, isexported, false));
       }
 
     }

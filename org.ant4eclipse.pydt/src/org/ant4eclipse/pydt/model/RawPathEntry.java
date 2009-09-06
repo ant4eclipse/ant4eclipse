@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
+import org.ant4eclipse.core.Assert;
+
 /**
  * A raw path entry is a reference to another entity which has not been resolved. It's only used to represent the data
  * stored within the configuration file.
@@ -27,9 +29,13 @@ public class RawPathEntry {
 
   private boolean       _external;
 
+  private String        _projectname;
+
   /**
    * Creates a new description used to access a referred entity within a project.
    * 
+   * @param projectname
+   *          The name of the owning project. Neither <code>null</code> nor empty.
    * @param refkind
    *          The kind of reference to the entity. Not <code>null</code>.
    * @param value
@@ -39,11 +45,24 @@ public class RawPathEntry {
    * @param external
    *          <code>true</code> <=> The value doesn't refer to a location within the workspace.
    */
-  public RawPathEntry(ReferenceKind refkind, String value, boolean export, boolean external) {
+  public RawPathEntry(final String projectname, final ReferenceKind refkind, final String value, final boolean export,
+      final boolean external) {
+    Assert.nonEmpty(projectname);
+    Assert.notNull(refkind);
+    _projectname = projectname;
     _kind = refkind;
     _value = value;
     _exported = export;
     _external = external;
+  }
+
+  /**
+   * Returns the name of the owning project.
+   * 
+   * @return The name of the owning project. Neither <code>null</code> nor empty.
+   */
+  public String getProjectname() {
+    return _projectname;
   }
 
   /**
@@ -97,6 +116,9 @@ public class RawPathEntry {
       return false;
     }
     final RawPathEntry other = (RawPathEntry) object;
+    if (!_projectname.equals(other._projectname)) {
+      return false;
+    }
     if (_kind != other._kind) {
       return false;
     }
@@ -120,6 +142,7 @@ public class RawPathEntry {
      *       of the path entry. It's a flag used for the project which tells how to deal with this entry.
      */
     int result = 1;
+    result = 31 * result + _projectname.hashCode();
     result = 31 * result + _kind.hashCode();
     result = 31 * result + (_value != null ? _value.hashCode() : 0);
     result = 31 * result + (_external ? 1 : 0);
@@ -133,7 +156,9 @@ public class RawPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[RawPathEntry:");
-    buffer.append(" _kind: ");
+    buffer.append(" _projectname: ");
+    buffer.append(_projectname);
+    buffer.append(", _kind: ");
     buffer.append(_kind);
     buffer.append(", _value: ");
     buffer.append(_value);

@@ -50,6 +50,7 @@ public class PyDevParser {
    */
   public static final void contributePathes(final PythonProjectRoleImpl pythonrole) {
 
+    final String projectname = pythonrole.getEclipseProject().getSpecifiedName();
     final File pydevproject = pythonrole.getEclipseProject().getChild(NAME_PYDEVPROJECT);
 
     final XQueryHandler queryhandler = new XQueryHandler();
@@ -87,21 +88,21 @@ public class PyDevParser {
         internalpath = Utilities.cleanup(internalpath.substring(1));
       }
       if ((internalpath != null) && isLibrary(internalpath)) {
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Library, internalpath, true, false));
+        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Library, internalpath, true, false));
       } else {
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Source, internalpath, true, false));
+        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Source, internalpath, true, false));
         // the PyDev framework has no output path declaration. the output path is equal to the
         // source path here.
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Output, internalpath, true, false));
+        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Output, internalpath, true, false));
       }
     }
 
     for (int i = 0; i < externalsourcepathes.length; i++) {
       final String path = externalsourcepathes[i];
       if (isLibrary(path)) {
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Library, path, true, true));
+        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Library, path, true, true));
       } else {
-        pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Source, path, true, true));
+        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Source, path, true, true));
       }
     }
 
@@ -109,7 +110,7 @@ public class PyDevParser {
       if (KEY_DEFAULT.equals(runtime)) {
         runtime = "";
       }
-      pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Runtime, runtime, true, false));
+      pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Runtime, runtime, true, false));
     }
 
     // PyDev uses the platform mechanism for referenced projects. this is somewhat unlikely
@@ -117,7 +118,7 @@ public class PyDevParser {
     // the ones with the wrong natures
     final String[] projects = pythonrole.getEclipseProject().getReferencedProjects();
     for (int i = 0; i < projects.length; i++) {
-      pythonrole.addRawPathEntry(new RawPathEntry(ReferenceKind.Project, "/" + projects[i], true, false));
+      pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Project, "/" + projects[i], true, false));
     }
 
   }
