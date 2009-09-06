@@ -47,7 +47,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
 
   private UsedProjectsArgumentComponent _args;
 
-  private PythonResolver                  _resolver;
+  private PythonResolver                _resolver;
 
   /**
    * Initialises this resolver implementation.

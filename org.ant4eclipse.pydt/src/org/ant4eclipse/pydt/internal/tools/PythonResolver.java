@@ -68,7 +68,6 @@ public class PythonResolver {
     ResolvedPathEntry result = _pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
       result = newResolvedEntry(entry);
-      _pathregistry.registerResolvedPathEntry(entry, result);
     }
     if (!receiver.contains(result)) {
       receiver.add(result);
@@ -253,7 +252,9 @@ public class PythonResolver {
    * @return A newly created record used to represent a path container. Not <code>null</code>.
    */
   private ResolvedContainerEntry newResolvedContainerEntry(final RawPathEntry entry) {
-    return new ResolvedContainerEntry(new File[0]);
+    final ResolvedContainerEntry result = new ResolvedContainerEntry(new File[0]);
+    _pathregistry.registerResolvedPathEntry(entry, result);
+    return result;
   }
 
   /**
@@ -265,7 +266,9 @@ public class PythonResolver {
    * @return A newly created record used to represent a library. Not <code>null</code>.
    */
   private ResolvedLibraryEntry newResolvedLibraryEntry(final RawPathEntry entry) {
-    return new ResolvedLibraryEntry(entry.getValue());
+    final ResolvedLibraryEntry result = new ResolvedLibraryEntry(entry.getValue());
+    _pathregistry.registerResolvedPathEntry(entry, result);
+    return result;
   }
 
   /**
@@ -277,7 +280,9 @@ public class PythonResolver {
    * @return A newly created record used to represent an output folder. Not <code>null</code>.
    */
   private ResolvedOutputEntry newResolvedOutputEntry(final RawPathEntry entry) {
-    return new ResolvedOutputEntry(entry.getValue());
+    final ResolvedOutputEntry result = new ResolvedOutputEntry(entry.getValue());
+    _pathregistry.registerResolvedPathEntry(entry, result);
+    return result;
   }
 
   /**
@@ -296,7 +301,9 @@ public class PythonResolver {
           value);
       return null;
     }
-    return new ResolvedProjectEntry(value.substring(1));
+    final ResolvedProjectEntry result = new ResolvedProjectEntry(value.substring(1));
+    _pathregistry.registerResolvedPathEntry(entry, result);
+    return result;
   }
 
   /**
@@ -308,7 +315,9 @@ public class PythonResolver {
    * @return A newly created record used to represent a source folder. Not <code>null</code>.
    */
   private ResolvedSourceEntry newResolvedSourceEntry(final RawPathEntry entry) {
-    return new ResolvedSourceEntry(entry.getValue());
+    final ResolvedSourceEntry result = new ResolvedSourceEntry(entry.getValue());
+    _pathregistry.registerResolvedPathEntry(entry, result);
+    return result;
   }
 
   /**
@@ -333,7 +342,9 @@ public class PythonResolver {
       // now runtime available
       throw new Ant4EclipseException(PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, value);
     }
-    return new ResolvedRuntimeEntry(runtime.getVersion(), runtime.getLibraries());
+    final ResolvedRuntimeEntry result = new ResolvedRuntimeEntry(runtime.getVersion(), runtime.getLibraries());
+    _pathregistry.registerResolvedPathEntry(entry, result);
+    return result;
   }
 
 } /* ENDCLASS */
