@@ -14,6 +14,7 @@ package org.ant4eclipse.pydt.ant;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
+import org.ant4eclipse.pydt.internal.tools.PathExpander;
 import org.ant4eclipse.pydt.internal.tools.PythonResolver;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
@@ -65,9 +66,10 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
   protected File[] resolvePath() {
     final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
     final PythonResolver resolver = new PythonResolver();
+    final PathExpander expander = new PathExpander();
     final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
     final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName(), entries);
-    final File[] result = resolver.expand(resolved, getEclipseProject(), getPathStyle());
+    final File[] result = expander.expand(resolved, getEclipseProject(), getPathStyle());
     return result;
   }
 

@@ -12,6 +12,7 @@
 package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
+import org.ant4eclipse.pydt.internal.tools.PathExpander;
 import org.ant4eclipse.pydt.internal.tools.PythonResolver;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
@@ -46,13 +47,14 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
   protected File[] resolvePath() {
     final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
     final PythonResolver resolver = new PythonResolver();
+    final PathExpander expander = new PathExpander();
     RawPathEntry[] entries = role.getRawPathEntries();
     if (_ignoreruntime) {
       // the runtimes shall be ignored, so don't resolve them
       entries = removeRuntimeEntries(entries);
     }
     final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName(), entries);
-    final File[] result = resolver.expand(resolved, getEclipseProject(), getPathStyle());
+    final File[] result = expander.expand(resolved, getEclipseProject(), getPathStyle());
     return result;
   }
 
