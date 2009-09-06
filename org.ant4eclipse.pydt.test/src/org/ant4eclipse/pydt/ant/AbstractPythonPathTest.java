@@ -171,40 +171,40 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
         + "${workspacedir}@" + projectdescription.getSecondaryProjectname(), content[0]);
   }
 
-  @Test
-  public void complexProjectInternalLibs() {
-    final ProjectDescription projectdescription = createComplexProject(_pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
-        | KIND_INTERNALLIBRARYSECONDARY);
-    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-python-path");
-    final String[] content = buildresult.getTargetOutput("get-python-path");
-    Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
-        + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getSecondaryProjectname()
-        + File.pathSeparator + getInternalLibs(projectdescription, null, false), content[0]);
-  }
+  // @Test
+  // public void complexProjectInternalLibs() {
+  // final ProjectDescription projectdescription = createComplexProject(_pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
+  // | KIND_INTERNALLIBRARYSECONDARY);
+  // final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-python-path");
+  // final String[] content = buildresult.getTargetOutput("get-python-path");
+  // Assert.assertEquals(1, content.length);
+  // Assert.assertEquals("${workspacedir}" + File.separator + projectdescription.getPrimaryProjectname()
+  // + File.pathSeparator + "${workspacedir}" + File.separator + projectdescription.getSecondaryProjectname()
+  // + File.pathSeparator + getInternalLibs(projectdescription, null, false), content[0]);
+  // }
 
-  @Test
-  public void complexProjectRelativeInternalLibs() {
-    final ProjectDescription projectdescription = createComplexProject(_pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
-        | KIND_INTERNALLIBRARYSECONDARY);
-    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-python-path-relative");
-    final String[] content = buildresult.getTargetOutput("get-python-path-relative");
-    Assert.assertEquals(1, content.length);
-    Assert.assertEquals("." + File.pathSeparator + getInternalLibs(projectdescription, null, true), content[0]);
-  }
+  // @Test
+  // public void complexProjectRelativeInternalLibs() {
+  // final ProjectDescription projectdescription = createComplexProject(_pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
+  // | KIND_INTERNALLIBRARYSECONDARY);
+  // final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-python-path-relative");
+  // final String[] content = buildresult.getTargetOutput("get-python-path-relative");
+  // Assert.assertEquals(1, content.length);
+  // Assert.assertEquals("." + File.pathSeparator + getInternalLibs(projectdescription, null, true), content[0]);
+  // }
 
-  @Test
-  public void complexProjectDirseparatorInternalLibs() {
-    final ProjectDescription projectdescription = createComplexProject(_pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
-        | KIND_INTERNALLIBRARYSECONDARY);
-    final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator",
-        "@");
-    final String[] content = buildresult.getTargetOutput("get-python-path-dirseparator");
-    Assert.assertEquals(1, content.length);
-    Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
-        + "${workspacedir}@" + projectdescription.getSecondaryProjectname() + File.pathSeparator
-        + getInternalLibs(projectdescription, "@", false), content[0]);
-  }
+  // @Test
+  // public void complexProjectDirseparatorInternalLibs() {
+  // final ProjectDescription projectdescription = createComplexProject(_pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
+  // | KIND_INTERNALLIBRARYSECONDARY);
+  // final BuildResult buildresult = execute(projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator",
+  // "@");
+  // final String[] content = buildresult.getTargetOutput("get-python-path-dirseparator");
+  // Assert.assertEquals(1, content.length);
+  // Assert.assertEquals("${workspacedir}@" + projectdescription.getPrimaryProjectname() + File.pathSeparator
+  // + "${workspacedir}@" + projectdescription.getSecondaryProjectname() + File.pathSeparator
+  // + getInternalLibs(projectdescription, "@", false), content[0]);
+  // }
 
   @Test
   public void cyclicProject() {
