@@ -27,19 +27,32 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
 
   private File[]  _libs;
 
+  private String  _owningproject;
+
   /**
    * Initialises this entry used to describe a runtime.
    * 
+   * @param owningproject
+   *          The name of the related eclipse project. Neither <code>null</code> nor empty.
    * @param version
    *          The version of the runtime. Not <code>null</code>.
    * @param libs
    *          The bundled libraries representing the runtime. Not <code>null</code>.
    */
-  public ResolvedRuntimeEntry(final Version version, final File[] libs) {
+  public ResolvedRuntimeEntry(final String owningproject, final Version version, final File[] libs) {
     Assert.notNull(version);
     Assert.notNull(libs);
+    Assert.nonEmpty(owningproject);
+    _owningproject = owningproject;
     _version = version;
     _libs = libs;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getOwningProjectname() {
+    return _owningproject;
   }
 
   /**
@@ -82,6 +95,9 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
       return false;
     }
     final ResolvedRuntimeEntry other = (ResolvedRuntimeEntry) object;
+    if (!_owningproject.equals(other._owningproject)) {
+      return false;
+    }
     if (_libs.length != other._libs.length) {
       return false;
     }
@@ -101,7 +117,8 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = _version.hashCode();
+    int result = _owningproject.hashCode();
+    result = 31 * result + _version.hashCode();
     for (int i = 0; i < _libs.length; i++) {
       result = 31 * result + _libs.hashCode();
     }
@@ -115,7 +132,9 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedRuntimeEntry:");
-    buffer.append(" _version: ");
+    buffer.append(" _owningproject: ");
+    buffer.append(_owningproject);
+    buffer.append(", _version: ");
     buffer.append(_version);
     buffer.append(", _libs: {");
     buffer.append(_libs[0]);

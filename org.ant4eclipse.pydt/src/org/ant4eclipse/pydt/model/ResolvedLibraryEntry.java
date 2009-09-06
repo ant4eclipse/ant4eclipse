@@ -24,15 +24,28 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
   // it's a relative path. otherwise it's pointing to an absolute path.
   private String _location;
 
+  private String _owningproject;
+
   /**
    * Sets up this entry with resolved location of a python library.
    * 
+   * @param owningproject
+   *          The name of the related eclipse project. Neither <code>null</code> nor empty.
    * @param location
    *          The location of the library. Neither <code>null</code> nor empty.
    */
-  public ResolvedLibraryEntry(final String location) {
+  public ResolvedLibraryEntry(final String owningproject, final String location) {
     Assert.nonEmpty(location);
+    Assert.nonEmpty(owningproject);
+    _owningproject = owningproject;
     _location = location;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getOwningProjectname() {
+    return _owningproject;
   }
 
   /**
@@ -66,6 +79,9 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
       return false;
     }
     final ResolvedLibraryEntry other = (ResolvedLibraryEntry) object;
+    if (!_owningproject.equals(other._owningproject)) {
+      return false;
+    }
     return _location.equals(other._location);
   }
 
@@ -74,7 +90,9 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    return _location.hashCode();
+    int result = _owningproject.hashCode();
+    result = 31 * result + _location.hashCode();
+    return result;
   }
 
   /**
@@ -84,7 +102,9 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedLibraryEntry:");
-    buffer.append(" _location: ");
+    buffer.append(" _owningproject: ");
+    buffer.append(_owningproject);
+    buffer.append(", _location: ");
     buffer.append(_location);
     buffer.append("]");
     return buffer.toString();

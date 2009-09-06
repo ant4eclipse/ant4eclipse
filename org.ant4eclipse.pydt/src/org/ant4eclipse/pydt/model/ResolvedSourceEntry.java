@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
+import org.ant4eclipse.core.Assert;
+
 /**
  * Resolved record used to identify a source folder within a project.
  * 
@@ -20,14 +22,27 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
 
   private String _folder;
 
+  private String _owningproject;
+
   /**
    * Sets up this entry with the relative path of the folder. The path is relative to the project.
    * 
+   * @param owningproject
+   *          The name of the related eclipse project. Neither <code>null</code> nor empty.
    * @param foldername
    *          The name of the folder. <code>null</code> or not empty.
    */
-  public ResolvedSourceEntry(final String foldername) {
+  public ResolvedSourceEntry(final String owningproject, final String foldername) {
+    Assert.nonEmpty(owningproject);
+    _owningproject = owningproject;
     _folder = foldername;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getOwningProjectname() {
+    return _owningproject;
   }
 
   /**
@@ -61,6 +76,12 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
       return false;
     }
     final ResolvedSourceEntry other = (ResolvedSourceEntry) object;
+    if (!_owningproject.equals(other._owningproject)) {
+      return false;
+    }
+    if (_folder == null) {
+      return other._folder == null;
+    }
     return _folder.equals(other._folder);
   }
 
@@ -69,7 +90,9 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    return _folder.hashCode();
+    int result = _owningproject.hashCode();
+    result = 31 * result + (_folder != null ? _folder.hashCode() : 0);
+    return result;
   }
 
   /**
@@ -79,7 +102,9 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedSourceEntry:");
-    buffer.append(" _folder: ");
+    buffer.append(" _owningproject: ");
+    buffer.append(_owningproject);
+    buffer.append(", _folder: ");
     buffer.append(_folder);
     buffer.append("]");
     return buffer.toString();

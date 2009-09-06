@@ -63,14 +63,11 @@ public class PythonResolver {
    * @param entry
    *          The unresolved entry pointing to a source folder. Not <code>null</code>.
    */
-  private void resolveImpl(final List<ResolvedPathEntry> receiver, final RawPathEntry entry) {
+  private void resolveImpl(final List<ResolvedPathEntry> receiver, final String projectname, final RawPathEntry entry) {
     Assert.notNull(entry);
     ResolvedPathEntry result = _pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
-      result = newResolvedEntry(entry);
-    }
-    if (!receiver.contains(result)) {
-      receiver.add(result);
+      addResolvedEntry(receiver, projectname, entry);
     }
   }
 
@@ -82,11 +79,11 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
-  public ResolvedPathEntry[] resolve(final RawPathEntry... entries) {
+  public ResolvedPathEntry[] resolve(final String projectname, final RawPathEntry... entries) {
     Assert.notNull(entries);
     final List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
     for (int i = 0; i < entries.length; i++) {
-      resolveImpl(list, entries[i]);
+      resolveImpl(list, projectname, entries[i]);
     }
     return list.toArray(new ResolvedPathEntry[list.size()]);
   }
@@ -222,113 +219,120 @@ public class PythonResolver {
   /**
    * Creates a new resolved record for the supplied entry.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The path entry which needs to be resolved. Not <code>null</code>.
-   * 
-   * @return A resolved entry. Not <code>null</code>.
    */
-  private ResolvedPathEntry newResolvedEntry(final RawPathEntry entry) {
+  private void addResolvedEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
     if (entry.getKind() == ReferenceKind.Container) {
-      return newResolvedContainerEntry(entry);
+      addResolvedContainerEntry(receiver, projectname, entry);
     } else if (entry.getKind() == ReferenceKind.Library) {
-      return newResolvedLibraryEntry(entry);
+      addResolvedLibraryEntry(receiver, projectname, entry);
     } else if (entry.getKind() == ReferenceKind.Output) {
-      return newResolvedOutputEntry(entry);
+      addResolvedOutputEntry(receiver, projectname, entry);
     } else if (entry.getKind() == ReferenceKind.Project) {
-      return newResolvedProjectEntry(entry);
+      addResolvedProjectEntry(receiver, projectname, entry);
     } else if (entry.getKind() == ReferenceKind.Runtime) {
-      return newResolvedRuntimeEntry(entry);
+      addResolvedRuntimeEntry(receiver, projectname, entry);
     } else /* if (entry.getKind() == ReferenceKind.Source) */{
-      return newResolvedSourceEntry(entry);
+      addResolvedSourceEntry(receiver, projectname, entry);
     }
   }
 
   /**
    * Creates a new record representing a path container.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The raw entry. Not <code>null</code>.
-   * 
-   * @return A newly created record used to represent a path container. Not <code>null</code>.
    */
-  private ResolvedContainerEntry newResolvedContainerEntry(final RawPathEntry entry) {
-    final ResolvedContainerEntry result = new ResolvedContainerEntry(new File[0]);
+  private void addResolvedContainerEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
+    final ResolvedContainerEntry result = new ResolvedContainerEntry(projectname, new File[0]);
     _pathregistry.registerResolvedPathEntry(entry, result);
-    return result;
+    receiver.add(result);
   }
 
   /**
    * Creates a new record representing a library.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The raw entry. Not <code>null</code>.
-   * 
-   * @return A newly created record used to represent a library. Not <code>null</code>.
    */
-  private ResolvedLibraryEntry newResolvedLibraryEntry(final RawPathEntry entry) {
-    final ResolvedLibraryEntry result = new ResolvedLibraryEntry(entry.getValue());
+  private void addResolvedLibraryEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
+    final ResolvedLibraryEntry result = new ResolvedLibraryEntry(projectname, entry.getValue());
     _pathregistry.registerResolvedPathEntry(entry, result);
-    return result;
+    receiver.add(result);
   }
 
   /**
    * Creates a new record representing an output folder.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The raw entry. Not <code>null</code>.
-   * 
-   * @return A newly created record used to represent an output folder. Not <code>null</code>.
    */
-  private ResolvedOutputEntry newResolvedOutputEntry(final RawPathEntry entry) {
-    final ResolvedOutputEntry result = new ResolvedOutputEntry(entry.getValue());
+  private void addResolvedOutputEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
+    final ResolvedOutputEntry result = new ResolvedOutputEntry(projectname, entry.getValue());
     _pathregistry.registerResolvedPathEntry(entry, result);
-    return result;
+    receiver.add(result);
   }
 
   /**
    * Creates a new record representing a project.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The raw entry. Not <code>null</code>.
-   * 
-   * @return A newly created record used to represent a python project Not <code>null</code>.
    */
-  private ResolvedProjectEntry newResolvedProjectEntry(final RawPathEntry entry) {
+  private void addResolvedProjectEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
     String value = entry.getValue();
     if ((value.charAt(0) != '/') || (value.length() == 1)) {
       /** @todo [02-Aug-2009:KASI] We need to cause an exception here. */
       A4ELogging.warn("The raw projectname '%s' does not start conform to the required format '/' <identifier> !",
           value);
-      return null;
+      return;
     }
-    final ResolvedProjectEntry result = new ResolvedProjectEntry(value.substring(1));
+    final ResolvedProjectEntry result = new ResolvedProjectEntry(projectname, value.substring(1));
     _pathregistry.registerResolvedPathEntry(entry, result);
-    return result;
+    receiver.add(result);
   }
 
   /**
    * Creates a new record representing a source folder.
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The raw entry. Not <code>null</code>.
-   * 
-   * @return A newly created record used to represent a source folder. Not <code>null</code>.
    */
-  private ResolvedSourceEntry newResolvedSourceEntry(final RawPathEntry entry) {
-    final ResolvedSourceEntry result = new ResolvedSourceEntry(entry.getValue());
+  private void addResolvedSourceEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
+    final ResolvedSourceEntry result = new ResolvedSourceEntry(projectname, entry.getValue());
     _pathregistry.registerResolvedPathEntry(entry, result);
-    return result;
+    receiver.add(result);
   }
 
   /**
    * Creates a new record representing a single runtime..
    * 
+   * @param receiver
+   *          A list used to collect all resolved path entries.
    * @param entry
    *          The raw entry. Not <code>null</code>.
-   * 
-   * @return A newly created record used to represent a single runtime. Not <code>null</code>.
    */
-  private ResolvedRuntimeEntry newResolvedRuntimeEntry(final RawPathEntry entry) {
+  private void addResolvedRuntimeEntry(final List<ResolvedPathEntry> receiver, final String projectname,
+      final RawPathEntry entry) {
     final String value = entry.getValue();
     PythonRuntime runtime = null;
     if (value.length() == 0) {
@@ -342,9 +346,10 @@ public class PythonResolver {
       // now runtime available
       throw new Ant4EclipseException(PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, value);
     }
-    final ResolvedRuntimeEntry result = new ResolvedRuntimeEntry(runtime.getVersion(), runtime.getLibraries());
+    final ResolvedRuntimeEntry result = new ResolvedRuntimeEntry(projectname, runtime.getVersion(), runtime
+        .getLibraries());
     _pathregistry.registerResolvedPathEntry(entry, result);
-    return result;
+    receiver.add(result);
   }
 
 } /* ENDCLASS */

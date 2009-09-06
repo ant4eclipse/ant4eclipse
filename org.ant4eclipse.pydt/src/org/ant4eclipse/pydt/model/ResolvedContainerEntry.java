@@ -24,15 +24,28 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
 
   private File[] _pathes;
 
+  private String _owningproject;
+
   /**
    * Initialises this entry used to describe a path container.
    * 
+   * @param owningproject
+   *          The name of the related eclipse project. Neither <code>null</code> nor empty.
    * @param pathes
    *          The bundled pathes representing this container. Not <code>null</code>.
    */
-  public ResolvedContainerEntry(final File[] pathes) {
+  public ResolvedContainerEntry(final String owningproject, final File[] pathes) {
     Assert.notNull(pathes);
+    Assert.nonEmpty(owningproject);
+    _owningproject = owningproject;
     _pathes = pathes;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getOwningProjectname() {
+    return _owningproject;
   }
 
   /**
@@ -66,6 +79,9 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
       return false;
     }
     final ResolvedContainerEntry other = (ResolvedContainerEntry) object;
+    if (!_owningproject.equals(other._owningproject)) {
+      return false;
+    }
     if (_pathes.length != other._pathes.length) {
       return false;
     }
@@ -82,7 +98,7 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = 1;
+    int result = _owningproject.hashCode();
     for (int i = 0; i < _pathes.length; i++) {
       result = 31 * result + _pathes.hashCode();
     }
@@ -96,7 +112,9 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedContainerEntry:");
-    buffer.append(" _pathes: {");
+    buffer.append(" _owningproject: ");
+    buffer.append(_owningproject);
+    buffer.append(", _pathes: {");
     buffer.append(_pathes[0]);
     for (int i = 1; i < _pathes.length; i++) {
       buffer.append(", ");

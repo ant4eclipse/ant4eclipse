@@ -25,4 +25,11 @@ public interface ResolvedPathEntry {
    */
   ReferenceKind getKind();
 
+  /**
+   * Returns the name of the associated project.
+   * 
+   * @return The name of the associated project. Neither <code>null</code> nor empty.
+   */
+  String getOwningProjectname();
+
 } /* ENDINTERFACE */

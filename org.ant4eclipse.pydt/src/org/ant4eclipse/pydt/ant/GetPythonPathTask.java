@@ -51,7 +51,7 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
       // the runtimes shall be ignored, so don't resolve them
       entries = removeRuntimeEntries(entries);
     }
-    final ResolvedPathEntry[] resolved = resolver.resolve(entries);
+    final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName(), entries);
     final File[] result = resolver.expand(resolved, getEclipseProject(), getPathStyle());
     return result;
   }

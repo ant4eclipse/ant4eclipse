@@ -76,7 +76,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
     }
     _workspace = project.getWorkspace();
     List<EclipseProject> result = new ArrayList<EclipseProject>();
-    resolve(result, loadEntries(project));
+    resolve(result, project.getSpecifiedName(), loadEntries(project));
     return result;
   }
 
@@ -126,10 +126,12 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
    * 
    * @param receiver
    *          A list used to collect the resolved process. Not <code>null</code>.
+   * @param projectname
+   *          The name of the associated project. Neither <code>null</code> nor empty.
    * @param entries
    *          The raw path entries needed to be processed. Not <code>null</code>.
    */
-  private void resolve(final List<EclipseProject> receiver, final List<RawPathEntry> entries) {
+  private void resolve(final List<EclipseProject> receiver, final String projectname, final List<RawPathEntry> entries) {
 
     final Set<RawPathEntry> followed = new HashSet<RawPathEntry>();
     while (!entries.isEmpty()) {
@@ -138,7 +140,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
       final RawPathEntry entry = entries.remove(0);
       if (!_registry.isResolved(entry)) {
         // until now it has not been resolved, so resolve and register it
-        _resolver.resolve(entry);
+        _resolver.resolve(projectname, entry);
       }
       // access the resolved path entry
       final ResolvedProjectEntry resolved = (ResolvedProjectEntry) _registry.getResolvedPathEntry(entry);

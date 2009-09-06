@@ -22,15 +22,28 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
 
   private String _projectname;
 
+  private String _owningproject;
+
   /**
    * Sets up this entry with the name of the project.
    * 
+   * @param owningproject
+   *          The name of the related eclipse project. Neither <code>null</code> nor empty.
    * @param name
    *          The name of the project. Neither <code>null</code> nor empty.
    */
-  public ResolvedProjectEntry(final String name) {
+  public ResolvedProjectEntry(final String owningproject, final String name) {
+    Assert.nonEmpty(owningproject);
     Assert.nonEmpty(name);
+    _owningproject = owningproject;
     _projectname = name;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getOwningProjectname() {
+    return _owningproject;
   }
 
   /**
@@ -41,9 +54,9 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
   }
 
   /**
-   * Returns the specified name of the project.
+   * Returns the name of the referred project.
    * 
-   * @return The specified name of the project. Neither <code>null</code> nor empty.
+   * @return The name of the referred project. Neither <code>null</code> nor empty.
    */
   public String getProjectname() {
     return _projectname;
@@ -64,6 +77,9 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
       return false;
     }
     final ResolvedProjectEntry other = (ResolvedProjectEntry) object;
+    if (!_owningproject.equals(other._owningproject)) {
+      return false;
+    }
     return _projectname.equals(other._projectname);
   }
 
@@ -72,7 +88,9 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    return _projectname.hashCode();
+    int result = _owningproject.hashCode();
+    result = 31 * result + _projectname.hashCode();
+    return result;
   }
 
   /**
@@ -82,7 +100,9 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
   public String toString() {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedProjectEntry:");
-    buffer.append(" _projectname: ");
+    buffer.append(" _owningproject: ");
+    buffer.append(_owningproject);
+    buffer.append(", _projectname: ");
     buffer.append(_projectname);
     buffer.append("]");
     return buffer.toString();
