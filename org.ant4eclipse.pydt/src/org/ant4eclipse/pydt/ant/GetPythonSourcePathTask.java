@@ -66,10 +66,10 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
   protected File[] resolvePath() {
     final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
     final PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, true);
-    final PathExpander expander = new PathExpander();
+    final PathExpander expander = new PathExpander(getWorkspace());
     final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
     final ResolvedPathEntry[] resolved = resolver.resolve(entries);
-    final File[] result = expander.expand(resolved, getEclipseProject(), getPathStyle());
+    final File[] result = expander.expand(resolved, getPathStyle());
     return result;
   }
 
