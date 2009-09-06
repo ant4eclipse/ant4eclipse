@@ -213,13 +213,11 @@ public class PythonResolver {
         // fetch the EclipseProject instance from the workspace
         final EclipseProject refproject = _workspace.getProject(((ResolvedProjectEntry) resolved).getProjectname());
         if (_mode == Mode.all) {
-          A4ELogging.info("Following.0");
           // this mode doesn't care for the 'export' flag on path settings
-          entries.addAll(loadEntries(refproject));
+          entries.addAll(0, loadEntries(refproject));
         } else if ((_mode == Mode.exported) && entry.isExported()) {
-          A4ELogging.info("Following.1");
           // just follow exported entries
-          entries.addAll(loadEntries(refproject));
+          entries.addAll(0, loadEntries(refproject));
         }
       }
 
@@ -245,9 +243,6 @@ public class PythonResolver {
         }
       }
       result.add(entry);
-    }
-    for (int i = 0; i < result.size(); i++) {
-      A4ELogging.info("record[%d] := '%s'", Integer.valueOf(i), result.get(i));
     }
     return result;
   }
