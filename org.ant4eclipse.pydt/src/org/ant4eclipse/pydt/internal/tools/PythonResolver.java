@@ -63,7 +63,7 @@ public class PythonResolver {
    * 
    * @return A resolved entry identifying a source folder. Not <code>null</code>.
    */
-  public ResolvedPathEntry resolve(final RawPathEntry entry) {
+  private ResolvedPathEntry resolveImpl(final RawPathEntry entry) {
     Assert.notNull(entry);
     ResolvedPathEntry result = _pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
@@ -81,11 +81,11 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
-  public ResolvedPathEntry[] resolve(final RawPathEntry[] entries) {
+  public ResolvedPathEntry[] resolve(final RawPathEntry... entries) {
     Assert.notNull(entries);
     final ResolvedPathEntry[] result = new ResolvedPathEntry[entries.length];
     for (int i = 0; i < entries.length; i++) {
-      result[i] = resolve(entries[i]);
+      result[i] = resolveImpl(entries[i]);
     }
     return result;
   }
