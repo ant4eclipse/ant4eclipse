@@ -1,22 +1,5 @@
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
-
-import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
-import org.apache.tools.ant.taskdefs.condition.Os;
-import org.apache.tools.ant.types.Path;
-import org.apache.tools.ant.types.resources.FileResource;
-import org.eclipse.jdt.core.compiler.CategorizedProblem;
-import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
-import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -28,10 +11,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
+import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.ant.types.Path;
+import org.apache.tools.ant.types.resources.FileResource;
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
+
 /**
  * <p>
- * Implements a javac compiler adapter for the eclipse compiler for java (ecj). The usage of the ecj has several
- * advantages, e.g. support of access restrictions, multiple source folders.
+ * Implements a javac compiler adapter for the eclipse compiler for java (ecj). The ant4eclipse javac compiler
+ * implements several enhancements The usage of the ecj has several advantages, e.g. support of access restrictions,
+ * multiple source folders.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -40,7 +36,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
   private static final String ANT4ECLIPSE_DEFAULT_FILE_ENCODING = "ant4eclipse.default.file.encoding";
 
-  /** - */
+  /** format of the compile problem message */
   private static final String COMPILE_PROBLEM_MESSAGE           = "----------\n%s. %s in %s (at line %s)\n%s\n%s\n%s\n";
 
   /** the compiler argument separator */
@@ -49,8 +45,11 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /** the refid key for the additional compiler arguments */
   private static final String COMPILER_ARGS_REFID_KEY           = "compiler.args.refid";
 
-  /** - */
+  /** the refid key for compiler.options.file */
   private static final String COMPILER_OPTIONS_FILE             = "compiler.options.file";
+
+  /** the refid key for default compiler options file */
+  private static final String DEFAULT_COMPILER_OPTIONS_FILE     = "default.compiler.options.file";
 
   /**
    * {@inheritDoc}
@@ -74,8 +73,14 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     final DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
     SourceFile[] sourceFiles = getSourceFilesToCompile(ecjAdditionalCompilerArguments);
     compileJobDescription.setSourceFiles(sourceFiles);
-    compileJobDescription.setCompilerOptions(getCompilerOptions());
     compileJobDescription.setClassFileLoader(createClassFileLoader(ecjAdditionalCompilerArguments));
+
+    // Step 5.1: set the compiler options
+    String compilerOptionsFileName = extractJavacCompilerArg(COMPILER_OPTIONS_FILE, null);
+    String defaultCompilerOptionsFileName = extractJavacCompilerArg(DEFAULT_COMPILER_OPTIONS_FILE, null);
+    Map<String, String> compilerOptions = CompilerOptionsProvider.getCompilerOptions(getJavac(),
+        compilerOptionsFileName, defaultCompilerOptionsFileName);
+    compileJobDescription.setCompilerOptions(compilerOptions);
 
     // Step 6: Compile
     final CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
@@ -130,75 +135,6 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       // TODO: NLS
       throw new BuildException("getJavac().getSourcepath() != null");
     }
-  }
-
-  /**
-   * <p>
-   * Creates the compiler options for the JDT compiler.
-   * </p>
-   * <p>
-   * The compiler options are defined here:
-   * <ul>
-   * <li><a href="http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.isv/guide/jdt_api_options.htm">JDT Core
-   * options</a></li>
-   * <li>
-   * <a href=
-   * "http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/ref-preferences-compiler.htm"
-   * >Java Compiler Preferences </a></li>
-   * <li>
-   * <a href="http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/compiler/ref-preferences-errors-warnings.htm"
-   * >Java Compiler Errors/Warnings Preferences</a></li>
-   * </ul>
-   * </p>
-   * 
-   * @return
-   */
-  @SuppressWarnings("unchecked")
-  private Map getCompilerOptions() {
-
-    // Step 1: create result
-    CompilerOptions compilerOptions = null;
-
-    // 
-    String compilerOptionsFileName = extractJavacCompilerArg(COMPILER_OPTIONS_FILE, null);
-    if (compilerOptionsFileName != null) {
-      File compilerOptionsFile = new File(compilerOptionsFileName);
-      if (compilerOptionsFile.exists() && compilerOptionsFile.isFile()) {
-        Map<String, String> compilerOptionsMap = Utilities.readProperties(compilerOptionsFile);
-        compilerOptions = new CompilerOptions(compilerOptionsMap);
-      }
-    }
-
-    // create default
-    if (compilerOptions == null) {
-
-      // create compiler options
-      compilerOptions = new CompilerOptions();
-
-      // debug
-      if (getJavac().getDebug()) {
-        compilerOptions.produceDebugAttributes = ClassFileConstants.ATTR_SOURCE | ClassFileConstants.ATTR_LINES
-            | ClassFileConstants.ATTR_VARS;
-      } else {
-        compilerOptions.produceDebugAttributes = 0x0;
-      }
-      // TODO
-      // see: http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.isv/guide/jdt_api_options.htm#compatibility
-
-      // get the source option
-      compilerOptions.sourceLevel = CompilerOptions.versionToJdkLevel(getJavac().getSource());
-
-      // get the target option
-      long targetLevel = CompilerOptions.versionToJdkLevel(getJavac().getTarget());
-      compilerOptions.complianceLevel = targetLevel;
-      compilerOptions.targetJDK = targetLevel;
-    }
-
-    // TODO:
-    // A4ELogging.info("Using the following compile options:\n %s", compilerOptions.toString());
-
-    // return the compiler options
-    return compilerOptions.getMap();
   }
 
   /**
