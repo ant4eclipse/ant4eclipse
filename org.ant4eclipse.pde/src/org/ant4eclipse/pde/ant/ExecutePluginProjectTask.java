@@ -11,23 +11,24 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
-import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-import org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask;
-import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.PdeBuildHelper;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
+
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileList;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -35,17 +36,19 @@ import org.osgi.framework.Version;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements TargetPlatformAwareComponent,
-    PdeExecutorValues {
- 
-  /** - */
-  private static final String         SCOPE_NAME_LIBRARY               = "ForEachPluginLibrary";
+public class ExecutePluginProjectTask extends AbstractExecuteProjectTask implements PdeExecutorValues {
 
   /** - */
-  public static final String          SCOPE_LIBRARY                    = "SCOPE_LIBRARY";
+  private static final String SCOPE_NAME_LIBRARY = "ForEachPluginLibrary";
 
   /** - */
-  private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
+  public static final String  SCOPE_LIBRARY      = "SCOPE_LIBRARY";
+
+  /** - */
+  private static final String SCOPE_NAME_PROJECT = "ForProject";
+
+  /** - */
+  public static final String  SCOPE_PROJECT      = "SCOPE_PROJECT";
 
   /**
    * <p>
@@ -55,66 +58,17 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
    */
   public ExecutePluginProjectTask() {
     super("executePluginProject");
-
-    _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final String getTargetPlatformId() {
-    return _targetPlatformAwareDelegate.getTargetPlatformId();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final boolean isTargetPlatformIdSet() {
-    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void setTargetPlatformId(String targetPlatformId) {
-    _targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public final void requireTargetPlatformIdSet() {
-    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  protected void addAdditionalExecutionValues(MacroExecutionValues executionValues) {
-    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
-
-    // "calculate" effective version, that is the version with replaced qualifier
-    final Version effectiveVersion = PdeBuildHelper.resolveVersion(pluginProjectRole.getBundleDescription()
-        .getVersion(), pluginProjectRole.getBuildProperties().getQualifier());
-
-    // TODO
-    executionValues.getProperties().put(BUNDLE_RESOLVED_VERSION, effectiveVersion.toString());
-    executionValues.getProperties().put(BUNDLE_VERSION,
-        pluginProjectRole.getBundleDescription().getVersion().toString());
-
-    PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
-    executionValues.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
-    executionValues.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected Object onCreateDynamicElement(final String name) {
+  public Object createDynamicElement(final String name) {
 
     if (SCOPE_NAME_LIBRARY.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_LIBRARY);
+    } else if (SCOPE_NAME_PROJECT.equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_PROJECT);
     }
 
     return null;
@@ -126,32 +80,49 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
   @Override
   protected void doExecute() {
 
-    // TODO: CHECK!
-    JdtClasspathContainerArgument containerArgument = createJdtClasspathContainerArgument();
-    containerArgument.setKey("target.platform");
-    containerArgument.setValue(getTargetPlatformId());
+    // check require fields
+    requireWorkspaceAndProjectNameSet();
 
-    super.doExecute();
+    // execute scoped macro definitions
+    for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+
+      final MacroDef macroDef = scopedMacroDefinition.getMacroDef();
+
+      // execute SCOPE_LIBRARY
+      if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
+        executeLibraryScopedMacroDef(macroDef);
+      }
+      // execute SCOPE_PROJECT
+      else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
+        executeProjectScopedMacroDef(macroDef);
+      }
+      // delegate to template method
+      else {
+        // TODO: NLS
+        throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
+      }
+    }
   }
 
   /**
-   * {@inheritDoc}
+   * <p>
+   * </p>
+   *
+   * @param macroDef
    */
-  @Override
-  protected boolean onExecuteScopeMacroDefintion(ScopedMacroDefinition<String> scopedMacroDefinition) {
+  private void executeProjectScopedMacroDef(MacroDef macroDef) {
 
-    // 1. Check required fields
-    requireWorkspaceAndProjectNameSet();
-    ensureRole(PluginProjectRole.class);
+    executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-    // execute scoped macro definitions
-    if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
-      executeLibraryScopedMacroDef(scopedMacroDefinition.getMacroDef());
-      return true;
-    } else {
-      return false;
-    }
+      public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
+        getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
+
+        addPluginProjectMacroExecutionValues(values);
+
+        return values;
+      }
+    });
   }
 
   /**
@@ -185,8 +156,7 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
               values.getProperties().put(LIBRARY_IS_SELF, "false");
             }
 
-            EcjAdditionalCompilerArguments compilerArguments = getExecutorValuesProvider().provideExecutorValues(
-                getJavaProjectRole(), getJdtClasspathContainerArguments(), values);
+            getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
 
             File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
             File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
@@ -197,14 +167,14 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
             values.getReferences().put(SOURCE_DIRECTORIES_PATH, convertToPath(sourceFiles));
             values.getReferences().put(OUTPUT_DIRECTORIES_PATH, convertToPath(outputFiles));
 
-            for (final String sourceFolderName : library.getSource()) {
-              final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
-              final File sourceFolder = getEclipseProject().getChild(sourceFolderName);
-              final File outputFolder = getEclipseProject().getChild(outputFolderName);
-              compilerArguments.addSourceFolder(sourceFolder, outputFolder);
-            }
+            // for (final String sourceFolderName : library.getSource()) {
+            // final String outputFolderName = getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolderName);
+            // final File sourceFolder = getEclipseProject().getChild(sourceFolderName);
+            // final File outputFolder = getEclipseProject().getChild(outputFolderName);
+            // compilerArguments.addSourceFolder(sourceFolder, outputFolder);
+            // }
 
-            addAdditionalExecutionValues(values);
+            addPluginProjectMacroExecutionValues(values);
 
             return values;
           }
@@ -228,5 +198,28 @@ public class ExecutePluginProjectTask extends ExecuteJdtProjectTask implements T
     FileList fileList = new FileList();
     fileList.setDir(getEclipseProject().getFolder());
 
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param values
+   * @throws BuildException
+   */
+  private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) throws BuildException {
+    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+
+    // "calculate" effective version, that is the version with replaced qualifier
+    final Version effectiveVersion = PdeBuildHelper.resolveVersion(pluginProjectRole.getBundleDescription()
+        .getVersion(), pluginProjectRole.getBuildProperties().getQualifier());
+
+    // TODO
+    values.getProperties().put(BUNDLE_RESOLVED_VERSION, effectiveVersion.toString());
+    values.getProperties().put(BUNDLE_VERSION, pluginProjectRole.getBundleDescription().getVersion().toString());
+
+    PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
+    values.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
+    values.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
   }
 }

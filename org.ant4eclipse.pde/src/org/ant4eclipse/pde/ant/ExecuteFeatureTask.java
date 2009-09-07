@@ -11,14 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-
 import org.ant4eclipse.core.ant.FileListHelper;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
@@ -32,20 +29,21 @@ import org.ant4eclipse.pde.tools.ResolvedFeature;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
+
 import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
-import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
+import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
-import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.Iterator;
 
 /**
  * <p>
@@ -55,44 +53,41 @@ import org.osgi.framework.Version;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteFeatureTask extends AbstractProjectPathTask implements DynamicElement,
-    MacroExecutionComponent<String>, PdeExecutorValues, TargetPlatformAwareComponent {
+public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements PdeExecutorValues,
+    TargetPlatformAwareComponent {
 
   /** the plug-in scope */
-  private static final String                  SCOPE_PLUGIN                = "SCOPE_PLUGIN";
+  private static final String               SCOPE_PLUGIN                = "SCOPE_PLUGIN";
 
   /** the plug-in scope element name */
-  private static final String                  SCOPE_NAME_PLUGIN           = "ForEachPlugin";
+  private static final String               SCOPE_NAME_PLUGIN           = "ForEachPlugin";
 
   /** the root feature scope */
-  private static final String                  SCOPE_ROOT_FEATURE          = "SCOPE_ROOT_FEATURE";
+  private static final String               SCOPE_ROOT_FEATURE          = "SCOPE_ROOT_FEATURE";
 
   /** the root feature scope element name */
-  private static final String                  SCOPE_NAME_ROOT_FEATURE     = "ForRootFeature";
+  private static final String               SCOPE_NAME_ROOT_FEATURE     = "ForRootFeature";
 
   /** the included feature scope */
-  private static final String                  SCOPE_INCLUDED_FEATURE      = "SCOPE_INCLUDED_FEATURE";
+  private static final String               SCOPE_INCLUDED_FEATURE      = "SCOPE_INCLUDED_FEATURE";
 
   /** the included feature scope element name */
-  private static final String                  SCOPE_NAME_INCLUDED_FEATURE = "ForEachIncludedFeature";
+  private static final String               SCOPE_NAME_INCLUDED_FEATURE = "ForEachIncludedFeature";
 
   /** the id of the feature to build (either featureId or projectName has to be set) */
-  private String                               _featureId;
+  private String                            _featureId;
 
   /** the version of the feature to build (must be used together with featureId) */
-  private Version                              _featureVersion;
-
-  /** the macro execution delegate */
-  private final MacroExecutionDelegate<String> _macroExecutionDelegate;
+  private Version                           _featureVersion;
 
   /** the target platform delegate */
-  private final TargetPlatformAwareDelegate    _targetPlatformAwareDelegate;
+  private final TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
   /** the resolved feature */
-  private ResolvedFeature                      _resolvedFeature;
+  private ResolvedFeature                   _resolvedFeature;
 
   /** a semicolon separated list of bundle-symbolicNames and versions */
-  private String                               _resolvedBundleVersions;
+  private String                            _resolvedBundleVersions;
 
   /**
    * <p>
@@ -100,45 +95,10 @@ public class ExecuteFeatureTask extends AbstractProjectPathTask implements Dynam
    * </p>
    */
   public ExecuteFeatureTask() {
+    super("executeFeature");
 
-    // create the delegates
-    this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeFeature");
+    // create the target platform delegate
     this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public NestedSequential createScopedMacroDefinition(String scope) {
-    return _macroExecutionDelegate.createScopedMacroDefinition(scope);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    _macroExecutionDelegate.executeMacroInstance(macroDef, provider);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public String getPrefix() {
-    return _macroExecutionDelegate.getPrefix();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
-    return _macroExecutionDelegate.getScopedMacroDefinitions();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void setPrefix(String prefix) {
-    _macroExecutionDelegate.setPrefix(prefix);
   }
 
   /**
