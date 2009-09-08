@@ -3,14 +3,14 @@
 <project name="testAntCall" basedir="." default="foo">
 
 	<typedef name="pluginProjectFileSet"
-	         classname="org.ant4eclipse.pde.ant.PluginProjectRelativeFileSet" />
+	         classname="org.ant4eclipse.pde.ant.PdeProjectFileSet" />
 
 	<target name="testMultipleDirectoriesFileSet">
 
 		<pluginProjectFileSet workspace="${workspace}"
 		                      projectname="${projectname}"
-		                      includes="META-INF/,OSGI-INF/,.,library.jar"
-		                      excludes=""
+		                      includes="${bin.includes}"
+		                      excludes="${bin.excludes}"
 		                      id="xyz.fileset" />
 
 		<echo-multiDirFileSet filesetref="xyz.fileset" />

@@ -15,6 +15,7 @@ import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
+import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import java.io.File;
 import java.util.Iterator;
@@ -48,7 +49,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private String                 _excludes;
 
   /** the ant attribute 'useDefaultExcludes' */
-  private boolean                _useDefaultExcludes;
+  private boolean                _useDefaultExcludes    = true;
 
   /** the ant attribute 'caseSensitive' */
   private boolean                _caseSensitive;
@@ -344,7 +345,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * </p>
    */
   protected void computeFileSet() {
-    
+
     // return if file list already is computed
     if (_fileListComputed) {
       return;
@@ -369,7 +370,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
         i++;
       }
     } else {
-      _excludes = null;
+      _excludedPattern = new String[0];
     }
 
     // clear the resource list
@@ -403,8 +404,6 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
           directoryScanner.setCaseSensitive(this._caseSensitive);
           // set includes
           directoryScanner.setIncludes(null);
-          // set excludes
-          directoryScanner.addExcludes(_excludedPattern);
           // set default excludes
           if (this._useDefaultExcludes) {
             directoryScanner.addDefaultExcludes();
@@ -417,16 +416,68 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
           for (String fileName : files) {
             if (token.equals(DEFAULT_SELF_DIRECTORY)) {
-              _resourceList.add(new FileResource(file, fileName));
+              if (!matchExcludePattern(fileName)) {
+                _resourceList.add(new FileResource(file, fileName));
+              }
             } else {
-              _resourceList.add(new FileResource(file.getParentFile(), token + File.separatorChar + fileName));
+              if (!matchExcludePattern(token + File.separatorChar + fileName)) {
+                System.err.println("Path: " + file.getPath());
+                System.err.println("token: " + token);
+                String filePath = normalize(file.getPath());
+                String rootPath = normalize(filePath).substring(0, filePath.indexOf(normalize(token)));
+                System.err.println("RootPath: " + rootPath);
+                _resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
+              }
             }
           }
         }
       }
     }
 
+    // for (Resource resource : _resourceList) {
+    // System.err.println(resource);
+    // }
+
     // set _fileListComputed
     _fileListComputed = true;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param string
+   * @return
+   */
+  private String normalize(String string) {
+
+    String result = string.replace('/', File.separatorChar).replace('\\', File.separatorChar);
+
+    if (result.endsWith("/") || result.endsWith("\\")) {
+      result = result.substring(0, result.length() - 1);
+    }
+
+    return result;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param string
+   * @return
+   */
+  private boolean matchExcludePattern(String string) {
+    for (String pattern : _excludedPattern) {
+       System.err.println("string: " + string);
+       System.err.println("pattern: " + pattern);
+      if (SelectorUtils.matchPath(normalize(pattern), normalize(string), _caseSensitive)) {
+         System.err.println("result: true");
+        return true;
+      }
+      System.err.println("result: false");
+    }
+
+    return false;
   }
 }
