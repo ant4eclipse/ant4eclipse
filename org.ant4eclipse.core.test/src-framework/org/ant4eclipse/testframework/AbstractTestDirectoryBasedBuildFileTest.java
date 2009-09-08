@@ -105,7 +105,24 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
     return this._testWorkspace;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
   protected File getTestDirectoryRootDir() {
     return this._testWorkspace.getRootDir();
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param string
+   * @return
+   */
+  public String normalize(String string) {
+    return string.replace('/', File.separatorChar).replace('\\', File.separatorChar);
   }
 }
