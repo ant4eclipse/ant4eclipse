@@ -50,7 +50,7 @@ public class BundleDependenciesResolver {
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param bundleDescription
    * @return
    */
@@ -59,7 +59,9 @@ public class BundleDependenciesResolver {
     Assert.notNull(bundleDescription);
 
     if (!bundleDescription.isResolved()) {
-      throw new RuntimeException("bundle not resolved");
+      String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription);
+      String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
+      throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo, resolverErrors));
     }
 
     // Step 1: add all packages that are imported...
@@ -88,7 +90,12 @@ public class BundleDependenciesResolver {
 
   private BundleDescription[] getReexportedBundles(final BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
-    Assert.assertTrue(bundleDescription.isResolved(), "Bundle must be resolved!");
+
+    if (!bundleDescription.isResolved()) {
+      String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription);
+      String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
+      throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo, resolverErrors));
+    }
 
     // define the result set
     final Set<BundleDescription> resultSet = new LinkedHashSet<BundleDescription>();

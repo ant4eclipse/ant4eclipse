@@ -23,7 +23,6 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
@@ -31,7 +30,6 @@ import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.ResolvedFeature;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
-
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
@@ -316,7 +314,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
       if (featureDescription == null) {
         // TODO: NLS
-        throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_" + includes.getVersion() + "'.");
+        throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_"
+            + includes.getVersion() + "'.");
       } else {
         result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
       }
@@ -328,7 +327,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param manifest
    * @param resolvedFeature
    * @throws BuildException
@@ -352,7 +351,12 @@ public final class TargetPlatformImpl implements TargetPlatform {
       }
 
       // TODO: NLS
-      Assert.assertTrue(bundleDescription.isResolved(), "bundle has to be resolved!");
+      if (!bundleDescription.isResolved()) {
+        String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription);
+        String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
+        throw new RuntimeException(String
+            .format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo, resolverErrors));
+      }
       bundleDescriptions.add(bundleDescription);
       map.put(bundleDescription, plugin);
     }
@@ -417,23 +421,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
     // log errors if any
     final BundleDescription[] bundleDescriptions = state.getBundles();
     // boolean allStatesResolved = true;
-    
+
     if (A4ELogging.isDebuggingEnabled()) {
-      for (int i = 0; i < bundleDescriptions.length; i++) {
-        final BundleDescription description = bundleDescriptions[i];
-        final ResolverError[] errors = state.getResolverErrors(description);
-        if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
-          if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
-            A4ELogging.debug("Not using '%s' -- another version resolved", getBundleInfo(description));
-          } else {
-            // allStatesResolved = false;
-            A4ELogging.debug("Could not resolve '%s':", getBundleInfo(description));
-            for (int j = 0; j < errors.length; j++) {
-              final ResolverError error = errors[j];
-              A4ELogging.debug("  %s", error);
-            }
-          }
-        }
+      for (BundleDescription description : bundleDescriptions) {
+        A4ELogging.debug(dumpResolverErrors(description));
       }
     }
     // return the state
@@ -441,14 +432,56 @@ public final class TargetPlatformImpl implements TargetPlatform {
   }
 
   /**
-   * @param bundleDescription
-   * @return
+   * <p>
+   * Returns the resolver errors as a string.
+   * </p>
+   * 
+   * @param description
+   *          the bundle description
+   * @return the resolver errors as a string.
    */
-  private static String getBundleInfo(final BundleDescription bundleDescription) {
-    final BundleSource bundleSource = BundleSource.getBundleSource(bundleDescription);
+  static String dumpResolverErrors(BundleDescription description) {
+    Assert.notNull(description);
+
+    StringBuffer stringBuffer = new StringBuffer();
+    State state = description.getContainingState();
+    final ResolverError[] errors = state.getResolverErrors(description);
+    if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
+      if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
+        stringBuffer.append("Not using '");
+        stringBuffer.append(getBundleInfo(description));
+        stringBuffer.append("' -- another version resolved\n");
+      } else {
+        stringBuffer.append("Could not resolve '");
+        stringBuffer.append(getBundleInfo(description));
+        stringBuffer.append("':\n");
+        for (int j = 0; j < errors.length; j++) {
+          final ResolverError error = errors[j];
+          stringBuffer.append("  ");
+          stringBuffer.append(error);
+          stringBuffer.append("\n");
+        }
+      }
+    }
+    return stringBuffer.toString();
+  }
+
+  /**
+   * <p>
+   * Returns the bundle info of the given bundle description.
+   * </p>
+   * 
+   * @param description
+   *          the bundle description.
+   * @return the bundle info of the given bundle description.
+   */
+  static String getBundleInfo(final BundleDescription description) {
+    Assert.notNull(description);
+    
+    final BundleSource bundleSource = BundleSource.getBundleSource(description);
 
     final StringBuffer buffer = new StringBuffer();
-    buffer.append(bundleDescription.getSymbolicName()).append("_").append(bundleDescription.getVersion().toString())
+    buffer.append(description.getSymbolicName()).append("_").append(description.getVersion().toString())
         .append("@");
     if (bundleSource.isEclipseProject()) {
       buffer.append("<P>").append(bundleSource.getAsEclipseProject().getFolder());
