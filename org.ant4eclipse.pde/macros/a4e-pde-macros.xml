@@ -30,6 +30,17 @@
 		<sequential>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+			  - Step 0: Prepare
+			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+			<!-- Step 0.1: try to create the target directory -->
+			<mkdir dir="@{destination}" />
+
+			<!-- Step 0.2: check the plug-in project -->
+			<ant4eclipse:checkPluginProject workspaceDirectory="@{workspaceDirectory}"
+			                                projectName="@{projectName}" />
+
+			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 			  - Step 1: Compile the plug-in project if it is a JDT project.
 			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<antcontrib:if>

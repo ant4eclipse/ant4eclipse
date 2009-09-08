@@ -6,4 +6,5 @@
 	<typedef name="executePluginLibrary" classname="org.ant4eclipse.pde.ant.ExecuteLibraryTask" />
 	<typedef name="pdeProjectFileSet" classname="org.ant4eclipse.pde.ant.PdeProjectFileSet" />
 	<typedef name="patchFeatureManifest" classname="org.ant4eclipse.pde.ant.PatchFeatureManifestTask" />
+	<typedef name="checkPluginProject" classname="org.ant4eclipse.pde.ant.CheckPluginProjectTask" />
 </antlib>
