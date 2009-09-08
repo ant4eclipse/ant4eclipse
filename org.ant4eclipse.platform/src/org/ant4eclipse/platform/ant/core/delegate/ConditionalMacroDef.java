@@ -1,16 +1,18 @@
 package org.ant4eclipse.platform.ant.core.delegate;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ldapfilter.LdapFilter;
+import org.ant4eclipse.core.ldapfilter.ParseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.UnknownElement;
+import org.apache.tools.ant.taskdefs.MacroDef;
+
 import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ldapfilter.LdapFilter;
-import org.ant4eclipse.core.ldapfilter.ParseException;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.UnknownElement;
-import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
  * <p>
@@ -150,9 +152,17 @@ public class ConditionalMacroDef extends MacroDef {
       catch (ParseException e) {
         try {
 
+          if (A4ELogging.isDebuggingEnabled()) {
+            A4ELogging.debug("Exception while parsing filter string '%s'.", filter);
+          }
+
           // get the current UnknownElement
           UnknownElement element = (UnknownElement) this._conditionalMacroDef.getProject().getThreadTask(
               Thread.currentThread());
+
+          if (A4ELogging.isDebuggingEnabled()) {
+            A4ELogging.debug("Current UnknownElement is '%s'.", element);
+          }
 
           // search for the unknown element that causes the problem
           for (UnknownElement unknownElement : (List<UnknownElement>) element.getChildren()) {
@@ -163,7 +173,15 @@ public class ConditionalMacroDef extends MacroDef {
 
           // no element found -> throw simple BuildException
           throw new BuildException("Invalid filter '" + filter + "'.");
+        } catch (BuildException exception) {
+          throw exception;
         } catch (Exception exception) {
+          // 
+          if (A4ELogging.isDebuggingEnabled()) {
+            A4ELogging
+                .debug("Exception while computing the line number for an exception: '%s'", exception.getMessage());
+          }
+
           // no element found -> throw simple BuildException
           throw new BuildException("Invalid filter '" + filter + "'.");
         }
