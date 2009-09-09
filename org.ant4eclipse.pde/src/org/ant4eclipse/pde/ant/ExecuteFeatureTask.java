@@ -373,6 +373,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
           // set the properties
           values.getProperties().put(FEATURE_IS_SOURCE, "true");
           values.getProperties().put(FEATURE_FILE, eclipseProject.getFolder().getAbsolutePath());
+          values.getProperties().put(FEATURE_FILE_NAME, eclipseProject.getSpecifiedName());
 
           FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(eclipseProject);
 
@@ -394,6 +395,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
 
           // set properties
           values.getProperties().put(FEATURE_FILE, file.getAbsolutePath());
+          values.getProperties().put(FEATURE_FILE_NAME, file.getName());
 
           // set references
           values.getReferences().put(FEATURE_FILE_PATH, convertToPath(file));

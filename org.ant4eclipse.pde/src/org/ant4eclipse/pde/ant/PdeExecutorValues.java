@@ -68,6 +68,9 @@ public interface PdeExecutorValues extends JdtExecutorValues {
 
   /** - */
   String FEATURE_FILE                      = "feature.file";
+  
+  /** - */
+  String FEATURE_FILE_NAME                      = "feature.file.name";
 
   /** - */
   String PLUGIN_UNPACK                     = "plugin.unpack";
