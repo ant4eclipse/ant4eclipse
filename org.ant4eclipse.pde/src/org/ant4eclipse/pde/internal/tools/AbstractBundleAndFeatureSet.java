@@ -20,6 +20,7 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.StopWatch;
 
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.pde.tools.PdeBuildHelper;
 
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
@@ -119,7 +120,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
 
       // return if match
       if (featureDescription.getFeatureManifest().getId().equals(featureId)
-          && featureDescription.getFeatureManifest().getVersion().equals(version)) {
+          && PdeBuildHelper.resolveVersion(featureDescription.getFeatureManifest().getVersion(),
+              PdeBuildHelper.getResolvedContextQualifier()).equals(version)) {
 
         return featureDescription;
       }
