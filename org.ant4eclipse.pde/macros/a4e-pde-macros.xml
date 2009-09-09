@@ -158,11 +158,20 @@
 					                                  libraryname="${executePluginProject.library.name}">
 
 						<ant4eclipse:forEachOutputDirectory>
-							<echo>Copying resources from directory '${executePluginLibrary.output.directory}'</echo>
+							<echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '${executePluginProject.project.directory}/${a4e.self.directory}'</echo>
 							<copy todir="${executePluginProject.project.directory}/${a4e.self.directory}">
 								<fileset dir="${executePluginLibrary.output.directory}" />
 							</copy>
 						</ant4eclipse:forEachOutputDirectory>
+
+						<ant4eclipse:forEachSourceDirectory>
+							<echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '${executePluginProject.project.directory}/${a4e.self.directory}'</echo>
+							<copy todir="${executePluginProject.project.directory}/${a4e.self.directory}">
+								<fileset dir="${executePluginLibrary.source.directory}">
+									<exclude name="**/*.java" />
+								</fileset>
+							</copy>
+						</ant4eclipse:forEachSourceDirectory>
 
 					</ant4eclipse:executePluginLibrary>
 				</ant4eclipse:forEachPluginLibrary>
