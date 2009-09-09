@@ -421,11 +421,8 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
               }
             } else {
               if (!matchExcludePattern(token + File.separatorChar + fileName)) {
-                System.err.println("Path: " + file.getPath());
-                System.err.println("token: " + token);
                 String filePath = normalize(file.getPath());
                 String rootPath = normalize(filePath).substring(0, filePath.indexOf(normalize(token)));
-                System.err.println("RootPath: " + rootPath);
                 _resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
               }
             }
