@@ -2,9 +2,9 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
@@ -15,15 +15,17 @@ import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
  * <p>
+ * The {@link ExecuteLibraryTask} can be used to iterate over the content of a library defined in a plug-in project.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements JdtExecutorValues {
+public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
 
   /** the name of the SCOPE_SOURCE_DIRECTORY */
   private static final String SCOPE_NAME_SOURCE_DIRECTORY = "ForEachSourceDirectory";
@@ -34,23 +36,22 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
   /** the name of the SCOPE_LIBRARY */
   private static final String SCOPE_NAME_LIBRARY          = "ForLibrary";
 
-  /** - */
+  /** the source directory scope */
   public static final String  SCOPE_SOURCE_DIRECTORY      = "SCOPE_SOURCE_DIRECTORY";
 
-  /** - */
+  /** the output directory scope */
   public static final String  SCOPE_OUTPUT_DIRECTORY      = "SCOPE_OUTPUT_DIRECTORY";
 
-  /** - */
+  /** the library scope */
   public static final String  SCOPE_LIBRARY               = "SCOPE_LIBRARY";
 
-  /** - */
+  /** the name of the library */
   private String              _libraryName;
 
   /**
    * <p>
    * Creates a new instance of type {@link ExecuteLibraryTask}.
    * </p>
-   * 
    */
   public ExecuteLibraryTask() {
     super("executePluginLibrary");
@@ -58,9 +59,10 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
 
   /**
    * <p>
+   * Returns the library name.
    * </p>
    * 
-   * @return
+   * @return the library name.
    */
   public String getLibraryName() {
     return _libraryName;
@@ -68,12 +70,33 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
 
   /**
    * <p>
+   * Sets the library name.
    * </p>
    * 
    * @param libraryName
+   *          the library name.
    */
   public void setLibraryName(String libraryName) {
     _libraryName = libraryName;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void preconditions() throws BuildException {
+
+    // check require fields
+    requireWorkspaceAndProjectNameSet();
+    if (_libraryName == null || _libraryName.trim().equals("")) {
+      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "library");
+    }
+
+    // check if the specified library exists
+    if (!getPluginProjectRole().getBuildProperties().hasLibrary(_libraryName)) {
+      throw new Ant4EclipseException(PdeExceptionCode.LIBRARY_NAME_DOES_NOT_EXIST, getLibraryName(),
+          getEclipseProject().getSpecifiedName());
+    }
   }
 
   /**
@@ -92,11 +115,11 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doExecute() {
-
-    // check require fields
-    requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
     for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
@@ -115,27 +138,39 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
 
   /**
    * <p>
+   * Iterates over the source directories of a library.
    * </p>
    * 
    * @param macroDef
+   *          the {@link MacroDef}
    */
   private void executeLibrarySourceDirectoryScopedMacroDef(MacroDef macroDef) {
+
+    // Step 1: Get the library
     final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
 
+    // Step 2: Iterate over the source entries
     for (final String librarySourceDirectory : library.getSource()) {
 
+      // execute the macro instance
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
+          // get the standard platform values
           getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
 
-          values.getProperties().put(SOURCE_DIRECTORY,
+          // add common library properties
+          addCommonLibraryProperties(library, values);
+          
+          // add additional values
+          values.getProperties().put(PdeExecutorValues.SOURCE_DIRECTORY,
               convertToString(getEclipseProject().getChild(librarySourceDirectory)));
-
-          values.getReferences().put(SOURCE_DIRECTORY_PATH,
+          values.getProperties().put(PdeExecutorValues.SOURCE_DIRECTORY_NAME, librarySourceDirectory);
+          values.getReferences().put(PdeExecutorValues.SOURCE_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(librarySourceDirectory)));
 
+          // return the result
           return values;
         }
       });
@@ -144,28 +179,39 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
 
   /**
    * <p>
+   * Iterates over the output directories of a library.
    * </p>
    * 
    * @param macroDef
+   *          the {@link MacroDef}
    */
   private void executeLibraryTargetDirectoryScopedMacroDef(MacroDef macroDef) {
 
+    // Step 1: Get the library
     final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
 
+    // Step 2: Iterate over the output entries
     for (final String libraryOutputDirectory : library.getOutput()) {
 
+      // execute the macro instance
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
+          // get the standard platform values
           getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
 
-          values.getProperties().put(OUTPUT_DIRECTORY,
+          // add common library properties
+          addCommonLibraryProperties(library, values);
+          
+          // add additional values
+          values.getProperties().put(PdeExecutorValues.OUTPUT_DIRECTORY,
               convertToString(getEclipseProject().getChild(libraryOutputDirectory)));
-
-          values.getReferences().put(OUTPUT_DIRECTORY_PATH,
+          values.getProperties().put(PdeExecutorValues.OUTPUT_DIRECTORY_NAME, libraryOutputDirectory);
+          values.getReferences().put(PdeExecutorValues.OUTPUT_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(libraryOutputDirectory)));
 
+          // return the result
           return values;
         }
       });
@@ -174,20 +220,29 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
 
   /**
    * <p>
+   * Executes the macro one time.
    * </p>
    * 
    * @param macroDef
+   *          the {@link MacroDef}
    */
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
+
+    // Step 1: Get the library
+    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
     
+    // Step 2: Execute the macro instance
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
+        // get the standard platform values
         getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
 
-        values.getProperties().put(PdeExecutorValues.LIBRARY_NAME, _libraryName);
+        // add common library properties
+        addCommonLibraryProperties(library, values);
 
+        // return the result
         return values;
       }
     });
@@ -202,5 +257,23 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask implements Jd
    */
   protected final PluginProjectRole getPluginProjectRole() {
     return PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+  }
+
+  /**
+   * <p>
+   * </p>
+   *
+   * @param library
+   * @param values
+   */
+  private void addCommonLibraryProperties(final Library library, MacroExecutionValues values) {
+    
+    values.getProperties().put(PdeExecutorValues.LIBRARY_NAME, _libraryName);
+    
+    if (library.isSelf()) {
+      values.getProperties().put(PdeExecutorValues.LIBRARY_IS_SELF, "true");
+    } else {
+      values.getProperties().put(PdeExecutorValues.LIBRARY_IS_SELF, "false");
+    }
   }
 }

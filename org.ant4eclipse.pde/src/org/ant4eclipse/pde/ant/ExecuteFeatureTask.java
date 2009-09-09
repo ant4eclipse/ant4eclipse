@@ -13,6 +13,7 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.FileListHelper;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
 
@@ -498,6 +499,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     }
     // case 2: feature taken from the target platform
     else {
+      if (A4ELogging.isDebuggingEnabled()) {
+        A4ELogging.debug("Trying to get feature '%s_%s' from target platform.", _featureId, _featureVersion);
+      }
+
       FeatureDescription featureDescription = targetPlatform.getFeatureDescription(_featureId, _featureVersion);
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
       return targetPlatform.resolveFeature(featureDescription.getSource(), featureManifest);

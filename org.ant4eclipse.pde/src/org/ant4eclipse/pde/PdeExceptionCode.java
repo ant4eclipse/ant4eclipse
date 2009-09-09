@@ -23,7 +23,10 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class PdeExceptionCode extends ExceptionCode {
-  
+  /** - */
+  @NLSMessage("Library '%s' doesn't exist in project '%s'.")
+  public static PdeExceptionCode LIBRARY_NAME_DOES_NOT_EXIST;                         ;
+
   /** - */
   @NLSMessage("File '%s' doesn't contain a bundle manifest file and will be ignored.")
   public static PdeExceptionCode WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE;
@@ -47,7 +50,7 @@ public class PdeExceptionCode extends ExceptionCode {
   /** - */
   @NLSMessage("No target platform has been set. Please specify a target platform by using the <jdtclasspathcontainerargument>-subelement with 'target.platform' as key")
   public static PdeExceptionCode NO_TARGET_PLATFORM_SET;
-  
+
   static {
     NLS.initialize(PdeExceptionCode.class);
   }
