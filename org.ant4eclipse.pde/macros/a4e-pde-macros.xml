@@ -216,8 +216,7 @@
 				<ant4eclipse:forProject if="@{packageAsJar}">
 					<delete dir="@{destination}/${a4e.plugins.directory}/${executePluginProject.project.name}_${executePluginProject.bundle.resolved.version}"
 					        quiet="true"
-					        deleteonexit="true"
-					        verbose="true" />
+					        deleteonexit="true" />
 				</ant4eclipse:forProject>
 
 			</ant4eclipse:executePluginProject>
@@ -293,12 +292,15 @@
 				<!-- Step 4: Build feature itself -->
 				<ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
 				                            filter="(feature.isSource=true)">
+
+					<echo>Building feature project '${executeFeature.feature.file.name} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
+						
 					<!-- Step 4.1: Copy all files defined in the build.properties to the destination directory  -->
 					<copy todir="@{destination}/${a4e.features.directory}/${executeFeature.feature.id}_${executeFeature.feature.resolved.version}"
 					      overwrite="true">
 						<!-- file set defined by the projects build properties -->
 						<ant4eclipse:pdeProjectFileSet workspace="@{workspaceDirectory}"
-						                               projectname="@{projectName}"
+						                               projectname="${executeFeature.feature.file.name}"
 						                               includes="${executeFeature.build.properties.binary.includes}"
 						                               excludes="${executeFeature.build.properties.binary.excludes}" />
 					</copy>
