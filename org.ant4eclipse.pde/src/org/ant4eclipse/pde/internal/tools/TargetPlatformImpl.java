@@ -203,6 +203,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
     Assert.nonEmpty(id);
     Assert.notNull(version);
 
+    if (version.equals(Version.emptyVersion)) {
+      return getFeatureDescription(id);
+    }
+
     // 
     FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription(id, version);
 
@@ -217,7 +221,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
         return featureDescription;
       }
     }
-
+    // TODO
+    System.err.println(String.format("Could not resolve feature '%s' in version '%s'.", id, version));
     //
     return null;
   }
@@ -477,12 +482,11 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   static String getBundleInfo(final BundleDescription description) {
     Assert.notNull(description);
-    
+
     final BundleSource bundleSource = BundleSource.getBundleSource(description);
 
     final StringBuffer buffer = new StringBuffer();
-    buffer.append(description.getSymbolicName()).append("_").append(description.getVersion().toString())
-        .append("@");
+    buffer.append(description.getSymbolicName()).append("_").append(description.getVersion().toString()).append("@");
     if (bundleSource.isEclipseProject()) {
       buffer.append("<P>").append(bundleSource.getAsEclipseProject().getFolder());
     } else {
