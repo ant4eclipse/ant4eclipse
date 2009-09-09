@@ -430,7 +430,11 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       in.close();
       StringBuilder underscoreLine = new StringBuilder();
       for (int i = lineStart; i < sourceStart; i++) {
-        underscoreLine.append(' ');
+        if (strLine.charAt(i-lineStart) == '\t') {
+          underscoreLine.append('\t');
+        } else {
+          underscoreLine.append(' ');
+        }
       }
       for (int i = sourceStart; i <= sourceEnd; i++) {
         underscoreLine.append('^');
