@@ -3,6 +3,7 @@ package org.ant4eclipse.pde.test.builder;
 import java.io.File;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
+
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.testframework.FileHelper;
 
@@ -11,60 +12,70 @@ import org.ant4eclipse.testframework.FileHelper;
  */
 public class PdeProjectBuilder extends JdtProjectBuilder {
 
-	/** - */
-	private BundleManifest _manifest;
+  /** - */
+  private BundleManifest        _manifest;
 
-	/**
-	 * @param projectName
-	 */
-	public PdeProjectBuilder(String projectName) {
-		super(projectName);
+  /** - */
+  private PluginBuildProperties _pluginBuildProperties;
 
-		withDefaultBundleManifest();
-		withPdeNature();
-	}
+  /**
+   * @param projectName
+   */
+  public PdeProjectBuilder(String projectName) {
+    super(projectName);
 
-	public static PdeProjectBuilder getPreConfiguredPdeProjectBuilder(
-			String projectName) {
-		return (PdeProjectBuilder) new PdeProjectBuilder(projectName)
-				.withDefaultBundleManifest().withJreContainerClasspathEntry()
-				.withSrcClasspathEntry("src", false).withOutputClasspathEntry(
-						"bin");
-	}
+    withDefaultBundleManifest();
+    withPdeNature();
+  }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.ant4eclipse.jdt.test.builder.JdtProjectBuilder#createArtefacts(java
-	 * .io.File)
-	 */
-	@Override
-	protected void createArtefacts(File projectDir) {
-		super.createArtefacts(projectDir);
+  public static PdeProjectBuilder getPreConfiguredPdeProjectBuilder(String projectName) {
+    return (PdeProjectBuilder) new PdeProjectBuilder(projectName).withDefaultBundleManifest()
+        .withJreContainerClasspathEntry().withSrcClasspathEntry("src", false).withOutputClasspathEntry("bin");
+  }
 
-		createBundleManifestFile(projectDir);
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.ant4eclipse.jdt.test.builder.JdtProjectBuilder#createArtefacts(java .io.File)
+   */
+  @Override
+  protected void createArtefacts(File projectDir) {
+    super.createArtefacts(projectDir);
 
-	protected PdeProjectBuilder withPdeNature() {
-		withContainerClasspathEntry("org.eclipse.pde.core.requiredPlugins");
-		return (PdeProjectBuilder) withNature(PluginProjectRole.PLUGIN_NATURE);
-	}
+    createBundleManifestFile(projectDir);
+    createPluginBuildPropertiesFile(projectDir);
+  }
 
-	protected PdeProjectBuilder withDefaultBundleManifest() {
-		_manifest = new BundleManifest(getProjectName());
-		return this;
-	}
+  protected PdeProjectBuilder withPdeNature() {
+    withContainerClasspathEntry("org.eclipse.pde.core.requiredPlugins");
+    return (PdeProjectBuilder) withNature(PluginProjectRole.PLUGIN_NATURE);
+  }
 
-	protected PdeProjectBuilder withBundleManifest(BundleManifest bundleManifest) {
-		_manifest = bundleManifest;
-		return this;
-	}
+  protected PdeProjectBuilder withDefaultBundleManifest() {
+    _manifest = new BundleManifest(getProjectName());
+    return this;
+  }
 
-	protected void createBundleManifestFile(File projectDir) {
-		FileHelper.createDirectory(new File(projectDir, "META-INF"));
-		File manifestFile = new File(new File(projectDir, "META-INF"),
-				"MANIFEST.MF");
-		FileHelper.createFile(manifestFile, _manifest.toString());
-	}
+  protected PdeProjectBuilder withBundleManifest(BundleManifest bundleManifest) {
+    _manifest = bundleManifest;
+    return this;
+  }
+
+  protected void createBundleManifestFile(File projectDir) {
+    FileHelper.createDirectory(new File(projectDir, "META-INF"));
+    File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
+    FileHelper.createFile(manifestFile, _manifest.toString());
+  }
+
+  public PluginBuildProperties withBuildProperties() {
+    _pluginBuildProperties = new PluginBuildProperties();
+    return _pluginBuildProperties;
+  }
+
+  protected void createPluginBuildPropertiesFile(File projectDir) {
+    if (_pluginBuildProperties != null) {
+      File buildPropertiesFile = new File(projectDir, "build.properties");
+      FileHelper.createFile(buildPropertiesFile, _pluginBuildProperties.toString());
+    }
+  }
 }
