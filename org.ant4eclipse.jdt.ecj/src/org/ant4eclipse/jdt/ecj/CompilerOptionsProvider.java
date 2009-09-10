@@ -5,15 +5,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.apache.tools.ant.taskdefs.Javac;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.util.Util;
 
 /**
- *
+ * <p>
+ * The {@link CompilerOptionsProvider} is a utility class that computes compiler options based on ant's javac task as
+ * well as an (optional) project specific and an (optional) global compiler options file.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class CompilerOptionsProvider {
+
   /**
    * <p>
    * Creates the compiler options for the JDT compiler.
@@ -31,63 +38,117 @@ public class CompilerOptionsProvider {
    * </ul>
    * </p>
    * 
-   * @return
+   * @param javac
+   *          the javac task
+   * @param projectCompilerOptionsFile
+   *          the project specific compiler options file.
+   * @param globalCompilerOptionsFile
+   *          the global compiler options file.
+   * 
+   * @return the map with the merged compiler options.
    */
   @SuppressWarnings("unchecked")
-  public static Map getCompilerOptions(Javac javac, String projectCompilerOptionsFile, String defaultCompilerOptionsFile) {
+  public static Map getCompilerOptions(Javac javac, String projectCompilerOptionsFile, String globalCompilerOptionsFile) {
     Assert.notNull(javac);
 
+    // get the project options
     Map<String, String> projectOptions = getFileCompilerOptions(projectCompilerOptionsFile);
-    Map<String, String> defaultOptions = getFileCompilerOptions(defaultCompilerOptionsFile);
+
+    // get the default options
+    Map<String, String> defaultOptions = getFileCompilerOptions(globalCompilerOptionsFile);
+
+    // get the javac options
     Map<String, String> javacOptions = getJavacCompilerOptions(javac);
 
-    Map<String, String> mergedMap = mergeCompilerOptions(projectOptions, javacOptions, defaultOptions);
+    // merge the map
+    Map<String, String> mergedMap = mergeCompilerOptions(projectOptions, defaultOptions, javacOptions);
 
-    // Step 1: create result
+    // create result
     CompilerOptions compilerOptions = new CompilerOptions(mergedMap);
 
-    // 
+    // verbose option
+    compilerOptions.verbose = javac.getVerbose();
 
-    // // create default
-    // if (compilerOptions == null) {
-    //
-    // // create compiler options
-    // compilerOptions = new CompilerOptions();
-    //
-    // // debug
-    // if (javac.getDebug()) {
-    // compilerOptions.produceDebugAttributes = ClassFileConstants.ATTR_SOURCE | ClassFileConstants.ATTR_LINES
-    // | ClassFileConstants.ATTR_VARS;
-    // } else {
-    // compilerOptions.produceDebugAttributes = 0x0;
-    // }
-    // // TODO
-    // // see: http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.isv/guide/jdt_api_options.htm#compatibility
-    //
-    // // get the source option
-    // compilerOptions.sourceLevel = CompilerOptions.versionToJdkLevel(javac.getSource());
-    //
-    // // get the target option
-    // long targetLevel = CompilerOptions.versionToJdkLevel(javac.getTarget());
-    // compilerOptions.complianceLevel = targetLevel;
-    // compilerOptions.targetJDK = targetLevel;
-    // }
-
-    // TODO:
-    // A4ELogging.info("Using the following compile options:\n %s", compilerOptions.toString());
+    // debug the compiler options
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("Using the following compile options:\n %s", compilerOptions.toString());
+    }
 
     // return the compiler options
     return compilerOptions.getMap();
   }
 
   /**
+   * <p>
+   * Returns the compiler options specified in the javac task.
+   * </p>
+   * 
    * @param javac
-   * @return
+   *          the javac task
+   * @return the compiler options specified in the javac task.
    */
   private static Map<String, String> getJavacCompilerOptions(Javac javac) {
 
     Map<String, String> result = new HashMap<String, String>();
 
+    /*
+     * set the source option
+     */
+    if (Utilities.hasText(javac.getSource())) {
+
+      // get the source
+      String source = javac.getSource();
+
+      // set the source
+      if (source.equals("1.3")) {
+        result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_3);
+      } else if (source.equals("1.4")) {
+        result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_4);
+      } else if (source.equals("1.5") || source.equals("5") || source.equals("5.0")) {
+        result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_5);
+      } else if (source.equals("1.6") || source.equals("6") || source.equals("6.0")) {
+        result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_6);
+      } else if (source.equals("1.7") || source.equals("7") || source.equals("7.0")) {
+        result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_7);
+      }
+
+      // TODO
+      throw new RuntimeException("Unknown source definition");
+    }
+
+    /*
+     * set the target option
+     */
+    if (Utilities.hasText(javac.getTarget())) {
+
+      // get the target
+      String target = javac.getSource();
+
+      // set the target
+      if (target.equals("1.3")) {
+        result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_3);
+        result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_3);
+      } else if (target.equals("1.4")) {
+        result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_4);
+        result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_4);
+      } else if (target.equals("1.5") || target.equals("5") || target.equals("5.0")) {
+        result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_5);
+        result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_5);
+      } else if (target.equals("1.6") || target.equals("6") || target.equals("6.0")) {
+        result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_6);
+        result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_6);
+      } else if (target.equals("1.7") || target.equals("7") || target.equals("7.0")) {
+        result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_7);
+        result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_7);
+      }
+
+      // TODO
+      throw new RuntimeException("Unknown target definition");
+    }
+
+    /*
+     * set the debug options
+     */
     if (javac.getDebug()) {
 
       String debugLevel = javac.getDebugLevel();
@@ -150,62 +211,46 @@ public class CompilerOptionsProvider {
       result.put(CompilerOptions.OPTION_ReportDeprecationWhenOverridingDeprecatedMethod, CompilerOptions.DISABLED);
     }
 
-    // /*
-    // * verbose option
-    // */
-    // if (this.verbose) {
-    // cmd.createArgument().setValue("-verbose");
-    // }
+    /*
+     * set the encoding option
+     */
+    if (javac.getEncoding() != null) {
+      result.put(CompilerOptions.OPTION_Encoding, javac.getEncoding());
+    }
 
-    // /*
-    // * failnoerror option
-    // */
-    // if (!this.attributes.getFailonerror()) {
-    // cmd.createArgument().setValue("-proceedOnError");
-    // }
-
-    // /*
-    // * target option.
-    // */
-    // if (this.target != null) {
-    // result.put(CompilerOptions.OPTION_TargetPlatform, this.target);
-    // }
-
-    // /*
-    // * source option
-    // */
-    // String source = this.attributes.getSource();
-    // if (source != null) {
-    // result.put(CompilerOptions.OPTION_Source, source);
-    // }
-
-    // /*
-    // * encoding option
-    // */
-    // if (javac.getEncoding() != null) {
-    // cmd.createArgument().setValue("-encoding");
-    // cmd.createArgument().setValue(this.encoding);
-    // }
-
+    // return result
     return result;
   }
 
   /**
+   * <p>
+   * Returns the compiler options for the given compiler options file.
+   * </p>
+   * 
    * @param fileName
-   * @return
+   *          the compiler options file.
+   * @return the map with the compiler options.
    */
   private static Map<String, String> getFileCompilerOptions(String fileName) {
-    if (fileName != null) {
-      File compilerOptionsFile = new File(fileName);
-      if (compilerOptionsFile.exists() && compilerOptionsFile.isFile()) {
-        Map<String, String> compilerOptionsMap = Utilities.readProperties(compilerOptionsFile);
-        return compilerOptionsMap;
+    if (Utilities.hasText(fileName)) {
+      try {
+        File compilerOptionsFile = new File(fileName);
+        if (compilerOptionsFile.exists() && compilerOptionsFile.isFile()) {
+          Map<String, String> compilerOptionsMap = Utilities.readProperties(compilerOptionsFile);
+          return compilerOptionsMap;
+        }
+      } catch (Exception e) {
+        A4ELogging.warn("Could not read compiler options file '%s'.\nReason: '%s'", fileName, e.getMessage());
+        return null;
       }
     }
     return null;
   }
 
   /**
+   * <p>
+   * </p>
+   * 
    * @param options_1
    * @param options_2
    * @param options_3
@@ -225,37 +270,5 @@ public class CompilerOptionsProvider {
       result.putAll(options_1);
     }
     return result;
-  }
-
-  /**
-   * <p>
-   * </p>
-   * 
-   * @param args
-   */
-  public static void main(String[] args) {
-
-    //
-    Map<String, String> map1 = new HashMap<String, String>();
-    map1.put("a", "1");
-    map1.put("b", "1");
-    map1.put("c", "1");
-
-    //
-    Map<String, String> map2 = new HashMap<String, String>();
-    map2.put("b", "2");
-    map2.put("d", "2");
-
-    //
-    Map<String, String> map3 = new HashMap<String, String>();
-    map3.put("b", "3");
-    map3.put("c", "3");
-    map3.put("d", "3");
-    map3.put("e", "3");
-
-    // 
-    Map<String, String> map = mergeCompilerOptions(map1, map2, map3);
-
-    System.err.println(map);
   }
 }

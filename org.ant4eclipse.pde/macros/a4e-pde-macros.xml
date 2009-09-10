@@ -27,6 +27,7 @@
 		<attribute name="targetPlatformId" />
 		<attribute name="destination" />
 		<attribute name="packageAsJar" default="true" />
+		<attribute name="defaultCompilerOptionsFile" default="" />
 		<sequential>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,6 +87,10 @@
 
 								<!-- we also have to pass path of the compiler options file to support project specific compiler options -->
 								<compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
+								             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+
+								<!-- pass the path of the default compiler options file  -->
+								<compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}"
 								             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 							</javac>
 						</ant4eclipse:forProject>
@@ -239,6 +244,7 @@
 		<attribute name="skipBuildFeature" default="false" />
 		<attribute name="packageAsJar" default="true" />
 		<attribute name="packagePluginsAsJar" default="true" />
+		<attribute name="defaultCompilerOptionsFile" default="" />
 		<sequential>
 
 			<!-- executes the defined feature -->
@@ -278,7 +284,8 @@
 					             projectName="${executeFeature.plugin.filename}"
 					             targetplatformid="@{targetPlatformId}"
 					             destination="@{destination}"
-					             packageAsJar="@{packagePluginsAsJar}" />
+					             packageAsJar="@{packagePluginsAsJar}"
+					             defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" />
 				</ant4eclipse:forEachPlugin>
 
 				<!-- Step 3.2: Copy plug-ins  -->
@@ -294,7 +301,7 @@
 				                            filter="(feature.isSource=true)">
 
 					<echo>Building feature project '${executeFeature.feature.file.name} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
-						
+
 					<!-- Step 4.1: Copy all files defined in the build.properties to the destination directory  -->
 					<copy todir="@{destination}/${a4e.features.directory}/${executeFeature.feature.id}_${executeFeature.feature.resolved.version}"
 					      overwrite="true">
