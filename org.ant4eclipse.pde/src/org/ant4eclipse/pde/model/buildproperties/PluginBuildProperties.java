@@ -152,17 +152,6 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    */
   public static class Library {
 
-    private static int hashCode(Object[] array) {
-      final int PRIME = 31;
-      if (array == null)
-        return 0;
-      int result = 1;
-      for (int index = 0; index < array.length; index++) {
-        result = PRIME * result + (array[index] == null ? 0 : array[index].hashCode());
-      }
-      return result;
-    }
-
     /**
      * The name of the library.
      */
@@ -217,10 +206,24 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     }
 
     /**
+     * <p>
+     * </p>
+     * 
+     * 
      * @return Returns the output.
      */
     public String[] getOutput() {
       return _output;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
+    public boolean hasOutput() {
+      return _output != null && _output.length > 0;
     }
 
     /**
@@ -230,6 +233,13 @@ public class PluginBuildProperties extends AbstractBuildProperties {
       return _source;
     }
 
+    /**
+     * @return
+     */
+    public boolean hasSource() {
+      return _source != null && _source.length > 0;
+    }
+    
     /**
      * @return Returns the exclude.
      */
@@ -299,6 +309,17 @@ public class PluginBuildProperties extends AbstractBuildProperties {
       if (!Arrays.equals(_source, other._source))
         return false;
       return true;
+    }
+
+    private static int hashCode(Object[] array) {
+      final int PRIME = 31;
+      if (array == null)
+        return 0;
+      int result = 1;
+      for (int index = 0; index < array.length; index++) {
+        result = PRIME * result + (array[index] == null ? 0 : array[index].hashCode());
+      }
+      return result;
     }
 
     /**
