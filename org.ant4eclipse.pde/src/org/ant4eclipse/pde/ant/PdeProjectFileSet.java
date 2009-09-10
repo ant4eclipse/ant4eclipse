@@ -466,13 +466,9 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    */
   private boolean matchExcludePattern(String string) {
     for (String pattern : _excludedPattern) {
-       System.err.println("string: " + string);
-       System.err.println("pattern: " + pattern);
       if (SelectorUtils.matchPath(normalize(pattern), normalize(string), _caseSensitive)) {
-         System.err.println("result: true");
         return true;
       }
-      System.err.println("result: false");
     }
 
     return false;
