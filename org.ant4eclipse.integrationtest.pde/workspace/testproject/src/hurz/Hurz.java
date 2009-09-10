@@ -1,5 +1,5 @@
 package hurz;
 
-public class Hurz {
+public class Hurz<T> {
 
 }
