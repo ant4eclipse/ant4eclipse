@@ -139,6 +139,9 @@
 							<include name="**/AllTests.java" />
 						</fileset>
 					</batchtest>
+					<!-- Set environment variables used in test -->
+					<env key="ECLIPSE_JAVA_GALILEO_WIN32_HOME" value="${test.pde.eclipse-java-galileo-win32.home}"/>
+					<env key="ECLIPSE_JAVA_GALILEO_LINUX_GTK_HOME" value="${test.pde.eclipse-java-galileo-linux-gtk.home}"/>
 				</junit>
 			</ant4eclipse:forEachSourceDirectory>
 		</ant4eclipse:executeJdtProject>
