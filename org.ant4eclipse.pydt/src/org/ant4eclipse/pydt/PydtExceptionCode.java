@@ -28,6 +28,9 @@ public class PydtExceptionCode extends ExceptionCode {
   @NLSMessage("The python runtime with the id '%s' has not been registered (see 'pythonContainer').")
   public static PydtExceptionCode UNKNOWN_PYTHON_RUNTIME;
 
+  @NLSMessage("Failed to create relative path from '%s' to '%s'.")
+  public static PydtExceptionCode NO_RELATIVE_PATH;
+
   static {
     NLS.initialize(PydtExceptionCode.class);
   }

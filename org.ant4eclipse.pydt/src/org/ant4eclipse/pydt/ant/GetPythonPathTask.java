@@ -41,7 +41,7 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
    */
   protected File[] resolvePath() {
     final PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, _ignoreruntime);
-    final PathExpander expander = new PathExpander(getWorkspace());
+    final PathExpander expander = new PathExpander(getEclipseProject());
     final ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName());
     final File[] result = expander.expand(resolved, getPathStyle());
     return result;
