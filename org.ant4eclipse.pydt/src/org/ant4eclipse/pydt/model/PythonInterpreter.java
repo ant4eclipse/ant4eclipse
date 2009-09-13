@@ -22,7 +22,7 @@ import java.io.File;
  */
 public class PythonInterpreter implements Comparable<PythonInterpreter> {
 
-  private static final String[] EXESUFFICES = new String[] { "", ".exe", ".bat" };
+  private static final String[] EXESUFFICES = new String[] { "", ".exe", ".bat", ".sh" };
 
   private String                _name;
 
