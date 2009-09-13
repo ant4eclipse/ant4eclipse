@@ -10,16 +10,6 @@
     <echo>${output}</echo>
   </target>
 
-  <target name="get-output-path-multiple-folders">
-    <getPythonOutputPath
-      projectName="${projectname}"
-      workspace="${workspacedir}"
-      property="output"
-      allowmultiplefolders="true"
-    />
-    <echo>${output}</echo>
-  </target>
-
   <target name="get-output-path-relative">
     <getPythonOutputPath
       projectName="${projectname}"
@@ -30,33 +20,11 @@
     <echo>${output}</echo>
   </target>
 
-  <target name="get-output-path-multiple-folders-relative">
-    <getPythonOutputPath
-      projectName="${projectname}"
-      workspace="${workspacedir}"
-      property="output"
-      allowmultiplefolders="true"
-      relative="true"
-    />
-    <echo>${output}</echo>
-  </target>
-
   <target name="get-output-path-dirseparator">
     <getPythonOutputPath
       projectName="${projectname}"
       workspace="${workspacedir}"
       property="output"
-      dirseparator="@"
-    />
-    <echo>${output}</echo>
-  </target>
-
-  <target name="get-output-path-multiple-folders-dirseparator">
-    <getPythonOutputPath
-      projectName="${projectname}"
-      workspace="${workspacedir}"
-      property="output"
-      allowmultiplefolders="true"
       dirseparator="@"
     />
     <echo>${output}</echo>
