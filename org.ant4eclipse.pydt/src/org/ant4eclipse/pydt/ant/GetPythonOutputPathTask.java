@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
@@ -21,52 +20,21 @@ import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedOutputEntry;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
-import org.apache.tools.ant.BuildException;
 
 import java.io.File;
 
 /**
- * Basic task used to access the source path of a python project.
+ * Basic task used to access the output path of a python project.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class GetPythonOutputPathTask extends AbstractPydtGetProjectPathTask {
 
-  private static final String MSG_MULTIPLEFOLDERS   = "The Project '%s' contains multiple source folders ! If you want to allow this,"
-                                                        + " you have to set allowMultipleFolders='true'!";
+  private static final String MSG_PYDLTK = "The python DLTK framework doesn't provide information for output folders."
+                                             + "Therefore the source folders are used for the output pathes as well.";
 
-  private static final String MSG_PYDLTK            = "The python DLTK framework doesn't provide information for output folders."
-                                                        + "Therefore the source folders are used for the output pathes as well.";
-
-  private static final String MSG_PYDEV             = "The PyDev framework uses source folders as output folders. They can't be "
-                                                        + "set explicitly.";
-
-  private boolean             _allowMultipleFolders = false;
-
-  /**
-   * Specifies if multiple folders are supported or not.
-   * 
-   * @param allowMultipleFolders
-   *          <code>true</code> <=> Multiple folders are supported, otherwise they're not.
-   */
-  public void setAllowMultipleFolders(final boolean allowMultipleFolders) {
-    _allowMultipleFolders = allowMultipleFolders;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  protected void preconditions() throws BuildException {
-    super.preconditions();
-    if (!_allowMultipleFolders) {
-      final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-      final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
-      if (entries.length > 1) {
-        throw new ExtendedBuildException(MSG_MULTIPLEFOLDERS, getEclipseProject().getSpecifiedName());
-      }
-    }
-  }
+  private static final String MSG_PYDEV  = "The PyDev framework uses source folders as output folders. They can't be "
+                                             + "set explicitly.";
 
   /**
    * {@inheritDoc}
