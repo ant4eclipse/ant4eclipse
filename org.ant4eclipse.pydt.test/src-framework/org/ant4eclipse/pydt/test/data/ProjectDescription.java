@@ -30,6 +30,10 @@ public class ProjectDescription {
 
   private List<String> _internallibs;
 
+  private List<String> _internallibsprimary;
+
+  private List<String> _internallibssecondary;
+
   private List<String> _sourcefolders;
 
   /**
@@ -40,6 +44,8 @@ public class ProjectDescription {
     _secondaryprojectname = null;
     _internallibs = new ArrayList<String>();
     _sourcefolders = new ArrayList<String>();
+    _internallibsprimary = new ArrayList<String>();
+    _internallibssecondary = new ArrayList<String>();
   }
 
   /**
@@ -86,7 +92,7 @@ public class ProjectDescription {
    * @return A list of all internal libararies. Not <code>null</code>.
    */
   public String[] getInternalLibs() {
-    return getInternalLibs(null);
+    return getInternalLibs(null, null);
   }
 
   /**
@@ -94,16 +100,27 @@ public class ProjectDescription {
    * 
    * @param dirseparator
    *          The dirseparator to be used. If <code>null</code> the default {@link File#separator} will be used.
+   * @param primary
+   *          <code>null</code> <=> All internal libraries. <code>Boolean.TRUE</code> <=> Only internal library for the
+   *          primary project. <code>Boolean.FALSE</code> <=> Only internal library for the secondary project.
    * 
    * @return A list of all internal libararies. Not <code>null</code>.
    */
-  public String[] getInternalLibs(String dirseparator) {
+  public String[] getInternalLibs(String dirseparator, Boolean primary) {
     if (dirseparator == null) {
       dirseparator = File.separator;
     }
-    final String[] result = new String[_internallibs.size()];
+    List<String> libs = _internallibs;
+    if (primary != null) {
+      if (primary.booleanValue()) {
+        libs = _internallibsprimary;
+      } else {
+        libs = _internallibssecondary;
+      }
+    }
+    final String[] result = new String[libs.size()];
     for (int i = 0; i < result.length; i++) {
-      result[i] = Utilities.replace(Utilities.replace(_internallibs.get(i), "\\", "/"), "/", dirseparator);
+      result[i] = Utilities.replace(Utilities.replace(libs.get(i), "\\", "/"), "/", dirseparator);
     }
     return result;
   }
@@ -113,9 +130,16 @@ public class ProjectDescription {
    * 
    * @param internallib
    *          An internal library declared as a workspace relative path. Neither <code>null</code> nor empty.
+   * @param primary
+   *          <code>true</code> <=> Used for the primary project, secondary project otherwise.
    */
-  public void addInternalLibrary(final String internallib) {
+  public void addInternalLibrary(final String internallib, final boolean primary) {
     _internallibs.add(internallib);
+    if (primary) {
+      _internallibsprimary.add(internallib);
+    } else {
+      _internallibssecondary.add(internallib);
+    }
   }
 
   /**

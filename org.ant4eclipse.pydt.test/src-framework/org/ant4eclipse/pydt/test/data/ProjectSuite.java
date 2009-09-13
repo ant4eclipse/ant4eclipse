@@ -97,9 +97,9 @@ public class ProjectSuite implements ProjectSuiteApi {
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
       final String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip));
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg));
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar));
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar), true);
     }
     primarybuilder.populate(_workspacebuilder);
     return result;
@@ -125,15 +125,15 @@ public class ProjectSuite implements ProjectSuiteApi {
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
       final String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip));
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg));
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar));
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar), true);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0) {
       final String prefix = "/" + result.getSecondaryProjectname() + "/";
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplezip));
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_sampleegg));
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplejar));
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplezip), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_sampleegg), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplejar), false);
     }
     primarybuilder.useProject(result.getSecondaryProjectname(), true);
     primarybuilder.populate(_workspacebuilder);
@@ -161,15 +161,15 @@ public class ProjectSuite implements ProjectSuiteApi {
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
       final String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip));
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg));
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar));
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar), true);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0) {
       final String prefix = "/" + result.getSecondaryProjectname() + "/";
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplezip));
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_sampleegg));
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplejar));
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplezip), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_sampleegg), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplejar), false);
     }
     primarybuilder.useProject(result.getSecondaryProjectname(), true);
     secondarybuilder.useProject(result.getPrimaryProjectname(), true);

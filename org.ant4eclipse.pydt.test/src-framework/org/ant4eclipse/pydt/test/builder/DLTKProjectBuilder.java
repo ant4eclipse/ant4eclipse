@@ -106,9 +106,11 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     buffer.append(_sourceentry);
     buffer.append(Utilities.NL);
     for (int i = 0; i < _buildpathentries.size(); i++) {
-      buffer.append(INDENT);
-      buffer.append(_buildpathentries.get(i));
-      buffer.append(Utilities.NL);
+      if (_buildpathentries.get(i)._kind != Kind.prj) {
+        buffer.append(INDENT);
+        buffer.append(_buildpathentries.get(i));
+        buffer.append(Utilities.NL);
+      }
     }
     for (int i = 0; i < _internallibs.size(); i++) {
       buffer.append(INDENT);
@@ -118,6 +120,13 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     buffer.append(INDENT);
     buffer.append(_runtime);
     buffer.append(Utilities.NL);
+    for (int i = 0; i < _buildpathentries.size(); i++) {
+      if (_buildpathentries.get(i)._kind == Kind.prj) {
+        buffer.append(INDENT);
+        buffer.append(_buildpathentries.get(i));
+        buffer.append(Utilities.NL);
+      }
+    }
     buffer.append("</buildpath>");
     Utilities.writeFile(destination, buffer.toString(), ENC_UTF8);
   }
