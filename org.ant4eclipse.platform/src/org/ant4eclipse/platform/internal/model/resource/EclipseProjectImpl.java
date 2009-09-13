@@ -239,7 +239,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public File getChild(String path, final PathStyle relative) {
+  public File getChild(String path, final PathStyle pathstyle) {
     Assert.notNull(path);
 
     String name = path;
@@ -253,27 +253,27 @@ public final class EclipseProjectImpl implements EclipseProject {
     // handle linked resource
     if (isLinkedResource(name)) {
       final LinkedResourceImpl resource = getLinkedResource(name);
-      if ((relative != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null)) {
+      if ((pathstyle != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null)) {
         // TODO
         throw (new RuntimeException("cannot calculate relative location for linked resource '" + name + "' !"));
       }
-      File result = new File(relative != PathStyle.ABSOLUTE ? resource.getRelativeLocation() : resource.getLocation());
+      File result = new File(pathstyle != PathStyle.ABSOLUTE ? resource.getRelativeLocation() : resource.getLocation());
       if (rest != null) {
         result = new File(result, rest);
       }
-      if ((relative == PathStyle.ABSOLUTE) && (!result.isAbsolute())) {
+      if ((pathstyle == PathStyle.ABSOLUTE) && (!result.isAbsolute())) {
         result = new File(this._projectDirectory, result.getPath());
       }
       return (result);
     }
 
     //
-    if (relative == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
+    if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
       if (path.length() == 0) {
         path = ".";
       }
       return (new File(path));
-    } else if (relative == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
+    } else if (pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
       return (new File(this._projectDirectory.getName(), path));
     }
 
