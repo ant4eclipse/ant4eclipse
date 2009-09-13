@@ -25,7 +25,6 @@ import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedContainerEntry;
 import org.ant4eclipse.pydt.model.ResolvedLibraryEntry;
-import org.ant4eclipse.pydt.model.ResolvedOutputEntry;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 import org.ant4eclipse.pydt.model.ResolvedProjectEntry;
 import org.ant4eclipse.pydt.model.ResolvedRuntimeEntry;
@@ -270,8 +269,6 @@ public class PythonResolver {
       return newResolvedContainerEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Library) {
       return newResolvedLibraryEntry(entry);
-    } else if (entry.getKind() == ReferenceKind.Output) {
-      return newResolvedOutputEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Project) {
       return newResolvedProjectEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Runtime) {
@@ -299,16 +296,6 @@ public class PythonResolver {
    */
   private ResolvedLibraryEntry newResolvedLibraryEntry(final RawPathEntry entry) {
     return new ResolvedLibraryEntry(entry.getProjectname(), entry.getValue());
-  }
-
-  /**
-   * Creates a new record representing an output folder.
-   * 
-   * @param entry
-   *          The raw entry. Not <code>null</code>.
-   */
-  private ResolvedOutputEntry newResolvedOutputEntry(final RawPathEntry entry) {
-    return new ResolvedOutputEntry(entry.getProjectname(), entry.getValue());
   }
 
   /**

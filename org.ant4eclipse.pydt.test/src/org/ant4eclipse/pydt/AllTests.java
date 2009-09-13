@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pydt;
 
-import org.ant4eclipse.pydt.ant.OutputPathDLTKTest;
-import org.ant4eclipse.pydt.ant.OutputPathPyDevTest;
 import org.ant4eclipse.pydt.ant.PythonPathDLTKTest;
 import org.ant4eclipse.pydt.ant.PythonPathPyDevTest;
 import org.ant4eclipse.pydt.ant.SourcePathDLTKTest;
@@ -26,7 +24,7 @@ import org.junit.runners.Suite;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { SourcePathDLTKTest.class, SourcePathPyDevTest.class, OutputPathDLTKTest.class,
-    OutputPathPyDevTest.class, PythonPathDLTKTest.class, PythonPathPyDevTest.class })
+@Suite.SuiteClasses( { SourcePathDLTKTest.class, SourcePathPyDevTest.class, PythonPathDLTKTest.class,
+    PythonPathPyDevTest.class })
 public class AllTests {
 } /* ENDCLASS */

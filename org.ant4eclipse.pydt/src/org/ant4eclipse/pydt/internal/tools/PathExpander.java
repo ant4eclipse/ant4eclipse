@@ -22,7 +22,6 @@ import org.ant4eclipse.pydt.PydtExceptionCode;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedContainerEntry;
 import org.ant4eclipse.pydt.model.ResolvedLibraryEntry;
-import org.ant4eclipse.pydt.model.ResolvedOutputEntry;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 import org.ant4eclipse.pydt.model.ResolvedProjectEntry;
 import org.ant4eclipse.pydt.model.ResolvedRuntimeEntry;
@@ -124,8 +123,6 @@ public class PathExpander {
       expandContainer(receiver, (ResolvedContainerEntry) entry);
     } else if (entry.getKind() == ReferenceKind.Library) {
       expandLibrary(receiver, (ResolvedLibraryEntry) entry);
-    } else if (entry.getKind() == ReferenceKind.Output) {
-      expandOutput(receiver, (ResolvedOutputEntry) entry);
     } else if (entry.getKind() == ReferenceKind.Project) {
       expandProject(receiver, (ResolvedProjectEntry) entry);
     } else if (entry.getKind() == ReferenceKind.Runtime) {
@@ -168,19 +165,6 @@ public class PathExpander {
       final EclipseProject otherproject = _workspace.getProject(entry.getProjectname());
       receiver.add(otherproject.getFolder(EclipseProject.PathStyle.ABSOLUTE));
     }
-  }
-
-  /**
-   * @see #expand(ResolvedPathEntry[])
-   */
-  private void expandOutput(final List<File> receiver, final ResolvedOutputEntry entry) {
-    File outputfolder = null;
-    if (entry.getFolder() == null) {
-      outputfolder = getProject(entry).getFolder(EclipseProject.PathStyle.ABSOLUTE);
-    } else {
-      outputfolder = getProject(entry).getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
-    }
-    receiver.add(outputfolder);
   }
 
   /**

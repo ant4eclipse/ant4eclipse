@@ -15,7 +15,6 @@ import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.pydt.ant.GetPythonOutputPathTask;
 import org.ant4eclipse.pydt.ant.GetPythonPathTask;
 import org.ant4eclipse.pydt.ant.GetPythonSourcePathTask;
 import org.ant4eclipse.pydt.ant.PythonDocumentationTask;
@@ -156,7 +155,6 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   protected void extendDefinitions(final Project project) {
     project.addTaskDefinition("getPythonSourcePath", GetPythonSourcePathTask.class);
-    project.addTaskDefinition("getPythonOutputPath", GetPythonOutputPathTask.class);
     project.addTaskDefinition("getPythonPath", GetPythonPathTask.class);
     project.addTaskDefinition("pythonDoc", PythonDocumentationTask.class);
     project.addDataTypeDefinition("pythonContainer", PythonContainer.class);

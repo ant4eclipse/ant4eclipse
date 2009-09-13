@@ -91,9 +91,6 @@ public class PyDevParser {
         pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Library, internalpath, true, false));
       } else {
         pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Source, internalpath, true, false));
-        // the PyDev framework has no output path declaration. the output path is equal to the
-        // source path here.
-        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Output, internalpath, true, false));
       }
     }
 
