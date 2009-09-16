@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
@@ -89,6 +92,10 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
     TargetPlatformDefinition targetPlatformDefinition = _targetPlatformDefnitionMap
         .get(targetPlatformDefinitionIdentifier);
+
+    if (targetPlatformDefinition == null) {
+      throw new Ant4EclipseException(PdeExceptionCode.NOT_TARGET_PLATFORM_DEFINITION, targetPlatformDefinitionIdentifier);
+    }
 
     return getInstance(workspace, targetPlatformDefinition.getLocations(), targetPlatformConfiguration);
   }
@@ -297,7 +304,8 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      * Helper method.
      * </p>
      * 
-     * @param array the object array
+     * @param array
+     *          the object array
      * @return
      */
     private int hashCode(final Object[] array) {

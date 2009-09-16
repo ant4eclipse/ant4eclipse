@@ -8,8 +8,11 @@ import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
+import java.io.File;
 import java.util.List;
 
 public class ResolvedFeature {
@@ -24,27 +27,71 @@ public class ResolvedFeature {
 
   /**
    * <p>
-   * Creates a new instance of type ResolvedFeature.
+   * Creates a new instance of type {@link ResolvedFeature}.
    * </p>
    * 
+   * @param source
+   *          the source of the fragment (an eclipse project, a jar file or a directory)
    * @param featureManifest
+   *          the FeatureManifest
    */
   public ResolvedFeature(Object source, FeatureManifest featureManifest) {
     Assert.notNull(source);
+    Assert.assertTrue(source instanceof EclipseProject || source instanceof File, String.format(
+        "Feature source must be instance of %s or %s.", EclipseProject.class.getName(), File.class.getName()));
     Assert.notNull(featureManifest);
 
     _featureManifest = featureManifest;
     _source = source;
   }
-  
-  
 
+  /**
+   * <p>
+   * Returns the source of the feature.
+   * </p>
+   * 
+   * @return the source of the feature.
+   */
   public Object getSource() {
     return _source;
   }
 
   /**
    * <p>
+   * Returns <code>true</code> if the source of the feature is an {@link EclipseProject}.
+   * </p>
+   * 
+   * @return <code>true</code> if the source of the feature is an {@link EclipseProject}.
+   */
+  public boolean isEclipseProject() {
+    return _source instanceof EclipseProject;
+  }
+
+  /**
+   * <p>
+   * Returns <code>true</code> if the source of the feature is a directory.
+   * </p>
+   * 
+   * @return <code>true</code> if the source of the feature is a directory.
+   */
+  public boolean isDirectory() {
+    return _source instanceof File && ((File) _source).isDirectory();
+  }
+
+  /**
+   * <p>
+   * Returns <code>true</code> if the source of the feature is a file.
+   * </p>
+   * 
+   * @return <code>true</code> if the source of the feature is a file.
+   */
+  public boolean isFile() {
+    return _source instanceof File && ((File) _source).isFile();
+  }
+
+  /**
+   * <p>
+   * Returns the {@link FeatureManifest}.
    * </p>
    * 
    * @return the featureManifest
@@ -55,6 +102,7 @@ public class ResolvedFeature {
 
   /**
    * <p>
+   * Returns the list with the plug-in / bundle description pairs.
    * </p>
    * 
    * @return the pluginToBundleDescptionList
@@ -76,6 +124,7 @@ public class ResolvedFeature {
 
   /**
    * <p>
+   * Returns the list with
    * </p>
    * 
    * @return the includesToFeatureDescriptionList

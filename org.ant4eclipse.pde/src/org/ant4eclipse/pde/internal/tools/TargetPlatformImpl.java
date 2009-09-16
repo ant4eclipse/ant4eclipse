@@ -116,15 +116,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
-  public State getState() {
-    return this._state;
+  public TargetPlatformConfiguration getTargetPlatformConfiguration() {
+    return this._configuration;
   }
 
   /**
    * {@inheritDoc}
    */
-  public TargetPlatformConfiguration getTargetPlatformConfiguration() {
-    return this._configuration;
+  public BundleDescription getResolvedBundle(String symbolicName, Version version) {
+    return _state.getBundle(symbolicName, version);
   }
 
   /**
@@ -201,7 +201,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   public FeatureDescription getFeatureDescription(String id, Version version) {
     Assert.nonEmpty(id);
-    Assert.notNull(version);
+
+    if (version == null) {
+      return getFeatureDescription(id);
+    }
 
     if (version.equals(Version.emptyVersion)) {
       return getFeatureDescription(id);
@@ -283,6 +286,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
+    Assert.notNull(source);
     Assert.notNull(manifest);
 
     ResolvedFeature resolvedFeature = new ResolvedFeature(source, manifest);

@@ -23,6 +23,27 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class PdeExceptionCode extends ExceptionCode {
+
+  /** - */
+  @NLSMessage("Invalid version '%s'.")
+  public static ExceptionCode    INVALID_VERSION;
+
+  /** - */
+  @NLSMessage("You have to specify attribute '%s' if  attribute '%s' is set.")
+  public static ExceptionCode    ANT_ATTRIBUTE_X_WITHOUT_ATTRIBUTE_Y = null;
+
+  /** - */
+  @NLSMessage("You have to specify either attribute '%s' or the nested '%s'. You can't specify both.")
+  public static ExceptionCode    ANT_ATTRIBUTE_X_OR_ELEMENT_Y;
+
+  /** - */
+  @NLSMessage("The specified bundle with the symbolic name '%s' and the version '%s' doesn't exist.")
+  public static ExceptionCode    SPECIFIED_BUNDLE_NOT_FOUND;
+
+  /** - */
+  @NLSMessage("Referenced target platform definition with id '%s' doesn't exist.")
+  public static ExceptionCode    NOT_TARGET_PLATFORM_DEFINITION;
+
   /** - */
   @NLSMessage("Library '%s' doesn't exist in project '%s'.")
   public static PdeExceptionCode LIBRARY_NAME_DOES_NOT_EXIST;                         ;

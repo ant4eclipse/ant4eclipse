@@ -13,13 +13,14 @@ package org.ant4eclipse.pde.tools;
 
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
-import org.eclipse.osgi.service.resolver.State;
+
+import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
 
 /**
  * <p>
- * A target platform contains different plug-in sets. It defines the target, against which plug-ins can be compiled and
- * tested.
+ * A {@link TargetPlatform} defines the platform against which bundles projects (and features projects) contained in a
+ * workspace can be built. The platform contains different plug-in sets.
  * </p>
  * 
  * @author Nils Hartmann
@@ -32,61 +33,83 @@ public interface TargetPlatform {
    * Returns the {@link TargetPlatformConfiguration} for this {@link TargetPlatform}.
    * </p>
    * 
-   * @return
+   * @return the {@link TargetPlatformConfiguration} for this {@link TargetPlatform}.
    */
   TargetPlatformConfiguration getTargetPlatformConfiguration();
 
   /**
    * <p>
-   * Returns the resolved state.
+   * Returns the bundle descriptor for the bundle with the given name and version. A null value is returned if no such
+   * bundle is found. If multiple bundles with the same resolution state are available, the bundle with the highest
+   * version number is returned if the <code>version<code> is null.
    * </p>
    * 
-   * @return
+   * @param symbolicName
+   *          symbolic name of the bundle to query
+   * @param version
+   *          version of the bundle to query. null matches any bundle
+   * @return the descriptor for the identified bundle or <code>null</code> if no such bundle is found.
    */
-  State getState();
+  BundleDescription getResolvedBundle(String symbolicName, Version version);
 
   /**
    * <p>
+   * Returns the feature description for the feature with the given id and version. A null value is returned if no such
+   * feature is found.
    * </p>
    * 
    * @param id
+   *          the id of the requested feature (must not be null)
    * @param version
-   * @return
+   *          the version of the requested feature (maybe null)
+   * @return the feature description for the feature with the given id and version or <code>null</code> value is
+   *         returned if no such feature is found.
    */
   FeatureDescription getFeatureDescription(String id, Version version);
 
   /**
    * <p>
+   * Returns <code>true</code> if this target platform contains a feature description with the given id and version.
    * </p>
    * 
    * @param id
+   *          the id of the requested feature (must not be null)
    * @param version
-   * @return
+   *          the version of the requested feature (maybe null)
+   * @return <code>true</code> if this target platform contains a feature description with the given id and version.
    */
   boolean hasFeatureDescription(String id, Version version);
 
   /**
    * <p>
+   * Returns the feature description for the feature with the given id. A null value is returned if no such feature is
+   * found.
    * </p>
    * 
    * @param id
-   * @return the {@link FeatureDescription} for a feature with the given id.
+   *          the id of the requested feature (must not be null)
+   * @return the feature description for the feature with the given id or <code>null</code> value is returned if no such
+   *         feature is found.
    */
   FeatureDescription getFeatureDescription(String id);
 
   /**
    * <p>
+   * Returns <code>true</code> if this target platform contains a feature description with the given id.
    * </p>
    * 
    * @param id
-   * @return <code>true</code> if a {@link FeatureDescription} for a feature with the given id exists.
+   *          the id of the requested feature (must not be null)
+   * @return <code>true</code> if this target platform contains a feature description with the given id.
    */
   boolean hasFeatureDescription(String id);
 
   /**
    * <p>
+   * Returns the {@link ResolvedFeature} 
    * </p>
-   *
+   * 
+   * @param source
    * @param manifest
    * @return
    */

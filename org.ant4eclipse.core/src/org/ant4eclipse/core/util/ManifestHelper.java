@@ -11,13 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.Assert;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.Manifest;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 /**
  * <p>
@@ -63,6 +65,34 @@ public class ManifestHelper {
    * <code>Bundle.getHeaders</code> method.
    */
   public static final String BUNDLE_SYMBOLICNAME = "Bundle-SymbolicName";
+
+  /**
+   * <p>
+   * Returns the 'Bundle-SymbolicName' entry for the given manifest. If not such entry exists, an Exception will be
+   * thrown.
+   * </p>
+   * 
+   * @param manifest
+   *          the manifest
+   */
+  public static String getBundleSymbolicName(final Manifest manifest) {
+    Assert.notNull(manifest);
+
+    // get the manifest header elements
+    ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
+        ManifestHelper.BUNDLE_SYMBOLICNAME);
+
+    // assert that entry exists
+    if (elements == null || elements.length == 0 || elements[0].getValues() == null
+        || elements[0].getValues().length == 0) {
+
+      throw new Ant4EclipseException(CoreExceptionCode.MANIFEST_HEADER_DOES_NOT_EXIST,
+          ManifestHelper.BUNDLE_SYMBOLICNAME);
+    }
+
+    // return the symbolic name
+    return elements[0].getValues()[0];
+  }
 
   /**
    * <p>

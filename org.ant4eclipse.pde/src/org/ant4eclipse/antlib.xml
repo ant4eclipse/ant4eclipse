@@ -7,4 +7,5 @@
 	<typedef name="pdeProjectFileSet" classname="org.ant4eclipse.pde.ant.PdeProjectFileSet" />
 	<typedef name="patchFeatureManifest" classname="org.ant4eclipse.pde.ant.PatchFeatureManifestTask" />
 	<typedef name="checkPluginProject" classname="org.ant4eclipse.pde.ant.CheckPluginProjectTask" />
+	<typedef name="getRequiredBundles" classname="org.ant4eclipse.pde.ant.GetRequiredBundlesTask" />
 </antlib>

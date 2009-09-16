@@ -11,15 +11,33 @@
  **********************************************************************/
 package org.ant4eclipse.core.exception;
 
+/**
+ * <p>
+ * The {@link Ant4EclipseException} allows you to set a a exception message with several arguments.
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class Ant4EclipseException extends RuntimeException {
 
   /** serialVersionUID */
   private static final long   serialVersionUID = -2322126644590371742L;
 
+  /** - */
   private final ExceptionCode _exceptionCode;
 
+  /** - */
   private final Object[]      _args;
 
+  /**
+   * <p>
+   * Creates a new instance of type Ant4EclipseException.
+   * </p>
+   * 
+   * @param cause
+   * @param exceptionCode
+   * @param args
+   */
   public Ant4EclipseException(final Throwable cause, final ExceptionCode exceptionCode, final Object... args) {
     super(cause);
 
@@ -39,33 +57,31 @@ public class Ant4EclipseException extends RuntimeException {
     this._args = args != null ? args : new Object[0];
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
   public ExceptionCode getExceptionCode() {
     return this._exceptionCode;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
   public Object[] getArgs() {
     return this._args;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String getMessage() {
     return String.format(this._exceptionCode.getMessage(), this._args);
   }
-
-  // @Override
-  // public String toString() {
-  // final StringBuffer buffer = new StringBuffer();
-  // buffer.append("[Ant4EclipseException:");
-  // buffer.append(" exceptionCode: ");
-  // buffer.append(this._exceptionCode);
-  // buffer.append(" args: ");
-  // buffer.append(" { ");
-  // for (int i0 = 0; (this._args != null) && (i0 < this._args.length); i0++) {
-  // buffer.append(" [" + i0 + "]: ");
-  // buffer.append(this._args[i0]);
-  // }
-  // buffer.append(" } ");
-  // buffer.append("]");
-  // return buffer.toString();
-  // }
 }
