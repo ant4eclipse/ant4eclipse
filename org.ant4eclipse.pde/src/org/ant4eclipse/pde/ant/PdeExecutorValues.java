@@ -4,6 +4,7 @@ import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 
 /**
  * <p>
+ * Definition of the keys for PDE specific executor values.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -68,9 +69,9 @@ public interface PdeExecutorValues extends JdtExecutorValues {
 
   /** - */
   String FEATURE_FILE                      = "feature.file";
-  
+
   /** - */
-  String FEATURE_FILE_NAME                      = "feature.file.name";
+  String FEATURE_FILE_NAME                 = "feature.file.name";
 
   /** - */
   String PLUGIN_UNPACK                     = "plugin.unpack";
@@ -124,9 +125,14 @@ public interface PdeExecutorValues extends JdtExecutorValues {
   String BUNDLE_RESOLVED_VERSION           = "bundle.resolved.version";
 
   /** - */
+  String BUNDLE_SYMBOLIC_NAME              = "bundle.symbolicname";
+
+  /** - */
   String LIBRARY_IS_SELF                   = "library.isSelf";
 
   /** - */
   String LIBRARY_NAME                      = "library.name";
 
+  /** - */
+  String LIBRARY_SOURCE_NAME               = "library.source.name";
 }

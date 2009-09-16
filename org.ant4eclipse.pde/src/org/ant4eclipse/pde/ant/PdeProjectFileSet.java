@@ -1,13 +1,21 @@
 package org.ant4eclipse.pde.ant;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.pde.internal.ant.LibraryHelper;
 
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
@@ -16,12 +24,6 @@ import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
-
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * <p>
@@ -42,6 +44,8 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   /** the name of the (default) self directory */
   private static final String    DEFAULT_SELF_DIRECTORY = "@dot";
 
+  /** 'ant-provided' attributes **/
+
   /** the ant attribute 'includes' */
   private String                 _includes;
 
@@ -52,7 +56,12 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private boolean                _useDefaultExcludes    = true;
 
   /** the ant attribute 'caseSensitive' */
-  private boolean                _caseSensitive;
+  private boolean                _caseSensitive         = false;
+
+  /** the ant attribute 'isSourceFileSet' */
+  private boolean                _isSourceFileSet       = false;
+
+  /** 'derived' attributes **/
 
   /** the exclusion pattern as an array */
   private String[]               _excludedPattern;
@@ -82,6 +91,29 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
     // create the result list
     _resourceList = new LinkedList<Resource>();
+  }
+
+  /**
+   * <p>
+   * Returns if this {@link PdeProjectFileSet} is a source file set.
+   * </p>
+   * 
+   * @return if this {@link PdeProjectFileSet} is a source file set.
+   */
+  public boolean isSourceFileSet() {
+    return _isSourceFileSet;
+  }
+
+  /**
+   * <p>
+   * Sets if this {@link PdeProjectFileSet} is a source file set or not.
+   * </p>
+   * 
+   * @param isSourceFileSet
+   *          if this {@link PdeProjectFileSet} is a source file set or not.
+   */
+  public void setSourceFileSet(boolean isSourceFileSet) {
+    _isSourceFileSet = isSourceFileSet;
   }
 
   /**
@@ -360,6 +392,98 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     }
 
     // split the exclusion pattern
+    splitExclusionPattern();
+
+    // clear the resource list
+    _resourceList.clear();
+
+    // iterate over the included pattern set
+    StringTokenizer stringTokenizer = new StringTokenizer(_includes, SEPARATOR);
+
+    while (stringTokenizer.hasMoreTokens()) {
+      String token = stringTokenizer.nextToken().trim();
+      processEntry(token);
+    }
+
+    // debug the resolved entries
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("Resolved pde project file set for project '%s'. Entries are:", getEclipseProject()
+          .getSpecifiedName());
+      for (Resource resource : _resourceList) {
+        A4ELogging.debug("- '%s'", resource);
+      }
+    }
+
+    // set _fileListComputed
+    _fileListComputed = true;
+  }
+
+  /**
+   * <p>
+   * 
+   * </p>
+   * 
+   * @param token
+   */
+  private void processEntry(String token) {
+
+    // 'patch' the dot
+    if (token.equals(SELF)) {
+      token = DEFAULT_SELF_DIRECTORY;
+    }
+    // patch the included library if '_isSourceFileSet'
+    else if (_isSourceFileSet) {
+      token = LibraryHelper.getSourceNameForLibrary(token);
+    }
+
+    // 'process' the token
+    if (getEclipseProject().hasChild(token)) {
+
+      // get the project child with the given name
+      File file = getEclipseProject().getChild(token);
+
+      if (file.isFile()) {
+        // if the child is a file, just add it to the list
+        _resourceList.add(new FileResource(getEclipseProject().getFolder(), token));
+      } else {
+
+        // if the child is a directory, scan the directory
+        DirectoryScanner directoryScanner = new DirectoryScanner();
+        directoryScanner.setBasedir(file);
+        directoryScanner.setCaseSensitive(this._caseSensitive);
+        directoryScanner.setIncludes(null);
+        if (this._useDefaultExcludes) {
+          directoryScanner.addDefaultExcludes();
+        }
+
+        // do the job
+        directoryScanner.scan();
+
+        // get the included files and add it to the resource list
+        String[] files = directoryScanner.getIncludedFiles();
+
+        for (String fileName : files) {
+          if (token.equals(DEFAULT_SELF_DIRECTORY)) {
+            if (!matchExcludePattern(fileName)) {
+              _resourceList.add(new FileResource(file, fileName));
+            }
+          } else {
+            if (!matchExcludePattern(token + File.separatorChar + fileName)) {
+              String filePath = normalize(file.getPath());
+              String rootPath = normalize(filePath).substring(0, filePath.indexOf(normalize(token)));
+              _resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  private void splitExclusionPattern() {
     if (_excludes != null && !"".equals(_excludes.trim())) {
       StringTokenizer stringTokenizer = new StringTokenizer(_excludes, SEPARATOR);
       int count = stringTokenizer.countTokens();
@@ -372,105 +496,52 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     } else {
       _excludedPattern = new String[0];
     }
-
-    // clear the resource list
-    _resourceList.clear();
-
-    // iterate over the included pattern set
-    StringTokenizer stringTokenizer = new StringTokenizer(_includes, SEPARATOR);
-    while (stringTokenizer.hasMoreTokens()) {
-      String token = stringTokenizer.nextToken().trim();
-
-      // 'patch' the dot
-      if (token.equals(SELF)) {
-        token = DEFAULT_SELF_DIRECTORY;
-      }
-
-      // 'process' the token
-      if (getEclipseProject().hasChild(token)) {
-
-        // get the project child with the given name
-        File file = getEclipseProject().getChild(token);
-
-        if (file.isFile()) {
-          // if the child is a file, just add it to the list
-          _resourceList.add(new FileResource(getEclipseProject().getFolder(), token));
-        } else {
-          // if the child is a directory, scan the directory
-          DirectoryScanner directoryScanner = new DirectoryScanner();
-          // set base directory
-          directoryScanner.setBasedir(file);
-          // set case sensitive
-          directoryScanner.setCaseSensitive(this._caseSensitive);
-          // set includes
-          directoryScanner.setIncludes(null);
-          // set default excludes
-          if (this._useDefaultExcludes) {
-            directoryScanner.addDefaultExcludes();
-          }
-          // do the job
-          directoryScanner.scan();
-
-          // get the included files and add it to the resource list
-          String[] files = directoryScanner.getIncludedFiles();
-
-          for (String fileName : files) {
-            if (token.equals(DEFAULT_SELF_DIRECTORY)) {
-              if (!matchExcludePattern(fileName)) {
-                _resourceList.add(new FileResource(file, fileName));
-              }
-            } else {
-              if (!matchExcludePattern(token + File.separatorChar + fileName)) {
-                String filePath = normalize(file.getPath());
-                String rootPath = normalize(filePath).substring(0, filePath.indexOf(normalize(token)));
-                _resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // for (Resource resource : _resourceList) {
-    // System.err.println(resource);
-    // }
-
-    // set _fileListComputed
-    _fileListComputed = true;
   }
 
   /**
    * <p>
+   * Helper method. Normalizes the given path.
    * </p>
    * 
-   * @param string
-   * @return
+   * @param path
+   *          the path to normalize
+   * @return the normalized path
    */
-  private String normalize(String string) {
+  private String normalize(String path) {
 
-    String result = string.replace('/', File.separatorChar).replace('\\', File.separatorChar);
+    // replace '/' and '\' with File.separatorChar
+    String result = path.replace('/', File.separatorChar).replace('\\', File.separatorChar);
 
+    // remove trailing '/' and '\'
     if (result.endsWith("/") || result.endsWith("\\")) {
       result = result.substring(0, result.length() - 1);
     }
 
+    // return result
     return result;
   }
 
   /**
    * <p>
+   * Helper method. Checks if the given string (which is a path) matches one of the exclude patterns.
    * </p>
    * 
-   * @param string
-   * @return
+   * @param path
+   *          the path
+   * @return <code>true</code> if the given path matches an exclusion pattern.
    */
-  private boolean matchExcludePattern(String string) {
+  private boolean matchExcludePattern(String path) {
+
+    // iterate over all excluded pattern
     for (String pattern : _excludedPattern) {
-      if (SelectorUtils.matchPath(normalize(pattern), normalize(string), _caseSensitive)) {
+
+      // if the given path matches an exclusion pattern, return true
+      if (SelectorUtils.matchPath(normalize(pattern), normalize(path), _caseSensitive)) {
         return true;
       }
     }
 
+    // return false
     return false;
   }
 }
