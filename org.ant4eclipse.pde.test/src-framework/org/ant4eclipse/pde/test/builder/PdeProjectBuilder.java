@@ -1,11 +1,12 @@
 package org.ant4eclipse.pde.test.builder;
 
-import java.io.File;
-
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+
 import org.ant4eclipse.testframework.FileHelper;
+
+import java.io.File;
 
 /**
  *
@@ -56,15 +57,16 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
     return this;
   }
 
-  protected PdeProjectBuilder withBundleManifest(BundleManifest bundleManifest) {
-    _manifest = bundleManifest;
-    return this;
+  public BundleManifest withBundleManifest() {
+    _manifest = new BundleManifest(getProjectName());
+    return _manifest;
   }
 
   protected void createBundleManifestFile(File projectDir) {
     FileHelper.createDirectory(new File(projectDir, "META-INF"));
     File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
-    FileHelper.createFile(manifestFile, _manifest.toString());
+    FileHelper.createFile(manifestFile);
+    _manifest.write(manifestFile);
   }
 
   public PluginBuildProperties withBuildProperties() {

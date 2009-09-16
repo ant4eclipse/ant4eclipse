@@ -76,6 +76,20 @@ public class FileHelper {
     }
   }
 
+  public static final void createFile(File file) {
+    Assert.notNull(file);
+
+    try {
+      if (!file.exists()) {
+        if (!file.createNewFile()) {
+          throw new RuntimeException("Could not create file: " + file);
+        }
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
+
   /**
    * Create a new file in the specified directory using the given file name and content.
    * <p>

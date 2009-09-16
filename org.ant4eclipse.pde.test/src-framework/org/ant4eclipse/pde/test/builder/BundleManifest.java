@@ -1,18 +1,35 @@
 package org.ant4eclipse.pde.test.builder;
 
+import org.ant4eclipse.core.util.Utilities;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ */
 public class BundleManifest {
 
   private String _bundleName;
 
   private String _bundleSymbolicName;
 
-  private String _bundleVersion;
+  private String _bundleVersion                      = "0.0.0";
 
   private String _bundleRequiredExecutionEnvironment = "J2SE-1.5";
 
   private String _importPackage;
 
   private String _exportPackage;
+
+  private String _fragmentHost;
+
+  private String _classpath;
 
   /**
    * @param bundleSymbolicName
@@ -68,31 +85,69 @@ public class BundleManifest {
     return this;
   }
 
-  /*
-   * (non-Javadoc)
-   *
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append("Manifest-Version: 1.0\n");
-    buffer.append("Bundle-ManifestVersion: 2\n");
+  public BundleManifest withFragmentHost(String fragmentHost) {
+    _fragmentHost = fragmentHost;
+    return this;
+  }
 
-    buffer.append("Bundle-Name: ");
-    buffer.append(_bundleName);
-    buffer.append("\n");
+  public BundleManifest withClassPath(String classPath) {
+    _classpath = classPath;
+    return this;
+  }
 
-    buffer.append("Bundle-SymbolicName: ");
-    buffer.append(_bundleSymbolicName);
-    buffer.append("\n");
+  public void write(File file) {
+
+    Manifest manifest = getManifest();
 
     // Bundle-Version: 1.0.0
     // Bundle-Activator: test.Activator
     // Bundle-ActivationPolicy: lazy
     // Bundle-RequiredExecutionEnvironment: J2SE-1.5
-    // Import-Package: org.osgi.framework;version="1.3.0"
+    // 
 
-    return buffer.toString();
+    try {
+      manifest.write(new FileOutputStream(file));
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public Manifest getManifest() {
+    Manifest manifest = new Manifest();
+    Attributes attributes = manifest.getMainAttributes();
+
+    attributes.putValue("Manifest-Version", "1.0");
+    attributes.putValue("Bundle-ManifestVersion", "2");
+
+    attributes.putValue("Bundle-SymbolicName", _bundleSymbolicName);
+    attributes.putValue("Bundle-Version", _bundleVersion);
+
+    if (Utilities.hasText(_bundleName)) {
+      attributes.putValue("Bundle-Name", _bundleName);
+    }
+
+    if (Utilities.hasText(_importPackage)) {
+      attributes.putValue("Import-Package", _importPackage);
+    }
+    
+    if (Utilities.hasText(_exportPackage)) {
+      attributes.putValue("Export-Package", _exportPackage);
+    }
+
+    if (Utilities.hasText(_fragmentHost)) {
+      attributes.putValue("Fragment-Host", _fragmentHost);
+    }
+
+    if (Utilities.hasText(_classpath)) {
+      attributes.putValue("Bundle-ClassPath", _classpath);
+    }
+    return manifest;
   }
 }

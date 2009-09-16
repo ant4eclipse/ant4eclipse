@@ -15,7 +15,6 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 
 import org.ant4eclipse.testframework.FileHelper;
 import org.ant4eclipse.testframework.TestDirectory;
-import org.apache.tools.ant.BuildFileTest;
 
 import java.io.File;
 
@@ -24,7 +23,7 @@ import java.io.File;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest {
+public abstract class AbstractWorkspaceBasedBuildFileTest extends EnhancedBuildFileTest {
 
   private TestDirectory _testWorkspace;
 

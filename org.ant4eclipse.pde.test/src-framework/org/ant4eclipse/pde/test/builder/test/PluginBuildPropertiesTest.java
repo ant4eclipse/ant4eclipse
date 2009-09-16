@@ -1,4 +1,6 @@
-package org.ant4eclipse.pde.test.builder;
+package org.ant4eclipse.pde.test.builder.test;
+
+import org.ant4eclipse.pde.test.builder.PluginBuildProperties;
 
 import junit.framework.TestCase;
 

@@ -12,11 +12,15 @@
 package org.ant4eclipse.pde;
 
 import org.ant4eclipse.pde.ant.PdeProjectFileSetTest;
-import org.ant4eclipse.pde.test.builder.PdeProjectBuilderTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { PdeProjectFileSetTest.class, PdeProjectBuilderTest.class})
+@Suite.SuiteClasses( { PdeProjectFileSetTest.class /**
+ * , GetRequiredBundlesTaskTest.class,
+ * ExecutePluginProjectTaskTest.class, ExecutePluginLibraryTaskTest.class, FragmentTest.class, JarInJarTest.class
+ */
+})
 public class AllTests {
 } /* ENDCLASS */

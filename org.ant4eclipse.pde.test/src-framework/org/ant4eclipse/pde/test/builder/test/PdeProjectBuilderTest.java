@@ -1,4 +1,4 @@
-package org.ant4eclipse.pde.test.builder;
+package org.ant4eclipse.pde.test.builder.test;
 
 import java.io.File;
 import java.util.Arrays;
@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
+
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedTest;
 
 public class PdeProjectBuilderTest extends AbstractTestDirectoryBasedTest {

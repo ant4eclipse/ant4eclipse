@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<project name="testAntCall" basedir="." default="foo">
+
+	<typedef name="targetPlatform"
+	         classname="org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType" />
+	<typedef name="getRequiredBundles"
+	         classname="org.ant4eclipse.pde.ant.GetRequiredBundlesTask" />
+
+	<!-- ================================= 
+          target: name              
+         ================================= -->
+	<target name="testGetRequiredBundles_inline">
+
+		<targetPlatform id="eclipse-3.5">
+			<location dir="${targetplatform.1}" />
+			<location dir="${targetplatform.2}" />
+		</targetPlatform>
+
+		<getRequiredBundles workspace="${workspaceDir}"
+		                    targetPlatformId="eclipse-3.5"
+		                    includeOptionalDependencies="true"
+		                    bundleSymbolicName="simpleproject1"
+		                    bundleVersion="1.0.0"
+		                    includeSpecifiedBundles="true"
+		                    property="mypath">
+
+		</getRequiredBundles>
+
+		<echo>${mypath}</echo>
+
+	</target>
+
+	<target name="testGetRequiredBundles_subelement">
+
+		<targetPlatform id="eclipse-3.5">
+			<location dir="${targetplatform.1}" />
+		</targetPlatform>
+
+		<getRequiredBundles workspace="${workspaceDir}"
+		                    targetPlatformId="eclipse-3.5"
+		                    includeOptionalDependencies="true"
+		                    bundleSymbolicName="simpleproject1"
+		                    bundleVersion="1.0.0"
+		                    includeSpecifiedBundles="true">
+
+			<bundle symbolicName="test" version="1.0.0" />
+			<bundle symbolicName="test" version="1.0.0" />
+			<bundle symbolicName="tst" version="1.0.0" />
+
+		</getRequiredBundles>
+
+	</target>
+
+
+	<!-- default dummy target -->
+	<target name="foo" />
+
+</project>
