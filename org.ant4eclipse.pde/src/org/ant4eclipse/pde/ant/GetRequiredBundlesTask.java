@@ -50,17 +50,17 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
   /** */
   private GetPathComponent                _getPathComponent;
 
-  /** indicates if optional dependencies should be resolved */
-  private boolean                         _includeOptionalDependencies = true;
+  // /** indicates if optional dependencies should be resolved */
+  // private boolean _includeOptionalDependencies = true;
 
-  /** indicates if the specified bundles should be part of the result */
-  private boolean                         _includeSpecifiedBundles     = true;
+  // /** indicates if the specified bundles should be part of the result */
+  // private boolean _includeSpecifiedBundles = true;
 
   /** indicates if workspace bundles should be part of the result */
-  private boolean                         _includeWorkspaceBundles     = true;
+  private boolean                         _includeWorkspaceBundles = true;
 
   /** indicates if the bundle class path should be resolved */
-  private boolean                         _resolveBundleClasspath      = true;
+  private boolean                         _resolveBundleClasspath  = true;
 
   /** the bundle symbolic name */
   private String                          _bundleSymbolicName;
@@ -73,9 +73,6 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /** the target platform */
   private TargetPlatform                  _targetPlatform;
-
-  /** */
-  private Set<BundleDescription>          _excludedBundles;
 
   /** */
   private Set<BundleDescription>          _resolvedBundleDescriptions;
@@ -94,7 +91,6 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
     _bundleSpecifications = new LinkedList<BundleSpecification>();
     _resolvedBundleDescriptions = new HashSet<BundleDescription>();
-    _excludedBundles = new HashSet<BundleDescription>();
   }
 
   /**
@@ -128,6 +124,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
   /**
    * {@inheritDoc}
    */
+  @Deprecated
   public final void setWorkspace(File workspace) {
     _workspaceDelegate.setWorkspace(workspace);
   }
@@ -262,49 +259,29 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
    * <p>
    * </p>
    * 
-   * @return the includeOptionalDependencies
+   * @return the includeWorkspaceBundles
    */
-  public boolean isIncludeOptionalDependencies() {
-    return _includeOptionalDependencies;
+  public boolean isIncludeWorkspaceBundles() {
+    return _includeWorkspaceBundles;
   }
 
   /**
    * <p>
    * </p>
    * 
-   * @param includeOptionalDependencies
-   *          the includeOptionalDependencies to set
+   * @param includeWorkspaceBundles
+   *          the includeWorkspaceBundles to set
    */
-  public void setIncludeOptionalDependencies(boolean includeOptionalDependencies) {
-    _includeOptionalDependencies = includeOptionalDependencies;
+  public void setIncludeWorkspaceBundles(boolean includeWorkspaceBundles) {
+    _includeWorkspaceBundles = includeWorkspaceBundles;
   }
 
   /**
    * <p>
+   * Returns the bundle symbolic name
    * </p>
    * 
-   * @return the includeSpecifiedBundles
-   */
-  public boolean isIncludeSpecifiedBundles() {
-    return _includeSpecifiedBundles;
-  }
-
-  /**
-   * <p>
-   * </p>
-   * 
-   * @param includeSpecifiedBundles
-   *          the includeSpecifiedBundles to set
-   */
-  public void setIncludeSpecifiedBundles(boolean includeSpecifiedBundles) {
-    _includeSpecifiedBundles = includeSpecifiedBundles;
-  }
-
-  /**
-   * <p>
-   * </p>
-   * 
-   * @return the bundleSymbolicName
+   * @return the bundle symbolic name
    */
   public String getBundleSymbolicName() {
     return _bundleSymbolicName;
@@ -312,6 +289,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /**
    * <p>
+   * Sets the bundle symbolic name
    * </p>
    * 
    * @param bundleSymbolicName
@@ -323,6 +301,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /**
    * <p>
+   * Returns the bundle version
    * </p>
    * 
    * @return the bundleVersion
@@ -333,6 +312,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /**
    * <p>
+   * Sets the bundle version
    * </p>
    * 
    * @param bundleVersion
@@ -344,8 +324,11 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /**
    * <p>
+   * Adds the {@link BundleSpecification} to the list of root bundles.
    * </p>
    * 
+   * @param specification
+   *          the bundle specification
    */
   public void addConfiguredBundle(BundleSpecification specification) {
 
@@ -370,32 +353,35 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /**
    * <p>
+   * Creates a new {@link BundleSpecification} instance.
    * </p>
    * 
-   * @return
+   * @return a new {@link BundleSpecification} instance.
    */
   public BundleSpecification createBundle() {
     return new BundleSpecification();
   }
 
   /**
-   * 
+   * <p>
+   * Executes the task.
+   * </p>
    */
   @Override
   protected void doExecute() {
 
-    // clear the result list
+    // step 1: clear the result list
     _resolvedBundleDescriptions.clear();
 
-    // get the target platform
+    // step 2: get the target platform
     initTargetPlatform();
 
-    // add the bundle specification
+    // step 3: add the bundle specification attribute to the the list of (root) bundle specifications
     if (Utilities.hasText(_bundleSymbolicName)) {
       _bundleSpecifications.add(new BundleSpecification(_bundleSymbolicName, _bundleVersion));
     }
 
-    // resolve required bundles for all bundle specifications
+    // step 4: resolve required bundles for all bundle specifications
     for (BundleSpecification bundleSpecification : _bundleSpecifications) {
 
       // get the resolved bundle description from the target platform
@@ -410,36 +396,39 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
       // resolve the required ones
       resolveReferencedBundles(bundleDescription);
-
-      // add bundle if '_includeSpecifiedBundles'
-      // if (_includeSpecifiedBundles) {
-      // addBundleDescriptionToResult(bundleDescription);
-      // } else {
-      // _excludedBundles.add(bundleDescription);
-      // }
     }
 
-    // resolve path
+    // step 5: resolve the path
     List<File> result = new LinkedList<File>();
 
     for (BundleDescription bundleDescription : _resolvedBundleDescriptions) {
-      BundleLayoutResolver layoutResolver = BundleDependenciesResolver.getBundleLayoutResolver(bundleDescription);
-      if (_resolveBundleClasspath) {
-        File[] files = layoutResolver.resolveBundleClasspathEntries();
-        result.addAll(Arrays.asList(files));
-      } else {
-        result.add(layoutResolver.getLocation());
+
+      // don't add the bundle if bundle source is an eclipse project and _includeWorkspaceBundles == false
+      BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+      if (_includeWorkspaceBundles || !(bundleSource.isEclipseProject())) {
+
+        // get the layout resolver
+        BundleLayoutResolver layoutResolver = BundleDependenciesResolver.getBundleLayoutResolver(bundleDescription);
+
+        // add the files
+        if (_resolveBundleClasspath) {
+          File[] files = layoutResolver.resolveBundleClasspathEntries();
+          result.addAll(Arrays.asList(files));
+        } else {
+          result.add(layoutResolver.getLocation());
+        }
       }
     }
 
+    // set the resolved path
     setResolvedPath((File[]) result.toArray(new File[0]));
 
-    // set path
+    // set the path
     if (isPathIdSet()) {
       populatePathId();
     }
 
-    // set property
+    // set the property
     if (isPropertySet()) {
       populateProperty();
     }
@@ -447,69 +436,57 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
   /**
    * <p>
+   * Helper method. Initializes the target platform.
    * </p>
    */
   private void initTargetPlatform() {
+
+    // create the configuration
     final TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
     configuration.setPreferProjects(true);
+
+    // get the target platform registry
     TargetPlatformRegistry targetPlatformRegistry = TargetPlatformRegistry.Helper.getRegistry();
+
+    // set the target platform
     _targetPlatform = targetPlatformRegistry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
   }
 
   /**
    * <p>
+   * Resolves the referenced bundles for the given bundle description.
    * </p>
    * 
    * @param bundleDescription
+   *          the referenced bundles for the given bundle description.
    */
   private void resolveReferencedBundles(BundleDescription bundleDescription) {
 
+    // step 1: add the bundle description to the list of resolved descriptions or
+    // return if the description already has been resolved
     // TODO: maybe we have to check if the bundle description has attached fragments (in case it is indirectly
     // referenced?)
-    if (_resolvedBundleDescriptions.contains(bundleDescription) || _excludedBundles.contains(bundleDescription)) {
+    if (_resolvedBundleDescriptions.contains(bundleDescription) /* || _excludedBundles.contains(bundleDescription) */) {
       return;
     } else {
       _resolvedBundleDescriptions.add(bundleDescription);
     }
 
-    // resolve bundle dependencies
+    // step 2: resolve bundle dependencies
     List<BundleDependency> bundleDependencies = new BundleDependenciesResolver()
         .resolveBundleClasspath(bundleDescription);
 
-    //
+    // step 3: resolve the referenced bundles
     for (BundleDependency bundleDependency : bundleDependencies) {
 
-      // addBundleDescriptionToResult(bundleDependency.getHost());
-      //      
-      // if (bundleDependency.hasFragment()) {
-      // addBundleDescriptionToResult(bundleDependency.getFragment());
-      // }
-
+      // resolve the host
       resolveReferencedBundles(bundleDependency.getHost());
 
+      // resolve the fragments
       for (BundleDescription fragment : bundleDependency.getFragments()) {
         resolveReferencedBundles(fragment);
       }
     }
-  }
-
-  /**
-   * <p>
-   * </p>
-   * 
-   * @param bundleDescription
-   */
-  private void addBundleDescriptionToResult(BundleDescription bundleDescription) {
-
-    // bundle source
-    BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
-
-    // return if bundle source is an eclipse project and _includeWorkspaceBundles == false
-    if (!_includeWorkspaceBundles && bundleSource.isEclipseProject()) {
-      return;
-    }
-
-    _resolvedBundleDescriptions.add(bundleDescription);
   }
 
   /**
@@ -518,8 +495,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
   @Override
   protected void preconditions() throws BuildException {
 
+    // require fields
     requirePathIdOrPropertySet();
-
     requireTargetPlatformIdSet();
 
     // if attribute 'bundleSymbolicName' is set, no 'bundle' element is allowed
