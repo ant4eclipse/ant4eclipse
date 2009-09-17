@@ -1,5 +1,23 @@
 package org.ant4eclipse.pde.internal.tools;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
+import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
+import org.ant4eclipse.core.util.ManifestHelper;
+
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
+import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
+
+import org.ant4eclipse.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
+
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.BundleSpecification;
+import org.eclipse.osgi.service.resolver.ExportPackageDescription;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,23 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
-import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
-import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
-import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
-import org.ant4eclipse.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-
-import org.eclipse.osgi.service.resolver.BaseDescription;
-import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.osgi.service.resolver.BundleSpecification;
-import org.eclipse.osgi.service.resolver.ExportPackageDescription;
-import org.eclipse.osgi.service.resolver.ImportPackageSpecification;
+import java.util.jar.Manifest;
 
 /**
  * <p>
@@ -36,6 +38,9 @@ import org.eclipse.osgi.service.resolver.ImportPackageSpecification;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class BundleDependenciesResolver {
+
+  /** ECLIPSE_EXTENSIBLE_API */
+  private static final String                      ECLIPSE_EXTENSIBLE_API = "Eclipse-ExtensibleAPI";
 
   /** the map of all resolved bundles */
   private Map<BundleDescription, BundleDependency> _resolvedBundles;
@@ -418,13 +423,27 @@ public class BundleDependenciesResolver {
 
     /**
      * <p>
-     * Returns the fragment (maybe <code>null</code>).
+     * Returns the fragments (never <code>null</code>).
      * </p>
      * 
-     * @return the fragment (maybe <code>null</code>).
+     * @return the fragment (never <code>null</code>).
      */
-    public BundleDescription getFragment() {
-      return _fragment;
+    public BundleDescription[] getFragments() {
+
+      // is single fragment set?
+      if (_fragment != null) {
+        return new BundleDescription[] { _fragment };
+      }
+
+      // if the host contains the eclipse extensible API header, return all known fragments
+      else if (isEclipseExtensibleAPI()) {
+        return _host.getFragments();
+      }
+
+      // return empty array
+      else {
+        return new BundleDescription[0];
+      }
     }
 
     /**
@@ -434,8 +453,9 @@ public class BundleDependenciesResolver {
      * 
      * @return <code>true</code> if a fragment is set.
      */
-    public boolean hasFragment() {
-      return _fragment != null;
+    public boolean hasFragments() {
+      return (_fragment != null)
+          || (isEclipseExtensibleAPI() && _host.getFragments() != null && _host.getFragments().length > 0);
     }
 
     /**
@@ -479,11 +499,11 @@ public class BundleDependenciesResolver {
       }
 
       // resolve the class path of the fragment
-      if (hasFragment()) {
-        layoutResolver = getBundleLayoutResolver(getFragment());
+      for (BundleDescription fragment : getFragments()) {
+        layoutResolver = getBundleLayoutResolver(fragment);
         files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
         if (_isRequiredBundle) {
-          addAllExportedPackages(getFragment(), accessRestrictions);
+          addAllExportedPackages(fragment, accessRestrictions);
         }
       }
 
@@ -512,8 +532,8 @@ public class BundleDependenciesResolver {
       }
 
       // add the fragment if it is an eclipse project
-      if (hasFragment()) {
-        final BundleSource fragmentSource = (BundleSource) getFragment().getUserObject();
+      for (BundleDescription fragment : getFragments()) {
+        final BundleSource fragmentSource = (BundleSource) fragment.getUserObject();
 
         if (fragmentSource.isEclipseProject()) {
           result.add(fragmentSource.getAsEclipseProject());
@@ -592,5 +612,21 @@ public class BundleDependenciesResolver {
         }
       }
     }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
+    private boolean isEclipseExtensibleAPI() {
+      BundleLayoutResolver resolver = getBundleLayoutResolver(_host);
+      Manifest manifest = resolver.getManifest();
+      String eclipseExtensibleHeader = ManifestHelper.getManifestHeader(manifest, ECLIPSE_EXTENSIBLE_API);
+      boolean isEclipseExtensibleHeaderAPI = (eclipseExtensibleHeader != null)
+          && Boolean.parseBoolean(eclipseExtensibleHeader);
+      return isEclipseExtensibleHeaderAPI;
+    }
+
   }
 }

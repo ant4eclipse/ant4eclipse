@@ -2,7 +2,6 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.util.Utilities;
 
@@ -48,6 +47,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
   /** the target platform delegate */
   private TargetPlatformAwareDelegate     _targetPlatformAwareDelegate;
 
+  /** */
   private GetPathComponent                _getPathComponent;
 
   /** indicates if optional dependencies should be resolved */
@@ -74,8 +74,10 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
   /** the target platform */
   private TargetPlatform                  _targetPlatform;
 
+  /** */
   private Set<BundleDescription>          _excludedBundles;
 
+  /** */
   private Set<BundleDescription>          _resolvedBundleDescriptions;
 
   /**
@@ -462,6 +464,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
    */
   private void resolveReferencedBundles(BundleDescription bundleDescription) {
 
+    // TODO: maybe we have to check if the bundle description has attached fragments (in case it is indirectly
+    // referenced?)
     if (_resolvedBundleDescriptions.contains(bundleDescription) || _excludedBundles.contains(bundleDescription)) {
       return;
     } else {
@@ -483,8 +487,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements W
 
       resolveReferencedBundles(bundleDependency.getHost());
 
-      if (bundleDependency.hasFragment()) {
-        resolveReferencedBundles(bundleDependency.getFragment());
+      for (BundleDescription fragment : bundleDependency.getFragments()) {
+        resolveReferencedBundles(fragment);
       }
     }
   }

@@ -2,6 +2,8 @@ package org.ant4eclipse.pde.test.builder;
 
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.jar.Attributes;
@@ -136,7 +138,7 @@ public class BundleManifest {
     if (Utilities.hasText(_importPackage)) {
       attributes.putValue("Import-Package", _importPackage);
     }
-    
+
     if (Utilities.hasText(_exportPackage)) {
       attributes.putValue("Export-Package", _exportPackage);
     }

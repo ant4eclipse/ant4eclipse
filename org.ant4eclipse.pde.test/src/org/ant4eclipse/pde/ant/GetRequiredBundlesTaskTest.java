@@ -25,7 +25,7 @@ public class GetRequiredBundlesTaskTest extends AbstractPdeBuildFileTest {
     pdeProjectBuilder.withSourceClass("src", "de.simpleproject1.test.Test3").finishClass();
     pdeProjectBuilder.withBundleManifest().withBundleVersion("1.0.0").withFragmentHost(
         "org.eclipse.osgi;bundle-version=\"[3.2.0,4.0.0)\"").withImportPackage("org.eclipse.ant.core");
-    pdeProjectBuilder.withBuildProperties();
+    pdeProjectBuilder.withDefaultBuildProperties();
     pdeProjectBuilder.createIn(getTestWorkspaceDirectory());
 
     StringBuffer buffer = new StringBuffer();

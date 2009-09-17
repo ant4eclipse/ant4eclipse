@@ -69,6 +69,12 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
     _manifest.write(manifestFile);
   }
 
+  public PluginBuildProperties withDefaultBuildProperties() {
+    _pluginBuildProperties = new PluginBuildProperties();
+    _pluginBuildProperties.withLibrary(".").withSource("src").withOutput("bin");
+    return _pluginBuildProperties;
+  }
+  
   public PluginBuildProperties withBuildProperties() {
     _pluginBuildProperties = new PluginBuildProperties();
     return _pluginBuildProperties;
