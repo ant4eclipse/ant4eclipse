@@ -1,6 +1,7 @@
 package org.ant4eclipse.core.util;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,9 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.jar.JarFile;
 
-import junit.framework.TestCase;
-
-public class UtilitiesTest extends TestCase {
+public class UtilitiesTest {
 
   private File _expansionDirectory;
 
@@ -41,9 +40,9 @@ public class UtilitiesTest extends TestCase {
     URL url = getClass().getClassLoader().getResource("org/ant4eclipse/core/util/test-jar.jar");
     File jarFile = new File(url.getFile());
 
-    assertTrue(jarFile.exists() && jarFile.isFile());
+    Assert.assertTrue(jarFile.exists() && jarFile.isFile());
 
-    assertTrue(this._expansionDirectory.exists() && this._expansionDirectory.isDirectory());
+    Assert.assertTrue(this._expansionDirectory.exists() && this._expansionDirectory.isDirectory());
 
     try {
       Utilities.expandJarFile(new JarFile(jarFile), this._expansionDirectory);
@@ -52,10 +51,10 @@ public class UtilitiesTest extends TestCase {
       e.printStackTrace();
     }
 
-    assertTrue(new File(this._expansionDirectory, "test.jar").exists());
-    assertTrue(new File(this._expansionDirectory, "test.txt").exists());
-    assertTrue(new File(this._expansionDirectory, "test2.jar").exists());
-    assertTrue(new File(this._expansionDirectory, "META-INF/MANIFEST.MF").exists());
+    Assert.assertTrue(new File(this._expansionDirectory, "test.jar").exists());
+    Assert.assertTrue(new File(this._expansionDirectory, "test.txt").exists());
+    Assert.assertTrue(new File(this._expansionDirectory, "test2.jar").exists());
+    Assert.assertTrue(new File(this._expansionDirectory, "META-INF/MANIFEST.MF").exists());
   }
 
   public void testCalcRelative() {
@@ -66,7 +65,7 @@ public class UtilitiesTest extends TestCase {
 
   public void test_newInstance() {
     Dummy dummy = Utilities.newInstance(Dummy.class.getName());
-    assertNotNull(dummy);
+    Assert.assertNotNull(dummy);
   }
 
   public static class Dummy {
