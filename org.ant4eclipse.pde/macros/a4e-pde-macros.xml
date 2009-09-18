@@ -28,21 +28,93 @@
 		<attribute name="destination" />
 		<attribute name="packageAsJar" default="true" />
 		<attribute name="defaultCompilerOptionsFile" default="" />
+
+		<!-- element defintions for lifecycle phases -->
+		<element name="validate"
+		         optional="true"
+		         description="Validate the project is correct and all necessary information is available." />
+		<element name="initialize"
+		         optional="true"
+		         description="Initialize build state, e.g. set properties or create directories." />
+		<element name="generate-sources"
+		         optional="true"
+		         description="Generate any source code for inclusion in compilation." />
+		<element name="generate-resources"
+		         optional="true"
+		         description="Generate resources for inclusion in the package." />
+		<element name="pre-compile"
+		         optional="true"
+		         description="Execute additional steps before compilation." />
+		<element name="post-compile"
+		         optional="true"
+		         description="Post-process the generated files from compilation, for example to do bytecode enhancement on Java classes." />
+		<element name="pre-package-library"
+		         optional="true"
+		         description="Execute additonal steps before packaging a library" />
+		<element name="post-package-library"
+		         optional="true"
+		         description="Execute additonal steps after packaging a library" />
+		<element name="prepare-package"
+		         optional="true"
+		         description="Copy the final package from the destination to aremote repository or whatever." />
+		<element name="deploy"
+		         optional="true"
+		         description="Perform any operations necessary to prepare a package before the actual packaging." />
+
 		<sequential>
 
+			<ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
+			                                  projectName="@{projectName}"
+			                                  prefix="buildPlugin">
+
+				<ant4eclipse:forProject>
+
+					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+					  - Step 1: Validate
+					  - Validate the project is correct and all necessary information is available.
+					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+					<!-- check project consistency -->
+					<ant4eclipse:checkPluginProject workspaceDirectory="@{workspaceDirectory}"
+					                                projectName="@{projectName}" />
+
+					<!-- template element 'validate' -->
+					<validate />
+
+					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+					  - Step 2: Initialize
+					  - Initialize build state, e.g. set properties or create directories.
+					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+					<!-- try to create the target directory -->
+					<mkdir dir="@{destination}" />
+
+					<!-- template element 'intialize' -->
+					<initialize />
+
+					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					  - Step 3: Generate-sources
+					  - Generate any source code for inclusion in compilation.
+					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+					<!-- template element 'generate-sources' -->
+					<generate-sources />
+
+					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+					  - Step 4: Generate-resources
+					  - Generate resources for inclusion in the package.
+					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+					<!-- template element 'generate-resources' -->
+					<generate-resources />
+
+				</ant4eclipse:forProject>
+
+			</ant4eclipse:executePluginProject>
+
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			  - Step 0: Prepare
-			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-			<!-- Step 0.1: try to create the target directory -->
-			<mkdir dir="@{destination}" />
-
-			<!-- Step 0.2: check the plug-in project -->
-			<ant4eclipse:checkPluginProject workspaceDirectory="@{workspaceDirectory}"
-			                                projectName="@{projectName}" />
-
-			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			  - Step 1: Compile the plug-in project if it is a JDT project.
+			  - Step 5: Compile
+			  - Compiles the plug-in project (only in case that the project has the nature 'org.eclipse.jdt.core.javanature').
 			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<antcontrib:if>
 				<ant4eclipse:hasNature workspaceDirectory="@{workspaceDirectory}"
@@ -50,49 +122,56 @@
 				                       nature="org.eclipse.jdt.core.javanature" />
 				<antcontrib:then>
 
-					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					  - Step 1.1: Execute the JDT project.
-					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+					<!-- Execute the JDT project -->
 					<ant4eclipse:executeJdtProject workspaceDirectory="@{workspaceDirectory}"
-					                               projectName="@{projectName}">
+					                               projectName="@{projectName}"
+					                               prefix="buildPlugin">
 
 						<jdtClasspathContainerArgument key="target.platform"
 						                               value="@{targetPlatformId}" />
 
-						<!-- Step 1.1.1: Scrub all output directories -->
+						<!-- Step 5.1: Clean all output directories -->
 						<ant4eclipse:forEachOutputDirectory>
-							<echo>Scrubbing directory '${executeJdtProject.output.directory}'</echo>
-							<delete dir="${executeJdtProject.output.directory}"
+							<echo>Scrubbing directory '${buildPlugin.output.directory}'</echo>
+							<delete dir="${buildPlugin.output.directory}"
 							        quiet="true" />
-							<mkdir dir="${executeJdtProject.output.directory}" />
+							<mkdir dir="${buildPlugin.output.directory}" />
 						</ant4eclipse:forEachOutputDirectory>
 
-						<!-- Step 1.1.2: compile the sources -->
+						<!-- Step 5.2: Compile the sources -->
 						<ant4eclipse:forProject>
-							<echo>Compiling pde project '${executeJdtProject.project.name}'</echo>
-							<echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
-							<echo>  - output directories -> ${executeJdtProject.default.output.directory}</echo>
-							<echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
-							<echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
 
-							<javac destdir="${executeJdtProject.default.output.directory}"
+							<!-- template element 'pre-compile' -->
+							<pre-compile />
+
+							<echo>Compiling pde project '${buildPlugin.project.name}'</echo>
+							<echo>  - source directories -> ${buildPlugin.source.directories}</echo>
+							<echo>  - output directories -> ${buildPlugin.default.output.directory}</echo>
+							<echo>  - bootclasspath      -> ${buildPlugin.boot.classpath}</echo>
+							<echo>  - classpath          -> ${buildPlugin.classpath.absolute.compiletime}</echo>
+
+							<javac destdir="${buildPlugin.default.output.directory}"
 							       compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
-								<src refid="executeJdtProject.source.directories.path" />
-								<bootclasspath refid="executeJdtProject.boot.classpath.path" />
-								<classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+								<src refid="buildPlugin.source.directories.path" />
+								<bootclasspath refid="buildPlugin.boot.classpath.path" />
+								<classpath refid="buildPlugin.classpath.absolute.compiletime.path" />
 
 								<!-- we have to pass in the reference to the additional compiler arguments -->
-								<compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
+								<compilerarg value="compiler.args.refid=buildPlugin.compiler.args"
 								             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 
 								<!-- we also have to pass path of the compiler options file to support project specific compiler options -->
-								<compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
+								<compilerarg value="compiler.options.file=${buildPlugin.project.directory}/.settings/org.eclipse.jdt.core.prefs"
 								             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 
 								<!-- pass the path of the default compiler options file  -->
 								<compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}"
 								             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 							</javac>
+
+							<!-- template element 'post-compile' -->
+							<post-compile />
+
 						</ant4eclipse:forProject>
 
 					</ant4eclipse:executeJdtProject>
@@ -100,32 +179,37 @@
 			</antcontrib:if>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			  - Step 2: Pack the bundle
+			  - Step 6: Package the bundle
 			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
-			                                  projectName="@{projectName}">
+			                                  projectName="@{projectName}"
+			                                  prefix="buildPlugin">
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 2.1: Pack all libraries except the 'self' library
+				  - Step 6.1: Pack all libraries except the 'self' library
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=false)">
-					<echo>Packing library '${executePluginProject.library.name}'</echo>
 
-					<!-- Step 2.1.1: Copy the content of the library to a temporary folder -->
+					<echo>Packing library '${buildPlugin.library.name}'</echo>
+
+					<!-- template element 'pre-package-library' -->
+					<pre-package-library />
+
+					<!-- copy the content of the library to a temporary folder -->
 					<ant4eclipse:executePluginLibrary workspace="@{workspaceDirectory}"
-					                                  projectname="${executePluginProject.project.name}"
-					                                  libraryname="${executePluginProject.library.name}">
+					                                  projectname="${buildPlugin.project.name}"
+					                                  libraryname="${buildPlugin.library.name}">
 
 						<ant4eclipse:forEachOutputDirectory>
-							<echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '@{destination}/${a4e.temp.directory}/${executePluginProject.library.name}'</echo>
-							<copy todir="@{destination}/${a4e.temp.directory}/${executePluginProject.library.name}">
+							<echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
+							<copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}">
 								<fileset dir="${executePluginLibrary.output.directory}" />
 							</copy>
 						</ant4eclipse:forEachOutputDirectory>
 
 						<ant4eclipse:forEachSourceDirectory>
-							<echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '@{destination}/${a4e.temp.directory}/${executePluginProject.library.name}'</echo>
-							<copy todir="@{destination}/${a4e.temp.directory}/${executePluginProject.library.name}">
+							<echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
+							<copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}">
 								<fileset dir="${executePluginLibrary.source.directory}">
 									<exclude name="**/*.java" />
 								</fileset>
@@ -134,95 +218,113 @@
 
 					</ant4eclipse:executePluginLibrary>
 
-					<!-- Step 2.1.2: Delete the library file if on exists -->
-					<delete file="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
+					<!--delete the library file if on exists -->
+					<delete file="@{destination}/${a4e.plugins.directory}/${buildPlugin.library.name}/${buildPlugin.library.name}"
 					        quiet="true" />
-					<mkdir dir="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}" />
+					<mkdir dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.library.name}" />
 
-					<!-- Step 2.1.3: Jar the library file if on exists -->
-					<jar destfile="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
-					     basedir="@{destination}/${a4e.temp.directory}/${executePluginProject.library.name}" />
+					<!-- jar the library file if on exists -->
+					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.library.name}/${buildPlugin.library.name}"
+					     basedir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}" />
 
-					<!-- Step 2.1.4: Move the jar file to the pde project folder project -->
-					<move file="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}/${executePluginProject.library.name}"
-					      todir="${executePluginProject.project.directory}" />
+					<!-- move the jar file to the pde project folder project -->
+					<move file="@{destination}/${a4e.plugins.directory}/${buildPlugin.library.name}/${buildPlugin.library.name}"
+					      todir="${buildPlugin.project.directory}" />
 
-					<!-- Step 2.1.5: Finally delete the temp file -->
-					<delete dir="@{destination}/${a4e.plugins.directory}/${executePluginProject.library.name}" />
+					<!-- finally delete the temp file -->
+					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.library.name}" />
 					<delete dir="@{destination}/${a4e.temp.directory}/" />
+
+					<!-- template element 'post-package-library' -->
+					<post-package-library />
+
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 2.2: Pack the 'self' library
+				  - Step 2.2: Package the 'self' library
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
+					<echo>Packing library '.'</echo>
 
 					<!-- just copy everything to the 'self' directory -->
 					<ant4eclipse:executePluginLibrary workspace="@{workspaceDirectory}"
-					                                  projectname="${executePluginProject.project.name}"
-					                                  libraryname="${executePluginProject.library.name}">
+					                                  projectname="${buildPlugin.project.name}"
+					                                  libraryname="${buildPlugin.library.name}">
+
+						<!-- template element 'pre-package-library' -->
+						<pre-package-library />
 
 						<ant4eclipse:forEachOutputDirectory>
-							<echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '${executePluginProject.project.directory}/${a4e.self.directory}'</echo>
-							<copy todir="${executePluginProject.project.directory}/${a4e.self.directory}">
+							<echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '${buildPlugin.project.directory}/${a4e.self.directory}'</echo>
+							<copy todir="${buildPlugin.project.directory}/${a4e.self.directory}">
 								<fileset dir="${executePluginLibrary.output.directory}" />
 							</copy>
 						</ant4eclipse:forEachOutputDirectory>
 
 						<ant4eclipse:forEachSourceDirectory>
-							<echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '${executePluginProject.project.directory}/${a4e.self.directory}'</echo>
-							<copy todir="${executePluginProject.project.directory}/${a4e.self.directory}">
+							<echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '${buildPlugin.project.directory}/${a4e.self.directory}'</echo>
+							<copy todir="${buildPlugin.project.directory}/${a4e.self.directory}">
 								<fileset dir="${executePluginLibrary.source.directory}">
 									<exclude name="**/*.java" />
 								</fileset>
 							</copy>
 						</ant4eclipse:forEachSourceDirectory>
 
+						<!-- template element 'post-package-library' -->
+						<post-package-library />
+
 					</ant4eclipse:executePluginLibrary>
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 2.3: Pack the bundle
+				  - Step 6.3: Package the bundle
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject>
 
-					<!-- Step 2.3.1: copy the (in the build.properties) specified content to the destination directory -->
-					<copy todir="@{destination}/${a4e.plugins.directory}/${executePluginProject.bundle.symbolicname}_${executePluginProject.bundle.resolved.version}"
+					<!-- template element 'prepare-package' -->
+					<prepare-package />
+
+					<!-- copy the (in the build.properties) specified content to the destination directory -->
+					<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}"
 					      overwrite="true">
 
 						<!-- file set defined by the projects build properties -->
 						<ant4eclipse:pdeProjectFileSet workspace="@{workspaceDirectory}"
-						                               projectname="${executePluginProject.project.name}"
-						                               includes="${executePluginProject.build.properties.binary.includes}"
-						                               excludes="${executePluginProject.build.properties.binary.excludes}" />
+						                               projectname="@{projectName}"
+						                               includes="${buildPlugin.build.properties.binary.includes}"
+						                               excludes="${buildPlugin.build.properties.binary.excludes}" />
 					</copy>
 
-					<!-- Step 2.3.2: delete the (temporary) self-directory -->
-					<delete dir="${executePluginProject.project.directory}/${a4e.self.directory}"
+					<!-- delete the (temporary) self-directory -->
+					<delete dir="${buildPlugin.project.directory}/${a4e.self.directory}"
 					        quiet="true" />
 
-					<!-- Step 2.3.3: 'patch' the manifest with the resolved bundle version -->
-					<manifest file="@{destination}/${a4e.plugins.directory}/${executePluginProject.bundle.symbolicname}_${executePluginProject.bundle.resolved.version}/META-INF/MANIFEST.MF"
+					<!-- 'patch' the manifest with the resolved bundle version -->
+					<manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}/META-INF/MANIFEST.MF"
 					          mode="update">
 						<attribute name="Bundle-Version"
-						           value="${executePluginProject.bundle.resolved.version}" />
+						           value="${buildPlugin.bundle.resolved.version}" />
 					</manifest>
 				</ant4eclipse:forProject>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 2.4: if bundle should be packaged as a jar file (the default),
+				  - if bundle should be packaged as a jar file (the default),
                   - we have to jar the bundle.
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject if="@{packageAsJar}">
-					<jar destfile="@{destination}/${a4e.plugins.directory}/${executePluginProject.bundle.symbolicname}_${executePluginProject.bundle.resolved.version}.jar"
-					     basedir="@{destination}/${a4e.plugins.directory}/${executePluginProject.bundle.symbolicname}_${executePluginProject.bundle.resolved.version}"
-					     manifest="@{destination}/${a4e.plugins.directory}/${executePluginProject.bundle.symbolicname}_${executePluginProject.bundle.resolved.version}/META-INF/MANIFEST.MF" />
+					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}.jar"
+					     basedir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}"
+					     manifest="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}/META-INF/MANIFEST.MF" />
 				</ant4eclipse:forProject>
+
 				<ant4eclipse:forProject if="@{packageAsJar}">
-					<delete dir="@{destination}/${a4e.plugins.directory}/${executePluginProject.bundle.symbolicname}_${executePluginProject.bundle.resolved.version}"
+					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}"
 					        quiet="true"
 					        deleteonexit="true" />
 				</ant4eclipse:forProject>
+
+				<!-- template element 'deploy' -->
+				<deploy />
 
 			</ant4eclipse:executePluginProject>
 		</sequential>
