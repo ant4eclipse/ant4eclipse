@@ -20,16 +20,16 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
-import java.util.Properties;
+import java.util.Map;
 
 public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTestCase {
 
   @Override
-  protected Properties customAnt4EclipseConfiguration(Properties properties) {
+  protected Map<String, String> customAnt4EclipseConfiguration(Map<String, String> properties) {
 
     // add TestProjectRoleIdentifier to ant4eclipse properties
-    properties.setProperty(ProjectRoleIdentifierRegistry.ROLEIDENTIFIER_PREFIX + ".dummyRole",
-        TestProjectRoleIdentifier.class.getName());
+    properties.put(ProjectRoleIdentifierRegistry.ROLEIDENTIFIER_PREFIX + ".dummyRole", TestProjectRoleIdentifier.class
+        .getName());
 
     return properties;
   }

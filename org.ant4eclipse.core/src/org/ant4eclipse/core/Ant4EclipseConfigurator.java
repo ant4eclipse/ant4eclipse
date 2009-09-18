@@ -22,7 +22,8 @@ import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
 
 import org.apache.tools.ant.Project;
 
-import java.util.Properties;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * <p>
@@ -67,11 +68,11 @@ public class Ant4EclipseConfigurator {
    * @param ant4EclipseConfigurationProperties
    *          the configuration properties
    */
-  public static void configureAnt4Eclipse(Properties ant4EclipseConfigurationProperties) {
+  public static void configureAnt4Eclipse(Map<String, String> ant4EclipseConfigurationProperties) {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new DefaultAnt4EclipseLogger(),
           ant4EclipseConfigurationProperties != null ? new Ant4EclipseConfigurationImpl(
-              ant4EclipseConfigurationProperties) : new Ant4EclipseConfigurationImpl(new Properties()));
+              ant4EclipseConfigurationProperties) : new Ant4EclipseConfigurationImpl(new Hashtable<String, String>()));
     }
   }
 

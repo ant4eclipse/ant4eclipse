@@ -6,11 +6,12 @@ import org.ant4eclipse.core.util.Utilities;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.Map.Entry;
 
 /**
  * <p>
@@ -22,10 +23,10 @@ import java.util.Map.Entry;
 public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
   /** the path of ant4eclipse configurations */
-  public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
+  public static final String  A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
 
   /** <b>All</b> configuration properties */
-  private Properties         _properties;
+  private Map<String, String> _properties;
 
   /**
    * <p>
@@ -35,7 +36,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * @param properties
    *          The backing properties
    */
-  public Ant4EclipseConfigurationImpl(Properties properties) {
+  public Ant4EclipseConfigurationImpl(Map<String, String> properties) {
     if (properties == null) {
       throw new IllegalArgumentException("Parameter 'properties' must not be null ");
     }
@@ -58,8 +59,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     if (propertyName == null) {
       throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
     }
-
-    return this._properties.getProperty(propertyName);
+    return this._properties.get(propertyName);
   }
 
   /**
@@ -83,13 +83,13 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     if (!prefix.endsWith(".")) {
       prefix += ".";
     }
-    Set<Entry<Object, Object>> entries = this._properties.entrySet();
+    Set<Map.Entry<String, String>> entries = this._properties.entrySet();
 
     List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
 
-    for (Entry<Object, Object> entry : entries) {
-      String key = entry.getKey().toString();
-      String value = entry.getValue().toString();
+    for (Map.Entry<String, String> entry : entries) {
+      String key = entry.getKey();
+      String value = entry.getValue();
       if (key.startsWith(prefix)) {
         key = key.substring(prefix.length());
         result.add(new Pair<String, String>(key, value));
@@ -124,9 +124,9 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * 
    * @return A Property object containing all loaded properties
    */
-  private Properties loadConfigurationProperties() {
+  private Map<String, String> loadConfigurationProperties() {
     Enumeration<URL> propertyFiles = getPropertyFiles();
-    Properties allProperties = new Properties();
+    Map<String, String> allProperties = new Hashtable<String, String>();
     while (propertyFiles.hasMoreElements()) {
       URL url = propertyFiles.nextElement();
       allProperties.putAll(Utilities.readProperties(url));

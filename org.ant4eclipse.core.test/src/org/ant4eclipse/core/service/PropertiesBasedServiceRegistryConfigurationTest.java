@@ -24,7 +24,6 @@ import org.junit.Test;
 
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Properties;
 
 public class PropertiesBasedServiceRegistryConfigurationTest {
 
@@ -33,17 +32,16 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
   @Before
   public void setupTestProperties() {
     // some dummy properties
-    Properties properties = new Properties();
-    properties.setProperty("service.ant4eclipse.TestServiceA", TestServiceAImpl.class.getName());
-    properties.setProperty("service.TestServiceB", TestServiceBImpl.class.getName());
-    properties.setProperty("noservice.TestServiceC", "Not a service");
-
-    _ant4EclipseConfiguration = new Ant4EclipseConfigurationImpl(properties);
+    Map<String, String> properties = new Hashtable<String, String>();
+    properties.put("service.ant4eclipse.TestServiceA", TestServiceAImpl.class.getName());
+    properties.put("service.TestServiceB", TestServiceBImpl.class.getName());
+    properties.put("noservice.TestServiceC", "Not a service");
+    this._ant4EclipseConfiguration = new Ant4EclipseConfigurationImpl(properties);
   }
 
   @After
   public void dispose() {
-    _ant4EclipseConfiguration = null;
+    this._ant4EclipseConfiguration = null;
   }
 
   @Test
@@ -53,7 +51,7 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
 
     // Execute configure
     PropertiesBasedServiceRegistryConfiguration config = new PropertiesBasedServiceRegistryConfiguration(
-        _ant4EclipseConfiguration);
+        this._ant4EclipseConfiguration);
     config.configure(context);
 
     // Make sure only given services have been registered
@@ -72,7 +70,7 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
     Map<String, Object> _registeredServices = new Hashtable<String, Object>();
 
     public void registerService(Object service, String serviceIdentifier) {
-      _registeredServices.put(serviceIdentifier, service);
+      this._registeredServices.put(serviceIdentifier, service);
 
     }
 

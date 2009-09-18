@@ -5,7 +5,8 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 
-import java.util.Properties;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class Ant4EclipseConfiguratorTest {
 
@@ -29,16 +30,16 @@ public class Ant4EclipseConfiguratorTest {
 
   @Test
   public void testAnt4EclipseConfigurator_3() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new Properties());
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new Properties());
+    Ant4EclipseConfigurator.configureAnt4Eclipse(new Hashtable<String, String>());
+    Ant4EclipseConfigurator.configureAnt4Eclipse(new Hashtable<String, String>());
 
     ServiceRegistry.reset();
   }
 
   @Test
   public void testAnt4EclipseConfigurator_4() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse((Properties) null);
-    Ant4EclipseConfigurator.configureAnt4Eclipse((Properties) null);
+    Ant4EclipseConfigurator.configureAnt4Eclipse((Map<String, String>) null);
+    Ant4EclipseConfigurator.configureAnt4Eclipse((Map<String, String>) null);
 
     ServiceRegistry.reset();
   }

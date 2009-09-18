@@ -19,7 +19,8 @@ import org.junit.After;
 import org.junit.Before;
 
 import java.io.InputStream;
-import java.util.Properties;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,7 +41,7 @@ public class ConfigurableAnt4EclipseTestCase {
    */
   @Before
   public void setup() {
-    Properties properties = customAnt4EclipseConfiguration(new Properties());
+    Map<String, String> properties = customAnt4EclipseConfiguration(new Hashtable<String, String>());
     if (properties == null) {
       Ant4EclipseConfigurator.configureAnt4Eclipse();
     } else {
@@ -64,7 +65,7 @@ public class ConfigurableAnt4EclipseTestCase {
    * @param properties
    * @return
    */
-  protected Properties customAnt4EclipseConfiguration(Properties properties) {
+  protected Map<String, String> customAnt4EclipseConfiguration(Map<String, String> properties) {
     return null;
   }
 
