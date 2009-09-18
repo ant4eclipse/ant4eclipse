@@ -133,10 +133,10 @@ public class CompilationUnitImpl implements ICompilationUnit {
         result.append("\n");
       }
     } catch (UnsupportedEncodingException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, filename,
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, filename,
           this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     } catch (IOException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, filename,
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, filename,
           this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     }
     return result.toString().toCharArray();

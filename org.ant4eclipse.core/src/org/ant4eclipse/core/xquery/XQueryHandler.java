@@ -159,7 +159,7 @@ public class XQueryHandler extends DefaultHandler {
       factory.newSAXParser().parse(new FileInputStream(xmlfile), handler);
     } catch (Exception ex) {
       A4ELogging.error(ex.getMessage());
-      throw (new Ant4EclipseException(CoreExceptionCode.X_QUERY_PARSE_EXCEPTION, ex));
+      throw (new Ant4EclipseException(ex, CoreExceptionCode.X_QUERY_PARSE_EXCEPTION));
     }
   }
 
@@ -180,7 +180,7 @@ public class XQueryHandler extends DefaultHandler {
       factory.newSAXParser().parse(inputStream, handler);
     } catch (Exception ex) {
       A4ELogging.error(ex.getMessage());
-      throw (new Ant4EclipseException(CoreExceptionCode.X_QUERY_PARSE_EXCEPTION, ex));
+      throw (new Ant4EclipseException(ex, CoreExceptionCode.X_QUERY_PARSE_EXCEPTION));
     }
   }
 

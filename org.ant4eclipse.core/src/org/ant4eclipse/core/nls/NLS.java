@@ -193,7 +193,7 @@ public abstract class NLS {
     try {
       object = constructor.newInstance(message);
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, ex, type.getName(), type
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, type.getName(), type
           .getSimpleName()
           + "(String)");
     }

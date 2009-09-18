@@ -596,7 +596,7 @@ public class Utilities {
     try {
       clazz = Class.forName(className);
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_LOAD_CLASS, ex, className, ex.toString());
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
     }
 
     // try to instantiate using default cstr...
@@ -605,7 +605,7 @@ public class Utilities {
     try {
       object = (T) clazz.newInstance();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, ex, className, ex.toString());
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
     }
 
     // return the constructed object
@@ -671,7 +671,7 @@ public class Utilities {
       byte[] buffer = new byte[16384];
       copy(instream, outstream, buffer);
     } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, ex, source.toExternalForm(), dest);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, source.toExternalForm(), dest);
     }
   }
 
@@ -704,7 +704,7 @@ public class Utilities {
         }
       }
     } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.UNPACKING_FAILED, ex, zipfile);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.UNPACKING_FAILED, zipfile);
     }
   }
 
@@ -955,7 +955,7 @@ public class Utilities {
       }
 
     } catch (Exception ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.EXECUTION_FAILURE, ex, exe);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.EXECUTION_FAILURE, exe);
     }
 
   }
@@ -998,7 +998,7 @@ public class Utilities {
         }
       } catch (IOException ex) {
         /** @todo [06-Aug-2009:KASI] We might need something more precise here. */
-        throw new Ant4EclipseException(CoreExceptionCode.EXECUTION_FAILURE, ex);
+        throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
       }
     }
 
