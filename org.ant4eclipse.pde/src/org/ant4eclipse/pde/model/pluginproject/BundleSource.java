@@ -12,7 +12,6 @@
 package org.ant4eclipse.pde.model.pluginproject;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.JarUtilities;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 

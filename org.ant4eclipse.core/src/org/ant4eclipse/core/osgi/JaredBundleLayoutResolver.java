@@ -13,8 +13,8 @@ package org.ant4eclipse.core.osgi;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.JarUtilities;
 import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 import java.io.File;
@@ -156,7 +156,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
 
     // unwrap jar file
     try {
-      JarUtilities.expandJarFile(this._jarFile, destination);
+      Utilities.expandJarFile(this._jarFile, destination);
     } catch (IOException e) {
       // log error
       A4ELogging.error("Could not expand jar file '%s'. Reason: '%s'", this._location, e.getMessage());

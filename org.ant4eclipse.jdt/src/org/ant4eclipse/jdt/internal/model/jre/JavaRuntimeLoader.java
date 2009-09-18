@@ -14,6 +14,7 @@ package org.ant4eclipse.jdt.internal.model.jre;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.data.Version;
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.internal.model.jre.support.LibraryDetector;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
@@ -75,7 +76,7 @@ public class JavaRuntimeLoader {
       while ((str = in.readLine()) != null) {
         contents.append(str);
       }
-      in.close();
+      Utilities.close(in);
       file.deleteOnExit();
     } catch (Throwable e) {
       e.printStackTrace();
