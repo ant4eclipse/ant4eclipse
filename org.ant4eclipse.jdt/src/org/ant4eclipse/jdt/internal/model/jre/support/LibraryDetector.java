@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre.support;
 
-import org.ant4eclipse.core.util.Utilities;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -58,7 +56,7 @@ public class LibraryDetector {
       outfile.createNewFile();
       BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
       out.write(buffer.toString());
-      Utilities.close(out);
+      out.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
