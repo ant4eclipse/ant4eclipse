@@ -208,8 +208,8 @@ public class CvsAdapter extends VcsAdapter {
     cvs.setCvsRoot(projectDescription.getResolvedCvsRoot().toString());
     cvs.setDest(destination);
 
-    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", new Boolean(this._quiet),
-        new Boolean(this._reallyQuiet));
+    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf(this._quiet),
+        Boolean.valueOf(this._reallyQuiet));
     cvs.setQuiet(this._quiet);
     cvs.setReallyquiet(this._reallyQuiet);
     return cvs;

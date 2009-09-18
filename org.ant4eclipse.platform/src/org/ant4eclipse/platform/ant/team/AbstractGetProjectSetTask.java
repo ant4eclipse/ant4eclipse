@@ -170,7 +170,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     Assert.notNull(projectSet);
 
     A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet,
-        new Boolean(deleteExisting));
+        Boolean.valueOf(deleteExisting));
 
     TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
 
