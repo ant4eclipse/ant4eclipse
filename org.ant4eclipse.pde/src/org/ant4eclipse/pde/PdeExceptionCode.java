@@ -46,7 +46,7 @@ public class PdeExceptionCode extends ExceptionCode {
 
   /** - */
   @NLSMessage("Library '%s' doesn't exist in project '%s'.")
-  public static PdeExceptionCode LIBRARY_NAME_DOES_NOT_EXIST;                         ;
+  public static PdeExceptionCode LIBRARY_NAME_DOES_NOT_EXIST;
 
   /** - */
   @NLSMessage("File '%s' doesn't contain a bundle manifest file and will be ignored.")

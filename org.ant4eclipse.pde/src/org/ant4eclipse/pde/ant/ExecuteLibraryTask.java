@@ -2,6 +2,7 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
@@ -164,10 +165,10 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
           addCommonLibraryProperties(library, values);
 
           // add additional values
-          values.getProperties().put(PdeExecutorValues.SOURCE_DIRECTORY,
+          values.getProperties().put(JdtExecutorValues.SOURCE_DIRECTORY,
               convertToString(getEclipseProject().getChild(librarySourceDirectory)));
-          values.getProperties().put(PdeExecutorValues.SOURCE_DIRECTORY_NAME, librarySourceDirectory);
-          values.getReferences().put(PdeExecutorValues.SOURCE_DIRECTORY_PATH,
+          values.getProperties().put(JdtExecutorValues.SOURCE_DIRECTORY_NAME, librarySourceDirectory);
+          values.getReferences().put(JdtExecutorValues.SOURCE_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(librarySourceDirectory)));
 
           // return the result
@@ -205,10 +206,10 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
           addCommonLibraryProperties(library, values);
 
           // add additional values
-          values.getProperties().put(PdeExecutorValues.OUTPUT_DIRECTORY,
+          values.getProperties().put(JdtExecutorValues.OUTPUT_DIRECTORY,
               convertToString(getEclipseProject().getChild(libraryOutputDirectory)));
-          values.getProperties().put(PdeExecutorValues.OUTPUT_DIRECTORY_NAME, libraryOutputDirectory);
-          values.getReferences().put(PdeExecutorValues.OUTPUT_DIRECTORY_PATH,
+          values.getProperties().put(JdtExecutorValues.OUTPUT_DIRECTORY_NAME, libraryOutputDirectory);
+          values.getReferences().put(JdtExecutorValues.OUTPUT_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(libraryOutputDirectory)));
 
           // return the result

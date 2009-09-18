@@ -2,8 +2,6 @@ package org.ant4eclipse.pde.test.builder;
 
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.jar.Attributes;
@@ -38,8 +36,8 @@ public class BundleManifest {
    */
   public BundleManifest(String bundleSymbolicName) {
     super();
-    _bundleSymbolicName = bundleSymbolicName;
-    _bundleName = _bundleSymbolicName;
+    this._bundleSymbolicName = bundleSymbolicName;
+    this._bundleName = this._bundleSymbolicName;
   }
 
   /**
@@ -47,7 +45,7 @@ public class BundleManifest {
    *          the bundleName to set
    */
   public BundleManifest withBundleName(String bundleName) {
-    _bundleName = bundleName;
+    this._bundleName = bundleName;
     return this;
   }
 
@@ -56,7 +54,7 @@ public class BundleManifest {
    *          the bundleVersion to set
    */
   public BundleManifest withBundleVersion(String bundleVersion) {
-    _bundleVersion = bundleVersion;
+    this._bundleVersion = bundleVersion;
     return this;
   }
 
@@ -65,7 +63,7 @@ public class BundleManifest {
    *          the bundleRequiredExecutionEnvironment to set
    */
   public BundleManifest withBundleRequiredExecutionEnvironment(String bundleRequiredExecutionEnvironment) {
-    _bundleRequiredExecutionEnvironment = bundleRequiredExecutionEnvironment;
+    this._bundleRequiredExecutionEnvironment = bundleRequiredExecutionEnvironment;
     return this;
   }
 
@@ -74,7 +72,7 @@ public class BundleManifest {
    *          the importPackage to set
    */
   public BundleManifest withImportPackage(String importPackage) {
-    _importPackage = importPackage;
+    this._importPackage = importPackage;
     return this;
   }
 
@@ -83,17 +81,17 @@ public class BundleManifest {
    *          the exportPackage to set
    */
   public BundleManifest withExportPackage(String exportPackage) {
-    _exportPackage = exportPackage;
+    this._exportPackage = exportPackage;
     return this;
   }
 
   public BundleManifest withFragmentHost(String fragmentHost) {
-    _fragmentHost = fragmentHost;
+    this._fragmentHost = fragmentHost;
     return this;
   }
 
   public BundleManifest withClassPath(String classPath) {
-    _classpath = classPath;
+    this._classpath = classPath;
     return this;
   }
 
@@ -128,27 +126,27 @@ public class BundleManifest {
     attributes.putValue("Manifest-Version", "1.0");
     attributes.putValue("Bundle-ManifestVersion", "2");
 
-    attributes.putValue("Bundle-SymbolicName", _bundleSymbolicName);
-    attributes.putValue("Bundle-Version", _bundleVersion);
+    attributes.putValue("Bundle-SymbolicName", this._bundleSymbolicName);
+    attributes.putValue("Bundle-Version", this._bundleVersion);
 
-    if (Utilities.hasText(_bundleName)) {
-      attributes.putValue("Bundle-Name", _bundleName);
+    if (Utilities.hasText(this._bundleName)) {
+      attributes.putValue("Bundle-Name", this._bundleName);
     }
 
-    if (Utilities.hasText(_importPackage)) {
-      attributes.putValue("Import-Package", _importPackage);
+    if (Utilities.hasText(this._importPackage)) {
+      attributes.putValue("Import-Package", this._importPackage);
     }
 
-    if (Utilities.hasText(_exportPackage)) {
-      attributes.putValue("Export-Package", _exportPackage);
+    if (Utilities.hasText(this._exportPackage)) {
+      attributes.putValue("Export-Package", this._exportPackage);
     }
 
-    if (Utilities.hasText(_fragmentHost)) {
-      attributes.putValue("Fragment-Host", _fragmentHost);
+    if (Utilities.hasText(this._fragmentHost)) {
+      attributes.putValue("Fragment-Host", this._fragmentHost);
     }
 
-    if (Utilities.hasText(_classpath)) {
-      attributes.putValue("Bundle-ClassPath", _classpath);
+    if (Utilities.hasText(this._classpath)) {
+      attributes.putValue("Bundle-ClassPath", this._classpath);
     }
     return manifest;
   }

@@ -14,7 +14,6 @@ import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 
 import org.ant4eclipse.platform.ant.core.GetPathComponent;
-import org.ant4eclipse.platform.ant.core.WorkspaceComponent;
 import org.ant4eclipse.platform.ant.core.delegate.GetPathDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
@@ -38,8 +37,8 @@ import java.util.Set;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetRequiredBundlesTask extends AbstractProjectPathTask implements WorkspaceComponent,
-    TargetPlatformAwareComponent, GetPathComponent {
+public class GetRequiredBundlesTask extends AbstractProjectPathTask implements TargetPlatformAwareComponent,
+    GetPathComponent {
 
   /** the workspace delegate */
   private WorkspaceDelegate               _workspaceDelegate;

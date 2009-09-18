@@ -42,7 +42,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
 
   public boolean getBooleanAttribute(String attributeName) {
     LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
-    return Boolean.valueOf(launchConfigAttribute.getStringValue());
+    return Boolean.parseBoolean(launchConfigAttribute.getStringValue());
   }
 
   public String getAttribute(String attributeName) {

@@ -10,7 +10,7 @@ public class PluginBuildProperties {
 
   public Library withLibrary(String name) {
     Library library = new Library(name);
-    _libraries.add(library);
+    this._libraries.add(library);
     return library;
   }
 
@@ -21,7 +21,7 @@ public class PluginBuildProperties {
   public String toString() {
     StringBuffer result = new StringBuffer();
 
-    for (Library library : _libraries) {
+    for (Library library : this._libraries) {
       result.append(library);
     }
     // bin.includes = META-INF/,\
@@ -29,12 +29,12 @@ public class PluginBuildProperties {
 
     result.append("bin.includes = ");
     result.append("META-INF/");
-    if (!_libraries.isEmpty()) {
+    if (!this._libraries.isEmpty()) {
       result.append(",\\\n");
     }
 
-    for (Iterator<Library> iterator = _libraries.iterator(); iterator.hasNext();) {
-      Library library = (Library) iterator.next();
+    for (Iterator<Library> iterator = this._libraries.iterator(); iterator.hasNext();) {
+      Library library = iterator.next();
       result.append(library.getName());
       if (iterator.hasNext()) {
         result.append(",\\\n");
@@ -54,9 +54,9 @@ public class PluginBuildProperties {
     private List<String> _outputList;
 
     public Library(String name) {
-      _name = name;
-      _sourceList = new LinkedList<String>();
-      _outputList = new LinkedList<String>();
+      this._name = name;
+      this._sourceList = new LinkedList<String>();
+      this._outputList = new LinkedList<String>();
     }
 
     /**
@@ -66,7 +66,7 @@ public class PluginBuildProperties {
      * @return the name
      */
     public String getName() {
-      return _name;
+      return this._name;
     }
 
     /**
@@ -77,12 +77,12 @@ public class PluginBuildProperties {
      * @return
      */
     public Library withSource(String source) {
-      _sourceList.add(source);
+      this._sourceList.add(source);
       return this;
     }
 
     public Library withOutput(String source) {
-      _outputList.add(source);
+      this._outputList.add(source);
       return this;
     }
 
@@ -102,11 +102,11 @@ public class PluginBuildProperties {
 
       StringBuffer result = new StringBuffer();
 
-      if (!_sourceList.isEmpty()) {
+      if (!this._sourceList.isEmpty()) {
         result.append("source.");
-        result.append(_name);
+        result.append(this._name);
         result.append(" = ");
-        for (Iterator<String> iterator = _sourceList.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = this._sourceList.iterator(); iterator.hasNext();) {
           String source = iterator.next();
           result.append(source);
           result.append("/");
@@ -117,11 +117,11 @@ public class PluginBuildProperties {
         }
       }
 
-      if (!_outputList.isEmpty()) {
+      if (!this._outputList.isEmpty()) {
         result.append("output.");
-        result.append(_name);
+        result.append(this._name);
         result.append(" = ");
-        for (Iterator<String> iterator = _outputList.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = this._outputList.iterator(); iterator.hasNext();) {
           String source = iterator.next();
           result.append(source);
           result.append("/");

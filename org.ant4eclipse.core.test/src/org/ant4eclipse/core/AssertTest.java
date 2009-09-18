@@ -136,7 +136,6 @@ public class AssertTest extends ConfigurableAnt4EclipseTestCase {
     try {
       Assert.isDirectory(testFile);
     } catch (RuntimeException e) {
-      String userDir = System.getProperty("user.dir") + File.separator;
       assertEquals("Precondition violated: " + testFile.getAbsolutePath() + " has to be a directory, not a file!", e
           .getMessage());
     }

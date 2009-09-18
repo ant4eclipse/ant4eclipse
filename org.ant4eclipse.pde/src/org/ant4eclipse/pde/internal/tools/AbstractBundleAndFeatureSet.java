@@ -98,8 +98,9 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     stopWatch.stop();
 
     // debug
-    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", stopWatch.getElapsedTime(),
-        this._bundleDescriptonList.size(), this._featureDescriptonList.size());
+    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", Long.valueOf(stopWatch
+        .getElapsedTime()), Integer.valueOf(this._bundleDescriptonList.size()), Integer
+        .valueOf(this._featureDescriptonList.size()));
 
     // set initialized
     this._isInitialised = true;

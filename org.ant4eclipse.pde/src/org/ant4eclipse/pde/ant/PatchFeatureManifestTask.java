@@ -45,66 +45,67 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
   /** - */
   private String _pluginVersions;
 
-  
-  
   /**
    * <p>
    * </p>
-   *
+   * 
    * @return the featureXmlFile
    */
   public File getFeatureXmlFile() {
-    return _featureXmlFile;
+    return this._featureXmlFile;
   }
 
   /**
    * <p>
    * </p>
-   *
-   * @param featureXmlFile the featureXmlFile to set
+   * 
+   * @param featureXmlFile
+   *          the featureXmlFile to set
    */
   public void setFeatureXmlFile(File featureXmlFile) {
-    _featureXmlFile = featureXmlFile;
+    this._featureXmlFile = featureXmlFile;
   }
 
   /**
    * <p>
    * </p>
-   *
+   * 
    * @return the qualifier
    */
   public String getQualifier() {
-    return _qualifier;
+    return this._qualifier;
   }
 
   /**
    * <p>
    * </p>
-   *
-   * @param qualifier the qualifier to set
+   * 
+   * @param qualifier
+   *          the qualifier to set
    */
   public void setQualifier(String qualifier) {
-    _qualifier = qualifier;
+    this._qualifier = qualifier;
   }
 
   /**
    * <p>
    * </p>
-   *
+   * 
    * @return the pluginVersions
    */
   public String getPluginVersions() {
-    return _pluginVersions;
+    return this._pluginVersions;
   }
 
   /**
    * <p>
    * </p>
-   *
-   * @param pluginVersions the pluginVersions to set
+   * 
+   * @param pluginVersions
+   *          the pluginVersions to set
    */
   public void setPluginVersions(String pluginVersions) {
-    _pluginVersions = pluginVersions;
+    this._pluginVersions = pluginVersions;
   }
 
   /**
@@ -115,9 +116,9 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
 
     Map<String, String> versions = new HashMap<String, String>();
 
-    if (Utilities.hasText(_pluginVersions)) {
+    if (Utilities.hasText(this._pluginVersions)) {
 
-      StringTokenizer tokenizer = new StringTokenizer(_pluginVersions, ";");
+      StringTokenizer tokenizer = new StringTokenizer(this._pluginVersions, ";");
 
       while (tokenizer.hasMoreTokens()) {
         String token = tokenizer.nextToken();
@@ -131,7 +132,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
     }
 
     try {
-      replaceVersions(_featureXmlFile, _qualifier, versions);
+      replaceVersions(this._featureXmlFile, this._qualifier, versions);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -143,14 +144,14 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
   @Override
   protected void preconditions() {
 
-    if (_featureXmlFile == null) {
+    if (this._featureXmlFile == null) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "featureXmlFile");
     }
-    if (!_featureXmlFile.exists()) {
+    if (!this._featureXmlFile.exists()) {
       // TODO
       throw new RuntimeException();
     }
-    if (!_featureXmlFile.isFile()) {
+    if (!this._featureXmlFile.isFile()) {
       // TODO
       throw new RuntimeException();
     }
@@ -190,7 +191,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
       Element element = (Element) pluginNodes.item(i);
       String id = element.getAttribute("id");
       if (newBundleVersions.containsKey(id)) {
-        String version = (String) newBundleVersions.get(id);
+        String version = newBundleVersions.get(id);
         element.setAttribute("version", version);
       }
     }

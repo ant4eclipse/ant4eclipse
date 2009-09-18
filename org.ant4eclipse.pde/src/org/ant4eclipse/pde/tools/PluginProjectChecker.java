@@ -52,7 +52,7 @@ public class PluginProjectChecker {
   /** the LIBRARY_WITHOUT_OUTPUT_DIRECTORY */
   private static final String   LIBRARY_WITHOUT_OUTPUT_DIRECTORY                = ERRONEOUS_PROJECT_DEFINITION_MSG
                                                                                     + "- Inconsistent build properties file '%2$s'.\n"
-                                                                                    + "- The build properties contains a library '%3$s' that doesn't contain a output directory. To fix this issue, please add a output directory to the library's output list 'output.%3$s'.\n";                                                  ;
+                                                                                    + "- The build properties contains a library '%3$s' that doesn't contain a output directory. To fix this issue, please add a output directory to the library's output list 'output.%3$s'.\n";
 
   /** the eclipse project to check */
   private EclipseProject        _eclipseProject;

@@ -1,15 +1,17 @@
 package org.ant4eclipse.jdt.ecj;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.apache.tools.ant.taskdefs.Javac;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.util.Util;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * <p>
@@ -87,6 +89,7 @@ public class CompilerOptionsProvider {
    *          the javac task
    * @return the compiler options specified in the javac task.
    */
+  @SuppressWarnings("unchecked")
   private static Map<String, String> getJavacCompilerOptions(Javac javac) {
 
     Map<String, String> result = new HashMap<String, String>();
@@ -184,15 +187,11 @@ public class CompilerOptionsProvider {
      */
     if (javac.getNowarn()) {
       // disable all warnings
-      Object[] entries = result.entrySet().toArray();
-      for (int i = 0, max = entries.length; i < max; i++) {
-        Map.Entry entry = (Map.Entry) entries[i];
-        if (!(entry.getKey() instanceof String))
-          continue;
-        if (!(entry.getValue() instanceof String))
-          continue;
-        if (((String) entry.getValue()).equals(CompilerOptions.WARNING)) {
-          result.put((String) entry.getKey(), CompilerOptions.IGNORE);
+      Map.Entry<String, String>[] entries = result.entrySet().toArray(new Map.Entry[result.size()]);
+      for (Entry<String, String> entrie : entries) {
+        Map.Entry<String, String> entry = entrie;
+        if (entry.getValue().equals(CompilerOptions.WARNING)) {
+          result.put(entry.getKey(), CompilerOptions.IGNORE);
         }
       }
       result.put(CompilerOptions.OPTION_TaskTags, Util.EMPTY_STRING);
