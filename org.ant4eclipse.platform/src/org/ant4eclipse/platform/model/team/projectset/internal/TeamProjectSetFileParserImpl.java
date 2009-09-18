@@ -77,10 +77,8 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
     this._factories = null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.core.Lifecycle#isInitialized()
+  /**
+   * {@inheritDoc}
    */
   public boolean isInitialized() {
     return (this._factories != null);

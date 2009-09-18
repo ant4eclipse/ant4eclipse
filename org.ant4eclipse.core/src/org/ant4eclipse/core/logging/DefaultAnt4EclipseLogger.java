@@ -13,16 +13,27 @@ package org.ant4eclipse.core.logging;
 
 import java.io.PrintStream;
 
+/**
+ * <p>
+ * Default implementation of an {@link Ant4EclipseLogger} which makes use of a specific {@link PrintStream} or
+ * {@link System#out} by default.
+ * </p>
+ */
 public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
+  /** -- */
   public static final int LOG_LEVEL_ERROR   = 0;
 
+  /** -- */
   public static final int LOG_LEVEL_WARN    = 1;
 
+  /** -- */
   public static final int LOG_LEVEL_INFO    = 2;
 
+  /** -- */
   public static final int LOG_LEVEL_DEBUG  /* ANT category: verbose */= 3;
 
+  /** -- */
   public static final int LOG_LEVEL_TRACE  /* ANT category: debug */= 4;
 
   private static String[] LEVEL_DESCIRPTION = new String[] { "ERROR", "WARN", "INFO", "DEBUG", "TRACE" };

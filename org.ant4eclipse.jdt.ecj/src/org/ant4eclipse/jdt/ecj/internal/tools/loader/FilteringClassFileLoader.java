@@ -54,21 +54,21 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   }
 
   /**
-   * @see org.ant4eclipse.jdt.ecj.ClassFileLoader#getAllPackages()
+   * {@inheritDoc}
    */
   public String[] getAllPackages() {
     return this._classFileLoader.getAllPackages();
   }
 
   /**
-   * @see org.ant4eclipse.jdt.ecj.ClassFileLoader#hasPackage(java.lang.String)
+   * {@inheritDoc}
    */
   public boolean hasPackage(String packageName) {
     return this._classFileLoader.hasPackage(packageName);
   }
 
   /**
-   * @see org.ant4eclipse.jdt.ecj.ClassFileLoader#loadClass(org.ant4eclipse.core.ClassName)
+   * {@inheritDoc}
    */
   public ClassFile loadClass(ClassName className) {
 

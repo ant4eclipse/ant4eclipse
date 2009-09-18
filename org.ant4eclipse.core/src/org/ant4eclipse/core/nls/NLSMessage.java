@@ -29,7 +29,7 @@ public @interface NLSMessage {
    * A default value, that should be set if no other value for the annotated field can be found in an external
    * properties file
    * 
-   * @return
+   * @return The default value used for the initialisation of a message. Not <code>null</code>.
    */
   String value() default "";
 

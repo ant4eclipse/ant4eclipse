@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.service;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 /**
  * ServiceRegistryConfiguration --
  * 
@@ -38,7 +40,7 @@ public interface ServiceRegistryConfiguration {
     /**
      * <p>
      * Associates the specified service with the specified service identifier. If the service identifier is already set,
-     * a {@link NoUniqueIdentifierException} will be thrown.
+     * a {@link Ant4EclipseException} will be thrown.
      * </p>
      * 
      * @param service
@@ -51,7 +53,7 @@ public interface ServiceRegistryConfiguration {
     /**
      * <p>
      * Associates the specified service with the specified service identifiers. If one of the service identifiers is
-     * already set, a {@link NoUniqueIdentifierException} will be thrown.
+     * already set, a {@link Ant4EclipseException} will be thrown.
      * </p>
      * 
      * @param service

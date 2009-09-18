@@ -29,10 +29,8 @@ public abstract class AbstractJdtTest extends AbstractWorkspaceBasedBuildFileTes
   /** TEST_DIR_SEPARATOR */
   public static final String TEST_DIR_SEPARATOR  = File.separator;
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest#setupBuildFile(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
   @Override
   protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {

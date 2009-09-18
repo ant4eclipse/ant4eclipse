@@ -81,6 +81,9 @@ public abstract class NLS {
 
   /**
    * Initializes all (NLS) fields of the given class
+   * 
+   * @param clazz
+   *          The class which field values will be setup with internationalised information. Not <code>null</code>.
    */
   public static void initialize(Class<?> clazz) {
     Field[] fields = clazz.getDeclaredFields();

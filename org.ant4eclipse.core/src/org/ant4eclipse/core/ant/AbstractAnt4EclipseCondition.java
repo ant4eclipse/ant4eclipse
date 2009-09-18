@@ -16,7 +16,7 @@ import org.apache.tools.ant.taskdefs.condition.Condition;
 public abstract class AbstractAnt4EclipseCondition extends ProjectComponent implements Condition {
 
   /**
-   * @see org.apache.tools.ant.taskdefs.condition.Condition#eval()
+   * {@inheritDoc}
    */
   public final boolean eval() throws BuildException {
     // Validates the Ant4EclipseDataTypes

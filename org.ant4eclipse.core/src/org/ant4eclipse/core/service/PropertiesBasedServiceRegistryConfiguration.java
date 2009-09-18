@@ -18,7 +18,7 @@ import org.ant4eclipse.core.util.Utilities;
 
 /**
  * The PropertiesBasedServiceRegistryConfiguration configures the ServiceRegistry with properties from
- * {@link Ant4EclipseConfigurationProperties}.
+ * {@link Ant4EclipseConfiguration}.
  * 
  * <p>
  * The properties that are used to configure the registry must have the service identifier as key and the service'
@@ -44,12 +44,22 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
    */
   public static final String       PROPERTY_PREFIX = "service";
 
+  /**
+   * <p>
+   * Sets up this configuration for a {@link ServiceRegistry}.
+   * </p>
+   * 
+   * @param ant4EclipseConfiguration
+   *          The configuration to be used. Not <code>null</code>.
+   */
   public PropertiesBasedServiceRegistryConfiguration(Ant4EclipseConfiguration ant4EclipseConfiguration) {
     Assert.notNull(ant4EclipseConfiguration);
-
     this._ant4EclipseConfiguration = ant4EclipseConfiguration;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void configure(ConfigurationContext context) {
 
     // get all properties describing a service

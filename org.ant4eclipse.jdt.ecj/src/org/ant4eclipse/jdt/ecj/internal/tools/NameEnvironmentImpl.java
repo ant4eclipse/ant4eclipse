@@ -49,14 +49,14 @@ public class NameEnvironmentImpl implements INameEnvironment {
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#cleanup()
+   * {@inheritDoc}
    */
   public void cleanup() {
     // nothing to do here...
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[][])
+   * {@inheritDoc}
    */
   public NameEnvironmentAnswer findType(char[][] compoundTypeName) {
 
@@ -76,10 +76,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[], char[][])
+  /**
+   * {@inheritDoc}
    */
   public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
     A4ELogging.trace("findType('%s', %s)", String.valueOf(typeName), asString(packageName));

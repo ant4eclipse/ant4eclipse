@@ -124,7 +124,7 @@ public class TargetDefinition {
   }
 
   /**
-   * @see java.lang.Object#toString()
+   * {@inheritDoc}
    */
   @Override
   public String toString() {
@@ -145,7 +145,7 @@ public class TargetDefinition {
   }
 
   /**
-   * @see java.lang.Object#hashCode()
+   * {@inheritDoc}
    */
   @Override
   public int hashCode() {
@@ -160,7 +160,7 @@ public class TargetDefinition {
   }
 
   /**
-   * @see java.lang.Object#equals(java.lang.Object)
+   * {@inheritDoc}
    */
   @Override
   public boolean equals(Object obj) {
@@ -305,7 +305,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {
@@ -317,7 +317,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object obj) {
@@ -345,7 +345,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
@@ -468,7 +468,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * {@inheritDoc}
      */
     @Override
     public String toString() {
@@ -663,7 +663,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * {@inheritDoc}
      */
     public int hashCode() {
       int prime = 31;
@@ -676,7 +676,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * {@inheritDoc}
      */
     public boolean equals(Object obj) {
       if (this == obj) {
@@ -717,7 +717,7 @@ public class TargetDefinition {
     }
 
     /**
-     * @see java.lang.Object#toString()
+     * {@inheritDoc}
      */
     public String toString() {
       StringBuffer buffer = new StringBuffer();

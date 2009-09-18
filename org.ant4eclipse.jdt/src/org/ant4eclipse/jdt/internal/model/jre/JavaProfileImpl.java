@@ -81,23 +81,21 @@ public class JavaProfileImpl implements JavaProfile {
   }
 
   /**
-   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#getName()
+   * {@inheritDoc}
    */
   public String getName() {
     return this._properties.getProperty(JavaProfileImpl.PROPERTY_PROFILE_NAME);
   }
 
   /**
-   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#isSystemPackage(java.lang.String)
+   * {@inheritDoc}
    */
   public boolean isSystemPackage(String packageName) {
     return this._systemPackagesList.contains(packageName);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.jre.JavaProfile#isDelegatedToBootClassLoader(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
   public boolean isDelegatedToBootClassLoader(String packageName) {
 
@@ -111,18 +109,21 @@ public class JavaProfileImpl implements JavaProfile {
   }
 
   /**
-   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#getExecutionEnvironments()
+   * {@inheritDoc}
    */
   public List<String> getExecutionEnvironmentNames() {
     return Collections.unmodifiableList(this._executionEnvironments);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public List<String> getSystemPackages() {
     return Collections.unmodifiableList(this._systemPackagesList);
   }
 
   /**
-   * @see org.ant4eclipse.jdt.model.jre.JavaProfile#getProperties()
+   * {@inheritDoc}
    */
   public Properties getProperties() {
     return this._properties;

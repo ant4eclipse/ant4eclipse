@@ -393,8 +393,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.internal.FilteredClasspathClassFileLoader#loadClass(net.sf.ant4eclipse.tools.core.ejc.loader.ClassName
-   *      )
+   * {@inheritDoc}
    */
   public ClassFile loadClass(ClassName className) {
 

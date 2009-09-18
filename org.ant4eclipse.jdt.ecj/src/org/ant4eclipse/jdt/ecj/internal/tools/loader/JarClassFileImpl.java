@@ -49,7 +49,7 @@ public class JarClassFileImpl extends AbstractClassFileImpl {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.loader.ClassFile#getBinaryType()
+   * {@inheritDoc}
    */
   public final IBinaryType getBinaryType() {
     try {
@@ -66,7 +66,7 @@ public class JarClassFileImpl extends AbstractClassFileImpl {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.ejc.internal.loader.AbstractClassFileImpl#toString()
+   * {@inheritDoc}
    */
   @Override
   public String toString() {

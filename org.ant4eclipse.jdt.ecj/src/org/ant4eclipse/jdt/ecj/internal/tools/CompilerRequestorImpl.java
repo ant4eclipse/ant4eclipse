@@ -53,8 +53,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.ICompilerRequestor#acceptResult(org.eclipse.jdt.internal.compiler.CompilationResult
-   *      )
+   * {@inheritDoc}
    */
   public void acceptResult(CompilationResult result) {
 

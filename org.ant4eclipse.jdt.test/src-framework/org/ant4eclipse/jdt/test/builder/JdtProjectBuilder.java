@@ -183,10 +183,8 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
         containerName));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.platform.test.builder.builder.EclipseProjectBuilder#createArtefacts(java.io.File)
+  /**
+   * {@inheritDoc}
    */
   @Override
   protected void createArtefacts(File projectDir) {

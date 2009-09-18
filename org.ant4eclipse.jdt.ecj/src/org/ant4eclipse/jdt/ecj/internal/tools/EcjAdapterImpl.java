@@ -46,10 +46,8 @@ import java.util.Map;
  */
 public final class EcjAdapterImpl implements EcjAdapter {
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.tools.osgi.ejc.EjcAdapter#compile(net.sf.ant4eclipse.tools.osgi.ejc.CompileJobDescription)
+  /**
+   * {@inheritDoc}
    */
   public CompileJobResult compile(CompileJobDescription description) {
     Assert.notNull(description);

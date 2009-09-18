@@ -90,7 +90,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.ICompilationUnit#getMainTypeName()
+   * {@inheritDoc}
    */
   public final char[] getMainTypeName() {
     return this._mainTypeName;
@@ -98,21 +98,21 @@ public class CompilationUnitImpl implements ICompilationUnit {
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.ICompilationUnit#getPackageName()
+   * {@inheritDoc}
    */
   public final char[][] getPackageName() {
     return this._packageName;
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.IDependent#getFileName()
+   * {@inheritDoc}
    */
   public final char[] getFileName() {
     return this._fileName;
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.ICompilationUnit#getContents()
+   * {@inheritDoc}
    */
   public final char[] getContents() {
     String filename = new String(this._fileName);

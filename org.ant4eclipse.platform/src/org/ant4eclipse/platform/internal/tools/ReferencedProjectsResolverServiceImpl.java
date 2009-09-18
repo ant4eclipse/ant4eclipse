@@ -81,8 +81,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
   }
 
   /**
-   * @see org.ant4eclipse.platform.tools.ReferencedProjectsResolverService#resolveReferencedProjects(org.ant4eclipse.platform.model.resource.EclipseProject,
-   *      java.util.Properties)
+   * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
     return resolveReferencedProjects(project, getReferenceTypes(), additionalElements);

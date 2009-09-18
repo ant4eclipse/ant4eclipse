@@ -59,31 +59,28 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#getType()
+   * {@inheritDoc}
    */
   public byte getType() {
     return LIBRARY;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#getLocation()
+   * {@inheritDoc}
    */
   public File getLocation() {
     return this._location;
   }
 
   /**
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#getManifest(java.io.File)
+   * {@inheritDoc}
    */
   public Manifest getManifest() {
     return this._manifest;
   }
 
   /**
-   * <p>
-   * </p>
-   * 
-   * @see net.sf.ant4eclipse.tools.core.osgi.BundleLayoutResolver#resolveBundleClasspathEntries(java.io.File)
+   * {@inheritDoc}
    */
   public File[] resolveBundleClasspathEntries() {
 

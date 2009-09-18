@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * <p>
  * The {@link ServiceRegistry} implements a singleton that can be used to register and retrieve services. A service is
- * an instance of a class that implements the interface {@link Service}.
+ * an instance of any kind of class.
  * </p>
  * <p>
  * The service registry must be configured before it can be used. To configure the registry a
@@ -123,8 +123,11 @@ public class ServiceRegistry {
    * </p>
    * 
    * @param <T>
+   *          The type of the service class.
    * @param serviceType
-   * @return
+   *          The service class itself.
+   * 
+   * @return <code>true</code> <=> A service is registered using the supplied type.
    */
   public <T> boolean hasService(Class<T> serviceType) {
     return hasService(serviceType.getName());
@@ -132,10 +135,13 @@ public class ServiceRegistry {
 
   /**
    * <p>
+   * Returns <code>true</code> if a service with the supplied identifier could be found.
    * </p>
    * 
    * @param serviceIdentifier
-   * @return
+   *          The identifier of the service class used to look for.
+   * 
+   * @return <code>true</code> <=> A service is registered using the supplied identifier.
    */
   public final boolean hasService(String serviceIdentifier) {
     return this._serviceMap.containsKey(serviceIdentifier);
@@ -147,8 +153,11 @@ public class ServiceRegistry {
    * </p>
    * 
    * @param <T>
+   *          The type of the service class.
    * @param serviceType
-   * @return
+   *          The service class itself.
+   * 
+   * @return The instance of the service class.
    */
   @SuppressWarnings("unchecked")
   public <T> T getService(Class<T> serviceType) {
@@ -157,11 +166,16 @@ public class ServiceRegistry {
 
   /**
    * <p>
+   * Gives access to a specific service.
    * </p>
    * 
    * @param serviceIdentifier
-   * @return
-   * @throws ServiceNotAvailableException
+   *          The identifier used to select a service.
+   * 
+   * @return The service instance. Not <code>null</code>.
+   * 
+   * @throws Ant4EclipseException
+   *           if the desired service is not available.
    */
   public final Object getService(String serviceIdentifier) {
     Object result = this._serviceMap.get(serviceIdentifier);

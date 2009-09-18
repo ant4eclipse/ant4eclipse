@@ -59,9 +59,10 @@ public class Ant4EclipseException extends RuntimeException {
 
   /**
    * <p>
+   * Returns the code that indicates the type of error.
    * </p>
    * 
-   * @return
+   * @return The code that indicates the type of error. Not <code>null</code>.
    */
   public ExceptionCode getExceptionCode() {
     return this._exceptionCode;
@@ -69,9 +70,10 @@ public class Ant4EclipseException extends RuntimeException {
 
   /**
    * <p>
+   * Returns the arguments used for the formatted message in order to provide additional information.
    * </p>
    * 
-   * @return
+   * @return The arguments used for the formatted message in order to provide additional information.
    */
   public Object[] getArgs() {
     return this._args;

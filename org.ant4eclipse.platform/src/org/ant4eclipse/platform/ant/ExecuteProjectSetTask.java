@@ -163,8 +163,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   }
 
   /**
-   * @return
-   * @see org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate#getSubElements()
+   * {@inheritDoc}
    */
   public List<Object> getSubElements() {
     return this._subElementDelegate.getSubElements();

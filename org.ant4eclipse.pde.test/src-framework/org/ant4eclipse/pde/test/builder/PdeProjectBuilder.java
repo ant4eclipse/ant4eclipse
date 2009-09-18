@@ -34,10 +34,8 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
         .withJreContainerClasspathEntry().withSrcClasspathEntry("src", false).withOutputClasspathEntry("bin");
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.jdt.test.builder.JdtProjectBuilder#createArtefacts(java .io.File)
+  /**
+   * {@inheritDoc}
    */
   @Override
   protected void createArtefacts(File projectDir) {
@@ -53,37 +51,37 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   }
 
   protected PdeProjectBuilder withDefaultBundleManifest() {
-    _manifest = new BundleManifest(getProjectName());
+    this._manifest = new BundleManifest(getProjectName());
     return this;
   }
 
   public BundleManifest withBundleManifest() {
-    _manifest = new BundleManifest(getProjectName());
-    return _manifest;
+    this._manifest = new BundleManifest(getProjectName());
+    return this._manifest;
   }
 
   protected void createBundleManifestFile(File projectDir) {
     FileHelper.createDirectory(new File(projectDir, "META-INF"));
     File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
     FileHelper.createFile(manifestFile);
-    _manifest.write(manifestFile);
+    this._manifest.write(manifestFile);
   }
 
   public PluginBuildProperties withDefaultBuildProperties() {
-    _pluginBuildProperties = new PluginBuildProperties();
-    _pluginBuildProperties.withLibrary(".").withSource("src").withOutput("bin");
-    return _pluginBuildProperties;
+    this._pluginBuildProperties = new PluginBuildProperties();
+    this._pluginBuildProperties.withLibrary(".").withSource("src").withOutput("bin");
+    return this._pluginBuildProperties;
   }
-  
+
   public PluginBuildProperties withBuildProperties() {
-    _pluginBuildProperties = new PluginBuildProperties();
-    return _pluginBuildProperties;
+    this._pluginBuildProperties = new PluginBuildProperties();
+    return this._pluginBuildProperties;
   }
 
   protected void createPluginBuildPropertiesFile(File projectDir) {
-    if (_pluginBuildProperties != null) {
+    if (this._pluginBuildProperties != null) {
       File buildPropertiesFile = new File(projectDir, "build.properties");
-      FileHelper.createFile(buildPropertiesFile, _pluginBuildProperties.toString());
+      FileHelper.createFile(buildPropertiesFile, this._pluginBuildProperties.toString());
     }
   }
 }

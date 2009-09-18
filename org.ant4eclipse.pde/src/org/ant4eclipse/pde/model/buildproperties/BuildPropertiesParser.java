@@ -49,6 +49,7 @@ import java.util.StringTokenizer;
  */
 public class BuildPropertiesParser {
 
+  /** -- */
   public static final String BUILD_PROPERTIES = "build.properties";
 
   /**

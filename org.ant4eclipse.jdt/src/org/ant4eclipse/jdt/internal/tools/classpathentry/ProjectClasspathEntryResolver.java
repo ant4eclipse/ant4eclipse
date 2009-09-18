@@ -35,8 +35,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
   }
 
   /**
-   * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#resolve(org.ant4eclipse.jdt.model.ClasspathEntry,
-   *      org.ant4eclipse.jdt.tools.container.ClasspathResolverContext)
+   * {@inheritDoc}
    */
   public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 

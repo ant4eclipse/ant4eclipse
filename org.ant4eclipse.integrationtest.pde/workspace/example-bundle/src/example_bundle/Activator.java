@@ -14,10 +14,8 @@ public class Activator implements BundleActivator {
 
   private static final String COLOR = "color"; // NON-NLS-1
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+  /**
+   * {@inheritDoc}
    */
   public void start(BundleContext context) throws Exception {
     tracker = new ServiceTracker(context, PreferencesService.class.getName(), null);
@@ -32,10 +30,8 @@ public class Activator implements BundleActivator {
     System.out.println("My favourite color is: " + preferences.get(COLOR, ""));
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+  /**
+   * {@inheritDoc}
    */
   public void stop(BundleContext context) throws Exception {
     // clean up

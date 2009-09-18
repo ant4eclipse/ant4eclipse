@@ -1,14 +1,14 @@
 package org.ant4eclipse.build.tools;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.ResourceCollection;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ public abstract class AbstractMergeTask extends Task {
   public AbstractMergeTask() {
 
     // create the resource collection list
-    _resourceCollections = new LinkedList<ResourceCollection>();
+    this._resourceCollections = new LinkedList<ResourceCollection>();
   }
 
   /**
@@ -57,7 +57,7 @@ public abstract class AbstractMergeTask extends Task {
    *          a resource collection.
    */
   public void add(ResourceCollection resourceCollection) {
-    _resourceCollections.add(resourceCollection);
+    this._resourceCollections.add(resourceCollection);
   }
 
   /**
@@ -69,7 +69,7 @@ public abstract class AbstractMergeTask extends Task {
    *          the destination file.
    */
   public void setDestinationFile(File destinationFile) {
-    _destinationFile = destinationFile;
+    this._destinationFile = destinationFile;
   }
 
   /**
@@ -80,7 +80,7 @@ public abstract class AbstractMergeTask extends Task {
    * @return the resource collections.
    */
   public List<ResourceCollection> getResourceCollections() {
-    return _resourceCollections;
+    return this._resourceCollections;
   }
 
   /**
@@ -91,12 +91,13 @@ public abstract class AbstractMergeTask extends Task {
    * @return the destination file.
    */
   public File getDestinationFile() {
-    return _destinationFile;
+    return this._destinationFile;
   }
 
   /**
-   * @see org.apache.tools.ant.Task#execute()
+   * {@inheritDoc}
    */
+  @Override
   public final void execute() throws BuildException {
 
     // Validates that the task parameters are valid.
@@ -129,11 +130,11 @@ public abstract class AbstractMergeTask extends Task {
    */
   protected void validate() throws BuildException {
 
-    if (!_destinationFile.canWrite()) {
+    if (!this._destinationFile.canWrite()) {
       try {
-        _destinationFile.createNewFile();
+        this._destinationFile.createNewFile();
       } catch (IOException e) {
-        throw new BuildException("Unable to write to " + _destinationFile + ".");
+        throw new BuildException("Unable to write to " + this._destinationFile + ".");
       }
     }
   }

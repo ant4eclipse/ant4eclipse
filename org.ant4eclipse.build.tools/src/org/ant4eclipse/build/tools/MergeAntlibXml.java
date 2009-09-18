@@ -35,15 +35,16 @@ public class MergeAntlibXml extends AbstractMergeTask {
   private Node     _resultAntlibNode = null;
 
   /**
-   * @see org.ant4eclipse.build.tools.AbstractMergeTask#doExecute()
+   * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("unchecked")
   public void doExecute() throws Exception {
 
     // create result tree
-    _result = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-    _resultAntlibNode = _result.createElement("antlib");
-    _result.appendChild(_resultAntlibNode);
+    this._result = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+    this._resultAntlibNode = this._result.createElement("antlib");
+    this._result.appendChild(this._resultAntlibNode);
 
     // process the specified files
     for (ResourceCollection resourceCollection : getResourceCollections()) {
@@ -82,8 +83,8 @@ public class MergeAntlibXml extends AbstractMergeTask {
     NodeList nl = node.getChildNodes();
     for (int i = 0, cnt = nl.getLength(); i < cnt; i++) {
       if (nl.item(i).getNodeType() == Node.ELEMENT_NODE) {
-        Node importedNode = _result.importNode(nl.item(i), true);
-        _resultAntlibNode.appendChild(importedNode);
+        Node importedNode = this._result.importNode(nl.item(i), true);
+        this._resultAntlibNode.appendChild(importedNode);
       }
     }
   }
@@ -100,7 +101,7 @@ public class MergeAntlibXml extends AbstractMergeTask {
     log("Writing file '" + getDestinationFile() + "'");
 
     // Prepare the DOM document for writing
-    Source source = new DOMSource(_result);
+    Source source = new DOMSource(this._result);
 
     // Prepare the output file
     Result result = new StreamResult(getDestinationFile());

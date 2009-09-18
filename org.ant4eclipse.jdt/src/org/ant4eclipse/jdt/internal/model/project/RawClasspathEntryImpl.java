@@ -134,46 +134,36 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   // return null;
   // }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#getEntryKind()
+  /**
+   * {@inheritDoc}
    */
   public int getEntryKind() {
     return this._entryKind;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#getPath()
+  /**
+   * {@inheritDoc}
    */
   public String getPath() {
     return this._path;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#getOutputLocation()
+  /**
+   * {@inheritDoc}
    */
   public String getOutputLocation() {
     return this._outputLocation;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#hasOutputLocation()
+  /**
+   * {@inheritDoc}
    */
   public boolean hasOutputLocation() {
     return this._outputLocation != null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#isExported()
+  /**
+   * {@inheritDoc}
    */
   public boolean isExported() {
     return this._exported;

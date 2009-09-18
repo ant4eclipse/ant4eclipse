@@ -13,14 +13,28 @@ package org.ant4eclipse.core.osgi;
 
 import org.ant4eclipse.core.exception.ExceptionCode;
 
+/**
+ * <p>
+ * Collection of failure codes for osgi related tools.
+ * </p>
+ */
 public class OsgiToolsExceptionCodes extends ExceptionCode {
 
+  /** -- */
   public static OsgiToolsExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND = new OsgiToolsExceptionCodes(
                                                                                "The file with global compiler settings '%s' could not be found");
 
+  /**
+   * <p>
+   * Initialises this failure code with a specific message.
+   * </p>
+   * 
+   * @param message
+   *          The message used for the user presentation. Not <code>null</code>.
+   */
   public OsgiToolsExceptionCodes(String message) {
     super(message);
 
   }
 
-}
+} /* ENDCLASS */

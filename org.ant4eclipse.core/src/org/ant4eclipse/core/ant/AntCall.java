@@ -51,12 +51,12 @@ public class AntCall extends Ant {
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * <p>
    * Overrides the <code>execute()</code> method of the {@link Ant} super class. This method will return <b>without</b>
    * an exception if the defined ant file or the defined target is not available.
    * </p>
-   * 
-   * @see org.apache.tools.ant.taskdefs.Ant#execute()
    */
   @Override
   public void execute() throws BuildException {
