@@ -490,15 +490,23 @@ public class Utilities {
    * 
    * @return A map of properties providing the settings. Not <code>null</code>.
    * 
-   * @throws IOException
-   *           Loading the content from the supplied resource failed.
+   * @throws Ant4EclipseException
+   *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public static final Map<String, String> readProperties(URL resource) throws IOException {
+  public static final Map<String, String> readProperties(URL resource) {
     InputStream instream = null;
     Map<String, String> result = null;
     try {
       instream = resource.openStream();
       result = readProperties(instream);
+    } catch (Ant4EclipseException ex) {
+      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
+        throw new Ant4EclipseException(ex.getCause(), CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm());
+      } else {
+        throw ex;
+      }
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm());
     } finally {
       close(instream);
     }
@@ -512,6 +520,9 @@ public class Utilities {
    *          The File providing the content. Not <code>null</code>.
    * 
    * @return A map of properties providing the read content. If <code>null</code> the settings could not be loaded.
+   * 
+   * @throws Ant4EclipseException
+   *           with code {@link CoreExceptionCode#FILEIO_FAILURE} if accessing the file failed for some reason.
    */
   public static final Map<String, String> readProperties(File propertiesFile) {
     FileInputStream fis = null;
@@ -520,12 +531,14 @@ public class Utilities {
       fis = new FileInputStream(propertiesFile);
       result = readProperties(fis);
       A4ELogging.debug("Read settings from '%s'", propertiesFile.getAbsolutePath());
+    } catch (Ant4EclipseException ex) {
+      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
+        throw new Ant4EclipseException(ex.getCause(), CoreExceptionCode.FILEIO_FAILURE, propertiesFile);
+      } else {
+        throw ex;
+      }
     } catch (IOException ex) {
-      /**
-       * @todo [28-Jun-2009:KASI] The caller should handle this exception has he has the knowledge how this should be
-       *       treated.
-       */
-      A4ELogging.warn("Could not load settings file '%s': '%s", propertiesFile.getAbsolutePath(), ex.toString());
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, propertiesFile);
     } finally {
       close(fis);
     }
@@ -540,14 +553,18 @@ public class Utilities {
    * 
    * @return A map of properties providing the read content. Not <code>null</code>.
    * 
-   * @throws IOException
-   *           Loading the properties from the InputStream failed.
+   * @throws Ant4EclipseException
+   *           with {@link CoreExceptionCode#IO_FAILURE} in case there was an io error on the stream.
    */
-  public static final Map<String, String> readProperties(InputStream instream) throws IOException {
+  public static final Map<String, String> readProperties(InputStream instream) {
     Map<String, String> result = new Hashtable<String, String>();
     if (instream != null) {
       Properties properties = new Properties();
-      properties.load(instream);
+      try {
+        properties.load(instream);
+      } catch (IOException ex) {
+        throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+      }
       for (Map.Entry<Object, Object> entry : properties.entrySet()) {
         result.put((String) entry.getKey(), (String) entry.getValue());
       }
@@ -556,30 +573,24 @@ public class Utilities {
   }
 
   /**
-   * @todo [28-Jun-2009:KASI] The return type should be Map<String,String> in order to provide a datatype making use of
-   *       generics. This would cause some changes within APIs which are uncritical but I don't intend to rewrite APIs
-   *       without further discussion.
+   * Loads the properties from a resource on the classpath.
+   * 
+   * @param classpath
+   *          The path within the classpath.
+   * 
+   * @return A Map providing the loaded properties. Not <code>null</code>.
+   * 
+   * @throws Ant4EclipseException
+   *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason or
+   *           {@link CoreExceptionCode#RESOURCE_NOT_ON_THE_CLASSPATH} if the resource is not located within the
+   *           classpath in the first place.
    */
-  public static final Properties readPropertiesFromClasspath(String name) {
-
-    ClassLoader classLoader = Utilities.class.getClassLoader();
-
-    InputStream inputStream = classLoader.getResourceAsStream(name);
-
-    if (inputStream == null) {
-      return null;
+  public static final Map<String, String> readProperties(String classpath) {
+    URL resource = Utilities.class.getResource(classpath);
+    if (resource == null) {
+      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, classpath);
     }
-
-    Properties profileProperties = new Properties();
-
-    try {
-      profileProperties.load(inputStream);
-      close(inputStream);
-      return profileProperties;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+    return readProperties(resource);
   }
 
   /**

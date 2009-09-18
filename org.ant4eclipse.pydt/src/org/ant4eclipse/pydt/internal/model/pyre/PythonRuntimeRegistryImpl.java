@@ -331,26 +331,21 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     if (cfgurl == null) {
       throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
     }
-    try {
-      Map<String, String> props = Utilities.readProperties(cfgurl);
-      List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
-      for (Map.Entry<String, String> entry : props.entrySet()) {
-        if (entry.getKey().startsWith(PROP_INTERPRETER)) {
-          String name = entry.getKey().substring(PROP_INTERPRETER.length());
-          String[] exes = Utilities.cleanup(entry.getValue().split(","));
-          if (exes == null) {
-            throw new ExtendedBuildException(MSG_MISSINGEXECUTABLES, entry.getKey());
-          }
-          Arrays.sort(exes);
-          interpreters.add(new PythonInterpreter(name, exes));
+    Map<String, String> props = Utilities.readProperties(cfgurl);
+    List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
+    for (Map.Entry<String, String> entry : props.entrySet()) {
+      if (entry.getKey().startsWith(PROP_INTERPRETER)) {
+        String name = entry.getKey().substring(PROP_INTERPRETER.length());
+        String[] exes = Utilities.cleanup(entry.getValue().split(","));
+        if (exes == null) {
+          throw new ExtendedBuildException(MSG_MISSINGEXECUTABLES, entry.getKey());
         }
+        Arrays.sort(exes);
+        interpreters.add(new PythonInterpreter(name, exes));
       }
-      this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
-      Arrays.sort(this._interpreters);
-    } catch (IOException ex) {
-      throw new BuildException(ex);
     }
-
+    this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
+    Arrays.sort(this._interpreters);
     this._initialised = true;
 
   }

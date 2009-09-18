@@ -131,6 +131,14 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Failed to launch executable '%s' (returncode %d).\nOutput:\n%sError:\n%s")
   public static CoreExceptionCode LAUNCHING_FAILURE;
 
+  /** - */
+  @NLSMessage("An IO operation on the file '%s' failed.")
+  public static CoreExceptionCode FILEIO_FAILURE;
+
+  /** - */
+  @NLSMessage("An IO operation on the resource '%s' failed.")
+  public static CoreExceptionCode RESOURCEIO_FAILURE;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }

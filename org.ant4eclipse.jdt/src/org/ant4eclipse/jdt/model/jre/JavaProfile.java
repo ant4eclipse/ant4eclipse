@@ -12,7 +12,7 @@
 package org.ant4eclipse.jdt.model.jre;
 
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * <p>
@@ -96,7 +96,7 @@ public interface JavaProfile {
    * 
    * @return the java profile as properties.
    */
-  Properties getProperties();
+  Map<String, String> getProperties();
 
   /**
    * <p>

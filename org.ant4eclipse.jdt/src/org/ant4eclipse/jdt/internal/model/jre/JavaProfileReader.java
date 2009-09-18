@@ -12,16 +12,14 @@
 package org.ant4eclipse.jdt.internal.model.jre;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.data.Version;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,9 +40,10 @@ public class JavaProfileReader {
    */
   public static JavaProfile[] readAllProfiles() {
 
-    Properties properties = Utilities.readPropertiesFromClasspath("profiles/profile.list");
+    // load the profile listing first
+    Map<String, String> properties = Utilities.readProperties("/profiles/profile.list");
 
-    String javaProfiles = (String) properties.get("java.profiles");
+    String javaProfiles = properties.get("java.profiles");
 
     String[] profiles = javaProfiles.split(",");
 
@@ -53,12 +52,12 @@ public class JavaProfileReader {
     for (String profile2 : profiles) {
       String profile = profile2.trim();
       if ((profile != null) && !"".equals(profile)) {
-        Properties props = Utilities.readPropertiesFromClasspath("profiles/" + profile);
+        Map<String, String> props = Utilities.readProperties("/profiles/" + profile);
         result.add(new JavaProfileImpl(props));
       }
     }
 
-    return result.toArray(new JavaProfile[0]);
+    return result.toArray(new JavaProfile[result.size()]);
   }
 
   /**
@@ -67,29 +66,9 @@ public class JavaProfileReader {
    */
   public static JavaProfile readProfile(String profile) {
     Assert.notNull(profile);
-
     String profileName = profile + ".profile";
-
-    InputStream inputStream = null;
-
     A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
-    ClassLoader classLoader = Version.class.getClassLoader();
-    inputStream = classLoader.getResourceAsStream("profiles/" + profileName);
-    if (inputStream != null) {
-      A4ELogging.debug("Profile read from '%s'", classLoader);
-    }
-
-    if (inputStream == null) {
-      throw new RuntimeException("The specified profile '" + profile + "' does not exist.");
-    }
-
-    Properties profileProperties = new Properties();
-    try {
-      profileProperties.load(inputStream);
-      Utilities.close(inputStream);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    Map<String, String> profileProperties = Utilities.readProperties("/profiles/" + profileName);
     return new JavaProfileImpl(profileProperties);
   }
 

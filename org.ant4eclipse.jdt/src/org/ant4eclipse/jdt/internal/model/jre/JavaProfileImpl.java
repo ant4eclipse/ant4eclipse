@@ -20,7 +20,7 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * <p>
@@ -59,7 +59,7 @@ public class JavaProfileImpl implements JavaProfile {
   private static final String PROPERTY_PROFILE_NAME           = "osgi.java.profile.name";
 
   /** the java profile properties */
-  private Properties          _properties;
+  private Map<String, String> _properties;
 
   /** the list of system packages */
   private List<String>        _systemPackagesList             = new LinkedList<String>();
@@ -72,7 +72,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * @param properties
    */
-  public JavaProfileImpl(Properties properties) {
+  public JavaProfileImpl(Map<String, String> properties) {
     Assert.notNull(properties);
 
     this._properties = properties;
@@ -84,7 +84,7 @@ public class JavaProfileImpl implements JavaProfile {
    * {@inheritDoc}
    */
   public String getName() {
-    return this._properties.getProperty(JavaProfileImpl.PROPERTY_PROFILE_NAME);
+    return this._properties.get(JavaProfileImpl.PROPERTY_PROFILE_NAME);
   }
 
   /**
@@ -125,7 +125,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
-  public Properties getProperties() {
+  public Map<String, String> getProperties() {
     return this._properties;
   }
 
@@ -135,11 +135,11 @@ public class JavaProfileImpl implements JavaProfile {
   private void initialise() {
 
     // set up system packages list...
-    if (isNotEmpty(this._properties.getProperty(PROPERTY_SYSTEM_PACKAGES))) {
+    if (isNotEmpty(this._properties.get(PROPERTY_SYSTEM_PACKAGES))) {
 
       // get HeaderElements
       ManifestHelper.ManifestHeaderElement[] headerElements = ManifestHelper.getManifestHeaderElements(this._properties
-          .getProperty(PROPERTY_SYSTEM_PACKAGES));
+          .get(PROPERTY_SYSTEM_PACKAGES));
 
       // iterate over result
       for (ManifestHeaderElement headerElement : headerElements) {
@@ -153,15 +153,15 @@ public class JavaProfileImpl implements JavaProfile {
       }
     }
 
-    if (isNotEmpty(this._properties.getProperty(PROPERTY_BOOTDELEGATION))) {
-      String[] packageDescriptions = this._properties.getProperty(PROPERTY_BOOTDELEGATION).split(",");
+    if (isNotEmpty(this._properties.get(PROPERTY_BOOTDELEGATION))) {
+      String[] packageDescriptions = this._properties.get(PROPERTY_BOOTDELEGATION).split(",");
       for (String packageDescription : packageDescriptions) {
         this._delegatedToBootClassLoaderList.add(new PackageFilter(packageDescription));
       }
     }
 
-    if (isNotEmpty(this._properties.getProperty(PROPERTY_EXECUTIONENVIRONMENT))) {
-      String[] executionEnvironments = this._properties.getProperty(PROPERTY_EXECUTIONENVIRONMENT).split(",");
+    if (isNotEmpty(this._properties.get(PROPERTY_EXECUTIONENVIRONMENT))) {
+      String[] executionEnvironments = this._properties.get(PROPERTY_EXECUTIONENVIRONMENT).split(",");
       for (String executionEnvironment : executionEnvironments) {
         this._executionEnvironments.add(executionEnvironment);
       }

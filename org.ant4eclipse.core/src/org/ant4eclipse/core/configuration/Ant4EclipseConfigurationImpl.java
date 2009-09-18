@@ -129,14 +129,8 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     Properties allProperties = new Properties();
     while (propertyFiles.hasMoreElements()) {
       URL url = propertyFiles.nextElement();
-
-      try {
-        allProperties.putAll(Utilities.readProperties(url));
-      } catch (IOException io) {
-        throw new RuntimeException("Could not read ant4eclipse configuration properties from " + url + ": " + io, io);
-      }
+      allProperties.putAll(Utilities.readProperties(url));
     }
-
     return allProperties;
   }
 }
