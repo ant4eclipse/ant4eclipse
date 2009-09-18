@@ -11,8 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.core.ant.ExtendedBuildException;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.pydt.PydtExceptionCode;
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.internal.tools.PathExpander;
 import org.ant4eclipse.pydt.internal.tools.PythonResolver;
@@ -30,10 +31,7 @@ import java.io.File;
  */
 public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
 
-  private static final String MSG_MULTIPLEFOLDERS   = "The Project '%s' contains multiple source folders ! If you want to allow this,"
-                                                        + " you have to set allowMultipleFolders='true'!";
-
-  private boolean             _allowMultipleFolders = false;
+  private boolean _allowMultipleFolders = false;
 
   /**
    * Specifies if multiple folders are supported or not.
@@ -55,7 +53,7 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
       PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
       RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
       if (entries.length > 1) {
-        throw new ExtendedBuildException(MSG_MULTIPLEFOLDERS, getEclipseProject().getSpecifiedName());
+        throw new Ant4EclipseException(PydtExceptionCode.MULTIPLEFOLDERS, getEclipseProject().getSpecifiedName());
       }
     }
   }

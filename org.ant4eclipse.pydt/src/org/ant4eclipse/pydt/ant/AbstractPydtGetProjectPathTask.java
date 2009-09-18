@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.core.ant.ExtendedBuildException;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.pydt.PydtExceptionCode;
 import org.ant4eclipse.pydt.internal.tools.PythonUtilities;
 import org.apache.tools.ant.BuildException;
 
@@ -26,8 +27,6 @@ import org.apache.tools.ant.BuildException;
  */
 abstract class AbstractPydtGetProjectPathTask extends AbstractGetProjectPathTask {
 
-  private static final String MSG_MISSINGROLE = "The project '%s' must have the Python or PyDev project role!";
-
   /**
    * {@inheritDoc}
    */
@@ -35,7 +34,7 @@ abstract class AbstractPydtGetProjectPathTask extends AbstractGetProjectPathTask
   protected void preconditions() throws BuildException {
     super.preconditions();
     if (!PythonUtilities.isPythonRelatedProject(getEclipseProject())) {
-      throw new ExtendedBuildException(MSG_MISSINGROLE, getEclipseProject().getSpecifiedName());
+      throw new Ant4EclipseException(PydtExceptionCode.MISSING_PYTHON_ROLE, getEclipseProject().getSpecifiedName());
     }
   }
 

@@ -12,11 +12,12 @@
 package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.core.ant.ExtendedBuildException;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.pydt.PydtExceptionCode;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
 import org.ant4eclipse.pydt.tools.PythonTools;
@@ -36,12 +37,6 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
                                                          + "  sys.argv=[]\n%s" + "  cli.cli()\n";
 
   private static final String MSG_DOCS_NOT_SUPPORTED = "Generation of documentation is currently not supported for python with major version >= 3 !";
-
-  private static final String MSG_MISSINGATTRIBUTE   = "The attribute '%s' has not been set !";
-
-  private static final String MSG_NOTADIRECTORY      = "The path '%s' doesn't refer to a directory !";
-
-  private static final String MSG_UNKNOWNRUNTIME     = "The runtime with the id '%s' is not registered !";
 
   private String              _runtimeid             = null;
 
@@ -82,26 +77,27 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
     if (this._destdir == null) {
-      throw new ExtendedBuildException(MSG_MISSINGATTRIBUTE, "destdir");
+      throw new Ant4EclipseException(PydtExceptionCode.MISSINGATTRIBUTE, "destdir");
     }
     if (this._sourcedir == null) {
-      throw new ExtendedBuildException(MSG_MISSINGATTRIBUTE, "sourcedir");
+      throw new Ant4EclipseException(PydtExceptionCode.MISSINGATTRIBUTE, "sourcedir");
     }
     if (this._destdir.exists() && (!this._destdir.isDirectory())) {
-      throw new ExtendedBuildException(MSG_NOTADIRECTORY, this._destdir);
+      throw new Ant4EclipseException(PydtExceptionCode.NOTADIRECTORY, this._destdir);
     }
     if (!this._sourcedir.isDirectory()) {
-      throw new ExtendedBuildException(MSG_NOTADIRECTORY, this._sourcedir);
+      throw new Ant4EclipseException(PydtExceptionCode.NOTADIRECTORY, this._sourcedir);
     }
     if (this._runtimeid == null) {
-      throw new ExtendedBuildException(MSG_MISSINGATTRIBUTE, "runtime");
+      throw new Ant4EclipseException(PydtExceptionCode.MISSINGATTRIBUTE, "runtime");
     }
     PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
     if (!registry.hasRuntime(this._runtimeid)) {
-      throw new ExtendedBuildException(MSG_UNKNOWNRUNTIME, this._runtimeid);
+      throw new Ant4EclipseException(PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, this._runtimeid);
     }
   }
 

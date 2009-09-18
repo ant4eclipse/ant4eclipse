@@ -31,6 +31,18 @@ public class PydtExceptionCode extends ExceptionCode {
   @NLSMessage("Failed to create relative path from '%s' to '%s'.")
   public static PydtExceptionCode NO_RELATIVE_PATH;
 
+  @NLSMessage("The project '%s' must have the Python or PyDev project role!")
+  public static PydtExceptionCode MISSING_PYTHON_ROLE;
+
+  @NLSMessage("The Project '%s' contains multiple source folders ! If you want to allow this, you have to set allowMultipleFolders='true'!")
+  public static PydtExceptionCode MULTIPLEFOLDERS;
+
+  @NLSMessage("The attribute '%s' has not been set !")
+  public static PydtExceptionCode MISSINGATTRIBUTE;
+
+  @NLSMessage("The path '%s' doesn't refer to a directory !")
+  public static PydtExceptionCode NOTADIRECTORY;
+
   static {
     NLS.initialize(PydtExceptionCode.class);
   }
