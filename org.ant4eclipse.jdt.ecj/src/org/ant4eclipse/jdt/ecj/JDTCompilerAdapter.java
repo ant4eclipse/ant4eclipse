@@ -93,7 +93,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     for (int i = 0; i < categorizedProblems.length; i++) {
       CategorizedProblem categorizedProblem = categorizedProblems[i];
 
-      String fileName = new String(categorizedProblem.getOriginatingFileName());
+      String fileName = String.valueOf(categorizedProblem.getOriginatingFileName());
       for (SourceFile sourceFile : sourceFiles) {
         if (fileName.equals(sourceFile.getSourceFileName())) {
 

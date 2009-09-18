@@ -36,7 +36,7 @@ public class EntryResolver {
         result.add(path);
       }
     }
-    return result.toArray(new String[0]);
+    return result.toArray(new String[result.size()]);
   }
 
   /**

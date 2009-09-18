@@ -115,10 +115,11 @@ public class CompilationUnitImpl implements ICompilationUnit {
    * @see org.eclipse.jdt.internal.compiler.env.ICompilationUnit#getContents()
    */
   public final char[] getContents() {
-    File sourceFile = new File(this._sourceFile.getSourceFolder(), new String(this._fileName));
+    String filename = new String(this._fileName);
+    File sourceFile = new File(this._sourceFile.getSourceFolder(), filename);
 
     A4ELogging.debug("SourceFile.getContents(): '%s', '%s'", this._sourceFile.getSourceFile().getAbsolutePath(),
-        new String(this._fileName));
+        this._fileName);
 
     StringBuffer result = new StringBuffer();
 
@@ -132,11 +133,11 @@ public class CompilationUnitImpl implements ICompilationUnit {
         result.append("\n");
       }
     } catch (UnsupportedEncodingException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new String(
-          this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
+      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, filename,
+          this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     } catch (IOException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new String(
-          this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
+      throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, filename,
+          this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     }
     return result.toString().toCharArray();
   }

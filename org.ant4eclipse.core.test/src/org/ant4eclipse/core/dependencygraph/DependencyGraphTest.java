@@ -22,11 +22,11 @@ public class DependencyGraphTest {
    */
   @Test
   public void testDependencyGraph() {
-    String o1 = new String("o1");
-    String o11 = new String("o11");
-    String o12 = new String("o12");
-    String o121 = new String("o121");
-    String o2 = new String("o2");
+    String o1 = "o1";
+    String o11 = "o11";
+    String o12 = "o12";
+    String o121 = "o121";
+    String o2 = "o2";
 
     DependencyGraph<String> graph = new DependencyGraph<String>();
 
@@ -57,9 +57,9 @@ public class DependencyGraphTest {
    */
   @Test
   public void testCyclicDependencyGraph() {
-    String o1 = new String("o1");
-    String o2 = new String("o2");
-    String o3 = new String("o3");
+    String o1 = "o1";
+    String o2 = "o2";
+    String o3 = "o3";
 
     DependencyGraph<String> graph = new DependencyGraph<String>();
 
@@ -103,11 +103,11 @@ public class DependencyGraphTest {
 
   @Test
   public void testForrest() {
-    String o1 = new String("o1");
-    String o2 = new String("o2");
-    String o3 = new String("o3");
-    String t1 = new String("t1");
-    String t2 = new String("t2");
+    String o1 = "o1";
+    String o2 = "o2";
+    String o3 = "o3";
+    String t1 = "t1";
+    String t2 = "t2";
 
     DependencyGraph<String> graph = new DependencyGraph<String>();
 
