@@ -54,6 +54,9 @@ public class XQueryHandler extends DefaultHandler {
 
   /**
    * Initialises this handler.
+   * 
+   * @param fileName
+   *          The name of the file that has to be parsed.
    */
   public XQueryHandler(String fileName) {
     super();
