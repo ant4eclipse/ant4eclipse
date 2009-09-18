@@ -32,17 +32,17 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    * @param foldername
    *          The name of the folder. <code>null</code> or not empty.
    */
-  public ResolvedSourceEntry(final String owningproject, final String foldername) {
+  public ResolvedSourceEntry(String owningproject, String foldername) {
     Assert.nonEmpty(owningproject);
-    _owningproject = owningproject;
-    _folder = foldername;
+    this._owningproject = owningproject;
+    this._folder = foldername;
   }
 
   /**
    * {@inheritDoc}
    */
   public String getOwningProjectname() {
-    return _owningproject;
+    return this._owningproject;
   }
 
   /**
@@ -58,14 +58,14 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    * @return The relative path of the folder. <code>null</code> or not empty.
    */
   public String getFolder() {
-    return _folder;
+    return this._folder;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object object) {
+  public boolean equals(Object object) {
     if (this == object) {
       return true;
     }
@@ -75,14 +75,14 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
     if (object.getClass() != getClass()) {
       return false;
     }
-    final ResolvedSourceEntry other = (ResolvedSourceEntry) object;
-    if (!_owningproject.equals(other._owningproject)) {
+    ResolvedSourceEntry other = (ResolvedSourceEntry) object;
+    if (!this._owningproject.equals(other._owningproject)) {
       return false;
     }
-    if (_folder == null) {
+    if (this._folder == null) {
       return other._folder == null;
     }
-    return _folder.equals(other._folder);
+    return this._folder.equals(other._folder);
   }
 
   /**
@@ -90,8 +90,8 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = _owningproject.hashCode();
-    result = 31 * result + (_folder != null ? _folder.hashCode() : 0);
+    int result = this._owningproject.hashCode();
+    result = 31 * result + (this._folder != null ? this._folder.hashCode() : 0);
     return result;
   }
 
@@ -100,12 +100,12 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedSourceEntry:");
     buffer.append(" _owningproject: ");
-    buffer.append(_owningproject);
+    buffer.append(this._owningproject);
     buffer.append(", _folder: ");
-    buffer.append(_folder);
+    buffer.append(this._folder);
     buffer.append("]");
     return buffer.toString();
   }

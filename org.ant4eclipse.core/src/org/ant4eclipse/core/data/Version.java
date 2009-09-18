@@ -25,18 +25,18 @@ import java.util.StringTokenizer;
 public class Version {
 
   /** the major version */
-  private Integer      _major;
+  private Integer _major;
 
   /** the minor version */
-  private Integer      _minor;
+  private Integer _minor;
 
   /** the micro version */
-  private Integer      _micro;
+  private Integer _micro;
 
   /** the qualifier version */
-  private String       _qualifier;
+  private String  _qualifier;
 
-  private final String _str;
+  private String  _str;
 
   /**
    * Sets up this version information from the supplied formatted string. The format is as followed:<br/>
@@ -48,7 +48,7 @@ public class Version {
    * @param version
    *          A formatted version string. Neither <code>null</code> nor empty.
    */
-  public Version(final String version) {
+  public Version(String version) {
 
     this._major = Integer.valueOf(0);
     this._minor = Integer.valueOf(0);
@@ -56,14 +56,14 @@ public class Version {
     this._qualifier = null;
 
     try {
-      final StringTokenizer st = new StringTokenizer(version, ".", false);
+      StringTokenizer st = new StringTokenizer(version, ".", false);
       this._major = Integer.valueOf(st.nextToken());
       if (st.hasMoreTokens()) {
         this._minor = Integer.valueOf(st.nextToken());
         if (st.hasMoreTokens()) {
 
-          final String microWithQualifier = st.nextToken();
-          final String[] splitted = microWithQualifier.split("_");
+          String microWithQualifier = st.nextToken();
+          String[] splitted = microWithQualifier.split("_");
 
           this._micro = Integer.valueOf(splitted[0]);
           if (splitted.length > 1) {
@@ -74,12 +74,12 @@ public class Version {
           }
         }
       }
-    } catch (final NoSuchElementException e) {
+    } catch (NoSuchElementException e) {
       throw new IllegalArgumentException("invalid version format '" + version + "'"); //$NON-NLS-1$
     }
 
     // create a textual representation
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append(this._major);
     buffer.append(".");
     buffer.append(this._minor);
@@ -141,7 +141,7 @@ public class Version {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -151,7 +151,7 @@ public class Version {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final Version other = (Version) obj;
+    Version other = (Version) obj;
     return this._str.equals(other._str);
   }
 

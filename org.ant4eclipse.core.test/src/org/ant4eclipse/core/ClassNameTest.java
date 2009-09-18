@@ -25,7 +25,7 @@ public class ClassNameTest {
 
   @Test
   public void test_QualifiedName() {
-    final String CLASSNAME = "net.sf.ant4eclipse.ClasspathTask";
+    String CLASSNAME = "net.sf.ant4eclipse.ClasspathTask";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
     assertEquals(CLASSNAME, className.getQualifiedClassName());
@@ -39,7 +39,7 @@ public class ClassNameTest {
 
   @Test
   public void test_SinglePackage() {
-    final String CLASSNAME = "net.ClasspathTask";
+    String CLASSNAME = "net.ClasspathTask";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
     assertEquals(CLASSNAME, className.getQualifiedClassName());
@@ -53,7 +53,7 @@ public class ClassNameTest {
 
   @Test
   public void test_ShortPackage() {
-    final String CLASSNAME = "n.ClasspathTask";
+    String CLASSNAME = "n.ClasspathTask";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
     assertEquals(CLASSNAME, className.getQualifiedClassName());
@@ -67,7 +67,7 @@ public class ClassNameTest {
 
   @Test
   public void test_ShortClassName() {
-    final String CLASSNAME = "n.C";
+    String CLASSNAME = "n.C";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
     assertEquals(CLASSNAME, className.getQualifiedClassName());
@@ -80,7 +80,7 @@ public class ClassNameTest {
 
   @Test
   public void test_Equals() {
-    final String CLASSNAME = "net.sf.ant4eclipse.ClasspathTask";
+    String CLASSNAME = "net.sf.ant4eclipse.ClasspathTask";
     ClassName className1 = ClassName.fromQualifiedClassName(CLASSNAME);
     ClassName className2 = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotSame(className1, className2);
@@ -101,7 +101,7 @@ public class ClassNameTest {
 
   @Test
   public void test_WithoutPackage() {
-    final String CLASSNAME = "C";
+    String CLASSNAME = "C";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
     assertEquals(CLASSNAME, className.getQualifiedClassName());

@@ -45,15 +45,14 @@ public class RawPathEntry {
    * @param external
    *          <code>true</code> <=> The value doesn't refer to a location within the workspace.
    */
-  public RawPathEntry(final String projectname, final ReferenceKind refkind, final String value, final boolean export,
-      final boolean external) {
+  public RawPathEntry(String projectname, ReferenceKind refkind, String value, boolean export, boolean external) {
     Assert.nonEmpty(projectname);
     Assert.notNull(refkind);
-    _projectname = projectname;
-    _kind = refkind;
-    _value = value;
-    _exported = export;
-    _external = external;
+    this._projectname = projectname;
+    this._kind = refkind;
+    this._value = value;
+    this._exported = export;
+    this._external = external;
   }
 
   /**
@@ -62,7 +61,7 @@ public class RawPathEntry {
    * @return The name of the owning project. Neither <code>null</code> nor empty.
    */
   public String getProjectname() {
-    return _projectname;
+    return this._projectname;
   }
 
   /**
@@ -71,7 +70,7 @@ public class RawPathEntry {
    * @return The kind of reference established by this entry. Not <code>null</code>.
    */
   public ReferenceKind getKind() {
-    return _kind;
+    return this._kind;
   }
 
   /**
@@ -80,7 +79,7 @@ public class RawPathEntry {
    * @return The value used to refer to a specified entity. Neither <code>null</code> nor empty.
    */
   public String getValue() {
-    return _value;
+    return this._value;
   }
 
   /**
@@ -89,7 +88,7 @@ public class RawPathEntry {
    * @return <code>true</code> <=> Contribute this entry to dependant resources, too.
    */
   public boolean isExported() {
-    return _exported;
+    return this._exported;
   }
 
   /**
@@ -98,14 +97,14 @@ public class RawPathEntry {
    * @return <code>true</code> <=> This entry doesn't refer to a location within the workspace.
    */
   public boolean isExternal() {
-    return _external;
+    return this._external;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object object) {
+  public boolean equals(Object object) {
     if (this == object) {
       return true;
     }
@@ -115,20 +114,20 @@ public class RawPathEntry {
     if (object.getClass() != getClass()) {
       return false;
     }
-    final RawPathEntry other = (RawPathEntry) object;
-    if (!_projectname.equals(other._projectname)) {
+    RawPathEntry other = (RawPathEntry) object;
+    if (!this._projectname.equals(other._projectname)) {
       return false;
     }
-    if (_kind != other._kind) {
+    if (this._kind != other._kind) {
       return false;
     }
-    if (_external != other._external) {
+    if (this._external != other._external) {
       return false;
     }
-    if (_value == null) {
+    if (this._value == null) {
       return other._value == null;
     } else {
-      return _value.equals(other._value);
+      return this._value.equals(other._value);
     }
   }
 
@@ -142,10 +141,10 @@ public class RawPathEntry {
      *       of the path entry. It's a flag used for the project which tells how to deal with this entry.
      */
     int result = 1;
-    result = 31 * result + _projectname.hashCode();
-    result = 31 * result + _kind.hashCode();
-    result = 31 * result + (_value != null ? _value.hashCode() : 0);
-    result = 31 * result + (_external ? 1 : 0);
+    result = 31 * result + this._projectname.hashCode();
+    result = 31 * result + this._kind.hashCode();
+    result = 31 * result + (this._value != null ? this._value.hashCode() : 0);
+    result = 31 * result + (this._external ? 1 : 0);
     return result;
   }
 
@@ -154,18 +153,18 @@ public class RawPathEntry {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[RawPathEntry:");
     buffer.append(" _projectname: ");
-    buffer.append(_projectname);
+    buffer.append(this._projectname);
     buffer.append(", _kind: ");
-    buffer.append(_kind);
+    buffer.append(this._kind);
     buffer.append(", _value: ");
-    buffer.append(_value);
+    buffer.append(this._value);
     buffer.append(", _exported: ");
-    buffer.append(_exported);
+    buffer.append(this._exported);
     buffer.append(", _external: ");
-    buffer.append(_external);
+    buffer.append(this._external);
     buffer.append("]");
     return buffer.toString();
   }

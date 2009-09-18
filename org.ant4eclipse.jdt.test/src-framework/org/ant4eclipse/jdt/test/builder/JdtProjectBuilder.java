@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class JdtProjectBuilder extends EclipseProjectBuilder {
 
-  private final List<String>               _classpathEntries;
+  private List<String>               _classpathEntries;
 
   /**
    * Holds all SourceClasses (grouped by their source folders) that should be added to this project.
@@ -49,7 +49,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * <li>Value: {@link SourceClasses} the SourceClasses in the source folder
    * </ul>
    */
-  private final Map<String, SourceClasses> _sourceClasses;
+  private Map<String, SourceClasses> _sourceClasses;
 
   /**
    * Returns a "pre-configured" {@link JdtProjectBuilder}, that already has set:
@@ -104,7 +104,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    */
   public SourceClass withSourceClass(String sourceFolder, String className) {
     SourceClass sourceClass = new SourceClass(this, className);
-    SourceClasses sourceClasses = _sourceClasses.get(sourceFolder);
+    SourceClasses sourceClasses = this._sourceClasses.get(sourceFolder);
     if (sourceClasses == null) {
       sourceClasses = new SourceClasses();
       this._sourceClasses.put(sourceFolder, sourceClasses);
@@ -130,7 +130,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
   public JdtProjectBuilder withClasspathEntry(String entry) {
     assertNotNull(entry);
 
-    _classpathEntries.add(entry);
+    this._classpathEntries.add(entry);
     return this;
   }
 
@@ -194,7 +194,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
 
     createClasspathFile(projectDir);
 
-    for (Map.Entry<String, SourceClasses> entry : _sourceClasses.entrySet()) {
+    for (Map.Entry<String, SourceClasses> entry : this._sourceClasses.entrySet()) {
       String sourceFolder = entry.getKey();
       List<SourceClass> sourceClasses = entry.getValue().getSourceClasses();
       for (SourceClass sourceClass : sourceClasses) {
@@ -235,11 +235,11 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
   }
 
   protected void createClasspathFile(File projectDir) {
-    final StringBuilder dotClasspath = new StringBuilder();
+    StringBuilder dotClasspath = new StringBuilder();
     dotClasspath.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(Utilities.NL).append("<classpath>")
         .append(Utilities.NL);
 
-    for (String entry : _classpathEntries) {
+    for (String entry : this._classpathEntries) {
       dotClasspath.append(entry).append(Utilities.NL);
     }
     dotClasspath.append("</classpath>").append(Utilities.NL);
@@ -254,7 +254,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @author Nils Hartmann (nils@nilshartmann.net)
    */
   class SourceClasses {
-    private final List<SourceClass> _sourceClasses;
+    private List<SourceClass> _sourceClasses;
 
     public SourceClasses() {
       this._sourceClasses = new LinkedList<SourceClass>();

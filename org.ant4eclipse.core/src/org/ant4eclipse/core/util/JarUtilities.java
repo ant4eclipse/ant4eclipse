@@ -31,7 +31,7 @@ public class JarUtilities {
    *          the expansion directory
    * @throws IOException
    */
-  public static void expandJarFile(final JarFile jarFile, final File expansionDirectory) throws IOException {
+  public static void expandJarFile(JarFile jarFile, File expansionDirectory) throws IOException {
     Assert.notNull(jarFile);
     Assert.notNull(expansionDirectory);
 
@@ -43,20 +43,20 @@ public class JarUtilities {
       }
     }
 
-    final Enumeration<JarEntry> entries = jarFile.entries();
+    Enumeration<JarEntry> entries = jarFile.entries();
     while (entries.hasMoreElements()) {
 
       // TODO: not sure if we need this??
-      final ZipEntry zipEntry = fixDirectory(jarFile, entries.nextElement());
+      ZipEntry zipEntry = fixDirectory(jarFile, entries.nextElement());
 
-      final File destFile = new File(expansionDirectory, zipEntry.getName());
+      File destFile = new File(expansionDirectory, zipEntry.getName());
 
       if (destFile.exists()) {
         continue;
       }
 
       // Create parent directory (if target is file) or complete directory (if target is directory)
-      final File directory = (zipEntry.isDirectory() ? destFile : destFile.getParentFile());
+      File directory = (zipEntry.isDirectory() ? destFile : destFile.getParentFile());
       if ((directory != null) && !directory.exists()) {
         if (!directory.mkdirs()) {
           throw new IOException("could not create directory '" + directory.getAbsolutePath() + " for an unkown reason.");
@@ -65,7 +65,7 @@ public class JarUtilities {
 
       if (!zipEntry.isDirectory()) {
         destFile.createNewFile();
-        final InputStream inputStream = jarFile.getInputStream(zipEntry);
+        InputStream inputStream = jarFile.getInputStream(zipEntry);
         try {
           writeFile(inputStream, destFile);
         } finally {
@@ -75,7 +75,7 @@ public class JarUtilities {
     }
   }
 
-  private static void writeFile(InputStream inputStream, final File file) {
+  private static void writeFile(InputStream inputStream, File file) {
     Assert.notNull(inputStream);
     Assert.isFile(file);
 
@@ -83,12 +83,12 @@ public class JarUtilities {
     try {
       fos = new FileOutputStream(file);
 
-      final byte buffer[] = new byte[1024];
+      byte buffer[] = new byte[1024];
       int count;
       while ((count = inputStream.read(buffer, 0, buffer.length)) > 0) {
         fos.write(buffer, 0, count);
       }
-    } catch (final IOException e) {
+    } catch (IOException e) {
       /**
        * @todo [28-Jun-2009:KASI] The original code didn't take care of this, since it only closed the streams (now done
        *       within the finally sequence). Nevertheless the resource might not have been copied completely, so there's
@@ -110,13 +110,13 @@ public class JarUtilities {
    * entry from the jarFile will be returned (that is the entry with "/" at the end) In all other cases the entry
    * instance passed to this method is returned as-is.
    */
-  private static ZipEntry fixDirectory(final JarFile jarFile, final ZipEntry entry) {
+  private static ZipEntry fixDirectory(JarFile jarFile, ZipEntry entry) {
     if ((entry == null) || entry.isDirectory() || (entry.getSize() > 0)) {
       return entry;
     }
 
-    final String dirName = entry.getName() + "/";
-    final ZipEntry dirEntry = jarFile.getEntry(dirName);
+    String dirName = entry.getName() + "/";
+    ZipEntry dirEntry = jarFile.getEntry(dirName);
     if (dirEntry != null) {
       return dirEntry;
     }

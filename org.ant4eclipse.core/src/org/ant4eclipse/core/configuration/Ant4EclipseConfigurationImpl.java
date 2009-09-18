@@ -25,7 +25,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
 
   /** <b>All</b> configuration properties */
-  private final Properties   _properties;
+  private Properties         _properties;
 
   /**
    * <p>
@@ -85,7 +85,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     }
     Set<Entry<Object, Object>> entries = this._properties.entrySet();
 
-    final List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
+    List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
 
     for (Entry<Object, Object> entry : entries) {
       String key = entry.getKey().toString();
@@ -126,7 +126,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    */
   private Properties loadConfigurationProperties() {
     Enumeration<URL> propertyFiles = getPropertyFiles();
-    final Properties allProperties = new Properties();
+    Properties allProperties = new Properties();
     while (propertyFiles.hasMoreElements()) {
       URL url = propertyFiles.nextElement();
 

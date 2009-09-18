@@ -51,17 +51,17 @@ public class LocationFileParser {
    *          the location file to be parsed
    * @return the project directory or <code>null</code> if the location doesn't point to a valid project directory
    */
-  public static final File getProjectDirectory(final File locationFile) {
+  public static final File getProjectDirectory(File locationFile) {
     Assert.isFile(locationFile);
 
     try {
       // read the location of the project directory
-      final File projectDir = readLocation(locationFile);
+      File projectDir = readLocation(locationFile);
 
       // check if projectDir is valid
       if (projectDir != null) {
         if (projectDir.isDirectory()) {
-          final File projectfile = new File(projectDir, ".project");
+          File projectfile = new File(projectDir, ".project");
           if (projectfile.isFile()) {
             return projectDir;
           } else {
@@ -74,7 +74,7 @@ public class LocationFileParser {
               projectDir);
         }
       }
-    } catch (final IOException e) {
+    } catch (IOException e) {
       // TODO: Logging
       e.printStackTrace();
     }
@@ -102,14 +102,14 @@ public class LocationFileParser {
    *         location could be read from the .location file
    * @throws IOException
    */
-  static final File readLocation(final File locationfile) throws IOException {
+  static final File readLocation(File locationfile) throws IOException {
     Assert.isFile(locationfile);
 
-    final ChunkyFile cf = new ChunkyFile(locationfile);
+    ChunkyFile cf = new ChunkyFile(locationfile);
     if (cf.getChunkCount() == 1) {
-      final byte[] data = cf.getChunk(0);
-      final DataInputStream datain = new DataInputStream(new ByteArrayInputStream(data));
-      final String location = datain.readUTF();
+      byte[] data = cf.getChunk(0);
+      DataInputStream datain = new DataInputStream(new ByteArrayInputStream(data));
+      String location = datain.readUTF();
       File file = null;
       if (location.length() > 0) {
         /*
@@ -117,7 +117,7 @@ public class LocationFileParser {
          * IProjectDescription description)}
          */
         if (location.startsWith(URI_PREFIX)) {
-          final URI uri = URI.create(location.substring(URI_PREFIX.length()));
+          URI uri = URI.create(location.substring(URI_PREFIX.length()));
           if (!uri.getScheme().startsWith("file")) {
             A4ELogging.debug("LocationFileParser.readLocation(): the stored location uri '%s' is not a file-uri", uri);
           } else {
@@ -127,12 +127,12 @@ public class LocationFileParser {
           try {
             // try to interprete the location as a URI
             file = new File(new URI(location));
-          } catch (final URISyntaxException ex) {
+          } catch (URISyntaxException ex) {
             // fallback mechanism which interprets the location as a simple path
             A4ELogging.debug("LocationFileParser.readLocation(): the location '%s' will be interpreted as a path",
                 location);
             file = new File(location);
-          } catch (final IllegalArgumentException ex) {
+          } catch (IllegalArgumentException ex) {
             // fallback mechanism which interprets the location as a simple path.
             // this can happen if the location doesn't conform to the current system
             // (f.e. a location file for unix which is used while ANT is executed unter

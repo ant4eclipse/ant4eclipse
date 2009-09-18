@@ -11,14 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
-
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Ant;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
 
 /**
  * <p>
@@ -45,7 +46,7 @@ public class AntCall extends Ant {
    * 
    * @param owner
    */
-  public AntCall(final Task owner) {
+  public AntCall(Task owner) {
     super(owner);
   }
 
@@ -66,9 +67,9 @@ public class AntCall extends Ant {
     try {
       // execute the super class
       super.execute();
-    } catch (final BuildException buildException) {
+    } catch (BuildException buildException) {
       // get the cause of the BuildException
-      final Throwable cause = getCause(buildException);
+      Throwable cause = getCause(buildException);
 
       if (cause instanceof FileNotFoundException
           && (cause.getMessage().indexOf(getAntFile()) != -1 || getAntFile() == null)) {
@@ -92,7 +93,7 @@ public class AntCall extends Ant {
    *          the exception for which the cause should be returned
    * @return the cause
    */
-  private Throwable getCause(final Throwable throwable) {
+  private Throwable getCause(Throwable throwable) {
     if (throwable instanceof BuildException) {
       return getCause(((BuildException) throwable).getException());
     }

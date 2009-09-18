@@ -32,10 +32,10 @@ import java.util.List;
 public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements JdtClasspathContainerArgumentComponent {
 
   /** Indicates whether the class path should be resolved as a runtime class path or not */
-  private boolean                                     _runtime = false;
+  private boolean                               _runtime = false;
 
   /** the {@link JdtClasspathContainerArgumentDelegate} */
-  private final JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
+  private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
   /**
    * <p>
@@ -57,7 +57,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * @param id
    *          the class path id
    */
-  public void setClasspathId(final String id) {
+  public void setClasspathId(String id) {
     super.setPathId(id);
   }
 
@@ -80,7 +80,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * @param runtime
    *          if a runtime path should be resolved or not.
    */
-  public void setRuntime(final boolean runtime) {
+  public void setRuntime(boolean runtime) {
     this._runtime = runtime;
   }
 
@@ -105,7 +105,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   protected File[] resolvePath() {
 
     // resolve the path
-    final ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath(getEclipseProject(), isRelative(),
+    ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath(getEclipseProject(), isRelative(),
         isRuntime(), this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments());
 
     // return the path files

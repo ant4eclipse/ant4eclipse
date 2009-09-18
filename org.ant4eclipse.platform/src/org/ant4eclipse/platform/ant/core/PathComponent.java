@@ -19,7 +19,7 @@ public interface PathComponent {
    * @param newpathseparator
    *          The new path separator.
    */
-  void setPathSeparator(final String newpathseparator);
+  void setPathSeparator(String newpathseparator);
 
   /**
    * Returns the currently used path separator.

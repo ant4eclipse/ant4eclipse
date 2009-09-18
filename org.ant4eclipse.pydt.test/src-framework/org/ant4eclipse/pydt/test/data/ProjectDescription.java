@@ -40,12 +40,12 @@ public class ProjectDescription {
    * Initialises this datastructure.
    */
   public ProjectDescription() {
-    _primaryprojectname = null;
-    _secondaryprojectname = null;
-    _internallibs = new ArrayList<String>();
-    _sourcefolders = new ArrayList<String>();
-    _internallibsprimary = new ArrayList<String>();
-    _internallibssecondary = new ArrayList<String>();
+    this._primaryprojectname = null;
+    this._secondaryprojectname = null;
+    this._internallibs = new ArrayList<String>();
+    this._sourcefolders = new ArrayList<String>();
+    this._internallibsprimary = new ArrayList<String>();
+    this._internallibssecondary = new ArrayList<String>();
   }
 
   /**
@@ -69,9 +69,9 @@ public class ProjectDescription {
     if (dirseparator == null) {
       dirseparator = File.separator;
     }
-    final String[] result = new String[_sourcefolders.size()];
+    String[] result = new String[this._sourcefolders.size()];
     for (int i = 0; i < result.length; i++) {
-      result[i] = Utilities.replace(Utilities.replace(_sourcefolders.get(i), "\\", "/"), "/", dirseparator);
+      result[i] = Utilities.replace(Utilities.replace(this._sourcefolders.get(i), "\\", "/"), "/", dirseparator);
     }
     return result;
   }
@@ -82,8 +82,8 @@ public class ProjectDescription {
    * @param sourcefolder
    *          A workspace relative path of the source. Neither <code>null</code> nor empty.
    */
-  public void addSourceFolder(final String sourcefolder) {
-    _sourcefolders.add(sourcefolder);
+  public void addSourceFolder(String sourcefolder) {
+    this._sourcefolders.add(sourcefolder);
   }
 
   /**
@@ -110,15 +110,15 @@ public class ProjectDescription {
     if (dirseparator == null) {
       dirseparator = File.separator;
     }
-    List<String> libs = _internallibs;
+    List<String> libs = this._internallibs;
     if (primary != null) {
       if (primary.booleanValue()) {
-        libs = _internallibsprimary;
+        libs = this._internallibsprimary;
       } else {
-        libs = _internallibssecondary;
+        libs = this._internallibssecondary;
       }
     }
-    final String[] result = new String[libs.size()];
+    String[] result = new String[libs.size()];
     for (int i = 0; i < result.length; i++) {
       result[i] = Utilities.replace(Utilities.replace(libs.get(i), "\\", "/"), "/", dirseparator);
     }
@@ -133,12 +133,12 @@ public class ProjectDescription {
    * @param primary
    *          <code>true</code> <=> Used for the primary project, secondary project otherwise.
    */
-  public void addInternalLibrary(final String internallib, final boolean primary) {
-    _internallibs.add(internallib);
+  public void addInternalLibrary(String internallib, boolean primary) {
+    this._internallibs.add(internallib);
     if (primary) {
-      _internallibsprimary.add(internallib);
+      this._internallibsprimary.add(internallib);
     } else {
-      _internallibssecondary.add(internallib);
+      this._internallibssecondary.add(internallib);
     }
   }
 
@@ -148,8 +148,8 @@ public class ProjectDescription {
    * @param primaryprojectname
    *          The primary project name. Neither <code>null</code> nor empty.
    */
-  public void setPrimaryProjectname(final String primaryprojectname) {
-    _primaryprojectname = primaryprojectname;
+  public void setPrimaryProjectname(String primaryprojectname) {
+    this._primaryprojectname = primaryprojectname;
   }
 
   /**
@@ -158,7 +158,7 @@ public class ProjectDescription {
    * @return The primary (main) project name. Neither <code>null</code> nor empty.
    */
   public String getPrimaryProjectname() {
-    return _primaryprojectname;
+    return this._primaryprojectname;
   }
 
   /**
@@ -167,8 +167,8 @@ public class ProjectDescription {
    * @param secondaryprojectname
    *          The secondary project name. Neither <code>null</code> nor empty.
    */
-  public void setSecondaryProjectname(final String secondaryprojectname) {
-    _secondaryprojectname = secondaryprojectname;
+  public void setSecondaryProjectname(String secondaryprojectname) {
+    this._secondaryprojectname = secondaryprojectname;
   }
 
   /**
@@ -177,7 +177,7 @@ public class ProjectDescription {
    * @return The secondary project name. Neither <code>null</code> nor empty.
    */
   public String getSecondaryProjectname() {
-    return _secondaryprojectname;
+    return this._secondaryprojectname;
   }
 
 } /* ENDCLASS */

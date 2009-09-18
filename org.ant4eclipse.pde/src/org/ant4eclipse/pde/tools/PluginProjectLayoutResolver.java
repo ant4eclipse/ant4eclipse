@@ -11,18 +11,20 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.core.util.ManifestHelper;
+
+import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
+import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.Manifest;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.util.ManifestHelper;
-import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
-import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * The {@link PluginProjectLayoutResolver} implements a {@link BundleLayoutResolver} for eclipse plug-in projects.
@@ -32,10 +34,10 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 public class PluginProjectLayoutResolver implements BundleLayoutResolver {
 
   /** the eclipse project */
-  private final EclipseProject _eclipseProject;
+  private EclipseProject _eclipseProject;
 
   /** the manifest file */
-  private Manifest             _manifest;
+  private Manifest       _manifest;
 
   /**
    * <p>
@@ -45,7 +47,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * @param project
    *          the eclipse plug-in project that has to be resolved
    */
-  public PluginProjectLayoutResolver(final EclipseProject project) {
+  public PluginProjectLayoutResolver(EclipseProject project) {
     Assert.notNull(project);
     Assert.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
 
@@ -53,10 +55,10 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     this._eclipseProject = project;
 
     // retrieve the bundle manifest
-    final File manifestFile = this._eclipseProject.getChild("META-INF/MANIFEST.MF");
+    File manifestFile = this._eclipseProject.getChild("META-INF/MANIFEST.MF");
     try {
       this._manifest = new Manifest(new FileInputStream(manifestFile));
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // TODO:
       e.printStackTrace();
       throw new RuntimeException(e);
@@ -90,35 +92,34 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   public File[] resolveBundleClasspathEntries() {
 
     // declare result
-    final List<File> result = new LinkedList<File>();
+    List<File> result = new LinkedList<File>();
 
     // resolve the bundle class path
-    final String bundleClasspath[] = ManifestHelper.getBundleClasspath(this._manifest);
+    String bundleClasspath[] = ManifestHelper.getBundleClasspath(this._manifest);
 
-    final PluginProjectRole pluginProjectRole = (PluginProjectRole) this._eclipseProject
-        .getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = (PluginProjectRole) this._eclipseProject.getRole(PluginProjectRole.class);
 
-    final PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
-    final File baseDir = this._eclipseProject.getFolder();
+    PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
+    File baseDir = this._eclipseProject.getFolder();
 
-    for (int i = 0; i < bundleClasspath.length; i++) {
-      if ((buildProperties != null) && buildProperties.hasLibrary(bundleClasspath[i])) {
-        final String[] libaries = buildProperties.getLibrary(bundleClasspath[i]).getOutput();
-        for (int j = 0; j < libaries.length; j++) {
-          final File file = new File(baseDir, libaries[j]);
+    for (String element : bundleClasspath) {
+      if ((buildProperties != null) && buildProperties.hasLibrary(element)) {
+        String[] libaries = buildProperties.getLibrary(element).getOutput();
+        for (String libarie : libaries) {
+          File file = new File(baseDir, libarie);
           if (!result.contains(file)) {
             result.add(file);
           }
         }
       } else {
-        final File file = new File(baseDir, bundleClasspath[i]);
+        File file = new File(baseDir, element);
         result.add(file);
       }
     }
     if (buildProperties.hasLibrary(".")) {
-      final String[] libaries = buildProperties.getLibrary(".").getOutput();
-      for (int j = 0; j < libaries.length; j++) {
-        final File file = new File(baseDir, libaries[j]);
+      String[] libaries = buildProperties.getLibrary(".").getOutput();
+      for (String libarie : libaries) {
+        File file = new File(baseDir, libarie);
         if (!result.contains(file)) {
           result.add(file);
         }

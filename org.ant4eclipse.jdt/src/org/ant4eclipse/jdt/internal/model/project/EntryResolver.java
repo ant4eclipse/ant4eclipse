@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
+import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 
 public class EntryResolver {
 
@@ -22,15 +22,15 @@ public class EntryResolver {
    * @param entryResolver
    * @return A list of resolved paths.
    */
-  public static String[] resolveEntries(final Condition condition, final JavaProjectRoleImpl javaProjectRole) {
+  public static String[] resolveEntries(Condition condition, JavaProjectRoleImpl javaProjectRole) {
 
-    final List<String> result = new LinkedList<String>();
+    List<String> result = new LinkedList<String>();
 
-    final RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
+    RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
 
-    for (final RawClasspathEntry rawClasspathEntrie : rawClasspathEntries) {
+    for (RawClasspathEntry rawClasspathEntrie : rawClasspathEntries) {
 
-      final String path = condition.resolve(rawClasspathEntrie);
+      String path = condition.resolve(rawClasspathEntrie);
 
       if (path != null) {
         result.add(path);

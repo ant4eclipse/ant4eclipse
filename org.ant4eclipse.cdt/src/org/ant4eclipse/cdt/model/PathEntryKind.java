@@ -29,7 +29,7 @@ public enum PathEntryKind {
    *          The key used to identify the kind of the path.
    */
   PathEntryKind(String key) {
-    _key = key;
+    this._key = key;
   }
 
   /**
@@ -38,7 +38,7 @@ public enum PathEntryKind {
    * @return The key used to identify the type of path. Neither <code>null</code> nor empty.
    */
   public String getKey() {
-    return _key;
+    return this._key;
   }
 
   /**
@@ -46,8 +46,8 @@ public enum PathEntryKind {
    * 
    * @param key
    *          The key used to identify the type of path. Neither <code>null</code> nor empty.
-   *          
-   * @return   An identified kind or <code>null</code> if the key could not be recognized.
+   * 
+   * @return An identified kind or <code>null</code> if the key could not be recognized.
    */
   public static final PathEntryKind valueByKey(String key) {
     for (PathEntryKind kind : PathEntryKind.values()) {

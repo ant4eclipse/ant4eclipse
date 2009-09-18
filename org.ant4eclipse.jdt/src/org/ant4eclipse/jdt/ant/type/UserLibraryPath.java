@@ -42,7 +42,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    * @param project
    *          The project this type applies to.
    */
-  public UserLibraryPath(final Project project) {
+  public UserLibraryPath(Project project) {
     super(project);
     this._userlibfile = null;
   }
@@ -53,7 +53,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    * @param userlib
    *          The new user library configuration file.
    */
-  public void setUserlibraries(final File userlib) {
+  public void setUserlibraries(File userlib) {
     if (!userlib.isFile()) {
       A4ELogging.warn("missing file '%s'", userlib.getPath());
     } else {
@@ -69,15 +69,15 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    */
   private void loadConfigurationFile() {
     try {
-      final UserLibrariesFileParser parser = UserLibrariesFileParser.Helper.getUserLibrariesFileParser();
+      UserLibrariesFileParser parser = UserLibrariesFileParser.Helper.getUserLibrariesFileParser();
 
-      final UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile);
-      final String[] libs = userlibs.getAvailableLibraries();
-      for (final String lib : libs) {
-        final UserLibrary library = userlibs.getLibrary(lib);
-        final Archive[] archives = library.getArchives();
-        final Path path = new Path(getProject());
-        for (final Archive archive : archives) {
+      UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile);
+      String[] libs = userlibs.getAvailableLibraries();
+      for (String lib : libs) {
+        UserLibrary library = userlibs.getLibrary(lib);
+        Archive[] archives = library.getArchives();
+        Path path = new Path(getProject());
+        for (Archive archive : archives) {
           path.createPathElement().setLocation(archive.getPath());
         }
 
@@ -88,7 +88,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
         ClassPathElementsRegistry.Helper.getRegistry().registerClassPathContainer(PREFIX + library.getName(),
             library.getArchiveFiles());
       }
-    } catch (final Exception ex) {
+    } catch (Exception ex) {
       A4ELogging.error("Failed to load userlibraries file.\n'%s'.", ex);
     }
   }

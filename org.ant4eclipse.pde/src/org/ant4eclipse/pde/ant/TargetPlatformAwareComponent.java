@@ -30,7 +30,7 @@ public interface TargetPlatformAwareComponent {
    * @param targetPlatformId
    *          the id of the target platform against which the workspace plug-ins will be compiled and tested.
    */
-  void setTargetPlatformId(final String targetPlatformId);
+  void setTargetPlatformId(String targetPlatformId);
 
   /**
    * <p>
@@ -49,7 +49,7 @@ public interface TargetPlatformAwareComponent {
    * @return the target platform id or <code>null</code>, if no target platform id has been set.
    */
   String getTargetPlatformId();
-  
+
   /**
    * <p>
    * Throws an {@link Ant4EclipseException} if the field '<code>_targetPlatformId</code>' is not set

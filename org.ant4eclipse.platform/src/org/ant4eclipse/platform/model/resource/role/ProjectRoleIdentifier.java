@@ -46,7 +46,7 @@ public interface ProjectRoleIdentifier {
    * @param project
    *          the eclipse project.
    */
-  ProjectRole createRole(final EclipseProject project);
+  ProjectRole createRole(EclipseProject project);
 
   /**
    * This function will be invoked after each project within a workspace has been setup. Therefore each action that
@@ -55,6 +55,6 @@ public interface ProjectRoleIdentifier {
    * @param project
    *          The project which role has to be modified if necessary. Not <code>null</code>.
    */
-  void postProcess(final EclipseProject project);
+  void postProcess(EclipseProject project);
 
 } /* ENDINTERFACE */

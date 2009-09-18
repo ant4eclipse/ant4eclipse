@@ -11,18 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
+import org.eclipse.jdt.internal.compiler.ClassFile;
+import org.eclipse.jdt.internal.compiler.CompilationResult;
+import org.eclipse.jdt.internal.compiler.ICompilerRequestor;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.eclipse.jdt.core.compiler.CategorizedProblem;
-import org.eclipse.jdt.internal.compiler.ClassFile;
-import org.eclipse.jdt.internal.compiler.CompilationResult;
-import org.eclipse.jdt.internal.compiler.ICompilerRequestor;
 
 /**
  * <p>
@@ -55,16 +56,16 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    * @see org.eclipse.jdt.internal.compiler.ICompilerRequestor#acceptResult(org.eclipse.jdt.internal.compiler.CompilationResult
    *      )
    */
-  public void acceptResult(final CompilationResult result) {
+  public void acceptResult(CompilationResult result) {
 
-    final CompilationUnitImpl compilationUnitImpl = (CompilationUnitImpl) result.getCompilationUnit();
-    final File destinationDirectory = compilationUnitImpl.getSourceFile().getDestinationFolder();
+    CompilationUnitImpl compilationUnitImpl = (CompilationUnitImpl) result.getCompilationUnit();
+    File destinationDirectory = compilationUnitImpl.getSourceFile().getDestinationFolder();
 
     if (!result.hasErrors()) {
-      final ClassFile[] classFiles = result.getClassFiles();
-      for (final ClassFile classFile2 : classFiles) {
-        final char[][] compoundName = classFile2.getCompoundName();
-        final StringBuffer classFileName = new StringBuffer();
+      ClassFile[] classFiles = result.getClassFiles();
+      for (ClassFile classFile2 : classFiles) {
+        char[][] compoundName = classFile2.getCompoundName();
+        StringBuffer classFileName = new StringBuffer();
         for (int j = 0; j < compoundName.length; j++) {
           classFileName.append(compoundName[j]);
           if (j < compoundName.length - 1) {
@@ -73,8 +74,8 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
         }
         try {
           classFileName.append(".class");
-          final File classFile = new File(destinationDirectory, classFileName.toString());
-          final File classDir = classFile.getParentFile();
+          File classFile = new File(destinationDirectory, classFileName.toString());
+          File classDir = classFile.getParentFile();
           if (!classDir.exists()) {
             classDir.mkdirs();
           }
@@ -83,13 +84,12 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
             classFile.createNewFile();
           }
 
-          final FileOutputStream fileOutputStream = new FileOutputStream(classFile);
+          FileOutputStream fileOutputStream = new FileOutputStream(classFile);
           fileOutputStream.write(classFile2.getBytes());
           fileOutputStream.flush();
           fileOutputStream.close();
-        } catch (final IOException ioe) {
-          A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(),
-              ioe.toString());
+        } catch (IOException ioe) {
+          A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(), ioe.toString());
           ioe.printStackTrace();
           this._compilationSuccessful = false;
         }

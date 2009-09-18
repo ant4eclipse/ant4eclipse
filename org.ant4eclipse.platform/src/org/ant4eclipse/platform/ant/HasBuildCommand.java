@@ -13,6 +13,7 @@ package org.ant4eclipse.platform.ant;
 
 import org.ant4eclipse.platform.ant.core.condition.AbstractProjectBasedCondition;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -46,7 +47,7 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
   public boolean doEval() {
     requireWorkspaceAndProjectNameSet();
     requireBuildCommandSet();
-    final EclipseProject project = getEclipseProject();
+    EclipseProject project = getEclipseProject();
     return project.hasBuildCommand(this._buildCommand);
   }
 
@@ -58,7 +59,7 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
    * @param command
    *          name of the build command.
    */
-  public void setBuildCommand(final String command) {
+  public void setBuildCommand(String command) {
     this._buildCommand = command;
   }
 

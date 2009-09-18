@@ -11,15 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.io.File;
-
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
+
+import java.io.File;
 
 /**
  * <p>
@@ -44,7 +46,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    * @param component
    *          the ProjectComponent
    */
-  public EclipseProjectDelegate(final ProjectComponent component) {
+  public EclipseProjectDelegate(ProjectComponent component) {
     super(component);
   }
 
@@ -59,7 +61,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
-  public final void setProjectName(final String projectName) {
+  public final void setProjectName(String projectName) {
     this._projectName = projectName;
   }
 
@@ -106,7 +108,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
     if (!getEclipseProject().hasRole(projectRoleClass)) {
 
       // TODO
-      final StringBuffer buffer = new StringBuffer();
+      StringBuffer buffer = new StringBuffer();
       buffer.append("Project ");
       buffer.append(this._projectName);
       buffer.append(" must have role");

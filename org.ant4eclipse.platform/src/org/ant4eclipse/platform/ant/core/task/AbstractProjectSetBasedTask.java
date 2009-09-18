@@ -20,7 +20,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
     WorkspaceProjectSetComponent {
 
   /** the workspace project set delegate */
-  private final WorkspaceProjectSetDelegate _workspaceProjectSetDelegate;
+  private WorkspaceProjectSetDelegate _workspaceProjectSetDelegate;
 
   /**
    * <p>

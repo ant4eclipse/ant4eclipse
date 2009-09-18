@@ -1,5 +1,19 @@
 package org.ant4eclipse.jdt.ecj;
 
+import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
+
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
+import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.ant.types.Path;
+import org.apache.tools.ant.types.resources.FileResource;
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -10,18 +24,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
-import org.apache.tools.ant.taskdefs.condition.Os;
-import org.apache.tools.ant.types.Path;
-import org.apache.tools.ant.types.resources.FileResource;
-import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
 /**
  * <p>
@@ -67,10 +69,10 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     EcjAdditionalCompilerArguments ecjAdditionalCompilerArguments = fetchEcjAdditionalCompilerArguments();
 
     // Step 4: Create the EcjAdapter
-    final EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
+    EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
 
     // Step 5: create CompileJobDescription
-    final DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
+    DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
     SourceFile[] sourceFiles = getSourceFilesToCompile(ecjAdditionalCompilerArguments);
     compileJobDescription.setSourceFiles(sourceFiles);
     compileJobDescription.setClassFileLoader(createClassFileLoader(ecjAdditionalCompilerArguments));
@@ -83,7 +85,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     compileJobDescription.setCompilerOptions(compilerOptions);
 
     // Step 6: Compile
-    final CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
+    CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
 
     // Step 7: dump result
     CategorizedProblem[] categorizedProblems = compileJobResult.getCategorizedProblems();
@@ -152,16 +154,16 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     File defaultDestinationFolder = getJavac().getDestdir();
 
     // get the files to compile
-    final List<SourceFile> sourceFiles = new LinkedList<SourceFile>();
+    List<SourceFile> sourceFiles = new LinkedList<SourceFile>();
 
     // iterate over all the source files and create SourceFile
-    for (final File file : getJavac().getFileList()) {
+    for (File file : getJavac().getFileList()) {
 
       // get the source folder
-      final File sourceFolder = getSourceFolder(file);
+      File sourceFolder = getSourceFolder(file);
 
       // get the relative source file name
-      final String sourceFileName = file.getAbsolutePath().substring(
+      String sourceFileName = file.getAbsolutePath().substring(
           sourceFolder.getAbsolutePath().length() + File.separator.length());
 
       // get the destination folder
@@ -185,16 +187,16 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    *          the source file.
    * @return the source folder
    */
-  private File getSourceFolder(final File sourceFile) {
+  private File getSourceFolder(File sourceFile) {
 
     // get the absoult path
-    final String absolutePath = sourceFile.getAbsolutePath();
+    String absolutePath = sourceFile.getAbsolutePath();
 
     // get the list of all source directories
-    final String[] srcDirs = getJavac().getSrcdir().list();
+    String[] srcDirs = getJavac().getSrcdir().list();
 
     // find the 'right' source directory
-    for (final String srcDir : srcDirs) {
+    for (String srcDir : srcDirs) {
       if (absolutePath.startsWith(srcDir) && absolutePath.charAt(srcDir.length()) == File.separatorChar) {
         return new File(srcDir);
       }
@@ -214,25 +216,25 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return the class file loader.
    */
   @SuppressWarnings("unchecked")
-  private ClassFileLoader createClassFileLoader(final EcjAdditionalCompilerArguments compilerArguments) {
+  private ClassFileLoader createClassFileLoader(EcjAdditionalCompilerArguments compilerArguments) {
 
     // Step 1: create class file loader list
-    final List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
+    List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
 
     // Step 2: add boot class loader
     classFileLoaderList.add(createBootClassLoader(compilerArguments));
 
     // Step 3: add class loader for class path entries
-    for (final Iterator iterator = getJavac().getClasspath().iterator(); iterator.hasNext();) {
+    for (Iterator iterator = getJavac().getClasspath().iterator(); iterator.hasNext();) {
 
       // get the file resource
-      final FileResource fileResource = (FileResource) iterator.next();
+      FileResource fileResource = (FileResource) iterator.next();
 
       if (fileResource.getFile().exists()) {
 
         // TODO: LIBRARY AND PROJECT
         // create class file loader for file resource
-        final ClassFileLoader myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
+        ClassFileLoader myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
             .getFile(), EcjAdapter.LIBRARY);
 
         // create and add FilteringClassFileLoader is necessary
@@ -261,30 +263,30 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return the boot class loader
    */
   @SuppressWarnings("unchecked")
-  private ClassFileLoader createBootClassLoader(final EcjAdditionalCompilerArguments compilerArguments) {
+  private ClassFileLoader createBootClassLoader(EcjAdditionalCompilerArguments compilerArguments) {
 
     // Step 1: get the boot class path as specified in the javac task
-    final Path bootclasspath = getJavac().getBootclasspath();
+    Path bootclasspath = getJavac().getBootclasspath();
 
     // Step 2: create ClassFileLoaders for each entry in the boot class path
-    final List<ClassFileLoader> bootClassFileLoaders = new LinkedList<ClassFileLoader>();
+    List<ClassFileLoader> bootClassFileLoaders = new LinkedList<ClassFileLoader>();
 
     // Step 3: iterate over the boot class path entries as specified in the ant path
-    for (final Iterator<FileResource> iterator = bootclasspath.iterator(); iterator.hasNext();) {
+    for (Iterator<FileResource> iterator = bootclasspath.iterator(); iterator.hasNext();) {
 
       // get the file resource
-      final FileResource fileResource = iterator.next();
+      FileResource fileResource = iterator.next();
 
       // create class file loader
       if (fileResource.getFile().exists()) {
-        final ClassFileLoader classFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
-            .getFile(), EcjAdapter.LIBRARY);
+        ClassFileLoader classFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource.getFile(),
+            EcjAdapter.LIBRARY);
         bootClassFileLoaders.add(classFileLoader);
       }
     }
 
     // Step 4: create compound class file loader
-    final ClassFileLoader classFileLoader = ClassFileLoaderFactory.createCompoundClassFileLoader(bootClassFileLoaders
+    ClassFileLoader classFileLoader = ClassFileLoaderFactory.createCompoundClassFileLoader(bootClassFileLoaders
         .toArray(new ClassFileLoader[0]));
 
     // Step 5: create FilteringClassFileLoader is necessary
@@ -335,13 +337,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     Assert.notNull(argumentName);
 
     // Step 1: Get all compilerArguments
-    final String[] currentCompilerArgs = getJavac().getCurrentCompilerArgs();
+    String[] currentCompilerArgs = getJavac().getCurrentCompilerArgs();
 
     // Step 2: Find the 'right' one
-    for (final String compilerArg : currentCompilerArgs) {
+    for (String compilerArg : currentCompilerArgs) {
 
       // split the argument
-      final String[] args = compilerArg.split(COMPILER_ARGS_SEPARATOR);
+      String[] args = compilerArg.split(COMPILER_ARGS_SEPARATOR);
 
       // requested one?
       if (args.length > 1 && argumentName.equalsIgnoreCase(args[0])) {
@@ -430,7 +432,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       in.close();
       StringBuilder underscoreLine = new StringBuilder();
       for (int i = lineStart; i < sourceStart; i++) {
-        if (strLine.charAt(i-lineStart) == '\t') {
+        if (strLine.charAt(i - lineStart) == '\t') {
           underscoreLine.append('\t');
         } else {
           underscoreLine.append(' ');

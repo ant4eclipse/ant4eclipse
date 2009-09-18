@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import java.io.File;
-
 import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
 import org.ant4eclipse.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
 import org.ant4eclipse.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
+
+import java.io.File;
 
 /**
  * <p>
@@ -43,8 +43,7 @@ public class ClassFileLoaderFactory {
    * @return creates an new instance of type {@link ClassFileLoader}, that can load {@link ClassFile ClassFiles} from an
    *         array of files (jar files or directories).
    */
-  public static ClassFileLoader createClasspathClassFileLoader(final File source, final byte type,
-      final File[] classpathEntries) {
+  public static ClassFileLoader createClasspathClassFileLoader(File source, byte type, File[] classpathEntries) {
     return new ClasspathClassFileLoaderImpl(source, type, classpathEntries);
   }
 
@@ -61,7 +60,7 @@ public class ClassFileLoaderFactory {
    * 
    * @return a new instance of type {@link ClassFileLoader}.
    */
-  public static ClassFileLoader createClasspathClassFileLoader(final File entry, final byte type) {
+  public static ClassFileLoader createClasspathClassFileLoader(File entry, byte type) {
     return new ClasspathClassFileLoaderImpl(entry, type);
   }
 
@@ -76,7 +75,7 @@ public class ClassFileLoaderFactory {
    * @return an new instance of type {@link ClassFileLoader}, that can load classes from multiple underlying class file
    *         loaders.
    */
-  public static ClassFileLoader createCompoundClassFileLoader(final ClassFileLoader[] classFileLoaders) {
+  public static ClassFileLoader createCompoundClassFileLoader(ClassFileLoader[] classFileLoaders) {
     return new CompoundClassFileLoaderImpl(classFileLoaders);
   }
 
@@ -92,7 +91,7 @@ public class ClassFileLoaderFactory {
    *          the filter
    * @return the class file loader
    */
-  public static ClassFileLoader createFilteringClassFileLoader(final ClassFileLoader classFileLoader, String filter) {
+  public static ClassFileLoader createFilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
     return new FilteringClassFileLoader(classFileLoader, filter);
   }
 }

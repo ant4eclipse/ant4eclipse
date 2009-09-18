@@ -1,9 +1,10 @@
 package org.ant4eclipse.platform.ant.core.delegate.helper;
 
-import java.util.Hashtable;
-
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+
 import org.apache.tools.ant.Project;
+
+import java.util.Hashtable;
 
 /**
  * <p>
@@ -79,13 +80,13 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    *          the key
    */
   @SuppressWarnings("unchecked")
-  private void removeReference(final String key) {
+  private void removeReference(String key) {
     try {
       Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "references");
       if (references != null) {
         references.remove(key);
       }
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // ignore
     }
   }
@@ -101,13 +102,13 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    *          the value
    */
   @SuppressWarnings("unchecked")
-  private void setReference(final String key, Object value) {
+  private void setReference(String key, Object value) {
     try {
       Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "references");
       if (references != null) {
         references.put(key, value);
       }
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // ignore
     }
   }

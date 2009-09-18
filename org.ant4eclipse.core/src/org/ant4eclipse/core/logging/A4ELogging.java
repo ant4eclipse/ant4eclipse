@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
-import org.ant4eclipse.core.service.*;
+import org.ant4eclipse.core.service.ServiceRegistry;
 
 /**
  * <p>
@@ -49,7 +49,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void trace(final String msg, final Object... args) {
+  public static final void trace(String msg, Object... args) {
     getLogger().trace(msg, args);
   }
 
@@ -61,7 +61,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void debug(final String msg, final Object... args) {
+  public static final void debug(String msg, Object... args) {
     getLogger().debug(msg, args);
   }
 
@@ -73,7 +73,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void info(final String msg, final Object... args) {
+  public static final void info(String msg, Object... args) {
     getLogger().info(msg, args);
   }
 
@@ -85,7 +85,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void warn(final String msg, final Object... args) {
+  public static final void warn(String msg, Object... args) {
     getLogger().warn(msg, args);
   }
 
@@ -97,7 +97,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void error(final String msg, final Object... args) {
+  public static final void error(String msg, Object... args) {
     getLogger().error(msg, args);
   }
 

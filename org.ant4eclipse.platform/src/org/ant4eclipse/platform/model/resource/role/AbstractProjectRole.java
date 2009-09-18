@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.model.resource.role;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
@@ -24,10 +25,10 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 public abstract class AbstractProjectRole implements ProjectRole {
 
   /** the name of the project role */
-  private final String         _name;
+  private String         _name;
 
   /** the eclipse project */
-  private final EclipseProject _eclipseProject;
+  private EclipseProject _eclipseProject;
 
   /**
    * <p>
@@ -39,7 +40,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
    * @param eclipseProject
    *          the eclipse project
    */
-  public AbstractProjectRole(final String name, final EclipseProject eclipseProject) {
+  public AbstractProjectRole(String name, EclipseProject eclipseProject) {
     Assert.nonEmpty(name);
     Assert.notNull(eclipseProject);
 
@@ -72,7 +73,8 @@ public abstract class AbstractProjectRole implements ProjectRole {
   /**
    * {@inheritDoc}
    */
-  public boolean equals(final Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -82,13 +84,14 @@ public abstract class AbstractProjectRole implements ProjectRole {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final AbstractProjectRole castedObj = (AbstractProjectRole) o;
+    AbstractProjectRole castedObj = (AbstractProjectRole) o;
     return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)));
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + (this._name == null ? 0 : this._name.hashCode());
@@ -98,8 +101,9 @@ public abstract class AbstractProjectRole implements ProjectRole {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[AbstractProjectRole:");
     buffer.append(" _name: ");
     buffer.append(this._name);

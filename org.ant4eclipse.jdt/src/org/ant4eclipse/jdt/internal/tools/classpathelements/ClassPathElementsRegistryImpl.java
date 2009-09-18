@@ -20,10 +20,10 @@ import java.util.Map;
 public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry {
 
   /** the class path variables */
-  private final Map<String, ClassPathVariable>  _classpathVariables;
+  private Map<String, ClassPathVariable>  _classpathVariables;
 
   /** the class path containers */
-  private final Map<String, ClassPathContainer> _classpathContainer;
+  private Map<String, ClassPathContainer> _classpathContainer;
 
   /**
    * <p>
@@ -50,28 +50,28 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
-  public ClassPathContainer getClassPathContainer(final String name) {
+  public ClassPathContainer getClassPathContainer(String name) {
     return this._classpathContainer.get(name);
   }
 
   /**
    * {@inheritDoc}
    */
-  public boolean hasClassPathContainer(final String name) {
+  public boolean hasClassPathContainer(String name) {
     return this._classpathContainer.containsKey(name);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void registerClassPathContainer(final String name, final File[] pathEntries) {
+  public void registerClassPathContainer(String name, File[] pathEntries) {
     this._classpathContainer.put(name, new ClassPathContainerImpl(name, pathEntries));
   }
 
   /**
    * {@inheritDoc}
    */
-  public ClassPathVariable getClassPathVariable(final String name) {
+  public ClassPathVariable getClassPathVariable(String name) {
     return this._classpathVariables.get(name);
   }
 
@@ -85,14 +85,14 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
-  public boolean hasClassPathVariable(final String name) {
+  public boolean hasClassPathVariable(String name) {
     return this._classpathVariables.containsKey(name);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void registerClassPathVariable(final String name, final File path) {
+  public void registerClassPathVariable(String name, File path) {
     this._classpathVariables.put(name, new ClasspathVariableImpl(name, path));
   }
 }

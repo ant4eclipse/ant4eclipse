@@ -2,10 +2,12 @@ package org.ant4eclipse.platform.ant.delegate;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseBuildFileTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
@@ -33,9 +35,9 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
    */
   public static class MacroExecuteTask extends AbstractAnt4EclipseTask implements DynamicElement {
 
-    public static int                            counter = 0;
+    public static int                      counter = 0;
 
-    private final MacroExecutionDelegate<String> _macroExecutionDelegate;
+    private MacroExecutionDelegate<String> _macroExecutionDelegate;
 
     public MacroExecuteTask() {
       this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "hurz");

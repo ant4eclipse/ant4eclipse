@@ -11,16 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.condition;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseCondition;
+
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.WorkspaceComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
 import org.apache.tools.ant.BuildException;
+
+import java.io.File;
 
 /**
  * <p>
@@ -33,7 +35,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
     EclipseProjectComponent {
 
   /** the project delegate */
-  private final EclipseProjectDelegate _projectDelegate;
+  private EclipseProjectDelegate _projectDelegate;
 
   /**
    * <p>
@@ -47,7 +49,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
-  public void setProjectName(final String project) {
+  public void setProjectName(String project) {
     this._projectDelegate.setProjectName(project);
   }
 
@@ -55,7 +57,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
    * {@inheritDoc}
    */
   @Deprecated
-  public void setWorkspace(final File workspace) {
+  public void setWorkspace(File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
   }
 

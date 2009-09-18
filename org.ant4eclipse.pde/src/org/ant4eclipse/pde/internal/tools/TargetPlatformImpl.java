@@ -11,18 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.tools;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Pair;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
@@ -30,12 +23,20 @@ import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.ResolvedFeature;
 import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
+
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
 import org.osgi.framework.Version;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * <p>
@@ -49,7 +50,7 @@ import org.osgi.framework.Version;
 public final class TargetPlatformImpl implements TargetPlatform {
 
   /** the bundle set that contains the plug-in projects */
-  private final BundleAndFeatureSet   _pluginProjectSet;
+  private BundleAndFeatureSet         _pluginProjectSet;
 
   /** contains a list of all the binary bundle sets that belong to this target location */
   private List<BundleAndFeatureSet>   _binaryBundleSets;
@@ -72,8 +73,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param configuration
    *          the {@link TargetPlatformConfiguration} of this target platform
    */
-  public TargetPlatformImpl(final BundleAndFeatureSet pluginProjectSet, final BundleAndFeatureSet[] binaryBundleSets,
-      final TargetPlatformConfiguration configuration) {
+  public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
+      TargetPlatformConfiguration configuration) {
     Assert.notNull(configuration);
 
     // set the plug-in project set
@@ -105,8 +106,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param configuration
    *          the {@link TargetPlatformConfiguration} of this target platform
    */
-  public TargetPlatformImpl(final BundleAndFeatureSet pluginProjectSet, final BundleAndFeatureSet binaryPluginSet,
-      final TargetPlatformConfiguration configuration) {
+  public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet binaryPluginSet,
+      TargetPlatformConfiguration configuration) {
 
     // delegate
     this(pluginProjectSet, (binaryPluginSet != null ? new BundleAndFeatureSet[] { binaryPluginSet } : null),
@@ -124,7 +125,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public BundleDescription getResolvedBundle(String symbolicName, Version version) {
-    return _state.getBundle(symbolicName, version);
+    return this._state.getBundle(symbolicName, version);
   }
 
   /**
@@ -138,8 +139,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
         this._pluginProjectSet.initialize();
       }
 
-      for (final Iterator<BundleAndFeatureSet> iterator = this._binaryBundleSets.iterator(); iterator.hasNext();) {
-        final BundleAndFeatureSet bundleSet = iterator.next();
+      for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
         bundleSet.initialize();
       }
 
@@ -169,10 +169,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return a list with a {@link BundleDescription BundleDescriptions} of each bundle that is contained in the plug-in
    *         project set or the binary bundle sets.
    */
-  private List<BundleDescription> getAllBundleDescriptions(final boolean preferProjects) {
+  private List<BundleDescription> getAllBundleDescriptions(boolean preferProjects) {
 
     // step 1: create the result list
-    final List<BundleDescription> result = new LinkedList<BundleDescription>();
+    List<BundleDescription> result = new LinkedList<BundleDescription>();
 
     // step 2: add plug-in projects from the plug-in projects list to the result
     if (this._pluginProjectSet != null) {
@@ -180,7 +180,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
 
     // step 3: add bundles from binary bundle sets to the result
-    for (BundleAndFeatureSet binaryBundleSet : _binaryBundleSets) {
+    for (BundleAndFeatureSet binaryBundleSet : this._binaryBundleSets) {
 
       for (BundleDescription bundleDescription : binaryBundleSet.getAllBundleDescriptions()) {
         if ((this._pluginProjectSet != null) && preferProjects
@@ -211,14 +211,14 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
 
     // 
-    FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription(id, version);
+    FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id, version);
 
     // 
     if (featureDescription != null) {
       return featureDescription;
     }
 
-    for (BundleAndFeatureSet bundleSet : _binaryBundleSets) {
+    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
       featureDescription = bundleSet.getFeatureDescription(id, version);
       if (featureDescription != null) {
         return featureDescription;
@@ -244,7 +244,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     Assert.nonEmpty(id);
 
     // 
-    FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription(id);
+    FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
 
     // 
     if (featureDescription != null) {
@@ -255,7 +255,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     FeatureDescription result = null;
 
     // iterate over feature descriptions
-    for (BundleAndFeatureSet bundleSet : _binaryBundleSets) {
+    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
 
       // get the feature manifest
       featureDescription = bundleSet.getFeatureDescription(id);
@@ -309,7 +309,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private void resolveIncludes(FeatureManifest manifest, ResolvedFeature resolvedFeature) {
 
     // TODO: DependencyGraph!!
-    final List<Pair<Includes, FeatureDescription>> result = new LinkedList<Pair<Includes, FeatureDescription>>();
+    List<Pair<Includes, FeatureDescription>> result = new LinkedList<Pair<Includes, FeatureDescription>>();
 
     for (Includes includes : manifest.getIncludes()) {
 
@@ -343,14 +343,14 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) throws BuildException {
     // 4. Retrieve BundlesDescriptions for feature plug-ins
-    final Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
-    final List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
+    Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
+    List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
 
     for (Plugin plugin : manifest.getPlugins()) {
 
       // if a plug-in reference uses a version, the exact version must be found in the workspace
       // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
-      BundleDescription bundleDescription = _state.getBundle(plugin.getId(), plugin.getVersion().equals(
+      BundleDescription bundleDescription = this._state.getBundle(plugin.getId(), plugin.getVersion().equals(
           Version.emptyVersion) ? null : plugin.getVersion());
 
       // TODO: NLS
@@ -371,22 +371,21 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
 
     // 5. Sort the bundles
-    final BundleDescription[] sortedbundleDescriptions = (BundleDescription[]) bundleDescriptions
-        .toArray(new BundleDescription[0]);
-    final Object[][] cycles = _state.getStateHelper().sortBundles(sortedbundleDescriptions);
+    BundleDescription[] sortedbundleDescriptions = bundleDescriptions.toArray(new BundleDescription[0]);
+    Object[][] cycles = this._state.getStateHelper().sortBundles(sortedbundleDescriptions);
     // warn on circular dependencies
     if ((cycles != null) && (cycles.length > 0)) {
       // TODO: better error messages
       A4ELogging.warn("Detected circular dependencies:");
-      for (int i = 0; i < cycles.length; i++) {
-        A4ELogging.warn(Arrays.asList(cycles[i]).toString());
+      for (Object[] cycle : cycles) {
+        A4ELogging.warn(Arrays.asList(cycle).toString());
       }
     }
 
     // 6.1 create result
-    final List<Pair<Plugin, BundleDescription>> result = new LinkedList<Pair<Plugin, BundleDescription>>();
+    List<Pair<Plugin, BundleDescription>> result = new LinkedList<Pair<Plugin, BundleDescription>>();
     for (BundleDescription bundleDescription : sortedbundleDescriptions) {
-      final Pair<Plugin, BundleDescription> pair = new Pair<Plugin, BundleDescription>(map.get(bundleDescription),
+      Pair<Plugin, BundleDescription> pair = new Pair<Plugin, BundleDescription>(map.get(bundleDescription),
           bundleDescription);
       result.add(pair);
     }
@@ -403,10 +402,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private State resolve() {
 
     // step 1: create new state
-    final State state = StateObjectFactory.defaultFactory.createState(true);
+    State state = StateObjectFactory.defaultFactory.createState(true);
 
     for (BundleDescription bundleDescription : getAllBundleDescriptions(this._configuration.isPreferProjects())) {
-      final BundleDescription copy = StateObjectFactory.defaultFactory.createBundleDescription(bundleDescription);
+      BundleDescription copy = StateObjectFactory.defaultFactory.createBundleDescription(bundleDescription);
       copy.setUserObject(bundleDescription.getUserObject());
       if (!state.addBundle(copy)) {
         // TODO: NLS
@@ -418,7 +417,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
 
     // set the platform properties
-    final Properties platformProperties = this._configuration.getConfigurationProperties();
+    Properties platformProperties = this._configuration.getConfigurationProperties();
     if (A4ELogging.isDebuggingEnabled()) {
       A4ELogging.debug(Utilities.toString("Initializing TargetPlatform with properties: ", platformProperties));
     }
@@ -428,7 +427,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     state.resolve();
 
     // log errors if any
-    final BundleDescription[] bundleDescriptions = state.getBundles();
+    BundleDescription[] bundleDescriptions = state.getBundles();
     // boolean allStatesResolved = true;
 
     if (A4ELogging.isDebuggingEnabled()) {
@@ -454,7 +453,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     StringBuffer stringBuffer = new StringBuffer();
     State state = description.getContainingState();
-    final ResolverError[] errors = state.getResolverErrors(description);
+    ResolverError[] errors = state.getResolverErrors(description);
     if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
       if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
         stringBuffer.append("Not using '");
@@ -464,8 +463,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
         stringBuffer.append("Could not resolve '");
         stringBuffer.append(getBundleInfo(description));
         stringBuffer.append("':\n");
-        for (int j = 0; j < errors.length; j++) {
-          final ResolverError error = errors[j];
+        for (ResolverError error : errors) {
           stringBuffer.append("  ");
           stringBuffer.append(error);
           stringBuffer.append("\n");
@@ -484,12 +482,12 @@ public final class TargetPlatformImpl implements TargetPlatform {
    *          the bundle description.
    * @return the bundle info of the given bundle description.
    */
-  static String getBundleInfo(final BundleDescription description) {
+  static String getBundleInfo(BundleDescription description) {
     Assert.notNull(description);
 
-    final BundleSource bundleSource = BundleSource.getBundleSource(description);
+    BundleSource bundleSource = BundleSource.getBundleSource(description);
 
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append(description.getSymbolicName()).append("_").append(description.getVersion().toString()).append("@");
     if (bundleSource.isEclipseProject()) {
       buffer.append("<P>").append(bundleSource.getAsEclipseProject().getFolder());

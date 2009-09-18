@@ -32,18 +32,18 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    * @param name
    *          The name of the project. Neither <code>null</code> nor empty.
    */
-  public ResolvedProjectEntry(final String owningproject, final String name) {
+  public ResolvedProjectEntry(String owningproject, String name) {
     Assert.nonEmpty(owningproject);
     Assert.nonEmpty(name);
-    _owningproject = owningproject;
-    _projectname = name;
+    this._owningproject = owningproject;
+    this._projectname = name;
   }
 
   /**
    * {@inheritDoc}
    */
   public String getOwningProjectname() {
-    return _owningproject;
+    return this._owningproject;
   }
 
   /**
@@ -59,14 +59,14 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    * @return The name of the referred project. Neither <code>null</code> nor empty.
    */
   public String getProjectname() {
-    return _projectname;
+    return this._projectname;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object object) {
+  public boolean equals(Object object) {
     if (this == object) {
       return true;
     }
@@ -76,11 +76,11 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
     if (object.getClass() != getClass()) {
       return false;
     }
-    final ResolvedProjectEntry other = (ResolvedProjectEntry) object;
-    if (!_owningproject.equals(other._owningproject)) {
+    ResolvedProjectEntry other = (ResolvedProjectEntry) object;
+    if (!this._owningproject.equals(other._owningproject)) {
       return false;
     }
-    return _projectname.equals(other._projectname);
+    return this._projectname.equals(other._projectname);
   }
 
   /**
@@ -88,8 +88,8 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = _owningproject.hashCode();
-    result = 31 * result + _projectname.hashCode();
+    int result = this._owningproject.hashCode();
+    result = 31 * result + this._projectname.hashCode();
     return result;
   }
 
@@ -98,12 +98,12 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedProjectEntry:");
     buffer.append(" _owningproject: ");
-    buffer.append(_owningproject);
+    buffer.append(this._owningproject);
     buffer.append(", _projectname: ");
-    buffer.append(_projectname);
+    buffer.append(this._projectname);
     buffer.append("]");
     return buffer.toString();
   }

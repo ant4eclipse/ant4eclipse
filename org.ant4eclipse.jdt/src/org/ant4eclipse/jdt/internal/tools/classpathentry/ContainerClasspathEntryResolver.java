@@ -58,7 +58,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
-  public boolean canResolve(final ClasspathEntry entry) {
+  public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_CONTAINER)
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_CONTAINER) */;
   }
@@ -66,7 +66,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
-  public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
+  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
     Assert.notNull(entry);
 
     // do not resolve if the class path entry is not visible
@@ -87,10 +87,10 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     boolean handled = false;
 
     // iterate over all registered container resolvers
-    final Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
+    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
 
-      final ClasspathContainerResolver classpathContainerResolver = iterator.next();
+      ClasspathContainerResolver classpathContainerResolver = iterator.next();
 
       if (A4ELogging.isDebuggingEnabled()) {
         A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Try " + classpathContainerResolver);
@@ -121,17 +121,17 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   public void initialize() {
     this._containerresolver = new LinkedList<ClasspathContainerResolver>();
 
-    final Iterable<Pair<String, String>> containerResolverEntries = Ant4EclipseConfiguration.Helper
+    Iterable<Pair<String, String>> containerResolverEntries = Ant4EclipseConfiguration.Helper
         .getAnt4EclipseConfiguration().getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
 
-    final List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
+    List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
 
     // Instantiate all Container Resolvers
-    for (final Pair<String, String> containerResolverEntry : containerResolverEntries) {
+    for (Pair<String, String> containerResolverEntry : containerResolverEntries) {
 
       // we're not interested in the key of a container resolver, only the class name (value of the entry) is relevant
       // to create new instance
-      final ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverEntry.getSecond());
+      ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverEntry.getSecond());
 
       // trace
       A4ELogging.trace("Register ClasspathContainerResolver '%s'", new Object[] { resolver });
@@ -143,9 +143,9 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     this._containerresolver = containerResolvers;
 
     // initialize all registered container resolvers
-    final Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
+    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
-      final ClasspathContainerResolver classpathContainerResolver = iterator.next();
+      ClasspathContainerResolver classpathContainerResolver = iterator.next();
       if (classpathContainerResolver instanceof Lifecycle) {
         ((Lifecycle) classpathContainerResolver).initialize();
       }
@@ -166,9 +166,9 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    */
   public void dispose() {
     // initialize all registered container resolvers
-    final Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
+    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
     while (iterator.hasNext()) {
-      final ClasspathContainerResolver classpathContainerResolver = iterator.next();
+      ClasspathContainerResolver classpathContainerResolver = iterator.next();
       if (classpathContainerResolver instanceof Lifecycle) {
         ((Lifecycle) classpathContainerResolver).dispose();
       }

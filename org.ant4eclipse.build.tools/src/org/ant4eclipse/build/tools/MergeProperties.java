@@ -1,5 +1,9 @@
 package org.ant4eclipse.build.tools;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.types.Resource;
+import org.apache.tools.ant.types.ResourceCollection;
+
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,12 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.types.Resource;
-import org.apache.tools.ant.types.ResourceCollection;
-
 public class MergeProperties extends AbstractMergeTask {
 
+  @Override
   @SuppressWarnings("unchecked")
   public void doExecute() throws IOException {
 
@@ -141,43 +142,52 @@ public class MergeProperties extends AbstractMergeTask {
     public String value;
 
     public String getName() {
-      return name;
+      return this.name;
     }
 
     @Override
     public int hashCode() {
-      final int prime = 31;
+      int prime = 31;
       int result = 1;
-      result = prime * result + ((comment == null) ? 0 : comment.hashCode());
-      result = prime * result + ((name == null) ? 0 : name.hashCode());
-      result = prime * result + ((value == null) ? 0 : value.hashCode());
+      result = prime * result + ((this.comment == null) ? 0 : this.comment.hashCode());
+      result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+      result = prime * result + ((this.value == null) ? 0 : this.value.hashCode());
       return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final Property other = (Property) obj;
-      if (comment == null) {
-        if (other.comment != null)
+      }
+      Property other = (Property) obj;
+      if (this.comment == null) {
+        if (other.comment != null) {
           return false;
-      } else if (!comment.equals(other.comment))
+        }
+      } else if (!this.comment.equals(other.comment)) {
         return false;
-      if (name == null) {
-        if (other.name != null)
+      }
+      if (this.name == null) {
+        if (other.name != null) {
           return false;
-      } else if (!name.equals(other.name))
+        }
+      } else if (!this.name.equals(other.name)) {
         return false;
-      if (value == null) {
-        if (other.value != null)
+      }
+      if (this.value == null) {
+        if (other.value != null) {
           return false;
-      } else if (!value.equals(other.value))
+        }
+      } else if (!this.value.equals(other.value)) {
         return false;
+      }
       return true;
     }
 
@@ -186,11 +196,11 @@ public class MergeProperties extends AbstractMergeTask {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[FileContents:");
       buffer.append(" name: ");
-      buffer.append(name);
+      buffer.append(this.name);
       buffer.append(" value: ");
-      buffer.append(value);
+      buffer.append(this.value);
       buffer.append(" comment: ");
-      buffer.append(comment);
+      buffer.append(this.comment);
       buffer.append("]");
       return buffer.toString();
     }

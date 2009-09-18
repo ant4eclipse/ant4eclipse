@@ -21,13 +21,13 @@ package org.ant4eclipse.core.exception;
 public class Ant4EclipseException extends RuntimeException {
 
   /** serialVersionUID */
-  private static final long   serialVersionUID = -2322126644590371742L;
+  private static final long serialVersionUID = -2322126644590371742L;
 
   /** - */
-  private final ExceptionCode _exceptionCode;
+  private ExceptionCode     _exceptionCode;
 
   /** - */
-  private final Object[]      _args;
+  private Object[]          _args;
 
   /**
    * <p>
@@ -38,7 +38,7 @@ public class Ant4EclipseException extends RuntimeException {
    * @param exceptionCode
    * @param args
    */
-  public Ant4EclipseException(final Throwable cause, final ExceptionCode exceptionCode, final Object... args) {
+  public Ant4EclipseException(Throwable cause, ExceptionCode exceptionCode, Object... args) {
     super(cause);
 
     this._exceptionCode = exceptionCode;
@@ -50,7 +50,7 @@ public class Ant4EclipseException extends RuntimeException {
    * @param exceptionCode
    * @param args
    */
-  public Ant4EclipseException(final ExceptionCode exceptionCode, final Object... args) {
+  public Ant4EclipseException(ExceptionCode exceptionCode, Object... args) {
     super();
 
     this._exceptionCode = exceptionCode;

@@ -29,39 +29,39 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
   /**
    * {@inheritDoc}
    */
-  public UserLibraries parseUserLibrariesFile(final File configuration) {
-    final UserLibrariesImpl userlibs = new UserLibrariesImpl();
+  public UserLibraries parseUserLibrariesFile(File configuration) {
+    UserLibrariesImpl userlibs = new UserLibrariesImpl();
 
-    final XQueryHandler queryhandler2 = new XQueryHandler();
+    XQueryHandler queryhandler2 = new XQueryHandler();
 
     // queries for the 'name' and 'systemlibrary' attributes. the resulting array
     // will have the same length.
-    final XQuery namequery = queryhandler2.createQuery("//eclipse-userlibraries/library/@name");
-    final XQuery syslibquery = queryhandler2.createQuery("//eclipse-userlibraries/library/@systemlibrary");
+    XQuery namequery = queryhandler2.createQuery("//eclipse-userlibraries/library/@name");
+    XQuery syslibquery = queryhandler2.createQuery("//eclipse-userlibraries/library/@systemlibrary");
 
     // function query which count the number of 'archive' elements within each 'library'
     // element. so it has the same length as the attribute-value-arrays.
-    final XQuery countquery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive[count()]");
+    XQuery countquery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive[count()]");
 
     // queries for the 'path', 'source', 'javadoc' attributes of 'archive' elements.
-    final XQuery pathquery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive/@path");
-    final XQuery sourcequery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive/@source");
-    final XQuery javadocquery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive/@javadoc");
+    XQuery pathquery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive/@path");
+    XQuery sourcequery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive/@source");
+    XQuery javadocquery = queryhandler2.createQuery("//eclipse-userlibraries/library/archive/@javadoc");
 
     // parse the file
     XQueryHandler.queryFile(configuration, queryhandler2);
 
-    final String[] names = namequery.getResult();
-    final String[] syslibs = syslibquery.getResult();
-    final String[] counters = countquery.getResult();
-    final String[] pathes = pathquery.getResult();
-    final String[] sources = sourcequery.getResult();
-    final String[] javadocs = javadocquery.getResult();
+    String[] names = namequery.getResult();
+    String[] syslibs = syslibquery.getResult();
+    String[] counters = countquery.getResult();
+    String[] pathes = pathquery.getResult();
+    String[] sources = sourcequery.getResult();
+    String[] javadocs = javadocquery.getResult();
 
     for (int i = 0, j = 0; i < names.length; i++) {
 
       // create an entry for each 'library' element
-      final UserLibraryImpl userlib = new UserLibraryImpl(names[i], "true".equals(syslibs[i]));
+      UserLibraryImpl userlib = new UserLibraryImpl(names[i], "true".equals(syslibs[i]));
       userlibs.addLibrary(userlib);
 
       // check how many 'archive' elements are associated
@@ -70,7 +70,7 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
       while (arccount > 0) {
 
         // create an Archive instance for each 'archive' element.
-        final ArchiveImpl archive = new ArchiveImpl(new File(pathes[j]));
+        ArchiveImpl archive = new ArchiveImpl(new File(pathes[j]));
         userlib.addArchive(archive);
 
         if ((sources[j] != null) && (!"".equals(sources[j].trim()))) {

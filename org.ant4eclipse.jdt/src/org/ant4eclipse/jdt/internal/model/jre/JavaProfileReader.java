@@ -42,18 +42,18 @@ public class JavaProfileReader {
    */
   public static JavaProfile[] readAllProfiles() {
 
-    final Properties properties = Utilities.readPropertiesFromClasspath("profiles/profile.list");
+    Properties properties = Utilities.readPropertiesFromClasspath("profiles/profile.list");
 
-    final String javaProfiles = (String) properties.get("java.profiles");
+    String javaProfiles = (String) properties.get("java.profiles");
 
-    final String[] profiles = javaProfiles.split(",");
+    String[] profiles = javaProfiles.split(",");
 
-    final List<JavaProfileImpl> result = new LinkedList<JavaProfileImpl>();
+    List<JavaProfileImpl> result = new LinkedList<JavaProfileImpl>();
 
-    for (final String profile2 : profiles) {
-      final String profile = profile2.trim();
+    for (String profile2 : profiles) {
+      String profile = profile2.trim();
       if ((profile != null) && !"".equals(profile)) {
-        final Properties props = Utilities.readPropertiesFromClasspath("profiles/" + profile);
+        Properties props = Utilities.readPropertiesFromClasspath("profiles/" + profile);
         result.add(new JavaProfileImpl(props));
       }
     }
@@ -65,15 +65,15 @@ public class JavaProfileReader {
    * @param profile
    * @return
    */
-  public static JavaProfile readProfile(final String profile) {
+  public static JavaProfile readProfile(String profile) {
     Assert.notNull(profile);
 
-    final String profileName = profile + ".profile";
+    String profileName = profile + ".profile";
 
     InputStream inputStream = null;
 
     A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
-    final ClassLoader classLoader = Version.class.getClassLoader();
+    ClassLoader classLoader = Version.class.getClassLoader();
     inputStream = classLoader.getResourceAsStream("profiles/" + profileName);
     if (inputStream != null) {
       A4ELogging.debug("Profile read from '%s'", classLoader);
@@ -83,37 +83,37 @@ public class JavaProfileReader {
       throw new RuntimeException("The specified profile '" + profile + "' does not exist.");
     }
 
-    final Properties profileProperties = new Properties();
+    Properties profileProperties = new Properties();
     try {
       profileProperties.load(inputStream);
       Utilities.close(inputStream);
-    } catch (final Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e.getMessage(), e);
     }
     return new JavaProfileImpl(profileProperties);
   }
 
-  // public static String getVMProfile(final File jreLocation) {
+  // public static String getVMProfile(File jreLocation) {
   //
-  // final JavaLauncher javaLauncher = JavaLauncher.createWithA4eClasspath(jreLocation);
+  // JavaLauncher javaLauncher = JavaLauncher.createWithA4eClasspath(jreLocation);
   //
   // javaLauncher.setMainClass("net.sf.ant4eclipse.model.jdt.jre.internal.support.LegacySystemProperties");
   // javaLauncher.setArgs(new String[] { JAVA_SPECIFICATION_VERSION, "java.vendor" });
   // javaLauncher.execute();
   //
-  // final String[] sysout = javaLauncher.getSystemOut();
+  // String[] sysout = javaLauncher.getSystemOut();
   // // for (int i = 0; i < sysout.length; i++) {
   // // System.err.println(i + " : " + sysout[i]);
   // // }
   //
-  // // final String[] syserr = javaLauncher.getSystemErr();
+  // // String[] syserr = javaLauncher.getSystemErr();
   // // for (int i = 0; i < syserr.length; i++) {
   // // System.err.println(syserr[i]);
   // // }
   //
-  // final Properties properties = new Properties();
+  // Properties properties = new Properties();
   // for (int i = 0; i < sysout.length; i++) {
-  // final String[] prop = sysout[i].split("=");
+  // String[] prop = sysout[i].split("=");
   // properties.put(prop[0], prop[1]);
   // }
   //

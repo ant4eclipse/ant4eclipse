@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.internal.model.resource;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.model.resource.ProjectNature;
 
 /**
@@ -24,7 +25,7 @@ import org.ant4eclipse.platform.model.resource.ProjectNature;
 public class ProjectNatureImpl implements ProjectNature {
 
   /** the name of the nature */
-  private final String _name;
+  private String _name;
 
   /**
    * <p>
@@ -33,7 +34,7 @@ public class ProjectNatureImpl implements ProjectNature {
    * 
    * @param name
    */
-  public ProjectNatureImpl(final String name) {
+  public ProjectNatureImpl(String name) {
     Assert.notNull(name);
 
     this._name = name;
@@ -49,7 +50,8 @@ public class ProjectNatureImpl implements ProjectNature {
   /**
    * {@inheritDoc}
    */
-  public boolean equals(final Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -59,13 +61,14 @@ public class ProjectNatureImpl implements ProjectNature {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final ProjectNatureImpl castedObj = (ProjectNatureImpl) o;
+    ProjectNatureImpl castedObj = (ProjectNatureImpl) o;
     return (this._name.equals(castedObj._name));
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + this._name.hashCode();
@@ -75,8 +78,9 @@ public class ProjectNatureImpl implements ProjectNature {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[ProjectNature:");
     buffer.append(" name: ");
     buffer.append(this._name);

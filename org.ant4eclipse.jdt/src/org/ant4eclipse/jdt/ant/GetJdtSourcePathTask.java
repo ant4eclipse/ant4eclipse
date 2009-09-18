@@ -52,7 +52,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
    * @param allowMultipleFolders
    *          if multiple folders are supported or not.
    */
-  public void setAllowMultipleFolders(final boolean allowMultipleFolders) {
+  public void setAllowMultipleFolders(boolean allowMultipleFolders) {
     this._allowMultipleFolders = allowMultipleFolders;
   }
 
@@ -75,16 +75,16 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
   protected File[] resolvePath() {
 
     // set relative flag
-    final EclipseProject.PathStyle relative = isRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
+    EclipseProject.PathStyle relative = isRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
         : EclipseProject.PathStyle.ABSOLUTE;
 
     // resolve the source path
-    final JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
-    final String[] paths = javaProjectRole.getSourceFolders();
-    final File[] result = getEclipseProject().getChildren(paths, relative);
+    JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
+    String[] paths = javaProjectRole.getSourceFolders();
+    File[] result = getEclipseProject().getChildren(paths, relative);
 
     if ((result.length > 1) && !isAllowMultipleFolders()) {
-      final StringBuffer buffer = new StringBuffer();
+      StringBuffer buffer = new StringBuffer();
       buffer.append("Project '");
       buffer.append(getEclipseProject().getFolderName());
       buffer.append("' contains multiple SourceFolders! ");

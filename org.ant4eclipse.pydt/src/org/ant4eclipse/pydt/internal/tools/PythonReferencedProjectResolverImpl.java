@@ -46,9 +46,9 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
    * Initialises this resolver implementation.
    */
   public PythonReferencedProjectResolverImpl() {
-    _resolver = null;
-    _workspace = null;
-    _args = null;
+    this._resolver = null;
+    this._workspace = null;
+    this._args = null;
   }
 
   /**
@@ -62,19 +62,19 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
    * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
-    _args = getArgs(additionalElements);
-    if (_args.isExport() && PythonUtilities.isPyDevProject(project)) {
+    this._args = getArgs(additionalElements);
+    if (this._args.isExport() && PythonUtilities.isPyDevProject(project)) {
       // 'exported' and 'all' is equivalent for PyDev since there's no distinction
       // between these settings so each path is considered to be exported
       A4ELogging.warn("The mode 'exported' is treated as 'all' for a PyDev project.");
     }
-    _workspace = project.getWorkspace();
-    _resolver = new PythonResolver(_workspace, getMode(), true);
-    ResolvedPathEntry[] resolved = _resolver.resolve(project.getSpecifiedName());
+    this._workspace = project.getWorkspace();
+    this._resolver = new PythonResolver(this._workspace, getMode(), true);
+    ResolvedPathEntry[] resolved = this._resolver.resolve(project.getSpecifiedName());
     List<EclipseProject> result = new ArrayList<EclipseProject>();
     for (ResolvedPathEntry entry : resolved) {
       if (entry.getKind() == ReferenceKind.Project) {
-        result.add(_workspace.getProject(((ResolvedProjectEntry) entry).getProjectname()));
+        result.add(this._workspace.getProject(((ResolvedProjectEntry) entry).getProjectname()));
       }
     }
     return result;
@@ -86,9 +86,9 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
    * @return The resolving mode used for the PythonResolver. Not <code>null</code>.
    */
   private PythonResolver.Mode getMode() {
-    if (_args.isAll()) {
+    if (this._args.isAll()) {
       return PythonResolver.Mode.all;
-    } else if (_args.isDirect()) {
+    } else if (this._args.isDirect()) {
       return PythonResolver.Mode.direct;
     } else /* if (_args.isExport()) */{
       return PythonResolver.Mode.exported;
@@ -103,11 +103,11 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
    * 
    * @return An instance controlling the resolving process. Not <code>null</code>.
    */
-  private UsedProjectsArgumentComponent getArgs(final List<Object> additionalElements) {
+  private UsedProjectsArgumentComponent getArgs(List<Object> additionalElements) {
     if (additionalElements != null) {
-      final List<Object> elements = Utilities.filter(additionalElements, UsedProjectsArgumentComponent.class);
+      List<Object> elements = Utilities.filter(additionalElements, UsedProjectsArgumentComponent.class);
       if (!elements.isEmpty()) {
-        final UsedProjectsArgumentComponent args = (UsedProjectsArgumentComponent) elements.get(0);
+        UsedProjectsArgumentComponent args = (UsedProjectsArgumentComponent) elements.get(0);
         if (elements.size() > 1) {
           A4ELogging.warn("Only one element '%s' is allowed ! Using the first one: '%s'.",
               UsedProjectsArgumentComponent.ELEMENTNAME, String.valueOf(args));

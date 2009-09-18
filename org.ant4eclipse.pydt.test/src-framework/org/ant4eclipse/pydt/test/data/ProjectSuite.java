@@ -54,15 +54,15 @@ public class ProjectSuite implements ProjectSuiteApi {
    * @param dltk
    *          <code>true</code> <=> Use a DLTK based python nature, PyDev otherwise.
    */
-  public ProjectSuite(final WorkspaceBuilder wsbuilder, final boolean dltk) {
+  public ProjectSuite(WorkspaceBuilder wsbuilder, boolean dltk) {
     Assert.assertNotNull(wsbuilder);
-    _workspacebuilder = wsbuilder;
-    _dltk = dltk;
-    _count = 1;
-    _formatter = new DecimalFormat("000");
-    _sampleegg = getResource("/org/ant4eclipse/pydt/test/data/sample.egg");
-    _samplejar = getResource("/org/ant4eclipse/pydt/test/data/sample.jar");
-    _samplezip = getResource("/org/ant4eclipse/pydt/test/data/sample.zip");
+    this._workspacebuilder = wsbuilder;
+    this._dltk = dltk;
+    this._count = 1;
+    this._formatter = new DecimalFormat("000");
+    this._sampleegg = getResource("/org/ant4eclipse/pydt/test/data/sample.egg");
+    this._samplejar = getResource("/org/ant4eclipse/pydt/test/data/sample.jar");
+    this._samplezip = getResource("/org/ant4eclipse/pydt/test/data/sample.zip");
   }
 
   /**
@@ -74,9 +74,9 @@ public class ProjectSuite implements ProjectSuiteApi {
    * 
    * @return The URL pointing to that resource. Not <code>null</code>.
    */
-  private URL getResource(final String path) {
+  private URL getResource(String path) {
     Assert.assertNotNull(path);
-    final URL result = getClass().getResource(path);
+    URL result = getClass().getResource(path);
     if (result == null) {
       Assert.fail(String.format("The resource '%s' is not located on the classpath !", path));
     }
@@ -86,95 +86,95 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
-  public ProjectDescription createEmptyProject(final URL script, final int projectsettings) {
-    final ProjectDescription result = new ProjectDescription();
+  public ProjectDescription createEmptyProject(URL script, int projectsettings) {
+    ProjectDescription result = new ProjectDescription();
     result.setPrimaryProjectname(newName());
-    final PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
+    PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
     primarybuilder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
       result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
-      final String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar), true);
+      String prefix = "/" + result.getPrimaryProjectname() + "/";
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplezip), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._sampleegg), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplejar), true);
     }
-    primarybuilder.populate(_workspacebuilder);
+    primarybuilder.populate(this._workspacebuilder);
     return result;
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectDescription createComplexProject(final URL script, final int projectsettings) {
-    final ProjectDescription result = new ProjectDescription();
+  public ProjectDescription createComplexProject(URL script, int projectsettings) {
+    ProjectDescription result = new ProjectDescription();
     result.setPrimaryProjectname(newName());
     result.setSecondaryProjectname(newName());
-    final PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
+    PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
     primarybuilder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
       result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
-    final PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
+    PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
       result.addSourceFolder("/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
-      final String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar), true);
+      String prefix = "/" + result.getPrimaryProjectname() + "/";
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplezip), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._sampleegg), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplejar), true);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0) {
-      final String prefix = "/" + result.getSecondaryProjectname() + "/";
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplezip), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_sampleegg), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplejar), false);
+      String prefix = "/" + result.getSecondaryProjectname() + "/";
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplezip), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._sampleegg), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplejar), false);
     }
     primarybuilder.useProject(result.getSecondaryProjectname(), true);
-    primarybuilder.populate(_workspacebuilder);
-    secondarybuilder.populate(_workspacebuilder);
+    primarybuilder.populate(this._workspacebuilder);
+    secondarybuilder.populate(this._workspacebuilder);
     return result;
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectDescription createCyclicProject(final URL script, final int projectsettings) {
-    final ProjectDescription result = new ProjectDescription();
+  public ProjectDescription createCyclicProject(URL script, int projectsettings) {
+    ProjectDescription result = new ProjectDescription();
     result.setPrimaryProjectname(newName());
     result.setSecondaryProjectname(newName());
-    final PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
+    PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
     primarybuilder.setBuildScript(script);
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
       primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
       result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
-    final PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
+    PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
     if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
       secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
       result.addSourceFolder("/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
-      final String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplezip), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_sampleegg), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(_samplejar), true);
+      String prefix = "/" + result.getPrimaryProjectname() + "/";
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplezip), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._sampleegg), true);
+      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplejar), true);
     }
     if ((projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0) {
-      final String prefix = "/" + result.getSecondaryProjectname() + "/";
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplezip), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_sampleegg), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(_samplejar), false);
+      String prefix = "/" + result.getSecondaryProjectname() + "/";
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplezip), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._sampleegg), false);
+      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplejar), false);
     }
     primarybuilder.useProject(result.getSecondaryProjectname(), true);
     secondarybuilder.useProject(result.getPrimaryProjectname(), true);
-    primarybuilder.populate(_workspacebuilder);
-    secondarybuilder.populate(_workspacebuilder);
+    primarybuilder.populate(this._workspacebuilder);
+    secondarybuilder.populate(this._workspacebuilder);
     return result;
   }
 
@@ -186,8 +186,8 @@ public class ProjectSuite implements ProjectSuiteApi {
    * 
    * @return The builder used to create the projects. Not <code>null</code>.
    */
-  private PythonProjectBuilder newProjectBuilder(final String projectname) {
-    if (_dltk) {
+  private PythonProjectBuilder newProjectBuilder(String projectname) {
+    if (this._dltk) {
       return new DLTKProjectBuilder(projectname);
     } else {
       return new PyDevProjectBuilder(projectname);
@@ -200,7 +200,7 @@ public class ProjectSuite implements ProjectSuiteApi {
    * @return A newly generated name. Neither <code>null</code> nor empty.
    */
   private String newName() {
-    return String.format(NAME_PREFIX, _formatter.format(_count++));
+    return String.format(NAME_PREFIX, this._formatter.format(this._count++));
   }
 
 } /* ENDCLASS */

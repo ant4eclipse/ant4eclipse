@@ -1,11 +1,5 @@
 package org.ant4eclipse.pde.ant;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.logging.A4ELogging;
 
@@ -16,6 +10,7 @@ import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
@@ -24,6 +19,12 @@ import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * <p>
@@ -83,14 +84,14 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @param project
    *          the ant project
    */
-  public PdeProjectFileSet(final Project project) {
+  public PdeProjectFileSet(Project project) {
     super(project);
 
     // create the project delegate
-    _eclipseProjectDelegate = new EclipseProjectDelegate(this);
+    this._eclipseProjectDelegate = new EclipseProjectDelegate(this);
 
     // create the result list
-    _resourceList = new LinkedList<Resource>();
+    this._resourceList = new LinkedList<Resource>();
   }
 
   /**
@@ -101,7 +102,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return if this {@link PdeProjectFileSet} is a source file set.
    */
   public boolean isSourceFileSet() {
-    return _isSourceFileSet;
+    return this._isSourceFileSet;
   }
 
   /**
@@ -113,7 +114,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    *          if this {@link PdeProjectFileSet} is a source file set or not.
    */
   public void setSourceFileSet(boolean isSourceFileSet) {
-    _isSourceFileSet = isSourceFileSet;
+    this._isSourceFileSet = isSourceFileSet;
   }
 
   /**
@@ -121,10 +122,10 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    */
   @Override
   public void setRefid(Reference ref) {
-    if (_includes != null && !"".equals(_includes)) {
+    if (this._includes != null && !"".equals(this._includes)) {
       throw tooManyAttributes();
     }
-    if (_excludes != null && !"".equals(_excludes)) {
+    if (this._excludes != null && !"".equals(this._excludes)) {
       throw tooManyAttributes();
     }
 
@@ -139,7 +140,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return the inclusion pattern.
    */
   public String getIncludes() {
-    return _includes;
+    return this._includes;
   }
 
   /**
@@ -166,7 +167,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return the exclusion pattern.
    */
   public String getExcludes() {
-    return _excludes;
+    return this._excludes;
   }
 
   /**
@@ -182,7 +183,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
       throw tooManyAttributes();
     }
 
-    _excludes = excludes;
+    this._excludes = excludes;
   }
 
   /**
@@ -209,7 +210,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return the default exclusions value.
    */
   public synchronized boolean getDefaultexcludes() {
-    return (isReference()) ? getRef(getProject()).getDefaultexcludes() : _useDefaultExcludes;
+    return (isReference()) ? getRef(getProject()).getDefaultexcludes() : this._useDefaultExcludes;
   }
 
   /**
@@ -235,63 +236,63 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return <code>boolean</code> indicating whether the file set is case sensitive.
    */
   public synchronized boolean isCaseSensitive() {
-    return (isReference()) ? getRef(getProject()).isCaseSensitive() : _caseSensitive;
+    return (isReference()) ? getRef(getProject()).isCaseSensitive() : this._caseSensitive;
   }
 
   /**
    * {@inheritDoc}
    */
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    _eclipseProjectDelegate.ensureRole(projectRoleClass);
+    this._eclipseProjectDelegate.ensureRole(projectRoleClass);
   }
 
   /**
    * {@inheritDoc}
    */
   public EclipseProject getEclipseProject() throws BuildException {
-    return _eclipseProjectDelegate.getEclipseProject();
+    return this._eclipseProjectDelegate.getEclipseProject();
   }
 
   /**
    * {@inheritDoc}
    */
   public final Workspace getWorkspace() {
-    return _eclipseProjectDelegate.getWorkspace();
+    return this._eclipseProjectDelegate.getWorkspace();
   }
 
   /**
    * {@inheritDoc}
    */
   public final File getWorkspaceDirectory() {
-    return _eclipseProjectDelegate.getWorkspaceDirectory();
+    return this._eclipseProjectDelegate.getWorkspaceDirectory();
   }
 
   /**
    * {@inheritDoc}
    */
   public final boolean isProjectNameSet() {
-    return _eclipseProjectDelegate.isProjectNameSet();
+    return this._eclipseProjectDelegate.isProjectNameSet();
   }
 
   /**
    * {@inheritDoc}
    */
   public final boolean isWorkspaceDirectorySet() {
-    return _eclipseProjectDelegate.isWorkspaceDirectorySet();
+    return this._eclipseProjectDelegate.isWorkspaceDirectorySet();
   }
 
   /**
    * {@inheritDoc}
    */
   public final void requireWorkspaceAndProjectNameSet() {
-    _eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
+    this._eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
   /**
    * {@inheritDoc}
    */
   public final void requireWorkspaceDirectorySet() {
-    _eclipseProjectDelegate.requireWorkspaceDirectorySet();
+    this._eclipseProjectDelegate.requireWorkspaceDirectorySet();
   }
 
   /**
@@ -299,14 +300,14 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    */
   @Deprecated
   public void setProject(File projectPath) {
-    _eclipseProjectDelegate.setProject(projectPath);
+    this._eclipseProjectDelegate.setProject(projectPath);
   }
 
   /**
    * {@inheritDoc}
    */
   public final void setProjectName(String projectName) {
-    _eclipseProjectDelegate.setProjectName(projectName);
+    this._eclipseProjectDelegate.setProjectName(projectName);
   }
 
   /**
@@ -314,14 +315,14 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    */
   @Deprecated
   public final void setWorkspace(File workspace) {
-    _eclipseProjectDelegate.setWorkspace(workspace);
+    this._eclipseProjectDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
   public final void setWorkspaceDirectory(File workspaceDirectory) {
-    _eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
+    this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
   /**
@@ -337,7 +338,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   public Iterator<Resource> iterator() {
     computeFileSet();
 
-    return _resourceList.iterator();
+    return this._resourceList.iterator();
   }
 
   /**
@@ -346,7 +347,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   public int size() {
     computeFileSet();
 
-    return _resourceList.size();
+    return this._resourceList.size();
   }
 
   /**
@@ -367,8 +368,8 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * </p>
    */
   protected void clear() {
-    _resourceList.clear();
-    _fileListComputed = false;
+    this._resourceList.clear();
+    this._fileListComputed = false;
   }
 
   /**
@@ -379,7 +380,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   protected void computeFileSet() {
 
     // return if file list already is computed
-    if (_fileListComputed) {
+    if (this._fileListComputed) {
       return;
     }
 
@@ -387,7 +388,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     requireWorkspaceAndProjectNameSet();
 
     // nothing to do if no inclusion pattern is defined
-    if (_includes == null || "".equals(_includes.trim())) {
+    if (this._includes == null || "".equals(this._includes.trim())) {
       return;
     }
 
@@ -395,10 +396,10 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     splitExclusionPattern();
 
     // clear the resource list
-    _resourceList.clear();
+    this._resourceList.clear();
 
     // iterate over the included pattern set
-    StringTokenizer stringTokenizer = new StringTokenizer(_includes, SEPARATOR);
+    StringTokenizer stringTokenizer = new StringTokenizer(this._includes, SEPARATOR);
 
     while (stringTokenizer.hasMoreTokens()) {
       String token = stringTokenizer.nextToken().trim();
@@ -409,13 +410,13 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     if (A4ELogging.isDebuggingEnabled()) {
       A4ELogging.debug("Resolved pde project file set for project '%s'. Entries are:", getEclipseProject()
           .getSpecifiedName());
-      for (Resource resource : _resourceList) {
+      for (Resource resource : this._resourceList) {
         A4ELogging.debug("- '%s'", resource);
       }
     }
 
     // set _fileListComputed
-    _fileListComputed = true;
+    this._fileListComputed = true;
   }
 
   /**
@@ -432,7 +433,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
       token = DEFAULT_SELF_DIRECTORY;
     }
     // patch the included library if '_isSourceFileSet'
-    else if (_isSourceFileSet) {
+    else if (this._isSourceFileSet) {
       token = LibraryHelper.getSourceNameForLibrary(token);
     }
 
@@ -444,7 +445,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
       if (file.isFile()) {
         // if the child is a file, just add it to the list
-        _resourceList.add(new FileResource(getEclipseProject().getFolder(), token));
+        this._resourceList.add(new FileResource(getEclipseProject().getFolder(), token));
       } else {
 
         // if the child is a directory, scan the directory
@@ -465,13 +466,13 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
         for (String fileName : files) {
           if (token.equals(DEFAULT_SELF_DIRECTORY)) {
             if (!matchExcludePattern(fileName)) {
-              _resourceList.add(new FileResource(file, fileName));
+              this._resourceList.add(new FileResource(file, fileName));
             }
           } else {
             if (!matchExcludePattern(token + File.separatorChar + fileName)) {
               String filePath = normalize(file.getPath());
               String rootPath = normalize(filePath).substring(0, filePath.indexOf(normalize(token)));
-              _resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
+              this._resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
             }
           }
         }
@@ -484,17 +485,17 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * </p>
    */
   private void splitExclusionPattern() {
-    if (_excludes != null && !"".equals(_excludes.trim())) {
-      StringTokenizer stringTokenizer = new StringTokenizer(_excludes, SEPARATOR);
+    if (this._excludes != null && !"".equals(this._excludes.trim())) {
+      StringTokenizer stringTokenizer = new StringTokenizer(this._excludes, SEPARATOR);
       int count = stringTokenizer.countTokens();
-      _excludedPattern = new String[count];
+      this._excludedPattern = new String[count];
       int i = 0;
       while (stringTokenizer.hasMoreTokens()) {
-        _excludedPattern[i] = stringTokenizer.nextToken();
+        this._excludedPattern[i] = stringTokenizer.nextToken();
         i++;
       }
     } else {
-      _excludedPattern = new String[0];
+      this._excludedPattern = new String[0];
     }
   }
 
@@ -533,10 +534,10 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private boolean matchExcludePattern(String path) {
 
     // iterate over all excluded pattern
-    for (String pattern : _excludedPattern) {
+    for (String pattern : this._excludedPattern) {
 
       // if the given path matches an exclusion pattern, return true
-      if (SelectorUtils.matchPath(normalize(pattern), normalize(path), _caseSensitive)) {
+      if (SelectorUtils.matchPath(normalize(pattern), normalize(path), this._caseSensitive)) {
         return true;
       }
     }

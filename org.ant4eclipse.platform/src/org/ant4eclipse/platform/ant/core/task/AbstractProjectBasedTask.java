@@ -32,7 +32,7 @@ import java.io.File;
 public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask implements EclipseProjectComponent {
 
   /** the project delegate */
-  private final EclipseProjectDelegate _eclipseProjectDelegate;
+  private EclipseProjectDelegate _eclipseProjectDelegate;
 
   /**
    * <p>

@@ -28,7 +28,7 @@ import java.io.File;
  */
 public class ProjectFactory {
 
-  private final ProjectRoleIdentifierRegistry _projectRoleIdentifierRegistry;
+  private ProjectRoleIdentifierRegistry _projectRoleIdentifierRegistry;
 
   public ProjectFactory() {
     this._projectRoleIdentifierRegistry = new ProjectRoleIdentifierRegistry();
@@ -43,14 +43,14 @@ public class ProjectFactory {
    *          The root directory of the project
    * @return a configured EclipseProject instance
    */
-  public EclipseProject readProjectFromWorkspace(final WorkspaceImpl workspace, final File projectDirectory) {
+  public EclipseProject readProjectFromWorkspace(WorkspaceImpl workspace, File projectDirectory) {
 
     A4ELogging.trace("ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath());
 
     Assert.notNull(workspace);
     Assert.isDirectory(projectDirectory);
 
-    final EclipseProjectImpl project = new EclipseProjectImpl(workspace, projectDirectory);
+    EclipseProjectImpl project = new EclipseProjectImpl(workspace, projectDirectory);
 
     // parses the project description
     ProjectFileParser.parseProject(project);
@@ -70,7 +70,7 @@ public class ProjectFactory {
    * @param project
    *          The project which roles should be postprocessed. Not <code>null</code>.
    */
-  public void postProcessRoleSetup(final EclipseProject project) {
+  public void postProcessRoleSetup(EclipseProject project) {
     A4ELogging.trace("ProjectFactory: postProcessRoleSetup(%s)", project.getSpecifiedName());
     this._projectRoleIdentifierRegistry.postProcessRoles(project);
   }

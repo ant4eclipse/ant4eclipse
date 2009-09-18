@@ -11,24 +11,25 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.ClassName;
+
+import org.ant4eclipse.jdt.ecj.ClassFile;
+import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ClassName;
-import org.ant4eclipse.jdt.ecj.ClassFile;
-import org.ant4eclipse.jdt.ecj.ClassFileLoader;
-
 public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 
-  private final ClassFileLoader[]                  _classFileLoaders;
+  private ClassFileLoader[]                  _classFileLoaders;
 
   /** maps packages to a package provider that contains a list of one or more class path entries */
-  private final Map<String, List<ClassFileLoader>> _allPackages;
+  private Map<String, List<ClassFileLoader>> _allPackages;
 
-  public CompoundClassFileLoaderImpl(final ClassFileLoader[] classFileLoaders) {
+  public CompoundClassFileLoaderImpl(ClassFileLoader[] classFileLoaders) {
     Assert.notNull(classFileLoaders);
 
     this._classFileLoaders = classFileLoaders;
@@ -42,13 +43,13 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
     return this._allPackages.keySet().toArray(new String[0]);
   }
 
-  public boolean hasPackage(final String packageName) {
+  public boolean hasPackage(String packageName) {
     return this._allPackages.containsKey(packageName);
   }
 
-  public ClassFile loadClass(final ClassName className) {
+  public ClassFile loadClass(ClassName className) {
 
-    final List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
+    List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
 
     if (classFileLoaderList == null) {
       return null;
@@ -56,8 +57,8 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 
     // TODO: SPECIAL HANDLING FOR CLASSES WITH ACCESS CONTROL? SECOND TRY?
 
-    for (final ClassFileLoader classFileLoader : classFileLoaderList) {
-      final ClassFile classFile = classFileLoader.loadClass(className);
+    for (ClassFileLoader classFileLoader : classFileLoaderList) {
+      ClassFile classFile = classFileLoader.loadClass(className);
       if (classFile != null) {
         return classFile;
       }
@@ -68,7 +69,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[CompoundClassFileLoader:");
     buffer.append(" { ");
     for (int i0 = 0; (this._classFileLoaders != null) && (i0 < this._classFileLoaders.length); i0++) {
@@ -84,17 +85,17 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 
   private void initialise() {
 
-    for (final ClassFileLoader classFileLoader : this._classFileLoaders) {
-      final String[] packages = classFileLoader.getAllPackages();
+    for (ClassFileLoader classFileLoader : this._classFileLoaders) {
+      String[] packages = classFileLoader.getAllPackages();
 
-      for (final String aPackage : packages) {
+      for (String aPackage : packages) {
         if (this._allPackages.containsKey(aPackage)) {
-          final List<ClassFileLoader> classFileLoaderList = this._allPackages.get(aPackage);
+          List<ClassFileLoader> classFileLoaderList = this._allPackages.get(aPackage);
           if (!classFileLoaderList.contains(classFileLoader)) {
             classFileLoaderList.add(classFileLoader);
           }
         } else {
-          final List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
+          List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
           classFileLoaderList.add(classFileLoader);
           this._allPackages.put(aPackage, classFileLoaderList);
         }

@@ -52,7 +52,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     super(project);
 
     // create a new TargetPlatformDefinition
-    _targetPlatformDefinition = new TargetPlatformDefinition();
+    this._targetPlatformDefinition = new TargetPlatformDefinition();
   }
 
   /**
@@ -68,7 +68,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
       throw tooManyAttributes();
     }
 
-    _id = id;
+    this._id = id;
   }
 
   /**
@@ -76,13 +76,13 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    */
   @Override
   protected void doValidate() {
-    if (_id == null || "".equals(_id)) {
+    if (this._id == null || "".equals(this._id)) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id");
     }
 
     // add the target platform definition
     TargetPlatformRegistry targetPlatformRegistry = TargetPlatformRegistry.Helper.getRegistry();
-    targetPlatformRegistry.addTargetPlatformDefinition(_id, _targetPlatformDefinition);
+    targetPlatformRegistry.addTargetPlatformDefinition(this._id, this._targetPlatformDefinition);
   }
 
   /**
@@ -90,12 +90,13 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    * Adds a {@link Location}.
    * </p>
    * 
-   * @param location the {@link Location} to add.
+   * @param location
+   *          the {@link Location} to add.
    */
   public void addConfiguredLocation(Location location) {
     Assert.notNull(location);
 
-    _targetPlatformDefinition.addLocation(location.getDirectory());
+    this._targetPlatformDefinition.addLocation(location.getDirectory());
   }
 
   /**
@@ -130,7 +131,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     public Location(File directory) {
       Assert.isDirectory(directory);
 
-      _directory = directory;
+      this._directory = directory;
     }
 
     /**
@@ -141,7 +142,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * @return the directory
      */
     public File getDirectory() {
-      return _directory;
+      return this._directory;
     }
 
     /**
@@ -155,7 +156,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     public void setDir(File directory) {
       Assert.isDirectory(directory);
 
-      _directory = directory;
+      this._directory = directory;
     }
 
     /**
@@ -166,45 +167,53 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * @return <code>true</code>, if the directory is set, <code>false</code> otherwise.
      */
     public boolean hasDirectory() {
-      return _directory != null;
+      return this._directory != null;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public int hashCode() {
-      final int PRIME = 31;
+      int PRIME = 31;
       int result = 1;
-      result = PRIME * result + ((_directory == null) ? 0 : _directory.hashCode());
+      result = PRIME * result + ((this._directory == null) ? 0 : this._directory.hashCode());
       return result;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final Location other = (Location) obj;
-      if (_directory == null) {
-        if (other._directory != null)
+      }
+      Location other = (Location) obj;
+      if (this._directory == null) {
+        if (other._directory != null) {
           return false;
-      } else if (!_directory.equals(other._directory))
+        }
+      } else if (!this._directory.equals(other._directory)) {
         return false;
+      }
       return true;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String toString() {
       StringBuffer result = new StringBuffer();
       result.append("[Location path=");
-      result.append(_directory);
+      result.append(this._directory);
       result.append("]");
       return result.toString();
     }

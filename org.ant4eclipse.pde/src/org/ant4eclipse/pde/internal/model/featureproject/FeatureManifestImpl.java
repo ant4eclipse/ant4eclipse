@@ -11,12 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.model.featureproject;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
+
+import org.osgi.framework.Version;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
-import org.osgi.framework.Version;
 
 /**
  * <p>
@@ -104,9 +106,9 @@ public class FeatureManifestImpl implements FeatureManifest {
   public FeatureManifestImpl() {
 
     // initialize plug-in list
-    _plugins = new LinkedList<Plugin>();
+    this._plugins = new LinkedList<Plugin>();
 
-    _includes = new LinkedList<Includes>();
+    this._includes = new LinkedList<Includes>();
   }
 
   /**
@@ -117,7 +119,7 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @return The name of the application.
    */
   public String getApplication() {
-    return _application;
+    return this._application;
   }
 
   /**
@@ -127,21 +129,21 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @return
    */
   public String getColocationAffinity() {
-    return _colocationAffinity;
+    return this._colocationAffinity;
   }
 
   /**
    * @return flag that, if "true", indicates that the feature cannot be installed in a group with other features.
    */
   public boolean isExclusive() {
-    return _exclusive;
+    return this._exclusive;
   }
 
   /**
    * @return feature identifier (eg. com.xyz.myfeature), required
    */
   public String getId() {
-    return _id;
+    return this._id;
   }
 
   /**
@@ -150,28 +152,28 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @return The location of an associated image.
    */
   public String getImage() {
-    return _image;
+    return this._image;
   }
 
   /**
    * @return locale specification.
    */
   public String getLocale() {
-    return _locale;
+    return this._locale;
   }
 
   /**
    * @return optional machine architecture specification.
    */
   public String getMachineArchitecture() {
-    return _machineArchitecture;
+    return this._machineArchitecture;
   }
 
   /**
    * @return operating system specification.
    */
   public String getOperatingSystem() {
-    return _operatingSystem;
+    return this._operatingSystem;
   }
 
   /**
@@ -180,7 +182,7 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @return The plugin used for this feature.
    */
   public String getPlugin() {
-    return _plugin;
+    return this._plugin;
   }
 
   /**
@@ -189,141 +191,142 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @return true <=> This feature is a primary one.
    */
   public boolean isPrimary() {
-    return _primary;
+    return this._primary;
   }
 
   /**
    * @return display label identifying the organization providing this component.
    */
   public String getProviderName() {
-    return _providerName;
+    return this._providerName;
   }
 
   /**
    * @return component version (eg. 1.0.3), required
    */
   public Version getVersion() {
-    return _version;
+    return this._version;
   }
 
   /**
    * {@inheritDoc}
    */
   public String getWindowingSystem() {
-    return _windowingSystem;
+    return this._windowingSystem;
   }
 
   /**
    * {@inheritDoc}
    */
   public String getLabel() {
-    return label;
+    return this.label;
   }
 
   /**
    * {@inheritDoc}
    */
   public List<Plugin> getPlugins() {
-    return _plugins;
+    return this._plugins;
   }
 
   /**
    * {@inheritDoc}
    */
   public List<Includes> getIncludes() {
-    return _includes;
+    return this._includes;
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
     buffer.append("[Feature:");
     buffer.append(" _id: ");
-    buffer.append(_id);
+    buffer.append(this._id);
     buffer.append(" _version: ");
-    buffer.append(_version);
+    buffer.append(this._version);
     buffer.append(" label: ");
-    buffer.append(label);
+    buffer.append(this.label);
     buffer.append(" _providerName: ");
-    buffer.append(_providerName);
+    buffer.append(this._providerName);
     buffer.append(" _image: ");
-    buffer.append(_image);
+    buffer.append(this._image);
     buffer.append(" _operatingSystem: ");
-    buffer.append(_operatingSystem);
+    buffer.append(this._operatingSystem);
     buffer.append(" _machineArchitecture: ");
-    buffer.append(_machineArchitecture);
+    buffer.append(this._machineArchitecture);
     buffer.append(" _windowingSystem: ");
-    buffer.append(_windowingSystem);
+    buffer.append(this._windowingSystem);
     buffer.append(" _locale: ");
-    buffer.append(_locale);
+    buffer.append(this._locale);
     buffer.append(" _colocationAffinity: ");
-    buffer.append(_colocationAffinity);
+    buffer.append(this._colocationAffinity);
     buffer.append(" _primary: ");
-    buffer.append(_primary);
+    buffer.append(this._primary);
     buffer.append(" _exclusive: ");
-    buffer.append(_exclusive);
+    buffer.append(this._exclusive);
     buffer.append(" _application: ");
-    buffer.append(_application);
+    buffer.append(this._application);
     buffer.append(" _plugin: ");
-    buffer.append(_plugin);
+    buffer.append(this._plugin);
     buffer.append(" _plugins: ");
-    buffer.append(_plugins);
+    buffer.append(this._plugins);
     buffer.append("]");
     return buffer.toString();
   }
 
   public void setApplication(String application) {
-    _application = application;
+    this._application = application;
   }
 
   public void setColocationAffinity(String colocationAffinity) {
-    _colocationAffinity = colocationAffinity;
+    this._colocationAffinity = colocationAffinity;
   }
 
   public void setExclusive(boolean exclusive) {
-    _exclusive = exclusive;
+    this._exclusive = exclusive;
   }
 
   public void setId(String id) {
-    _id = id;
+    this._id = id;
   }
 
   public void setImage(String image) {
-    _image = image;
+    this._image = image;
   }
 
   public void setLocale(String locale) {
-    _locale = locale;
+    this._locale = locale;
   }
 
   public void setMachineArchitecture(String machineArchitecture) {
-    _machineArchitecture = machineArchitecture;
+    this._machineArchitecture = machineArchitecture;
   }
 
   public void setOperatingSystem(String operatingSystem) {
-    _operatingSystem = operatingSystem;
+    this._operatingSystem = operatingSystem;
   }
 
   public void setPlugin(String plugin) {
-    _plugin = plugin;
+    this._plugin = plugin;
   }
 
   public void setPrimary(boolean primary) {
-    _primary = primary;
+    this._primary = primary;
   }
 
   public void setProviderName(String providerName) {
-    _providerName = providerName;
+    this._providerName = providerName;
   }
 
   public void setVersion(Version version) {
-    _version = version;
+    this._version = version;
   }
 
   public void setWindowingSystem(String windowingSystem) {
-    _windowingSystem = windowingSystem;
+    this._windowingSystem = windowingSystem;
   }
 
   public void setLabel(String label) {
@@ -336,13 +339,13 @@ public class FeatureManifestImpl implements FeatureManifest {
   public void addPlugin(Plugin plugin) {
     Assert.notNull(plugin);
 
-    _plugins.add(plugin);
+    this._plugins.add(plugin);
   }
 
   public void addIncludes(Includes includes) {
     Assert.notNull(includes);
 
-    _includes.add(includes);
+    this._includes.add(includes);
   }
 
   /**
@@ -411,7 +414,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return
      */
     public String getDownloadSize() {
-      return _downloadSize;
+      return this._downloadSize;
     }
 
     /**
@@ -421,7 +424,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return
      */
     public boolean isFragment() {
-      return _fragment;
+      return this._fragment;
     }
 
     /**
@@ -431,7 +434,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return
      */
     public String getId() {
-      return _id;
+      return this._id;
     }
 
     /**
@@ -441,7 +444,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return
      */
     public String getInstallSize() {
-      return _installSize;
+      return this._installSize;
     }
 
     /**
@@ -451,205 +454,226 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return
      */
     public String getLocale() {
-      return _locale;
+      return this._locale;
     }
 
     public String getMachineArchitecture() {
-      return _machineArchitecture;
+      return this._machineArchitecture;
     }
 
     public String getOperatingSystem() {
-      return _operatingSystem;
+      return this._operatingSystem;
     }
 
     public boolean isUnpack() {
-      return _unpack;
+      return this._unpack;
     }
 
     public Version getVersion() {
-      return _version;
+      return this._version;
     }
 
     public String getWindowingSystem() {
-      return _windowingSystem;
+      return this._windowingSystem;
     }
 
     public boolean hasDownloadSize() {
-      return _downloadSize != null;
+      return this._downloadSize != null;
     }
 
     public boolean hasId() {
-      return _id != null;
+      return this._id != null;
     }
 
     public boolean hasInstallSize() {
-      return _installSize != null;
+      return this._installSize != null;
     }
 
     public boolean hasLocale() {
-      return _locale != null;
+      return this._locale != null;
     }
 
     public boolean hasMachineArchitecture() {
-      return _machineArchitecture != null;
+      return this._machineArchitecture != null;
     }
 
     public boolean hasOperatingSystem() {
-      return _operatingSystem != null;
+      return this._operatingSystem != null;
     }
 
     public boolean hasVersion() {
-      return _version != null;
+      return this._version != null;
     }
 
     public boolean hasWindowingSystem() {
-      return _windowingSystem != null;
+      return this._windowingSystem != null;
     }
 
     public String getEffectiveVersion() {
-      return _effectiveVersion;
+      return this._effectiveVersion;
     }
 
     public void setEffectiveVersion(String effectiveVersion) {
-      _effectiveVersion = effectiveVersion;
+      this._effectiveVersion = effectiveVersion;
     }
 
     public String toString() {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[Plugin:");
       buffer.append(" id: ");
-      buffer.append(_id);
+      buffer.append(this._id);
       buffer.append(" version: ");
-      buffer.append(_version);
+      buffer.append(this._version);
       buffer.append(" fragment: ");
-      buffer.append(_fragment);
+      buffer.append(this._fragment);
       buffer.append(" operatingSystem: ");
-      buffer.append(_operatingSystem);
+      buffer.append(this._operatingSystem);
       buffer.append(" machineArchitecture: ");
-      buffer.append(_machineArchitecture);
+      buffer.append(this._machineArchitecture);
       buffer.append(" windowingSystem: ");
-      buffer.append(_windowingSystem);
+      buffer.append(this._windowingSystem);
       buffer.append(" locale: ");
-      buffer.append(_locale);
+      buffer.append(this._locale);
       buffer.append(" downloadSize: ");
-      buffer.append(_downloadSize);
+      buffer.append(this._downloadSize);
       buffer.append(" installSize: ");
-      buffer.append(_installSize);
+      buffer.append(this._installSize);
       buffer.append(" unpack: ");
-      buffer.append(_unpack);
+      buffer.append(this._unpack);
       buffer.append("]");
       return buffer.toString();
     }
 
     public int hashCode() {
-      final int PRIME = 31;
+      int PRIME = 31;
       int result = 1;
-      result = PRIME * result + ((_id == null) ? 0 : _id.hashCode());
-      result = PRIME * result + ((_version == null) ? 0 : _version.hashCode());
-      result = PRIME * result + (_fragment ? 1231 : 1237);
-      result = PRIME * result + ((_operatingSystem == null) ? 0 : _operatingSystem.hashCode());
-      result = PRIME * result + ((_machineArchitecture == null) ? 0 : _machineArchitecture.hashCode());
-      result = PRIME * result + ((_windowingSystem == null) ? 0 : _windowingSystem.hashCode());
-      result = PRIME * result + ((_locale == null) ? 0 : _locale.hashCode());
-      result = PRIME * result + ((_downloadSize == null) ? 0 : _downloadSize.hashCode());
-      result = PRIME * result + ((_installSize == null) ? 0 : _installSize.hashCode());
-      result = PRIME * result + (_unpack ? 1231 : 1237);
+      result = PRIME * result + ((this._id == null) ? 0 : this._id.hashCode());
+      result = PRIME * result + ((this._version == null) ? 0 : this._version.hashCode());
+      result = PRIME * result + (this._fragment ? 1231 : 1237);
+      result = PRIME * result + ((this._operatingSystem == null) ? 0 : this._operatingSystem.hashCode());
+      result = PRIME * result + ((this._machineArchitecture == null) ? 0 : this._machineArchitecture.hashCode());
+      result = PRIME * result + ((this._windowingSystem == null) ? 0 : this._windowingSystem.hashCode());
+      result = PRIME * result + ((this._locale == null) ? 0 : this._locale.hashCode());
+      result = PRIME * result + ((this._downloadSize == null) ? 0 : this._downloadSize.hashCode());
+      result = PRIME * result + ((this._installSize == null) ? 0 : this._installSize.hashCode());
+      result = PRIME * result + (this._unpack ? 1231 : 1237);
       return result;
     }
 
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final PluginImpl other = (PluginImpl) obj;
-      if (_id == null) {
-        if (other._id != null)
+      }
+      PluginImpl other = (PluginImpl) obj;
+      if (this._id == null) {
+        if (other._id != null) {
           return false;
-      } else if (!_id.equals(other._id))
+        }
+      } else if (!this._id.equals(other._id)) {
         return false;
-      if (_version == null) {
-        if (other._version != null)
+      }
+      if (this._version == null) {
+        if (other._version != null) {
           return false;
-      } else if (!_version.equals(other._version))
+        }
+      } else if (!this._version.equals(other._version)) {
         return false;
-      if (_fragment != other._fragment)
+      }
+      if (this._fragment != other._fragment) {
         return false;
-      if (_operatingSystem == null) {
-        if (other._operatingSystem != null)
+      }
+      if (this._operatingSystem == null) {
+        if (other._operatingSystem != null) {
           return false;
-      } else if (!_operatingSystem.equals(other._operatingSystem))
+        }
+      } else if (!this._operatingSystem.equals(other._operatingSystem)) {
         return false;
-      if (_machineArchitecture == null) {
-        if (other._machineArchitecture != null)
+      }
+      if (this._machineArchitecture == null) {
+        if (other._machineArchitecture != null) {
           return false;
-      } else if (!_machineArchitecture.equals(other._machineArchitecture))
+        }
+      } else if (!this._machineArchitecture.equals(other._machineArchitecture)) {
         return false;
-      if (_windowingSystem == null) {
-        if (other._windowingSystem != null)
+      }
+      if (this._windowingSystem == null) {
+        if (other._windowingSystem != null) {
           return false;
-      } else if (!_windowingSystem.equals(other._windowingSystem))
+        }
+      } else if (!this._windowingSystem.equals(other._windowingSystem)) {
         return false;
-      if (_locale == null) {
-        if (other._locale != null)
+      }
+      if (this._locale == null) {
+        if (other._locale != null) {
           return false;
-      } else if (!_locale.equals(other._locale))
+        }
+      } else if (!this._locale.equals(other._locale)) {
         return false;
-      if (_downloadSize == null) {
-        if (other._downloadSize != null)
+      }
+      if (this._downloadSize == null) {
+        if (other._downloadSize != null) {
           return false;
-      } else if (!_downloadSize.equals(other._downloadSize))
+        }
+      } else if (!this._downloadSize.equals(other._downloadSize)) {
         return false;
-      if (_installSize == null) {
-        if (other._installSize != null)
+      }
+      if (this._installSize == null) {
+        if (other._installSize != null) {
           return false;
-      } else if (!_installSize.equals(other._installSize))
+        }
+      } else if (!this._installSize.equals(other._installSize)) {
         return false;
-      if (_unpack != other._unpack)
+      }
+      if (this._unpack != other._unpack) {
         return false;
+      }
       return true;
     }
 
     public void setDownloadSize(String downloadSize) {
-      _downloadSize = downloadSize;
+      this._downloadSize = downloadSize;
     }
 
     public void setFragment(boolean fragment) {
-      _fragment = fragment;
+      this._fragment = fragment;
     }
 
     public void setId(String id) {
-      _id = id;
+      this._id = id;
     }
 
     public void setInstallSize(String installSize) {
-      _installSize = installSize;
+      this._installSize = installSize;
     }
 
     public void setLocale(String locale) {
-      _locale = locale;
+      this._locale = locale;
     }
 
     public void setMachineArchitecture(String machineArchitecture) {
-      _machineArchitecture = machineArchitecture;
+      this._machineArchitecture = machineArchitecture;
     }
 
     public void setOperatingSystem(String operatingSystem) {
-      _operatingSystem = operatingSystem;
+      this._operatingSystem = operatingSystem;
     }
 
     public void setUnpack(boolean unpack) {
-      _unpack = unpack;
+      this._unpack = unpack;
     }
 
     public void setVersion(Version version) {
-      _version = version;
+      this._version = version;
     }
 
     public void setWindowingSystem(String windowingSystem) {
-      _windowingSystem = windowingSystem;
+      this._windowingSystem = windowingSystem;
     }
   }
 
@@ -694,7 +718,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the id
      */
     public String getId() {
-      return _id;
+      return this._id;
     }
 
     /**
@@ -705,7 +729,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the id to set
      */
     public void setId(String id) {
-      _id = id;
+      this._id = id;
     }
 
     /**
@@ -715,7 +739,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the version
      */
     public Version getVersion() {
-      return _version;
+      return this._version;
     }
 
     /**
@@ -726,7 +750,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the version to set
      */
     public void setVersion(Version version) {
-      _version = version;
+      this._version = version;
     }
 
     /**
@@ -736,7 +760,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the name
      */
     public String getName() {
-      return _name;
+      return this._name;
     }
 
     /**
@@ -747,7 +771,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the name to set
      */
     public void setName(String name) {
-      _name = name;
+      this._name = name;
     }
 
     /**
@@ -757,7 +781,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the optional
      */
     public boolean isOptional() {
-      return _optional;
+      return this._optional;
     }
 
     /**
@@ -768,7 +792,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the optional to set
      */
     public void setOptional(boolean optional) {
-      _optional = optional;
+      this._optional = optional;
     }
 
     /**
@@ -778,7 +802,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the searchLocation
      */
     public String getSearchLocation() {
-      return _searchLocation;
+      return this._searchLocation;
     }
 
     /**
@@ -789,7 +813,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the searchLocation to set
      */
     public void setSearchLocation(String searchLocation) {
-      _searchLocation = searchLocation;
+      this._searchLocation = searchLocation;
     }
 
     /**
@@ -799,7 +823,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the operatingSystem
      */
     public String getOperatingSystem() {
-      return _operatingSystem;
+      return this._operatingSystem;
     }
 
     /**
@@ -810,7 +834,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the operatingSystem to set
      */
     public void setOperatingSystem(String operatingSystem) {
-      _operatingSystem = operatingSystem;
+      this._operatingSystem = operatingSystem;
     }
 
     /**
@@ -820,7 +844,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the machineArchitecture
      */
     public String getMachineArchitecture() {
-      return _machineArchitecture;
+      return this._machineArchitecture;
     }
 
     /**
@@ -831,7 +855,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the machineArchitecture to set
      */
     public void setMachineArchitecture(String machineArchitecture) {
-      _machineArchitecture = machineArchitecture;
+      this._machineArchitecture = machineArchitecture;
     }
 
     /**
@@ -841,7 +865,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the windowingSystem
      */
     public String getWindowingSystem() {
-      return _windowingSystem;
+      return this._windowingSystem;
     }
 
     /**
@@ -852,7 +876,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the windowingSystem to set
      */
     public void setWindowingSystem(String windowingSystem) {
-      _windowingSystem = windowingSystem;
+      this._windowingSystem = windowingSystem;
     }
 
     /**
@@ -862,7 +886,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * @return the locale
      */
     public String getLocale() {
-      return _locale;
+      return this._locale;
     }
 
     /**
@@ -873,7 +897,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      *          the locale to set
      */
     public void setLocale(String locale) {
-      _locale = locale;
+      this._locale = locale;
     }
   }
 }

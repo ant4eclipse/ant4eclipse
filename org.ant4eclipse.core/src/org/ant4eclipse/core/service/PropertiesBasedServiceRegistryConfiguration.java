@@ -29,7 +29,7 @@ import org.ant4eclipse.core.util.Utilities;
  */
 public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegistryConfiguration {
 
-  private final Ant4EclipseConfiguration _ant4EclipseConfiguration;
+  private Ant4EclipseConfiguration _ant4EclipseConfiguration;
 
   /**
    * The prefix of properties that should be interpreted as service description.
@@ -42,7 +42,7 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
    * </pre>
    * 
    */
-  public static final String             PROPERTY_PREFIX = "service";
+  public static final String       PROPERTY_PREFIX = "service";
 
   public PropertiesBasedServiceRegistryConfiguration(Ant4EclipseConfiguration ant4EclipseConfiguration) {
     Assert.notNull(ant4EclipseConfiguration);

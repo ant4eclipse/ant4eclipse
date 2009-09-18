@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.internal.model.resource;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 
 /**
@@ -24,18 +25,18 @@ import org.ant4eclipse.platform.model.resource.BuildCommand;
 public class BuildCommandImpl implements BuildCommand {
 
   /** the name of the build command */
-  private final String _name;
+  private String _name;
 
   /**
    * the 'triggers'-element, or null if not present
    */
-  private final String _triggers;
+  private String _triggers;
 
   /**
    * @param name
    *          the name of the build command.
    */
-  public BuildCommandImpl(final String name) {
+  public BuildCommandImpl(String name) {
     this(name, null);
   }
 
@@ -47,7 +48,7 @@ public class BuildCommandImpl implements BuildCommand {
    * @param the
    *          triggers that would cause this builder to run in eclipse (might be null)
    */
-  public BuildCommandImpl(final String name, String triggers) {
+  public BuildCommandImpl(String name, String triggers) {
     Assert.notNull(name);
     this._name = name;
     if ((triggers != null) && triggers.endsWith(",")) {
@@ -90,7 +91,8 @@ public class BuildCommandImpl implements BuildCommand {
   /**
    * {@inheritDoc}
    */
-  public boolean equals(final Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -100,15 +102,16 @@ public class BuildCommandImpl implements BuildCommand {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final BuildCommandImpl castedObj = (BuildCommandImpl) o;
+    BuildCommandImpl castedObj = (BuildCommandImpl) o;
     return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)));
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[BuildCommand:");
     buffer.append(" name: ");
     buffer.append(this._name);

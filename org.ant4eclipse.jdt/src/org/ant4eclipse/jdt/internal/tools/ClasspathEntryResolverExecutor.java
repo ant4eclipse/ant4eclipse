@@ -1,20 +1,22 @@
 package org.ant4eclipse.jdt.internal.tools;
 
-import java.util.EmptyStackException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.jdt.JdtExceptionCode;
 import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.util.EmptyStackException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * <p>
@@ -33,22 +35,22 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 public class ClasspathEntryResolverExecutor {
 
   /** stack of 'current projects' */
-  private final Stack<EclipseProject> _currentProject;
+  private Stack<EclipseProject>    _currentProject;
 
   /** list with all projects that are (transitively) resolved */
-  private final List<EclipseProject>  _resolvedProjects;
+  private List<EclipseProject>     _resolvedProjects;
 
   /** list with all projects that references. These projects are not transitively resolved */
-  private final List<EclipseProject>  _referencedProjects;
+  private List<EclipseProject>     _referencedProjects;
 
   /** array that contains all resolvers for raw class path entries * */
-  private ClasspathEntryResolver[]    _entryResolvers;
+  private ClasspathEntryResolver[] _entryResolvers;
 
   /** the resolver context */
-  private ClasspathResolverContext    _resolverContext;
+  private ClasspathResolverContext _resolverContext;
 
   /** indicates if an exception is thrown in the case that a container could not be resolved */
-  private final boolean               _failOnNonHandledEntry;
+  private boolean                  _failOnNonHandledEntry;
 
   /**
    * <p>
@@ -57,7 +59,7 @@ public class ClasspathEntryResolverExecutor {
    * 
    * @param failOnNonHandledEntry
    */
-  public ClasspathEntryResolverExecutor(final boolean failOnNonHandledEntry) {
+  public ClasspathEntryResolverExecutor(boolean failOnNonHandledEntry) {
 
     // initialize the executor attributes
     this._resolvedProjects = new LinkedList<EclipseProject>();
@@ -78,7 +80,7 @@ public class ClasspathEntryResolverExecutor {
     // returns the current project
     try {
       return this._currentProject.peek();
-    } catch (final EmptyStackException e) {
+    } catch (EmptyStackException e) {
       return null;
     }
   }
@@ -104,13 +106,13 @@ public class ClasspathEntryResolverExecutor {
   public List<EclipseProject> getReferencedProjects() {
 
     // create the result
-    final List<EclipseProject> result = new LinkedList<EclipseProject>();
+    List<EclipseProject> result = new LinkedList<EclipseProject>();
 
     // add all resolved projects
     result.addAll(this._resolvedProjects);
 
     // add all referenced projects
-    for (final EclipseProject eclipseProject : this._referencedProjects) {
+    for (EclipseProject eclipseProject : this._referencedProjects) {
       if (!result.contains(eclipseProject)) {
         result.add(eclipseProject);
       }
@@ -132,8 +134,8 @@ public class ClasspathEntryResolverExecutor {
    * @param classpathResolverContext
    *          the resolver context
    */
-  public final void resolve(final EclipseProject rootProject, final ClasspathEntryResolver[] classpathEntryResolvers,
-      final ClasspathResolverContext classpathResolverContext) {
+  public final void resolve(EclipseProject rootProject, ClasspathEntryResolver[] classpathEntryResolvers,
+      ClasspathResolverContext classpathResolverContext) {
 
     // Initialize the ProjectClasspathResolver instance
     this._resolvedProjects.clear();
@@ -147,7 +149,7 @@ public class ClasspathEntryResolverExecutor {
     this._resolverContext = classpathResolverContext;
 
     // Initialize Entry Resolvers
-    for (final ClasspathEntryResolver entryResolver : this._entryResolvers) {
+    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
       if (entryResolver instanceof Lifecycle) {
         ((Lifecycle) entryResolver).initialize();
       }
@@ -157,7 +159,7 @@ public class ClasspathEntryResolverExecutor {
     resolveReferencedProject(rootProject);
 
     // Dispose Entry Resolvers
-    for (final ClasspathEntryResolver entryResolver : this._entryResolvers) {
+    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
       if (entryResolver instanceof Lifecycle) {
         ((Lifecycle) entryResolver).dispose();
       }
@@ -172,7 +174,7 @@ public class ClasspathEntryResolverExecutor {
    * @param project
    *          the project to add.
    */
-  public final void addReferencedProject(final EclipseProject project) {
+  public final void addReferencedProject(EclipseProject project) {
     Assert.notNull(project);
 
     // adds the referenced project
@@ -189,7 +191,7 @@ public class ClasspathEntryResolverExecutor {
    * @param project
    *          the project to add.
    */
-  public final void resolveReferencedProject(final EclipseProject project) {
+  public final void resolveReferencedProject(EclipseProject project) {
     Assert.notNull(project);
 
     // detect circular dependencies
@@ -231,13 +233,13 @@ public class ClasspathEntryResolverExecutor {
    * @param classpathEntries
    *          the class path entries to resolve
    */
-  private void resolveClasspathEntries(final ClasspathEntry[] classpathEntries) {
+  private void resolveClasspathEntries(ClasspathEntry[] classpathEntries) {
 
     // iterate over all entries
-    for (final ClasspathEntry classpathEntry : classpathEntries) {
+    for (ClasspathEntry classpathEntry : classpathEntries) {
       try {
         resolveClasspathEntry(classpathEntry);
-      } catch (final Exception e) {
+      } catch (Exception e) {
         throw new Ant4EclipseException(e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry,
             (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage());
       }
@@ -252,14 +254,14 @@ public class ClasspathEntryResolverExecutor {
    * @param entry
    *          the class path entry to resolve.
    */
-  private final void resolveClasspathEntry(final ClasspathEntry entry) {
+  private final void resolveClasspathEntry(ClasspathEntry entry) {
     Assert.notNull(entry);
 
     // initialize handled
     boolean handled = false;
 
     // iterate over all the entry resolvers and try to resolve the entry
-    for (final ClasspathEntryResolver entryResolver : this._entryResolvers) {
+    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
       if (entryResolver.canResolve(entry)) {
         handled = true;
         entryResolver.resolve(entry, this._resolverContext);

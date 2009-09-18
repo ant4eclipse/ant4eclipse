@@ -26,7 +26,7 @@ public interface ServiceRegistryConfiguration {
    * @param context
    *          the configuration context
    */
-  void configure(final ConfigurationContext context);
+  void configure(ConfigurationContext context);
 
   /**
    * ConfigurationContext --

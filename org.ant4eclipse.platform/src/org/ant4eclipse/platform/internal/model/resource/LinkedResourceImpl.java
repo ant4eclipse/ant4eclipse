@@ -19,16 +19,16 @@ package org.ant4eclipse.platform.internal.model.resource;
 public class LinkedResourceImpl {
 
   /** the name of the linked resource */
-  private final String _name;
+  private String _name;
 
   /** the location of the linked resource */
-  private final String _location;
+  private String _location;
 
   /** the location relative to the project */
-  private final String _relativelocation;
+  private String _relativelocation;
 
   /** the type of the linked resource */
-  private final int    _type;
+  private int    _type;
 
   /**
    * Creates a new instance of type LinkedResource.
@@ -38,7 +38,7 @@ public class LinkedResourceImpl {
    * @param relative
    * @param type
    */
-  public LinkedResourceImpl(final String name, final String location, final String relative, final int type) {
+  public LinkedResourceImpl(String name, String location, String relative, int type) {
     this._name = name;
     this._location = location;
     this._type = type;
@@ -84,8 +84,9 @@ public class LinkedResourceImpl {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[LinkedResource:");
     buffer.append(" name: ");
     buffer.append(this._name);
@@ -102,7 +103,8 @@ public class LinkedResourceImpl {
   /**
    * {@inheritDoc}
    */
-  public boolean equals(final Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -112,7 +114,7 @@ public class LinkedResourceImpl {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final LinkedResourceImpl castedObj = (LinkedResourceImpl) o;
+    LinkedResourceImpl castedObj = (LinkedResourceImpl) o;
     return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name))
         && (this._location == null ? castedObj._location == null : this._location.equals(castedObj._location))
         && (this._type == castedObj._type) && (this._relativelocation == null ? castedObj._relativelocation == null
@@ -122,6 +124,7 @@ public class LinkedResourceImpl {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + (this._name == null ? 0 : this._name.hashCode());

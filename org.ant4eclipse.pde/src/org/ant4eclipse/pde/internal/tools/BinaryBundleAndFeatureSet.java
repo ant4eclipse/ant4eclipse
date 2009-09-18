@@ -40,7 +40,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
   public static final String DEFAULT_FEATURE_DIRECTORY = "features";
 
   /** the location of the platform against which the workspace plug-ins will be compiled and tested */
-  private final File         _targetPlatformLocation;
+  private File               _targetPlatformLocation;
 
   /**
    * <p>
@@ -50,7 +50,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
    * @param targetPlatformLocation
    *          the target platform location.
    */
-  public BinaryBundleAndFeatureSet(final File targetPlatformLocation) {
+  public BinaryBundleAndFeatureSet(File targetPlatformLocation) {
     super("target platform location '" + targetPlatformLocation.getAbsolutePath() + "'");
 
     Assert.isDirectory(targetPlatformLocation);
@@ -61,6 +61,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void readBundlesAndFeatures() {
 
     // 1. read plugin from target location
@@ -70,10 +71,9 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
       pluginsDirectory = this._targetPlatformLocation;
     }
     if ((pluginsDirectory != null) && pluginsDirectory.exists()) {
-      final File[] plugins = pluginsDirectory.listFiles();
-      for (int i1 = 0; i1 < plugins.length; i1++) {
-        final File plugin = plugins[i1];
-        final BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin(plugin);
+      File[] plugins = pluginsDirectory.listFiles();
+      for (File plugin : plugins) {
+        BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin(plugin);
         if (bundleDescription != null) {
           addBundleDescription(bundleDescription);
         }
@@ -82,16 +82,14 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
 
     // 2. read plugins from linked directories in target location
     if (this._targetPlatformLocation != null) {
-      final LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
-      for (int i = 0; i < linkFiles.length; i++) {
-        final LinkFile file = linkFiles[i];
+      LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
+      for (LinkFile file : linkFiles) {
         if (file.isValidDestination()) {
-          final File pluginsDirectory1 = file.getPluginsDirectory();
+          File pluginsDirectory1 = file.getPluginsDirectory();
           if ((pluginsDirectory1 != null) && pluginsDirectory1.exists()) {
-            final File[] plugins = pluginsDirectory1.listFiles();
-            for (int i2 = 0; i2 < plugins.length; i2++) {
-              final File plugin = plugins[i2];
-              final BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin(plugin);
+            File[] plugins = pluginsDirectory1.listFiles();
+            for (File plugin : plugins) {
+              BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin(plugin);
               if (bundleDescription != null) {
                 addBundleDescription(bundleDescription);
               }
@@ -118,7 +116,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
     // 2. read plugins from linked directories in target location
     if (this._targetPlatformLocation != null) {
 
-      final LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
+      LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
 
       for (LinkFile linkFile : linkFiles) {
 
@@ -142,7 +140,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
     }
 
     for (File feature : directory.listFiles()) {
-      final FeatureDescription featureDescription = FeatureDescriptionLoader.parseFeature(feature);
+      FeatureDescription featureDescription = FeatureDescriptionLoader.parseFeature(feature);
 
       if (featureDescription != null) {
         addFeaturesDescription(featureDescription);

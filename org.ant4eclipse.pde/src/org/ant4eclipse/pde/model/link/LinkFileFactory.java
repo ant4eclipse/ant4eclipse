@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.link;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -18,10 +22,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
 
 /**
  * LinkFileFactory provides methods to find and parse link files
@@ -38,27 +38,26 @@ public class LinkFileFactory {
    *          The directory that contains the "links" subdirectory
    * @return An array of LinkFile objects representing all .link-files found in the directory.
    */
-  public static LinkFile[] getLinkFiles(final File directory) {
+  public static LinkFile[] getLinkFiles(File directory) {
     Assert.notNull(directory);
 
-    final File linksDir = new File(directory, "links");
+    File linksDir = new File(directory, "links");
 
     if (!linksDir.isDirectory()) {
       A4ELogging.debug("Links-directory '%s' does not exist", linksDir.getAbsolutePath());
       return new LinkFile[0];
     }
     A4ELogging.debug("Reading links-directory '%s'", linksDir.getAbsolutePath());
-    final File[] links = linksDir.listFiles(new FilenameFilter() {
-      public boolean accept(final File dir, final String name) {
+    File[] links = linksDir.listFiles(new FilenameFilter() {
+      public boolean accept(File dir, String name) {
         return (name.endsWith(".link"));
       }
     });
 
-    final List<LinkFile> result = new LinkedList<LinkFile>();
+    List<LinkFile> result = new LinkedList<LinkFile>();
 
-    for (int i = 0; i < links.length; i++) {
-      final File link = links[i];
-      final LinkFile linkFile = parseLinkFile(link);
+    for (File link : links) {
+      LinkFile linkFile = parseLinkFile(link);
       if (linkFile != null) {
         result.add(linkFile);
       }
@@ -85,26 +84,26 @@ public class LinkFileFactory {
    *         contain a path.
    * 
    */
-  public static LinkFile parseLinkFile(final File linkFile) {
+  public static LinkFile parseLinkFile(File linkFile) {
     Assert.isFile(linkFile);
     A4ELogging.debug("Parsing link file '%s'", linkFile.getAbsolutePath());
 
-    final Properties p = new Properties();
+    Properties p = new Properties();
     FileInputStream inputStream = null;
     try {
       inputStream = new FileInputStream(linkFile);
       p.load(inputStream);
-    } catch (final IOException ioe) {
+    } catch (IOException ioe) {
       throw new RuntimeException("could not read " + linkFile.getAbsolutePath() + ": " + ioe, ioe);
     } finally {
       Utilities.close(inputStream);
     }
-    final String path = p.getProperty("path");
+    String path = p.getProperty("path");
     if (path == null) {
       return null;
     }
 
-    final File destination = new File(path);
+    File destination = new File(path);
     return new LinkFile(destination);
   }
 }

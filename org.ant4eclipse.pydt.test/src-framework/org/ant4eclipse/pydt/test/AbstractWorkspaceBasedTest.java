@@ -56,12 +56,12 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @param dltk
    *          <code>true</code> <=> Use the python dltk implementation.
    */
-  public AbstractWorkspaceBasedTest(final boolean dltk) {
-    _dltk = dltk;
-    _disposeonexit = true;
-    final String val = Utilities.cleanup(System.getProperty(PROP_DISPOSEONEXIT));
+  public AbstractWorkspaceBasedTest(boolean dltk) {
+    this._dltk = dltk;
+    this._disposeonexit = true;
+    String val = Utilities.cleanup(System.getProperty(PROP_DISPOSEONEXIT));
     if (val != null) {
-      _disposeonexit = !"false".equals(val);
+      this._disposeonexit = !"false".equals(val);
     }
   }
 
@@ -73,8 +73,8 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return The location of the ant buildfile. Not <code>null</code>.
    */
-  private File getBuildFile(final String projectname) {
-    final File projectdir = getProjectFolder(projectname);
+  private File getBuildFile(String projectname) {
+    File projectdir = getProjectFolder(projectname);
     return new File(projectdir, NAME_BUILDXML);
   }
 
@@ -88,7 +88,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return A result containing the generated information from the target. Not <code>null</code>.
    */
-  public BuildResult execute(final String projectname, final String target) {
+  public BuildResult execute(String projectname, String target) {
     return execute(projectname, target, null);
   }
 
@@ -105,7 +105,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return A result containing the generated information from the target. Not <code>null</code>.
    */
-  public BuildResult execute(final String projectname, final String target, String dirsep) {
+  public BuildResult execute(String projectname, String target, String dirsep) {
 
     Assert.assertNotNull(projectname);
     Assert.assertNotNull(target);
@@ -114,16 +114,16 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
       dirsep = File.separator;
     }
 
-    final File buildfile = getBuildFile(projectname);
+    File buildfile = getBuildFile(projectname);
 
-    final Project project = new Project();
+    Project project = new Project();
     project.init();
 
     project.setUserProperty(AntProperties.PROP_ANTFILE, buildfile.getAbsolutePath());
     setupProperties(project, projectname);
     extendDefinitions(project);
 
-    final BuildResult result = new BuildResult(getWorkspaceFolder(), dirsep);
+    BuildResult result = new BuildResult(getWorkspaceFolder(), dirsep);
     result.assign(project);
 
     ProjectHelper.configureProject(project, buildfile);
@@ -142,7 +142,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @param projectname
    *          The name of the eclipse project used for the testing. Not <code>null</code>.
    */
-  protected void setupProperties(final Project project, final String projectname) {
+  protected void setupProperties(Project project, String projectname) {
     project.setUserProperty(AntProperties.PROP_PROJECTNAME, projectname);
     project.setUserProperty(AntProperties.PROP_WORKSPACEDIR, getWorkspaceFolder().getAbsolutePath());
   }
@@ -153,7 +153,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @param project
    *          The project used to configure. Not <code>null</code>.
    */
-  protected void extendDefinitions(final Project project) {
+  protected void extendDefinitions(Project project) {
     project.addTaskDefinition("getPythonSourcePath", GetPythonSourcePathTask.class);
     project.addTaskDefinition("getPythonPath", GetPythonPathTask.class);
     project.addTaskDefinition("pythonDoc", PythonDocumentationTask.class);
@@ -169,9 +169,9 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return The URL pointing to that resource. Not <code>null</code>.
    */
-  protected URL getResource(final String path) {
+  protected URL getResource(String path) {
     Assert.assertNotNull(path);
-    final URL result = getClass().getResource(path);
+    URL result = getClass().getResource(path);
     if (result == null) {
       Assert.fail(String.format("The resource '%s' is not located on the classpath !", path));
     }
@@ -184,7 +184,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   @Before
   public void setup() {
     Ant4EclipseConfigurator.configureAnt4Eclipse();
-    _projectsuite = new ProjectSuite(this, _dltk);
+    this._projectsuite = new ProjectSuite(this, this._dltk);
   }
 
   /**
@@ -192,33 +192,33 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @After
   public void teardown() {
-    if (_disposeonexit) {
+    if (this._disposeonexit) {
       dispose();
     }
     ServiceRegistry.reset();
-    _dltk = false;
-    _projectsuite = null;
+    this._dltk = false;
+    this._projectsuite = null;
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectDescription createEmptyProject(final URL script, final int projectsettings) {
-    return _projectsuite.createEmptyProject(script, projectsettings);
+  public ProjectDescription createEmptyProject(URL script, int projectsettings) {
+    return this._projectsuite.createEmptyProject(script, projectsettings);
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectDescription createComplexProject(final URL script, final int projectsettings) {
-    return _projectsuite.createComplexProject(script, projectsettings);
+  public ProjectDescription createComplexProject(URL script, int projectsettings) {
+    return this._projectsuite.createComplexProject(script, projectsettings);
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectDescription createCyclicProject(final URL script, final int projectsettings) {
-    return _projectsuite.createCyclicProject(script, projectsettings);
+  public ProjectDescription createCyclicProject(URL script, int projectsettings) {
+    return this._projectsuite.createCyclicProject(script, projectsettings);
   }
 
 } /* ENDCLASS */

@@ -48,10 +48,10 @@ public class PathExpander {
    * @param project
    *          The project instance currently used for the path expansion. Not <code>null</code>.
    */
-  public PathExpander(final EclipseProject project) {
+  public PathExpander(EclipseProject project) {
     Assert.notNull(project);
-    _project = project;
-    _workspace = _project.getWorkspace();
+    this._project = project;
+    this._workspace = this._project.getWorkspace();
   }
 
   /**
@@ -64,7 +64,7 @@ public class PathExpander {
    * 
    * @return A list of resolved filesystem locations. Not <code>null</code>.
    */
-  public File[] expand(final ResolvedPathEntry[] entries, final EclipseProject.PathStyle pathstyle) {
+  public File[] expand(ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle) {
     Assert.notNull(entries);
     Assert.notNull(pathstyle);
     List<File> list = new ArrayList<File>();
@@ -90,16 +90,16 @@ public class PathExpander {
    * 
    * @return The relative filesystem location description as desired. Not <code>null</code>.
    */
-  private File getRelative(final File file, final EclipseProject.PathStyle pathstyle) {
-    String relativepath = Utilities.calcRelative(_project.getFolder(), file);
+  private File getRelative(File file, EclipseProject.PathStyle pathstyle) {
+    String relativepath = Utilities.calcRelative(this._project.getFolder(), file);
     if (relativepath == null) {
-      throw new Ant4EclipseException(PydtExceptionCode.NO_RELATIVE_PATH, _project.getFolder(), file);
+      throw new Ant4EclipseException(PydtExceptionCode.NO_RELATIVE_PATH, this._project.getFolder(), file);
     }
     if (pathstyle == EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
       if (relativepath.length() == 0) {
-        return new File(_project.getFolderName());
+        return new File(this._project.getFolderName());
       } else {
-        return new File(_project.getFolderName() + File.separator + relativepath);
+        return new File(this._project.getFolderName() + File.separator + relativepath);
       }
     } else /* if (pathstyle == EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) */{
       if (relativepath.length() == 0) {
@@ -118,7 +118,7 @@ public class PathExpander {
    * @param entry
    *          A resolved path entry which have to be translated into a filesystem path. Not <code>null</code>.
    */
-  private void expand(final List<File> receiver, final ResolvedPathEntry entry) {
+  private void expand(List<File> receiver, ResolvedPathEntry entry) {
     if (entry.getKind() == ReferenceKind.Container) {
       expandContainer(receiver, (ResolvedContainerEntry) entry);
     } else if (entry.getKind() == ReferenceKind.Library) {
@@ -148,8 +148,8 @@ public class PathExpander {
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandRuntime(final List<File> receiver, final ResolvedRuntimeEntry entry) {
-    final File[] libraries = entry.getLibraries();
+  private void expandRuntime(List<File> receiver, ResolvedRuntimeEntry entry) {
+    File[] libraries = entry.getLibraries();
     for (File lib : libraries) {
       receiver.add(lib);
     }
@@ -158,11 +158,11 @@ public class PathExpander {
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandProject(final List<File> receiver, final ResolvedProjectEntry entry) {
+  private void expandProject(List<File> receiver, ResolvedProjectEntry entry) {
     if (entry.getProjectname().equals(entry.getOwningProjectname())) {
       receiver.add(getProject(entry).getFolder(EclipseProject.PathStyle.ABSOLUTE));
     } else {
-      final EclipseProject otherproject = _workspace.getProject(entry.getProjectname());
+      EclipseProject otherproject = this._workspace.getProject(entry.getProjectname());
       receiver.add(otherproject.getFolder(EclipseProject.PathStyle.ABSOLUTE));
     }
   }
@@ -170,8 +170,8 @@ public class PathExpander {
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandLibrary(final List<File> receiver, final ResolvedLibraryEntry entry) {
-    final EclipseProject project = _workspace.getProject(entry.getOwningProjectname());
+  private void expandLibrary(List<File> receiver, ResolvedLibraryEntry entry) {
+    EclipseProject project = this._workspace.getProject(entry.getOwningProjectname());
     File file = new File(entry.getLocation());
     if (!file.isAbsolute()) {
       file = project.getChild(entry.getLocation(), EclipseProject.PathStyle.ABSOLUTE);
@@ -182,8 +182,8 @@ public class PathExpander {
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandContainer(final List<File> receiver, final ResolvedContainerEntry entry) {
-    final File[] pathes = entry.getPathes();
+  private void expandContainer(List<File> receiver, ResolvedContainerEntry entry) {
+    File[] pathes = entry.getPathes();
     for (File path : pathes) {
       receiver.add(path);
     }
@@ -197,8 +197,8 @@ public class PathExpander {
    * 
    * @return The project associated with the supplied entry. Not <code>null</code>.
    */
-  private EclipseProject getProject(final ResolvedPathEntry entry) {
-    return _workspace.getProject(entry.getOwningProjectname());
+  private EclipseProject getProject(ResolvedPathEntry entry) {
+    return this._workspace.getProject(entry.getOwningProjectname());
   }
 
 } /* ENDCLASS */

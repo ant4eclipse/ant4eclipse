@@ -11,18 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.JarUtilities;
+import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.JarUtilities;
-import org.ant4eclipse.core.util.ManifestHelper;
-import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 /**
  * <p>
@@ -34,16 +34,16 @@ import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 public class JaredBundleLayoutResolver implements BundleLayoutResolver {
 
   /** the location */
-  private final File     _location;
+  private File     _location;
 
   /** the expansion directory */
-  private final File     _expansionDirectory;
+  private File     _expansionDirectory;
 
   /** the jar file */
-  private final JarFile  _jarFile;
+  private JarFile  _jarFile;
 
   /** the manifest */
-  private final Manifest _manifest;
+  private Manifest _manifest;
 
   /**
    * <p>
@@ -55,7 +55,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * @param expansionDirectory
    *          the expansion directory
    */
-  public JaredBundleLayoutResolver(final File location, final File expansionDirectory) {
+  public JaredBundleLayoutResolver(File location, File expansionDirectory) {
     Assert.isFile(location);
     Assert.notNull(expansionDirectory);
 
@@ -65,7 +65,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     try {
       this._jarFile = new JarFile(this._location);
       this._manifest = this._jarFile.getManifest();
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
@@ -115,7 +115,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   private boolean needExpansion() {
 
     // get the bundle class path
-    final String[] bundleClasspath = ManifestHelper.getBundleClasspath(this._manifest);
+    String[] bundleClasspath = ManifestHelper.getBundleClasspath(this._manifest);
 
     // check entries
     for (int i = 0; i < bundleClasspath.length; i++) {
@@ -140,7 +140,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   private File[] expand() {
 
     // compute destination
-    final ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(this._manifest,
+    ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(this._manifest,
         ManifestHelper.BUNDLE_SYMBOLICNAME);
 
     if (elements == null || elements.length == 0 || elements[0].getValues() == null
@@ -150,14 +150,14 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
           + this._location + "'.");
     }
 
-    final String version = ManifestHelper.getManifestHeader(this._manifest, ManifestHelper.BUNDLE_VERSION);
+    String version = ManifestHelper.getManifestHeader(this._manifest, ManifestHelper.BUNDLE_VERSION);
 
-    final File destination = new File(this._expansionDirectory, elements[0].getValues()[0] + "_" + version);
+    File destination = new File(this._expansionDirectory, elements[0].getValues()[0] + "_" + version);
 
     // unwrap jar file
     try {
       JarUtilities.expandJarFile(this._jarFile, destination);
-    } catch (final IOException e) {
+    } catch (IOException e) {
       // log error
       A4ELogging.error("Could not expand jar file '%s'. Reason: '%s'", new Object[] { this._location, e.getMessage() });
 
@@ -166,10 +166,10 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     }
 
     // prepare results
-    final List<File> result = new LinkedList<File>();
+    List<File> result = new LinkedList<File>();
 
     // get bundle class path
-    final String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
+    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
 
     // add class path entries to the result
     for (String bundleClasspathEntrie : bundleClasspathEntries) {
@@ -180,7 +180,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
       }
       // add entry
       else {
-        final File classpathEntry = new File(destination, bundleClasspathEntrie);
+        File classpathEntry = new File(destination, bundleClasspathEntrie);
         if (classpathEntry.exists()) {
           result.add(classpathEntry);
         }

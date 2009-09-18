@@ -309,15 +309,15 @@ public abstract class NLS {
    */
   static class MessageProperties extends Properties {
 
-    private static final long        serialVersionUID = 1L;
+    private static final long  serialVersionUID = 1L;
 
     /** the class this MessageProperties objects holds the messages for */
-    private final Class<?>           _targetClass;
+    private Class<?>           _targetClass;
 
     /**
      * all the fields on the target class that can have messages assigned to
      */
-    private final Map<String, Field> _fields;
+    private Map<String, Field> _fields;
 
     public MessageProperties(Class<?> targetClass, Map<String, Field> fields) {
       this._targetClass = targetClass;
@@ -326,7 +326,7 @@ public abstract class NLS {
 
     @Override
     public synchronized Object put(Object key, Object value) {
-      if (this.containsKey(key)) {
+      if (containsKey(key)) {
         // the given field as already been set. simply return it's first value (we don't want to override)
         return super.get(key);
       }

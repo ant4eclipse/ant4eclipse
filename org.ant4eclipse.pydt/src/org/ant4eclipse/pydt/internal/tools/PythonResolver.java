@@ -70,15 +70,15 @@ public class PythonResolver {
    * @param ignoreruntimes
    *          <code>true</code> <=> Runtimes have to be ignored.
    */
-  public PythonResolver(final Workspace workspace, final Mode mode, final boolean ignoreruntimes) {
+  public PythonResolver(Workspace workspace, Mode mode, boolean ignoreruntimes) {
     Assert.notNull(workspace);
-    _pathregistry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
-    _runtimeregistry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
-    _workspace = workspace;
-    _ignoreruntimes = ignoreruntimes;
-    _mode = mode;
-    if (_mode == null) {
-      _mode = Mode.all;
+    this._pathregistry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
+    this._runtimeregistry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
+    this._workspace = workspace;
+    this._ignoreruntimes = ignoreruntimes;
+    this._mode = mode;
+    if (this._mode == null) {
+      this._mode = Mode.all;
     }
   }
 
@@ -88,14 +88,14 @@ public class PythonResolver {
    * @param entry
    *          The unresolved entry pointing to a source folder. Not <code>null</code>.
    */
-  private void resolveImpl(final RawPathEntry entry) {
+  private void resolveImpl(RawPathEntry entry) {
     Assert.notNull(entry);
-    ResolvedPathEntry result = _pathregistry.getResolvedPathEntry(entry);
+    ResolvedPathEntry result = this._pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
       result = newResolvedEntry(entry);
     }
     if (result != null) {
-      _pathregistry.registerResolvedPathEntry(entry, result);
+      this._pathregistry.registerResolvedPathEntry(entry, result);
     }
   }
 
@@ -107,8 +107,8 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
-  public ResolvedPathEntry[] resolve(final String projectname) {
-    final EclipseProject project = _workspace.getProject(projectname);
+  public ResolvedPathEntry[] resolve(String projectname) {
+    EclipseProject project = this._workspace.getProject(projectname);
     return resolve(loadEntries(project));
   }
 
@@ -120,10 +120,10 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
-  public ResolvedPathEntry[] resolve(final RawPathEntry... entries) {
+  public ResolvedPathEntry[] resolve(RawPathEntry... entries) {
     Assert.notNull(entries);
-    final List<RawPathEntry> input = new ArrayList<RawPathEntry>();
-    for (final RawPathEntry entry : entries) {
+    List<RawPathEntry> input = new ArrayList<RawPathEntry>();
+    for (RawPathEntry entry : entries) {
       input.add(entry);
     }
     return resolve(input);
@@ -137,9 +137,9 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
-  public ResolvedPathEntry[] resolve(final List<RawPathEntry> entries) {
+  public ResolvedPathEntry[] resolve(List<RawPathEntry> entries) {
     Assert.notNull(entries);
-    final List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
+    List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
     resolve(list, filter(entries));
     return list.toArray(new ResolvedPathEntry[list.size()]);
   }
@@ -152,8 +152,8 @@ public class PythonResolver {
    * 
    * @return A list only containing the entries that need to be processed. Not <code>null</code>.
    */
-  private List<RawPathEntry> filter(final List<RawPathEntry> input) {
-    if (_ignoreruntimes) {
+  private List<RawPathEntry> filter(List<RawPathEntry> input) {
+    if (this._ignoreruntimes) {
       List<RawPathEntry> result = new ArrayList<RawPathEntry>();
       for (int i = 0; i < input.size(); i++) {
         if (input.get(i).getKind() != ReferenceKind.Runtime) {
@@ -174,19 +174,19 @@ public class PythonResolver {
    * @param entries
    *          The entries that need to be processed. Not <code>null</code>.
    */
-  private void resolve(final List<ResolvedPathEntry> receiver, final List<RawPathEntry> entries) {
+  private void resolve(List<ResolvedPathEntry> receiver, List<RawPathEntry> entries) {
 
-    final Set<RawPathEntry> followed = new HashSet<RawPathEntry>();
+    Set<RawPathEntry> followed = new HashSet<RawPathEntry>();
     while (!entries.isEmpty()) {
 
-      final RawPathEntry entry = entries.remove(0);
-      if (!_pathregistry.isResolved(entry)) {
+      RawPathEntry entry = entries.remove(0);
+      if (!this._pathregistry.isResolved(entry)) {
         // until now it has not been resolved, so resolve and register it
         resolveImpl(entry);
       }
 
       // access the resolved path entry
-      final ResolvedPathEntry resolved = _pathregistry.getResolvedPathEntry(entry);
+      ResolvedPathEntry resolved = this._pathregistry.getResolvedPathEntry(entry);
       if (!receiver.contains(resolved)) {
         receiver.add(resolved);
       }
@@ -203,18 +203,18 @@ public class PythonResolver {
 
       followed.add(entry);
 
-      if (_mode == Mode.direct) {
+      if (this._mode == Mode.direct) {
         // we're not interested in indirectly used entries
         continue;
       }
 
       if (resolved.getKind() == ReferenceKind.Project) {
         // fetch the EclipseProject instance from the workspace
-        final EclipseProject refproject = _workspace.getProject(((ResolvedProjectEntry) resolved).getProjectname());
-        if (_mode == Mode.all) {
+        EclipseProject refproject = this._workspace.getProject(((ResolvedProjectEntry) resolved).getProjectname());
+        if (this._mode == Mode.all) {
           // this mode doesn't care for the 'export' flag on path settings
           entries.addAll(0, loadEntries(refproject));
-        } else if ((_mode == Mode.exported) && entry.isExported()) {
+        } else if ((this._mode == Mode.exported) && entry.isExported()) {
           // just follow exported entries
           entries.addAll(0, loadEntries(refproject));
         }
@@ -231,13 +231,13 @@ public class PythonResolver {
    * 
    * @return A list of raw path entries. Not <code>null</code>.
    */
-  private List<RawPathEntry> loadEntries(final EclipseProject project) {
-    final List<RawPathEntry> result = new ArrayList<RawPathEntry>();
-    final PythonProjectRole role = (PythonProjectRole) project.getRole(PythonProjectRole.class);
-    final RawPathEntry[] entries = role.getRawPathEntries();
+  private List<RawPathEntry> loadEntries(EclipseProject project) {
+    List<RawPathEntry> result = new ArrayList<RawPathEntry>();
+    PythonProjectRole role = (PythonProjectRole) project.getRole(PythonProjectRole.class);
+    RawPathEntry[] entries = role.getRawPathEntries();
     for (RawPathEntry entry : entries) {
       if (entry.getKind() == ReferenceKind.Runtime) {
-        if (_ignoreruntimes) {
+        if (this._ignoreruntimes) {
           continue;
         }
       }
@@ -254,7 +254,7 @@ public class PythonResolver {
    * 
    * @return <code>true</code> <=> The entry could be refined.
    */
-  private boolean canBeFollowed(final ResolvedPathEntry entry) {
+  private boolean canBeFollowed(ResolvedPathEntry entry) {
     return entry.getKind() == ReferenceKind.Project;
   }
 
@@ -264,7 +264,7 @@ public class PythonResolver {
    * @param entry
    *          The path entry which needs to be resolved. Not <code>null</code>.
    */
-  private ResolvedPathEntry newResolvedEntry(final RawPathEntry entry) {
+  private ResolvedPathEntry newResolvedEntry(RawPathEntry entry) {
     if (entry.getKind() == ReferenceKind.Container) {
       return newResolvedContainerEntry(entry);
     } else if (entry.getKind() == ReferenceKind.Library) {
@@ -284,7 +284,7 @@ public class PythonResolver {
    * @param entry
    *          The raw entry. Not <code>null</code>.
    */
-  private ResolvedContainerEntry newResolvedContainerEntry(final RawPathEntry entry) {
+  private ResolvedContainerEntry newResolvedContainerEntry(RawPathEntry entry) {
     return new ResolvedContainerEntry(entry.getProjectname(), new File[0]);
   }
 
@@ -294,7 +294,7 @@ public class PythonResolver {
    * @param entry
    *          The raw entry. Not <code>null</code>.
    */
-  private ResolvedLibraryEntry newResolvedLibraryEntry(final RawPathEntry entry) {
+  private ResolvedLibraryEntry newResolvedLibraryEntry(RawPathEntry entry) {
     return new ResolvedLibraryEntry(entry.getProjectname(), entry.getValue());
   }
 
@@ -304,7 +304,7 @@ public class PythonResolver {
    * @param entry
    *          The raw entry. Not <code>null</code>.
    */
-  private ResolvedProjectEntry newResolvedProjectEntry(final RawPathEntry entry) {
+  private ResolvedProjectEntry newResolvedProjectEntry(RawPathEntry entry) {
     String value = entry.getValue();
     if ((value.charAt(0) != '/') || (value.length() == 1)) {
       /** @todo [02-Aug-2009:KASI] We need to cause an exception here. */
@@ -321,7 +321,7 @@ public class PythonResolver {
    * @param entry
    *          The raw entry. Not <code>null</code>.
    */
-  private ResolvedSourceEntry newResolvedSourceEntry(final RawPathEntry entry) {
+  private ResolvedSourceEntry newResolvedSourceEntry(RawPathEntry entry) {
     return new ResolvedSourceEntry(entry.getProjectname(), entry.getValue());
   }
 
@@ -331,15 +331,15 @@ public class PythonResolver {
    * @param entry
    *          The raw entry. Not <code>null</code>.
    */
-  private ResolvedRuntimeEntry newResolvedRuntimeEntry(final RawPathEntry entry) {
-    final String value = entry.getValue();
+  private ResolvedRuntimeEntry newResolvedRuntimeEntry(RawPathEntry entry) {
+    String value = entry.getValue();
     PythonRuntime runtime = null;
     if (value.length() == 0) {
       // use the default runtime
-      runtime = _runtimeregistry.getRuntime();
+      runtime = this._runtimeregistry.getRuntime();
     } else {
       // use the selected runtime
-      runtime = _runtimeregistry.getRuntime(value);
+      runtime = this._runtimeregistry.getRuntime(value);
     }
     if (runtime == null) {
       // now runtime available

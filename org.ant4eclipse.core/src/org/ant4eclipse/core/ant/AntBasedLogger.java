@@ -26,10 +26,10 @@ import org.apache.tools.ant.Task;
 public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
 
   /** the ant project */
-  private Project                   _project = null;
+  private Project             _project = null;
 
   /** the (thread local) context */
-  private final ThreadLocal<Object> _context = new ThreadLocal<Object>();
+  private ThreadLocal<Object> _context = new ThreadLocal<Object>();
 
   /**
    * <p>
@@ -37,7 +37,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
    * 
    * @param project
    */
-  public AntBasedLogger(final Project project) {
+  public AntBasedLogger(Project project) {
     Assert.notNull(project);
 
     this._project = project;
@@ -47,7 +47,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
-  public void setContext(final Object context) {
+  public void setContext(Object context) {
     this._context.set(context);
   }
 
@@ -68,84 +68,84 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
-  public void debug(final String msg, final Object... args) {
+  public void debug(String msg, Object... args) {
     log(Project.MSG_VERBOSE, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void trace(final String msg, final Object... args) {
+  public void trace(String msg, Object... args) {
     log(Project.MSG_DEBUG, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void info(final String msg, final Object... args) {
+  public void info(String msg, Object... args) {
     log(Project.MSG_INFO, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void warn(final String msg, final Object... args) {
+  public void warn(String msg, Object... args) {
     log(Project.MSG_WARN, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void error(final String msg, final Object... args) {
+  public void error(String msg, Object... args) {
     log(Project.MSG_ERR, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void taskStarted(final BuildEvent event) {
+  public void taskStarted(BuildEvent event) {
     setContext(event.getTask());
   }
 
   /**
    * {@inheritDoc}
    */
-  public void taskFinished(final BuildEvent event) {
+  public void taskFinished(BuildEvent event) {
     setContext(null);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void targetStarted(final BuildEvent event) {
+  public void targetStarted(BuildEvent event) {
     setContext(event.getTarget());
   }
 
   /**
    * {@inheritDoc}
    */
-  public void targetFinished(final BuildEvent event) {
+  public void targetFinished(BuildEvent event) {
     setContext(null);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void messageLogged(final BuildEvent event) {
+  public void messageLogged(BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
 
   /**
    * {@inheritDoc}
    */
-  public void buildStarted(final BuildEvent event) {
+  public void buildStarted(BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
 
   /**
    * {@inheritDoc}
    */
-  public void buildFinished(final BuildEvent event) {
+  public void buildFinished(BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
 
@@ -159,9 +159,9 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
    * @param args
    *          The arguments used to format the message.
    */
-  private void log(final int msgLevel, final String msg, final Object... args) {
+  private void log(int msgLevel, String msg, Object... args) {
     // retrieve the context
-    final Object ctx = this._context.get();
+    Object ctx = this._context.get();
     if (ctx instanceof Task) {
       // log with task context
       this._project.log((Task) ctx, String.format(msg, args), msgLevel);

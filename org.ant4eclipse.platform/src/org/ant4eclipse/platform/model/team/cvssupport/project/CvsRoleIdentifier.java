@@ -18,8 +18,6 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
-import org.ant4eclipse.platform.model.team.cvssupport.project.CvsParser;
-import org.ant4eclipse.platform.model.team.cvssupport.project.CvsProjectRole;
 
 /**
  * Identifier for a CVS role.
@@ -31,20 +29,20 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public boolean isRoleSupported(final EclipseProject project) {
+  public boolean isRoleSupported(EclipseProject project) {
     return (CvsParser.isCvsProject(project));
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectRole createRole(final EclipseProject project) {
+  public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CvsRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
-    final CvsRoot cvsRoot = CvsParser.readCvsRoot(project);
-    final String repositoryName = CvsParser.readCvsRepositoryName(project);
-    final String tag = CvsParser.readTag(project);
-    final CvsProjectRole cvsProjectRole = new CvsProjectRole(project, repositoryName, cvsRoot, tag);
+    CvsRoot cvsRoot = CvsParser.readCvsRoot(project);
+    String repositoryName = CvsParser.readCvsRepositoryName(project);
+    String tag = CvsParser.readTag(project);
+    CvsProjectRole cvsProjectRole = new CvsProjectRole(project, repositoryName, cvsRoot, tag);
     return cvsProjectRole;
   }
 

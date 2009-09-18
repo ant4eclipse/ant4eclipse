@@ -30,10 +30,10 @@ import java.util.jar.Manifest;
 public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
 
   /** the location */
-  private final File     _location;
+  private File     _location;
 
   /** the manifest */
-  private final Manifest _manifest;
+  private Manifest _manifest;
 
   /**
    * <p>
@@ -43,17 +43,17 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    * @param location
    *          the root directory of the exploded bundle.
    */
-  public ExplodedBundleLayoutResolver(final File location) {
+  public ExplodedBundleLayoutResolver(File location) {
     Assert.isDirectory(location);
 
     // set the location
     this._location = location;
 
     // Get manifest for exploded bundle
-    final File manifestFile = new File(location, "META-INF/MANIFEST.MF");
+    File manifestFile = new File(location, "META-INF/MANIFEST.MF");
     try {
       this._manifest = new Manifest(new FileInputStream(manifestFile));
-    } catch (final Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
@@ -88,10 +88,10 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   public File[] resolveBundleClasspathEntries() {
 
     // prepare results
-    final List<File> result = new LinkedList<File>();
+    List<File> result = new LinkedList<File>();
 
     // get bundle class path
-    final String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
+    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
 
     // add class path entries to the result
     for (String bundleClasspathEntrie : bundleClasspathEntries) {
@@ -102,7 +102,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
       }
       // add entry
       else {
-        final File classpathEntry = new File(this._location, bundleClasspathEntrie);
+        File classpathEntry = new File(this._location, bundleClasspathEntrie);
         if (classpathEntry.exists()) {
           result.add(classpathEntry);
         }

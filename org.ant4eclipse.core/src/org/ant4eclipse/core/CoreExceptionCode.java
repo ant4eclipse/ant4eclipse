@@ -142,7 +142,7 @@ public class CoreExceptionCode extends ExceptionCode {
    * 
    * @param message
    */
-  private CoreExceptionCode(final String message) {
+  private CoreExceptionCode(String message) {
     super(message);
   }
 }

@@ -66,52 +66,52 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
   /**
    * {@inheritDoc}
    */
-  public void setCurrent(final Workspace currentWorkspace) {
+  public void setCurrent(Workspace currentWorkspace) {
     this._current = currentWorkspace;
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setCurrent(final String id) {
+  public void setCurrent(String id) {
     this._current = getWorkspace(id);
   }
 
   /**
    * {@inheritDoc}
    */
-  public Workspace getWorkspace(final String id) {
+  public Workspace getWorkspace(String id) {
     return this._registry.get(id);
   }
 
   /**
    * {@inheritDoc}
    */
-  public boolean containsWorkspace(final String id) {
+  public boolean containsWorkspace(String id) {
     return this._registry.containsKey(id);
   }
 
   /**
    * {@inheritDoc}
    */
-  public Workspace registerWorkspace(final String id, final WorkspaceDefinition workspaceDefinition) {
+  public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
     Assert.nonEmpty(id);
     Assert.notNull(workspaceDefinition);
 
     // create new workspace implementation
-    final WorkspaceImpl workspace = new WorkspaceImpl();
+    WorkspaceImpl workspace = new WorkspaceImpl();
 
     // retrieve all project folders from the workspace definition
-    final File[] projectFolders = workspaceDefinition.getProjectFolders();
+    File[] projectFolders = workspaceDefinition.getProjectFolders();
 
     if (A4ELogging.isDebuggingEnabled()) {
       A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=" + projectFolders.length);
     }
 
     // read the projects and add them to the workspace
-    final List<EclipseProject> projects = new ArrayList<EclipseProject>();
+    List<EclipseProject> projects = new ArrayList<EclipseProject>();
     for (File projectFolder : projectFolders) {
-      final EclipseProject eclipseProject = this._projectFactory.readProjectFromWorkspace(workspace, projectFolder);
+      EclipseProject eclipseProject = this._projectFactory.readProjectFromWorkspace(workspace, projectFolder);
       projects.add(eclipseProject);
       workspace.registerEclipseProject(eclipseProject);
     }

@@ -27,12 +27,12 @@ import java.util.Vector;
  */
 public class ChunkyFile {
 
-  private static final byte[]  BEGIN_CHUNK = { 64, -79, -117, -127, 35, -68, 0, 20, 26, 37, -106, -25, -93, -109, -66,
-      30                                  };
+  private static final byte[] BEGIN_CHUNK = { 64, -79, -117, -127, 35, -68, 0, 20, 26, 37, -106, -25, -93, -109, -66,
+      30                                 };
 
-  private static final byte[]  END_CHUNK   = { -64, 88, -5, -13, 35, -68, 0, 20, 26, 81, -13, -116, 123, -69, 119, -58 };
+  private static final byte[] END_CHUNK   = { -64, 88, -5, -13, 35, -68, 0, 20, 26, 81, -13, -116, 123, -69, 119, -58 };
 
-  private final Vector<byte[]> _chunkdata;
+  private Vector<byte[]>      _chunkdata;
 
   /**
    * Creates a chunked representation of the supplied file.

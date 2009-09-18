@@ -1,6 +1,7 @@
 package org.ant4eclipse.platform.ant.core;
 
 import org.ant4eclipse.core.Assert;
+
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
@@ -16,10 +17,10 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 public class ScopedMacroDefinition<E> {
 
   /** the macro definition */
-  private final MacroDef _macroDef;
+  private MacroDef _macroDef;
 
   /** the scope of the macro definition */
-  private final E        _scope;
+  private E        _scope;
 
   /**
    * <p>
@@ -29,7 +30,7 @@ public class ScopedMacroDefinition<E> {
    * @param macroDefinition
    * @param scope
    */
-  public ScopedMacroDefinition(final MacroDef macroDefinition, final E scope) {
+  public ScopedMacroDefinition(MacroDef macroDefinition, E scope) {
     Assert.notNull(macroDefinition);
     Assert.notNull(scope);
 

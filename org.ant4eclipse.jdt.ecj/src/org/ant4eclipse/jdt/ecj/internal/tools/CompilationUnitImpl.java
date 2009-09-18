@@ -42,16 +42,16 @@ public class CompilationUnitImpl implements ICompilationUnit {
   private static final String JAVA_FILE_POSTFIX = ".java";
 
   /** - */
-  private final SourceFile    _sourceFile;
+  private SourceFile          _sourceFile;
 
   /** the file name, relative to the source folder */
-  private final char[]        _fileName;
+  private char[]              _fileName;
 
   /** the name of the top level public type, e.g. {Hashtable} */
-  private final char[]        _mainTypeName;
+  private char[]              _mainTypeName;
 
   /** the name of the package , e.g. {java, lang} */
-  private final char[][]      _packageName;
+  private char[][]            _packageName;
 
   /**
    * <p>
@@ -61,7 +61,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    * @param sourceFile
    *          the source file
    */
-  public CompilationUnitImpl(final SourceFile sourceFile) {
+  public CompilationUnitImpl(SourceFile sourceFile) {
     Assert.notNull(sourceFile);
 
     // debug
@@ -72,14 +72,14 @@ public class CompilationUnitImpl implements ICompilationUnit {
     this._fileName = this._sourceFile.getSourceFileName().toCharArray();
 
     // compute qualified name
-    final String qualifiedTypeName = getQualifiedTypeName(this._sourceFile.getSourceFileName());
+    String qualifiedTypeName = getQualifiedTypeName(this._sourceFile.getSourceFileName());
 
     // compute package and main type name
-    final int v = qualifiedTypeName.lastIndexOf('.');
+    int v = qualifiedTypeName.lastIndexOf('.');
     this._mainTypeName = qualifiedTypeName.substring(v + 1).toCharArray();
     if ((v > 0) && (v < qualifiedTypeName.length())) {
-      final String packageName = qualifiedTypeName.substring(0, v);
-      final StringTokenizer packages = new StringTokenizer(packageName, ".");
+      String packageName = qualifiedTypeName.substring(0, v);
+      StringTokenizer packages = new StringTokenizer(packageName, ".");
       this._packageName = new char[packages.countTokens()][];
       for (int i = 0; i < this._packageName.length; i++) {
         this._packageName[i] = packages.nextToken().toCharArray();
@@ -115,26 +115,26 @@ public class CompilationUnitImpl implements ICompilationUnit {
    * @see org.eclipse.jdt.internal.compiler.env.ICompilationUnit#getContents()
    */
   public final char[] getContents() {
-    final File sourceFile = new File(this._sourceFile.getSourceFolder(), new String(this._fileName));
+    File sourceFile = new File(this._sourceFile.getSourceFolder(), new String(this._fileName));
 
     A4ELogging.debug("SourceFile.getContents(): '%s', '%s'", new Object[] {
         this._sourceFile.getSourceFile().getAbsolutePath(), new String(this._fileName) });
 
-    final StringBuffer result = new StringBuffer();
+    StringBuffer result = new StringBuffer();
 
     try {
-      final BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile),
-          this._sourceFile.getEncoding()));
+      BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), this._sourceFile
+          .getEncoding()));
 
       String str;
       while ((str = in.readLine()) != null) {
         result.append(str);
         result.append("\n");
       }
-    } catch (final UnsupportedEncodingException e) {
+    } catch (UnsupportedEncodingException e) {
       throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new String(
           this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new Ant4EclipseException(EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, e, new String(
           this._fileName), this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
     }
@@ -160,7 +160,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    *          the file name to resolve
    * @return the qualified type name for the given type name.
    */
-  private String getQualifiedTypeName(final String fileName) {
+  private String getQualifiedTypeName(String fileName) {
     if (fileName.toLowerCase().endsWith(JAVA_FILE_POSTFIX)) {
       return fileName.substring(0, fileName.length() - 5).replace(File.separatorChar, '.');
     } else {

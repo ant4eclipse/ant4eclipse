@@ -18,40 +18,39 @@ package org.ant4eclipse.cdt.model;
  */
 public enum BuildArtefactType {
 
-  SharedLibrary ( "org.eclipse.cdt.build.core.buildArtefactType.sharedLib" ),
-  StaticLibrary ( "org.eclipse.cdt.build.core.buildArtefactType.staticLib" ),
-  Executable    ( "org.eclipse.cdt.build.core.buildArtefactType.exe"       ),
-  Unmanaged     ( null                                                     );
-  
-  private String   _value;
-  
+  SharedLibrary("org.eclipse.cdt.build.core.buildArtefactType.sharedLib"), StaticLibrary(
+      "org.eclipse.cdt.build.core.buildArtefactType.staticLib"), Executable(
+      "org.eclipse.cdt.build.core.buildArtefactType.exe"), Unmanaged(null);
+
+  private String _value;
+
   /**
    * Prepares this type with the corresponding value (used within the xml representation).
    * 
    * @param value
-   *           The identifying value used within the xml representation. Maybe <code>null</code>.
+   *          The identifying value used within the xml representation. Maybe <code>null</code>.
    */
-  BuildArtefactType( String value ) {
-    _value = value;
+  BuildArtefactType(String value) {
+    this._value = value;
   }
-  
+
   /**
-   * Returns the type associated with the supplied id. If the type cannot be identified
-   * it might be an unmanaged project.
+   * Returns the type associated with the supplied id. If the type cannot be identified it might be an unmanaged
+   * project.
    * 
    * @param id
    *          The ID used to identify the type of project.
-   *          
-   * @return   The artifact type or <code>null</code> if it could not be identified (in that
-   *           case it might be an unmanaged project).
+   * 
+   * @return The artifact type or <code>null</code> if it could not be identified (in that case it might be an unmanaged
+   *         project).
    */
-  public static final BuildArtefactType valueByID( String id ) {
-    for( BuildArtefactType type : BuildArtefactType.values() ) {
-      if( type._value.equals( id ) ) {
+  public static final BuildArtefactType valueByID(String id) {
+    for (BuildArtefactType type : BuildArtefactType.values()) {
+      if (type._value.equals(id)) {
         return type;
       }
     }
     return null;
   }
-  
+
 } /* ENDENUM */

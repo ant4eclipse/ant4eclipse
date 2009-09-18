@@ -11,22 +11,24 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-import java.io.File;
-import java.net.MalformedURLException;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectSet;
+
 import org.apache.tools.ant.Project;
 import org.tigris.subversion.svnant.SvnTask;
 import org.tigris.subversion.svnant.commands.Checkout;
 import org.tigris.subversion.svnant.commands.Export;
 import org.tigris.subversion.svnant.commands.Update;
 import org.tigris.subversion.svnclientadapter.SVNUrl;
+
+import java.io.File;
+import java.net.MalformedURLException;
 
 /**
  * An adapter to access a subversion repository using the svn-ant task (by polarion)
@@ -38,22 +40,22 @@ public class SvnAdapter extends VcsAdapter {
   /**
    * Set to <tt>false</tt> to use command line client interface instead of JNI JavaHL binding. e
    */
-  private final boolean _javahl;
+  private boolean _javahl;
 
   /**
    * Set to false to use command line client interface instead of JavaSVN binding.
    */
-  private final boolean _svnkit;
+  private boolean _svnkit;
 
   /**
    * formatter definition used to format/parse dates (e.g. when revision is specified as date).
    */
-  private final String  _dateFormatter;
+  private String  _dateFormatter;
 
   /**
    * time zone used to format/parse dates (e.g. when revision is specified as date).
    */
-  private final String  _dateTimeZone;
+  private String  _dateTimeZone;
 
   /**
    * 

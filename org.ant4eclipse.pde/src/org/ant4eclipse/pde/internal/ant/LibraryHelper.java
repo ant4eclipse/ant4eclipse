@@ -1,14 +1,16 @@
 package org.ant4eclipse.pde.internal.ant;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LibraryHelper {
 
@@ -38,13 +40,13 @@ public class LibraryHelper {
   public static Library[] getLibraries(EclipseProject eclipseProject) {
 
     // get the plug-in project role
-    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(eclipseProject);
+    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(eclipseProject);
 
     // get the libraries
-    final PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
+    PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
 
     // TODO: should we take sourceIncludes for source builds?
-    final List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
+    List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
 
     List<Library> result = new LinkedList<Library>();
 
@@ -57,7 +59,7 @@ public class LibraryHelper {
       }
     }
 
-    return (Library[]) result.toArray(new Library[0]);
+    return result.toArray(new Library[0]);
   }
 
   /**
@@ -67,7 +69,7 @@ public class LibraryHelper {
    * @param libraryName
    * @return
    */
-  public static String getSourceNameForLibrary(final String libraryName) {
+  public static String getSourceNameForLibrary(String libraryName) {
 
     Assert.notNull(libraryName);
 

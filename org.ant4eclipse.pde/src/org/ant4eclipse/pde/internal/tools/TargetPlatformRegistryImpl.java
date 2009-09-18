@@ -11,13 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.tools;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
@@ -26,7 +19,15 @@ import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
+
 import org.ant4eclipse.platform.model.resource.Workspace;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -39,13 +40,13 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
   /** the current {@link TargetPlatform}, maybe null **/
-  private TargetPlatform                              _currentTargetPlatform;
+  private TargetPlatform                        _currentTargetPlatform;
 
   /** the static map with all target platforms currently resolved */
-  private final Map<Object, BundleAndFeatureSet>      _targetPlatformMap          = new HashMap<Object, BundleAndFeatureSet>();
+  private Map<Object, BundleAndFeatureSet>      _targetPlatformMap          = new HashMap<Object, BundleAndFeatureSet>();
 
   /** the target platform definitions */
-  private final Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
+  private Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
 
   /**
    * {@inheritDoc}
@@ -64,7 +65,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
-  public void setCurrent(final TargetPlatform targetPlatform) {
+  public void setCurrent(TargetPlatform targetPlatform) {
     this._currentTargetPlatform = targetPlatform;
   }
 
@@ -80,7 +81,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * {@inheritDoc}
    */
   public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
-    _targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
+    this._targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
 
   }
 
@@ -90,11 +91,12 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       TargetPlatformConfiguration targetPlatformConfiguration) {
 
-    TargetPlatformDefinition targetPlatformDefinition = _targetPlatformDefnitionMap
+    TargetPlatformDefinition targetPlatformDefinition = this._targetPlatformDefnitionMap
         .get(targetPlatformDefinitionIdentifier);
 
     if (targetPlatformDefinition == null) {
-      throw new Ant4EclipseException(PdeExceptionCode.NOT_TARGET_PLATFORM_DEFINITION, targetPlatformDefinitionIdentifier);
+      throw new Ant4EclipseException(PdeExceptionCode.NOT_TARGET_PLATFORM_DEFINITION,
+          targetPlatformDefinitionIdentifier);
     }
 
     return getInstance(workspace, targetPlatformDefinition.getLocations(), targetPlatformConfiguration);
@@ -104,14 +106,14 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * {@inheritDoc}
    */
   public TargetPlatformDefinition getTargetPlatformDefinition(String identifier) {
-    return _targetPlatformDefnitionMap.get(identifier);
+    return this._targetPlatformDefnitionMap.get(identifier);
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean hasTargetPlatformDefinition(String identifier) {
-    return _targetPlatformDefnitionMap.containsKey(identifier);
+    return this._targetPlatformDefnitionMap.containsKey(identifier);
   }
 
   /**
@@ -121,7 +123,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @param workspace
    * @return
    */
-  private PluginAndFeatureProjectSet getPluginProjectSet(final Workspace workspace) {
+  private PluginAndFeatureProjectSet getPluginProjectSet(Workspace workspace) {
 
     if (!this._targetPlatformMap.containsKey(workspace)) {
       this._targetPlatformMap.put(workspace, new PluginAndFeatureProjectSet(workspace));
@@ -143,23 +145,23 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    *          the target platform configuration
    * @return an instance of type {@link TargetPlatform} with the specified configuration.
    */
-  private TargetPlatform getInstance(final Workspace workspace, final File[] targetLocations,
-      final TargetPlatformConfiguration targetPlatformConfiguration) {
+  private TargetPlatform getInstance(Workspace workspace, File[] targetLocations,
+      TargetPlatformConfiguration targetPlatformConfiguration) {
 
     Assert.assertTrue((workspace != null) || (targetLocations != null),
         "Parameter workspace or targetLocations has to be set !");
 
     // TargetPlatformKey
-    final TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
+    TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
     if (this._targetPlatformMap.containsKey(key)) {
       return (TargetPlatform) this._targetPlatformMap.get(key);
     }
 
     // get the workspace bundle set
-    final BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
+    BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
 
     // get the binary bundle sets
-    final BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
+    BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
 
     // create and return the target platform instance
     return new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets, targetPlatformConfiguration);
@@ -172,7 +174,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @param file
    * @return
    */
-  private BinaryBundleAndFeatureSet getBinaryPluginSet(final File file) {
+  private BinaryBundleAndFeatureSet getBinaryPluginSet(File file) {
 
     if (!this._targetPlatformMap.containsKey(file)) {
       this._targetPlatformMap.put(file, new BinaryBundleAndFeatureSet(file));
@@ -185,14 +187,14 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @param files
    * @return
    */
-  private BinaryBundleAndFeatureSet[] getBinaryPluginSet(final File[] files) {
+  private BinaryBundleAndFeatureSet[] getBinaryPluginSet(File[] files) {
 
     //
-    final List<BinaryBundleAndFeatureSet> result = new LinkedList<BinaryBundleAndFeatureSet>();
+    List<BinaryBundleAndFeatureSet> result = new LinkedList<BinaryBundleAndFeatureSet>();
 
     //
-    for (int i = 0; i < files.length; i++) {
-      result.add(getBinaryPluginSet(files[i]));
+    for (File file : files) {
+      result.add(getBinaryPluginSet(file));
     }
 
     //
@@ -209,13 +211,13 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   private class TargetPlatformKey {
 
     /** the workspace */
-    private final Workspace                   _workspace;
+    private Workspace                   _workspace;
 
     /** the target locations */
-    private final File[]                      _targetLocations;
+    private File[]                      _targetLocations;
 
     /** the target platform configuration */
-    private final TargetPlatformConfiguration _targetPlatformConfiguration;
+    private TargetPlatformConfiguration _targetPlatformConfiguration;
 
     /**
      * <p>
@@ -229,8 +231,8 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      * @param targetPlatformConfiguration
      *          the target platform configuration
      */
-    public TargetPlatformKey(final Workspace workspace, final File[] targetLocations,
-        final TargetPlatformConfiguration targetPlatformConfiguration) {
+    public TargetPlatformKey(Workspace workspace, File[] targetLocations,
+        TargetPlatformConfiguration targetPlatformConfiguration) {
 
       this._targetLocations = targetLocations;
       this._targetPlatformConfiguration = targetPlatformConfiguration;
@@ -240,8 +242,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int hashCode() {
-      final int prime = 31;
+      int prime = 31;
       int result = 1;
       result = prime * result + getOuterType().hashCode();
       result = prime * result + hashCode(this._targetLocations);
@@ -254,7 +257,8 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     /**
      * {@inheritDoc}
      */
-    public boolean equals(final Object obj) {
+    @Override
+    public boolean equals(Object obj) {
       if (this == obj) {
         return true;
       }
@@ -264,7 +268,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       if (getClass() != obj.getClass()) {
         return false;
       }
-      final TargetPlatformKey other = (TargetPlatformKey) obj;
+      TargetPlatformKey other = (TargetPlatformKey) obj;
       if (!getOuterType().equals(other.getOuterType())) {
         return false;
       }
@@ -308,14 +312,14 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      *          the object array
      * @return
      */
-    private int hashCode(final Object[] array) {
-      final int prime = 31;
+    private int hashCode(Object[] array) {
+      int prime = 31;
       if (array == null) {
         return 0;
       }
       int result = 1;
-      for (int index = 0; index < array.length; index++) {
-        result = prime * result + (array[index] == null ? 0 : array[index].hashCode());
+      for (Object element : array) {
+        result = prime * result + (element == null ? 0 : element.hashCode());
       }
       return result;
     }

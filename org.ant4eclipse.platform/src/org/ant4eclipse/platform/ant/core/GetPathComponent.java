@@ -1,6 +1,6 @@
 package org.ant4eclipse.platform.ant.core;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * <p>

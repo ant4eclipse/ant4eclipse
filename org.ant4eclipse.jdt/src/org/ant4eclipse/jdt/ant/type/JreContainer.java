@@ -42,7 +42,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @param project
    *          The project this type applies to.
    */
-  public JreContainer(final Project project) {
+  public JreContainer(Project project) {
     super(project);
     this._defaultJre = null;
   }
@@ -56,7 +56,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     return (new Runtime());
   }
 
-  public void setDefault(final String defaultJre) {
+  public void setDefault(String defaultJre) {
     this._defaultJre = defaultJre;
   }
 
@@ -66,8 +66,8 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @param runtime
    *          The java runtime environment configuration that shall be added.
    */
-  public void addConfiguredJre(final Runtime runtime) {
-    final File location = runtime.getLocation();
+  public void addConfiguredJre(Runtime runtime) {
+    File location = runtime.getLocation();
     if (location == null) {
       throw new BuildException("Missing parameter 'location' on jre!");
     }
@@ -76,12 +76,12 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       throw new BuildException("Missing parameter 'id' on jre!");
     }
 
-    final boolean isDefault = runtime.getId().equals(this._defaultJre);
+    boolean isDefault = runtime.getId().equals(this._defaultJre);
 
-    final JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
+    JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
         JavaRuntimeRegistry.class.getName());
 
-    final JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation());
+    JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation());
 
     Assert.notNull(javaRuntime);
 
@@ -89,9 +89,9 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       javaRuntimeRegistry.setDefaultJavaRuntime(runtime.getId());
     }
 
-    final Path path = new Path(getProject());
-    final File[] libraries = javaRuntime.getLibraries();
-    for (final File librarie : libraries) {
+    Path path = new Path(getProject());
+    File[] libraries = javaRuntime.getLibraries();
+    for (File librarie : libraries) {
       path.createPathElement().setLocation(librarie);
     }
 
@@ -114,7 +114,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       return this._id;
     }
 
-    public void setId(final String id) {
+    public void setId(String id) {
       this._id = id;
     }
 
@@ -122,7 +122,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       return this._location;
     }
 
-    public void setLocation(final File location) {
+    public void setLocation(File location) {
       this._location = location;
     }
   }

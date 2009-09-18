@@ -56,8 +56,8 @@ public class BundleDependenciesResolver {
   public BundleDependenciesResolver() {
 
     // create instance variables
-    _resolvedBundles = new HashMap<BundleDescription, BundleDependency>();
-    _allImportedPackages = new LinkedHashSet<String>();
+    this._resolvedBundles = new HashMap<BundleDescription, BundleDependency>();
+    this._allImportedPackages = new LinkedHashSet<String>();
   }
 
   /**
@@ -67,7 +67,7 @@ public class BundleDependenciesResolver {
    * @param description
    * @return
    */
-  public List<BundleDependency> resolveBundleClasspath(final BundleDescription description) {
+  public List<BundleDependency> resolveBundleClasspath(BundleDescription description) {
     return resolveBundleClasspath(description, true);
   }
 
@@ -80,7 +80,7 @@ public class BundleDependenciesResolver {
    *          the bundle description
    * @return
    */
-  public List<BundleDependency> resolveBundleClasspath(final BundleDescription description,
+  public List<BundleDependency> resolveBundleClasspath(BundleDescription description,
       boolean includeOptionalDependencies) {
 
     Assert.notNull(description);
@@ -119,15 +119,15 @@ public class BundleDependenciesResolver {
       resolveBundleClasspath(hostDescription);
 
       // create BundleDependency if necessary
-      if (!_resolvedBundles.containsKey(hostDescription)) {
-        _resolvedBundles.put(hostDescription, new BundleDependency(hostDescription, true));
+      if (!this._resolvedBundles.containsKey(hostDescription)) {
+        this._resolvedBundles.put(hostDescription, new BundleDependency(hostDescription, true));
       } else {
-        BundleDependency bundleDependency = _resolvedBundles.get(_resolvedBundles);
+        BundleDependency bundleDependency = this._resolvedBundles.get(this._resolvedBundles);
         bundleDependency._isHostForRootBundle = true;
       }
     }
 
-    return new LinkedList<BundleDependency>(_resolvedBundles.values());
+    return new LinkedList<BundleDependency>(this._resolvedBundles.values());
   }
 
   /**
@@ -139,13 +139,13 @@ public class BundleDependenciesResolver {
    *          the given {@link BundleDescription}.
    * @return a {@link BundleLayoutResolver} for the given {@link BundleDescription}.
    */
-  public static BundleLayoutResolver getBundleLayoutResolver(final BundleDescription bundleDescription) {
+  public static BundleLayoutResolver getBundleLayoutResolver(BundleDescription bundleDescription) {
 
     // get the bundle source
-    final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+    BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
 
     // get the location
-    final File location = getLocation(bundleDescription);
+    File location = getLocation(bundleDescription);
 
     // eclipse project -> PluginProjectLayoutResolver
     if (bundleSource.isEclipseProject()) {
@@ -215,13 +215,13 @@ public class BundleDependenciesResolver {
    *          the {@link BundleDescription}
    * @return the location for the given {@link BundleDescription}.
    */
-  public static File getLocation(final BundleDescription bundleDescription) {
+  public static File getLocation(BundleDescription bundleDescription) {
 
     // get the bundle source
-    final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+    BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
 
     // get the location
-    final File result = bundleSource.isEclipseProject() ? bundleSource.getAsEclipseProject().getFolder() : bundleSource
+    File result = bundleSource.isEclipseProject() ? bundleSource.getAsEclipseProject().getFolder() : bundleSource
         .getAsFile();
 
     // return result
@@ -232,7 +232,7 @@ public class BundleDependenciesResolver {
    * @param bundleDescription
    * @return
    */
-  private BundleDescription[] getReexportedBundles(final BundleDescription bundleDescription) {
+  private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
 
     if (!bundleDescription.isResolved()) {
@@ -242,7 +242,7 @@ public class BundleDependenciesResolver {
     }
 
     // define the result set
-    final Set<BundleDescription> resultSet = new LinkedHashSet<BundleDescription>();
+    Set<BundleDescription> resultSet = new LinkedHashSet<BundleDescription>();
 
     // iterate over all required bundles
     for (BundleSpecification specification : bundleDescription.getRequiredBundles()) {
@@ -251,7 +251,7 @@ public class BundleDependenciesResolver {
       if (specification.isExported()) {
 
         // get the bundle description
-        final BundleDescription reexportedBundle = (BundleDescription) specification.getSupplier();
+        BundleDescription reexportedBundle = (BundleDescription) specification.getSupplier();
 
         // add the bundle description
         resultSet.add(reexportedBundle);
@@ -285,7 +285,7 @@ public class BundleDependenciesResolver {
    * @param context
    * @param bundleDescription
    */
-  private void addRequiredBundle(final BundleDescription bundleDescription) {
+  private void addRequiredBundle(BundleDescription bundleDescription) {
 
     // get bundle dependency
     BundleDependency bundleDependency = getBundleDependency(bundleDescription);
@@ -305,7 +305,7 @@ public class BundleDependenciesResolver {
     // add the imported package
     bundleDependency.addImportedPackage(exportPackageDescription.getName());
 
-    _allImportedPackages.add(exportPackageDescription.getName());
+    this._allImportedPackages.add(exportPackageDescription.getName());
   }
 
   /**
@@ -323,12 +323,12 @@ public class BundleDependenciesResolver {
     BundleDescription host = getHost(bundleDescription);
 
     // create BundleDependency if necessary
-    if (!_resolvedBundles.containsKey(host)) {
-      _resolvedBundles.put(host, new BundleDependency(host));
+    if (!this._resolvedBundles.containsKey(host)) {
+      this._resolvedBundles.put(host, new BundleDependency(host));
     }
 
     // return BundleDependency
-    return _resolvedBundles.get(host);
+    return this._resolvedBundles.get(host);
   }
 
   /**
@@ -367,9 +367,9 @@ public class BundleDependenciesResolver {
     public BundleDependency(BundleDescription host) {
       Assert.notNull(host);
 
-      _host = host;
-      _isRequiredBundle = false;
-      _importedPackages = new LinkedHashSet<String>();
+      this._host = host;
+      this._isRequiredBundle = false;
+      this._importedPackages = new LinkedHashSet<String>();
     }
 
     /**
@@ -385,10 +385,10 @@ public class BundleDependenciesResolver {
     public BundleDependency(BundleDescription host, boolean isHostForRootBundle) {
       Assert.notNull(host);
 
-      _host = host;
-      _isRequiredBundle = false;
-      _isHostForRootBundle = isHostForRootBundle;
-      _importedPackages = new LinkedHashSet<String>();
+      this._host = host;
+      this._isRequiredBundle = false;
+      this._isHostForRootBundle = isHostForRootBundle;
+      this._importedPackages = new LinkedHashSet<String>();
     }
 
     /**
@@ -404,10 +404,10 @@ public class BundleDependenciesResolver {
     public BundleDependency(BundleDescription host, BundleDescription fragment) {
       Assert.notNull(host);
 
-      _host = host;
-      _fragment = fragment;
-      _isRequiredBundle = false;
-      _importedPackages = new LinkedHashSet<String>();
+      this._host = host;
+      this._fragment = fragment;
+      this._isRequiredBundle = false;
+      this._importedPackages = new LinkedHashSet<String>();
     }
 
     /**
@@ -418,7 +418,7 @@ public class BundleDependenciesResolver {
      * @return the host (never <code>null</code>).
      */
     public BundleDescription getHost() {
-      return _host;
+      return this._host;
     }
 
     /**
@@ -431,13 +431,13 @@ public class BundleDependenciesResolver {
     public BundleDescription[] getFragments() {
 
       // is single fragment set?
-      if (_fragment != null) {
-        return new BundleDescription[] { _fragment };
+      if (this._fragment != null) {
+        return new BundleDescription[] { this._fragment };
       }
 
       // if the host contains the eclipse extensible API header, return all known fragments
       else if (isEclipseExtensibleAPI()) {
-        return _host.getFragments();
+        return this._host.getFragments();
       }
 
       // return empty array
@@ -454,8 +454,8 @@ public class BundleDependenciesResolver {
      * @return <code>true</code> if a fragment is set.
      */
     public boolean hasFragments() {
-      return (_fragment != null)
-          || (isEclipseExtensibleAPI() && _host.getFragments() != null && _host.getFragments().length > 0);
+      return (this._fragment != null)
+          || (isEclipseExtensibleAPI() && this._host.getFragments() != null && this._host.getFragments().length > 0);
     }
 
     /**
@@ -471,10 +471,10 @@ public class BundleDependenciesResolver {
       List<File> files = new LinkedList<File>();
 
       // if this dependency is the host bundle for the root bundle, everything is visible for the root bundle
-      if (_isHostForRootBundle) {
+      if (this._isHostForRootBundle) {
 
         // get the layout resolver
-        BundleLayoutResolver layoutResolver = getBundleLayoutResolver(_host);
+        BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._host);
 
         // add the resolved bundle class path entries
         files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
@@ -487,22 +487,22 @@ public class BundleDependenciesResolver {
       AccessRestrictions accessRestrictions = new AccessRestrictions();
 
       // add the imported packages
-      for (String importedPackage : _importedPackages) {
+      for (String importedPackage : this._importedPackages) {
         accessRestrictions.addPublicPackage(importedPackage);
       }
 
       // resolve the class path of the host
-      BundleLayoutResolver layoutResolver = getBundleLayoutResolver(_host);
+      BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._host);
       files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
-      if (_isRequiredBundle) {
-        addAllExportedPackages(_host, accessRestrictions);
+      if (this._isRequiredBundle) {
+        addAllExportedPackages(this._host, accessRestrictions);
       }
 
       // resolve the class path of the fragment
       for (BundleDescription fragment : getFragments()) {
         layoutResolver = getBundleLayoutResolver(fragment);
         files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
-        if (_isRequiredBundle) {
+        if (this._isRequiredBundle) {
           addAllExportedPackages(fragment, accessRestrictions);
         }
       }
@@ -525,7 +525,7 @@ public class BundleDependenciesResolver {
       List<EclipseProject> result = new LinkedList<EclipseProject>();
 
       // add the host if it is an eclipse project
-      final BundleSource bundleSource = (BundleSource) _host.getUserObject();
+      BundleSource bundleSource = (BundleSource) this._host.getUserObject();
 
       if (bundleSource.isEclipseProject()) {
         result.add(bundleSource.getAsEclipseProject());
@@ -533,7 +533,7 @@ public class BundleDependenciesResolver {
 
       // add the fragment if it is an eclipse project
       for (BundleDescription fragment : getFragments()) {
-        final BundleSource fragmentSource = (BundleSource) fragment.getUserObject();
+        BundleSource fragmentSource = (BundleSource) fragment.getUserObject();
 
         if (fragmentSource.isEclipseProject()) {
           result.add(fragmentSource.getAsEclipseProject());
@@ -549,9 +549,9 @@ public class BundleDependenciesResolver {
      */
     @Override
     public String toString() {
-      return "BundleDependency [_host=" + _host + ", _fragment=" + _fragment + ", _importedPackages="
-          + _importedPackages + ", _isHostForRootBundle=" + _isHostForRootBundle + ", _isRequiredBundle="
-          + _isRequiredBundle + "]";
+      return "BundleDependency [_host=" + this._host + ", _fragment=" + this._fragment + ", _importedPackages="
+          + this._importedPackages + ", _isHostForRootBundle=" + this._isHostForRootBundle + ", _isRequiredBundle="
+          + this._isRequiredBundle + "]";
     }
 
     /**
@@ -564,7 +564,7 @@ public class BundleDependenciesResolver {
      *          the required bundle flag
      */
     private void setRequiredBundle(boolean isRequiredBundle) {
-      _isRequiredBundle = isRequiredBundle;
+      this._isRequiredBundle = isRequiredBundle;
     }
 
     /**
@@ -576,7 +576,7 @@ public class BundleDependenciesResolver {
      *          the package name
      */
     private void addImportedPackage(String packageName) {
-      _importedPackages.add(packageName);
+      this._importedPackages.add(packageName);
     }
 
     /**
@@ -607,7 +607,7 @@ public class BundleDependenciesResolver {
         // takes priority over Require-Bundle, and packages which are exported by a
         // required bundle and imported via Import-Package must not be treated as
         // split packages."
-        if (!_allImportedPackages.contains(exportPackageDescription.getName())) {
+        if (!BundleDependenciesResolver.this._allImportedPackages.contains(exportPackageDescription.getName())) {
           accessRestrictions.addPublicPackage(exportPackageDescription.getName());
         }
       }
@@ -620,7 +620,7 @@ public class BundleDependenciesResolver {
      * @return
      */
     private boolean isEclipseExtensibleAPI() {
-      BundleLayoutResolver resolver = getBundleLayoutResolver(_host);
+      BundleLayoutResolver resolver = getBundleLayoutResolver(this._host);
       Manifest manifest = resolver.getManifest();
       String eclipseExtensibleHeader = ManifestHelper.getManifestHeader(manifest, ECLIPSE_EXTENSIBLE_API);
       boolean isEclipseExtensibleHeaderAPI = (eclipseExtensibleHeader != null)

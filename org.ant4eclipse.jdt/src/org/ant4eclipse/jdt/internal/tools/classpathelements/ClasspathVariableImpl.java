@@ -16,10 +16,10 @@ import java.io.File;
 public class ClasspathVariableImpl implements ClassPathVariable {
 
   /** the name of the class path variable */
-  private final String _name;
+  private String _name;
 
   /** the path of this class path variable */
-  private final File   _path;
+  private File   _path;
 
   /**
    * <p>
@@ -29,7 +29,7 @@ public class ClasspathVariableImpl implements ClassPathVariable {
    * @param name
    * @param path
    */
-  public ClasspathVariableImpl(final String name, final File path) {
+  public ClasspathVariableImpl(String name, File path) {
     Assert.nonEmpty(name);
     Assert.notNull(path);
 
@@ -55,7 +55,7 @@ public class ClasspathVariableImpl implements ClassPathVariable {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -65,7 +65,7 @@ public class ClasspathVariableImpl implements ClassPathVariable {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final ClasspathVariableImpl castedObj = (ClasspathVariableImpl) o;
+    ClasspathVariableImpl castedObj = (ClasspathVariableImpl) o;
     return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)) && (this._path == null ? castedObj._path == null
         : this._path.equals(castedObj._path)));
   }
@@ -86,7 +86,7 @@ public class ClasspathVariableImpl implements ClassPathVariable {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[ClasspathVariableImpl:");
     buffer.append(" _name: ");
     buffer.append(this._name);

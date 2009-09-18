@@ -17,13 +17,15 @@ import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.cdt.model.project.CProjectRole;
 
 /**
- * <p>Implements the c project role.</p>
+ * <p>
+ * Implements the c project role.
+ * </p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRole {
 
-  public static final String         NAME = "CProjectRole";
+  public static final String NAME = "CProjectRole";
 
   /**
    * <p>
@@ -33,7 +35,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
    * @param eclipseProject
    *          the eclipse project
    */
-  public CProjectRoleImpl(final EclipseProject eclipseProject) {
+  public CProjectRoleImpl(EclipseProject eclipseProject) {
     super(NAME, eclipseProject);
   }
 
@@ -42,7 +44,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[CProjectRole:");
     buffer.append(" NAME: ");
     buffer.append(NAME);
@@ -63,7 +65,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -76,7 +78,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
     if (o.getClass() != getClass()) {
       return false;
     }
-    // final CProjectRoleImpl other = (CProjectRoleImpl) o;
+    // CProjectRoleImpl other = (CProjectRoleImpl) o;
     return true;
   }
 

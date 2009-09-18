@@ -38,7 +38,7 @@ public interface JavaRuntimeRegistry {
    *          indicates is the {@link JavaRuntime} should be the default one.
    * @return the {@link JavaRuntime}
    */
-  JavaRuntime registerJavaRuntime(final String id, final File location, final boolean isDefault);
+  JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault);
 
   /**
    * <p>
@@ -51,7 +51,7 @@ public interface JavaRuntimeRegistry {
    *          the location
    * @return the {@link JavaRuntime}
    */
-  JavaRuntime registerJavaRuntime(final String id, final File location);
+  JavaRuntime registerJavaRuntime(String id, File location);
 
   /**
    * <p>
@@ -61,7 +61,7 @@ public interface JavaRuntimeRegistry {
    * @param id
    *          the id of the default java runtime.
    */
-  void setDefaultJavaRuntime(final String id);
+  void setDefaultJavaRuntime(String id);
 
   /**
    * <p>
@@ -72,7 +72,7 @@ public interface JavaRuntimeRegistry {
    *          the id under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
    * @return <code>true</code> if the java runtime with the given id is known.
    */
-  boolean hasJavaRuntime(final String id);
+  boolean hasJavaRuntime(String id);
 
   /**
    * <p>
@@ -83,7 +83,7 @@ public interface JavaRuntimeRegistry {
    *          the id under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
    * @return the java runtime with the given path or <code>null</code> if no such java runtime is registered.
    */
-  JavaRuntime getJavaRuntime(final String id);
+  JavaRuntime getJavaRuntime(String id);
 
   /**
    * <p>
@@ -107,7 +107,7 @@ public interface JavaRuntimeRegistry {
    *          the id of the profile
    * @return <code>true</code> if a java profile is registered with the given id.
    */
-  boolean hasJavaProfile(final String id);
+  boolean hasJavaProfile(String id);
 
   /**
    * <p>
@@ -118,7 +118,7 @@ public interface JavaRuntimeRegistry {
    *          the id of the java profile.
    * @return the {@link JavaProfile} with the given id.
    */
-  JavaProfile getJavaProfile(final String id);
+  JavaProfile getJavaProfile(String id);
 
   /**
    * <p>

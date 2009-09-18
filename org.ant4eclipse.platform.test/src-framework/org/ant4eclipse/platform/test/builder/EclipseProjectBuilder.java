@@ -30,15 +30,15 @@ import java.util.List;
  */
 public class EclipseProjectBuilder {
 
-  private final String       _projectName;
+  private String       _projectName;
 
-  private final List<String> _natures;
+  private List<String> _natures;
 
-  private final List<String> _builders;
+  private List<String> _builders;
 
-  private final List<String> _referencedProjects;
+  private List<String> _referencedProjects;
 
-  public EclipseProjectBuilder(final String projectName) {
+  public EclipseProjectBuilder(String projectName) {
     assertNotNull(projectName);
     this._projectName = projectName;
     this._natures = new LinkedList<String>();
@@ -81,7 +81,7 @@ public class EclipseProjectBuilder {
    */
   public File createIn(File destinationDirectory) {
     Assert.isDirectory(destinationDirectory);
-    final File projectDir = new File(destinationDirectory, this._projectName);
+    File projectDir = new File(destinationDirectory, this._projectName);
     FileHelper.createDirectory(projectDir);
 
     createArtefacts(projectDir);
@@ -93,7 +93,7 @@ public class EclipseProjectBuilder {
   }
 
   protected void createProjectFile(File projectDir) {
-    final StringBuffer dotProject = new StringBuffer();
+    StringBuffer dotProject = new StringBuffer();
     dotProject.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(Utilities.NL).append(
         "<projectDescription><name>").append(this._projectName).append("</name>").append("<comment/>").append(
         Utilities.NL);
@@ -108,7 +108,7 @@ public class EclipseProjectBuilder {
     dotProject.append(Utilities.NL).append("<buildSpec>").append(Utilities.NL);
     Iterator<String> it = this._builders.iterator();
     while (it.hasNext()) {
-      final String builder = it.next();
+      String builder = it.next();
       dotProject.append("<buildCommand><name>").append(builder).append("</name><arguments/></buildCommand>").append(
           Utilities.NL);
     }
@@ -117,7 +117,7 @@ public class EclipseProjectBuilder {
     it = this._natures.iterator();
     dotProject.append("<natures>").append(Utilities.NL);
     while (it.hasNext()) {
-      final String builder = it.next();
+      String builder = it.next();
       dotProject.append("<nature>").append(builder).append("</nature>").append(Utilities.NL);
     }
     dotProject.append("</natures>").append(Utilities.NL);

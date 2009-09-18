@@ -1,15 +1,15 @@
 package org.ant4eclipse.core.service;
 
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 
 /**
  * <p>
@@ -38,19 +38,19 @@ import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationCo
 public class ServiceRegistry {
 
   /** the instance */
-  private static ServiceRegistry    _instance;
+  private static ServiceRegistry _instance;
 
   /** the service map **/
-  private final Map<String, Object> _serviceMap;
+  private Map<String, Object>    _serviceMap;
 
   /** list that contains the ordering of the services **/
-  private final List<Object>        _serviceOrdering;
+  private List<Object>           _serviceOrdering;
 
   /** indicates whether the registry is configured **/
-  private static boolean            _configured    = false;
+  private static boolean         _configured    = false;
 
   /** indicates whether the registry instance is initialized **/
-  private boolean                   _isInitialized = false;
+  private boolean                _isInitialized = false;
 
   /**
    * <p>
@@ -60,7 +60,7 @@ public class ServiceRegistry {
    * @param configuration
    *          the service registry configuration
    */
-  public static void configure(final ServiceRegistryConfiguration configuration) {
+  public static void configure(ServiceRegistryConfiguration configuration) {
     parameterNotNull("configuration", configuration);
     assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
 
@@ -137,7 +137,7 @@ public class ServiceRegistry {
    * @param serviceIdentifier
    * @return
    */
-  public final boolean hasService(final String serviceIdentifier) {
+  public final boolean hasService(String serviceIdentifier) {
     return this._serviceMap.containsKey(serviceIdentifier);
   }
 
@@ -163,8 +163,8 @@ public class ServiceRegistry {
    * @return
    * @throws ServiceNotAvailableException
    */
-  public final Object getService(final String serviceIdentifier) {
-    final Object result = this._serviceMap.get(serviceIdentifier);
+  public final Object getService(String serviceIdentifier) {
+    Object result = this._serviceMap.get(serviceIdentifier);
 
     if (result == null) {
       throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceIdentifier);
@@ -190,15 +190,15 @@ public class ServiceRegistry {
   private void initialize() {
     assertTrue(!isInitialized(), "Service registry already has been initialized!");
 
-    final Iterator<Object> iterator = this._serviceOrdering.iterator();
+    Iterator<Object> iterator = this._serviceOrdering.iterator();
 
     while (iterator.hasNext()) {
-      final Object service = iterator.next();
+      Object service = iterator.next();
 
       if (service instanceof Lifecycle) {
         try {
           ((Lifecycle) service).initialize();
-        } catch (final Exception e) {
+        } catch (Exception e) {
           throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
               .getName());
         }
@@ -215,14 +215,14 @@ public class ServiceRegistry {
   private void dispose() {
     assertTrue(isInitialized(), "Service registry is not initialized.");
 
-    final Iterator<Object> iterator = this._serviceOrdering.iterator();
+    Iterator<Object> iterator = this._serviceOrdering.iterator();
 
     while (iterator.hasNext()) {
-      final Object service = iterator.next();
+      Object service = iterator.next();
       if (service instanceof Lifecycle) {
         try {
           ((Lifecycle) service).dispose();
-        } catch (final Exception e) {
+        } catch (Exception e) {
           // no need to do anything here...
           System.err.println(String.format(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED.getMessage(), service));
         }
@@ -235,7 +235,7 @@ public class ServiceRegistry {
   /**
    * @param b
    */
-  private void setInitialized(final boolean b) {
+  private void setInitialized(boolean b) {
     this._isInitialized = b;
   }
 
@@ -249,7 +249,7 @@ public class ServiceRegistry {
    * @param object
    *          the object that must be set.
    */
-  private static void parameterNotNull(final String parameterName, final Object parameter) {
+  private static void parameterNotNull(String parameterName, Object parameter) {
     if (parameter == null) {
       throw new Ant4EclipseException(CoreExceptionCode.ASSERT_PARAMETER_NOT_NULL_FAILED, parameterName);
     }
@@ -265,7 +265,7 @@ public class ServiceRegistry {
    * @param msg
    *          the message
    */
-  private static void assertTrue(final boolean condition, final String msg) {
+  private static void assertTrue(boolean condition, String msg) {
     if (!condition) {
       throw new Ant4EclipseException(CoreExceptionCode.ASSERT_TRUE_FAILED, msg);
     }
@@ -288,7 +288,7 @@ public class ServiceRegistry {
    */
   protected class ConfigurationContextImpl implements ConfigurationContext {
 
-    public final void registerService(final Object service, final String serviceIdentifier) {
+    public final void registerService(Object service, String serviceIdentifier) {
       assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       parameterNotNull("service", service);
       parameterNotNull("serviceIdentifier", serviceIdentifier);
@@ -301,7 +301,7 @@ public class ServiceRegistry {
       }
     }
 
-    public final void registerService(final Object service, final String[] serviceIdentifier) {
+    public final void registerService(Object service, String[] serviceIdentifier) {
       assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       parameterNotNull("service", service);
       parameterNotNull("serviceIdentifier", serviceIdentifier);
@@ -311,13 +311,13 @@ public class ServiceRegistry {
         assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
       }
 
-      for (final String object : serviceIdentifier) {
+      for (String object : serviceIdentifier) {
         if (ServiceRegistry.this._serviceMap.containsKey(object)) {
           throw new Ant4EclipseException(CoreExceptionCode.SERVICE_IDENTIFIER_IS_NOT_UNIQUE, (Object) serviceIdentifier);
         }
       }
 
-      for (final String object : serviceIdentifier) {
+      for (String object : serviceIdentifier) {
         ServiceRegistry.this._serviceMap.put(object, service);
         ServiceRegistry.this._serviceOrdering.add(service);
       }

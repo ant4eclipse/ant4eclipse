@@ -12,7 +12,9 @@
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.jdt.ecj.internal.tools.ModifiableClassFile;
+
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**
@@ -25,10 +27,10 @@ import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 public abstract class AbstractClassFileImpl implements ModifiableClassFile {
 
   /** the library location */
-  private final String      _libraryLocation;
+  private String            _libraryLocation;
 
   /** the library type */
-  private final byte        _libraryType;
+  private byte              _libraryType;
 
   /** an access restriction */
   private AccessRestriction _accessRestriction;
@@ -43,7 +45,7 @@ public abstract class AbstractClassFileImpl implements ModifiableClassFile {
    * @param libraryType
    *          the library type
    */
-  protected AbstractClassFileImpl(final String libraryLocation, final byte libraryType) {
+  protected AbstractClassFileImpl(String libraryLocation, byte libraryType) {
     Assert.notNull(libraryLocation);
 
     this._libraryLocation = libraryLocation;
@@ -81,7 +83,7 @@ public abstract class AbstractClassFileImpl implements ModifiableClassFile {
   /**
    * {@inheritDoc}
    */
-  public final void setAccessRestriction(final AccessRestriction accessRestriction) {
+  public final void setAccessRestriction(AccessRestriction accessRestriction) {
     this._accessRestriction = accessRestriction;
   }
 }

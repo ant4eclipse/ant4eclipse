@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.tools;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.StopWatch;
@@ -24,6 +20,10 @@ import org.ant4eclipse.pde.tools.PdeBuildHelper;
 
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
+
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -36,16 +36,16 @@ import org.osgi.framework.Version;
 public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet {
 
   /** the list that contains all the bundle descriptions */
-  private final List<BundleDescription>  _bundleDescriptonList;
+  private List<BundleDescription>  _bundleDescriptonList;
 
   /** the list that contains all the feature descriptions */
-  private final List<FeatureDescription> _featureDescriptonList;
+  private List<FeatureDescription> _featureDescriptonList;
 
   /** indicates whether or not the platform is initialized */
-  private boolean                        _isInitialised = false;
+  private boolean                  _isInitialised = false;
 
   /** a description of this BundleAndFeatureSet */
-  private String                         _description;
+  private String                   _description;
 
   /**
    * <p>
@@ -59,7 +59,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     Assert.nonEmpty(description);
 
     // set the description
-    _description = description;
+    this._description = description;
 
     // create the bundle description list
     this._bundleDescriptonList = new LinkedList<BundleDescription>();
@@ -87,7 +87,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     }
 
     // debug
-    A4ELogging.info("Trying to read bundles and feature from '%s'.", _description);
+    A4ELogging.info("Trying to read bundles and feature from '%s'.", this._description);
 
     // create stop watch for debugging purpose
     StopWatch stopWatch = new StopWatch();
@@ -116,7 +116,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     initialize();
 
     // iterate over feature list
-    for (FeatureDescription featureDescription : _featureDescriptonList) {
+    for (FeatureDescription featureDescription : this._featureDescriptonList) {
 
       // return if match
       if (featureDescription.getFeatureManifest().getId().equals(featureId)
@@ -144,7 +144,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     FeatureDescription result = null;
 
     // iterate over feature descriptions
-    for (FeatureDescription featureDescription : _featureDescriptonList) {
+    for (FeatureDescription featureDescription : this._featureDescriptonList) {
 
       // get the feature manifest
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
@@ -177,16 +177,16 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
-  public final boolean containsBundle(final String symbolicName) {
+  public final boolean containsBundle(String symbolicName) {
     Assert.notNull(symbolicName);
 
     // initialize if necessary
     initialize();
 
-    final Iterator<BundleDescription> iterator = this._bundleDescriptonList.iterator();
+    Iterator<BundleDescription> iterator = this._bundleDescriptonList.iterator();
 
     while (iterator.hasNext()) {
-      final BundleDescription description = iterator.next();
+      BundleDescription description = iterator.next();
       if (symbolicName.equals(description.getSymbolicName())
       /*
        * TODO || "system.bundle".equals(symbolicName) && description.isSystemBundle()
@@ -206,7 +206,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param bundleDescription
    *          the {@link BundleDescription} to add.
    */
-  protected final void addBundleDescription(final BundleDescription bundleDescription) {
+  protected final void addBundleDescription(BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
 
     this._bundleDescriptonList.add(bundleDescription);
@@ -220,7 +220,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param featureDescription
    *          the {@link FeatureDescription} to add
    */
-  protected final void addFeaturesDescription(final FeatureDescription featureDescription) {
+  protected final void addFeaturesDescription(FeatureDescription featureDescription) {
     Assert.notNull(featureDescription);
 
     this._featureDescriptonList.add(featureDescription);

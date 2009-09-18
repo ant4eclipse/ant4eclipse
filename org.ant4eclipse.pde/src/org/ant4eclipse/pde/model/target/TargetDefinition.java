@@ -45,14 +45,14 @@ public class TargetDefinition {
    * @return
    */
   public String getName() {
-    return _name;
+    return this._name;
   }
 
   /**
    * @return
    */
   public boolean isLocationSet() {
-    return _location != null;
+    return this._location != null;
   }
 
   /**
@@ -63,14 +63,14 @@ public class TargetDefinition {
    * @return the location of the target definition.
    */
   public Location getLocation() {
-    return _location;
+    return this._location;
   }
 
   /**
    * @return
    */
   public boolean isEnvironmentSet() {
-    return _environment != null;
+    return this._environment != null;
   }
 
   /**
@@ -80,7 +80,7 @@ public class TargetDefinition {
    * @return
    */
   public Environment getEnvironment() {
-    return _environment;
+    return this._environment;
   }
 
   /**
@@ -90,7 +90,7 @@ public class TargetDefinition {
    * @return
    */
   public boolean isTargetJRESet() {
-    return _targetJRE != null;
+    return this._targetJRE != null;
   }
 
   /**
@@ -100,7 +100,7 @@ public class TargetDefinition {
    * @return
    */
   public TargetJRE getTargetJRE() {
-    return _targetJRE;
+    return this._targetJRE;
   }
 
   /**
@@ -110,7 +110,7 @@ public class TargetDefinition {
    * @return
    */
   public boolean isContentSet() {
-    return _content != null;
+    return this._content != null;
   }
 
   /**
@@ -120,25 +120,26 @@ public class TargetDefinition {
    * @return
    */
   public Content getContent() {
-    return _content;
+    return this._content;
   }
 
   /**
    * @see java.lang.Object#toString()
    */
+  @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
     buffer.append("[TargetDefinition:");
     buffer.append(" _name: ");
-    buffer.append(_name);
+    buffer.append(this._name);
     buffer.append(" _location: ");
-    buffer.append(_location);
+    buffer.append(this._location);
     buffer.append(" _environment: ");
-    buffer.append(_environment);
+    buffer.append(this._environment);
     buffer.append(" _targetJRE: ");
-    buffer.append(_targetJRE);
+    buffer.append(this._targetJRE);
     buffer.append(" _content: ");
-    buffer.append(_content);
+    buffer.append(this._content);
     buffer.append("]");
     return buffer.toString();
   }
@@ -146,53 +147,68 @@ public class TargetDefinition {
   /**
    * @see java.lang.Object#hashCode()
    */
+  @Override
   public int hashCode() {
-    final int prime = 31;
+    int prime = 31;
     int result = 1;
-    result = prime * result + ((_content == null) ? 0 : _content.hashCode());
-    result = prime * result + ((_environment == null) ? 0 : _environment.hashCode());
-    result = prime * result + ((_location == null) ? 0 : _location.hashCode());
-    result = prime * result + ((_name == null) ? 0 : _name.hashCode());
-    result = prime * result + ((_targetJRE == null) ? 0 : _targetJRE.hashCode());
+    result = prime * result + ((this._content == null) ? 0 : this._content.hashCode());
+    result = prime * result + ((this._environment == null) ? 0 : this._environment.hashCode());
+    result = prime * result + ((this._location == null) ? 0 : this._location.hashCode());
+    result = prime * result + ((this._name == null) ? 0 : this._name.hashCode());
+    result = prime * result + ((this._targetJRE == null) ? 0 : this._targetJRE.hashCode());
     return result;
   }
 
   /**
    * @see java.lang.Object#equals(java.lang.Object)
    */
+  @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
-    final TargetDefinition other = (TargetDefinition) obj;
-    if (_content == null) {
-      if (other._content != null)
+    }
+    TargetDefinition other = (TargetDefinition) obj;
+    if (this._content == null) {
+      if (other._content != null) {
         return false;
-    } else if (!_content.equals(other._content))
+      }
+    } else if (!this._content.equals(other._content)) {
       return false;
-    if (_environment == null) {
-      if (other._environment != null)
+    }
+    if (this._environment == null) {
+      if (other._environment != null) {
         return false;
-    } else if (!_environment.equals(other._environment))
+      }
+    } else if (!this._environment.equals(other._environment)) {
       return false;
-    if (_location == null) {
-      if (other._location != null)
+    }
+    if (this._location == null) {
+      if (other._location != null) {
         return false;
-    } else if (!_location.equals(other._location))
+      }
+    } else if (!this._location.equals(other._location)) {
       return false;
-    if (_name == null) {
-      if (other._name != null)
+    }
+    if (this._name == null) {
+      if (other._name != null) {
         return false;
-    } else if (!_name.equals(other._name))
+      }
+    } else if (!this._name.equals(other._name)) {
       return false;
-    if (_targetJRE == null) {
-      if (other._targetJRE != null)
+    }
+    if (this._targetJRE == null) {
+      if (other._targetJRE != null) {
         return false;
-    } else if (!_targetJRE.equals(other._targetJRE))
+      }
+    } else if (!this._targetJRE.equals(other._targetJRE)) {
       return false;
+    }
     return true;
   }
 
@@ -203,7 +219,7 @@ public class TargetDefinition {
    * @param name
    */
   void setName(String name) {
-    _name = name;
+    this._name = name;
   }
 
   /**
@@ -213,7 +229,7 @@ public class TargetDefinition {
    * @param location
    */
   void setLocation(Location location) {
-    _location = location;
+    this._location = location;
   }
 
   /**
@@ -223,7 +239,7 @@ public class TargetDefinition {
    * @param environment
    */
   void setEnvironment(Environment environment) {
-    _environment = environment;
+    this._environment = environment;
   }
 
   /**
@@ -233,7 +249,7 @@ public class TargetDefinition {
    * @param targetJRE
    */
   void setTargetJRE(TargetJRE targetJRE) {
-    _targetJRE = targetJRE;
+    this._targetJRE = targetJRE;
   }
 
   /**
@@ -243,7 +259,7 @@ public class TargetDefinition {
    * @param content
    */
   void setContent(Content content) {
-    _content = content;
+    this._content = content;
   }
 
   /**
@@ -265,7 +281,7 @@ public class TargetDefinition {
      * @return
      */
     public boolean useDefault() {
-      return _useDefault;
+      return this._useDefault;
     }
 
     /**
@@ -275,7 +291,7 @@ public class TargetDefinition {
      * @return
      */
     public boolean isPathSet() {
-      return _path != null;
+      return this._path != null;
     }
 
     /**
@@ -285,51 +301,60 @@ public class TargetDefinition {
      * @return
      */
     public String getPath() {
-      return _path;
+      return this._path;
     }
 
     /**
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode() {
-      final int prime = 31;
+      int prime = 31;
       int result = 1;
-      result = prime * result + ((_path == null) ? 0 : _path.hashCode());
-      result = prime * result + (_useDefault ? 1231 : 1237);
+      result = prime * result + ((this._path == null) ? 0 : this._path.hashCode());
+      result = prime * result + (this._useDefault ? 1231 : 1237);
       return result;
     }
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final Location other = (Location) obj;
-      if (_path == null) {
-        if (other._path != null)
+      }
+      Location other = (Location) obj;
+      if (this._path == null) {
+        if (other._path != null) {
           return false;
-      } else if (!_path.equals(other._path))
+        }
+      } else if (!this._path.equals(other._path)) {
         return false;
-      if (_useDefault != other._useDefault)
+      }
+      if (this._useDefault != other._useDefault) {
         return false;
+      }
       return true;
     }
 
     /**
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[Location:");
       buffer.append(" _useDefault: ");
-      buffer.append(_useDefault);
+      buffer.append(this._useDefault);
       buffer.append(" _path: ");
-      buffer.append(_path);
+      buffer.append(this._path);
       buffer.append("]");
       return buffer.toString();
     }
@@ -341,7 +366,7 @@ public class TargetDefinition {
      * @param useDefault
      */
     void setUseDefault(boolean useDefault) {
-      _useDefault = useDefault;
+      this._useDefault = useDefault;
     }
 
     /**
@@ -351,7 +376,7 @@ public class TargetDefinition {
      * @param path
      */
     void setPath(String path) {
-      _path = path;
+      this._path = path;
     }
   }
 
@@ -373,94 +398,108 @@ public class TargetDefinition {
     private String _nl;
 
     public String getOs() {
-      return _os;
+      return this._os;
     }
 
     public String getWs() {
-      return _ws;
+      return this._ws;
     }
 
     public String getArch() {
-      return _arch;
+      return this._arch;
     }
 
     public String getNl() {
-      return _nl;
+      return this._nl;
     }
 
+    @Override
     public int hashCode() {
-      final int prime = 31;
+      int prime = 31;
       int result = 1;
-      result = prime * result + ((_arch == null) ? 0 : _arch.hashCode());
-      result = prime * result + ((_nl == null) ? 0 : _nl.hashCode());
-      result = prime * result + ((_os == null) ? 0 : _os.hashCode());
-      result = prime * result + ((_ws == null) ? 0 : _ws.hashCode());
+      result = prime * result + ((this._arch == null) ? 0 : this._arch.hashCode());
+      result = prime * result + ((this._nl == null) ? 0 : this._nl.hashCode());
+      result = prime * result + ((this._os == null) ? 0 : this._os.hashCode());
+      result = prime * result + ((this._ws == null) ? 0 : this._ws.hashCode());
       return result;
     }
 
+    @Override
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final Environment other = (Environment) obj;
-      if (_arch == null) {
-        if (other._arch != null)
+      }
+      Environment other = (Environment) obj;
+      if (this._arch == null) {
+        if (other._arch != null) {
           return false;
-      } else if (!_arch.equals(other._arch))
+        }
+      } else if (!this._arch.equals(other._arch)) {
         return false;
-      if (_nl == null) {
-        if (other._nl != null)
+      }
+      if (this._nl == null) {
+        if (other._nl != null) {
           return false;
-      } else if (!_nl.equals(other._nl))
+        }
+      } else if (!this._nl.equals(other._nl)) {
         return false;
-      if (_os == null) {
-        if (other._os != null)
+      }
+      if (this._os == null) {
+        if (other._os != null) {
           return false;
-      } else if (!_os.equals(other._os))
+        }
+      } else if (!this._os.equals(other._os)) {
         return false;
-      if (_ws == null) {
-        if (other._ws != null)
+      }
+      if (this._ws == null) {
+        if (other._ws != null) {
           return false;
-      } else if (!_ws.equals(other._ws))
+        }
+      } else if (!this._ws.equals(other._ws)) {
         return false;
+      }
       return true;
     }
 
     /**
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[Environment:");
       buffer.append(" _os: ");
-      buffer.append(_os);
+      buffer.append(this._os);
       buffer.append(" _ws: ");
-      buffer.append(_ws);
+      buffer.append(this._ws);
       buffer.append(" _arch: ");
-      buffer.append(_arch);
+      buffer.append(this._arch);
       buffer.append(" _nl: ");
-      buffer.append(_nl);
+      buffer.append(this._nl);
       buffer.append("]");
       return buffer.toString();
     }
 
     void setOs(String os) {
-      _os = os;
+      this._os = os;
     }
 
     void setWs(String ws) {
-      _ws = ws;
+      this._ws = ws;
     }
 
     void setArch(String arch) {
-      _arch = arch;
+      this._arch = arch;
     }
 
     void setNl(String nl) {
-      _nl = nl;
+      this._nl = nl;
     }
   }
 
@@ -487,7 +526,7 @@ public class TargetDefinition {
      * @return
      */
     public String getJreName() {
-      return _jreName;
+      return this._jreName;
     }
 
     /**
@@ -497,7 +536,7 @@ public class TargetDefinition {
      * @return
      */
     public String getExecutionEnvironment() {
-      return _executionEnvironment;
+      return this._executionEnvironment;
     }
 
     /**
@@ -507,9 +546,9 @@ public class TargetDefinition {
      * @return
      */
     public int getType() {
-      if (_jreName != null) {
+      if (this._jreName != null) {
         return JRE;
-      } else if (_executionEnvironment != null) {
+      } else if (this._executionEnvironment != null) {
         return EXECUTION_ENVIRONMENT;
       } else {
         return DEFAULT_JRE;
@@ -520,42 +559,50 @@ public class TargetDefinition {
      * @param jreName
      */
     void setJreName(String jreName) {
-      _jreName = jreName;
+      this._jreName = jreName;
     }
 
     /**
      * @param execEnv
      */
     void setExecutionEnvironment(String executionEnvironment) {
-      _executionEnvironment = executionEnvironment;
+      this._executionEnvironment = executionEnvironment;
     }
 
+    @Override
     public int hashCode() {
-      final int prime = 31;
+      int prime = 31;
       int result = 1;
-      result = prime * result + ((_executionEnvironment == null) ? 0 : _executionEnvironment.hashCode());
-      result = prime * result + ((_jreName == null) ? 0 : _jreName.hashCode());
+      result = prime * result + ((this._executionEnvironment == null) ? 0 : this._executionEnvironment.hashCode());
+      result = prime * result + ((this._jreName == null) ? 0 : this._jreName.hashCode());
       return result;
     }
 
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final TargetJRE other = (TargetJRE) obj;
-      if (_executionEnvironment == null) {
-        if (other._executionEnvironment != null)
+      }
+      TargetJRE other = (TargetJRE) obj;
+      if (this._executionEnvironment == null) {
+        if (other._executionEnvironment != null) {
           return false;
-      } else if (!_executionEnvironment.equals(other._executionEnvironment))
+        }
+      } else if (!this._executionEnvironment.equals(other._executionEnvironment)) {
         return false;
-      if (_jreName == null) {
-        if (other._jreName != null)
+      }
+      if (this._jreName == null) {
+        if (other._jreName != null) {
           return false;
-      } else if (!_jreName.equals(other._jreName))
+        }
+      } else if (!this._jreName.equals(other._jreName)) {
         return false;
+      }
       return true;
     }
 
@@ -619,12 +666,12 @@ public class TargetDefinition {
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
-      final int prime = 31;
+      int prime = 31;
       int result = 1;
-      result = prime * result + ((_extraLocations == null) ? 0 : _extraLocations.hashCode());
-      result = prime * result + ((_features == null) ? 0 : _features.hashCode());
-      result = prime * result + ((_plugins == null) ? 0 : _plugins.hashCode());
-      result = prime * result + (_useAllPlugins ? 1231 : 1237);
+      result = prime * result + ((this._extraLocations == null) ? 0 : this._extraLocations.hashCode());
+      result = prime * result + ((this._features == null) ? 0 : this._features.hashCode());
+      result = prime * result + ((this._plugins == null) ? 0 : this._plugins.hashCode());
+      result = prime * result + (this._useAllPlugins ? 1231 : 1237);
       return result;
     }
 
@@ -632,30 +679,40 @@ public class TargetDefinition {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object obj) {
-      if (this == obj)
+      if (this == obj) {
         return true;
-      if (obj == null)
+      }
+      if (obj == null) {
         return false;
-      if (getClass() != obj.getClass())
+      }
+      if (getClass() != obj.getClass()) {
         return false;
-      final Content other = (Content) obj;
-      if (_extraLocations == null) {
-        if (other._extraLocations != null)
+      }
+      Content other = (Content) obj;
+      if (this._extraLocations == null) {
+        if (other._extraLocations != null) {
           return false;
-      } else if (!_extraLocations.equals(other._extraLocations))
+        }
+      } else if (!this._extraLocations.equals(other._extraLocations)) {
         return false;
-      if (_features == null) {
-        if (other._features != null)
+      }
+      if (this._features == null) {
+        if (other._features != null) {
           return false;
-      } else if (!_features.equals(other._features))
+        }
+      } else if (!this._features.equals(other._features)) {
         return false;
-      if (_plugins == null) {
-        if (other._plugins != null)
+      }
+      if (this._plugins == null) {
+        if (other._plugins != null) {
           return false;
-      } else if (!_plugins.equals(other._plugins))
+        }
+      } else if (!this._plugins.equals(other._plugins)) {
         return false;
-      if (_useAllPlugins != other._useAllPlugins)
+      }
+      if (this._useAllPlugins != other._useAllPlugins) {
         return false;
+      }
       return true;
     }
 
@@ -666,13 +723,13 @@ public class TargetDefinition {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[Content:");
       buffer.append(" _useAllPlugins: ");
-      buffer.append(_useAllPlugins);
+      buffer.append(this._useAllPlugins);
       buffer.append(" _plugins: ");
-      buffer.append(_plugins);
+      buffer.append(this._plugins);
       buffer.append(" _features: ");
-      buffer.append(_features);
+      buffer.append(this._features);
       buffer.append(" _extraLocations: ");
-      buffer.append(_extraLocations);
+      buffer.append(this._extraLocations);
       buffer.append("]");
       return buffer.toString();
     }

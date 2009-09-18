@@ -46,9 +46,9 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
     Assert.notNull(compilerOptions);
     Assert.notNull(sourceFiles);
 
-    _classFileLoader = classFileLoader;
-    _compilerOptions = compilerOptions;
-    _sourceFiles = sourceFiles;
+    this._classFileLoader = classFileLoader;
+    this._compilerOptions = compilerOptions;
+    this._sourceFiles = sourceFiles;
   }
 
   /**
@@ -80,7 +80,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param classFileLoader
    *          the class file loader.
    */
-  public void setClassFileLoader(final ClassFileLoader classFileLoader) {
+  public void setClassFileLoader(ClassFileLoader classFileLoader) {
     Assert.notNull(classFileLoader);
 
     this._classFileLoader = classFileLoader;
@@ -94,7 +94,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    *          the compiler options.
    */
-  public void setCompilerOptions(final Map<String, String> compilerOptions) {
+  public void setCompilerOptions(Map<String, String> compilerOptions) {
     Assert.notNull(compilerOptions);
 
     this._compilerOptions = compilerOptions;
@@ -108,7 +108,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param sourceFiles
    *          the source files.
    */
-  public void setSourceFiles(final SourceFile[] sourceFiles) {
+  public void setSourceFiles(SourceFile[] sourceFiles) {
     Assert.notNull(sourceFiles);
 
     this._sourceFiles = sourceFiles;

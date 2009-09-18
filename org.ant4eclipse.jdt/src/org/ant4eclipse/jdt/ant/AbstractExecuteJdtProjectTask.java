@@ -22,10 +22,10 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
     JdtClasspathContainerArgumentComponent {
 
   /** the class path container argument delegates */
-  private final JdtClasspathContainerArgumentDelegate _jdtClasspathContainerArgumentDelegate;
+  private JdtClasspathContainerArgumentDelegate _jdtClasspathContainerArgumentDelegate;
 
   /** the JDT executor values provider */
-  private final JdtExecutorValuesProvider             _executorValuesProvider;
+  private JdtExecutorValuesProvider             _executorValuesProvider;
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    * @param prefix
    *          the prefix for all scoped values
    */
-  public AbstractExecuteJdtProjectTask(final String prefix) {
+  public AbstractExecuteJdtProjectTask(String prefix) {
     super(prefix);
 
     // create the delegates

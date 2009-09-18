@@ -13,13 +13,13 @@ package org.ant4eclipse.core.util;
 public class Pair<T, U> {
 
   /** the first thing of this pair */
-  private final T             _first;
+  private T             _first;
 
   /** the second thing of this pair */
-  private final U             _second;
+  private U             _second;
 
   /** the hash code */
-  private transient final int _hash;
+  private transient int _hash;
 
   /**
    * <p>

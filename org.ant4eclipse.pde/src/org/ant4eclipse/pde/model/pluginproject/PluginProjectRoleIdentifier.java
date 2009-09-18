@@ -34,25 +34,25 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public boolean isRoleSupported(final EclipseProject project) {
+  public boolean isRoleSupported(EclipseProject project) {
     return (project.hasNature(PluginProjectRole.PLUGIN_NATURE));
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectRole createRole(final EclipseProject project) {
+  public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("PluginProjectRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
 
     BundleDescription description;
     try {
       description = BundleDescriptionLoader.loadFromPluginProject(project);
-    } catch (final Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e.getMessage(), e);
     }
 
-    final PluginProjectRole pluginProjectRole = new PluginProjectRoleImpl(project, description);
+    PluginProjectRole pluginProjectRole = new PluginProjectRoleImpl(project, description);
 
     // TODO: umbauen...
     if (project.hasChild(BuildPropertiesParser.BUILD_PROPERTIES)) {
@@ -65,7 +65,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public void postProcess(final EclipseProject project) {
+  public void postProcess(EclipseProject project) {
   }
 
 } /* ENDCLASS */

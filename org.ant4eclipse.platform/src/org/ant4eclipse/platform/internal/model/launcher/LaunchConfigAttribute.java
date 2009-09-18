@@ -1,14 +1,14 @@
 package org.ant4eclipse.platform.internal.model.launcher;
 
+import org.ant4eclipse.core.Assert;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import org.ant4eclipse.core.Assert;
-
 class LaunchConfigAttribute {
-  private final String _name;
+  private String _name;
 
-  private Object       _value;
+  private Object _value;
 
   public LaunchConfigAttribute(String name) {
     Assert.notNull("Parameter 'name' must not be null", name);
@@ -49,7 +49,7 @@ class LaunchConfigAttribute {
   }
 
   static class ListAttribute {
-    private final List<String> _entries = new LinkedList<String>();
+    private List<String> _entries = new LinkedList<String>();
 
     public List<String> getEntries() {
       return this._entries;

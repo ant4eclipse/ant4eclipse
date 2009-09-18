@@ -12,6 +12,7 @@
 package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import org.ant4eclipse.pde.PdeExceptionCode;
 
 /**
@@ -38,8 +39,8 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
-  public final void setTargetPlatformId(final String targetPlatformId) {
-    _targetPlatformId = targetPlatformId;
+  public final void setTargetPlatformId(String targetPlatformId) {
+    this._targetPlatformId = targetPlatformId;
   }
 
   /**
@@ -53,9 +54,9 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    * {@inheritDoc}
    */
   public final String getTargetPlatformId() {
-    return _targetPlatformId;
+    return this._targetPlatformId;
   }
-  
+
   /**
    * {@inheritDoc}
    */

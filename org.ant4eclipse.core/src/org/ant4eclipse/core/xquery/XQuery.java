@@ -35,37 +35,37 @@ public class XQuery {
 
   // the complete path in fragments, each fragment indicates the next deeper
   // level
-  private String[]          _splitted;
+  private String[]       _splitted;
 
   // a corresponding list of conditions
-  private final Condition[] _conditions;
+  private Condition[]    _conditions;
 
   // the attribute name in case we're handling an attribute
-  private String            _attribute;
+  private String         _attribute;
 
   // the counter is used in case there's a reference to a n-th element
-  private final int[]       _counter;
+  private int[]          _counter;
 
   // the result may be a String or a Vector instance
-  private Vector<String>    _values;
+  private Vector<String> _values;
 
   // keeps the depth which is acceptable for this query
-  private int               _accept;
+  private int            _accept;
 
   // a flag which indicates that some data has to be collected. this
   // is necessary because element data will be set within the call
   // of the method 'endVisit'
-  private boolean           _matched;
+  private boolean        _matched;
 
   // a depth level from which we're willing to generate default values.
   // this means that an 'unsatisfied' query forces to generate a null value
   // entry.
-  private int               _forcedepth;
+  private int            _forcedepth;
 
   // the original query
-  private final String      _xquery;
+  private String         _xquery;
 
-  private final String      _fileName;
+  private String         _fileName;
 
   /**
    * Initializes this instance with the supplied query.
@@ -73,7 +73,7 @@ public class XQuery {
    * @param query
    *          A query used to retrieve XML data.
    */
-  XQuery(final String fileName, String query) {
+  XQuery(String fileName, String query) {
 
     this._fileName = fileName;
 
@@ -93,7 +93,7 @@ public class XQuery {
 
     // check if we're querying an attribute
     if (this._splitted[this._splitted.length - 1].startsWith("@")) {
-      final String[] temp = new String[this._splitted.length - 1];
+      String[] temp = new String[this._splitted.length - 1];
       this._attribute = this._splitted[this._splitted.length - 1].substring(1);
       System.arraycopy(this._splitted, 0, temp, 0, temp.length);
       this._splitted = temp;
@@ -116,9 +116,9 @@ public class XQuery {
     this._counter = new int[this._splitted.length];
     Arrays.fill(this._conditions, null);
     for (int i = 0; i < this._splitted.length; i++) {
-      final int idx1 = this._splitted[i].indexOf('[');
+      int idx1 = this._splitted[i].indexOf('[');
       if (idx1 != -1) {
-        final int idx2 = this._splitted[i].indexOf(']');
+        int idx2 = this._splitted[i].indexOf(']');
         if (idx2 == -1) {
           invalid(query, "Condition openend with '[' lacks a corresponding ']' brace.");
         }
@@ -143,14 +143,14 @@ public class XQuery {
    * 
    * @return The Condition instance which will be used while evaluating.
    */
-  private Condition createCondition(final String query, final String condition, final int depth) {
+  private Condition createCondition(String query, String condition, int depth) {
 
     try {
 
       // indexed element
       return (new IndexCompare(Integer.parseInt(condition), depth));
 
-    } catch (final NumberFormatException ex) {
+    } catch (NumberFormatException ex) {
 
       // create a count-function used to calculate the number of occurrences
       if ("count()".equals(condition)) {
@@ -167,21 +167,21 @@ public class XQuery {
 
       // we're having an attribute based expression. currently only
       // the equality operator is supported
-      final int idx = condition.indexOf('=');
+      int idx = condition.indexOf('=');
       if (idx == -1) {
         invalid(query, "Only '=' operations are supported within an attributed expression.");
       }
 
       // strip the testvalue and do the comparison
-      final String attrname = condition.substring(1, idx);
-      final int idx1 = condition.indexOf('\'');
-      final int idx2 = condition.indexOf('\'', idx1 + 1);
+      String attrname = condition.substring(1, idx);
+      int idx1 = condition.indexOf('\'');
+      int idx2 = condition.indexOf('\'', idx1 + 1);
 
       if ((idx1 == -1) || (idx2 == -1)) {
         invalid(query, "The attributed expression doesn't contain a comparison value.");
       }
 
-      final String testvalue = condition.substring(idx1 + 1, idx2);
+      String testvalue = condition.substring(idx1 + 1, idx2);
       return (new StringCompare(attrname, testvalue));
 
     }
@@ -198,7 +198,7 @@ public class XQuery {
    * 
    * @return true <=> The element is acceptable for this query.
    */
-  private boolean matches(final String element, final Attributes attrs) {
+  private boolean matches(String element, Attributes attrs) {
 
     // there's a named element, so check it
     if ((!"*".equals(this._splitted[this._accept])) && (!element.equals(this._splitted[this._accept]))) {
@@ -224,7 +224,7 @@ public class XQuery {
    * @param element
    *          The currently used element.
    */
-  private void adjustCounter(final int depth, final String element) {
+  private void adjustCounter(int depth, String element) {
     if (depth < this._splitted.length) {
       if (element.equals(this._splitted[depth])) {
         this._counter[depth] = this._counter[depth] + 1;
@@ -245,7 +245,7 @@ public class XQuery {
    * @param attrs
    *          The attributes associated with this element.
    */
-  void visit(final int depth, final String element, final Attributes attrs) {
+  void visit(int depth, String element, Attributes attrs) {
 
     if (depth >= this._splitted.length) {
       // this element is to deep for this query
@@ -295,7 +295,7 @@ public class XQuery {
    * @param content
    *          The trimmed text content of the XML element.
    */
-  void endVisit(final int depth, final String content) {
+  void endVisit(int depth, String content) {
 
     if (this._accept == (depth + 1)) {
       if (this._matched) {
@@ -331,7 +331,7 @@ public class XQuery {
    * @param newvalue
    *          The value that shall be added.
    */
-  private void addValue(final String newvalue) {
+  private void addValue(String newvalue) {
     if (this._values == null) {
       this._values = new Vector<String>();
     }
@@ -347,7 +347,7 @@ public class XQuery {
     if (this._values == null) {
       return (new String[0]);
     }
-    final String[] result = new String[this._values.size()];
+    String[] result = new String[this._values.size()];
     this._values.toArray(result);
     return (result);
   }
@@ -359,7 +359,7 @@ public class XQuery {
    * @return The data collected by this query (String)
    */
   public String getSingleResult() {
-    final String[] results = getResult();
+    String[] results = getResult();
     if (results.length > 1) {
       throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_DUCPLICATE_ENTRY_EXCEPTION, new Object[] { this._xquery,
           this._fileName });
@@ -387,7 +387,7 @@ public class XQuery {
    * 
    * @return The depth of the supplied level.
    */
-  private int counter(final int depth) {
+  private int counter(int depth) {
     // -1 because the method 'adjustCounter' will be called before
     // the use of this function.
     return (this._counter[depth] - 1);
@@ -409,7 +409,7 @@ public class XQuery {
    * @param msg
    *          An error message.
    */
-  private void invalid(final String query, final String msg) {
+  private void invalid(String query, String msg) {
     throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION, new Object[] { query, msg });
   }
 
@@ -437,9 +437,9 @@ public class XQuery {
    */
   private class IndexCompare implements Condition {
 
-    private final int level;
+    private int level;
 
-    private final int index;
+    private int index;
 
     /**
      * Initializes this condition using the supplied element level.
@@ -449,7 +449,7 @@ public class XQuery {
      * @param cnt
      *          The index used for the comparison.
      */
-    public IndexCompare(final int lvlindex, final int cnt) {
+    public IndexCompare(int lvlindex, int cnt) {
       this.level = lvlindex;
       this.index = cnt;
     }
@@ -457,8 +457,8 @@ public class XQuery {
     /**
      * {@inheritDoc}
      */
-    public boolean check(final String element, final Attributes attrs) {
-      return (XQuery.this.counter(this.index) == this.level);
+    public boolean check(String element, Attributes attrs) {
+      return (counter(this.index) == this.level);
     }
 
   } /* ENDCLASS */
@@ -468,7 +468,7 @@ public class XQuery {
    */
   private class CounterFunction implements Condition {
 
-    private final int index;
+    private int index;
 
     /**
      * Initializes this counter.
@@ -476,24 +476,24 @@ public class XQuery {
      * @param idx
      *          The index of the counter that shall be used.
      */
-    public CounterFunction(final int idx) {
+    public CounterFunction(int idx) {
       this.index = idx;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean check(final String element, final Attributes attrs) {
+    public boolean check(String element, Attributes attrs) {
 
-      if (XQuery.this.counter(this.index) == 0) {
+      if (counter(this.index) == 0) {
         // create a new entry
-        XQuery.this.addValue("0");
+        addValue("0");
       }
 
       // increment the current value
-      final Vector<String> values = XQuery.this._values;
-      final String lastval = values.get(values.size() - 1);
-      final int value = Integer.parseInt(lastval);
+      Vector<String> values = XQuery.this._values;
+      String lastval = values.get(values.size() - 1);
+      int value = Integer.parseInt(lastval);
       values.set(values.size() - 1, String.valueOf(value + 1));
 
       // function evaluation, so we don't need to process anything else
@@ -508,9 +508,9 @@ public class XQuery {
    */
   private class StringCompare implements Condition {
 
-    private final String attr;
+    private String attr;
 
-    private final String value;
+    private String value;
 
     /**
      * Initializes this string comparison condition.
@@ -520,7 +520,7 @@ public class XQuery {
      * @param expected
      *          The value of the expected attribute value.
      */
-    public StringCompare(final String attrname, final String expected) {
+    public StringCompare(String attrname, String expected) {
       this.attr = attrname;
       this.value = expected;
     }
@@ -528,7 +528,7 @@ public class XQuery {
     /**
      * {@inheritDoc}
      */
-    public boolean check(final String element, final Attributes attrs) {
+    public boolean check(String element, Attributes attrs) {
       return (this.value.equals(attrs.getValue(this.attr)));
     }
 

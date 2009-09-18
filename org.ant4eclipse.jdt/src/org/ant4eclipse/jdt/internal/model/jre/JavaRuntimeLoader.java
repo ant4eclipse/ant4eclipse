@@ -53,86 +53,86 @@ public class JavaRuntimeLoader {
    * @param id
    * @param location
    */
-  public static JavaRuntime loadJavaRuntime(final String id, final File location) {
+  public static JavaRuntime loadJavaRuntime(String id, File location) {
     Assert.nonEmpty(id);
     Assert.isDirectory(location);
 
-    final String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"
+    String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"
         + Math.round(Math.random() * 1000000000);
     // System.out.println(outfileName);
 
-    final JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
+    JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
     javaLauncher.setMainClass(LibraryDetector.class.getName());
     javaLauncher.setArgs(new String[] { outfileName });
     javaLauncher.execute();
 
     // TODO
-    final StringBuffer contents = new StringBuffer();
+    StringBuffer contents = new StringBuffer();
     try {
-      final File file = new File(outfileName);
-      final BufferedReader in = new BufferedReader(new FileReader(file));
+      File file = new File(outfileName);
+      BufferedReader in = new BufferedReader(new FileReader(file));
       String str;
       while ((str = in.readLine()) != null) {
         contents.append(str);
       }
       in.close();
       file.deleteOnExit();
-    } catch (final Throwable e) {
+    } catch (Throwable e) {
       e.printStackTrace();
     }
 
-    final String result = contents.toString();
+    String result = contents.toString();
     // System.out.println(result);
-    final String[] values = result.split("\\|");
-    final Version javaVersion = new Version(values[0]);
-    final String sunbootclasspath = values[1];
-    final String javaextdirs = values[2];
-    // final String javaendorseddirs = values[3];
-    final Version javaSpecificationVersion = new Version(values[4]);
+    String[] values = result.split("\\|");
+    Version javaVersion = new Version(values[0]);
+    String sunbootclasspath = values[1];
+    String javaextdirs = values[2];
+    // String javaendorseddirs = values[3];
+    Version javaSpecificationVersion = new Version(values[4]);
 
-    final List<File> files = new LinkedList<File>();
+    List<File> files = new LinkedList<File>();
     addFiles(sunbootclasspath, false, files);
     addFiles(javaextdirs, true, files);
 
     // addFiles(javaendorseddirs);
     // TODO: ext-libs!!
 
-    final File[] libraries = files.toArray(new File[0]);
+    File[] libraries = files.toArray(new File[0]);
 
     //
-    final Properties properties = new Properties();
+    Properties properties = new Properties();
     properties.put(JAVA_SPECIFICATION_VERSION, values[4]);
     properties.put(JAVA_SPECIFICATION_NAME, values[5]);
 
-    final String javaProfileName = getVmProfile(properties);
+    String javaProfileName = getVmProfile(properties);
 
-    final JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
+    JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
         JavaRuntimeRegistry.class.getName());
-    final JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile(javaProfileName);
+    JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile(javaProfileName);
 
-    final JavaRuntime javaRuntime = new JavaRuntimeImpl(id, location, libraries, javaVersion, javaSpecificationVersion,
+    JavaRuntime javaRuntime = new JavaRuntimeImpl(id, location, libraries, javaVersion, javaSpecificationVersion,
         javaProfile);
 
     return javaRuntime;
   }
 
-  private static void addFiles(final String path, final boolean addChildrenIfDirectory, final List<File> list) {
+  private static void addFiles(String path, boolean addChildrenIfDirectory, List<File> list) {
 
-    final String[] fileNames = path.split(File.pathSeparator);
+    String[] fileNames = path.split(File.pathSeparator);
 
-    for (final String fileName : fileNames) {
-      final File file = new File(fileName);
+    for (String fileName : fileNames) {
+      File file = new File(fileName);
       if (file.exists()) {
 
         if (file.isFile() && !list.contains(file)) {
           list.add(file);
         } else if (file.isDirectory() && addChildrenIfDirectory) {
-          final File[] children = file.listFiles(new FilenameFilter() {
-            public boolean accept(final File dir, final String name) {
+          File[] children = file.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
               return name.endsWith(".jar");
             }
           });
-          for (final File child : children) {
+          for (File child : children) {
             if (child.isFile() && !list.contains(child)) {
               list.add(child);
             }
@@ -142,17 +142,17 @@ public class JavaRuntimeLoader {
     }
   }
 
-  private static String getVmProfile(final Properties systemProperties) {
-    // final Properties result = new Properties();
+  private static String getVmProfile(Properties systemProperties) {
+    // Properties result = new Properties();
     // Find the VM profile name using J2ME properties
-    final String j2meConfig = systemProperties.getProperty(J2ME_MICROEDITION_CONFIGURATION);
-    final String j2meProfiles = systemProperties.getProperty(J2ME_MICROEDITION_PROFILES);
+    String j2meConfig = systemProperties.getProperty(J2ME_MICROEDITION_CONFIGURATION);
+    String j2meProfiles = systemProperties.getProperty(J2ME_MICROEDITION_PROFILES);
     String vmProfile = null;
     String javaEdition = null;
     if ((j2meConfig != null) && (j2meConfig.length() > 0) && (j2meProfiles != null) && (j2meProfiles.length() > 0)) {
       // save the vmProfile based off of the config and profile
       // use the last profile; assuming that is the highest one
-      final String[] j2meProfileList = getArrayFromList(j2meProfiles, " "); //$NON-NLS-1$
+      String[] j2meProfileList = getArrayFromList(j2meProfiles, " "); //$NON-NLS-1$
       if ((j2meProfileList != null) && (j2meProfileList.length > 0)) {
         vmProfile = j2meConfig + '_' + j2meProfileList[j2meProfileList.length - 1];
       }
@@ -165,9 +165,9 @@ public class JavaRuntimeLoader {
       // set the profile and EE based off of the java.specification.version
       // TODO We assume J2ME Foundation and J2SE here. need to support other profiles J2EE ...
       if (javaSpecVersion != null) {
-        final StringTokenizer st = new StringTokenizer(javaSpecVersion, " _-"); //$NON-NLS-1$
+        StringTokenizer st = new StringTokenizer(javaSpecVersion, " _-"); //$NON-NLS-1$
         javaSpecVersion = st.nextToken();
-        final String javaSpecName = systemProperties.getProperty(JAVA_SPECIFICATION_NAME);
+        String javaSpecName = systemProperties.getProperty(JAVA_SPECIFICATION_NAME);
         if ("J2ME Foundation Specification".equals(javaSpecName)) {
           vmProfile = "CDC-" + javaSpecVersion + "_Foundation-" + javaSpecVersion; //$NON-NLS-1$ //$NON-NLS-2$
         } else {
@@ -196,14 +196,14 @@ public class JavaRuntimeLoader {
    *          the separator to use to split the list into tokens.
    * @since 3.2
    */
-  private static String[] getArrayFromList(final String stringList, final String separator) {
+  private static String[] getArrayFromList(String stringList, String separator) {
     if ((stringList == null) || (stringList.trim().length() == 0)) {
       return new String[0];
     }
-    final ArrayList<String> list = new ArrayList<String>();
-    final StringTokenizer tokens = new StringTokenizer(stringList, separator);
+    ArrayList<String> list = new ArrayList<String>();
+    StringTokenizer tokens = new StringTokenizer(stringList, separator);
     while (tokens.hasMoreTokens()) {
-      final String token = tokens.nextToken().trim();
+      String token = tokens.nextToken().trim();
       if (token.length() != 0) {
         list.add(token);
       }

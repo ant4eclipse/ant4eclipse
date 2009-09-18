@@ -70,11 +70,11 @@ public class Utilities {
    * @param stream
    *          The stream that has to be closed. Maybe <code>null</code>.
    */
-  public static final void close(final InputStream stream) {
+  public static final void close(InputStream stream) {
     if (stream != null) {
       try {
         stream.close();
-      } catch (final IOException ex) {
+      } catch (IOException ex) {
         // generally not interesting so a warning is apropriate here
         A4ELogging.warn(ex.getMessage());
       }
@@ -87,11 +87,11 @@ public class Utilities {
    * @param stream
    *          The stream that has to be closed. Maybe <code>null</code>.
    */
-  public static final void close(final OutputStream stream) {
+  public static final void close(OutputStream stream) {
     if (stream != null) {
       try {
         stream.close();
-      } catch (final IOException ex) {
+      } catch (IOException ex) {
         // generally not interesting so a warning is apropriate here
         A4ELogging.warn(ex.getMessage());
       }
@@ -104,23 +104,23 @@ public class Utilities {
    * @param writer
    *          The writer which has to be closed. Maybe <code>null</code>.
    */
-  public static final void close(final Writer writer) {
+  public static final void close(Writer writer) {
     if (writer != null) {
       try {
         writer.close();
-      } catch (final IOException ex) {
+      } catch (IOException ex) {
         // generally not interesting so a warning is apropriate here
         A4ELogging.warn(ex.getMessage());
       }
     }
   }
 
-  public static final URL toURL(final File file) {
+  public static final URL toURL(File file) {
     Assert.notNull(file);
-    final URI uri = file.toURI();
+    URI uri = file.toURI();
     try {
       return uri.toURL();
-    } catch (final MalformedURLException e) {
+    } catch (MalformedURLException e) {
       // TODO
       throw new RuntimeException(e);
     }
@@ -135,7 +135,7 @@ public class Utilities {
    * 
    * @return true <=> The path could be deleted with success.
    */
-  public static final boolean delete(final File file) {
+  public static final boolean delete(File file) {
     Assert.notNull(file);
     if (!file.exists()) {
       return true;
@@ -143,7 +143,7 @@ public class Utilities {
     boolean result = true;
     if (file.isDirectory()) {
       // delete the children
-      final File[] children = file.listFiles();
+      File[] children = file.listFiles();
       if (children != null) {
         for (File element : children) {
           result = delete(element) && result;
@@ -157,7 +157,7 @@ public class Utilities {
     while ((!file.delete()) && (tries > 0)) {
       try {
         Thread.sleep(10);
-      } catch (final InterruptedException ex) {
+      } catch (InterruptedException ex) {
         // do nothing here
       }
       tries--;
@@ -169,7 +169,7 @@ public class Utilities {
     return result;
   }
 
-  public static final List<File> getAllChildren(final File file) {
+  public static final List<File> getAllChildren(File file) {
     Assert.notNull(file);
 
     List<File> result = new LinkedList<File>();
@@ -177,7 +177,7 @@ public class Utilities {
     if (file.isDirectory()) {
 
       // add the children
-      final File[] children = file.listFiles();
+      File[] children = file.listFiles();
       if (children != null) {
         for (File element : children) {
           if (element.isFile()) {
@@ -228,11 +228,11 @@ public class Utilities {
    * 
    * @return The modified text. Not <code>null</code>.
    */
-  public static final String replace(final String input, final String search, final String replacement) {
+  public static final String replace(String input, String search, String replacement) {
     Assert.notNull(input);
     Assert.notNull(search);
     Assert.notNull(replacement);
-    final int idx = input.indexOf(search);
+    int idx = input.indexOf(search);
     if (idx == -1) {
       return input;
     }
@@ -257,21 +257,21 @@ public class Utilities {
    * 
    * @return The file which indicates the relative path. null in case the relative path could not be calculated.
    */
-  public static final String calcRelative(final File fromfile, final File tofile) {
+  public static final String calcRelative(File fromfile, File tofile) {
     String frompath = null;
     String topath = null;
     try {
       frompath = fromfile.getCanonicalPath();
-    } catch (final IOException ex) {
+    } catch (IOException ex) {
       return (null);
     }
     try {
       topath = tofile.getCanonicalPath();
-    } catch (final IOException ex) {
+    } catch (IOException ex) {
       return (null);
     }
-    final String[] fromstr = frompath.replace('\\', '/').split("/");
-    final String[] tostr = topath.replace('\\', '/').split("/");
+    String[] fromstr = frompath.replace('\\', '/').split("/");
+    String[] tostr = topath.replace('\\', '/').split("/");
 
     if (!fromstr[0].equals(tostr[0])) {
       // we're not working on the same device
@@ -286,7 +286,7 @@ public class Utilities {
         break;
       }
     }
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     for (int i = same; i < fromstr.length; i++) {
       buffer.append(File.separator + "..");
     }
@@ -305,7 +305,7 @@ public class Utilities {
    * @param path
    * @return the path without a trailing path separator
    */
-  public static final String removeTrailingPathSeparator(final String path) {
+  public static final String removeTrailingPathSeparator(String path) {
     if ((path == null) || (path.length() < 2)) {
       return path;
     }
@@ -338,7 +338,7 @@ public class Utilities {
    * @return <code>true</code> if the String is not null, length > 0, and not whitespace only
    * @see java.lang.Character#isWhitespace
    */
-  public static final boolean hasText(final String str) {
+  public static final boolean hasText(String str) {
     int strLen;
     if ((str == null) || ((strLen = str.length()) == 0)) {
       return false;
@@ -359,7 +359,7 @@ public class Utilities {
    * 
    * @return <code>null</code> in case there's no value or a String which contains at least one valuable character.
    */
-  public static final String cleanup(final String input) {
+  public static final String cleanup(String input) {
     String result = input;
     if (result != null) {
       result = result.trim();
@@ -379,11 +379,11 @@ public class Utilities {
    * 
    * @return A list of the input values which is either <code>null</code> or contains at least one non empty value.
    */
-  public static final String[] cleanup(final String[] input) {
-    final List<String> result = new ArrayList<String>();
+  public static final String[] cleanup(String[] input) {
+    List<String> result = new ArrayList<String>();
     if (input != null) {
       for (String element2 : input) {
-        final String element = cleanup(element2);
+        String element = cleanup(element2);
         if (element != null) {
           result.add(element);
         }
@@ -407,12 +407,12 @@ public class Utilities {
    * 
    * @return A string with replaced characters.
    */
-  public static final String replace(final String input, final char ch, final String replacement) {
-    final StringBuffer buffer = new StringBuffer();
-    final String searchstr = String.valueOf(ch);
-    final StringTokenizer tokenizer = new StringTokenizer(input, searchstr, true);
+  public static final String replace(String input, char ch, String replacement) {
+    StringBuffer buffer = new StringBuffer();
+    String searchstr = String.valueOf(ch);
+    StringTokenizer tokenizer = new StringTokenizer(input, searchstr, true);
     while (tokenizer.hasMoreTokens()) {
-      final String token = tokenizer.nextToken();
+      String token = tokenizer.nextToken();
       if (token.equals(searchstr)) {
         buffer.append(replacement);
       } else {
@@ -430,7 +430,7 @@ public class Utilities {
    * 
    * @return The text representing the content of the supplied map.
    */
-  public static final String toString(final Properties properties) {
+  public static final String toString(Properties properties) {
     return (toString(null, properties));
   }
 
@@ -444,8 +444,8 @@ public class Utilities {
    * 
    * @return The text representing the content of the supplied map.
    */
-  public static final String toString(final String title, final Properties properties) {
-    final StringBuilder buffer = new StringBuilder();
+  public static final String toString(String title, Properties properties) {
+    StringBuilder buffer = new StringBuilder();
     if (title != null) {
       buffer.append(title);
       buffer.append(NL);
@@ -468,7 +468,7 @@ public class Utilities {
    * 
    * @return A map of properties providing the settings. Not <code>null</code>.
    */
-  public static final Map<String, String> readProperties(final URL resource) throws IOException {
+  public static final Map<String, String> readProperties(URL resource) throws IOException {
     InputStream instream = null;
     Map<String, String> result = null;
     try {
@@ -488,14 +488,14 @@ public class Utilities {
    * 
    * @return A map of properties providing the read content. If <code>null</code> the settings could not be loaded.
    */
-  public static final Map<String, String> readProperties(final File propertiesFile) {
+  public static final Map<String, String> readProperties(File propertiesFile) {
     FileInputStream fis = null;
     Map<String, String> result = null;
     try {
       fis = new FileInputStream(propertiesFile);
       result = readProperties(fis);
       A4ELogging.debug("Read settings from '%s'", propertiesFile.getAbsolutePath());
-    } catch (final IOException ex) {
+    } catch (IOException ex) {
       /**
        * @todo [28-Jun-2009:KASI] The caller should handle this exception has he has the knowledge how this should be
        *       treated.
@@ -518,7 +518,7 @@ public class Utilities {
    * @throws IOException
    *           Loading the properties from the InputStream failed.
    */
-  public static final Map<String, String> readProperties(final InputStream instream) throws IOException {
+  public static final Map<String, String> readProperties(InputStream instream) throws IOException {
     Map<String, String> result = new Hashtable<String, String>();
     if (instream != null) {
       Properties properties = new Properties();
@@ -535,23 +535,23 @@ public class Utilities {
    *       generics. This would cause some changes within APIs which are uncritical but I don't intend to rewrite APIs
    *       without further discussion.
    */
-  public static final Properties readPropertiesFromClasspath(final String name) {
+  public static final Properties readPropertiesFromClasspath(String name) {
 
-    final ClassLoader classLoader = Utilities.class.getClassLoader();
+    ClassLoader classLoader = Utilities.class.getClassLoader();
 
-    final InputStream inputStream = classLoader.getResourceAsStream(name);
+    InputStream inputStream = classLoader.getResourceAsStream(name);
 
     if (inputStream == null) {
       return null;
     }
 
-    final Properties profileProperties = new Properties();
+    Properties profileProperties = new Properties();
 
     try {
       profileProperties.load(inputStream);
       close(inputStream);
       return profileProperties;
-    } catch (final Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
       return null;
     }
@@ -562,7 +562,7 @@ public class Utilities {
    * 
    * @param directory
    */
-  public static final void mkdirs(final File directory) {
+  public static final void mkdirs(File directory) {
     Assert.notNull("The parameter 'directory' must not be null", directory);
     if (directory.isDirectory()) {
       return; // already there
@@ -622,7 +622,7 @@ public class Utilities {
    * 
    * @return <code>true</code> <=> The supplied literal is part of the allowed values.
    */
-  public static final boolean contains(final String candidate, final String... allowed) {
+  public static final boolean contains(String candidate, String... allowed) {
     Assert.notNull("The parameter 'candidate' must not be null", candidate);
     Assert.notNull("The parameter 'allowed' must not be null", allowed);
     for (String part : allowed) {
@@ -643,8 +643,8 @@ public class Utilities {
    * 
    * @return A list with the input elements that do match the specified type. Not <code>null</code>.
    */
-  public static final List<Object> filter(final List<Object> input, final Class<?> clazz) {
-    final List<Object> result = new ArrayList<Object>();
+  public static final List<Object> filter(List<Object> input, Class<?> clazz) {
+    List<Object> result = new ArrayList<Object>();
     for (int i = 0; i < input.size(); i++) {
       if (clazz.isAssignableFrom(input.get(i).getClass())) {
         result.add(input.get(i));
@@ -662,7 +662,7 @@ public class Utilities {
    * @param dest
    *          The destination file where the copy shall be created. Not <code>null</code>.
    */
-  public static final void copy(final URL source, File dest) {
+  public static final void copy(URL source, File dest) {
     InputStream instream = null;
     OutputStream outstream = null;
     try {
@@ -683,22 +683,22 @@ public class Utilities {
    * @param destdir
    *          The directory where the content shall be written to. Not <code>null</code>.
    */
-  public static final void unpack(final File zipfile, File destdir) {
+  public static final void unpack(File zipfile, File destdir) {
     Assert.notNull(zipfile);
     Assert.notNull(destdir);
-    final byte[] buffer = new byte[16384];
+    byte[] buffer = new byte[16384];
     try {
       if (!destdir.isAbsolute()) {
         destdir = destdir.getAbsoluteFile();
       }
-      final ZipFile zip = new ZipFile(zipfile);
+      ZipFile zip = new ZipFile(zipfile);
       Enumeration<? extends ZipEntry> entries = zip.entries();
       while (entries.hasMoreElements()) {
         ZipEntry zentry = entries.nextElement();
         if (zentry.isDirectory()) {
           mkdirs(new File(destdir, zentry.getName()));
         } else {
-          final File destfile = new File(destdir, zentry.getName());
+          File destfile = new File(destdir, zentry.getName());
           mkdirs(destfile.getParentFile());
           copy(zip.getInputStream(zentry), new FileOutputStream(destfile), buffer);
         }
@@ -722,7 +722,7 @@ public class Utilities {
    * @throws IOException
    *           Copying failed for some reason.
    */
-  public static final void copy(InputStream instream, final OutputStream outstream, byte[] buffer) throws IOException {
+  public static final void copy(InputStream instream, OutputStream outstream, byte[] buffer) throws IOException {
     Assert.notNull(instream);
     Assert.notNull(outstream);
     Assert.notNull(buffer);
@@ -752,7 +752,7 @@ public class Utilities {
    * 
    * @return The file keeping the exported content.
    */
-  public static final File exportResource(final String resource) {
+  public static final File exportResource(String resource) {
     Assert.nonEmpty(resource);
     Assert.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
     String suffix = ".tmp";
@@ -776,15 +776,15 @@ public class Utilities {
    * 
    * @return The file keeping the exported content.
    */
-  public static final File exportResource(final String resource, final String suffix) {
+  public static final File exportResource(String resource, String suffix) {
     Assert.nonEmpty(resource);
     Assert.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
-    final URL url = Utilities.class.getResource(resource);
+    URL url = Utilities.class.getResource(resource);
     if (url == null) {
       throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
     }
     try {
-      final File result = File.createTempFile("a4e", suffix);
+      File result = File.createTempFile("a4e", suffix);
       copy(url, result);
       return result.getCanonicalFile();
     } catch (IOException ex) {
@@ -800,9 +800,9 @@ public class Utilities {
   public static final File createTempDir() {
     try {
       File result = null;
-      final String tempdir = cleanup(System.getProperty(PROP_A4ETEMPDIR));
+      String tempdir = cleanup(System.getProperty(PROP_A4ETEMPDIR));
       if (tempdir != null) {
-        final File dir = new File(tempdir);
+        File dir = new File(tempdir);
         mkdirs(dir);
         result = File.createTempFile("a4e", "dir", dir);
       } else {
@@ -832,11 +832,11 @@ public class Utilities {
    * 
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
-  public static final File createFile(final String content, final String suffix, final String encoding) {
+  public static final File createFile(String content, String suffix, String encoding) {
     Assert.notNull(content);
     Assert.nonEmpty(encoding);
     try {
-      final File result = File.createTempFile("a4e", suffix);
+      File result = File.createTempFile("a4e", suffix);
       writeFile(result, content, encoding);
       return result.getCanonicalFile();
     } catch (IOException ex) {
@@ -854,7 +854,7 @@ public class Utilities {
    * @param encoding
    *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    */
-  public static final void writeFile(final File destination, final String content, final String encoding) {
+  public static final void writeFile(File destination, String content, String encoding) {
     Assert.notNull(destination);
     Assert.notNull(content);
     Assert.nonEmpty(encoding);
@@ -868,7 +868,7 @@ public class Utilities {
       output = new FileOutputStream(destination);
       writer = new OutputStreamWriter(output, encoding);
       writer.write(content);
-    } catch (final IOException ex) {
+    } catch (IOException ex) {
       throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
     } finally {
       Utilities.close(writer);
@@ -884,7 +884,7 @@ public class Utilities {
    * 
    * @return The name without the suffix.
    */
-  public static final String stripSuffix(final String name) {
+  public static final String stripSuffix(String name) {
     Assert.notNull(name);
     int lidx = name.lastIndexOf('.');
     if (lidx != -1) {
@@ -905,7 +905,7 @@ public class Utilities {
    * @param args
    *          The arguments for the execution. Maybe <code>null</code>.
    */
-  public static final void execute(final File exe, final StringBuffer output, final String... args) {
+  public static final void execute(File exe, StringBuffer output, String... args) {
     execute(exe, output, null, args);
   }
 
@@ -922,7 +922,7 @@ public class Utilities {
    * @param args
    *          The arguments for the execution. Maybe <code>null</code>.
    */
-  public static final void execute(final File exe, StringBuffer output, StringBuffer error, final String... args) {
+  public static final void execute(File exe, StringBuffer output, StringBuffer error, String... args) {
 
     try {
 
@@ -967,9 +967,9 @@ public class Utilities {
    */
   private static class OutputCopier extends Thread {
 
-    private final BufferedReader _source;
+    private BufferedReader _source;
 
-    private final StringBuffer   _receiver;
+    private StringBuffer   _receiver;
 
     /**
      * Initalises this copiying process.
@@ -979,7 +979,7 @@ public class Utilities {
      * @param dest
      *          The destination buffer used to get the output. Not <code>null</code>.
      */
-    public OutputCopier(final InputStream instream, final StringBuffer dest) {
+    public OutputCopier(InputStream instream, StringBuffer dest) {
       this._source = new BufferedReader(new InputStreamReader(instream));
       this._receiver = dest;
     }

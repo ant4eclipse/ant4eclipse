@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public final class UserLibrariesImpl implements UserLibraries {
 
-  private final Map<String, UserLibraryImpl> _libraries;
+  private Map<String, UserLibraryImpl> _libraries;
 
   /**
    * Initialises this data structure used to collect the content of an eclipse user library configuration file.
@@ -40,7 +40,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    * @param userlibrary
    *          The user library entry which shall be added.
    */
-  public void addLibrary(final UserLibraryImpl userlibrary) {
+  public void addLibrary(UserLibraryImpl userlibrary) {
     Assert.notNull(userlibrary);
 
     this._libraries.put(userlibrary.getName(), userlibrary);
@@ -49,7 +49,7 @@ public final class UserLibrariesImpl implements UserLibraries {
   /**
    * {@inheritDoc}
    */
-  public boolean hasLibrary(final String name) {
+  public boolean hasLibrary(String name) {
     Assert.notNull(name);
 
     return (this._libraries.containsKey(name));
@@ -58,7 +58,7 @@ public final class UserLibrariesImpl implements UserLibraries {
   /**
    * {@inheritDoc}
    */
-  public UserLibraryImpl getLibrary(final String name) {
+  public UserLibraryImpl getLibrary(String name) {
     Assert.notNull(name);
 
     return (this._libraries.get(name));
@@ -68,7 +68,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   public String[] getAvailableLibraries() {
-    final String[] result = new String[this._libraries.size()];
+    String[] result = new String[this._libraries.size()];
     this._libraries.keySet().toArray(result);
     return (result);
   }

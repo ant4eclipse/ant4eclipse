@@ -39,15 +39,15 @@ import java.util.Vector;
 public class XQueryHandler extends DefaultHandler {
 
   /** - */
-  private final StringBuffer      _buffer;
+  private StringBuffer            _buffer;
 
   /** - */
   private int                     _depth;
 
   /** - */
-  private final Vector<XQuery>    _queries;
+  private Vector<XQuery>          _queries;
 
-  private final String            _fileName;
+  private String                  _fileName;
 
   /** - */
   private static SAXParserFactory factory;
@@ -55,7 +55,7 @@ public class XQueryHandler extends DefaultHandler {
   /**
    * Initialises this handler.
    */
-  public XQueryHandler(final String fileName) {
+  public XQueryHandler(String fileName) {
     super();
     this._buffer = new StringBuffer();
     this._queries = new Vector<XQuery>();
@@ -78,8 +78,8 @@ public class XQueryHandler extends DefaultHandler {
    * 
    * @return A query instance allowing to retrieve the results.
    */
-  public XQuery createQuery(final String query) {
-    final XQuery result = new XQuery(this._fileName, query);
+  public XQuery createQuery(String query) {
+    XQuery result = new XQuery(this._fileName, query);
     this._queries.add(result);
     return (result);
   }
@@ -91,7 +91,7 @@ public class XQueryHandler extends DefaultHandler {
   public void startDocument() throws SAXException {
     this._depth = 0;
     for (int i = 0; i < this._queries.size(); i++) {
-      final XQuery query = this._queries.get(i);
+      XQuery query = this._queries.get(i);
       query.reset();
     }
     if (this._buffer.length() > 0) {
@@ -103,11 +103,10 @@ public class XQueryHandler extends DefaultHandler {
    * {@inheritDoc}
    */
   @Override
-  public void startElement(final String uri, final String localname, final String qname, final Attributes attributes)
-      throws SAXException {
+  public void startElement(String uri, String localname, String qname, Attributes attributes) throws SAXException {
 
     for (int i = 0; i < this._queries.size(); i++) {
-      final XQuery query = this._queries.get(i);
+      XQuery query = this._queries.get(i);
       query.visit(this._depth, qname, attributes);
     }
 
@@ -119,13 +118,13 @@ public class XQueryHandler extends DefaultHandler {
    * {@inheritDoc}
    */
   @Override
-  public void endElement(final String uri, final String localname, final String qname) throws SAXException {
+  public void endElement(String uri, String localname, String qname) throws SAXException {
 
     this._depth--;
 
-    final String str = this._buffer.toString().trim();
+    String str = this._buffer.toString().trim();
     for (int i = 0; i < this._queries.size(); i++) {
-      final XQuery query = this._queries.get(i);
+      XQuery query = this._queries.get(i);
       query.endVisit(this._depth, str);
     }
 
@@ -139,7 +138,7 @@ public class XQueryHandler extends DefaultHandler {
    * {@inheritDoc}
    */
   @Override
-  public void characters(final char[] ch, final int start, final int length) throws SAXException {
+  public void characters(char[] ch, int start, int length) throws SAXException {
     this._buffer.append(ch, start, length);
   }
 
@@ -151,14 +150,14 @@ public class XQueryHandler extends DefaultHandler {
    * @param handler
    *          The handler which provides all queries.
    */
-  public static void queryFile(final File xmlfile, final XQueryHandler handler) {
+  public static void queryFile(File xmlfile, XQueryHandler handler) {
     Assert.isFile(xmlfile);
     Assert.notNull(handler);
 
     try {
-      final SAXParserFactory factory = getSAXParserFactory();
+      SAXParserFactory factory = getSAXParserFactory();
       factory.newSAXParser().parse(new FileInputStream(xmlfile), handler);
-    } catch (final Exception ex) {
+    } catch (Exception ex) {
       A4ELogging.error(ex.getMessage());
       throw (new Ant4EclipseException(CoreExceptionCode.X_QUERY_PARSE_EXCEPTION, ex));
     }
@@ -172,14 +171,14 @@ public class XQueryHandler extends DefaultHandler {
    * @param handler
    *          The handler which provides all queries.
    */
-  public static void queryInputStream(final InputStream inputStream, final XQueryHandler handler) {
+  public static void queryInputStream(InputStream inputStream, XQueryHandler handler) {
     Assert.notNull(inputStream);
     Assert.notNull(handler);
 
     try {
-      final SAXParserFactory factory = getSAXParserFactory();
+      SAXParserFactory factory = getSAXParserFactory();
       factory.newSAXParser().parse(inputStream, handler);
-    } catch (final Exception ex) {
+    } catch (Exception ex) {
       A4ELogging.error(ex.getMessage());
       throw (new Ant4EclipseException(CoreExceptionCode.X_QUERY_PARSE_EXCEPTION, ex));
     }

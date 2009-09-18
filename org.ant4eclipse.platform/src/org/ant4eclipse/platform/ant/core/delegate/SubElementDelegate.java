@@ -98,7 +98,7 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
     Iterable<Pair<String, String>> subElementContributionEntries = Ant4EclipseConfiguration.Helper
         .getAnt4EclipseConfiguration().getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
 
-    final List<SubElementContribution> subElementContributions = new LinkedList<SubElementContribution>();
+    List<SubElementContribution> subElementContributions = new LinkedList<SubElementContribution>();
 
     // Instantiate the subElementContributions
     for (Pair<String, String> subElementContributionDefinition : subElementContributionEntries) {

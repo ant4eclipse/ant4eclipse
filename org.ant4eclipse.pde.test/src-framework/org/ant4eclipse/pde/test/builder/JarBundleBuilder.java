@@ -2,8 +2,6 @@ package org.ant4eclipse.pde.test.builder;
 
 import org.ant4eclipse.core.Assert;
 
-import org.ant4eclipse.testframework.FileHelper;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -36,10 +34,10 @@ public class JarBundleBuilder {
     Assert.nonEmpty(name);
 
     // set the name
-    _name = name;
+    this._name = name;
 
     // default manifest
-    _manifest = new BundleManifest(_name);
+    this._manifest = new BundleManifest(this._name);
   }
 
   /**
@@ -49,12 +47,12 @@ public class JarBundleBuilder {
    * @return
    */
   public BundleManifest withBundleManifest() {
-    return _manifest;
+    return this._manifest;
   }
 
   public JarBundleBuilder withEmbeddedJar(String name) {
-    _embeddedJarName = name;
-    _manifest.withClassPath(".," + name + ".jar");
+    this._embeddedJarName = name;
+    this._manifest.withClassPath(".," + name + ".jar");
     return this;
   }
 
@@ -71,20 +69,20 @@ public class JarBundleBuilder {
       throw new RuntimeException("Directory '" + destinationDirectory + "' must be a directory.");
     }
 
-    final File jarFile = new File(destinationDirectory, this._name + ".jar");
+    File jarFile = new File(destinationDirectory, this._name + ".jar");
     try {
       jarFile.createNewFile();
     } catch (IOException e) {
       new RuntimeException(e);
     }
 
-    if (_embeddedJarName == null) {
-      createJarArchive(jarFile, _manifest.getManifest());
+    if (this._embeddedJarName == null) {
+      createJarArchive(jarFile, this._manifest.getManifest());
     } else {
-      final File jarFile2 = new File(destinationDirectory, this._embeddedJarName + ".jar");
+      File jarFile2 = new File(destinationDirectory, this._embeddedJarName + ".jar");
       try {
         jarFile2.createNewFile();
-        createJarArchive(jarFile, _manifest.getManifest(), new File[] { jarFile2 });
+        createJarArchive(jarFile, this._manifest.getManifest(), new File[] { jarFile2 });
       } catch (IOException e) {
         new RuntimeException(e);
       }
@@ -118,8 +116,9 @@ public class JarBundleBuilder {
       JarOutputStream out = new JarOutputStream(stream, manifest);
 
       for (int i = 0; i < tobeJared.length; i++) {
-        if (tobeJared[i] == null || !tobeJared[i].exists() || tobeJared[i].isDirectory())
+        if (tobeJared[i] == null || !tobeJared[i].exists() || tobeJared[i].isDirectory()) {
           continue; // Just in case...
+        }
         System.out.println("Adding " + tobeJared[i].getName());
 
         // Add archive entry
@@ -131,8 +130,9 @@ public class JarBundleBuilder {
         FileInputStream in = new FileInputStream(tobeJared[i]);
         while (true) {
           int nRead = in.read(buffer, 0, buffer.length);
-          if (nRead <= 0)
+          if (nRead <= 0) {
             break;
+          }
           out.write(buffer, 0, nRead);
         }
         in.close();

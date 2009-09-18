@@ -45,7 +45,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
    * @param projectname
    *          The name of the project used to be created. Neither <code>null</code> nor empty.
    */
-  public PyDevProjectBuilder(final String projectname) {
+  public PyDevProjectBuilder(String projectname) {
     super(projectname);
     withNature(PyDevProjectRole.NATURE);
     withBuilder(PyDevProjectRole.BUILDCOMMAND);
@@ -53,15 +53,15 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
      * @note [17-Aug-2009:KASI] By default the PyDev uses 'src' as a source folder. We don't imitate this here as this
      *       allows to simplify the tests.
      */
-    _sourcepath = "/" + projectname;
-    _sourcepathes = new ArrayList<String>();
-    _internallibs = new Hashtable<String, URL>();
+    this._sourcepath = "/" + projectname;
+    this._sourcepathes = new ArrayList<String>();
+    this._internallibs = new Hashtable<String, URL>();
   }
 
   /**
    * {@inheritDoc}
    */
-  public void useProject(final String projectname, final boolean export) {
+  public void useProject(String projectname, boolean export) {
     withProjectReference(projectname);
     if (!export) {
       /** @todo [14-Aug-2009:KASI] We need a message here, since each referred project is considered to be exported. */
@@ -71,7 +71,8 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
-  protected void createArtefacts(final File projectdir) {
+  @Override
+  protected void createArtefacts(File projectdir) {
     super.createArtefacts(projectdir);
     writePyDevProject(new File(projectdir, NAME_PYDEVPROJECT));
     writeInternalLibraries(projectdir);
@@ -83,7 +84,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
    * @param destination
    *          The destination where the file has to be written to.
    */
-  private void writePyDevProject(final File destination) {
+  private void writePyDevProject(File destination) {
     StringBuffer buffer = new StringBuffer();
     buffer.append("<?xml version=\"1.0\" encoding=\"" + ENC_UTF8 + "\" standalone=\"no\"?>");
     buffer.append(Utilities.NL);
@@ -95,13 +96,13 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
     // write down the source pathes
     buffer.append("  <pydev_pathproperty name=\"org.python.pydev.PROJECT_SOURCE_PATH\">");
     buffer.append(Utilities.NL);
-    buffer.append("    <path>" + _sourcepath + "</path>");
+    buffer.append("    <path>" + this._sourcepath + "</path>");
     buffer.append(Utilities.NL);
-    for (int i = 0; i < _sourcepathes.size(); i++) {
-      buffer.append("    <path>" + _sourcepathes.get(i) + "</path>");
+    for (int i = 0; i < this._sourcepathes.size(); i++) {
+      buffer.append("    <path>" + this._sourcepathes.get(i) + "</path>");
       buffer.append(Utilities.NL);
     }
-    for (Map.Entry<String, URL> entry : _internallibs.entrySet()) {
+    for (Map.Entry<String, URL> entry : this._internallibs.entrySet()) {
       buffer.append("    <path>/" + getProjectName() + "/" + entry.getKey() + "</path>");
       buffer.append(Utilities.NL);
     }
@@ -124,9 +125,9 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
    * @param destination
    *          The destination directory of the project. Not <code>null</code> and must be a valid directory.
    */
-  private void writeInternalLibraries(final File destination) {
-    for (Map.Entry<String, URL> entry : _internallibs.entrySet()) {
-      final File destfile = new File(destination, entry.getKey());
+  private void writeInternalLibraries(File destination) {
+    for (Map.Entry<String, URL> entry : this._internallibs.entrySet()) {
+      File destfile = new File(destination, entry.getKey());
       Utilities.mkdirs(destfile.getParentFile());
       Utilities.copy(entry.getValue(), destfile);
     }
@@ -135,25 +136,25 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
-  public void setSourceFolder(final String sourcename) {
-    _sourcepath = "/" + getProjectName() + "/" + sourcename;
+  public void setSourceFolder(String sourcename) {
+    this._sourcepath = "/" + getProjectName() + "/" + sourcename;
   }
 
   /**
    * {@inheritDoc}
    */
-  public void addSourceFolder(final String additionalfolder) {
-    _sourcepathes.add("/" + getProjectName() + "/" + additionalfolder);
+  public void addSourceFolder(String additionalfolder) {
+    this._sourcepathes.add("/" + getProjectName() + "/" + additionalfolder);
   }
 
   /**
    * {@inheritDoc}
    */
   public String importInternalLibrary(URL location) {
-    final String file = location.getFile();
-    final int lidx = file.lastIndexOf('/');
-    final String relative = "lib/" + (lidx != -1 ? file.substring(lidx + 1) : file);
-    _internallibs.put(relative, location);
+    String file = location.getFile();
+    int lidx = file.lastIndexOf('/');
+    String relative = "lib/" + (lidx != -1 ? file.substring(lidx + 1) : file);
+    this._internallibs.put(relative, location);
     return relative;
   }
 

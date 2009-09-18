@@ -78,7 +78,7 @@ public interface FeatureProjectRole extends ProjectRole {
      *          the eclipse project
      * @return the {@link FeatureProjectRole}
      */
-    public static final FeatureProjectRole getFeatureProjectRole(final EclipseProject eclipseProject) {
+    public static final FeatureProjectRole getFeatureProjectRole(EclipseProject eclipseProject) {
       Assert.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have FeatureProjectRole!");
 
@@ -95,7 +95,7 @@ public interface FeatureProjectRole extends ProjectRole {
      *          the eclipse project
      * @return <code>true</code> if the eclipse project contains a feature project role.
      */
-    public static final boolean hasFeatureProjectRole(final EclipseProject eclipseProject) {
+    public static final boolean hasFeatureProjectRole(EclipseProject eclipseProject) {
       Assert.notNull(eclipseProject);
 
       return eclipseProject.hasRole(FeatureProjectRole.class);

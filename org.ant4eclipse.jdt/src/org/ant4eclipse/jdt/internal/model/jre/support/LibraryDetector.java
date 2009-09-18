@@ -32,10 +32,10 @@ public class LibraryDetector {
    * 
    * @param args
    */
-  public static void main(final String[] args) {
+  public static void main(String[] args) {
 
     // create property string
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append(System.getProperty("java.version"));
     buffer.append("|");
     buffer.append(System.getProperty("sun.boot.class.path"));
@@ -52,13 +52,13 @@ public class LibraryDetector {
 
     // write to file
     try {
-      final File outfile = new File(args[0]);
+      File outfile = new File(args[0]);
       outfile.createNewFile();
-      final BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
+      BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
       out.write(buffer.toString());
       out.flush();
       out.close();
-    } catch (final IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
     //

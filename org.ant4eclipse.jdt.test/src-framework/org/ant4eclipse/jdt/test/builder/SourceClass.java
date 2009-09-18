@@ -47,29 +47,29 @@ import java.util.List;
  */
 public class SourceClass {
 
-  private final String            _className;
+  private String            _className;
 
-  private final List<String>      _usedClasses;
+  private List<String>      _usedClasses;
 
-  private final JdtProjectBuilder _eclipseProjectCreator;
+  private JdtProjectBuilder _eclipseProjectCreator;
 
   public SourceClass(JdtProjectBuilder eclipseProjectCreator, String className) {
-    _eclipseProjectCreator = eclipseProjectCreator;
-    _usedClasses = new LinkedList<String>();
-    _className = className;
+    this._eclipseProjectCreator = eclipseProjectCreator;
+    this._usedClasses = new LinkedList<String>();
+    this._className = className;
   }
 
   public SourceClass withClassUsed(String className) {
-    _usedClasses.add(className);
+    this._usedClasses.add(className);
     return this;
   }
 
   public JdtProjectBuilder finishClass() {
-    return _eclipseProjectCreator;
+    return this._eclipseProjectCreator;
   }
 
   public String getClassName() {
-    return _className;
+    return this._className;
   }
 
   /**
@@ -79,7 +79,7 @@ public class SourceClass {
    */
   String generateUsageCode() {
     StringBuffer source = new StringBuffer();
-    Iterator<String> it = _usedClasses.iterator();
+    Iterator<String> it = this._usedClasses.iterator();
     while (it.hasNext()) {
       String usedClassName = it.next().toString();
       source.append(asSource(ClassName.fromQualifiedClassName(usedClassName))).append(Utilities.NL);

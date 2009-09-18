@@ -11,13 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
+
 import org.apache.tools.ant.Project;
+
+import java.io.File;
 
 /**
  * Encapsulates the access to a Version control system.
@@ -27,9 +29,9 @@ import org.apache.tools.ant.Project;
 public abstract class VcsAdapter {
 
   /** the ant project in which the cvs tasks will be executed */
-  private final Project _antProject;
+  private Project _antProject;
 
-  public VcsAdapter(final Project antProject) {
+  public VcsAdapter(Project antProject) {
     Assert.notNull(antProject);
     this._antProject = antProject;
   }
@@ -49,8 +51,8 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  public final void checkoutProject(final File destination, final TeamProjectDescription projectDescription,
-      final boolean deleteExisting) throws Ant4EclipseException {
+  public final void checkoutProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
+      throws Ant4EclipseException {
     Assert.notNull(projectDescription);
 
     String projectName = projectDescription.getProjectName();
@@ -75,7 +77,7 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  public final void updateProject(final File destination, final TeamProjectDescription projectDescription)
+  public final void updateProject(File destination, TeamProjectDescription projectDescription)
       throws Ant4EclipseException {
     Assert.notNull(projectDescription);
     update(destination, projectDescription);
@@ -94,8 +96,8 @@ public abstract class VcsAdapter {
    *          indicates if existing projects should be deleted.
    * @throws VcsException
    */
-  public final void exportProject(final File destination, final TeamProjectDescription projectDescription,
-      final boolean deleteExisting) throws Ant4EclipseException {
+  public final void exportProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
+      throws Ant4EclipseException {
     Assert.notNull(projectDescription);
 
     String projectName = projectDescription.getProjectName();

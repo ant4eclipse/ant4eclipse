@@ -32,7 +32,7 @@ import java.util.Vector;
 public class EclipseVariableResolverImpl implements EclipseVariableResolver {
 
   /** a mapping for the eclipse variables */
-  private final Map<String, String> _eclipsevariables = new Hashtable<String, String>();
+  private Map<String, String> _eclipsevariables = new Hashtable<String, String>();
 
   /**
    * {@inheritDoc}
@@ -58,7 +58,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final void setEclipseVariable(final String key, final String value) {
+  public final void setEclipseVariable(String key, String value) {
     if (value == null) {
       this._eclipsevariables.remove(key);
     } else {
@@ -69,12 +69,11 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final String resolveEclipseVariables(final String string, final EclipseProject project,
-      final Map<String, String> otherProperties) {
+  public final String resolveEclipseVariables(String string, EclipseProject project, Map<String, String> otherProperties) {
     Assert.notNull(string);
     // Assert.notNull(project);
     // resolve Eclipse variables
-    final Map<String, String> eclipseVariables = getEclipseVariables(project);
+    Map<String, String> eclipseVariables = getEclipseVariables(project);
 
     // overwrite "default" values for eclipse variables with values as specified in otherProperties
     if (otherProperties != null) {
@@ -82,7 +81,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
     }
 
     // resolve string
-    final String resolvedString = resolveProperties(string, eclipseVariables);
+    String resolvedString = resolveProperties(string, eclipseVariables);
     return resolvedString;
   }
 
@@ -96,8 +95,8 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final Map<String, String> getEclipseVariables(final EclipseProject project) {
-    final Map<String, String> eclipseVariables = new Hashtable<String, String>();
+  public final Map<String, String> getEclipseVariables(EclipseProject project) {
+    Map<String, String> eclipseVariables = new Hashtable<String, String>();
     eclipseVariables.putAll(this._eclipsevariables);
     if (project != null) {
       eclipseVariables.put("build_project", project.getFolder().getAbsolutePath());
@@ -120,23 +119,23 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * @param properties
    * @return
    */
-  private final String resolveProperties(final String value, final Map<String, String> properties) {
+  private final String resolveProperties(String value, Map<String, String> properties) {
 
-    final Vector<String> fragments = new Vector<String>();
-    final Vector<String> propertyRefs = new Vector<String>();
-    final Vector<String> propertyArgs = new Vector<String>();
+    Vector<String> fragments = new Vector<String>();
+    Vector<String> propertyRefs = new Vector<String>();
+    Vector<String> propertyArgs = new Vector<String>();
     parsePropertyString(value, fragments, propertyRefs, propertyArgs);
 
-    final StringBuffer sb = new StringBuffer();
-    final Enumeration<String> i = fragments.elements();
-    final Enumeration<String> j = propertyRefs.elements();
-    final Enumeration<String> k = propertyArgs.elements();
+    StringBuffer sb = new StringBuffer();
+    Enumeration<String> i = fragments.elements();
+    Enumeration<String> j = propertyRefs.elements();
+    Enumeration<String> k = propertyArgs.elements();
 
     while (i.hasMoreElements()) {
       String fragment = i.nextElement();
       if (fragment == null) {
-        final String propertyName = j.nextElement();
-        final String propertyArg = k.nextElement();
+        String propertyName = j.nextElement();
+        String propertyArg = k.nextElement();
         Object replacement = null;
         if (properties != null) {
           if ("workspace_loc".equals(propertyName)) {
@@ -152,7 +151,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
             replacement = properties.get(propertyName);
           }
         }
-        final String arg = propertyArg != null ? ":" + propertyArg : "";
+        String arg = propertyArg != null ? ":" + propertyArg : "";
         fragment = (replacement != null) ? replacement.toString() : "${" + propertyName + arg + "}";
       }
       sb.append(fragment);
@@ -164,8 +163,8 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * based on org.apache.tools.ant.PropertyHelper#parsePropertyString
    */
-  private final void parsePropertyString(final String value, final Vector<String> fragments,
-      final Vector<String> propertyRefs, final Vector<String> propertyArgs) {
+  private final void parsePropertyString(String value, Vector<String> fragments, Vector<String> propertyRefs,
+      Vector<String> propertyArgs) {
     int prev = 0;
     int pos;
     // search for the next instance of $ from the 'prev' position
@@ -201,14 +200,14 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
 
       } else {
         // property found, extract its name or bail on a typo
-        final int endName = value.indexOf('}', pos);
+        int endName = value.indexOf('}', pos);
         if (endName < 0) {
           throw new RuntimeException("Syntax error in property: " + value);
         }
         String propertyName = value.substring(pos + 2, endName);
         // cut off eclipse arguments, since they are not supported
         // by ant4eclipse
-        final int v = propertyName.indexOf(':');
+        int v = propertyName.indexOf(':');
         String propertyArg = null;
         if (v != -1) {
           propertyArg = propertyName.substring(v + 1);

@@ -57,7 +57,7 @@ public class PlatformExceptionCode extends ExceptionCode {
     NLS.initialize(PlatformExceptionCode.class);
   }
 
-  private PlatformExceptionCode(final String message) {
+  private PlatformExceptionCode(String message) {
     super(message);
   }
 }

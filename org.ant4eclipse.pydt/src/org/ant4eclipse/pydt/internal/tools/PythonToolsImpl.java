@@ -33,33 +33,33 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
    * {@inheritDoc}
    */
   public File getEpydocInstallation() {
-    return _epydoc;
+    return this._epydoc;
   }
 
   /**
    * {@inheritDoc}
    */
   public void dispose() {
-    Utilities.delete(_epydoc);
-    _epydoc = null;
-    _initialised = false;
+    Utilities.delete(this._epydoc);
+    this._epydoc = null;
+    this._initialised = false;
   }
 
   /**
    * {@inheritDoc}
    */
   public void initialize() {
-    final File zip = Utilities.exportResource("/org/ant4eclipse/pydt/epydoc.zip");
-    _epydoc = new File(zip.getParentFile(), "epydoc");
-    Utilities.unpack(zip, _epydoc);
-    _initialised = true;
+    File zip = Utilities.exportResource("/org/ant4eclipse/pydt/epydoc.zip");
+    this._epydoc = new File(zip.getParentFile(), "epydoc");
+    Utilities.unpack(zip, this._epydoc);
+    this._initialised = true;
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return _initialised;
+    return this._initialised;
   }
 
 } /* ENDCLASS */

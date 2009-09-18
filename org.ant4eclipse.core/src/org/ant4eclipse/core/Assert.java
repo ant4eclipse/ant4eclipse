@@ -34,7 +34,7 @@ public class Assert {
    * @param object
    *          the object that must be set.
    */
-  public static void notNull(final Object object) {
+  public static void notNull(Object object) {
     notNull("Object has to be set!", object);
   }
 
@@ -48,7 +48,7 @@ public class Assert {
    * @param object
    *          the object that must be set.
    */
-  public static void notNull(final String message, final Object object) {
+  public static void notNull(String message, Object object) {
     if (object == null) {
       A4ELogging.debug(message);
       throw new RuntimeException("Precondition violated: " + message);
@@ -85,10 +85,10 @@ public class Assert {
    * @param string
    *          the string that must provide a value.
    */
-  public static void nonEmpty(final String string) {
+  public static void nonEmpty(String string) {
     notNull(string);
     if (string.length() == 0) {
-      final String msg = "Precondition violated: An empty string is not allowed here !";
+      String msg = "Precondition violated: An empty string is not allowed here !";
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -102,10 +102,10 @@ public class Assert {
    * @param file
    *          the file that must exist.
    */
-  public static void exists(final File file) {
+  public static void exists(File file) {
     notNull(file);
     if (!file.exists()) {
-      final String msg = String.format("Precondition violated: %s has to exist!", file.getAbsolutePath());
+      String msg = String.format("Precondition violated: %s has to exist!", file.getAbsolutePath());
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -119,11 +119,11 @@ public class Assert {
    * @param file
    *          the file that must be a file.
    */
-  public static void isFile(final File file) {
+  public static void isFile(File file) {
     Assert.exists(file);
     if (!file.isFile()) {
-      final String msg = String.format("Precondition violated: %s has to be a file, not a directory!", file
-          .getAbsolutePath());
+      String msg = String
+          .format("Precondition violated: %s has to be a file, not a directory!", file.getAbsolutePath());
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -137,11 +137,11 @@ public class Assert {
    * @param file
    *          the file that must be a directory.
    */
-  public static void isDirectory(final File file) {
+  public static void isDirectory(File file) {
     Assert.exists(file);
     if (!file.isDirectory()) {
-      final String msg = String.format("Precondition violated: %s has to be a directory, not a file!", file
-          .getAbsolutePath());
+      String msg = String
+          .format("Precondition violated: %s has to be a directory, not a file!", file.getAbsolutePath());
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }
@@ -157,7 +157,7 @@ public class Assert {
    * @param msg
    *          the message
    */
-  public static void assertTrue(final boolean condition, final String msg) {
+  public static void assertTrue(boolean condition, String msg) {
     if (!condition) {
       // A4ELogging.debug(errmsg);
       throw new RuntimeException(String.format("Precondition violated: %s", msg));
@@ -176,10 +176,10 @@ public class Assert {
    * @param to
    *          the upper bound inclusive.
    */
-  public static void inRange(final int value, final int from, final int to) {
+  public static void inRange(int value, int from, int to) {
     if ((value < from) || (value > to)) {
-      final String msg = String.format("Precondition violated: %d must be within the range %d..%d !", new Object[] {
-          Integer.valueOf(value), Integer.valueOf(from), Integer.valueOf(to) });
+      String msg = String.format("Precondition violated: %d must be within the range %d..%d !", Integer.valueOf(value),
+          Integer.valueOf(from), Integer.valueOf(to));
       A4ELogging.debug(msg);
       throw new RuntimeException(msg);
     }

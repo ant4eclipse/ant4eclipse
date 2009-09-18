@@ -18,7 +18,7 @@ public class OsgiToolsExceptionCodes extends ExceptionCode {
   public static OsgiToolsExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND = new OsgiToolsExceptionCodes(
                                                                                "The file with global compiler settings '%s' could not be found");
 
-  public OsgiToolsExceptionCodes(final String message) {
+  public OsgiToolsExceptionCodes(String message) {
     super(message);
 
   }

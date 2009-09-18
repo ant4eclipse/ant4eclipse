@@ -50,7 +50,7 @@ public class DLTKParser {
    * 
    * @return The kind of reference used for this type of record.
    */
-  private static final ReferenceKind getReferenceKind(final String kind) {
+  private static final ReferenceKind getReferenceKind(String kind) {
     if (KIND_SOURCE.equals(kind)) {
       return ReferenceKind.Source;
     } else if (KIND_LIBRARY.equals(kind)) {
@@ -71,26 +71,26 @@ public class DLTKParser {
    * @param pythonrole
    *          The role instance which will be filled with the corresponding information. Not <code>null</code>.
    */
-  public static final void contributePathes(final PythonProjectRoleImpl pythonrole) {
+  public static final void contributePathes(PythonProjectRoleImpl pythonrole) {
 
-    final String projectname = pythonrole.getEclipseProject().getSpecifiedName();
-    final File buildpath = pythonrole.getEclipseProject().getChild(NAME_BUILDPATH);
+    String projectname = pythonrole.getEclipseProject().getSpecifiedName();
+    File buildpath = pythonrole.getEclipseProject().getChild(NAME_BUILDPATH);
 
-    final XQueryHandler queryhandler = new XQueryHandler();
+    XQueryHandler queryhandler = new XQueryHandler();
 
     // prepare the access for the attributes 'kind', 'path', 'exported', 'external'
-    final XQuery kindquery = queryhandler.createQuery("//buildpath/buildpathentry/@kind");
-    final XQuery pathquery = queryhandler.createQuery("//buildpath/buildpathentry/@path");
-    final XQuery exportedquery = queryhandler.createQuery("//buildpath/buildpathentry/@exported");
-    final XQuery externalquery = queryhandler.createQuery("//buildpath/buildpathentry/@external");
+    XQuery kindquery = queryhandler.createQuery("//buildpath/buildpathentry/@kind");
+    XQuery pathquery = queryhandler.createQuery("//buildpath/buildpathentry/@path");
+    XQuery exportedquery = queryhandler.createQuery("//buildpath/buildpathentry/@exported");
+    XQuery externalquery = queryhandler.createQuery("//buildpath/buildpathentry/@external");
 
     // now fetch the necessary data
     XQueryHandler.queryFile(buildpath, queryhandler);
 
-    final String[] kinds = kindquery.getResult();
-    final String[] pathes = pathquery.getResult();
-    final String[] exported = exportedquery.getResult();
-    final String[] externals = externalquery.getResult();
+    String[] kinds = kindquery.getResult();
+    String[] pathes = pathquery.getResult();
+    String[] exported = exportedquery.getResult();
+    String[] externals = externalquery.getResult();
 
     for (int i = 0; i < kinds.length; i++) {
       ReferenceKind refkind = getReferenceKind(kinds[i]);
@@ -102,8 +102,8 @@ public class DLTKParser {
             kinds[i]);
         continue;
       }
-      final boolean isexported = Boolean.parseBoolean(exported[i]);
-      final boolean isexternal = Boolean.parseBoolean(externals[i]);
+      boolean isexported = Boolean.parseBoolean(exported[i]);
+      boolean isexternal = Boolean.parseBoolean(externals[i]);
       if (refkind == ReferenceKind.Container) {
         // runtimes are declared as containers in Python DLTK
         if (path.startsWith(KEY_RUNTIME)) {

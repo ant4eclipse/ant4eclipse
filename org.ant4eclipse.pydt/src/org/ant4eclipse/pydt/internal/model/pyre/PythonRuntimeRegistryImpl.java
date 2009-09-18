@@ -93,9 +93,9 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * 
    * @return The interpreter or <code>null</code> if none could be found.
    */
-  private PythonInterpreter lookupInterpreter(final File location) {
-    for (final PythonInterpreter interpreter : _interpreters) {
-      final File result = interpreter.lookup(location);
+  private PythonInterpreter lookupInterpreter(File location) {
+    for (PythonInterpreter interpreter : this._interpreters) {
+      File result = interpreter.lookup(location);
       if (result != null) {
         return interpreter;
       }
@@ -106,15 +106,15 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   /**
    * {@inheritDoc}
    */
-  public boolean hasRuntime(final String id) {
+  public boolean hasRuntime(String id) {
     Assert.nonEmpty(id);
-    return _runtimes.containsKey(id);
+    return this._runtimes.containsKey(id);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void registerRuntime(final String id, File location, final boolean sitepackages) {
+  public void registerRuntime(String id, File location, boolean sitepackages) {
 
     Assert.nonEmpty(id);
     Assert.notNull(location);
@@ -125,7 +125,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
       throw new ExtendedBuildException(MSG_CANONICALFILE, ex, location);
     }
 
-    final PythonRuntime existing = getRuntime(id);
+    PythonRuntime existing = getRuntime(id);
     if (existing != null) {
 
       // check the current setting
@@ -146,12 +146,12 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     if (python == null) {
       throw new ExtendedBuildException(MSG_UNSUPPORTEDRUNTIME, id, location);
     }
-    final File interpreter = python.lookup(location);
+    File interpreter = python.lookup(location);
 
     // launch the python lister script to access the python path
     StringBuffer output = new StringBuffer();
     StringBuffer error = new StringBuffer();
-    Utilities.execute(interpreter, output, error, _pythonlister.getAbsolutePath());
+    Utilities.execute(interpreter, output, error, this._pythonlister.getAbsolutePath());
 
     String[] extraction = extractOutput(output.toString(), sitepackages);
     if (extraction == null) {
@@ -161,15 +161,15 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     }
 
     // load version number and library records
-    final Version version = new Version(extraction[0]);
-    final File[] libs = new File[extraction.length - 1];
+    Version version = new Version(extraction[0]);
+    File[] libs = new File[extraction.length - 1];
     for (int i = 0; i < libs.length; i++) {
       libs[i] = new File(extraction[i + 1]);
     }
 
-    final PythonRuntime newruntime = new PythonRuntimeImpl(id, location, version, libs, python);
+    PythonRuntime newruntime = new PythonRuntimeImpl(id, location, version, libs, python);
     A4ELogging.debug(MSG_REGISTEREDRUNTIME, id, location);
-    _runtimes.put(id, newruntime);
+    this._runtimes.put(id, newruntime);
 
   }
 
@@ -183,7 +183,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * 
    * @return A list of strings containing the runtime information or <code>null</code> in case of a failure.
    */
-  private String[] extractOutput(final String content, final boolean sitepackages) {
+  private String[] extractOutput(String content, boolean sitepackages) {
     List<String> list = new ArrayList<String>();
     boolean collect = false;
     boolean first = true;
@@ -242,7 +242,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * @throws IOException
    *           Path calculation failed for some reason.
    */
-  private boolean isHiddenDir(final String dir, final boolean sitepackages) throws IOException {
+  private boolean isHiddenDir(String dir, boolean sitepackages) throws IOException {
     File file = new File(dir);
     if (!file.exists()) {
       // this directory does not exist (f.e. __classpath__ symbols provided by jython)
@@ -252,28 +252,28 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
       return true;
     }
     file = file.getCanonicalFile();
-    return _listerdir.equals(file) || _currentdir.equals(file);
+    return this._listerdir.equals(file) || this._currentdir.equals(file);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setDefaultRuntime(final String id) {
+  public void setDefaultRuntime(String id) {
     Assert.nonEmpty(id);
     if (!hasRuntime(id)) {
       throw new ExtendedBuildException(MSG_INVALIDDEFAULTID, id);
     }
-    _defaultid = id;
+    this._defaultid = id;
   }
 
   /**
    * {@inheritDoc}
    */
   public PythonRuntime getRuntime() {
-    if (_defaultid != null) {
-      return _runtimes.get(_defaultid);
-    } else if (_runtimes.size() == 1) {
-      return _runtimes.values().iterator().next();
+    if (this._defaultid != null) {
+      return this._runtimes.get(this._defaultid);
+    } else if (this._runtimes.size() == 1) {
+      return this._runtimes.values().iterator().next();
     }
     throw new BuildException(MSG_NODEFAULTRUNTIME);
   }
@@ -281,30 +281,30 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   /**
    * {@inheritDoc}
    */
-  public PythonRuntime getRuntime(final String id) {
+  public PythonRuntime getRuntime(String id) {
     Assert.nonEmpty(id);
-    return _runtimes.get(id);
+    return this._runtimes.get(id);
   }
 
   /**
    * {@inheritDoc}
    */
   public PythonInterpreter[] getSupportedInterpreters() {
-    return _interpreters;
+    return this._interpreters;
   }
 
   /**
    * {@inheritDoc}
    */
   public void dispose() {
-    _runtimes.clear();
-    Utilities.delete(_pythonlister);
-    _defaultid = null;
-    _pythonlister = null;
-    _listerdir = null;
-    _currentdir = null;
-    _interpreters = null;
-    _initialised = false;
+    this._runtimes.clear();
+    Utilities.delete(this._pythonlister);
+    this._defaultid = null;
+    this._pythonlister = null;
+    this._listerdir = null;
+    this._currentdir = null;
+    this._interpreters = null;
+    this._initialised = false;
   }
 
   /**
@@ -313,31 +313,31 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   public void initialize() {
 
     // export the python lister script, so it can be executed in order to access the pythonpath
-    _pythonlister = Utilities.exportResource("/org/ant4eclipse/pydt/lister.py");
-    if (!_pythonlister.isAbsolute()) {
-      _pythonlister = _pythonlister.getAbsoluteFile();
+    this._pythonlister = Utilities.exportResource("/org/ant4eclipse/pydt/lister.py");
+    if (!this._pythonlister.isAbsolute()) {
+      this._pythonlister = this._pythonlister.getAbsoluteFile();
     }
-    _listerdir = _pythonlister.getParentFile();
-    _currentdir = new File(".");
+    this._listerdir = this._pythonlister.getParentFile();
+    this._currentdir = new File(".");
     try {
-      _listerdir = _listerdir.getCanonicalFile();
-      _currentdir = _currentdir.getCanonicalFile();
+      this._listerdir = this._listerdir.getCanonicalFile();
+      this._currentdir = this._currentdir.getCanonicalFile();
     } catch (IOException ex) {
       throw new BuildException(ex);
     }
 
     // load the python interpreter configurations
-    final URL cfgurl = getClass().getResource("/org/ant4eclipse/pydt/python.properties");
+    URL cfgurl = getClass().getResource("/org/ant4eclipse/pydt/python.properties");
     if (cfgurl == null) {
       throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
     }
     try {
-      final Map<String, String> props = Utilities.readProperties(cfgurl);
-      final List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
-      for (final Map.Entry<String, String> entry : props.entrySet()) {
+      Map<String, String> props = Utilities.readProperties(cfgurl);
+      List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
+      for (Map.Entry<String, String> entry : props.entrySet()) {
         if (entry.getKey().startsWith(PROP_INTERPRETER)) {
-          final String name = entry.getKey().substring(PROP_INTERPRETER.length());
-          final String[] exes = Utilities.cleanup(entry.getValue().split(","));
+          String name = entry.getKey().substring(PROP_INTERPRETER.length());
+          String[] exes = Utilities.cleanup(entry.getValue().split(","));
           if (exes == null) {
             throw new ExtendedBuildException(MSG_MISSINGEXECUTABLES, entry.getKey());
           }
@@ -345,13 +345,13 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
           interpreters.add(new PythonInterpreter(name, exes));
         }
       }
-      _interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
-      Arrays.sort(_interpreters);
+      this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
+      Arrays.sort(this._interpreters);
     } catch (IOException ex) {
       throw new BuildException(ex);
     }
 
-    _initialised = true;
+    this._initialised = true;
 
   }
 
@@ -359,7 +359,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return _initialised;
+    return this._initialised;
   }
 
 } /* ENDCLASS */

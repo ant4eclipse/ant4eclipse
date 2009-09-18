@@ -38,7 +38,7 @@ public class JdtClasspathContainerArgument {
    * 
    * @param key
    */
-  public final void setKey(final String key) {
+  public final void setKey(String key) {
     this.key = key;
   }
 
@@ -61,7 +61,7 @@ public class JdtClasspathContainerArgument {
    * @param value
    *          the value of the {@link JdtClasspathContainerArgument}.
    */
-  public final void setValue(final String value) {
+  public final void setValue(String value) {
     this.value = value;
   }
 
@@ -70,7 +70,7 @@ public class JdtClasspathContainerArgument {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[JdtClasspathContainerArgument:");
     buffer.append(" key: ");
     buffer.append(this.key);

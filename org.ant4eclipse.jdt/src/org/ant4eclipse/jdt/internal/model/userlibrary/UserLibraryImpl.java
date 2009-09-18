@@ -27,15 +27,15 @@ import java.util.List;
 public class UserLibraryImpl implements UserLibrary {
 
   /** The name of the user library */
-  private final String            _name;
+  private String            _name;
 
   /**
    * Represents this a system library (i.e. a library added to the boot classpath)
    */
-  private final boolean           _systemlibrary;
+  private boolean           _systemlibrary;
 
   /** The content of this library */
-  private final List<ArchiveImpl> _archives;
+  private List<ArchiveImpl> _archives;
 
   /**
    * Creates a new user library entry with a specific name.
@@ -45,7 +45,7 @@ public class UserLibraryImpl implements UserLibrary {
    * @param syslib
    *          true <=> This library affects the boot class path.
    */
-  public UserLibraryImpl(final String name, final boolean syslib) {
+  public UserLibraryImpl(String name, boolean syslib) {
     Assert.notNull(name);
 
     this._name = name;
@@ -71,7 +71,7 @@ public class UserLibraryImpl implements UserLibrary {
    * {@inheritDoc}
    */
   public ArchiveImpl[] getArchives() {
-    final ArchiveImpl[] result = new ArchiveImpl[this._archives.size()];
+    ArchiveImpl[] result = new ArchiveImpl[this._archives.size()];
     this._archives.toArray(result);
     return (result);
   }
@@ -82,10 +82,10 @@ public class UserLibraryImpl implements UserLibrary {
   public File[] getArchiveFiles() {
 
     // create new result list
-    final List<File> result = new LinkedList<File>();
+    List<File> result = new LinkedList<File>();
 
     // add all path entries
-    for (final ArchiveImpl archive : this._archives) {
+    for (ArchiveImpl archive : this._archives) {
       result.add(archive.getPath());
     }
 
@@ -99,7 +99,7 @@ public class UserLibraryImpl implements UserLibrary {
    * @param arc
    *          The archive that will be added.
    */
-  public void addArchive(final ArchiveImpl arc) {
+  public void addArchive(ArchiveImpl arc) {
     Assert.notNull(arc);
 
     this._archives.add(arc);

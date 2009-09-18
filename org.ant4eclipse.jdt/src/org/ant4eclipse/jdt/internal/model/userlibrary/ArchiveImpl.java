@@ -25,13 +25,13 @@ import java.io.File;
 public class ArchiveImpl implements Archive {
 
   /** the path */
-  private final File _path;
+  private File   _path;
 
   /** the javadoc */
-  private String     _javadoc;
+  private String _javadoc;
 
   /** the source */
-  private File       _source;
+  private File   _source;
 
   /**
    * Creates an archive entry provding some infos regarding a classpath entry.
@@ -39,7 +39,7 @@ public class ArchiveImpl implements Archive {
    * @param path
    *          The location of the classes. Maybe a directory or a Jar.
    */
-  public ArchiveImpl(final File path) {
+  public ArchiveImpl(File path) {
     this(path, null, null);
   }
 
@@ -53,7 +53,7 @@ public class ArchiveImpl implements Archive {
    * @param javadoc
    *          The location of the javadocs as an url.
    */
-  public ArchiveImpl(final File path, final File source, final String javadoc) {
+  public ArchiveImpl(File path, File source, String javadoc) {
     Assert.exists(path);
     this._path = path;
     setSource(source);
@@ -66,7 +66,7 @@ public class ArchiveImpl implements Archive {
    * @param newsource
    *          The new source entry for this archive.
    */
-  public void setSource(final File newsource) {
+  public void setSource(File newsource) {
     // TODO: Should we log this?
     // if (newsource != null && !newsource.exists()) {
     // LoggerFactory.instance().getLogger().warn(
@@ -83,7 +83,7 @@ public class ArchiveImpl implements Archive {
    * @param newjavadoc
    *          The new javadoc entry.
    */
-  public void setJavaDoc(final String newjavadoc) {
+  public void setJavaDoc(String newjavadoc) {
     // TODO: Should we throw a exceptiion here?
     // if (newjavadoc != null) {
     // Assert.assertTrue(newjavadoc.length() > 0,

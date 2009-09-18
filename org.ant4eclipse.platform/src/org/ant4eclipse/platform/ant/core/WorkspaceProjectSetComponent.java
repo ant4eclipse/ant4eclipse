@@ -20,7 +20,7 @@ public interface WorkspaceProjectSetComponent extends ProjectSetComponent, Works
    * @param allWorkspaceProjects
    *          the flag
    */
-  void setAllWorkspaceProjects(final boolean allWorkspaceProjects);
+  void setAllWorkspaceProjects(boolean allWorkspaceProjects);
 
   /**
    * <p>

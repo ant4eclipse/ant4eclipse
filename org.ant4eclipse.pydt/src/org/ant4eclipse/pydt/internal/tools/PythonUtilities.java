@@ -47,7 +47,7 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has one of the supported python natures.
    */
-  public static final boolean isPythonRelatedProject(final EclipseProject project) {
+  public static final boolean isPythonRelatedProject(EclipseProject project) {
     Assert.notNull(project);
     return project.hasRole(PyDevProjectRole.class) || project.hasRole(DLTKProjectRole.class);
   }
@@ -60,10 +60,10 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has been created using the PyDev framework.
    */
-  public static final boolean isPyDevProject(final EclipseProject project) {
+  public static final boolean isPyDevProject(EclipseProject project) {
     Assert.notNull(project);
     if (project.hasRole(PyDevProjectRole.class)) {
-      final PythonProjectRole role = (PythonProjectRole) project.getRole(PyDevProjectRole.class);
+      PythonProjectRole role = (PythonProjectRole) project.getRole(PyDevProjectRole.class);
       return !role.isDLTK();
     } else {
       return false;
@@ -78,10 +78,10 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has been created within the Python DLTK framework.
    */
-  public static final boolean isPyDLTKProject(final EclipseProject project) {
+  public static final boolean isPyDLTKProject(EclipseProject project) {
     Assert.notNull(project);
     if (project.hasRole(DLTKProjectRole.class)) {
-      final PythonProjectRole role = (PythonProjectRole) project.getRole(DLTKProjectRole.class);
+      PythonProjectRole role = (PythonProjectRole) project.getRole(DLTKProjectRole.class);
       return role.isDLTK();
     } else {
       return false;
@@ -94,7 +94,7 @@ public class PythonUtilities {
    * @return A list of all known python interpreters. Not <code>null</code>.
    */
   public static final PythonInterpreter[] getPythonInterpreters() {
-    final PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
+    PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
     return registry.getSupportedInterpreters();
   }
 

@@ -22,13 +22,13 @@ import java.io.File;
 public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent {
 
   /** - */
-  private final ProjectSetComponent _projectSetComponent;
+  private ProjectSetComponent _projectSetComponent;
 
   /** - */
-  private final WorkspaceComponent  _workspaceComponent;
+  private WorkspaceComponent  _workspaceComponent;
 
   /** - */
-  private boolean                   _allWorkspaceProjects;
+  private boolean             _allWorkspaceProjects;
 
   /**
    * <p>

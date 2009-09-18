@@ -23,7 +23,7 @@ import org.ant4eclipse.core.nls.NLSMessage;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class EcjExceptionCodes extends ExceptionCode {
-  
+
   @NLSMessage("The ant reference id '%s' doesn't point to an EcjAdditionalCompilerArguments object.")
   public static EcjExceptionCodes NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT;
 
@@ -34,8 +34,8 @@ public class EcjExceptionCodes extends ExceptionCode {
   public static EcjExceptionCodes UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION;
 
   @NLSMessage("Compilation was not successful.")
-  public static EcjExceptionCodes COMPILATION_WAS_NOT_SUCCESFUL;  
-  
+  public static EcjExceptionCodes COMPILATION_WAS_NOT_SUCCESFUL;
+
   static {
     NLS.initialize(EcjExceptionCodes.class);
   }
@@ -48,7 +48,7 @@ public class EcjExceptionCodes extends ExceptionCode {
    * @param message
    *          the message
    */
-  private EcjExceptionCodes(final String message) {
+  private EcjExceptionCodes(String message) {
     super(message);
   }
 }

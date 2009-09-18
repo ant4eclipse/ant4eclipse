@@ -15,14 +15,14 @@ import java.util.Collection;
 
 public interface LaunchConfiguration {
 
-  public String getType();
+  String getType();
 
-  public Collection<String> getAttributeNames();
+  Collection<String> getAttributeNames();
 
-  public boolean getBooleanAttribute(String attributeName);
+  boolean getBooleanAttribute(String attributeName);
 
-  public String getAttribute(String attributeName);
+  String getAttribute(String attributeName);
 
-  public String[] getListAttribute(String attributeName);
+  String[] getListAttribute(String attributeName);
 
 }

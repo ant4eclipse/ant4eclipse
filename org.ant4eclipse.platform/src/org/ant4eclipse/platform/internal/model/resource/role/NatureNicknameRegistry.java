@@ -39,7 +39,7 @@ public class NatureNicknameRegistry implements Lifecycle {
     Iterable<Pair<String, String>> natureNicknameEntries = Ant4EclipseConfiguration.Helper
         .getAnt4EclipseConfiguration().getAllProperties(NATURE_NICKNAME_PREFIX);
 
-    final Map<String, List<String>> nicknames = new Hashtable<String, List<String>>();
+    Map<String, List<String>> nicknames = new Hashtable<String, List<String>>();
     for (Pair<String, String> natureNicknameEntry : natureNicknameEntries) {
       String nature = natureNicknameEntry.getFirst();
       String nickname = natureNicknameEntry.getSecond();

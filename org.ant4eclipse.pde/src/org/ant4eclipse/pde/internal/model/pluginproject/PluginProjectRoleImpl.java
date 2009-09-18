@@ -12,12 +12,16 @@
 package org.ant4eclipse.pde.internal.model.pluginproject;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
+
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
@@ -31,16 +35,16 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 public class PluginProjectRoleImpl extends AbstractProjectRole implements PluginProjectRole {
 
   /** PLUGIN_NATURE */
-  public static final String      PLUGIN_NATURE            = "org.eclipse.pde.PluginNature";
+  public static final String    PLUGIN_NATURE            = "org.eclipse.pde.PluginNature";
 
   /** PLUGIN_PROJECT_ROLE_NAME */
-  public static final String      PLUGIN_PROJECT_ROLE_NAME = "PluginProjectRole";
+  public static final String    PLUGIN_PROJECT_ROLE_NAME = "PluginProjectRole";
 
   /** the BundleDescription of the underlying plug-in project */
-  private final BundleDescription _bundleDescription;
+  private BundleDescription     _bundleDescription;
 
   /** the build properties */
-  private PluginBuildProperties   _buildProperties;
+  private PluginBuildProperties _buildProperties;
 
   /**
    * <p>
@@ -49,7 +53,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * 
    * @return the plugin project role.
    */
-  public static final PluginProjectRoleImpl getPluginProjectRole(final EclipseProject eclipseProject) {
+  public static final PluginProjectRoleImpl getPluginProjectRole(EclipseProject eclipseProject) {
     Assert.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have PluginProjectRole!");
 
@@ -63,7 +67,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * 
    * @return whether a plug-in project role is set or not.
    */
-  public static final boolean hasPluginProjectRole(final EclipseProject eclipseProject) {
+  public static final boolean hasPluginProjectRole(EclipseProject eclipseProject) {
     Assert.notNull(eclipseProject);
 
     return eclipseProject.hasRole(PluginProjectRoleImpl.class);
@@ -77,7 +81,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * @param eclipseProject
    *          the plugin project.
    */
-  public PluginProjectRoleImpl(final EclipseProject eclipseProject, final BundleDescription description) {
+  public PluginProjectRoleImpl(EclipseProject eclipseProject, BundleDescription description) {
     super(PLUGIN_PROJECT_ROLE_NAME, eclipseProject);
 
     Assert.notNull(eclipseProject);
@@ -125,7 +129,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * Sets the build properties.
    * </p>
    */
-  public void setBuildProperties(final PluginBuildProperties buildProperties) {
+  public void setBuildProperties(PluginBuildProperties buildProperties) {
     this._buildProperties = buildProperties;
   }
 
@@ -147,7 +151,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
      * 
      * @return the java project role.
      */
-    public static final PluginProjectRoleImpl getPluginProjectRole(final EclipseProject eclipseProject) {
+    public static final PluginProjectRoleImpl getPluginProjectRole(EclipseProject eclipseProject) {
       Assert.assertTrue(hasJavaProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have PluginProjectRole!");
 
@@ -161,7 +165,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
      * 
      * @return Returns whether a {@link JavaProjectRole} is set or not.
      */
-    public static final boolean hasJavaProjectRole(final EclipseProject eclipseProject) {
+    public static final boolean hasJavaProjectRole(EclipseProject eclipseProject) {
       Assert.notNull(eclipseProject);
 
       return eclipseProject.hasRole(JavaProjectRoleImpl.class);

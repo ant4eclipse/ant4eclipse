@@ -1,9 +1,10 @@
 package org.ant4eclipse.platform.ant.core.delegate.helper;
 
-import java.util.Hashtable;
-
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+
 import org.apache.tools.ant.Project;
+
+import java.util.Hashtable;
 
 /**
  * <p>
@@ -79,7 +80,7 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    *          the key
    */
   @SuppressWarnings("unchecked")
-  private void removeProperty(final String name) {
+  private void removeProperty(String name) {
     Hashtable properties = null;
     // Ant 1.5 stores properties in Project
     try {
@@ -87,7 +88,7 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
       if (properties != null) {
         properties.remove(name);
       }
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // ignore, could be Ant 1.6
     }
     try {
@@ -95,21 +96,21 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
       if (properties != null) {
         properties.remove(name);
       }
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // ignore, could be Ant 1.6
     }
 
     // Ant 1.6 uses a PropertyHelper, can check for it by checking for a
     // reference to "ant.PropertyHelper"
     try {
-      final Object property_helper = getAntProject().getReference("ant.PropertyHelper");
+      Object property_helper = getAntProject().getReference("ant.PropertyHelper");
       if (property_helper != null) {
         try {
           properties = (Hashtable) AbstractAntProjectRaper.getValue(property_helper, "properties");
           if (properties != null) {
             properties.remove(name);
           }
-        } catch (final Exception e) {
+        } catch (Exception e) {
           // ignore
         }
         try {
@@ -117,11 +118,11 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
           if (properties != null) {
             properties.remove(name);
           }
-        } catch (final Exception e) {
+        } catch (Exception e) {
           // ignore
         }
       }
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // ignore, could be Ant 1.5
     }
   }

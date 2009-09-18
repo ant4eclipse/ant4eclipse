@@ -30,10 +30,10 @@ import java.util.Set;
 public class ResolvedClasspathEntry {
 
   /** the file array */
-  private final File[]             _entries;
+  private File[]             _entries;
 
   /** the visibility rules */
-  private final AccessRestrictions _accessRestrictions;
+  private AccessRestrictions _accessRestrictions;
 
   /**
    * <p>
@@ -43,7 +43,7 @@ public class ResolvedClasspathEntry {
    * @param entries
    * @param accessRestrictions
    */
-  public ResolvedClasspathEntry(final File[] entries, final AccessRestrictions accessRestrictions) {
+  public ResolvedClasspathEntry(File[] entries, AccessRestrictions accessRestrictions) {
     Assert.notNull(entries);
 
     this._entries = entries;
@@ -58,7 +58,7 @@ public class ResolvedClasspathEntry {
    * @param entry
    * @param accessRestrictions
    */
-  public ResolvedClasspathEntry(final File entry, final AccessRestrictions accessRestrictions) {
+  public ResolvedClasspathEntry(File entry, AccessRestrictions accessRestrictions) {
     this(new File[] { entry }, accessRestrictions);
   }
 
@@ -70,7 +70,7 @@ public class ResolvedClasspathEntry {
    * @param entries
    *          the file entries
    */
-  public ResolvedClasspathEntry(final File[] entries) {
+  public ResolvedClasspathEntry(File[] entries) {
     this(entries, null);
   }
 
@@ -82,7 +82,7 @@ public class ResolvedClasspathEntry {
    * @param entry
    *          the file entry
    */
-  public ResolvedClasspathEntry(final File entry) {
+  public ResolvedClasspathEntry(File entry) {
     this(new File[] { entry }, null);
   }
 
@@ -124,7 +124,7 @@ public class ResolvedClasspathEntry {
    */
   @Override
   public int hashCode() {
-    final int prime = 31;
+    int prime = 31;
     int result = 1;
     result = prime * result + ((this._accessRestrictions == null) ? 0 : this._accessRestrictions.hashCode());
     result = prime * result + ResolvedClasspathEntry.hashCode(this._entries);
@@ -135,7 +135,7 @@ public class ResolvedClasspathEntry {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -145,7 +145,7 @@ public class ResolvedClasspathEntry {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final ResolvedClasspathEntry other = (ResolvedClasspathEntry) obj;
+    ResolvedClasspathEntry other = (ResolvedClasspathEntry) obj;
     if (this._accessRestrictions == null) {
       if (other._accessRestrictions != null) {
         return false;
@@ -168,13 +168,13 @@ public class ResolvedClasspathEntry {
    *          the array.
    * @return the hash code of an array of objects.
    */
-  private static int hashCode(final Object[] array) {
-    final int prime = 31;
+  private static int hashCode(Object[] array) {
+    int prime = 31;
     if (array == null) {
       return 0;
     }
     int result = 1;
-    for (final Object element : array) {
+    for (Object element : array) {
       result = prime * result + (element == null ? 0 : element.hashCode());
     }
     return result;
@@ -185,7 +185,7 @@ public class ResolvedClasspathEntry {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedClasspathEntry:");
     buffer.append(" { ");
     for (int i0 = 0; (this._entries != null) && (i0 < this._entries.length); i0++) {
@@ -209,13 +209,13 @@ public class ResolvedClasspathEntry {
   public static class AccessRestrictions {
 
     /** indicates if everything should be excluded by default */
-    private boolean           _excludeAll = true;
+    private boolean     _excludeAll = true;
 
     /** the set of public packages */
-    private final Set<String> _publicPackages;
+    private Set<String> _publicPackages;
 
     /** the set of private packages */
-    private final Set<String> _privatePackages;
+    private Set<String> _privatePackages;
 
     /**
      * <p>
@@ -240,8 +240,7 @@ public class ResolvedClasspathEntry {
      * @param excludeAll
      *          indicates if everything should be excluded by default
      */
-    public AccessRestrictions(final Set<String> publicPackages, final Set<String> privatePackages,
-        final boolean excludeAll) {
+    public AccessRestrictions(Set<String> publicPackages, Set<String> privatePackages, boolean excludeAll) {
 
       // TODO
       // AE-67: Support for types (exclusion/inclusion of classes/interfaces)
@@ -270,7 +269,7 @@ public class ResolvedClasspathEntry {
      * @param name
      *          the name of the public package.
      */
-    public void addPublicPackage(final String name) {
+    public void addPublicPackage(String name) {
       this._publicPackages.add(name);
     }
 
@@ -282,7 +281,7 @@ public class ResolvedClasspathEntry {
      * @param name
      *          the name of the private package.
      */
-    public void addPrivatePackage(final String name) {
+    public void addPrivatePackage(String name) {
       this._privatePackages.add(name);
     }
 
@@ -316,17 +315,17 @@ public class ResolvedClasspathEntry {
      * @return the access restrictions as formatted string.
      */
     public String asFormattedString() {
-      final StringBuffer result = new StringBuffer();
+      StringBuffer result = new StringBuffer();
 
       // format public packages
-      for (final String publicPackage : this._publicPackages) {
+      for (String publicPackage : this._publicPackages) {
         result.append("+");
         result.append(publicPackage.replace('.', '/'));
         result.append("/*;");
       }
 
       // format private packages
-      for (final String privatePackage : this._privatePackages) {
+      for (String privatePackage : this._privatePackages) {
         result.append("-");
         result.append(privatePackage.replace('.', '/'));
         result.append("/*;");
@@ -348,7 +347,7 @@ public class ResolvedClasspathEntry {
      */
     @Override
     public String toString() {
-      final StringBuffer buffer = new StringBuffer();
+      StringBuffer buffer = new StringBuffer();
       buffer.append("[AccessRestrictions:");
       buffer.append(" _excludeAll: ");
       buffer.append(this._excludeAll);

@@ -11,15 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.pluginproject;
 
-import java.io.File;
-import java.util.jar.Manifest;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.JarUtilities;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.util.ManifestElement;
 import org.osgi.framework.Constants;
+
+import java.io.File;
+import java.util.jar.Manifest;
 
 /**
  * The {@link BundleSource} wraps the source of a bundle (e.g. an eclipse plug-in project, a jared bundle or an exploded
@@ -39,11 +41,11 @@ public class BundleSource {
    *          the bundle description.
    * @return the bundle source.
    */
-  public static BundleSource getBundleSource(final BundleDescription bundleDescription) {
+  public static BundleSource getBundleSource(BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
 
     // retrieve the user object (that is always an instance of type BundleSource in our case)
-    final BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
+    BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
 
     // throw RuntimeException if the bundle source is not set
     if (bundleSource == null) {
@@ -55,13 +57,13 @@ public class BundleSource {
   }
 
   /** the bundle source */
-  private final Object   _source;
+  private Object   _source;
 
   /** The properties read from the manifest (=headers) */
-  private final Manifest _bundleManifest;
+  private Manifest _bundleManifest;
 
   /** The file or directory to load classes from. This might point to a directory. */
-  private File           _classpathRoot;
+  private File     _classpathRoot;
 
   /**
    * <p>
@@ -73,7 +75,7 @@ public class BundleSource {
    * @param bundleManifest
    *          the bundle manifest
    */
-  public BundleSource(final Object source, final Manifest bundleManifest) {
+  public BundleSource(Object source, Manifest bundleManifest) {
     Assert.notNull(source);
     Assert.notNull(bundleManifest);
 
@@ -181,7 +183,7 @@ public class BundleSource {
    * @param classpathRoot
    *          the class path root
    */
-  public void setClasspathRoot(final File classpathRoot) {
+  public void setClasspathRoot(File classpathRoot) {
     Assert.notNull(classpathRoot);
     Assert.assertTrue(!hasClasspathRoot(), "Classpath root already set!");
 
@@ -237,8 +239,9 @@ public class BundleSource {
   /**
    * @see java.lang.Object#toString()
    */
+  @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[BundleSource:");
     buffer.append(" _source: ");
     buffer.append(this._source);

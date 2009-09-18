@@ -30,10 +30,10 @@ import java.util.List;
 public final class ResolvedClasspathImpl implements ResolvedClasspath {
 
   /** the list with all the resolved path entries */
-  private final List<ResolvedClasspathEntry> _classpath;
+  private List<ResolvedClasspathEntry> _classpath;
 
   /** - * */
-  private ResolvedClasspathEntry             _bootclasspath;
+  private ResolvedClasspathEntry       _bootclasspath;
 
   /**
    * <p>
@@ -80,7 +80,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * @param resolvedClasspathEntry
    *          the class path entry to add.
    */
-  public final void addClasspathEntry(final ResolvedClasspathEntry resolvedClasspathEntry) {
+  public final void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
     Assert.notNull(resolvedClasspathEntry);
 
     if (!this._classpath.contains(resolvedClasspathEntry)) {
@@ -95,7 +95,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * 
    * @param resolvedClasspathEntry
    */
-  public final void addBootClasspathEntry(final ResolvedClasspathEntry resolvedClasspathEntry) {
+  public final void addBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
     Assert.notNull(resolvedClasspathEntry);
 
     if (this._bootclasspath != null) {
@@ -115,15 +115,15 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    *          the class path
    * @return a list with all class path entries as files.
    */
-  private File[] resolveClasspathToFiles(final List<ResolvedClasspathEntry> classpath) {
+  private File[] resolveClasspathToFiles(List<ResolvedClasspathEntry> classpath) {
 
     // create result
-    final List<File> result = new LinkedList<File>();
+    List<File> result = new LinkedList<File>();
 
     // add all files
-    for (final Object element : classpath) {
-      final ResolvedClasspathEntry resolvedClasspathEntry = (ResolvedClasspathEntry) element;
-      final File[] files = resolvedClasspathEntry.getEntries();
+    for (Object element : classpath) {
+      ResolvedClasspathEntry resolvedClasspathEntry = (ResolvedClasspathEntry) element;
+      File[] files = resolvedClasspathEntry.getEntries();
       for (int i = 0; i < files.length; i++) {
         if (!result.contains(files[i])) {
           result.add(files[i]);

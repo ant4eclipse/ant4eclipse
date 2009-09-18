@@ -11,15 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.model.featureproject;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
+
+import java.io.File;
 
 /**
  * <p>
@@ -30,7 +31,7 @@ import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
  */
 public class FeatureProjectRoleImpl extends AbstractProjectRole implements FeatureProjectRole {
 
-  private final EclipseProject   _project;
+  private EclipseProject         _project;
 
   /** the feature */
   private FeatureManifest        _feature;
@@ -43,7 +44,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * 
    * @return Returns the feature project role.
    */
-  public static FeatureProjectRoleImpl getFeatureProjectRole(final EclipseProject eclipseProject) {
+  public static FeatureProjectRoleImpl getFeatureProjectRole(EclipseProject eclipseProject) {
     Assert.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have FeatureProjectRole!");
 
@@ -55,7 +56,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * 
    * @return Returns whether a feature project role is set or not.
    */
-  public static boolean hasFeatureProjectRole(final EclipseProject eclipseProject) {
+  public static boolean hasFeatureProjectRole(EclipseProject eclipseProject) {
     Assert.notNull(eclipseProject);
 
     return eclipseProject.hasRole(FeatureProjectRoleImpl.class);
@@ -69,7 +70,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @param eclipseProject
    *          the plugin project.
    */
-  public FeatureProjectRoleImpl(final EclipseProject eclipseProject) {
+  public FeatureProjectRoleImpl(EclipseProject eclipseProject) {
     super(FEATURE_PROJECT_ROLE_NAME, eclipseProject);
     Assert.notNull(eclipseProject);
     this._project = eclipseProject;
@@ -94,7 +95,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @param featuremanifest
    *          the feature manifest to set.
    */
-  public void setFeature(final FeatureManifest featuremanifest) {
+  public void setFeature(FeatureManifest featuremanifest) {
     Assert.notNull(featuremanifest);
 
     this._feature = featuremanifest;
@@ -120,7 +121,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * </p>
    */
   // TODO: should not be public to the rest of ant4eclipse!
-  public void setBuildProperties(final FeatureBuildProperties buildProperties) {
+  public void setBuildProperties(FeatureBuildProperties buildProperties) {
     this._buildProperties = buildProperties;
   }
 

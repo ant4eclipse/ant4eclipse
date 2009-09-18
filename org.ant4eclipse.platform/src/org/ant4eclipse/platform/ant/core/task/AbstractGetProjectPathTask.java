@@ -37,10 +37,10 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     EclipseProjectComponent {
 
   /** the project delegate */
-  private final EclipseProjectDelegate _projectDelegate;
+  private EclipseProjectDelegate _projectDelegate;
 
   /** the get path delegate */
-  private final GetPathDelegate        _getPathDelegate;
+  private GetPathDelegate        _getPathDelegate;
 
   /**
    * <p>
@@ -82,7 +82,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   public void doExecute() {
 
     // resolve path
-    final File[] resolvedPath = resolvePath();
+    File[] resolvedPath = resolvePath();
     setResolvedPath(resolvedPath);
 
     // set path

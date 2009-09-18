@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
+import org.ant4eclipse.core.Assert;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.Assert;
 
 /**
  * <p>
@@ -37,7 +37,7 @@ public class TargetPlatformDefinition {
    */
   public TargetPlatformDefinition() {
     // create the locations list
-    _locations = new LinkedList<File>();
+    this._locations = new LinkedList<File>();
   }
 
   /**
@@ -51,8 +51,8 @@ public class TargetPlatformDefinition {
   public void addLocation(File location) {
     Assert.isDirectory(location);
 
-    if (!_locations.contains(location)) {
-      _locations.add(location);
+    if (!this._locations.contains(location)) {
+      this._locations.add(location);
     }
   }
 
@@ -64,6 +64,6 @@ public class TargetPlatformDefinition {
    * @return all the locations defined in this target platform location.
    */
   public final File[] getLocations() {
-    return _locations.toArray(new File[0]);
+    return this._locations.toArray(new File[0]);
   }
 }

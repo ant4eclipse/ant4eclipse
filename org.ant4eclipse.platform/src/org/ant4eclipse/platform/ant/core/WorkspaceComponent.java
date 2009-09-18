@@ -48,7 +48,7 @@ public interface WorkspaceComponent {
    *             compatibility only.
    */
   @Deprecated
-  void setWorkspace(final File workspace);
+  void setWorkspace(File workspace);
 
   /**
    * <p>
@@ -58,7 +58,7 @@ public interface WorkspaceComponent {
    * @param workspace
    *          the workspace directory
    */
-  void setWorkspaceDirectory(final File workspaceDirectory);
+  void setWorkspaceDirectory(File workspaceDirectory);
 
   /**
    * <p>

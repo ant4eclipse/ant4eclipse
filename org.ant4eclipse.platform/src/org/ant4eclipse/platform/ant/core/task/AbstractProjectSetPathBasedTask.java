@@ -1,10 +1,11 @@
 package org.ant4eclipse.platform.ant.core.task;
 
-import java.io.File;
-
 import org.ant4eclipse.platform.ant.core.PathComponent;
 import org.ant4eclipse.platform.ant.core.delegate.PathDelegate;
+
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import org.apache.tools.ant.types.Path;
 public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSetBasedTask implements PathComponent {
 
   /** the path delegate */
-  private final PathDelegate _pathDelegate;
+  private PathDelegate _pathDelegate;
 
   /**
    * <p>

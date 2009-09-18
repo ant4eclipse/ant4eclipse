@@ -47,7 +47,7 @@ public abstract class AbstractAnt4EclipseTask extends Task {
    * </p>
    */
   @Override
-  public void setProject(final Project project) {
+  public void setProject(Project project) {
     super.setProject(project);
 
     // configure ant4eclipse

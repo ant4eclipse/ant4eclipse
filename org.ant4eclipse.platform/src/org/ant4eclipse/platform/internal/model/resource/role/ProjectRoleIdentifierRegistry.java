@@ -52,16 +52,16 @@ public class ProjectRoleIdentifierRegistry {
    * @param project
    *          The project that shall be modified.
    */
-  public void applyRoles(final EclipseProjectImpl project) {
+  public void applyRoles(EclipseProjectImpl project) {
     for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
       if (projectRoleIdentifier.isRoleSupported(project)) {
-        final ProjectRole projectRole = projectRoleIdentifier.createRole(project);
+        ProjectRole projectRole = projectRoleIdentifier.createRole(project);
         project.addRole(projectRole);
       }
     }
   }
 
-  public void postProcessRoles(final EclipseProject project) {
+  public void postProcessRoles(EclipseProject project) {
     for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
       if (projectRoleIdentifier.isRoleSupported(project)) {
         projectRoleIdentifier.postProcess(project);
@@ -81,7 +81,7 @@ public class ProjectRoleIdentifierRegistry {
     Iterable<Pair<String, String>> roleidentifierEntries = Ant4EclipseConfiguration.Helper
         .getAnt4EclipseConfiguration().getAllProperties(ROLEIDENTIFIER_PREFIX);
 
-    final List<ProjectRoleIdentifier> roleIdentifiers = new LinkedList<ProjectRoleIdentifier>();
+    List<ProjectRoleIdentifier> roleIdentifiers = new LinkedList<ProjectRoleIdentifier>();
 
     // Instantiate all ProjectRoleIdentifiers
     for (Pair<String, String> roleidentifierEntry : roleidentifierEntries) {

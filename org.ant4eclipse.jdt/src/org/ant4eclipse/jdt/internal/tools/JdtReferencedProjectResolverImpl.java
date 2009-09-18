@@ -26,38 +26,37 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
   /**
    * {@inheritDoc}
    */
-  public boolean canHandle(final EclipseProject project) {
+  public boolean canHandle(EclipseProject project) {
     return JavaProjectRole.Helper.hasJavaProjectRole(project);
   }
 
   /**
    * {@inheritDoc}
    */
-  public List<EclipseProject> resolveReferencedProjects(final EclipseProject project,
-      final List<Object> additionalElements) {
+  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
     Assert.notNull(project);
 
-    final List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
+    List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
 
     if (additionalElements != null) {
-      for (final Object object : additionalElements) {
+      for (Object object : additionalElements) {
         if (object instanceof JdtClasspathContainerArgument) {
-          final JdtClasspathContainerArgument argument = (JdtClasspathContainerArgument) object;
+          JdtClasspathContainerArgument argument = (JdtClasspathContainerArgument) object;
           classpathContainerArguments.add(argument);
         }
       }
     }
     // create a ResolverJob
-    final ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, classpathContainerArguments);
+    ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, classpathContainerArguments);
 
-    final ClasspathEntryResolverExecutor classpathEntryResolverExecutor = new ClasspathEntryResolverExecutor(false);
+    ClasspathEntryResolverExecutor classpathEntryResolverExecutor = new ClasspathEntryResolverExecutor(false);
 
     classpathEntryResolverExecutor.resolve(job.getRootProject(), new ClasspathEntryResolver[] {
         new ContainerClasspathEntryResolver(), new ProjectClasspathEntryResolver(), },
         new ClasspathResolverContextImpl(classpathEntryResolverExecutor, job));
 
     // we need to remove the calling project, since the api states that only referenced projects have to be returned
-    final List<EclipseProject> result = classpathEntryResolverExecutor.getReferencedProjects();
+    List<EclipseProject> result = classpathEntryResolverExecutor.getReferencedProjects();
     result.remove(project);
     return result;
   }

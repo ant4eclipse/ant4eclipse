@@ -67,7 +67,7 @@ public class JdtExceptionCode extends ExceptionCode {
    * 
    * @param message
    */
-  private JdtExceptionCode(final String message) {
+  private JdtExceptionCode(String message) {
     super(message);
   }
 }

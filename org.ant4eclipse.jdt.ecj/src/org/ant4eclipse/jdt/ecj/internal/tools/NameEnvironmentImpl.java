@@ -14,8 +14,10 @@ package org.ant4eclipse.jdt.ecj.internal.tools;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ClassName;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+
 import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
 
@@ -30,7 +32,7 @@ import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
 public class NameEnvironmentImpl implements INameEnvironment {
 
   /** used to find binary type as requested by the compiler */
-  private final ClassFileLoader _classFileLoader;
+  private ClassFileLoader _classFileLoader;
 
   /**
    * <p>
@@ -40,7 +42,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param classFileLoader
    *          the class file loader to use.
    */
-  public NameEnvironmentImpl(final ClassFileLoader classFileLoader) {
+  public NameEnvironmentImpl(ClassFileLoader classFileLoader) {
     Assert.notNull(classFileLoader);
 
     this._classFileLoader = classFileLoader;
@@ -56,10 +58,10 @@ public class NameEnvironmentImpl implements INameEnvironment {
   /**
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[][])
    */
-  public NameEnvironmentAnswer findType(final char[][] compoundTypeName) {
+  public NameEnvironmentAnswer findType(char[][] compoundTypeName) {
 
     // convert char array to string(buffer)
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     for (int i = 0; i < compoundTypeName.length; i++) {
       buffer.append(new String(compoundTypeName[i]));
       if (i < compoundTypeName.length - 1) {
@@ -68,9 +70,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
     }
 
     // find class
-    final NameEnvironmentAnswer answer = findClass(buffer.toString());
-    A4ELogging
-        .trace("findType('%s'): %s", new Object[] { asString(compoundTypeName), Boolean.valueOf(answer != null) });
+    NameEnvironmentAnswer answer = findClass(buffer.toString());
+    A4ELogging.trace("findType('%s'): %s", asString(compoundTypeName), Boolean.valueOf(answer != null));
     return answer;
 
   }
@@ -80,12 +81,12 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * 
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[], char[][])
    */
-  public NameEnvironmentAnswer findType(final char[] typeName, final char[][] packageName) {
+  public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
     A4ELogging.trace("findType('%s', %s)", new String(typeName), asString(packageName));
 
-    final StringBuffer result = new StringBuffer();
+    StringBuffer result = new StringBuffer();
     if (packageName != null) {
-      for (final char[] element : packageName) {
+      for (char[] element : packageName) {
         result.append(new String(element)).append(".");
       }
     }
@@ -104,7 +105,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * 
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#isPackage(char[][], char[])
    */
-  public boolean isPackage(final char[][] parentPackageName, final char[] packageName) {
+  public boolean isPackage(char[][] parentPackageName, char[] packageName) {
     A4ELogging.trace("isPackage('%s', %s)", asString(parentPackageName), new String(packageName));
 
     String qualifiedPackageName = toJavaName(parentPackageName);
@@ -117,7 +118,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
     // this is a three-step check in order to gain performance resp. to avoid
     // the scanning of all jar files
 
-    final boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
+    boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
 
     A4ELogging.trace("isPackage - package '%s' found: %s'", new Object[] { qualifiedPackageName, "" + packageFound });
 
@@ -128,7 +129,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param className
    * @return
    */
-  protected NameEnvironmentAnswer findClass(final String className) {
+  protected NameEnvironmentAnswer findClass(String className) {
     Assert.notNull(className);
     return findClass(ClassName.fromQualifiedClassName(className));
   }
@@ -142,10 +143,10 @@ public class NameEnvironmentImpl implements INameEnvironment {
    *          represents the class name
    * @return a {@link NameEnvironmentAnswer}
    */
-  protected NameEnvironmentAnswer findClass(final ClassName className) {
+  protected NameEnvironmentAnswer findClass(ClassName className) {
 
     // load class file from class file loader
-    final ClassFile classFile = this._classFileLoader.loadClass(className);
+    ClassFile classFile = this._classFileLoader.loadClass(className);
 
     // return new NameEnvironmentAnswer if classFile was found
     if (classFile != null) {
@@ -166,8 +167,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
    *          the array to convert.
    * @return the
    */
-  private static String toJavaName(final char[][] array) {
-    final StringBuffer result = new StringBuffer();
+  private static String toJavaName(char[][] array) {
+    StringBuffer result = new StringBuffer();
 
     if (array != null) {
       for (int i = 0; i < array.length; i++) {
@@ -188,9 +189,9 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param array
    * @return
    */
-  private static String asString(final char[][] array) {
+  private static String asString(char[][] array) {
     // define result
-    final StringBuffer result = new StringBuffer();
+    StringBuffer result = new StringBuffer();
 
     // compute result
     if (array != null) {

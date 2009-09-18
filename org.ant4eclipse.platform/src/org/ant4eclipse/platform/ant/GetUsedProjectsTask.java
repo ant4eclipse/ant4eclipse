@@ -35,31 +35,31 @@ import java.util.List;
 public class GetUsedProjectsTask extends AbstractProjectBasedTask implements SubElementComponent {
 
   /** the default seperator */
-  private final static String      DEFAULT_SEPARATOR = ",";
+  private final static String DEFAULT_SEPARATOR = ",";
 
   /**
    * The name of an ant property that will hold the list of referenced projects
    */
-  private String                   _property;
+  private String              _property;
 
   /**
    * An (optional) specified separator that is used to separate the project names (defaults to <b>
    * {@link #DEFAULT_SEPARATOR}</b>)
    */
-  private String                   _separator;
+  private String              _separator;
 
   /**
    * Allows to enable self inclusion of the used project if set to <code>true</code>.
    */
-  private boolean                  _selfinclude;
+  private boolean             _selfinclude;
 
   /**
    * The reference type that is used for the resolving process of projects. A value of <code>null</code> means that all
    * reference types are being tried.
    */
-  private String[]                 _referencetypes;
+  private String[]            _referencetypes;
 
-  private final SubElementDelegate _subElementDelegate;
+  private SubElementDelegate  _subElementDelegate;
 
   public GetUsedProjectsTask() {
     this._subElementDelegate = new SubElementDelegate(this);
@@ -73,7 +73,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param newreferencetype
    *          A reference type which depends on the current configuration of a4e.
    */
-  public void setReferencetypes(final String newreferencetypes) {
+  public void setReferencetypes(String newreferencetypes) {
     String[] elements = null;
     if (newreferencetypes != null) {
       elements = newreferencetypes.split(",");
@@ -89,7 +89,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param property
    *          the name of an ant property that will hold the list of referenced projects.
    */
-  public void setProperty(final String property) {
+  public void setProperty(String property) {
     this._property = Utilities.cleanup(property);
   }
 
@@ -101,7 +101,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param separator
    *          an (optional) separator that is used to separate the project names.
    */
-  public void setSeparator(final String separator) {
+  public void setSeparator(String separator) {
     this._separator = Utilities.cleanup(separator);
   }
 
@@ -113,7 +113,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param selfinclude
    *          <code>true</code> <=> Enable self inclusion.
    */
-  public void setSelfinclude(final boolean selfinclude) {
+  public void setSelfinclude(boolean selfinclude) {
     this._selfinclude = selfinclude;
   }
 
@@ -149,7 +149,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     requireWorkspaceAndProjectNameSet();
     if (this._referencetypes != null) {
       // check if we can use the provided reference type
-      final String[] allowed = getResolver().getReferenceTypes();
+      String[] allowed = getResolver().getReferenceTypes();
       for (String reftype : this._referencetypes) {
         if (!Utilities.contains(reftype, allowed)) {
           throw new BuildException("The 'referencetypes' value '" + reftype + "' is not supported.");

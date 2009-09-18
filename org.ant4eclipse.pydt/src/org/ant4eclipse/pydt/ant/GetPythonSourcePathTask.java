@@ -41,8 +41,8 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
    * @param allowMultipleFolders
    *          <code>true</code> <=> Multiple folders are supported, otherwise they're not.
    */
-  public void setAllowMultipleFolders(final boolean allowMultipleFolders) {
-    _allowMultipleFolders = allowMultipleFolders;
+  public void setAllowMultipleFolders(boolean allowMultipleFolders) {
+    this._allowMultipleFolders = allowMultipleFolders;
   }
 
   /**
@@ -51,9 +51,9 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (!_allowMultipleFolders) {
-      final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-      final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
+    if (!this._allowMultipleFolders) {
+      PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
+      RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
       if (entries.length > 1) {
         throw new ExtendedBuildException(MSG_MULTIPLEFOLDERS, getEclipseProject().getSpecifiedName());
       }
@@ -63,13 +63,14 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected File[] resolvePath() {
-    final PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
-    final PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, true);
-    final PathExpander expander = new PathExpander(getEclipseProject());
-    final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
-    final ResolvedPathEntry[] resolved = resolver.resolve(entries);
-    final File[] result = expander.expand(resolved, getPathStyle());
+    PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
+    PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, true);
+    PathExpander expander = new PathExpander(getEclipseProject());
+    RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
+    ResolvedPathEntry[] resolved = resolver.resolve(entries);
+    File[] result = expander.expand(resolved, getPathStyle());
     return result;
   }
 

@@ -1,14 +1,16 @@
 package org.ant4eclipse.platform.ant.core.delegate.helper;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
+
+import org.apache.tools.ant.Project;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
-import org.apache.tools.ant.Project;
 
 /**
  * <p>
@@ -24,7 +26,7 @@ import org.apache.tools.ant.Project;
 public abstract class AbstractAntProjectRaper<V> {
 
   /** the ant project */
-  private final Project              _antProject;
+  private Project                    _antProject;
 
   /** the prefix used for the scoped values */
   private String                     _prefix;
@@ -86,8 +88,8 @@ public abstract class AbstractAntProjectRaper<V> {
     Iterator<Entry<String, V>> iterator = this._scopedValues.entrySet().iterator();
     while (iterator.hasNext()) {
 
-      final Map.Entry<String, V> entry = iterator.next();
-      final String key = (this._prefix + entry.getKey());
+      Map.Entry<String, V> entry = iterator.next();
+      String key = (this._prefix + entry.getKey());
 
       // store the property if it already exists
       V existingValue = this._valueAccessor.getValue(key);
@@ -95,7 +97,7 @@ public abstract class AbstractAntProjectRaper<V> {
         this._overriddenValues.put(key, existingValue);
       }
 
-      final V newValue = entry.getValue();
+      V newValue = entry.getValue();
       this._valueAccessor.setValue(key, newValue);
     }
   }
@@ -111,7 +113,7 @@ public abstract class AbstractAntProjectRaper<V> {
     // unset scopes value
     Iterator<String> keyIterator = this._scopedValues.keySet().iterator();
     while (keyIterator.hasNext()) {
-      final String key = (this._prefix + keyIterator.next());
+      String key = (this._prefix + keyIterator.next());
       this._valueAccessor.unsetValue(key);
 
       // reset the property if it existed before executing the macro
@@ -136,9 +138,8 @@ public abstract class AbstractAntProjectRaper<V> {
    * @exception NoSuchFieldException
    *              Darn, nothing to fondle
    */
-  public static Object getValue(final Object instance, final String fieldName) throws IllegalAccessException,
-      NoSuchFieldException {
-    final Field field = getField(instance.getClass(), fieldName);
+  public static Object getValue(Object instance, String fieldName) throws IllegalAccessException, NoSuchFieldException {
+    Field field = getField(instance.getClass(), fieldName);
     field.setAccessible(true);
     return field.get(instance);
   }
@@ -155,13 +156,13 @@ public abstract class AbstractAntProjectRaper<V> {
    *              Darn, nothing to fondle.
    */
   @SuppressWarnings("unchecked")
-  public static Field getField(final Class thisClass, final String fieldName) throws NoSuchFieldException {
+  public static Field getField(Class thisClass, String fieldName) throws NoSuchFieldException {
     if (thisClass == null) {
       throw new NoSuchFieldException("Invalid field : " + fieldName);
     }
     try {
       return thisClass.getDeclaredField(fieldName);
-    } catch (final NoSuchFieldException e) {
+    } catch (NoSuchFieldException e) {
       return getField(thisClass.getSuperclass(), fieldName);
     }
   }

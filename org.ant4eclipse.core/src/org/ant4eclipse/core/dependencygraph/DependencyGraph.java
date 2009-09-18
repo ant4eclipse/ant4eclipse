@@ -57,13 +57,13 @@ import java.util.Set;
 public final class DependencyGraph<T> {
 
   /** vertices */
-  private final List<T>       _vertices;
+  private List<T>           _vertices;
 
   /** edges */
-  private final List<Edge<T>> _edges;
+  private List<Edge<T>>     _edges;
 
   /** renderer */
-  private VertexRenderer<T>   _renderer;
+  private VertexRenderer<T> _renderer;
 
   /**
    * <p>
@@ -84,7 +84,7 @@ public final class DependencyGraph<T> {
    *          the provided renderer is used to create a custom string representation of a vertex for further usage in an
    *          exception message.
    */
-  public DependencyGraph(final VertexRenderer<T> renderer) {
+  public DependencyGraph(VertexRenderer<T> renderer) {
     this();
     Assert.notNull(renderer);
     this._renderer = renderer;
@@ -98,7 +98,7 @@ public final class DependencyGraph<T> {
    * @param vertex
    *          the vertex that will be added.
    */
-  public void addVertex(final T vertex) {
+  public void addVertex(T vertex) {
     Assert.notNull(vertex);
 
     if (!this._vertices.contains(vertex)) {
@@ -116,7 +116,7 @@ public final class DependencyGraph<T> {
    * @return <code>true</code>, if the given vertex has already been added to the {@link DependencyGraph}, otherwise
    *         <code>false</code>.
    */
-  public boolean containsVertex(final T vertex) {
+  public boolean containsVertex(T vertex) {
     Assert.notNull(vertex);
 
     return this._vertices.contains(vertex);
@@ -132,7 +132,7 @@ public final class DependencyGraph<T> {
    * @param child
    *          the child node
    */
-  public void addEdge(final T parent, final T child) {
+  public void addEdge(T parent, T child) {
     Assert.notNull(parent);
     Assert.notNull(child);
 
@@ -151,7 +151,7 @@ public final class DependencyGraph<T> {
   public List<T> calculateOrder() {
 
     // setup a matrix that contains a true value iff there is a the first index donates a parent of the second value
-    final boolean[][] matrix = new boolean[this._vertices.size()][this._vertices.size()];
+    boolean[][] matrix = new boolean[this._vertices.size()][this._vertices.size()];
 
     // fill the diagonale
     for (boolean[] element : matrix) {
@@ -160,9 +160,9 @@ public final class DependencyGraph<T> {
 
     // set each value to true iff there is a relationship form first to second...
     for (int i = 0; i < this._edges.size(); i++) {
-      final Edge<T> edge = this._edges.get(i);
-      final int fromidx = this._vertices.indexOf(edge.parent);
-      final int toidx = this._vertices.indexOf(edge.child);
+      Edge<T> edge = this._edges.get(i);
+      int fromidx = this._vertices.indexOf(edge.parent);
+      int toidx = this._vertices.indexOf(edge.child);
 
       if ((fromidx == -1) || (toidx == -1)) {
         // one of the edge's vertices has not been
@@ -174,7 +174,7 @@ public final class DependencyGraph<T> {
       matrix[fromidx][toidx] = true;
     }
 
-    final List<T> list = new LinkedList<T>();
+    List<T> list = new LinkedList<T>();
 
     // iterates across the matrix as long as we didn't found
     // a cycle and there are still edges to be processed
@@ -199,17 +199,17 @@ public final class DependencyGraph<T> {
    * 
    * @return true <=> There are still edges within the matrix so a succeeding iteration is required.
    */
-  private boolean reduce(final List<T> result, final boolean[][] matrix) {
+  private boolean reduce(List<T> result, boolean[][] matrix) {
     int zeros = 0;
-    final int[] count = countEdges(matrix);
+    int[] count = countEdges(matrix);
 
-    final List<T> removable = new LinkedList<T>();
+    List<T> removable = new LinkedList<T>();
 
     // add currently independent vertices to the list
     // of removable candidates
     for (int i = 0; i < count.length; i++) {
       if (count[i] == 0) {
-        final T vertex = this._vertices.get(i);
+        T vertex = this._vertices.get(i);
 
         if (!result.contains(vertex)) {
           removable.add(vertex);
@@ -222,7 +222,7 @@ public final class DependencyGraph<T> {
     if (removable.isEmpty()) {
       if (zeros < matrix.length) {
         // get the first cycle and create an apropriate textual representation
-        final StringBuffer buffer = new StringBuffer();
+        StringBuffer buffer = new StringBuffer();
         for (int i = 0; i < count.length; i++) {
           if (count[i] > 0) {
             cycleString(buffer, new HashSet<T>(), i, matrix);
@@ -265,8 +265,8 @@ public final class DependencyGraph<T> {
    * @param matrix
    *          The current state of the matrix.
    */
-  private void cycleString(final StringBuffer buffer, final Set<T> processed, final int idx, final boolean[][] matrix) {
-    final T vertex = this._vertices.get(idx);
+  private void cycleString(StringBuffer buffer, Set<T> processed, int idx, boolean[][] matrix) {
+    T vertex = this._vertices.get(idx);
     if (this._renderer == null) {
       buffer.append(String.valueOf(vertex));
     } else {
@@ -295,8 +295,8 @@ public final class DependencyGraph<T> {
    * 
    * @return A list with the length of the matrix where each element holds the number of edges of the related row.
    */
-  private int[] countEdges(final boolean[][] matrix) {
-    final int[] result = new int[matrix.length];
+  private int[] countEdges(boolean[][] matrix) {
+    int[] result = new int[matrix.length];
     // count the number of edges for each row
     for (int i = 0; i < matrix.length; i++) {
       result[i] = sum(matrix[i]);
@@ -313,7 +313,7 @@ public final class DependencyGraph<T> {
    *          the array of boolean
    * @return the number of 'true'-values in the given array.
    */
-  private int sum(final boolean[] row) {
+  private int sum(boolean[] row) {
     int result = 0;
 
     for (boolean element : row) {
@@ -362,10 +362,10 @@ public final class DependencyGraph<T> {
    */
   public static class Edge<T> {
     /** parent */
-    private final T parent;
+    private T parent;
 
     /** child */
-    private final T child;
+    private T child;
 
     /**
      * <p>
@@ -377,7 +377,7 @@ public final class DependencyGraph<T> {
      * @param aChild
      *          the child object
      */
-    public Edge(final T aParent, final T aChild) {
+    public Edge(T aParent, T aChild) {
       Assert.notNull(aParent);
       Assert.notNull(aChild);
 
@@ -412,7 +412,7 @@ public final class DependencyGraph<T> {
      */
     @Override
     public int hashCode() {
-      final int PRIME = 31;
+      int PRIME = 31;
       int result = 1;
       result = PRIME * result + this.parent.hashCode();
       result = PRIME * result + this.child.hashCode();
@@ -424,7 +424,7 @@ public final class DependencyGraph<T> {
      */
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
       if (this == obj) {
         return true;
       }
@@ -435,7 +435,7 @@ public final class DependencyGraph<T> {
         return false;
       }
       @SuppressWarnings("unchecked")
-      final Edge<T> other = (Edge<T>) obj;
+      Edge<T> other = (Edge<T>) obj;
       if (!this.parent.equals(other.parent)) {
         return false;
       }
@@ -450,7 +450,7 @@ public final class DependencyGraph<T> {
      */
     @Override
     public String toString() {
-      final StringBuffer result = new StringBuffer();
+      StringBuffer result = new StringBuffer();
       result.append("[Edge");
       result.append(" parent:");
       result.append(this.parent);

@@ -26,16 +26,16 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     SubElementComponent, ProjectReferenceAwareComponent {
 
   /** the {@link MacroExecutionDelegate} */
-  private final MacroExecutionDelegate<Scope>  _macroExecutionDelegate;
+  private MacroExecutionDelegate<Scope>  _macroExecutionDelegate;
 
   /** the {@link SubElementDelegate} */
-  private final SubElementDelegate             _subElementDelegate;
+  private SubElementDelegate             _subElementDelegate;
 
   /** the {@link ProjectReferenceAwareDelegate} */
-  private final ProjectReferenceAwareDelegate  _projectReferenceAwareDelegate;
+  private ProjectReferenceAwareDelegate  _projectReferenceAwareDelegate;
 
   /** the {@link PlatformExecutorValuesProvider} */
-  private final PlatformExecutorValuesProvider _platformExecutorValuesProvider;
+  private PlatformExecutorValuesProvider _platformExecutorValuesProvider;
 
   /**
    * <p>
@@ -120,11 +120,11 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     requireWorkspaceDirectorySet();
 
     // calculate build order
-    final List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
+    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
         this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate.getSubElements());
 
     // execute the macro definitions
-    for (final ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for (ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {
       for (final EclipseProject eclipseProject : projects) {
 
         // execute macro instance

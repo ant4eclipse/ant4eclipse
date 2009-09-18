@@ -12,7 +12,9 @@
 package org.ant4eclipse.pde.tools;
 
 import org.ant4eclipse.core.service.ServiceRegistry;
+
 import org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType;
+
 import org.ant4eclipse.platform.model.resource.Workspace;
 
 /**
@@ -66,7 +68,7 @@ public interface TargetPlatformRegistry {
    * 
    * @return the TargetPlatform
    */
-  TargetPlatform getInstance(final Workspace workspace, String targetPlatformDefinitionIdentifier,
+  TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       TargetPlatformConfiguration targetPlatformConfiguration);
 
   /**

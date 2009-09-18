@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
-import java.io.*;
+import java.io.PrintStream;
 
 public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
@@ -44,7 +44,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param printer
    *          The printer that will be used for the output. If <code>null</code> the standard output is used.
    */
-  public DefaultAnt4EclipseLogger(final PrintStream printer) {
+  public DefaultAnt4EclipseLogger(PrintStream printer) {
     this._logLevel = LOG_LEVEL_TRACE;
     this._printer = printer;
     if (this._printer == null) {
@@ -72,21 +72,21 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param loglevel
    *          The new log level to be used for this logger.
    */
-  public void setLogLevel(final int loglevel) {
+  public void setLogLevel(int loglevel) {
     this._logLevel = loglevel;
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setContext(final Object context) {
+  public void setContext(Object context) {
     //
   }
 
   /**
    * {@inheritDoc}
    */
-  public void debug(final String msg, final Object... args) {
+  public void debug(String msg, Object... args) {
     if (isDebuggingEnabled()) {
       log(LOG_LEVEL_DEBUG, msg, args);
     }
@@ -95,21 +95,21 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
-  public void error(final String msg, final Object... args) {
+  public void error(String msg, Object... args) {
     log(LOG_LEVEL_ERROR, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void info(final String msg, final Object... args) {
+  public void info(String msg, Object... args) {
     log(LOG_LEVEL_INFO, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void trace(final String msg, final Object... args) {
+  public void trace(String msg, Object... args) {
     if (isTraceingEnabled()) {
       log(LOG_LEVEL_TRACE, msg, args);
     }
@@ -118,7 +118,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
-  public void warn(final String msg, final Object... args) {
+  public void warn(String msg, Object... args) {
     log(LOG_LEVEL_WARN, msg, args);
   }
 
@@ -132,7 +132,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param args
    *          The arguments to be used for the formatting message.
    */
-  private void log(final int level, final String msg, final Object... args) {
+  private void log(int level, String msg, Object... args) {
     this._printer.println("[" + LEVEL_DESCIRPTION[level] + "] " + String.format(msg, args));
   }
 

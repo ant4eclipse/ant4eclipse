@@ -12,18 +12,18 @@ import java.util.Map;
 public class StringTemplate {
 
   /** - */
-  private static String             PREFIX  = "${";
+  private static String       PREFIX  = "${";
 
   /** - */
-  private static String             POSTFIX = "}";
+  private static String       POSTFIX = "}";
 
-  public static final String        NL      = System.getProperty("line.separator");
-
-  /** - */
-  private final StringBuilder       _stringTemplate;
+  public static final String  NL      = System.getProperty("line.separator");
 
   /** - */
-  private final Map<String, String> _stringsToReplace;
+  private StringBuilder       _stringTemplate;
+
+  /** - */
+  private Map<String, String> _stringsToReplace;
 
   /**
    * 

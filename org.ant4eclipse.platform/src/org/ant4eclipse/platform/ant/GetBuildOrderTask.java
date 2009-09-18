@@ -38,13 +38,13 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
     ProjectReferenceAwareComponent {
 
   /** the delegate used for handling sub elements (e.g. &lt;jdtClasspathContainerArgument&gt; */
-  private final SubElementDelegate            _subElementDelegate;
+  private SubElementDelegate            _subElementDelegate;
 
   /** the project reference delegate */
-  private final ProjectReferenceAwareDelegate _projectReferenceAwareDelegate;
+  private ProjectReferenceAwareDelegate _projectReferenceAwareDelegate;
 
   /** the property that should hold the ordered projects */
-  private String                              _buildorderProperty;
+  private String                        _buildorderProperty;
 
   /**
    * <p>
@@ -108,7 +108,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * 
    * @param buildorderProperty
    */
-  public final void setBuildorderProperty(final String buildorderProperty) {
+  public final void setBuildorderProperty(String buildorderProperty) {
     this._buildorderProperty = buildorderProperty;
   }
 
@@ -157,9 +157,8 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
     requireBuildorderPropertySet();
 
     // calculate build order
-    final List<EclipseProject> orderedProjects = BuildOrderResolver.resolveBuildOrder(getWorkspace(),
-        getProjectNames(), this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate
-            .getSubElements());
+    List<EclipseProject> orderedProjects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
+        this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate.getSubElements());
 
     // set property
     getProject().setProperty(this._buildorderProperty, convertToString(orderedProjects, ','));
@@ -175,11 +174,11 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * 
    * @return A String which contains the list of names.
    */
-  private String convertToString(final List<EclipseProject> projects, final char separator) {
+  private String convertToString(List<EclipseProject> projects, char separator) {
     Assert.notNull(projects);
 
     // create StringBuffer
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
 
     // construct result
     for (Iterator<EclipseProject> iterator = projects.iterator(); iterator.hasNext();) {

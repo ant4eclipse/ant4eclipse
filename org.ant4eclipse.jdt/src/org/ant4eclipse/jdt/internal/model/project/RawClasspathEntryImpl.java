@@ -25,16 +25,16 @@ import java.io.File;
 public final class RawClasspathEntryImpl implements RawClasspathEntry {
 
   /** the path */
-  private String    _path;
+  private String  _path;
 
   /** the entrykind */
-  private final int _entryKind;
+  private int     _entryKind;
 
   /** the outputlocation */
-  private String    _outputLocation;
+  private String  _outputLocation;
 
   /** whether or not the entry is exported */
-  private boolean   _exported = true;
+  private boolean _exported = true;
 
   /**
    * Creates a new instance of type EclipseClasspathEntry
@@ -42,7 +42,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param entryKind
    * @param path
    */
-  public RawClasspathEntryImpl(final String entryKind, final String path) {
+  public RawClasspathEntryImpl(String entryKind, String path) {
     this(resolveEntryKind(entryKind, path), path, null, false);
   }
 
@@ -53,7 +53,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param path
    * @param output
    */
-  public RawClasspathEntryImpl(final String entryKind, final String path, final String output) {
+  public RawClasspathEntryImpl(String entryKind, String path, String output) {
     this(resolveEntryKind(entryKind, path), path, output, false);
   }
 
@@ -64,7 +64,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param path
    * @param exported
    */
-  public RawClasspathEntryImpl(final String entryKind, final String path, final boolean exported) {
+  public RawClasspathEntryImpl(String entryKind, String path, boolean exported) {
     this(resolveEntryKind(entryKind, path), path, null, exported);
   }
 
@@ -76,7 +76,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param output
    * @param exported
    */
-  public RawClasspathEntryImpl(final String entryKind, final String path, final String output, final boolean exported) {
+  public RawClasspathEntryImpl(String entryKind, String path, String output, boolean exported) {
     this(resolveEntryKind(entryKind, path), path, output, exported);
   }
 
@@ -86,7 +86,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param entryKind
    * @param path
    */
-  public RawClasspathEntryImpl(final int entryKind, final String path) {
+  public RawClasspathEntryImpl(int entryKind, String path) {
     this(entryKind, path, null, false);
   }
 
@@ -98,7 +98,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param output
    * @param exported
    */
-  public RawClasspathEntryImpl(final int entryKind, final String path, final String output, final boolean exported) {
+  public RawClasspathEntryImpl(int entryKind, String path, String output, boolean exported) {
     Assert.notNull(path);
 
     this._entryKind = entryKind;
@@ -118,7 +118,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
     }
   }
 
-  // public final boolean isProjectRelative() {
+  // public boolean isProjectRelative() {
   // return false;
   // }
   //
@@ -139,7 +139,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#getEntryKind()
    */
-  public final int getEntryKind() {
+  public int getEntryKind() {
     return this._entryKind;
   }
 
@@ -148,7 +148,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#getPath()
    */
-  public final String getPath() {
+  public String getPath() {
     return this._path;
   }
 
@@ -157,7 +157,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#getOutputLocation()
    */
-  public final String getOutputLocation() {
+  public String getOutputLocation() {
     return this._outputLocation;
   }
 
@@ -166,7 +166,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#hasOutputLocation()
    */
-  public final boolean hasOutputLocation() {
+  public boolean hasOutputLocation() {
     return this._outputLocation != null;
   }
 
@@ -175,7 +175,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @see net.sf.ant4eclipse.model.jdt.project.internal.RawClasspathentry#isExported()
    */
-  public final boolean isExported() {
+  public boolean isExported() {
     return this._exported;
   }
 
@@ -189,7 +189,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @return A numerical information specifying the entry kind.
    */
-  private static int resolveEntryKind(final String entryKind, final String path) {
+  private static int resolveEntryKind(String entryKind, String path) {
     Assert.notNull(entryKind);
     Assert.notNull(path);
 
@@ -215,7 +215,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[EclipseClasspathEntry:");
     buffer.append(" path: ");
     buffer.append(this._path);
@@ -233,7 +233,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -243,7 +243,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final RawClasspathEntryImpl castedObj = (RawClasspathEntryImpl) o;
+    RawClasspathEntryImpl castedObj = (RawClasspathEntryImpl) o;
     return ((this._path == null ? castedObj._path == null : this._path.equals(castedObj._path))
         && (this._entryKind == castedObj._entryKind)
         && (this._outputLocation == null ? castedObj._outputLocation == null : this._outputLocation

@@ -55,8 +55,8 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    * @param runtimeid
    *          The id of the runtime used to access the python interpreter.
    */
-  public void setRuntime(final String runtimeid) {
-    _runtimeid = Utilities.cleanup(runtimeid);
+  public void setRuntime(String runtimeid) {
+    this._runtimeid = Utilities.cleanup(runtimeid);
   }
 
   /**
@@ -65,8 +65,8 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    * @param destdir
    *          The destination directory where the documentation shall be written to.
    */
-  public void setDestdir(final File destdir) {
-    _destdir = destdir;
+  public void setDestdir(File destdir) {
+    this._destdir = destdir;
   }
 
   /**
@@ -75,8 +75,8 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    * @param sourcedir
    *          The sources directory used to create the documentation from.
    */
-  public void setSourcedir(final File sourcedir) {
-    _sourcedir = sourcedir;
+  public void setSourcedir(File sourcedir) {
+    this._sourcedir = sourcedir;
   }
 
   /**
@@ -84,24 +84,24 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    */
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (_destdir == null) {
+    if (this._destdir == null) {
       throw new ExtendedBuildException(MSG_MISSINGATTRIBUTE, "destdir");
     }
-    if (_sourcedir == null) {
+    if (this._sourcedir == null) {
       throw new ExtendedBuildException(MSG_MISSINGATTRIBUTE, "sourcedir");
     }
-    if (_destdir.exists() && (!_destdir.isDirectory())) {
-      throw new ExtendedBuildException(MSG_NOTADIRECTORY, _destdir);
+    if (this._destdir.exists() && (!this._destdir.isDirectory())) {
+      throw new ExtendedBuildException(MSG_NOTADIRECTORY, this._destdir);
     }
-    if (!_sourcedir.isDirectory()) {
-      throw new ExtendedBuildException(MSG_NOTADIRECTORY, _sourcedir);
+    if (!this._sourcedir.isDirectory()) {
+      throw new ExtendedBuildException(MSG_NOTADIRECTORY, this._sourcedir);
     }
-    if (_runtimeid == null) {
+    if (this._runtimeid == null) {
       throw new ExtendedBuildException(MSG_MISSINGATTRIBUTE, "runtime");
     }
-    final PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
-    if (!registry.hasRuntime(_runtimeid)) {
-      throw new ExtendedBuildException(MSG_UNKNOWNRUNTIME, _runtimeid);
+    PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
+    if (!registry.hasRuntime(this._runtimeid)) {
+      throw new ExtendedBuildException(MSG_UNKNOWNRUNTIME, this._runtimeid);
     }
   }
 
@@ -111,8 +111,8 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
   @Override
   protected void doExecute() {
 
-    final PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
-    final PythonRuntime runtime = registry.getRuntime(_runtimeid);
+    PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
+    PythonRuntime runtime = registry.getRuntime(this._runtimeid);
 
     if (runtime.getVersion().getMajor() >= 3) {
       // unfortunately the syntax has changed, so we can't use epydoc with it
@@ -120,25 +120,25 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
       return;
     }
 
-    final PythonTools pythontools = ServiceRegistry.instance().getService(PythonTools.class);
-    final File executable = runtime.getExecutable();
+    PythonTools pythontools = ServiceRegistry.instance().getService(PythonTools.class);
+    File executable = runtime.getExecutable();
 
-    Utilities.mkdirs(_destdir);
+    Utilities.mkdirs(this._destdir);
 
     // setup some options for the commandline
-    final StringBuffer options = new StringBuffer();
+    StringBuffer options = new StringBuffer();
     appendOption(options, "--html");
     appendOption(options, "-o");
-    appendOption(options, pythonEscape(_destdir.getAbsolutePath()));
+    appendOption(options, pythonEscape(this._destdir.getAbsolutePath()));
     collectModules(options);
 
     // generate the python script used to generate the documentation
-    final File install = pythontools.getEpydocInstallation();
-    final String name = Utilities.stripSuffix(install.getName());
-    final String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, options);
+    File install = pythontools.getEpydocInstallation();
+    String name = Utilities.stripSuffix(install.getName());
+    String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, options);
 
     // save the script
-    final File script = Utilities.createFile(code, ".py", "ASCII");
+    File script = Utilities.createFile(code, ".py", "ASCII");
 
     // execute the script
     Utilities.execute(executable, null, script.getAbsolutePath());
@@ -165,7 +165,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    * @param option
    *          The option that has to be added. Neither <code>null</code> nor empty.
    */
-  private void appendOption(final StringBuffer buffer, final String option) {
+  private void appendOption(StringBuffer buffer, String option) {
     buffer.append("  sys.argv.append(\"" + option + "\")\n");
   }
 
@@ -176,9 +176,9 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    *          The buffer used to collect the package locations as single options added to the commandline. Not
    *          <code>null</code>.
    */
-  private void collectModules(final StringBuffer options) {
-    final List<File> result = new ArrayList<File>();
-    collectPackages(result, _sourcedir);
+  private void collectModules(StringBuffer options) {
+    List<File> result = new ArrayList<File>();
+    collectPackages(result, this._sourcedir);
     if (result.size() > 0) {
       appendOption(options, pythonEscape(result.get(0).getAbsolutePath()));
       for (int i = 1; i < result.size(); i++) {
@@ -195,8 +195,8 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    * 
    * @return <code>true</code> <=> The supplied directory is a package.
    */
-  private boolean isPackage(final File dir) {
-    final File child = new File(dir, "__init__.py");
+  private boolean isPackage(File dir) {
+    File child = new File(dir, "__init__.py");
     return child.isFile();
   }
 
@@ -209,13 +209,13 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    * @param current
    *          The current location within the filesystem. Not <code>null</code> and must be a directory.
    */
-  private void collectPackages(final List<File> receiver, final File current) {
+  private void collectPackages(List<File> receiver, File current) {
     if (isPackage(current)) {
       receiver.add(current);
       return;
     }
-    final File[] children = current.listFiles();
-    for (final File child : children) {
+    File[] children = current.listFiles();
+    for (File child : children) {
       if (child.isDirectory()) {
         collectPackages(receiver, child);
       }

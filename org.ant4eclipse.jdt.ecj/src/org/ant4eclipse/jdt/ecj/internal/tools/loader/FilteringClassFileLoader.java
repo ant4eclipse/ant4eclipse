@@ -1,15 +1,17 @@
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.core.ClassName;
+
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.internal.tools.ModifiableClassFile;
+
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.eclipse.jdt.internal.compiler.env.AccessRule;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -20,16 +22,16 @@ import org.eclipse.jdt.internal.compiler.env.AccessRule;
 public class FilteringClassFileLoader implements ClassFileLoader {
 
   /** the class file loader that should be filtered */
-  private final ClassFileLoader _classFileLoader;
+  private ClassFileLoader _classFileLoader;
 
   /** the filter string */
-  private final String          _filter;
+  private String          _filter;
 
   /** the include patterns */
-  private final List<String>    _includes;
+  private List<String>    _includes;
 
   /** the exclude patterns */
-  private final List<String>    _excludes;
+  private List<String>    _excludes;
 
   /**
    * <p>
@@ -38,7 +40,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * @param classFileLoader
    * @param filter
    */
-  public FilteringClassFileLoader(final ClassFileLoader classFileLoader, final String filter) {
+  public FilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
 
     // TODO ASSERT
 
@@ -61,30 +63,30 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   /**
    * @see org.ant4eclipse.jdt.ecj.ClassFileLoader#hasPackage(java.lang.String)
    */
-  public boolean hasPackage(final String packageName) {
+  public boolean hasPackage(String packageName) {
     return this._classFileLoader.hasPackage(packageName);
   }
 
   /**
    * @see org.ant4eclipse.jdt.ecj.ClassFileLoader#loadClass(org.ant4eclipse.core.ClassName)
    */
-  public ClassFile loadClass(final ClassName className) {
+  public ClassFile loadClass(ClassName className) {
 
-    final ClassFile result = this._classFileLoader.loadClass(className);
+    ClassFile result = this._classFileLoader.loadClass(className);
 
-    final String classFileName = className.asClassFileName();
+    String classFileName = className.asClassFileName();
 
-    for (final String includePattern : this._includes) {
+    for (String includePattern : this._includes) {
       if (classFileName.matches(includePattern)) {
         return result;
       }
     }
 
-    for (final String exludePattern : this._excludes) {
+    for (String exludePattern : this._excludes) {
       if (classFileName.matches(exludePattern)) {
 
         if (result instanceof ModifiableClassFile) {
-          final AccessRestriction accessRestriction = new AccessRestriction(new AccessRule("**".toCharArray(),
+          AccessRestriction accessRestriction = new AccessRestriction(new AccessRule("**".toCharArray(),
               IProblem.ForbiddenReference), result.getLibraryType(), result.getLibraryLocation());
 
           ((ModifiableClassFile) result).setAccessRestriction(accessRestriction);
@@ -102,8 +104,8 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * </p>
    */
   private void init() {
-    final String[] parts = this._filter.split(";");
-    for (final String part : parts) {
+    String[] parts = this._filter.split(";");
+    for (String part : parts) {
 
       // step 1: replace all occurrences of '**/*' with '###' (temporary step)
       String transformedPart = part.substring(1).replaceAll("\\*\\*/\\*", "###");

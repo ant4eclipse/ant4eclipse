@@ -19,7 +19,9 @@ import org.ant4eclipse.cdt.model.project.CCProjectRole;
 import org.ant4eclipse.cdt.model.project.CProjectRole;
 
 /**
- * <p>Collection of Cdt related helper functions.</p>
+ * <p>
+ * Collection of Cdt related helper functions.
+ * </p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
@@ -32,29 +34,28 @@ public class CdtUtilities {
   }
 
   /**
-   * Returns <code>true</code> in case the supplied project has one of the supported c natures.
-   * This method is just a convenience function which combines {@link #isCCProject(EclipseProject)}
-   * and {@link #isCProject(EclipseProject)}.
+   * Returns <code>true</code> in case the supplied project has one of the supported c natures. This method is just a
+   * convenience function which combines {@link #isCCProject(EclipseProject)} and {@link #isCProject(EclipseProject)}.
    * 
    * @param project
-   *            The project that has to be examined. Not <code>null</code>.
-   *            
-   * @return   <code>true</code> <=> The supplied project has one of the supported c natures.
+   *          The project that has to be examined. Not <code>null</code>.
+   * 
+   * @return <code>true</code> <=> The supplied project has one of the supported c natures.
    */
-  public static final boolean isCRelatedProject(final EclipseProject project) {
+  public static final boolean isCRelatedProject(EclipseProject project) {
     Assert.notNull(project);
     return project.hasRole(CProjectRole.class) || project.hasRole(CCProjectRole.class);
   }
-  
+
   /**
    * Returns <code>true</code> in case the supplied project has the simple c nature.
-   *  
+   * 
    * @param project
-   *            The project that has to be examined. Not <code>null</code>.
-   *            
-   * @return   <code>true</code> <=> The supplied project has the simple c nature.
+   *          The project that has to be examined. Not <code>null</code>.
+   * 
+   * @return <code>true</code> <=> The supplied project has the simple c nature.
    */
-  public static final boolean isCProject(final EclipseProject project) {
+  public static final boolean isCProject(EclipseProject project) {
     Assert.notNull(project);
     return project.hasRole(CProjectRole.class);
   }
@@ -63,13 +64,13 @@ public class CdtUtilities {
    * Returns <code>true</code> in case the supplied project has the c++ nature.
    * 
    * @param project
-   *            The project that has to be examined. Not <code>null</code>.
-   *            
-   * @return   <code>true</code> <=> The supplied project has the c++ nature.
+   *          The project that has to be examined. Not <code>null</code>.
+   * 
+   * @return <code>true</code> <=> The supplied project has the c++ nature.
    */
-  public static final boolean isCCProject(final EclipseProject project) {
+  public static final boolean isCCProject(EclipseProject project) {
     Assert.notNull(project);
     return project.hasRole(CCProjectRole.class);
   }
-  
+
 } /* ENDCLASS */

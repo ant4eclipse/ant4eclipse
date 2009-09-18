@@ -168,15 +168,15 @@ public class ServiceRegistryTest {
     private boolean _initialized = false;
 
     public void initialize() {
-      _initialized = true;
+      this._initialized = true;
     }
 
     public void dispose() {
-      _initialized = false;
+      this._initialized = false;
     }
 
     public boolean isInitialized() {
-      return _initialized;
+      return this._initialized;
     }
   }
 

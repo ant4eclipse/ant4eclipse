@@ -8,7 +8,7 @@ import java.util.List;
 public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContainerArgumentComponent {
 
   /** the container argument list */
-  private final List<JdtClasspathContainerArgument> _containerArguments = new LinkedList<JdtClasspathContainerArgument>();
+  private List<JdtClasspathContainerArgument> _containerArguments = new LinkedList<JdtClasspathContainerArgument>();
 
   /**
    * {@inheritDoc}
@@ -16,7 +16,7 @@ public class JdtClasspathContainerArgumentDelegate implements JdtClasspathContai
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
 
     // create argument
-    final JdtClasspathContainerArgument argument = new JdtClasspathContainerArgument();
+    JdtClasspathContainerArgument argument = new JdtClasspathContainerArgument();
 
     // add argument to argument list
     this._containerArguments.add(argument);

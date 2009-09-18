@@ -43,7 +43,7 @@ public class FeatureDescriptionLoader {
    *          the feature file
    * @return the feature description
    */
-  public static FeatureDescription parseFeature(final File file) {
+  public static FeatureDescription parseFeature(File file) {
     Assert.exists(file);
 
     if (file.isFile() && file.getName().endsWith(".jar")) {
@@ -70,12 +70,12 @@ public class FeatureDescriptionLoader {
    *          the given feature jar file.
    * @return the {@link FeatureDescription}
    */
-  private static FeatureDescription parseFeatureJarFile(final File file) {
+  private static FeatureDescription parseFeatureJarFile(File file) {
     Assert.isFile(file);
 
     try {
       // create jar file
-      final JarFile jarFile = new JarFile(file);
+      JarFile jarFile = new JarFile(file);
 
       // get the feature manifest
       ZipEntry zipEntry = jarFile.getEntry(Constants.FEATURE_MANIFEST);
@@ -109,12 +109,12 @@ public class FeatureDescriptionLoader {
    * @return the {@link FeatureDescription} or <code>null</code>, if the directory doesn't contain a
    *         <code>feature.xml</code> file, the method returns <code>null</code>.
    */
-  private static FeatureDescription parseFeatureDirectory(final File directory) {
+  private static FeatureDescription parseFeatureDirectory(File directory) {
     Assert.isDirectory(directory);
 
     try {
       // create jar file
-      final File featureManifestFile = new File(directory, Constants.FEATURE_MANIFEST);
+      File featureManifestFile = new File(directory, Constants.FEATURE_MANIFEST);
 
       // return null if no feature manifest
       if (!featureManifestFile.exists() || !featureManifestFile.isFile()) {

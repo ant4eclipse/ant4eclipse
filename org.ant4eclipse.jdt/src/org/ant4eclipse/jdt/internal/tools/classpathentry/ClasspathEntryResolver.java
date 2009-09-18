@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import org.ant4eclipse.jdt.model.*;
-import org.ant4eclipse.jdt.model.project.*;
-import org.ant4eclipse.jdt.tools.container.*;
+import org.ant4eclipse.jdt.model.ClasspathEntry;
+import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
+import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
 /**
  * <p>
@@ -47,5 +47,5 @@ public interface ClasspathEntryResolver {
    * @param context
    *          the {@link ClasspathResolverContext}
    */
-  void resolve(ClasspathEntry classpathEntry, final ClasspathResolverContext context);
+  void resolve(ClasspathEntry classpathEntry, ClasspathResolverContext context);
 }

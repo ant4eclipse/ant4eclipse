@@ -98,16 +98,16 @@ public class ConditionalMacroDef extends MacroDef {
   public static class ConditionalNestedSequential extends MacroDef.NestedSequential {
 
     /** the sequential should only be executed if '_if == true' */
-    private boolean                   _if     = true;
+    private boolean             _if     = true;
 
     /** the sequential should only be executed if '_unless == false' */
-    private boolean                   _unless = false;
+    private boolean             _unless = false;
 
     /** a filter expression to filter the elements to execute a sequential for */
-    private String                    _filter = null;
+    private String              _filter = null;
 
     /** the parent conditional macro definition */
-    private final ConditionalMacroDef _conditionalMacroDef;
+    private ConditionalMacroDef _conditionalMacroDef;
 
     /**
      * <p>
@@ -166,7 +166,7 @@ public class ConditionalMacroDef extends MacroDef {
 
           // search for the unknown element that causes the problem
           for (UnknownElement unknownElement : (List<UnknownElement>) element.getChildren()) {
-            if (this.equals(unknownElement.getWrapper().getProxy())) {
+            if (equals(unknownElement.getWrapper().getProxy())) {
               throw new BuildException("Invalid filter '" + filter + "'.", unknownElement.getLocation());
             }
           }

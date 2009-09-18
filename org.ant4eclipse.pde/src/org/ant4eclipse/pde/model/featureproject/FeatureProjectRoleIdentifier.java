@@ -37,24 +37,24 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public boolean isRoleSupported(final EclipseProject project) {
+  public boolean isRoleSupported(EclipseProject project) {
     return (project.hasNature(FeatureProjectRole.FEATURE_NATURE));
   }
 
   /**
    * {@inheritDoc}
    */
-  public ProjectRole createRole(final EclipseProject project) {
+  public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("FeatureProjectRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
 
-    final FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
-    final File featureDescription = featureProjectRole.getFeatureXml();
+    FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
+    File featureDescription = featureProjectRole.getFeatureXml();
 
     try {
-      final FeatureManifest feature = FeatureManifestParser.parseFeature(new FileInputStream(featureDescription));
+      FeatureManifest feature = FeatureManifestParser.parseFeature(new FileInputStream(featureDescription));
       featureProjectRole.setFeature(feature);
-    } catch (final FileNotFoundException e) {
+    } catch (FileNotFoundException e) {
       throw new Ant4EclipseException(PdeExceptionCode.FEATURE_MANIFEST_FILE_NOT_FOUND, project.getFolder()
           .getAbsolutePath());
     }
@@ -70,7 +70,7 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public void postProcess(final EclipseProject project) {
+  public void postProcess(EclipseProject project) {
   }
 
 } /* ENDCLASS */

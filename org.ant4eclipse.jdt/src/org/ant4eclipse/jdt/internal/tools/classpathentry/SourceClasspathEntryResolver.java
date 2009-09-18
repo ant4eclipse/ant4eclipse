@@ -33,7 +33,7 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
   /**
    * {@inheritDoc}
    */
-  public boolean canResolve(final ClasspathEntry entry) {
+  public boolean canResolve(ClasspathEntry entry) {
     // only suitable for raw class path entries of kind CPE_SOURCE
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_SOURCE);
   }
@@ -41,14 +41,14 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
   /**
    * {@inheritDoc}
    */
-  public void resolve(final ClasspathEntry pathEntry, final ClasspathResolverContext context) {
+  public void resolve(ClasspathEntry pathEntry, ClasspathResolverContext context) {
 
     // always exported, there is no need to check for visibility
-    final RawClasspathEntry entry = (RawClasspathEntry) pathEntry;
+    RawClasspathEntry entry = (RawClasspathEntry) pathEntry;
 
-    final String path = getCurrentJavaProjectRole(context).getOutputFolderForSourceFolder(entry.getPath());
+    String path = getCurrentJavaProjectRole(context).getOutputFolderForSourceFolder(entry.getPath());
 
-    final File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(path,
+    File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(path,
         EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(
         path, EclipseProject.PathStyle.ABSOLUTE);
 

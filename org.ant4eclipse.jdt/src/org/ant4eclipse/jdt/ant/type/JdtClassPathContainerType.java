@@ -36,7 +36,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public JdtClassPathContainerType(final Project project) {
+  public JdtClassPathContainerType(Project project) {
     super(project);
   }
 
@@ -57,7 +57,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * @param name
    *          the name to set
    */
-  public void setName(final String name) {
+  public void setName(String name) {
     this._name = name;
   }
 
@@ -67,7 +67,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * @param rc
    *          resource collection to add.
    */
-  public void add(final ResourceCollection rc) {
+  public void add(ResourceCollection rc) {
     if (this._resources == null) {
       this._resources = new Union();
     }
@@ -82,14 +82,14 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
     // TODO: validate
 
     // fetch the ClassPathElementsRegistry
-    final ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
+    ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
 
     // fetch the provided files
-    final List<File> files = new LinkedList<File>();
+    List<File> files = new LinkedList<File>();
     @SuppressWarnings("unchecked")
-    final Iterator iterator = this._resources.iterator();
+    Iterator iterator = this._resources.iterator();
     while (iterator.hasNext()) {
-      final FileResource fileResource = (FileResource) iterator.next();
+      FileResource fileResource = (FileResource) iterator.next();
       files.add(fileResource.getFile());
     }
 

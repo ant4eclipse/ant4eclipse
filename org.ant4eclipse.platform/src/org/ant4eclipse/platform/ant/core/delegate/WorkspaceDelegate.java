@@ -11,15 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
+import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.ant.core.WorkspaceComponent;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
+
+import java.io.File;
 
 /**
  * <p>
@@ -44,7 +47,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * @param component
    *          the ant {@link ProjectComponent}
    */
-  public WorkspaceDelegate(final ProjectComponent component) {
+  public WorkspaceDelegate(ProjectComponent component) {
     super(component);
   }
 
@@ -52,14 +55,15 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * {@inheritDoc}
    */
   @Deprecated
-  public final void setWorkspace(final File workspace) {
+  public final void setWorkspace(File workspace) {
+    A4ELogging.warn("The attribute 'workspace' is deprecated. Please use 'workspaceDirectory' instead !");
     setWorkspaceDirectory(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setWorkspaceDirectory(final File workspaceDirectory) {
+  public final void setWorkspaceDirectory(File workspaceDirectory) {
     this._workspaceDirectory = workspaceDirectory;
   }
 

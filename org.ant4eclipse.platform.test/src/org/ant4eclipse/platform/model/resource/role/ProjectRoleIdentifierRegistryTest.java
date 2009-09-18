@@ -59,7 +59,7 @@ public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTe
     /**
      * {@inheritDoc}
      */
-    public void postProcess(final EclipseProject project) {
+    public void postProcess(EclipseProject project) {
     }
 
   }

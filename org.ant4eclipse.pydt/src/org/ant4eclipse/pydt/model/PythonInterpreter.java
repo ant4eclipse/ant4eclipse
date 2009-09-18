@@ -37,11 +37,11 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    *          The supported executable names. Not <code>null</code>. Must be sorted lexicographically and each element
    *          is supposed to be neither <code>null</code> nor empty.
    */
-  public PythonInterpreter(final String name, final String[] executables) {
+  public PythonInterpreter(String name, String[] executables) {
     Assert.notNull(name);
     Assert.notNull(executables);
-    _name = name;
-    _executables = executables;
+    this._name = name;
+    this._executables = executables;
   }
 
   /**
@@ -50,7 +50,7 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    * @return The name associated with this interpreter.
    */
   public String getName() {
-    return _name;
+    return this._name;
   }
 
   /**
@@ -61,10 +61,10 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    * 
    * @return The location of the python executable or <code>null</code>.
    */
-  public File lookup(final File directory) {
+  public File lookup(File directory) {
     Assert.notNull(directory);
-    for (final String exename : _executables) {
-      for (final String suffix : EXESUFFICES) {
+    for (String exename : this._executables) {
+      for (String suffix : EXESUFFICES) {
         File candidate = new File(directory, exename + suffix);
         if (candidate.isFile()) {
           // found a match
@@ -79,7 +79,7 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object object) {
+  public boolean equals(Object object) {
     if (this == object) {
       return true;
     }
@@ -89,15 +89,15 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
     if (object.getClass() != getClass()) {
       return false;
     }
-    final PythonInterpreter other = (PythonInterpreter) object;
-    if (!_name.equals(other._name)) {
+    PythonInterpreter other = (PythonInterpreter) object;
+    if (!this._name.equals(other._name)) {
       return false;
     }
-    if (_executables.length != other._executables.length) {
+    if (this._executables.length != other._executables.length) {
       return false;
     }
-    for (int i = 0; i < _executables.length; i++) {
-      if (!_executables[i].equals(other._executables)) {
+    for (int i = 0; i < this._executables.length; i++) {
+      if (!this._executables[i].equals(other._executables)) {
         return false;
       }
     }
@@ -109,9 +109,9 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    */
   @Override
   public int hashCode() {
-    int result = _name.hashCode();
-    for (int i = 0; i < _executables.length; i++) {
-      result = result * 31 + _executables[i].hashCode();
+    int result = this._name.hashCode();
+    for (String executable : this._executables) {
+      result = result * 31 + executable.hashCode();
     }
     return result;
   }
@@ -121,16 +121,16 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[PythonInterpreter:");
     buffer.append(" _name: ");
-    buffer.append(_name);
+    buffer.append(this._name);
     buffer.append(", _executables: {");
-    if (_executables.length > 0) {
-      buffer.append(_executables[0]);
-      for (int i = 1; i < _executables.length; i++) {
+    if (this._executables.length > 0) {
+      buffer.append(this._executables[0]);
+      for (int i = 1; i < this._executables.length; i++) {
         buffer.append(", ");
-        buffer.append(_executables[i]);
+        buffer.append(this._executables[i]);
       }
     }
     buffer.append("}]");
@@ -141,7 +141,7 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    * {@inheritDoc}
    */
   public int compareTo(PythonInterpreter other) {
-    return _name.compareTo(other._name);
+    return this._name.compareTo(other._name);
   }
 
 } /* ENDCLASS */

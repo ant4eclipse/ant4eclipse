@@ -11,11 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.container;
 
-import java.io.File;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.ContainerTypes;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
@@ -25,31 +22,35 @@ import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
+import java.io.File;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 public class JreContainerResolver implements ClasspathContainerResolver {
 
-  public boolean canResolveContainer(final ClasspathEntry classpathEntry) {
+  public boolean canResolveContainer(ClasspathEntry classpathEntry) {
     return classpathEntry.getPath().startsWith(ContainerTypes.JRE_CONTAINER);
   }
 
   /**
    * @param resolver
    */
-  public void resolveContainer(final ClasspathEntry classpathEntry, final ClasspathResolverContext context) {
+  public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
     //
 
     if (!context.isCurrentProjectRoot()) {
       return;
     }
 
-    final JavaRuntimeRegistry javaRuntimeRegistry = JavaRuntimeRegistry.Helper.getRegistry();
+    JavaRuntimeRegistry javaRuntimeRegistry = JavaRuntimeRegistry.Helper.getRegistry();
 
-    final String path = classpathEntry.getPath();
+    String path = classpathEntry.getPath();
 
     JavaRuntime javaRuntime = null;
     if (path.equals(ContainerTypes.JRE_CONTAINER)) {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
     } else if (path.startsWith(ContainerTypes.VMTYPE_PREFIX)) {
-      final String key = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
+      String key = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
       javaRuntime = javaRuntimeRegistry.getJavaRuntime(key);
       if (javaRuntime == null) {
         // TODO
@@ -67,12 +68,12 @@ public class JreContainerResolver implements ClasspathContainerResolver {
 
     // TODO
     AccessRestrictions accessRestrictions = null;
-    final File[] libraries = javaRuntime.getLibraries();
+    File[] libraries = javaRuntime.getLibraries();
 
     if (!path.equals(ContainerTypes.JRE_CONTAINER)) {
-      final String profileKey = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
+      String profileKey = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
       if (javaRuntimeRegistry.hasJavaProfile(profileKey)) {
-        final Set<String> publicPackages = new LinkedHashSet<String>();
+        Set<String> publicPackages = new LinkedHashSet<String>();
         publicPackages.add("java");
         publicPackages.addAll(javaRuntimeRegistry.getJavaProfile(profileKey).getSystemPackages());
         accessRestrictions = new AccessRestrictions(publicPackages, new LinkedHashSet<String>(), true);

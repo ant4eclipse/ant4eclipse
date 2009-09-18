@@ -90,7 +90,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param property
    *          the name of an ant property that will hold the list of referenced projects.
    */
-  public void setProperty(final String property) {
+  public void setProperty(String property) {
     this._property = property;
   }
 
@@ -102,7 +102,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   // * @param property
   // * the name of an ANT property that will hold the list of projects that are not available.
   // */
-  // public void setUnavailableProjects(final String property) {
+  // public void setUnavailableProjects(String property) {
   // this._unavailableProjects = property;
   // }
   //
@@ -114,7 +114,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   // * @param specifiednames
   // * <code>true</code> <=> Create the list using the specified names.
   // */
-  // public void setSpecifiedNames(final boolean specifiednames) {
+  // public void setSpecifiedNames(boolean specifiednames) {
   // this._specifiedNames = specifiednames;
   // }
 
@@ -137,7 +137,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param separator
    *          an (optional) separator that is used to separate the project names.
    */
-  public void setSeparator(final String separator) {
+  public void setSeparator(String separator) {
     Assert.notNull(separator);
     this._separator = separator;
   }
@@ -161,7 +161,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param source
    *          where to read the referenced projects from.
    */
-  public void setSource(final String source) {
+  public void setSource(String source) {
     this._source = source;
   }
 
@@ -185,7 +185,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param recursive
    *          <code>true</code> if required projects should be resolve recursive.
    */
-  public void setRecursive(final boolean recursive) {
+  public void setRecursive(boolean recursive) {
     this._recursive = recursive;
   }
 
@@ -193,7 +193,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     return this._exportedOnly;
   }
 
-  public void setExportedOnly(final boolean exportedOnly) {
+  public void setExportedOnly(boolean exportedOnly) {
     this._exportedOnly = exportedOnly;
   }
 
@@ -248,7 +248,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // rejected);
     // }
     //
-    // final StringBuffer result = new StringBuffer();
+    // StringBuffer result = new StringBuffer();
     // if (this._specifiedNames) {
     // result.append(referencedProjects[0].getSpecifiedName());
     // } else {
@@ -277,9 +277,9 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // getProjectDelegate().setStringProperty(this._unavailableProjects, result.toString());
     // }
     //
-    // } catch (final BuildException ex) {
+    // } catch (BuildException ex) {
     // throw ex;
-    // } catch (final Exception ex) {
+    // } catch (Exception ex) {
     // A4ELogging.debug(ex.getMessage());
     // throw new BuildException(ex.getMessage(), ex);
     // }
@@ -306,7 +306,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
      * @param value
      *          the yalue to be set.
      */
-    public NonJavaProjectHandling(final String value) {
+    public NonJavaProjectHandling(String value) {
       super();
       setValue(value);
     }

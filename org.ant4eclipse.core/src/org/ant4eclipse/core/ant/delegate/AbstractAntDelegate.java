@@ -12,6 +12,7 @@
 package org.ant4eclipse.core.ant.delegate;
 
 import org.ant4eclipse.core.Assert;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -25,7 +26,7 @@ import org.apache.tools.ant.ProjectComponent;
 public abstract class AbstractAntDelegate {
 
   /** the project component */
-  private final ProjectComponent _component;
+  private ProjectComponent _component;
 
   /**
    * <p>
@@ -35,7 +36,7 @@ public abstract class AbstractAntDelegate {
    * @param component
    *          the project component
    */
-  public AbstractAntDelegate(final ProjectComponent component) {
+  public AbstractAntDelegate(ProjectComponent component) {
     Assert.notNull(component);
 
     this._component = component;

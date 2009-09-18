@@ -29,7 +29,7 @@ public class OutputClasspathEntryResolver extends AbstractClasspathEntryResolver
   /**
    * {@inheritDoc}
    */
-  public boolean canResolve(final ClasspathEntry entry) {
+  public boolean canResolve(ClasspathEntry entry) {
     // only suitable for raw class path entries of kind CPE_OUTPUT
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_OUTPUT);
   }
@@ -37,7 +37,7 @@ public class OutputClasspathEntryResolver extends AbstractClasspathEntryResolver
   /**
    * {@inheritDoc}
    */
-  public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
+  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
     // nothing to do here - handled within the Source Handler
   }
 }

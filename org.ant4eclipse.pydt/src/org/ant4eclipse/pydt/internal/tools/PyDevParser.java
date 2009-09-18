@@ -11,16 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-
-import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRoleImpl;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ReferenceKind;
@@ -48,35 +43,35 @@ public class PyDevParser {
    * @param pythonrole
    *          The role instance which will be filled with the corresponding information. Not <code>null</code>.
    */
-  public static final void contributePathes(final PythonProjectRoleImpl pythonrole) {
+  public static final void contributePathes(PythonProjectRoleImpl pythonrole) {
 
-    final String projectname = pythonrole.getEclipseProject().getSpecifiedName();
-    final File pydevproject = pythonrole.getEclipseProject().getChild(NAME_PYDEVPROJECT);
+    String projectname = pythonrole.getEclipseProject().getSpecifiedName();
+    File pydevproject = pythonrole.getEclipseProject().getChild(NAME_PYDEVPROJECT);
 
-    final XQueryHandler queryhandler = new XQueryHandler();
+    XQueryHandler queryhandler = new XQueryHandler();
 
     // prepare the access for the pathes
-    final XQuery pathquery = queryhandler
+    XQuery pathquery = queryhandler
         .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_SOURCE_PATH']/path");
-    final XQuery externalquery = queryhandler
+    XQuery externalquery = queryhandler
         .createQuery("//pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH']/path");
-    final XQuery runtimequery = queryhandler
+    XQuery runtimequery = queryhandler
         .createQuery("//pydev_project/pydev_property[@name='org.python.pydev.PYTHON_PROJECT_INTERPRETER']");
 
     // now fetch the necessary data
     XQueryHandler.queryFile(pydevproject, queryhandler);
 
-    final String[] internalsourcepathes = pathquery.getResult();
-    final String[] externalsourcepathes = externalquery.getResult();
+    String[] internalsourcepathes = pathquery.getResult();
+    String[] externalsourcepathes = externalquery.getResult();
     String runtime = runtimequery.getSingleResult();
 
     // PyDev identifies the projects by workspace relative pathes, so we need to strip these
     // prefixes from the project names
-    final String prefix = "/" + pythonrole.getEclipseProject().getSpecifiedName();
+    String prefix = "/" + pythonrole.getEclipseProject().getSpecifiedName();
 
     // a path can be a library or a source directory
-    for (int i = 0; i < internalsourcepathes.length; i++) {
-      final String path = internalsourcepathes[i];
+    for (String internalsourcepathe : internalsourcepathes) {
+      String path = internalsourcepathe;
       if (!path.startsWith(prefix)) {
         A4ELogging.error(
             "The internal path '%s' does not start with the expected prefix '%s' and is therefore being skipped.",
@@ -94,8 +89,7 @@ public class PyDevParser {
       }
     }
 
-    for (int i = 0; i < externalsourcepathes.length; i++) {
-      final String path = externalsourcepathes[i];
+    for (String path : externalsourcepathes) {
       if (isLibrary(path)) {
         pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Library, path, true, true));
       } else {
@@ -113,25 +107,11 @@ public class PyDevParser {
     // PyDev uses the platform mechanism for referenced projects. this is somewhat unlikely
     // so we need to convert this information into corresponding entries while sorting out
     // the ones with the wrong natures
-    final String[] projects = pythonrole.getEclipseProject().getReferencedProjects();
-    for (int i = 0; i < projects.length; i++) {
-      pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Project, "/" + projects[i], true, false));
+    String[] projects = pythonrole.getEclipseProject().getReferencedProjects();
+    for (String project : projects) {
+      pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Project, "/" + project, true, false));
     }
 
-  }
-
-  static final void postProcess(final EclipseProject project) {
-    Assert.notNull(project);
-    final PythonProjectRoleImpl role = (PythonProjectRoleImpl) project.getRole(PythonProjectRole.class);
-    final Workspace workspace = project.getWorkspace();
-    final RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Project);
-    for (RawPathEntry entry : entries) {
-      final String projectname = entry.getValue().substring(1);
-      final EclipseProject refproject = workspace.getProject(projectname);
-      if (!PythonUtilities.isPyDevProject(refproject)) {
-        role.removeRawPathEntry(entry);
-      }
-    }
   }
 
   /**
@@ -143,7 +123,7 @@ public class PyDevParser {
    * 
    * @return <code>true</code> <=> Interprete the supplied path as a library.
    */
-  private static final boolean isLibrary(final String path) {
+  private static final boolean isLibrary(String path) {
     int lidx = path.lastIndexOf('.');
     if (lidx == -1) {
       return false;

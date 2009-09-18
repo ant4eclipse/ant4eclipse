@@ -18,15 +18,15 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
   /**
    * {@inheritDoc}
    */
-  public boolean canResolveContainer(final ClasspathEntry classpathEntry) {
+  public boolean canResolveContainer(ClasspathEntry classpathEntry) {
     return getClassPathElementsRegistry().hasClassPathContainer(classpathEntry.getPath());
   }
 
   /**
    * {@inheritDoc}
    */
-  public void resolveContainer(final ClasspathEntry classpathEntry, final ClasspathResolverContext context) {
-    final ClassPathContainer container = getClassPathElementsRegistry().getClassPathContainer(classpathEntry.getPath());
+  public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
+    ClassPathContainer container = getClassPathElementsRegistry().getClassPathContainer(classpathEntry.getPath());
     context.addClasspathEntry(new ResolvedClasspathEntry(container.getPathEntries()));
   }
 

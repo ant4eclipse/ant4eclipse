@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.jar.Manifest;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 /**
  * <p>
@@ -75,7 +75,7 @@ public class ManifestHelper {
    * @param manifest
    *          the manifest
    */
-  public static String getBundleSymbolicName(final Manifest manifest) {
+  public static String getBundleSymbolicName(Manifest manifest) {
     Assert.notNull(manifest);
 
     // get the manifest header elements
@@ -102,7 +102,7 @@ public class ManifestHelper {
    * 
    * @return the 'Bundle-Classpath' entries or <code>.</code> if no 'Bundle-Classpath' has been specified.
    */
-  public static String[] getBundleClasspath(final Manifest manifest) {
+  public static String[] getBundleClasspath(Manifest manifest) {
 
     // parse the 'Bundle-Classpath' manifest entry
     String[] bundleClasspath = splitHeader(manifest.getMainAttributes().getValue(BUNDLE_CLASSPATH));
@@ -116,18 +116,18 @@ public class ManifestHelper {
     return bundleClasspath;
   }
 
-  public static String getManifestHeader(final Manifest manifest, final String header) {
+  public static String getManifestHeader(Manifest manifest, String header) {
     Assert.notNull(manifest);
     Assert.nonEmpty(header);
 
     return manifest.getMainAttributes().getValue(header);
   }
 
-  public static ManifestHeaderElement[] getManifestHeaderElements(final Manifest manifest, final String header) {
+  public static ManifestHeaderElement[] getManifestHeaderElements(Manifest manifest, String header) {
     Assert.notNull(manifest);
     Assert.nonEmpty(header);
 
-    final String manifestValue = manifest.getMainAttributes().getValue(header);
+    String manifestValue = manifest.getMainAttributes().getValue(header);
 
     if ((manifestValue == null) || "".equals(manifestValue.trim())) {
       return new ManifestHeaderElement[0];
@@ -136,15 +136,15 @@ public class ManifestHelper {
     return getManifestHeaderElements(manifestValue);
   }
 
-  public static ManifestHeaderElement[] getManifestHeaderElements(final String manifestValue) {
+  public static ManifestHeaderElement[] getManifestHeaderElements(String manifestValue) {
     Assert.nonEmpty(manifestValue);
 
-    final String[] elements = splitHeader(manifestValue);
-    final List<ManifestHeaderElement> result = new LinkedList<ManifestHeaderElement>();
+    String[] elements = splitHeader(manifestValue);
+    List<ManifestHeaderElement> result = new LinkedList<ManifestHeaderElement>();
     for (String element : elements) {
-      final ManifestHeaderElement manifestHeaderElement = new ManifestHeaderElement();
+      ManifestHeaderElement manifestHeaderElement = new ManifestHeaderElement();
       result.add(manifestHeaderElement);
-      final String[] elementParts = splitHeader(element, ";");
+      String[] elementParts = splitHeader(element, ";");
 
       for (String elementPart : elementParts) {
         String[] splitted = splitHeader(elementPart, ":=");
@@ -169,7 +169,7 @@ public class ManifestHelper {
    * @param header
    * @return
    */
-  public static String[] splitHeader(final String header) {
+  public static String[] splitHeader(String header) {
     return splitHeader(header, ",");
   }
 
@@ -178,13 +178,13 @@ public class ManifestHelper {
    * @param separator
    * @return
    */
-  public static String[] splitHeader(final String header, final String separator) {
+  public static String[] splitHeader(String header, String separator) {
     if ((header == null) || (header.trim().length() == 0)) {
       return new String[0];
     }
-    final List<String> result = new LinkedList<String>();
+    List<String> result = new LinkedList<String>();
 
-    final char[] chars = header.toCharArray();
+    char[] chars = header.toCharArray();
     StringBuilder currentValue = new StringBuilder();
     boolean inQuotedString = false;
     for (int i = 0; i < chars.length; i++) {
@@ -240,14 +240,14 @@ public class ManifestHelper {
    * @param pattern
    * @return
    */
-  private static boolean lookup(final char[] array, final int index, final String pattern) {
+  private static boolean lookup(char[] array, int index, String pattern) {
     Assert.nonEmpty(pattern);
 
     if (index + pattern.length() > array.length) {
       return false;
     }
 
-    final char[] patternChars = pattern.toCharArray();
+    char[] patternChars = pattern.toCharArray();
 
     for (int i = 0; i < patternChars.length; i++) {
       if (array[index + i] != patternChars[i]) {
@@ -258,7 +258,7 @@ public class ManifestHelper {
     return true;
   }
 
-  private static String removeQuotes(final String value) {
+  private static String removeQuotes(String value) {
     if (value == null) {
       return null;
     }
@@ -298,15 +298,15 @@ public class ManifestHelper {
       this._directives = new HashMap<String, String>();
     }
 
-    void addAttribute(final String key, final String value) {
+    void addAttribute(String key, String value) {
       this._attributes.put(key, value);
     }
 
-    void addDirective(final String key, final String value) {
+    void addDirective(String key, String value) {
       this._directives.put(key, value);
     }
 
-    public boolean addValue(final String o) {
+    public boolean addValue(String o) {
       return this._values.add(o);
     }
 
@@ -337,7 +337,7 @@ public class ManifestHelper {
 
     @Override
     public String toString() {
-      final StringBuffer buffer = new StringBuffer();
+      StringBuffer buffer = new StringBuffer();
       buffer.append("[ManifestHeaderElement:");
       buffer.append(" _values: ");
       buffer.append(this._values);

@@ -45,33 +45,33 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
    *          the class path entry to resolve.
    * @return <code>true</code>, if the {@link ClasspathEntry} is of kind {@link RawClasspathEntry.CPE_VARIABLE}.
    */
-  public boolean canResolve(final ClasspathEntry entry) {
+  public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_VARIABLE);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
+  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 
     // get the path
-    final String path = entry.getPath();
+    String path = entry.getPath();
 
     // split variable and tail if necessary
     String variable = path;
     String tail = null;
-    final int separatorIndex = path.indexOf(this.SEPARATOR);
+    int separatorIndex = path.indexOf(this.SEPARATOR);
     if (separatorIndex != -1) {
       variable = path.substring(0, separatorIndex);
       tail = path.substring(separatorIndex);
     }
 
     // get variablesRegistry
-    final ClassPathElementsRegistry elementsRegistry = ClassPathElementsRegistry.Helper.getRegistry();
+    ClassPathElementsRegistry elementsRegistry = ClassPathElementsRegistry.Helper.getRegistry();
 
     // resolve variable
     if (elementsRegistry.hasClassPathVariable(variable)) {
-      final ClassPathVariable classpathVariable = elementsRegistry.getClassPathVariable(variable);
+      ClassPathVariable classpathVariable = elementsRegistry.getClassPathVariable(variable);
       if (tail != null) {
         context.addClasspathEntry(new ResolvedClasspathEntry(new File(classpathVariable.getPath(), tail)));
       } else {

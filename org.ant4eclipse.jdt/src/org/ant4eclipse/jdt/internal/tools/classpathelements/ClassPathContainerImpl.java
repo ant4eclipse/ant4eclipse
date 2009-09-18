@@ -14,10 +14,10 @@ import java.io.File;
 public class ClassPathContainerImpl implements ClassPathContainer {
 
   /** the name of the class path container */
-  private final String _name;
+  private String _name;
 
   /** the path entries of this class path container */
-  private final File[] _pathEntries;
+  private File[] _pathEntries;
 
   /**
    * <p>
@@ -29,7 +29,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    * @param pathEntries
    *          the path entries
    */
-  public ClassPathContainerImpl(final String name, final File[] pathEntries) {
+  public ClassPathContainerImpl(String name, File[] pathEntries) {
     super();
 
     this._name = name;
@@ -54,7 +54,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -64,7 +64,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final ClassPathContainerImpl castedObj = (ClassPathContainerImpl) o;
+    ClassPathContainerImpl castedObj = (ClassPathContainerImpl) o;
     return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)) && java.util.Arrays
         .equals(this._pathEntries, castedObj._pathEntries));
   }
@@ -87,7 +87,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[ClassPathContainerImpl:");
     buffer.append(" _name: ");
     buffer.append(this._name);

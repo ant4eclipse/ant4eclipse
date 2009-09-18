@@ -44,7 +44,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
-  public boolean canResolve(final ClasspathEntry entry) {
+  public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_LIBRARY)
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_ARCHIVE) */;
   }
@@ -52,7 +52,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
-  public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
+  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 
     // do not resolve if the class path entry is not visible
     if (!isClasspathEntryVisible(entry, context)) {
@@ -66,7 +66,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
 
     // WORKSPACE_RELATIVE_PATH
     else if (getPathType(entry, context) == WORKSPACE_RELATIVE_PATH) {
-      final String[] splitted = splitHeadAndTail(entry.getPath());
+      String[] splitted = splitHeadAndTail(entry.getPath());
       resolveProjectRelativeResource(context.getWorkspace().getProject(splitted[0]), splitted[1], context);
     }
 
@@ -80,9 +80,9 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
    * @param entry
    * @return
    */
-  private int getPathType(final ClasspathEntry entry, final ClasspathResolverContext context) {
+  private int getPathType(ClasspathEntry entry, ClasspathResolverContext context) {
 
-    final String entrypath = entry.getPath();
+    String entrypath = entry.getPath();
 
     // dos file system
     if (DOS_STYLE) {
@@ -115,7 +115,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
         // We consider a path to be a "workspace relative path" if the
         // path exist inside the workspace
 
-        final String[] splitted = splitHeadAndTail(entrypath);
+        String[] splitted = splitHeadAndTail(entrypath);
 
         if (context.getWorkspace().hasProject(splitted[0])
             && context.getWorkspace().getProject(splitted[0]).hasChild(splitted[1])) {
@@ -140,7 +140,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
    * @param entryPath
    * @return
    */
-  private String[] splitHeadAndTail(final String entryPath) {
+  private String[] splitHeadAndTail(String entryPath) {
 
     String path = entryPath;
 
@@ -148,7 +148,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
       path = path.substring(1);
     }
 
-    final String[] result = new String[2];
+    String[] result = new String[2];
 
     result[0] = path.substring(0, path.indexOf("/"));
     result[1] = path.substring(path.indexOf("/") + 1);

@@ -84,7 +84,7 @@ public class PdeExceptionCode extends ExceptionCode {
    * @param message
    *          the message of the {@link PdeExceptionCode}
    */
-  private PdeExceptionCode(final String message) {
+  private PdeExceptionCode(String message) {
     super(message);
   }
 }

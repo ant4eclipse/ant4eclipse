@@ -24,7 +24,7 @@ import org.apache.tools.ant.ProjectComponent;
 public class JdtClasspathContainerArgumentContribution implements SubElementContribution {
 
   /** - */
-  private final JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
+  private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
   /**
    * <p>
@@ -39,7 +39,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   /**
    * {@inheritDoc}
    */
-  public boolean canHandleSubElement(final String name, final ProjectComponent component) {
+  public boolean canHandleSubElement(String name, ProjectComponent component) {
     // TODO? Class? component?
     return "jdtClasspathContainerArgument".equalsIgnoreCase(name);
   }
@@ -47,7 +47,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   /**
    * {@inheritDoc}
    */
-  public Object createSubElement(final String name, final ProjectComponent component) throws BuildException {
+  public Object createSubElement(String name, ProjectComponent component) throws BuildException {
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 }

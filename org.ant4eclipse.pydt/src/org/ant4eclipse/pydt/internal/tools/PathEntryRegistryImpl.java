@@ -27,13 +27,13 @@ import java.util.Map;
  */
 public class PathEntryRegistryImpl implements PathEntryRegistry {
 
-  private final Map<RawPathEntry, ResolvedPathEntry> _resolvedentries;
+  private Map<RawPathEntry, ResolvedPathEntry> _resolvedentries;
 
   /**
    * Initialises this registry for path entries.
    */
   public PathEntryRegistryImpl() {
-    _resolvedentries = new Hashtable<RawPathEntry, ResolvedPathEntry>();
+    this._resolvedentries = new Hashtable<RawPathEntry, ResolvedPathEntry>();
   }
 
   /**
@@ -41,24 +41,24 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
    */
   public boolean isResolved(RawPathEntry entry) {
     Assert.notNull(entry);
-    return _resolvedentries.containsKey(entry);
+    return this._resolvedentries.containsKey(entry);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void registerResolvedPathEntry(final RawPathEntry origin, final ResolvedPathEntry solution) {
+  public void registerResolvedPathEntry(RawPathEntry origin, ResolvedPathEntry solution) {
     Assert.notNull(origin);
     Assert.notNull(solution);
-    _resolvedentries.put(origin, solution);
+    this._resolvedentries.put(origin, solution);
   }
 
   /**
    * {@inheritDoc}
    */
-  public ResolvedPathEntry getResolvedPathEntry(final RawPathEntry entry) {
+  public ResolvedPathEntry getResolvedPathEntry(RawPathEntry entry) {
     Assert.notNull(entry);
-    return _resolvedentries.get(entry);
+    return this._resolvedentries.get(entry);
   }
 
 } /* ENDCLASS */

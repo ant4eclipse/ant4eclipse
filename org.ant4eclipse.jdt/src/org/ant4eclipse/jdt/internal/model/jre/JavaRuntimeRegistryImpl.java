@@ -35,13 +35,13 @@ import java.util.Map;
 public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
   /** the default java runtime key * */
-  private String                         _defaultJavaRuntimeKey = null;
+  private String                   _defaultJavaRuntimeKey = null;
 
   /** the java runtime cache */
-  private final Map<String, JavaRuntime> _javaRuntimeCache;
+  private Map<String, JavaRuntime> _javaRuntimeCache;
 
   /** the java profile cache */
-  private final Map<String, JavaProfile> _javaProfileCache;
+  private Map<String, JavaProfile> _javaProfileCache;
 
   /**
    * <p>
@@ -55,10 +55,10 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     this._javaProfileCache = new HashMap<String, JavaProfile>();
 
     // read all known profiles
-    final JavaProfile[] javaProfiles = JavaProfileReader.readAllProfiles();
+    JavaProfile[] javaProfiles = JavaProfileReader.readAllProfiles();
 
     // add profiles to profile cache
-    for (final JavaProfile javaProfile : javaProfiles) {
+    for (JavaProfile javaProfile : javaProfiles) {
       this._javaProfileCache.put(javaProfile.getName(), javaProfile);
     }
   }
@@ -66,11 +66,11 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public JavaRuntime registerJavaRuntime(final String id, final File location, final boolean isDefault) {
+  public JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault) {
     Assert.nonEmpty(id);
     Assert.isDirectory(location);
 
-    final JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location);
+    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location);
 
     return registerJavaRuntime(javaRuntime, isDefault);
   }
@@ -78,14 +78,14 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public JavaRuntime registerJavaRuntime(final String id, final File location) {
+  public JavaRuntime registerJavaRuntime(String id, File location) {
     return registerJavaRuntime(id, location, false);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setDefaultJavaRuntime(final String id) {
+  public void setDefaultJavaRuntime(String id) {
     Assert.notNull(id);
     Assert.assertTrue(hasJavaRuntime(id), "No JavaRuntime with id '" + id + "' registered!");
 
@@ -95,7 +95,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public boolean hasJavaRuntime(final String path) {
+  public boolean hasJavaRuntime(String path) {
     Assert.nonEmpty(path);
 
     // return true if a java runtime exists
@@ -105,7 +105,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // return if a java profile exists
     if (this._javaProfileCache.containsKey(path)) {
-      final JavaProfile javaProfile = this._javaProfileCache.get(path);
+      JavaProfile javaProfile = this._javaProfileCache.get(path);
       if (getJavaRuntime(javaProfile) != null) {
         return true;
       }
@@ -117,7 +117,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public boolean hasJavaProfile(final String path) {
+  public boolean hasJavaProfile(String path) {
     Assert.nonEmpty(path);
 
     return this._javaProfileCache.containsKey(path);
@@ -126,7 +126,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public JavaRuntime getJavaRuntime(final String path) {
+  public JavaRuntime getJavaRuntime(String path) {
     Assert.nonEmpty(path);
 
     // return true if a java runtime exists
@@ -137,7 +137,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // return if a java profile exists
     if (this._javaProfileCache.containsKey(path)) {
 
-      final JavaProfile javaProfile = this._javaProfileCache.get(path);
+      JavaProfile javaProfile = this._javaProfileCache.get(path);
       return getJavaRuntime(javaProfile);
     }
 
@@ -147,7 +147,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public JavaProfile getJavaProfile(final String path) {
+  public JavaProfile getJavaProfile(String path) {
     Assert.nonEmpty(path);
 
     return this._javaProfileCache.get(path);
@@ -173,7 +173,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // this._eclipseProject.getName());
 
     // try to create java runtime from java.home
-    final JavaRuntime javaRuntime = getJavaRuntimeFromJavaHome();
+    JavaRuntime javaRuntime = getJavaRuntimeFromJavaHome();
     if (javaRuntime != null) {
       return javaRuntime;
     }
@@ -189,18 +189,18 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @param javaProfile
    * @return
    */
-  private JavaRuntime getJavaRuntime(final JavaProfile javaProfile) {
+  private JavaRuntime getJavaRuntime(JavaProfile javaProfile) {
 
     // result
     JavaRuntime result = null;
 
-    final String profileName = javaProfile.getName();
+    String profileName = javaProfile.getName();
 
     // iterate over java runtime cache
-    for (final Object element : this._javaRuntimeCache.values()) {
+    for (Object element : this._javaRuntimeCache.values()) {
 
       // get the java runtime
-      final JavaRuntime javaRuntime = (JavaRuntime) element;
+      JavaRuntime javaRuntime = (JavaRuntime) element;
 
       if (javaRuntime.getJavaProfile().getExecutionEnvironmentNames().contains(profileName)) {
 
@@ -225,7 +225,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @param profileName
    * @return
    */
-  private int getIndex(final JavaRuntime javaRuntime, final String profileName) {
+  private int getIndex(JavaRuntime javaRuntime, String profileName) {
     int index = javaRuntime.getJavaProfile().getExecutionEnvironmentNames().indexOf(profileName);
     index = javaRuntime.getJavaProfile().getExecutionEnvironmentNames().size() - index;
     return index;
@@ -244,14 +244,14 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @return the path under this java runtime is stored, e.g.
    *         <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
    */
-  private JavaRuntime registerJavaRuntime(final JavaRuntime javaRuntime, final boolean isDefault) {
+  private JavaRuntime registerJavaRuntime(JavaRuntime javaRuntime, boolean isDefault) {
     Assert.notNull(javaRuntime);
 
     // create path
-    final String id = javaRuntime.getId();
+    String id = javaRuntime.getId();
 
     if (this._javaRuntimeCache.containsKey(id)) {
-      final JavaRuntime runtime = this._javaRuntimeCache.get(id);
+      JavaRuntime runtime = this._javaRuntimeCache.get(id);
 
       if (!runtime.equals(javaRuntime)) {
 
@@ -286,7 +286,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   private JavaRuntime getJavaRuntimeFromJavaHome() {
 
     // read system property 'java.home'
-    final String javaHome = System.getProperty("java.home");
+    String javaHome = System.getProperty("java.home");
 
     // if system property 'java.home' is not set, return null
     if (javaHome == null) {
@@ -295,7 +295,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // create file
-    final File location = new File(javaHome);
+    File location = new File(javaHome);
 
     // if location is not a directory, return null
     if (!location.isDirectory()) {

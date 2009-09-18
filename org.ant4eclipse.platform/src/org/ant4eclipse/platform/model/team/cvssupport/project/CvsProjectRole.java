@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.model.team.cvssupport.project;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
@@ -27,20 +28,20 @@ public final class CvsProjectRole extends AbstractProjectRole {
   public static final String NAME = "CvsProjectRole";
 
   /** the cvsRoot for the project * */
-  private final CvsRoot      _cvsRoot;
+  private CvsRoot            _cvsRoot;
 
   /** the name of the project in the repository */
-  private final String       _projectNameInRepository;
+  private String             _projectNameInRepository;
 
   /** the name of the branch or version */
-  private final String       _branchOrVersionTag;
+  private String             _branchOrVersionTag;
 
   /**
    * Returns the cvs project role. If a cvs project role is not set, an exception will be thrown.
    * 
    * @return Returns the cvs project role.
    */
-  public static CvsProjectRole getCvsProjectRole(final EclipseProject eclipseProject) {
+  public static CvsProjectRole getCvsProjectRole(EclipseProject eclipseProject) {
     Assert.assertTrue(hasCvsProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have CvsProjectRole!");
 
@@ -52,7 +53,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * 
    * @return Returns whether a cvs project role is set or not.
    */
-  public static boolean hasCvsProjectRole(final EclipseProject eclipseProject) {
+  public static boolean hasCvsProjectRole(EclipseProject eclipseProject) {
     return eclipseProject.hasRole(CvsProjectRole.class);
   }
 
@@ -66,8 +67,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @param branchOrVersionTag
    *          the name of the branch or version
    */
-  public CvsProjectRole(final EclipseProject eclipseProject, final String projectNameInRepository,
-      final String cvsRoot, final String branchOrVersionTag) {
+  public CvsProjectRole(EclipseProject eclipseProject, String projectNameInRepository, String cvsRoot,
+      String branchOrVersionTag) {
     super(NAME, eclipseProject);
 
     Assert.notNull(projectNameInRepository);
@@ -88,8 +89,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @param branchOrVersionTag
    *          the name of the branch or version
    */
-  public CvsProjectRole(final EclipseProject eclipseProject, final String projectNameInRepository,
-      final CvsRoot cvsRoot, final String branchOrVersionTag) {
+  public CvsProjectRole(EclipseProject eclipseProject, String projectNameInRepository, CvsRoot cvsRoot,
+      String branchOrVersionTag) {
     super(NAME, eclipseProject);
 
     Assert.notNull(projectNameInRepository);
@@ -148,7 +149,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
   /**
    * {@inheritDoc}
    */
-  public boolean equals(final Object o) {
+  @Override
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -161,7 +163,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final CvsProjectRole castedObj = (CvsProjectRole) o;
+    CvsProjectRole castedObj = (CvsProjectRole) o;
     return ((this._cvsRoot == null ? castedObj._cvsRoot == null : this._cvsRoot.equals(castedObj._cvsRoot))
         && (this._projectNameInRepository == null ? castedObj._projectNameInRepository == null
             : this._projectNameInRepository.equals(castedObj._projectNameInRepository)) && (this._branchOrVersionTag == null ? castedObj._branchOrVersionTag == null
@@ -171,8 +173,9 @@ public final class CvsProjectRole extends AbstractProjectRole {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[CvsProjectRole:");
     buffer.append(" NAME: ");
     buffer.append(NAME);

@@ -1,6 +1,7 @@
 package org.ant4eclipse.platform.ant;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.PathComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -12,16 +13,16 @@ import org.ant4eclipse.platform.model.resource.ProjectNature;
 public class PlatformExecutorValuesProvider {
 
   /** the key for the project name property */
-  public static final String  PROJECT_NAME           = "project.name";
+  public static final String PROJECT_NAME           = "project.name";
 
   /** the key for the project directory property */
-  public static final String  PROJECT_DIRECTORY      = "project.directory";
+  public static final String PROJECT_DIRECTORY      = "project.directory";
 
   /** the key for the project directory path */
-  public static final String  PROJECT_DIRECTORY_PATH = "project.directory.path";
+  public static final String PROJECT_DIRECTORY_PATH = "project.directory.path";
 
   /** the internally used path component */
-  private final PathComponent _pathComponent;
+  private PathComponent      _pathComponent;
 
   /**
    * <p>

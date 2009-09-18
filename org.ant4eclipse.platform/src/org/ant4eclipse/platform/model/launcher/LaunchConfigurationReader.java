@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.launcher;
 
-import java.io.File;
-
 import org.ant4eclipse.core.service.ServiceRegistry;
+
+import java.io.File;
 
 /**
  * 
@@ -30,7 +30,7 @@ public interface LaunchConfigurationReader {
    *          The launch configuration file to parse
    * @return The {@link LaunchConfiguration}-instance
    */
-  public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile);
+  LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile);
 
   /**
    */

@@ -62,7 +62,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return A list of entries providing entries of the desired type.
    */
-  RawClasspathEntry[] getRawClasspathEntries(final int entrykind);
+  RawClasspathEntry[] getRawClasspathEntries(int entrykind);
 
   /**
    * <p>
@@ -148,7 +148,7 @@ public interface JavaProjectRole extends ProjectRole {
      * 
      * @return the java project role.
      */
-    public static final JavaProjectRole getJavaProjectRole(final EclipseProject eclipseProject) {
+    public static final JavaProjectRole getJavaProjectRole(EclipseProject eclipseProject) {
       Assert.assertTrue(hasJavaProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have JavaProjectRole!");
 
@@ -162,7 +162,7 @@ public interface JavaProjectRole extends ProjectRole {
      * 
      * @return Returns whether a {@link JavaProjectRole} is set or not.
      */
-    public static final boolean hasJavaProjectRole(final EclipseProject eclipseProject) {
+    public static final boolean hasJavaProjectRole(EclipseProject eclipseProject) {
       Assert.notNull(eclipseProject);
 
       return eclipseProject.hasRole(JavaProjectRoleImpl.class);

@@ -23,30 +23,30 @@ import java.io.File;
  */
 public class ClasspathFileParser {
 
-  public static void parseClasspath(final JavaProjectRoleImpl javaProjectRole) {
+  public static void parseClasspath(JavaProjectRoleImpl javaProjectRole) {
     Assert.notNull(javaProjectRole);
 
-    final File classpathFile = javaProjectRole.getEclipseProject().getChild(".classpath");
+    File classpathFile = javaProjectRole.getEclipseProject().getChild(".classpath");
 
-    final XQueryHandler queryhandler = new XQueryHandler();
+    XQueryHandler queryhandler = new XQueryHandler();
 
     // queries for the 'kind', 'path','output' and 'exported' attributes. The
     // resulting array will have the same length.
-    final XQuery kindquery = queryhandler.createQuery("//classpath/classpathentry/@kind");
-    final XQuery pathquery = queryhandler.createQuery("//classpath/classpathentry/@path");
-    final XQuery outputquery = queryhandler.createQuery("//classpath/classpathentry/@output");
-    final XQuery exportedquery = queryhandler.createQuery("//classpath/classpathentry/@exported");
+    XQuery kindquery = queryhandler.createQuery("//classpath/classpathentry/@kind");
+    XQuery pathquery = queryhandler.createQuery("//classpath/classpathentry/@path");
+    XQuery outputquery = queryhandler.createQuery("//classpath/classpathentry/@output");
+    XQuery exportedquery = queryhandler.createQuery("//classpath/classpathentry/@exported");
 
     // parse the file
     XQueryHandler.queryFile(classpathFile, queryhandler);
 
-    final String[] kinds = kindquery.getResult();
-    final String[] pathes = pathquery.getResult();
-    final String[] outputs = outputquery.getResult();
-    final String[] exporteds = exportedquery.getResult();
+    String[] kinds = kindquery.getResult();
+    String[] pathes = pathquery.getResult();
+    String[] outputs = outputquery.getResult();
+    String[] exporteds = exportedquery.getResult();
 
     for (int i = 0; i < exporteds.length; i++) {
-      final String path = Utilities.removeTrailingPathSeparator(pathes[i]);
+      String path = Utilities.removeTrailingPathSeparator(pathes[i]);
       if (outputs[i] != null) {
         javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path, Utilities
             .removeTrailingPathSeparator(outputs[i])));

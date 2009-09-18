@@ -11,16 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.jdt.internal.model.jre.JavaProfileReader;
+
+import org.ant4eclipse.pde.model.pluginproject.Constants;
+
+import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.jdt.internal.model.jre.JavaProfileReader;
-import org.ant4eclipse.pde.model.pluginproject.Constants;
-import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
 
 /**
  * TargetPlatformConfiguration --
@@ -28,13 +31,13 @@ import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
 public class TargetPlatformConfiguration {
 
   /** - */
-  private boolean                   _preferProjects = true;
+  private boolean             _preferProjects = true;
 
   /** - */
-  private final Map<Object, Object> _configurationProperties;
+  private Map<Object, Object> _configurationProperties;
 
   /** - */
-  private boolean                   _isLocked       = false;
+  private boolean             _isLocked       = false;
 
   /**
    * 
@@ -52,37 +55,37 @@ public class TargetPlatformConfiguration {
     this._configurationProperties.put(Constants.PROP_NL, EclipseEnvironmentInfo.getDefault().getNL());
   }
 
-  public void setPreferProjects(final boolean preferProjects) {
+  public void setPreferProjects(boolean preferProjects) {
     assertNotLocked();
 
     this._preferProjects = preferProjects;
   }
 
-  public void setOperatingSystem(final String value) {
+  public void setOperatingSystem(String value) {
     assertNotLocked();
 
     this._configurationProperties.put(Constants.PROP_OS, value);
   }
 
-  public void setArchitecture(final String value) {
+  public void setArchitecture(String value) {
     assertNotLocked();
 
     this._configurationProperties.put(Constants.PROP_ARCH, value);
   }
 
-  public void setWindowingSystem(final String value) {
+  public void setWindowingSystem(String value) {
     assertNotLocked();
 
     this._configurationProperties.put(Constants.PROP_WS, value);
   }
 
-  public void setProfileName(final String value) {
+  public void setProfileName(String value) {
     assertNotLocked();
 
     this._configurationProperties.put("osgi.java.profile.name", value);
   }
 
-  public void setLanguageSetting(final String value) {
+  public void setLanguageSetting(String value) {
     assertNotLocked();
 
     this._configurationProperties.put(Constants.PROP_NL, value);
@@ -97,12 +100,12 @@ public class TargetPlatformConfiguration {
   }
 
   public Properties getConfigurationProperties() {
-    final Properties result = new Properties();
+    Properties result = new Properties();
 
-    final Set<Map.Entry<Object, Object>> entrySet = this._configurationProperties.entrySet();
-    final Iterator<Map.Entry<Object, Object>> iterator = entrySet.iterator();
+    Set<Map.Entry<Object, Object>> entrySet = this._configurationProperties.entrySet();
+    Iterator<Map.Entry<Object, Object>> iterator = entrySet.iterator();
     while (iterator.hasNext()) {
-      final Map.Entry<Object, Object> entry = iterator.next();
+      Map.Entry<Object, Object> entry = iterator.next();
       result.put(entry.getKey(), entry.getValue());
     }
 
@@ -129,15 +132,17 @@ public class TargetPlatformConfiguration {
     return (String) this._configurationProperties.get(Constants.PROP_WS);
   }
 
+  @Override
   public int hashCode() {
-    final int prime = 31;
+    int prime = 31;
     int result = 1;
     result = prime * result + ((this._configurationProperties == null) ? 0 : this._configurationProperties.hashCode());
     result = prime * result + (this._preferProjects ? 1231 : 1237);
     return result;
   }
 
-  public boolean equals(final Object obj) {
+  @Override
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -147,7 +152,7 @@ public class TargetPlatformConfiguration {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final TargetPlatformConfiguration other = (TargetPlatformConfiguration) obj;
+    TargetPlatformConfiguration other = (TargetPlatformConfiguration) obj;
     if (this._configurationProperties == null) {
       if (other._configurationProperties != null) {
         return false;

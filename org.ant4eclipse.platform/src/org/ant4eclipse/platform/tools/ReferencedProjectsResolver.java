@@ -32,7 +32,7 @@ public interface ReferencedProjectsResolver {
    * @return <code>true</code> if the {@link ReferencedProjectsResolver} can resolve referenced projects for the given
    *         project, otherwise <code>false</code>.
    */
-  boolean canHandle(final EclipseProject project);
+  boolean canHandle(EclipseProject project);
 
   /**
    * <p>
@@ -51,5 +51,5 @@ public interface ReferencedProjectsResolver {
    * 
    * @return
    */
-  List<EclipseProject> resolveReferencedProjects(final EclipseProject project, final List<Object> additionalElements);
+  List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements);
 }

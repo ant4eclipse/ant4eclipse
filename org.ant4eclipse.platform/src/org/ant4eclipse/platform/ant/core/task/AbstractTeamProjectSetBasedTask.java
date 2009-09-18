@@ -11,12 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.task;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
+
 import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
 import org.ant4eclipse.platform.ant.core.delegate.TeamProjectSetDelegate;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+
+import java.io.File;
 
 /**
  * <p>
@@ -29,7 +30,7 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
     TeamProjectSetComponent {
 
   /** the project set delegate */
-  private final TeamProjectSetDelegate _projectSetDelegate;
+  private TeamProjectSetDelegate _projectSetDelegate;
 
   /**
    *
@@ -62,7 +63,7 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
   /**
    * {@inheritDoc}
    */
-  public void setProjectSet(final File projectSet) {
+  public void setProjectSet(File projectSet) {
     this._projectSetDelegate.setTeamProjectSet(projectSet);
   }
 

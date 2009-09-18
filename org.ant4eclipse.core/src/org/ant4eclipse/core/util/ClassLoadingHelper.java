@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.CodeSource;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>
@@ -42,21 +42,21 @@ public class ClassLoadingHelper {
    *          the class
    * @return the class path entries for the specified class.
    */
-  public static String[] getClasspathEntriesFor(final Class<?> clazz) {
+  public static String[] getClasspathEntriesFor(Class<?> clazz) {
     Assert.notNull(clazz);
 
     // get class loader
-    final ClassLoader classLoader = clazz.getClassLoader();
-    final Class<? extends ClassLoader> classLoaderClass = classLoader.getClass();
+    ClassLoader classLoader = clazz.getClassLoader();
+    Class<? extends ClassLoader> classLoaderClass = classLoader.getClass();
 
     // AntClassLoader: we have to call 'getClasspath()', because the code
     // source always is the 'ant.jar'
     if (classLoaderClass.getName().equals(CLASS_ORG_APACHE_TOOLS_ANT_ANTCLASSLOADER)) {
 
       try {
-        final Method method = classLoaderClass.getDeclaredMethod(METHOD_GET_CLASSPATH, new Class[0]);
-        final Object result = method.invoke(classLoader, new Object[0]);
-        final String[] fileNames = result.toString().split(File.pathSeparator);
+        Method method = classLoaderClass.getDeclaredMethod(METHOD_GET_CLASSPATH, new Class[0]);
+        Object result = method.invoke(classLoader, new Object[0]);
+        String[] fileNames = result.toString().split(File.pathSeparator);
 
         // patch the file names
         for (int i = 0; i < fileNames.length; i++) {
@@ -65,14 +65,14 @@ public class ClassLoadingHelper {
 
         // return the file names
         return fileNames;
-      } catch (final Exception e) {
+      } catch (Exception e) {
         e.printStackTrace();
         return new String[0];
       }
     }
     // 'normal' class loader: just retrieve the code source
     else {
-      final CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
+      CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
 
       String fileName = codeSource.getLocation().getFile();
       String patchedfileName = patchFileName(fileName);

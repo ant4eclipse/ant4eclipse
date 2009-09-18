@@ -108,7 +108,7 @@ public interface JavaProfile {
    * 
    * @return <code>true</code>, if the specified package name denotes a system package, <code>false</code> otherwise.
    */
-  boolean isSystemPackage(final String packageName);
+  boolean isSystemPackage(String packageName);
 
   /**
    * <p>
@@ -120,5 +120,5 @@ public interface JavaProfile {
    * 
    * @return <code>true</code>, if the specified package name is must be delegated to the boot class loader.
    */
-  boolean isDelegatedToBootClassLoader(final String packageName);
+  boolean isDelegatedToBootClassLoader(String packageName);
 }

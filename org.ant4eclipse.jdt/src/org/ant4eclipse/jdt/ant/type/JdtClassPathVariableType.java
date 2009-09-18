@@ -33,7 +33,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public JdtClassPathVariableType(final Project project) {
+  public JdtClassPathVariableType(Project project) {
     super(project);
   }
 
@@ -56,7 +56,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @param name
    *          the name to set
    */
-  public void setName(final String name) {
+  public void setName(String name) {
     this._name = name;
   }
 
@@ -79,7 +79,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @param path
    *          the path of the class path variable.
    */
-  public void setPath(final File path) {
+  public void setPath(File path) {
     this._path = path;
   }
 
@@ -100,7 +100,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
       throw new BuildException("Missing parameter 'name' on classpathVariable!");
     }
 
-    final ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
+    ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
 
     // TODO: what to do if classpathVariable already registered?
     variablesRegistry.registerClassPathVariable(this._name, this._path);

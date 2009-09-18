@@ -84,7 +84,7 @@ public interface EclipseProject {
    * 
    * @return Returns the folder that represents this project. Not <code>null</code>.
    */
-  File getFolder(final PathStyle pathstyle);
+  File getFolder(PathStyle pathstyle);
 
   /**
    * <p>
@@ -113,7 +113,7 @@ public interface EclipseProject {
    *          the path of child
    * @return Returns whether this project has a child with the given path.
    */
-  boolean hasChild(final String path);
+  boolean hasChild(String path);
 
   /**
    * <p>
@@ -125,7 +125,7 @@ public interface EclipseProject {
    * 
    * @return Returns the child of this project with the given path.
    */
-  File getChild(final String path);
+  File getChild(String path);
 
   /**
    * <p>
@@ -134,7 +134,7 @@ public interface EclipseProject {
    * @param path
    * @return
    */
-  File[] getChildren(final String[] path);
+  File[] getChildren(String[] path);
 
   /**
    * <p>
@@ -148,7 +148,7 @@ public interface EclipseProject {
    * 
    * @return Returns the child of this project with the given path.
    */
-  File getChild(final String path, final PathStyle relative);
+  File getChild(String path, PathStyle relative);
 
   /**
    * <p>
@@ -158,7 +158,7 @@ public interface EclipseProject {
    * @param relative
    * @return
    */
-  File[] getChildren(final String[] path, final PathStyle relative);
+  File[] getChildren(String[] path, PathStyle relative);
 
   /**
    * <p>
@@ -169,7 +169,7 @@ public interface EclipseProject {
    *          the name of the file inside the <tt>.settings</tt> file
    * @return true if there is such a file otherwise false
    */
-  boolean hasSettingsFile(final String settingsFileName);
+  boolean hasSettingsFile(String settingsFileName);
 
   /**
    * <p>
@@ -182,7 +182,7 @@ public interface EclipseProject {
    * 
    * @throws RuntimeException
    */
-  File getSettingsFile(final String settingsFileName) throws RuntimeException;
+  File getSettingsFile(String settingsFileName) throws RuntimeException;
 
   /**
    * <p>
@@ -192,7 +192,7 @@ public interface EclipseProject {
    * @param natureName
    * @return Returns whether the nature with the specified name is set or not.
    */
-  boolean hasNature(final String natureName);
+  boolean hasNature(String natureName);
 
   /**
    * <p>
@@ -202,7 +202,7 @@ public interface EclipseProject {
    * @param nature
    * @return Returns whether the specified nature is set or not.
    */
-  boolean hasNature(final ProjectNature nature);
+  boolean hasNature(ProjectNature nature);
 
   /**
    * <p>
@@ -222,7 +222,7 @@ public interface EclipseProject {
    * @return Returns whether the role of the given type is set or not.
    * 
    */
-  boolean hasRole(final Class<? extends ProjectRole> projectRoleClass);
+  boolean hasRole(Class<? extends ProjectRole> projectRoleClass);
 
   /**
    * <p>
@@ -232,7 +232,7 @@ public interface EclipseProject {
    * @param projectRoleClass
    * @return Returns the role of the given type. If the role is not set, an exception will be thrown.
    */
-  ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass);
+  ProjectRole getRole(Class<? extends ProjectRole> projectRoleClass);
 
   /**
    * <p>
@@ -251,7 +251,7 @@ public interface EclipseProject {
    * @param commandName
    * @return Returns whether the build command with the specified name is set or not.
    */
-  boolean hasBuildCommand(final String commandName);
+  boolean hasBuildCommand(String commandName);
 
   /**
    * <p>
@@ -263,7 +263,7 @@ public interface EclipseProject {
    * 
    * @return Returns whether the specified build command is set or not.
    */
-  boolean hasBuildCommand(final BuildCommand command);
+  boolean hasBuildCommand(BuildCommand command);
 
   /**
    * <p>

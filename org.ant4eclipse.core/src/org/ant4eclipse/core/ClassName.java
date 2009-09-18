@@ -21,10 +21,10 @@ package org.ant4eclipse.core;
 public final class ClassName {
 
   /** the package name */
-  private final String _packageName;
+  private String _packageName;
 
   /** the class name */
-  private final String _className;
+  private String _className;
 
   /**
    * <p>
@@ -35,11 +35,11 @@ public final class ClassName {
    *          The qualified class name
    * @return a ClassName instance representing this qualified class name
    */
-  public static ClassName fromQualifiedClassName(final String qualifiedClassName) {
+  public static ClassName fromQualifiedClassName(String qualifiedClassName) {
     Assert.nonEmpty(qualifiedClassName);
 
     // split the qualified class name
-    final String[] splittedClassName = splitQualifiedClassName(qualifiedClassName);
+    String[] splittedClassName = splitQualifiedClassName(qualifiedClassName);
 
     // create new instance
     return new ClassName(splittedClassName[0], splittedClassName[1]);
@@ -98,7 +98,7 @@ public final class ClassName {
    * @return this class name as a file name
    */
   public String asClassFileName() {
-    final String fileName = getQualifiedClassName().replace('.', '/');
+    String fileName = getQualifiedClassName().replace('.', '/');
     return fileName + ".class";
   }
 
@@ -111,7 +111,7 @@ public final class ClassName {
    * @return this class name as a file name
    */
   public String asSourceFileName() {
-    final String fileName = getQualifiedClassName().replace('.', '/');
+    String fileName = getQualifiedClassName().replace('.', '/');
     return fileName + ".java";
   }
 
@@ -128,7 +128,7 @@ public final class ClassName {
    */
   @Override
   public int hashCode() {
-    final int PRIME = 31;
+    int PRIME = 31;
     int result = 1;
     result = PRIME * result + this._className.hashCode();
     result = PRIME * result + this._packageName.hashCode();
@@ -139,7 +139,7 @@ public final class ClassName {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -149,7 +149,7 @@ public final class ClassName {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final ClassName other = (ClassName) obj;
+    ClassName other = (ClassName) obj;
     if (!this._className.equals(other._className)) {
       return false;
     }
@@ -166,10 +166,10 @@ public final class ClassName {
    * 
    * @return an array with exactly two items: {package name, class name}
    */
-  private static String[] splitQualifiedClassName(final String qualifiedClassName) {
+  private static String[] splitQualifiedClassName(String qualifiedClassName) {
     Assert.nonEmpty(qualifiedClassName);
 
-    final int v = qualifiedClassName.lastIndexOf('.');
+    int v = qualifiedClassName.lastIndexOf('.');
     String packageName = "";
     if (v != -1) {
       packageName = qualifiedClassName.substring(0, v);
@@ -178,7 +178,7 @@ public final class ClassName {
     // throw new IllegalStateException("Default packages not supported! Classname was:'" + qualifiedClassName + "'");
     // }
 
-    final String className = qualifiedClassName.substring(v + 1);
+    String className = qualifiedClassName.substring(v + 1);
     return new String[] { packageName, className };
   }
 
@@ -192,7 +192,7 @@ public final class ClassName {
    * @param className
    *          the class name.
    */
-  private ClassName(final String packageName, final String className) {
+  private ClassName(String packageName, String className) {
     Assert.notNull(packageName);
     Assert.nonEmpty(className);
 

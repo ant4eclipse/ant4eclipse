@@ -35,10 +35,10 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   private static final String METADATA_PROJECTS = ".metadata/.plugins/org.eclipse.core.resources/.projects";
 
   /** the workspace directory */
-  private final File          _workspaceDirectory;
+  private File                _workspaceDirectory;
 
   /** the meta data location directory */
-  private final File          _metadataLocationDirectory;
+  private File                _metadataLocationDirectory;
 
   /**
    * <p>
@@ -48,7 +48,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @param workspaceDirectory
    *          the workspace directory
    */
-  public DefaultEclipseWorkspaceDefinition(final File workspaceDirectory) {
+  public DefaultEclipseWorkspaceDefinition(File workspaceDirectory) {
     Assert.isDirectory(workspaceDirectory);
 
     this._workspaceDirectory = workspaceDirectory;
@@ -61,16 +61,16 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   public File[] getProjectFolders() {
 
     // define the result
-    final List<File> result = new LinkedList<File>();
+    List<File> result = new LinkedList<File>();
 
     // read all directories in the workspace directory
     File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {
-      public boolean accept(final File file) {
-        final boolean accepted = file.isDirectory() && !".metadata".equals(file.getName()) && isProjectDirectory(file);
-        final String message = String
+      public boolean accept(File file) {
+        boolean accepted = file.isDirectory() && !".metadata".equals(file.getName()) && isProjectDirectory(file);
+        String message = String
             .format(
                 "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
-                new Object[] { file.getAbsolutePath(), Boolean.valueOf(accepted) });
+                file.getAbsolutePath(), Boolean.valueOf(accepted));
         A4ELogging.debug(message);
         return accepted;
       }
@@ -84,12 +84,12 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
 
       // read all directories in the METADATA_PROJECTS directory
       directories = this._metadataLocationDirectory.listFiles(new FileFilter() {
-        public boolean accept(final File file) {
-          final boolean accepted = file.isDirectory() && isLocationDirectory(file);
-          final String message = String
+        public boolean accept(File file) {
+          boolean accepted = file.isDirectory() && isLocationDirectory(file);
+          String message = String
               .format(
                   "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
-                  new Object[] { file.getAbsolutePath(), Boolean.valueOf(accepted) });
+                  file.getAbsolutePath(), Boolean.valueOf(accepted));
           A4ELogging.debug(message);
           return accepted;
         }
@@ -97,7 +97,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
 
       // add the resolved linked directories to the result
       for (File directorie : directories) {
-        final File linkedProject = LocationFileParser.getProjectDirectory(new File(directorie, ".location"));
+        File linkedProject = LocationFileParser.getProjectDirectory(new File(directorie, ".location"));
         if ((linkedProject != null) && !result.contains(linkedProject)) {
           result.add(linkedProject);
         }
@@ -117,7 +117,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    *          the directory
    * @return <code>true</code>, if the specified directory is an eclipse project directory.
    */
-  private boolean isProjectDirectory(final File directory) {
+  private boolean isProjectDirectory(File directory) {
     return isDirectory(directory) && new File(directory, ".project").exists();
   }
 
@@ -128,7 +128,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @param directory
    * @return
    */
-  private boolean isLocationDirectory(final File directory) {
+  private boolean isLocationDirectory(File directory) {
     return isDirectory(directory) && new File(directory, ".location").exists();
   }
 
@@ -136,7 +136,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @param directory
    * @return
    */
-  private boolean isDirectory(final File directory) {
+  private boolean isDirectory(File directory) {
     return (directory != null) && directory.exists();
   }
 } /* ENDCLASS */

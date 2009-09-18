@@ -30,7 +30,7 @@ public interface PathEntryRegistry {
    * 
    * @return <code>true</code> <=> The entry already has been resolved.
    */
-  boolean isResolved(final RawPathEntry entry);
+  boolean isResolved(RawPathEntry entry);
 
   /**
    * Registers a path entry for an raw representation.
@@ -40,7 +40,7 @@ public interface PathEntryRegistry {
    * @param solution
    *          A corresponding entry which has been resolved. Not <code>null</code>.
    */
-  void registerResolvedPathEntry(final RawPathEntry origin, final ResolvedPathEntry solution);
+  void registerResolvedPathEntry(RawPathEntry origin, ResolvedPathEntry solution);
 
   /**
    * Returns the resolved entry for the supplied entry if it already has been registered.
@@ -51,6 +51,6 @@ public interface PathEntryRegistry {
    * @return The resolved representation of the supplied entry. Not <code>null</code> if
    *         {@link #isResolved(RawPathEntry)} returns <code>true</code>.
    */
-  ResolvedPathEntry getResolvedPathEntry(final RawPathEntry entry);
+  ResolvedPathEntry getResolvedPathEntry(RawPathEntry entry);
 
 } /* ENDINTERFACE */

@@ -40,7 +40,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    * 
    * @return <code>true</code> if the role is applicable for the eclipse project.
    */
-  public boolean isRoleSupported(final EclipseProject project) {
+  public boolean isRoleSupported(EclipseProject project) {
     return (project.hasNature(JavaProjectRole.JAVA_NATURE));
   }
 
@@ -49,10 +49,10 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    * Adds a {@link JavaProjectRole} to the given project and parses the class path.
    * </p>
    */
-  public ProjectRole createRole(final EclipseProject project) {
+  public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
     Assert.notNull(project);
-    final JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl(project);
+    JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl(project);
     ClasspathFileParser.parseClasspath(javaProjectRole);
     return javaProjectRole;
   }
@@ -60,7 +60,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
-  public void postProcess(final EclipseProject project) {
+  public void postProcess(EclipseProject project) {
   }
 
 } /* ENDCLASS */

@@ -31,7 +31,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSet {
 
   /** the workspace which contains the projects to build */
-  private final Workspace _workspace;
+  private Workspace _workspace;
 
   /**
    * <p>
@@ -41,9 +41,9 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
    * @param workspace
    *          the {@link Workspace}
    */
-  public PluginAndFeatureProjectSet(final Workspace workspace) {
+  public PluginAndFeatureProjectSet(Workspace workspace) {
     super("workspace");
-    
+
     Assert.notNull(workspace);
 
     this._workspace = workspace;
@@ -52,10 +52,11 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void readBundlesAndFeatures() {
 
     // get all projects...
-    final EclipseProject[] eclipseProjects = this._workspace.getAllProjects();
+    EclipseProject[] eclipseProjects = this._workspace.getAllProjects();
 
     // add all plug-in projects
     for (EclipseProject eclipseProject : eclipseProjects) {

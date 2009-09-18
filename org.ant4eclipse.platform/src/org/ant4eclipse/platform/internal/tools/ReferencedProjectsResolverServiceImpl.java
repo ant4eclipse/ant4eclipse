@@ -107,7 +107,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
     Iterable<Pair<String, String>> referencedProjectsResolverEntries = Ant4EclipseConfiguration.Helper
         .getAnt4EclipseConfiguration().getAllProperties(REFERENCED_PROJECTS_RESOLVER_PREFIX);
 
-    final Map<String, ReferencedProjectsResolver> referencedProjectsResolvers = new HashMap<String, ReferencedProjectsResolver>();
+    Map<String, ReferencedProjectsResolver> referencedProjectsResolvers = new HashMap<String, ReferencedProjectsResolver>();
 
     // Instantiate all ReferencedProjectsResolvers
     for (Pair<String, String> referencedProjectsResolverEntry : referencedProjectsResolverEntries) {

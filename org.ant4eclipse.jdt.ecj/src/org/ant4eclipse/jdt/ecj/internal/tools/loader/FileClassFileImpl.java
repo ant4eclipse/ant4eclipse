@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
+
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
+
+import java.io.File;
 
 /**
  * DefaultClassFile --
@@ -25,12 +26,12 @@ import org.eclipse.jdt.internal.compiler.env.IBinaryType;
 public class FileClassFileImpl extends AbstractClassFileImpl {
 
   /** the class file */
-  private final File _classfile;
+  private File _classfile;
 
   /**
    * @param classfile
    */
-  public FileClassFileImpl(final File classfile, final String libraryLocation, final byte libraryType) {
+  public FileClassFileImpl(File classfile, String libraryLocation, byte libraryType) {
     super(libraryLocation, libraryType);
 
     Assert.exists(classfile);
@@ -44,7 +45,7 @@ public class FileClassFileImpl extends AbstractClassFileImpl {
   public final IBinaryType getBinaryType() {
     try {
       return ClassFileReader.read(this._classfile, true);
-    } catch (final Exception e) {
+    } catch (Exception e) {
       // return null if an exception occurs
       e.printStackTrace();
       return null;
@@ -56,7 +57,7 @@ public class FileClassFileImpl extends AbstractClassFileImpl {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[FileClassFileImpl:");
     buffer.append(" bundleLocation: ");
     buffer.append(getLibraryLocation());

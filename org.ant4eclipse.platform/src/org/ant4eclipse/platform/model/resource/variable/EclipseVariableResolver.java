@@ -33,7 +33,7 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param value
    *          The value of the variable. A value of null causes the variable to be removed.
    */
-  void setEclipseVariable(final String key, final String value);
+  void setEclipseVariable(String key, String value);
 
   /**
    * Substitutes all occurences of an eclipse <b>variable</b> (aka as <b>property</b> in ant)in the given string.
@@ -51,8 +51,7 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param otherProperties
    *          Table with variable names as keys and their values as values. Might be null.
    */
-  String resolveEclipseVariables(final String string, final EclipseProject project,
-      final Map<String, String> otherProperties);
+  String resolveEclipseVariables(String string, EclipseProject project, Map<String, String> otherProperties);
 
   /**
    * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
@@ -69,6 +68,6 @@ public interface EclipseVariableResolver extends Lifecycle {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  Map<String, String> getEclipseVariables(final EclipseProject project);
+  Map<String, String> getEclipseVariables(EclipseProject project);
 
 } /* ENDINTERFACE */

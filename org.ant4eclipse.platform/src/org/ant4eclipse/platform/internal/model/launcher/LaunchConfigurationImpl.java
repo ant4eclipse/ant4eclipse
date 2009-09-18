@@ -11,20 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.launcher;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
+import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
+
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
-import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
-
 public class LaunchConfigurationImpl implements LaunchConfiguration {
 
-  private final String                             _type;
+  private String                             _type;
 
-  private final Map<String, LaunchConfigAttribute> _attributes;
+  private Map<String, LaunchConfigAttribute> _attributes;
 
   public LaunchConfigurationImpl(String type, List<LaunchConfigAttribute> attributes) {
     super();
@@ -86,7 +87,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
   @Override
   public String toString() {
 
-    final String retValue = "LaunchConfigurationImpl ( " // prefix
+    String retValue = "LaunchConfigurationImpl ( " // prefix
         + super.toString() // add super attributes
         + ", _type = '" + this._type + "'" // _type
         + ", _attributes = '" + this._attributes + "'" // _attributes

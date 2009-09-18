@@ -30,22 +30,22 @@ import java.io.File;
 public class JavaRuntimeImpl implements JavaRuntime {
 
   /** the id */
-  private String            _id                       = null;
+  private String      _id                       = null;
 
   /** the location */
-  private File              _location                 = null;
+  private File        _location                 = null;
 
   /** the version */
-  private Version           _javaVersion              = null;
+  private Version     _javaVersion              = null;
 
   /** the version */
-  private Version           _javaSpecificationVersion = null;
+  private Version     _javaSpecificationVersion = null;
 
   /** - */
-  private final JavaProfile _javaProfile;
+  private JavaProfile _javaProfile;
 
   /** the libraries */
-  private File[]            _libraries                = new File[0];
+  private File[]      _libraries                = new File[0];
 
   /**
    * <p>
@@ -59,8 +59,8 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * @param javaSpecificationVersion
    * @param javaProfile
    */
-  JavaRuntimeImpl(final String id, final File location, final File[] libraries, final Version javaVersion,
-      final Version javaSpecificationVersion, final JavaProfile javaProfile) {
+  JavaRuntimeImpl(String id, File location, File[] libraries, Version javaVersion, Version javaSpecificationVersion,
+      JavaProfile javaProfile) {
 
     Assert.nonEmpty(id);
     Assert.isDirectory(location);
@@ -102,7 +102,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * @see org.ant4eclipse.jdt.model.jre.JavaRuntime#isJavaVersion(net.sf.ant4eclipse.model.jdt.jre.JavaRuntimeImpl.Version
    *      )
    */
-  public boolean isJavaVersion(final Version version) {
+  public boolean isJavaVersion(Version version) {
     return (version.getMajor() == this._javaVersion.getMajor()) && (version.getMinor() == this._javaVersion.getMinor());
   }
 
@@ -132,7 +132,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[JavaRuntime:");
     buffer.append(" id: ");
     buffer.append(this._id);
@@ -156,7 +156,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
+    int prime = 31;
     int result = 1;
     result = prime * result + ((this._id == null) ? 0 : this._id.hashCode());
     result = prime * result + ((this._location == null) ? 0 : this._location.hashCode());
@@ -164,7 +164,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -174,7 +174,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final JavaRuntimeImpl other = (JavaRuntimeImpl) obj;
+    JavaRuntimeImpl other = (JavaRuntimeImpl) obj;
     if (this._id == null) {
       if (other._id != null) {
         return false;

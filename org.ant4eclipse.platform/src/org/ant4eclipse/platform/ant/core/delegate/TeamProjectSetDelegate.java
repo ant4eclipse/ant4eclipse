@@ -11,14 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.io.File;
-
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
+
 import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
+
+import java.io.File;
 
 /**
  * <p>
@@ -42,7 +44,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    * 
    * @param component
    */
-  public TeamProjectSetDelegate(final ProjectComponent component) {
+  public TeamProjectSetDelegate(ProjectComponent component) {
     super(component);
   }
 
@@ -60,7 +62,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
   /**
    * {@inheritDoc}
    */
-  public final void setTeamProjectSet(final File projectSet) {
+  public final void setTeamProjectSet(File projectSet) {
     this._teamProjectSetFile = projectSet;
   }
 

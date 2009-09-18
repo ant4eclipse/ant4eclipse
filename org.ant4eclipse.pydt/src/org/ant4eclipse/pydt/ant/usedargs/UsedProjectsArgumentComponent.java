@@ -39,7 +39,7 @@ public class UsedProjectsArgumentComponent {
    * @return <code>true</code> <=> Directly returned projects.
    */
   public boolean isDirect() {
-    return _direct;
+    return this._direct;
   }
 
   /**
@@ -48,7 +48,7 @@ public class UsedProjectsArgumentComponent {
    * @return <code>true</code> <=> Projects shall be resolved in general.
    */
   public boolean isAll() {
-    return _all;
+    return this._all;
   }
 
   /**
@@ -57,7 +57,7 @@ public class UsedProjectsArgumentComponent {
    * @return <code>true</code> <=> Resolve exported projects, too.
    */
   public boolean isExport() {
-    return _export;
+    return this._export;
   }
 
   /**
@@ -66,21 +66,21 @@ public class UsedProjectsArgumentComponent {
    * @param mode
    *          The new resolving mode.
    */
-  public void setMode(final Mode mode) {
-    _all = false;
-    _export = false;
-    _direct = false;
+  public void setMode(Mode mode) {
+    this._all = false;
+    this._export = false;
+    this._direct = false;
     if (mode != null) {
       if (mode.isExported()) {
-        _export = true;
+        this._export = true;
       } else if (mode.isDirect()) {
-        _direct = true;
+        this._direct = true;
       } else /* if (mode.isAll()) */{
-        _all = true;
+        this._all = true;
       }
     } else {
       // the default is 'all'
-      _all = true;
+      this._all = true;
     }
   }
 
@@ -100,6 +100,7 @@ public class UsedProjectsArgumentComponent {
     /**
      * {@inheritDoc}.
      */
+    @Override
     public String[] getValues() {
       return VALUES;
     }

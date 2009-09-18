@@ -1,11 +1,12 @@
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.io.File;
-
 import org.ant4eclipse.platform.ant.core.GetPathComponent;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
 
 /**
  * <p>
@@ -31,14 +32,14 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
   /**
    * @param component
    */
-  public GetPathDelegate(final ProjectComponent component) {
+  public GetPathDelegate(ProjectComponent component) {
     super(component);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setPathId(final String id) {
+  public final void setPathId(String id) {
     if (this._pathId == null) {
       this._pathId = id;
     }
@@ -68,14 +69,14 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
   /**
    * {@inheritDoc}
    */
-  public final void setRelative(final boolean relative) {
+  public final void setRelative(boolean relative) {
     this._relative = relative;
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setProperty(final String property) {
+  public final void setProperty(String property) {
     this._property = property;
   }
 
@@ -112,7 +113,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
   /**
    * {@inheritDoc}
    */
-  public final void setResolvedPath(final File[] resolvedPath) {
+  public final void setResolvedPath(File[] resolvedPath) {
     this._resolvedPath = resolvedPath;
   }
 
@@ -121,7 +122,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   public final void populateProperty() {
     if (isPropertySet()) {
-      final String resolvedpath = convertToString(getResolvedPath());
+      String resolvedpath = convertToString(getResolvedPath());
       getAntProject().setProperty(getProperty(), resolvedpath);
     }
   }
@@ -131,7 +132,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   public final void populatePathId() {
     if (isPathIdSet()) {
-      final Path resolvedPath = convertToPath(getResolvedPath());
+      Path resolvedPath = convertToPath(getResolvedPath());
       getAntProject().addReference(getPathId(), resolvedPath);
     }
   }

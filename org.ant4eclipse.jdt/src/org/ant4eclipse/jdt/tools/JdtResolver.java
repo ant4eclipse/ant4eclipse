@@ -43,25 +43,24 @@ public class JdtResolver {
    *          an optional list with class path container arguments
    * @return the resolved class path
    */
-  public static final ResolvedClasspath resolveProjectClasspath(final EclipseProject project,
-      final boolean resolveRelative, final boolean isRuntimeClasspath,
-      final List<JdtClasspathContainerArgument> classpathContainerArguments) {
+  public static final ResolvedClasspath resolveProjectClasspath(EclipseProject project, boolean resolveRelative,
+      boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
     Assert.notNull(project);
 
     // create a ResolverJob
-    final ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
+    ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
         classpathContainerArguments);
 
     // create the ClasspathEntryResolverExecutor
-    final ClasspathEntryResolverExecutor executor = new ClasspathEntryResolverExecutor(true);
+    ClasspathEntryResolverExecutor executor = new ClasspathEntryResolverExecutor(true);
 
     // create the ClasspathEntryResolvers
-    final ClasspathEntryResolver[] resolvers = new ClasspathEntryResolver[] { new VariableClasspathEntryResolver(),
+    ClasspathEntryResolver[] resolvers = new ClasspathEntryResolver[] { new VariableClasspathEntryResolver(),
         new ContainerClasspathEntryResolver(), new SourceClasspathEntryResolver(), new ProjectClasspathEntryResolver(),
         new LibraryClasspathEntryResolver(), new OutputClasspathEntryResolver() };
 
     // create the result object
-    final ResolvedClasspathImpl resolvedClasspath = new ResolvedClasspathImpl();
+    ResolvedClasspathImpl resolvedClasspath = new ResolvedClasspathImpl();
 
     // execute the job
     executor.resolve(job.getRootProject(), resolvers,

@@ -14,6 +14,7 @@ package org.ant4eclipse.platform.model.team.cvssupport;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.PlatformExceptionCode;
 
 /**
@@ -70,7 +71,7 @@ public final class CvsRoot implements Cloneable {
    */
   public void setUser(String user) {
     Assert.notNull(user);
-    _user = user;
+    this._user = user;
   }
 
   /**
@@ -79,7 +80,7 @@ public final class CvsRoot implements Cloneable {
    * @return Returns the connection type.
    */
   public String getConnectionType() {
-    return _connectionType;
+    return this._connectionType;
   }
 
   /**
@@ -88,7 +89,7 @@ public final class CvsRoot implements Cloneable {
    * @return Returns the host.
    */
   public String getHost() {
-    return _host;
+    return this._host;
   }
 
   /**
@@ -97,7 +98,7 @@ public final class CvsRoot implements Cloneable {
    * @return Returns the repository.
    */
   public String getRepository() {
-    return _repository;
+    return this._repository;
   }
 
   /**
@@ -106,7 +107,7 @@ public final class CvsRoot implements Cloneable {
    * @return Returns the user.
    */
   public String getUser() {
-    return _user;
+    return this._user;
   }
 
   /**
@@ -115,7 +116,7 @@ public final class CvsRoot implements Cloneable {
    * @return whether an user is set or not.
    */
   public boolean hasUser() {
-    return _user != null;
+    return this._user != null;
   }
 
   /**
@@ -124,7 +125,7 @@ public final class CvsRoot implements Cloneable {
    * @return Returns the encoded password.
    */
   public String getEncodedPassword() {
-    return _encodedPassword;
+    return this._encodedPassword;
   }
 
   /**
@@ -133,12 +134,13 @@ public final class CvsRoot implements Cloneable {
    * @return whether an encoded password is set or not.
    */
   public boolean hasEncodedPassword() {
-    return _encodedPassword != null;
+    return this._encodedPassword != null;
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object clone() {
     CvsRoot inst = new CvsRoot();
     inst._connectionType = this._connectionType == null ? null : new String(this._connectionType);
@@ -152,27 +154,28 @@ public final class CvsRoot implements Cloneable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     StringBuffer buffy = new StringBuffer();
 
     buffy.append(":");
-    buffy.append(_connectionType);
+    buffy.append(this._connectionType);
     buffy.append(":");
 
-    if (_user != null) {
-      buffy.append(_user);
+    if (this._user != null) {
+      buffy.append(this._user);
 
-      if (_encodedPassword != null) {
+      if (this._encodedPassword != null) {
         buffy.append(":");
-        buffy.append(_encodedPassword);
+        buffy.append(this._encodedPassword);
       }
 
       buffy.append("@");
     }
 
-    buffy.append(_host);
+    buffy.append(this._host);
     buffy.append(":");
-    buffy.append(_repository);
+    buffy.append(this._repository);
 
     return buffy.toString();
   }
@@ -218,7 +221,7 @@ public final class CvsRoot implements Cloneable {
    * @param cvsRoot
    *          the cvsroot to parse.
    */
-  private void parse(final String cvsRoot) {
+  private void parse(String cvsRoot) {
 
     String root = cvsRoot;
 
@@ -229,22 +232,22 @@ public final class CvsRoot implements Cloneable {
       if (second == -1) {
         throw (new IllegalArgumentException());
       }
-      _connectionType = root.substring(1, second);
+      this._connectionType = root.substring(1, second);
       root = root.substring(second + 1);
-      int semicolon = _connectionType.indexOf(';');
+      int semicolon = this._connectionType.indexOf(';');
       if (semicolon != -1) {
         /**
          * @todo [01-Apr-2006:KASI] We need to handle method options as well. f.e.
          *       :pserver;proxy=www.myproxy.net;proxyport=8000:
          */
         // we need to remove some method options here
-        _connectionType = _connectionType.substring(0, semicolon);
+        this._connectionType = this._connectionType.substring(0, semicolon);
       }
     } else {
       // we need to set the default connection method which
       // will be changed when the repository location is
       // known
-      _connectionType = "default";
+      this._connectionType = "default";
     }
 
     // parse the user/password information
@@ -252,21 +255,21 @@ public final class CvsRoot implements Cloneable {
     if (separator != -1) {
       String[] userpass = root.substring(0, separator).split(":");
       root = root.substring(separator + 1);
-      _user = userpass[0];
+      this._user = userpass[0];
       if (userpass.length > 1) {
-        _encodedPassword = userpass[1];
+        this._encodedPassword = userpass[1];
       }
     }
 
     // now we got the repository location, so let's see
     // if we need to adjust the connection method
-    if ("default".equals(_connectionType)) {
+    if ("default".equals(this._connectionType)) {
       if (root.charAt(0) == '/') {
         // we need to handle a local repository
-        _connectionType = "local";
+        this._connectionType = "local";
       } else {
         // we need to handle a remote repository
-        _connectionType = "ext";
+        this._connectionType = "ext";
       }
     }
 
@@ -274,7 +277,7 @@ public final class CvsRoot implements Cloneable {
       /**
        * @todo [01-Apr-2006:KASI] Running a local repository. Needs better support.
        */
-      _repository = root;
+      this._repository = root;
     } else {
       /**
        * @todo [01-Apr-2006:KASI] Currently the port parameter is not parsed.
@@ -283,16 +286,16 @@ public final class CvsRoot implements Cloneable {
       if (separator == -1) {
         throw (new IllegalArgumentException());
       }
-      _host = root.substring(0, separator);
-      _repository = root.substring(separator);
+      this._host = root.substring(0, separator);
+      this._repository = root.substring(separator);
     }
 
-    if (isEmpty(_connectionType)) {
+    if (isEmpty(this._connectionType)) {
       throw new Ant4EclipseException(PlatformExceptionCode.INVALID_CVS_ROOT, cvsRoot,
           PlatformExceptionCode.MISSING_CONNECTION_TYPE);
     }
 
-    if (isEmpty(_repository)) {
+    if (isEmpty(this._repository)) {
       throw new Ant4EclipseException(PlatformExceptionCode.INVALID_CVS_ROOT, cvsRoot,
           PlatformExceptionCode.MISSING_REPOSITORY);
     }
@@ -316,11 +319,11 @@ public final class CvsRoot implements Cloneable {
    */
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (_connectionType == null ? 0 : _connectionType.hashCode());
-    hashCode = 31 * hashCode + (_user == null ? 0 : _user.hashCode());
-    hashCode = 31 * hashCode + (_host == null ? 0 : _host.hashCode());
-    hashCode = 31 * hashCode + (_repository == null ? 0 : _repository.hashCode());
-    hashCode = 31 * hashCode + (_encodedPassword == null ? 0 : _encodedPassword.hashCode());
+    hashCode = 31 * hashCode + (this._connectionType == null ? 0 : this._connectionType.hashCode());
+    hashCode = 31 * hashCode + (this._user == null ? 0 : this._user.hashCode());
+    hashCode = 31 * hashCode + (this._host == null ? 0 : this._host.hashCode());
+    hashCode = 31 * hashCode + (this._repository == null ? 0 : this._repository.hashCode());
+    hashCode = 31 * hashCode + (this._encodedPassword == null ? 0 : this._encodedPassword.hashCode());
     return hashCode;
   }
 

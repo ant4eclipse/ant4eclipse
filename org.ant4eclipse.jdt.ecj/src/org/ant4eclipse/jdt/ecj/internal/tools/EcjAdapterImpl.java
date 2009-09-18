@@ -11,18 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.jdt.ecj.EcjAdapter;
 import org.ant4eclipse.jdt.ecj.SourceFile;
+
 import org.eclipse.jdt.internal.compiler.Compiler;
 import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
 import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;
@@ -31,6 +28,11 @@ import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
 import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The {@link EcjAdapterImpl} can be used to compile eclipse projects with the eclipse java compiler (ejc). It provides
@@ -49,49 +51,49 @@ public final class EcjAdapterImpl implements EcjAdapter {
    * 
    * @see net.sf.ant4eclipse.tools.osgi.ejc.EjcAdapter#compile(net.sf.ant4eclipse.tools.osgi.ejc.CompileJobDescription)
    */
-  public CompileJobResult compile(final CompileJobDescription description) {
+  public CompileJobResult compile(CompileJobDescription description) {
     Assert.notNull(description);
 
-    // final File[] sourceFolder = description.getSourceFolders();
+    // File[] sourceFolder = description.getSourceFolders();
 
     // A4ELogging.debug("source folder: " + Arrays.asList(sourceFolder));
 
-    // final File outputFolder = description.getOutputFolder();
+    // File outputFolder = description.getOutputFolder();
     //
     // A4ELogging.debug("output folder: " + outputFolder);
 
-    final ClassFileLoader classFileLoader = description.getClassFileLoader();
+    ClassFileLoader classFileLoader = description.getClassFileLoader();
 
     A4ELogging.debug("classFileLoader: " + classFileLoader);
 
-    final Map<String, String> compilerOptions = description.getCompilerOptions();
+    Map<String, String> compilerOptions = description.getCompilerOptions();
 
     A4ELogging.debug("compiler options: " + compilerOptions);
 
     // retrieve the compilation units
-    final ICompilationUnit[] sources = getCompilationUnits(description.getSourceFiles());
+    ICompilationUnit[] sources = getCompilationUnits(description.getSourceFiles());
 
-    final IErrorHandlingPolicy policy = DefaultErrorHandlingPolicies.proceedWithAllProblems();
+    IErrorHandlingPolicy policy = DefaultErrorHandlingPolicies.proceedWithAllProblems();
 
-    final IProblemFactory problemFactory = new DefaultProblemFactory(Locale.getDefault());
+    IProblemFactory problemFactory = new DefaultProblemFactory(Locale.getDefault());
 
-    final CompilerRequestorImpl requestor = new CompilerRequestorImpl();
+    CompilerRequestorImpl requestor = new CompilerRequestorImpl();
 
-    final INameEnvironment nameEnvironment = new NameEnvironmentImpl(classFileLoader);
+    INameEnvironment nameEnvironment = new NameEnvironmentImpl(classFileLoader);
 
     // in any case disallow forbidden references
     compilerOptions.put("org.eclipse.jdt.core.compiler.problem.forbiddenReference", "error");
 
-    final Compiler compiler = new Compiler(nameEnvironment, policy, new CompilerOptions(compilerOptions), requestor,
+    Compiler compiler = new Compiler(nameEnvironment, policy, new CompilerOptions(compilerOptions), requestor,
         problemFactory);
 
     try {
       compiler.compile(sources);
-    } catch (final Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
 
-    final CompileJobResultImpl result = new CompileJobResultImpl();
+    CompileJobResultImpl result = new CompileJobResultImpl();
     result.setSucceeded(requestor.isCompilationSuccessful());
     result.setCategorizedProblems(requestor.getCategorizedProblems());
     return result;
@@ -101,15 +103,15 @@ public final class EcjAdapterImpl implements EcjAdapter {
    * @param sourceFolders
    * @return
    */
-  private ICompilationUnit[] getCompilationUnits(final SourceFile[] sourceFiles) {
+  private ICompilationUnit[] getCompilationUnits(SourceFile[] sourceFiles) {
 
     // create result list
-    final List<ICompilationUnit> result = new LinkedList<ICompilationUnit>();
+    List<ICompilationUnit> result = new LinkedList<ICompilationUnit>();
 
     // iterate over source folders
-    for (final SourceFile sourceFile : sourceFiles) {
+    for (SourceFile sourceFile : sourceFiles) {
 
-      final CompilationUnitImpl compilationUnitImpl = new CompilationUnitImpl(sourceFile);
+      CompilationUnitImpl compilationUnitImpl = new CompilationUnitImpl(sourceFile);
 
       if (!result.contains(compilationUnitImpl)) {
         result.add(compilationUnitImpl);

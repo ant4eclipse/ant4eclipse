@@ -30,7 +30,7 @@ public interface UserLibrariesFileParser {
    * @param configuration
    *          The eclipse user library configuration file.
    */
-  UserLibraries parseUserLibrariesFile(final File configuration);
+  UserLibraries parseUserLibrariesFile(File configuration);
 
   /**
    * <p>

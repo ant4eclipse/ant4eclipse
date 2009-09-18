@@ -42,7 +42,7 @@ public class Ant4EclipseConfigurator {
    * @param project
    *          the ant project
    */
-  public static void configureAnt4Eclipse(final Project project) {
+  public static void configureAnt4Eclipse(Project project) {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new AntBasedLogger(project), new Ant4EclipseConfigurationImpl());
     }
@@ -67,7 +67,7 @@ public class Ant4EclipseConfigurator {
    * @param ant4EclipseConfigurationProperties
    *          the configuration properties
    */
-  public static void configureAnt4Eclipse(final Properties ant4EclipseConfigurationProperties) {
+  public static void configureAnt4Eclipse(Properties ant4EclipseConfigurationProperties) {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new DefaultAnt4EclipseLogger(),
           ant4EclipseConfigurationProperties != null ? new Ant4EclipseConfigurationImpl(
@@ -90,7 +90,7 @@ public class Ant4EclipseConfigurator {
     // configure
     ServiceRegistry.configure(new ServiceRegistryConfiguration() {
 
-      public void configure(final ConfigurationContext context) {
+      public void configure(ConfigurationContext context) {
 
         // 1. add Ant4EclipseLogger
         context.registerService(logger, Ant4EclipseLogger.class.getName());

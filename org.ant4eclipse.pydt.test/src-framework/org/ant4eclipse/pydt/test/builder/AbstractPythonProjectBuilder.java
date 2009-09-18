@@ -28,14 +28,15 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
 
   private URL                 _buildscript;
 
-  AbstractPythonProjectBuilder(final String projectname) {
+  AbstractPythonProjectBuilder(String projectname) {
     super(projectname);
   }
 
   /**
    * {@inheritDoc}
    */
-  protected void createArtefacts(final File projectdir) {
+  @Override
+  protected void createArtefacts(File projectdir) {
     super.createArtefacts(projectdir);
     writeAntScript(new File(projectdir, NAME_BUILDXML));
   }
@@ -43,7 +44,7 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
   /**
    * {@inheritDoc}
    */
-  public File populate(final WorkspaceBuilder workspacebuilder) {
+  public File populate(WorkspaceBuilder workspacebuilder) {
     Assert.notNull(workspacebuilder);
     return workspacebuilder.addProject(this);
   }
@@ -51,9 +52,9 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
   /**
    * {@inheritDoc}
    */
-  public void setBuildScript(final URL location) {
+  public void setBuildScript(URL location) {
     Assert.notNull(location);
-    _buildscript = location;
+    this._buildscript = location;
   }
 
   /**
@@ -62,9 +63,9 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
    * @param destination
    *          The destination where the ANT script has been saved to. Not <code>null</code>.
    */
-  private void writeAntScript(final File destination) {
-    if (_buildscript != null) {
-      Utilities.copy(_buildscript, destination);
+  private void writeAntScript(File destination) {
+    if (this._buildscript != null) {
+      Utilities.copy(this._buildscript, destination);
     }
   }
 

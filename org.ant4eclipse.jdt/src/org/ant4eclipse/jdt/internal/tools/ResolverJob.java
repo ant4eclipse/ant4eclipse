@@ -1,10 +1,11 @@
 package org.ant4eclipse.jdt.internal.tools;
 
-import java.util.List;
-
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
+
+import java.util.List;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -12,19 +13,19 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 public final class ResolverJob {
 
   /** the root eclipse project */
-  private final EclipseProject                      _rootProject;
+  private EclipseProject                      _rootProject;
 
   /** the workspace that contains all projects */
-  private final Workspace                           _workspace;
+  private Workspace                           _workspace;
 
   /** indicates whether the class path should be resolved relative or absolute */
-  private final boolean                             _relative;
+  private boolean                             _relative;
 
   /** indicates whether the class path is a runtime class path or not */
-  private final boolean                             _runtimeClasspath;
+  private boolean                             _runtimeClasspath;
 
   /** - */
-  private final List<JdtClasspathContainerArgument> _classpathContainerArguments;
+  private List<JdtClasspathContainerArgument> _classpathContainerArguments;
 
   /**
    * @param rootProject
@@ -32,8 +33,8 @@ public final class ResolverJob {
    * @param relative
    * @param runtime
    */
-  public ResolverJob(final EclipseProject rootProject, final Workspace workspace, final boolean relative,
-      final boolean runtime, final List<JdtClasspathContainerArgument> classpathContainerArguments) {
+  public ResolverJob(EclipseProject rootProject, Workspace workspace, boolean relative, boolean runtime,
+      List<JdtClasspathContainerArgument> classpathContainerArguments) {
 
     this._rootProject = rootProject;
     this._workspace = workspace;

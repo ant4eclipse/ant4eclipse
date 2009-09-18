@@ -29,7 +29,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
-  public boolean canResolve(final ClasspathEntry entry) {
+  public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_PROJECT)
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_PROJECT) */;
   }
@@ -38,7 +38,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
    * @see org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver#resolve(org.ant4eclipse.jdt.model.ClasspathEntry,
    *      org.ant4eclipse.jdt.tools.container.ClasspathResolverContext)
    */
-  public void resolve(final ClasspathEntry entry, final ClasspathResolverContext context) {
+  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 
     // return immediately if the class path entry is not visible
     if (!isClasspathEntryVisible(entry, context)) {
@@ -54,7 +54,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
     }
 
     // get the project
-    final EclipseProject referencedProject = context.getWorkspace().getProject(projectname);
+    EclipseProject referencedProject = context.getWorkspace().getProject(projectname);
 
     // resolve the class path for the referenced project.
     context.resolveProjectClasspath(referencedProject);

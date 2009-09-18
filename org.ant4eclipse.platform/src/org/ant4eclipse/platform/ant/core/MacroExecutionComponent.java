@@ -32,7 +32,7 @@ public interface MacroExecutionComponent<E> {
    */
   void setPrefix(String prefix);
 
-  NestedSequential createScopedMacroDefinition(final E scope);
+  NestedSequential createScopedMacroDefinition(E scope);
 
   List<ScopedMacroDefinition<E>> getScopedMacroDefinitions();
 
@@ -42,7 +42,7 @@ public interface MacroExecutionComponent<E> {
   // * @param scopedProperties
   // * @param scopedReferences
   // */
-  // void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues);
+  // void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues);
 
-  void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValuesProvider provider);
+  void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider);
 }

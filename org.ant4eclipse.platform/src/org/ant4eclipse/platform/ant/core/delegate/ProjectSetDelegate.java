@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.ant.core.delegate;
 
 import org.ant4eclipse.platform.ant.core.ProjectSetComponent;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -33,7 +34,7 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    * @param component
    *          the project component
    */
-  public ProjectSetDelegate(final ProjectComponent component) {
+  public ProjectSetDelegate(ProjectComponent component) {
     super(component);
   }
 

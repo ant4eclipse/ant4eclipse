@@ -36,40 +36,40 @@ import java.util.List;
 public final class EclipseProjectImpl implements EclipseProject {
 
   /** The name of the projects <tt>.settings</tt> folder */
-  public static final String             SETTINGS_FOLDER_NAME = ".settings";
+  public static final String       SETTINGS_FOLDER_NAME = ".settings";
 
   /** the workspace that contains this project */
-  private final Workspace                _workspace;
+  private Workspace                _workspace;
 
   /** the file that represents this project */
-  private final File                     _projectDirectory;
+  private File                     _projectDirectory;
 
   /** the project name specified in the project description */
-  private String                         _specifiedName;
+  private String                   _specifiedName;
 
   /** the <tt>.settings</tt> folder of the project or <tt>null<tt> if there is no <tt>.settings</tt> folder */
-  private final File                     _settingsFolder;
+  private File                     _settingsFolder;
 
   /** the project comment */
-  private String                         _comment;
+  private String                   _comment;
 
   /** the list of project natures */
-  private final List<ProjectNature>      _natures;
+  private List<ProjectNature>      _natures;
 
   /** the list of project roles */
-  private final List<ProjectRole>        _roles;
+  private List<ProjectRole>        _roles;
 
   /** the list of buildCommands */
-  private final List<BuildCommand>       _buildCommands;
+  private List<BuildCommand>       _buildCommands;
 
   /** the referenced project specified in the project description */
-  private final List<String>             _referencedProjects;
+  private List<String>             _referencedProjects;
 
   /** the linked resources specified in the project description */
-  private final List<LinkedResourceImpl> _linkedResources;
+  private List<LinkedResourceImpl> _linkedResources;
 
   /** the names of the linked resource. used for the mapping */
-  private final List<String>             _linkedResourceNames;
+  private List<String>             _linkedResourceNames;
 
   /**
    * Creates a new instance of type project.
@@ -79,7 +79,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param projectName
    *          the name of the project
    */
-  public EclipseProjectImpl(final Workspace workspace, final File projectDirectory) {
+  public EclipseProjectImpl(Workspace workspace, File projectDirectory) {
     Assert.isDirectory(projectDirectory);
 
     this._workspace = workspace;
@@ -91,7 +91,7 @@ public final class EclipseProjectImpl implements EclipseProject {
     this._linkedResources = new LinkedList<LinkedResourceImpl>();
     this._linkedResourceNames = new LinkedList<String>();
 
-    final File settingsFolder = getChild(SETTINGS_FOLDER_NAME);
+    File settingsFolder = getChild(SETTINGS_FOLDER_NAME);
     this._settingsFolder = (settingsFolder.isDirectory() ? settingsFolder : null);
   }
 
@@ -106,7 +106,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param specifiedName
    *          The specifiedName to set.
    */
-  public void setSpecifiedName(final String specifiedName) {
+  public void setSpecifiedName(String specifiedName) {
     this._specifiedName = specifiedName;
   }
 
@@ -121,7 +121,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param comment
    *          The comment to set.
    */
-  public void setComment(final String comment) {
+  public void setComment(String comment) {
     this._comment = comment;
   }
 
@@ -142,7 +142,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public File getFolder(final PathStyle pathstyle) {
+  public File getFolder(PathStyle pathstyle) {
     Assert.notNull(pathstyle);
     if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
       return new File(".");
@@ -163,33 +163,33 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public boolean hasChild(final String path) {
+  public boolean hasChild(String path) {
     Assert.notNull(path);
-    final File child = getChild(path);
+    File child = getChild(path);
     return child.exists();
   }
 
   /**
    * {@inheritDoc}
    */
-  public File getChild(final String path) {
+  public File getChild(String path) {
     return (getChild(path, PathStyle.ABSOLUTE));
   }
 
   /**
    * {@inheritDoc}
    */
-  public File[] getChildren(final String[] path) {
+  public File[] getChildren(String[] path) {
     return getChildren(path, PathStyle.ABSOLUTE);
   }
 
   /**
    * {@inheritDoc}
    */
-  public File[] getChildren(final String[] path, final PathStyle relative) {
+  public File[] getChildren(String[] path, PathStyle relative) {
     Assert.notNull(path);
 
-    final File[] result = new File[path.length];
+    File[] result = new File[path.length];
 
     for (int i = 0; i < result.length; i++) {
       result[i] = getChild(path[i], relative);
@@ -205,12 +205,12 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public boolean hasSettingsFile(final String settingsFileName) {
+  public boolean hasSettingsFile(String settingsFileName) {
     // check if settings folder exists
     if (!hasSettingsFolder()) {
       return false;
     }
-    final File settingsFile = new File(this._settingsFolder, settingsFileName);
+    File settingsFile = new File(this._settingsFolder, settingsFileName);
     // is it an existing file?
     return settingsFile.isFile();
   }
@@ -218,11 +218,11 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public File getSettingsFile(final String settingsFileName) throws RuntimeException {
+  public File getSettingsFile(String settingsFileName) throws RuntimeException {
     Assert.notNull("The parameter 'settingsFileName' must not be null", settingsFileName);
     Assert.assertTrue(hasSettingsFolder(), "The project '" + getFolderName() + "' must have a .settings folder");
 
-    final File settingsFile = new File(this._settingsFolder, settingsFileName);
+    File settingsFile = new File(this._settingsFolder, settingsFileName);
     if (!settingsFile.exists()) {
       throw new RuntimeException("Settings File '" + settingsFileName + "' not found in project '" + getFolderName()
           + "'");
@@ -239,12 +239,12 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public File getChild(String path, final PathStyle pathstyle) {
+  public File getChild(String path, PathStyle pathstyle) {
     Assert.notNull(path);
 
     String name = path;
     String rest = null;
-    final int idx = firstFileSeparator(path);
+    int idx = firstFileSeparator(path);
     if (idx != -1) {
       name = path.substring(0, idx);
       rest = path.substring(idx + 1);
@@ -252,7 +252,7 @@ public final class EclipseProjectImpl implements EclipseProject {
 
     // handle linked resource
     if (isLinkedResource(name)) {
-      final LinkedResourceImpl resource = getLinkedResource(name);
+      LinkedResourceImpl resource = getLinkedResource(name);
       if ((pathstyle != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null)) {
         // TODO
         throw (new RuntimeException("cannot calculate relative location for linked resource '" + name + "' !"));
@@ -289,9 +289,9 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return The index of the first file separator or -1.
    */
-  private int firstFileSeparator(final String str) {
-    final int idx1 = str.indexOf('/');
-    final int idx2 = str.indexOf('\\');
+  private int firstFileSeparator(String str) {
+    int idx1 = str.indexOf('/');
+    int idx2 = str.indexOf('\\');
     if ((idx1 == -1) && (idx2 == -1)) {
       return (-1);
     }
@@ -307,7 +307,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param nature
    *          the nature to add.
    */
-  public void addNature(final ProjectNature nature) {
+  public void addNature(ProjectNature nature) {
     Assert.notNull(nature);
     if (!this._natures.contains(nature)) {
       this._natures.add(nature);
@@ -317,7 +317,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public boolean hasNature(final String natureName) {
+  public boolean hasNature(String natureName) {
     Assert.notNull(natureName);
     return hasNature(new ProjectNatureImpl(natureName));
   }
@@ -325,7 +325,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public boolean hasNature(final ProjectNature nature) {
+  public boolean hasNature(ProjectNature nature) {
     Assert.notNull(nature);
 
     // nature unknown:
@@ -364,7 +364,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * @param referencedProject
    */
-  public void addReferencedProject(final String referencedProject) {
+  public void addReferencedProject(String referencedProject) {
     if ((referencedProject != null) && !this._referencedProjects.contains(referencedProject)) {
       this._referencedProjects.add(referencedProject);
     }
@@ -383,7 +383,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param role
    *          Adds the specified role to the EclipseProject.
    */
-  public void addRole(final ProjectRole role) {
+  public void addRole(ProjectRole role) {
     Assert.notNull(role);
     if (hasRole(role.getClass())) {
       throw new RuntimeException("ProjectRole " + role.getClass() + " is already set!");
@@ -395,11 +395,11 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public boolean hasRole(final Class<? extends ProjectRole> projectRoleClass) {
+  public boolean hasRole(Class<? extends ProjectRole> projectRoleClass) {
     Assert.notNull(projectRoleClass);
-    final Iterator<ProjectRole> iterator = this._roles.iterator();
+    Iterator<ProjectRole> iterator = this._roles.iterator();
     while (iterator.hasNext()) {
-      final AbstractProjectRole role = (AbstractProjectRole) iterator.next();
+      AbstractProjectRole role = (AbstractProjectRole) iterator.next();
       if (projectRoleClass.isAssignableFrom(role.getClass())) {
         return true;
       }
@@ -410,12 +410,12 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public ProjectRole getRole(final Class<? extends ProjectRole> projectRoleClass) {
+  public ProjectRole getRole(Class<? extends ProjectRole> projectRoleClass) {
     Assert.notNull(projectRoleClass);
     Assert.assertTrue(hasRole(projectRoleClass), "hasRole(projectRoleClass) on project '" + getFolderName()
         + "'has to be true for role '" + projectRoleClass + "'!");
 
-    final Iterator<ProjectRole> iterator = this._roles.iterator();
+    Iterator<ProjectRole> iterator = this._roles.iterator();
 
     ProjectRole role = null;
 
@@ -441,7 +441,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param command
    *          the specified build command to the project.
    */
-  public void addBuildCommand(final BuildCommand command) {
+  public void addBuildCommand(BuildCommand command) {
     Assert.notNull(command);
 
     this._buildCommands.add(command);
@@ -450,16 +450,16 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public boolean hasBuildCommand(final String commandName) {
+  public boolean hasBuildCommand(String commandName) {
     Assert.notNull(commandName);
-    final BuildCommand command = new BuildCommandImpl(commandName);
+    BuildCommand command = new BuildCommandImpl(commandName);
     return hasBuildCommand(command);
   }
 
   /**
    * {@inheritDoc}
    */
-  public boolean hasBuildCommand(final BuildCommand command) {
+  public boolean hasBuildCommand(BuildCommand command) {
     Assert.notNull(command);
     return this._buildCommands.contains(command);
   }
@@ -477,7 +477,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param linkedResource
    *          the linked resource to add.
    */
-  public void addLinkedResource(final LinkedResourceImpl linkedResource) {
+  public void addLinkedResource(LinkedResourceImpl linkedResource) {
     Assert.notNull(linkedResource);
 
     if (!this._linkedResources.contains(linkedResource)) {
@@ -494,9 +494,9 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return The desired LinkedResource instance.
    */
-  public LinkedResourceImpl getLinkedResource(final String name) {
+  public LinkedResourceImpl getLinkedResource(String name) {
     Assert.assertTrue(isLinkedResource(name), "Cannot retrieve linked resource '" + name + "' !");
-    final int idx = this._linkedResourceNames.indexOf(name);
+    int idx = this._linkedResourceNames.indexOf(name);
     return this._linkedResources.get(idx);
   }
 
@@ -508,7 +508,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return true <=> The name applies to a specific linked resource.
    */
-  public boolean isLinkedResource(final String name) {
+  public boolean isLinkedResource(String name) {
     Assert.notNull(name);
     return (this._linkedResourceNames.contains(name));
   }
@@ -525,7 +525,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public String toString() {
-    final StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = new StringBuffer();
     buffer.append("[EclipseProject:");
     buffer.append(" name: ");
     buffer.append(getSpecifiedName());
@@ -539,7 +539,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -549,7 +549,7 @@ public final class EclipseProjectImpl implements EclipseProject {
     if (o.getClass() != getClass()) {
       return false;
     }
-    final EclipseProjectImpl castedObj = (EclipseProjectImpl) o;
+    EclipseProjectImpl castedObj = (EclipseProjectImpl) o;
     return ((this._workspace == null ? castedObj._workspace == null : this._workspace.equals(castedObj._workspace))
         && (this._projectDirectory == null ? castedObj._projectDirectory == null : this._projectDirectory
             .equals(castedObj._projectDirectory))

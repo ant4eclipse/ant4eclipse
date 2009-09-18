@@ -65,7 +65,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
    * @return the library name.
    */
   public String getLibraryName() {
-    return _libraryName;
+    return this._libraryName;
   }
 
   /**
@@ -77,7 +77,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
    *          the library name.
    */
   public void setLibraryName(String libraryName) {
-    _libraryName = libraryName;
+    this._libraryName = libraryName;
   }
 
   /**
@@ -88,12 +88,12 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
 
     // check require fields
     requireWorkspaceAndProjectNameSet();
-    if (_libraryName == null || _libraryName.trim().equals("")) {
+    if (this._libraryName == null || this._libraryName.trim().equals("")) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "library");
     }
 
     // check if the specified library exists
-    if (!getPluginProjectRole().getBuildProperties().hasLibrary(_libraryName)) {
+    if (!getPluginProjectRole().getBuildProperties().hasLibrary(this._libraryName)) {
       throw new Ant4EclipseException(PdeExceptionCode.LIBRARY_NAME_DOES_NOT_EXIST, getLibraryName(),
           getEclipseProject().getSpecifiedName());
     }
@@ -102,7 +102,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   /**
    * {@inheritDoc}
    */
-  public Object createDynamicElement(final String name) {
+  public Object createDynamicElement(String name) {
 
     if (SCOPE_NAME_SOURCE_DIRECTORY.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORY);
@@ -122,7 +122,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   protected void doExecute() {
 
     // execute scoped macro definitions
-    for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
       if (SCOPE_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
         executeLibrarySourceDirectoryScopedMacroDef(scopedMacroDefinition.getMacroDef());
@@ -147,7 +147,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   private void executeLibrarySourceDirectoryScopedMacroDef(MacroDef macroDef) {
 
     // Step 1: Get the library
-    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
+    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(this._libraryName);
 
     // Step 2: Iterate over the source entries
     for (final String librarySourceDirectory : library.getSource()) {
@@ -162,7 +162,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
 
           // add common library properties
           addCommonLibraryProperties(library, values);
-          
+
           // add additional values
           values.getProperties().put(PdeExecutorValues.SOURCE_DIRECTORY,
               convertToString(getEclipseProject().getChild(librarySourceDirectory)));
@@ -188,7 +188,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   private void executeLibraryTargetDirectoryScopedMacroDef(MacroDef macroDef) {
 
     // Step 1: Get the library
-    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
+    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(this._libraryName);
 
     // Step 2: Iterate over the output entries
     for (final String libraryOutputDirectory : library.getOutput()) {
@@ -203,7 +203,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
 
           // add common library properties
           addCommonLibraryProperties(library, values);
-          
+
           // add additional values
           values.getProperties().put(PdeExecutorValues.OUTPUT_DIRECTORY,
               convertToString(getEclipseProject().getChild(libraryOutputDirectory)));
@@ -229,8 +229,8 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
 
     // Step 1: Get the library
-    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(_libraryName);
-    
+    final Library library = getPluginProjectRole().getBuildProperties().getLibrary(this._libraryName);
+
     // Step 2: Execute the macro instance
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
@@ -262,14 +262,14 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   /**
    * <p>
    * </p>
-   *
+   * 
    * @param library
    * @param values
    */
-  private void addCommonLibraryProperties(final Library library, MacroExecutionValues values) {
-    
-    values.getProperties().put(PdeExecutorValues.LIBRARY_NAME, _libraryName);
-    
+  private void addCommonLibraryProperties(Library library, MacroExecutionValues values) {
+
+    values.getProperties().put(PdeExecutorValues.LIBRARY_NAME, this._libraryName);
+
     if (library.isSelf()) {
       values.getProperties().put(PdeExecutorValues.LIBRARY_IS_SELF, "true");
     } else {

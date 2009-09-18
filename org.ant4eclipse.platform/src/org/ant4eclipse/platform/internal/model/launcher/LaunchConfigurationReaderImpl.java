@@ -11,19 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.launcher;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
+import org.ant4eclipse.platform.model.launcher.LaunchConfigurationReader;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
-import org.ant4eclipse.platform.model.launcher.LaunchConfigurationReader;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader {
 
@@ -63,17 +65,17 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
 
   class LaunchConfigHandler extends DefaultHandler {
 
-    public final static String                LAUNCH_CONFIGURATION_ELEMENT_NAME = "launchConfiguration";
+    public final static String          LAUNCH_CONFIGURATION_ELEMENT_NAME = "launchConfiguration";
 
-    public final static String                LIST_ENTRY_ELEMENT_NAME           = "listEntry";
+    public final static String          LIST_ENTRY_ELEMENT_NAME           = "listEntry";
 
-    public final static String                LIST_ATTRIBUTE_ELEMENT_NAME       = "listAttribute";
+    public final static String          LIST_ATTRIBUTE_ELEMENT_NAME       = "listAttribute";
 
-    private final List<LaunchConfigAttribute> _attributes                       = new LinkedList<LaunchConfigAttribute>();
+    private List<LaunchConfigAttribute> _attributes                       = new LinkedList<LaunchConfigAttribute>();
 
-    private String                            _launchConfigurationType;
+    private String                      _launchConfigurationType;
 
-    private LaunchConfigAttribute             _currentAttribute                 = null;
+    private LaunchConfigAttribute       _currentAttribute                 = null;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {

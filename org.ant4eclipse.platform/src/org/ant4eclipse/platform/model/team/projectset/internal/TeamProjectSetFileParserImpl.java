@@ -31,8 +31,8 @@ import java.util.Hashtable;
 import java.util.Map;
 
 /**
- * Reads an eclipse team project set file and constructs a
- * {@link org.ant4eclipse.model.platform.team.projectset.TeamProjectSet TeamProjectSet} for it.
+ * Reads an eclipse team project set file and constructs a {@link
+ * org.ant4eclipse.model.platform.team.projectset.TeamProjectSet TeamProjectSet} for it.
  * 
  * <p>
  * For the format of the psf-file used by Eclipse see org.eclipse.team.internal.ccvs.ui.CVSProjectSetSerializer
@@ -57,13 +57,13 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   private Map<String, TeamProjectSetFactory> _factories;
 
   public void initialize() {
-    Iterable<Pair<String,String>> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration().getAllProperties(
-        TEAMPROVIDER_PREFIX);
+    Iterable<Pair<String, String>> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
+        .getAllProperties(TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
-    for (Pair<String,String> teamProvider : teamProviders) {
+    for (Pair<String, String> teamProvider : teamProviders) {
       TeamProjectSetFactory factory = Utilities.newInstance(teamProvider.getSecond());
-      A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", factory, teamProvider.getFirst() );
+      A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", factory, teamProvider.getFirst());
       providers.put(teamProvider.getFirst(), factory);
     }
 
@@ -89,25 +89,25 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
     Assert.isFile(projectSetFile);
 
-    final XQueryHandler queryhandler2 = new XQueryHandler();
+    XQueryHandler queryhandler2 = new XQueryHandler();
 
     // queries for the 'provider-id' attribute
-    final XQuery providerIdQuery = queryhandler2.createQuery("//psf/provider/@id");
+    XQuery providerIdQuery = queryhandler2.createQuery("//psf/provider/@id");
     // query for the 'reference' elements
-    final XQuery referenceQuery = queryhandler2.createQuery("//psf/provider/project/@reference");
+    XQuery referenceQuery = queryhandler2.createQuery("//psf/provider/project/@reference");
 
     // parse the file
     XQueryHandler.queryFile(projectSetFile, queryhandler2);
 
     // determine team project set-provider
-    final String providerId = providerIdQuery.getSingleResult();
+    String providerId = providerIdQuery.getSingleResult();
 
     // get the factory for this provider
     TeamProjectSetFactory projectSetFactory = getFactoryForProvider(providerId);
-    final TeamProjectSet projectSet = projectSetFactory.createTeamProjectSet(projectSetFile.getName());
+    TeamProjectSet projectSet = projectSetFactory.createTeamProjectSet(projectSetFile.getName());
 
     // retrieve the result
-    final String[] projects = referenceQuery.getResult();
+    String[] projects = referenceQuery.getResult();
 
     // create TeamProjectDescriptions for each project
     for (String project : projects) {

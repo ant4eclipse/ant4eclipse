@@ -31,6 +31,6 @@ public @interface NLSMessage {
    * 
    * @return
    */
-  public String value() default "";
+  String value() default "";
 
 }

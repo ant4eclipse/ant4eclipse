@@ -46,7 +46,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
    * 
    * @param project
    */
-  public AbstractAnt4EclipseDataType(final Project project) {
+  public AbstractAnt4EclipseDataType(Project project) {
     setProject(project);
 
     // add instance

@@ -25,7 +25,7 @@ public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFil
      * @param userlib
      *          The new user library configuration file.
      */
-    public void setAttribute(final String attribute) {
+    public void setAttribute(String attribute) {
       getProject().log("setAttribute(" + attribute + ")");
     }
   }

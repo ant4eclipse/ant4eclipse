@@ -11,18 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
+import org.ant4eclipse.platform.PlatformExceptionCode;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.Workspace;
+import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
 /**
  * <p>
@@ -34,12 +35,12 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 public final class WorkspaceImpl implements Workspace {
 
   /** map with all the eclipse projects */
-  private final Map<String, EclipseProject> _projects;
+  private Map<String, EclipseProject> _projects;
 
   /**
    * {@inheritDoc}
    */
-  public boolean hasProject(final String name) {
+  public boolean hasProject(String name) {
     Assert.nonEmpty(name);
 
     return this._projects.containsKey(name);
@@ -48,7 +49,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
-  public EclipseProject getProject(final String name) {
+  public EclipseProject getProject(String name) {
     Assert.nonEmpty(name);
 
     return this._projects.get(name);
@@ -57,7 +58,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
-  public EclipseProject[] getProjects(final String[] names, final boolean failOnMissingProjects) {
+  public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
     Assert.notNull(names);
 
     List<EclipseProject> projects = new LinkedList<EclipseProject>();
@@ -73,7 +74,7 @@ public final class WorkspaceImpl implements Workspace {
       projects.add(project);
     }
 
-    // getProject(final String name);
+    // getProject(String name);
     // projects.
     return projects.toArray(new EclipseProject[0]);
   }
@@ -82,18 +83,18 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getAllProjects() {
-    final Collection<EclipseProject> projects = this._projects.values();
+    Collection<EclipseProject> projects = this._projects.values();
     return projects.toArray(new EclipseProject[0]);
   }
 
-  public EclipseProject[] getAllProjects(final Class<? extends ProjectRole> projectRole) {
+  public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
     Assert.notNull(projectRole);
     Assert.assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
         "Class '%s' must be assignable from class '%s'", new Object[] { projectRole.getClass().getName(),
             ProjectRole.class.getName() }));
 
-    final List<EclipseProject> result = new LinkedList<EclipseProject>();
-    final Collection<EclipseProject> projects = this._projects.values();
+    List<EclipseProject> result = new LinkedList<EclipseProject>();
+    Collection<EclipseProject> projects = this._projects.values();
     for (EclipseProject eclipseProject : projects) {
       if (eclipseProject.hasRole(projectRole)) {
         result.add(eclipseProject);
@@ -112,11 +113,11 @@ public final class WorkspaceImpl implements Workspace {
     this._projects = new Hashtable<String, EclipseProject>();
   }
 
-  public void registerEclipseProject(final EclipseProject eclipseProject) {
+  public void registerEclipseProject(EclipseProject eclipseProject) {
     Assert.notNull(eclipseProject);
 
     // we have to use the specified name here instead of the directory name
-    final String key = eclipseProject.getSpecifiedName();
+    String key = eclipseProject.getSpecifiedName();
 
     if (this._projects.containsKey(key) && !eclipseProject.equals(this._projects.get(key))) {
 
@@ -129,14 +130,14 @@ public final class WorkspaceImpl implements Workspace {
 
   @Override
   public int hashCode() {
-    final int prime = 31;
+    int prime = 31;
     int result = 1;
     result = prime * result + ((this._projects == null) ? 0 : this._projects.hashCode());
     return result;
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(Object obj) {
     if (this == obj) {
       return true;
     }
@@ -146,7 +147,7 @@ public final class WorkspaceImpl implements Workspace {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final WorkspaceImpl other = (WorkspaceImpl) obj;
+    WorkspaceImpl other = (WorkspaceImpl) obj;
     if (this._projects == null) {
       if (other._projects != null) {
         return false;

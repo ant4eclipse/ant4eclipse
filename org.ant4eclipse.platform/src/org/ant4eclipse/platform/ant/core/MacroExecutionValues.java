@@ -13,10 +13,10 @@ import java.util.Map;
 public final class MacroExecutionValues {
 
   /** the properties */
-  private final Map<String, String> properties;
+  private Map<String, String> properties;
 
   /** the references */
-  private final Map<String, Object> references;
+  private Map<String, Object> references;
 
   /**
    * <p>

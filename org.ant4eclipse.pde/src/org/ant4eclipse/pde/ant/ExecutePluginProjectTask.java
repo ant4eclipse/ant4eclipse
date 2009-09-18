@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import java.io.File;
-import java.util.jar.Manifest;
-
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.ManifestHelper;
 
@@ -23,13 +20,18 @@ import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.PdeBuildHelper;
+
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
+
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.jar.Manifest;
 
 /**
  * <p>
@@ -65,7 +67,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
   /**
    * {@inheritDoc}
    */
-  public Object createDynamicElement(final String name) {
+  public Object createDynamicElement(String name) {
 
     // handle 'forEachPluginLibrary' element
     if (SCOPE_NAME_LIBRARY.equalsIgnoreCase(name)) {
@@ -90,9 +92,9 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
-    for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
-      final MacroDef macroDef = scopedMacroDefinition.getMacroDef();
+      MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
       // execute SCOPE_LIBRARY
       if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
@@ -147,7 +149,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
   private void executeLibraryScopedMacroDef(MacroDef macroDef) {
 
     // get the libraries
-    final Library[] libraries = LibraryHelper.getLibraries(getEclipseProject());
+    Library[] libraries = LibraryHelper.getLibraries(getEclipseProject());
 
     // Iterate over all the libraries
     for (final Library library : libraries) {
@@ -202,7 +204,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
   private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) {
 
     // get the plug-in project role
-    final PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
 
     // get the bundle source
     BundleSource bundleSource = (BundleSource) pluginProjectRole.getBundleDescription().getUserObject();
@@ -214,8 +216,8 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     values.getProperties().put(BUNDLE_SYMBOLIC_NAME, ManifestHelper.getBundleSymbolicName(manifest));
 
     // "calculate" effective version, that is the version with replaced qualifier
-    final Version effectiveVersion = PdeBuildHelper.resolveVersion(pluginProjectRole.getBundleDescription()
-        .getVersion(), pluginProjectRole.getBuildProperties().getQualifier());
+    Version effectiveVersion = PdeBuildHelper.resolveVersion(pluginProjectRole.getBundleDescription().getVersion(),
+        pluginProjectRole.getBuildProperties().getQualifier());
 
     // add the bundle version
     values.getProperties().put(BUNDLE_RESOLVED_VERSION, effectiveVersion.toString());

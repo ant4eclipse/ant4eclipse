@@ -50,14 +50,14 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * @param prefix
    *          the prefix
    */
-  protected ExecuteJdtProjectTask(final String prefix) {
+  protected ExecuteJdtProjectTask(String prefix) {
     super(prefix);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final Object createDynamicElement(final String name) throws BuildException {
+  public final Object createDynamicElement(String name) throws BuildException {
 
     // handle SCOPE_SOURCE_DIRECTORY
     if (SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase(name)) {
@@ -85,7 +85,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    *          the name of the sub element
    * @return
    */
-  protected Object onCreateDynamicElement(final String name) {
+  protected Object onCreateDynamicElement(String name) {
     // default implementation returns null
     return null;
   }
@@ -97,7 +97,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * @param scopedMacroDefinition
    * @return
    */
-  protected boolean onExecuteScopeMacroDefintion(final ScopedMacroDefinition<String> scopedMacroDefinition) {
+  protected boolean onExecuteScopeMacroDefintion(ScopedMacroDefinition<String> scopedMacroDefinition) {
     // default implementation returns false
     return false;
   }
@@ -108,7 +108,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param executionValues
    */
-  protected void addAdditionalExecutionValues(final MacroExecutionValues executionValues) {
+  protected void addAdditionalExecutionValues(MacroExecutionValues executionValues) {
     // adds additional execution values
   }
 
@@ -122,9 +122,9 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
-    for (final ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
-      final MacroDef macroDef = scopedMacroDefinition.getMacroDef();
+      MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
       // execute SCOPE_SOURCE_DIRECTORY
       if (SCOPE_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
@@ -153,14 +153,14 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * @param javaProjectRole
    * @param classpathes
    */
-  private void executeSourceDirectoryScopedMacroDef(final MacroDef macroDef) {
+  private void executeSourceDirectoryScopedMacroDef(MacroDef macroDef) {
 
     for (final String sourceFolder : getJavaProjectRole().getSourceFolders()) {
 
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-        public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
               values);
@@ -197,7 +197,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param macroDef
    */
-  private void executeOutputDirectoryScopedMacroDef(final MacroDef macroDef) {
+  private void executeOutputDirectoryScopedMacroDef(MacroDef macroDef) {
 
     // iterate over all output folders
     for (final String outFolder : getJavaProjectRole().getAllOutputFolders()) {
@@ -205,7 +205,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-        public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // get the default jdt executor values
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
@@ -232,7 +232,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param macroDef
    */
-  private void executeProjectScopedMacroDef(final MacroDef macroDef) {
+  private void executeProjectScopedMacroDef(MacroDef macroDef) {
 
     // execute macro
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {

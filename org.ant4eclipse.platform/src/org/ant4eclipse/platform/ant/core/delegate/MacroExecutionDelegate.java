@@ -11,25 +11,27 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import java.io.StringReader;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.ldapfilter.LdapFilter;
 import org.ant4eclipse.core.ldapfilter.ParseException;
+
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.platform.ant.core.delegate.helper.AntReferencesRaper;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroInstance;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.io.StringReader;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -44,10 +46,10 @@ import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements MacroExecutionComponent<E> {
 
   /** the prefix for all scoped properties and references */
-  private String                               _prefix = null;
+  private String                         _prefix = null;
 
   /** list of all macro definitions */
-  private final List<ScopedMacroDefinition<E>> _macroDefs;
+  private List<ScopedMacroDefinition<E>> _macroDefs;
 
   /**
    * <p>
@@ -59,7 +61,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * @param prefix
    *          the prefix for all scoped properties and references
    */
-  public MacroExecutionDelegate(final Task task, String prefix) {
+  public MacroExecutionDelegate(Task task, String prefix) {
     super(task);
 
     this._prefix = prefix;
@@ -74,7 +76,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * @param task
    *          the task
    */
-  public MacroExecutionDelegate(final Task task) {
+  public MacroExecutionDelegate(Task task) {
     this(task, null);
   }
 
@@ -102,8 +104,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
-  public NestedSequential createScopedMacroDefinition(final E scope) {
-    final MacroDef macroDef = new ConditionalMacroDef();
+  public NestedSequential createScopedMacroDefinition(E scope) {
+    MacroDef macroDef = new ConditionalMacroDef();
     macroDef.setProject(getAntProject());
     this._macroDefs.add(new ScopedMacroDefinition<E>(macroDef, scope));
     return macroDef.createSequential();
@@ -132,7 +134,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
-  private void executeMacroInstance(final MacroDef macroDef, final MacroExecutionValues macroExecutionValues) {
+  private void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues) {
     Assert.notNull(macroDef);
     Assert.notNull(macroExecutionValues);
 
@@ -153,7 +155,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     }
 
     // create MacroInstance
-    final MacroInstance instance = new MacroInstance();
+    MacroInstance instance = new MacroInstance();
     instance.setProject(getAntProject());
     instance.setOwningTarget(((Task) getProjectComponent()).getOwningTarget());
     instance.setMacroDef(macroDef);

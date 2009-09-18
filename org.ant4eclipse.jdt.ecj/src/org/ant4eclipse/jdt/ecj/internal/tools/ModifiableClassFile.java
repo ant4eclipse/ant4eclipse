@@ -12,6 +12,7 @@
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
+
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**
@@ -31,5 +32,5 @@ public interface ModifiableClassFile extends ClassFile {
    * @param accessRestriction
    *          the {@link AccessRestriction}.
    */
-  void setAccessRestriction(final AccessRestriction accessRestriction);
+  void setAccessRestriction(AccessRestriction accessRestriction);
 }
