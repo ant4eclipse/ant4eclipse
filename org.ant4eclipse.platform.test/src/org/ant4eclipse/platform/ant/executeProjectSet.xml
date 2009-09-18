@@ -7,7 +7,7 @@
 
 	<target name="executeProjectSet">
 
-		<executeProjectSet workspace="${workspaceDir}"
+		<executeProjectSet workspaceDirectory="${workspaceDir}"
 				           teamprojectset="projectSet.psf" >
 
 			  <forEachProject>
