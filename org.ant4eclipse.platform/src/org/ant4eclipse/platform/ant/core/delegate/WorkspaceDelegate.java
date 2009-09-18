@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.ant.core.delegate;
 
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
+import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.ant.core.WorkspaceComponent;
 import org.ant4eclipse.platform.model.resource.Workspace;
@@ -55,7 +56,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    */
   @Deprecated
   public final void setWorkspace(File workspace) {
-    // A4ELogging.warn("The attribute 'workspace' is deprecated. Please use 'workspaceDirectory' instead !");
+    A4ELogging.warn("The attribute 'workspace' is deprecated. Please use 'workspaceDirectory' instead !");
     setWorkspaceDirectory(workspace);
   }
 

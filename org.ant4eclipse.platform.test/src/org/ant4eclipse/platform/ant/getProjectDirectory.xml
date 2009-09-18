@@ -9,7 +9,7 @@
 
 	<!-- test testGetProjectDirectory -->
 	<target name="testGetProjectDirectory">
-		<getProjectDirectory workspace='${workspaceDir}'
+		<getProjectDirectory workspaceDirectory='${workspaceDir}'
 		                     projectName='simpleproject'
 		                     property='test'
 		/>

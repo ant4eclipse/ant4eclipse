@@ -8,7 +8,7 @@
 
 	<target name="executeJdtProject_forEachSourceDirectory">
 
-		<executeJdtProject workspace="${workspaceDir}"
+		<executeJdtProject workspaceDirectory="${workspaceDir}"
 		                   projectName="${projectName}"
 		                   pathSeparator="${pathSeparator}">
 

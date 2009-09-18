@@ -7,7 +7,7 @@
 
 	<target name="executeProjectBuilders">
 
-		<executeProjectBuilders workspace='${workspaceDir}' projectName='simpleproject'>
+		<executeProjectBuilders workspaceDirectory='${workspaceDir}' projectName='simpleproject'>
 
 			<org.eclipse.jdt.core.javabuilder>
 				<echo>org.eclipse.jdt.core.javabuilder</echo>

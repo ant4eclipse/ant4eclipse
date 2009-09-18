@@ -7,7 +7,7 @@
 
 	<target name="testMultipleDirectoriesFileSet">
 
-		<pluginProjectFileSet workspace="${workspace}"
+		<pluginProjectFileSet workspaceDirectory="${workspace}"
 		                      projectname="${projectname}"
 		                      includes="${bin.includes}"
 		                      excludes="${bin.excludes}"
