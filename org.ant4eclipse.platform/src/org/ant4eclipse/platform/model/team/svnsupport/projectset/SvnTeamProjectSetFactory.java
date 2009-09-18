@@ -11,10 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.svnsupport.projectset;
 
-import org.ant4eclipse.core.*;
-import org.ant4eclipse.core.exception.*;
-import org.ant4eclipse.platform.*;
-import org.ant4eclipse.platform.model.team.projectset.*;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+
+import org.ant4eclipse.platform.PlatformExceptionCode;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectDescription;
+import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectSet;
 
 /**
  * Parses a Project Set-File provided by the Subversive Eclipse Plugin and the Subclipse Eclipse Plugin

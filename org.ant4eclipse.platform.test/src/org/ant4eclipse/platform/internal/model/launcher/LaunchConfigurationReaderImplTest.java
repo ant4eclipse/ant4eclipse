@@ -1,17 +1,21 @@
 package org.ant4eclipse.platform.internal.model.launcher;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.InputStream;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.platform.model.launcher.LaunchConfigurationReader;
+
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.InputStream;
 
 public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTestCase {
 
