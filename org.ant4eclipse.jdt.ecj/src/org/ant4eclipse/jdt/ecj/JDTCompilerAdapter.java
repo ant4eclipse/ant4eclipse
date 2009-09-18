@@ -4,6 +4,7 @@ import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
 
@@ -428,8 +429,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         }
         strLine = newLine;
       }
-      // Close the input stream
-      in.close();
+      Utilities.close(in);
       StringBuilder underscoreLine = new StringBuilder();
       for (int i = lineStart; i < sourceStart; i++) {
         if (strLine.charAt(i - lineStart) == '\t') {

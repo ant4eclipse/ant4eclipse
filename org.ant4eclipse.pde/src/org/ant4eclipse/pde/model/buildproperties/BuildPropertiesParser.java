@@ -12,7 +12,7 @@
 package org.ant4eclipse.pde.model.buildproperties;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
@@ -108,14 +108,7 @@ public class BuildPropertiesParser {
       // TODO
       throw new RuntimeException(ioe.getMessage(), ioe);
     } finally {
-      try {
-        if (inputStream != null) {
-          inputStream.close();
-        }
-      } catch (IOException ioe) {
-        A4ELogging.warn("Could not close inputstream: %s", ioe.getMessage());
-      }
-
+      Utilities.close(inputStream);
     }
   }
 

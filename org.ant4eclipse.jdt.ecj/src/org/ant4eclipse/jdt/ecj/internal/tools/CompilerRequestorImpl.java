@@ -12,6 +12,7 @@
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.internal.compiler.ClassFile;
@@ -85,8 +86,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
 
           FileOutputStream fileOutputStream = new FileOutputStream(classFile);
           fileOutputStream.write(classFile2.getBytes());
-          fileOutputStream.flush();
-          fileOutputStream.close();
+          Utilities.close(fileOutputStream);
         } catch (IOException ioe) {
           A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(), ioe.toString());
           ioe.printStackTrace();

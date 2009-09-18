@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.model.team.cvssupport.project;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -120,12 +120,7 @@ public class CvsParser {
       while ((str = in.readLine()) != null) {
         buffy.append(str);
       }
-
-      try {
-        in.close();
-      } catch (IOException ioe) {
-        A4ELogging.warn("Could not close file '%s': '%s", file, ioe.toString());
-      }
+      Utilities.close(in);
     } catch (IOException e) {
       throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e.toString());
     }

@@ -57,7 +57,7 @@ public class TestDirectory {
     this._rootDir = new File(System.getProperty("java.io.tmpdir"), "a4etest");
     if (this._rootDir.exists()) {
       if (!Utilities.delete(this._rootDir)) {
-        throw new RuntimeException(String.format("Failed to delete directory '%s'.", _rootDir));
+        throw new RuntimeException(String.format("Failed to delete directory '%s'.", this._rootDir));
       }
     }
     System.out.println("Create test dir: " + this._rootDir);
@@ -69,12 +69,12 @@ public class TestDirectory {
       if (this._rootDir != null && this._removeOnDispose) {
         System.out.println("Remove test dir: " + this._rootDir);
         if (!Utilities.delete(this._rootDir)) {
-          throw new RuntimeException(String.format("Failed to delete directory '%s'.", _rootDir));
+          throw new RuntimeException(String.format("Failed to delete directory '%s'.", this._rootDir));
         }
         this._rootDir = null;
       }
     } catch (Exception ex) {
-      System.err.println("WARN! Could not remove test directory " + _rootDir + ": " + ex);
+      System.err.println("WARN! Could not remove test directory " + this._rootDir + ": " + ex);
       ex.printStackTrace();
     }
   }
@@ -112,9 +112,7 @@ public class TestDirectory {
     while ((bytesRead = inputStream.read(buffer, 0, buffer.length)) != -1) {
       output.write(buffer, 0, bytesRead);
     }
-
-    inputStream.close();
-
+    Utilities.close(inputStream);
     return createFile(fileName, output.toString());
   }
 

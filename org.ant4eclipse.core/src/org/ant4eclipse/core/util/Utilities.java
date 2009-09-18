@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -108,6 +109,23 @@ public class Utilities {
     if (writer != null) {
       try {
         writer.close();
+      } catch (IOException ex) {
+        // generally not interesting so a warning is apropriate here
+        A4ELogging.warn(ex.getMessage());
+      }
+    }
+  }
+
+  /**
+   * Closes the supplied reader if it's available.
+   * 
+   * @param reader
+   *          The reader which has to be closed. Maybe <code>null</code>.
+   */
+  public static final void close(Reader reader) {
+    if (reader != null) {
+      try {
+        reader.close();
       } catch (IOException ex) {
         // generally not interesting so a warning is apropriate here
         A4ELogging.warn(ex.getMessage());

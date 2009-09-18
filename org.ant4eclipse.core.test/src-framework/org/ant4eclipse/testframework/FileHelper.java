@@ -69,8 +69,7 @@ public class FileHelper {
       FileWriter fileWriter = new FileWriter(file);
 
       fileWriter.write(content);
-      fileWriter.flush();
-      fileWriter.close();
+      Utilities.close(fileWriter);
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
@@ -120,9 +119,8 @@ public class FileHelper {
 
     try {
       FileOutputStream fout = new FileOutputStream(fileOut);
-
       fout.write(content);
-      fout.close();
+      Utilities.close(fout);
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e.getMessage(), e);
     } catch (IOException e) {
@@ -163,7 +161,7 @@ public class FileHelper {
     try {
       FileOutputStream fout = new FileOutputStream(fileOut);
       byteStream.writeTo(fout);
-      fout.close();
+      Utilities.close(fout);
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e.getMessage(), e);
     } catch (IOException e) {
@@ -189,7 +187,7 @@ public class FileHelper {
     try {
       BufferedInputStream stream = new BufferedInputStream(new FileInputStream(fileName));
       stream.read(content);
-      stream.close();
+      Utilities.close(stream);
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e.getMessage(), e);
     } catch (IOException e) {

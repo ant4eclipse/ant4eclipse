@@ -1,6 +1,7 @@
 package org.ant4eclipse.pde.test.builder;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.Utilities;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -135,11 +136,10 @@ public class JarBundleBuilder {
           }
           out.write(buffer, 0, nRead);
         }
-        in.close();
+        Utilities.close(in);
       }
-
-      out.close();
-      stream.close();
+      Utilities.close(out);
+      Utilities.close(stream);
       System.out.println("Adding completed OK");
     } catch (Exception ex) {
       ex.printStackTrace();
