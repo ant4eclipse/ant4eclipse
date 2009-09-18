@@ -489,6 +489,9 @@ public class Utilities {
    *          The resource providing the content. Not <code>null</code>.
    * 
    * @return A map of properties providing the settings. Not <code>null</code>.
+   * 
+   * @throws IOException
+   *           Loading the content from the supplied resource failed.
    */
   public static final Map<String, String> readProperties(URL resource) throws IOException {
     InputStream instream = null;
