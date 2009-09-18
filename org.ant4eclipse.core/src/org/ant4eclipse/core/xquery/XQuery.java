@@ -361,8 +361,7 @@ public class XQuery {
   public String getSingleResult() {
     String[] results = getResult();
     if (results.length > 1) {
-      throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_DUCPLICATE_ENTRY_EXCEPTION, new Object[] { this._xquery,
-          this._fileName });
+      throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_DUCPLICATE_ENTRY_EXCEPTION, this._xquery, this._fileName);
     }
     if (results.length == 0) {
       return (null);
@@ -410,7 +409,7 @@ public class XQuery {
    *          An error message.
    */
   private void invalid(String query, String msg) {
-    throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION, new Object[] { query, msg });
+    throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION, query, msg);
   }
 
   /**

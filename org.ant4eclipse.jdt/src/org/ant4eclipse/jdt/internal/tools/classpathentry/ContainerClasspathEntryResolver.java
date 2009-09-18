@@ -134,7 +134,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
       ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverEntry.getSecond());
 
       // trace
-      A4ELogging.trace("Register ClasspathContainerResolver '%s'", new Object[] { resolver });
+      A4ELogging.trace("Register ClasspathContainerResolver '%s'", resolver);
 
       // add resolver
       containerResolvers.add(resolver);

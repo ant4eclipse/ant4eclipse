@@ -124,10 +124,10 @@ public class CvsParser {
       try {
         in.close();
       } catch (IOException ioe) {
-        A4ELogging.warn("Could not close file '%s': '%s", new Object[] { file, ioe.toString() });
+        A4ELogging.warn("Could not close file '%s': '%s", file, ioe.toString());
       }
     } catch (IOException e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, e, file, e.toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e.toString());
     }
 
     return buffy.toString();

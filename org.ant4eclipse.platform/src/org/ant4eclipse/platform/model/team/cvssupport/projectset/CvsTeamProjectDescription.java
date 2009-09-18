@@ -13,6 +13,7 @@ package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
@@ -49,12 +50,12 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
     Assert.notNull(cvsroot);
     Assert.notNull(nameInRepository);
 
-    _cvsRoot = cvsroot;
-    _nameInRepository = nameInRepository;
-    _branchOrVersionTag = tag;
+    this._cvsRoot = cvsroot;
+    this._nameInRepository = nameInRepository;
+    this._branchOrVersionTag = tag;
 
-    if ("".equals(_branchOrVersionTag)) {
-      _branchOrVersionTag = null;
+    if ("".equals(this._branchOrVersionTag)) {
+      this._branchOrVersionTag = null;
     }
   }
 
@@ -80,7 +81,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the tag of the branch or version.
    */
   public String getBranchOrVersionTag() {
-    return _branchOrVersionTag;
+    return this._branchOrVersionTag;
   }
 
   /**
@@ -89,7 +90,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the cvsRoot.
    */
   public CvsRoot getCvsRoot() {
-    return _cvsRoot;
+    return this._cvsRoot;
   }
 
   /**
@@ -102,7 +103,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   public CvsRoot getResolvedCvsRoot() {
     Assert.assertTrue(isCvsUserSet(), "CvsUser and CvsPwd have to be set!");
 
-    return _cvsRoot.getResolvedRoot(_cvsUser, _cvsPwd);
+    return this._cvsRoot.getResolvedRoot(this._cvsUser, this._cvsPwd);
   }
 
   private String _cvsPwd = null;
@@ -113,7 +114,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the name of the project in the repository.
    */
   public String getNameInRepository() {
-    return _nameInRepository;
+    return this._nameInRepository;
   }
 
   /**
@@ -131,7 +132,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns whether the project has a branch or version tag.
    */
   public boolean hasBranchOrVersionTag() {
-    return _branchOrVersionTag != null;
+    return this._branchOrVersionTag != null;
   }
 
   /**
@@ -140,7 +141,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns whether the cvs user and the cvs password is set.
    */
   public boolean isCvsUserSet() {
-    return _cvsUser != null;
+    return this._cvsUser != null;
   }
 
   /**
@@ -154,10 +155,10 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   public void setCvsUserAndPassword(String cvsUser, String cvsPwd) {
     Assert.notNull(cvsUser);
 
-    A4ELogging.debug("setCvsUserAndPassword(%s, %s)", new Object[] { cvsUser, cvsPwd });
+    A4ELogging.debug("setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd);
 
-    _cvsUser = cvsUser;
-    _cvsPwd = cvsPwd;
+    this._cvsUser = cvsUser;
+    this._cvsPwd = cvsPwd;
   }
 
   /**
@@ -169,15 +170,15 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
     buffer.append(" projectname: ");
     buffer.append(getProjectName());
     buffer.append(" cvsRoot: ");
-    buffer.append(_cvsRoot);
+    buffer.append(this._cvsRoot);
     buffer.append(" nameInRepository: ");
-    buffer.append(_nameInRepository);
+    buffer.append(this._nameInRepository);
     buffer.append(" branchOrVersionTag: ");
-    buffer.append(_branchOrVersionTag);
+    buffer.append(this._branchOrVersionTag);
     buffer.append(" cvsUser: ");
-    buffer.append(_cvsUser);
+    buffer.append(this._cvsUser);
     buffer.append(" cvsPwd: ");
-    buffer.append(_cvsPwd);
+    buffer.append(this._cvsPwd);
     buffer.append("]");
     return buffer.toString();
   }
@@ -217,11 +218,11 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public int hashCode() {
     int hashCode = super.hashCode();
-    hashCode = 31 * hashCode + (_cvsRoot == null ? 0 : _cvsRoot.hashCode());
-    hashCode = 31 * hashCode + (_nameInRepository == null ? 0 : _nameInRepository.hashCode());
-    hashCode = 31 * hashCode + (_branchOrVersionTag == null ? 0 : _branchOrVersionTag.hashCode());
-    hashCode = 31 * hashCode + (_cvsUser == null ? 0 : _cvsUser.hashCode());
-    hashCode = 31 * hashCode + (_cvsPwd == null ? 0 : _cvsPwd.hashCode());
+    hashCode = 31 * hashCode + (this._cvsRoot == null ? 0 : this._cvsRoot.hashCode());
+    hashCode = 31 * hashCode + (this._nameInRepository == null ? 0 : this._nameInRepository.hashCode());
+    hashCode = 31 * hashCode + (this._branchOrVersionTag == null ? 0 : this._branchOrVersionTag.hashCode());
+    hashCode = 31 * hashCode + (this._cvsUser == null ? 0 : this._cvsUser.hashCode());
+    hashCode = 31 * hashCode + (this._cvsPwd == null ? 0 : this._cvsPwd.hashCode());
     return hashCode;
   }
 

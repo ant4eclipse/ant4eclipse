@@ -11,17 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
-import java.io.File;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.platform.ant.core.task.AbstractTeamProjectSetBasedTask;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
+
+import java.io.File;
 
 public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBasedTask {
 
@@ -167,8 +169,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     Assert.isDirectory(destination);
     Assert.notNull(projectSet);
 
-    A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", new Object[] { destination, projectSet,
-        new Boolean(deleteExisting) });
+    A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet,
+        new Boolean(deleteExisting));
 
     TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
 

@@ -65,7 +65,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
     Assert.notNull(sourceFile);
 
     // debug
-    A4ELogging.debug("CompilationUnitImpl(%s)", new Object[] { sourceFile });
+    A4ELogging.debug("CompilationUnitImpl(%s)", sourceFile);
 
     this._sourceFile = sourceFile;
 
@@ -117,8 +117,8 @@ public class CompilationUnitImpl implements ICompilationUnit {
   public final char[] getContents() {
     File sourceFile = new File(this._sourceFile.getSourceFolder(), new String(this._fileName));
 
-    A4ELogging.debug("SourceFile.getContents(): '%s', '%s'", new Object[] {
-        this._sourceFile.getSourceFile().getAbsolutePath(), new String(this._fileName) });
+    A4ELogging.debug("SourceFile.getContents(): '%s', '%s'", this._sourceFile.getSourceFile().getAbsolutePath(),
+        new String(this._fileName));
 
     StringBuffer result = new StringBuffer();
 

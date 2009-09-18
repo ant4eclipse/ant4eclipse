@@ -120,7 +120,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
 
-    A4ELogging.trace("isPackage - package '%s' found: %s'", new Object[] { qualifiedPackageName, "" + packageFound });
+    A4ELogging.trace("isPackage - package '%s' found: %s'", qualifiedPackageName, "" + packageFound);
 
     return packageFound;
   }

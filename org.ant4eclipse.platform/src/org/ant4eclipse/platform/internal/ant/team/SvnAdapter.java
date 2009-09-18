@@ -16,6 +16,7 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
+import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectSet;
@@ -92,23 +93,23 @@ public class SvnAdapter extends VcsAdapter {
     checkout.setProject(getAntProject());
     checkout.setTask(task);
     File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
-    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[] {
-        svnTeamProjectDescription.getProjectName(), destPath });
+    A4ELogging.debug("Setting dest path for project '%s' to '%s'", 
+        svnTeamProjectDescription.getProjectName(), destPath);
     checkout.setDestpath(destPath);
     checkout.setRevision(svnTeamProjectDescription.getRevision());
     try {
       checkout.setUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
     } catch (MalformedURLException e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
-          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() });
+      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, 
+          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString());
     }
     task.addCheckout(checkout);
 
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] {
-          "checkout", ex.toString() }, ex);
+      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, 
+          "checkout", ex.toString());
     }
 
   }
@@ -129,23 +130,23 @@ public class SvnAdapter extends VcsAdapter {
     export.setTask(task);
 
     File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
-    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[] {
-        svnTeamProjectDescription.getProjectName(), destPath });
+    A4ELogging.debug("Setting dest path for project '%s' to '%s'", 
+        svnTeamProjectDescription.getProjectName(), destPath);
     export.setDestPath(destPath);
     export.setRevision(svnTeamProjectDescription.getRevision());
     try {
       export.setSrcUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
     } catch (MalformedURLException e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, new Object[] {
-          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() });
+      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT, 
+          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString());
     }
     task.addExport(export);
 
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "export",
-          ex.toString() }, ex);
+      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "export",
+          ex.toString());
     }
   }
 
@@ -164,8 +165,8 @@ public class SvnAdapter extends VcsAdapter {
     update.setProject(getAntProject());
     update.setTask(task);
     File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
-    A4ELogging.debug("Setting dest path for project '%s' to '%s'", new Object[] {
-        svnTeamProjectDescription.getProjectName(), destPath });
+    A4ELogging.debug("Setting dest path for project '%s' to '%s'", 
+        svnTeamProjectDescription.getProjectName(), destPath);
     update.setDir(destPath);
     update.setRevision(svnTeamProjectDescription.getRevision());
     task.addUpdate(update);
@@ -173,8 +174,8 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, new Object[] { "update",
-          ex.toString() }, ex);
+      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "update",
+          ex.toString());
     }
   }
 

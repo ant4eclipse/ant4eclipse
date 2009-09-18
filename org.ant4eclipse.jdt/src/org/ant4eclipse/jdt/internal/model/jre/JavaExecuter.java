@@ -272,12 +272,10 @@ public class JavaExecuter {
 
     } catch (IOException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION,
-          new Object[] { cmd.toString() }, e);
+      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString());
     } catch (InterruptedException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION,
-          new Object[] { cmd.toString() }, e);
+      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString());
     }
   }
 

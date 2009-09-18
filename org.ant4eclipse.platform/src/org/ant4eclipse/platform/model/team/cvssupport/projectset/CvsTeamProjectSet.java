@@ -11,12 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 
-import java.util.Iterator;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+
+import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectSet;
+
+import java.util.Iterator;
 
 public class CvsTeamProjectSet extends AbstractTeamProjectSet {
 
@@ -35,7 +37,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
   public void setUserAndPassword(String cvsUser, String cvsPwd) {
     Assert.notNull(cvsUser);
 
-    A4ELogging.debug("setUserAndPassword(%s, %s)", new Object[] { cvsUser, cvsPwd });
+    A4ELogging.debug("setUserAndPassword(%s, %s)", cvsUser, cvsPwd);
 
     for (Iterator<TeamProjectDescription> iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
       CvsTeamProjectDescription description = (CvsTeamProjectDescription) iterator.next();

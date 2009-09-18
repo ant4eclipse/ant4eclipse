@@ -159,7 +159,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
       JarUtilities.expandJarFile(this._jarFile, destination);
     } catch (IOException e) {
       // log error
-      A4ELogging.error("Could not expand jar file '%s'. Reason: '%s'", new Object[] { this._location, e.getMessage() });
+      A4ELogging.error("Could not expand jar file '%s'. Reason: '%s'", this._location, e.getMessage());
 
       // return 'self'
       return new File[] { this._location };

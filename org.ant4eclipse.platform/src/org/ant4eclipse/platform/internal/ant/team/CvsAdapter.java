@@ -16,6 +16,8 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
+import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
+import org.ant4eclipse.platform.internal.ant.team.VcsException;
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
@@ -79,7 +81,7 @@ public class CvsAdapter extends VcsAdapter {
 
     CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
 
-    A4ELogging.debug("export(%s, %s)", new Object[] { destination, projectDescription });
+    A4ELogging.debug("export(%s, %s)", destination, projectDescription);
 
     Cvs cvs = createCvsTask(destination, cvsTeamProjectDescription);
     String nameInRepository = quote(cvsTeamProjectDescription.getNameInRepository());
@@ -97,8 +99,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
-          cvs.getCommand(), e.toString() }, e);
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, 
+          cvs.getCommand(), e.toString());
     }
   }
 
@@ -122,7 +124,7 @@ public class CvsAdapter extends VcsAdapter {
     Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
-    A4ELogging.debug("update(%s, %s)", new Object[] { destination, projectDescription });
+    A4ELogging.debug("update(%s, %s)", destination, projectDescription);
     CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
     Cvs cvs = createCvsTask(destination, cvsTeamProjectDescription);
     File projectFolder = new File(destination, projectDescription.getProjectName());
@@ -140,8 +142,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
-          cvs.getCommand(), e.toString() }, e);
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, 
+          cvs.getCommand(), e.toString());
     }
   }
 
@@ -163,7 +165,7 @@ public class CvsAdapter extends VcsAdapter {
     Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
-    A4ELogging.debug("checkout(%s, %s)", new Object[] { destination, projectDescription });
+    A4ELogging.debug("checkout(%s, %s)", destination, projectDescription);
     CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
 
     Cvs cvs = createCvsTask(destination, cvsTeamProjectDescription);
@@ -181,8 +183,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, new Object[] {
-          cvs.getCommand(), e.toString() }, e);
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, 
+          cvs.getCommand(), e.toString());
     }
   }
 
@@ -206,8 +208,8 @@ public class CvsAdapter extends VcsAdapter {
     cvs.setCvsRoot(projectDescription.getResolvedCvsRoot().toString());
     cvs.setDest(destination);
 
-    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", new Object[] { new Boolean(this._quiet),
-        new Boolean(this._reallyQuiet) });
+    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", new Boolean(this._quiet),
+        new Boolean(this._reallyQuiet));
     cvs.setQuiet(this._quiet);
     cvs.setReallyquiet(this._reallyQuiet);
     return cvs;

@@ -89,9 +89,10 @@ public final class WorkspaceImpl implements Workspace {
 
   public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
     Assert.notNull(projectRole);
-    Assert.assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
-        "Class '%s' must be assignable from class '%s'", new Object[] { projectRole.getClass().getName(),
-            ProjectRole.class.getName() }));
+    Assert
+        .assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
+            "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(), ProjectRole.class
+                .getName()));
 
     List<EclipseProject> result = new LinkedList<EclipseProject>();
     Collection<EclipseProject> projects = this._projects.values();
@@ -122,7 +123,7 @@ public final class WorkspaceImpl implements Workspace {
     if (this._projects.containsKey(key) && !eclipseProject.equals(this._projects.get(key))) {
 
       throw new Ant4EclipseException(PlatformExceptionCode.PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS,
-          new Object[] { this._projects.get(key), eclipseProject });
+          this._projects.get(key), eclipseProject);
     }
 
     this._projects.put(key, eclipseProject);

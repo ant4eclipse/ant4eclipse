@@ -262,7 +262,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // result.append(referencedProjects[i].getFolderName());
     // }
     // }
-    // A4ELogging.debug("Setting '%s' to list of referenced projects '%s'", new Object[] { getProperty(), result });
+    // A4ELogging.debug("Setting '%s' to list of referenced projects '%s'", getProperty(), result);
     // getProjectDelegate().setStringProperty(getProperty(), result.toString());
     //
     // if ((rejected != null) && (!rejected.isEmpty())) {
@@ -272,8 +272,8 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // result.append(getSeparator());
     // result.append(rejected.get(i));
     // }
-    // A4ELogging.debug("Setting '%s' to list of rejected projects '%s'", new Object[] { this._unavailableProjects,
-    // result });
+    // A4ELogging.debug("Setting '%s' to list of rejected projects '%s'", this._unavailableProjects,
+    // result);
     // getProjectDelegate().setStringProperty(this._unavailableProjects, result.toString());
     // }
     //

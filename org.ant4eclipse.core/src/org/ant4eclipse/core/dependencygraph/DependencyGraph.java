@@ -229,8 +229,7 @@ public final class DependencyGraph<T> {
             break;
           }
         }
-        throw new Ant4EclipseException(CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, new Object[] { buffer
-            .toString() });
+        throw new Ant4EclipseException(CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, buffer.toString());
       }
     } else {
       // we need to clear the removable vertices, so they won't
