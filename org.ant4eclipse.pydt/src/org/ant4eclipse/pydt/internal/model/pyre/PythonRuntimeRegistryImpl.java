@@ -332,7 +332,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     if (cfgurl == null) {
       throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
     }
-    ExtendedProperties props = Utilities.readProperties(cfgurl);
+    ExtendedProperties props = new ExtendedProperties(cfgurl);
     List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
     for (Map.Entry<String, String> entry : props.entrySet()) {
       if (entry.getKey().startsWith(PROP_INTERPRETER)) {

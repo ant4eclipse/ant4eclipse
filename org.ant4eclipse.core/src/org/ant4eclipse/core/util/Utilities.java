@@ -480,68 +480,6 @@ public class Utilities {
   }
 
   /**
-   * Reads the properties from the supplied resource.
-   * 
-   * @param resource
-   *          The resource providing the content. Not <code>null</code>.
-   * 
-   * @return A map of properties providing the settings. Not <code>null</code>.
-   * 
-   * @throws Ant4EclipseException
-   *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason.
-   */
-  public static final ExtendedProperties readProperties(URL resource) {
-    return new ExtendedProperties(resource);
-  }
-
-  /**
-   * Reads the properties from the supplied InputStream instance.
-   * 
-   * @param propertiesFile
-   *          The File providing the content. Not <code>null</code>.
-   * 
-   * @return A map of properties providing the read content. If <code>null</code> the settings could not be loaded.
-   * 
-   * @throws Ant4EclipseException
-   *           with code {@link CoreExceptionCode#FILEIO_FAILURE} if accessing the file failed for some reason.
-   */
-  public static final ExtendedProperties readProperties(File propertiesFile) {
-    return new ExtendedProperties(propertiesFile);
-  }
-
-  /**
-   * Reads the properties from the supplied InputStream instance.
-   * 
-   * @param instream
-   *          The InputStream providing the content. Maybe <code>null</code>.
-   * 
-   * @return A map of properties providing the read content. Not <code>null</code>.
-   * 
-   * @throws Ant4EclipseException
-   *           with {@link CoreExceptionCode#IO_FAILURE} in case there was an io error on the stream.
-   */
-  public static final ExtendedProperties readProperties(InputStream instream) {
-    return new ExtendedProperties(instream);
-  }
-
-  /**
-   * Loads the properties from a resource on the classpath.
-   * 
-   * @param classpath
-   *          The path within the classpath.
-   * 
-   * @return A Map providing the loaded properties. Not <code>null</code>.
-   * 
-   * @throws Ant4EclipseException
-   *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason or
-   *           {@link CoreExceptionCode#RESOURCE_NOT_ON_THE_CLASSPATH} if the resource is not located within the
-   *           classpath in the first place.
-   */
-  public static final ExtendedProperties readProperties(String classpath) {
-    return new ExtendedProperties(classpath);
-  }
-
-  /**
    * Creates the given directory (including all of its missing parent directories) if it does not exists yet.
    * 
    * @param directory

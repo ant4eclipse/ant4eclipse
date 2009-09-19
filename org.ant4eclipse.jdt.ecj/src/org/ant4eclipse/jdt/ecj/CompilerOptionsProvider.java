@@ -238,7 +238,7 @@ public class CompilerOptionsProvider {
       try {
         File compilerOptionsFile = new File(fileName);
         if (compilerOptionsFile.exists() && compilerOptionsFile.isFile()) {
-          ExtendedProperties compilerOptionsMap = Utilities.readProperties(compilerOptionsFile);
+          ExtendedProperties compilerOptionsMap = new ExtendedProperties(compilerOptionsFile);
           return compilerOptionsMap;
         }
       } catch (Exception e) {

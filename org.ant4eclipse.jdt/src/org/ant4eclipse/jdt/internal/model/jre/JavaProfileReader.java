@@ -14,7 +14,6 @@ package org.ant4eclipse.jdt.internal.model.jre;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.ExtendedProperties;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 
@@ -41,7 +40,7 @@ public class JavaProfileReader {
   public static JavaProfile[] readAllProfiles() {
 
     // load the profile listing first
-    ExtendedProperties properties = Utilities.readProperties("/profiles/profile.list");
+    ExtendedProperties properties = new ExtendedProperties("/profiles/profile.list");
 
     String javaProfiles = properties.get("java.profiles");
 
@@ -52,7 +51,7 @@ public class JavaProfileReader {
     for (String profile2 : profiles) {
       String profile = profile2.trim();
       if ((profile != null) && !"".equals(profile)) {
-        ExtendedProperties props = Utilities.readProperties("/profiles/" + profile);
+        ExtendedProperties props = new ExtendedProperties("/profiles/" + profile);
         result.add(new JavaProfileImpl(props));
       }
     }
@@ -68,7 +67,7 @@ public class JavaProfileReader {
     Assert.notNull(profile);
     String profileName = profile + ".profile";
     A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
-    ExtendedProperties profileProperties = Utilities.readProperties("/profiles/" + profileName);
+    ExtendedProperties profileProperties = new ExtendedProperties("/profiles/" + profileName);
     return new JavaProfileImpl(profileProperties);
   }
 
