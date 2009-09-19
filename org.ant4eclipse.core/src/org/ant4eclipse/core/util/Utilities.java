@@ -59,6 +59,9 @@ public class Utilities {
   /** -- */
   public static final String NL              = System.getProperty("line.separator");
 
+  /** -- */
+  public static final String ENCODING        = System.getProperty("file.encoding");
+
   /**
    * Prevent instantiation of this class.
    */

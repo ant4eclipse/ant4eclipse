@@ -27,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.NoSuchElementException;
@@ -52,26 +51,6 @@ public class FileHelper {
 
     if (!directory.mkdirs()) {
       throw new RuntimeException("Directory '" + directory + "' could not be created for an unkown reason");
-    }
-  }
-
-  public static final void createFile(File file, String content) {
-    Assert.notNull(file);
-    Assert.notNull(content);
-
-    try {
-      if (!file.exists()) {
-        if (!file.createNewFile()) {
-          throw new RuntimeException("Could not create file: " + file);
-        }
-      }
-
-      FileWriter fileWriter = new FileWriter(file);
-
-      fileWriter.write(content);
-      Utilities.close(fileWriter);
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
     }
   }
 

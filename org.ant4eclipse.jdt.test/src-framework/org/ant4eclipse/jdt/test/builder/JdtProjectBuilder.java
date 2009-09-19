@@ -23,8 +23,6 @@ import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 import org.ant4eclipse.platform.test.builder.StringTemplate;
 
-import org.ant4eclipse.testframework.FileHelper;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -229,7 +227,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     classTemplate.replace("packageName", className.getPackageName());
     classTemplate.replace("className", className.getClassName());
 
-    FileHelper.createFile(sourcefile, classTemplate.toString());
+    Utilities.writeFile(sourcefile, classTemplate.toString(), Utilities.ENCODING);
   }
 
   protected void createClasspathFile(File projectDir) {
@@ -243,7 +241,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     dotClasspath.append("</classpath>").append(Utilities.NL);
 
     File dotClasspathFile = new File(projectDir, ".classpath");
-    FileHelper.createFile(dotClasspathFile, dotClasspath.toString());
+    Utilities.writeFile(dotClasspathFile, dotClasspath.toString(), "UTF-8");
   }
 
   /**

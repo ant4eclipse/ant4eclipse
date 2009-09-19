@@ -1,5 +1,7 @@
 package org.ant4eclipse.pde.test.builder;
 
+import org.ant4eclipse.core.util.Utilities;
+
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
@@ -81,7 +83,7 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   protected void createPluginBuildPropertiesFile(File projectDir) {
     if (this._pluginBuildProperties != null) {
       File buildPropertiesFile = new File(projectDir, "build.properties");
-      FileHelper.createFile(buildPropertiesFile, this._pluginBuildProperties.toString());
+      Utilities.writeFile(buildPropertiesFile, this._pluginBuildProperties.toString(), Utilities.ENCODING);
     }
   }
 }

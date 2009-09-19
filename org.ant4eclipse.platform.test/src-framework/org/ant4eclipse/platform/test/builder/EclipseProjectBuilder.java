@@ -124,6 +124,6 @@ public class EclipseProjectBuilder {
     dotProject.append("</projectDescription>").append(Utilities.NL);
 
     File dotProjectFile = new File(projectDir, ".project");
-    FileHelper.createFile(dotProjectFile, dotProject.toString());
+    Utilities.writeFile(dotProjectFile, dotProject.toString(), "UTF-8");
   }
 }

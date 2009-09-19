@@ -83,7 +83,7 @@ public class TestWorkspace {
    */
   public File createFile(String fileName, String content) {
     File outFile = new File(this._rootDir, fileName);
-    FileHelper.createFile(outFile, content);
+    Utilities.writeFile(outFile, content, Utilities.ENCODING);
     return outFile;
   }
 
