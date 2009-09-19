@@ -1,19 +1,32 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.jdt.tools;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import java.util.List;
-
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
+
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
+
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.Test;
+
+import java.util.List;
 
 public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
 
@@ -23,20 +36,20 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
   public void setup() {
     super.setup();
 
-    _testWorkspace = new TestDirectory();
+    this._testWorkspace = new TestDirectory();
 
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject1").createIn(_testWorkspace.getRootDir());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject1").createIn(this._testWorkspace.getRootDir());
     JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject2").withClasspathEntry(
         "<classpathentry combineaccessrules=\"false\" kind=\"src\" path=\"/simpleproject1\"/>").createIn(
-        _testWorkspace.getRootDir());
+        this._testWorkspace.getRootDir());
     JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject3").withClasspathEntry(
         "<classpathentry combineaccessrules=\"false\" kind=\"src\" path=\"/simpleproject2\"/>").createIn(
-        _testWorkspace.getRootDir());
+        this._testWorkspace.getRootDir());
   }
 
   @Override
   public void dispose() {
-    _testWorkspace.dispose();
+    this._testWorkspace.dispose();
 
     super.dispose();
   }
@@ -44,8 +57,8 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
   @Test
   public void buildOrder() {
     WorkspaceRegistry workspaceRegistry = WorkspaceRegistry.Helper.getRegistry();
-    Workspace workspace = workspaceRegistry.registerWorkspace(_testWorkspace.getRootDir().getAbsolutePath(),
-        new DefaultEclipseWorkspaceDefinition(_testWorkspace.getRootDir()));
+    Workspace workspace = workspaceRegistry.registerWorkspace(this._testWorkspace.getRootDir().getAbsolutePath(),
+        new DefaultEclipseWorkspaceDefinition(this._testWorkspace.getRootDir()));
 
     // List<EclipseProject> projects = ReferencedProjectsResolver.resolveReferencedProjects(workspace
     // .getProject("simpleproject3"), null);

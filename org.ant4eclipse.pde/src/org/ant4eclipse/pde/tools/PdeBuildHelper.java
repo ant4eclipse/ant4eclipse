@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,14 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.pde.model.buildproperties.AbstractBuildProperties;
+
+import org.apache.tools.ant.BuildException;
+import org.osgi.framework.Version;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.pde.model.buildproperties.AbstractBuildProperties;
-import org.apache.tools.ant.BuildException;
-import org.osgi.framework.Version;
 
 /**
  * PdeBuildHelper

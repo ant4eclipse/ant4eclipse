@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.platform.internal.ant.team.VcsException;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
 import org.apache.tools.ant.Project;

@@ -28,17 +28,19 @@ public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
     if (!CdtUtilities.isCRelatedProject(getEclipseProject())) {
-      throw new BuildException(String.format("The project '%s' must have the c or c++ project role!", getEclipseProject()
-          .getSpecifiedName()));
+      throw new BuildException(String.format("The project '%s' must have the c or c++ project role!",
+          getEclipseProject().getSpecifiedName()));
     }
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   protected File[] resolvePath() {
     return new File[0];
   }

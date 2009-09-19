@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.featureproject;
 
-import java.io.InputStream;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
@@ -20,6 +18,8 @@ import org.ant4eclipse.core.xquery.XQueryHandler;
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureManifestImpl;
 
 import org.osgi.framework.Version;
+
+import java.io.InputStream;
 
 /**
  * <p>
@@ -73,7 +73,6 @@ public class FeatureManifestParser {
     XQuery pluginInstallSizeQuery = queryhandler.createQuery("//feature/{plugin}/@install-size");
     XQuery pluginUnpackQuery = queryhandler.createQuery("//feature/{plugin}/@unpack");
 
-    
     XQuery includesIdQuery = queryhandler.createQuery("//feature/{includes}/@id");
     XQuery includesVersionQuery = queryhandler.createQuery("//feature/{includes}/@version");
     XQuery includesNameQuery = queryhandler.createQuery("//feature/{includes}/@name");
@@ -83,7 +82,7 @@ public class FeatureManifestParser {
     XQuery includesArchQuery = queryhandler.createQuery("//feature/{includes}/@arch");
     XQuery includesWsQuery = queryhandler.createQuery("//feature/{includes}/@ws");
     XQuery includesNlQuery = queryhandler.createQuery("//feature/{includes}/@nl");
-    
+
     // parse the file
     XQueryHandler.queryInputStream(inputStream, queryhandler);
 
@@ -127,7 +126,7 @@ public class FeatureManifestParser {
       plugin.setUnpack(Boolean.valueOf(pluginUnpacks[i]).booleanValue());
       feature.addPlugin(plugin);
     }
-    
+
     String[] includesId = includesIdQuery.getResult();
     String[] includesVersion = includesVersionQuery.getResult();
     String[] includesName = includesNameQuery.getResult();

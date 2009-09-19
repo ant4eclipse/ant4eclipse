@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,8 +12,8 @@
 package org.ant4eclipse.jdt.internal.model.jre;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
@@ -59,7 +59,7 @@ public class JavaProfileImpl implements JavaProfile {
   private static final String PROPERTY_PROFILE_NAME           = "osgi.java.profile.name";
 
   /** the java profile properties */
-  private StringMap  _properties;
+  private StringMap           _properties;
 
   /** the list of system packages */
   private List<String>        _systemPackagesList             = new LinkedList<String>();

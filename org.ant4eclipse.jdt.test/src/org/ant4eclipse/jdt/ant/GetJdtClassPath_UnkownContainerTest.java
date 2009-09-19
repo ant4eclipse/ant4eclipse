@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -36,7 +36,7 @@ public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTes
     JdtProjectBuilder builder = JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject")
         .withContainerClasspathEntry("UnkownContainer");
 
-    _simpleProjectBinDir = new File(builder.createIn(getTestWorkspaceDirectory()), "bin");
+    this._simpleProjectBinDir = new File(builder.createIn(getTestWorkspaceDirectory()), "bin");
   }
 
   /**
@@ -48,7 +48,7 @@ public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTes
   public void testSimple() throws Exception {
     try {
       String classpath = executeTestTarget("simpleproject", false, false);
-      assertClasspath(classpath, _simpleProjectBinDir);
+      assertClasspath(classpath, this._simpleProjectBinDir);
     } catch (Exception e) {
       return;
     }

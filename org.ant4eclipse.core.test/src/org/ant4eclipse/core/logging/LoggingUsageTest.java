@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.core.logging;
 
 import static org.junit.Assert.assertEquals;
@@ -20,10 +31,10 @@ public class LoggingUsageTest {
 
   @Before
   public void configureServiceRegistry() {
-    byteout.reset();
+    this.byteout.reset();
     ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
       public void configure(ConfigurationContext context) {
-        PrintStream printer = new PrintStream(byteout);
+        PrintStream printer = new PrintStream(LoggingUsageTest.this.byteout);
         context.registerService(new DefaultAnt4EclipseLogger(printer), SERVICE_TYPE.getName());
       }
     };
@@ -37,7 +48,7 @@ public class LoggingUsageTest {
    * @return The current output without cr characters. Not <code>null</code>.
    */
   private String getCurrentOutput() {
-    String result = new String(byteout.toByteArray());
+    String result = new String(this.byteout.toByteArray());
     return result.replaceAll("\r", "");
   }
 

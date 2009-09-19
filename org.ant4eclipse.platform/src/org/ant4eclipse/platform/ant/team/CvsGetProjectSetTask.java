@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,8 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
+import org.ant4eclipse.platform.ant.team.AbstractGetProjectSetTask;
 import org.ant4eclipse.platform.internal.ant.team.CvsAdapter;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
+
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -27,19 +29,19 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   private String  _tag            = null;
 
   public boolean isCvsQuiet() {
-    return _cvsQuiet;
+    return this._cvsQuiet;
   }
 
   public void setCvsQuiet(boolean cvsQuiet) {
-    _cvsQuiet = cvsQuiet;
+    this._cvsQuiet = cvsQuiet;
   }
 
   public boolean isCvsReallyQuiet() {
-    return _cvsReallyQuiet;
+    return this._cvsReallyQuiet;
   }
 
   public void setCvsReallyQuiet(boolean cvsReallyQuiet) {
-    _cvsReallyQuiet = cvsReallyQuiet;
+    this._cvsReallyQuiet = cvsReallyQuiet;
   }
 
   /**
@@ -65,7 +67,7 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   }
 
   public String getTag() {
-    return _tag;
+    return this._tag;
   }
 
   public void setTag(String tag) {

@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.jdt.ant;
 
 import org.ant4eclipse.core.Assert;
@@ -24,16 +35,16 @@ import java.util.Map;
 public class EcjAdditionalCompilerArguments {
 
   /** maps source folders to output folders */
-  private Map<File, File>    _outputFolderMap;
+  private Map<File, File>   _outputFolderMap;
 
   /** maps class path entries to access restrictions */
-  private Map<File, String>  _accessRestrictions;
+  private Map<File, String> _accessRestrictions;
 
   /** the compiler options */
-  private StringMap _compilerOptions;
+  private StringMap         _compilerOptions;
 
   /** the boot class path access restrictions */
-  private String             _bootClassPathAccessRestrictions;
+  private String            _bootClassPathAccessRestrictions;
 
   /**
    * <p>

@@ -1,12 +1,26 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import java.util.List;
-
 import org.ant4eclipse.core.logging.A4ELogging;
+
 import org.ant4eclipse.pde.tools.PluginProjectChecker;
 import org.ant4eclipse.pde.tools.PluginProjectChecker.Issue;
+
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
+
 import org.apache.tools.ant.BuildException;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,7 +43,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
    * @return <code>true</code>, if the task should fail on error.
    */
   public boolean isFailOnError() {
-    return _failOnError;
+    return this._failOnError;
   }
 
   /**
@@ -41,7 +55,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
    *          the value
    */
   public void setFailOnError(boolean failOnError) {
-    _failOnError = failOnError;
+    this._failOnError = failOnError;
   }
 
   /**
@@ -61,7 +75,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
 
       // iterate over the issue list
       for (Issue issue : issues) {
-        if (_failOnError) {
+        if (this._failOnError) {
           A4ELogging.error(issue.getMessage());
         } else {
           A4ELogging.warn(issue.getMessage());
@@ -69,7 +83,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
       }
 
       // fail if specified
-      if (_failOnError) {
+      if (this._failOnError) {
         throw new BuildException(String.format(
             "Inconsistent or erroneous plug-in project definition for project '%s'. See above for details.",
             getEclipseProject().getSpecifiedName()));

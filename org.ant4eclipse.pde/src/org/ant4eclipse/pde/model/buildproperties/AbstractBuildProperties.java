@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -62,22 +62,22 @@ public class AbstractBuildProperties {
    * @return
    */
   public boolean isCustom() {
-    return _custom;
+    return this._custom;
   }
 
   public String[] getBinaryExcludes() {
-    return _binExcludes;
+    return this._binExcludes;
   }
 
   public String[] getBinaryIncludes() {
-    return _binIncludes;
+    return this._binIncludes;
   }
 
   public String getBinaryExcludesAsString() {
     StringBuffer buffer = new StringBuffer();
-    for (int i = 0; i < _binExcludes.length; i++) {
-      buffer.append(_binExcludes[i]);
-      if (i + 1 < _binExcludes.length) {
+    for (int i = 0; i < this._binExcludes.length; i++) {
+      buffer.append(this._binExcludes[i]);
+      if (i + 1 < this._binExcludes.length) {
         buffer.append(",");
       }
     }
@@ -86,9 +86,9 @@ public class AbstractBuildProperties {
 
   public String getBinaryIncludesAsString() {
     StringBuffer buffer = new StringBuffer();
-    for (int i = 0; i < _binIncludes.length; i++) {
-      buffer.append(_binIncludes[i]);
-      if (i + 1 < _binIncludes.length) {
+    for (int i = 0; i < this._binIncludes.length; i++) {
+      buffer.append(this._binIncludes[i]);
+      if (i + 1 < this._binIncludes.length) {
         buffer.append(",");
       }
     }
@@ -99,14 +99,14 @@ public class AbstractBuildProperties {
    * @return Returns the qualifier.
    */
   public String getQualifier() {
-    return _qualifier;
+    return this._qualifier;
   }
 
   /**
    * @return
    */
   public boolean isContextQualifier() {
-    return isContextQualifer(_qualifier);
+    return isContextQualifer(this._qualifier);
   }
 
   public static boolean isContextQualifer(String qualifier) {
@@ -117,7 +117,7 @@ public class AbstractBuildProperties {
    * @return
    */
   public boolean isNoneQualifier() {
-    return isNoneQualifier(_qualifier);
+    return isNoneQualifier(this._qualifier);
   }
 
   public static boolean isNoneQualifier(String qualifier) {
@@ -128,19 +128,19 @@ public class AbstractBuildProperties {
    * @param custom
    */
   void setCustom(boolean custom) {
-    _custom = custom;
+    this._custom = custom;
   }
 
   void setBinaryExcludes(String[] excludes) {
     Assert.notNull(excludes);
 
-    _binExcludes = excludes;
+    this._binExcludes = excludes;
   }
 
   void setBinaryIncludes(String[] includes) {
     Assert.notNull(includes);
 
-    _binIncludes = includes;
+    this._binIncludes = includes;
   }
 
   /**
@@ -152,6 +152,6 @@ public class AbstractBuildProperties {
       return;
     }
 
-    _qualifier = qualifier;
+    this._qualifier = qualifier;
   }
 }

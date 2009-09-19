@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
+import org.ant4eclipse.platform.ant.team.AbstractGetProjectSetTask;
 import org.ant4eclipse.platform.internal.ant.team.SvnAdapter;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 
@@ -45,35 +46,35 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
   private String  _dateTimeZone  = null;
 
   public String getDateFormatter() {
-    return _dateFormatter;
+    return this._dateFormatter;
   }
 
   public void setDateFormatter(String dateFormatter) {
-    _dateFormatter = dateFormatter;
+    this._dateFormatter = dateFormatter;
   }
 
   public String getDateTimeZone() {
-    return _dateTimeZone;
+    return this._dateTimeZone;
   }
 
   public void setDateTimeZone(String dateTimeZone) {
-    _dateTimeZone = dateTimeZone;
+    this._dateTimeZone = dateTimeZone;
   }
 
   public boolean isJavahl() {
-    return _javahl;
+    return this._javahl;
   }
 
   public void setJavahl(boolean javahl) {
-    _javahl = javahl;
+    this._javahl = javahl;
   }
 
   public boolean isJavasvn() {
-    return _javasvn;
+    return this._javasvn;
   }
 
   public void setJavasvn(boolean javasvn) {
-    _javasvn = javasvn;
+    this._javasvn = javasvn;
   }
 
   protected VcsAdapter createVcsAdapter() {

@@ -36,23 +36,23 @@ public class PythonSubelementContribution implements SubElementContribution {
    * Initialises this contributor to handle subelements known within the python support layer.
    */
   public PythonSubelementContribution() {
-    mapping = new Hashtable<String, Class<?>>();
+    this.mapping = new Hashtable<String, Class<?>>();
     /** @todo [02-Aug-2009:KASI] Why do we only get lowercase names ? */
-    mapping.put(UsedProjectsArgumentComponent.ELEMENTNAME.toLowerCase(), UsedProjectsArgumentComponent.class);
+    this.mapping.put(UsedProjectsArgumentComponent.ELEMENTNAME.toLowerCase(), UsedProjectsArgumentComponent.class);
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean canHandleSubElement(String name, ProjectComponent component) {
-    return mapping.containsKey(name);
+    return this.mapping.containsKey(name);
   }
 
   /**
    * {@inheritDoc}
    */
   public Object createSubElement(String name, ProjectComponent component) {
-    Class<?> clazz = mapping.get(name);
+    Class<?> clazz = this.mapping.get(name);
     if (clazz != null) {
       try {
         return clazz.newInstance();

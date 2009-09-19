@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2007 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0

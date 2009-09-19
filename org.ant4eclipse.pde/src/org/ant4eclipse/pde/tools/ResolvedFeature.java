@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
 import org.ant4eclipse.core.Assert;
@@ -41,8 +52,8 @@ public class ResolvedFeature {
         "Feature source must be instance of %s or %s.", EclipseProject.class.getName(), File.class.getName()));
     Assert.notNull(featureManifest);
 
-    _featureManifest = featureManifest;
-    _source = source;
+    this._featureManifest = featureManifest;
+    this._source = source;
   }
 
   /**
@@ -53,7 +64,7 @@ public class ResolvedFeature {
    * @return the source of the feature.
    */
   public Object getSource() {
-    return _source;
+    return this._source;
   }
 
   /**
@@ -64,7 +75,7 @@ public class ResolvedFeature {
    * @return <code>true</code> if the source of the feature is an {@link EclipseProject}.
    */
   public boolean isEclipseProject() {
-    return _source instanceof EclipseProject;
+    return this._source instanceof EclipseProject;
   }
 
   /**
@@ -75,7 +86,7 @@ public class ResolvedFeature {
    * @return <code>true</code> if the source of the feature is a directory.
    */
   public boolean isDirectory() {
-    return _source instanceof File && ((File) _source).isDirectory();
+    return this._source instanceof File && ((File) this._source).isDirectory();
   }
 
   /**
@@ -86,7 +97,7 @@ public class ResolvedFeature {
    * @return <code>true</code> if the source of the feature is a file.
    */
   public boolean isFile() {
-    return _source instanceof File && ((File) _source).isFile();
+    return this._source instanceof File && ((File) this._source).isFile();
   }
 
   /**
@@ -97,7 +108,7 @@ public class ResolvedFeature {
    * @return the featureManifest
    */
   public FeatureManifest getFeatureManifest() {
-    return _featureManifest;
+    return this._featureManifest;
   }
 
   /**
@@ -108,7 +119,7 @@ public class ResolvedFeature {
    * @return the pluginToBundleDescptionList
    */
   public List<Pair<Plugin, BundleDescription>> getPluginToBundleDescptionList() {
-    return _pluginToBundleDescptionList;
+    return this._pluginToBundleDescptionList;
   }
 
   /**
@@ -119,7 +130,7 @@ public class ResolvedFeature {
    *          the pluginToBundleDescptionList to set
    */
   public void setPluginToBundleDescptionList(List<Pair<Plugin, BundleDescription>> pluginToBundleDescptionList) {
-    _pluginToBundleDescptionList = pluginToBundleDescptionList;
+    this._pluginToBundleDescptionList = pluginToBundleDescptionList;
   }
 
   /**
@@ -130,7 +141,7 @@ public class ResolvedFeature {
    * @return the includesToFeatureDescriptionList
    */
   public List<Pair<Includes, FeatureDescription>> getIncludesToFeatureDescriptionList() {
-    return _includesToFeatureDescriptionList;
+    return this._includesToFeatureDescriptionList;
   }
 
   /**
@@ -142,7 +153,7 @@ public class ResolvedFeature {
    */
   public void setIncludesToFeatureDescriptionList(
       List<Pair<Includes, FeatureDescription>> includesToFeatureDescriptionList) {
-    _includesToFeatureDescriptionList = includesToFeatureDescriptionList;
+    this._includesToFeatureDescriptionList = includesToFeatureDescriptionList;
   }
 
 }

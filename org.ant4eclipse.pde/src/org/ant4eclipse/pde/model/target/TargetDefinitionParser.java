@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.target;
 
-import java.io.InputStream;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
+
+import java.io.InputStream;
 
 /**
  * <p>
@@ -84,16 +84,16 @@ public class TargetDefinitionParser {
     TargetDefinition.Content content = new TargetDefinition.Content();
     targetDefinition.setContent(content);
     String[] pluginIds = pluginIdQuery.getResult();
-    for (int i = 0; i < pluginIds.length; i++) {
-      content.addPlugin(pluginIds[i]);
+    for (String pluginId : pluginIds) {
+      content.addPlugin(pluginId);
     }
     String[] featureIds = featureIdQuery.getResult();
-    for (int i = 0; i < featureIds.length; i++) {
-      content.addFeature(featureIds[i]);
+    for (String featureId : featureIds) {
+      content.addFeature(featureId);
     }
     String[] extraLocationPaths = extraLocationPathQuery.getResult();
-    for (int i = 0; i < extraLocationPaths.length; i++) {
-      content.addExtraLocation(extraLocationPaths[i]);
+    for (String extraLocationPath : extraLocationPaths) {
+      content.addExtraLocation(extraLocationPath);
     }
 
     // create the target jre

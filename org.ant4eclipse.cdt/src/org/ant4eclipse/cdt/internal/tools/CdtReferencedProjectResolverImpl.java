@@ -15,8 +15,10 @@ import org.ant4eclipse.platform.internal.tools.PlatformReferencedProjectsResolve
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
- * <p>Resolver implementation for the cdt. Currently the cdt doesn't support any kind of specific containers 
- * used to access other projects, so the referenced projects are used in general.</p>
+ * <p>
+ * Resolver implementation for the cdt. Currently the cdt doesn't support any kind of specific containers used to access
+ * other projects, so the referenced projects are used in general.
+ * </p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
@@ -25,6 +27,7 @@ public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjects
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canHandle(EclipseProject project) {
     return CdtUtilities.isCRelatedProject(project);
   }

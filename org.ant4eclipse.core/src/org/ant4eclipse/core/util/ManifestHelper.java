@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -290,13 +290,13 @@ public class ManifestHelper {
   public static class ManifestHeaderElement {
 
     /** the values */
-    protected List<String>       _values;
+    protected List<String> _values;
 
     /** the attributes */
-    protected StringMap _attributes;
+    protected StringMap    _attributes;
 
     /** the directives */
-    protected StringMap _directives;
+    protected StringMap    _directives;
 
     public ManifestHeaderElement() {
       this._values = new LinkedList<String>();

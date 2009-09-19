@@ -1,5 +1,5 @@
 /**********************************************************************
- * Copyright (c) 2005-2008 ant4eclipse project team.
+ * Copyright (c) 2005-2009 ant4eclipse project team.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-import java.io.File;
-
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
+
+import java.io.File;
 
 /**
  * <p>

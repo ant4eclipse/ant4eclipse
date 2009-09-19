@@ -1,15 +1,14 @@
-/*******************************************************************************
- * Sun Public License Notice
- * 
- * The contents of this file are subject to the Sun Public License Version 1.0
- * (the "License"). You may not use this file except in compliance with the
- * License. A copy of the License is available at http://www.sun.com/
- * 
- * The Original Code is Ant4Eclipse. The Initial Developers of the Original Code
- * are Nils Hartmann and Gerd Wuetherich.
- * 
- * Contributor(s): Daniel Kasmeroglu
- ******************************************************************************/
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.core.xquery;
 
 import static org.junit.Assert.assertEquals;
