@@ -3,7 +3,7 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
@@ -113,7 +113,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
   @Override
   protected void doExecute() {
 
-    ExtendedProperties versions = new ExtendedProperties();
+    StringMap versions = new StringMap();
 
     if (Utilities.hasText(this._pluginVersions)) {
 
@@ -168,7 +168,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    *          A map containing plugin-id (String) - version (String) associations
    * @throws Exception
    */
-  protected void replaceVersions(File featureXml, String qualifier, ExtendedProperties newBundleVersions)
+  protected void replaceVersions(File featureXml, String qualifier, StringMap newBundleVersions)
       throws Exception {
     Assert.notNull(featureXml);
     Assert.assertTrue(featureXml.isFile(), "featureXml (" + featureXml + ") must point to an existing file");

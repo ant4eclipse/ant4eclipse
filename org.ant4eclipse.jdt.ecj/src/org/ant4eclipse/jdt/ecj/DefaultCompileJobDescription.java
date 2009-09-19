@@ -1,7 +1,7 @@
 package org.ant4eclipse.jdt.ecj;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   private ClassFileLoader    _classFileLoader;
 
   /** the compiler options */
-  private ExtendedProperties _compilerOptions;
+  private StringMap _compilerOptions;
 
   /** the source files */
   private SourceFile[]       _sourceFiles;
@@ -39,7 +39,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    * @param sourceFiles
    */
-  public DefaultCompileJobDescription(ClassFileLoader classFileLoader, ExtendedProperties compilerOptions,
+  public DefaultCompileJobDescription(ClassFileLoader classFileLoader, StringMap compilerOptions,
       SourceFile[] sourceFiles) {
     Assert.notNull(classFileLoader);
     Assert.notNull(compilerOptions);
@@ -60,7 +60,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   /**
    * {@inheritDoc}
    */
-  public ExtendedProperties getCompilerOptions() {
+  public StringMap getCompilerOptions() {
     return this._compilerOptions;
   }
 
@@ -93,7 +93,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    *          the compiler options.
    */
-  public void setCompilerOptions(ExtendedProperties compilerOptions) {
+  public void setCompilerOptions(StringMap compilerOptions) {
     Assert.notNull(compilerOptions);
 
     this._compilerOptions = compilerOptions;

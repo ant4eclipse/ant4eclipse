@@ -1,7 +1,7 @@
 package org.ant4eclipse.core;
 
 import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.apache.tools.ant.Project;
 import org.junit.Test;
@@ -28,16 +28,16 @@ public class Ant4EclipseConfiguratorTest {
 
   @Test
   public void testAnt4EclipseConfigurator_3() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new ExtendedProperties());
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new ExtendedProperties());
+    Ant4EclipseConfigurator.configureAnt4Eclipse(new StringMap());
+    Ant4EclipseConfigurator.configureAnt4Eclipse(new StringMap());
 
     ServiceRegistry.reset();
   }
 
   @Test
   public void testAnt4EclipseConfigurator_4() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse((ExtendedProperties) null);
-    Ant4EclipseConfigurator.configureAnt4Eclipse((ExtendedProperties) null);
+    Ant4EclipseConfigurator.configureAnt4Eclipse((StringMap) null);
+    Ant4EclipseConfigurator.configureAnt4Eclipse((StringMap) null);
 
     ServiceRegistry.reset();
   }

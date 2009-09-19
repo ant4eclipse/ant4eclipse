@@ -1,7 +1,7 @@
 package org.ant4eclipse.platform.test.builder;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
 
 import java.util.Iterator;
@@ -12,23 +12,23 @@ import java.util.Iterator;
 public class StringTemplate {
 
   /** - */
-  private static String      PREFIX  = "${";
+  private static String PREFIX  = "${";
 
   /** - */
-  private static String      POSTFIX = "}";
+  private static String POSTFIX = "}";
 
   /** - */
-  private StringBuilder      _stringTemplate;
+  private StringBuilder _stringTemplate;
 
   /** - */
-  private ExtendedProperties _stringsToReplace;
+  private StringMap     _stringsToReplace;
 
   /**
    * 
    */
   public StringTemplate() {
     this._stringTemplate = new StringBuilder();
-    this._stringsToReplace = new ExtendedProperties();
+    this._stringsToReplace = new StringMap();
   }
 
   /**
@@ -70,7 +70,6 @@ public class StringTemplate {
   public void replace(String name, String value) {
     Assert.notNull(name);
     Assert.notNull(value);
-
     this._stringsToReplace.put(name, value);
   }
 

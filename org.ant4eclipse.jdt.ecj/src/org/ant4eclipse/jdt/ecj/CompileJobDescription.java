@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ public interface CompileJobDescription {
    * 
    * @return the compiler options for the compile job.
    */
-  ExtendedProperties getCompilerOptions();
+  StringMap getCompilerOptions();
 
   /**
    * <p>

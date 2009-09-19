@@ -12,7 +12,7 @@
 package org.ant4eclipse.platform.internal.model.resource.variable;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
@@ -31,7 +31,7 @@ import java.util.Vector;
 public class EclipseVariableResolverImpl implements EclipseVariableResolver {
 
   /** a mapping for the eclipse variables */
-  private ExtendedProperties _eclipsevariables = new ExtendedProperties();
+  private StringMap _eclipsevariables = new StringMap();
 
   /**
    * {@inheritDoc}
@@ -68,11 +68,11 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final String resolveEclipseVariables(String string, EclipseProject project, ExtendedProperties otherProperties) {
+  public final String resolveEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
     Assert.notNull(string);
     // Assert.notNull(project);
     // resolve Eclipse variables
-    ExtendedProperties eclipseVariables = getEclipseVariables(project);
+    StringMap eclipseVariables = getEclipseVariables(project);
 
     // overwrite "default" values for eclipse variables with values as specified in otherProperties
     if (otherProperties != null) {
@@ -87,15 +87,15 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final ExtendedProperties getEclipseVariables() {
+  public final StringMap getEclipseVariables() {
     return (getEclipseVariables(null));
   }
 
   /**
    * {@inheritDoc}
    */
-  public final ExtendedProperties getEclipseVariables(EclipseProject project) {
-    ExtendedProperties eclipseVariables = new ExtendedProperties();
+  public final StringMap getEclipseVariables(EclipseProject project) {
+    StringMap eclipseVariables = new StringMap();
     eclipseVariables.putAll(this._eclipsevariables);
     if (project != null) {
       eclipseVariables.put("build_project", project.getFolder().getAbsolutePath());
@@ -118,7 +118,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * @param properties
    * @return
    */
-  private final String resolveProperties(String value, ExtendedProperties properties) {
+  private final String resolveProperties(String value, StringMap properties) {
 
     Vector<String> fragments = new Vector<String>();
     Vector<String> propertyRefs = new Vector<String>();

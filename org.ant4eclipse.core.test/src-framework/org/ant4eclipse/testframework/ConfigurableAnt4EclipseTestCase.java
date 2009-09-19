@@ -13,7 +13,7 @@ package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
@@ -40,7 +40,7 @@ public class ConfigurableAnt4EclipseTestCase {
    */
   @Before
   public void setup() {
-    ExtendedProperties properties = customAnt4EclipseConfiguration(new ExtendedProperties());
+    StringMap properties = customAnt4EclipseConfiguration(new StringMap());
     if (properties == null) {
       Ant4EclipseConfigurator.configureAnt4Eclipse();
     } else {
@@ -64,7 +64,7 @@ public class ConfigurableAnt4EclipseTestCase {
    * @param properties
    * @return
    */
-  protected ExtendedProperties customAnt4EclipseConfiguration(ExtendedProperties properties) {
+  protected StringMap customAnt4EclipseConfiguration(StringMap properties) {
     return null;
   }
 

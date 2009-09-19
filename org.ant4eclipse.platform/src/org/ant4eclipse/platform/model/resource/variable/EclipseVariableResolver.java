@@ -12,7 +12,7 @@
 package org.ant4eclipse.platform.model.resource.variable;
 
 import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
@@ -50,14 +50,14 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param otherProperties
    *          Table with variable names as keys and their values as values. Might be null.
    */
-  String resolveEclipseVariables(String string, EclipseProject project, ExtendedProperties otherProperties);
+  String resolveEclipseVariables(String string, EclipseProject project, StringMap otherProperties);
 
   /**
    * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  ExtendedProperties getEclipseVariables();
+  StringMap getEclipseVariables();
 
   /**
    * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
@@ -67,6 +67,6 @@ public interface EclipseVariableResolver extends Lifecycle {
    * 
    * @return The map providing the necessary (key, value) pairs.
    */
-  ExtendedProperties getEclipseVariables(EclipseProject project);
+  StringMap getEclipseVariables(EclipseProject project);
 
 } /* ENDINTERFACE */

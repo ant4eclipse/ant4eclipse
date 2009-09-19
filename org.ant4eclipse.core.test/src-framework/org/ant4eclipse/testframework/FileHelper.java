@@ -15,7 +15,7 @@ import static java.lang.String.format;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
 
 import java.io.BufferedInputStream;
@@ -230,7 +230,7 @@ public class FileHelper {
   /**
    * Returns the content of the file specified.
    */
-  public static final byte[] getFileFiltered(String fileName, char tokenSep, ExtendedProperties filter) {
+  public static final byte[] getFileFiltered(String fileName, char tokenSep, StringMap filter) {
     try {
       File file = new File(fileName);
       BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -257,7 +257,7 @@ public class FileHelper {
   /**
    * Returns the content of the file specified.
    */
-  public static final byte[] getBinaryFileFiltered(String fileName, ExtendedProperties filter) {
+  public static final byte[] getBinaryFileFiltered(String fileName, StringMap filter) {
     File file = new File(fileName);
     ByteArrayOutputStream byteout = new ByteArrayOutputStream();
     try {
@@ -323,7 +323,7 @@ public class FileHelper {
     return fileList.toArray(new String[fileList.size()]);
   }
 
-  public static final String replaceTokens(String line, char tokenSep, ExtendedProperties tokens) {
+  public static final String replaceTokens(String line, char tokenSep, StringMap tokens) {
     boolean inToken = false;
 
     StringBuffer result = new StringBuffer();

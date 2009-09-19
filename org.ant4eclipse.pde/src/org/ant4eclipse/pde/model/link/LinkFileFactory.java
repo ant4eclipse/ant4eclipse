@@ -13,7 +13,7 @@ package org.ant4eclipse.pde.model.link;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -84,7 +84,7 @@ public class LinkFileFactory {
   public static LinkFile parseLinkFile(File linkFile) {
     Assert.isFile(linkFile);
     A4ELogging.debug("Parsing link file '%s'", linkFile.getAbsolutePath());
-    ExtendedProperties p = new ExtendedProperties(linkFile);
+    StringMap p = new StringMap(linkFile);
     String path = p.get("path");
     if (path == null) {
       return null;

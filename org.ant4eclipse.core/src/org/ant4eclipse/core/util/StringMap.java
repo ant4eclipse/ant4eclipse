@@ -30,12 +30,12 @@ import java.util.Properties;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class ExtendedProperties extends Hashtable<String, String> {
+public class StringMap extends Hashtable<String, String> {
 
   /**
    * Simply sets up this datastructure with no content.
    */
-  public ExtendedProperties() {
+  public StringMap() {
   }
 
   /**
@@ -47,7 +47,7 @@ public class ExtendedProperties extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with {@link CoreExceptionCode#IO_FAILURE} in case there was an io error on the stream.
    */
-  public ExtendedProperties(InputStream instream) {
+  public StringMap(InputStream instream) {
     extendProperties(instream);
   }
 
@@ -62,7 +62,7 @@ public class ExtendedProperties extends Hashtable<String, String> {
    *           {@link CoreExceptionCode#RESOURCE_NOT_ON_THE_CLASSPATH} if the resource is not located within the
    *           classpath in the first place.
    */
-  public ExtendedProperties(String classpath) {
+  public StringMap(String classpath) {
     extendProperties(classpath);
   }
 
@@ -75,7 +75,7 @@ public class ExtendedProperties extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public ExtendedProperties(URL resource) {
+  public StringMap(URL resource) {
     extendProperties(resource);
   }
 
@@ -88,7 +88,7 @@ public class ExtendedProperties extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#FILEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public ExtendedProperties(File propertiesFile) {
+  public StringMap(File propertiesFile) {
     extendProperties(propertiesFile);
   }
 
@@ -190,10 +190,16 @@ public class ExtendedProperties extends Hashtable<String, String> {
   }
 
   /**
+   * <p>
+   * Returns the value of a key.
+   * </p>
    * 
    * @param key
+   *          The key which value shall be delivered.
    * @param defvalue
-   * @return
+   *          The default value to be used.
+   * 
+   * @return The value from the map or the default value.
    */
   public String get(String key, String defvalue) {
     if (containsKey(key)) {

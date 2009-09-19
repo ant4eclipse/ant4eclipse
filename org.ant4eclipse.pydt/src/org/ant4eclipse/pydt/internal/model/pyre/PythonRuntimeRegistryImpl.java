@@ -16,7 +16,7 @@ import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.data.Version;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pydt.model.PythonInterpreter;
@@ -332,7 +332,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     if (cfgurl == null) {
       throw new BuildException(MSG_MISSINGPYTHONPROPERTIES);
     }
-    ExtendedProperties props = new ExtendedProperties(cfgurl);
+    StringMap props = new StringMap(cfgurl);
     List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
     for (Map.Entry<String, String> entry : props.entrySet()) {
       if (entry.getKey().startsWith(PROP_INTERPRETER)) {

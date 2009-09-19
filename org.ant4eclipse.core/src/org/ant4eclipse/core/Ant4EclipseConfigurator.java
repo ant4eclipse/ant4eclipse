@@ -19,7 +19,7 @@ import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.apache.tools.ant.Project;
 
@@ -66,11 +66,11 @@ public class Ant4EclipseConfigurator {
    * @param ant4EclipseConfigurationProperties
    *          the configuration properties
    */
-  public static void configureAnt4Eclipse(ExtendedProperties ant4EclipseConfigurationProperties) {
+  public static void configureAnt4Eclipse(StringMap ant4EclipseConfigurationProperties) {
     if (!ServiceRegistry.isConfigured()) {
       configureAnt4Eclipse(new DefaultAnt4EclipseLogger(),
           ant4EclipseConfigurationProperties != null ? new Ant4EclipseConfigurationImpl(
-              ant4EclipseConfigurationProperties) : new Ant4EclipseConfigurationImpl(new ExtendedProperties()));
+              ant4EclipseConfigurationProperties) : new Ant4EclipseConfigurationImpl(new StringMap()));
     }
   }
 

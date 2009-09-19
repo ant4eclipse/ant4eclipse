@@ -13,7 +13,7 @@ package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.CompileJobDescription;
@@ -64,7 +64,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
 
     A4ELogging.debug("classFileLoader: " + classFileLoader);
 
-    ExtendedProperties compilerOptions = description.getCompilerOptions();
+    StringMap compilerOptions = description.getCompilerOptions();
 
     A4ELogging.debug("compiler options: " + compilerOptions);
 

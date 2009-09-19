@@ -293,15 +293,15 @@ public class ManifestHelper {
     protected List<String>       _values;
 
     /** the attributes */
-    protected ExtendedProperties _attributes;
+    protected StringMap _attributes;
 
     /** the directives */
-    protected ExtendedProperties _directives;
+    protected StringMap _directives;
 
     public ManifestHeaderElement() {
       this._values = new LinkedList<String>();
-      this._attributes = new ExtendedProperties();
-      this._directives = new ExtendedProperties();
+      this._attributes = new StringMap();
+      this._directives = new StringMap();
     }
 
     void addAttribute(String key, String value) {
@@ -326,14 +326,14 @@ public class ManifestHelper {
     /**
      * @return
      */
-    public ExtendedProperties getAttributes() {
+    public StringMap getAttributes() {
       return this._attributes;
     }
 
     /**
      * @return
      */
-    public ExtendedProperties getDirectives() {
+    public StringMap getDirectives() {
       return this._directives;
     }
 

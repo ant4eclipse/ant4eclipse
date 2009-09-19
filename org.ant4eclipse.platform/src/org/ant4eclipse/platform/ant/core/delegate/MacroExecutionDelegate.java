@@ -15,7 +15,7 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.ldapfilter.LdapFilter;
 import org.ant4eclipse.core.ldapfilter.ParseException;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
@@ -143,7 +143,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
 
       String filter = conditionalMacroDef.getFilter();
       if (filter != null) {
-        ExtendedProperties properties = macroExecutionValues.getProperties();
+        StringMap properties = macroExecutionValues.getProperties();
         try {
           if (!(new LdapFilter(properties, new StringReader(filter)).validate())) {
             return;

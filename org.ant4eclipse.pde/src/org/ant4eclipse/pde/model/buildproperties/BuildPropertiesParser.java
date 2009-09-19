@@ -12,7 +12,7 @@
 package org.ant4eclipse.pde.model.buildproperties;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
@@ -65,7 +65,7 @@ public class BuildPropertiesParser {
   public static void parsePluginBuildProperties(PluginProjectRole pluginProjectRole) {
 
     Assert.notNull(pluginProjectRole);
-    ExtendedProperties properties = loadBuildProperties(pluginProjectRole.getEclipseProject());
+    StringMap properties = loadBuildProperties(pluginProjectRole.getEclipseProject());
     PluginBuildProperties buildProperties = initializePluginBuildProperties(properties);
     pluginProjectRole.setBuildProperties(buildProperties);
   }
@@ -85,17 +85,17 @@ public class BuildPropertiesParser {
   public static void parseFeatureBuildProperties(FeatureProjectRole featureProjectRole) {
     Assert.notNull(featureProjectRole);
 
-    ExtendedProperties buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
+    StringMap buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
     FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
     initializeAbstractBuildProperties(buildProperties, featureBuildProperties);
     // TODO
     ((FeatureProjectRoleImpl) featureProjectRole).setBuildProperties(featureBuildProperties);
   }
 
-  private static ExtendedProperties loadBuildProperties(EclipseProject eclipseProject) {
+  private static StringMap loadBuildProperties(EclipseProject eclipseProject) {
     Assert.notNull(eclipseProject);
     File file = eclipseProject.getChild(BUILD_PROPERTIES);
-    return new ExtendedProperties(file);
+    return new StringMap(file);
   }
 
   /**
@@ -107,7 +107,7 @@ public class BuildPropertiesParser {
    * This method is mainly public to make it accessible from tests (?)
    * </p>
    */
-  public static PluginBuildProperties initializePluginBuildProperties(ExtendedProperties properties) {
+  public static PluginBuildProperties initializePluginBuildProperties(StringMap properties) {
     Assert.notNull(properties);
 
     PluginBuildProperties buildProperties = new PluginBuildProperties();
@@ -156,7 +156,7 @@ public class BuildPropertiesParser {
     return buildProperties;
   }
 
-  private static void initializeAbstractBuildProperties(ExtendedProperties allProperties,
+  private static void initializeAbstractBuildProperties(StringMap allProperties,
       AbstractBuildProperties abstractBuildProperties) {
     Assert.notNull(allProperties);
     Assert.notNull(abstractBuildProperties);

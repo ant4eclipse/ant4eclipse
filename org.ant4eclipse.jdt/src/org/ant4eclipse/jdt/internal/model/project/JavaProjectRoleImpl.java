@@ -14,7 +14,7 @@ package org.ant4eclipse.jdt.internal.model.project;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.ContainerTypes;
@@ -132,15 +132,15 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
-  public ExtendedProperties getCompilerOptions() {
+  public StringMap getCompilerOptions() {
 
-    ExtendedProperties result = null;
+    StringMap result = null;
 
     // read project-specific compiler settings if available
     File settingsDir = getEclipseProject().getChild(".settings");
     File prefsFile = new File(settingsDir, "org.eclipse.jdt.core.prefs");
     if (prefsFile.isFile()) {
-      result = new ExtendedProperties(prefsFile);
+      result = new StringMap(prefsFile);
     } else {
       A4ELogging.debug("No file with project specific compiler settings found at '%s'.", prefsFile);
     }

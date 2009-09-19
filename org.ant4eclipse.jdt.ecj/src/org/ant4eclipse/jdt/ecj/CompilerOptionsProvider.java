@@ -2,7 +2,7 @@ package org.ant4eclipse.jdt.ecj;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.apache.tools.ant.taskdefs.Javac;
@@ -50,21 +50,21 @@ public class CompilerOptionsProvider {
    * @return the map with the merged compiler options.
    */
   @SuppressWarnings("unchecked")
-  public static ExtendedProperties getCompilerOptions(Javac javac, String projectCompilerOptionsFile,
+  public static StringMap getCompilerOptions(Javac javac, String projectCompilerOptionsFile,
       String globalCompilerOptionsFile) {
     Assert.notNull(javac);
 
     // get the project options
-    ExtendedProperties projectOptions = getFileCompilerOptions(projectCompilerOptionsFile);
+    StringMap projectOptions = getFileCompilerOptions(projectCompilerOptionsFile);
 
     // get the default options
-    ExtendedProperties defaultOptions = getFileCompilerOptions(globalCompilerOptionsFile);
+    StringMap defaultOptions = getFileCompilerOptions(globalCompilerOptionsFile);
 
     // get the javac options
-    ExtendedProperties javacOptions = getJavacCompilerOptions(javac);
+    StringMap javacOptions = getJavacCompilerOptions(javac);
 
     // merge the map
-    ExtendedProperties mergedMap = mergeCompilerOptions(projectOptions, defaultOptions, javacOptions);
+    StringMap mergedMap = mergeCompilerOptions(projectOptions, defaultOptions, javacOptions);
 
     // create result
     CompilerOptions compilerOptions = new CompilerOptions(mergedMap);
@@ -78,7 +78,7 @@ public class CompilerOptionsProvider {
     }
 
     // return the compiler options
-    ExtendedProperties result = new ExtendedProperties();
+    StringMap result = new StringMap();
     result.putAll(compilerOptions.getMap());
     return result;
   }
@@ -93,9 +93,9 @@ public class CompilerOptionsProvider {
    * @return the compiler options specified in the javac task.
    */
   @SuppressWarnings("unchecked")
-  private static ExtendedProperties getJavacCompilerOptions(Javac javac) {
+  private static StringMap getJavacCompilerOptions(Javac javac) {
 
-    ExtendedProperties result = new ExtendedProperties();
+    StringMap result = new StringMap();
 
     /*
      * set the source option
@@ -233,12 +233,12 @@ public class CompilerOptionsProvider {
    *          the compiler options file.
    * @return the map with the compiler options.
    */
-  private static ExtendedProperties getFileCompilerOptions(String fileName) {
+  private static StringMap getFileCompilerOptions(String fileName) {
     if (Utilities.hasText(fileName)) {
       try {
         File compilerOptionsFile = new File(fileName);
         if (compilerOptionsFile.exists() && compilerOptionsFile.isFile()) {
-          ExtendedProperties compilerOptionsMap = new ExtendedProperties(compilerOptionsFile);
+          StringMap compilerOptionsMap = new StringMap(compilerOptionsFile);
           return compilerOptionsMap;
         }
       } catch (Exception e) {
@@ -258,10 +258,10 @@ public class CompilerOptionsProvider {
    * @param options_3
    * @return
    */
-  private static ExtendedProperties mergeCompilerOptions(ExtendedProperties options_1, ExtendedProperties options_2,
-      ExtendedProperties options_3) {
+  private static StringMap mergeCompilerOptions(StringMap options_1, StringMap options_2,
+      StringMap options_3) {
 
-    ExtendedProperties result = new ExtendedProperties();
+    StringMap result = new StringMap();
     if (options_3 != null) {
       result.putAll(options_3);
     }

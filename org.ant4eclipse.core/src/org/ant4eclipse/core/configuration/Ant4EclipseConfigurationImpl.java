@@ -1,6 +1,6 @@
 package org.ant4eclipse.core.configuration;
 
-import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Pair;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
 
   /** <b>All</b> configuration properties */
-  private ExtendedProperties _properties;
+  private StringMap _properties;
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * @param properties
    *          The backing properties
    */
-  public Ant4EclipseConfigurationImpl(ExtendedProperties properties) {
+  public Ant4EclipseConfigurationImpl(StringMap properties) {
     if (properties == null) {
       throw new IllegalArgumentException("Parameter 'properties' must not be null ");
     }
@@ -123,9 +123,9 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * 
    * @return A Property object containing all loaded properties
    */
-  private ExtendedProperties loadConfigurationProperties() {
+  private StringMap loadConfigurationProperties() {
     Enumeration<URL> propertyFiles = getPropertyFiles();
-    ExtendedProperties allProperties = new ExtendedProperties();
+    StringMap allProperties = new StringMap();
     while (propertyFiles.hasMoreElements()) {
       URL url = propertyFiles.nextElement();
       allProperties.extendProperties(url);
