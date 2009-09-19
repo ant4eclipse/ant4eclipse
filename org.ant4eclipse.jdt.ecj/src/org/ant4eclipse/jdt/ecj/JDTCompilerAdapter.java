@@ -4,6 +4,7 @@ import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.ExtendedProperties;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
@@ -24,7 +25,6 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -81,7 +81,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // Step 5.1: set the compiler options
     String compilerOptionsFileName = extractJavacCompilerArg(COMPILER_OPTIONS_FILE, null);
     String defaultCompilerOptionsFileName = extractJavacCompilerArg(DEFAULT_COMPILER_OPTIONS_FILE, null);
-    Map<String, String> compilerOptions = CompilerOptionsProvider.getCompilerOptions(getJavac(),
+    ExtendedProperties compilerOptions = CompilerOptionsProvider.getCompilerOptions(getJavac(),
         compilerOptionsFileName, defaultCompilerOptionsFileName);
     compileJobDescription.setCompilerOptions(compilerOptions);
 

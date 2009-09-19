@@ -1,6 +1,7 @@
 package org.ant4eclipse.jdt.ant;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import java.io.File;
 import java.util.HashMap;
@@ -23,16 +24,16 @@ import java.util.Map;
 public class EcjAdditionalCompilerArguments {
 
   /** maps source folders to output folders */
-  private Map<File, File>     _outputFolderMap;
+  private Map<File, File>    _outputFolderMap;
 
   /** maps class path entries to access restrictions */
-  private Map<File, String>   _accessRestrictions;
+  private Map<File, String>  _accessRestrictions;
 
   /** the compiler options */
-  private Map<String, String> _compilerOptions;
+  private ExtendedProperties _compilerOptions;
 
   /** the boot class path access restrictions */
-  private String              _bootClassPathAccessRestrictions;
+  private String             _bootClassPathAccessRestrictions;
 
   /**
    * <p>
@@ -117,7 +118,7 @@ public class EcjAdditionalCompilerArguments {
    * 
    * @return the compilerOptions
    */
-  public Map<String, String> getCompilerOptions() {
+  public ExtendedProperties getCompilerOptions() {
     return this._compilerOptions;
   }
 
@@ -182,7 +183,7 @@ public class EcjAdditionalCompilerArguments {
    * @param compilerOptions
    *          the compiler options.
    */
-  public void addCompilerOptions(Map<String, String> compilerOptions) {
+  public void addCompilerOptions(ExtendedProperties compilerOptions) {
     this._compilerOptions = compilerOptions;
   }
 }

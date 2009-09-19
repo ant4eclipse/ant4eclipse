@@ -14,18 +14,18 @@ package org.ant4eclipse.platform.model.resource.role;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.ant4eclipse.core.util.ExtendedProperties;
+
 import org.ant4eclipse.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 
-import java.util.Map;
-
 public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTestCase {
 
   @Override
-  protected Map<String, String> customAnt4EclipseConfiguration(Map<String, String> properties) {
+  protected ExtendedProperties customAnt4EclipseConfiguration(ExtendedProperties properties) {
 
     // add TestProjectRoleIdentifier to ant4eclipse properties
     properties.put(ProjectRoleIdentifierRegistry.ROLEIDENTIFIER_PREFIX + ".dummyRole", TestProjectRoleIdentifier.class

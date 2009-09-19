@@ -13,14 +13,13 @@ package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
 import org.junit.Before;
 
 import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Map;
 
 /**
  * <p>
@@ -41,7 +40,7 @@ public class ConfigurableAnt4EclipseTestCase {
    */
   @Before
   public void setup() {
-    Map<String, String> properties = customAnt4EclipseConfiguration(new Hashtable<String, String>());
+    ExtendedProperties properties = customAnt4EclipseConfiguration(new ExtendedProperties());
     if (properties == null) {
       Ant4EclipseConfigurator.configureAnt4Eclipse();
     } else {
@@ -65,7 +64,7 @@ public class ConfigurableAnt4EclipseTestCase {
    * @param properties
    * @return
    */
-  protected Map<String, String> customAnt4EclipseConfiguration(Map<String, String> properties) {
+  protected ExtendedProperties customAnt4EclipseConfiguration(ExtendedProperties properties) {
     return null;
   }
 

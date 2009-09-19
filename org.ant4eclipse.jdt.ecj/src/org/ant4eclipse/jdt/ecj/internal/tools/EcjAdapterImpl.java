@@ -13,6 +13,7 @@ package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.CompileJobDescription;
@@ -32,7 +33,6 @@ import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * The {@link EcjAdapterImpl} can be used to compile eclipse projects with the eclipse java compiler (ejc). It provides
@@ -64,7 +64,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
 
     A4ELogging.debug("classFileLoader: " + classFileLoader);
 
-    Map<String, String> compilerOptions = description.getCompilerOptions();
+    ExtendedProperties compilerOptions = description.getCompilerOptions();
 
     A4ELogging.debug("compiler options: " + compilerOptions);
 

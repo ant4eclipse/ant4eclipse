@@ -13,15 +13,12 @@ package org.ant4eclipse.pde.model.link;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * LinkFileFactory provides methods to find and parse link files
@@ -87,18 +84,8 @@ public class LinkFileFactory {
   public static LinkFile parseLinkFile(File linkFile) {
     Assert.isFile(linkFile);
     A4ELogging.debug("Parsing link file '%s'", linkFile.getAbsolutePath());
-
-    Properties p = new Properties();
-    FileInputStream inputStream = null;
-    try {
-      inputStream = new FileInputStream(linkFile);
-      p.load(inputStream);
-    } catch (IOException ioe) {
-      throw new RuntimeException("could not read " + linkFile.getAbsolutePath() + ": " + ioe, ioe);
-    } finally {
-      Utilities.close(inputStream);
-    }
-    String path = p.getProperty("path");
+    ExtendedProperties p = new ExtendedProperties(linkFile);
+    String path = p.get("path");
     if (path == null) {
       return null;
     }

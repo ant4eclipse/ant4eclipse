@@ -17,6 +17,7 @@ import static org.junit.Assert.fail;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,7 +33,7 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
   @Before
   public void setupTestProperties() {
     // some dummy properties
-    Map<String, String> properties = new Hashtable<String, String>();
+    ExtendedProperties properties = new ExtendedProperties();
     properties.put("service.ant4eclipse.TestServiceA", TestServiceAImpl.class.getName());
     properties.put("service.TestServiceB", TestServiceBImpl.class.getName());
     properties.put("noservice.TestServiceC", "Not a service");

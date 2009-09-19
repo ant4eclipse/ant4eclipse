@@ -12,6 +12,7 @@
 package org.ant4eclipse.jdt.model.project;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
@@ -19,8 +20,6 @@ import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-
-import java.util.Map;
 
 /**
  * <p>
@@ -91,7 +90,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return a map with the compiler options or <code>null</code> if no such options exist.
    */
-  Map<String, String> getCompilerOptions();
+  ExtendedProperties getCompilerOptions();
 
   /**
    * <p>

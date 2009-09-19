@@ -15,10 +15,8 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.jar.Manifest;
 
 /**
@@ -292,18 +290,18 @@ public class ManifestHelper {
   public static class ManifestHeaderElement {
 
     /** the values */
-    protected List<String>        _values;
+    protected List<String>       _values;
 
     /** the attributes */
-    protected Map<String, String> _attributes;
+    protected ExtendedProperties _attributes;
 
     /** the directives */
-    protected Map<String, String> _directives;
+    protected ExtendedProperties _directives;
 
     public ManifestHeaderElement() {
       this._values = new LinkedList<String>();
-      this._attributes = new HashMap<String, String>();
-      this._directives = new HashMap<String, String>();
+      this._attributes = new ExtendedProperties();
+      this._directives = new ExtendedProperties();
     }
 
     void addAttribute(String key, String value) {
@@ -328,14 +326,14 @@ public class ManifestHelper {
     /**
      * @return
      */
-    public Map<String, String> getAttributes() {
+    public ExtendedProperties getAttributes() {
       return this._attributes;
     }
 
     /**
      * @return
      */
-    public Map<String, String> getDirectives() {
+    public ExtendedProperties getDirectives() {
       return this._directives;
     }
 

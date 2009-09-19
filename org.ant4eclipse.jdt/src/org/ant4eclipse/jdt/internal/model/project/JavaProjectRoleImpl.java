@@ -14,6 +14,7 @@ package org.ant4eclipse.jdt.internal.model.project;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.core.util.ExtendedProperties;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.model.ClasspathEntry;
@@ -30,7 +31,6 @@ import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -133,9 +133,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
-  public Map<String, String> getCompilerOptions() {
+  public ExtendedProperties getCompilerOptions() {
 
-    Map<String, String> result = null;
+    ExtendedProperties result = null;
 
     // read project-specific compiler settings if available
     File settingsDir = getEclipseProject().getChild(".settings");

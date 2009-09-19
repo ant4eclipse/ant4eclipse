@@ -11,8 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
+import org.ant4eclipse.core.util.ExtendedProperties;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -96,7 +97,7 @@ public interface JavaProfile {
    * 
    * @return the java profile as properties.
    */
-  Map<String, String> getProperties();
+  ExtendedProperties getProperties();
 
   /**
    * <p>

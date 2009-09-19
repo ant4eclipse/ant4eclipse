@@ -12,7 +12,7 @@
 package org.ant4eclipse.pde.model.buildproperties;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
@@ -22,12 +22,9 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
 /**
@@ -68,7 +65,7 @@ public class BuildPropertiesParser {
   public static void parsePluginBuildProperties(PluginProjectRole pluginProjectRole) {
 
     Assert.notNull(pluginProjectRole);
-    Properties properties = loadBuildProperties(pluginProjectRole.getEclipseProject());
+    ExtendedProperties properties = loadBuildProperties(pluginProjectRole.getEclipseProject());
     PluginBuildProperties buildProperties = initializePluginBuildProperties(properties);
     pluginProjectRole.setBuildProperties(buildProperties);
   }
@@ -88,28 +85,17 @@ public class BuildPropertiesParser {
   public static void parseFeatureBuildProperties(FeatureProjectRole featureProjectRole) {
     Assert.notNull(featureProjectRole);
 
-    Properties buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
+    ExtendedProperties buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
     FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
     initializeAbstractBuildProperties(buildProperties, featureBuildProperties);
     // TODO
     ((FeatureProjectRoleImpl) featureProjectRole).setBuildProperties(featureBuildProperties);
   }
 
-  private static Properties loadBuildProperties(EclipseProject eclipseProject) {
+  private static ExtendedProperties loadBuildProperties(EclipseProject eclipseProject) {
     Assert.notNull(eclipseProject);
     File file = eclipseProject.getChild(BUILD_PROPERTIES);
-    FileInputStream inputStream = null;
-    try {
-      Properties properties = new Properties();
-      inputStream = new FileInputStream(file);
-      properties.load(inputStream);
-      return properties;
-    } catch (IOException ioe) {
-      // TODO
-      throw new RuntimeException(ioe.getMessage(), ioe);
-    } finally {
-      Utilities.close(inputStream);
-    }
+    return new ExtendedProperties(file);
   }
 
   /**
@@ -121,22 +107,22 @@ public class BuildPropertiesParser {
    * This method is mainly public to make it accessible from tests (?)
    * </p>
    */
-  public static PluginBuildProperties initializePluginBuildProperties(Properties properties) {
+  public static PluginBuildProperties initializePluginBuildProperties(ExtendedProperties properties) {
     Assert.notNull(properties);
 
     PluginBuildProperties buildProperties = new PluginBuildProperties();
     initializeAbstractBuildProperties(properties, buildProperties);
 
     // set jars.compile.order
-    String jarsCompileOrder = (String) properties.get("jars.compile.order");
+    String jarsCompileOrder = properties.get("jars.compile.order");
     if (jarsCompileOrder != null) {
       buildProperties.setJarsCompileOrder(getAsList(jarsCompileOrder, ",", true));
     }
 
     // set source and target compatibility level
-    String javacSource = properties.getProperty("javacSource", "1.3");
+    String javacSource = properties.get("javacSource", "1.3");
     buildProperties.setJavacSource(javacSource);
-    String javacTarget = properties.getProperty("javacTarget", "1.2");
+    String javacTarget = properties.get("javacTarget", "1.2");
     buildProperties.setJavacTarget(javacTarget);
 
     // set libraries
@@ -170,7 +156,7 @@ public class BuildPropertiesParser {
     return buildProperties;
   }
 
-  private static void initializeAbstractBuildProperties(Properties allProperties,
+  private static void initializeAbstractBuildProperties(ExtendedProperties allProperties,
       AbstractBuildProperties abstractBuildProperties) {
     Assert.notNull(allProperties);
     Assert.notNull(abstractBuildProperties);
@@ -179,14 +165,14 @@ public class BuildPropertiesParser {
     abstractBuildProperties.setQualifier((String) allProperties.get("qualifier"));
 
     // set custom
-    abstractBuildProperties.setCustom(Boolean.valueOf(allProperties.getProperty("custom", "false")).booleanValue());
+    abstractBuildProperties.setCustom(Boolean.valueOf(allProperties.get("custom", "false")).booleanValue());
 
     // set bin.includes
-    String includes = allProperties.getProperty("bin.includes", "");
+    String includes = allProperties.get("bin.includes", "");
     abstractBuildProperties.setBinaryIncludes(getAsList(includes, ",", true));
 
     // set bin.excludes
-    String excludes = allProperties.getProperty("bin.excludes", "");
+    String excludes = allProperties.get("bin.excludes", "");
     abstractBuildProperties.setBinaryExcludes(getAsList(excludes, ",", true));
   }
 

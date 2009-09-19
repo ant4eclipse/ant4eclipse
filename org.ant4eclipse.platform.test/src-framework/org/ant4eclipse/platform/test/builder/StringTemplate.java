@@ -1,10 +1,10 @@
 package org.ant4eclipse.platform.test.builder;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.ExtendedProperties;
+import org.ant4eclipse.core.util.Utilities;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
@@ -12,25 +12,23 @@ import java.util.Map;
 public class StringTemplate {
 
   /** - */
-  private static String       PREFIX  = "${";
+  private static String      PREFIX  = "${";
 
   /** - */
-  private static String       POSTFIX = "}";
-
-  public static final String  NL      = System.getProperty("line.separator");
+  private static String      POSTFIX = "}";
 
   /** - */
-  private StringBuilder       _stringTemplate;
+  private StringBuilder      _stringTemplate;
 
   /** - */
-  private Map<String, String> _stringsToReplace;
+  private ExtendedProperties _stringsToReplace;
 
   /**
    * 
    */
   public StringTemplate() {
     this._stringTemplate = new StringBuilder();
-    this._stringsToReplace = new HashMap<String, String>();
+    this._stringsToReplace = new ExtendedProperties();
   }
 
   /**
@@ -60,7 +58,7 @@ public class StringTemplate {
    * @return
    */
   public StringTemplate nl() {
-    this._stringTemplate.append(NL);
+    this._stringTemplate.append(Utilities.NL);
     return this;
 
   }

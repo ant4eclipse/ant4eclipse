@@ -12,6 +12,7 @@
 package org.ant4eclipse.jdt.internal.model.jre;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.ExtendedProperties;
 import org.ant4eclipse.core.util.ManifestHelper;
 import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
@@ -20,7 +21,6 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -59,7 +59,7 @@ public class JavaProfileImpl implements JavaProfile {
   private static final String PROPERTY_PROFILE_NAME           = "osgi.java.profile.name";
 
   /** the java profile properties */
-  private Map<String, String> _properties;
+  private ExtendedProperties  _properties;
 
   /** the list of system packages */
   private List<String>        _systemPackagesList             = new LinkedList<String>();
@@ -72,7 +72,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * @param properties
    */
-  public JavaProfileImpl(Map<String, String> properties) {
+  public JavaProfileImpl(ExtendedProperties properties) {
     Assert.notNull(properties);
 
     this._properties = properties;
@@ -125,7 +125,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
-  public Map<String, String> getProperties() {
+  public ExtendedProperties getProperties() {
     return this._properties;
   }
 

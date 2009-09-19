@@ -18,7 +18,6 @@ import org.ant4eclipse.core.logging.A4ELogging;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -33,11 +32,9 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
@@ -493,24 +490,8 @@ public class Utilities {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public static final Map<String, String> readProperties(URL resource) {
-    InputStream instream = null;
-    Map<String, String> result = null;
-    try {
-      instream = resource.openStream();
-      result = readProperties(instream);
-    } catch (Ant4EclipseException ex) {
-      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
-        throw new Ant4EclipseException(ex.getCause(), CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm());
-      } else {
-        throw ex;
-      }
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm());
-    } finally {
-      close(instream);
-    }
-    return result;
+  public static final ExtendedProperties readProperties(URL resource) {
+    return new ExtendedProperties(resource);
   }
 
   /**
@@ -524,25 +505,8 @@ public class Utilities {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#FILEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public static final Map<String, String> readProperties(File propertiesFile) {
-    FileInputStream fis = null;
-    Map<String, String> result = null;
-    try {
-      fis = new FileInputStream(propertiesFile);
-      result = readProperties(fis);
-      A4ELogging.debug("Read settings from '%s'", propertiesFile.getAbsolutePath());
-    } catch (Ant4EclipseException ex) {
-      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
-        throw new Ant4EclipseException(ex.getCause(), CoreExceptionCode.FILEIO_FAILURE, propertiesFile);
-      } else {
-        throw ex;
-      }
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, propertiesFile);
-    } finally {
-      close(fis);
-    }
-    return result;
+  public static final ExtendedProperties readProperties(File propertiesFile) {
+    return new ExtendedProperties(propertiesFile);
   }
 
   /**
@@ -556,20 +520,8 @@ public class Utilities {
    * @throws Ant4EclipseException
    *           with {@link CoreExceptionCode#IO_FAILURE} in case there was an io error on the stream.
    */
-  public static final Map<String, String> readProperties(InputStream instream) {
-    Map<String, String> result = new Hashtable<String, String>();
-    if (instream != null) {
-      Properties properties = new Properties();
-      try {
-        properties.load(instream);
-      } catch (IOException ex) {
-        throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
-      }
-      for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-        result.put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
-    return result;
+  public static final ExtendedProperties readProperties(InputStream instream) {
+    return new ExtendedProperties(instream);
   }
 
   /**
@@ -585,12 +537,8 @@ public class Utilities {
    *           {@link CoreExceptionCode#RESOURCE_NOT_ON_THE_CLASSPATH} if the resource is not located within the
    *           classpath in the first place.
    */
-  public static final Map<String, String> readProperties(String classpath) {
-    URL resource = Utilities.class.getResource(classpath);
-    if (resource == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, classpath);
-    }
-    return readProperties(resource);
+  public static final ExtendedProperties readProperties(String classpath) {
+    return new ExtendedProperties(classpath);
   }
 
   /**

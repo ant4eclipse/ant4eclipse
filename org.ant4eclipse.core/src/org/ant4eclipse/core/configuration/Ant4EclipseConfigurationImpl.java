@@ -1,12 +1,11 @@
 package org.ant4eclipse.core.configuration;
 
+import org.ant4eclipse.core.util.ExtendedProperties;
 import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,10 +22,10 @@ import java.util.Set;
 public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
   /** the path of ant4eclipse configurations */
-  public static final String  A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
+  public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
 
   /** <b>All</b> configuration properties */
-  private Map<String, String> _properties;
+  private ExtendedProperties _properties;
 
   /**
    * <p>
@@ -36,7 +35,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * @param properties
    *          The backing properties
    */
-  public Ant4EclipseConfigurationImpl(Map<String, String> properties) {
+  public Ant4EclipseConfigurationImpl(ExtendedProperties properties) {
     if (properties == null) {
       throw new IllegalArgumentException("Parameter 'properties' must not be null ");
     }
@@ -124,12 +123,12 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * 
    * @return A Property object containing all loaded properties
    */
-  private Map<String, String> loadConfigurationProperties() {
+  private ExtendedProperties loadConfigurationProperties() {
     Enumeration<URL> propertyFiles = getPropertyFiles();
-    Map<String, String> allProperties = new Hashtable<String, String>();
+    ExtendedProperties allProperties = new ExtendedProperties();
     while (propertyFiles.hasMoreElements()) {
       URL url = propertyFiles.nextElement();
-      allProperties.putAll(Utilities.readProperties(url));
+      allProperties.extendProperties(url);
     }
     return allProperties;
   }

@@ -12,14 +12,13 @@
 package org.ant4eclipse.platform.internal.model.resource.variable;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.ExtendedProperties;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 
 import java.io.File;
 import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -32,7 +31,7 @@ import java.util.Vector;
 public class EclipseVariableResolverImpl implements EclipseVariableResolver {
 
   /** a mapping for the eclipse variables */
-  private Map<String, String> _eclipsevariables = new Hashtable<String, String>();
+  private ExtendedProperties _eclipsevariables = new ExtendedProperties();
 
   /**
    * {@inheritDoc}
@@ -69,11 +68,11 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final String resolveEclipseVariables(String string, EclipseProject project, Map<String, String> otherProperties) {
+  public final String resolveEclipseVariables(String string, EclipseProject project, ExtendedProperties otherProperties) {
     Assert.notNull(string);
     // Assert.notNull(project);
     // resolve Eclipse variables
-    Map<String, String> eclipseVariables = getEclipseVariables(project);
+    ExtendedProperties eclipseVariables = getEclipseVariables(project);
 
     // overwrite "default" values for eclipse variables with values as specified in otherProperties
     if (otherProperties != null) {
@@ -88,15 +87,15 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
   /**
    * {@inheritDoc}
    */
-  public final Map<String, String> getEclipseVariables() {
+  public final ExtendedProperties getEclipseVariables() {
     return (getEclipseVariables(null));
   }
 
   /**
    * {@inheritDoc}
    */
-  public final Map<String, String> getEclipseVariables(EclipseProject project) {
-    Map<String, String> eclipseVariables = new Hashtable<String, String>();
+  public final ExtendedProperties getEclipseVariables(EclipseProject project) {
+    ExtendedProperties eclipseVariables = new ExtendedProperties();
     eclipseVariables.putAll(this._eclipsevariables);
     if (project != null) {
       eclipseVariables.put("build_project", project.getFolder().getAbsolutePath());
@@ -119,7 +118,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * @param properties
    * @return
    */
-  private final String resolveProperties(String value, Map<String, String> properties) {
+  private final String resolveProperties(String value, ExtendedProperties properties) {
 
     Vector<String> fragments = new Vector<String>();
     Vector<String> propertyRefs = new Vector<String>();

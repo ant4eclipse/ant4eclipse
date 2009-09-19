@@ -1,5 +1,7 @@
 package org.ant4eclipse.platform.ant.core;
 
+import org.ant4eclipse.core.util.ExtendedProperties;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import java.util.Map;
 public final class MacroExecutionValues {
 
   /** the properties */
-  private Map<String, String> properties;
+  private ExtendedProperties  properties;
 
   /** the references */
   private Map<String, Object> references;
@@ -25,7 +27,7 @@ public final class MacroExecutionValues {
    */
   public MacroExecutionValues() {
     // create properties map
-    this.properties = new HashMap<String, String>();
+    this.properties = new ExtendedProperties();
     // create references map
     this.references = new HashMap<String, Object>();
   }
@@ -37,7 +39,7 @@ public final class MacroExecutionValues {
    * 
    * @return the map with all properties.
    */
-  public Map<String, String> getProperties() {
+  public ExtendedProperties getProperties() {
     return this.properties;
   }
 
