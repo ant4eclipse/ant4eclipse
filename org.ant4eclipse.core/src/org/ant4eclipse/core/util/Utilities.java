@@ -18,6 +18,7 @@ import org.ant4eclipse.core.logging.A4ELogging;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -67,6 +69,115 @@ public class Utilities {
    */
   private Utilities() {
     // Prevent instantiation of this class.
+  }
+
+  /**
+   * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
+   * newlines (@see {@link #NL} unless requested otherwise.
+   * 
+   * @param resource
+   *          The resource providing the text content. Must be located on the classpath.
+   * @param encoding
+   *          The encoding to be used for the file. Neither <code>null</code> nor empty.
+   * @param includenewlines
+   *          <code>true</code> <=> Allow newlines or remove them otherwise.
+   * 
+   * @return The buffer containing the file content. Not <code>null</code>.
+   */
+  public static final StringBuffer readTextContent(String resource, String encoding, boolean includenewlines) {
+    URL url = Utilities.class.getResource(resource);
+    if (url == null) {
+      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
+    }
+    return readTextContent(url, encoding, includenewlines);
+  }
+
+  /**
+   * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
+   * newlines (@see {@link #NL} unless requested otherwise.
+   * 
+   * @param input
+   *          The file providing the text content. Must be a valid file.
+   * @param encoding
+   *          The encoding to be used for the file. Neither <code>null</code> nor empty.
+   * @param includenewlines
+   *          <code>true</code> <=> Allow newlines or remove them otherwise.
+   * 
+   * @return The buffer containing the file content. Not <code>null</code>.
+   */
+  public static final StringBuffer readTextContent(File input, String encoding, boolean includenewlines) {
+    InputStream instream = null;
+    try {
+      instream = new FileInputStream(input);
+      return readTextContent(instream, encoding, includenewlines);
+    } catch (Ant4EclipseException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, input);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, input);
+    } finally {
+      close(instream);
+    }
+  }
+
+  /**
+   * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
+   * newlines (@see {@link #NL} unless requested otherwise.
+   * 
+   * @param input
+   *          The resource providing the text content. Must be a valid resource.
+   * @param encoding
+   *          The encoding to be used for the file. Neither <code>null</code> nor empty.
+   * @param includenewlines
+   *          <code>true</code> <=> Allow newlines or remove them otherwise.
+   * 
+   * @return The buffer containing the file content. Not <code>null</code>.
+   */
+  public static final StringBuffer readTextContent(URL input, String encoding, boolean includenewlines) {
+    InputStream instream = null;
+    try {
+      instream = input.openStream();
+      return readTextContent(instream, encoding, includenewlines);
+    } catch (Ant4EclipseException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, input.toExternalForm());
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, input.toExternalForm());
+    } finally {
+      close(instream);
+    }
+  }
+
+  /**
+   * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
+   * newlines (@see {@link #NL} unless requested otherwise.
+   * 
+   * @param input
+   *          The stream providing the text content. Not <code>null</code>.
+   * @param encoding
+   *          The encoding to be used for the file. Neither <code>null</code> nor empty.
+   * @param includenewlines
+   *          <code>true</code> <=> Allow newlines or remove them otherwise.
+   * 
+   * @return The buffer containing the file content. Not <code>null</code>.
+   */
+  public static final StringBuffer readTextContent(InputStream input, String encoding, boolean includenewlines) {
+    try {
+      StringBuffer result = new StringBuffer();
+      OutputCopier copier = new OutputCopier(input, result, encoding);
+      copier.start();
+      copier.join();
+      if (!includenewlines) {
+        int pos = result.indexOf(NL);
+        while (pos != -1) {
+          result.delete(pos, pos + NL.length());
+          pos = result.indexOf(NL);
+        }
+      }
+      return result;
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+    } catch (InterruptedException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, input);
+    }
   }
 
   /**
@@ -796,8 +907,34 @@ public class Utilities {
     } catch (IOException ex) {
       throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
     } finally {
-      Utilities.close(writer);
-      Utilities.close(output);
+      close(writer);
+      close(output);
+    }
+  }
+
+  /**
+   * This function stores a file under a specified location using the supplied data.
+   * 
+   * @param destination
+   *          The destination where the file has to be written to. Not <code>null</code>.
+   * @param content
+   *          The content that has to be written. Not <code>null</code>.
+   */
+  public static final void writeFile(File destination, byte[] content) {
+    Assert.notNull(destination);
+    Assert.notNull(content);
+    OutputStream output = null;
+    try {
+      // check if the file can be written
+      if (destination.exists() && (!destination.canWrite())) {
+        throw new RuntimeException("Could not create file: " + destination);
+      }
+      output = new FileOutputStream(destination);
+      output.write(content);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, destination);
+    } finally {
+      close(output);
     }
   }
 
@@ -973,8 +1110,8 @@ public class Utilities {
       }
 
       Process process = Runtime.getRuntime().exec(cmdarray);
-      OutputCopier outcopier = new OutputCopier(process.getInputStream(), output);
-      OutputCopier errcopier = new OutputCopier(process.getErrorStream(), error);
+      OutputCopier outcopier = new OutputCopier(process.getInputStream(), output, ENCODING);
+      OutputCopier errcopier = new OutputCopier(process.getErrorStream(), error, ENCODING);
       outcopier.start();
       errcopier.start();
       int result = process.waitFor();
@@ -1007,9 +1144,11 @@ public class Utilities {
      *          The stream which provides the content. Not <code>null</code>.
      * @param dest
      *          The destination buffer used to get the output. Not <code>null</code>.
+     * @param encoding
+     *          The encoding to be used while accessing the strem. Not <code>null</code>.
      */
-    public OutputCopier(InputStream instream, StringBuffer dest) {
-      this._source = new BufferedReader(new InputStreamReader(instream));
+    public OutputCopier(InputStream instream, StringBuffer dest, String encoding) throws UnsupportedEncodingException {
+      this._source = new BufferedReader(new InputStreamReader(instream, encoding));
       this._receiver = dest;
     }
 

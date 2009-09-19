@@ -21,9 +21,7 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -71,12 +69,7 @@ public class JavaRuntimeLoader {
     StringBuffer contents = new StringBuffer();
     try {
       File file = new File(outfileName);
-      BufferedReader in = new BufferedReader(new FileReader(file));
-      String str;
-      while ((str = in.readLine()) != null) {
-        contents.append(str);
-      }
-      Utilities.close(in);
+      contents = Utilities.readTextContent(file, Utilities.ENCODING, false);
       file.deleteOnExit();
     } catch (Throwable e) {
       e.printStackTrace();

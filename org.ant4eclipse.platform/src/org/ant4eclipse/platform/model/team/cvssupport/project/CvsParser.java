@@ -19,10 +19,7 @@ import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * <p>
@@ -112,19 +109,11 @@ public class CvsParser {
    */
   private static String readFile(File file) throws Ant4EclipseException {
     StringBuffer buffy = new StringBuffer();
-
     try {
-      BufferedReader in = new BufferedReader(new FileReader(file));
-      String str;
-
-      while ((str = in.readLine()) != null) {
-        buffy.append(str);
-      }
-      Utilities.close(in);
-    } catch (IOException e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e.toString());
+      buffy = Utilities.readTextContent(file, Utilities.ENCODING, false);
+    } catch (Ant4EclipseException e) {
+      throw new Ant4EclipseException(e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e.toString());
     }
-
     return buffy.toString();
   }
 

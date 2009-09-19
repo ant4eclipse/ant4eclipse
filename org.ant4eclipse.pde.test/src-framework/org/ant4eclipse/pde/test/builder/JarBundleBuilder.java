@@ -129,13 +129,7 @@ public class JarBundleBuilder {
 
         // Write file to archive
         FileInputStream in = new FileInputStream(tobeJared[i]);
-        while (true) {
-          int nRead = in.read(buffer, 0, buffer.length);
-          if (nRead <= 0) {
-            break;
-          }
-          out.write(buffer, 0, nRead);
-        }
+        Utilities.copy(in, out, buffer);
         Utilities.close(in);
       }
       Utilities.close(out);

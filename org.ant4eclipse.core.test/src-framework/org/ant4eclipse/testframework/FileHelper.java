@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import static java.lang.String.format;
-
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.StringMap;
@@ -25,10 +23,8 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
@@ -96,15 +92,7 @@ public class FileHelper {
       fileOut.delete();
     }
 
-    try {
-      FileOutputStream fout = new FileOutputStream(fileOut);
-      fout.write(content);
-      Utilities.close(fout);
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    Utilities.writeFile(fileOut, content);
 
     // System.out.println("Created file " + directoryName + "\\" + fileName);
   }
@@ -128,25 +116,12 @@ public class FileHelper {
    *           if an error occurs during creation.
    */
   public static final void createFile(String directoryName, String fileName, ByteArrayOutputStream byteStream) {
-
     File fileOut = new File(directoryName + File.separator + fileName);
-
     fileOut.mkdirs();
-
     if (fileOut.exists()) {
       fileOut.delete();
     }
-
-    try {
-      FileOutputStream fout = new FileOutputStream(fileOut);
-      byteStream.writeTo(fout);
-      Utilities.close(fout);
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
-
+    Utilities.writeFile(fileOut, byteStream.toByteArray());
   }
 
   /**
@@ -185,25 +160,8 @@ public class FileHelper {
    *           if the file not exits or if an I/O error occurs.
    */
   public static final String getResource(String resourceName) {
-
-    InputStream inputStream = FileHelper.class.getResourceAsStream("/" + resourceName);
-    if (inputStream == null) {
-      throw new RuntimeException(format("Resource '%s' not found on classpath!", resourceName));
-    }
-
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    try {
-      int b;
-      while ((b = inputStream.read()) != -1) {
-        out.write(b);
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    } finally {
-      Utilities.close(out);
-      Utilities.close(inputStream);
-    }
-    return out.toString();
+    StringBuffer buffer = Utilities.readTextContent("/" + resourceName, Utilities.ENCODING, true);
+    return buffer.toString();
   }
 
   /**

@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 
@@ -20,8 +21,6 @@ import org.eclipse.jdt.internal.compiler.CompilationResult;
 import org.eclipse.jdt.internal.compiler.ICompilerRequestor;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,22 +71,16 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
             classFileName.append('/');
           }
         }
+        classFileName.append(".class");
+        File classFile = new File(destinationDirectory, classFileName.toString());
+        File classDir = classFile.getParentFile();
+        if (!classDir.exists()) {
+          classDir.mkdirs();
+        }
         try {
-          classFileName.append(".class");
-          File classFile = new File(destinationDirectory, classFileName.toString());
-          File classDir = classFile.getParentFile();
-          if (!classDir.exists()) {
-            classDir.mkdirs();
-          }
           A4ELogging.debug("writing class file: '%s'", classFile);
-          if (!classFile.exists()) {
-            classFile.createNewFile();
-          }
-
-          FileOutputStream fileOutputStream = new FileOutputStream(classFile);
-          fileOutputStream.write(classFile2.getBytes());
-          Utilities.close(fileOutputStream);
-        } catch (IOException ioe) {
+          Utilities.writeFile(classFile, classFile2.getBytes());
+        } catch (Ant4EclipseException ioe) {
           A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(), ioe.toString());
           ioe.printStackTrace();
           this._compilationSuccessful = false;
