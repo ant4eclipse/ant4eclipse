@@ -13,6 +13,9 @@ package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
 import org.ant4eclipse.core.Assert;
 
+import org.ant4eclipse.jdt.ecj.ClassFile;
+import org.ant4eclipse.jdt.ecj.internal.tools.DefaultReferableType;
+
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFormatException;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
@@ -25,7 +28,7 @@ import java.util.zip.ZipFile;
  * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
-public class JarClassFileImpl extends AbstractClassFileImpl {
+public class JarClassFileImpl extends DefaultReferableType implements ClassFile {
 
   /** the zip file */
   private ZipFile _zipFile;

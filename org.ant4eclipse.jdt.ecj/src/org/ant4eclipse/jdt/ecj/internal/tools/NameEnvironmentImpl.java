@@ -17,6 +17,7 @@ import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.jdt.ecj.SourceFile;
 
 import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
@@ -49,21 +50,21 @@ public class NameEnvironmentImpl implements INameEnvironment {
   }
 
   /**
-   * {@inheritDoc}
+   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#cleanup()
    */
   public void cleanup() {
     // nothing to do here...
   }
 
   /**
-   * {@inheritDoc}
+   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[][])
    */
   public NameEnvironmentAnswer findType(char[][] compoundTypeName) {
 
     // convert char array to string(buffer)
     StringBuffer buffer = new StringBuffer();
     for (int i = 0; i < compoundTypeName.length; i++) {
-      buffer.append(compoundTypeName[i]);
+      buffer.append(new String(compoundTypeName[i]));
       if (i < compoundTypeName.length - 1) {
         buffer.append(".");
       }
@@ -76,18 +77,21 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
   }
 
-  /**
-   * {@inheritDoc}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[], char[][])
    */
   public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
-    A4ELogging.trace("findType('%s', %s)", String.valueOf(typeName), asString(packageName));
+    A4ELogging.trace("findType('%s', %s)", new String(typeName), asString(packageName));
+
     StringBuffer result = new StringBuffer();
     if (packageName != null) {
       for (char[] element : packageName) {
-        result.append(element).append(".");
+        result.append(new String(element)).append(".");
       }
     }
-    result.append(typeName);
+    result.append(new String(typeName));
 
     return findClass(result.toString());
   }
@@ -103,13 +107,13 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#isPackage(char[][], char[])
    */
   public boolean isPackage(char[][] parentPackageName, char[] packageName) {
-    A4ELogging.trace("isPackage('%s', %s)", asString(parentPackageName), String.valueOf(packageName));
+    A4ELogging.trace("isPackage('%s', %s)", asString(parentPackageName), new String(packageName));
 
     String qualifiedPackageName = toJavaName(parentPackageName);
     if (qualifiedPackageName.length() > 0) {
-      qualifiedPackageName += "." + String.valueOf(packageName);
+      qualifiedPackageName += "." + new String(packageName);
     } else {
-      qualifiedPackageName = String.valueOf(packageName);
+      qualifiedPackageName = new String(packageName);
     }
 
     // this is a three-step check in order to gain performance resp. to avoid
@@ -117,7 +121,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
 
-    A4ELogging.trace("isPackage - package '%s' found: %s'", qualifiedPackageName, "" + packageFound);
+    A4ELogging.trace("isPackage - package '%s' found: %s'", new Object[] { qualifiedPackageName, "" + packageFound });
 
     return packageFound;
   }
@@ -151,6 +155,16 @@ public class NameEnvironmentImpl implements INameEnvironment {
           .getAccessRestriction() : null));
     }
 
+    // load source file from class file loader
+    // TODO: AccessRestictions for source files!!
+    SourceFile sourceFile = this._classFileLoader.loadSource(className);
+
+    // load source file from class file loader
+    if (sourceFile != null) {
+      // TODO: AccessRestictions for source files!!
+      return new NameEnvironmentAnswer(new CompilationUnitImpl(sourceFile), null);
+    }
+
     // else return null
     return null;
   }
@@ -169,7 +183,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     if (array != null) {
       for (int i = 0; i < array.length; i++) {
-        result.append(array[i]);
+        result.append(new String(array[i]));
         if (i < array.length - 1) {
           result.append(".");
         }
@@ -193,7 +207,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
     // compute result
     if (array != null) {
       for (int i = 0; i < array.length; i++) {
-        result.append("{").append(array[i]).append("}");
+        result.append("{").append(new String(array[i])).append("}");
         if (i < array.length - 1) {
           result.append(",");
         }

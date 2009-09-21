@@ -16,6 +16,7 @@ import org.ant4eclipse.core.ClassName;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -64,6 +65,29 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
       }
     }
 
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public ReferableSourceFile loadSource(ClassName className) {
+
+    // if the package name is not in the map of all packages, return immediately
+    List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
+    if (classFileLoaderList == null) {
+      return null;
+    }
+
+    // search for the source file
+    for (ClassFileLoader classFileLoader : classFileLoaderList) {
+      ReferableSourceFile sourceFile = classFileLoader.loadSource(className);
+      if (sourceFile != null) {
+        return sourceFile;
+      }
+    }
+
+    // last resort: return null
     return null;
   }
 

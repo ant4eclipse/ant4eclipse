@@ -183,7 +183,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
           : defaultDestinationFolder;
 
       // add the new source file
-      sourceFiles.add(new SourceFile(sourceFolder, sourceFileName, destinationFolder, getDefaultEncoding()));
+      sourceFiles.add(SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder,
+          getDefaultEncoding()));
     }
 
     // return the result

@@ -12,7 +12,6 @@
 package org.ant4eclipse.jdt.ant;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.StringMap;
 
 import java.io.File;
 import java.util.HashMap;
@@ -39,9 +38,6 @@ public class EcjAdditionalCompilerArguments {
 
   /** maps class path entries to access restrictions */
   private Map<File, String> _accessRestrictions;
-
-  /** the compiler options */
-  private StringMap         _compilerOptions;
 
   /** the boot class path access restrictions */
   private String            _bootClassPathAccessRestrictions;
@@ -124,28 +120,6 @@ public class EcjAdditionalCompilerArguments {
 
   /**
    * <p>
-   * Returns the compiler options.
-   * </p>
-   * 
-   * @return the compilerOptions
-   */
-  public StringMap getCompilerOptions() {
-    return this._compilerOptions;
-  }
-
-  /**
-   * <p>
-   * Returns <code>true</code> if the arguments contain compiler options.
-   * </p>
-   * 
-   * @return <code>true</code> if the arguments contain compiler options.
-   */
-  public boolean hasCompilerOptions() {
-    return this._compilerOptions != null;
-  }
-
-  /**
-   * <p>
    * Adds an access restriction for the given class path entry.
    * </p>
    * 
@@ -184,17 +158,5 @@ public class EcjAdditionalCompilerArguments {
    */
   public void addSourceFolder(File sourceFolder, File outputFolder) {
     this._outputFolderMap.put(sourceFolder, outputFolder);
-  }
-
-  /**
-   * <p>
-   * Adds the compiler options to the {@link EcjAdditionalCompilerArguments}.
-   * </p>
-   * 
-   * @param compilerOptions
-   *          the compiler options.
-   */
-  public void addCompilerOptions(StringMap compilerOptions) {
-    this._compilerOptions = compilerOptions;
   }
 }

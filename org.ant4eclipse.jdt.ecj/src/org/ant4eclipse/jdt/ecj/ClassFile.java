@@ -23,26 +23,7 @@ import org.eclipse.jdt.internal.compiler.env.IBinaryType;
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public interface ClassFile {
-
-  /**
-   * <p>
-   * Returns the type of the bundle this class file was loaded from. Possible values are {@link EcjAdapter#LIBRARY} and
-   * {@link EcjAdapter#PROJECT}.
-   * </p>
-   * 
-   * @return the type of the bundle this class file was loaded from.
-   */
-  byte getLibraryType();
-
-  /**
-   * <p>
-   * Returns of location of the bundle this class file was loaded from.
-   * </p>
-   * 
-   * @return the location of the bundle this class file was loaded from.
-   */
-  String getLibraryLocation();
+public interface ClassFile extends ReferableType {
 
   /**
    * <p>
@@ -52,22 +33,4 @@ public interface ClassFile {
    * @return this class file as an {@link IBinaryType}.
    */
   IBinaryType getBinaryType();
-
-  /**
-   * <p>
-   * Returns whether there exists an access restriction for this class file or not.
-   * </p>
-   * 
-   * @return whether there exists an access restriction for this class file or not.
-   */
-  boolean hasAccessRestriction();
-
-  /**
-   * <p>
-   * Returns the access restriction for this class file or <code>null</code> if no access restriction exists.
-   * </p>
-   * 
-   * @return the access restriction for this class file or <code>null</code> if no access restriction exists.
-   */
-  AccessRestriction getAccessRestriction();
 }

@@ -56,4 +56,17 @@ public interface ClassFileLoader {
    *         is not available.
    */
   ClassFile loadClass(ClassName className);
+
+  /**
+   * <p>
+   * Returns an instance of type {@link SourceFile} that is the source file for the specified class or <code>null</code>
+   * if no such source can be found.
+   * </p>
+   * 
+   * @param className
+   *          The class name of the class that should be loaded.
+   * @return an instance of type {@link SourceFile} that is the source file for the specified class or <code>null</code>
+   *         if no such source can be found.
+   */
+  ReferableSourceFile loadSource(ClassName className);
 }

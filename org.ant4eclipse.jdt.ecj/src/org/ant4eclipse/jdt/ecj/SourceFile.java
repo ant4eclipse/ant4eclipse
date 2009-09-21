@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.Assert;
-
 import java.io.File;
 
 /**
@@ -22,64 +20,7 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class SourceFile {
-
-  /** the constant FILE_ENCODING_SYSTEM_PROPERTY */
-  private static final String FILE_ENCODING_SYSTEM_PROPERTY = "file.encoding";
-
-  /** the folder that contains the source file */
-  private File                _sourceFolder;
-
-  /** the name of the source file */
-  private String              _sourceFileName;
-
-  /** the destination folder */
-  private File                _destinationFolder;
-
-  /** the file encoding */
-  private String              _encoding;
-
-  /**
-   * <p>
-   * Creates a new instance of type {@link SourceFile}.
-   * </p>
-   * 
-   * @param sourceFolder
-   *          the folder that contains the source file
-   * @param sourceFileName
-   *          the name of the source file
-   * @param destinationFolder
-   *          the destination folder
-   * @param encoding
-   *          the file encoding
-   */
-  public SourceFile(File sourceFolder, String sourceFileName, File destinationFolder, String encoding) {
-    Assert.isDirectory(sourceFolder);
-    Assert.nonEmpty(sourceFileName);
-    Assert.isDirectory(destinationFolder);
-    Assert.nonEmpty(encoding);
-
-    this._destinationFolder = destinationFolder;
-    this._encoding = encoding;
-    this._sourceFileName = sourceFileName;
-    this._sourceFolder = sourceFolder;
-  }
-
-  /**
-   * <p>
-   * Creates a new instance of type {@link SourceFile} with the default encoding.
-   * </p>
-   * 
-   * @param sourceFolder
-   *          the folder that contains the source file
-   * @param sourceFileName
-   *          the name of the source file
-   * @param destinationFolder
-   *          the destination folder
-   */
-  public SourceFile(File sourceFolder, String sourceFileName, File destinationFolder) {
-    this(sourceFolder, sourceFileName, destinationFolder, System.getProperty(FILE_ENCODING_SYSTEM_PROPERTY));
-  }
+public interface SourceFile {
 
   /**
    * <p>
@@ -88,9 +29,7 @@ public class SourceFile {
    * 
    * @return the source folder.
    */
-  public File getSourceFolder() {
-    return this._sourceFolder;
-  }
+  File getSourceFolder();
 
   /**
    * <p>
@@ -99,9 +38,7 @@ public class SourceFile {
    * 
    * @return the source file name.
    */
-  public String getSourceFileName() {
-    return this._sourceFileName;
-  }
+  String getSourceFileName();
 
   /**
    * <p>
@@ -110,9 +47,7 @@ public class SourceFile {
    * 
    * @return the source file.
    */
-  public File getSourceFile() {
-    return new File(this._sourceFolder, this._sourceFileName);
-  }
+  File getSourceFile();
 
   /**
    * <p>
@@ -121,9 +56,7 @@ public class SourceFile {
    * 
    * @return the destination folder.
    */
-  public File getDestinationFolder() {
-    return this._destinationFolder;
-  }
+  File getDestinationFolder();
 
   /**
    * <p>
@@ -132,27 +65,5 @@ public class SourceFile {
    * 
    * @return the file encoding.
    */
-  public String getEncoding() {
-    return this._encoding;
-  }
-
-  /**
-   *
-   */
-  @Override
-  public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append("[SourceFile:");
-    buffer.append(" _sourceFolder: ");
-    buffer.append(this._sourceFolder);
-    buffer.append(" _sourceFileName: ");
-    buffer.append(this._sourceFileName);
-    buffer.append(" _destinationFolder: ");
-    buffer.append(this._destinationFolder);
-    buffer.append(" _encoding: ");
-    buffer.append(this._encoding);
-    buffer.append("]");
-    return buffer.toString();
-  }
-
+  String getEncoding();
 }

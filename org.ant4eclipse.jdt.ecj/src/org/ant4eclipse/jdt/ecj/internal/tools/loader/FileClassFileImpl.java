@@ -13,17 +13,20 @@ package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
 import org.ant4eclipse.core.Assert;
 
+import org.ant4eclipse.jdt.ecj.ClassFile;
+import org.ant4eclipse.jdt.ecj.internal.tools.DefaultReferableType;
+
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
 
 import java.io.File;
 
 /**
- * DefaultClassFile --
+ * FileClassFileImpl --
  * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
-public class FileClassFileImpl extends AbstractClassFileImpl {
+public class FileClassFileImpl extends DefaultReferableType implements ClassFile {
 
   /** the class file */
   private File _classfile;

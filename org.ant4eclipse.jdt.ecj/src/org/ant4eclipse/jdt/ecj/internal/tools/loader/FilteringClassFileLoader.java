@@ -15,7 +15,9 @@ import org.ant4eclipse.core.ClassName;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
-import org.ant4eclipse.jdt.ecj.internal.tools.ModifiableClassFile;
+import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
+import org.ant4eclipse.jdt.ecj.ReferableType;
+import org.ant4eclipse.jdt.ecj.internal.tools.DefaultReferableType;
 
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
@@ -85,29 +87,56 @@ public class FilteringClassFileLoader implements ClassFileLoader {
 
     ClassFile result = this._classFileLoader.loadClass(className);
 
+    setAccessRestrictions(result, className);
+
+    return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public ReferableSourceFile loadSource(ClassName className) {
+
+    ReferableSourceFile result = this._classFileLoader.loadSource(className);
+
+    setAccessRestrictions(result, className);
+
+    return result;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param referableType
+   * @return
+   */
+  private ReferableType setAccessRestrictions(ReferableType referableType, ClassName className) {
+
     String classFileName = className.asClassFileName();
 
     for (String includePattern : this._includes) {
       if (classFileName.matches(includePattern)) {
-        return result;
+        return referableType;
       }
     }
 
     for (String exludePattern : this._excludes) {
       if (classFileName.matches(exludePattern)) {
 
-        if (result instanceof ModifiableClassFile) {
-          AccessRestriction accessRestriction = new AccessRestriction(new AccessRule("**".toCharArray(),
-              IProblem.ForbiddenReference), result.getLibraryType(), result.getLibraryLocation());
+        if (referableType instanceof DefaultReferableType) {
 
-          ((ModifiableClassFile) result).setAccessRestriction(accessRestriction);
+          AccessRestriction accessRestriction = new AccessRestriction(new AccessRule("**".toCharArray(),
+              IProblem.ForbiddenReference), referableType.getLibraryType(), referableType.getLibraryLocation());
+
+          ((DefaultReferableType) referableType).setAccessRestriction(accessRestriction);
         }
-        return result;
+        return referableType;
       }
     }
 
     // TODO?? DEFAULT?
-    return result;
+    return referableType;
   }
 
   /**

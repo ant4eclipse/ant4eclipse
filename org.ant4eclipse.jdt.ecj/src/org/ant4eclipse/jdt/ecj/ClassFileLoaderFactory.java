@@ -47,6 +47,15 @@ public class ClassFileLoaderFactory {
     return new ClasspathClassFileLoaderImpl(source, type, classpathEntries);
   }
 
+  public static ClassFileLoader createClasspathClassFileLoader(File source, byte type, File[] classpathEntries,
+      File[] sourcepathEntries) {
+    return new ClasspathClassFileLoaderImpl(source, type, classpathEntries, sourcepathEntries);
+  }
+
+  public static ClassFileLoader createClasspathClassFileLoader(File classPathEntry, byte type, File sourcePathEntry) {
+    return new ClasspathClassFileLoaderImpl(classPathEntry, type, sourcePathEntry);
+  }
+
   /**
    * <p>
    * Creates an new instance of type {@link ClassFileLoader}, that can load {@link ClassFile ClassFiles} from a jar file
