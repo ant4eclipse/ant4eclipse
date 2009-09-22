@@ -28,11 +28,10 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * The BuildPropertiesParser reads and interprets the build.properties file of a Plugin Project.
- * 
  * <p>
- * The build.properties-file is automatically read when an EclipseProject with the {@link PluginProjectRole} is opened.
- * 
+ * The {@link BuildPropertiesParser} reads and interprets the <code>build.properties</code> file of an eclipse plug-in
+ * Project.
+ * </p>
  * <p>
  * The properties can be received from an opened EclipseProject using:
  * 
@@ -41,7 +40,6 @@ import java.util.StringTokenizer;
  *       PluginProjectRole.getPluginProjectRole(eclipseProject).getBuildProperties()
  * </pre>
  * 
- * @see #parsePluginBuildProperties(EclipseProject)
  * @see PluginProjectRole#getBuildProperties()
  */
 public class BuildPropertiesParser {
@@ -135,16 +133,16 @@ public class BuildPropertiesParser {
 
         Library library = new Library(libraryName);
 
-        String[] source = getAsList((String) properties.get("source." + libraryName), ",", true);
+        String[] source = getAsList(properties.get("source." + libraryName), ",", true);
         library.setSource(source);
 
-        String[] output = getAsList((String) properties.get("output." + libraryName), ",", true);
+        String[] output = getAsList(properties.get("output." + libraryName), ",", true);
         library.setOutput(output);
 
-        String manifest = (String) properties.get("manifest." + libraryName);
+        String manifest = properties.get("manifest." + libraryName);
         library.setManifest(manifest);
 
-        String exclude = (String) properties.get("exclude." + libraryName);
+        String exclude = properties.get("exclude." + libraryName);
         library.setExclude(exclude);
 
         buildProperties.addLibrary(library);
@@ -162,7 +160,7 @@ public class BuildPropertiesParser {
     Assert.notNull(abstractBuildProperties);
 
     // set qualifier
-    abstractBuildProperties.setQualifier((String) allProperties.get("qualifier"));
+    abstractBuildProperties.setQualifier(allProperties.get("qualifier"));
 
     // set custom
     abstractBuildProperties.setCustom(Boolean.valueOf(allProperties.get("custom", "false")).booleanValue());

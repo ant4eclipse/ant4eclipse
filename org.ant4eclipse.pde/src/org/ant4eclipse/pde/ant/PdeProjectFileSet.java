@@ -14,7 +14,8 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.logging.A4ELogging;
 
-import org.ant4eclipse.pde.internal.ant.LibraryHelper;
+import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
+import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
@@ -35,7 +36,6 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * <p>
@@ -47,9 +47,6 @@ import java.util.StringTokenizer;
 public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection,
     EclipseProjectComponent {
 
-  /** the separator for inclusion and exclusion pattern */
-  private static final String    SEPARATOR              = ",";
-
   /** the bundle root (self) */
   private static final String    SELF                   = ".";
 
@@ -58,25 +55,16 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
   /** 'ant-provided' attributes **/
 
-  /** the ant attribute 'includes' */
-  private String                 _includes;
-
-  /** the ant attribute 'excludes' */
-  private String                 _excludes;
-
   /** the ant attribute 'useDefaultExcludes' */
   private boolean                _useDefaultExcludes    = true;
 
   /** the ant attribute 'caseSensitive' */
   private boolean                _caseSensitive         = false;
 
-  /** the ant attribute 'isSourceFileSet' */
-  private boolean                _isSourceFileSet       = false;
+  /** the ant attribute 'excludeLibraries' */
+  private boolean                _excludeLibraries      = false;
 
   /** 'derived' attributes **/
-
-  /** the exclusion pattern as an array */
-  private String[]               _excludedPattern;
 
   /** the result resource list */
   private List<Resource>         _resourceList;
@@ -86,6 +74,9 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
   /** indicates if the file list already has been computed */
   private boolean                _fileListComputed      = false;
+
+  /** - */
+  private PluginBuildProperties  _pluginBuildProperties;
 
   /**
    * <p>
@@ -106,37 +97,11 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   }
 
   /**
-   * <p>
-   * Returns if this {@link PdeProjectFileSet} is a source file set.
-   * </p>
-   * 
-   * @return if this {@link PdeProjectFileSet} is a source file set.
-   */
-  public boolean isSourceFileSet() {
-    return this._isSourceFileSet;
-  }
-
-  /**
-   * <p>
-   * Sets if this {@link PdeProjectFileSet} is a source file set or not.
-   * </p>
-   * 
-   * @param isSourceFileSet
-   *          if this {@link PdeProjectFileSet} is a source file set or not.
-   */
-  public void setSourceFileSet(boolean isSourceFileSet) {
-    this._isSourceFileSet = isSourceFileSet;
-  }
-
-  /**
    * {@inheritDoc}
    */
   @Override
   public void setRefid(Reference ref) {
-    if (this._includes != null && !"".equals(this._includes)) {
-      throw tooManyAttributes();
-    }
-    if (this._excludes != null && !"".equals(this._excludes)) {
+    if (isWorkspaceDirectorySet() || isProjectNameSet()) {
       throw tooManyAttributes();
     }
 
@@ -145,56 +110,23 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
   /**
    * <p>
-   * Returns the inclusion pattern.
    * </p>
    * 
-   * @return the inclusion pattern.
+   * @return the excludeLibraries
    */
-  public String getIncludes() {
-    return this._includes;
+  public boolean isExcludeLibraries() {
+    return this._excludeLibraries;
   }
 
   /**
    * <p>
-   * Sets the inclusion pattern.
    * </p>
    * 
-   * @param includes
-   *          the inclusion pattern
+   * @param excludeLibraries
+   *          the excludeLibraries to set
    */
-  public void setIncludes(String includes) {
-    if (isReference()) {
-      throw tooManyAttributes();
-    }
-
-    this._includes = includes;
-  }
-
-  /**
-   * <p>
-   * Returns the exclusion pattern.
-   * </p>
-   * 
-   * @return the exclusion pattern.
-   */
-  public String getExcludes() {
-    return this._excludes;
-  }
-
-  /**
-   * <p>
-   * Sets the inclusion pattern.
-   * </p>
-   * 
-   * @param excludes
-   *          the exclusion pattern
-   */
-  public void setExcludes(String excludes) {
-    if (isReference()) {
-      throw tooManyAttributes();
-    }
-
-    this._excludes = excludes;
+  public void setExcludeLibraries(boolean excludeLibraries) {
+    this._excludeLibraries = excludeLibraries;
   }
 
   /**
@@ -397,23 +329,23 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
     // require workspace and project name set
     requireWorkspaceAndProjectNameSet();
+    ensureRole(PluginProjectRole.class);
+
+    // get plug-in project role
+    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+    this._pluginBuildProperties = pluginProjectRole.getBuildProperties();
 
     // nothing to do if no inclusion pattern is defined
-    if (this._includes == null || "".equals(this._includes.trim())) {
+    // TODO: isSource?
+    if (!this._pluginBuildProperties.hasBinaryIncludes()) {
       return;
     }
-
-    // split the exclusion pattern
-    splitExclusionPattern();
 
     // clear the resource list
     this._resourceList.clear();
 
     // iterate over the included pattern set
-    StringTokenizer stringTokenizer = new StringTokenizer(this._includes, SEPARATOR);
-
-    while (stringTokenizer.hasMoreTokens()) {
-      String token = stringTokenizer.nextToken().trim();
+    for (String token : this._pluginBuildProperties.getBinaryIncludes()) {
       processEntry(token);
     }
 
@@ -439,13 +371,14 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    */
   private void processEntry(String token) {
 
+    // if token is a library name and _excludeLibraries
+    if (this._excludeLibraries && this._pluginBuildProperties.hasLibrary(token)) {
+      return;
+    }
+
     // 'patch' the dot
     if (token.equals(SELF)) {
       token = DEFAULT_SELF_DIRECTORY;
-    }
-    // patch the included library if '_isSourceFileSet'
-    else if (this._isSourceFileSet) {
-      token = LibraryHelper.getSourceNameForLibrary(token);
     }
 
     // 'process' the token
@@ -493,25 +426,6 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
   /**
    * <p>
-   * </p>
-   */
-  private void splitExclusionPattern() {
-    if (this._excludes != null && !"".equals(this._excludes.trim())) {
-      StringTokenizer stringTokenizer = new StringTokenizer(this._excludes, SEPARATOR);
-      int count = stringTokenizer.countTokens();
-      this._excludedPattern = new String[count];
-      int i = 0;
-      while (stringTokenizer.hasMoreTokens()) {
-        this._excludedPattern[i] = stringTokenizer.nextToken();
-        i++;
-      }
-    } else {
-      this._excludedPattern = new String[0];
-    }
-  }
-
-  /**
-   * <p>
    * Helper method. Normalizes the given path.
    * </p>
    * 
@@ -545,7 +459,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private boolean matchExcludePattern(String path) {
 
     // iterate over all excluded pattern
-    for (String pattern : this._excludedPattern) {
+    for (String pattern : this._pluginBuildProperties.getBinaryExcludes()) {
 
       // if the given path matches an exclusion pattern, return true
       if (SelectorUtils.matchPath(normalize(pattern), normalize(path), this._caseSensitive)) {

@@ -67,6 +67,9 @@ public interface PdeExecutorValues extends JdtExecutorValues {
   String BUILD_PROPERTIES_BINARY_INCLUDES  = "build.properties.binary.includes";
 
   /** - */
+  String BUILD_LIBRARYSOURCEROOTS          = "build.librarysourceroots";
+
+  /** - */
   String FEATURE_PROVIDERNAME              = "feature.providername";
 
   /** - */

@@ -17,6 +17,7 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -25,11 +26,11 @@ import java.util.Map;
  */
 public class PluginBuildProperties extends AbstractBuildProperties {
 
-  // /** lists files to include in the source build */
-  // private String _srcIncludes;
+  /** lists files to include in the source build */
+  private String               _srcIncludes;
 
-  // /** lists files to exclude from the source build */
-  // private String _srcExcludes;
+  /** lists files to exclude from the source build */
+  private String               _srcExcludes;
 
   /** list of libraries */
   private Map<String, Library> _libraries;
@@ -58,6 +59,30 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    */
   public Library[] getLibraries() {
     return this._libraries.values().toArray(new Library[0]);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public String getLibrariesSourceRoots(String sourcePostfix) {
+
+    StringBuffer buffer = new StringBuffer();
+
+    for (Iterator<Library> iterator = this._libraries.values().iterator(); iterator.hasNext();) {
+      Library library = iterator.next();
+      buffer.append(library.getName());
+      if (!library.isSelf() && sourcePostfix != null) {
+        buffer.append(sourcePostfix);
+      }
+      if (iterator.hasNext()) {
+        buffer.append(",");
+      }
+    }
+
+    return buffer.toString();
   }
 
   /**

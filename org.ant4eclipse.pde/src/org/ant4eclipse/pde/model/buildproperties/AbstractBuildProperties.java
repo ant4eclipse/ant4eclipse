@@ -14,8 +14,10 @@ package org.ant4eclipse.pde.model.buildproperties;
 import org.ant4eclipse.core.Assert;
 
 /**
- * Instances of this class epresents the "common properties" that are used by plugins and features as described in the
- * "Plug-in Development Environment Guide"-Help.
+ * <p>
+ * {@link AbstractBuildProperties} represent the "common properties" that are used within plug-in projects and features
+ * as described in the "Plug-in Development Environment Guide"-Help.
+ * <p>
  * 
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  * @spec Eclipse Help - PDE Guide - "Feature and Plug-in Build Configuration Properties"
@@ -31,20 +33,17 @@ public class AbstractBuildProperties {
   /** NONE_QUALIFIER */
   private static String NONE_QUALIFIER    = "none";
 
-  /**
-   * indicates that the build script is hand-crafted as opposed to automatically generated. Therefore no other value is
-   * consulted.
-   */
+  /** indicates that the build script is hand-crafted as opposed to automatically generated */
   protected boolean     _custom;
 
   /** lists files that will included in the binary version of the plug-in being built */
-  protected String[]    _binIncludes;
+  protected String[]    _binIncludes      = new String[0];
 
   /** lists files to exclude from the binary build */
-  protected String[]    _binExcludes;
+  protected String[]    _binExcludes      = new String[0];
 
   /**
-   * when the element version number ends with .qualifier this indicates by which value ".qualifier" must be replaced.
+   * When the element version number ends with .qualifier this indicates by which value ".qualifier" must be replaced.
    * The value of the property can either be context, &lt;value&gt; or none. Context will generate a date according to
    * the system date, or use the CVS tags when the built is automated. Value is an actual value. None will remove
    * ".qualifier". If the property is omitted, context is used.
@@ -52,27 +51,70 @@ public class AbstractBuildProperties {
   private String        _qualifier        = CONTEXT_QUALIFIER;
 
   /**
-   *
+   * <p>
+   * Creates a new instance of type {@link AbstractBuildProperties}.
+   * </p>
    */
   public AbstractBuildProperties() {
-    //
+    // nothing to do here...
   }
 
   /**
-   * @return
+   * <p>
+   * Returns <code>true</code> if the <code>custom</code> property is set.
+   * </p>
+   * 
+   * @return <code>true</code> if the <code>custom</code> property is set.
    */
   public boolean isCustom() {
     return this._custom;
   }
 
+  /**
+   * <p>
+   * Returns <code>true</code> if the build has binary excludes.
+   * </p>
+   * 
+   * @return <code>true</code> if the build has binary excludes.
+   */
+  public boolean hasBinaryExcludes() {
+    return this._binExcludes != null && this._binExcludes.length > 0;
+  }
+
+  /**
+   * <p>
+   * Returns <code>true</code> if the build has binary includes.
+   * </p>
+   * 
+   * @return <code>true</code> if the build has binary includes.
+   */
+  public boolean hasBinaryIncludes() {
+    return this._binIncludes != null && this._binIncludes.length > 0;
+  }
+
+  /**
+   * <p>
+   * Returns the binary excludes.
+   * </p>
+   * 
+   * @return the binary excludes.
+   */
   public String[] getBinaryExcludes() {
     return this._binExcludes;
   }
 
+  /**
+   * <p>
+   * Returns the binary includes.
+   * </p>
+   * 
+   * @return the binary includes.
+   */
   public String[] getBinaryIncludes() {
     return this._binIncludes;
   }
 
+  // TODO: remove
   public String getBinaryExcludesAsString() {
     StringBuffer buffer = new StringBuffer();
     for (int i = 0; i < this._binExcludes.length; i++) {
@@ -84,6 +126,7 @@ public class AbstractBuildProperties {
     return buffer.toString();
   }
 
+  // TODO: remove
   public String getBinaryIncludesAsString() {
     StringBuffer buffer = new StringBuffer();
     for (int i = 0; i < this._binIncludes.length; i++) {
@@ -96,47 +139,95 @@ public class AbstractBuildProperties {
   }
 
   /**
-   * @return Returns the qualifier.
+   * <p>
+   * Returns the qualifier.
+   * </p>
+   * 
+   * @return the qualifier.
    */
   public String getQualifier() {
     return this._qualifier;
   }
 
   /**
-   * @return
+   * <p>
+   * Returns <code>true</code> if the qualifier is the context qualifier.
+   * </p>
+   * 
+   * @return <code>true</code> if the qualifier is the context qualifier.
    */
   public boolean isContextQualifier() {
     return isContextQualifer(this._qualifier);
   }
 
+  /**
+   * <p>
+   * Returns <code>true</code> if the qualifier is the context qualifier.
+   * </p>
+   * 
+   * @param qualifier
+   *          the qualifier
+   * @return <code>true</code> if the qualifier is the context qualifier.
+   */
   public static boolean isContextQualifer(String qualifier) {
     return CONTEXT_QUALIFIER.equals(qualifier);
   }
 
   /**
-   * @return
+   * <p>
+   * Returns <code>true</code> if the qualifier is the none qualifier.
+   * </p>
+   * 
+   * @return <code>true</code> if the qualifier is the none qualifier.
    */
   public boolean isNoneQualifier() {
     return isNoneQualifier(this._qualifier);
   }
 
+  /**
+   * <p>
+   * Returns <code>true</code> if the qualifier is the none qualifier.
+   * </p>
+   * 
+   * @param qualifier
+   *          the qualifier
+   * @return <code>true</code> if the qualifier is the none qualifier.
+   */
   public static boolean isNoneQualifier(String qualifier) {
     return NONE_QUALIFIER.equals(qualifier);
   }
 
   /**
+   * <p>
+   * Sets the custom property.
+   * </p>
+   * 
    * @param custom
    */
   void setCustom(boolean custom) {
     this._custom = custom;
   }
 
+  /**
+   * <p>
+   * Sets the binary excludes list.
+   * </p>
+   * 
+   * @param excludes
+   */
   void setBinaryExcludes(String[] excludes) {
     Assert.notNull(excludes);
 
     this._binExcludes = excludes;
   }
 
+  /**
+   * <p>
+   * Sets the binary excludes list.
+   * </p>
+   * 
+   * @param includes
+   */
   void setBinaryIncludes(String[] includes) {
     Assert.notNull(includes);
 
@@ -144,8 +235,12 @@ public class AbstractBuildProperties {
   }
 
   /**
+   * <p>
+   * Sets the qualifier.
+   * </p>
+   * 
    * @param qualifier
-   *          The qualifier to set.
+   *          the qualifier to set.
    */
   void setQualifier(String qualifier) {
     if (qualifier == null) {
