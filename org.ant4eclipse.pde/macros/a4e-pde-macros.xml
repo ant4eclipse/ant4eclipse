@@ -29,6 +29,7 @@
 		<attribute name="packageAsJar" default="true" />
 		<attribute name="buildSourceJar" default="true" />
 		<attribute name="defaultCompilerOptionsFile" default="" />
+		<attribute name="newBundleVersion" default="" />
 
 		<!-- element defintions for lifecycle phases -->
 		<element name="validate"
@@ -71,7 +72,16 @@
 				<ant4eclipse:forProject>
 
 					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-					  - Step 1: Validate
+					  - Step 1: Set the bundle version
+					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+					<condition property="buildPlugin.newBundleVersion"
+					           value="${buildPlugin.bundle.resolved.version}"
+					           else="@{newBundleVersion}">
+						<equals arg1="@{newBundleVersion}" arg2="" />
+					</condition>
+
+					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+					  - Step 2: Validate
 					  - Validate the project is correct and all necessary information is available.
 					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -83,7 +93,7 @@
 					<validate />
 
 					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-					  - Step 2: Initialize
+					  - Step 3: Initialize
 					  - Initialize build state, e.g. set properties or create directories.
 					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -94,7 +104,7 @@
 					<initialize />
 
 					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					  - Step 3: Generate-sources
+					  - Step 4: Generate-sources
 					  - Generate any source code for inclusion in compilation.
 					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -102,7 +112,7 @@
 					<generate-sources />
 
 					<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-					  - Step 4: Generate-resources
+					  - Step 5: Generate-resources
 					  - Generate resources for inclusion in the package.
 					  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -114,7 +124,7 @@
 			</ant4eclipse:executePluginProject>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			  - Step 5: Compile
+			  - Step 6: Compile
 			  - Compiles the plug-in project (only in case that the project has the nature 'org.eclipse.jdt.core.javanature').
 			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<antcontrib:if>
@@ -131,7 +141,7 @@
 						<jdtClasspathContainerArgument key="target.platform"
 						                               value="@{targetPlatformId}" />
 
-						<!-- Step 5.1: Clean all output directories -->
+						<!-- Step 6.1: Clean all output directories -->
 						<ant4eclipse:forEachOutputDirectory>
 							<echo>Scrubbing directory '${buildPlugin.output.directory}'</echo>
 							<delete dir="${buildPlugin.output.directory}"
@@ -139,7 +149,7 @@
 							<mkdir dir="${buildPlugin.output.directory}" />
 						</ant4eclipse:forEachOutputDirectory>
 
-						<!-- Step 5.2: Compile the sources -->
+						<!-- Step 6.2: Compile the sources -->
 						<ant4eclipse:forProject>
 
 							<!-- template element 'pre-compile' -->
@@ -180,14 +190,14 @@
 			</antcontrib:if>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			  - Step 6: Package the bundle
+			  - Step 7: Package the bundle
 			  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
 			                                  projectName="@{projectName}"
 			                                  prefix="buildPlugin">
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 6.1: Pack all libraries except the 'self' library
+				  - Step 7.1: Pack all libraries except the 'self' library
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=false)">
 
@@ -242,7 +252,7 @@
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 2.2: Package the 'self' library
+				  - Step 7.2: Package the 'self' library
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
 					<echo>Packing library '.'</echo>
@@ -278,7 +288,7 @@
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 6.3: Package the bundle
+				  - Step 7.3: Package the bundle
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject>
 
@@ -286,7 +296,7 @@
 					<prepare-package />
 
 					<!-- copy the (in the build.properties) specified content to the destination directory -->
-					<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}"
+					<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}"
 					      overwrite="true">
 
 						<!-- file set defined by the projects build properties -->
@@ -299,10 +309,10 @@
 					        quiet="true" />
 
 					<!-- 'patch' the manifest with the resolved bundle version -->
-					<manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}/META-INF/MANIFEST.MF"
+					<manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF"
 					          mode="update">
 						<attribute name="Bundle-Version"
-						           value="${buildPlugin.bundle.resolved.version}" />
+						           value="${buildPlugin.newBundleVersion}" />
 					</manifest>
 				</ant4eclipse:forProject>
 
@@ -311,19 +321,19 @@
                   - we have to jar the bundle.
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject if="@{packageAsJar}">
-					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}.jar"
-					     basedir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}"
-					     manifest="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}/META-INF/MANIFEST.MF" />
+					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}.jar"
+					     basedir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}"
+					     manifest="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF" />
 				</ant4eclipse:forProject>
 
 				<ant4eclipse:forProject if="@{packageAsJar}">
-					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.bundle.resolved.version}"
+					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}"
 					        quiet="true"
 					        deleteonexit="true" />
 				</ant4eclipse:forProject>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 7: Build the source bundle 
+				  - Step 8: Build the source bundle 
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject if="@{buildSourceJar}">
 					<buildSourceBundle workspaceDirectory="@{workspaceDirectory}"
@@ -347,14 +357,26 @@
 		<attribute name="workspaceDirectory" />
 		<attribute name="projectName" />
 		<attribute name="destination" />
+		<attribute name="newBundleVersion" default="" />
 		<sequential>
 
 			<ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
 			                                  projectName="@{projectName}"
 			                                  prefix="buildPlugin">
 
+				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+				  - Step 1: Set the bundle version
+				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+				<ant4eclipse:forProject>
+					<condition property="buildPlugin.newBundleVersion"
+					           value="@{newBundleVersion}"
+					           else="${buildPlugin.bundle.resolved.version}">
+						<isset property="@{newBundleVersion}" />
+					</condition>
+				</ant4eclipse:forProject>
+
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 1: Copy the source of the 'self' library to the 
+				  - Step 2: Copy the source of the 'self' library to the 
 				  -         destination location
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
@@ -364,7 +386,7 @@
 					                                  libraryname="${buildPlugin.library.name}">
 
 						<ant4eclipse:forEachSourceDirectory>
-							<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}/">
+							<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/">
 								<fileset dir="${executePluginLibrary.source.directory}" />
 							</copy>
 						</ant4eclipse:forEachSourceDirectory>
@@ -373,7 +395,7 @@
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 2: Package the source of all the library source (except 
+				  - Step 3: Package the source of all the library source (except 
 				  -         the 'self' library ) to the destination location
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=false)">
@@ -383,7 +405,7 @@
 					                                  libraryname="${buildPlugin.library.name}">
 
 						<ant4eclipse:forEachSourceDirectory>
-							<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}/${buildPlugin.library.name}.src">
+							<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/${buildPlugin.library.name}.src">
 								<fileset dir="${executePluginLibrary.source.directory}" />
 							</copy>
 						</ant4eclipse:forEachSourceDirectory>
@@ -392,13 +414,13 @@
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 3: Copy all 'non-library' resources to the destination 
+				  - Step 4: Copy all 'non-library' resources to the destination 
 				  -         location and create the manifest file
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject>
 
 					<!-- copy the (in the build.properties) specified content to the destination directory -->
-					<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}"
+					<copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}"
 					      overwrite="true">
 
 						<!-- file set defined by the projects build properties -->
@@ -408,32 +430,32 @@
 					</copy>
 
 					<!-- create the bundle manifest -->
-					<manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}/META-INF/MANIFEST.MF">
+					<manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF">
 						<attribute name="Bundle-ManifestVersion" value="2" />
 						<attribute name="Bundle-Version"
-						           value="${buildPlugin.bundle.resolved.version}" />
+						           value="${buildPlugin.newBundleVersion}" />
 						<attribute name="Bundle-SymbolicName"
 						           value="${buildPlugin.bundle.symbolicname}.source" />
 						<attribute name="Eclipse-SourceBundle"
-						           value="${buildPlugin.bundle.symbolicname};version=&quot;${buildPlugin.bundle.resolved.version}&quot;;roots:=&quot;${buildPlugin.build.librarysourceroots}&quot;" />
+						           value="${buildPlugin.bundle.symbolicname};version=&quot;${buildPlugin.newBundleVersion}&quot;;roots:=&quot;${buildPlugin.build.librarysourceroots}&quot;" />
 					</manifest>
 
 				</ant4eclipse:forProject>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-			      - Step 4: create the jar file
+			      - Step 5: create the jar file
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject>
-					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}.jar"
-					     basedir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}"
-					     manifest="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}/META-INF/MANIFEST.MF" />
+					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}.jar"
+					     basedir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}"
+					     manifest="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF" />
 				</ant4eclipse:forProject>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-				  - Step 5: delete the (temporary) bundle directory
+				  - Step 6: delete the (temporary) bundle directory
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject>
-					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.bundle.resolved.version}"
+					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}"
 					        quiet="true"
 					        deleteonexit="true" />
 				</ant4eclipse:forProject>
