@@ -46,13 +46,24 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
     // always exported, there is no need to check for visibility
     RawClasspathEntry entry = (RawClasspathEntry) pathEntry;
 
-    String path = getCurrentJavaProjectRole(context).getOutputFolderForSourceFolder(entry.getPath());
+    // get the source path
+    String sourcePath = entry.getPath();
 
-    File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(path,
+    // get the source folder
+    File sourceFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(sourcePath,
         EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(
-        path, EclipseProject.PathStyle.ABSOLUTE);
+        sourcePath, EclipseProject.PathStyle.ABSOLUTE);
+
+    // get the output path
+    String outputPath = getCurrentJavaProjectRole(context).getOutputFolderForSourceFolder(sourcePath);
+
+    // get the output folder
+    File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(outputPath,
+        EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(
+        outputPath, EclipseProject.PathStyle.ABSOLUTE);
 
     // TODO: ACCESS RESTRICTIONS
-    context.addClasspathEntry(new ResolvedClasspathEntry(outputFolder));
+    context
+        .addClasspathEntry(new ResolvedClasspathEntry(new File[] { outputFolder }, null, new File[] { sourceFolder }));
   }
 }

@@ -14,6 +14,8 @@ package org.ant4eclipse.jdt.ecj;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.StringMap;
 
+import java.util.Map;
+
 /**
  * <p>
  * Default implementation of a {@link CompileJobDescription}.
@@ -24,13 +26,13 @@ import org.ant4eclipse.core.util.StringMap;
 public class DefaultCompileJobDescription implements CompileJobDescription {
 
   /** the ClassFileLoader */
-  private ClassFileLoader _classFileLoader;
+  private ClassFileLoader     _classFileLoader;
 
   /** the compiler options */
-  private StringMap       _compilerOptions;
+  private Map<String, String> _compilerOptions;
 
   /** the source files */
-  private SourceFile[]    _sourceFiles;
+  private SourceFile[]        _sourceFiles;
 
   /**
    * <p>
@@ -71,7 +73,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   /**
    * {@inheritDoc}
    */
-  public StringMap getCompilerOptions() {
+  public Map<String, String> getCompilerOptions() {
     return this._compilerOptions;
   }
 
@@ -104,7 +106,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    *          the compiler options.
    */
-  public void setCompilerOptions(StringMap compilerOptions) {
+  public void setCompilerOptions(Map<String, String> compilerOptions) {
     Assert.notNull(compilerOptions);
 
     this._compilerOptions = compilerOptions;

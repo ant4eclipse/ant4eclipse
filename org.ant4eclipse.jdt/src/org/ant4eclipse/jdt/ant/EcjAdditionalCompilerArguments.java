@@ -14,8 +14,11 @@ package org.ant4eclipse.jdt.ant;
 import org.ant4eclipse.core.Assert;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -34,13 +37,16 @@ import java.util.Map;
 public class EcjAdditionalCompilerArguments {
 
   /** maps source folders to output folders */
-  private Map<File, File>   _outputFolderMap;
+  private Map<File, File>      _outputFolderMap;
+
+  /** maps output folders to source folders */
+  private Map<File, Set<File>> _sourceFolderMap;
 
   /** maps class path entries to access restrictions */
-  private Map<File, String> _accessRestrictions;
+  private Map<File, String>    _accessRestrictions;
 
   /** the boot class path access restrictions */
-  private String            _bootClassPathAccessRestrictions;
+  private String               _bootClassPathAccessRestrictions;
 
   /**
    * <p>
@@ -51,6 +57,7 @@ public class EcjAdditionalCompilerArguments {
     // create the maps
     this._accessRestrictions = new HashMap<File, String>();
     this._outputFolderMap = new HashMap<File, File>();
+    this._sourceFolderMap = new HashMap<File, Set<File>>();
   }
 
   /**
@@ -101,6 +108,28 @@ public class EcjAdditionalCompilerArguments {
    */
   public String getAccessRestrictions(File classpathentry) {
     return this._accessRestrictions.get(classpathentry);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param outputFolder
+   * @return
+   */
+  public boolean hasSourceFoldersForOutputFolder(File outputFolder) {
+    return false;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param outputFolder
+   * @return
+   */
+  public File[] getSourceFoldersForOutputFolder(File outputFolder) {
+    return null;
   }
 
   /**
@@ -156,7 +185,31 @@ public class EcjAdditionalCompilerArguments {
    * @param outputFolder
    *          the output folder
    */
-  public void addSourceFolder(File sourceFolder, File outputFolder) {
+  public void addOutputFolderForSourceFolder(File sourceFolder, File outputFolder) {
     this._outputFolderMap.put(sourceFolder, outputFolder);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceFolders
+   * @param outputFolder
+   */
+  public void addSourceFolderForOutputFolder(File outputFolder, File[] sourceFolders) {
+    Assert.notNull(outputFolder);
+    Assert.notNull(sourceFolders);
+
+    // get source folder map
+    Set<File> sourceFolderSet = this._sourceFolderMap.get(sourceFolders);
+
+    // if no source folder map exists, create a new one
+    if (sourceFolderSet == null) {
+      sourceFolderSet = new HashSet<File>();
+      this._sourceFolderMap.put(outputFolder, sourceFolderSet);
+    }
+
+    // add the source folder
+    sourceFolderSet.addAll(Arrays.asList(sourceFolders));
   }
 }

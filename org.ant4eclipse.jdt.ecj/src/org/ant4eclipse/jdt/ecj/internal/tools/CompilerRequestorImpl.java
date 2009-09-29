@@ -15,6 +15,9 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
+import org.ant4eclipse.jdt.ecj.SourceFile;
+
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.internal.compiler.ClassFile;
 import org.eclipse.jdt.internal.compiler.CompilationResult;
@@ -57,8 +60,19 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    */
   public void acceptResult(CompilationResult result) {
 
+    // get the compilation unit...
     CompilationUnitImpl compilationUnitImpl = (CompilationUnitImpl) result.getCompilationUnit();
-    File destinationDirectory = compilationUnitImpl.getSourceFile().getDestinationFolder();
+
+    // ...and the source file
+    SourceFile sourceFile = compilationUnitImpl.getSourceFile();
+
+    // return immediately if the source file is a ReferableSourceFile
+    if (sourceFile instanceof ReferableSourceFile) {
+      return;
+    }
+
+    // get the destination directory
+    File destinationDirectory = sourceFile.getDestinationFolder();
 
     if (!result.hasErrors()) {
       ClassFile[] classFiles = result.getClassFiles();
@@ -90,20 +104,29 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
       this._compilationSuccessful = false;
     }
 
+    // add the problems...
     if (result.getAllProblems() != null) {
       this._categorizedProblems.addAll(Arrays.asList(result.getAllProblems()));
     }
   }
 
   /**
-   * @return
+   * <p>
+   * Returns <code>true</code> if the compilation was successful, <code>false</code> otherwise.
+   * </p>
+   * 
+   * @return <code>true</code> if the compilation was successful, <code>false</code> otherwise.
    */
   public boolean isCompilationSuccessful() {
     return this._compilationSuccessful;
   }
 
   /**
-   * @return
+   * <p>
+   * Returns the categorized problems.
+   * </p>
+   * 
+   * @return the categorized problems.
    */
   public CategorizedProblem[] getCategorizedProblems() {
     return this._categorizedProblems.toArray(new CategorizedProblem[0]);

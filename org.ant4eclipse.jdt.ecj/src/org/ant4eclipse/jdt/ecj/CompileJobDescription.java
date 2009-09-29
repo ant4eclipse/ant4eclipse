@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.util.StringMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ public interface CompileJobDescription {
    * 
    * @return the compiler options for the compile job.
    */
-  StringMap getCompilerOptions();
+  Map<String, String> getCompilerOptions();
 
   /**
    * <p>

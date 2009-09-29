@@ -12,10 +12,7 @@
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StringMap;
 
-import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.jdt.ecj.EcjAdapter;
@@ -33,6 +30,7 @@ import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * The {@link EcjAdapterImpl} can be used to compile eclipse projects with the eclipse java compiler (ejc). It provides
@@ -52,54 +50,55 @@ public final class EcjAdapterImpl implements EcjAdapter {
   public CompileJobResult compile(CompileJobDescription description) {
     Assert.notNull(description);
 
-    // File[] sourceFolder = description.getSourceFolders();
+    // create the name environment
+    INameEnvironment nameEnvironment = new NameEnvironmentImpl(description.getClassFileLoader());
 
-    // A4ELogging.debug("source folder: " + Arrays.asList(sourceFolder));
-
-    // File outputFolder = description.getOutputFolder();
-    //
-    // A4ELogging.debug("output folder: " + outputFolder);
-
-    ClassFileLoader classFileLoader = description.getClassFileLoader();
-
-    A4ELogging.debug("classFileLoader: " + classFileLoader);
-
-    StringMap compilerOptions = description.getCompilerOptions();
-
-    A4ELogging.debug("compiler options: " + compilerOptions);
+    // get the compiler options
+    Map<String, String> compilerOptions = description.getCompilerOptions();
 
     // retrieve the compilation units
     ICompilationUnit[] sources = getCompilationUnits(description.getSourceFiles());
 
+    // create the error handling policy
     IErrorHandlingPolicy policy = DefaultErrorHandlingPolicies.proceedWithAllProblems();
 
+    // create the problem factory
     IProblemFactory problemFactory = new DefaultProblemFactory(Locale.getDefault());
 
+    // create the compiler requestor
     CompilerRequestorImpl requestor = new CompilerRequestorImpl();
-
-    INameEnvironment nameEnvironment = new NameEnvironmentImpl(classFileLoader);
 
     // in any case disallow forbidden references
     compilerOptions.put("org.eclipse.jdt.core.compiler.problem.forbiddenReference", "error");
 
+    // create the compiler
     Compiler compiler = new Compiler(nameEnvironment, policy, new CompilerOptions(compilerOptions), requestor,
         problemFactory);
 
+    // compile
     try {
       compiler.compile(sources);
     } catch (Exception e) {
       e.printStackTrace();
     }
 
+    // create the compile job result
     CompileJobResultImpl result = new CompileJobResultImpl();
     result.setSucceeded(requestor.isCompilationSuccessful());
     result.setCategorizedProblems(requestor.getCategorizedProblems());
+
+    // return the result
     return result;
   }
 
   /**
-   * @param sourceFolders
-   * @return
+   * <p>
+   * Returns the compilation units for the given source files.
+   * </p>
+   * 
+   * @param sourceFiles
+   *          the source files
+   * @return the compilation units for the given source files.
    */
   private ICompilationUnit[] getCompilationUnits(SourceFile[] sourceFiles) {
 

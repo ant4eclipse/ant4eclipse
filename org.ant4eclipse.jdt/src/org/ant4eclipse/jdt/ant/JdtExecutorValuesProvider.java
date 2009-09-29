@@ -83,10 +83,21 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     }
 
     ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
+
     for (ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries) {
+
+      // set source folder for output folder
+      if (resolvedClasspathEntry.hasSourcePathEntries()) {
+        File[] sourcePathEntries = resolvedClasspathEntry.getSourcePathEntries();
+        for (File file : resolvedClasspathEntry.getClassPathEntries()) {
+          compilerArguments.addSourceFolderForOutputFolder(file, sourcePathEntries);
+        }
+      }
+
+      // set access restrictions
       if (resolvedClasspathEntry.hasAccessRestrictions()) {
         AccessRestrictions accessRestrictions = resolvedClasspathEntry.getAccessRestrictions();
-        for (File file : resolvedClasspathEntry.getEntries()) {
+        for (File file : resolvedClasspathEntry.getClassPathEntries()) {
           compilerArguments.addAccessRestrictions(file, accessRestrictions.asFormattedString());
         }
       }
@@ -139,7 +150,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
         String outputFolderName = javaProjectRole.getOutputFolderForSourceFolder(sourceFolderName);
         File sourceFolder = javaProjectRole.getEclipseProject().getChild(sourceFolderName);
         File outputFolder = javaProjectRole.getEclipseProject().getChild(outputFolderName);
-        compilerArguments.addSourceFolder(sourceFolder, outputFolder);
+        compilerArguments.addOutputFolderForSourceFolder(sourceFolder, outputFolder);
       }
     }
 

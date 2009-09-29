@@ -62,7 +62,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * {@inheritDoc}
    */
   public File[] getBootClasspathFiles() {
-    return this._bootclasspath.getEntries();
+    return this._bootclasspath.getClassPathEntries();
   }
 
   /**
@@ -123,7 +123,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
     // add all files
     for (Object element : classpath) {
       ResolvedClasspathEntry resolvedClasspathEntry = (ResolvedClasspathEntry) element;
-      File[] files = resolvedClasspathEntry.getEntries();
+      File[] files = resolvedClasspathEntry.getClassPathEntries();
       for (int i = 0; i < files.length; i++) {
         if (!result.contains(files[i])) {
           result.add(files[i]);

@@ -28,6 +28,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +49,9 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /** the {@link PlatformExecutorValuesProvider} */
   private PlatformExecutorValuesProvider _platformExecutorValuesProvider;
 
+  /** indicates if the build order should be resolved */
+  private boolean                        _resolveBuildOrder = true;
+
   /**
    * <p>
    * Creates a new instance of type {@link ExecuteProjectSetTask}.
@@ -59,6 +63,29 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     this._subElementDelegate = new SubElementDelegate(this);
     this._projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(getPathDelegate());
+  }
+
+  /**
+   * <p>
+   * Returns is the build order should be resolved or not.
+   * </p>
+   * 
+   * @return the resolveBuildOrder
+   */
+  public boolean isResolveBuildOrder() {
+    return this._resolveBuildOrder;
+  }
+
+  /**
+   * <p>
+   * Sets if the build order should be resolved or not.
+   * </p>
+   * 
+   * @param resolveBuildOrder
+   *          the resolveBuildOrder to set
+   */
+  public void setResolveBuildOrder(boolean resolveBuildOrder) {
+    this._resolveBuildOrder = resolveBuildOrder;
   }
 
   /**
@@ -130,9 +157,16 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
     requireWorkspaceDirectorySet();
 
-    // calculate build order
-    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
-        this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate.getSubElements());
+    // get all eclipse projects and calculate the build order if necessary
+    List<EclipseProject> projects = null;
+    if (this._resolveBuildOrder) {
+      // resolve the build order
+      projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
+          this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate.getSubElements());
+    } else {
+      // only get the specified projects
+      projects = Arrays.asList(getWorkspace().getProjects(getProjectNames(), false));
+    }
 
     // execute the macro definitions
     for (ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {

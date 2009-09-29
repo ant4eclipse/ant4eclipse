@@ -68,7 +68,6 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings( { "unchecked" })
   public boolean execute() {
 
     // Step 1: check preconditions
@@ -245,10 +244,16 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
       if (fileResource.getFile().exists()) {
 
+        File[] sourceFolders = new File[] {};
+
+        if (compilerArguments.hasSourceFoldersForOutputFolder(fileResource.getFile())) {
+          sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(fileResource.getFile());
+        }
+
         // TODO: LIBRARY AND PROJECT
         // create class file loader for file resource
         ClassFileLoader myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
-            .getFile(), EcjAdapter.LIBRARY);
+            .getFile(), EcjAdapter.LIBRARY, new File[] { fileResource.getFile() }, sourceFolders);
 
         // create and add FilteringClassFileLoader is necessary
         if (compilerArguments != null && compilerArguments.hasAccessRestrictions(fileResource.getFile())) {

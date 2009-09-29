@@ -30,29 +30,49 @@ import java.util.Set;
 public class ResolvedClasspathEntry {
 
   /** the file array */
-  private File[]             _entries;
+  private File[]             _classPathEntries;
+
+  /** the file array */
+  private File[]             _sourcePathEntries;
 
   /** the visibility rules */
   private AccessRestrictions _accessRestrictions;
 
   /**
    * <p>
-   * Creates a new instance of type ResolvedClasspathEntry.
+   * Creates a new instance of type {@link ResolvedClasspathEntry}.
+   * </p>
+   * 
+   * @param classPathEntries
+   *          the class path entries
+   * @param accessRestrictions
+   *          the access restrictions
+   * @param sourcePathEntries
+   *          the source path entries
+   */
+  public ResolvedClasspathEntry(File[] classPathEntries, AccessRestrictions accessRestrictions, File[] sourcePathEntries) {
+    Assert.notNull(classPathEntries);
+
+    this._classPathEntries = classPathEntries;
+    this._accessRestrictions = accessRestrictions;
+    this._sourcePathEntries = sourcePathEntries;
+  }
+
+  /**
+   * <p>
+   * Creates a new instance of type {@link ResolvedClasspathEntry}.
    * </p>
    * 
    * @param entries
    * @param accessRestrictions
    */
   public ResolvedClasspathEntry(File[] entries, AccessRestrictions accessRestrictions) {
-    Assert.notNull(entries);
-
-    this._entries = entries;
-    this._accessRestrictions = accessRestrictions;
+    this(entries, accessRestrictions, null);
   }
 
   /**
    * <p>
-   * Creates a new instance of type ResolvedClasspathEntry.
+   * Creates a new instance of type {@link ResolvedClasspathEntry}.
    * </p>
    * 
    * @param entry
@@ -64,26 +84,26 @@ public class ResolvedClasspathEntry {
 
   /**
    * <p>
-   * Creates a new instance of type ResolvedClasspathEntry.
+   * Creates a new instance of type {@link ResolvedClasspathEntry}.
    * </p>
    * 
-   * @param entries
+   * @param classPathEntries
    *          the file entries
    */
-  public ResolvedClasspathEntry(File[] entries) {
-    this(entries, null);
+  public ResolvedClasspathEntry(File[] classPathEntries) {
+    this(classPathEntries, null);
   }
 
   /**
    * <p>
-   * Creates a new instance of type ResolvedClasspathEntry.
+   * Creates a new instance of type {@link ResolvedClasspathEntry}.
    * </p>
    * 
-   * @param entry
-   *          the file entry
+   * @param classPathEntry
+   *          the class path entry
    */
-  public ResolvedClasspathEntry(File entry) {
-    this(new File[] { entry }, null);
+  public ResolvedClasspathEntry(File classPathEntry) {
+    this(new File[] { classPathEntry }, null);
   }
 
   /**
@@ -93,8 +113,32 @@ public class ResolvedClasspathEntry {
    * 
    * @return all file entries for this class path entry.
    */
-  public File[] getEntries() {
-    return this._entries;
+  public File[] getClassPathEntries() {
+    return this._classPathEntries;
+  }
+
+  /**
+   * <p>
+   * Returns all the source path entries for this class path entry. If no source path entries exist, <code>null</code>
+   * will be returned instead.
+   * </p>
+   * 
+   * @return all the source path entries for this class path entry. If no source path entries exist, <code>null</code>
+   *         will be returned instead.
+   */
+  public File[] getSourcePathEntries() {
+    return this._sourcePathEntries;
+  }
+
+  /**
+   * <p>
+   * Returns <code>true</code> if this entry has source path entries attached.
+   * </p>
+   * 
+   * @return <code>true</code> if this entry has source path entries attached.
+   */
+  public boolean hasSourcePathEntries() {
+    return this._sourcePathEntries != null && this._sourcePathEntries.length > 0;
   }
 
   /**
@@ -127,7 +171,7 @@ public class ResolvedClasspathEntry {
     int prime = 31;
     int result = 1;
     result = prime * result + ((this._accessRestrictions == null) ? 0 : this._accessRestrictions.hashCode());
-    result = prime * result + ResolvedClasspathEntry.hashCode(this._entries);
+    result = prime * result + ResolvedClasspathEntry.hashCode(this._classPathEntries);
     return result;
   }
 
@@ -153,7 +197,7 @@ public class ResolvedClasspathEntry {
     } else if (!this._accessRestrictions.equals(other._accessRestrictions)) {
       return false;
     }
-    if (!Arrays.equals(this._entries, other._entries)) {
+    if (!Arrays.equals(this._classPathEntries, other._classPathEntries)) {
       return false;
     }
     return true;
@@ -188,9 +232,9 @@ public class ResolvedClasspathEntry {
     StringBuffer buffer = new StringBuffer();
     buffer.append("[ResolvedClasspathEntry:");
     buffer.append(" { ");
-    for (int i0 = 0; (this._entries != null) && (i0 < this._entries.length); i0++) {
+    for (int i0 = 0; (this._classPathEntries != null) && (i0 < this._classPathEntries.length); i0++) {
       buffer.append(" _entries[" + i0 + "]: ");
-      buffer.append(this._entries[i0]);
+      buffer.append(this._classPathEntries[i0]);
     }
     buffer.append(" } ");
     buffer.append(" _accessRestrictions: ");
