@@ -17,8 +17,8 @@ import java.io.File;
 
 /**
  * <p>
- * LinkFile is a representation of a *.link-File that is used by eclipse to link (external) directories into a platform
- * location.
+ * {@link LinkFile} is a representation of a <code>*.link</code> file that is used by eclipse to link (external)
+ * directories into a platform location.
  * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
@@ -42,34 +42,37 @@ public class LinkFile {
 
   /**
    * <p>
-   * Creates a new instance of type LinkFile.
+   * Creates a new instance of type {@link LinkFile}.
    * </p>
    * 
    * @param destination
+   *          the destination of the link file.
    */
   public LinkFile(File destination) {
     Assert.notNull(destination);
+
     this._destination = destination;
   }
 
   /**
-   * Checks if the destination directory is valid.
-   * 
    * <p>
-   * A destination is valid if it is an existing directory that contains an eclipse/plugins folder.
+   * Checks if the destination directory is valid. A destination is valid if it is an existing directory that contains
+   * an <code>eclipse/plugins</code> folder.
+   * </p>
    * 
-   * @return true if this is a valid destination
+   * @return <code>true</code> if this is a valid destination
    */
   public boolean isValidDestination() {
     return getPluginsDirectory().isDirectory();
   }
 
   /**
-   * Returns the plugins directory inside the destination directory.
    * <p>
-   * Note:The plugins directory might not exist
+   * Returns the plugins directory inside the destination directory. Note: The plugins directory might not exist.
+   * </p>
    * 
-   * @return The plugins directory
+   * @return the plugins directory
+   * 
    * @see #isValidDestination()
    * @see #PLUGINS_DIRECTORY
    */
@@ -77,17 +80,31 @@ public class LinkFile {
     return new File(this._destination, PLUGINS_DIRECTORY);
   }
 
+  /**
+   * <p>
+   * Returns the features directory inside the destination directory. Note: The features directory might not exist.
+   * </p>
+   * 
+   * @return the features directory
+   */
   public File getFeaturesDirectory() {
     return new File(this._destination, FEATURES_DIRECTORY);
   }
 
   /**
-   * @return The destination of this link file
+   * <p>
+   * The destination of the link file
+   * </p>
+   * 
+   * @return the destination of this link file
    */
   public File getDestination() {
     return this._destination;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
     int PRIME = 31;
@@ -96,6 +113,9 @@ public class LinkFile {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
