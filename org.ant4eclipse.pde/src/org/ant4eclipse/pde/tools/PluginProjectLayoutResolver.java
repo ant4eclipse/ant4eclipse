@@ -15,6 +15,8 @@ import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.util.ManifestHelper;
 
+import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
@@ -128,5 +130,30 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
 
     // return result
     return result.toArray(new File[result.size()]);
+  }
+
+  /**
+   * <p>
+   * For PluginProjects we also have to 'resolve' the source
+   * </p>
+   * 
+   * @return
+   */
+  public File[] getPluginProjectSourceFolders() {
+
+    // declare result
+    List<File> result = new LinkedList<File>();
+
+    if (JavaProjectRole.Helper.hasJavaProjectRole(this._eclipseProject)) {
+      JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(this._eclipseProject);
+
+      String[] sourcefolders = javaProjectRole.getSourceFolders();
+      for (String sourcefolder : sourcefolders) {
+        File file = this._eclipseProject.getChild(sourcefolder);
+        result.add(file);
+      }
+    }
+
+    return result.toArray(new File[0]);
   }
 }

@@ -118,7 +118,7 @@ public class EcjAdditionalCompilerArguments {
    * @return
    */
   public boolean hasSourceFoldersForOutputFolder(File outputFolder) {
-    return false;
+    return this._sourceFolderMap.containsKey(outputFolder);
   }
 
   /**
@@ -129,7 +129,8 @@ public class EcjAdditionalCompilerArguments {
    * @return
    */
   public File[] getSourceFoldersForOutputFolder(File outputFolder) {
-    return null;
+    return hasSourceFoldersForOutputFolder(outputFolder) ? this._sourceFolderMap.get(outputFolder).toArray(new File[0])
+        : new File[0];
   }
 
   /**

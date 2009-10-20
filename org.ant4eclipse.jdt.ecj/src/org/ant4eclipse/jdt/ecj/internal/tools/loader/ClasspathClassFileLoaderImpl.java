@@ -68,7 +68,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    *          type
    */
   public ClasspathClassFileLoaderImpl(File entry, byte type) {
-    Assert.exists(entry);
+    Assert.notNull(entry);
 
     this._location = entry;
     this._type = type;
@@ -78,8 +78,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   public ClasspathClassFileLoaderImpl(File classPathEntry, byte type, File sourcePathEntry) {
-    Assert.exists(classPathEntry);
-    Assert.exists(sourcePathEntry);
+    Assert.notNull(classPathEntry);
+    Assert.notNull(sourcePathEntry);
 
     this._location = classPathEntry;
     this._type = type;
@@ -98,7 +98,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param classpathEntries
    */
   public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries) {
-    Assert.exists(location);
+    Assert.notNull(location);
 
     this._location = location;
     this._type = type;
@@ -108,7 +108,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries, File[] sourcePathEntries) {
-    Assert.exists(location);
+    Assert.notNull(location);
 
     this._location = location;
     this._type = type;
@@ -208,12 +208,12 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     Assert.notNull(classpathEntries);
     Assert.notNull(sourcepathEntries);
 
-    // assert that each entry exists
+    // assert that each entry is not null
     for (File classpathEntrie : classpathEntries) {
-      Assert.exists(classpathEntrie);
+      Assert.notNull(classpathEntrie);
     }
     for (File sourcepathEntry : sourcepathEntries) {
-      Assert.exists(sourcepathEntry);
+      Assert.notNull(sourcepathEntry);
     }
 
     // assign path entries
@@ -228,7 +228,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
       if (file.isDirectory()) {
         String[] allPackages = getAllPackagesFromDirectory(file);
         addAllPackagesFromClassPathEntry(allPackages, file);
-      } else {
+      } else if (file.isFile()) {
         try {
           String[] allPackages = getAllPackagesFromJar(file);
           addAllPackagesFromClassPathEntry(allPackages, file);

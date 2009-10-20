@@ -478,21 +478,24 @@ public class BundleDependenciesResolver {
      */
     public ResolvedClasspathEntry getResolvedClasspathEntry() {
 
-      // create the list of all contained files
-      List<File> files = new LinkedList<File>();
-
       // if this dependency is the host bundle for the root bundle, everything is visible for the root bundle
       if (this._isHostForRootBundle) {
 
         // get the layout resolver
         BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._host);
 
-        // add the resolved bundle class path entries
-        files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
-
         // return the result
-        return new ResolvedClasspathEntry(files.toArray(new File[0]));
+        if (layoutResolver instanceof PluginProjectLayoutResolver) {
+          return new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries(),
+              ((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders());
+        } else {
+          new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries());
+        }
       }
+
+      // create the list of all contained files
+      List<File> classfiles = new LinkedList<File>();
+      List<File> sourcefiles = new LinkedList<File>();
 
       // create the access restrictions
       AccessRestrictions accessRestrictions = new AccessRestrictions();
@@ -504,7 +507,11 @@ public class BundleDependenciesResolver {
 
       // resolve the class path of the host
       BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._host);
-      files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+      classfiles.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+      if (layoutResolver instanceof PluginProjectLayoutResolver) {
+        sourcefiles.addAll(Arrays.asList(((PluginProjectLayoutResolver) layoutResolver)
+            .getPluginProjectSourceFolders()));
+      }
       if (this._isRequiredBundle) {
         addAllExportedPackages(this._host, accessRestrictions);
       }
@@ -512,14 +519,19 @@ public class BundleDependenciesResolver {
       // resolve the class path of the fragment
       for (BundleDescription fragment : getFragments()) {
         layoutResolver = getBundleLayoutResolver(fragment);
-        files.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+        classfiles.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
+        if (layoutResolver instanceof PluginProjectLayoutResolver) {
+          sourcefiles.addAll(Arrays.asList(((PluginProjectLayoutResolver) layoutResolver)
+              .getPluginProjectSourceFolders()));
+        }
         if (this._isRequiredBundle) {
           addAllExportedPackages(fragment, accessRestrictions);
         }
       }
 
       // return the result
-      return new ResolvedClasspathEntry(files.toArray(new File[0]), accessRestrictions);
+      return new ResolvedClasspathEntry(classfiles.toArray(new File[0]), accessRestrictions, sourcefiles
+          .toArray(new File[0]));
     }
 
     /**

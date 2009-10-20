@@ -50,6 +50,22 @@ public class ResolvedClasspathEntry {
    * @param sourcePathEntries
    *          the source path entries
    */
+  public ResolvedClasspathEntry(File[] classPathEntries, File[] sourcePathEntries) {
+    this(classPathEntries, null, sourcePathEntries);
+  }
+
+  /**
+   * <p>
+   * Creates a new instance of type {@link ResolvedClasspathEntry}.
+   * </p>
+   * 
+   * @param classPathEntries
+   *          the class path entries
+   * @param accessRestrictions
+   *          the access restrictions
+   * @param sourcePathEntries
+   *          the source path entries
+   */
   public ResolvedClasspathEntry(File[] classPathEntries, AccessRestrictions accessRestrictions, File[] sourcePathEntries) {
     Assert.notNull(classPathEntries);
 
@@ -91,7 +107,7 @@ public class ResolvedClasspathEntry {
    *          the file entries
    */
   public ResolvedClasspathEntry(File[] classPathEntries) {
-    this(classPathEntries, null);
+    this(classPathEntries, (AccessRestrictions) null);
   }
 
   /**
@@ -103,7 +119,7 @@ public class ResolvedClasspathEntry {
    *          the class path entry
    */
   public ResolvedClasspathEntry(File classPathEntry) {
-    this(new File[] { classPathEntry }, null);
+    this(new File[] { classPathEntry }, (AccessRestrictions) null);
   }
 
   /**
@@ -233,8 +249,14 @@ public class ResolvedClasspathEntry {
     buffer.append("[ResolvedClasspathEntry:");
     buffer.append(" { ");
     for (int i0 = 0; (this._classPathEntries != null) && (i0 < this._classPathEntries.length); i0++) {
-      buffer.append(" _entries[" + i0 + "]: ");
+      buffer.append(" _classPathEntries[" + i0 + "]: ");
       buffer.append(this._classPathEntries[i0]);
+    }
+    buffer.append(" } ");
+    buffer.append(" { ");
+    for (int i0 = 0; (this._sourcePathEntries != null) && (i0 < this._sourcePathEntries.length); i0++) {
+      buffer.append(" _sourcePathEntries[" + i0 + "]: ");
+      buffer.append(this._sourcePathEntries[i0]);
     }
     buffer.append(" } ");
     buffer.append(" _accessRestrictions: ");

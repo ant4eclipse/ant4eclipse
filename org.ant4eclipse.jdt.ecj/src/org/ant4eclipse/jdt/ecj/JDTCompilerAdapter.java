@@ -242,13 +242,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       // get the file resource
       FileResource fileResource = (FileResource) iterator.next();
 
-      if (fileResource.getFile().exists()) {
+      File[] sourceFolders = new File[] {};
 
-        File[] sourceFolders = new File[] {};
+      if (compilerArguments.hasSourceFoldersForOutputFolder(fileResource.getFile())) {
+        sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(fileResource.getFile());
+      }
 
-        if (compilerArguments.hasSourceFoldersForOutputFolder(fileResource.getFile())) {
-          sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(fileResource.getFile());
-        }
+      if (fileResource.getFile().exists() || (sourceFolders != null && sourceFolders.length > 0)) {
 
         // TODO: LIBRARY AND PROJECT
         // create class file loader for file resource
