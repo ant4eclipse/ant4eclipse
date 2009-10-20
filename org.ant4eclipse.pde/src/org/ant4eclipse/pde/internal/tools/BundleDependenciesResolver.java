@@ -133,7 +133,7 @@ public class BundleDependenciesResolver {
       if (!this._resolvedBundles.containsKey(hostDescription)) {
         this._resolvedBundles.put(hostDescription, new BundleDependency(hostDescription, true));
       } else {
-        BundleDependency bundleDependency = this._resolvedBundles.get(this._resolvedBundles);
+        BundleDependency bundleDependency = this._resolvedBundles.get(hostDescription);
         bundleDependency._isHostForRootBundle = true;
       }
     }
@@ -509,8 +509,8 @@ public class BundleDependenciesResolver {
       BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._host);
       classfiles.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
       if (layoutResolver instanceof PluginProjectLayoutResolver) {
-        sourcefiles.addAll(Arrays.asList(((PluginProjectLayoutResolver) layoutResolver)
-            .getPluginProjectSourceFolders()));
+        sourcefiles.addAll(Arrays
+            .asList(((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders()));
       }
       if (this._isRequiredBundle) {
         addAllExportedPackages(this._host, accessRestrictions);
