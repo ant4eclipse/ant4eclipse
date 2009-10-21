@@ -25,6 +25,7 @@ import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 
 import org.apache.tools.ant.BuildException;
+import org.eclipse.osgi.framework.internal.core.FrameworkProperties;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
@@ -401,6 +402,9 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   private State resolve() {
 
+    // TODO
+    FrameworkProperties.setProperty("osgi.resolver.usesMode", "ignore");
+
     // step 1: create new state
     State state = StateObjectFactory.defaultFactory.createState(true);
 
@@ -432,7 +436,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     if (A4ELogging.isDebuggingEnabled()) {
       for (BundleDescription description : bundleDescriptions) {
-        A4ELogging.debug(dumpResolverErrors(description));
+        String resolverErrors = dumpResolverErrors(description);
+        if (resolverErrors != null && !resolverErrors.trim().equals("")) {
+          A4ELogging.debug(resolverErrors);
+        }
       }
     }
     // return the state

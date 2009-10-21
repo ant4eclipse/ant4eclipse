@@ -13,6 +13,7 @@ package org.ant4eclipse.pde.internal.tools;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.tools.TargetPlatform;
@@ -40,13 +41,16 @@ import java.util.Map;
 public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
   /** the current {@link TargetPlatform}, maybe null **/
-  private TargetPlatform                        _currentTargetPlatform;
+  private TargetPlatform                         _currentTargetPlatform;
 
   /** the static map with all target platforms currently resolved */
-  private Map<Object, BundleAndFeatureSet>      _targetPlatformMap          = new HashMap<Object, BundleAndFeatureSet>();
+  private Map<Object, BundleAndFeatureSet>       _bundleAndFeatureSetMap     = new HashMap<Object, BundleAndFeatureSet>();
 
   /** the target platform definitions */
-  private Map<String, TargetPlatformDefinition> _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
+  private Map<String, TargetPlatformDefinition>  _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
+
+  /** - */
+  private Map<TargetPlatformKey, TargetPlatform> _targetPlatformMap          = new HashMap<TargetPlatformKey, TargetPlatform>();
 
   /**
    * {@inheritDoc}
@@ -73,8 +77,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * {@inheritDoc}
    */
   public void clear() {
-    this._targetPlatformMap.clear();
+    this._bundleAndFeatureSetMap.clear();
     this._targetPlatformDefnitionMap.clear();
+    this._targetPlatformMap.clear();
   }
 
   /**
@@ -90,6 +95,11 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       TargetPlatformConfiguration targetPlatformConfiguration) {
+
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("getInstance(%s, %s, %s)", workspace, targetPlatformDefinitionIdentifier,
+          targetPlatformConfiguration);
+    }
 
     TargetPlatformDefinition targetPlatformDefinition = this._targetPlatformDefnitionMap
         .get(targetPlatformDefinitionIdentifier);
@@ -125,11 +135,11 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   private PluginAndFeatureProjectSet getPluginProjectSet(Workspace workspace) {
 
-    if (!this._targetPlatformMap.containsKey(workspace)) {
-      this._targetPlatformMap.put(workspace, new PluginAndFeatureProjectSet(workspace));
+    if (!this._bundleAndFeatureSetMap.containsKey(workspace)) {
+      this._bundleAndFeatureSetMap.put(workspace, new PluginAndFeatureProjectSet(workspace));
     }
 
-    return (PluginAndFeatureProjectSet) this._targetPlatformMap.get(workspace);
+    return (PluginAndFeatureProjectSet) this._bundleAndFeatureSetMap.get(workspace);
   }
 
   /**
@@ -154,7 +164,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     // TargetPlatformKey
     TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
     if (this._targetPlatformMap.containsKey(key)) {
-      return (TargetPlatform) this._targetPlatformMap.get(key);
+      return this._targetPlatformMap.get(key);
     }
 
     // get the workspace bundle set
@@ -164,7 +174,12 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
     BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
 
     // create and return the target platform instance
-    return new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets, targetPlatformConfiguration);
+    TargetPlatform targetPlatform = new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets,
+        targetPlatformConfiguration);
+
+    this._targetPlatformMap.put(key, targetPlatform);
+
+    return targetPlatform;
   }
 
   /**
@@ -176,11 +191,11 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   private BinaryBundleAndFeatureSet getBinaryPluginSet(File file) {
 
-    if (!this._targetPlatformMap.containsKey(file)) {
-      this._targetPlatformMap.put(file, new BinaryBundleAndFeatureSet(file));
+    if (!this._bundleAndFeatureSetMap.containsKey(file)) {
+      this._bundleAndFeatureSetMap.put(file, new BinaryBundleAndFeatureSet(file));
     }
 
-    return (BinaryBundleAndFeatureSet) this._targetPlatformMap.get(file);
+    return (BinaryBundleAndFeatureSet) this._bundleAndFeatureSetMap.get(file);
   }
 
   /**
