@@ -256,14 +256,14 @@
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
 					<echo>Packing library '.'</echo>
+					
+					<!-- template element 'pre-package-library' -->
+					<pre-package-library />
 
 					<!-- just copy everything to the 'self' directory -->
 					<ant4eclipse:executePluginLibrary workspaceDirectory="@{workspaceDirectory}"
 					                                  projectname="${buildPlugin.project.name}"
 					                                  libraryname="${buildPlugin.library.name}">
-
-						<!-- template element 'pre-package-library' -->
-						<pre-package-library />
 
 						<ant4eclipse:forEachOutputDirectory>
 							<echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '${buildPlugin.project.directory}/${a4e.self.directory}'</echo>
@@ -281,10 +281,11 @@
 							</copy>
 						</ant4eclipse:forEachSourceDirectory>
 
-						<!-- template element 'post-package-library' -->
-						<post-package-library />
-
 					</ant4eclipse:executePluginLibrary>
+					
+					<!-- template element 'post-package-library' -->
+					<post-package-library />
+					
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
