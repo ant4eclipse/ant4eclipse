@@ -12,32 +12,83 @@
 package org.ant4eclipse.jdt.internal.model.jre;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.Lifecycle;
+import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
  * Taken from Framework!
  * </p>
  */
-public class JavaProfileReader {
+public class JavaProfileReader implements Lifecycle {
+
+  /** the java profile cache */
+  private Map<String, JavaProfile> _javaProfileCache;
 
   /**
-   * @return
+   * {@inheritDoc}
    */
-  public static JavaProfile readDefaultProfile() {
-    return readProfile("JavaSE-1.6");
+  public void initialize() {
+
+    this._javaProfileCache = new HashMap<String, JavaProfile>();
+
+    // read all known profiles
+    JavaProfile[] javaProfiles = readAllProfiles();
+
+    // add profiles to profile cache
+    for (JavaProfile javaProfile : javaProfiles) {
+      this._javaProfileCache.put(javaProfile.getName(), javaProfile);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void dispose() {
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isInitialized() {
+    return this._javaProfileCache != null;
   }
 
   /**
    * @return
    */
-  public static JavaProfile[] readAllProfiles() {
+  public JavaProfile readDefaultProfile() {
+    return this._javaProfileCache.get("JavaSE-1.6");
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public JavaProfile getJavaProfile(String path) {
+    Assert.nonEmpty(path);
+
+    return this._javaProfileCache.get(path);
+  }
+
+  public boolean hasJavaProfile(String path) {
+    Assert.nonEmpty(path);
+
+    return this._javaProfileCache.containsKey(path);
+  }
+
+  /**
+   * @return
+   */
+  private JavaProfile[] readAllProfiles() {
 
     // load the profile listing first
     StringMap properties = new StringMap("/profiles/profile.list");
@@ -59,17 +110,17 @@ public class JavaProfileReader {
     return result.toArray(new JavaProfile[result.size()]);
   }
 
-  /**
-   * @param profile
-   * @return
-   */
-  public static JavaProfile readProfile(String profile) {
-    Assert.notNull(profile);
-    String profileName = profile + ".profile";
-    A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
-    StringMap profileProperties = new StringMap("/profiles/" + profileName);
-    return new JavaProfileImpl(profileProperties);
-  }
+  // /**
+  // * @param profile
+  // * @return
+  // */
+  // public static JavaProfile readProfile(String profile) {
+  // Assert.notNull(profile);
+  // String profileName = profile + ".profile";
+  // A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
+  // StringMap profileProperties = new StringMap("/profiles/" + profileName);
+  // return new JavaProfileImpl(profileProperties);
+  // }
 
   // public static String getVMProfile(File jreLocation) {
   //
@@ -97,4 +148,8 @@ public class JavaProfileReader {
   //
   // return getVmProfile(properties);
   // }
+
+  public static JavaProfileReader getInstance() {
+    return (JavaProfileReader) ServiceRegistry.instance().getService(JavaProfileReader.class.getName());
+  }
 }

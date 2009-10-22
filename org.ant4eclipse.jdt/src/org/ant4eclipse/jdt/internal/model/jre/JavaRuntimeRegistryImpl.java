@@ -40,9 +40,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /** the java runtime cache */
   private Map<String, JavaRuntime> _javaRuntimeCache;
 
-  /** the java profile cache */
-  private Map<String, JavaProfile> _javaProfileCache;
-
   /**
    * <p>
    * Creates a new instance of type {@link JavaRuntimeRegistryImpl}.
@@ -52,15 +49,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // create hash maps
     this._javaRuntimeCache = new HashMap<String, JavaRuntime>();
-    this._javaProfileCache = new HashMap<String, JavaProfile>();
-
-    // read all known profiles
-    JavaProfile[] javaProfiles = JavaProfileReader.readAllProfiles();
-
-    // add profiles to profile cache
-    for (JavaProfile javaProfile : javaProfiles) {
-      this._javaProfileCache.put(javaProfile.getName(), javaProfile);
-    }
   }
 
   /**
@@ -104,11 +92,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // return if a java profile exists
-    if (this._javaProfileCache.containsKey(path)) {
-      JavaProfile javaProfile = this._javaProfileCache.get(path);
-      if (getJavaRuntime(javaProfile) != null) {
-        return true;
-      }
+    JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
+    if (javaProfile != null && getJavaRuntime(javaProfile) != null) {
+      return true;
     }
 
     return false;
@@ -120,7 +106,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   public boolean hasJavaProfile(String path) {
     Assert.nonEmpty(path);
 
-    return this._javaProfileCache.containsKey(path);
+    return JavaProfileReader.getInstance().hasJavaProfile(path);
   }
 
   /**
@@ -135,9 +121,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // return if a java profile exists
-    if (this._javaProfileCache.containsKey(path)) {
-
-      JavaProfile javaProfile = this._javaProfileCache.get(path);
+    JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
+    if (javaProfile != null) {
       return getJavaRuntime(javaProfile);
     }
 
@@ -150,7 +135,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   public JavaProfile getJavaProfile(String path) {
     Assert.nonEmpty(path);
 
-    return this._javaProfileCache.get(path);
+    return JavaProfileReader.getInstance().getJavaProfile(path);
   }
 
   /**

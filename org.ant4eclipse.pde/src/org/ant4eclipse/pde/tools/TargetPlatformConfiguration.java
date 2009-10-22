@@ -47,7 +47,7 @@ public class TargetPlatformConfiguration {
 
     this._configurationProperties = new HashMap<Object, Object>();
 
-    this._configurationProperties.putAll(JavaProfileReader.readDefaultProfile().getProperties());
+    this._configurationProperties.putAll(JavaProfileReader.getInstance().readDefaultProfile().getProperties());
 
     this._configurationProperties.put(Constants.PROP_WS, EclipseEnvironmentInfo.getDefault().getWS());
     this._configurationProperties.put(Constants.PROP_OS, EclipseEnvironmentInfo.getDefault().getOS());
