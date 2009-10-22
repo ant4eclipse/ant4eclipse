@@ -18,6 +18,8 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
+
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
 
 import org.apache.tools.ant.BuildException;
@@ -239,31 +241,45 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // Step 3: add class loader for class path entries
     for (Iterator iterator = getJavac().getClasspath().iterator(); iterator.hasNext();) {
 
-      // get the file resource
+      // get the file resource that contains the class files
       FileResource fileResource = (FileResource) iterator.next();
+      File classesFile = fileResource.getFile();
+      ClassFileLoader myclassFileLoader = null;
 
-      File[] sourceFolders = new File[] {};
+      // jar files
+      if (classesFile.isFile()) {
 
-      if (compilerArguments.hasSourceFoldersForOutputFolder(fileResource.getFile())) {
-        sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(fileResource.getFile());
+        if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
+          myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
+        } else {
+          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+              new File[] { classesFile }, new File[] {});
+          ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
+        }
+
+      } else {
+
+        // get source folders if available
+        File[] sourceFolders = new File[] {};
+
+        if (compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
+          sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(classesFile);
+        }
+
+        // create class file loader for file resource
+        // TODO: LIBRARY AND PROJECT
+        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+            new File[] { classesFile }, sourceFolders);
       }
 
-      if (fileResource.getFile().exists() || (sourceFolders != null && sourceFolders.length > 0)) {
-
-        // TODO: LIBRARY AND PROJECT
-        // create class file loader for file resource
-        ClassFileLoader myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(fileResource
-            .getFile(), EcjAdapter.LIBRARY, new File[] { fileResource.getFile() }, sourceFolders);
-
-        // create and add FilteringClassFileLoader is necessary
-        if (compilerArguments != null && compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
-          classFileLoaderList.add(ClassFileLoaderFactory.createFilteringClassFileLoader(myclassFileLoader,
-              compilerArguments.getAccessRestrictions(fileResource.getFile())));
-        }
-        // else add class file loader
-        else {
-          classFileLoaderList.add(myclassFileLoader);
-        }
+      // create and add FilteringClassFileLoader is necessary
+      if (compilerArguments != null && compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
+        classFileLoaderList.add(ClassFileLoaderFactory.createFilteringClassFileLoader(myclassFileLoader,
+            compilerArguments.getAccessRestrictions(fileResource.getFile())));
+      }
+      // else add class file loader
+      else {
+        classFileLoaderList.add(myclassFileLoader);
       }
     }
 
@@ -285,6 +301,10 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     // Step 1: get the boot class path as specified in the javac task
     Path bootclasspath = getJavac().getBootclasspath();
+
+    if (ClassFileLoaderCache.getInstance().hasClassFileLoader(bootclasspath.toString())) {
+      return ClassFileLoaderCache.getInstance().getClassFileLoader(bootclasspath.toString());
+    }
 
     // Step 2: create ClassFileLoaders for each entry in the boot class path
     List<ClassFileLoader> bootClassFileLoaders = new LinkedList<ClassFileLoader>();
@@ -316,13 +336,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
             .getBootClassPathAccessRestrictions());
       }
 
-      return ClassFileLoaderFactory.createFilteringClassFileLoader(classFileLoader, compilerArguments
+      classFileLoader = ClassFileLoaderFactory.createFilteringClassFileLoader(classFileLoader, compilerArguments
           .getBootClassPathAccessRestrictions());
     }
-    // else return compound class file loader
-    else {
-      return classFileLoader;
-    }
+
+    ClassFileLoaderCache.getInstance().storeClassFileLoader(bootclasspath.toString(), classFileLoader);
+
+    return classFileLoader;
   }
 
   /**
