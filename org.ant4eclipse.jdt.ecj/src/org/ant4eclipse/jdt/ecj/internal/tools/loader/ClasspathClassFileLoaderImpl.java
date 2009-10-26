@@ -597,15 +597,17 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
 
       // TODO Support for source jars
 
+      String javaFileName = className.getClassName() + ".java";
+
       for (File classpathEntry : this._sourcepathEntries) {
 
         if (classpathEntry.isDirectory()) {
           File packageDir = new File(classpathEntry, className.getPackageAsDirectoryName());
-
           if (packageDir.isDirectory()) {
             for (String name : packageDir.list()) {
-
-              if (className.asSourceFileName().endsWith(name)) {
+              if (javaFileName.equals(name)
+                  && new File(classpathEntry, className.asSourceFileName().replace('/', File.separatorChar).replace(
+                      '\\', File.separatorChar)).exists()) {
                 return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName().replace('/',
                     File.separatorChar).replace('\\', File.separatorChar), classpathEntry.getAbsolutePath(),
                     ClasspathClassFileLoaderImpl.this._type);
