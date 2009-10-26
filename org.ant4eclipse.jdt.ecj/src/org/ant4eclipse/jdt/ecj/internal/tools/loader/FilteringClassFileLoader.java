@@ -159,8 +159,6 @@ public class FilteringClassFileLoader implements ClassFileLoader {
       // step 4: append '\.class'
       transformedPart = transformedPart.concat("\\.class");
 
-      // System.out.println(part.substring(1) + " -> " + transformedPart);
-
       if (part.startsWith("+")) {
         this._includes.add(transformedPart);
       }

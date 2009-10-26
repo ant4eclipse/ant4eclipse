@@ -597,17 +597,23 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
 
       // TODO Support for source jars
 
-      for (File file : this._sourcepathEntries) {
-        File classpathEntry = file;
+      for (File classpathEntry : this._sourcepathEntries) {
 
         if (classpathEntry.isDirectory()) {
-          File result = new File(classpathEntry, className.asSourceFileName());
-          if (result.exists()) {
-            return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName().replace('/',
-                File.separatorChar).replace('\\', File.separatorChar), classpathEntry.getAbsolutePath(),
-                ClasspathClassFileLoaderImpl.this._type);
+          File packageDir = new File(classpathEntry, className.getPackageAsDirectoryName());
+
+          if (packageDir.isDirectory()) {
+            for (String name : packageDir.list()) {
+
+              if (className.asSourceFileName().endsWith(name)) {
+                return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName().replace('/',
+                    File.separatorChar).replace('\\', File.separatorChar), classpathEntry.getAbsolutePath(),
+                    ClasspathClassFileLoaderImpl.this._type);
+              }
+            }
           }
         }
+
         // else {
         // try {
         // JarFile jarFile = new JarFile(classpathEntry);
@@ -622,6 +628,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
         // // nothing to do here...
         // }
         // }
+
       }
       return null;
     }

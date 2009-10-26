@@ -72,7 +72,6 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     // find class
     NameEnvironmentAnswer answer = findClass(buffer.toString());
-    A4ELogging.trace("findType('%s'): %s", asString(compoundTypeName), Boolean.valueOf(answer != null));
     return answer;
 
   }
@@ -83,7 +82,6 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[], char[][])
    */
   public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
-    A4ELogging.trace("findType('%s', %s)", new String(typeName), asString(packageName));
 
     StringBuffer result = new StringBuffer();
     if (packageName != null) {
@@ -107,7 +105,6 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#isPackage(char[][], char[])
    */
   public boolean isPackage(char[][] parentPackageName, char[] packageName) {
-    A4ELogging.trace("isPackage('%s', %s)", asString(parentPackageName), new String(packageName));
 
     String qualifiedPackageName = toJavaName(parentPackageName);
     if (qualifiedPackageName.length() > 0) {
@@ -120,8 +117,6 @@ public class NameEnvironmentImpl implements INameEnvironment {
     // the scanning of all jar files
 
     boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
-
-    A4ELogging.trace("isPackage - package '%s' found: %s'", new Object[] { qualifiedPackageName, "" + packageFound });
 
     return packageFound;
   }
@@ -151,6 +146,12 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     // return new NameEnvironmentAnswer if classFile was found
     if (classFile != null) {
+
+      if (A4ELogging.isTraceingEnabled()) {
+        A4ELogging.trace("Loading class '%s' from '%s'.", className.getQualifiedClassName(), classFile
+            .getLibraryLocation());
+      }
+
       return new NameEnvironmentAnswer(classFile.getBinaryType(), (classFile.hasAccessRestriction() ? classFile
           .getAccessRestriction() : null));
     }
@@ -161,6 +162,12 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     // load source file from class file loader
     if (sourceFile != null) {
+
+      if (A4ELogging.isTraceingEnabled()) {
+        A4ELogging.trace("Loading class '%s' as source from '%s'.", className.getQualifiedClassName(), sourceFile
+            .getSourceFile().getAbsolutePath());
+      }
+
       // TODO: AccessRestictions for source files!!
       return new NameEnvironmentAnswer(new CompilationUnitImpl(sourceFile), null);
     }
