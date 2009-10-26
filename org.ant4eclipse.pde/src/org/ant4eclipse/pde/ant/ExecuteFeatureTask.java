@@ -19,7 +19,6 @@ import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
-import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
@@ -377,13 +376,13 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
           values.getProperties().put(FEATURE_FILE, eclipseProject.getFolder().getAbsolutePath());
           values.getProperties().put(FEATURE_FILE_NAME, eclipseProject.getSpecifiedName());
 
-          FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(eclipseProject);
+          // FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(eclipseProject);
 
-          if (featureProjectRole.hasBuildProperties()) {
-            FeatureBuildProperties buildProperties = featureProjectRole.getBuildProperties();
-            values.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
-            values.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
-          }
+          // if (featureProjectRole.hasBuildProperties()) {
+          // FeatureBuildProperties buildProperties = featureProjectRole.getBuildProperties();
+          // values.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
+          // values.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
+          // }
 
           // set references
           values.getReferences().put(FEATURE_FILE_PATH, convertToPath(eclipseProject.getFolder()));
@@ -413,12 +412,14 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
         Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(manifest.getVersion(), PdeBuildHelper
             .getResolvedContextQualifier());
         values.getProperties().put(FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString());
-        // if (manifest) {
-        values.getProperties().put(FEATURE_LABEL, manifest.getLabel());
-        // }
-        // if (condition) {
-        values.getProperties().put(FEATURE_PROVIDERNAME, manifest.getProviderName());
-        // }
+
+        if (Utilities.hasText(manifest.getLabel())) {
+          values.getProperties().put(FEATURE_LABEL, manifest.getLabel());
+        }
+
+        if (Utilities.hasText(manifest.getProviderName())) {
+          values.getProperties().put(FEATURE_PROVIDERNAME, manifest.getProviderName());
+        }
 
         values.getProperties().put(FEATURE_PLUGINS_RESOLVED_VERSIONS, ExecuteFeatureTask.this._resolvedBundleVersions);
 
@@ -448,26 +449,47 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
 
           // add the feature id
           values.getProperties().put(FEATURE_ID, pair.getFirst().getId());
+
           // add the feature version
           values.getProperties().put(FEATURE_VERSION, pair.getFirst().getVersion().toString());
+
           // add the resolved version
           Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(pair.getSecond().getFeatureManifest()
               .getVersion(), PdeBuildHelper.getResolvedContextQualifier());
           values.getProperties().put(FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString());
+
           // add the name
-          values.getProperties().put(FEATURE_NAME, pair.getFirst().getName());
+          if (Utilities.hasText(pair.getFirst().getName())) {
+            values.getProperties().put(FEATURE_NAME, pair.getFirst().getName());
+          }
+
           // add the optional value
           values.getProperties().put(FEATURE_OPTIONAL, Boolean.toString(pair.getFirst().isOptional()));
+
           // add the searchLocation
-          values.getProperties().put(FEATURE_SEARCH_LOCATION, pair.getFirst().getSearchLocation());
+          if (Utilities.hasText(pair.getFirst().getSearchLocation())) {
+            values.getProperties().put(FEATURE_SEARCH_LOCATION, pair.getFirst().getSearchLocation());
+          }
+
           // add the operatingSystem
-          values.getProperties().put(FEATURE_OS, pair.getFirst().getOperatingSystem());
+          if (Utilities.hasText(pair.getFirst().getOperatingSystem())) {
+            values.getProperties().put(FEATURE_OS, pair.getFirst().getOperatingSystem());
+          }
+
           // add the machineArchitecture
-          values.getProperties().put(FEATURE_ARCH, pair.getFirst().getMachineArchitecture());
+          if (Utilities.hasText(pair.getFirst().getMachineArchitecture())) {
+            values.getProperties().put(FEATURE_ARCH, pair.getFirst().getMachineArchitecture());
+          }
+
           // add the windowingSystem
-          values.getProperties().put(FEATURE_WS, pair.getFirst().getWindowingSystem());
+          if (Utilities.hasText(pair.getFirst().getWindowingSystem())) {
+            values.getProperties().put(FEATURE_WS, pair.getFirst().getWindowingSystem());
+          }
+
           // add the locale
-          values.getProperties().put(FEATURE_NL, pair.getFirst().getLocale());
+          if (Utilities.hasText(pair.getFirst().getLocale())) {
+            values.getProperties().put(FEATURE_NL, pair.getFirst().getLocale());
+          }
 
           // return the values
           return values;

@@ -224,8 +224,8 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     values.getProperties().put(BUNDLE_VERSION, pluginProjectRole.getBundleDescription().getVersion().toString());
 
     PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
-    values.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
-    values.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
+    // values.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
+    // values.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
 
     values.getProperties().put(BUILD_LIBRARYSOURCEROOTS, buildProperties.getLibrariesSourceRoots(".src"));
   }

@@ -256,7 +256,7 @@
 				  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
 					<echo>Packing library '.'</echo>
-					
+
 					<!-- template element 'pre-package-library' -->
 					<pre-package-library />
 
@@ -282,10 +282,10 @@
 						</ant4eclipse:forEachSourceDirectory>
 
 					</ant4eclipse:executePluginLibrary>
-					
+
 					<!-- template element 'post-package-library' -->
 					<post-package-library />
-					
+
 				</ant4eclipse:forEachPluginLibrary>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -543,11 +543,10 @@
 					<!-- Step 4.1: Copy all files defined in the build.properties to the destination directory  -->
 					<copy todir="@{destination}/${a4e.features.directory}/${executeFeature.feature.id}_${executeFeature.feature.resolved.version}"
 					      overwrite="true">
+						
 						<!-- file set defined by the projects build properties -->
-						<ant4eclipse:pdeProjectFileSet workspace="@{workspaceDirectory}"
-						                               projectname="${executeFeature.feature.file.name}"
-						                               includes="${executeFeature.build.properties.binary.includes}"
-						                               excludes="${executeFeature.build.properties.binary.excludes}" />
+						<ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
+						                               projectname="${executeFeature.feature.file.name}" />
 					</copy>
 
 					<!-- Step 4.2: Patch the feature.xml -->

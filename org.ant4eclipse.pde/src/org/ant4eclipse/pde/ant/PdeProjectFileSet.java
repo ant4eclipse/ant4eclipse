@@ -14,7 +14,9 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.pde.model.buildproperties.AbstractBuildProperties;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
+import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
@@ -48,35 +50,35 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     EclipseProjectComponent {
 
   /** the bundle root (self) */
-  private static final String    SELF                   = ".";
+  private static final String     SELF                   = ".";
 
   /** the name of the (default) self directory */
-  private static final String    DEFAULT_SELF_DIRECTORY = "@dot";
+  private static final String     DEFAULT_SELF_DIRECTORY = "@dot";
 
   /** 'ant-provided' attributes **/
 
   /** the ant attribute 'useDefaultExcludes' */
-  private boolean                _useDefaultExcludes    = true;
+  private boolean                 _useDefaultExcludes    = true;
 
   /** the ant attribute 'caseSensitive' */
-  private boolean                _caseSensitive         = false;
+  private boolean                 _caseSensitive         = false;
 
   /** the ant attribute 'excludeLibraries' */
-  private boolean                _excludeLibraries      = false;
+  private boolean                 _excludeLibraries      = false;
 
   /** 'derived' attributes **/
 
   /** the result resource list */
-  private List<Resource>         _resourceList;
+  private List<Resource>          _resourceList;
 
   /** the eclipse project delegate */
-  private EclipseProjectDelegate _eclipseProjectDelegate;
+  private EclipseProjectDelegate  _eclipseProjectDelegate;
 
   /** indicates if the file list already has been computed */
-  private boolean                _fileListComputed      = false;
+  private boolean                 _fileListComputed      = false;
 
   /** - */
-  private PluginBuildProperties  _pluginBuildProperties;
+  private AbstractBuildProperties _buildProperties;
 
   /**
    * <p>
@@ -329,15 +331,20 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
     // require workspace and project name set
     requireWorkspaceAndProjectNameSet();
-    ensureRole(PluginProjectRole.class);
 
-    // get plug-in project role
-    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
-    this._pluginBuildProperties = pluginProjectRole.getBuildProperties();
+    if (!(getEclipseProject().hasRole(PluginProjectRole.class) || getEclipseProject().hasRole(FeatureProjectRole.class))) {
+      throw new BuildException(String.format(
+          "Project '%s' must have role 'PluginProjectRole' or 'FeatureProjectRole'.", getEclipseProject()
+              .getSpecifiedName()));
+    }
+
+    this._buildProperties = getEclipseProject().hasRole(PluginProjectRole.class) ? PluginProjectRole.Helper
+        .getPluginProjectRole(getEclipseProject()).getBuildProperties() : FeatureProjectRole.Helper
+        .getFeatureProjectRole(getEclipseProject()).getBuildProperties();
 
     // nothing to do if no inclusion pattern is defined
     // TODO: isSource?
-    if (!this._pluginBuildProperties.hasBinaryIncludes()) {
+    if (!this._buildProperties.hasBinaryIncludes()) {
       return;
     }
 
@@ -345,7 +352,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     this._resourceList.clear();
 
     // iterate over the included pattern set
-    for (String token : this._pluginBuildProperties.getBinaryIncludes()) {
+    for (String token : this._buildProperties.getBinaryIncludes()) {
       processEntry(token);
     }
 
@@ -372,7 +379,8 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private void processEntry(String token) {
 
     // if token is a library name and _excludeLibraries
-    if (this._excludeLibraries && this._pluginBuildProperties.hasLibrary(token)) {
+    if (this._excludeLibraries && this._buildProperties instanceof PluginBuildProperties
+        && ((PluginBuildProperties) this._buildProperties).hasLibrary(token)) {
       return;
     }
 
@@ -459,7 +467,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private boolean matchExcludePattern(String path) {
 
     // iterate over all excluded pattern
-    for (String pattern : this._pluginBuildProperties.getBinaryExcludes()) {
+    for (String pattern : this._buildProperties.getBinaryExcludes()) {
 
       // if the given path matches an exclusion pattern, return true
       if (SelectorUtils.matchPath(normalize(pattern), normalize(path), this._caseSensitive)) {
