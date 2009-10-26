@@ -76,11 +76,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
         problemFactory);
 
     // compile
-    try {
-      compiler.compile(sources);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    compiler.compile(sources);
 
     // create the compile job result
     CompileJobResultImpl result = new CompileJobResultImpl();
