@@ -72,8 +72,8 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
       // add the problems...
       if (result.getAllProblems() != null) {
         if (A4ELogging.isTraceingEnabled()) {
-          A4ELogging.trace("Could compile referenced class '%s'. Reason: %s", sourceFile.getSourceFileName(), Arrays
-              .asList(result.getAllProblems()));
+          A4ELogging.trace("Could not compile referenced class '%s'. Reason: %s", sourceFile.getSourceFileName(),
+              Arrays.asList(result.getAllProblems()));
         }
       }
 
