@@ -13,7 +13,6 @@ package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.jdt.ecj.SourceFile;
@@ -63,9 +62,6 @@ public class CompilationUnitImpl implements ICompilationUnit {
    */
   public CompilationUnitImpl(SourceFile sourceFile) {
     Assert.notNull(sourceFile);
-
-    // debug
-    A4ELogging.debug("CompilationUnitImpl(%s)", sourceFile);
 
     this._sourceFile = sourceFile;
 
@@ -117,9 +113,6 @@ public class CompilationUnitImpl implements ICompilationUnit {
   public final char[] getContents() {
     String filename = new String(this._fileName);
     File sourceFile = new File(this._sourceFile.getSourceFolder(), filename);
-
-    A4ELogging.debug("SourceFile.getContents(): '%s', '%s'", this._sourceFile.getSourceFile().getAbsolutePath(),
-        this._fileName);
 
     StringBuffer result = new StringBuffer();
 

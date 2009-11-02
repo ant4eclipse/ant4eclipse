@@ -68,6 +68,15 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
 
     // return immediately if the source file is a ReferableSourceFile
     if (sourceFile instanceof ReferableSourceFile) {
+
+      // add the problems...
+      if (result.getAllProblems() != null) {
+        if (A4ELogging.isTraceingEnabled()) {
+          A4ELogging.trace("Could compile referenced class '%s'. Reason: %s", sourceFile.getSourceFileName(), Arrays
+              .asList(result.getAllProblems()));
+        }
+      }
+
       return;
     }
 

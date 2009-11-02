@@ -113,10 +113,15 @@ public class NameEnvironmentImpl implements INameEnvironment {
       qualifiedPackageName = new String(packageName);
     }
 
-    // this is a three-step check in order to gain performance resp. to avoid
-    // the scanning of all jar files
-
     boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
+
+    if (A4ELogging.isTraceingEnabled()) {
+      if (packageFound) {
+        A4ELogging.trace("Package '%s' found...", qualifiedPackageName);
+      } else {
+        A4ELogging.trace("Package '%s' not found...", qualifiedPackageName);
+      }
+    }
 
     return packageFound;
   }
@@ -173,6 +178,9 @@ public class NameEnvironmentImpl implements INameEnvironment {
     }
 
     // else return null
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("Could not load class '%s'.", className.getQualifiedClassName());
+    }
     return null;
   }
 
@@ -199,31 +207,31 @@ public class NameEnvironmentImpl implements INameEnvironment {
     return result.toString();
   }
 
-  /**
-   * <p>
-   * ONLY USED FOR DEBUGGING PURPOSE.
-   * </p>
-   * 
-   * @param array
-   * @return
-   */
-  private static String asString(char[][] array) {
-    // define result
-    StringBuffer result = new StringBuffer();
-
-    // compute result
-    if (array != null) {
-      for (int i = 0; i < array.length; i++) {
-        result.append("{").append(new String(array[i])).append("}");
-        if (i < array.length - 1) {
-          result.append(",");
-        }
-      }
-    } else {
-      result.append("(null)");
-    }
-
-    // return result
-    return result.toString();
-  }
+  // /**
+  // * <p>
+  // * ONLY USED FOR DEBUGGING PURPOSE.
+  // * </p>
+  // *
+  // * @param array
+  // * @return
+  // */
+  // private static String asString(char[][] array) {
+  // // define result
+  // StringBuffer result = new StringBuffer();
+  //
+  // // compute result
+  // if (array != null) {
+  // for (int i = 0; i < array.length; i++) {
+  // result.append("{").append(new String(array[i])).append("}");
+  // if (i < array.length - 1) {
+  // result.append(",");
+  // }
+  // }
+  // } else {
+  // result.append("(null)");
+  // }
+  //
+  // // return result
+  // return result.toString();
+  // }
 }
