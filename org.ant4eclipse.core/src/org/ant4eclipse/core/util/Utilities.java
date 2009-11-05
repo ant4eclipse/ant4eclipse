@@ -556,6 +556,31 @@ public class Utilities {
   }
 
   /**
+   * Generates a textual representation for the supplied list of values.
+   * 
+   * @param objects
+   *          A list of values. Not <code>null</code>.
+   * @param delimiter
+   *          The delimiter to be used. If <code>null</code> the default value <code>,</code> is used.
+   * 
+   * @return A textual representation for the supplied list of values. Not <code>null</code>.
+   */
+  public static final String listToString(Object[] objects, String delimiter) {
+    if (delimiter == null) {
+      delimiter = ",";
+    }
+    StringBuffer buffer = new StringBuffer();
+    if (objects.length > 0) {
+      buffer.append(String.valueOf(objects[0]));
+      for (int i = 1; i < objects.length; i++) {
+        buffer.append(delimiter);
+        buffer.append(String.valueOf(objects[i]));
+      }
+    }
+    return buffer.toString();
+  }
+
+  /**
    * Generates a textual representation of the supplied Property map.
    * 
    * @param properties
