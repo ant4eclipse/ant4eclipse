@@ -31,13 +31,10 @@ import java.util.Set;
 public abstract class AbstractAnt4EclipseDataType extends DataType {
 
   /** - */
-  private static Set<AbstractAnt4EclipseDataType> instances     = new HashSet<AbstractAnt4EclipseDataType>();
+  private static Set<AbstractAnt4EclipseDataType> instances  = new HashSet<AbstractAnt4EclipseDataType>();
 
   /** - */
-  private static Object                           instancesLock = new Object();
-
-  /** - */
-  private boolean                                 _validated    = false;
+  private boolean                                 _validated = false;
 
   /**
    * <p>
@@ -50,16 +47,12 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
     setProject(project);
 
     // add instance
-    synchronized (instancesLock) {
+    synchronized (instances) {
       instances.add(this);
     }
     // configure ant4eclipse
     Ant4EclipseConfigurator.configureAnt4Eclipse(project);
 
-    // add to instances map
-    synchronized (instancesLock) {
-      instances.add(this);
-    }
   }
 
   /**
@@ -102,7 +95,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
   static void validateAll() {
 
     // add to instances map
-    synchronized (instancesLock) {
+    synchronized (instances) {
 
       // iterate over the registered AbstractAnt4EclipseDataTypes
       for (AbstractAnt4EclipseDataType dataType : instances) {
