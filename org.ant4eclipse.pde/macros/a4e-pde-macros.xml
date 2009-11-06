@@ -466,6 +466,145 @@
     </sequential>
   </macrodef>
 
+  <!-- ~~~ PRIVATE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Clears a directory under a certain condition.                                           -->
+  <!--                                                                                         -->
+  <!-- @param dir         The directory which has to be cleaned.                               -->
+  <!-- @param condition   The condition which decides whether the cleanup takes place or not.  -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="scrub-directory">
+    <attribute name="dir"/>
+    <attribute name="condition" default="true"/>
+    <sequential>
+      <antcontrib:if>
+        <antcontrib:istrue value="@{condition}"/>
+        <antcontrib:then>
+          <echo>Scrubbing directory '@{dir}'</echo>
+          <delete dir="@{dir}" quiet="true" />
+          <mkdir dir="@{dir}" />
+        </antcontrib:then>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+  
+  <!-- =================================
+          macro       : buildProduct
+          description : Builds an eclipse product. Each contained plug-in project will be build.
+         ================================= -->
+  <macrodef name="buildProduct">
+    <attribute name="workspaceDirectory" />
+    <attribute name="productfile"/>
+    <attribute name="targetPlatformId" />
+    <attribute name="destination" />
+    <attribute name="clearDestination" default="false" />
+    <attribute name="defaultCompilerOptionsFile" default=""/>
+    <attribute name="commandline" default="false"/>
+    <sequential>
+      
+      <echo level="warning">THIS MACRO IS CURRENTLY NOT FINISHED</echo>
+      
+      <!-- cleanup the directory if that has been requested -->
+      <scrub-directory dir="@{destination}" condition="@{clearDestination}"/>
+      
+      <!-- access the product configuration -->
+      <queryProduct product="@{productfile}" workspaceDirectory="@{workspaceDirectory}">
+        <query type="launchername"  property="a4e.buildProduct_launcher"/>
+        <query type="id"            property="a4e.buildProduct_id"/>
+        <query type="name"          property="a4e.buildProduct_name"/>
+        <query type="vmargs"        property="a4e.buildProduct_vmargs"/>
+        <query type="configini"     property="a4e.buildProduct_configini"/>
+        <query type="plugins"       property="a4e.buildProduct_pluginids"/> 
+        <query type="fragments"     property="a4e.buildProduct_fragmentids"/> 
+        <query type="wsplugins"     property="a4e.buildProduct_wspluginids"/> 
+        <query type="wsfragments"   property="a4e.buildProduct_wsfragmentids"/> 
+      </queryProduct>
+
+      <!-- create the .eclipseproduct file -->
+      <echo file="@{destination}/.eclipseproduct">version=1.0.0&#10;</echo>
+      <echo file="@{destination}/.eclipseproduct" append="true">name=${create-product-file_name}&#10;</echo>
+      <echo file="@{destination}/.eclipseproduct" append="true">id=${create-product-file_id}&#10;</echo>
+
+      <!-- create the ini file for the launcher -->
+      <echo file="@{destination}/${a4e.buildProduct_launcher}.ini">-vmargs&#10;</echo>
+      <antcontrib:for param="vmarg" list="${a4e.buildProduct_vmargs}" delimiter=" " trim="true">
+        <sequential>
+          <echo file="@{destination}/${a4e.buildProduct_launcher}.ini" append="true">@{vmarg}&#10;</echo>
+        </sequential>
+      </antcontrib:for>
+
+      <!-- copy an existing config.ini file --> 
+      <copy file="${a4e.buildProduct_configini}" tofile="@{destination}/configuration/config.ini"/>
+      
+      <!-- copy the executable (decide whether we're using the commandline version or not) -->
+      <antcontrib:if>
+        <antcontrib:istrue value="@{commandline}"/>
+        <antcontrib:then>
+        </antcontrib:then>
+        <antcontrib:else>
+        </antcontrib:else>
+      </antcontrib:if>
+
+      <!-- copy all used plugin from the target platform into our release version -->
+      <!-- @todo [06-Nov-2009:KASI]  We need the location of the target platform here.
+      <antcontrib:for param="projectname" list="${build-a4e.buildProduct_pluginids}">
+        <sequential>
+          <copy todir="@{destdir}/plugins" overwrite="true">
+            <fileset dir="@{targetplatform}/plugins">
+              <include name="@{projectname}_*.jar" />
+              <include name="@{projectname}_*/**" />
+              <not>
+                <contains text=".source" casesensitive="true" />
+              </not>
+            </fileset>
+          </copy>
+        </sequential>
+      </antcontrib:for>
+      -->
+
+      <!-- build all plugins -->
+      <!-- @todo [06-Nov-2009:KASI]  Currently assuming a plugin based product definition. -->
+      <antcontrib:for param="projectname" list="${a4e.buildProduct_wspluginids}">
+        <sequential>
+          <buildPlugin 
+            projectName="@{projectname}" 
+            workspaceDirectory="@{workspaceDirectory}" 
+            targetPlatformId="@{targetPlatformId}" 
+            packageAsJar="true"
+            destination="@{destination}"
+            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+          />
+        </sequential>
+      </antcontrib:for>
+
+      <!-- build all fragments -->
+      <!-- @todo [06-Nov-2009:KASI]  Currently assuming a plugin based product definition. -->
+      <antcontrib:for param="fragmentname" list="${a4e.buildProduct_wsfragmentids}">
+        <sequential>
+          <buildPlugin 
+            projectName="@{fragmentname}" 
+            workspaceDirectory="@{workspaceDirectory}" 
+            targetPlatformId="@{targetPlatformId}" 
+            packageAsJar="true"
+            destination="@{destination}"
+            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+          />
+        </sequential>
+      </antcontrib:for>
+
+      <!-- remove the variables -->
+      <antcontrib:var unset="true" name="a4e.buildProduct_launcher"/>
+      <antcontrib:var unset="true" name="a4e.buildProduct_id"/>
+      <antcontrib:var unset="true" name="a4e.buildProduct_name"/>
+      <antcontrib:var unset="true" name="a4e.buildProduct_vmargs"/>
+      <antcontrib:var unset="true" name="a4e.buildProduct_configini"/>
+      <antcontrib:var unset="true" name="a4e.buildProduct_pluginids"/> 
+      <antcontrib:var unset="true" name="a4e.buildProduct_fragmentids"/> 
+      <antcontrib:var unset="true" name="a4e.buildProduct_wspluginids"/> 
+      <antcontrib:var unset="true" name="a4e.buildProduct_wsfragmentids"/>
+      
+    </sequential>
+  </macrodef>
+      
   <!-- =================================
           target      : buildFeature
           description : Builds an eclipse feature project. Each contained plug-in project will be build.
