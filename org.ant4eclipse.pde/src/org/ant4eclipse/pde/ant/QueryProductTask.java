@@ -82,16 +82,29 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   public static enum Os {
 
     /** - */
-    linux,
+    linux(ProductDefinition.Os.linux),
 
     /** - */
-    solaris,
+    solaris(ProductDefinition.Os.solaris),
 
     /** - */
-    macosx,
+    macosx(ProductDefinition.Os.macosx),
 
     /** - */
-    win32;
+    win32(ProductDefinition.Os.win32);
+
+    /** - */
+    private ProductDefinition.Os _os;
+
+    /**
+     * Initialises this ant enumeration with the corresponding value for the product definition.
+     * 
+     * @param pos
+     *          The os value used for the product definition. Not <code>null</code>.
+     */
+    Os(ProductDefinition.Os pos) {
+      this._os = pos;
+    }
 
   }
 
@@ -271,14 +284,13 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
       }
       break;
     case programargs:
-      value = getArgs(productdef.getProgramArgs(), productdef.getProgramArgs(ProductDefinition.Os.valueOf(this._os
-          .name())));
+      value = getArgs(productdef.getProgramArgs(), productdef.getProgramArgs(this._os._os));
       break;
     case vmargs:
-      value = getArgs(productdef.getVmArgs(), productdef.getVmArgs(ProductDefinition.Os.valueOf(this._os.name())));
+      value = getArgs(productdef.getVmArgs(), productdef.getVmArgs(this._os._os));
       break;
     case configini:
-      String configini = productdef.getConfigIni(ProductDefinition.Os.valueOf(this._os.name()));
+      String configini = productdef.getConfigIni(this._os._os);
       if (configini != null) {
         int idx = configini.indexOf('/', 1);
         String projectname = configini.substring(1, idx);
