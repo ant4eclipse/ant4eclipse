@@ -59,27 +59,27 @@ public class ProductDefinitionParser {
     XQuery featureidquery = queryhandler.createQuery("//product/features/feature/@id");
     XQuery featureversionquery = queryhandler.createQuery("//product/features/feature/@version");
 
-    XQuery configinilinuxquery = queryhandler.createQuery("//product/configIni/linux/text()");
-    XQuery configinimacosxquery = queryhandler.createQuery("//product/configIni/macosx/text()");
-    XQuery configinisolarisquery = queryhandler.createQuery("//product/configIni/solaris/text()");
-    XQuery configiniwin32query = queryhandler.createQuery("//product/configIni/win32/text()");
+    XQuery configinilinuxquery = queryhandler.createQuery("//product/configIni/linux");
+    XQuery configinimacosxquery = queryhandler.createQuery("//product/configIni/macosx");
+    XQuery configinisolarisquery = queryhandler.createQuery("//product/configIni/solaris");
+    XQuery configiniwin32query = queryhandler.createQuery("//product/configIni/win32");
 
-    XQuery programallquery = queryhandler.createQuery("//product/launcherArgs/programArgs/text()");
-    XQuery programlinuxquery = queryhandler.createQuery("//product/launcherArgs/programArgsLin/text()");
-    XQuery programmacquery = queryhandler.createQuery("//product/launcherArgs/programArgsMac/text()");
-    XQuery programsolarisquery = queryhandler.createQuery("//product/launcherArgs/programArgsSol/text()");
-    XQuery programwinquery = queryhandler.createQuery("//product/launcherArgs/programArgsWin/text()");
+    XQuery programallquery = queryhandler.createQuery("//product/launcherArgs/programArgs");
+    XQuery programlinuxquery = queryhandler.createQuery("//product/launcherArgs/programArgsLin");
+    XQuery programmacquery = queryhandler.createQuery("//product/launcherArgs/programArgsMac");
+    XQuery programsolarisquery = queryhandler.createQuery("//product/launcherArgs/programArgsSol");
+    XQuery programwinquery = queryhandler.createQuery("//product/launcherArgs/programArgsWin");
 
-    XQuery vmargsallquery = queryhandler.createQuery("//product/launcherArgs/vmArgs/text()");
-    XQuery vmargslinuxquery = queryhandler.createQuery("//product/launcherArgs/vmArgsLin/text()");
-    XQuery vmargsmacquery = queryhandler.createQuery("//product/launcherArgs/vmArgsMac/text()");
-    XQuery vmargssolarisquery = queryhandler.createQuery("//product/launcherArgs/vmArgsSol/text()");
-    XQuery vmargswinquery = queryhandler.createQuery("//product/launcherArgs/vmArgsWin/text()");
+    XQuery vmargsallquery = queryhandler.createQuery("//product/launcherArgs/vmArgs");
+    XQuery vmargslinuxquery = queryhandler.createQuery("//product/launcherArgs/vmArgsLin");
+    XQuery vmargsmacquery = queryhandler.createQuery("//product/launcherArgs/vmArgsMac");
+    XQuery vmargssolarisquery = queryhandler.createQuery("//product/launcherArgs/vmArgsSol");
+    XQuery vmargswinquery = queryhandler.createQuery("//product/launcherArgs/vmArgsWin");
 
-    XQuery vmlinuxquery = queryhandler.createQuery("//product/vm/linux/text()");
-    XQuery vmmacosxquery = queryhandler.createQuery("//product/vm/macosx/text()");
-    XQuery vmsolarisquery = queryhandler.createQuery("//product/vm/solaris/text()");
-    XQuery vmwin32query = queryhandler.createQuery("//product/vm/win32/text()");
+    XQuery vmlinuxquery = queryhandler.createQuery("//product/vm/linux");
+    XQuery vmmacosxquery = queryhandler.createQuery("//product/vm/macosx");
+    XQuery vmsolarisquery = queryhandler.createQuery("//product/vm/solaris");
+    XQuery vmwin32query = queryhandler.createQuery("//product/vm/win32");
 
     XQueryHandler.queryInputStream(inputstream, queryhandler);
 
