@@ -74,6 +74,15 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     launchername,
 
     /** - */
+    wsplugins,
+
+    /** - */
+    wsfragments,
+
+    /** - */
+    wsfeatures,
+
+    /** - */
     plugins,
 
     /** - */
@@ -216,7 +225,8 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
         throw new ExtendedBuildException("The attribute 'query' has to be set to one of the following values: %s",
             Utilities.listToString(QueryType.values(), null));
       }
-      if (query._type == QueryType.configini) {
+      if ((query._type == QueryType.configini) || (query._type == QueryType.wsplugins)
+          || (query._type == QueryType.wsfragments) || (query._type == QueryType.wsfeatures)) {
         this._workspacedelegate.requireWorkspaceDirectorySet();
       }
     }
@@ -275,6 +285,12 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
       return Utilities.listToString(productdef.getFragmentIds(), this._delimiter);
     case features:
       return Utilities.listToString(productdef.getFeatureIds(), this._delimiter);
+    case wsplugins:
+      return getWorkspaceContained(productdef.getPluginIds());
+    case wsfragments:
+      return getWorkspaceContained(productdef.getFragmentIds());
+    case wsfeatures:
+      return getWorkspaceContained(productdef.getFeatureIds());
     case launchername:
       return productdef.getLaunchername();
     case application:
@@ -310,6 +326,27 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     default:
       throw new ExtendedBuildException("The query type '%s' is currently not implemented.", query._type);
     }
+  }
+
+  /**
+   * Filters the supplied list of ids by those that are located within the workspace.
+   * 
+   * @param ids
+   *          The ids which have to be filtered. Not <code>null</code>.
+   * 
+   * @return The value providing the list of ids available within the workspace. Not <code>null</code>.
+   */
+  private String getWorkspaceContained(String[] ids) {
+    List<String> list = new ArrayList<String>();
+    for (String id : ids) {
+      if (this._workspacedelegate.getWorkspace().getProject(id) != null) {
+        list.add(id);
+      }
+    }
+    if (list.isEmpty()) {
+      return null;
+    }
+    return Utilities.listToString(list.toArray(), this._delimiter);
   }
 
   /**
