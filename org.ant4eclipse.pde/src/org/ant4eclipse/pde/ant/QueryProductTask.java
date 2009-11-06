@@ -45,6 +45,12 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   public static enum Query {
 
     /** - */
+    id,
+
+    /** - */
+    name,
+
+    /** - */
     basedonfeatures,
 
     /** - */
@@ -301,6 +307,12 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
       break;
     case basedonfeatures:
       value = String.valueOf(productdef.isBasedOnFeatures());
+      break;
+    case id:
+      value = productdef.getId();
+      break;
+    case name:
+      value = productdef.getName();
       break;
     default:
       throw new ExtendedBuildException("The query type '%s' is currently not implemented.", this._query);
