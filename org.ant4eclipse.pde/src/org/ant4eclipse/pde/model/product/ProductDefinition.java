@@ -195,7 +195,7 @@ public class ProductDefinition {
    */
   void addVm(Os os, String vm) {
     if (vm != null) {
-      this._vm.put(os, vm);
+      this._vm.put(os, vm.trim());
     }
   }
 
@@ -221,7 +221,7 @@ public class ProductDefinition {
    */
   void addVmArgs(Os os, String args) {
     if (args != null) {
-      this._vmargs.put(os, args.replace('\n', ' '));
+      this._vmargs.put(os, args.replace('\n', ' ').trim());
     }
   }
 
@@ -256,7 +256,7 @@ public class ProductDefinition {
    */
   void addProgramArgs(Os os, String args) {
     if (args != null) {
-      this._programargs.put(os, args.replace('\n', ' '));
+      this._programargs.put(os, args.replace('\n', ' ').trim());
     }
   }
 
@@ -282,7 +282,8 @@ public class ProductDefinition {
   }
 
   /**
-   * Registers a config ini path for a specific os.
+   * Registers a config ini path for a specific os. The path is always workspace relative which means it begins with a
+   * leading slash.
    * 
    * @param os
    *          The associated operating system. Not <code>null</code>.
@@ -291,12 +292,13 @@ public class ProductDefinition {
    */
   void addConfigIni(Os os, String path) {
     if (path != null) {
-      this._configini.put(os, path);
+      this._configini.put(os, path.trim());
     }
   }
 
   /**
-   * Returns a config.ini path used for the supplied operating system.
+   * Returns a config.ini path used for the supplied operating system. The path is always workspace relative which means
+   * it begins with a leading slash.
    * 
    * @param os
    *          The operating system used to access the path. Not <code>null</code>.
@@ -305,15 +307,6 @@ public class ProductDefinition {
    */
   public String getConfigIni(Os os) {
     return this._configini.get(os);
-  }
-
-  /**
-   * Returns a config.ini path used for all operating systems.
-   * 
-   * @return The config.ini path or <code>null</code> if none has been specified.
-   */
-  public String getConfigIni() {
-    return getConfigIni(Os.all);
   }
 
   /**
