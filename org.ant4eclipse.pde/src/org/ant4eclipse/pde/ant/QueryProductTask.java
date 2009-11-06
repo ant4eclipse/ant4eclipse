@@ -29,6 +29,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -42,7 +44,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   /**
    * The query type is used to select the kind of data that is being requested.
    */
-  public static enum Query {
+  public static enum QueryType {
 
     /** - */
     id,
@@ -115,19 +117,10 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   }
 
   /** - */
-  private String            _property;
-
-  /** - */
   private File              _product;
 
   /** - */
-  private Query             _query;
-
-  /** - */
   private String            _delimiter;
-
-  /** - */
-  private Os                _os;
 
   /** - */
   private WorkspaceDelegate _workspacedelegate;
@@ -135,17 +128,18 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   /** - */
   private boolean           _defaultisempty;
 
+  /** - */
+  private List<Query>       _queries;
+
   /**
    * Initialises this task with default values.
    */
   public QueryProductTask() {
     super();
     this._workspacedelegate = new WorkspaceDelegate(this);
-    this._os = Os.win32;
+    this._queries = new ArrayList<Query>();
     this._delimiter = ",";
-    this._query = null;
     this._product = null;
-    this._property = null;
     this._defaultisempty = true;
   }
 
@@ -165,38 +159,8 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param workspace
    *          The workspace directory. Not <code>null</code>.
    */
-  public final void setWorkspaceDirectory(File workspace) {
+  public void setWorkspaceDirectory(File workspace) {
     this._workspacedelegate.setWorkspaceDirectory(workspace);
-  }
-
-  /**
-   * Changes the current os used for the querying of the product configuration.
-   * 
-   * @param newos
-   *          The new os used for the querying of the product configuration. Not <code>null</code>.
-   */
-  public void setOs(Os newos) {
-    this._os = newos;
-  }
-
-  /**
-   * Changes the query used to access the product information.
-   * 
-   * @param newquery
-   *          The new query used to access product information. Not <code>null</code>.
-   */
-  public void setQuery(Query newquery) {
-    this._query = newquery;
-  }
-
-  /**
-   * Changes the name of the property which will be set to access the value.
-   * 
-   * @param newproperty
-   *          The new property name. Neither <code>null</code> nor empty.
-   */
-  public void setProperty(String newproperty) {
-    this._property = Utilities.cleanup(newproperty);
   }
 
   /**
@@ -220,26 +184,41 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   }
 
   /**
+   * Adds the supplied query to this task.
+   * 
+   * @param newquery
+   *          The new query which has to be added.
+   */
+  public void addConfiguredQuery(Query newquery) {
+    this._queries.add(newquery);
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (this._property == null) {
-      throw new BuildException("The attribute 'property' has to be set.");
-    }
     if (this._product == null) {
       throw new BuildException("The attribute 'product' has to be set.");
     }
     if (!this._product.isFile()) {
       throw new ExtendedBuildException("The product configuration '%s' is not a regular file.", this._product);
     }
-    if (this._query == null) {
-      throw new ExtendedBuildException("The attribute 'query' has to be set to one of the following values: %s",
-          Utilities.listToString(Query.values(), null));
+    if (this._queries.isEmpty()) {
+      throw new BuildException("There must be at least one <query> element.");
     }
-    if (this._query == Query.configini) {
-      this._workspacedelegate.requireWorkspaceDirectorySet();
+    for (Query query : this._queries) {
+      if (query._property == null) {
+        throw new BuildException("The attribute 'property' has to be set on a query.");
+      }
+      if (query._type == null) {
+        throw new ExtendedBuildException("The attribute 'query' has to be set to one of the following values: %s",
+            Utilities.listToString(QueryType.values(), null));
+      }
+      if (query._type == QueryType.configini) {
+        this._workspacedelegate.requireWorkspaceDirectorySet();
+      }
     }
   }
 
@@ -266,63 +245,70 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   @Override
   protected void doExecute() {
     ProductDefinition productdef = loadProductDefinition();
-    String value = null;
-    switch (this._query) {
+    for (Query query : this._queries) {
+      String value = runQuery(query, productdef);
+      if (value != null) {
+        getProject().setProperty(query._property, value);
+      } else {
+        if (this._defaultisempty) {
+          getProject().setProperty(query._property, "");
+        }
+      }
+    }
+  }
+
+  /**
+   * Evaluates a single query.
+   * 
+   * @param query
+   *          The query that has to be evaluated. Not <code>null</code>.
+   * @param productdef
+   *          The product definition providing the necessary information. Not <code>null</code>.
+   * 
+   * @return The value of this query. Maybe <code>null</code>.
+   */
+  private String runQuery(Query query, ProductDefinition productdef) {
+    switch (query._type) {
     case plugins:
-      value = Utilities.listToString(productdef.getPluginIds(), this._delimiter);
-      break;
+      return Utilities.listToString(productdef.getPluginIds(), this._delimiter);
     case fragments:
-      value = Utilities.listToString(productdef.getFragmentIds(), this._delimiter);
-      break;
+      return Utilities.listToString(productdef.getFragmentIds(), this._delimiter);
     case features:
-      value = Utilities.listToString(productdef.getFeatureIds(), this._delimiter);
-      break;
+      return Utilities.listToString(productdef.getFeatureIds(), this._delimiter);
     case launchername:
-      value = productdef.getLaunchername();
-      break;
+      return productdef.getLaunchername();
     case application:
-      value = productdef.getApplication();
-      break;
+      return productdef.getApplication();
+    case programargs:
+      return getArgs(productdef.getProgramArgs(), productdef.getProgramArgs(query._os._os));
+    case vmargs:
+      return getArgs(productdef.getVmArgs(), productdef.getVmArgs(query._os._os));
+    case basedonfeatures:
+      return String.valueOf(productdef.isBasedOnFeatures());
+    case id:
+      return productdef.getId();
+    case name:
+      return productdef.getName();
     case version:
       Version version = productdef.getVersion();
       if (version != null) {
-        value = version.toString();
+        return version.toString();
+      } else {
+        return null;
       }
-      break;
-    case programargs:
-      value = getArgs(productdef.getProgramArgs(), productdef.getProgramArgs(this._os._os));
-      break;
-    case vmargs:
-      value = getArgs(productdef.getVmArgs(), productdef.getVmArgs(this._os._os));
-      break;
     case configini:
-      String configini = productdef.getConfigIni(this._os._os);
+      String configini = productdef.getConfigIni(query._os._os);
       if (configini != null) {
         int idx = configini.indexOf('/', 1);
         String projectname = configini.substring(1, idx);
         String path = configini.substring(idx + 1);
         EclipseProject project = this._workspacedelegate.getWorkspace().getProject(projectname);
-        value = project.getChild(path, PathStyle.ABSOLUTE).getAbsolutePath();
+        return project.getChild(path, PathStyle.ABSOLUTE).getAbsolutePath();
+      } else {
+        return null;
       }
-      break;
-    case basedonfeatures:
-      value = String.valueOf(productdef.isBasedOnFeatures());
-      break;
-    case id:
-      value = productdef.getId();
-      break;
-    case name:
-      value = productdef.getName();
-      break;
     default:
-      throw new ExtendedBuildException("The query type '%s' is currently not implemented.", this._query);
-    }
-    if (value != null) {
-      getProject().setProperty(this._property, value);
-    } else {
-      if (this._defaultisempty) {
-        getProject().setProperty(this._property, "");
-      }
+      throw new ExtendedBuildException("The query type '%s' is currently not implemented.", query._type);
     }
   }
 
@@ -349,5 +335,60 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     }
     return Utilities.cleanup(buffer.toString());
   }
+
+  /**
+   * Representation of a single query element for this task.
+   */
+  public static class Query {
+
+    /** - */
+    private String    _property;
+
+    /** - */
+    private QueryType _type;
+
+    /** - */
+    private Os        _os;
+
+    /**
+     * Initialises this query instance with default values.
+     */
+    public Query() {
+      this._os = Os.win32;
+      this._type = null;
+      this._property = null;
+    }
+
+    /**
+     * Changes the current os used for the querying of the product configuration.
+     * 
+     * @param newos
+     *          The new os used for the querying of the product configuration. Not <code>null</code>.
+     */
+    public void setOs(Os newos) {
+      this._os = newos;
+    }
+
+    /**
+     * Changes the query used to access the product information.
+     * 
+     * @param newquery
+     *          The new query used to access product information. Not <code>null</code>.
+     */
+    public void setType(QueryType newquery) {
+      this._type = newquery;
+    }
+
+    /**
+     * Changes the name of the property which will be set to access the value.
+     * 
+     * @param newproperty
+     *          The new property name. Neither <code>null</code> nor empty.
+     */
+    public void setProperty(String newproperty) {
+      this._property = Utilities.cleanup(newproperty);
+    }
+
+  } /* ENDCLASS */
 
 } /* ENDCLASS */
