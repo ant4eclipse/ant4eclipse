@@ -12,9 +12,10 @@
 package org.ant4eclipse.pde.model.product;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.data.Version;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
+
+import org.osgi.framework.Version;
 
 import java.io.InputStream;
 
@@ -32,14 +33,14 @@ public class ProductDefinitionParser {
    * Creates a product definition from the supplied content.
    * </p>
    * 
-   * @param inputStream
+   * @param inputstream
    *          The stream which provides the content. Not <code>null</code>.
    * 
    * @return A product definition instance. Not <code>null</code>.
    */
-  public static ProductDefinition parseProductDefinition(InputStream inputStream) {
+  public static ProductDefinition parseProductDefinition(InputStream inputstream) {
 
-    Assert.notNull(inputStream);
+    Assert.notNull(inputstream);
 
     XQueryHandler queryhandler = new XQueryHandler();
 
@@ -49,10 +50,38 @@ public class ProductDefinitionParser {
     XQuery versionquery = queryhandler.createQuery("//product/@version");
     XQuery usefeaturesquery = queryhandler.createQuery("//product/@useFeatures");
 
+    XQuery launchernamequery = queryhandler.createQuery("//product/launcher/@name");
+    XQuery splashquery = queryhandler.createQuery("//product/splash/@location");
+
     XQuery pluginidquery = queryhandler.createQuery("//product/plugins/plugin/@id");
     XQuery fragmentquery = queryhandler.createQuery("//product/plugins/plugin/@fragment");
 
-    XQueryHandler.queryInputStream(inputStream, queryhandler);
+    XQuery featureidquery = queryhandler.createQuery("//product/features/feature/@id");
+    XQuery featureversionquery = queryhandler.createQuery("//product/features/feature/@version");
+
+    XQuery configinilinuxquery = queryhandler.createQuery("//product/configIni/linux/text()");
+    XQuery configinimacosxquery = queryhandler.createQuery("//product/configIni/macosx/text()");
+    XQuery configinisolarisquery = queryhandler.createQuery("//product/configIni/solaris/text()");
+    XQuery configiniwin32query = queryhandler.createQuery("//product/configIni/win32/text()");
+
+    XQuery programallquery = queryhandler.createQuery("//product/launcherArgs/programArgs/text()");
+    XQuery programlinuxquery = queryhandler.createQuery("//product/launcherArgs/programArgsLin/text()");
+    XQuery programmacquery = queryhandler.createQuery("//product/launcherArgs/programArgsMac/text()");
+    XQuery programsolarisquery = queryhandler.createQuery("//product/launcherArgs/programArgsSol/text()");
+    XQuery programwinquery = queryhandler.createQuery("//product/launcherArgs/programArgsWin/text()");
+
+    XQuery vmargsallquery = queryhandler.createQuery("//product/launcherArgs/vmArgs/text()");
+    XQuery vmargslinuxquery = queryhandler.createQuery("//product/launcherArgs/vmArgsLin/text()");
+    XQuery vmargsmacquery = queryhandler.createQuery("//product/launcherArgs/vmArgsMac/text()");
+    XQuery vmargssolarisquery = queryhandler.createQuery("//product/launcherArgs/vmArgsSol/text()");
+    XQuery vmargswinquery = queryhandler.createQuery("//product/launcherArgs/vmArgsWin/text()");
+
+    XQuery vmlinuxquery = queryhandler.createQuery("//product/vm/linux/text()");
+    XQuery vmmacosxquery = queryhandler.createQuery("//product/vm/macosx/text()");
+    XQuery vmsolarisquery = queryhandler.createQuery("//product/vm/solaris/text()");
+    XQuery vmwin32query = queryhandler.createQuery("//product/vm/win32/text()");
+
+    XQueryHandler.queryInputStream(inputstream, queryhandler);
 
     ProductDefinition result = new ProductDefinition();
 
@@ -60,7 +89,31 @@ public class ProductDefinitionParser {
     result.setId(idquery.getSingleResult());
     result.setName(namequery.getSingleResult());
     result.setVersion(new Version(versionquery.getSingleResult()));
+    result.setLaunchername(launchernamequery.getSingleResult());
+    result.setSplashplugin(splashquery.getSingleResult());
     result.setBasedOnFeatures(Boolean.parseBoolean(usefeaturesquery.getSingleResult()));
+
+    result.addConfigIni(ProductDefinition.Os.linux, configinilinuxquery.getSingleResult());
+    result.addConfigIni(ProductDefinition.Os.macosx, configinimacosxquery.getSingleResult());
+    result.addConfigIni(ProductDefinition.Os.solaris, configinisolarisquery.getSingleResult());
+    result.addConfigIni(ProductDefinition.Os.win32, configiniwin32query.getSingleResult());
+
+    result.addProgramArgs(ProductDefinition.Os.all, programallquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.Os.linux, programlinuxquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.Os.macosx, programmacquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.Os.solaris, programsolarisquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.Os.win32, programwinquery.getSingleResult());
+
+    result.addVmArgs(ProductDefinition.Os.all, vmargsallquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.Os.linux, vmargslinuxquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.Os.macosx, vmargsmacquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.Os.solaris, vmargssolarisquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.Os.win32, vmargswinquery.getSingleResult());
+
+    result.addVm(ProductDefinition.Os.linux, vmlinuxquery.getSingleResult());
+    result.addVm(ProductDefinition.Os.macosx, vmmacosxquery.getSingleResult());
+    result.addVm(ProductDefinition.Os.solaris, vmsolarisquery.getSingleResult());
+    result.addVm(ProductDefinition.Os.win32, vmwin32query.getSingleResult());
 
     String[] pluginids = pluginidquery.getResult();
     String[] isfragment = fragmentquery.getResult();
@@ -68,14 +121,14 @@ public class ProductDefinitionParser {
       result.addPlugin(pluginids[i], Boolean.parseBoolean(isfragment[i]));
     }
 
+    String[] featureids = featureidquery.getResult();
+    String[] featureversions = featureversionquery.getResult();
+    for (int i = 0; i < featureids.length; i++) {
+      result.addFeature(featureids[i], new Version(featureversions[i]));
+    }
+
     return result;
 
   }
-
-  /*
-   * public static final void main(String[] args) throws Exception { InputStream instream = new FileInputStream(new
-   * File("mmt2.product.txt")); ProductDefinition result = parseProductDefinition(instream); System.err.println(result);
-   * }
-   */
 
 } /* ENDCLASS */
