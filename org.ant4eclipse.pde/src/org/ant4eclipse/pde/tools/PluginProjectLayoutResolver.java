@@ -11,22 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.util.ManifestHelper;
-
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-
-import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
-import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
-
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.Manifest;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.core.util.ManifestHelper;
+import org.ant4eclipse.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
+import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
  * The {@link PluginProjectLayoutResolver} implements a {@link BundleLayoutResolver} for eclipse plug-in projects.
@@ -118,10 +115,11 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
         result.add(file);
       }
     }
-    if (buildProperties.hasLibrary(".")) {
+
+    if (buildProperties != null && buildProperties.hasLibrary(".")) {
       String[] libaries = buildProperties.getLibrary(".").getOutput();
-      for (String libarie : libaries) {
-        File file = new File(baseDir, libarie);
+      for (String libary : libaries) {
+        File file = new File(baseDir, libary);
         if (!result.contains(file)) {
           result.add(file);
         }
