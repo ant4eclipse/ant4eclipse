@@ -56,7 +56,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   public FilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
 
-    Assert.notNull(this._classFileLoader);
+    Assert.notNull(classFileLoader);
     Assert.nonEmpty(filter);
 
     this._classFileLoader = classFileLoader;
