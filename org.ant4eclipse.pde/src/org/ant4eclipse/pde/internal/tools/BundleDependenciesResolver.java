@@ -12,6 +12,7 @@
 package org.ant4eclipse.pde.internal.tools;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
@@ -84,11 +85,11 @@ public class BundleDependenciesResolver {
 
   /**
    * <p>
-   * 
    * </p>
    * 
    * @param description
    *          the bundle description
+   * @param includeOptionalDependencies
    * @return
    */
   public List<BundleDependency> resolveBundleClasspath(BundleDescription description,
@@ -98,8 +99,14 @@ public class BundleDependenciesResolver {
 
     // Step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
-      throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", TargetPlatformImpl
-          .getBundleInfo(description), TargetPlatformImpl.dumpResolverErrors(description)));
+
+      String errorMessage = String.format("Bundle '%s' is not resolved. Reason:\n%s", TargetPlatformImpl
+          .getBundleInfo(description), TargetPlatformImpl.dumpResolverErrors(description));
+
+      A4ELogging.error(errorMessage);
+
+      // TODO: NLS
+      throw new RuntimeException(errorMessage);
     }
 
     // ImportPackageSpecification[] importPackageSpecifications = bundleDescription.getImportPackages();
