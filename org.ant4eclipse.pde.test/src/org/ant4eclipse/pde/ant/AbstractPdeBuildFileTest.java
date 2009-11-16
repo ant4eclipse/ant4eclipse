@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.core.util.Utilities;
-
-import org.ant4eclipse.jdt.ant.base.AbstractJdtTest;
-
 import java.io.File;
+
+import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.jdt.ant.base.AbstractJdtTest;
+import org.ant4eclipse.pde.test.EchoLogfile;
 
 /**
  * <p>
@@ -33,10 +33,20 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   public static String        ECLIPSE_SDK_35_LINUX_GTK     = "ECLIPSE_SDK_35_LINUX_GTK";
 
   /** - */
-  private final static String EXPECTED_TARGET_PLATFORM_LOG = "Trying to read bundles and feature from 'workspace'\\.Needed \\d* ms to read 1 bundles and 0 features from bundle set\\.Trying to read bundles and feature from 'target platform location '.*'\\.Needed \\d* ms to read 368 bundles and 15 features from bundle set\\.Trying to read bundles and feature from 'target platform location '.*'\\.Needed \\d* ms to read \\d* bundles and \\d* features from bundle set\\.";
+  private final static String EXPECTED_TARGET_PLATFORM_LOG = "Trying to read bundles and feature from 'workspace'\\.Needed \\d* ms to read 1 bundles and 0 features from bundle set\\.Trying to read bundles and feature from 'target platform location '.*''\\.Needed \\d* ms to read 368 bundles and 15 features from bundle set\\.Trying to read bundles and feature from 'target platform location '.*''\\.Needed \\d* ms to read \\d* bundles and \\d* features from bundle set\\.";
 
   /** the additional target platform directory */
   private File                _additionalTargetPlatformDirectory;
+
+  /**
+   * The name of the file that contains the output of the echo-tasks in the buildfile
+   */
+  private String              _echoLogfileName;
+
+  /**
+   * The echo log file that was used by ant. Might be null
+   */
+  private EchoLogfile         _echoLogfile;
 
   /**
    * {@inheritDoc}
@@ -55,6 +65,10 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    */
   @Override
   protected void tearDown() throws Exception {
+    if (this._echoLogfile != null) {
+      this._echoLogfile.dispose();
+      this._echoLogfile = null;
+    }
     disposeAdditionalTargetPlatformDirectory();
     super.tearDown();
   }
@@ -72,6 +86,15 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
     setupBuildFile("buildWorkspace.xml");
   }
 
+  protected EchoLogfile getEchoLogfile() throws Exception {
+    // echo log points to a file that is used to echo all messages into that are compared
+    // after test execution with expected values (instead of parsing the *whole* log output)
+    if (this._echoLogfile == null) {
+      this._echoLogfile = new EchoLogfile(this._echoLogfileName);
+    }
+    return this._echoLogfile;
+  }
+
   /**
    * <p>
    * </p>
@@ -79,6 +102,8 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    * @throws Exception
    */
   protected void setupDefaultProperties() throws Exception {
+    this._echoLogfileName = new File(getTestWorkspaceDirectory(), "echo.log").getAbsolutePath();
+    getProject().setProperty("echolog", this._echoLogfileName);
     getProject().setProperty("workspace", getTestWorkspaceDirectory().getAbsolutePath());
     getProject().setProperty("targetplatform.1", getTargetPlatformDirectory().getAbsolutePath());
     getProject().setProperty("targetplatform.2", getAdditionalTargetPlatformPath());
