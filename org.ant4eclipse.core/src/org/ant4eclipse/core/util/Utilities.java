@@ -11,11 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +39,11 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>
@@ -289,7 +289,9 @@ public class Utilities {
     int tries = 5;
     while ((!file.delete()) && (tries > 0)) {
       try {
+        System.gc();
         Thread.sleep(10);
+        System.gc();
       } catch (InterruptedException ex) {
         // do nothing here
       }
