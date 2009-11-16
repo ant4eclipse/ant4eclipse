@@ -184,6 +184,16 @@
               <post-compile />
 
             </ant4eclipse:forProject>
+          	
+            <!-- Step 6.3: Copy the resources -->
+            <ant4eclipse:forEachSourceDirectory>
+              <echo>Copying resources from directory '${buildPlugin.source.directory}' to '${buildPlugin.output.directory}'</echo>
+              <copy todir="${buildPlugin.output.directory}">
+                <fileset dir="${buildPlugin.source.directory}">
+                  <exclude name="**/*.java" />
+                </fileset>
+              </copy>
+            </ant4eclipse:forEachSourceDirectory>
 
           </ant4eclipse:executeJdtProject>
         </antcontrib:then>
@@ -220,7 +230,7 @@
 
             <ant4eclipse:forEachSourceDirectory>
               <echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
-              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}">
+              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}" overwrite="true">
                 <fileset dir="${executePluginLibrary.source.directory}">
                   <exclude name="**/*.java" />
                 </fileset>
