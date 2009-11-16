@@ -147,8 +147,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
     // source path is not supported!
     if (getJavac().getSourcepath() != null) {
-      // TODO: NLS
-      throw new BuildException("getJavac().getSourcepath() != null");
+      throw new Ant4EclipseException(EcjExceptionCodes.JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION);
     }
   }
 
@@ -216,8 +215,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       }
     }
 
-    // TODO: NLS
-    throw new RuntimeException();
+    // source folder for source file does not exist...
+    throw new Ant4EclipseException(EcjExceptionCodes.SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST, sourceFile
+        .getAbsolutePath());
   }
 
   /**

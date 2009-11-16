@@ -13,9 +13,11 @@ package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ClassName;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
 import org.ant4eclipse.jdt.ecj.internal.tools.ReferableSourceFileImpl;
 
@@ -229,13 +231,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
         String[] allPackages = getAllPackagesFromDirectory(file);
         addAllPackagesFromClassPathEntry(allPackages, file);
       } else if (file.isFile()) {
-        try {
-          String[] allPackages = getAllPackagesFromJar(file);
-          addAllPackagesFromClassPathEntry(allPackages, file);
-        } catch (IOException e) {
-          // TODO....
-          e.printStackTrace();
-        }
+        String[] allPackages = getAllPackagesFromJar(file);
+        addAllPackagesFromClassPathEntry(allPackages, file);
       }
     }
 
@@ -245,7 +242,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
         String[] allPackages = getAllPackagesFromDirectory(file);
         addAllPackagesFromSourcePathEntry(allPackages, file);
       }
-      // TODO: Support for sources in jars/zips
+      // we do not support source in jars or zips
     }
   }
 
@@ -325,14 +322,21 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @return
    * @throws IOException
    */
-  private String[] getAllPackagesFromJar(File jar) throws IOException {
+  private String[] getAllPackagesFromJar(File jar) {
     Assert.isFile(jar);
 
     // prepare result...
     List<String> result = new LinkedList<String>();
 
     // create the jarFile wrapper...
-    JarFile jarFile = new JarFile(jar);
+    JarFile jarFile = null;
+
+    try {
+      jarFile = new JarFile(jar);
+    } catch (IOException e) {
+      throw new Ant4EclipseException(EcjExceptionCodes.COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION, jar
+          .getAbsolutePath());
+    }
 
     // Iterate over entries...
     Enumeration<?> enumeration = jarFile.entries();
@@ -544,7 +548,6 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      *          the source path entry to add.
      */
     public void addSourcepathEntry(File sourcepathEntry) {
-      // TODO: support for zip'd or jar'd source files
       Assert.isDirectory(sourcepathEntry);
 
       this._sourcepathEntries.add(sourcepathEntry);
@@ -595,8 +598,6 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      */
     public ReferableSourceFile loadSourceFile(ClassName className) {
 
-      // TODO Support for source jars
-
       String javaFileName = className.getClassName() + ".java";
 
       for (File classpathEntry : this._sourcepathEntries) {
@@ -616,6 +617,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
           }
         }
 
+        // we do not support source jars here...
         // else {
         // try {
         // JarFile jarFile = new JarFile(classpathEntry);

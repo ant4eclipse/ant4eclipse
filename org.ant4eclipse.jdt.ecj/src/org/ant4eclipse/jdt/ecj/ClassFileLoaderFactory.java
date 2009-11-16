@@ -47,11 +47,30 @@ public class ClassFileLoaderFactory {
     return new ClasspathClassFileLoaderImpl(source, type, classpathEntries);
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param source
+   * @param type
+   * @param classpathEntries
+   * @param sourcepathEntries
+   * @return
+   */
   public static ClassFileLoader createClasspathClassFileLoader(File source, byte type, File[] classpathEntries,
       File[] sourcepathEntries) {
     return new ClasspathClassFileLoaderImpl(source, type, classpathEntries, sourcepathEntries);
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param classPathEntry
+   * @param type
+   * @param sourcePathEntry
+   * @return
+   */
   public static ClassFileLoader createClasspathClassFileLoader(File classPathEntry, byte type, File sourcePathEntry) {
     return new ClasspathClassFileLoaderImpl(classPathEntry, type, sourcePathEntry);
   }

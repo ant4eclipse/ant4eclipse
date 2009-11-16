@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
+import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ClassName;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
@@ -55,7 +56,8 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   public FilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
 
-    // TODO ASSERT
+    Assert.notNull(this._classFileLoader);
+    Assert.nonEmpty(filter);
 
     this._classFileLoader = classFileLoader;
     this._filter = filter;
@@ -135,7 +137,6 @@ public class FilteringClassFileLoader implements ClassFileLoader {
       }
     }
 
-    // TODO?? DEFAULT?
     return referableType;
   }
 

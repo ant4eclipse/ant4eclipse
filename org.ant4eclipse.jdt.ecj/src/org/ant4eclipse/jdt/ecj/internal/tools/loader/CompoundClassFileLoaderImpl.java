@@ -56,8 +56,6 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
       return null;
     }
 
-    // TODO: SPECIAL HANDLING FOR CLASSES WITH ACCESS CONTROL? SECOND TRY?
-
     for (ClassFileLoader classFileLoader : classFileLoaderList) {
       ClassFile classFile = classFileLoader.loadClass(className);
       if (classFile != null) {

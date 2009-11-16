@@ -12,8 +12,10 @@
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 import org.ant4eclipse.jdt.ecj.ClassFile;
+import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.jdt.ecj.internal.tools.DefaultReferableType;
 
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
@@ -58,13 +60,11 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
     try {
       return ClassFileReader.read(this._zipFile, this._zipEntryName, true);
     } catch (ClassFormatException e) {
-      // TODO
-      e.printStackTrace();
-      return null;
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, this._zipFile,
+          this._zipEntryName);
     } catch (IOException e) {
-      // TODO
-      e.printStackTrace();
-      return null;
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, this._zipFile,
+          this._zipEntryName);
     }
   }
 

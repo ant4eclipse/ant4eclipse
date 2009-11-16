@@ -24,6 +24,18 @@ import org.ant4eclipse.core.nls.NLSMessage;
  */
 public class EcjExceptionCodes extends ExceptionCode {
 
+  @NLSMessage("Could not create jar file from file '%s'.")
+  public static ExceptionCode     COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION = null;
+
+  @NLSMessage("Unknown target option '%s' in javac task.")
+  public static ExceptionCode     UNKNOWN_JAVA_TARGET_OPTION_EXCEPTION;
+
+  @NLSMessage("Unknown source option '%s' in javac task.")
+  public static ExceptionCode     UNKNOWN_JAVA_SOURCE_OPTION_EXCEPTION;
+
+  @NLSMessage("Unable to read binary type '%s' from jar file '%s'.")
+  public static ExceptionCode     UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION;
+
   @NLSMessage("The ant reference id '%s' doesn't point to an EcjAdditionalCompilerArguments object.")
   public static EcjExceptionCodes NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT;
 
@@ -35,6 +47,12 @@ public class EcjExceptionCodes extends ExceptionCode {
 
   @NLSMessage("Compilation was not successful.")
   public static EcjExceptionCodes COMPILATION_WAS_NOT_SUCCESFUL;
+
+  @NLSMessage("Source folder for source file '%s' does not exist.")
+  public static ExceptionCode     SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST;
+
+  @NLSMessage("The javac source path attibute is not supported by the JDTCompilerAdapter.")
+  public static ExceptionCode     JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION;
 
   static {
     NLS.initialize(EcjExceptionCodes.class);

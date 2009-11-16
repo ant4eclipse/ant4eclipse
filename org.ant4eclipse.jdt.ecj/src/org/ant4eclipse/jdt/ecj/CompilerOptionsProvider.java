@@ -12,6 +12,7 @@
 package org.ant4eclipse.jdt.ecj;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.Utilities;
@@ -129,8 +130,7 @@ public class CompilerOptionsProvider {
         result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_7);
       }
 
-      // TODO
-      throw new RuntimeException("Unknown source definition");
+      throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_SOURCE_OPTION_EXCEPTION, source);
     }
 
     /*
@@ -159,8 +159,7 @@ public class CompilerOptionsProvider {
         result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_7);
       }
 
-      // TODO
-      throw new RuntimeException("Unknown target definition");
+      throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_TARGET_OPTION_EXCEPTION, target);
     }
 
     /*
