@@ -54,6 +54,15 @@ public interface TargetPlatform {
 
   /**
    * <p>
+   * Returns all the unresolved bundles.
+   * </p>
+   * 
+   * @return all the unresolved bundles
+   */
+  BundleDescription[] getBundlesWithResolverErrors();
+
+  /**
+   * <p>
    * Returns the feature description for the feature with the given id and version. A null value is returned if no such
    * feature is found.
    * </p>

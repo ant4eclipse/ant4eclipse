@@ -21,6 +21,9 @@ import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
+import org.ant4eclipse.pde.internal.tools.TargetPlatformImpl;
+import org.ant4eclipse.pde.internal.tools.UnresolvedBundleException;
+import org.ant4eclipse.pde.internal.tools.UnresolvedBundlesAnalyzer;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
@@ -69,7 +72,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     BundleDescription resolvedBundleDescription = targetPlatform.getResolvedBundle(pluginProjectDescription
         .getSymbolicName(), pluginProjectDescription.getVersion());
 
-    resolveBundleClassPath(context, resolvedBundleDescription);
+    resolveBundleClassPath(context, resolvedBundleDescription, targetPlatform);
 
     // // Step 7: if the plug-in project is a fragment, we have to add the host as well
     // if (BundleDependenciesResolver.isFragment(resolvedBundleDescription)) {
@@ -96,25 +99,42 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
   /**
    * <p>
+   * Resolves the bundle class path.
    * </p>
    * 
    * @param context
    * @param resolvedBundleDescription
+   * @param targetPlatform
    */
-  private void resolveBundleClassPath(ClasspathResolverContext context, BundleDescription resolvedBundleDescription) {
-    List<BundleDependency> bundleDependencies = new BundleDependenciesResolver()
-        .resolveBundleClasspath(resolvedBundleDescription);
+  private void resolveBundleClassPath(ClasspathResolverContext context, BundleDescription resolvedBundleDescription,
+      TargetPlatform targetPlatform) {
 
-    // Step 6: add all dependencies to the class path
+    // declare the bundle dependencies
+    List<BundleDependency> bundleDependencies = null;
+
+    try {
+      bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription);
+    } catch (UnresolvedBundleException e) {
+
+      // try to find the root cause
+      BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform).getRootCause(e
+          .getBundleDescription());
+
+      // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
+      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION, TargetPlatformImpl
+          .dumpResolverErrors(description, true));
+    }
+
+    // add all dependencies to the class path
     for (BundleDependency bundleDependency : bundleDependencies) {
 
-      // Step 6.1: add the referenced eclipse projects - this information is needed to compute the correct build order
+      // add the referenced eclipse projects - this information is needed to compute the correct build order
       List<EclipseProject> referencedPluginProjects = bundleDependency.getReferencedPluginProjects();
       for (EclipseProject referencedPluginProject : referencedPluginProjects) {
         context.addReferencedProjects(referencedPluginProject);
       }
 
-      // Step 6.2: add the class path entries - these entries are used for the class path
+      // add the class path entries - these entries are used for the class path
       context.addClasspathEntry(bundleDependency.getResolvedClasspathEntry());
     }
   }
@@ -130,10 +150,10 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
    */
   private TargetPlatform getTargetPlatform(ClasspathResolverContext context) {
 
-    // Step 4.1: get the TargetPlatform
+    // get the TargetPlatform
     TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
 
-    // Step 1: get the target platform argument
+    // get the target platform argument
     // TODO: get the target.platform argument
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
 
@@ -141,7 +161,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       throw new Ant4EclipseException(PdeExceptionCode.NO_TARGET_PLATFORM_SET);
     }
 
-    // Step 4.2: get the TargetPlatform
+    // get the TargetPlatform
     TargetPlatform targetPlatform = registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
         new TargetPlatformConfiguration());
     return targetPlatform;

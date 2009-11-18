@@ -12,7 +12,6 @@
 package org.ant4eclipse.pde.internal.tools;
 
 import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
@@ -78,8 +77,9 @@ public class BundleDependenciesResolver {
    * 
    * @param description
    * @return
+   * @throws UnresolvedBundleException
    */
-  public List<BundleDependency> resolveBundleClasspath(BundleDescription description) {
+  public List<BundleDependency> resolveBundleClasspath(BundleDescription description) throws UnresolvedBundleException {
     return resolveBundleClasspath(description, true);
   }
 
@@ -91,22 +91,16 @@ public class BundleDependenciesResolver {
    *          the bundle description
    * @param includeOptionalDependencies
    * @return
+   * @throws UnresolvedBundleException
    */
   public List<BundleDependency> resolveBundleClasspath(BundleDescription description,
-      boolean includeOptionalDependencies) {
+      boolean includeOptionalDependencies) throws UnresolvedBundleException {
 
     Assert.notNull(description);
 
     // Step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
-
-      String errorMessage = String.format("Bundle '%s' is not resolved. Reason:\n%s", TargetPlatformImpl
-          .getBundleInfo(description), TargetPlatformImpl.dumpResolverErrors(description));
-
-      A4ELogging.error(errorMessage);
-
-      // TODO: NLS
-      throw new RuntimeException(errorMessage);
+      throw new UnresolvedBundleException(description);
     }
 
     // ImportPackageSpecification[] importPackageSpecifications = bundleDescription.getImportPackages();
@@ -254,7 +248,7 @@ public class BundleDependenciesResolver {
     Assert.notNull(bundleDescription);
 
     if (!bundleDescription.isResolved()) {
-      String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription);
+      String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
       String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
       throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo, resolverErrors));
     }

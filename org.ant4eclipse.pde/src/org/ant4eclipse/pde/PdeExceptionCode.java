@@ -25,12 +25,16 @@ import org.ant4eclipse.core.nls.NLSMessage;
 public class PdeExceptionCode extends ExceptionCode {
 
   /** - */
+  @NLSMessage("\n%s")
+  public static ExceptionCode    BUNDLE_NOT_RESOLVED_EXCEPTION;
+
+  /** - */
   @NLSMessage("Invalid version '%s'.")
   public static ExceptionCode    INVALID_VERSION;
 
   /** - */
   @NLSMessage("You have to specify attribute '%s' if  attribute '%s' is set.")
-  public static ExceptionCode    ANT_ATTRIBUTE_X_WITHOUT_ATTRIBUTE_Y = null;
+  public static ExceptionCode    ANT_ATTRIBUTE_X_WITHOUT_ATTRIBUTE_Y;
 
   /** - */
   @NLSMessage("You have to specify either attribute '%s' or the nested '%s'. You can't specify both.")

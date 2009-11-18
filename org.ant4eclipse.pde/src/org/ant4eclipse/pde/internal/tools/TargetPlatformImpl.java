@@ -130,6 +130,25 @@ public final class TargetPlatformImpl implements TargetPlatform {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  public BundleDescription[] getBundlesWithResolverErrors() {
+
+    // create result
+    List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
+
+    // iterate over all descriptions
+    for (BundleDescription description : this._state.getBundles()) {
+      ResolverError[] errors = this._state.getResolverErrors(description);
+      if (errors != null && errors.length > 0) {
+        bundleDescriptions.add(description);
+      }
+    }
+
+    return bundleDescriptions.toArray(new BundleDescription[0]);
+  }
+
+  /**
    * <p>
    * </p>
    */
@@ -362,7 +381,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
       // TODO: NLS
       if (!bundleDescription.isResolved()) {
-        String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription);
+        String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
         String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
         throw new RuntimeException(String
             .format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo, resolverErrors));
@@ -436,7 +455,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     if (A4ELogging.isDebuggingEnabled()) {
       for (BundleDescription description : bundleDescriptions) {
-        String resolverErrors = dumpResolverErrors(description);
+        String resolverErrors = dumpResolverErrors(description, true);
         if (resolverErrors != null && !resolverErrors.trim().equals("")) {
           A4ELogging.debug(resolverErrors);
         }
@@ -455,7 +474,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    *          the bundle description
    * @return the resolver errors as a string.
    */
-  static String dumpResolverErrors(BundleDescription description) {
+  public static String dumpResolverErrors(BundleDescription description, boolean header) {
     Assert.notNull(description);
 
     StringBuffer stringBuffer = new StringBuffer();
@@ -467,13 +486,22 @@ public final class TargetPlatformImpl implements TargetPlatform {
         stringBuffer.append(getBundleInfo(description));
         stringBuffer.append("' -- another version resolved\n");
       } else {
-        stringBuffer.append("Could not resolve '");
-        stringBuffer.append(getBundleInfo(description));
-        stringBuffer.append("':\n");
-        for (ResolverError error : errors) {
+        if (header) {
+          stringBuffer.append("Could not resolve '");
+          // stringBuffer.append(getBundleInfo(description));
+          stringBuffer.append(description.getSymbolicName());
+          stringBuffer.append("_");
+          stringBuffer.append(description.getVersion());
+          stringBuffer.append("' (Location: ");
+          stringBuffer.append(description.getLocation());
+          stringBuffer.append("):\n");
+        }
+        for (int i = 0; i < errors.length; i++) {
           stringBuffer.append("  ");
-          stringBuffer.append(error);
-          stringBuffer.append("\n");
+          stringBuffer.append(errors[i]);
+          if (i + 1 < errors.length) {
+            stringBuffer.append("\n");
+          }
         }
       }
     }

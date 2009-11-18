@@ -18,6 +18,8 @@ import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
+import org.ant4eclipse.pde.internal.tools.TargetPlatformImpl;
+import org.ant4eclipse.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.TargetPlatform;
@@ -489,8 +491,15 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     }
 
     // step 2: resolve bundle dependencies
-    List<BundleDependency> bundleDependencies = new BundleDependenciesResolver()
-        .resolveBundleClasspath(bundleDescription);
+    List<BundleDependency> bundleDependencies = null;
+
+    try {
+      bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(bundleDescription);
+    } catch (UnresolvedBundleException e) {
+      // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
+      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION, TargetPlatformImpl
+          .dumpResolverErrors(bundleDescription, true));
+    }
 
     // step 3: resolve the referenced bundles
     for (BundleDependency bundleDependency : bundleDependencies) {
