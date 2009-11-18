@@ -48,28 +48,52 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
     return this._allPackages.containsKey(packageName);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public ClassFile loadClass(ClassName className) {
 
+    // get the class file loader list
     List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
 
+    // return if class file loader list is null
     if (classFileLoaderList == null) {
       return null;
     }
 
+    // declare the result
+    ClassFile result = null;
+
+    // try to find the class file...
     for (ClassFileLoader classFileLoader : classFileLoaderList) {
+
+      // try to load class file...
       ClassFile classFile = classFileLoader.loadClass(className);
+
+      // class file was found...
       if (classFile != null) {
-        return classFile;
+
+        // if the class file has no access restrictions, return the class file...
+        if (!classFile.hasAccessRestriction()) {
+          return classFile;
+        }
+        // else set the class file a result, if result is null
+        else if (result == null) {
+          result = classFile;
+        }
       }
     }
 
-    return null;
+    // return the result
+    return result;
   }
 
   /**
    * {@inheritDoc}
    */
   public ReferableSourceFile loadSource(ClassName className) {
+
+    // TODO: Access restrictions for source files!!
 
     // if the package name is not in the map of all packages, return immediately
     List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
