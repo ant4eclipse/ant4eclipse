@@ -25,6 +25,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,6 +89,13 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
     this._targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
 
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public List<String> getTargetPlatformDefinitionIds() {
+    return Collections.unmodifiableList(new LinkedList<String>(this._targetPlatformDefnitionMap.keySet()));
   }
 
   /**

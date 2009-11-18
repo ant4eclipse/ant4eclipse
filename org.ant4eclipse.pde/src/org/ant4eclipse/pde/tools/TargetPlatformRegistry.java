@@ -17,6 +17,8 @@ import org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType;
 
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import java.util.List;
+
 /**
  * <p>
  * The target platform factory can be used to get an instance of type TargetPlatform. The created instances are stored
@@ -54,6 +56,15 @@ public interface TargetPlatformRegistry {
    * @return
    */
   TargetPlatformDefinition getTargetPlatformDefinition(String identifier);
+
+  /**
+   * <p>
+   * Returns the target platform definition IDs.
+   * </p>
+   * 
+   * @return the target platform definition IDs.
+   */
+  List<String> getTargetPlatformDefinitionIds();
 
   /**
    * <p>

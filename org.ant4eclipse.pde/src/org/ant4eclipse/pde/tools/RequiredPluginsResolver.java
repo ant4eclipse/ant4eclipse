@@ -154,16 +154,23 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
 
     // get the target platform argument
-    // TODO: get the target.platform argument
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
 
     if (containerArgument == null) {
-      throw new Ant4EclipseException(PdeExceptionCode.NO_TARGET_PLATFORM_SET);
-    }
 
-    // get the TargetPlatform
-    TargetPlatform targetPlatform = registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
-        new TargetPlatformConfiguration());
-    return targetPlatform;
+      // get the one and only target platform
+      if (registry.getTargetPlatformDefinitionIds().size() == 1) {
+        String id = registry.getTargetPlatformDefinitionIds().get(0);
+        return registry.getInstance(context.getWorkspace(), id, new TargetPlatformConfiguration());
+      }
+
+      // throw new Ant4EclipseException
+      throw new Ant4EclipseException(PdeExceptionCode.NO_TARGET_PLATFORM_SET);
+    } else {
+
+      // get the TargetPlatform
+      return registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
+          new TargetPlatformConfiguration());
+    }
   }
 }
