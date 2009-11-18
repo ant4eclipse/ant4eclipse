@@ -23,6 +23,9 @@ public class PlatformExceptionCode extends ExceptionCode {
 
   public static String                MISSING_REPOSITORY      = "Missing repository";
 
+  @NLSMessage("Specified project '%s' does not exist.")
+  public static ExceptionCode         SPECIFIED_PROJECT_DOES_NOT_EXIST;
+
   @NLSMessage("The usage of the 'project' attribute is not supported anymore. Please use the 'workspaceDirectory' and 'projectName' attributes instead.")
   public static PlatformExceptionCode DEPRECATED_USAGE_OF_SET_PROJECT;
 

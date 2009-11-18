@@ -13,6 +13,7 @@ package org.ant4eclipse.platform.internal.model.resource;
 
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -61,21 +62,29 @@ public final class WorkspaceImpl implements Workspace {
   public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
     Assert.notNull(names);
 
+    // the result list with all the eclipse projects...
     List<EclipseProject> projects = new LinkedList<EclipseProject>();
 
+    // iterate over the project names...
     for (String name : names) {
+      // get the eclipse project
       EclipseProject project = getProject(name);
 
-      if (project == null && failOnMissingProjects) {
-        // TODO
-        throw new RuntimeException("Missing Project '" + name + "'");
+      // handle project is null
+      if (project == null) {
+        if (failOnMissingProjects) {
+          throw new Ant4EclipseException(PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, name);
+        } else {
+          A4ELogging.debug("Specified project '%s' does not exist.", name);
+        }
       }
-
-      projects.add(project);
+      // add the project to the result list...
+      else {
+        projects.add(project);
+      }
     }
 
-    // getProject(String name);
-    // projects.
+    // return the result
     return projects.toArray(new EclipseProject[0]);
   }
 
