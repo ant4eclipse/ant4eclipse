@@ -164,6 +164,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
     buffer.append("[CvsTeamProjectDescription:");
@@ -184,9 +185,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   }
 
   /**
-   * Returns <code>true</code> if this <code>CvsTeamProjectDescription</code> is the same as the o argument.
-   * 
-   * @return <code>true</code> if this <code>CvsTeamProjectDescription</code> is the same as the o argument.
+   * {@inheritDoc}
    */
   public boolean equals(Object o) {
     if (this == o) {
@@ -212,9 +211,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   }
 
   /**
-   * Override hashCode.
-   * 
-   * @return the Objects hashcode.
+   * {@inheritDoc}
    */
   public int hashCode() {
     int hashCode = super.hashCode();

@@ -62,27 +62,21 @@ public class BuildCommandImpl implements BuildCommand {
   }
 
   /**
-   * Returns the name the build command.
-   * 
-   * @return the name of the build command.
+   * {@inheritDoc}
    */
   public final String getName() {
     return this._name;
   }
 
   /**
-   * Return the triggers of this build command (comma separated),e.g. <code>full,incremental</code>
-   * 
-   * @return the triggers as a comma-separated list
+   * {@inheritDoc}
    */
   public String getTriggers() {
     return this._triggers;
   }
 
   /**
-   * Returns wether this builder has triggers set
-   * 
-   * @return true or false
+   * {@inheritDoc}
    */
   public boolean hasTriggers() {
     return (this._triggers != null);

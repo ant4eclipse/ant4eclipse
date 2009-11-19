@@ -40,10 +40,16 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
     initialise();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public String[] getAllPackages() {
     return this._allPackages.keySet().toArray(new String[0]);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean hasPackage(String packageName) {
     return this._allPackages.containsKey(packageName);
   }
@@ -113,6 +119,9 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();

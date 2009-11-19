@@ -225,6 +225,9 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     return SOURCE_CLASSPATH.equals(getSource());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doExecute() {
     requirePropertySet();

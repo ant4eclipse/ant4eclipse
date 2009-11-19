@@ -17,8 +17,6 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
-import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectDescription;
-import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectSet;
 
 /**
  * Parses a Project Set-File provided by the Subversive Eclipse Plugin and the Subclipse Eclipse Plugin
@@ -46,10 +44,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
   public static final int PROJECT_NAME = 2;
 
   /**
-   * Creates a new SvnTeamProjectSet.
-   * 
-   * @param projectSetFile
-   *          The subversion project set-file
+   * {@inheritDoc}
    */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
     Assert.notNull(projectSetName);
@@ -59,7 +54,10 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
   }
 
   /**
+   * {@inheritDoc}
+   * <p>
    * Parses a "reference" in a subversion-Project Set file.
+   * </p>
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assert.instanceOf("projectSet", projectSet, SvnTeamProjectSet.class);

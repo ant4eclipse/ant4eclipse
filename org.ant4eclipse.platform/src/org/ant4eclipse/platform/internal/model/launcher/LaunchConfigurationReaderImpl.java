@@ -31,6 +31,9 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
 
   private SAXParserFactory _saxParserFactory;
 
+  /**
+   * {@inheritDoc}
+   */
   public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
 
     Assert.notNull("Parameter 'launchConfigurationFile' must not be null", launchConfigurationFile);

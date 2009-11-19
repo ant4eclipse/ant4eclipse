@@ -31,20 +31,15 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
-   * <p>
-   * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.jdt.core.javanature"</code>.
-   * </p>
-   * 
-   * @param project
-   *          the eclipse project that should be tested.
-   * 
-   * @return <code>true</code> if the role is applicable for the eclipse project.
+   * {@inheritDoc}
    */
   public boolean isRoleSupported(EclipseProject project) {
     return (project.hasNature(JavaProjectRole.JAVA_NATURE));
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * <p>
    * Adds a {@link JavaProjectRole} to the given project and parses the class path.
    * </p>

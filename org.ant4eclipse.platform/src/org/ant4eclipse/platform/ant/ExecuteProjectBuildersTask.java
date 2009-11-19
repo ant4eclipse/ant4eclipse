@@ -41,15 +41,16 @@ public class ExecuteProjectBuildersTask extends AbstractExecuteProjectTask {
   }
 
   /**
-   * @param name
-   * @return
-   * @throws BuildException
+   * {@inheritDoc}
    */
   public Object createDynamicElement(String name) {
     NestedSequential sequential = createScopedMacroDefinition(name);
     return sequential;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doExecute() {
 

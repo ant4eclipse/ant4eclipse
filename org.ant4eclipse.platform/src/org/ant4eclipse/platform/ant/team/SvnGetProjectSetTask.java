@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
-import org.ant4eclipse.platform.ant.team.AbstractGetProjectSetTask;
 import org.ant4eclipse.platform.internal.ant.team.SvnAdapter;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 
@@ -77,10 +76,18 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
     this._javasvn = javasvn;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   protected VcsAdapter createVcsAdapter() {
     return new SvnAdapter(getProject(), isJavahl(), isJavasvn(), getDateFormatter(), getDateTimeZone());
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   protected void checkPrereqs() {
     // no additional pre-reqs
   }

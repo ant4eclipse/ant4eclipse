@@ -90,44 +90,28 @@ public class SourceFileImpl implements SourceFile {
   }
 
   /**
-   * <p>
-   * Returns the source folder.
-   * </p>
-   * 
-   * @return the source folder.
+   * {@inheritDoc}
    */
   public File getSourceFolder() {
     return this._sourceFolder;
   }
 
   /**
-   * <p>
-   * Returns the source file name.
-   * </p>
-   * 
-   * @return the source file name.
+   * {@inheritDoc}
    */
   public String getSourceFileName() {
     return this._sourceFileName;
   }
 
   /**
-   * <p>
-   * Returns the source file.
-   * </p>
-   * 
-   * @return the source file.
+   * {@inheritDoc}
    */
   public File getSourceFile() {
     return new File(this._sourceFolder, this._sourceFileName);
   }
 
   /**
-   * <p>
-   * Returns the destination folder.
-   * </p>
-   * 
-   * @return the destination folder.
+   * {@inheritDoc}
    */
   public File getDestinationFolder() {
     return this._destinationFolder;
@@ -145,18 +129,14 @@ public class SourceFileImpl implements SourceFile {
   }
 
   /**
-   * <p>
-   * Returns the file encoding.
-   * </p>
-   * 
-   * @return the file encoding.
+   * {@inheritDoc}
    */
   public String getEncoding() {
     return this._encoding;
   }
 
   /**
-   *
+   * {@inheritDoc}
    */
   @Override
   public String toString() {

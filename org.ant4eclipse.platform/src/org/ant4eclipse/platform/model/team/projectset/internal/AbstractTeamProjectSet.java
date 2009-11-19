@@ -11,13 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
+import org.ant4eclipse.core.Assert;
+
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
+import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 public abstract class AbstractTeamProjectSet implements TeamProjectSet {
 
@@ -36,41 +37,31 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   public AbstractTeamProjectSet(String name) {
     Assert.notNull(name);
 
-    _name = name;
-    _projectDescriptions = new LinkedList<TeamProjectDescription>();
+    this._name = name;
+    this._projectDescriptions = new LinkedList<TeamProjectDescription>();
   }
 
   /**
-   * Returns the name of the TeamProjectSet.
-   * 
-   * @return Returns the name of the TeamProjectSet.
+   * {@inheritDoc}
    */
   public String getName() {
-    return _name;
+    return this._name;
   }
 
   /**
-   * Returns the TeamProjectDescriptions.
-   * 
-   * @return Returns the TeamProjectDescriptions.
+   * {@inheritDoc}
    */
   public TeamProjectDescription[] getTeamProjectDescriptions() {
-    return _projectDescriptions.toArray(new TeamProjectDescription[0]);
+    return this._projectDescriptions.toArray(new TeamProjectDescription[0]);
   }
 
   /**
-   * Returns a TeamProjectDescription by the given name.
-   * 
-   * @param name
-   *          the name of the TeamProjectDescription to return.
-   * @return Returns a TeamProjectDescription by the given name.
+   * {@inheritDoc}
    */
   public TeamProjectDescription getTeamProjectDescriptionByName(String name) {
     Assert.notNull(name);
 
-    for (Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
-      TeamProjectDescription description = iterator.next();
-
+    for (TeamProjectDescription description : this._projectDescriptions) {
       if (name.equals(description.getProjectName())) {
         return description;
       }
@@ -80,16 +71,13 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   }
 
   /**
-   * Returns a list of project names.
-   * 
-   * @return A list of project names.
+   * {@inheritDoc}
    */
   public String[] getProjectNames() {
 
-    String[] result = new String[_projectDescriptions.size()];
+    String[] result = new String[this._projectDescriptions.size()];
     int i = 0;
-    for (Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
-      TeamProjectDescription description = iterator.next();
+    for (TeamProjectDescription description : this._projectDescriptions) {
       String projectName = description.getProjectName();
       result[i] = projectName;
       i++;
@@ -101,13 +89,14 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
     buffer.append("[TeamProjectSet:");
     buffer.append(" name: ");
-    buffer.append(_name);
+    buffer.append(this._name);
     buffer.append(" { ");
-    for (Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext();) {
+    for (Iterator<TeamProjectDescription> iterator = this._projectDescriptions.iterator(); iterator.hasNext();) {
       TeamProjectDescription description = iterator.next();
       buffer.append(description);
 
@@ -125,11 +114,11 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    */
   protected void addTeamProjectDescription(TeamProjectDescription description) {
     Assert.notNull(description);
-    _projectDescriptions.add(description);
+    this._projectDescriptions.add(description);
   }
 
   protected List<TeamProjectDescription> getProjectDescriptions() {
-    return _projectDescriptions;
+    return this._projectDescriptions;
   }
 
 }

@@ -151,6 +151,9 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     return this._macroExecutionDelegate.getScopedMacroDefinitions();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void doExecute() {
     // check required attributes

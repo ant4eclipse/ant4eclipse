@@ -49,22 +49,14 @@ public abstract class AbstractProjectRole implements ProjectRole {
   }
 
   /**
-   * <p>
-   * Returns the name of the project role.
-   * </p>
-   * 
-   * @return the name of the project role.
+   * {@inheritDoc}
    */
   public final String getName() {
     return this._name;
   }
 
   /**
-   * <p>
-   * Returns the associated eclipse project.
-   * </p>
-   * 
-   * @return the associated eclipse project.
+   * {@inheritDoc}
    */
   public EclipseProject getEclipseProject() {
     return this._eclipseProject;

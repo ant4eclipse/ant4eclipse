@@ -381,9 +381,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   }
 
   /**
-   * <p>
-   * Executes the task.
-   * </p>
+   * {@inheritDoc}
    */
   @Override
   protected void doExecute() {

@@ -146,9 +146,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   }
 
   /**
-   * <p>
-   * Executes the GetBuildOrderTask.
-   * </p>
+   * {@inheritDoc}
    */
   @Override
   protected void doExecute() {

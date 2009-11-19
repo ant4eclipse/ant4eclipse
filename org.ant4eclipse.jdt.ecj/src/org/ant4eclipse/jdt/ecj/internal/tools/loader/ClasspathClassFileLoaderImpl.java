@@ -480,6 +480,9 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     return getPackageProvider(className.getPackageName()).loadSourceFile(className);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();

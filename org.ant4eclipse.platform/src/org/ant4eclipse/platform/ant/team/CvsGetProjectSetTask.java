@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.team;
 
-import org.ant4eclipse.platform.ant.team.AbstractGetProjectSetTask;
 import org.ant4eclipse.platform.internal.ant.team.CvsAdapter;
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 
@@ -82,12 +81,20 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
     setUsername(cvsUser);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   protected VcsAdapter createVcsAdapter() {
     // set property
     System.setProperty("javacvs.multiple_commands_warning", "false");
     return new CvsAdapter(getProject(), isCvsQuiet(), isCvsReallyQuiet(), getTag());
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   protected void checkPrereqs() {
     requiresCvsUserSet();
   }

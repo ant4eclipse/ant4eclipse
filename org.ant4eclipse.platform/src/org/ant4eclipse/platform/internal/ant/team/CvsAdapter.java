@@ -16,8 +16,6 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
-import org.ant4eclipse.platform.internal.ant.team.VcsException;
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
@@ -63,6 +61,8 @@ public class CvsAdapter extends VcsAdapter {
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * <p>
    * Runs a CVS export operation on a given project.
    * </p>
@@ -99,12 +99,14 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, 
-          cvs.getCommand(), e.toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(), e
+          .toString());
     }
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * <p>
    * Runs a CVS update operation on a given project.
    * </p>
@@ -142,12 +144,14 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, 
-          cvs.getCommand(), e.toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(), e
+          .toString());
     }
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * <p>
    * Runs a CVS checkout operation on a given project.
    * </p>
@@ -183,8 +187,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, 
-          cvs.getCommand(), e.toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(), e
+          .toString());
     }
   }
 
@@ -208,8 +212,8 @@ public class CvsAdapter extends VcsAdapter {
     cvs.setCvsRoot(projectDescription.getResolvedCvsRoot().toString());
     cvs.setDest(destination);
 
-    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf(this._quiet),
-        Boolean.valueOf(this._reallyQuiet));
+    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf(this._quiet), Boolean
+        .valueOf(this._reallyQuiet));
     cvs.setQuiet(this._quiet);
     cvs.setReallyquiet(this._reallyQuiet);
     return cvs;

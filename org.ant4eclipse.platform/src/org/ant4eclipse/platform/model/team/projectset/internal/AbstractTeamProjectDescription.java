@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
 import org.ant4eclipse.core.Assert;
+
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
 public class AbstractTeamProjectDescription implements TeamProjectDescription {
@@ -19,35 +20,31 @@ public class AbstractTeamProjectDescription implements TeamProjectDescription {
   private String _projectname;
 
   /**
-   * Returns the name of the project.
-   * 
-   * @return Returns the name of the project.
+   * {@inheritDoc}
    */
   public String getProjectName() {
-    return _projectname;
+    return this._projectname;
   }
 
   public AbstractTeamProjectDescription(String projectname) {
     Assert.notNull(projectname);
-    _projectname = projectname;
+    this._projectname = projectname;
   }
 
   /**
-   * Override hashCode.
-   * 
-   * @return the Objects hashcode.
+   * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (_projectname == null ? 0 : _projectname.hashCode());
+    hashCode = 31 * hashCode + (this._projectname == null ? 0 : this._projectname.hashCode());
     return hashCode;
   }
 
   /**
-   * Returns <code>true</code> if this <code>AbstractTeamProjectDescription</code> is the same as the o argument.
-   * 
-   * @return <code>true</code> if this <code>AbstractTeamProjectDescription</code> is the same as the o argument.
+   * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

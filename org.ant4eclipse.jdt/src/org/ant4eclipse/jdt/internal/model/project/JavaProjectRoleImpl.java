@@ -207,9 +207,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   }
 
   /**
-   * @param sourceFolder
-   * @param resolveRelative
-   * @return
+   * {@inheritDoc}
    */
   public String getOutputFolderForSourceFolder(final String sourceFolder) {
     Assert.nonEmpty(sourceFolder);

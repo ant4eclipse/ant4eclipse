@@ -14,7 +14,6 @@ package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 
-import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectSet;
 
@@ -27,20 +26,15 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
   }
 
   /**
-   * Sets the cvs user and password for each contained TeamProjectDescription.
-   * 
-   * @param cvsUser
-   *          the cvs user.
-   * @param cvsPwd
-   *          the cvs password might be null
+   * {@inheritDoc}
    */
   public void setUserAndPassword(String cvsUser, String cvsPwd) {
     Assert.notNull(cvsUser);
 
     A4ELogging.debug("setUserAndPassword(%s, %s)", cvsUser, cvsPwd);
 
-    for (Iterator<TeamProjectDescription> iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
-      CvsTeamProjectDescription description = (CvsTeamProjectDescription) iterator.next();
+    for (TeamProjectDescription teamProjectDescription : getProjectDescriptions()) {
+      CvsTeamProjectDescription description = (CvsTeamProjectDescription) teamProjectDescription;
       description.setCvsUserAndPassword(cvsUser, cvsPwd);
     }
   }
@@ -56,6 +50,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
     buffer.append("[CvsTeamProjectSet:");

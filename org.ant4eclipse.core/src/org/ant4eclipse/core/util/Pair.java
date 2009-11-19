@@ -75,11 +75,17 @@ public class Pair<T, U> {
     return this._second;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
     return this._hash;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @SuppressWarnings("unchecked")
   @Override
   public boolean equals(Object other) {

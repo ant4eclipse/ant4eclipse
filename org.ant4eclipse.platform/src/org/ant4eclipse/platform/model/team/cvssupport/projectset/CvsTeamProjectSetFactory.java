@@ -16,8 +16,6 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
-import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 
@@ -42,6 +40,9 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
   /** BRANCH_OR_VERSION_TAG */
   private static final int BRANCH_OR_VERSION_TAG      = 4;
 
+  /**
+   * {@inheritDoc}
+   */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
     Assert.notNull(projectSetName);
     CvsTeamProjectSet projectSet = new CvsTeamProjectSet(projectSetName);
@@ -49,8 +50,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
   }
 
   /**
-   * Parses the given reference of a CVS Project Set-file.
-   * 
+   * {@inheritDoc}
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assert.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);

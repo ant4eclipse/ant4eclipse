@@ -28,6 +28,9 @@ import java.util.Set;
 
 public class JreContainerResolver implements ClasspathContainerResolver {
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean canResolveContainer(ClasspathEntry classpathEntry) {
     return classpathEntry.getPath().startsWith(ContainerTypes.JRE_CONTAINER);
   }

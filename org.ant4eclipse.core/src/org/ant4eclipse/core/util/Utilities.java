@@ -11,6 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,11 +44,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 /**
  * <p>
@@ -1009,7 +1009,7 @@ public class Utilities {
    *          the expansion directory
    * @throws IOException
    */
-  public static void expandJarFile(JarFile jarFile, File expansionDirectory) throws IOException {
+  public static final void expandJarFile(JarFile jarFile, File expansionDirectory) throws IOException {
     Assert.notNull(jarFile);
     Assert.notNull(expansionDirectory);
 
@@ -1088,7 +1088,7 @@ public class Utilities {
    * entry from the jarFile will be returned (that is the entry with "/" at the end) In all other cases the entry
    * instance passed to this method is returned as-is.
    */
-  private static ZipEntry fixDirectory(JarFile jarFile, ZipEntry entry) {
+  private static final ZipEntry fixDirectory(JarFile jarFile, ZipEntry entry) {
     if ((entry == null) || entry.isDirectory() || (entry.getSize() > 0)) {
       return entry;
     }

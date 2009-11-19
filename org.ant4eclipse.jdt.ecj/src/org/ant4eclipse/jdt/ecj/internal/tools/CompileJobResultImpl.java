@@ -21,10 +21,16 @@ public class CompileJobResultImpl implements CompileJobResult {
 
   private CategorizedProblem[] _categorizedProblems;
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean succeeded() {
     return this._succeeded;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public CategorizedProblem[] getCategorizedProblems() {
     return this._categorizedProblems == null ? new CategorizedProblem[0] : this._categorizedProblems;
   }

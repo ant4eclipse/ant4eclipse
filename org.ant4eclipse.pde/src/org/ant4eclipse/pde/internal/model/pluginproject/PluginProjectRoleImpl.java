@@ -92,42 +92,28 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
   }
 
   /**
-   * <p>
-   * Returns the BundleDescription.
-   * </p>
-   * 
-   * @return BundleDescription.
+   * {@inheritDoc}
    */
   public BundleDescription getBundleDescription() {
     return this._bundleDescription;
   }
 
   /**
-   * <p>
-   * Returns <code>true</code> if the build properties have been set.
-   * </p>
-   * 
-   * @return <code>true</code> if the build properties have been set.
+   * {@inheritDoc}
    */
   public boolean hasBuildProperties() {
     return this._buildProperties != null;
   }
 
   /**
-   * <p>
-   * Returns the build properties.
-   * </p>
-   * 
-   * @return Returns the buildProperties.
+   * {@inheritDoc}
    */
   public PluginBuildProperties getBuildProperties() {
     return this._buildProperties;
   }
 
   /**
-   * <p>
-   * Sets the build properties.
-   * </p>
+   * {@inheritDoc}
    */
   public void setBuildProperties(PluginBuildProperties buildProperties) {
     this._buildProperties = buildProperties;

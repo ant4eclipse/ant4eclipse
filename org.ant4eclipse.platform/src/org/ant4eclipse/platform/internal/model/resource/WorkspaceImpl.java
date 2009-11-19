@@ -96,6 +96,9 @@ public final class WorkspaceImpl implements Workspace {
     return projects.toArray(new EclipseProject[0]);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
     Assert.notNull(projectRole);
     Assert
@@ -138,6 +141,9 @@ public final class WorkspaceImpl implements Workspace {
     this._projects.put(key, eclipseProject);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
     int prime = 31;
@@ -146,6 +152,9 @@ public final class WorkspaceImpl implements Workspace {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {

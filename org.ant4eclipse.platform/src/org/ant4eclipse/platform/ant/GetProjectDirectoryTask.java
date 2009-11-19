@@ -24,6 +24,9 @@ import java.io.File;
  */
 public class GetProjectDirectoryTask extends AbstractGetProjectPathTask {
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected File[] resolvePath() {
     return new File[] { getEclipseProject().getFolder() };

@@ -37,6 +37,8 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * <p>
    * Returns <code>true</code> if the eclipse project contains the requested buildCommand
    * </p>

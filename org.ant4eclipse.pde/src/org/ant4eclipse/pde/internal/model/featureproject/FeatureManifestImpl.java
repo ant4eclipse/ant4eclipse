@@ -112,21 +112,14 @@ public class FeatureManifestImpl implements FeatureManifest {
   }
 
   /**
-   * <p>
-   * Returns the name of the application.
-   * </p>
-   * 
-   * @return The name of the application.
+   * {@inheritDoc}
    */
   public String getApplication() {
     return this._application;
   }
 
   /**
-   * <p>
-   * </p>
-   * 
-   * @return
+   * {@inheritDoc}
    */
   public String getColocationAffinity() {
     return this._colocationAffinity;
@@ -140,55 +133,49 @@ public class FeatureManifestImpl implements FeatureManifest {
   }
 
   /**
-   * @return feature identifier (eg. com.xyz.myfeature), required
+   * {@inheritDoc}
    */
   public String getId() {
     return this._id;
   }
 
   /**
-   * Returns the location of an associated image.
-   * 
-   * @return The location of an associated image.
+   * {@inheritDoc}
    */
   public String getImage() {
     return this._image;
   }
 
   /**
-   * @return locale specification.
+   * {@inheritDoc}
    */
   public String getLocale() {
     return this._locale;
   }
 
   /**
-   * @return optional machine architecture specification.
+   * {@inheritDoc}
    */
   public String getMachineArchitecture() {
     return this._machineArchitecture;
   }
 
   /**
-   * @return operating system specification.
+   * {@inheritDoc}
    */
   public String getOperatingSystem() {
     return this._operatingSystem;
   }
 
   /**
-   * Returns the plugin used for this feature.
-   * 
-   * @return The plugin used for this feature.
+   * {@inheritDoc}
    */
   public String getPlugin() {
     return this._plugin;
   }
 
   /**
-   * Returns true if this feature is a primary one.
-   * 
-   * @return true <=> This feature is a primary one.
+   * {@inheritDoc}
    */
   public boolean isPrimary() {
     return this._primary;

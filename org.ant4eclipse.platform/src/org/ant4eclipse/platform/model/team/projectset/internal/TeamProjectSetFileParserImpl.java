@@ -56,6 +56,9 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    */
   private Map<String, TeamProjectSetFactory> _factories;
 
+  /**
+   * {@inheritDoc}
+   */
   public void initialize() {
     Iterable<Pair<String, String>> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
         .getAllProperties(TEAMPROVIDER_PREFIX);
@@ -71,7 +74,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   }
 
   /**
-   * Disposes this TeamProjectSetFileParserImpl instances
+   * {@inheritDoc}
    */
   public void dispose() {
     this._factories = null;
@@ -84,6 +87,9 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
     return (this._factories != null);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
     Assert.isFile(projectSetFile);
 

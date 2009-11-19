@@ -57,7 +57,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
   }
 
   /**
-   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[][])
+   * {@inheritDoc}
    */
   public NameEnvironmentAnswer findType(char[][] compoundTypeName) {
 
@@ -76,10 +76,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#findType(char[], char[][])
+  /**
+   * {@inheritDoc}
    */
   public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
 
@@ -95,14 +93,14 @@ public class NameEnvironmentImpl implements INameEnvironment {
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * This method returns true if the given packageName is a valid package.
    * 
    * <p>
    * Note that this method returns true regardless of any OSGi visibility constraints.
    * <p>
    * This method also returns true for top level packages
-   * 
-   * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#isPackage(char[][], char[])
    */
   public boolean isPackage(char[][] parentPackageName, char[] packageName) {
 

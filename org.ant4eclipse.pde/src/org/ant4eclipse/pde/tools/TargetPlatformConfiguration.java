@@ -132,6 +132,9 @@ public class TargetPlatformConfiguration {
     return (String) this._configurationProperties.get(Constants.PROP_WS);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int hashCode() {
     int prime = 31;
@@ -141,6 +144,9 @@ public class TargetPlatformConfiguration {
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
