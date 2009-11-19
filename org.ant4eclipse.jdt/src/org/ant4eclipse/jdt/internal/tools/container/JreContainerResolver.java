@@ -60,6 +60,10 @@ public class JreContainerResolver implements ClasspathContainerResolver {
         javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
         A4ELogging.warn("Could not find JRE for " + path + ". Using default JRE (Version: "
             + javaRuntime.getJavaVersion() + ", Location: " + javaRuntime.getLocation() + ") !");
+
+        // the default runtime has been chosen since there's no other possibility.
+        // registering the runtime prevents successive fallbacks and annoying redundant warnings.
+        javaRuntimeRegistry.registerJavaRuntime(key, javaRuntime.getLocation());
       }
     } else {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
