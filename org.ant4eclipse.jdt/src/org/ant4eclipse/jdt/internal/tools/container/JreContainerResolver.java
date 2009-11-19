@@ -61,11 +61,6 @@ public class JreContainerResolver implements ClasspathContainerResolver {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
     }
 
-    if (javaRuntime == null) {
-      // TODO
-      throw new RuntimeException("Could not find JRE for " + path + ".");
-    }
-
     // TODO
     AccessRestrictions accessRestrictions = null;
     File[] libraries = javaRuntime.getLibraries();
