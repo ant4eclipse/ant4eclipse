@@ -78,6 +78,9 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
   private boolean                 _fileListComputed      = false;
 
   /** - */
+  private boolean                 _sourceBundle          = false;
+
+  /** - */
   private AbstractBuildProperties _buildProperties;
 
   /**
@@ -96,6 +99,27 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
 
     // create the result list
     this._resourceList = new LinkedList<Resource>();
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return the sourceBundle
+   */
+  public boolean isSourceBundle() {
+    return this._sourceBundle;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceBundle
+   *          the sourceBundle to set
+   */
+  public void setSourceBundle(boolean sourceBundle) {
+    this._sourceBundle = sourceBundle;
   }
 
   /**
@@ -343,8 +367,9 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
         .getFeatureProjectRole(getEclipseProject()).getBuildProperties();
 
     // nothing to do if no inclusion pattern is defined
-    // TODO: isSource?
-    if (!this._buildProperties.hasBinaryIncludes()) {
+    if (this._sourceBundle && (!this._buildProperties.hasSourceIncludes())) {
+      return;
+    } else if ((!this._sourceBundle) && (!this._buildProperties.hasBinaryIncludes())) {
       return;
     }
 
@@ -352,7 +377,9 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
     this._resourceList.clear();
 
     // iterate over the included pattern set
-    for (String token : this._buildProperties.getBinaryIncludes()) {
+    String[] includes = this._sourceBundle ? this._buildProperties.getSourceIncludes() : this._buildProperties
+        .getBinaryIncludes();
+    for (String token : includes) {
       processEntry(token);
     }
 
@@ -466,8 +493,11 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    */
   private boolean matchExcludePattern(String path) {
 
+    String[] excludes = this._sourceBundle ? this._buildProperties.getSourceExcludes() : this._buildProperties
+        .getBinaryExcludes();
+
     // iterate over all excluded pattern
-    for (String pattern : this._buildProperties.getBinaryExcludes()) {
+    for (String pattern : excludes) {
 
       // if the given path matches an exclusion pattern, return true
       if (SelectorUtils.matchPath(normalize(pattern), normalize(path), this._caseSensitive)) {

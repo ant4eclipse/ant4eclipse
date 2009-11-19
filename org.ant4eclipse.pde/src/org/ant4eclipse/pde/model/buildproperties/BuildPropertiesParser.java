@@ -111,6 +111,14 @@ public class BuildPropertiesParser {
     PluginBuildProperties buildProperties = new PluginBuildProperties();
     initializeAbstractBuildProperties(properties, buildProperties);
 
+    // set src.includes
+    String includes = properties.get("src.includes", "");
+    buildProperties.setSourceIncludes(getAsList(includes, ",", true));
+
+    // set src.excludes
+    String excludes = properties.get("src.excludes", "");
+    buildProperties.setSourceExcludes(getAsList(excludes, ",", true));
+
     // set jars.compile.order
     String jarsCompileOrder = properties.get("jars.compile.order");
     if (jarsCompileOrder != null) {

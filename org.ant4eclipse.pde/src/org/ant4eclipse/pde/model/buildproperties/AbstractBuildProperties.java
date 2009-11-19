@@ -42,6 +42,12 @@ public class AbstractBuildProperties {
   /** lists files to exclude from the binary build */
   protected String[]    _binExcludes      = new String[0];
 
+  /** lists files to include in the source build */
+  private String[]      _srcIncludes      = new String[0];
+
+  /** lists files to exclude from the source build */
+  private String[]      _srcExcludes      = new String[0];
+
   /**
    * When the element version number ends with .qualifier this indicates by which value ".qualifier" must be replaced.
    * The value of the property can either be context, &lt;value&gt; or none. Context will generate a date according to
@@ -68,6 +74,28 @@ public class AbstractBuildProperties {
    */
   public boolean isCustom() {
     return this._custom;
+  }
+
+  /**
+   * <p>
+   * Returns <code>true</code> if the build has source excludes.
+   * </p>
+   * 
+   * @return <code>true</code> if the build has source excludes.
+   */
+  public boolean hasSourceExcludes() {
+    return this._srcExcludes != null && this._srcExcludes.length > 0;
+  }
+
+  /**
+   * <p>
+   * Returns <code>true</code> if the build has source includes.
+   * </p>
+   * 
+   * @return <code>true</code> if the build has source includes.
+   */
+  public boolean hasSourceIncludes() {
+    return this._srcIncludes != null && this._srcIncludes.length > 0;
   }
 
   /**
@@ -114,28 +142,24 @@ public class AbstractBuildProperties {
     return this._binIncludes;
   }
 
-  // TODO: remove
-  public String getBinaryExcludesAsString() {
-    StringBuffer buffer = new StringBuffer();
-    for (int i = 0; i < this._binExcludes.length; i++) {
-      buffer.append(this._binExcludes[i]);
-      if (i + 1 < this._binExcludes.length) {
-        buffer.append(",");
-      }
-    }
-    return buffer.toString();
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return the srcIncludes
+   */
+  public String[] getSourceIncludes() {
+    return this._srcIncludes;
   }
 
-  // TODO: remove
-  public String getBinaryIncludesAsString() {
-    StringBuffer buffer = new StringBuffer();
-    for (int i = 0; i < this._binIncludes.length; i++) {
-      buffer.append(this._binIncludes[i]);
-      if (i + 1 < this._binIncludes.length) {
-        buffer.append(",");
-      }
-    }
-    return buffer.toString();
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return the srcExcludes
+   */
+  public String[] getSourceExcludes() {
+    return this._srcExcludes;
   }
 
   /**
@@ -232,6 +256,32 @@ public class AbstractBuildProperties {
     Assert.notNull(includes);
 
     this._binIncludes = includes;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param srcIncludes
+   *          the srcIncludes to set
+   */
+  void setSourceIncludes(String[] srcIncludes) {
+    Assert.notNull(srcIncludes);
+
+    this._srcIncludes = srcIncludes;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param srcExcludes
+   *          the srcExcludes to set
+   */
+  void setSourceExcludes(String[] srcExcludes) {
+    Assert.notNull(srcExcludes);
+
+    this._srcExcludes = srcExcludes;
   }
 
   /**

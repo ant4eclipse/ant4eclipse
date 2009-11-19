@@ -26,12 +26,6 @@ import java.util.Map;
  */
 public class PluginBuildProperties extends AbstractBuildProperties {
 
-  /** lists files to include in the source build */
-  private String               _srcIncludes;
-
-  /** lists files to exclude from the source build */
-  private String               _srcExcludes;
-
   /** list of libraries */
   private Map<String, Library> _libraries;
 

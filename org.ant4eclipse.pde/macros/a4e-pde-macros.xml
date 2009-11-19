@@ -437,9 +437,12 @@
             <!-- file set defined by the projects build properties -->
             <ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
                                            projectname="@{projectName}"
-                                           excludeLibraries="true" />
+                                           excludeLibraries="true" 
+            							   sourceBundle="true"/>
           </copy>
 
+          <mkdir dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF" />	
+        	
           <!-- create the bundle manifest -->
           <manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF">
             <attribute name="Bundle-ManifestVersion" value="2" />
