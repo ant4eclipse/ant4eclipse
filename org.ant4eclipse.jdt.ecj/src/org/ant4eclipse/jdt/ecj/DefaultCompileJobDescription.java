@@ -14,6 +14,7 @@ package org.ant4eclipse.jdt.ecj;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.StringMap;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -122,7 +123,51 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    */
   public void setSourceFiles(SourceFile[] sourceFiles) {
     Assert.notNull(sourceFiles);
-
     this._sourceFiles = sourceFiles;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("[DefaultCompileJobDescription:");
+    buffer.append(" _classFileLoader: ");
+    buffer.append(this._classFileLoader);
+    buffer.append(", _compilerOptions: {");
+    if ((this._compilerOptions != null) && (this._compilerOptions.size() > 0)) {
+      Iterator<Map.Entry<String, String>> iterator = this._compilerOptions.entrySet().iterator();
+      Map.Entry<String, String> current = iterator.next();
+      buffer.append("(");
+      buffer.append(current.getKey());
+      buffer.append(",");
+      buffer.append(current.getValue());
+      buffer.append(")");
+      while (iterator.hasNext()) {
+        buffer.append(",");
+        current = iterator.next();
+        buffer.append("(");
+        buffer.append(current.getKey());
+        buffer.append(",");
+        buffer.append(current.getValue());
+        buffer.append(")");
+      }
+    }
+    buffer.append(this._compilerOptions);
+    buffer.append("}");
+    buffer.append(", _sourceFiles: {");
+    if ((this._sourceFiles != null) && (this._sourceFiles.length > 0)) {
+      buffer.append(this._sourceFiles[0]);
+      for (int i = 1; i < this._sourceFiles.length; i++) {
+        buffer.append(", ");
+        buffer.append(this._sourceFiles[i]);
+      }
+    }
+    buffer.append(this._sourceFiles);
+    buffer.append("}");
+    buffer.append("]");
+    return buffer.toString();
+  }
+
 }
