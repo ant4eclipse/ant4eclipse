@@ -54,8 +54,9 @@ public class JreContainerResolver implements ClasspathContainerResolver {
       javaRuntime = javaRuntimeRegistry.getJavaRuntime(key);
       if (javaRuntime == null) {
         // TODO
-        A4ELogging.warn("Could not find JRE for " + path + ". Using default JRE!");
         javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
+        A4ELogging.warn("Could not find JRE for " + path + ". Using default JRE (Version: "
+            + javaRuntime.getJavaVersion() + ", Location: " + javaRuntime.getLocation() + ") !");
       }
     } else {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
