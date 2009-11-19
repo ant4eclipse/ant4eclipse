@@ -97,6 +97,10 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         defaultCompilerOptionsFileName);
     compileJobDescription.setCompilerOptions(compilerOptions);
 
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("CompileJobDescription: %s", compileJobDescription);
+    }
+
     // Step 6: Compile
     CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
 
