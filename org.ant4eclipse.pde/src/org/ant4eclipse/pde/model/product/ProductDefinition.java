@@ -101,7 +101,7 @@ public class ProductDefinition {
     this._name = null;
     this._id = null;
     this._application = null;
-    this._version = null;
+    this._version = Version.emptyVersion;
     this._basedonfeatures = false;
     this._configini = new Hashtable<Os, String>();
     this._programargs = new Hashtable<Os, String>();
