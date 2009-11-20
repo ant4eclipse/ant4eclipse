@@ -29,46 +29,46 @@ import java.util.Map;
 public class ProductDefinition {
 
   /** - */
-  private String               _name;
+  private String                 _name;
 
   /** - */
-  private String               _id;
+  private String                 _id;
 
   /** - */
-  private String               _application;
+  private String                 _application;
 
   /** - */
-  private Version              _version;
+  private Version                _version;
 
   /** - */
-  private boolean              _basedonfeatures;
+  private boolean                _basedonfeatures;
 
   /** - */
-  private List<String>         _pluginids;
+  private List<String>           _pluginids;
 
   /** - */
-  private List<String>         _fragmentids;
+  private List<String>           _fragmentids;
 
   /** - */
-  private Map<ProductOs, String>      _configini;
+  private Map<ProductOs, String> _configini;
 
   /** - */
-  private Map<ProductOs, String>      _programargs;
+  private Map<ProductOs, String> _programargs;
 
   /** - */
-  private Map<ProductOs, String>      _vmargs;
+  private Map<ProductOs, String> _vmargs;
 
   /** - */
-  private String               _launchername;
+  private String                 _launchername;
 
   /** - */
-  private Map<ProductOs, String>      _vm;
+  private Map<ProductOs, String> _vm;
 
   /** - */
-  private String               _splashplugin;
+  private String                 _splashplugin;
 
   /** - */
-  private Map<String, Version> _features;
+  private Map<String, Version>   _features;
 
   /**
    * Initialises this data structure.
@@ -209,10 +209,14 @@ public class ProductDefinition {
    * @param os
    *          The operating system used to access the vm arguments. Not <code>null</code>.
    * 
-   * @return The vm arguments or <code>null</code> if none has been specified.
+   * @return The vm arguments. Not <code>null</code>.
    */
   public String getVmArgs(ProductOs os) {
-    return this._vmargs.get(os);
+    if (this._vmargs.containsKey(os)) {
+      return this._vmargs.get(os);
+    } else {
+      return "";
+    }
   }
 
   /**
@@ -235,10 +239,14 @@ public class ProductDefinition {
    * @param os
    *          The operating system used to access the program arguments. Not <code>null</code>.
    * 
-   * @return The program arguments or <code>null</code> if none has been specified.
+   * @return The program arguments. Not <code>null</code>.
    */
   public String getProgramArgs(ProductOs os) {
-    return this._programargs.get(os);
+    if (this._programargs.containsKey(os)) {
+      return this._programargs.get(os);
+    } else {
+      return "";
+    }
   }
 
   /**
