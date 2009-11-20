@@ -94,37 +94,37 @@ public class ProductDefinitionParser {
     result.setSplashplugin(splashquery.getSingleResult());
     result.setBasedOnFeatures(Boolean.parseBoolean(usefeaturesquery.getSingleResult()));
 
-    result.addConfigIni(ProductDefinition.Os.linux, configinilinuxquery.getSingleResult());
-    result.addConfigIni(ProductDefinition.Os.macosx, configinimacosxquery.getSingleResult());
-    result.addConfigIni(ProductDefinition.Os.solaris, configinisolarisquery.getSingleResult());
-    result.addConfigIni(ProductDefinition.Os.win32, configiniwin32query.getSingleResult());
+    result.addConfigIni(ProductDefinition.ProductOs.linux, configinilinuxquery.getSingleResult());
+    result.addConfigIni(ProductDefinition.ProductOs.macosx, configinimacosxquery.getSingleResult());
+    result.addConfigIni(ProductDefinition.ProductOs.solaris, configinisolarisquery.getSingleResult());
+    result.addConfigIni(ProductDefinition.ProductOs.win32, configiniwin32query.getSingleResult());
 
     String programarg = Utilities.cleanup(programallquery.getSingleResult());
     if (programarg != null) {
-      for (ProductDefinition.Os os : ProductDefinition.Os.values()) {
+      for (ProductDefinition.ProductOs os : ProductDefinition.ProductOs.values()) {
         result.addProgramArgs(os, programarg);
       }
     }
-    result.addProgramArgs(ProductDefinition.Os.linux, programlinuxquery.getSingleResult());
-    result.addProgramArgs(ProductDefinition.Os.macosx, programmacquery.getSingleResult());
-    result.addProgramArgs(ProductDefinition.Os.solaris, programsolarisquery.getSingleResult());
-    result.addProgramArgs(ProductDefinition.Os.win32, programwinquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.ProductOs.linux, programlinuxquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.ProductOs.macosx, programmacquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.ProductOs.solaris, programsolarisquery.getSingleResult());
+    result.addProgramArgs(ProductDefinition.ProductOs.win32, programwinquery.getSingleResult());
 
     String vmarg = Utilities.cleanup(vmargsallquery.getSingleResult());
     if (vmarg != null) {
-      for (ProductDefinition.Os os : ProductDefinition.Os.values()) {
+      for (ProductDefinition.ProductOs os : ProductDefinition.ProductOs.values()) {
         result.addProgramArgs(os, vmarg);
       }
     }
-    result.addVmArgs(ProductDefinition.Os.linux, vmargslinuxquery.getSingleResult());
-    result.addVmArgs(ProductDefinition.Os.macosx, vmargsmacquery.getSingleResult());
-    result.addVmArgs(ProductDefinition.Os.solaris, vmargssolarisquery.getSingleResult());
-    result.addVmArgs(ProductDefinition.Os.win32, vmargswinquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.ProductOs.linux, vmargslinuxquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.ProductOs.macosx, vmargsmacquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.ProductOs.solaris, vmargssolarisquery.getSingleResult());
+    result.addVmArgs(ProductDefinition.ProductOs.win32, vmargswinquery.getSingleResult());
 
-    result.addVm(ProductDefinition.Os.linux, vmlinuxquery.getSingleResult());
-    result.addVm(ProductDefinition.Os.macosx, vmmacosxquery.getSingleResult());
-    result.addVm(ProductDefinition.Os.solaris, vmsolarisquery.getSingleResult());
-    result.addVm(ProductDefinition.Os.win32, vmwin32query.getSingleResult());
+    result.addVm(ProductDefinition.ProductOs.linux, vmlinuxquery.getSingleResult());
+    result.addVm(ProductDefinition.ProductOs.macosx, vmmacosxquery.getSingleResult());
+    result.addVm(ProductDefinition.ProductOs.solaris, vmsolarisquery.getSingleResult());
+    result.addVm(ProductDefinition.ProductOs.win32, vmwin32query.getSingleResult());
 
     String[] pluginids = pluginidquery.getResult();
     String[] isfragment = fragmentquery.getResult();

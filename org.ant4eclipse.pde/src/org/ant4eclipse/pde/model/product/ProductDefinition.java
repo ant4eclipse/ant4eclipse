@@ -31,7 +31,7 @@ public class ProductDefinition {
   /**
    * A constant allowing to identify operating system specific values.
    */
-  public static enum Os {
+  public static enum ProductOs {
     /** - */
     win32,
     /** - */
@@ -70,19 +70,19 @@ public class ProductDefinition {
   private List<String>         _fragmentids;
 
   /** - */
-  private Map<Os, String>      _configini;
+  private Map<ProductOs, String>      _configini;
 
   /** - */
-  private Map<Os, String>      _programargs;
+  private Map<ProductOs, String>      _programargs;
 
   /** - */
-  private Map<Os, String>      _vmargs;
+  private Map<ProductOs, String>      _vmargs;
 
   /** - */
   private String               _launchername;
 
   /** - */
-  private Map<Os, String>      _vm;
+  private Map<ProductOs, String>      _vm;
 
   /** - */
   private String               _splashplugin;
@@ -101,11 +101,11 @@ public class ProductDefinition {
     this._application = null;
     this._version = Version.emptyVersion;
     this._basedonfeatures = false;
-    this._configini = new Hashtable<Os, String>();
-    this._programargs = new Hashtable<Os, String>();
-    this._vmargs = new Hashtable<Os, String>();
+    this._configini = new Hashtable<ProductOs, String>();
+    this._programargs = new Hashtable<ProductOs, String>();
+    this._vmargs = new Hashtable<ProductOs, String>();
     this._launchername = null;
-    this._vm = new Hashtable<Os, String>();
+    this._vm = new Hashtable<ProductOs, String>();
     this._splashplugin = null;
     this._features = new Hashtable<String, Version>();
   }
@@ -191,7 +191,7 @@ public class ProductDefinition {
    * @param vm
    *          The required vm for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addVm(Os os, String vm) {
+  void addVm(ProductOs os, String vm) {
     if (vm != null) {
       this._vm.put(os, vm.trim());
     }
@@ -205,7 +205,7 @@ public class ProductDefinition {
    * 
    * @return The required vm or <code>null</code> if none has been specified.
    */
-  public String getVm(Os os) {
+  public String getVm(ProductOs os) {
     return this._vm.get(os);
   }
 
@@ -217,7 +217,7 @@ public class ProductDefinition {
    * @param args
    *          The vm arguments for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addVmArgs(Os os, String args) {
+  void addVmArgs(ProductOs os, String args) {
     if (args != null) {
       this._vmargs.put(os, args.replace('\n', ' ').trim());
     }
@@ -231,7 +231,7 @@ public class ProductDefinition {
    * 
    * @return The vm arguments or <code>null</code> if none has been specified.
    */
-  public String getVmArgs(Os os) {
+  public String getVmArgs(ProductOs os) {
     return this._vmargs.get(os);
   }
 
@@ -243,7 +243,7 @@ public class ProductDefinition {
    * @param args
    *          The program arguments for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addProgramArgs(Os os, String args) {
+  void addProgramArgs(ProductOs os, String args) {
     if (args != null) {
       this._programargs.put(os, args.replace('\n', ' ').trim());
     }
@@ -257,7 +257,7 @@ public class ProductDefinition {
    * 
    * @return The program arguments or <code>null</code> if none has been specified.
    */
-  public String getProgramArgs(Os os) {
+  public String getProgramArgs(ProductOs os) {
     return this._programargs.get(os);
   }
 
@@ -270,7 +270,7 @@ public class ProductDefinition {
    * @param path
    *          The path to be used for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addConfigIni(Os os, String path) {
+  void addConfigIni(ProductOs os, String path) {
     if (path != null) {
       this._configini.put(os, path.trim());
     }
@@ -285,7 +285,7 @@ public class ProductDefinition {
    * 
    * @return The config.ini path or <code>null</code> if none has been specified.
    */
-  public String getConfigIni(Os os) {
+  public String getConfigIni(ProductOs os) {
     return this._configini.get(os);
   }
 
@@ -476,7 +476,7 @@ public class ProductDefinition {
     }
     buffer.append(", _configini: {");
     boolean first = true;
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String configini = getConfigIni(os);
       if (configini != null) {
         if (!first) {
@@ -491,7 +491,7 @@ public class ProductDefinition {
     buffer.append("}");
     buffer.append(", _programargs: {");
     first = true;
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String programargs = getProgramArgs(os);
       if (programargs != null) {
         if (!first) {
@@ -506,7 +506,7 @@ public class ProductDefinition {
     buffer.append("}");
     buffer.append(", _vmargs: {");
     first = true;
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String vmargs = getVmArgs(os);
       if (vmargs != null) {
         if (!first) {
@@ -521,7 +521,7 @@ public class ProductDefinition {
     buffer.append("}");
     buffer.append(", _vm: {");
     first = true;
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String vm = getVm(os);
       if (vm != null) {
         if (!first) {
@@ -564,19 +564,19 @@ public class ProductDefinition {
     for (int i = 0; i < this._fragmentids.size(); i++) {
       result = 31 * result + this._fragmentids.get(i).hashCode();
     }
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String configini = getConfigIni(os);
       result = 31 * result + (configini == null ? 0 : configini.hashCode());
     }
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String programargs = getProgramArgs(os);
       result = 31 * result + (programargs == null ? 0 : programargs.hashCode());
     }
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String vmargs = getVmArgs(os);
       result = 31 * result + (vmargs == null ? 0 : vmargs.hashCode());
     }
-    for (Os os : Os.values()) {
+    for (ProductOs os : ProductOs.values()) {
       String vm = getVm(os);
       result = 31 * result + (vm == null ? 0 : vm.hashCode());
     }

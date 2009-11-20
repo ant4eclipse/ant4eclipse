@@ -99,19 +99,19 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   public static enum Os {
 
     /** - */
-    linux(ProductDefinition.Os.linux),
+    linux(ProductDefinition.ProductOs.linux),
 
     /** - */
-    solaris(ProductDefinition.Os.solaris),
+    solaris(ProductDefinition.ProductOs.solaris),
 
     /** - */
-    macosx(ProductDefinition.Os.macosx),
+    macosx(ProductDefinition.ProductOs.macosx),
 
     /** - */
-    win32(ProductDefinition.Os.win32);
+    win32(ProductDefinition.ProductOs.win32);
 
     /** - */
-    private ProductDefinition.Os _os;
+    private ProductDefinition.ProductOs _os;
 
     /**
      * Initialises this ant enumeration with the corresponding value for the product definition.
@@ -119,7 +119,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
      * @param pos
      *          The os value used for the product definition. Not <code>null</code>.
      */
-    Os(ProductDefinition.Os pos) {
+    Os(ProductDefinition.ProductOs pos) {
       this._os = pos;
     }
 
