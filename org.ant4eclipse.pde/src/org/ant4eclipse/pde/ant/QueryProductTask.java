@@ -296,9 +296,9 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     case application:
       return productdef.getApplication();
     case programargs:
-      return getArgs(productdef.getProgramArgs(), productdef.getProgramArgs(query._os._os));
+      return getArgs(productdef.getProgramArgs(query._os._os));
     case vmargs:
-      return getArgs(productdef.getVmArgs(), productdef.getVmArgs(query._os._os));
+      return getArgs(productdef.getVmArgs(query._os._os));
     case basedonfeatures:
       return String.valueOf(productdef.isBasedOnFeatures());
     case id:

@@ -33,8 +33,6 @@ public class ProductDefinition {
    */
   public static enum Os {
     /** - */
-    all,
-    /** - */
     win32,
     /** - */
     solaris,
@@ -238,15 +236,6 @@ public class ProductDefinition {
   }
 
   /**
-   * Returns the vm arguments used for all operating systems.
-   * 
-   * @return The vm arguments or <code>null</code> if none has been specified.
-   */
-  public String getVmArgs() {
-    return getVmArgs(Os.all);
-  }
-
-  /**
    * Registers a set of program arguments for a specific os.
    * 
    * @param os
@@ -270,15 +259,6 @@ public class ProductDefinition {
    */
   public String getProgramArgs(Os os) {
     return this._programargs.get(os);
-  }
-
-  /**
-   * Returns the program arguments used for all operating systems.
-   * 
-   * @return The program arguments or <code>null</code> if none has been specified.
-   */
-  public String getProgramArgs() {
-    return getProgramArgs(Os.all);
   }
 
   /**

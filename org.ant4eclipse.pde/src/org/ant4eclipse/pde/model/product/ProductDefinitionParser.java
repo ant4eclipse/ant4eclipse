@@ -12,6 +12,7 @@
 package org.ant4eclipse.pde.model.product;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
 
@@ -98,13 +99,23 @@ public class ProductDefinitionParser {
     result.addConfigIni(ProductDefinition.Os.solaris, configinisolarisquery.getSingleResult());
     result.addConfigIni(ProductDefinition.Os.win32, configiniwin32query.getSingleResult());
 
-    result.addProgramArgs(ProductDefinition.Os.all, programallquery.getSingleResult());
+    String programarg = Utilities.cleanup(programallquery.getSingleResult());
+    if (programarg != null) {
+      for (ProductDefinition.Os os : ProductDefinition.Os.values()) {
+        result.addProgramArgs(os, programarg);
+      }
+    }
     result.addProgramArgs(ProductDefinition.Os.linux, programlinuxquery.getSingleResult());
     result.addProgramArgs(ProductDefinition.Os.macosx, programmacquery.getSingleResult());
     result.addProgramArgs(ProductDefinition.Os.solaris, programsolarisquery.getSingleResult());
     result.addProgramArgs(ProductDefinition.Os.win32, programwinquery.getSingleResult());
 
-    result.addVmArgs(ProductDefinition.Os.all, vmargsallquery.getSingleResult());
+    String vmarg = Utilities.cleanup(vmargsallquery.getSingleResult());
+    if (vmarg != null) {
+      for (ProductDefinition.Os os : ProductDefinition.Os.values()) {
+        result.addProgramArgs(os, vmarg);
+      }
+    }
     result.addVmArgs(ProductDefinition.Os.linux, vmargslinuxquery.getSingleResult());
     result.addVmArgs(ProductDefinition.Os.macosx, vmargsmacquery.getSingleResult());
     result.addVmArgs(ProductDefinition.Os.solaris, vmargssolarisquery.getSingleResult());
