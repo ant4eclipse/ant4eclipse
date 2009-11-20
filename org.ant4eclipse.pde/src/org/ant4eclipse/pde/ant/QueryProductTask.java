@@ -17,6 +17,7 @@ import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.model.product.ProductDefinition;
 import org.ant4eclipse.pde.model.product.ProductDefinitionParser;
+import org.ant4eclipse.pde.model.product.ProductOs;
 
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -347,19 +348,19 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   public static class Query {
 
     /** - */
-    private String                      _property;
+    private String    _property;
 
     /** - */
-    private QueryType                   _type;
+    private QueryType _type;
 
     /** - */
-    private ProductDefinition.ProductOs _os;
+    private ProductOs _os;
 
     /**
      * Initialises this query instance with default values.
      */
     public Query() {
-      this._os = ProductDefinition.ProductOs.win32;
+      this._os = ProductOs.win32;
       this._type = null;
       this._property = null;
     }
@@ -370,7 +371,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
      * @param newos
      *          The new os used for the querying of the product configuration. Not <code>null</code>.
      */
-    public void setOs(ProductDefinition.ProductOs newos) {
+    public void setOs(ProductOs newos) {
       this._os = newos;
     }
 

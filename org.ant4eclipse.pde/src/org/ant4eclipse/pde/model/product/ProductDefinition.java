@@ -28,26 +28,6 @@ import java.util.Map;
  */
 public class ProductDefinition {
 
-  /**
-   * A constant allowing to identify operating system specific values.
-   */
-  public static enum ProductOs {
-    /** - */
-    win32,
-    /** - */
-    solaris,
-    /** - */
-    linux,
-    /** - */
-    macosx
-  }
-
-  /*
-   * <configIni use="default" path="config.ini"> <win32>/org.autosar.mmt2.product/config.ini</win32> </configIni>
-   * 
-   * <windowImages/>
-   */
-
   /** - */
   private String               _name;
 
