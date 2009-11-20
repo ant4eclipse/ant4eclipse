@@ -490,7 +490,7 @@ public class BundleDependenciesResolver {
           return new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries(),
               ((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders());
         } else {
-          new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries());
+          return new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries());
         }
       }
 
