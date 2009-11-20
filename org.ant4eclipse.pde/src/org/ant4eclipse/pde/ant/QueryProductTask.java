@@ -93,38 +93,6 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
 
   }
 
-  /**
-   * Selection of the operating system currently used to query the product configuration.
-   */
-  public static enum Os {
-
-    /** - */
-    linux(ProductDefinition.ProductOs.linux),
-
-    /** - */
-    solaris(ProductDefinition.ProductOs.solaris),
-
-    /** - */
-    macosx(ProductDefinition.ProductOs.macosx),
-
-    /** - */
-    win32(ProductDefinition.ProductOs.win32);
-
-    /** - */
-    private ProductDefinition.ProductOs _os;
-
-    /**
-     * Initialises this ant enumeration with the corresponding value for the product definition.
-     * 
-     * @param pos
-     *          The os value used for the product definition. Not <code>null</code>.
-     */
-    Os(ProductDefinition.ProductOs pos) {
-      this._os = pos;
-    }
-
-  }
-
   /** - */
   private File              _product;
 
@@ -296,9 +264,9 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     case application:
       return productdef.getApplication();
     case programargs:
-      return getArgs(productdef.getProgramArgs(query._os._os));
+      return getArgs(productdef.getProgramArgs(query._os));
     case vmargs:
-      return getArgs(productdef.getVmArgs(query._os._os));
+      return getArgs(productdef.getVmArgs(query._os));
     case basedonfeatures:
       return String.valueOf(productdef.isBasedOnFeatures());
     case id:
@@ -313,7 +281,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
         return null;
       }
     case configini:
-      String configini = productdef.getConfigIni(query._os._os);
+      String configini = productdef.getConfigIni(query._os);
       if (configini != null) {
         int idx = configini.indexOf('/', 1);
         String projectname = configini.substring(1, idx);
@@ -379,19 +347,19 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   public static class Query {
 
     /** - */
-    private String    _property;
+    private String                      _property;
 
     /** - */
-    private QueryType _type;
+    private QueryType                   _type;
 
     /** - */
-    private Os        _os;
+    private ProductDefinition.ProductOs _os;
 
     /**
      * Initialises this query instance with default values.
      */
     public Query() {
-      this._os = Os.win32;
+      this._os = ProductDefinition.ProductOs.win32;
       this._type = null;
       this._property = null;
     }
@@ -402,7 +370,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
      * @param newos
      *          The new os used for the querying of the product configuration. Not <code>null</code>.
      */
-    public void setOs(Os newos) {
+    public void setOs(ProductDefinition.ProductOs newos) {
       this._os = newos;
     }
 
