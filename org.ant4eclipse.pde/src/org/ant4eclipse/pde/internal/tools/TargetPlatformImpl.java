@@ -333,20 +333,22 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     for (Includes includes : manifest.getIncludes()) {
 
-      FeatureDescription featureDescription = null;
+      if (matches(includes.getOperatingSystem(), includes.getMachineArchitecture(), includes.getWindowingSystem(),
+          includes.getLocale())) {
 
-      if (includes.getVersion().equals(Version.emptyVersion)) {
-        featureDescription = getFeatureDescription(includes.getId());
-      } else {
-        featureDescription = getFeatureDescription(includes.getId(), includes.getVersion());
-      }
-
-      if (featureDescription == null) {
-        // TODO: NLS
-        throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_"
-            + includes.getVersion() + "'.");
-      } else {
-        result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
+        FeatureDescription featureDescription = null;
+        if (includes.getVersion().equals(Version.emptyVersion)) {
+          featureDescription = getFeatureDescription(includes.getId());
+        } else {
+          featureDescription = getFeatureDescription(includes.getId(), includes.getVersion());
+        }
+        if (featureDescription == null) {
+          // TODO: NLS
+          throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_"
+              + includes.getVersion() + "'.");
+        } else {
+          result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
+        }
       }
     }
 
@@ -362,32 +364,35 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @throws BuildException
    */
   private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) throws BuildException {
+
     // 4. Retrieve BundlesDescriptions for feature plug-ins
     Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
     List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
 
     for (Plugin plugin : manifest.getPlugins()) {
 
-      // if a plug-in reference uses a version, the exact version must be found in the workspace
-      // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
-      BundleDescription bundleDescription = this._state.getBundle(plugin.getId(), plugin.getVersion().equals(
-          Version.emptyVersion) ? null : plugin.getVersion());
+      if (matches(plugin.getOperatingSystem(), plugin.getMachineArchitecture(), plugin.getWindowingSystem(), plugin
+          .getLocale())) {
 
-      // TODO: NLS
-      if (bundleDescription == null) {
-        throw new BuildException("Could not find bundle with id '" + plugin.getId() + "' and version '"
-            + plugin.getVersion() + "' in workspace or target platform!");
+        // if a plug-in reference uses a version, the exact version must be found in the workspace
+        // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
+        BundleDescription bundleDescription = this._state.getBundle(plugin.getId(), plugin.getVersion().equals(
+            Version.emptyVersion) ? null : plugin.getVersion());
+        // TODO: NLS
+        if (bundleDescription == null) {
+          throw new BuildException("Could not find bundle with id '" + plugin.getId() + "' and version '"
+              + plugin.getVersion() + "' in workspace or target platform!");
+        }
+        // TODO: NLS
+        if (!bundleDescription.isResolved()) {
+          String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
+          String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
+          throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo,
+              resolverErrors));
+        }
+        bundleDescriptions.add(bundleDescription);
+        map.put(bundleDescription, plugin);
       }
-
-      // TODO: NLS
-      if (!bundleDescription.isResolved()) {
-        String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
-        String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
-        throw new RuntimeException(String
-            .format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo, resolverErrors));
-      }
-      bundleDescriptions.add(bundleDescription);
-      map.put(bundleDescription, plugin);
     }
 
     // 5. Sort the bundles
@@ -465,6 +470,49 @@ public final class TargetPlatformImpl implements TargetPlatform {
     return state;
   }
 
+  private boolean matches(String os, String arch, String ws, String nl) {
+    return contains(this._configuration.getOperatingSystem(), os)
+        && contains(this._configuration.getArchitecture(), arch)
+        && contains(this._configuration.getWindowingSystem(), ws)
+        && contains(this._configuration.getLanguageSetting(), nl);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param element
+   * @param commaSeparatedList
+   * @return
+   */
+  private static boolean contains(String element, String commaSeparatedList) {
+
+    // 
+    if (element == null || element.trim().equals("")) {
+      return true;
+    }
+
+    //
+    if (commaSeparatedList == null || commaSeparatedList.trim().equals("")) {
+      return true;
+    }
+
+    // split the elements
+    String[] elements = commaSeparatedList.split(",");
+
+    // iterate over all the list elements
+    for (String listElement : elements) {
+
+      // 
+      if (element.trim().equalsIgnoreCase(listElement)) {
+        return true;
+      }
+    }
+
+    // finally return false
+    return false;
+  }
+
   /**
    * <p>
    * Returns the resolver errors as a string.
@@ -472,9 +520,11 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * 
    * @param description
    *          the bundle description
+   * @param dumpHeader
+   *          indicates if the header should be dumped or not
    * @return the resolver errors as a string.
    */
-  public static String dumpResolverErrors(BundleDescription description, boolean header) {
+  public static String dumpResolverErrors(BundleDescription description, boolean dumpHeader) {
     Assert.notNull(description);
 
     StringBuffer stringBuffer = new StringBuffer();
@@ -486,7 +536,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
         stringBuffer.append(getBundleInfo(description));
         stringBuffer.append("' -- another version resolved\n");
       } else {
-        if (header) {
+        if (dumpHeader) {
           stringBuffer.append("Could not resolve '");
           // stringBuffer.append(getBundleInfo(description));
           stringBuffer.append(description.getSymbolicName());

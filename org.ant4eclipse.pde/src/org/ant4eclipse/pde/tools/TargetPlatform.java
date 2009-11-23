@@ -120,7 +120,7 @@ public interface TargetPlatform {
    * 
    * @param source
    * @param manifest
-   * @return
+   * @return returns the resolved feature
    */
   ResolvedFeature resolveFeature(Object source, FeatureManifest manifest);
 }
