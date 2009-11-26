@@ -164,11 +164,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
           values.getProperties().put(LIBRARY_SOURCE_NAME, LibraryHelper.getSourceNameForLibrary(library.getName()));
 
           // add boolean for 'self' library
-          if (library.isSelf()) {
-            values.getProperties().put(LIBRARY_IS_SELF, "true");
-          } else {
-            values.getProperties().put(LIBRARY_IS_SELF, "false");
-          }
+          values.getProperties().put(LIBRARY_IS_SELF, String.valueOf(library.isSelf()));
 
           // add the platform specific values
           getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
