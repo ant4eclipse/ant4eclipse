@@ -13,8 +13,10 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.model.product.ProductDefinition;
 import org.ant4eclipse.pde.model.product.ProductDefinitionParser;
 import org.ant4eclipse.pde.model.product.ProductOs;
@@ -211,6 +213,12 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     try {
       instream = new FileInputStream(this._product);
       return ProductDefinitionParser.parseProductDefinition(instream);
+    } catch (Ant4EclipseException ex) {
+      if (ex.getExceptionCode() == PdeExceptionCode.INVALID_CONFIGURATION_VALUE) {
+        throw new Ant4EclipseException(PdeExceptionCode.INVALID_PRODUCT_DEFINITION, this._product, ex.getMessage());
+      } else {
+        throw ex;
+      }
     } catch (IOException ex) {
       throw new BuildException(ex);
     } finally {

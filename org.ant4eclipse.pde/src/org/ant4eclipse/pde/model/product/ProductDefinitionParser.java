@@ -12,9 +12,12 @@
 package org.ant4eclipse.pde.model.product;
 
 import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.core.xquery.XQuery;
 import org.ant4eclipse.core.xquery.XQueryHandler;
+
+import org.ant4eclipse.pde.PdeExceptionCode;
 
 import org.osgi.framework.Version;
 
@@ -138,8 +141,47 @@ public class ProductDefinitionParser {
       result.addFeature(featureids[i], new Version(featureversions[i]));
     }
 
+    validate(result);
+
     return result;
 
+  }
+
+  /**
+   * Performs a simple validation of the data currently stored within this description.
+   * 
+   * @param result
+   *          The product definition instance that needs to be validated.
+   */
+  private static final void validate(ProductDefinition result) {
+    if ((result.getName() == null) || (result.getName().length() == 0)) {
+      throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, "", "name");
+    }
+    if ((result.getId() == null) || (result.getId().length() == 0)) {
+      throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, "", "id");
+    }
+    for (ProductOs os : ProductOs.values()) {
+      String configini = result.getConfigIni(os);
+      if (configini != null) {
+        String name = String.format("configIni/%s", os.name());
+        if (configini.length() == 0) {
+          throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, "", name);
+        }
+        if (configini.charAt(0) != '/') {
+          // it's not starting with a slash indicating workspace relativity
+          throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, configini, name);
+        }
+        int next = configini.indexOf('/', 1);
+        if (next == -1) {
+          // it's not starting with a slash indicating workspace relativity
+          throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, configini, name);
+        }
+        if (next == configini.length() - 1) {
+          // there's no file path after the project name
+          throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, configini, name);
+        }
+      }
+    }
   }
 
 } /* ENDCLASS */

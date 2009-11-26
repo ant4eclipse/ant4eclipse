@@ -76,6 +76,14 @@ public class PdeExceptionCode extends ExceptionCode {
   @NLSMessage("No target platform has been set. Please specify a target platform by using the <jdtclasspathcontainerargument>-subelement with 'target.platform' as key")
   public static PdeExceptionCode NO_TARGET_PLATFORM_SET;
 
+  /** - */
+  @NLSMessage("The product definition '%s' is invalid. Reason: %s")
+  public static PdeExceptionCode INVALID_PRODUCT_DEFINITION;
+
+  /** - */
+  @NLSMessage("The value '%s' for %s is not allowed.")
+  public static PdeExceptionCode INVALID_CONFIGURATION_VALUE;
+
   static {
     NLS.initialize(PdeExceptionCode.class);
   }
