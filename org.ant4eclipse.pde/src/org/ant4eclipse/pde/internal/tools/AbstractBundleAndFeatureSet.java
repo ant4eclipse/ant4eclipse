@@ -152,10 +152,13 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
 
       // if match -> set as result
       if (featureManifest.getId().equals(featureId)) {
-        if (result != null && result.getFeatureManifest().getVersion().compareTo(featureManifest.getVersion()) < 0) {
+        if (result == null) {
           result = featureDescription;
         } else {
-          result = featureDescription;
+          // the current feature description has a higher version, so use this one
+          if (result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+            result = featureDescription;
+          }
         }
       }
     }

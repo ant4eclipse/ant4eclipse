@@ -282,11 +282,13 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
       // if match -> set as result
       if (featureDescription != null && featureDescription.getFeatureManifest().getId().equals(id)) {
-        if (result != null
-            && result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+        if (result == null) {
           result = featureDescription;
         } else {
-          result = featureDescription;
+          // the current feature description has a higher version, so use this one
+          if (result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+            result = featureDescription;
+          }
         }
       }
     }
