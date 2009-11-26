@@ -170,6 +170,38 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  public BundleDescription getBundleDescription(String bundleid) {
+    Assert.nonEmpty(bundleid);
+
+    // initialize if necessary
+    initialize();
+
+    // result
+    BundleDescription result = null;
+
+    for (BundleDescription bundleDescription : this._bundleDescriptonList) {
+
+      // if match -> set as result
+      if (bundleDescription.getSymbolicName().equals(bundleid)) {
+        if (result == null) {
+          result = bundleDescription;
+        } else {
+          // the current feature description has a higher version, so use this one
+          if (result.getVersion().compareTo(bundleDescription.getVersion()) < 0) {
+            result = bundleDescription;
+          }
+        }
+      }
+    }
+
+    // return result
+    return result;
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public final List<BundleDescription> getAllBundleDescriptions() {
 
     // initialize if necessary

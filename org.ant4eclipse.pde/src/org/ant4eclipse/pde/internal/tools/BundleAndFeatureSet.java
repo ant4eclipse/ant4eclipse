@@ -89,4 +89,19 @@ public interface BundleAndFeatureSet {
    * @return the {@link FeatureDescription}
    */
   FeatureDescription getFeatureDescription(String featureId);
+
+  /**
+   * <p>
+   * Returns the {@link BundleDescription} with the given feature id. If no such bundle exists, <code>null</code> will
+   * be returned instead. If multiple bundle exits with the specified bundle id, the bundle with the highest version
+   * will be returned.
+   * </p>
+   * 
+   * @param bundleid
+   *          The bundle id. Neither <code>null</code> nor empty.
+   * 
+   * @return The {@link BundleDescription}. Maybe <code>null</code>.
+   */
+  BundleDescription getBundleDescription(String bundleid);
+
 }
