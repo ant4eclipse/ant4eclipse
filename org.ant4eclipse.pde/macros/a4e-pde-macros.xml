@@ -31,7 +31,7 @@
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="newBundleVersion" default="" />
 
-    <!-- element defintions for lifecycle phases -->
+    <!-- element definitions for lifecycle phases -->
     <element name="validate"
              optional="true"
              description="Validate the project if it's correct and all necessary information is available." />
@@ -533,11 +533,21 @@
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="packageAsJar" default="false"/>
     <attribute name="commandline" default="false"/>
+    <attribute name="packageSources" default="true"/>
     
+    <!-- element definitions for lifecycle phases -->
+    <element name="validate"
+             optional="true"
+             description="Validate the project if it's correct and all necessary information is available." />
+
+    <element name="deploy"
+             optional="true"
+             description="Perform any operations necessary to prepare a package before the actual packaging." />
+
     <sequential>
       
       <echo level="warning">THIS MACRO IS CURRENTLY NOT COMPLETED</echo>
-      
+
       <ant4eclipse:executeProduct
         workspaceDirectory="@{workspaceDirectory}"
         targetPlatformId="@{targetPlatformId}"
@@ -549,16 +559,22 @@
           <echo>Building product ${executeProduct.product.name} version ${executeProduct.product.version}</echo>
         </ant4eclipse:forProduct>
 
+        <validate/>
+        
         <!-- Step 1: Scrub destination directory if requested -->
         <ant4eclipse:forProduct if="@{clearDestination}">
           <echo>Scrubbing directory '@{destination}'</echo>
           <delete dir="@{destination}" quiet="true" />
-          <mkdir dir="@{destination}" />
         </ant4eclipse:forProduct>
 
-        <!-- Step 2: Build feature and plugins -->
+        <!-- Step 2: Assure a necessary structure. --> 
+        <ant4eclipse:forProduct>
+          <mkdir dir="@{destination}/configuration" />
+        </ant4eclipse:forProduct>
+
+        <!-- Step 3: Build features or plugins -->
         
-        <!-- Step 2a: Build included features if this product is based on features -->
+        <!-- Step 3a: Build included features if this product is based on features -->
         <ant4eclipse:forEachFeature>
           <antcontrib:if>
             <istrue value="${executeProduct.product.basedonfeatures}"/>
@@ -576,7 +592,7 @@
           </antcontrib:if>
         </ant4eclipse:forEachFeature>
 
-        <!-- Step 2b: Build included plugins if this product is based on plugins -->
+        <!-- Step 3b: Build included plugins if this product is based on plugins -->
         <ant4eclipse:forEachPlugin filter="(plugin.isSource=true)">
           <antcontrib:if>
             <isfalse value="${executeProduct.product.basedonfeatures}"/>
@@ -589,12 +605,13 @@
                 packageAsJar="@{packageAsJar}"
                 destination="@{destination}"
                 defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+                buildSourceJar="@{packageSources}"
               />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachPlugin>
 
-        <!-- Step 2b: Copy plugins from the target platform -->
+        <!-- Step 3c: Copy plugins from the target platform -->
         <ant4eclipse:forEachPlugin filter="(plugin.isSource=false)">
           <antcontrib:if>
             <isfalse value="${executeProduct.product.basedonfeatures}"/>
@@ -607,7 +624,7 @@
           </antcontrib:if>
         </ant4eclipse:forEachPlugin>
         
-        <!-- Step 3: Generate artifacts -->
+        <!-- Step 4: Generate artifacts -->
         <ant4eclipse:forProduct>
           
           <!-- create the .eclipseproduct file -->
@@ -633,23 +650,34 @@
             </else>
           </antcontrib:if>
 
-          <!-- copy an existing config.ini file -->
-          <!-- @todo [20-Nov-2009:KASI]  locate the original ini file
-          <copy file="${a4e.buildProduct_configini}" tofile="@{destination}/configuration/config.ini"/>
-          -->
+          <antcontrib:if>
+            <and>
+              <not><equals arg1="" arg2="${executeProduct.product.configini}"/></not>
+              <available file="${executeProduct.product.configini}" type="file"/>
+            </and>
+            <then>
+              <copy file="${executeProduct.product.configini}" todir="@{destination}/configuration" overwrite="true"/>
+            </then>
+          </antcontrib:if>
 
-          <!-- copy the executable files -->
-          <!-- @todo [20-Nov-2009:KASI]  locate the original exe files
           <antcontrib:if>
             <istrue value="@{commandline}"/>
             <then>
+              <copy file="${executeProduct.product.cmdexe}" tofile="@{destination}/${executeProduct.product.launchername}.exe" overwrite="true"/>
             </then>
             <else>
+              <copy file="${executeProduct.product.guiexe}" tofile="@{destination}/${executeProduct.product.launchername}.exe" overwrite="true"/>
+              <copy file="${executeProduct.product.cmdexe}" tofile="@{destination}/${executeProduct.product.launchername}c.exe" overwrite="true"/>
             </else>
           </antcontrib:if>
-          -->
+          
         </ant4eclipse:forProduct>
 
+        <ant4eclipse:forProduct>
+          <!-- template element 'deploy' -->
+          <deploy />
+        </ant4eclipse:forProduct>
+        
         <ant4eclipse:forProduct>
           <echo>Building product ${executeProduct.product.name} successfully build.</echo>
         </ant4eclipse:forProduct>
