@@ -39,7 +39,7 @@ public class ProductDefinitionParser {
    * 
    * @return A product definition instance. Not <code>null</code>.
    */
-  public static ProductDefinition parseProductDefinition(InputStream inputstream) {
+  public static final ProductDefinition parseProductDefinition(InputStream inputstream) {
 
     Assert.notNull(inputstream);
 
@@ -113,7 +113,7 @@ public class ProductDefinitionParser {
     String vmarg = Utilities.cleanup(vmargsallquery.getSingleResult());
     if (vmarg != null) {
       for (ProductOs os : ProductOs.values()) {
-        result.addProgramArgs(os, vmarg);
+        result.addVmArgs(os, vmarg);
       }
     }
     result.addVmArgs(ProductOs.linux, vmargslinuxquery.getSingleResult());
