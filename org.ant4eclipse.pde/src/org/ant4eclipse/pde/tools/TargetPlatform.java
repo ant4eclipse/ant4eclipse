@@ -17,6 +17,8 @@ import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
 
+import java.io.File;
+
 /**
  * <p>
  * A {@link TargetPlatform} defines the platform against which bundles projects (and features projects) contained in a
@@ -147,4 +149,11 @@ public interface TargetPlatform {
    * @return returns the resolved feature
    */
   ResolvedFeature resolveFeature(Object source, FeatureManifest manifest);
+
+  /**
+   * Returns a list of all locations used by this TargetPlatform.
+   * 
+   * @return A list of all locations used by this TargetPlatform. Neither <code>null</code> nor empty.
+   */
+  File[] getLocations();
 }

@@ -183,7 +183,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
     // create and return the target platform instance
     TargetPlatform targetPlatform = new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets,
-        targetPlatformConfiguration);
+        targetPlatformConfiguration, targetLocations);
 
     this._targetPlatformMap.put(key, targetPlatform);
 

@@ -32,6 +32,7 @@ import org.eclipse.osgi.service.resolver.State;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
 import org.osgi.framework.Version;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -62,6 +63,9 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /** the state object */
   private State                       _state;
 
+  /** - */
+  private File[]                      _targetplatformLocations;
+
   /**
    * <p>
    * Creates a new instance of type {@link TargetPlatformImpl}.
@@ -73,9 +77,11 @@ public final class TargetPlatformImpl implements TargetPlatform {
    *          an array of bundle sets that contain the binary bundles, may <code>null</code>.
    * @param configuration
    *          the {@link TargetPlatformConfiguration} of this target platform
+   * @param targetlocations
+   *          a list of all targetplatform locations providing the bundles. Neither <code>null</code> nor empty.
    */
   public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
-      TargetPlatformConfiguration configuration) {
+      TargetPlatformConfiguration configuration, File[] targetlocations) {
     Assert.notNull(configuration);
 
     // set the plug-in project set
@@ -91,8 +97,17 @@ public final class TargetPlatformImpl implements TargetPlatform {
     // set the configuration
     this._configuration = configuration;
 
+    this._targetplatformLocations = targetlocations;
+
     // initialize
     initialize();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public File[] getLocations() {
+    return this._targetplatformLocations;
   }
 
   /**
