@@ -199,7 +199,11 @@ public class ProductDefinition {
    */
   void addVmArgs(ProductOs os, String args) {
     if (args != null) {
-      this._vmargs.put(os, args.replace('\n', ' ').trim());
+      String oldargs = "";
+      if (this._vmargs.containsKey(os)) {
+        oldargs = this._vmargs.get(os) + " ";
+      }
+      this._vmargs.put(os, oldargs + args.replace('\n', ' ').trim());
     }
   }
 
@@ -229,7 +233,11 @@ public class ProductDefinition {
    */
   void addProgramArgs(ProductOs os, String args) {
     if (args != null) {
-      this._programargs.put(os, args.replace('\n', ' ').trim());
+      String oldargs = "";
+      if (this._programargs.containsKey(os)) {
+        oldargs = this._programargs.get(os) + " ";
+      }
+      this._programargs.put(os, oldargs + args.replace('\n', ' ').trim());
     }
   }
 
