@@ -115,6 +115,30 @@ public interface TargetPlatform {
 
   /**
    * <p>
+   * Returns the bundle description for the bundle with the given id. A null value is returned if no such bundle is
+   * found.
+   * </p>
+   * 
+   * @param id
+   *          the id of the requested bundle (must not be null)
+   * @return the bundle description for the bundle with the given id or <code>null</code> value is returned if no such
+   *         feature is found.
+   */
+  BundleDescription getBundleDescription(String id);
+
+  /**
+   * <p>
+   * Returns <code>true</code> if this target platform contains a bundle description with the given id.
+   * </p>
+   * 
+   * @param id
+   *          the id of the requested bundle (must not be null)
+   * @return <code>true</code> if this target platform contains a bundle description with the given id.
+   */
+  boolean hasBundleDescription(String id);
+
+  /**
+   * <p>
    * Returns the {@link ResolvedFeature}
    * </p>
    * 

@@ -307,6 +307,52 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  public BundleDescription getBundleDescription(String id) {
+    Assert.nonEmpty(id);
+
+    // 
+    BundleDescription bundleDescription = this._pluginProjectSet.getBundleDescription(id);
+
+    // 
+    if (bundleDescription != null) {
+      return bundleDescription;
+    }
+
+    // result
+    BundleDescription result = null;
+
+    // iterate over feature descriptions
+    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+
+      // get the feature manifest
+      bundleDescription = bundleSet.getBundleDescription(id);
+
+      // if match -> set as result
+      if (bundleDescription != null) {
+        if (result == null) {
+          result = bundleDescription;
+        } else {
+          // the current bundle description has a higher version, so use this one
+          if (result.getVersion().compareTo(bundleDescription.getVersion()) < 0) {
+            result = bundleDescription;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasBundleDescription(String id) {
+    return getBundleDescription(id) != null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
     Assert.notNull(source);
     Assert.notNull(manifest);
@@ -472,6 +518,20 @@ public final class TargetPlatformImpl implements TargetPlatform {
     return state;
   }
 
+  /**
+   * Returns <code>true</code> if the current target configuration matches a given system specification.
+   * 
+   * @param os
+   *          The os to be matched.
+   * @param arch
+   *          The architecture to be matched.
+   * @param ws
+   *          The windowing system to be matched.
+   * @param nl
+   *          The language to be matched.
+   * 
+   * @return <code>true</code> <=> The configuration matches the given system specification.
+   */
   private boolean matches(String os, String arch, String ws, String nl) {
     return contains(this._configuration.getOperatingSystem(), os)
         && contains(this._configuration.getArchitecture(), arch)
