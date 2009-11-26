@@ -34,7 +34,7 @@
     <!-- element defintions for lifecycle phases -->
     <element name="validate"
              optional="true"
-             description="Validate the project is correct and all necessary information is available." />
+             description="Validate the project if it's correct and all necessary information is available." />
     <element name="initialize"
              optional="true"
              description="Initialize build state, e.g. set properties or create directories." />
@@ -355,6 +355,15 @@
         <!-- template element 'deploy' -->
         <deploy />
 
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+          - Step 9: Cleaning up
+          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <ant4eclipse:forProject>
+          <!-- the property has been set, so we need to remove it otherwise it cannot be altered -->
+          <!-- by subsequent calls of this macro. -->
+          <antcontrib:var unset="true" name="buildPlugin.newBundleVersion"/>
+        </ant4eclipse:forProject>
+
       </ant4eclipse:executePluginProject>
     </sequential>
   </macrodef>
@@ -438,11 +447,11 @@
             <ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
                                            projectname="@{projectName}"
                                            excludeLibraries="true" 
-            							   sourceBundle="true"/>
+                                           sourceBundle="true"/>
           </copy>
 
           <mkdir dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF" />	
-        	
+
           <!-- create the bundle manifest -->
           <manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF">
             <attribute name="Bundle-ManifestVersion" value="2" />
@@ -472,6 +481,15 @@
           <delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}"
                   quiet="true"
                   deleteonexit="true" />
+        </ant4eclipse:forProject>
+
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+          - Step 7: Cleaning up
+          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <ant4eclipse:forProject>
+          <!-- the property has been set, so we need to remove it otherwise it cannot be altered -->
+          <!-- by subsequent calls of this macro. -->
+          <antcontrib:var unset="true" name="buildPlugin.newBundleVersion"/>
         </ant4eclipse:forProject>
 
       </ant4eclipse:executePluginProject>
