@@ -36,10 +36,10 @@ import java.util.List;
 public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet {
 
   /** the list that contains all the bundle descriptions */
-  private List<BundleDescription>  _bundleDescriptonList;
+  private List<BundleDescription>  _bundleDescriptionList;
 
   /** the list that contains all the feature descriptions */
-  private List<FeatureDescription> _featureDescriptonList;
+  private List<FeatureDescription> _featureDescriptionList;
 
   /** indicates whether or not the platform is initialized */
   private boolean                  _isInitialised = false;
@@ -62,10 +62,10 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     this._description = description;
 
     // create the bundle description list
-    this._bundleDescriptonList = new LinkedList<BundleDescription>();
+    this._bundleDescriptionList = new LinkedList<BundleDescription>();
 
     // create the feature description list
-    this._featureDescriptonList = new LinkedList<FeatureDescription>();
+    this._featureDescriptionList = new LinkedList<FeatureDescription>();
   }
 
   /**
@@ -99,8 +99,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
 
     // debug
     A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", Long.valueOf(stopWatch
-        .getElapsedTime()), Integer.valueOf(this._bundleDescriptonList.size()), Integer
-        .valueOf(this._featureDescriptonList.size()));
+        .getElapsedTime()), Integer.valueOf(this._bundleDescriptionList.size()), Integer
+        .valueOf(this._featureDescriptionList.size()));
 
     // set initialized
     this._isInitialised = true;
@@ -117,7 +117,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     initialize();
 
     // iterate over feature list
-    for (FeatureDescription featureDescription : this._featureDescriptonList) {
+    for (FeatureDescription featureDescription : this._featureDescriptionList) {
 
       // return if match
       if (featureDescription.getFeatureManifest().getId().equals(featureId)
@@ -145,7 +145,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     FeatureDescription result = null;
 
     // iterate over feature descriptions
-    for (FeatureDescription featureDescription : this._featureDescriptonList) {
+    for (FeatureDescription featureDescription : this._featureDescriptionList) {
 
       // get the feature manifest
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
@@ -179,7 +179,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     // result
     BundleDescription result = null;
 
-    for (BundleDescription bundleDescription : this._bundleDescriptonList) {
+    for (BundleDescription bundleDescription : this._bundleDescriptionList) {
 
       // if match -> set as result
       if (bundleDescription.getSymbolicName().equals(bundleid)) {
@@ -207,7 +207,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     // initialize if necessary
     initialize();
 
-    return this._bundleDescriptonList;
+    return this._bundleDescriptionList;
   }
 
   /**
@@ -219,7 +219,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     // initialize if necessary
     initialize();
 
-    Iterator<BundleDescription> iterator = this._bundleDescriptonList.iterator();
+    Iterator<BundleDescription> iterator = this._bundleDescriptionList.iterator();
 
     while (iterator.hasNext()) {
       BundleDescription description = iterator.next();
@@ -245,7 +245,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   protected final void addBundleDescription(BundleDescription bundleDescription) {
     Assert.notNull(bundleDescription);
 
-    this._bundleDescriptonList.add(bundleDescription);
+    this._bundleDescriptionList.add(bundleDescription);
   }
 
   /**
@@ -259,7 +259,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   protected final void addFeaturesDescription(FeatureDescription featureDescription) {
     Assert.notNull(featureDescription);
 
-    this._featureDescriptonList.add(featureDescription);
+    this._featureDescriptionList.add(featureDescription);
   }
 
   /**
@@ -270,10 +270,10 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   private final void refresh() {
 
     // clear list of bundles...
-    this._bundleDescriptonList.clear();
+    this._bundleDescriptionList.clear();
 
     // clear list of features...
-    this._bundleDescriptonList.clear();
+    this._bundleDescriptionList.clear();
 
     // read all bundles and features...
     readBundlesAndFeatures();
