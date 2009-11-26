@@ -96,26 +96,6 @@ public final class TargetPlatformImpl implements TargetPlatform {
   }
 
   /**
-   * <p>
-   * Creates a new instance of type {@link TargetPlatformImpl}.
-   * </p>
-   * 
-   * @param pluginProjectSet
-   *          the bundle set that contains the plug-in projects
-   * @param binaryPluginSet
-   *          the binary bundle sets that belong to this target location
-   * @param configuration
-   *          the {@link TargetPlatformConfiguration} of this target platform
-   */
-  public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet binaryPluginSet,
-      TargetPlatformConfiguration configuration) {
-
-    // delegate
-    this(pluginProjectSet, (binaryPluginSet != null ? new BundleAndFeatureSet[] { binaryPluginSet } : null),
-        configuration);
-  }
-
-  /**
    * {@inheritDoc}
    */
   public TargetPlatformConfiguration getTargetPlatformConfiguration() {
