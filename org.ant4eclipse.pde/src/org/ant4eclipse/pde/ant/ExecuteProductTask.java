@@ -93,6 +93,15 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   private static final String         PROP_PROGRAMARGS     = "product.programargs";
 
   /** - */
+  private static final String         PROP_CONFIGINI       = "product.configini";
+
+  /** - */
+  private static final String         PROP_GUIEXE          = "product.guiexe";
+
+  /** - */
+  private static final String         PROP_CMDEXE          = "product.cmdexe";
+
+  /** - */
   private static final String         PROP_FEATUREID       = "feature.id";
 
   /** - */
@@ -109,9 +118,6 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
 
   /** - */
   private static final String         PROP_PLUGINFILELIST  = "plugin.filelist";
-
-  /** - */
-  private static final String         PROP_CONFIGINI       = "configini";
 
   // programargs,
   // wsplugins,
@@ -236,21 +242,24 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     TargetPlatform targetplatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
         getTargetPlatformId(), configuration);
 
+    StringMap properties = new StringMap();
+    contributeForAll(properties, productdef, targetplatform);
+
     // execute scoped macro definitions
     for (ScopedMacroDefinition<String> scopedmacro : getScopedMacroDefinitions()) {
       Scope scope = Scope.valueOf(scopedmacro.getScope());
       switch (scope) {
       case ForProduct:
-        executeForProduct(productdef, scopedmacro.getMacroDef(), targetplatform);
+        executeForProduct(productdef, scopedmacro.getMacroDef(), properties, targetplatform);
         break;
       case ForEachFeature:
-        executeForEachFeature(productdef, scopedmacro.getMacroDef(), targetplatform);
+        executeForEachFeature(productdef, scopedmacro.getMacroDef(), properties, targetplatform);
         break;
       // case ForEachTargetFeature:
       // executeForEachTargetFeature(productdef, scopedmacro.getMacroDef(), targetplatform);
       // break;
       case ForEachPlugin:
-        executeForEachPlugin(productdef, scopedmacro.getMacroDef(), targetplatform);
+        executeForEachPlugin(productdef, scopedmacro.getMacroDef(), properties, targetplatform);
         break;
       }
     }
@@ -264,14 +273,18 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    *          The productdefinition to be used. Not <code>null</code>.
    * @param macrodef
    *          The macro constituting the scope. Not <code>null</code>.
+   * @param forall
+   *          A bunch of properties used for all execution macros. Not <code>null</code>.
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void executeForEachPlugin(ProductDefinition productdef, MacroDef macrodef, TargetPlatform targetplatform) {
+  private void executeForEachPlugin(ProductDefinition productdef, MacroDef macrodef, StringMap forall,
+      TargetPlatform targetplatform) {
 
     StringMap properties = new StringMap();
+    properties.putAll(forall);
+
     Map<String, Object> references = new Hashtable<String, Object>();
-    contributeForAll(properties, productdef);
 
     String[] pluginids = productdef.getPluginIds();
     for (String pluginid : pluginids) {
@@ -294,13 +307,16 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    *          The productdefinition to be used. Not <code>null</code>.
    * @param macrodef
    *          The macro constituting the scope. Not <code>null</code>.
+   * @param forall
+   *          A bunch of properties used for all execution macros. Not <code>null</code>.
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void executeForEachFeature(ProductDefinition productdef, MacroDef macrodef, TargetPlatform targetplatform) {
+  private void executeForEachFeature(ProductDefinition productdef, MacroDef macrodef, StringMap forall,
+      TargetPlatform targetplatform) {
 
     StringMap properties = new StringMap();
-    contributeForAll(properties, productdef);
+    properties.putAll(forall);
 
     String[] featureids = productdef.getFeatureIds();
     for (String featureid : featureids) {
@@ -341,12 +357,15 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    *          The productdefinition to be used. Not <code>null</code>.
    * @param macrodef
    *          The macro constituting the scope. Not <code>null</code>.
+   * @param forall
+   *          A bunch of properties used for all execution macros. Not <code>null</code>.
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void executeForProduct(ProductDefinition productdef, MacroDef macrodef, TargetPlatform targetplatform) {
+  private void executeForProduct(ProductDefinition productdef, MacroDef macrodef, StringMap forall,
+      TargetPlatform targetplatform) {
     StringMap properties = new StringMap();
-    contributeForAll(properties, productdef);
+    properties.putAll(forall);
     executeMacroInstance(macrodef, new LocalMacroExecutionValuesProvider(properties));
   }
 
@@ -392,8 +411,10 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    *          The properties used to be filled with the settings. Not <code>null</code>.
    * @param productdef
    *          The product definition instance providing the necessary information. Not <code>null</code>.
+   * @param targetplatform
+   *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void contributeForAll(StringMap properties, ProductDefinition productdef) {
+  private void contributeForAll(StringMap properties, ProductDefinition productdef, TargetPlatform targetplatform) {
 
     properties.put(PROP_PRODUCTID, productdef.getId());
     properties.put(PROP_PRODUCTNAME, productdef.getName());
@@ -415,6 +436,44 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
       File path = project.getChild(childname);
       properties.put(PROP_CONFIGINI, path.getAbsolutePath());
     }
+
+    String guiexe = "eclipse";
+    String cmdexe = "eclipse";
+
+    switch (this._os) {
+    case win32:
+      guiexe = "eclipse.exe";
+      cmdexe = "eclipsec.exe";
+      break;
+    default:
+      throw new RuntimeException("NYI");
+    }
+
+    File fileguiexe = null;
+    File filecmdexe = null;
+
+    File[] targetlocations = targetplatform.getLocations();
+    for (File targetlocation : targetlocations) {
+      if (fileguiexe == null) {
+        File child = new File(targetlocation, guiexe);
+        if (child.isFile()) {
+          fileguiexe = child;
+        }
+      }
+      if (filecmdexe == null) {
+        File child = new File(targetlocation, cmdexe);
+        if (child.isFile()) {
+          filecmdexe = child;
+        }
+      }
+    }
+
+    if ((fileguiexe == null) || (filecmdexe == null)) {
+      throw new RuntimeException("NYI");
+    }
+
+    properties.put(PROP_GUIEXE, fileguiexe.getAbsolutePath());
+    properties.put(PROP_CMDEXE, filecmdexe.getAbsolutePath());
 
   }
 
