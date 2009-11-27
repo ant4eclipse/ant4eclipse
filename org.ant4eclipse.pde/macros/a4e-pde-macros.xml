@@ -538,16 +538,14 @@
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
              optional="true"
-             description="Validate the project if it's correct and all necessary information is available." />
+             description="Validate the project if it's correct and all necessary information is available. Scope: forProduct." />
 
     <element name="deploy"
              optional="true"
-             description="Perform any operations necessary to prepare a package before the actual packaging." />
+             description="Perform any operations necessary to prepare a package before the actual packaging. Scope: forProduct." />
 
     <sequential>
       
-      <echo level="warning">THIS MACRO IS CURRENTLY NOT COMPLETED</echo>
-
       <ant4eclipse:executeProduct
         workspaceDirectory="@{workspaceDirectory}"
         targetPlatformId="@{targetPlatformId}"
@@ -559,7 +557,9 @@
           <echo>Building product ${executeProduct.product.name} version ${executeProduct.product.version}</echo>
         </ant4eclipse:forProduct>
 
-        <validate/>
+        <ant4eclipse:forProduct>
+          <validate/>
+        </ant4eclipse:forProduct>
         
         <!-- Step 1: Scrub destination directory if requested -->
         <ant4eclipse:forProduct if="@{clearDestination}">
@@ -579,6 +579,9 @@
           <antcontrib:if>
             <istrue value="${executeProduct.product.basedonfeatures}"/>
             <then>
+              
+              <echo level="warning">THE SUPPORT FOR FEATURES IS CURRENTLY NOT COMPLETED</echo>
+
               <echo> -> Building included feature '${executeProduct.feature.id}' - '${executeProduct.feature.version}'</echo>
               <buildFeature 
                 workspaceDirectory="@{workspaceDirectory}"
