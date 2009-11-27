@@ -2,20 +2,20 @@
 
 <project name="execute-project-builders-test" basedir="." default="foo">
 
-	<!-- definition of condition HasNature -->
-	<typedef name="getBuildOrder"
-	         classname="org.ant4eclipse.platform.ant.GetBuildOrderTask" />
+  <!-- definition of condition HasNature -->
+  <typedef name="getBuildOrder"
+           classname="org.ant4eclipse.platform.ant.GetBuildOrderTask" />
 
-	<target name="getBuildOrder">
+  <target name="getBuildOrder">
 
-		<getBuildOrder workspace="${workspaceDir}"
-		               teamprojectset="projectSet.psf"
-		               buildOrderProperty="test" />
+    <getBuildOrder workspace="${workspaceDir}"
+                   teamprojectset="projectSet.psf"
+                   buildOrderProperty="test" />
 
-		<echo>${test}</echo>
+    <echo>${test}</echo>
 
-	</target>
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 </project>

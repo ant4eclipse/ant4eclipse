@@ -2,30 +2,30 @@
 
 <project name="getEclipseClasspath-test" basedir="." default="foo">
 
-	<!-- definition of type classpathVariables -->
-	<typedef name="jdtClassPathVariable"
-	         classname="org.ant4eclipse.jdt.ant.type.JdtClassPathVariableType" />
-	<typedef name="jdtClassPathContainer"
-	         classname="org.ant4eclipse.jdt.ant.type.JdtClassPathContainerType" />
-	<typedef name="getJdtClassPath"
-	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+  <!-- definition of type classpathVariables -->
+  <typedef name="jdtClassPathVariable"
+           classname="org.ant4eclipse.jdt.ant.type.JdtClassPathVariableType" />
+  <typedef name="jdtClassPathContainer"
+           classname="org.ant4eclipse.jdt.ant.type.JdtClassPathContainerType" />
+  <typedef name="getJdtClassPath"
+           classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
 
 
-	<target name="getJdtClassPath">
+  <target name="getJdtClassPath">
 
-		<jdtClassPathVariable name="BRUNO_WALTER"
-		                      path="${workspaceDir}/bruno_walter" />
+    <jdtClassPathVariable name="BRUNO_WALTER"
+                          path="${workspaceDir}/bruno_walter" />
 
-		<jdtClassPathVariable name="VAR2" path="${workspaceDir}/var2" />
+    <jdtClassPathVariable name="VAR2" path="${workspaceDir}/var2" />
 
-		<getJdtClassPath workspace="${workspaceDir}"
-		                 relative="${relative}"
-		                 pathSeparator="${pathSeparator}"
-		                 runtime="${runtimeClasspath}"
-		                 projectName="${projectName}"
-		                 property="classpath" />
-	</target>
+    <getJdtClassPath workspace="${workspaceDir}"
+                     relative="${relative}"
+                     pathSeparator="${pathSeparator}"
+                     runtime="${runtimeClasspath}"
+                     projectName="${projectName}"
+                     property="classpath" />
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 </project>

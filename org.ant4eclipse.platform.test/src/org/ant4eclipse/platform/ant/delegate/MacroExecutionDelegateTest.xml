@@ -2,44 +2,44 @@
 
 <project name="testAntCall" basedir=".">
 
-	<typedef name="macroExecute"
-	         classname="org.ant4eclipse.platform.ant.delegate.MacroExecutionDelegateTest$MacroExecuteTask"
-	/>
+  <typedef name="macroExecute"
+           classname="org.ant4eclipse.platform.ant.delegate.MacroExecutionDelegateTest$MacroExecuteTask"
+  />
 
-	<!-- test testNonexistingNature -->
-	<target name="testMacroExecute">
+  <!-- test testNonexistingNature -->
+  <target name="testMacroExecute">
 
-		<!-- expecting 'initial' -->
-		<echo>${hurz.test}!</echo>
+    <!-- expecting 'initial' -->
+    <echo>${hurz.test}!</echo>
 
-		<macroExecute prefix="hurz">
-		    <org.eclipse.jdt.core.javabuilder>
-		    	<!-- expecting 'test1.test' -->
-				<echo>${hurz.test}!</echo>
-				<macroExecute prefix="hurz">
-				    <org.eclipse.jdt.core.javabuilder>
-				    	<!-- expecting 'test2.test' -->
-						<echo>${hurz.test}!</echo>
-				    </org.eclipse.jdt.core.javabuilder>
-				</macroExecute>
-		    	<!-- expecting 'test1.test' -->
-				<echo>${hurz.test}!</echo>
-		    </org.eclipse.jdt.core.javabuilder>
-		</macroExecute>
+    <macroExecute prefix="hurz">
+        <org.eclipse.jdt.core.javabuilder>
+          <!-- expecting 'test1.test' -->
+        <echo>${hurz.test}!</echo>
+        <macroExecute prefix="hurz">
+            <org.eclipse.jdt.core.javabuilder>
+              <!-- expecting 'test2.test' -->
+            <echo>${hurz.test}!</echo>
+            </org.eclipse.jdt.core.javabuilder>
+        </macroExecute>
+          <!-- expecting 'test1.test' -->
+        <echo>${hurz.test}!</echo>
+        </org.eclipse.jdt.core.javabuilder>
+    </macroExecute>
 
-		<!-- expecting 'initial' -->
-		<echo>${hurz.test}!</echo>
+    <!-- expecting 'initial' -->
+    <echo>${hurz.test}!</echo>
 
-		<macroExecute prefix="hurz">
-		    <org.eclipse.jdt.core.javabuilder>
-		    	<!-- expecting 'test3.test' -->
-				<echo>${hurz.test}!</echo>
-		    </org.eclipse.jdt.core.javabuilder>
-		</macroExecute>
+    <macroExecute prefix="hurz">
+        <org.eclipse.jdt.core.javabuilder>
+          <!-- expecting 'test3.test' -->
+        <echo>${hurz.test}!</echo>
+        </org.eclipse.jdt.core.javabuilder>
+    </macroExecute>
 
-		<!-- expecting 'initial' -->
-		<echo>${hurz.test}</echo>
+    <!-- expecting 'initial' -->
+    <echo>${hurz.test}</echo>
 
-	</target>
+  </target>
 
 </project>

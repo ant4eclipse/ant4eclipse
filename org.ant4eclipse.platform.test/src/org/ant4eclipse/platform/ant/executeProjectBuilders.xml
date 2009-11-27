@@ -2,25 +2,25 @@
 
 <project name="execute-project-builders-test" basedir="." default="foo">
 
-	<!-- definition of condition HasNature -->
-	<typedef name="executeProjectBuilders" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
+  <!-- definition of condition HasNature -->
+  <typedef name="executeProjectBuilders" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
 
-	<target name="executeProjectBuilders">
+  <target name="executeProjectBuilders">
 
-		<executeProjectBuilders workspaceDirectory='${workspaceDir}' projectName='simpleproject'>
+    <executeProjectBuilders workspaceDirectory='${workspaceDir}' projectName='simpleproject'>
 
-			<org.eclipse.jdt.core.javabuilder>
-				<echo>org.eclipse.jdt.core.javabuilder</echo>
-			</org.eclipse.jdt.core.javabuilder>
+      <org.eclipse.jdt.core.javabuilder>
+        <echo>org.eclipse.jdt.core.javabuilder</echo>
+      </org.eclipse.jdt.core.javabuilder>
 
-			<org.ant4eclipse.anotherbuilder>
-				<echo>org.ant4eclipse.anotherbuilder</echo>
-			</org.ant4eclipse.anotherbuilder>
+      <org.ant4eclipse.anotherbuilder>
+        <echo>org.ant4eclipse.anotherbuilder</echo>
+      </org.ant4eclipse.anotherbuilder>
 
-		</executeProjectBuilders>
+    </executeProjectBuilders>
 
-	</target>
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 </project>

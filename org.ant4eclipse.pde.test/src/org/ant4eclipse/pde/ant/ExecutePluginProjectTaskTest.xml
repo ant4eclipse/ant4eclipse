@@ -2,15 +2,15 @@
 
 <project name="test" basedir="." default="foo">
 
-	<typedef name="executePluginProject"
-	         classname="org.ant4eclipse.pde.ant.ExecutePluginProjectTask" />
+  <typedef name="executePluginProject"
+           classname="org.ant4eclipse.pde.ant.ExecutePluginProjectTask" />
 
-	<target name="testExecutePluginProject">
-	
+  <target name="testExecutePluginProject">
+  
 
-	</target>
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 
 </project>

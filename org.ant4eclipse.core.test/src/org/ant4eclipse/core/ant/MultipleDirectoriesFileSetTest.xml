@@ -2,30 +2,30 @@
 
 <project name="testAntCall" basedir="." default="foo">
 
-	<typedef name="multiDirFileSet"
-	         classname="org.ant4eclipse.core.ant.MultipleDirectoriesFileSet" />
+  <typedef name="multiDirFileSet"
+           classname="org.ant4eclipse.core.ant.MultipleDirectoriesFileSet" />
 
-	<target name="testMultipleDirectoriesFileSet">
+  <target name="testMultipleDirectoriesFileSet">
 
-		<multiDirFileSet id="xyz.fileset" />
-		<echo-multiDirFileSet filesetref="xyz.fileset" />
-	</target>
+    <multiDirFileSet id="xyz.fileset" />
+    <echo-multiDirFileSet filesetref="xyz.fileset" />
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 
-	<macrodef name="echo-multiDirFileSet">
-		<attribute name="filesetref" />
-		<sequential>
-			<pathconvert pathsep="
-	" property="@{filesetref}.echopath">
-				<path>
-					<multiDirFileSet refid="@{filesetref}" />
-				</path>
-			</pathconvert>
-			<echo>   ------- echoing fileset @{filesetref} -------</echo>
-			<echo>${@{filesetref}.echopath}</echo>
-		</sequential>
-	</macrodef>
+  <macrodef name="echo-multiDirFileSet">
+    <attribute name="filesetref" />
+    <sequential>
+      <pathconvert pathsep="
+  " property="@{filesetref}.echopath">
+        <path>
+          <multiDirFileSet refid="@{filesetref}" />
+        </path>
+      </pathconvert>
+      <echo>   ------- echoing fileset @{filesetref} -------</echo>
+      <echo>${@{filesetref}.echopath}</echo>
+    </sequential>
+  </macrodef>
 
 </project>

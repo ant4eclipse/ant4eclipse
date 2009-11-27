@@ -2,22 +2,22 @@
 
 <project name="getEclipseClasspath-test" basedir="." default="foo">
 
-	<!-- definition of condition HasNature -->
-	<typedef name="getJdtClassPath"
-	         classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask"
-	/>
+  <!-- definition of condition HasNature -->
+  <typedef name="getJdtClassPath"
+           classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask"
+  />
 
-	<target name="getJdtClassPath">
-		<getJdtClassPath workspace="${workspaceDir}"
-		                     relative="${relative}"
-		                     pathSeparator="${pathSeparator}"
-			                 dirSeparator="${dirSeparator}"
-		                     runtime="${runtimeClasspath}"
-		                     projectName="${projectName}"
-		                     property="classpath"
-		/>
-	</target>
+  <target name="getJdtClassPath">
+    <getJdtClassPath workspace="${workspaceDir}"
+                         relative="${relative}"
+                         pathSeparator="${pathSeparator}"
+                       dirSeparator="${dirSeparator}"
+                         runtime="${runtimeClasspath}"
+                         projectName="${projectName}"
+                         property="classpath"
+    />
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 </project>

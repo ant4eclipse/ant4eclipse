@@ -2,14 +2,14 @@
 
 <project name="has-nature-test" basedir="." default="foo">
 
-	<typedef name="ant4EclipseDataType"
-	         classname="org.ant4eclipse.core.ant.AbstractAnt4EclipseDataTypeTest$Ant4EclipseDataType"
-	/>
+  <typedef name="ant4EclipseDataType"
+           classname="org.ant4eclipse.core.ant.AbstractAnt4EclipseDataTypeTest$Ant4EclipseDataType"
+  />
 
-	<target name="testAbstractAnt4EclipseDataType">
-		<ant4EclipseDataType attribute="myAttribute"/>
-	</target>
+  <target name="testAbstractAnt4EclipseDataType">
+    <ant4EclipseDataType attribute="myAttribute"/>
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 </project>

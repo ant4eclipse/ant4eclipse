@@ -184,7 +184,7 @@
               <post-compile />
 
             </ant4eclipse:forProject>
-          	
+            
             <!-- Step 6.3: Copy the resources -->
             <ant4eclipse:forEachSourceDirectory>
               <echo>Copying resources from directory '${buildPlugin.source.directory}' to '${buildPlugin.output.directory}'</echo>
@@ -450,7 +450,7 @@
                                            sourceBundle="true"/>
           </copy>
 
-          <mkdir dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF" />	
+          <mkdir dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF" />  
 
           <!-- create the bundle manifest -->
           <manifest file="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF">

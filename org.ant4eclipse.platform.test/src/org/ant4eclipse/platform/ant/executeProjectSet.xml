@@ -2,23 +2,23 @@
 
 <project name="execute-project-builders-test" basedir="." default="foo">
 
-	<!-- definition of condition HasNature -->
-	<typedef name="executeProjectSet" classname="org.ant4eclipse.platform.ant.ExecuteProjectSetTask" />
+  <!-- definition of condition HasNature -->
+  <typedef name="executeProjectSet" classname="org.ant4eclipse.platform.ant.ExecuteProjectSetTask" />
 
-	<target name="executeProjectSet">
+  <target name="executeProjectSet">
 
-		<executeProjectSet workspaceDirectory="${workspaceDir}"
-				           teamprojectset="projectSet.psf" >
+    <executeProjectSet workspaceDirectory="${workspaceDir}"
+                   teamprojectset="projectSet.psf" >
 
-			  <forEachProject>
-			    <echo>${executeProjectSet.project.name}</echo>
-			  </forEachProject>
+        <forEachProject>
+          <echo>${executeProjectSet.project.name}</echo>
+        </forEachProject>
 
 
-		</executeProjectSet>
+    </executeProjectSet>
 
-	</target>
+  </target>
 
-	<!-- default dummy target -->
-	<target name="foo" />
+  <!-- default dummy target -->
+  <target name="foo" />
 </project>
