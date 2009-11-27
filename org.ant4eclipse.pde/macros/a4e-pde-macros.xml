@@ -150,7 +150,7 @@
             </ant4eclipse:forEachOutputDirectory>
 
             <!-- Step 6.2: Compile the sources -->
-            <ant4eclipse:forProject if="(buildPlugin.source.directories=*)">
+            <ant4eclipse:forProject filter="(source.directories=*)">
 
               <!-- template element 'pre-compile' -->
               <pre-compile />
