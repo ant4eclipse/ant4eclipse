@@ -351,9 +351,11 @@
                              projectName="@{projectName}"
                              destination="@{destination}" />
         </ant4eclipse:forProject>
-
-        <!-- template element 'deploy' -->
-        <deploy />
+      	
+        <ant4eclipse:forProject> 
+            <!-- template element 'deploy' --> 
+            <deploy /> 
+        </ant4eclipse:forProject> 
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
           - Step 9: Cleaning up
