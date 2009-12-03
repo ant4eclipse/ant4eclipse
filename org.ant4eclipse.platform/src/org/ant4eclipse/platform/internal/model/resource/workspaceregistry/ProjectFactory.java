@@ -18,6 +18,7 @@ import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.platform.model.resource.validator.ValidatorRegistry;
 
 import java.io.File;
 
@@ -30,8 +31,11 @@ public class ProjectFactory {
 
   private ProjectRoleIdentifierRegistry _projectRoleIdentifierRegistry;
 
+  private ValidatorRegistry             _validatorRegistry;
+
   public ProjectFactory() {
     this._projectRoleIdentifierRegistry = new ProjectRoleIdentifierRegistry();
+    this._validatorRegistry = new ValidatorRegistry();
   }
 
   /**
@@ -73,6 +77,7 @@ public class ProjectFactory {
   public void postProcessRoleSetup(EclipseProject project) {
     A4ELogging.trace("ProjectFactory: postProcessRoleSetup(%s)", project.getSpecifiedName());
     this._projectRoleIdentifierRegistry.postProcessRoles(project);
+    this._validatorRegistry.validate(project);
   }
 
 }

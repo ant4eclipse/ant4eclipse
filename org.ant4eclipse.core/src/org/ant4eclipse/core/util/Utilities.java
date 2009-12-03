@@ -29,6 +29,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.lang.reflect.Constructor;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -667,6 +668,51 @@ public class Utilities {
 
     try {
       object = (T) clazz.newInstance();
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+    }
+
+    // return the constructed object
+    return object;
+  }
+
+  /**
+   * <p>
+   * The class must be loadable via Class.forName() and must have a constructor with a single String parameter.
+   * </p>
+   * 
+   * @param className
+   *          The name of the class. Neither <code>null</code> nor empty.
+   * @param arg
+   *          The argument used to instantiate the class. Maybe <code>null</code>.
+   * 
+   * @return The newly instantiated type. Not <code>null</code>.
+   */
+  @SuppressWarnings("unchecked")
+  public static final <T> T newInstance(String className, String arg) {
+    Assert.notNull("The parameter 'className' must not be null", className);
+
+    Class<?> clazz = null;
+
+    // Try to load class...
+    try {
+      clazz = Class.forName(className);
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
+    }
+
+    Constructor constructor = null;
+    try {
+      constructor = clazz.getConstructor(String.class);
+    } catch (NoSuchMethodException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+    }
+
+    // try to instantiate using default cstr...
+    T object = null;
+
+    try {
+      object = (T) constructor.newInstance(arg);
     } catch (Exception ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
     }
