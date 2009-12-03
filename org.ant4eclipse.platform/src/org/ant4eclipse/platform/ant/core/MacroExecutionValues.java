@@ -45,6 +45,24 @@ public final class MacroExecutionValues {
 
   /**
    * <p>
+   * Return the map with all properties using a specified prefix.
+   * </p>
+   * 
+   * @param prefix
+   *          The prefix to be used for the property keys. Neither <code>null</code> nor empty.
+   * 
+   * @return the map with all properties.
+   */
+  public StringMap getProperties(String prefix) {
+    StringMap result = new StringMap();
+    for (Map.Entry<String, String> pair : this.properties.entrySet()) {
+      result.put(String.format("%s.%s", prefix, pair.getKey()), pair.getValue());
+    }
+    return result;
+  }
+
+  /**
+   * <p>
    * Return the map with all properties.
    * </p>
    * 

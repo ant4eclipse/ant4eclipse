@@ -143,7 +143,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
 
       String filter = conditionalMacroDef.getFilter();
       if (filter != null) {
-        StringMap properties = macroExecutionValues.getProperties();
+        StringMap properties = macroExecutionValues.getProperties(getPrefix());
         try {
           if (!(new LdapFilter(properties, new StringReader(filter)).validate())) {
             return;
