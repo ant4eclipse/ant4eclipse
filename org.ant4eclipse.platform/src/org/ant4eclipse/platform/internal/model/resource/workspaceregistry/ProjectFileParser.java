@@ -55,17 +55,17 @@ public class ProjectFileParser {
     XQueryHandler queryhandler2 = new XQueryHandler(projectFile.getAbsolutePath());
 
     // create Queries
-    XQuery projectNameQuery = queryhandler2.createQuery("//projectDescription/name");
-    XQuery commentQuery = queryhandler2.createQuery("//projectDescription/comment");
-    XQuery referencedProjectQuery = queryhandler2.createQuery("//projectDescription/projects/project");
-    XQuery natureQuery = queryhandler2.createQuery("//projectDescription/natures/nature");
-    XQuery buildCommandNameQuery = queryhandler2.createQuery("//projectDescription/buildSpec/{buildCommand}/name");
-    XQuery linkedResourceNameQuery = queryhandler2.createQuery("//projectDescription/linkedResources/{link}/name");
-    XQuery linkedResourceTypeQuery = queryhandler2.createQuery("//projectDescription/linkedResources/{link}/type");
+    XQuery projectNameQuery = queryhandler2.createQuery("/projectDescription/name");
+    XQuery commentQuery = queryhandler2.createQuery("/projectDescription/comment");
+    XQuery referencedProjectQuery = queryhandler2.createQuery("/projectDescription/projects/project");
+    XQuery natureQuery = queryhandler2.createQuery("/projectDescription/natures/nature");
+    XQuery buildCommandNameQuery = queryhandler2.createQuery("/projectDescription/buildSpec/{buildCommand}/name");
+    XQuery linkedResourceNameQuery = queryhandler2.createQuery("/projectDescription/linkedResources/{link}/name");
+    XQuery linkedResourceTypeQuery = queryhandler2.createQuery("/projectDescription/linkedResources/{link}/type");
     XQuery linkedResourceLocationQuery = queryhandler2
-        .createQuery("//projectDescription/linkedResources/{link}/location");
+        .createQuery("/projectDescription/linkedResources/{link}/location");
     XQuery linkedResourceLocationURIQuery = queryhandler2
-        .createQuery("//projectDescription/linkedResources/{link}/locationURI");
+        .createQuery("/projectDescription/linkedResources/{link}/locationURI");
 
     XQueryHandler.queryFile(projectFile, queryhandler2);
 

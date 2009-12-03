@@ -81,12 +81,12 @@ public class XQuery {
     this._forcedepth = -1;
     this._xquery = query;
 
-    if (!query.startsWith("//")) {
-      invalid(query, "Query needs to starts with two slashes !");
+    if (!query.startsWith("/")) {
+      invalid(query, "Query needs to starts with a slash !");
     }
 
     // reduce the first two slashes for the root indication
-    query = query.substring(2);
+    query = query.substring(1);
 
     // create the single fragments
     this._splitted = query.split("/");

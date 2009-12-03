@@ -42,32 +42,32 @@ public class XQueryHandlerTest {
 
     // retrieve the attributes 'name' and 'age'. the resulting arrays will have the
     // same length because their length depends on the number of 'element' elements.
-    XQuery query1 = handler.createQuery("//database/element/@name");
-    XQuery query2 = handler.createQuery("//database/element/@age");
+    XQuery query1 = handler.createQuery("/database/element/@name");
+    XQuery query2 = handler.createQuery("/database/element/@age");
 
     // get the data values of 'file' and 'length' elements. the arrays are having
     // different lengths.
-    XQuery query3 = handler.createQuery("//database/folder/file");
-    XQuery query4 = handler.createQuery("//database/folder/length");
+    XQuery query3 = handler.createQuery("/database/folder/file");
+    XQuery query4 = handler.createQuery("/database/folder/length");
 
     // this query generates a data entry for the 'length' element in case it
     // is missing within a 'folder' element. this way the array length can
     // be guaruanteed for multiple data entries.
-    XQuery query5 = handler.createQuery("//database/{folder}/length");
+    XQuery query5 = handler.createQuery("/database/{folder}/length");
 
     // similar but using a condition.
-    XQuery query6 = handler.createQuery("//database/{folder[@name='device:B']}/length");
+    XQuery query6 = handler.createQuery("/database/{folder[@name='device:B']}/length");
 
     // wildcard examples.
-    XQuery query7 = handler.createQuery("//*/element/@name");
-    XQuery query8 = handler.createQuery("//*/*/file");
+    XQuery query7 = handler.createQuery("/*/element/@name");
+    XQuery query8 = handler.createQuery("/*/*/file");
 
     // get an attribute of an indexed element.
-    XQuery query9 = handler.createQuery("//database/element[1]/@name");
+    XQuery query9 = handler.createQuery("/database/element[1]/@name");
 
     // function query. this one creates numbers indicating the occurrence of 'entry'
     // elements within 'group' elements.
-    XQuery query10 = handler.createQuery("//database/group/entry[count()]");
+    XQuery query10 = handler.createQuery("/database/group/entry[count()]");
 
     // run the SAX parser while evaluating the queries
     XQueryHandler.queryInputStream(inputStream, handler);
@@ -140,11 +140,10 @@ public class XQueryHandlerTest {
     try {
       // retrieve the attributes 'name' and 'age'. the resulting arrays will have the
       // same length because their length depends on the number of 'element' elements.
-      handler.createQuery("/database/element/@name");
+      handler.createQuery("database/element/@name");
     } catch (Ant4EclipseException e) {
       assertSame(e.getExceptionCode(), CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION);
-      assertEquals("Invalid x-query '/database/element/@name': Query needs to starts with two slashes !", e
-          .getMessage());
+      assertEquals("Invalid x-query 'database/element/@name': Query needs to starts with a slash !", e.getMessage());
     }
   }
 } /* ENDCLASS */

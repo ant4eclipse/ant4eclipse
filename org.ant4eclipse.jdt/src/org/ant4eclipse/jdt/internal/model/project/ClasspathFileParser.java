@@ -32,10 +32,10 @@ public class ClasspathFileParser {
 
     // queries for the 'kind', 'path','output' and 'exported' attributes. The
     // resulting array will have the same length.
-    XQuery kindquery = queryhandler.createQuery("//classpath/classpathentry/@kind");
-    XQuery pathquery = queryhandler.createQuery("//classpath/classpathentry/@path");
-    XQuery outputquery = queryhandler.createQuery("//classpath/classpathentry/@output");
-    XQuery exportedquery = queryhandler.createQuery("//classpath/classpathentry/@exported");
+    XQuery kindquery = queryhandler.createQuery("/classpath/classpathentry/@kind");
+    XQuery pathquery = queryhandler.createQuery("/classpath/classpathentry/@path");
+    XQuery outputquery = queryhandler.createQuery("/classpath/classpathentry/@output");
+    XQuery exportedquery = queryhandler.createQuery("/classpath/classpathentry/@exported");
 
     // parse the file
     XQueryHandler.queryFile(classpathFile, queryhandler);

@@ -47,41 +47,41 @@ public class FeatureManifestParser {
 
     XQueryHandler queryhandler = new XQueryHandler();
 
-    XQuery idQuery = queryhandler.createQuery("//feature/@id");
-    XQuery versionQuery = queryhandler.createQuery("//feature/@version");
-    XQuery labelQuery = queryhandler.createQuery("//feature/@label");
-    XQuery providerNameQuery = queryhandler.createQuery("//feature/@provider-name");
-    XQuery imageQuery = queryhandler.createQuery("//feature/@image");
-    XQuery osQuery = queryhandler.createQuery("//feature/@os");
-    XQuery archQuery = queryhandler.createQuery("//feature/@arch");
-    XQuery wsQuery = queryhandler.createQuery("//feature/@ws");
-    XQuery nlQuery = queryhandler.createQuery("//feature/@nl");
-    XQuery colocationAffinityQuery = queryhandler.createQuery("//feature/@colocation-affinity");
-    XQuery primaryQuery = queryhandler.createQuery("//feature/@primary");
-    XQuery exclusiveQuery = queryhandler.createQuery("//feature/@exclusive");
-    XQuery pluginQuery = queryhandler.createQuery("//feature/@plugin");
-    XQuery applicationQuery = queryhandler.createQuery("//feature/@application");
+    XQuery idQuery = queryhandler.createQuery("/feature/@id");
+    XQuery versionQuery = queryhandler.createQuery("/feature/@version");
+    XQuery labelQuery = queryhandler.createQuery("/feature/@label");
+    XQuery providerNameQuery = queryhandler.createQuery("/feature/@provider-name");
+    XQuery imageQuery = queryhandler.createQuery("/feature/@image");
+    XQuery osQuery = queryhandler.createQuery("/feature/@os");
+    XQuery archQuery = queryhandler.createQuery("/feature/@arch");
+    XQuery wsQuery = queryhandler.createQuery("/feature/@ws");
+    XQuery nlQuery = queryhandler.createQuery("/feature/@nl");
+    XQuery colocationAffinityQuery = queryhandler.createQuery("/feature/@colocation-affinity");
+    XQuery primaryQuery = queryhandler.createQuery("/feature/@primary");
+    XQuery exclusiveQuery = queryhandler.createQuery("/feature/@exclusive");
+    XQuery pluginQuery = queryhandler.createQuery("/feature/@plugin");
+    XQuery applicationQuery = queryhandler.createQuery("/feature/@application");
 
-    XQuery pluginIdQuery = queryhandler.createQuery("//feature/{plugin}/@id");
-    XQuery pluginversionQuery = queryhandler.createQuery("//feature/{plugin}/@version");
-    XQuery pluginFragmentQuery = queryhandler.createQuery("//feature/{plugin}/@fragment");
-    XQuery pluginOsQuery = queryhandler.createQuery("//feature/{plugin}/@os");
-    XQuery pluginArchQuery = queryhandler.createQuery("//feature/{plugin}/@arch");
-    XQuery pluginWsQuery = queryhandler.createQuery("//feature/{plugin}/@ws");
-    XQuery pluginNlQuery = queryhandler.createQuery("//feature/{plugin}/@nl");
-    XQuery pluginDownloadSizeQuery = queryhandler.createQuery("//feature/{plugin}/@download-size");
-    XQuery pluginInstallSizeQuery = queryhandler.createQuery("//feature/{plugin}/@install-size");
-    XQuery pluginUnpackQuery = queryhandler.createQuery("//feature/{plugin}/@unpack");
+    XQuery pluginIdQuery = queryhandler.createQuery("/feature/{plugin}/@id");
+    XQuery pluginversionQuery = queryhandler.createQuery("/feature/{plugin}/@version");
+    XQuery pluginFragmentQuery = queryhandler.createQuery("/feature/{plugin}/@fragment");
+    XQuery pluginOsQuery = queryhandler.createQuery("/feature/{plugin}/@os");
+    XQuery pluginArchQuery = queryhandler.createQuery("/feature/{plugin}/@arch");
+    XQuery pluginWsQuery = queryhandler.createQuery("/feature/{plugin}/@ws");
+    XQuery pluginNlQuery = queryhandler.createQuery("/feature/{plugin}/@nl");
+    XQuery pluginDownloadSizeQuery = queryhandler.createQuery("/feature/{plugin}/@download-size");
+    XQuery pluginInstallSizeQuery = queryhandler.createQuery("/feature/{plugin}/@install-size");
+    XQuery pluginUnpackQuery = queryhandler.createQuery("/feature/{plugin}/@unpack");
 
-    XQuery includesIdQuery = queryhandler.createQuery("//feature/{includes}/@id");
-    XQuery includesVersionQuery = queryhandler.createQuery("//feature/{includes}/@version");
-    XQuery includesNameQuery = queryhandler.createQuery("//feature/{includes}/@name");
-    XQuery includesOptionalQuery = queryhandler.createQuery("//feature/{includes}/@optional");
-    XQuery includesSearchLocationQuery = queryhandler.createQuery("//feature/{includes}/@search-location");
-    XQuery includesOsQuery = queryhandler.createQuery("//feature/{includes}/@os");
-    XQuery includesArchQuery = queryhandler.createQuery("//feature/{includes}/@arch");
-    XQuery includesWsQuery = queryhandler.createQuery("//feature/{includes}/@ws");
-    XQuery includesNlQuery = queryhandler.createQuery("//feature/{includes}/@nl");
+    XQuery includesIdQuery = queryhandler.createQuery("/feature/{includes}/@id");
+    XQuery includesVersionQuery = queryhandler.createQuery("/feature/{includes}/@version");
+    XQuery includesNameQuery = queryhandler.createQuery("/feature/{includes}/@name");
+    XQuery includesOptionalQuery = queryhandler.createQuery("/feature/{includes}/@optional");
+    XQuery includesSearchLocationQuery = queryhandler.createQuery("/feature/{includes}/@search-location");
+    XQuery includesOsQuery = queryhandler.createQuery("/feature/{includes}/@os");
+    XQuery includesArchQuery = queryhandler.createQuery("/feature/{includes}/@arch");
+    XQuery includesWsQuery = queryhandler.createQuery("/feature/{includes}/@ws");
+    XQuery includesNlQuery = queryhandler.createQuery("/feature/{includes}/@nl");
 
     // parse the file
     XQueryHandler.queryInputStream(inputStream, queryhandler);

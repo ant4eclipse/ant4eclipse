@@ -42,22 +42,22 @@ public class TargetDefinitionParser {
     XQueryHandler queryhandler = new XQueryHandler();
 
     // create queries
-    XQuery nameQuery = queryhandler.createQuery("//target/@name");
+    XQuery nameQuery = queryhandler.createQuery("/target/@name");
 
-    XQuery pathQuery = queryhandler.createQuery("//target/location/@path");
-    XQuery useDefaultQuery = queryhandler.createQuery("//target/location/@useDefault");
+    XQuery pathQuery = queryhandler.createQuery("/target/location/@path");
+    XQuery useDefaultQuery = queryhandler.createQuery("/target/location/@useDefault");
 
-    XQuery environmentOsQuery = queryhandler.createQuery("//target/environment/os");
-    XQuery environmentWsQuery = queryhandler.createQuery("//target/environment/ws");
-    XQuery environmentArchQuery = queryhandler.createQuery("//target/environment/arch");
-    XQuery environmentNlQuery = queryhandler.createQuery("//target/environment/nl");
+    XQuery environmentOsQuery = queryhandler.createQuery("/target/environment/os");
+    XQuery environmentWsQuery = queryhandler.createQuery("/target/environment/ws");
+    XQuery environmentArchQuery = queryhandler.createQuery("/target/environment/arch");
+    XQuery environmentNlQuery = queryhandler.createQuery("/target/environment/nl");
 
-    XQuery pluginIdQuery = queryhandler.createQuery("//target/content/plugins/{plugin}/@id");
-    XQuery featureIdQuery = queryhandler.createQuery("//target/content/features/{feature}/@id");
-    XQuery extraLocationPathQuery = queryhandler.createQuery("//target/content/extraLocations/{location}/@path");
+    XQuery pluginIdQuery = queryhandler.createQuery("/target/content/plugins/{plugin}/@id");
+    XQuery featureIdQuery = queryhandler.createQuery("/target/content/features/{feature}/@id");
+    XQuery extraLocationPathQuery = queryhandler.createQuery("/target/content/extraLocations/{location}/@path");
 
-    XQuery targetJreNameQuery = queryhandler.createQuery("//target/targetJRE/jreName");
-    XQuery targetJreExecutionEnvironmentQuery = queryhandler.createQuery("//target/targetJRE/execEnv");
+    XQuery targetJreNameQuery = queryhandler.createQuery("/target/targetJRE/jreName");
+    XQuery targetJreExecutionEnvironmentQuery = queryhandler.createQuery("/target/targetJRE/execEnv");
 
     // parse the file
     XQueryHandler.queryInputStream(inputStream, queryhandler);

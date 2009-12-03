@@ -96,9 +96,9 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
     XQueryHandler queryhandler2 = new XQueryHandler();
 
     // queries for the 'provider-id' attribute
-    XQuery providerIdQuery = queryhandler2.createQuery("//psf/provider/@id");
+    XQuery providerIdQuery = queryhandler2.createQuery("/psf/provider/@id");
     // query for the 'reference' elements
-    XQuery referenceQuery = queryhandler2.createQuery("//psf/provider/project/@reference");
+    XQuery referenceQuery = queryhandler2.createQuery("/psf/provider/project/@reference");
 
     // parse the file
     XQueryHandler.queryFile(projectSetFile, queryhandler2);

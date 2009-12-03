@@ -79,10 +79,10 @@ public class DLTKParser {
     XQueryHandler queryhandler = new XQueryHandler();
 
     // prepare the access for the attributes 'kind', 'path', 'exported', 'external'
-    XQuery kindquery = queryhandler.createQuery("//buildpath/buildpathentry/@kind");
-    XQuery pathquery = queryhandler.createQuery("//buildpath/buildpathentry/@path");
-    XQuery exportedquery = queryhandler.createQuery("//buildpath/buildpathentry/@exported");
-    XQuery externalquery = queryhandler.createQuery("//buildpath/buildpathentry/@external");
+    XQuery kindquery = queryhandler.createQuery("/buildpath/buildpathentry/@kind");
+    XQuery pathquery = queryhandler.createQuery("/buildpath/buildpathentry/@path");
+    XQuery exportedquery = queryhandler.createQuery("/buildpath/buildpathentry/@exported");
+    XQuery externalquery = queryhandler.createQuery("/buildpath/buildpathentry/@external");
 
     // now fetch the necessary data
     XQueryHandler.queryFile(buildpath, queryhandler);
