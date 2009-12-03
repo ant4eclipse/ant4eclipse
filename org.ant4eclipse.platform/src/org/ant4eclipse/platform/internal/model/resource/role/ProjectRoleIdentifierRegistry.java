@@ -50,7 +50,7 @@ public class ProjectRoleIdentifierRegistry {
    * Modifies the supplied project according to all currently registered RoleIdentifier instances.
    * 
    * @param project
-   *          The project that shall be modified.
+   *          The project that shall be modified. Not <code>null</code>.
    */
   public void applyRoles(EclipseProjectImpl project) {
     for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
@@ -61,6 +61,14 @@ public class ProjectRoleIdentifierRegistry {
     }
   }
 
+  /**
+   * Performs a post processing step for the roles. This might be necessary in situations where the applied role does
+   * not have all information needed (especially when the information must be provided by other projects which have not
+   * been processed at role application time).
+   * 
+   * @param project
+   *          The project used for the post processing step. Not <code>null</code>.
+   */
   public void postProcessRoles(EclipseProject project) {
     for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
       if (projectRoleIdentifier.isRoleSupported(project)) {
