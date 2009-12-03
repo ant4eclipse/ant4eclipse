@@ -581,9 +581,6 @@
           <antcontrib:if>
             <istrue value="${executeProduct.product.basedonfeatures}"/>
             <then>
-              
-              <echo level="warning">THE SUPPORT FOR FEATURES IS CURRENTLY NOT COMPLETED</echo>
-
               <echo> -> Building included feature '${executeProduct.feature.id}' - '${executeProduct.feature.version}'</echo>
               <buildFeature 
                 workspaceDirectory="@{workspaceDirectory}"
@@ -591,7 +588,10 @@
                 featureVersion="${executeProduct.feature.version}"
                 targetPlatformId="@{targetPlatformId}"
                 destination="@{destination}"
-                packageAsJar="@{packageAsJar}" 
+                packageAsJar="@{packageAsJar}"
+                packagePluginsAsJar="@{packageAsJar}"
+                packagePluginSourcesAsJar="@{packageSources}"
+                defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
               />
             </then>
           </antcontrib:if>
@@ -709,6 +709,7 @@
     <attribute name="skipBuildFeature" default="false" />
     <attribute name="packageAsJar" default="true" />
     <attribute name="packagePluginsAsJar" default="true" />
+    <attribute name="packagePluginSourcesAsJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
     <sequential>
 
@@ -750,6 +751,7 @@
                        targetplatformid="@{targetPlatformId}"
                        destination="@{destination}"
                        packageAsJar="@{packagePluginsAsJar}"
+                       buildSourceJar="@{packagePluginSourcesAsJar}"
                        defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" />
         </ant4eclipse:forEachPlugin>
 
