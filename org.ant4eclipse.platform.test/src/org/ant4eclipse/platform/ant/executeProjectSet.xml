@@ -19,6 +19,19 @@
 
   </target>
 
+  <target name="executeProjectSetFiltered">
+
+    <executeProjectSet workspaceDirectory="${workspaceDir}"
+                   teamprojectset="projectSet.psf">
+
+        <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+          <echo>${executeProjectSet.project.name}</echo>
+        </forEachProject>
+
+    </executeProjectSet>
+
+  </target>
+
   <!-- default dummy target -->
   <target name="foo" />
 </project>
