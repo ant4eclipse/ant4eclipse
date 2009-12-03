@@ -150,7 +150,7 @@
             </ant4eclipse:forEachOutputDirectory>
 
             <!-- Step 6.2: Compile the sources -->
-            <ant4eclipse:forProject filter="(source.directories=*)">
+            <ant4eclipse:forProject filter="(buildPlugin.source.directories=*)">
 
               <!-- template element 'pre-compile' -->
               <pre-compile />
@@ -209,7 +209,7 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
           - Step 7.1: Pack all libraries except the 'self' library
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <ant4eclipse:forEachPluginLibrary filter="(library.isSelf=false)">
+        <ant4eclipse:forEachPluginLibrary filter="(buildPlugin.library.isSelf=false)">
 
           <echo>Packing library '${buildPlugin.library.name}'</echo>
 
@@ -264,7 +264,7 @@
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
           - Step 7.2: Package the 'self' library
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
+        <ant4eclipse:forEachPluginLibrary filter="(buildPlugin.library.isSelf=true)">
           <echo>Packing library '.'</echo>
 
           <!-- template element 'pre-package-library' -->
@@ -401,7 +401,7 @@
           - Step 2: Copy the source of the 'self' library to the 
           -         destination location
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <ant4eclipse:forEachPluginLibrary filter="(library.isSelf=true)">
+        <ant4eclipse:forEachPluginLibrary filter="(buildPlugin.library.isSelf=true)">
 
           <ant4eclipse:executePluginLibrary workspaceDirectory="@{workspaceDirectory}"
                                             projectname="${buildPlugin.project.name}"
@@ -420,7 +420,7 @@
           - Step 3: Package the source of all the library source (except 
           -         the 'self' library ) to the destination location
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <ant4eclipse:forEachPluginLibrary filter="(library.isSelf=false)">
+        <ant4eclipse:forEachPluginLibrary filter="(buildPlugin.library.isSelf=false)">
 
           <ant4eclipse:executePluginLibrary workspaceDirectory="@{workspaceDirectory}"
                                             projectname="${buildPlugin.project.name}"
@@ -598,7 +598,7 @@
         </ant4eclipse:forEachFeature>
 
         <!-- Step 3b: Build included plugins if this product is based on plugins -->
-        <ant4eclipse:forEachPlugin filter="(plugin.isSource=true)">
+        <ant4eclipse:forEachPlugin filter="(executeProduct.plugin.isSource=true)">
           <antcontrib:if>
             <isfalse value="${executeProduct.product.basedonfeatures}"/>
             <then>
@@ -617,7 +617,7 @@
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3c: Copy plugins from the target platform -->
-        <ant4eclipse:forEachPlugin filter="(plugin.isSource=false)">
+        <ant4eclipse:forEachPlugin filter="(executeProduct.plugin.isSource=false)">
           <antcontrib:if>
             <isfalse value="${executeProduct.product.basedonfeatures}"/>
             <then>
@@ -744,7 +744,7 @@
 
         <!-- Step 3: Build the plug-ins  -->
         <!-- Step 3.1: Build the plug-ins  -->
-        <ant4eclipse:forEachPlugin filter="(plugin.isSource=true)">
+        <ant4eclipse:forEachPlugin filter="(executeProduct.plugin.isSource=true)">
           <echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolvedversion})' </echo>
           <buildPlugin workspaceDirectory="@{workspaceDirectory}"
                        projectName="${executeFeature.plugin.filename}"
@@ -756,7 +756,7 @@
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3.2: Copy plug-ins  -->
-        <ant4eclipse:forEachPlugin filter="(plugin.isSource=false)">
+        <ant4eclipse:forEachPlugin filter="(executeProduct.plugin.isSource=false)">
           <echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolvedversion})' </echo>
           <copy todir="@{destination}/${a4e.plugins.directory}">
             <filelist refid="executeFeature.plugin.filelist" />
@@ -765,7 +765,7 @@
 
         <!-- Step 4: Build feature itself -->
         <ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
-                                    filter="(feature.isSource=true)">
+                                    filter="(executeProduct.feature.isSource=true)">
 
           <echo>Building feature project '${executeFeature.feature.file.name} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
 
@@ -801,7 +801,7 @@
 
         <!-- if feature is already built, we only have to copy the jar / directory -->
         <ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
-                                    filter="(feature.isSource=false)">
+                                    filter="(executeProduct.feature.isSource=false)">
 
           <echo>Copying feature '${executeFeature.feature.file} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
 
@@ -810,7 +810,6 @@
           </copy>
 
         </ant4eclipse:forRootFeature>
-
 
         <ant4eclipse:forRootFeature>
           <echo>Feature '${executeFeature.feature.id}_${executeFeature.feature.version}' successfully built.</echo>

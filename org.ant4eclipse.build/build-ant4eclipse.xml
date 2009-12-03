@@ -32,13 +32,13 @@
                                    projectReferenceTypes="jdt">
 
       <!-- build each non-test project contained in the project set -->
-      <ant4eclipse:forEachProject filter="(!(project.name=*.test))">
+      <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
         <antcall target="buildProject" inheritrefs="true" />
       </ant4eclipse:forEachProject>
 
       <!-- build all test projects contained in the project set 
            and execute their test classes -->
-      <ant4eclipse:forEachProject filter="(project.name=*.test)">
+      <ant4eclipse:forEachProject filter="(executeProjectSet.project.name=*.test)">
         <!-- build... -->
         <antcall target="buildProject" inheritrefs="true">
           <param name="_testProject" value="true" />
