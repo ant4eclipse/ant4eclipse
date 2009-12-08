@@ -162,7 +162,10 @@
               <echo>  - classpath          -> ${buildPlugin.classpath.absolute.compiletime}</echo>
 
               <javac destdir="${buildPlugin.default.output.directory}"
-                     compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter">
+                     compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" 
+              	     source="1.5"
+              	     target="1.5" >
+              	
                 <src refid="buildPlugin.source.directories.path" />
                 <bootclasspath refid="buildPlugin.boot.classpath.path" />
                 <classpath refid="buildPlugin.classpath.absolute.compiletime.path" />
@@ -171,13 +174,13 @@
                 <compilerarg value="compiler.args.refid=buildPlugin.compiler.args"
                              compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
 
-                <!-- we also have to pass path of the compiler options file to support project specific compiler options -->
+                <!-- we also have to pass path of the compiler options file to support project specific compiler options --> 
                 <compilerarg value="compiler.options.file=${buildPlugin.project.directory}/.settings/org.eclipse.jdt.core.prefs"
-                             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+                             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" /> 
 
-                <!-- pass the path of the default compiler options file  -->
+                <!-- pass the path of the default compiler options file -->
                 <compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}"
-                             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" />
+                             compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" /> 
               </javac>
 
               <!-- template element 'post-compile' -->
