@@ -68,16 +68,24 @@ public class CompilerOptionsProvider {
 
     // get the project options
     StringMap projectOptions = getFileCompilerOptions(projectCompilerOptionsFile);
-
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("projectOptions: '%s'.", projectOptions);
+    }
     // get the default options
     StringMap defaultOptions = getFileCompilerOptions(globalCompilerOptionsFile);
-
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("defaultOptions: '%s'.", defaultOptions);
+    }
     // get the javac options
     StringMap javacOptions = getJavacCompilerOptions(javac);
-
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("javacOptions: '%s'.", javacOptions);
+    }
     // merge the map
     StringMap mergedMap = mergeCompilerOptions(projectOptions, defaultOptions, javacOptions);
-
+    if (A4ELogging.isTraceingEnabled()) {
+      A4ELogging.trace("mergedMap: '%s'.", mergedMap);
+    }
     // create result
     CompilerOptions compilerOptions = new CompilerOptions(mergedMap);
 
@@ -116,7 +124,6 @@ public class CompilerOptionsProvider {
 
       // get the source
       String source = javac.getSource();
-
       // set the source
       if (source.equals("1.3")) {
         result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_3);
@@ -128,9 +135,9 @@ public class CompilerOptionsProvider {
         result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_6);
       } else if (source.equals("1.7") || source.equals("7") || source.equals("7.0")) {
         result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_7);
+      } else {
+        throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_SOURCE_OPTION_EXCEPTION, source);
       }
-
-      throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_SOURCE_OPTION_EXCEPTION, source);
     }
 
     /*
@@ -157,9 +164,9 @@ public class CompilerOptionsProvider {
       } else if (target.equals("1.7") || target.equals("7") || target.equals("7.0")) {
         result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_7);
         result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_7);
+      } else {
+        throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_TARGET_OPTION_EXCEPTION, target);
       }
-
-      throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_TARGET_OPTION_EXCEPTION, target);
     }
 
     /*
