@@ -14,7 +14,7 @@ package org.ant4eclipse.core;
 import static org.junit.Assert.assertEquals;
 
 import org.ant4eclipse.lib.core.Assert;
-import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
 import javax.swing.JFrame;
@@ -25,20 +25,18 @@ import java.io.IOException;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class AssertTest extends ConfigurableAnt4EclipseTestCase {
+public class AssertTest {
 
   /**
    * 
    */
   @Test
   public void testAssertNotNull() {
-
     Assert.notNull(new Object());
-
     try {
       Assert.notNull(null);
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: Object has to be set!", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals("Precondition violated: Object has to be set!", ex.getMessage());
     }
   }
 
