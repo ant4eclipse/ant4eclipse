@@ -12,11 +12,12 @@
 package org.ant4eclipse.core;
 
 import org.ant4eclipse.core.dependencygraph.DependencyGraphTest;
+import org.ant4eclipse.core.xquery.XQueryHandlerTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { DependencyGraphTest.class })
+@Suite.SuiteClasses( { DependencyGraphTest.class, XQueryHandlerTest.class })
 public class AllTests {
 } /* ENDCLASS */
