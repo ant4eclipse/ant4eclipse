@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<project name="test" basedir="." default="foo">
+
+  <typedef name="executePluginLibrary"
+           classname="org.ant4eclipse.pde.ant.ExecuteLibraryTask" />
+
+
+  <target name="testExecutePluginLibrary">
+
+    <executePluginLibrary workspace="${workspaceDirectory}"
+                          projectname="${project.name}"
+                          libraryname="${library.name}">
+
+      <forEachOutputDirectory>
+        <echo>- ${executePluginLibrary.output.directory} -</echo>
+        <echo>- ${executePluginLibrary.output.directory.name} -</echo>
+      </forEachOutputDirectory>
+
+      <forEachSourceDirectory>
+        <echo>- ${executePluginLibrary.source.directory} -</echo>
+        <echo>- ${executePluginLibrary.source.directory.name} -</echo>
+      </forEachSourceDirectory>
+
+    </executePluginLibrary>
+
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+
+</project>
