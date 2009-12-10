@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.ant;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.Arrays;
 import java.util.LinkedList;

@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
 

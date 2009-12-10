@@ -13,12 +13,12 @@ package org.ant4eclipse.platform.ant.core.delegate;
 
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.ant.SubElementContribution;
 import org.ant4eclipse.platform.ant.core.SubElementComponent;
 
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

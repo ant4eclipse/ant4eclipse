@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.jdt.ecj.EcjAdapter;
 import org.ant4eclipse.jdt.ecj.SourceFile;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.eclipse.jdt.internal.compiler.Compiler;
 import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
 import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;

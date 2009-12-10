@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.pde.internal.model.pluginproject.FeatureDescriptionLoader;
 import org.ant4eclipse.pde.model.link.LinkFile;
 import org.ant4eclipse.pde.model.link.LinkFileFactory;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 import java.io.File;

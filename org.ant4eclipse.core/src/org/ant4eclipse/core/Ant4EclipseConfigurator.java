@@ -14,13 +14,13 @@ package org.ant4eclipse.core;
 import org.ant4eclipse.core.ant.AntBasedLogger;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
-import org.ant4eclipse.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
-import org.ant4eclipse.core.util.StringMap;
 
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.apache.tools.ant.Project;
 
 /**

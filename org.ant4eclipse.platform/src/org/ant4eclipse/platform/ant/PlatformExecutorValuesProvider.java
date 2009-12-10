@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.PathComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.ProjectNature;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)

@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.model.pyre;
 
-import org.ant4eclipse.core.data.Version;
-
+import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.pydt.model.PythonInterpreter;
 import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
 

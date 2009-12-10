@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
-import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * Resolved record used to identify an eclipse project.

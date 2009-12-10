@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core.delegate;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.ant.core.PathComponent;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
 

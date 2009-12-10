@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test.builder;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.util.Iterator;
 

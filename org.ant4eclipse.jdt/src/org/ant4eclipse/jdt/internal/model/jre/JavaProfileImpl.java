@@ -11,12 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.ManifestHelper;
-import org.ant4eclipse.core.util.StringMap;
 import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.Collections;
 import java.util.LinkedList;

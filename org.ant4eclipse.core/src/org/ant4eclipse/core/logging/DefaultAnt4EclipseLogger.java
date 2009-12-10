@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
+
 import java.io.PrintStream;
 
 /**

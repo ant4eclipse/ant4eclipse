@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.launcher;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
 import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.Collection;
 import java.util.Hashtable;

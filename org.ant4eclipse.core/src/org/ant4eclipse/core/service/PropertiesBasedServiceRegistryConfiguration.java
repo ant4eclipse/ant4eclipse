@@ -11,10 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.core.service;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 /**
  * The PropertiesBasedServiceRegistryConfiguration configures the ServiceRegistry with properties from

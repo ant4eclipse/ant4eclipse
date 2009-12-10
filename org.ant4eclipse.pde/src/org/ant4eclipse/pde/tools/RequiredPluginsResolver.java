@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
@@ -29,6 +26,8 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 import java.util.List;

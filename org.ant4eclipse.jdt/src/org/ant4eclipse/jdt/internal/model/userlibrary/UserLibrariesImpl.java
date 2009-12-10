@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.userlibrary;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.Hashtable;
 import java.util.Map;

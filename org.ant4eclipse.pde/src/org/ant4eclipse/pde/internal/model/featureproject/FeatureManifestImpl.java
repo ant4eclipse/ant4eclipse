@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.model.featureproject;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.osgi.framework.Version;
 
 import java.util.LinkedList;

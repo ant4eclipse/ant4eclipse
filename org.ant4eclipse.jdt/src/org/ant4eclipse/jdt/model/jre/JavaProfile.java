@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
-import org.ant4eclipse.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.List;
 

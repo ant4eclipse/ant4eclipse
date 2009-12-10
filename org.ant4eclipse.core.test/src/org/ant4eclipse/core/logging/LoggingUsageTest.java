@@ -13,9 +13,10 @@ package org.ant4eclipse.core.logging;
 
 import static org.junit.Assert.assertEquals;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.service.ServiceRegistryConfiguration;
-
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

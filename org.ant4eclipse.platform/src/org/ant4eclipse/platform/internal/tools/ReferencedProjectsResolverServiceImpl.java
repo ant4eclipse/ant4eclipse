@@ -12,13 +12,14 @@
 package org.ant4eclipse.platform.internal.tools;
 
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
+
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;

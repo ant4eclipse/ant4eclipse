@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.service.ServiceRegistry;
-
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.pydt.model.PythonInterpreter;
 import org.ant4eclipse.pydt.model.project.DLTKProjectRole;

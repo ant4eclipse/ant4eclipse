@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.logging.A4ELogging;
-
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 

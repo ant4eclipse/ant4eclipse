@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.project;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.StringMap;
-
 import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 /**
  * <p>

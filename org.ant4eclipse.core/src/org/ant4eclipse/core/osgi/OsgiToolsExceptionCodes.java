@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import org.ant4eclipse.core.exception.ExceptionCode;
+import org.ant4eclipse.lib.core.exception.ExceptionCode;
 
 /**
  * <p>

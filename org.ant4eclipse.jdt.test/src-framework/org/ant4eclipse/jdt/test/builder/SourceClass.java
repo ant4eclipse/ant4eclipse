@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.test.builder;
 
-import org.ant4eclipse.core.ClassName;
-import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.platform.test.builder.StringTemplate;
+
+import org.ant4eclipse.lib.core.ClassName;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.util.Iterator;
 import java.util.LinkedList;

@@ -11,12 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.featureproject;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
-
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureManifestImpl;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.osgi.framework.Version;
 
 import java.io.InputStream;

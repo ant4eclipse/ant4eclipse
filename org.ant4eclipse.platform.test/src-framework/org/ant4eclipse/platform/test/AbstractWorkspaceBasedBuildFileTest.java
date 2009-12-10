@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.testframework.FileHelper;
 import org.ant4eclipse.testframework.TestDirectory;
 

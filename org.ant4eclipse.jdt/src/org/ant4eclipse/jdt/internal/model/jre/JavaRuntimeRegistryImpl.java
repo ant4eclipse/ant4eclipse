@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import org.ant4eclipse.jdt.JdtExceptionCode;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.io.File;
 import java.util.HashMap;

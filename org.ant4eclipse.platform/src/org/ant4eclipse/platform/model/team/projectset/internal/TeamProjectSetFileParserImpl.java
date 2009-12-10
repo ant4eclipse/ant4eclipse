@@ -11,20 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 
 import java.io.File;
 import java.util.Hashtable;

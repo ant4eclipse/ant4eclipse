@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.buildproperties;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.StringMap;
-
 import org.ant4eclipse.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.io.File;
 import java.util.Iterator;

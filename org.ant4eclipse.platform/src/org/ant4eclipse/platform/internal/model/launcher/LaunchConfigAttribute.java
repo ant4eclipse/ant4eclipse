@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.launcher;
 
-import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import org.ant4eclipse.platform.internal.model.resource.ChunkyFile;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

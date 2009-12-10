@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.cdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.cdt.model.project.CCProjectRole;
 import org.ant4eclipse.cdt.model.project.CProjectRole;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * <p>

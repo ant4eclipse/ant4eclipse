@@ -15,13 +15,13 @@ import static java.lang.String.format;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.ant4eclipse.core.ClassName;
-import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 import org.ant4eclipse.platform.test.builder.StringTemplate;
+
+import org.ant4eclipse.lib.core.ClassName;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 import java.io.IOException;

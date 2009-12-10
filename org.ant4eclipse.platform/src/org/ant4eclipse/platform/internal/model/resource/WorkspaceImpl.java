@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.util.Collection;
 import java.util.Hashtable;

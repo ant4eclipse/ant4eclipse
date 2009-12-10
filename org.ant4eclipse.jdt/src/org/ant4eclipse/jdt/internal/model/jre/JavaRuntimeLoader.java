@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.data.Version;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.jdt.internal.model.jre.support.LibraryDetector;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.data.Version;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 import java.io.FilenameFilter;

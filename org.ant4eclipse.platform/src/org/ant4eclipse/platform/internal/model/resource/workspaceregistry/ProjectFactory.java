@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.validator.ValidatorRegistry;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.io.File;
 

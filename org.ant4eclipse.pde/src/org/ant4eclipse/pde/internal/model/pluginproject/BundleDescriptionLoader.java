@@ -11,15 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.model.pluginproject;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.model.pluginproject.Constants;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
 import org.osgi.framework.BundleException;

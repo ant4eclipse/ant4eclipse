@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.service.ServiceRegistry;
-
 import org.ant4eclipse.platform.internal.model.resource.role.NatureNicknameRegistry;
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -21,6 +18,9 @@ import org.ant4eclipse.platform.model.resource.ProjectNature;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 
 import java.io.File;
 import java.util.Iterator;

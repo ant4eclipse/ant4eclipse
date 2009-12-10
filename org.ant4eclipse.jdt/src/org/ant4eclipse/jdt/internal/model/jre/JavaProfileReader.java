@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.StringMap;
-
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.HashMap;
 import java.util.LinkedList;

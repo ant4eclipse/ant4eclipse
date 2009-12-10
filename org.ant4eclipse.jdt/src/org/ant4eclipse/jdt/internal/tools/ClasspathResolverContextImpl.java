@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.EmptyStackException;
 import java.util.List;

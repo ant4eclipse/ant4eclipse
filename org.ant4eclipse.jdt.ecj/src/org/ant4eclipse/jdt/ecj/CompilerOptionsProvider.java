@@ -11,12 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
-
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.taskdefs.Javac;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.util.Util;

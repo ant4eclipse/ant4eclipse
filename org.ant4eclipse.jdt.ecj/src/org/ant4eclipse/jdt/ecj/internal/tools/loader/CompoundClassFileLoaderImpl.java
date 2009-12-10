@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ClassName;
-
 import org.ant4eclipse.jdt.ecj.ClassFile;
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.ClassName;
 
 import java.util.HashMap;
 import java.util.LinkedList;

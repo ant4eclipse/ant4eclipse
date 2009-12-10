@@ -13,7 +13,7 @@ package org.ant4eclipse.testframework;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

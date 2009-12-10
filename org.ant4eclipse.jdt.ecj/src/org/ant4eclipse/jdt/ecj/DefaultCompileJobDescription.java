@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.StringMap;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.Iterator;
 import java.util.Map;

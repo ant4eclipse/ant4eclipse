@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.launcher;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.platform.model.launcher.LaunchConfigurationReader;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

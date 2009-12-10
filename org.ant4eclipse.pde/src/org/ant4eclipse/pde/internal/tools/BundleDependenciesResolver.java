@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
@@ -25,6 +24,7 @@ import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;

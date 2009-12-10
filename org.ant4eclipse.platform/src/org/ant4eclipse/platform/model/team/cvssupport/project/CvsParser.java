@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.project;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 
@@ -112,7 +112,8 @@ public class CvsParser {
     try {
       buffy = Utilities.readTextContent(file, Utilities.ENCODING, false);
     } catch (Ant4EclipseException e) {
-      throw new Ant4EclipseException(e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e.toString());
+      throw new Ant4EclipseException(e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e
+          .toString());
     }
     return buffy.toString();
   }

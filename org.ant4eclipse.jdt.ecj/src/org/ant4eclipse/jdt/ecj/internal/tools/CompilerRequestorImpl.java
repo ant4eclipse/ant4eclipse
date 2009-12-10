@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Utilities;
-
 import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
 import org.ant4eclipse.jdt.ecj.SourceFile;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.internal.compiler.ClassFile;
 import org.eclipse.jdt.internal.compiler.CompilationResult;

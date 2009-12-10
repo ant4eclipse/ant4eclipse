@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.StringMap;
-
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 

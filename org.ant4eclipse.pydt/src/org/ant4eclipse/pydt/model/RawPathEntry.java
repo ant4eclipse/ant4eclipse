@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
-import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * A raw path entry is a reference to another entity which has not been resolved. It's only used to represent the data

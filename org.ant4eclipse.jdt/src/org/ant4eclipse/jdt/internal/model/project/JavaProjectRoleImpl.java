@@ -11,11 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.StringMap;
-
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.ContainerTypes;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
@@ -26,6 +21,11 @@ import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.io.File;
 import java.util.LinkedList;

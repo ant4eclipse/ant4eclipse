@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-
 import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
@@ -27,6 +25,7 @@ import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 

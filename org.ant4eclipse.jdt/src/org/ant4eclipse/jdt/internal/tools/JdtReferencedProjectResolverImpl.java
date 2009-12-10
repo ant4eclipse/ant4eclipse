@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.jdt.internal.tools.classpathentry.ContainerClasspathEntryResolver;
 import org.ant4eclipse.jdt.internal.tools.classpathentry.ProjectClasspathEntryResolver;
@@ -21,6 +19,8 @@ import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.LinkedList;
 import java.util.List;

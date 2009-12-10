@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.configuration;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Pair;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Pair;
 
 /**
  * <p>

@@ -11,10 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
@@ -32,6 +29,9 @@ import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;

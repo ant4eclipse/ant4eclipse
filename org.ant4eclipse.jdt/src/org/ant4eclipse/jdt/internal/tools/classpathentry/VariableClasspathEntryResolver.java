@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-
 import org.ant4eclipse.jdt.JdtExceptionCode;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
@@ -20,6 +18,8 @@ import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.ant4eclipse.jdt.tools.classpathelements.ClassPathVariable;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
 import java.io.File;
 

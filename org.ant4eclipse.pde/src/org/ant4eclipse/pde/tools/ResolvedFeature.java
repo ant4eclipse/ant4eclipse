@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.Pair;
-
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
@@ -21,6 +18,8 @@ import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.Pair;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 import java.io.File;

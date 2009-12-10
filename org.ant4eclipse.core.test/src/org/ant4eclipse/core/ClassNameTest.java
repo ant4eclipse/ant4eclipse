@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
+import org.ant4eclipse.lib.core.ClassName;
 import org.junit.Test;
 
 import java.util.LinkedList;

@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.buildproperties;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.util.Arrays;
 import java.util.Collection;

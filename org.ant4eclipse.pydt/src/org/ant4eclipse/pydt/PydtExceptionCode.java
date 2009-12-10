@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt;
 
-import org.ant4eclipse.core.exception.ExceptionCode;
-import org.ant4eclipse.core.nls.NLS;
-import org.ant4eclipse.core.nls.NLSMessage;
+import org.ant4eclipse.lib.core.exception.ExceptionCode;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * ExceptionCodes for Pydt tools.

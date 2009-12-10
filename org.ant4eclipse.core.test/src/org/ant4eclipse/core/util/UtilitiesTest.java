@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

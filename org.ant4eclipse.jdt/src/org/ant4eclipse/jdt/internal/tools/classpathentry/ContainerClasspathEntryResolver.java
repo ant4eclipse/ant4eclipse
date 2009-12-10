@@ -11,17 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.util.Iterator;
 import java.util.LinkedList;

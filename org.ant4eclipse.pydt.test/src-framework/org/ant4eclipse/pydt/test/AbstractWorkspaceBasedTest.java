@@ -12,9 +12,9 @@
 package org.ant4eclipse.pydt.test;
 
 import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.pydt.ant.GetPythonPathTask;
 import org.ant4eclipse.pydt.ant.GetPythonSourcePathTask;
 import org.ant4eclipse.pydt.ant.PythonDocumentationTask;

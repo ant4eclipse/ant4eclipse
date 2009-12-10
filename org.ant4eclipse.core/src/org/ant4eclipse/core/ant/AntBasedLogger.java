@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.Ant4EclipseLogger;
-
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;

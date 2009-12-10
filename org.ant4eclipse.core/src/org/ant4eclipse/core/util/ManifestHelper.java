@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.LinkedList;
 import java.util.List;

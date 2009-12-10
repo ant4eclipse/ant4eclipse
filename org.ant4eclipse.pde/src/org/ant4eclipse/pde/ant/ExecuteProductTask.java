@@ -13,9 +13,6 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.ant.FileListHelper;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
@@ -33,6 +30,9 @@ import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.eclipse.osgi.service.resolver.BundleDescription;

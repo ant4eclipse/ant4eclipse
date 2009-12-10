@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.pydt.model.RawPathEntry;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 import org.ant4eclipse.pydt.tools.PathEntryRegistry;

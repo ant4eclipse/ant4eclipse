@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.io.File;
 import java.util.LinkedList;

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
@@ -23,6 +21,8 @@ import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.PathComponent;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.io.File;
 import java.util.List;

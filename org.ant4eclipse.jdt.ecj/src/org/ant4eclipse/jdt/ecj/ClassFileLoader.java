@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.ClassName;
+import org.ant4eclipse.lib.core.ClassName;
 
 /**
  * <p>

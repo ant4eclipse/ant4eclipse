@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import org.ant4eclipse.core.Assert;
-
+import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**

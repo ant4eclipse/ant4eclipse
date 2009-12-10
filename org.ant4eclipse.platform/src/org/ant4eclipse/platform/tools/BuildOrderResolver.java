@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.tools;
 
-import org.ant4eclipse.core.dependencygraph.DependencyGraph;
-import org.ant4eclipse.core.dependencygraph.DependencyGraph.VertexRenderer;
-
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
+
+import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph;
+import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph.VertexRenderer;
 
 import java.util.Arrays;
 import java.util.LinkedList;

@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.core.configuration;
 
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.io.IOException;
 import java.net.URL;

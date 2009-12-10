@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.util.Utilities;
-
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.pydt.tools.PythonTools;
 
 import java.io.File;

@@ -1,8 +1,8 @@
 package org.ant4eclipse.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.ecj.SourceFile;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.io.File;
 

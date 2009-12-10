@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.ManifestHelper;
 
 import org.ant4eclipse.pde.internal.ant.LibraryHelper;
@@ -27,6 +26,7 @@ import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.osgi.framework.Version;
 

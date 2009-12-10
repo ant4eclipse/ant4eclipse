@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant;
 
-import org.ant4eclipse.core.Assert;
-
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

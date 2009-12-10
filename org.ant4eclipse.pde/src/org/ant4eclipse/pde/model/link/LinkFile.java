@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.link;
 
-import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.lib.core.Assert;
 
 import java.io.File;
 
