@@ -9,11 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core;
+package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.core.exception.ExceptionCode;
-import org.ant4eclipse.core.nls.NLS;
-import org.ant4eclipse.core.nls.NLSMessage;
+
+import org.ant4eclipse.lib.core.exception.ExceptionCode;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>

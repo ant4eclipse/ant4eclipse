@@ -9,12 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.service;
+package org.ant4eclipse.lib.core.service;
 
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.service.ServiceRegistryConfiguration.ConfigurationContext;
+
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 
 import java.util.HashMap;
 import java.util.Iterator;

@@ -9,9 +9,9 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.service;
+package org.ant4eclipse.lib.core.service;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
 /**
  * ServiceRegistryConfiguration --

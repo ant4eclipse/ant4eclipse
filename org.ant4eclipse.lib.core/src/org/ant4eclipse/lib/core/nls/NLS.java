@@ -9,12 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.nls;
+package org.ant4eclipse.lib.core.nls;
 
-import org.ant4eclipse.core.CoreExceptionCode;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.exception.ExceptionCode;
-import org.ant4eclipse.core.util.Utilities;
+
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.exception.ExceptionCode;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.IOException;
 import java.io.InputStream;

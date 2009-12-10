@@ -9,37 +9,41 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.logging;
-
-import org.ant4eclipse.core.service.ServiceRegistry;
+package org.ant4eclipse.lib.core.logging;
 
 /**
  * <p>
  * API which provides a project wide logging mechanism.
+ * 
+ * ERR -> INFO -> DEBUG -> TRACE, entspricht in ant (ERR -> INFO -> VERBOSE -> DEBUG)
  * </p>
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class A4ELogging {
+public interface Ant4EclipseLogger {
+
+  /**
+   * Applies a contextual object which might provide additional information to some output.
+   * 
+   * @param context
+   *          A contextual object providing additional information. Maybe <code>null</code>.
+   */
+  void setContext(Object context);
 
   /**
    * Returns <code>true</code> if the debugging is enabled.
    * 
    * @return <code>true</code> <=> Debugging is enabled.
    */
-  public static final boolean isDebuggingEnabled() {
-    return getLogger().isDebuggingEnabled();
-  }
+  boolean isDebuggingEnabled();
 
   /**
    * Returns <code>true</code> if tracing is enabled.
    * 
    * @return <code>true</code> <=> Tracing is enabled.
    */
-  public static final boolean isTraceingEnabled() {
-    return getLogger().isTraceingEnabled();
-  }
+  boolean isTraceingEnabled();
 
   /**
    * Dumps traceing information.
@@ -49,9 +53,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void trace(String msg, Object... args) {
-    getLogger().trace(msg, args);
-  }
+  void trace(String msg, Object... args);
 
   /**
    * Dumps debugging information.
@@ -61,9 +63,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void debug(String msg, Object... args) {
-    getLogger().debug(msg, args);
-  }
+  void debug(String msg, Object... args);
 
   /**
    * Dumps informational text.
@@ -73,9 +73,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void info(String msg, Object... args) {
-    getLogger().info(msg, args);
-  }
+  void info(String msg, Object... args);
 
   /**
    * Dumps warning information.
@@ -85,9 +83,7 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void warn(String msg, Object... args) {
-    getLogger().warn(msg, args);
-  }
+  void warn(String msg, Object... args);
 
   /**
    * Dumps error information.
@@ -97,17 +93,6 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void error(String msg, Object... args) {
-    getLogger().error(msg, args);
-  }
-
-  /**
-   * Returns an instance of a logger currently provided by the registry.
-   * 
-   * @return An instance of a logger currently provided by the registry. Not <code>null</code>.
-   */
-  private static final Ant4EclipseLogger getLogger() {
-    return (Ant4EclipseLogger) ServiceRegistry.instance().getService(Ant4EclipseLogger.class.getName());
-  }
+  void error(String msg, Object... args);
 
 } /* ENDCLASS */

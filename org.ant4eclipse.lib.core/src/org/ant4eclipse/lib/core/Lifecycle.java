@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core;
+package org.ant4eclipse.lib.core;
 
 /**
  * This interface must be implemented by services that are aware of a Lifecycle.
