@@ -29,25 +29,25 @@ import java.io.File;
 public class Assert {
 
   @NLSMessage("Parameter '%s' should be of type '%s' but is a '%s'")
-  private static String MSG_INVALIDTYPE;
+  public static String MSG_INVALIDTYPE;
 
   @NLSMessage("The parameter '%s' is not supposed to be null.")
-  private static String MSG_NOTNULL;
+  public static String MSG_NOTNULL;
 
   @NLSMessage("The supplied string is not allowed to be empty.")
-  private static String MSG_STRINGMUSTBENONEMPTY;
+  public static String MSG_STRINGMUSTBENONEMPTY;
 
   @NLSMessage("The resource '%s' does not exist !")
-  private static String MSG_RESOURCEDOESNOTEXIST;
+  public static String MSG_RESOURCEDOESNOTEXIST;
 
   @NLSMessage("The resource '%s' is not a regular file !")
-  private static String MSG_RESOURCEISNOTAREGULARFILE;
+  public static String MSG_RESOURCEISNOTAREGULARFILE;
 
   @NLSMessage("The resource '%s' is not a directory !")
-  private static String MSG_RESOURCEISNOTADIRECTORY;
+  public static String MSG_RESOURCEISNOTADIRECTORY;
 
   @NLSMessage("The value %d is supposed to be in the range [%d..%d] !")
-  private static String MSG_VALUEOUTOFRANGE;
+  public static String MSG_VALUEOUTOFRANGE;
 
   static {
     NLS.initialize(Assert.class);
