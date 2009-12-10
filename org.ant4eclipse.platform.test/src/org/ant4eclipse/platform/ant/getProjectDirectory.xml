@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<project name="has-nature-test" basedir="." default="foo">
+
+  <!-- definition of condition HasNature -->
+  <typedef name="getProjectDirectory"
+           classname="org.ant4eclipse.platform.ant.GetProjectDirectoryTask"
+  />
+
+  <!-- test testGetProjectDirectory -->
+  <target name="testGetProjectDirectory">
+    <getProjectDirectory workspaceDirectory='${workspaceDir}'
+                         projectName='simpleproject'
+                         property='test'
+    />
+    <echo>${test}</echo>
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+</project>
