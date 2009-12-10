@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 import org.ant4eclipse.lib.core.nls.NLS;
 import org.ant4eclipse.lib.core.nls.NLSMessage;
@@ -99,14 +98,6 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("Precondition violated: Object has to be set.")
   public static CoreExceptionCode ASSERT_NOT_NULL_FAILED;
 
-  /** - */
-  @NLSMessage("Precondition violated: Parameter '%s' has to be set.")
-  public static CoreExceptionCode ASSERT_PARAMETER_NOT_NULL_FAILED;
-
-  /** - */
-  @NLSMessage("Precondition violated: %s")
-  public static CoreExceptionCode ASSERT_TRUE_FAILED;
-
   /** utility function related exception codes. */
   /** - */
   @NLSMessage("Could not export resource '%s' into file '%s'.")
@@ -140,6 +131,14 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("An IO operation on the resource '%s' failed.")
   public static CoreExceptionCode RESOURCEIO_FAILURE;
 
+  /** - */
+  @NLSMessage("A precondition has been violated: %s")
+  public static CoreExceptionCode PRECONDITION_VIOLATION;
+
+  /** - */
+  @NLSMessage("An invalid format has been used: %s")
+  public static CoreExceptionCode ILLEGAL_FORMAT;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }
@@ -154,4 +153,5 @@ public class CoreExceptionCode extends ExceptionCode {
   private CoreExceptionCode(String message) {
     super(message);
   }
-}
+
+} /* ENDCLASS */

@@ -24,13 +24,10 @@ package org.ant4eclipse.lib.core.util;
 public class Pair<T, U> {
 
   /** the first thing of this pair */
-  private T             _first;
+  private T _first;
 
   /** the second thing of this pair */
-  private U             _second;
-
-  /** the hash code */
-  private transient int _hash;
+  private U _second;
 
   /**
    * <p>
@@ -43,14 +40,8 @@ public class Pair<T, U> {
    *          the second thing of this pair
    */
   public Pair(T first, U second) {
-
-    // set the elements
     this._first = first;
     this._second = second;
-
-    // compute the hash code
-    this._hash = (this._first == null ? 0 : this._first.hashCode() * 31)
-        + (this._second == null ? 0 : this._second.hashCode());
   }
 
   /**
@@ -80,7 +71,10 @@ public class Pair<T, U> {
    */
   @Override
   public int hashCode() {
-    return this._hash;
+    // compute the hash code
+    int result = this._first == null ? 0 : this._first.hashCode();
+    result = 31 * result + (this._second == null ? 0 : this._second.hashCode());
+    return result;
   }
 
   /**
@@ -92,14 +86,11 @@ public class Pair<T, U> {
     if (this == other) {
       return true;
     }
-
     if (other == null || !(getClass().isInstance(other))) {
       return false;
     }
-
     Pair<T, U> otherPair = getClass().cast(other);
-
-    return (this._first == null ? otherPair._first == null : this._first.equals(otherPair._first))
-        && (this._second == null ? otherPair._second == null : this._second.equals(otherPair._second));
+    return Utilities.equals(this._first, otherPair._first) && Utilities.equals(this._second, otherPair._second);
   }
-}
+
+} /* ENDCLASS */

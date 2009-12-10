@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-
 import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -1198,6 +1197,30 @@ public class Utilities {
       throw new Ant4EclipseException(ex, CoreExceptionCode.EXECUTION_FAILURE, exe);
     }
 
+  }
+
+  /**
+   * Returns <code>true</code> if the supplied objects are equal. This function is capable to deal with
+   * <code>null</code> values.
+   * 
+   * @param <T>
+   *          The type of parameters that will be used.
+   * @param o1
+   *          One object. Maybe <code>null</code>.
+   * @param o2
+   *          Another object. Maybe <code>null</code>.
+   * 
+   * @return <code>true</code> <=> Both objects are equal.
+   */
+  public static final <T> boolean equals(T o1, T o2) {
+    if (o1 == null) {
+      return o2 == null;
+    } else if (o1 == o2) {
+      // not necessary but efficient
+      return true;
+    } else {
+      return o1.equals(o2);
+    }
   }
 
   /**

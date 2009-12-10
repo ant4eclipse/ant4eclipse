@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.service;
 
-
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,6 +45,9 @@ import java.util.Map;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * 
+ * @todo [10-Dec-2009:KASI] The static reference should be removed so that classloading won't cleanup existing data
+ *       (happens within a taskdef if ant).
  */
 public class ServiceRegistry {
 
@@ -73,8 +75,8 @@ public class ServiceRegistry {
    *          the service registry configuration
    */
   public static void configure(ServiceRegistryConfiguration configuration) {
-    parameterNotNull("configuration", configuration);
-    assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
+    Assert.paramNotNull("configuration", configuration);
+    Assert.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
 
     _instance = new ServiceRegistry();
     configuration.configure(_instance.new ConfigurationContextImpl());
@@ -104,7 +106,7 @@ public class ServiceRegistry {
    * </p>
    */
   public static void reset() {
-    assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
+    Assert.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
 
     // if the service registry is configured, it is also initialized and needs to be disposed
     _instance.dispose();
@@ -124,8 +126,7 @@ public class ServiceRegistry {
    * @return the instance.
    */
   public static ServiceRegistry instance() {
-    assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
-
+    Assert.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
     return _instance;
   }
 
@@ -214,7 +215,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void initialize() {
-    assertTrue(!isInitialized(), "Service registry already has been initialized!");
+    Assert.assertTrue(!isInitialized(), "Service registry already has been initialized!");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -239,7 +240,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void dispose() {
-    assertTrue(isInitialized(), "Service registry is not initialized.");
+    Assert.assertTrue(isInitialized(), "Service registry is not initialized.");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -267,38 +268,6 @@ public class ServiceRegistry {
 
   /**
    * <p>
-   * Assert that the specified object is not null.
-   * </p>
-   * 
-   * @param message
-   *          an error message
-   * @param object
-   *          the object that must be set.
-   */
-  private static void parameterNotNull(String parameterName, Object parameter) {
-    if (parameter == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.ASSERT_PARAMETER_NOT_NULL_FAILED, parameterName);
-    }
-  }
-
-  /**
-   * <p>
-   * Assert that the given condition is <code>true</code>
-   * </p>
-   * 
-   * @param condition
-   *          the condition
-   * @param msg
-   *          the message
-   */
-  private static void assertTrue(boolean condition, String msg) {
-    if (!condition) {
-      throw new Ant4EclipseException(CoreExceptionCode.ASSERT_TRUE_FAILED, msg);
-    }
-  }
-
-  /**
-   * <p>
    * Creates an instance of type {@link ServiceRegistry}.
    * </p>
    */
@@ -312,12 +281,15 @@ public class ServiceRegistry {
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  protected class ConfigurationContextImpl implements ConfigurationContext {
+  private class ConfigurationContextImpl implements ConfigurationContext {
 
-    public final void registerService(Object service, String serviceIdentifier) {
-      assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      parameterNotNull("service", service);
-      parameterNotNull("serviceIdentifier", serviceIdentifier);
+    /**
+     * {@inheritDoc}
+     */
+    public void registerService(Object service, String serviceIdentifier) {
+      Assert.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
+      Assert.paramNotNull("service", service);
+      Assert.paramNotNull("serviceIdentifier", serviceIdentifier);
 
       if (!ServiceRegistry.this._serviceMap.containsKey(serviceIdentifier)) {
         ServiceRegistry.this._serviceMap.put(serviceIdentifier, service);
@@ -327,14 +299,17 @@ public class ServiceRegistry {
       }
     }
 
-    public final void registerService(Object service, String[] serviceIdentifier) {
-      assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      parameterNotNull("service", service);
-      parameterNotNull("serviceIdentifier", serviceIdentifier);
-      assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
+    /**
+     * {@inheritDoc}
+     */
+    public void registerService(Object service, String[] serviceIdentifier) {
+      Assert.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
+      Assert.paramNotNull("service", service);
+      Assert.paramNotNull("serviceIdentifier", serviceIdentifier);
+      Assert.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
 
       for (int i = 0; i < serviceIdentifier.length; i++) {
-        assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
+        Assert.assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
       }
 
       for (String object : serviceIdentifier) {
@@ -348,5 +323,7 @@ public class ServiceRegistry {
         ServiceRegistry.this._serviceOrdering.add(service);
       }
     }
-  }
-}
+
+  } /* ENDCLASS */
+
+} /* ENDCLASS */

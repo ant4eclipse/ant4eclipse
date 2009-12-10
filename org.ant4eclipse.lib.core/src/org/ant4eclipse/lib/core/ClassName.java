@@ -26,23 +26,30 @@ public final class ClassName {
   /** the class name */
   private String _className;
 
+  private String _qualifiedName;
+
   /**
    * <p>
-   * Returns a new instance of type {@link ClassName} representing the given qualified class name.
+   * Creates a new instance of type {@link ClassName}.
    * </p>
    * 
-   * @param qualifiedClassName
-   *          The qualified class name
-   * @return a ClassName instance representing this qualified class name
+   * @param packageName
+   *          the package name.
+   * @param className
+   *          the class name.
    */
-  public static ClassName fromQualifiedClassName(String qualifiedClassName) {
-    Assert.nonEmpty(qualifiedClassName);
+  private ClassName(String qualifiedClassName) {
 
-    // split the qualified class name
-    String[] splittedClassName = splitQualifiedClassName(qualifiedClassName);
+    this._qualifiedName = qualifiedClassName;
+    this._packageName = "";
+    this._className = qualifiedClassName;
 
-    // create new instance
-    return new ClassName(splittedClassName[0], splittedClassName[1]);
+    int v = qualifiedClassName.lastIndexOf('.');
+    if (v != -1) {
+      this._packageName = qualifiedClassName.substring(0, v);
+      this._className = qualifiedClassName.substring(v + 1);
+    }
+
   }
 
   /**
@@ -50,10 +57,10 @@ public final class ClassName {
    * Returns the qualified name of this class as a java type identifier (e.g. <code>foo.bar.Bazz</code>).
    * </p>
    * 
-   * @return the qualified class name. Never null.
+   * @return the qualified class name. Neither <code>null</code> nor empty.
    */
   public String getQualifiedClassName() {
-    return this._packageName.equals("") ? this._className : this._packageName + "." + this._className;
+    return this._qualifiedName;
   }
 
   /**
@@ -120,7 +127,7 @@ public final class ClassName {
    */
   @Override
   public String toString() {
-    return getQualifiedClassName();
+    return this._qualifiedName;
   }
 
   /**
@@ -128,11 +135,7 @@ public final class ClassName {
    */
   @Override
   public int hashCode() {
-    int PRIME = 31;
-    int result = 1;
-    result = PRIME * result + this._className.hashCode();
-    result = PRIME * result + this._packageName.hashCode();
-    return result;
+    return this._qualifiedName.hashCode();
   }
 
   /**
@@ -150,53 +153,24 @@ public final class ClassName {
       return false;
     }
     ClassName other = (ClassName) obj;
-    if (!this._className.equals(other._className)) {
-      return false;
-    }
-    if (!this._packageName.equals(other._packageName)) {
-      return false;
-    }
-    return true;
+    return this._qualifiedName.equals(other._qualifiedName);
   }
 
   /**
    * <p>
-   * Splits the qualified class name in package name and class name
+   * Returns a new instance of type {@link ClassName} representing the given qualified class name.
    * </p>
    * 
-   * @return an array with exactly two items: {package name, class name}
+   * @todo [10-Dec-2009:KASI] Personally I would say that the constructor should be preferred instead of this static
+   *       method in order to get rid of this method.
+   * 
+   * @param qualifiedClassName
+   *          The qualified class name
+   * @return a ClassName instance representing this qualified class name
    */
-  private static String[] splitQualifiedClassName(String qualifiedClassName) {
+  public static final ClassName fromQualifiedClassName(String qualifiedClassName) {
     Assert.nonEmpty(qualifiedClassName);
-
-    int v = qualifiedClassName.lastIndexOf('.');
-    String packageName = "";
-    if (v != -1) {
-      packageName = qualifiedClassName.substring(0, v);
-    }
-    // if ((packageName == null) || (packageName.length() < 1)) {
-    // throw new IllegalStateException("Default packages not supported! Classname was:'" + qualifiedClassName + "'");
-    // }
-
-    String className = qualifiedClassName.substring(v + 1);
-    return new String[] { packageName, className };
+    return new ClassName(qualifiedClassName);
   }
 
-  /**
-   * <p>
-   * Creates a new instance of type {@link ClassName}.
-   * </p>
-   * 
-   * @param packageName
-   *          the package name.
-   * @param className
-   *          the class name.
-   */
-  private ClassName(String packageName, String className) {
-    Assert.notNull(packageName);
-    Assert.nonEmpty(className);
-
-    this._packageName = packageName;
-    this._className = className;
-  }
-}
+} /* ENDCLASS */

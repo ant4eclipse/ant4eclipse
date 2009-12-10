@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.service;
 
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-
 /**
  * ServiceRegistryConfiguration --
  * 
@@ -30,39 +28,4 @@ public interface ServiceRegistryConfiguration {
    */
   void configure(ConfigurationContext context);
 
-  /**
-   * ConfigurationContext --
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  interface ConfigurationContext {
-
-    /**
-     * <p>
-     * Associates the specified service with the specified service identifier. If the service identifier is already set,
-     * a {@link Ant4EclipseException} will be thrown.
-     * </p>
-     * 
-     * @param service
-     *          the service
-     * @param serviceIdentifier
-     *          the service identifier
-     */
-    void registerService(Object service, String serviceIdentifier);
-
-    /**
-     * <p>
-     * Associates the specified service with the specified service identifiers. If one of the service identifiers is
-     * already set, a {@link Ant4EclipseException} will be thrown.
-     * </p>
-     * 
-     * @param service
-     *          the service
-     * @param serviceIdentifiers
-     *          the service identifiers
-     */
-    void registerService(Object service, String[] serviceIdentifiers);
-
-  }
-
-}
+} /* ENDINTERFACE */
