@@ -249,7 +249,7 @@ public class ServiceRegistry {
           ((Lifecycle) service).dispose();
         } catch (Exception e) {
           // no need to do anything here...
-          System.err.println(String.format(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED.getMessage(), service));
+          System.err.printf(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED.getMessage(), service);
         }
       }
     }

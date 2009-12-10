@@ -240,7 +240,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
       }
     }
     // TODO
-    System.err.println(String.format("Could not resolve feature '%s' in version '%s'.", id, version));
+    A4ELogging.error("Could not resolve feature '%s' in version '%s'.", id, version);
     //
     return null;
   }
