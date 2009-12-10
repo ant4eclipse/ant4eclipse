@@ -27,7 +27,7 @@
   <target name="build.ant4eclipse" depends="prepare">
 
     <!-- Step 1: iterate over the project set and build each project -->
-    <ant4eclipse:executeProjectSet workspace="${basedir}"
+    <ant4eclipse:executeProjectSet workspaceDirectory="${basedir}"
                                    teamprojectset="${teamprojectset}"
                                    projectReferenceTypes="jdt">
 
@@ -56,6 +56,44 @@
 
   </target>
 
+  <!-- =================================
+          target: build.ant4eclipse
+         ================================= -->
+  <target name="build.ant4eclipse.lib" depends="prepare">
+
+    <!-- Step 1: iterate over the project set and build each project -->
+    <ant4eclipse:executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectsetlib}"
+      projectReferenceTypes="jdt"
+    >
+
+      <!-- build each non-test project contained in the project set -->
+      <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <antcall target="buildProject" inheritrefs="true" />
+      </ant4eclipse:forEachProject>
+
+      <!-- build all test projects contained in the project set 
+           and execute their test classes -->
+      <ant4eclipse:forEachProject filter="(executeProjectSet.project.name=*.test)">
+        <!-- build... -->
+        <antcall target="buildProject" inheritrefs="true">
+          <param name="_testProject" value="true" />
+        </antcall>
+        <!-- ...and test -->
+        <antcall target="testProject" inheritrefs="true" />
+      </ant4eclipse:forEachProject>
+      
+    </ant4eclipse:executeProjectSet>
+
+    <!-- Step 2: mergeModules -->
+    <antcall target="mergeModulesLib" inheritrefs="true" />
+
+    <!-- Step 3: buildDistributionLib -->
+    <antcall target="buildDistributionLib" inheritrefs="true" />
+
+  </target>
+
   <!-- - - - - - - - - - - - - - - - - -
           target: prepare
          - - - - - - - - - - - - - - - - - -->
@@ -73,7 +111,7 @@
 
     <echo level="debug">Project ${executeProjectSet.project.name} -> ${_testProject}</echo>
 
-    <ant4eclipse:executeJdtProject workspace="${basedir}"
+    <ant4eclipse:executeJdtProject workspaceDirectory="${basedir}"
                                    projectname="${executeProjectSet.project.name}">
 
       <!-- Step 1: clean output directories -->
@@ -114,7 +152,7 @@
   <target name="testProject">
     <echo>Running tests in project "${executeProjectSet.project.name}"</echo>
 
-    <ant4eclipse:executeJdtProject workspace="${basedir}"
+    <ant4eclipse:executeJdtProject workspaceDirectory="${basedir}"
                                    projectname="${executeProjectSet.project.name}">
 
       <ant4eclipse:forEachSourceDirectory>
@@ -268,12 +306,35 @@
   </target>
 
   <!-- - - - - - - - - - - - - - - - - -
+          target: mergeModules
+         - - - - - - - - - - - - - - - - - -->
+  <target name="mergeModulesLib">
+
+    <!-- merge all ant4eclipse.properties -->
+    <ant4eclipse:mergeProperties destinationFile="${destination}/merged/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties">
+      <fileset dir="${destination}/merged/cfg">
+        <include name="**/ant4eclipse-configuration.properties" />
+        <exclude name="ant4eclipse-configuration.properties" />
+      </fileset>
+    </ant4eclipse:mergeProperties>
+
+    <!-- build the jar file -->
+    <jar 
+      destfile="${destination}/org.ant4eclipse.lib_${revision}.jar"
+      basedir="${destination}/merged/classes" 
+    />
+
+    <!-- delete the 'merged' directory -->
+    <delete dir="${destination}/merged" quiet="true" />
+  </target>
+
+  <!-- - - - - - - - - - - - - - - - - -
           target: buildDistribution
          - - - - - - - - - - - - - - - - - -->
   <target name="buildDistribution">
 
     <!-- copy macros -->
-    <ant4eclipse:executeProjectSet workspace="${basedir}"
+    <ant4eclipse:executeProjectSet workspaceDirectory="${basedir}"
                                    teamprojectset="${teamprojectset}"
                                    projectReferenceTypes="jdt">
       <ant4eclipse:forEachProject>
@@ -317,4 +378,21 @@
 
   </target>
 
+  <target name="buildDistributionLib">
+    
+    <!-- zip the result -->
+    <zip destfile="${destination}/org.ant4eclipse.lib_${revision}.zip">
+      <fileset dir="${destination}" >
+        <include name="libs/*" />
+        <include name="org.ant4eclipse.lib_*.jar" />
+      </fileset>
+    </zip>
+
+    <!-- tar the zip -->
+    <tar destfile="${destination}/org.ant4eclipse.lib_${revision}.tar.gz" compression="gzip">
+      <zipfileset src="${destination}/org.ant4eclipse.lib_${revision}.zip" />
+    </tar>
+
+  </target>
+  
 </project>
