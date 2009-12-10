@@ -25,7 +25,7 @@ import java.util.LinkedList;
 public class ClassNameTest {
 
   @Test
-  public void test_QualifiedName() {
+  public void qualifiedName() {
     String CLASSNAME = "net.sf.ant4eclipse.ClasspathTask";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
@@ -39,7 +39,7 @@ public class ClassNameTest {
   }
 
   @Test
-  public void test_SinglePackage() {
+  public void singlePackage() {
     String CLASSNAME = "net.ClasspathTask";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
@@ -53,7 +53,7 @@ public class ClassNameTest {
   }
 
   @Test
-  public void test_ShortPackage() {
+  public void shortPackage() {
     String CLASSNAME = "n.ClasspathTask";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
@@ -67,7 +67,7 @@ public class ClassNameTest {
   }
 
   @Test
-  public void test_ShortClassName() {
+  public void shortClassName() {
     String CLASSNAME = "n.C";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
@@ -80,7 +80,7 @@ public class ClassNameTest {
   }
 
   @Test
-  public void test_Equals() {
+  public void equalObjects() {
     String CLASSNAME = "net.sf.ant4eclipse.ClasspathTask";
     ClassName className1 = ClassName.fromQualifiedClassName(CLASSNAME);
     ClassName className2 = ClassName.fromQualifiedClassName(CLASSNAME);
@@ -101,7 +101,7 @@ public class ClassNameTest {
   }
 
   @Test
-  public void test_WithoutPackage() {
+  public void withoutPackage() {
     String CLASSNAME = "C";
     ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
     assertNotNull(className);
