@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class AssertTest {
+public class AssureTest {
 
   /**
    * 
