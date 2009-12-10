@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<project name="has-nature-test" basedir="." default="foo">
+
+  <!-- definition of condition HasNature -->
+  <typedef name="ant4EclipseTask"
+           classname="org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest$Ant4EclipseTask"
+  />
+  
+  <typedef name="ant4EclipseFailureTask"
+           classname="org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest$Ant4EclipseFailureTask"
+  />
+
+  <!-- test testNonexistingNature -->
+  <target name="testAbstractAnt4EclipseTask">
+      <ant4EclipseTask />
+  </target>
+  
+  <target name="testAbstractAnt4EclipseFailureTask">
+      <ant4EclipseFailureTask />
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+</project>
