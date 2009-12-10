@@ -13,7 +13,7 @@ package org.ant4eclipse.pydt.internal.model.pyre;
 
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -108,7 +108,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public boolean hasRuntime(String id) {
-    Assert.nonEmpty(id);
+    Assure.nonEmpty(id);
     return this._runtimes.containsKey(id);
   }
 
@@ -117,8 +117,8 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    */
   public void registerRuntime(String id, File location, boolean sitepackages) {
 
-    Assert.nonEmpty(id);
-    Assert.notNull(location);
+    Assure.nonEmpty(id);
+    Assure.notNull(location);
 
     try {
       location = location.getCanonicalFile();
@@ -260,7 +260,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public void setDefaultRuntime(String id) {
-    Assert.nonEmpty(id);
+    Assure.nonEmpty(id);
     if (!hasRuntime(id)) {
       throw new ExtendedBuildException(MSG_INVALIDDEFAULTID, id);
     }
@@ -283,7 +283,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public PythonRuntime getRuntime(String id) {
-    Assert.nonEmpty(id);
+    Assure.nonEmpty(id);
     return this._runtimes.get(id);
   }
 

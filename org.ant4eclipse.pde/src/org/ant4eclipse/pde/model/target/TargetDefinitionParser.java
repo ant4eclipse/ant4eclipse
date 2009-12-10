@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.target;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 
@@ -36,7 +36,7 @@ public class TargetDefinitionParser {
    * @return a target definition instance.
    */
   public static TargetDefinition parseTargetDefinition(InputStream inputStream) {
-    Assert.notNull(inputStream);
+    Assure.notNull(inputStream);
 
     // create query handler
     XQueryHandler queryhandler = new XQueryHandler();

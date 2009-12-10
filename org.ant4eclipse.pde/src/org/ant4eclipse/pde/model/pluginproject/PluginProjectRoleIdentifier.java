@@ -19,7 +19,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
@@ -42,7 +42,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("PluginProjectRoleIdentifier.applyRole(%s)", project);
-    Assert.notNull(project);
+    Assure.notNull(project);
 
     BundleDescription description;
     try {

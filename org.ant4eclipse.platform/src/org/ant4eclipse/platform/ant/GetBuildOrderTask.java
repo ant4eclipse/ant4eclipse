@@ -19,7 +19,7 @@ import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.BuildException;
 
 import java.util.Iterator;
@@ -172,7 +172,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * @return A String which contains the list of names.
    */
   private String convertToString(List<EclipseProject> projects, char separator) {
-    Assert.notNull(projects);
+    Assure.notNull(projects);
 
     // create StringBuffer
     StringBuffer buffer = new StringBuffer();

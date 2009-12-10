@@ -13,7 +13,7 @@ package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.jdt.ecj.ReferableType;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**
@@ -54,7 +54,7 @@ public class DefaultReferableType implements ReferableType {
    *          the library type
    */
   protected DefaultReferableType(String libraryLocation, byte libraryType) {
-    Assert.notNull(libraryLocation);
+    Assure.notNull(libraryLocation);
 
     this._libraryLocation = libraryLocation;
     this._libraryType = libraryType;

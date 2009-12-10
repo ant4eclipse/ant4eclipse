@@ -2,7 +2,7 @@ package org.ant4eclipse.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.jdt.ecj.SourceFile;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 
@@ -45,10 +45,10 @@ public class SourceFileImpl implements SourceFile {
    *          the file encoding
    */
   public SourceFileImpl(File sourceFolder, String sourceFileName, File destinationFolder, String encoding) {
-    Assert.isDirectory(sourceFolder);
-    Assert.nonEmpty(sourceFileName);
-    Assert.isDirectory(destinationFolder);
-    Assert.nonEmpty(encoding);
+    Assure.isDirectory(sourceFolder);
+    Assure.nonEmpty(sourceFileName);
+    Assure.isDirectory(destinationFolder);
+    Assure.nonEmpty(encoding);
 
     this._destinationFolder = destinationFolder;
     this._encoding = encoding;
@@ -81,8 +81,8 @@ public class SourceFileImpl implements SourceFile {
    * @param sourceFileName
    */
   protected SourceFileImpl(File sourceFolder, String sourceFileName) {
-    Assert.isDirectory(sourceFolder);
-    Assert.nonEmpty(sourceFileName);
+    Assure.isDirectory(sourceFolder);
+    Assure.nonEmpty(sourceFileName);
 
     this._sourceFileName = sourceFileName;
     this._sourceFolder = sourceFolder;

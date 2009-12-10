@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.model.team.cvssupport;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
@@ -48,7 +48,7 @@ public final class CvsRoot implements Cloneable {
    * @throws IllegalArgumentException
    */
   public CvsRoot(String root) throws IllegalArgumentException {
-    Assert.nonEmpty(root);
+    Assure.nonEmpty(root);
     parse(root);
   }
 
@@ -59,7 +59,7 @@ public final class CvsRoot implements Cloneable {
    *          The encodedPassword to set.
    */
   public void setEncodedPassword(String encodedPassword) {
-    Assert.notNull(encodedPassword);
+    Assure.notNull(encodedPassword);
     this._encodedPassword = encodedPassword;
   }
 
@@ -70,7 +70,7 @@ public final class CvsRoot implements Cloneable {
    *          Sets a cvs user.
    */
   public void setUser(String user) {
-    Assert.notNull(user);
+    Assure.notNull(user);
     this._user = user;
   }
 
@@ -190,7 +190,7 @@ public final class CvsRoot implements Cloneable {
    * @return the resolved root.
    */
   public CvsRoot getResolvedRoot(String username, String password) {
-    Assert.notNull(username);
+    Assure.notNull(username);
 
     CvsRoot cvsRoot = null;
 

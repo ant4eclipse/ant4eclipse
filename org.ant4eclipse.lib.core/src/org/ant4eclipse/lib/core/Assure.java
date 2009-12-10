@@ -26,7 +26,7 @@ import java.io.File;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class Assert {
+public class Assure {
 
   @NLSMessage("Parameter '%s' should be of type '%s' but is a '%s'")
   public static String MSG_INVALIDTYPE;
@@ -50,7 +50,7 @@ public class Assert {
   public static String MSG_VALUEOUTOFRANGE;
 
   static {
-    NLS.initialize(Assert.class);
+    NLS.initialize(Assure.class);
   }
 
   /**
@@ -153,7 +153,7 @@ public class Assert {
    *          the file that must be a file.
    */
   public static final void isFile(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
     if (!file.isFile()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
           MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath()));
@@ -169,7 +169,7 @@ public class Assert {
    *          the file that must be a directory.
    */
   public static final void isDirectory(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
     if (!file.isDirectory()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
           MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath()));

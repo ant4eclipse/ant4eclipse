@@ -16,7 +16,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
@@ -42,7 +42,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public boolean hasProject(String name) {
-    Assert.nonEmpty(name);
+    Assure.nonEmpty(name);
 
     return this._projects.containsKey(name);
   }
@@ -51,7 +51,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject getProject(String name) {
-    Assert.nonEmpty(name);
+    Assure.nonEmpty(name);
 
     return this._projects.get(name);
   }
@@ -60,7 +60,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
-    Assert.notNull(names);
+    Assure.notNull(names);
 
     // the result list with all the eclipse projects...
     List<EclipseProject> projects = new LinkedList<EclipseProject>();
@@ -100,8 +100,8 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
-    Assert.notNull(projectRole);
-    Assert
+    Assure.notNull(projectRole);
+    Assure
         .assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
             "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(), ProjectRole.class
                 .getName()));
@@ -127,7 +127,7 @@ public final class WorkspaceImpl implements Workspace {
   }
 
   public void registerEclipseProject(EclipseProject eclipseProject) {
-    Assert.notNull(eclipseProject);
+    Assure.notNull(eclipseProject);
 
     // we have to use the specified name here instead of the directory name
     String key = eclipseProject.getSpecifiedName();

@@ -15,7 +15,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * Implements the cvs role of a project.
@@ -42,7 +42,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @return Returns the cvs project role.
    */
   public static CvsProjectRole getCvsProjectRole(EclipseProject eclipseProject) {
-    Assert.assertTrue(hasCvsProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
+    Assure.assertTrue(hasCvsProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have CvsProjectRole!");
 
     return (CvsProjectRole) eclipseProject.getRole(CvsProjectRole.class);
@@ -71,8 +71,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
       String branchOrVersionTag) {
     super(NAME, eclipseProject);
 
-    Assert.notNull(projectNameInRepository);
-    Assert.notNull(cvsRoot);
+    Assure.notNull(projectNameInRepository);
+    Assure.notNull(cvsRoot);
 
     this._cvsRoot = new CvsRoot(cvsRoot);
     this._projectNameInRepository = projectNameInRepository;
@@ -93,8 +93,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
       String branchOrVersionTag) {
     super(NAME, eclipseProject);
 
-    Assert.notNull(projectNameInRepository);
-    Assert.notNull(cvsRoot);
+    Assure.notNull(projectNameInRepository);
+    Assure.notNull(cvsRoot);
 
     this._cvsRoot = cvsRoot;
     this._projectNameInRepository = projectNameInRepository;

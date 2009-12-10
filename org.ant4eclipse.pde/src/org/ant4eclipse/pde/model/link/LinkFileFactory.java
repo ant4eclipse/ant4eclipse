@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.link;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 
@@ -36,7 +36,7 @@ public class LinkFileFactory {
    * @return An array of LinkFile objects representing all .link-files found in the directory.
    */
   public static LinkFile[] getLinkFiles(File directory) {
-    Assert.notNull(directory);
+    Assure.notNull(directory);
 
     File linksDir = new File(directory, "links");
 
@@ -82,7 +82,7 @@ public class LinkFileFactory {
    * 
    */
   public static LinkFile parseLinkFile(File linkFile) {
-    Assert.isFile(linkFile);
+    Assure.isFile(linkFile);
     A4ELogging.debug("Parsing link file '%s'", linkFile.getAbsolutePath());
     StringMap p = new StringMap(linkFile);
     String path = p.get("path");

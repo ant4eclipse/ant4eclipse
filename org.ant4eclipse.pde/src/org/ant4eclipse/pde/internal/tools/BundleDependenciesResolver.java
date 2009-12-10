@@ -24,7 +24,7 @@ import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
@@ -96,7 +96,7 @@ public class BundleDependenciesResolver {
   public List<BundleDependency> resolveBundleClasspath(BundleDescription description,
       boolean includeOptionalDependencies) throws UnresolvedBundleException {
 
-    Assert.notNull(description);
+    Assure.notNull(description);
 
     // Step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
@@ -245,7 +245,7 @@ public class BundleDependenciesResolver {
    * @return
    */
   private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription) {
-    Assert.notNull(bundleDescription);
+    Assure.notNull(bundleDescription);
 
     if (!bundleDescription.isResolved()) {
       String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
@@ -329,7 +329,7 @@ public class BundleDependenciesResolver {
    * @return
    */
   private BundleDependency getBundleDependency(BundleDescription bundleDescription) {
-    Assert.notNull(bundleDescription);
+    Assure.notNull(bundleDescription);
 
     // get host
     BundleDescription host = getHost(bundleDescription);
@@ -377,7 +377,7 @@ public class BundleDependenciesResolver {
      *          the host
      */
     public BundleDependency(BundleDescription host) {
-      Assert.notNull(host);
+      Assure.notNull(host);
 
       this._host = host;
       this._isRequiredBundle = false;
@@ -395,7 +395,7 @@ public class BundleDependenciesResolver {
      *          indicates that this bundle is the host for the root bundle
      */
     public BundleDependency(BundleDescription host, boolean isHostForRootBundle) {
-      Assert.notNull(host);
+      Assure.notNull(host);
 
       this._host = host;
       this._isRequiredBundle = false;
@@ -414,7 +414,7 @@ public class BundleDependenciesResolver {
      *          the fragment (maybe <code>null</code>)
      */
     public BundleDependency(BundleDescription host, BundleDescription fragment) {
-      Assert.notNull(host);
+      Assure.notNull(host);
 
       this._host = host;
       this._fragment = fragment;

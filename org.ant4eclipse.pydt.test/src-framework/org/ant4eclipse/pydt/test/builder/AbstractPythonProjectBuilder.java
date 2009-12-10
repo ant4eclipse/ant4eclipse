@@ -13,7 +13,7 @@ package org.ant4eclipse.pydt.test.builder;
 
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
@@ -45,7 +45,7 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
    * {@inheritDoc}
    */
   public File populate(WorkspaceBuilder workspacebuilder) {
-    Assert.notNull(workspacebuilder);
+    Assure.notNull(workspacebuilder);
     return workspacebuilder.addProject(this);
   }
 
@@ -53,7 +53,7 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
    * {@inheritDoc}
    */
   public void setBuildScript(URL location) {
-    Assert.notNull(location);
+    Assure.notNull(location);
     this._buildscript = location;
   }
 

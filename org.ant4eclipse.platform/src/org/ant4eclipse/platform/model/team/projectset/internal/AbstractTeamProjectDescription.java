@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.model.team.projectset.internal;
 
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 public class AbstractTeamProjectDescription implements TeamProjectDescription {
   /** the name of the project */
@@ -27,7 +27,7 @@ public class AbstractTeamProjectDescription implements TeamProjectDescription {
   }
 
   public AbstractTeamProjectDescription(String projectname) {
-    Assert.notNull(projectname);
+    Assure.notNull(projectname);
     this._projectname = projectname;
   }
 

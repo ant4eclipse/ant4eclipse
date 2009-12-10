@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -36,7 +36,7 @@ public class FileHelper {
   private static final byte[] END_CHUNK   = { -64, 88, -5, -13, 35, -68, 0, 20, 26, 81, -13, -116, 123, -69, 119, -58 };
 
   public static final void createDirectory(File directory) {
-    Assert.notNull(directory);
+    Assure.notNull(directory);
 
     if (directory.isFile()) {
       throw new RuntimeException("Directory '" + directory + "' is a file");
@@ -51,7 +51,7 @@ public class FileHelper {
   }
 
   public static final void createFile(File file) {
-    Assert.notNull(file);
+    Assure.notNull(file);
 
     try {
       if (!file.exists()) {

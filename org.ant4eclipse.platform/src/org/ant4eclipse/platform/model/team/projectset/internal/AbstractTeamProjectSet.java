@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.model.team.projectset.internal;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,7 +35,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    *          the name of the team project set.
    */
   public AbstractTeamProjectSet(String name) {
-    Assert.notNull(name);
+    Assure.notNull(name);
 
     this._name = name;
     this._projectDescriptions = new LinkedList<TeamProjectDescription>();
@@ -59,7 +59,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * {@inheritDoc}
    */
   public TeamProjectDescription getTeamProjectDescriptionByName(String name) {
-    Assert.notNull(name);
+    Assure.notNull(name);
 
     for (TeamProjectDescription description : this._projectDescriptions) {
       if (name.equals(description.getProjectName())) {
@@ -113,7 +113,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * @param description
    */
   protected void addTeamProjectDescription(TeamProjectDescription description) {
-    Assert.notNull(description);
+    Assure.notNull(description);
     this._projectDescriptions.add(description);
   }
 

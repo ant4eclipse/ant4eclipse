@@ -13,7 +13,7 @@ package org.ant4eclipse.pde.test.builder.test;
 
 import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedTest;
 
 import java.io.File;
@@ -36,11 +36,11 @@ public class PdeProjectBuilderTest extends AbstractTestDirectoryBasedTest {
     File root = getTestDirectoryRootDir();
 
     // assert
-    Assert.isDirectory(root);
+    Assure.isDirectory(root);
 
     File simpleProjectDir = new File(root, "simpleproject1");
 
-    Assert.isDirectory(simpleProjectDir);
+    Assure.isDirectory(simpleProjectDir);
 
     assertChildren(simpleProjectDir, ".classpath", ".project", "@dot", "META-INF", "my");
 
@@ -54,7 +54,7 @@ public class PdeProjectBuilderTest extends AbstractTestDirectoryBasedTest {
    * @param names
    */
   protected void assertChildren(File parent, String... names) {
-    Assert.isDirectory(parent);
+    Assure.isDirectory(parent);
 
     File[] children = parent.listFiles();
     assertEquals(names.length, children.length);

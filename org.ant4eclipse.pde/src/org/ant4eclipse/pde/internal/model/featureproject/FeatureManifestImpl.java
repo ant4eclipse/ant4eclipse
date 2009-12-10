@@ -13,7 +13,7 @@ package org.ant4eclipse.pde.internal.model.featureproject;
 
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.osgi.framework.Version;
 
 import java.util.LinkedList;
@@ -323,13 +323,13 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @param plugin
    */
   public void addPlugin(Plugin plugin) {
-    Assert.notNull(plugin);
+    Assure.notNull(plugin);
 
     this._plugins.add(plugin);
   }
 
   public void addIncludes(Includes includes) {
-    Assert.notNull(includes);
+    Assure.notNull(includes);
 
     this._includes.add(includes);
   }

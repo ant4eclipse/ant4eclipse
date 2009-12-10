@@ -17,7 +17,7 @@ import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceDefinition;
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
@@ -95,8 +95,8 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
    * {@inheritDoc}
    */
   public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
-    Assert.nonEmpty(id);
-    Assert.notNull(workspaceDefinition);
+    Assure.nonEmpty(id);
+    Assure.notNull(workspaceDefinition);
 
     // create new workspace implementation
     WorkspaceImpl workspace = new WorkspaceImpl();

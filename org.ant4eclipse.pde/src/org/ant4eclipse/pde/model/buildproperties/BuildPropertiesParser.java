@@ -18,7 +18,7 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.io.File;
@@ -62,7 +62,7 @@ public class BuildPropertiesParser {
    */
   public static void parsePluginBuildProperties(PluginProjectRole pluginProjectRole) {
 
-    Assert.notNull(pluginProjectRole);
+    Assure.notNull(pluginProjectRole);
     StringMap properties = loadBuildProperties(pluginProjectRole.getEclipseProject());
     PluginBuildProperties buildProperties = initializePluginBuildProperties(properties);
     pluginProjectRole.setBuildProperties(buildProperties);
@@ -81,7 +81,7 @@ public class BuildPropertiesParser {
    * @see PluginProjectRole#getBuildProperties()
    */
   public static void parseFeatureBuildProperties(FeatureProjectRole featureProjectRole) {
-    Assert.notNull(featureProjectRole);
+    Assure.notNull(featureProjectRole);
 
     StringMap buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
     FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
@@ -91,7 +91,7 @@ public class BuildPropertiesParser {
   }
 
   private static StringMap loadBuildProperties(EclipseProject eclipseProject) {
-    Assert.notNull(eclipseProject);
+    Assure.notNull(eclipseProject);
     File file = eclipseProject.getChild(BUILD_PROPERTIES);
     return new StringMap(file);
   }
@@ -106,7 +106,7 @@ public class BuildPropertiesParser {
    * </p>
    */
   public static PluginBuildProperties initializePluginBuildProperties(StringMap properties) {
-    Assert.notNull(properties);
+    Assure.notNull(properties);
 
     PluginBuildProperties buildProperties = new PluginBuildProperties();
     initializeAbstractBuildProperties(properties, buildProperties);
@@ -164,8 +164,8 @@ public class BuildPropertiesParser {
 
   private static void initializeAbstractBuildProperties(StringMap allProperties,
       AbstractBuildProperties abstractBuildProperties) {
-    Assert.notNull(allProperties);
-    Assert.notNull(abstractBuildProperties);
+    Assure.notNull(allProperties);
+    Assure.notNull(abstractBuildProperties);
 
     // set qualifier
     abstractBuildProperties.setQualifier(allProperties.get("qualifier"));
@@ -188,7 +188,7 @@ public class BuildPropertiesParser {
    * @return
    */
   private static String[] getAsList(String content, String delimiter, boolean removePathSeparator) {
-    Assert.notNull(delimiter);
+    Assure.notNull(delimiter);
 
     if (content == null) {
       return new String[] {};

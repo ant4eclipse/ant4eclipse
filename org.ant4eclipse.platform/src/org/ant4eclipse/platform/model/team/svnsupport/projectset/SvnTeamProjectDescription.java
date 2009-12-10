@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.model.team.svnsupport.projectset;
 
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
 
@@ -37,8 +37,8 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public SvnTeamProjectDescription(SvnTeamProjectSet teamProjectSet, String projectname, String url, String revision) {
     super(projectname);
-    Assert.notNull(teamProjectSet);
-    Assert.notNull(url);
+    Assure.notNull(teamProjectSet);
+    Assure.notNull(url);
 
     this._teamProjectSet = teamProjectSet;
     this._url = url;

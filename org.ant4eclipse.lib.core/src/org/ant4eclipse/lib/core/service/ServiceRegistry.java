@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.service;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -75,8 +75,8 @@ public class ServiceRegistry {
    *          the service registry configuration
    */
   public static void configure(ServiceRegistryConfiguration configuration) {
-    Assert.paramNotNull("configuration", configuration);
-    Assert.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
+    Assure.paramNotNull("configuration", configuration);
+    Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
 
     _instance = new ServiceRegistry();
     configuration.configure(_instance.new ConfigurationContextImpl());
@@ -106,7 +106,7 @@ public class ServiceRegistry {
    * </p>
    */
   public static void reset() {
-    Assert.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
+    Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
 
     // if the service registry is configured, it is also initialized and needs to be disposed
     _instance.dispose();
@@ -126,7 +126,7 @@ public class ServiceRegistry {
    * @return the instance.
    */
   public static ServiceRegistry instance() {
-    Assert.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
+    Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
     return _instance;
   }
 
@@ -215,7 +215,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void initialize() {
-    Assert.assertTrue(!isInitialized(), "Service registry already has been initialized!");
+    Assure.assertTrue(!isInitialized(), "Service registry already has been initialized!");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -240,7 +240,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void dispose() {
-    Assert.assertTrue(isInitialized(), "Service registry is not initialized.");
+    Assure.assertTrue(isInitialized(), "Service registry is not initialized.");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -287,9 +287,9 @@ public class ServiceRegistry {
      * {@inheritDoc}
      */
     public void registerService(Object service, String serviceIdentifier) {
-      Assert.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      Assert.paramNotNull("service", service);
-      Assert.paramNotNull("serviceIdentifier", serviceIdentifier);
+      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
+      Assure.paramNotNull("service", service);
+      Assure.paramNotNull("serviceIdentifier", serviceIdentifier);
 
       if (!ServiceRegistry.this._serviceMap.containsKey(serviceIdentifier)) {
         ServiceRegistry.this._serviceMap.put(serviceIdentifier, service);
@@ -303,13 +303,13 @@ public class ServiceRegistry {
      * {@inheritDoc}
      */
     public void registerService(Object service, String[] serviceIdentifier) {
-      Assert.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      Assert.paramNotNull("service", service);
-      Assert.paramNotNull("serviceIdentifier", serviceIdentifier);
-      Assert.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
+      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
+      Assure.paramNotNull("service", service);
+      Assure.paramNotNull("serviceIdentifier", serviceIdentifier);
+      Assure.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
 
       for (int i = 0; i < serviceIdentifier.length; i++) {
-        Assert.assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
+        Assure.assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
       }
 
       for (String object : serviceIdentifier) {

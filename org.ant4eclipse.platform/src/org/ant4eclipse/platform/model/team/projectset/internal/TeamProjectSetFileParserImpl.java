@@ -18,7 +18,7 @@ import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -92,7 +92,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
-    Assert.isFile(projectSetFile);
+    Assure.isFile(projectSetFile);
 
     XQueryHandler queryhandler2 = new XQueryHandler();
 
@@ -124,7 +124,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   }
 
   public TeamProjectSetFactory getFactoryForProvider(String providerId) {
-    Assert.notNull("Parameter 'providerId' must not be null", providerId);
+    Assure.notNull("Parameter 'providerId' must not be null", providerId);
 
     if (!this._factories.containsKey(providerId)) {
       throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);

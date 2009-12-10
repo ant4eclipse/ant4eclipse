@@ -15,7 +15,7 @@ import org.ant4eclipse.core.util.ClassLoadingHelper;
 
 import org.ant4eclipse.jdt.JdtExceptionCode;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
@@ -87,7 +87,7 @@ public class JavaExecuter {
    * @return a new {@link JavaExecuter}
    */
   public static JavaExecuter createWithA4eClasspath(File jreLocation) {
-    Assert.isDirectory(jreLocation);
+    Assure.isDirectory(jreLocation);
 
     // check if the location points to a JDK (instead a JRE)...
     File jreDirectory = new File(jreLocation, "jre");
@@ -127,7 +127,7 @@ public class JavaExecuter {
    *          the directory of the java runtime.
    */
   public JavaExecuter(File jreDirectory) {
-    Assert.isDirectory(jreDirectory);
+    Assure.isDirectory(jreDirectory);
 
     this._jreDirectory = jreDirectory;
   }
@@ -141,7 +141,7 @@ public class JavaExecuter {
    *          the class path entries
    */
   public void setClasspathEntries(String[] classpathEntries) {
-    Assert.notNull(classpathEntries);
+    Assure.notNull(classpathEntries);
 
     // create file array
     File[] files = new File[classpathEntries.length];
@@ -162,7 +162,7 @@ public class JavaExecuter {
    *          the class path entry
    */
   public void setClasspathEntries(File classpathEntry) {
-    Assert.notNull(classpathEntry);
+    Assure.notNull(classpathEntry);
 
     setClasspathEntries(new File[] { classpathEntry });
   }
@@ -176,7 +176,7 @@ public class JavaExecuter {
    *          the class path entries
    */
   public void setClasspathEntries(File[] classpathEntries) {
-    Assert.notNull(classpathEntries);
+    Assure.notNull(classpathEntries);
 
     this._classpathEntries = classpathEntries;
   }
@@ -190,7 +190,7 @@ public class JavaExecuter {
    *          the main class
    */
   public void setMainClass(String mainClass) {
-    Assert.notNull(mainClass);
+    Assure.notNull(mainClass);
 
     this._mainClass = mainClass;
   }
@@ -204,7 +204,7 @@ public class JavaExecuter {
    *          the program arguments.
    */
   public void setArgs(String[] args) {
-    Assert.notNull(args);
+    Assure.notNull(args);
 
     this._args = args;
   }

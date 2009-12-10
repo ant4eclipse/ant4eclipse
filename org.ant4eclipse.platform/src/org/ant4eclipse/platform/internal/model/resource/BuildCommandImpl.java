@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.internal.model.resource;
 
 import org.ant4eclipse.platform.model.resource.BuildCommand;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -49,7 +49,7 @@ public class BuildCommandImpl implements BuildCommand {
    *          triggers that would cause this builder to run in eclipse (might be null)
    */
   public BuildCommandImpl(String name, String triggers) {
-    Assert.notNull(name);
+    Assure.notNull(name);
     this._name = name;
     if ((triggers != null) && triggers.endsWith(",")) {
       if (triggers.length() > 1) { // remove trailing ,

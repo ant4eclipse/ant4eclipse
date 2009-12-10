@@ -21,7 +21,7 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,8 +51,8 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    *          the eclipse plug-in project that has to be resolved
    */
   public PluginProjectLayoutResolver(EclipseProject project) {
-    Assert.notNull(project);
-    Assert.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
+    Assure.notNull(project);
+    Assure.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
 
     // set the eclipse project
     this._eclipseProject = project;

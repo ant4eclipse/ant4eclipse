@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.dependencygraph;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
@@ -86,7 +86,7 @@ public final class DependencyGraph<T> {
    */
   public DependencyGraph(VertexRenderer<T> renderer) {
     this();
-    Assert.notNull(renderer);
+    Assure.notNull(renderer);
     this._renderer = renderer;
   }
 
@@ -99,7 +99,7 @@ public final class DependencyGraph<T> {
    *          the vertex that will be added.
    */
   public void addVertex(T vertex) {
-    Assert.notNull(vertex);
+    Assure.notNull(vertex);
 
     if (!this._vertices.contains(vertex)) {
       this._vertices.add(vertex);
@@ -117,7 +117,7 @@ public final class DependencyGraph<T> {
    *         <code>false</code>.
    */
   public boolean containsVertex(T vertex) {
-    Assert.notNull(vertex);
+    Assure.notNull(vertex);
 
     return this._vertices.contains(vertex);
   }
@@ -133,8 +133,8 @@ public final class DependencyGraph<T> {
    *          the child node
    */
   public void addEdge(T parent, T child) {
-    Assert.notNull(parent);
-    Assert.notNull(child);
+    Assure.notNull(parent);
+    Assure.notNull(child);
 
     addVertex(parent);
     addVertex(child);

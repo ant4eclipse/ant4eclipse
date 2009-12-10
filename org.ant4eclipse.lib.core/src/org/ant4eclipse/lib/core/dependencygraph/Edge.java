@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.dependencygraph;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -42,8 +42,8 @@ public class Edge<T> {
    *          the child object
    */
   public Edge(T aParent, T aChild) {
-    Assert.notNull(aParent);
-    Assert.notNull(aChild);
+    Assure.notNull(aParent);
+    Assure.notNull(aChild);
 
     this.parent = aParent;
     this.child = aChild;

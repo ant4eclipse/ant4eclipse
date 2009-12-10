@@ -17,7 +17,7 @@ import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
 import org.ant4eclipse.jdt.ecj.ReferableType;
 import org.ant4eclipse.jdt.ecj.internal.tools.DefaultReferableType;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
@@ -55,8 +55,8 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   public FilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
 
-    Assert.notNull(classFileLoader);
-    Assert.nonEmpty(filter);
+    Assure.notNull(classFileLoader);
+    Assure.nonEmpty(filter);
 
     this._classFileLoader = classFileLoader;
     this._filter = filter;

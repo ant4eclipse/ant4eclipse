@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.project;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
@@ -24,7 +24,7 @@ import java.io.File;
 public class ClasspathFileParser {
 
   public static void parseClasspath(JavaProjectRoleImpl javaProjectRole) {
-    Assert.notNull(javaProjectRole);
+    Assure.notNull(javaProjectRole);
 
     File classpathFile = javaProjectRole.getEclipseProject().getChild(".classpath");
 

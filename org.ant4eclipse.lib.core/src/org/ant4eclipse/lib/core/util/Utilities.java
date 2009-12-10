@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -250,7 +250,7 @@ public class Utilities {
   }
 
   public static final URL toURL(File file) {
-    Assert.notNull(file);
+    Assure.notNull(file);
     URI uri = file.toURI();
     try {
       return uri.toURL();
@@ -270,7 +270,7 @@ public class Utilities {
    * @return true <=> The path could be deleted with success.
    */
   public static final boolean delete(File file) {
-    Assert.notNull(file);
+    Assure.notNull(file);
     if (!file.exists()) {
       return true;
     }
@@ -306,7 +306,7 @@ public class Utilities {
   }
 
   public static final List<File> getAllChildren(File file) {
-    Assert.notNull(file);
+    Assure.notNull(file);
 
     List<File> result = new LinkedList<File>();
 
@@ -365,9 +365,9 @@ public class Utilities {
    * @return The modified text. Not <code>null</code>.
    */
   public static final String replace(String input, String search, String replacement) {
-    Assert.notNull(input);
-    Assert.notNull(search);
-    Assert.notNull(replacement);
+    Assure.notNull(input);
+    Assure.notNull(search);
+    Assure.notNull(replacement);
     int idx = input.indexOf(search);
     if (idx == -1) {
       return input;
@@ -627,7 +627,7 @@ public class Utilities {
    * @param directory
    */
   public static final void mkdirs(File directory) {
-    Assert.notNull("The parameter 'directory' must not be null", directory);
+    Assure.notNull("The parameter 'directory' must not be null", directory);
     if (directory.isDirectory()) {
       return; // already there
     }
@@ -652,7 +652,7 @@ public class Utilities {
    */
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className) {
-    Assert.notNull("The parameter 'className' must not be null", className);
+    Assure.notNull("The parameter 'className' must not be null", className);
 
     Class<?> clazz = null;
 
@@ -690,7 +690,7 @@ public class Utilities {
    */
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className, String arg) {
-    Assert.notNull("The parameter 'className' must not be null", className);
+    Assure.notNull("The parameter 'className' must not be null", className);
 
     Class<?> clazz = null;
 
@@ -732,8 +732,8 @@ public class Utilities {
    * @return <code>true</code> <=> The supplied literal is part of the allowed values.
    */
   public static final boolean contains(String candidate, String... allowed) {
-    Assert.notNull("The parameter 'candidate' must not be null", candidate);
-    Assert.notNull("The parameter 'allowed' must not be null", allowed);
+    Assure.notNull("The parameter 'candidate' must not be null", candidate);
+    Assure.notNull("The parameter 'allowed' must not be null", allowed);
     for (String part : allowed) {
       if (candidate.equals(part)) {
         return true;
@@ -793,8 +793,8 @@ public class Utilities {
    *          The directory where the content shall be written to. Not <code>null</code>.
    */
   public static final void unpack(File zipfile, File destdir) {
-    Assert.notNull(zipfile);
-    Assert.notNull(destdir);
+    Assure.notNull(zipfile);
+    Assure.notNull(destdir);
     byte[] buffer = new byte[16384];
     try {
       if (!destdir.isAbsolute()) {
@@ -832,9 +832,9 @@ public class Utilities {
    *           Copying failed for some reason.
    */
   public static final void copy(InputStream instream, OutputStream outstream, byte[] buffer) throws IOException {
-    Assert.notNull(instream);
-    Assert.notNull(outstream);
-    Assert.notNull(buffer);
+    Assure.notNull(instream);
+    Assure.notNull(outstream);
+    Assure.notNull(buffer);
     try {
       int read = instream.read(buffer);
       while (read != -1) {
@@ -862,8 +862,8 @@ public class Utilities {
    * @return The file keeping the exported content.
    */
   public static final File exportResource(String resource) {
-    Assert.nonEmpty(resource);
-    Assert.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
+    Assure.nonEmpty(resource);
+    Assure.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
     String suffix = ".tmp";
     int lidx = resource.lastIndexOf('.');
     if (lidx != -1) {
@@ -886,8 +886,8 @@ public class Utilities {
    * @return The file keeping the exported content.
    */
   public static final File exportResource(String resource, String suffix) {
-    Assert.nonEmpty(resource);
-    Assert.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
+    Assure.nonEmpty(resource);
+    Assure.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
     URL url = Utilities.class.getResource(resource);
     if (url == null) {
       throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
@@ -942,8 +942,8 @@ public class Utilities {
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
   public static final File createFile(String content, String suffix, String encoding) {
-    Assert.notNull(content);
-    Assert.nonEmpty(encoding);
+    Assure.notNull(content);
+    Assure.nonEmpty(encoding);
     try {
       File result = File.createTempFile("a4e", suffix);
       writeFile(result, content, encoding);
@@ -964,9 +964,9 @@ public class Utilities {
    *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    */
   public static final void writeFile(File destination, String content, String encoding) {
-    Assert.notNull(destination);
-    Assert.notNull(content);
-    Assert.nonEmpty(encoding);
+    Assure.notNull(destination);
+    Assure.notNull(content);
+    Assure.nonEmpty(encoding);
     OutputStream output = null;
     Writer writer = null;
     try {
@@ -994,8 +994,8 @@ public class Utilities {
    *          The content that has to be written. Not <code>null</code>.
    */
   public static final void writeFile(File destination, byte[] content) {
-    Assert.notNull(destination);
-    Assert.notNull(content);
+    Assure.notNull(destination);
+    Assure.notNull(content);
     OutputStream output = null;
     try {
       // check if the file can be written
@@ -1020,7 +1020,7 @@ public class Utilities {
    * @return The name without the suffix.
    */
   public static final String stripSuffix(String name) {
-    Assert.notNull(name);
+    Assure.notNull(name);
     int lidx = name.lastIndexOf('.');
     if (lidx != -1) {
       return name.substring(0, lidx);
@@ -1056,8 +1056,8 @@ public class Utilities {
    * @throws IOException
    */
   public static final void expandJarFile(JarFile jarFile, File expansionDirectory) throws IOException {
-    Assert.notNull(jarFile);
-    Assert.notNull(expansionDirectory);
+    Assure.notNull(jarFile);
+    Assure.notNull(expansionDirectory);
 
     if (!expansionDirectory.exists()) {
       if (!expansionDirectory.mkdirs()) {
@@ -1100,8 +1100,8 @@ public class Utilities {
   }
 
   private static void writeFile(InputStream inputStream, File file) {
-    Assert.notNull(inputStream);
-    Assert.isFile(file);
+    Assure.notNull(inputStream);
+    Assure.isFile(file);
 
     FileOutputStream fos = null;
     try {

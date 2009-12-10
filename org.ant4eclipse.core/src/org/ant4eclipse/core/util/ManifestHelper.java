@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.util;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -80,7 +80,7 @@ public class ManifestHelper {
    *           if the symbolic name could not be found.
    */
   public static String getBundleSymbolicName(Manifest manifest) {
-    Assert.notNull(manifest);
+    Assure.notNull(manifest);
 
     // get the manifest header elements
     ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
@@ -124,15 +124,15 @@ public class ManifestHelper {
   }
 
   public static String getManifestHeader(Manifest manifest, String header) {
-    Assert.notNull(manifest);
-    Assert.nonEmpty(header);
+    Assure.notNull(manifest);
+    Assure.nonEmpty(header);
 
     return manifest.getMainAttributes().getValue(header);
   }
 
   public static ManifestHeaderElement[] getManifestHeaderElements(Manifest manifest, String header) {
-    Assert.notNull(manifest);
-    Assert.nonEmpty(header);
+    Assure.notNull(manifest);
+    Assure.nonEmpty(header);
 
     String manifestValue = manifest.getMainAttributes().getValue(header);
 
@@ -144,7 +144,7 @@ public class ManifestHelper {
   }
 
   public static ManifestHeaderElement[] getManifestHeaderElements(String manifestValue) {
-    Assert.nonEmpty(manifestValue);
+    Assure.nonEmpty(manifestValue);
 
     String[] elements = splitHeader(manifestValue);
     List<ManifestHeaderElement> result = new LinkedList<ManifestHeaderElement>();
@@ -248,7 +248,7 @@ public class ManifestHelper {
    * @return
    */
   private static boolean lookup(char[] array, int index, String pattern) {
-    Assert.nonEmpty(pattern);
+    Assure.nonEmpty(pattern);
 
     if (index + pattern.length() > array.length) {
       return false;

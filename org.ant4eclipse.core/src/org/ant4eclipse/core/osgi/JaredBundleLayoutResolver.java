@@ -14,7 +14,7 @@ package org.ant4eclipse.core.osgi;
 import org.ant4eclipse.core.util.ManifestHelper;
 import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -57,8 +57,8 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    *          the expansion directory
    */
   public JaredBundleLayoutResolver(File location, File expansionDirectory) {
-    Assert.isFile(location);
-    Assert.notNull(expansionDirectory);
+    Assure.isFile(location);
+    Assure.notNull(expansionDirectory);
 
     this._location = location;
     this._expansionDirectory = expansionDirectory;

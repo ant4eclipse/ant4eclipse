@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.test.builder;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.FileHelper;
 
@@ -79,7 +79,7 @@ public class EclipseProjectBuilder {
    * @return The project directory
    */
   public File createIn(File destinationDirectory) {
-    Assert.isDirectory(destinationDirectory);
+    Assure.isDirectory(destinationDirectory);
     File projectDir = new File(destinationDirectory, this._projectName);
     FileHelper.createDirectory(projectDir);
 

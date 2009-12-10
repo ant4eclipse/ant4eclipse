@@ -17,7 +17,7 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -82,7 +82,7 @@ public class LibraryHelper {
    */
   public static String getSourceNameForLibrary(String libraryName) {
 
-    Assert.notNull(libraryName);
+    Assure.notNull(libraryName);
 
     String result = libraryName;
 

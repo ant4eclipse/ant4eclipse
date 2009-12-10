@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.launcher;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +22,7 @@ class LaunchConfigAttribute {
   private Object _value;
 
   public LaunchConfigAttribute(String name) {
-    Assert.notNull("Parameter 'name' must not be null", name);
+    Assure.notNull("Parameter 'name' must not be null", name);
     this._name = name;
   }
 
@@ -43,13 +43,13 @@ class LaunchConfigAttribute {
   }
 
   public ListAttribute getListAttributeValue() {
-    Assert.assertTrue(isListAttribute(), "LauchConfigAttribute '" + this._name + "' must be a list-based attribute");
+    Assure.assertTrue(isListAttribute(), "LauchConfigAttribute '" + this._name + "' must be a list-based attribute");
 
     return (ListAttribute) this._value;
   }
 
   public String getStringValue() {
-    Assert.assertTrue(isStringBasedAttribute(), "LauchConfigAttribute '" + this._name
+    Assure.assertTrue(isStringBasedAttribute(), "LauchConfigAttribute '" + this._name
         + "' must be a string-based attribute");
 
     return (String) this._value;

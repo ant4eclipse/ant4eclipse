@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.ant.core.delegate;
 import org.ant4eclipse.core.ldapfilter.LdapFilter;
 import org.ant4eclipse.core.ldapfilter.ParseException;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.UnknownElement;
@@ -128,7 +128,7 @@ public class ConditionalMacroDef extends MacroDef {
      */
     public ConditionalNestedSequential(ConditionalMacroDef conditionalMacroDef) {
       super();
-      Assert.notNull(conditionalMacroDef);
+      Assure.notNull(conditionalMacroDef);
 
       this._conditionalMacroDef = conditionalMacroDef;
     }

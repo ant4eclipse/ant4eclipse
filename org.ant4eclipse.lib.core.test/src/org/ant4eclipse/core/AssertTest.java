@@ -13,7 +13,7 @@ package org.ant4eclipse.core;
 
 import static org.junit.Assert.assertEquals;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
@@ -32,9 +32,9 @@ public class AssertTest {
    */
   @Test
   public void testAssertNotNull() {
-    Assert.notNull(new Object());
+    Assure.notNull(new Object());
     try {
-      Assert.notNull(null);
+      Assure.notNull(null);
     } catch (Ant4EclipseException ex) {
       assertEquals("Precondition violated: Object has to be set!", ex.getMessage());
     }
@@ -42,10 +42,10 @@ public class AssertTest {
 
   @Test
   public void testInstanceOf() {
-    Assert.instanceOf("parameter", "", String.class);
+    Assure.instanceOf("parameter", "", String.class);
 
     try {
-      Assert.instanceOf("parameter", new Object(), String.class);
+      Assure.instanceOf("parameter", new Object(), String.class);
     } catch (RuntimeException e) {
       assertEquals(
           "Precondition violated: Parameter 'parameter' should be of type 'java.lang.String' but is a 'java.lang.Object'",
@@ -53,7 +53,7 @@ public class AssertTest {
     }
 
     try {
-      Assert.instanceOf("parameter", null, JFrame.class);
+      Assure.instanceOf("parameter", null, JFrame.class);
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: Parameter 'parameter' should be of type 'javax.swing.JFrame' but was null",
           e.getMessage());
@@ -66,16 +66,16 @@ public class AssertTest {
   @Test
   public void testAssertNonEmpty() {
 
-    Assert.nonEmpty("test");
+    Assure.nonEmpty("test");
 
     try {
-      Assert.nonEmpty("");
+      Assure.nonEmpty("");
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: An empty string is not allowed here !", e.getMessage());
     }
 
     try {
-      Assert.nonEmpty(null);
+      Assure.nonEmpty(null);
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: Object has to be set!", e.getMessage());
     }
@@ -93,11 +93,11 @@ public class AssertTest {
 
     System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
 
-    Assert.exists(testFile);
-    Assert.exists(testFile.getParentFile());
+    Assure.exists(testFile);
+    Assure.exists(testFile.getParentFile());
 
     try {
-      Assert.exists(new File("NICHT_DA"));
+      Assure.exists(new File("NICHT_DA"));
     } catch (RuntimeException e) {
       String userDir = System.getProperty("user.dir") + File.separator;
       assertEquals("Precondition violated: " + userDir + "NICHT_DA has to exist!", e.getMessage());
@@ -116,14 +116,14 @@ public class AssertTest {
     System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
 
     try {
-      Assert.isFile(testFile.getParentFile());
+      Assure.isFile(testFile.getParentFile());
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: " + testFile.getParentFile().getAbsolutePath()
           + " has to be a file, not a directory!", e.getMessage());
     }
 
     try {
-      Assert.isFile(new File("NICHT_DA"));
+      Assure.isFile(new File("NICHT_DA"));
     } catch (RuntimeException e) {
       String userDir = System.getProperty("user.dir") + File.separator;
       assertEquals("Precondition violated: " + userDir + "NICHT_DA has to exist!", e.getMessage());
@@ -141,17 +141,17 @@ public class AssertTest {
     testFile.deleteOnExit();
     System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
 
-    Assert.isDirectory(testFile.getParentFile());
+    Assure.isDirectory(testFile.getParentFile());
 
     try {
-      Assert.isDirectory(testFile);
+      Assure.isDirectory(testFile);
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: " + testFile.getAbsolutePath() + " has to be a directory, not a file!", e
           .getMessage());
     }
 
     try {
-      Assert.isDirectory(new File("NICHT_DA"));
+      Assure.isDirectory(new File("NICHT_DA"));
     } catch (RuntimeException e) {
       String userDir = System.getProperty("user.dir") + File.separator;
       assertEquals("Precondition violated: " + userDir + "NICHT_DA has to exist!", e.getMessage());
@@ -163,10 +163,10 @@ public class AssertTest {
    */
   @Test
   public void testAssertTrue() {
-    Assert.assertTrue(true, "true");
+    Assure.assertTrue(true, "true");
 
     try {
-      Assert.assertTrue(false, "false");
+      Assure.assertTrue(false, "false");
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: false", e.getMessage());
     }
@@ -177,20 +177,20 @@ public class AssertTest {
    */
   @Test
   public void testInRange() {
-    Assert.inRange(5, 1, 10);
+    Assure.inRange(5, 1, 10);
 
-    Assert.inRange(1, 1, 10);
+    Assure.inRange(1, 1, 10);
 
-    Assert.inRange(10, 1, 10);
+    Assure.inRange(10, 1, 10);
 
     try {
-      Assert.inRange(0, 1, 10);
+      Assure.inRange(0, 1, 10);
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: 0 must be within the range 1..10 !", e.getMessage());
     }
 
     try {
-      Assert.inRange(11, 1, 10);
+      Assure.inRange(11, 1, 10);
     } catch (RuntimeException e) {
       assertEquals("Precondition violated: 11 must be within the range 1..10 !", e.getMessage());
     }

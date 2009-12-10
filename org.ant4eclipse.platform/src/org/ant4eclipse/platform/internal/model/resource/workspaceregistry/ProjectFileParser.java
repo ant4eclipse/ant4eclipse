@@ -18,7 +18,7 @@ import org.ant4eclipse.platform.internal.model.resource.ProjectNatureImpl;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.variable.EclipseVariableResolver;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
@@ -47,7 +47,7 @@ public class ProjectFileParser {
    * @return the supplied {@link EclipseProject} instance.
    */
   public static EclipseProjectImpl parseProject(EclipseProjectImpl eclipseProject) {
-    Assert.notNull(eclipseProject);
+    Assure.notNull(eclipseProject);
 
     // retrieve the '.project' file
     File projectFile = eclipseProject.getChild(".project");

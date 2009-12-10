@@ -16,7 +16,7 @@ import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.svnsupport.projectset.SvnTeamProjectSet;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.Project;
@@ -82,9 +82,9 @@ public class SvnAdapter extends VcsAdapter {
    */
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
+    Assure.isDirectory(destination);
+    Assure.notNull(projectDescription);
+    Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
@@ -120,9 +120,9 @@ public class SvnAdapter extends VcsAdapter {
    */
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
+    Assure.isDirectory(destination);
+    Assure.notNull(projectDescription);
+    Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
@@ -159,9 +159,9 @@ public class SvnAdapter extends VcsAdapter {
    */
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
+    Assure.isDirectory(destination);
+    Assure.notNull(projectDescription);
+    Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;

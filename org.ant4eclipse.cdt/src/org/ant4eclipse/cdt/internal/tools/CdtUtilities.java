@@ -16,7 +16,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.cdt.model.project.CCProjectRole;
 import org.ant4eclipse.cdt.model.project.CProjectRole;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -43,7 +43,7 @@ public class CdtUtilities {
    * @return <code>true</code> <=> The supplied project has one of the supported c natures.
    */
   public static final boolean isCRelatedProject(EclipseProject project) {
-    Assert.notNull(project);
+    Assure.notNull(project);
     return project.hasRole(CProjectRole.class) || project.hasRole(CCProjectRole.class);
   }
 
@@ -56,7 +56,7 @@ public class CdtUtilities {
    * @return <code>true</code> <=> The supplied project has the simple c nature.
    */
   public static final boolean isCProject(EclipseProject project) {
-    Assert.notNull(project);
+    Assure.notNull(project);
     return project.hasRole(CProjectRole.class);
   }
 
@@ -69,7 +69,7 @@ public class CdtUtilities {
    * @return <code>true</code> <=> The supplied project has the c++ nature.
    */
   public static final boolean isCCProject(EclipseProject project) {
-    Assert.notNull(project);
+    Assure.notNull(project);
     return project.hasRole(CCProjectRole.class);
   }
 

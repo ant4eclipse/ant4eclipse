@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.buildproperties;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.util.Arrays;
@@ -84,7 +84,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          add the specified library to the build properties.
    */
   public void addLibrary(Library library) {
-    Assert.notNull(library);
+    Assure.notNull(library);
 
     if (!this._libraries.containsKey(library.getName())) {
       this._libraries.put(library.getName(), library);
@@ -99,7 +99,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return The Library object or null if no such library exists
    */
   public Library getLibrary(String libraryName) {
-    Assert.notNull(libraryName);
+    Assure.notNull(libraryName);
 
     return this._libraries.get(libraryName);
   }
@@ -112,7 +112,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return true or false
    */
   public boolean hasLibrary(String libraryName) {
-    Assert.notNull(libraryName);
+    Assure.notNull(libraryName);
 
     return this._libraries.containsKey(libraryName);
   }
@@ -156,7 +156,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          The compileOrder to set.
    */
   void setJarsCompileOrder(String[] compileOrder) {
-    Assert.notNull(compileOrder);
+    Assure.notNull(compileOrder);
 
     this._jarsCompileOrder = compileOrder;
   }
@@ -204,7 +204,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @param name
      */
     public Library(String name) {
-      Assert.notNull(name);
+      Assure.notNull(name);
 
       this._name = name;
     }

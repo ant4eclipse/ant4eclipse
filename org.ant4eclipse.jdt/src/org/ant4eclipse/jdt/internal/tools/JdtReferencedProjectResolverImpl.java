@@ -20,7 +20,7 @@ import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
-    Assert.notNull(project);
+    Assure.notNull(project);
 
     List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
 

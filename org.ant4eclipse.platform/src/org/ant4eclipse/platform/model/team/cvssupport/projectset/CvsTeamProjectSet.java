@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectSet;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.util.Iterator;
@@ -29,7 +29,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
    * {@inheritDoc}
    */
   public void setUserAndPassword(String cvsUser, String cvsPwd) {
-    Assert.notNull(cvsUser);
+    Assure.notNull(cvsUser);
 
     A4ELogging.debug("setUserAndPassword(%s, %s)", cvsUser, cvsPwd);
 
@@ -43,7 +43,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
    * Overwritten method to make sure that the given TeamProjectDescription is an instance of a CvsTeamProjectDescription
    */
   public void addTeamProjectDescription(CvsTeamProjectDescription description) {
-    Assert.notNull(description);
+    Assure.notNull(description);
     super.addTeamProjectDescription(description);
   }
 

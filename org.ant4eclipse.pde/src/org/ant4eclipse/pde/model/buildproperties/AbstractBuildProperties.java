@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.buildproperties;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -240,7 +240,7 @@ public class AbstractBuildProperties {
    * @param excludes
    */
   void setBinaryExcludes(String[] excludes) {
-    Assert.notNull(excludes);
+    Assure.notNull(excludes);
 
     this._binExcludes = excludes;
   }
@@ -253,7 +253,7 @@ public class AbstractBuildProperties {
    * @param includes
    */
   void setBinaryIncludes(String[] includes) {
-    Assert.notNull(includes);
+    Assure.notNull(includes);
 
     this._binIncludes = includes;
   }
@@ -266,7 +266,7 @@ public class AbstractBuildProperties {
    *          the srcIncludes to set
    */
   void setSourceIncludes(String[] srcIncludes) {
-    Assert.notNull(srcIncludes);
+    Assure.notNull(srcIncludes);
 
     this._srcIncludes = srcIncludes;
   }
@@ -279,7 +279,7 @@ public class AbstractBuildProperties {
    *          the srcExcludes to set
    */
   void setSourceExcludes(String[] srcExcludes) {
-    Assert.notNull(srcExcludes);
+    Assure.notNull(srcExcludes);
 
     this._srcExcludes = srcExcludes;
   }

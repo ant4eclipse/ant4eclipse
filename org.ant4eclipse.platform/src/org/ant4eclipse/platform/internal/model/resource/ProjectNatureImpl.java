@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.internal.model.resource;
 
 import org.ant4eclipse.platform.model.resource.ProjectNature;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -35,7 +35,7 @@ public class ProjectNatureImpl implements ProjectNature {
    * @param name
    */
   public ProjectNatureImpl(String name) {
-    Assert.notNull(name);
+    Assure.notNull(name);
 
     this._name = name;
   }

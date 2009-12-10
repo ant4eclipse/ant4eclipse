@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -49,7 +49,7 @@ public class TargetPlatformDefinition {
    *          the location to add
    */
   public void addLocation(File location) {
-    Assert.isDirectory(location);
+    Assure.isDirectory(location);
 
     if (!this._locations.contains(location)) {
       this._locations.add(location);

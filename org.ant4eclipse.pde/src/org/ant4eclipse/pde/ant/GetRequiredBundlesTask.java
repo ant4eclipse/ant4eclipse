@@ -29,7 +29,7 @@ import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
@@ -351,7 +351,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   public void addConfiguredBundle(BundleSpecification specification) {
 
     // assert not null
-    Assert.notNull(specification);
+    Assure.notNull(specification);
 
     // assert symbolic name is set
     if (Utilities.hasText(specification._symbolicName)) {

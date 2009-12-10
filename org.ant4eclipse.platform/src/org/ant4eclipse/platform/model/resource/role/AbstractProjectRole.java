@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.model.resource.role;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -41,8 +41,8 @@ public abstract class AbstractProjectRole implements ProjectRole {
    *          the eclipse project
    */
   public AbstractProjectRole(String name, EclipseProject eclipseProject) {
-    Assert.nonEmpty(name);
-    Assert.notNull(eclipseProject);
+    Assure.nonEmpty(name);
+    Assure.notNull(eclipseProject);
 
     this._name = name;
     this._eclipseProject = eclipseProject;

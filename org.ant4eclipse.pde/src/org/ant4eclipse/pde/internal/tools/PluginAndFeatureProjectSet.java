@@ -17,7 +17,7 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * <p>
@@ -44,7 +44,7 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
   public PluginAndFeatureProjectSet(Workspace workspace) {
     super("workspace");
 
-    Assert.notNull(workspace);
+    Assure.notNull(workspace);
 
     this._workspace = workspace;
   }

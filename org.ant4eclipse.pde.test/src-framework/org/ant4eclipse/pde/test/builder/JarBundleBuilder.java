@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.test.builder;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
@@ -43,7 +43,7 @@ public class JarBundleBuilder {
   public JarBundleBuilder(String name) {
     super();
 
-    Assert.nonEmpty(name);
+    Assure.nonEmpty(name);
 
     // set the name
     this._name = name;

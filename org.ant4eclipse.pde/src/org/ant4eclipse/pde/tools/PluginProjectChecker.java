@@ -18,7 +18,7 @@ import org.ant4eclipse.pde.tools.PluginProjectChecker.Issue.IssueLevel;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 import java.util.Arrays;
@@ -90,7 +90,7 @@ public class PluginProjectChecker {
    *          the eclipse project to check.
    */
   public PluginProjectChecker(EclipseProject eclipseProject) {
-    Assert.notNull(eclipseProject);
+    Assure.notNull(eclipseProject);
 
     this._eclipseProject = eclipseProject;
     this._issues = new LinkedList<Issue>();

@@ -13,7 +13,7 @@ package org.ant4eclipse.jdt.internal.model.userlibrary;
 
 import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -41,7 +41,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    *          The user library entry which shall be added.
    */
   public void addLibrary(UserLibraryImpl userlibrary) {
-    Assert.notNull(userlibrary);
+    Assure.notNull(userlibrary);
 
     this._libraries.put(userlibrary.getName(), userlibrary);
   }
@@ -50,7 +50,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   public boolean hasLibrary(String name) {
-    Assert.notNull(name);
+    Assure.notNull(name);
 
     return (this._libraries.containsKey(name));
   }
@@ -59,7 +59,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   public UserLibraryImpl getLibrary(String name) {
-    Assert.notNull(name);
+    Assure.notNull(name);
 
     return (this._libraries.get(name));
   }

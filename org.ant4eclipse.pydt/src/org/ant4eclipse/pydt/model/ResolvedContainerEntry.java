@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 
@@ -35,8 +35,8 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    *          The bundled pathes representing this container. Not <code>null</code>.
    */
   public ResolvedContainerEntry(String owningproject, File[] pathes) {
-    Assert.notNull(pathes);
-    Assert.nonEmpty(owningproject);
+    Assure.notNull(pathes);
+    Assure.nonEmpty(owningproject);
     this._owningproject = owningproject;
     this._pathes = pathes;
   }

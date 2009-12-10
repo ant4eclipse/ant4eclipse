@@ -13,7 +13,7 @@ package org.ant4eclipse.core.osgi;
 
 import org.ant4eclipse.core.util.ManifestHelper;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,7 +45,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    *          the root directory of the exploded bundle.
    */
   public ExplodedBundleLayoutResolver(File location) {
-    Assert.isDirectory(location);
+    Assure.isDirectory(location);
 
     // set the location
     this._location = location;

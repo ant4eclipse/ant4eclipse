@@ -13,7 +13,7 @@ package org.ant4eclipse.pde.model.pluginproject;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.util.ManifestElement;
 import org.osgi.framework.Constants;
@@ -40,7 +40,7 @@ public class BundleSource {
    * @return the bundle source.
    */
   public static BundleSource getBundleSource(BundleDescription bundleDescription) {
-    Assert.notNull(bundleDescription);
+    Assure.notNull(bundleDescription);
 
     // retrieve the user object (that is always an instance of type BundleSource in our case)
     BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
@@ -74,8 +74,8 @@ public class BundleSource {
    *          the bundle manifest
    */
   public BundleSource(Object source, Manifest bundleManifest) {
-    Assert.notNull(source);
-    Assert.notNull(bundleManifest);
+    Assure.notNull(source);
+    Assure.notNull(bundleManifest);
 
     this._source = source;
     this._bundleManifest = bundleManifest;
@@ -117,7 +117,7 @@ public class BundleSource {
    * @return the bundle source.
    */
   public EclipseProject getAsEclipseProject() {
-    Assert.assertTrue(isEclipseProject(), "Bundle source has to be instance of Eclipse Project");
+    Assure.assertTrue(isEclipseProject(), "Bundle source has to be instance of Eclipse Project");
 
     return (EclipseProject) this._source;
   }
@@ -131,7 +131,7 @@ public class BundleSource {
    * @return the bundle source.
    */
   public File getAsFile() {
-    Assert.assertTrue(this._source instanceof File, "Bundle source has to be instance of File");
+    Assure.assertTrue(this._source instanceof File, "Bundle source has to be instance of File");
 
     return (File) this._source;
   }
@@ -182,8 +182,8 @@ public class BundleSource {
    *          the class path root
    */
   public void setClasspathRoot(File classpathRoot) {
-    Assert.notNull(classpathRoot);
-    Assert.assertTrue(!hasClasspathRoot(), "Classpath root already set!");
+    Assure.notNull(classpathRoot);
+    Assure.assertTrue(!hasClasspathRoot(), "Classpath root already set!");
 
     this._classpathRoot = classpathRoot;
   }

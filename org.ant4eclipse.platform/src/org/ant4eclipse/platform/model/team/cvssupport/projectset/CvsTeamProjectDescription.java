@@ -14,7 +14,7 @@ package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
@@ -47,8 +47,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public CvsTeamProjectDescription(String projectname, CvsRoot cvsroot, String nameInRepository, String tag) {
     super(projectname);
-    Assert.notNull(cvsroot);
-    Assert.notNull(nameInRepository);
+    Assure.notNull(cvsroot);
+    Assure.notNull(nameInRepository);
 
     this._cvsRoot = cvsroot;
     this._nameInRepository = nameInRepository;
@@ -101,7 +101,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the resolved CvsRoot.
    */
   public CvsRoot getResolvedCvsRoot() {
-    Assert.assertTrue(isCvsUserSet(), "CvsUser and CvsPwd have to be set!");
+    Assure.assertTrue(isCvsUserSet(), "CvsUser and CvsPwd have to be set!");
 
     return this._cvsRoot.getResolvedRoot(this._cvsUser, this._cvsPwd);
   }
@@ -153,7 +153,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    *          the cvs password might be null
    */
   public void setCvsUserAndPassword(String cvsUser, String cvsPwd) {
-    Assert.notNull(cvsUser);
+    Assure.notNull(cvsUser);
 
     A4ELogging.debug("setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd);
 

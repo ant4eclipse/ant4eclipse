@@ -16,7 +16,7 @@ import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
@@ -99,7 +99,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    *          The command to set.
    */
   public void setCommand(VcsCommand command) {
-    Assert.notNull(command);
+    Assure.notNull(command);
 
     this._command = command;
   }
@@ -165,8 +165,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void checkoutProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectSet);
+    Assure.isDirectory(destination);
+    Assure.notNull(projectSet);
 
     A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf(deleteExisting));
 
@@ -184,8 +184,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void exportProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectSet);
+    Assure.isDirectory(destination);
+    Assure.notNull(projectSet);
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
@@ -199,8 +199,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    */
   public void updateProjectSet(File destination, TeamProjectSet projectSet) throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectSet);
+    Assure.isDirectory(destination);
+    Assure.notNull(projectSet);
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 

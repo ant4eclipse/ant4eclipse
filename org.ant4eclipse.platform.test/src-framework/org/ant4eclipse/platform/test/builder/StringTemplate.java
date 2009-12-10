@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test.builder;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -48,7 +48,7 @@ public class StringTemplate {
   public StringTemplate(String content) {
     this();
 
-    Assert.notNull(content);
+    Assure.notNull(content);
 
     this._stringTemplate.append(content);
   }
@@ -57,7 +57,7 @@ public class StringTemplate {
    * @param content
    */
   public StringTemplate append(String content) {
-    Assert.notNull(content);
+    Assure.notNull(content);
 
     this._stringTemplate.append(content);
     return this;
@@ -79,8 +79,8 @@ public class StringTemplate {
    * @param value
    */
   public void replace(String name, String value) {
-    Assert.notNull(name);
-    Assert.notNull(value);
+    Assure.notNull(name);
+    Assure.notNull(value);
     this._stringsToReplace.put(name, value);
   }
 

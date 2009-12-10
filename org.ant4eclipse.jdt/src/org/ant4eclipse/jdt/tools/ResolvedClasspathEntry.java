@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.tools;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class ResolvedClasspathEntry {
    *          the source path entries
    */
   public ResolvedClasspathEntry(File[] classPathEntries, AccessRestrictions accessRestrictions, File[] sourcePathEntries) {
-    Assert.notNull(classPathEntries);
+    Assure.notNull(classPathEntries);
 
     this._classPathEntries = classPathEntries;
     this._accessRestrictions = accessRestrictions;

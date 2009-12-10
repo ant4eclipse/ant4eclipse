@@ -19,7 +19,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
@@ -46,7 +46,7 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("FeatureProjectRoleIdentifier.applyRole(%s)", project);
-    Assert.notNull(project);
+    Assure.notNull(project);
 
     FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
     File featureDescription = featureProjectRole.getFeatureXml();

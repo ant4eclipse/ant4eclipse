@@ -13,7 +13,7 @@ package org.ant4eclipse.platform.ant.core.delegate.helper;
 
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.Project;
 
 import java.lang.reflect.Field;
@@ -84,8 +84,8 @@ public abstract class AbstractAntProjectRaper<V> {
    *          the prefix used for the scoped values.
    */
   public final void setScopedValues(Map<String, V> scopedValues, String prefix) {
-    Assert.assertTrue(this._scopedValues == null, "Scoped values are already set!");
-    Assert.notNull(scopedValues);
+    Assure.assertTrue(this._scopedValues == null, "Scoped values are already set!");
+    Assure.notNull(scopedValues);
 
     // set the scoped values
     this._scopedValues = scopedValues;
@@ -118,7 +118,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * </p>
    */
   public final void unsetScopedValues() {
-    Assert.assertTrue(this._scopedValues != null, "Scoped values must be set!");
+    Assure.assertTrue(this._scopedValues != null, "Scoped values must be set!");
 
     // unset scopes value
     Iterator<String> keyIterator = this._scopedValues.keySet().iterator();

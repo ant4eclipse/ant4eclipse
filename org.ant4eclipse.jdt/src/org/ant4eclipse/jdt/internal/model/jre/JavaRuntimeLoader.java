@@ -16,7 +16,7 @@ import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -53,8 +53,8 @@ public class JavaRuntimeLoader {
    * @param location
    */
   public static JavaRuntime loadJavaRuntime(String id, File location) {
-    Assert.nonEmpty(id);
-    Assert.isDirectory(location);
+    Assure.nonEmpty(id);
+    Assure.isDirectory(location);
 
     String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"
         + Math.round(Math.random() * 1000000000);
