@@ -14,8 +14,8 @@ package org.ant4eclipse.core.dependencygraph;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
+import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph;
 import org.ant4eclipse.lib.core.dependencygraph.Edge;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -23,17 +23,17 @@ import org.junit.Test;
 
 import java.util.List;
 
+import junit.framework.Assert;
+
 /**
- * Testet den DependencyGraph.
+ * Test: DependencyGraph
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class DependencyGraphTest {
-  /**
-   * @throws CyclicDependencyException
-   */
+
   @Test
-  public void testDependencyGraph() {
+  public void dependencyGraph() {
     String o1 = "o1";
     String o11 = "o11";
     String o12 = "o12";
@@ -68,7 +68,7 @@ public class DependencyGraphTest {
    *
    */
   @Test
-  public void testCyclicDependencyGraph() {
+  public void cyclicDependencyGraph() {
     String o1 = "o1";
     String o2 = "o2";
     String o3 = "o3";
@@ -85,14 +85,14 @@ public class DependencyGraphTest {
 
     try {
       graph.calculateOrder();
-      fail();
-    } catch (Ant4EclipseException e) {
-      assertEquals("The specified graph contains cyclic dependencies (e.g. 'o1 -> o2 -> o3 -> o1').", e.getMessage());
+      Assert.fail();
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, ex.getExceptionCode());
     }
   }
 
   @Test
-  public void testEdge() {
+  public void edge() {
     Object parent = new Object();
     Object child = new Object();
 
@@ -114,7 +114,7 @@ public class DependencyGraphTest {
   }
 
   @Test
-  public void testForrest() {
+  public void forrest() {
     String o1 = "o1";
     String o2 = "o2";
     String o3 = "o3";
@@ -140,5 +140,7 @@ public class DependencyGraphTest {
     assertEquals("o2", result.get(2));
     assertEquals("t1", result.get(3));
     assertEquals("o1", result.get(4));
+
   }
-}
+
+} /* ENDCLASS */
