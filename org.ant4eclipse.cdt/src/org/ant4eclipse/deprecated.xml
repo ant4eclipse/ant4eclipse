@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<antlib>
+
+  <typedef name="getCSourcepath" classname="org.ant4eclipse.cdt.ant.GetCdtSourcePathTask" />
+  
+</antlib>
