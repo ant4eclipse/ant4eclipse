@@ -14,6 +14,7 @@ package org.ant4eclipse.core;
 import static org.junit.Assert.assertEquals;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
@@ -27,107 +28,95 @@ import java.io.IOException;
  */
 public class AssureTest {
 
-  /**
-   * 
-   */
   @Test
-  public void testAssertNotNull() {
+  public void assertNotNull() {
     Assure.notNull(new Object());
     try {
       Assure.notNull(null);
     } catch (Ant4EclipseException ex) {
-      assertEquals("Precondition violated: Object has to be set!", ex.getMessage());
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
   @Test
-  public void testInstanceOf() {
+  public void instanceOf() {
     Assure.instanceOf("parameter", "", String.class);
-
     try {
       Assure.instanceOf("parameter", new Object(), String.class);
-    } catch (RuntimeException e) {
-      assertEquals(
-          "Precondition violated: Parameter 'parameter' should be of type 'java.lang.String' but is a 'java.lang.Object'",
-          e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
-
     try {
       Assure.instanceOf("parameter", null, JFrame.class);
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: Parameter 'parameter' should be of type 'javax.swing.JFrame' but was null",
-          e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
-  /**
-   * 
-   */
   @Test
-  public void testAssertNonEmpty() {
-
+  public void assertNonEmpty() {
     Assure.nonEmpty("test");
-
     try {
       Assure.nonEmpty("");
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: An empty string is not allowed here !", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
-
     try {
       Assure.nonEmpty(null);
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: Object has to be set!", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
-  /**
-   * @throws IOException
-   * 
-   */
   @Test
-  public void testExist() throws IOException {
+  public void resourceExist() throws IOException {
 
     File testFile = File.createTempFile("a4e-testExists", null);
+    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
     testFile.deleteOnExit();
 
-    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
-
+    // positive check for a file
     Assure.exists(testFile);
+
+    // positive check for a directory
     Assure.exists(testFile.getParentFile());
 
     try {
       Assure.exists(new File("NICHT_DA"));
-    } catch (RuntimeException e) {
-      String userDir = System.getProperty("user.dir") + File.separator;
-      assertEquals("Precondition violated: " + userDir + "NICHT_DA has to exist!", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
+
   }
 
-  /**
-   * @throws IOException
-   * 
-   */
   @Test
-  public void testIsFile() throws IOException {
+  public void isFile() throws IOException {
 
     File testFile = File.createTempFile("a4e-testIsFile", null);
-    testFile.deleteOnExit();
+    File nonexistingDir = new File(testFile.getParentFile(), testFile.getName() + ".dir");
     System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
+    testFile.deleteOnExit();
+
+    Assure.isFile(testFile);
 
     try {
       Assure.isFile(testFile.getParentFile());
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: " + testFile.getParentFile().getAbsolutePath()
-          + " has to be a file, not a directory!", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+
+    try {
+      Assure.isFile(nonexistingDir);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.isFile(new File("NICHT_DA"));
-    } catch (RuntimeException e) {
-      String userDir = System.getProperty("user.dir") + File.separator;
-      assertEquals("Precondition violated: " + userDir + "NICHT_DA has to exist!", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
+
   }
 
   /**
@@ -135,7 +124,7 @@ public class AssureTest {
    * 
    */
   @Test
-  public void testIsDirectory() throws IOException {
+  public void isDirectory() throws IOException {
 
     File testFile = File.createTempFile("a4e-testIsDirectory", null);
     testFile.deleteOnExit();
@@ -145,30 +134,25 @@ public class AssureTest {
 
     try {
       Assure.isDirectory(testFile);
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: " + testFile.getAbsolutePath() + " has to be a directory, not a file!", e
-          .getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.isDirectory(new File("NICHT_DA"));
-    } catch (RuntimeException e) {
-      String userDir = System.getProperty("user.dir") + File.separator;
-      assertEquals("Precondition violated: " + userDir + "NICHT_DA has to exist!", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
+
   }
 
-  /**
-   * 
-   */
   @Test
-  public void testAssertTrue() {
+  public void assertTrue() {
     Assure.assertTrue(true, "true");
-
     try {
       Assure.assertTrue(false, "false");
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: false", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
@@ -176,23 +160,23 @@ public class AssureTest {
    * 
    */
   @Test
-  public void testInRange() {
+  public void inRange() {
+
     Assure.inRange(5, 1, 10);
-
     Assure.inRange(1, 1, 10);
-
     Assure.inRange(10, 1, 10);
 
     try {
       Assure.inRange(0, 1, 10);
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: 0 must be within the range 1..10 !", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.inRange(11, 1, 10);
-    } catch (RuntimeException e) {
-      assertEquals("Precondition violated: 11 must be within the range 1..10 !", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
-}
+
+} /* ENDCLASS */
