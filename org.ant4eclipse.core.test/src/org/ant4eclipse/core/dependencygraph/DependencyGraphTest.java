@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph;
+import org.ant4eclipse.lib.core.dependencygraph.Edge;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
@@ -95,8 +96,8 @@ public class DependencyGraphTest {
     Object parent = new Object();
     Object child = new Object();
 
-    DependencyGraph.Edge<Object> edge_1 = new DependencyGraph.Edge<Object>(parent, child);
-    DependencyGraph.Edge<Object> edge_2 = new DependencyGraph.Edge<Object>(parent, child);
+    Edge<Object> edge_1 = new Edge<Object>(parent, child);
+    Edge<Object> edge_2 = new Edge<Object>(parent, child);
     assertEquals(edge_1.hashCode(), edge_2.hashCode());
     assertEquals(edge_1, edge_2);
     assertTrue(edge_1.equals(edge_1));
@@ -104,8 +105,8 @@ public class DependencyGraphTest {
     assertFalse(edge_1.equals(null));
     assertFalse(edge_2.equals(null));
 
-    DependencyGraph.Edge<Object> edge_3 = new DependencyGraph.Edge<Object>(parent, new Object());
-    DependencyGraph.Edge<Object> edge_4 = new DependencyGraph.Edge<Object>(new Object(), child);
+    Edge<Object> edge_3 = new Edge<Object>(parent, new Object());
+    Edge<Object> edge_4 = new Edge<Object>(new Object(), child);
     assertFalse(edge_1.equals(edge_3));
     assertFalse(edge_1.equals(edge_4));
 

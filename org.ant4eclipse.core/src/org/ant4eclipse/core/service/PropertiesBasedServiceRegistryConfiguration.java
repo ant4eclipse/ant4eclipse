@@ -14,6 +14,7 @@ package org.ant4eclipse.core.service;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 
 import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.ant4eclipse.lib.core.util.Pair;

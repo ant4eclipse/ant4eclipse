@@ -18,6 +18,7 @@ import static org.junit.Assert.fail;
 
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.Test;
