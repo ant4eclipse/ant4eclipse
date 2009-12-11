@@ -56,6 +56,12 @@ public class AssureTest {
   @Test
   public void assertNonEmpty() {
     Assure.nonEmpty("test");
+    Assure.nonEmpty("param", new boolean[] { false });
+    Assure.nonEmpty("param", new byte[] { (byte) 0 });
+    Assure.nonEmpty("param", new short[] { (short) 0 });
+    Assure.nonEmpty("param", new char[] { (char) 0 });
+    Assure.nonEmpty("param", new int[] { 0 });
+    Assure.nonEmpty("param", new long[] { 0 });
     try {
       Assure.nonEmpty("");
     } catch (Ant4EclipseException ex) {
@@ -63,6 +69,36 @@ public class AssureTest {
     }
     try {
       Assure.nonEmpty(null);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+    try {
+      Assure.nonEmpty("param", new boolean[0]);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+    try {
+      Assure.nonEmpty("param", new byte[0]);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+    try {
+      Assure.nonEmpty("param", new char[0]);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+    try {
+      Assure.nonEmpty("param", new short[0]);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+    try {
+      Assure.nonEmpty("param", new int[0]);
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+    }
+    try {
+      Assure.nonEmpty("param", new long[0]);
     } catch (Ant4EclipseException ex) {
       assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
