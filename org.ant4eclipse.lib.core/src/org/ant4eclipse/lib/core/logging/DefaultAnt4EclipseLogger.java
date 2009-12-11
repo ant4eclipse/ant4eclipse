@@ -9,9 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.logging;
-
-import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
+package org.ant4eclipse.lib.core.logging;
 
 import java.io.PrintStream;
 
@@ -23,26 +21,33 @@ import java.io.PrintStream;
  */
 public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
-  /** -- */
-  public static final int LOG_LEVEL_ERROR   = 0;
+  public static enum Priority {
 
-  /** -- */
-  public static final int LOG_LEVEL_WARN    = 1;
+    error(0, "ERROR"), warn(1, "WARN"), info(2, "INFO"), debug(3, "DEBUG"), trace(4, "TRACE");
 
-  /** -- */
-  public static final int LOG_LEVEL_INFO    = 2;
+    private int    level;
 
-  /** -- */
-  public static final int LOG_LEVEL_DEBUG  /* ANT category: verbose */= 3;
+    private String description;
 
-  /** -- */
-  public static final int LOG_LEVEL_TRACE  /* ANT category: debug */= 4;
+    Priority(int lev, String desc) {
+      this.level = lev;
+      this.description = desc;
+    }
 
-  private static String[] LEVEL_DESCIRPTION = new String[] { "ERROR", "WARN", "INFO", "DEBUG", "TRACE" };
+    public boolean isEnabled(Priority value) {
+      return value.level >= this.level;
+    }
 
-  private int             _logLevel;
+    @Override
+    public String toString() {
+      return this.description;
+    }
 
-  private PrintStream     _printer;
+  } /* ENDENUM */
+
+  private Priority    _logLevel;
+
+  private PrintStream _printer;
 
   /**
    * Sets up this logger implementation to make use of standard output.
@@ -58,7 +63,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    *          The printer that will be used for the output. If <code>null</code> the standard output is used.
    */
   public DefaultAnt4EclipseLogger(PrintStream printer) {
-    this._logLevel = LOG_LEVEL_TRACE;
+    this._logLevel = Priority.trace;
     this._printer = printer;
     if (this._printer == null) {
       this._printer = System.out;
@@ -69,14 +74,14 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   public boolean isDebuggingEnabled() {
-    return this._logLevel >= LOG_LEVEL_DEBUG;
+    return Priority.debug.isEnabled(this._logLevel);
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean isTraceingEnabled() {
-    return this._logLevel >= LOG_LEVEL_TRACE;
+    return Priority.trace.isEnabled(this._logLevel);
   }
 
   /**
@@ -85,7 +90,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param loglevel
    *          The new log level to be used for this logger.
    */
-  public void setLogLevel(int loglevel) {
+  public void setLogLevel(Priority loglevel) {
     this._logLevel = loglevel;
   }
 
@@ -101,7 +106,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   public void debug(String msg, Object... args) {
     if (isDebuggingEnabled()) {
-      log(LOG_LEVEL_DEBUG, msg, args);
+      log(Priority.debug, msg, args);
     }
   }
 
@@ -109,14 +114,14 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   public void error(String msg, Object... args) {
-    log(LOG_LEVEL_ERROR, msg, args);
+    log(Priority.error, msg, args);
   }
 
   /**
    * {@inheritDoc}
    */
   public void info(String msg, Object... args) {
-    log(LOG_LEVEL_INFO, msg, args);
+    log(Priority.info, msg, args);
   }
 
   /**
@@ -124,7 +129,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   public void trace(String msg, Object... args) {
     if (isTraceingEnabled()) {
-      log(LOG_LEVEL_TRACE, msg, args);
+      log(Priority.trace, msg, args);
     }
   }
 
@@ -132,7 +137,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   public void warn(String msg, Object... args) {
-    log(LOG_LEVEL_WARN, msg, args);
+    log(Priority.warn, msg, args);
   }
 
   /**
@@ -145,8 +150,8 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param args
    *          The arguments to be used for the formatting message.
    */
-  private void log(int level, String msg, Object... args) {
-    this._printer.println("[" + LEVEL_DESCIRPTION[level] + "] " + String.format(msg, args));
+  private void log(Priority level, String msg, Object... args) {
+    this._printer.println("[" + level + "] " + String.format(msg, args));
   }
 
 } /* ENDCLASS */

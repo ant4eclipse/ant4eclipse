@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
+import org.ant4eclipse.lib.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
@@ -99,7 +100,7 @@ public class LoggingUsageTest {
   public void testDebugDisabled() {
     DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistry.instance().getService(
         SERVICE_TYPE.getName());
-    loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.LOG_LEVEL_INFO);
+    loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.debug("no args");
     A4ELogging.debug("single arg is: %d", Integer.valueOf(12));
     A4ELogging.debug("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
@@ -119,7 +120,7 @@ public class LoggingUsageTest {
   public void testTracingDisabled() {
     DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistry.instance().getService(
         SERVICE_TYPE.getName());
-    loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.LOG_LEVEL_INFO);
+    loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.trace("no args");
     A4ELogging.trace("single arg is: %d", Integer.valueOf(12));
     A4ELogging.trace("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
