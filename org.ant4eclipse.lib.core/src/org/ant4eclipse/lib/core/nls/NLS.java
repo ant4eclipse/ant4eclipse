@@ -239,19 +239,19 @@ public abstract class NLS {
     }
 
     NLSMessage nlsMessage = field.getAnnotation(NLSMessage.class);
-    if (nlsMessage == null) {
-      // not an NLS field, no problem, just ignore it
-      return false;
-    }
-
     if (problem != null) {
+      if (nlsMessage == null) {
+        // not an NLS field, no problem, just ignore it
+        return false;
+      }
       // NLS-annotation on a field with wrong modifiers (not public static non-final)
       throw new RuntimeException(String.format(MSG_MISUSEDNLSANNOTATION, field.getDeclaringClass().getName(), field
           .getName(), problem));
     }
 
     // NLS fields are fields with @NLSMessage annotation and fields with type String and Exception code (and subclasses)
-    return (field.getType() == String.class || ExceptionCode.class.isAssignableFrom(field.getType()));
+    return (nlsMessage != null) || (field.getType() == String.class)
+        || ExceptionCode.class.isAssignableFrom(field.getType());
   }
 
   /**
