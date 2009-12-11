@@ -34,6 +34,9 @@ public class Assure {
   @NLSMessage("The parameter '%s' is not supposed to be null.")
   public static String MSG_NOTNULL;
 
+  @NLSMessage("The parameter '%s' is not supposed to be empty.")
+  public static String MSG_NOTEMPTY;
+
   @NLSMessage("The supplied string is not allowed to be empty.")
   public static String MSG_STRINGMUSTBENONEMPTY;
 
@@ -77,6 +80,102 @@ public class Assure {
    */
   public static final void paramNotNull(String parametername, Object object) {
     notNull(String.format(MSG_NOTNULL, parametername), object);
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, byte[] object) {
+    paramNotNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, boolean[] object) {
+    paramNotNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, char[] object) {
+    paramNotNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, short[] object) {
+    paramNotNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, int[] object) {
+    paramNotNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, long[] object) {
+    paramNotNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
   }
 
   /**
