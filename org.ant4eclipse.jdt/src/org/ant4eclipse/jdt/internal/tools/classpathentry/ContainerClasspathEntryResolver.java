@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
-
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
@@ -21,6 +20,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -122,8 +122,9 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   public void initialize() {
     this._containerresolver = new LinkedList<ClasspathContainerResolver>();
 
-    Iterable<Pair<String, String>> containerResolverEntries = Ant4EclipseConfiguration.Helper
-        .getAnt4EclipseConfiguration().getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> containerResolverEntries = config
+        .getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
 
     List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
 

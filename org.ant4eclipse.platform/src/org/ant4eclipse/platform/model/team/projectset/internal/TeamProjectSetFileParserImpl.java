@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
-
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
@@ -22,6 +21,7 @@ import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
@@ -61,8 +61,8 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   public void initialize() {
-    Iterable<Pair<String, String>> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(TEAMPROVIDER_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> teamProviders = config.getAllProperties(TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
     for (Pair<String, String> teamProvider : teamProviders) {

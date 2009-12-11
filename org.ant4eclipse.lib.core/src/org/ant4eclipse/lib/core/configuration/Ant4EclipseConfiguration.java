@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.configuration;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 
 /**
@@ -60,24 +59,4 @@ public interface Ant4EclipseConfiguration {
    */
   Iterable<Pair<String, String>> getAllProperties(String prefix);
 
-  /**
-   * <p>
-   * Helper class to retrieve the {@link Ant4EclipseConfiguration} service from the {@link ServiceRegistry}.
-   * </p>
-   * 
-   * @author Nils Hartmann (nils@nilshartmann.net)
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Returns the {@link Ant4EclipseConfiguration} service from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the {@link Ant4EclipseConfiguration} service
-     */
-    public static Ant4EclipseConfiguration getAnt4EclipseConfiguration() {
-      return (Ant4EclipseConfiguration) ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class.getName());
-    }
-  }
-}
+} /* ENDINTERFACE */

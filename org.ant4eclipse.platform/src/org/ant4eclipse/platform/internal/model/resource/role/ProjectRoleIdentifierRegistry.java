@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource.role;
 
-
 import org.ant4eclipse.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
@@ -19,6 +18,7 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -87,8 +87,8 @@ public class ProjectRoleIdentifierRegistry {
    */
   protected void init() {
     // get all properties that defines a ProjectRoleIdentifier
-    Iterable<Pair<String, String>> roleidentifierEntries = Ant4EclipseConfiguration.Helper
-        .getAnt4EclipseConfiguration().getAllProperties(ROLEIDENTIFIER_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> roleidentifierEntries = config.getAllProperties(ROLEIDENTIFIER_PREFIX);
 
     List<ProjectRoleIdentifier> roleIdentifiers = new LinkedList<ProjectRoleIdentifier>();
 

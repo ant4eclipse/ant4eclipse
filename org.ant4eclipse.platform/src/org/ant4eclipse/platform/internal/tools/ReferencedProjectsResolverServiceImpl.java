@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.tools;
 
-
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
 
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -115,8 +115,9 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
     }
 
     // get all properties that defines a ReferencedProjectsResolver
-    Iterable<Pair<String, String>> referencedProjectsResolverEntries = Ant4EclipseConfiguration.Helper
-        .getAnt4EclipseConfiguration().getAllProperties(REFERENCED_PROJECTS_RESOLVER_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> referencedProjectsResolverEntries = config
+        .getAllProperties(REFERENCED_PROJECTS_RESOLVER_PREFIX);
 
     Map<String, ReferencedProjectsResolver> referencedProjectsResolvers = new HashMap<String, ReferencedProjectsResolver>();
 
