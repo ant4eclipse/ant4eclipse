@@ -66,13 +66,6 @@ public class Utilities {
   public static final String ENCODING        = System.getProperty("file.encoding");
 
   /**
-   * Prevent instantiation of this class.
-   */
-  private Utilities() {
-    // Prevent instantiation of this class.
-  }
-
-  /**
    * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
    * newlines (@see {@link #NL} unless requested otherwise.
    * 
@@ -255,7 +248,6 @@ public class Utilities {
     try {
       return uri.toURL();
     } catch (MalformedURLException e) {
-      // TODO
       throw new RuntimeException(e);
     }
   }
@@ -307,11 +299,8 @@ public class Utilities {
 
   public static final List<File> getAllChildren(File file) {
     Assure.notNull(file);
-
     List<File> result = new LinkedList<File>();
-
     if (file.isDirectory()) {
-
       // add the children
       File[] children = file.listFiles();
       if (children != null) {
@@ -335,7 +324,6 @@ public class Utilities {
         return name.equals(childName);
       }
     });
-
     return children.length > 0;
   }
 
@@ -348,7 +336,6 @@ public class Utilities {
     if (children.length < 1) {
       return null;
     }
-
     return children[0];
   }
 
@@ -408,7 +395,6 @@ public class Utilities {
     }
     String[] fromstr = frompath.replace('\\', '/').split("/");
     String[] tostr = topath.replace('\\', '/').split("/");
-
     if (!fromstr[0].equals(tostr[0])) {
       // we're not working on the same device
       /**
@@ -449,7 +435,6 @@ public class Utilities {
       return path.substring(0, path.length() - 1);
     }
     return path;
-
   }
 
   /**
@@ -629,13 +614,11 @@ public class Utilities {
   public static final void mkdirs(File directory) {
     Assure.notNull("The parameter 'directory' must not be null", directory);
     if (directory.isDirectory()) {
-      return; // already there
+      return;
     }
-
     if (directory.isFile()) {
       throw new Ant4EclipseException(CoreExceptionCode.PATH_MUST_NOT_BE_A_FILE, directory);
     }
-
     if (!directory.mkdirs()) {
       throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
     }
@@ -653,25 +636,19 @@ public class Utilities {
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className) {
     Assure.notNull("The parameter 'className' must not be null", className);
-
     Class<?> clazz = null;
-
-    // Try to load class...
     try {
       clazz = Class.forName(className);
     } catch (Exception ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
     }
-
     // try to instantiate using default cstr...
     T object = null;
-
     try {
       object = (T) clazz.newInstance();
     } catch (Exception ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
     }
-
     // return the constructed object
     return object;
   }
@@ -691,26 +668,21 @@ public class Utilities {
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className, String arg) {
     Assure.notNull("The parameter 'className' must not be null", className);
-
     Class<?> clazz = null;
-
     // Try to load class...
     try {
       clazz = Class.forName(className);
     } catch (Exception ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
     }
-
     Constructor constructor = null;
     try {
       constructor = clazz.getConstructor(String.class);
     } catch (NoSuchMethodException ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
     }
-
     // try to instantiate using default cstr...
     T object = null;
-
     try {
       object = (T) constructor.newInstance(arg);
     } catch (Exception ex) {
@@ -1055,53 +1027,48 @@ public class Utilities {
    *          the expansion directory
    * @throws IOException
    */
-  public static final void expandJarFile(JarFile jarFile, File expansionDirectory) throws IOException {
+  public static final void expandJarFile(JarFile jarFile, File expansionDirectory) {
+
     Assure.notNull(jarFile);
     Assure.notNull(expansionDirectory);
 
-    if (!expansionDirectory.exists()) {
-      if (!expansionDirectory.mkdirs()) {
-        // TODO:
-        throw new RuntimeException("Could not create expansion directory '" + expansionDirectory
-            + "' for an unknown reason");
-      }
-    }
+    mkdirs(expansionDirectory);
+
+    // this way we make sure that calls to File#getParentFile always return non-null values
+    expansionDirectory = expansionDirectory.getAbsoluteFile();
 
     Enumeration<JarEntry> entries = jarFile.entries();
     while (entries.hasMoreElements()) {
 
-      // TODO: not sure if we need this??
-      ZipEntry zipEntry = fixDirectory(jarFile, entries.nextElement());
+      ZipEntry zipEntry = entries.nextElement();
 
       File destFile = new File(expansionDirectory, zipEntry.getName());
-
       if (destFile.exists()) {
+        // a directory might already have been created
         continue;
       }
 
-      // Create parent directory (if target is file) or complete directory (if target is directory)
-      File directory = (zipEntry.isDirectory() ? destFile : destFile.getParentFile());
-      if ((directory != null) && !directory.exists()) {
-        if (!directory.mkdirs()) {
-          throw new IOException("could not create directory '" + directory.getAbsolutePath() + " for an unkown reason.");
+      if (zipEntry.isDirectory()) {
+        mkdirs(destFile);
+      } else {
+        mkdirs(destFile.getParentFile());
+        InputStream inputStream = null;
+        try {
+          inputStream = jarFile.getInputStream(zipEntry);
+          writeFile(inputStream, destFile);
+        } catch (IOException ex) {
+          throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+        } finally {
+          close(inputStream);
         }
       }
 
-      if (!zipEntry.isDirectory()) {
-        destFile.createNewFile();
-        InputStream inputStream = jarFile.getInputStream(zipEntry);
-        try {
-          writeFile(inputStream, destFile);
-        } finally {
-          Utilities.close(inputStream);
-        }
-      }
     }
+
   }
 
   private static void writeFile(InputStream inputStream, File file) {
     Assure.notNull(inputStream);
-    Assure.isFile(file);
 
     FileOutputStream fos = null;
     try {
@@ -1120,32 +1087,9 @@ public class Utilities {
        */
     } finally {
       // close open streams
-      Utilities.close(fos);
-      Utilities.close(inputStream);
+      close(fos);
+      close(inputStream);
     }
-  }
-
-  /**
-   * <p>
-   * Fixes a problem with <code>zipEntry.isDirectory()</code>
-   * <p>
-   * The <code>isDirectory()</code> method only returns true if the entry's name ends with a "/". This method checks if
-   * the given entry is a directory even if the name does not end with a "/". If it is a directory the corresponding
-   * entry from the jarFile will be returned (that is the entry with "/" at the end) In all other cases the entry
-   * instance passed to this method is returned as-is.
-   */
-  private static final ZipEntry fixDirectory(JarFile jarFile, ZipEntry entry) {
-    if ((entry == null) || entry.isDirectory() || (entry.getSize() > 0)) {
-      return entry;
-    }
-
-    String dirName = entry.getName() + "/";
-    ZipEntry dirEntry = jarFile.getEntry(dirName);
-    if (dirEntry != null) {
-      return dirEntry;
-    }
-
-    return entry;
   }
 
   /**
