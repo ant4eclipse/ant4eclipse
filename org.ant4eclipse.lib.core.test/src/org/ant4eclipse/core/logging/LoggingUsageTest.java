@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.core.logging;
 
-import static org.junit.Assert.assertEquals;
-
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.logging.DefaultAnt4EclipseLogger;
@@ -20,6 +18,7 @@ import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,70 +60,70 @@ public class LoggingUsageTest {
   }
 
   @Test
-  public void testInfo() {
+  public void info() {
     A4ELogging.info("no args");
     A4ELogging.info("single arg is: %d", Integer.valueOf(12));
     A4ELogging.info("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("[INFO] no args\n[INFO] single arg is: 12\n[INFO] multiple args are: 45, 'Fredo'\n",
+    Assert.assertEquals("[INFO] no args\n[INFO] single arg is: 12\n[INFO] multiple args are: 45, 'Fredo'\n",
         getCurrentOutput());
   }
 
   @Test
-  public void testWarn() {
+  public void warn() {
     A4ELogging.warn("no args");
     A4ELogging.warn("single arg is: %d", Integer.valueOf(12));
     A4ELogging.warn("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("[WARN] no args\n[WARN] single arg is: 12\n[WARN] multiple args are: 45, 'Fredo'\n",
+    Assert.assertEquals("[WARN] no args\n[WARN] single arg is: 12\n[WARN] multiple args are: 45, 'Fredo'\n",
         getCurrentOutput());
   }
 
   @Test
-  public void testError() {
+  public void error() {
     A4ELogging.error("no args");
     A4ELogging.error("single arg is: %d", Integer.valueOf(12));
     A4ELogging.error("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("[ERROR] no args\n[ERROR] single arg is: 12\n[ERROR] multiple args are: 45, 'Fredo'\n",
+    Assert.assertEquals("[ERROR] no args\n[ERROR] single arg is: 12\n[ERROR] multiple args are: 45, 'Fredo'\n",
         getCurrentOutput());
   }
 
   @Test
-  public void testDebugEnabled() {
+  public void debugEnabled() {
     A4ELogging.debug("no args");
     A4ELogging.debug("single arg is: %d", Integer.valueOf(12));
     A4ELogging.debug("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("[DEBUG] no args\n[DEBUG] single arg is: 12\n[DEBUG] multiple args are: 45, 'Fredo'\n",
+    Assert.assertEquals("[DEBUG] no args\n[DEBUG] single arg is: 12\n[DEBUG] multiple args are: 45, 'Fredo'\n",
         getCurrentOutput());
   }
 
   @Test
-  public void testDebugDisabled() {
+  public void debugDisabled() {
     DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistry.instance().getService(
         SERVICE_TYPE.getName());
     loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.debug("no args");
     A4ELogging.debug("single arg is: %d", Integer.valueOf(12));
     A4ELogging.debug("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("", getCurrentOutput());
+    Assert.assertEquals("", getCurrentOutput());
   }
 
   @Test
-  public void testTracingEnabled() {
+  public void tracingEnabled() {
     A4ELogging.trace("no args");
     A4ELogging.trace("single arg is: %d", Integer.valueOf(12));
     A4ELogging.trace("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("[TRACE] no args\n[TRACE] single arg is: 12\n[TRACE] multiple args are: 45, 'Fredo'\n",
+    Assert.assertEquals("[TRACE] no args\n[TRACE] single arg is: 12\n[TRACE] multiple args are: 45, 'Fredo'\n",
         getCurrentOutput());
   }
 
   @Test
-  public void testTracingDisabled() {
+  public void tracingDisabled() {
     DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistry.instance().getService(
         SERVICE_TYPE.getName());
     loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.trace("no args");
     A4ELogging.trace("single arg is: %d", Integer.valueOf(12));
     A4ELogging.trace("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
-    assertEquals("", getCurrentOutput());
+    Assert.assertEquals("", getCurrentOutput());
   }
 
 } /* ENDCLASS */
