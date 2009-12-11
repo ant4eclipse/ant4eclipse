@@ -14,9 +14,9 @@ package org.ant4eclipse.core.service;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
 
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.junit.After;
