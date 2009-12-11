@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,7 +40,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.StringTokenizer;
 import java.util.Map.Entry;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -55,6 +55,12 @@ import java.util.zip.ZipFile;
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
 public class Utilities {
+
+  @NLSMessage("Exporting a resource is only supported for root based pathes !")
+  public static String       MSG_INVALIDRESOURCEPATH;
+
+  @NLSMessage("Failed to delete '%s' !")
+  public static String       MSG_FAILEDTODELETE;
 
   /** - */
   public static final String PROP_A4ETEMPDIR = "ant4eclipse.temp";
@@ -243,12 +249,12 @@ public class Utilities {
   }
 
   public static final URL toURL(File file) {
-    Assure.notNull(file);
+    Assure.paramNotNull("file", file);
     URI uri = file.toURI();
     try {
       return uri.toURL();
-    } catch (MalformedURLException e) {
-      throw new RuntimeException(e);
+    } catch (MalformedURLException ex) {
+      throw new RuntimeException(ex);
     }
   }
 
@@ -291,12 +297,20 @@ public class Utilities {
       tries--;
     }
     if (file.exists()) {
-      A4ELogging.warn("Failed to delete '%s' !", file.getPath());
+      A4ELogging.warn(MSG_FAILEDTODELETE, file.getPath());
       result = false;
     }
     return result;
   }
 
+  /**
+   * Returns a list of all files located within the supplied directory/file.
+   * 
+   * @param file
+   *          The resource which files should be listed. If it's a file it will be the only child in the returned list.
+   * 
+   * @return The list containing all children. Not <code>null</code>.
+   */
   public static final List<File> getAllChildren(File file) {
     Assure.notNull(file);
     List<File> result = new LinkedList<File>();
@@ -319,12 +333,7 @@ public class Utilities {
   }
 
   public static final boolean hasChild(File directory, final String childName) {
-    String[] children = directory.list(new FilenameFilter() {
-      public boolean accept(File dir, String name) {
-        return name.equals(childName);
-      }
-    });
-    return children.length > 0;
+    return getChild(directory, childName) != null;
   }
 
   public static final File getChild(File directory, final String childName) {
@@ -359,15 +368,29 @@ public class Utilities {
     if (idx == -1) {
       return input;
     }
-    String before = "";
-    String after = "";
-    if (idx > 0) {
-      before = input.substring(0, idx);
+    StringBuffer buffer = new StringBuffer(input);
+    while (idx != -1) {
+      buffer.delete(idx, idx + search.length());
+      buffer.insert(idx, replacement);
+      idx = buffer.indexOf(search, idx + replacement.length());
     }
-    if (idx + search.length() < input.length()) {
-      after = input.substring(idx + search.length());
-    }
-    return before + replacement + replace(after, search, replacement);
+    return buffer.toString();
+  }
+
+  /**
+   * Replaces a character with a specified string.
+   * 
+   * @param input
+   *          The string which will be modified. Not <code>null</code>.
+   * @param ch
+   *          The character that shall be replaced.
+   * @param replacement
+   *          The replacing string. Not <code>null</code>.
+   * 
+   * @return A string with replaced characters. Not <code>null</code>.
+   */
+  public static final String replace(String input, char ch, String replacement) {
+    return replace(input, String.valueOf(ch), replacement);
   }
 
   /**
@@ -464,16 +487,7 @@ public class Utilities {
    * @see java.lang.Character#isWhitespace
    */
   public static final boolean hasText(String str) {
-    int strLen;
-    if ((str == null) || ((strLen = str.length()) == 0)) {
-      return false;
-    }
-    for (int i = 0; i < strLen; i++) {
-      if (!Character.isWhitespace(str.charAt(i))) {
-        return true;
-      }
-    }
-    return false;
+    return cleanup(str) != null;
   }
 
   /**
@@ -521,33 +535,6 @@ public class Utilities {
   }
 
   /**
-   * Replaces a character with a specified string.
-   * 
-   * @param input
-   *          The string which will be modified.
-   * @param ch
-   *          The character that shall be replaced.
-   * @param replacement
-   *          The replacing string.
-   * 
-   * @return A string with replaced characters.
-   */
-  public static final String replace(String input, char ch, String replacement) {
-    StringBuffer buffer = new StringBuffer();
-    String searchstr = String.valueOf(ch);
-    StringTokenizer tokenizer = new StringTokenizer(input, searchstr, true);
-    while (tokenizer.hasMoreTokens()) {
-      String token = tokenizer.nextToken();
-      if (token.equals(searchstr)) {
-        buffer.append(replacement);
-      } else {
-        buffer.append(token);
-      }
-    }
-    return buffer.toString();
-  }
-
-  /**
    * Generates a textual representation for the supplied list of values.
    * 
    * @param objects
@@ -558,6 +545,7 @@ public class Utilities {
    * @return A textual representation for the supplied list of values. Not <code>null</code>.
    */
   public static final String listToString(Object[] objects, String delimiter) {
+    Assure.paramNotNull("objects", objects);
     if (delimiter == null) {
       delimiter = ",";
     }
@@ -590,11 +578,12 @@ public class Utilities {
    * @param title
    *          A textual information printed above the property map.
    * @param properties
-   *          The map which shall be translated into a text.
+   *          The map which shall be translated into a text. Not <code>null</code>.
    * 
    * @return The text representing the content of the supplied map.
    */
   public static final String toString(String title, Properties properties) {
+    Assure.paramNotNull("properties", properties);
     StringBuilder buffer = new StringBuilder();
     if (title != null) {
       buffer.append(title);
@@ -604,7 +593,9 @@ public class Utilities {
     while (it.hasNext()) {
       Entry<Object, Object> entry = it.next();
       buffer.append("'").append(entry.getKey());
-      buffer.append("' -> '").append(entry.getValue()).append("'");
+      buffer.append("' -> '");
+      buffer.append(entry.getValue());
+      buffer.append("'");
       buffer.append(NL);
     }
     return buffer.toString();
@@ -616,7 +607,7 @@ public class Utilities {
    * @param directory
    */
   public static final void mkdirs(File directory) {
-    Assure.notNull("The parameter 'directory' must not be null", directory);
+    Assure.paramNotNull("directory", directory);
     if (directory.isDirectory()) {
       return;
     }
@@ -639,7 +630,7 @@ public class Utilities {
    */
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className) {
-    Assure.notNull("The parameter 'className' must not be null", className);
+    Assure.paramNotNull("className", className);
     Class<?> clazz = null;
     try {
       clazz = Class.forName(className);
@@ -708,8 +699,8 @@ public class Utilities {
    * @return <code>true</code> <=> The supplied literal is part of the allowed values.
    */
   public static final boolean contains(String candidate, String... allowed) {
-    Assure.notNull("The parameter 'candidate' must not be null", candidate);
-    Assure.notNull("The parameter 'allowed' must not be null", allowed);
+    Assure.paramNotNull("candidate", candidate);
+    Assure.paramNotNull("allowed", allowed);
     for (String part : allowed) {
       if (candidate.equals(part)) {
         return true;
@@ -729,6 +720,8 @@ public class Utilities {
    * @return A list with the input elements that do match the specified type. Not <code>null</code>.
    */
   public static final List<Object> filter(List<Object> input, Class<?> clazz) {
+    Assure.paramNotNull("input", input);
+    Assure.paramNotNull("clazz", clazz);
     List<Object> result = new ArrayList<Object>();
     for (int i = 0; i < input.size(); i++) {
       if (clazz.isAssignableFrom(input.get(i).getClass())) {
@@ -748,6 +741,8 @@ public class Utilities {
    *          The destination file where the copy shall be created. Not <code>null</code>.
    */
   public static final void copy(URL source, File dest) {
+    Assure.paramNotNull("source", source);
+    Assure.paramNotNull("dest", dest);
     InputStream instream = null;
     OutputStream outstream = null;
     try {
@@ -762,6 +757,8 @@ public class Utilities {
 
   /**
    * Unpacks the content from the supplied zip file into the supplied destination directory.
+   * 
+   * @todo [11-Dec-2009:KASI] This should be merged with {@link #expandJarFile(JarFile, File)}
    * 
    * @param zipfile
    *          The zip file which has to be unpacked. Not <code>null</code> and must be a file.
@@ -810,7 +807,7 @@ public class Utilities {
   public static final void copy(InputStream instream, OutputStream outstream, byte[] buffer) throws IOException {
     Assure.notNull(instream);
     Assure.notNull(outstream);
-    Assure.notNull(buffer);
+    Assure.nonEmpty("buffer", buffer);
     try {
       int read = instream.read(buffer);
       while (read != -1) {
@@ -839,7 +836,7 @@ public class Utilities {
    */
   public static final File exportResource(String resource) {
     Assure.nonEmpty(resource);
-    Assure.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
+    Assure.assertTrue(resource.startsWith("/"), MSG_INVALIDRESOURCEPATH);
     String suffix = ".tmp";
     int lidx = resource.lastIndexOf('.');
     if (lidx != -1) {
@@ -863,7 +860,7 @@ public class Utilities {
    */
   public static final File exportResource(String resource, String suffix) {
     Assure.nonEmpty(resource);
-    Assure.assertTrue(resource.startsWith("/"), "Exporting a resource is only supported for root based pathes !");
+    Assure.assertTrue(resource.startsWith("/"), MSG_INVALIDRESOURCEPATH);
     URL url = Utilities.class.getResource(resource);
     if (url == null) {
       throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
@@ -940,16 +937,12 @@ public class Utilities {
    *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    */
   public static final void writeFile(File destination, String content, String encoding) {
-    Assure.notNull(destination);
-    Assure.notNull(content);
+    Assure.paramNotNull("destination", destination);
+    Assure.paramNotNull("content", content);
     Assure.nonEmpty(encoding);
     OutputStream output = null;
     Writer writer = null;
     try {
-      // check if the file can be written
-      if (destination.exists() && (!destination.canWrite())) {
-        throw new RuntimeException("Could not create file: " + destination);
-      }
       output = new FileOutputStream(destination);
       writer = new OutputStreamWriter(output, encoding);
       writer.write(content);
@@ -970,14 +963,11 @@ public class Utilities {
    *          The content that has to be written. Not <code>null</code>.
    */
   public static final void writeFile(File destination, byte[] content) {
-    Assure.notNull(destination);
+    Assure.paramNotNull("destination", destination);
+    Assure.paramNotNull("content", content);
     Assure.notNull(content);
     OutputStream output = null;
     try {
-      // check if the file can be written
-      if (destination.exists() && (!destination.canWrite())) {
-        throw new RuntimeException("Could not create file: " + destination);
-      }
       output = new FileOutputStream(destination);
       output.write(content);
     } catch (IOException ex) {
