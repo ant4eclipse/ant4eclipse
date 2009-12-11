@@ -11,10 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.test;
 
-import java.io.File;
-import java.io.IOException;
+import org.junit.Assert;
 
-import junit.framework.Assert;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * <p>
@@ -24,6 +26,34 @@ import junit.framework.Assert;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class JUnitUtilities {
+
+  /**
+   * Reads the content of the supplied file.
+   * 
+   * @param file
+   *          The file which content has to be read.
+   * 
+   * @return The data from the file.
+   */
+  public static final byte[] loadFile(File file) {
+    byte[] buffer = new byte[1024];
+    ByteArrayOutputStream byteout = new ByteArrayOutputStream();
+    FileInputStream filein = null;
+    try {
+      filein = new FileInputStream(file);
+      int read = filein.read(buffer);
+      while (read != -1) {
+        if (read > 0) {
+          byteout.write(buffer, 0, read);
+        }
+        read = filein.read(buffer);
+      }
+      filein.close();
+    } catch (IOException ex) {
+      Assert.fail(ex.getMessage());
+    }
+    return byteout.toByteArray();
+  }
 
   /**
    * <p>
@@ -53,11 +83,57 @@ public class JUnitUtilities {
       if (!tempfile.mkdir()) {
         Assert.fail();
       }
+      Runtime.getRuntime().addShutdownHook(new Cleaner(tempfile));
       return tempfile;
     } catch (IOException ex) {
       Assert.fail(ex.getMessage());
       return null;
     }
   }
+
+  /**
+   * <p>
+   * Creates a temporary file.
+   * </p>
+   * 
+   * @return A temporary file. Not <code>null</code>.
+   */
+  public static final File createTempFile() {
+    try {
+      File result = File.createTempFile("a4e.", ".file");
+      Runtime.getRuntime().addShutdownHook(new Cleaner(result));
+      return result;
+    } catch (IOException ex) {
+      Assert.fail(ex.getMessage());
+      return null;
+    }
+  }
+
+  private static class Cleaner extends Thread {
+
+    private File file;
+
+    public Cleaner(File resource) {
+      this.file = resource;
+    }
+
+    @Override
+    public void run() {
+      delete(this.file);
+    }
+
+    public void delete(File resource) {
+      if (resource.exists()) {
+        if (resource.isDirectory()) {
+          File[] children = resource.listFiles();
+          for (File child : children) {
+            delete(child);
+          }
+        }
+        resource.delete();
+      }
+    }
+
+  } /* ENDCLASS */
 
 } /* ENDCLASS */
