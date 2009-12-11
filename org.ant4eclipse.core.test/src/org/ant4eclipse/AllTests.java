@@ -16,15 +16,12 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseConditionTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataTypeTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest;
 import org.ant4eclipse.core.ant.AntCallTest;
-import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfigurationTest;
-import org.ant4eclipse.core.service.ServiceRegistryTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { Ant4EclipseConfiguratorTest.class, PropertiesBasedServiceRegistryConfigurationTest.class,
-    ServiceRegistryTest.class, AbstractAnt4EclipseConditionTest.class, AbstractAnt4EclipseDataTypeTest.class,
-    AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+@Suite.SuiteClasses( { Ant4EclipseConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
+    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
 public class AllTests {
 }

@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.configuration;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.StringMap;
 
@@ -47,9 +50,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    *          The backing properties
    */
   public Ant4EclipseConfigurationImpl(StringMap properties) {
-    if (properties == null) {
-      throw new IllegalArgumentException("Parameter 'properties' must not be null ");
-    }
+    Assure.paramNotNull("properties", properties);
     this._properties = properties;
   }
 
@@ -66,9 +67,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public String getProperty(String propertyName) {
-    if (propertyName == null) {
-      throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
-    }
+    Assure.paramNotNull("propertyName", propertyName);
     return this._properties.get(propertyName);
   }
 
@@ -76,10 +75,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public boolean hasProperty(String propertyName) {
-    if (propertyName == null) {
-      throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
-    }
-
+    Assure.paramNotNull("propertyName", propertyName);
     return this._properties.containsKey(propertyName);
   }
 
@@ -87,16 +83,12 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public Iterable<Pair<String, String>> getAllProperties(String prefix) {
-    if (prefix == null) {
-      throw new IllegalArgumentException("Parameter 'prefix' must not be null ");
-    }
+    Assure.paramNotNull("prefix", prefix);
     if (!prefix.endsWith(".")) {
       prefix += ".";
     }
     Set<Map.Entry<String, String>> entries = this._properties.entrySet();
-
     List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
-
     for (Map.Entry<String, String> entry : entries) {
       String key = entry.getKey();
       String value = entry.getValue();
@@ -105,7 +97,6 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
         result.add(new Pair<String, String>(key, value));
       }
     }
-
     return result;
   }
 
@@ -119,8 +110,8 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   private Enumeration<URL> getPropertyFiles() {
     try {
       return getClass().getClassLoader().getResources(A4E_CONFIGURATION_PROPERTIES);
-    } catch (IOException ioe) {
-      throw new RuntimeException("Could not detect propery files on classpath: " + ioe, ioe);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, A4E_CONFIGURATION_PROPERTIES);
     }
   }
 
@@ -143,4 +134,5 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     }
     return allProperties;
   }
-}
+
+} /* ENDCLASS */

@@ -9,14 +9,10 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.service;
-
+package org.ant4eclipse.lib.core.service;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.service.ConfigurationContext;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -57,7 +53,7 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
    *          The configuration to be used. Not <code>null</code>.
    */
   public PropertiesBasedServiceRegistryConfiguration(Ant4EclipseConfiguration ant4EclipseConfiguration) {
-    Assure.notNull(ant4EclipseConfiguration);
+    Assure.paramNotNull("ant4EclipseConfiguration", ant4EclipseConfiguration);
     this._ant4EclipseConfiguration = ant4EclipseConfiguration;
   }
 
@@ -65,6 +61,7 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
    * {@inheritDoc}
    */
   public void configure(ConfigurationContext context) {
+    Assure.paramNotNull("context", context);
 
     // get all properties describing a service
     Iterable<Pair<String, String>> serviceProperties = this._ant4EclipseConfiguration.getAllProperties(PROPERTY_PREFIX);
@@ -80,4 +77,5 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
     }
 
   }
-}
+
+} /* ENDCLASS */

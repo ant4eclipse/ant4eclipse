@@ -11,22 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.core.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ServiceRegistryTest {
 
   @Test
-  public void testServiceRegistry() {
+  public void serviceRegistry() {
 
     final Object object1 = new Object();
     final Object object2 = new Object();
@@ -40,54 +37,54 @@ public class ServiceRegistryTest {
       }
     });
 
-    assertTrue(ServiceRegistry.instance().hasService("test1"));
-    assertTrue(ServiceRegistry.instance().hasService("test2"));
-    assertTrue(ServiceRegistry.instance().hasService("test3"));
+    Assert.assertTrue(ServiceRegistry.instance().hasService("test1"));
+    Assert.assertTrue(ServiceRegistry.instance().hasService("test2"));
+    Assert.assertTrue(ServiceRegistry.instance().hasService("test3"));
 
-    assertEquals(ServiceRegistry.instance().getService("test1"), object1);
-    assertEquals(ServiceRegistry.instance().getService("test2"), object2);
-    assertEquals(ServiceRegistry.instance().getService("test3"), object2);
+    Assert.assertEquals(ServiceRegistry.instance().getService("test1"), object1);
+    Assert.assertEquals(ServiceRegistry.instance().getService("test2"), object2);
+    Assert.assertEquals(ServiceRegistry.instance().getService("test3"), object2);
 
     // 
     try {
       ServiceRegistry.instance().getService("not there");
-      fail();
+      Assert.fail();
     } catch (Ant4EclipseException e) {
-      assertEquals("Service 'not there' is not available.", e.getMessage());
+      Assert.assertEquals("Service 'not there' is not available.", e.getMessage());
     }
 
     ServiceRegistry.reset();
   }
 
   @Test
-  public void testNullService() {
+  public void nullService() {
+
     try {
-      // 
       ServiceRegistry.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(null, "null");
         }
       });
-      fail();
-    } catch (Exception e) {
-      assertEquals(e.getMessage(), "Precondition violated: Parameter 'service' has to be set.");
+      Assert.fail();
+    } catch (Ant4EclipseException ex) {
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
-      // 
       ServiceRegistry.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService("null", (String) null);
         }
       });
-      fail();
-    } catch (Exception e) {
-      assertEquals(e.getMessage(), "Precondition violated: Parameter 'serviceIdentifier' has to be set.");
+      Assert.fail();
+    } catch (Ant4EclipseException ex) {
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
+
   }
 
   @Test
-  public void testNoUniqueIdentifierException() {
+  public void duplicateIdentifierException() {
     try {
       // 
       ServiceRegistry.configure(new ServiceRegistryConfiguration() {
@@ -96,7 +93,7 @@ public class ServiceRegistryTest {
           context.registerService(new Object(), new String[] { "test1", "test3" });
         }
       });
-      fail();
+      Assert.fail();
     } catch (Exception e) {
       //
     }
@@ -108,14 +105,14 @@ public class ServiceRegistryTest {
           context.registerService(new Object(), "test1");
         }
       });
-      fail();
+      Assert.fail();
     } catch (Exception e) {
       //
     }
   }
 
   @Test
-  public void testInitialitationException() {
+  public void initialisationException() {
     try {
       // 
       ServiceRegistry.configure(new ServiceRegistryConfiguration() {
@@ -123,16 +120,17 @@ public class ServiceRegistryTest {
           context.registerService(new NonInitialitationDummyService(), "test1");
         }
       });
-      fail();
+      Assert.fail();
     } catch (Exception e) {
-      assertEquals(
-          "Service 'org.ant4eclipse.core.service.ServiceRegistryTest$NonInitialitationDummyService' could not be initialized.",
-          e.getMessage());
+      Assert
+          .assertEquals(
+              "Service 'org.ant4eclipse.core.service.ServiceRegistryTest$NonInitialitationDummyService' could not be initialized.",
+              e.getMessage());
     }
   }
 
   @Test
-  public void testDisposeException() {
+  public void disposeException() {
     ServiceRegistry.configure(new ServiceRegistryConfiguration() {
       public void configure(ConfigurationContext context) {
         context.registerService(new NonDisposeDummyService(), "test1");
@@ -142,7 +140,7 @@ public class ServiceRegistryTest {
   }
 
   @Test
-  public void testInitializeAndDispose() {
+  public void initializeAndDispose() {
 
     final DummyService dummyService = new DummyService();
 
@@ -154,23 +152,23 @@ public class ServiceRegistryTest {
       }
     });
 
-    assertTrue(ServiceRegistry.instance().hasService(DummyService.class.getName()));
+    Assert.assertTrue(ServiceRegistry.instance().hasService(DummyService.class.getName()));
     DummyService service = (DummyService) ServiceRegistry.instance().getService(DummyService.class.getName());
-    assertEquals(dummyService, service);
-    assertTrue(dummyService.isInitialized());
+    Assert.assertEquals(dummyService, service);
+    Assert.assertTrue(dummyService.isInitialized());
 
-    assertTrue(ServiceRegistry.instance().hasService(DummyService.class));
+    Assert.assertTrue(ServiceRegistry.instance().hasService(DummyService.class));
     service = ServiceRegistry.instance().getService(DummyService.class);
-    assertEquals(dummyService, service);
-    assertTrue(dummyService.isInitialized());
+    Assert.assertEquals(dummyService, service);
+    Assert.assertTrue(dummyService.isInitialized());
 
     ServiceRegistry.reset();
-    assertFalse(ServiceRegistry.isConfigured());
+    Assert.assertFalse(ServiceRegistry.isConfigured());
     try {
       ServiceRegistry.reset();
-      fail();
-    } catch (Exception e) {
-      assertEquals("Precondition violated: ServiceRegistry has to be configured.", e.getMessage());
+      Assert.fail();
+    } catch (Ant4EclipseException ex) {
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
