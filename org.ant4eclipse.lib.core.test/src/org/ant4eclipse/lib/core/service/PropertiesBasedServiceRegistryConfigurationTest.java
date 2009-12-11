@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.service;
+package org.ant4eclipse.lib.core.service;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;

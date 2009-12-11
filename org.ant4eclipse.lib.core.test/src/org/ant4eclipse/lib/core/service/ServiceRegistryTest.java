@@ -9,14 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.service;
+package org.ant4eclipse.lib.core.service;
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ConfigurationContext;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -121,11 +118,8 @@ public class ServiceRegistryTest {
         }
       });
       Assert.fail();
-    } catch (Exception e) {
-      Assert
-          .assertEquals(
-              "Service 'org.ant4eclipse.core.service.ServiceRegistryTest$NonInitialitationDummyService' could not be initialized.",
-              e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      Assert.assertEquals(CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, ex.getExceptionCode());
     }
   }
 
