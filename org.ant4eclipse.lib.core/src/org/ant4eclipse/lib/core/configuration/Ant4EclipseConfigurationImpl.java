@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.configuration;
+package org.ant4eclipse.lib.core.configuration;
 
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.StringMap;

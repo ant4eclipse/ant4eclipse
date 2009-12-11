@@ -12,10 +12,10 @@
 package org.ant4eclipse.core;
 
 import org.ant4eclipse.core.ant.AntBasedLogger;
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.core.service.PropertiesBasedServiceRegistryConfiguration;
 
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
