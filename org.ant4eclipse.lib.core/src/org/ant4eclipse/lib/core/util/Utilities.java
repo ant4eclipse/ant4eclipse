@@ -56,13 +56,13 @@ import java.util.zip.ZipFile;
  */
 public class Utilities {
 
-  /** -- */
+  /** - */
   public static final String PROP_A4ETEMPDIR = "ant4eclipse.temp";
 
-  /** -- */
+  /** - */
   public static final String NL              = System.getProperty("line.separator");
 
-  /** -- */
+  /** - */
   public static final String ENCODING        = System.getProperty("file.encoding");
 
   /**
@@ -381,6 +381,8 @@ public class Utilities {
    * @return The file which indicates the relative path. null in case the relative path could not be calculated.
    */
   public static final String calcRelative(File fromfile, File tofile) {
+    Assure.notNull(fromfile);
+    Assure.notNull(tofile);
     String frompath = null;
     String topath = null;
     try {
@@ -410,10 +412,12 @@ public class Utilities {
     }
     StringBuffer buffer = new StringBuffer();
     for (int i = same; i < fromstr.length; i++) {
-      buffer.append(File.separator + "..");
+      buffer.append(File.separator);
+      buffer.append("..");
     }
     for (int i = same; i < tostr.length; i++) {
-      buffer.append(File.separator + tostr[i]);
+      buffer.append(File.separator);
+      buffer.append(tostr[i]);
     }
     if (buffer.length() > 0) {
       buffer.delete(0, File.separator.length());
@@ -1172,7 +1176,7 @@ public class Utilities {
    * 
    * @author Daniel Kasmeroglu
    */
-  private static class OutputCopier extends Thread {
+  private static final class OutputCopier extends Thread {
 
     private BufferedReader _source;
 
