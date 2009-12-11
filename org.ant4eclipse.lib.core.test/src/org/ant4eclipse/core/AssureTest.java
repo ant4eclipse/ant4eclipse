@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
-import static org.junit.Assert.assertEquals;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.junit.Assert;
 import org.junit.Test;
 
 import javax.swing.JFrame;
@@ -34,7 +33,7 @@ public class AssureTest {
     try {
       Assure.notNull(null);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
@@ -44,12 +43,12 @@ public class AssureTest {
     try {
       Assure.instanceOf("parameter", new Object(), String.class);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.instanceOf("parameter", null, JFrame.class);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
@@ -65,42 +64,42 @@ public class AssureTest {
     try {
       Assure.nonEmpty("");
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty(null);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty("param", new boolean[0]);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty("param", new byte[0]);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty("param", new char[0]);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty("param", new short[0]);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty("param", new int[0]);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
       Assure.nonEmpty("param", new long[0]);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
@@ -120,7 +119,7 @@ public class AssureTest {
     try {
       Assure.exists(new File("NICHT_DA"));
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
   }
@@ -138,19 +137,19 @@ public class AssureTest {
     try {
       Assure.isFile(testFile.getParentFile());
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.isFile(nonexistingDir);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.isFile(new File("NICHT_DA"));
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
   }
@@ -171,13 +170,13 @@ public class AssureTest {
     try {
       Assure.isDirectory(testFile);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.isDirectory(new File("NICHT_DA"));
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
   }
@@ -188,7 +187,7 @@ public class AssureTest {
     try {
       Assure.assertTrue(false, "false");
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 
@@ -205,13 +204,13 @@ public class AssureTest {
     try {
       Assure.inRange(0, 1, 10);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
       Assure.inRange(11, 1, 10);
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
   }
 

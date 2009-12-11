@@ -11,19 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.core.dependencygraph;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph;
 import org.ant4eclipse.lib.core.dependencygraph.Edge;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
-
-import junit.framework.Assert;
 
 /**
  * Test: DependencyGraph
@@ -55,13 +50,14 @@ public class DependencyGraphTest {
 
     List<String> result = graph.calculateOrder();
 
-    assertEquals(5, result.size());
+    Assert.assertEquals(5, result.size());
 
-    assertEquals(o11, result.get(0));
-    assertEquals(o121, result.get(1));
-    assertEquals(o2, result.get(2));
-    assertEquals(o12, result.get(3));
-    assertEquals(o1, result.get(4));
+    Assert.assertEquals(o11, result.get(0));
+    Assert.assertEquals(o121, result.get(1));
+    Assert.assertEquals(o2, result.get(2));
+    Assert.assertEquals(o12, result.get(3));
+    Assert.assertEquals(o1, result.get(4));
+
   }
 
   /**
@@ -87,7 +83,7 @@ public class DependencyGraphTest {
       graph.calculateOrder();
       Assert.fail();
     } catch (Ant4EclipseException ex) {
-      assertEquals(CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, ex.getExceptionCode());
+      Assert.assertEquals(CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, ex.getExceptionCode());
     }
   }
 
@@ -98,19 +94,19 @@ public class DependencyGraphTest {
 
     Edge<Object> edge_1 = new Edge<Object>(parent, child);
     Edge<Object> edge_2 = new Edge<Object>(parent, child);
-    assertEquals(edge_1.hashCode(), edge_2.hashCode());
-    assertEquals(edge_1, edge_2);
-    assertTrue(edge_1.equals(edge_1));
-    assertTrue(edge_2.equals(edge_2));
-    assertFalse(edge_1.equals(null));
-    assertFalse(edge_2.equals(null));
+    Assert.assertEquals(edge_1.hashCode(), edge_2.hashCode());
+    Assert.assertEquals(edge_1, edge_2);
+    Assert.assertTrue(edge_1.equals(edge_1));
+    Assert.assertTrue(edge_2.equals(edge_2));
+    Assert.assertFalse(edge_1.equals(null));
+    Assert.assertFalse(edge_2.equals(null));
 
     Edge<Object> edge_3 = new Edge<Object>(parent, new Object());
     Edge<Object> edge_4 = new Edge<Object>(new Object(), child);
-    assertFalse(edge_1.equals(edge_3));
-    assertFalse(edge_1.equals(edge_4));
+    Assert.assertFalse(edge_1.equals(edge_3));
+    Assert.assertFalse(edge_1.equals(edge_4));
 
-    assertFalse(edge_1.equals(new RuntimeException()));
+    Assert.assertFalse(edge_1.equals(new RuntimeException()));
   }
 
   @Test
@@ -135,11 +131,11 @@ public class DependencyGraphTest {
 
     List<String> result = graph.calculateOrder();
 
-    assertEquals("o3", result.get(0));
-    assertEquals("t2", result.get(1));
-    assertEquals("o2", result.get(2));
-    assertEquals("t1", result.get(3));
-    assertEquals("o1", result.get(4));
+    Assert.assertEquals("o3", result.get(0));
+    Assert.assertEquals("t2", result.get(1));
+    Assert.assertEquals("o2", result.get(2));
+    Assert.assertEquals("t1", result.get(3));
+    Assert.assertEquals("o1", result.get(4));
 
   }
 
