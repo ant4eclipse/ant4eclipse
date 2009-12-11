@@ -336,7 +336,7 @@ public class Utilities {
       }
     });
 
-    return (children.length > 0);
+    return children.length > 0;
   }
 
   public static final File getChild(File directory, final String childName) {
@@ -399,12 +399,12 @@ public class Utilities {
     try {
       frompath = fromfile.getCanonicalPath();
     } catch (IOException ex) {
-      return (null);
+      return null;
     }
     try {
       topath = tofile.getCanonicalPath();
     } catch (IOException ex) {
-      return (null);
+      return null;
     }
     String[] fromstr = frompath.replace('\\', '/').split("/");
     String[] tostr = topath.replace('\\', '/').split("/");
@@ -414,7 +414,7 @@ public class Utilities {
       /**
        * @todo [26-Feb-2006:KASI] Can this be omitted under UNIX ?
        */
-      return (null);
+      return null;
     }
     int same = 1;
     for (; same < Math.min(fromstr.length, tostr.length); same++) {
@@ -432,7 +432,7 @@ public class Utilities {
     if (buffer.length() > 0) {
       buffer.delete(0, File.separator.length());
     }
-    return (buffer.toString());
+    return buffer.toString();
   }
 
   /**
@@ -555,7 +555,7 @@ public class Utilities {
         buffer.append(token);
       }
     }
-    return (buffer.toString());
+    return buffer.toString();
   }
 
   /**
@@ -592,7 +592,7 @@ public class Utilities {
    * @return The text representing the content of the supplied map.
    */
   public static final String toString(Properties properties) {
-    return (toString(null, properties));
+    return toString(null, properties);
   }
 
   /**
@@ -618,7 +618,7 @@ public class Utilities {
       buffer.append("' -> '").append(entry.getValue()).append("'");
       buffer.append(NL);
     }
-    return (buffer.toString());
+    return buffer.toString();
   }
 
   /**
