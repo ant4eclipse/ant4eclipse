@@ -265,12 +265,16 @@ public class BundleDependenciesResolver {
         // get the bundle description
         BundleDescription reexportedBundle = (BundleDescription) specification.getSupplier();
 
-        // add the bundle description
-        resultSet.add(reexportedBundle);
+        // only add the re-exported bundle if it is not null
+        if (reexportedBundle != null) {
 
-        // add all re-exported bundle description recursively
-        for (BundleDescription rereexportedBundle : getReexportedBundles(reexportedBundle)) {
-          resultSet.add(rereexportedBundle);
+          // add the bundle description
+          resultSet.add(reexportedBundle);
+
+          // add all re-exported bundle description recursively
+          for (BundleDescription rereexportedBundle : getReexportedBundles(reexportedBundle)) {
+            resultSet.add(rereexportedBundle);
+          }
         }
       }
     }
