@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
@@ -125,11 +126,13 @@ public abstract class NLS {
     // Create holder for the messages. The put()-method of MessageProperties
     // will set a new property not only to the properties instance but
     // also to the appropriate field on "clazz"
-    Properties messages = new MessageProperties(clazz, nlsFields);
+    Properties messages = new Properties();
 
     // Load messages from properties files and set them (via MessageProperties)
     // to the appropriate fields on clazz
     loadProperties(messages, variants);
+
+    applyProperties(messages, clazz, nlsFields);
 
     // Determine fields that have not been set (because the property
     // is missing in the properties-file)
@@ -145,6 +148,38 @@ public abstract class NLS {
         } catch (Exception ex) {
           // should not happen
         }
+      }
+    }
+  }
+
+  /**
+   * Applies all values located within a properties file, so the fields will get translated values.
+   * 
+   * @param messages
+   *          The properties providing all messages. Not <code>null</code>.
+   * @param clazz
+   *          The class which is only used for reporting. Not <code>null</code>.
+   * @param fields
+   *          The fields which have to be recognized for the changes. Not <code>null</code>.
+   */
+  @SuppressWarnings("unchecked")
+  private static final void applyProperties(Properties messages, Class<?> clazz, Map<String, Field> fields) {
+    Enumeration<String> names = (Enumeration<String>) messages.propertyNames();
+    while (names.hasMoreElements()) {
+      String key = names.nextElement();
+      String value = messages.getProperty(key);
+      Field field = fields.get(key);
+      if (field == null) {
+        // Property not known
+        System.out.println("Message-Property '" + key + "' existiert nicht an Ziel-Klasse '" + clazz.getName() + "'");
+        continue;
+      }
+      Object fieldValue = getFieldValue(field, value);
+      try {
+        field.set(null, fieldValue);
+      } catch (Exception ex) {
+        System.err.println("Could not set field '" + field + "': " + ex);
+        continue;
       }
     }
   }
@@ -312,59 +347,5 @@ public abstract class NLS {
       }
     }
   }
-
-  /**
-   * MessageProperties holds the messages for a class
-   * 
-   * @author Nils Hartmann <nils@nilshartmann.net>
-   * @version $Revision$
-   */
-  private static class MessageProperties extends Properties {
-
-    /** the class this MessageProperties objects holds the messages for */
-    private Class<?>           _targetClass;
-
-    /** all the fields on the target class that can have messages assigned to */
-    private Map<String, Field> _fields;
-
-    public MessageProperties(Class<?> targetClass, Map<String, Field> fields) {
-      this._targetClass = targetClass;
-      this._fields = fields;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public synchronized Object put(Object key, Object value) {
-      if (containsKey(key)) {
-        // the given field has already been set. simply return it's first value (we don't want to override)
-        return super.get(key);
-      }
-
-      Field field = this._fields.get(key);
-
-      if (field == null) {
-        // Property not known
-        System.out.println("Message-Property '" + key + "' existiert nicht an Ziel-Klasse '" + this._targetClass + "'");
-        return null;
-      }
-
-      Object fieldValue = getFieldValue(field, (String) value);
-
-      try {
-        field.set(null, fieldValue);
-      } catch (Exception ex) {
-        System.err.println("Could not set field '" + field + "': " + ex);
-        return null;
-      }
-
-      // Avoid setting the field more than one time
-      super.put(key, fieldValue);
-
-      return null;
-    }
-
-  } /* ENDCLASS */
 
 } /* ENDCLASS */
