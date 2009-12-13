@@ -98,9 +98,9 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
     // fetch the provided files
     List<File> files = new LinkedList<File>();
     @SuppressWarnings("unchecked")
-    Iterator iterator = this._resources.iterator();
+    Iterator<FileResource> iterator = this._resources.iterator();
     while (iterator.hasNext()) {
-      FileResource fileResource = (FileResource) iterator.next();
+      FileResource fileResource = iterator.next();
       files.add(fileResource.getFile());
     }
 

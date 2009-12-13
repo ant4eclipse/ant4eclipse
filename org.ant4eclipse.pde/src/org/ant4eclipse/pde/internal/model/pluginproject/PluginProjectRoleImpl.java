@@ -56,7 +56,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
     Assure.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have PluginProjectRole!");
 
-    return (PluginProjectRoleImpl) eclipseProject.getRole(PluginProjectRoleImpl.class);
+    return eclipseProject.getRole(PluginProjectRoleImpl.class);
   }
 
   /**
@@ -140,7 +140,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
       Assure.assertTrue(hasJavaProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have PluginProjectRole!");
 
-      return (PluginProjectRoleImpl) eclipseProject.getRole(PluginProjectRoleImpl.class);
+      return eclipseProject.getRole(PluginProjectRoleImpl.class);
     }
 
     /**

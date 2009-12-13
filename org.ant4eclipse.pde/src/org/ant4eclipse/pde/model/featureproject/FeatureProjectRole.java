@@ -83,7 +83,7 @@ public interface FeatureProjectRole extends ProjectRole {
           + "\" must have FeatureProjectRole!");
 
       // returns the feature project role
-      return (FeatureProjectRole) eclipseProject.getRole(FeatureProjectRole.class);
+      return eclipseProject.getRole(FeatureProjectRole.class);
     }
 
     /**

@@ -127,6 +127,6 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    * @return the {@link JavaProjectRole} of the current project.
    */
   protected JavaProjectRole getCurrentJavaProjectRole(ClasspathResolverContext context) {
-    return JavaProjectRole.Helper.getJavaProjectRole(context.getCurrentProject());
+    return context.getCurrentProject().getRole(JavaProjectRole.class);
   }
 }

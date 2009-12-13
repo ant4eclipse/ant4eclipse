@@ -91,7 +91,7 @@ public interface PluginProjectRole extends ProjectRole {
       Assure.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have PluginProjectRole!");
 
-      return (PluginProjectRole) eclipseProject.getRole(PluginProjectRole.class);
+      return eclipseProject.getRole(PluginProjectRole.class);
     }
 
     /**

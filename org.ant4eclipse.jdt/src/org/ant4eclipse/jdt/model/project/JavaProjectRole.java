@@ -11,11 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.project;
 
-import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -129,26 +127,4 @@ public interface JavaProjectRole extends ProjectRole {
    */
   String getDefaultOutputFolder();
 
-  /**
-   * <p>
-   * Helper class that provides methods for retrieving the {@link JavaProjectRole} from a given {@link EclipseProject}.
-   * </p>
-   * 
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  public class Helper {
-
-    /**
-     * <p>
-     * Returns the {@link JavaProjectRole}. If a {@link JavaProjectRole} is not set, an exception will be thrown.
-     * </p>
-     * 
-     * @return the java project role.
-     */
-    public static final JavaProjectRole getJavaProjectRole(EclipseProject eclipseProject) {
-      return (JavaProjectRole) eclipseProject.getRole(JavaProjectRoleImpl.class);
-    }
-
-  }
 }

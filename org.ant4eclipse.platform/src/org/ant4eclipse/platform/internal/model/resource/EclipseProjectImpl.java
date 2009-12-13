@@ -410,7 +410,8 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
-  public ProjectRole getRole(Class<? extends ProjectRole> projectRoleClass) {
+  @SuppressWarnings("unchecked")
+  public <T extends ProjectRole> T getRole(Class<T> projectRoleClass) {
     Assure.notNull(projectRoleClass);
     Assure.assertTrue(hasRole(projectRoleClass), "hasRole(projectRoleClass) on project '" + getFolderName()
         + "'has to be true for role '" + projectRoleClass + "'!");
@@ -418,14 +419,13 @@ public final class EclipseProjectImpl implements EclipseProject {
     Iterator<ProjectRole> iterator = this._roles.iterator();
 
     ProjectRole role = null;
-
     while (iterator.hasNext()) {
       role = iterator.next();
       if (projectRoleClass.isAssignableFrom(role.getClass())) {
         break;
       }
     }
-    return role;
+    return (T) role;
   }
 
   /**

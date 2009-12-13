@@ -232,7 +232,7 @@ public interface EclipseProject {
    * @param projectRoleClass
    * @return Returns the role of the given type. If the role is not set, an exception will be thrown.
    */
-  ProjectRole getRole(Class<? extends ProjectRole> projectRoleClass);
+  <T extends ProjectRole> T getRole(Class<T> projectRoleClass);
 
   /**
    * <p>

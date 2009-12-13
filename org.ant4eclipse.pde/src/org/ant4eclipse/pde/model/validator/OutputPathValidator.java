@@ -56,7 +56,7 @@ public class OutputPathValidator extends AbstractProjectValidator {
     // check for it
     if (project.hasRole(JavaProjectRole.class)) {
 
-      JavaProjectRole javarole = (JavaProjectRole) project.getRole(JavaProjectRole.class);
+      JavaProjectRole javarole = project.getRole(JavaProjectRole.class);
 
       // get the output folders from the normal java nature
       File[] outputfolders = project.getChildren(javarole.getAllOutputFolders(),

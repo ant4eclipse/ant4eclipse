@@ -232,7 +232,7 @@ public class PythonResolver {
    */
   private List<RawPathEntry> loadEntries(EclipseProject project) {
     List<RawPathEntry> result = new ArrayList<RawPathEntry>();
-    PythonProjectRole role = (PythonProjectRole) project.getRole(PythonProjectRole.class);
+    PythonProjectRole role = project.getRole(PythonProjectRole.class);
     RawPathEntry[] entries = role.getRawPathEntries();
     for (RawPathEntry entry : entries) {
       if (entry.getKind() == ReferenceKind.Runtime) {

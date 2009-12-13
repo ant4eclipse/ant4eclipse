@@ -227,10 +227,10 @@ public class ClasspathEntryResolverExecutor {
 
     // assert raw class path entries
     // TODO: NLS
-    Assure.assertTrue(JavaProjectRole.Helper.getJavaProjectRole(project).hasRawClasspathEntries(), "");
+    Assure.assertTrue(project.getRole(JavaProjectRole.class).hasRawClasspathEntries(), "");
 
     // resolve the class path entries for this project
-    resolveClasspathEntries(JavaProjectRole.Helper.getJavaProjectRole(project).getRawClasspathEntries());
+    resolveClasspathEntries(project.getRole(JavaProjectRole.class).getRawClasspathEntries());
 
     // pop the project from the stack
     this._currentProject.pop();

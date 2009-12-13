@@ -96,7 +96,7 @@ public class PluginProjectChecker {
     this._issues = new LinkedList<Issue>();
 
     this._projectName = this._eclipseProject.getSpecifiedName();
-    this._pluginProjectRole = (PluginProjectRole) this._eclipseProject.getRole(PluginProjectRole.class);
+    this._pluginProjectRole = this._eclipseProject.getRole(PluginProjectRole.class);
     this._buildProperties = this._pluginProjectRole.getBuildProperties();
     this._binaryIncludesList = Arrays.asList(this._buildProperties.getBinaryIncludes());
     this._binaryExcludesList = Arrays.asList(this._buildProperties.getBinaryExcludes());

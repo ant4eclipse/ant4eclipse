@@ -45,7 +45,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
     Assure.assertTrue(hasCvsProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have CvsProjectRole!");
 
-    return (CvsProjectRole) eclipseProject.getRole(CvsProjectRole.class);
+    return eclipseProject.getRole(CvsProjectRole.class);
   }
 
   /**

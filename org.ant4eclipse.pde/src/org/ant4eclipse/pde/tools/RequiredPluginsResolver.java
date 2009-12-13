@@ -59,7 +59,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
     // Step 1: get the plug-in project role
     EclipseProject eclipseProject = context.getCurrentProject();
-    PluginProjectRole pluginProjectRole = (PluginProjectRole) eclipseProject.getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = eclipseProject.getRole(PluginProjectRole.class);
 
     // Step 2: get the bundle description
     BundleDescription pluginProjectDescription = pluginProjectRole.getBundleDescription();

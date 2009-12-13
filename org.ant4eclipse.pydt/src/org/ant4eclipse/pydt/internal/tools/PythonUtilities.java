@@ -62,7 +62,7 @@ public class PythonUtilities {
   public static final boolean isPyDevProject(EclipseProject project) {
     Assure.notNull(project);
     if (project.hasRole(PyDevProjectRole.class)) {
-      PythonProjectRole role = (PythonProjectRole) project.getRole(PyDevProjectRole.class);
+      PythonProjectRole role = project.getRole(PyDevProjectRole.class);
       return !role.isDLTK();
     } else {
       return false;
@@ -80,7 +80,7 @@ public class PythonUtilities {
   public static final boolean isPyDLTKProject(EclipseProject project) {
     Assure.notNull(project);
     if (project.hasRole(DLTKProjectRole.class)) {
-      PythonProjectRole role = (PythonProjectRole) project.getRole(DLTKProjectRole.class);
+      PythonProjectRole role = project.getRole(DLTKProjectRole.class);
       return role.isDLTK();
     } else {
       return false;

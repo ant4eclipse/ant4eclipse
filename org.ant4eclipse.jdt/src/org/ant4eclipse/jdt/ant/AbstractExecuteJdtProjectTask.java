@@ -78,7 +78,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    */
   protected final JavaProjectRole getJavaProjectRole() {
-    return JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
+    return getEclipseProject().getRole(JavaProjectRole.class);
   }
 
   /**
