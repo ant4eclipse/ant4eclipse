@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -34,7 +32,7 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
+public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
   /** The factory used to build projects */
   private ProjectFactory         _projectFactory;
