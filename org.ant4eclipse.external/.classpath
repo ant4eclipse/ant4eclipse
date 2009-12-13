@@ -6,6 +6,11 @@
 	<classpathentry exported="true" kind="lib" path="libs/equinox/org.eclipse.osgi_3.5.0.v20090520.jar" sourcepath="libs/equinox/org.eclipse.osgi.source_3.5.0.v20090520.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/ecj/ecj-3.5.jar" sourcepath="libs/ecj/ecjsrc-3.5.zip"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.core"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.cdt"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.jdt"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.pde"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.platform"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.pydt"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
