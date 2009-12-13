@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 import org.ant4eclipse.pydt.ant.usedargs.UsedProjectsArgumentComponent;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;

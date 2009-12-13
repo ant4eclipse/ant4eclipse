@@ -16,10 +16,10 @@ import org.ant4eclipse.platform.ant.core.SubElementComponent;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetBasedTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
 
 import java.util.Iterator;

@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.PlatformExceptionCode;
+import org.ant4eclipse.lib.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Cvs;
 

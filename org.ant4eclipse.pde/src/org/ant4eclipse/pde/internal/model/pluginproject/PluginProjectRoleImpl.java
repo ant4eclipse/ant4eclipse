@@ -14,10 +14,10 @@ package org.ant4eclipse.pde.internal.model.pluginproject;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**

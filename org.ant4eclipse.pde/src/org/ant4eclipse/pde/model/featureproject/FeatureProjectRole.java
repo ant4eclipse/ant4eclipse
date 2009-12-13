@@ -13,7 +13,7 @@ package org.ant4eclipse.pde.model.featureproject;
 
 import org.ant4eclipse.pde.model.buildproperties.FeatureBuildProperties;
 
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
  * <p>

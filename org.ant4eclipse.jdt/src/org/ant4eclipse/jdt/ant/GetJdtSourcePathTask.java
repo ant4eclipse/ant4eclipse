@@ -15,8 +15,8 @@ import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

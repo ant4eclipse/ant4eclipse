@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.platform.ant.core;
 
-import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

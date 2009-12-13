@@ -16,13 +16,13 @@ import static org.junit.Assert.assertSame;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
-import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
-import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
+import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
+import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.Test;

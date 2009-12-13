@@ -17,7 +17,8 @@ import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;
 

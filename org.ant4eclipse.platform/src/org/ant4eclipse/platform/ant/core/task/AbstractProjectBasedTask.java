@@ -15,10 +15,10 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 
 import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

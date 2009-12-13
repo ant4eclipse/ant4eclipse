@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.cdt.model.project;
 
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
  * CProjectRole --

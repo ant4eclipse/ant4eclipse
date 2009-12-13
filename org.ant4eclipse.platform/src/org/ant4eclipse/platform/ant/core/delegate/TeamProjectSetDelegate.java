@@ -14,10 +14,10 @@ package org.ant4eclipse.platform.ant.core.delegate;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 
 import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFileParser;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

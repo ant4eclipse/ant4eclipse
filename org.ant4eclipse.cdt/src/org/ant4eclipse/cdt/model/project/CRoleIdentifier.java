@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.cdt.model.project;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
 import org.ant4eclipse.cdt.internal.model.project.CProjectRoleImpl;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
 /**
  * <p>

@@ -17,10 +17,10 @@ import org.ant4eclipse.jdt.internal.tools.classpathentry.ProjectClasspathEntryRe
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 
 import java.util.LinkedList;
 import java.util.List;

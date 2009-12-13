@@ -22,9 +22,9 @@ import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;

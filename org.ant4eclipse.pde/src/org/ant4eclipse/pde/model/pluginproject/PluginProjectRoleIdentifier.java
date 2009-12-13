@@ -15,12 +15,12 @@ import org.ant4eclipse.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.pde.internal.model.pluginproject.PluginProjectRoleImpl;
 import org.ant4eclipse.pde.model.buildproperties.BuildPropertiesParser;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**

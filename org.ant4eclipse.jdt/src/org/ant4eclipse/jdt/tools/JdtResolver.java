@@ -24,9 +24,9 @@ import org.ant4eclipse.jdt.internal.tools.classpathentry.SourceClasspathEntryRes
 import org.ant4eclipse.jdt.internal.tools.classpathentry.VariableClasspathEntryResolver;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;
 

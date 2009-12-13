@@ -17,12 +17,12 @@ import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.EmptyStackException;
 import java.util.LinkedList;

@@ -16,9 +16,9 @@ import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.PluginProjectChecker.Issue.IssueLevel;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.io.File;
 import java.util.Arrays;

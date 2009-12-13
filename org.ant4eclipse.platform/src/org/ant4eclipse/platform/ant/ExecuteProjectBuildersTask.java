@@ -15,8 +15,8 @@ import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
-import org.ant4eclipse.platform.model.resource.BuildCommand;
 
+import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 

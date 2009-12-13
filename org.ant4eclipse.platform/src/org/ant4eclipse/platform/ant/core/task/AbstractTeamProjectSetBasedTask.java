@@ -15,7 +15,8 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 
 import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
 import org.ant4eclipse.platform.ant.core.delegate.TeamProjectSetDelegate;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
+
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 
 import java.io.File;
 

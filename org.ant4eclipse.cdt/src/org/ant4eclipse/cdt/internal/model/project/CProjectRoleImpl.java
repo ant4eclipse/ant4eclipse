@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.cdt.internal.model.project;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
 import org.ant4eclipse.cdt.model.project.CProjectRole;
+
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 
 /**
  * <p>

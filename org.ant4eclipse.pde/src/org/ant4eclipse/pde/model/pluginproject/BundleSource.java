@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.pluginproject;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.util.ManifestElement;
 import org.osgi.framework.Constants;

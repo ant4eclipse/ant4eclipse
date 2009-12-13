@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 import org.apache.tools.ant.Project;
 
 import java.io.File;

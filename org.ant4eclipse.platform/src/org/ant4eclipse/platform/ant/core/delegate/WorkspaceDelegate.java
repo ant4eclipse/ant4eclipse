@@ -14,12 +14,12 @@ package org.ant4eclipse.platform.ant.core.delegate;
 import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 
 import org.ant4eclipse.platform.ant.core.WorkspaceComponent;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
-import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
+import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

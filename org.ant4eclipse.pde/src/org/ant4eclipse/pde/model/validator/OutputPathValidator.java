@@ -16,9 +16,9 @@ import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.platform.model.resource.validator.AbstractProjectValidator;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.validator.AbstractProjectValidator;
 
 import java.io.File;
 import java.util.HashSet;

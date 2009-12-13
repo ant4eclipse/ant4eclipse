@@ -27,12 +27,12 @@ import org.ant4eclipse.platform.ant.core.GetPathComponent;
 import org.ant4eclipse.platform.ant.core.delegate.GetPathDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectPathTask;
-import org.ant4eclipse.platform.model.resource.Workspace;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;

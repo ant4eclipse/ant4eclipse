@@ -21,9 +21,9 @@ import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetPathBasedTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;

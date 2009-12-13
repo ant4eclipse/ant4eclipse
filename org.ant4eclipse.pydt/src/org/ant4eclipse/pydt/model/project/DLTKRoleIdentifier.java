@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.model.project;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.pydt.internal.model.project.PythonProjectRoleImpl;
 import org.ant4eclipse.pydt.internal.tools.DLTKParser;
 
