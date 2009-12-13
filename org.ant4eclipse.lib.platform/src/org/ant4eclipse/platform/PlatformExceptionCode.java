@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform;
 
-import org.ant4eclipse.platform.ant.team.TeamExceptionCode;
+import org.ant4eclipse.platform.model.team.TeamExceptionCode;
 
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 import org.ant4eclipse.lib.core.nls.NLS;
