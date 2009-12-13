@@ -20,6 +20,7 @@ import org.ant4eclipse.jdt.tools.classpathelements.ClassPathVariable;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 
 import java.io.File;
 
@@ -67,7 +68,7 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
     }
 
     // get variablesRegistry
-    ClassPathElementsRegistry elementsRegistry = ClassPathElementsRegistry.Helper.getRegistry();
+    ClassPathElementsRegistry elementsRegistry = ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
 
     // resolve variable
     if (elementsRegistry.hasClassPathVariable(variable)) {

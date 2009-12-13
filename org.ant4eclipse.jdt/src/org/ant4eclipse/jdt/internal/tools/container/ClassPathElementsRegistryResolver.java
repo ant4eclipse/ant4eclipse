@@ -18,6 +18,8 @@ import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+
 /**
  * <p>
  * </p>
@@ -48,6 +50,6 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
    * @return
    */
   private ClassPathElementsRegistry getClassPathElementsRegistry() {
-    return ClassPathElementsRegistry.Helper.getRegistry();
+    return ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
   }
 }

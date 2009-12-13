@@ -13,8 +13,6 @@ package org.ant4eclipse.jdt.tools.classpathelements;
 
 import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-
 import java.io.File;
 import java.util.List;
 
@@ -132,22 +130,4 @@ public interface ClassPathElementsRegistry {
    */
   List<ClassPathVariable> getClasspathVariables();
 
-  /**
-   * <p>
-   * Helper class to fetch the {@link ClassPathElementsRegistry} instance from the {@link ServiceRegistry}.
-   * </p>
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link ClassPathElementsRegistry} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link ClassPathElementsRegistry}
-     */
-    public static ClassPathElementsRegistry getRegistry() {
-      return ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
-    }
-  }
 }

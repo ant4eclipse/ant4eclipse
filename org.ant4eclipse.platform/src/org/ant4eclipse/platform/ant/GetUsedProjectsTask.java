@@ -17,6 +17,7 @@ import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 
@@ -208,7 +209,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
      * @todo [09-Jul-2009:KASI] The inner convenience classes located in service interfaces should be removed. I'm just
      *       using this shortcut here in order to support refactoring in future.
      */
-    return ReferencedProjectsResolverService.Helper.getService();
+    return ServiceRegistry.instance().getService(ReferencedProjectsResolverService.class);
   }
 
 } /* ENDCLASS */

@@ -22,6 +22,7 @@ import org.ant4eclipse.platform.model.resource.workspaceregistry.DefaultEclipseW
 import org.ant4eclipse.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
 
   @Test
   public void buildOrder() {
-    WorkspaceRegistry workspaceRegistry = WorkspaceRegistry.Helper.getRegistry();
+    WorkspaceRegistry workspaceRegistry = ServiceRegistry.instance().getService(WorkspaceRegistry.class);
     Workspace workspace = workspaceRegistry.registerWorkspace(this._testWorkspace.getRootDir().getAbsolutePath(),
         new DefaultEclipseWorkspaceDefinition(this._testWorkspace.getRootDir()));
 

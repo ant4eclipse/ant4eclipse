@@ -17,6 +17,7 @@ import org.ant4eclipse.platform.ant.core.TeamProjectSetComponent;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -94,6 +95,6 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    */
   private TeamProjectSet readTeamProjectSet() {
     requireTeamProjectSetSet();
-    return TeamProjectSetFileParser.Helper.getInstance().parseTeamProjectSetFile(this._teamProjectSetFile);
+    return ServiceRegistry.instance().getService(TeamProjectSetFileParser.class).parseTeamProjectSetFile(this._teamProjectSetFile);
   }
 }

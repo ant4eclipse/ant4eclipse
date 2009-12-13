@@ -13,8 +13,6 @@ package org.ant4eclipse.platform.tools;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-
 import java.util.List;
 
 /**
@@ -70,19 +68,4 @@ public interface ReferencedProjectsResolverService {
    */
   List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements);
 
-  /**
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link ReferencedProjectsResolverService} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link ReferencedProjectsResolverService}
-     */
-    public static ReferencedProjectsResolverService getService() {
-      return ServiceRegistry.instance().getService(ReferencedProjectsResolverService.class);
-    }
-  }
 }

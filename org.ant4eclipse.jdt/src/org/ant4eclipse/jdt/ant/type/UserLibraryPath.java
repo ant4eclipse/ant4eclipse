@@ -20,6 +20,7 @@ import org.ant4eclipse.jdt.model.userlibrary.UserLibrary;
 import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 
@@ -69,7 +70,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    */
   private void loadConfigurationFile() {
     try {
-      UserLibrariesFileParser parser = UserLibrariesFileParser.Helper.getUserLibrariesFileParser();
+      UserLibrariesFileParser parser = ServiceRegistry.instance().getService(UserLibrariesFileParser.class);
 
       UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile);
       String[] libs = userlibs.getAvailableLibraries();
@@ -85,7 +86,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
         getProject().addReference(PREFIX + lib, path);
 
         // add it to the ClassPathElementsRegistry
-        ClassPathElementsRegistry.Helper.getRegistry().registerClassPathContainer(PREFIX + library.getName(),
+        ServiceRegistry.instance().getService(ClassPathElementsRegistry.class).registerClassPathContainer(PREFIX + library.getName(),
             library.getArchiveFiles());
       }
     } catch (Exception ex) {

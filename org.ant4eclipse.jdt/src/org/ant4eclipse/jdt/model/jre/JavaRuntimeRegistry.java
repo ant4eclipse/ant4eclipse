@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.model.jre;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-
 import java.io.File;
 
 /**
@@ -120,22 +118,4 @@ public interface JavaRuntimeRegistry {
    */
   JavaProfile getJavaProfile(String id);
 
-  /**
-   * <p>
-   * Helper class to fetch the {@link JavaRuntimeRegistry} instance from the {@link ServiceRegistry}.
-   * </p>
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link JavaRuntimeRegistry} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link JavaRuntimeRegistry}
-     */
-    public static JavaRuntimeRegistry getRegistry() {
-      return ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
-    }
-  }
 }

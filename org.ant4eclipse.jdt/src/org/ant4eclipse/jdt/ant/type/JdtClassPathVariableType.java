@@ -15,6 +15,7 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
 import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -111,7 +112,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
       throw new BuildException("Missing parameter 'name' on classpathVariable!");
     }
 
-    ClassPathElementsRegistry variablesRegistry = ClassPathElementsRegistry.Helper.getRegistry();
+    ClassPathElementsRegistry variablesRegistry = ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
 
     // TODO: what to do if classpathVariable already registered?
     variablesRegistry.registerClassPathVariable(this._name, this._path);
