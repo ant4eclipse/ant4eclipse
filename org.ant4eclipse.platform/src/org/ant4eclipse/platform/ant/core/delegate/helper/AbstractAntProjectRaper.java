@@ -165,8 +165,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * @exception NoSuchFieldException
    *              Darn, nothing to fondle.
    */
-  @SuppressWarnings("unchecked")
-  public static Field getField(Class thisClass, String fieldName) throws NoSuchFieldException {
+  public static Field getField(Class<?> thisClass, String fieldName) throws NoSuchFieldException {
     if (thisClass == null) {
       throw new NoSuchFieldException("Invalid field : " + fieldName);
     }
@@ -192,17 +191,17 @@ public abstract class AbstractAntProjectRaper<V> {
      * @param key
      * @return
      */
-    public V getValue(String key);
+    V getValue(String key);
 
     /**
      * @param key
      * @param value
      */
-    public void setValue(String key, V value);
+    void setValue(String key, V value);
 
     /**
      * @param key
      */
-    public void unsetValue(String key);
+    void unsetValue(String key);
   }
 }
