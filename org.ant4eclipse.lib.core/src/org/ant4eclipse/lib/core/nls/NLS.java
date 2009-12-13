@@ -163,7 +163,7 @@ public abstract class NLS {
    */
   private static final String getDefaultMessage(Field field) {
     NLSMessage nlsMessage = field.getAnnotation(NLSMessage.class);
-    if ((nlsMessage.value() == null) || (nlsMessage.value().trim().length() == 0)) {
+    if ((nlsMessage == null) || (nlsMessage.value() == null) || (nlsMessage.value().trim().length() == 0)) {
       return String.format(MSG_DEFAULTMESSAGE, field);
     }
     return nlsMessage.value();
