@@ -28,6 +28,7 @@ import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 import java.util.List;
@@ -150,7 +151,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   private TargetPlatform getTargetPlatform(ClasspathResolverContext context) {
 
     // get the TargetPlatform
-    TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
+    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
 
     // get the target platform argument
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");

@@ -15,8 +15,6 @@ import org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType;
 
 import org.ant4eclipse.platform.model.resource.Workspace;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-
 import java.util.List;
 
 /**
@@ -111,19 +109,4 @@ public interface TargetPlatformRegistry {
    */
   boolean hasCurrent();
 
-  /**
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link TargetPlatformRegistry} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link TargetPlatformRegistry}
-     */
-    public static TargetPlatformRegistry getRegistry() {
-      return ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
-    }
-  }
 }

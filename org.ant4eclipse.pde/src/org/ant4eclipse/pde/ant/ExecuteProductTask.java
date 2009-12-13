@@ -31,6 +31,7 @@ import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
@@ -239,8 +240,8 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     configuration.setPreferProjects(true);
 
     // fetch the target platform
-    TargetPlatform targetplatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
-        getTargetPlatformId(), configuration);
+    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
+    TargetPlatform targetplatform = registry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
 
     StringMap properties = new StringMap();
     contributeForAll(properties, productdef, targetplatform);
