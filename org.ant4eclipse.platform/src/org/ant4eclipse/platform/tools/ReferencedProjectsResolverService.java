@@ -82,8 +82,7 @@ public interface ReferencedProjectsResolverService {
      * @return the registered {@link ReferencedProjectsResolverService}
      */
     public static ReferencedProjectsResolverService getService() {
-      return (ReferencedProjectsResolverService) ServiceRegistry.instance().getService(
-          ReferencedProjectsResolverService.class.getName());
+      return ServiceRegistry.instance().getService(ReferencedProjectsResolverService.class);
     }
   }
 }

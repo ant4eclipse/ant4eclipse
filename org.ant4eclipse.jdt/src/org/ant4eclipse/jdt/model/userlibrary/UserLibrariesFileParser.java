@@ -47,7 +47,7 @@ public interface UserLibrariesFileParser {
      * @return the registered {@link UserLibrariesFileParser}
      */
     public static UserLibrariesFileParser getUserLibrariesFileParser() {
-      return (UserLibrariesFileParser) ServiceRegistry.instance().getService(UserLibrariesFileParser.class.getName());
+      return ServiceRegistry.instance().getService(UserLibrariesFileParser.class);
     }
   }
 } /* ENDCLASS */

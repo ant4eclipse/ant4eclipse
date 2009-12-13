@@ -44,8 +44,7 @@ public interface LaunchConfigurationReader {
      * @return the registered {@link LaunchConfigurationReader}
      */
     public static LaunchConfigurationReader getReader() {
-      return (LaunchConfigurationReader) ServiceRegistry.instance().getService(
-          LaunchConfigurationReader.class.getName());
+      return ServiceRegistry.instance().getService(LaunchConfigurationReader.class);
     }
   }
 

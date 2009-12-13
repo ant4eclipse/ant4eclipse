@@ -100,8 +100,7 @@ public class JavaRuntimeLoader {
 
     String javaProfileName = getVmProfile(properties);
 
-    JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
-        JavaRuntimeRegistry.class.getName());
+    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
     JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile(javaProfileName);
 
     JavaRuntime javaRuntime = new JavaRuntimeImpl(id, location, libraries, javaVersion, javaSpecificationVersion,

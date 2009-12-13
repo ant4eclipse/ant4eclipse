@@ -135,7 +135,7 @@ public interface JavaRuntimeRegistry {
      * @return the registered {@link JavaRuntimeRegistry}
      */
     public static JavaRuntimeRegistry getRegistry() {
-      return (JavaRuntimeRegistry) ServiceRegistry.instance().getService(JavaRuntimeRegistry.class.getName());
+      return ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
     }
   }
 }

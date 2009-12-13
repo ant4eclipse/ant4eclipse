@@ -147,8 +147,7 @@ public interface ClassPathElementsRegistry {
      * @return the registered {@link ClassPathElementsRegistry}
      */
     public static ClassPathElementsRegistry getRegistry() {
-      return (ClassPathElementsRegistry) ServiceRegistry.instance().getService(
-          ClassPathElementsRegistry.class.getName());
+      return ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
     }
   }
 }

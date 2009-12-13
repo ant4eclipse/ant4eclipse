@@ -21,7 +21,7 @@ public interface TeamProjectSetFileParser {
 
   class Helper {
     public static TeamProjectSetFileParser getInstance() {
-      return (TeamProjectSetFileParser) ServiceRegistry.instance().getService(TeamProjectSetFileParser.class.getName());
+      return ServiceRegistry.instance().getService(TeamProjectSetFileParser.class);
     }
   }
 

@@ -123,7 +123,7 @@ public interface TargetPlatformRegistry {
      * @return the registered {@link TargetPlatformRegistry}
      */
     public static TargetPlatformRegistry getRegistry() {
-      return (TargetPlatformRegistry) ServiceRegistry.instance().getService(TargetPlatformRegistry.class.getName());
+      return ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
     }
   }
 }

@@ -174,30 +174,12 @@ public class ServiceRegistry {
    */
   @SuppressWarnings("unchecked")
   public <T> T getService(Class<T> serviceType) {
-    return (T) getService(serviceType.getName());
-  }
-
-  /**
-   * <p>
-   * Gives access to a specific service.
-   * </p>
-   * 
-   * @param serviceIdentifier
-   *          The identifier used to select a service.
-   * 
-   * @return The service instance. Not <code>null</code>.
-   * 
-   * @throws Ant4EclipseException
-   *           if the desired service is not available.
-   */
-  public final Object getService(String serviceIdentifier) {
-    Object result = this._serviceMap.get(serviceIdentifier);
-
+    Object result = this._serviceMap.get(serviceType.getName());
     if (result == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceIdentifier);
+      throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceType.getName());
     }
+    return (T) result;
 
-    return result;
   }
 
   /**

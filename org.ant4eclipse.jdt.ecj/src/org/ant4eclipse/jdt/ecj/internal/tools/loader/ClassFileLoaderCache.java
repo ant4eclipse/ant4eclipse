@@ -40,6 +40,6 @@ public class ClassFileLoaderCache {
   }
 
   public static ClassFileLoaderCache getInstance() {
-    return (ClassFileLoaderCache) ServiceRegistry.instance().getService(ClassFileLoaderCache.class.getName());
+    return ServiceRegistry.instance().getService(ClassFileLoaderCache.class);
   }
 }

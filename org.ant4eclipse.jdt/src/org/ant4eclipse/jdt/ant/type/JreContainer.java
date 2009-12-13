@@ -78,8 +78,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     boolean isDefault = runtime.getId().equals(this._defaultJre);
 
-    JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
-        JavaRuntimeRegistry.class.getName());
+    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
 
     JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation());
 

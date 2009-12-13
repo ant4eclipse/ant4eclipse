@@ -343,7 +343,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   }
 
   private JavaRuntimeRegistry getJavaRuntimeRegistry() {
-    return (JavaRuntimeRegistry) ServiceRegistry.instance().getService(JavaRuntimeRegistry.class.getName());
+    return ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
   }
 
   /**

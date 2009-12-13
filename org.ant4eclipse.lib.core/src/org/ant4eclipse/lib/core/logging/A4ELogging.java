@@ -107,7 +107,7 @@ public class A4ELogging {
    * @return An instance of a logger currently provided by the registry. Not <code>null</code>.
    */
   private static final Ant4EclipseLogger getLogger() {
-    return (Ant4EclipseLogger) ServiceRegistry.instance().getService(Ant4EclipseLogger.class.getName());
+    return ServiceRegistry.instance().getService(Ant4EclipseLogger.class);
   }
 
 } /* ENDCLASS */

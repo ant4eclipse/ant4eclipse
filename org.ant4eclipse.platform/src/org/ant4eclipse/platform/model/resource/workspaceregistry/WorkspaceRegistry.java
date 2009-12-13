@@ -115,7 +115,7 @@ public interface WorkspaceRegistry extends Lifecycle {
      * @return the registered {@link WorkspaceRegistry}
      */
     public static WorkspaceRegistry getRegistry() {
-      return (WorkspaceRegistry) ServiceRegistry.instance().getService(WorkspaceRegistry.class.getName());
+      return ServiceRegistry.instance().getService(WorkspaceRegistry.class);
     }
   }
 

@@ -20,40 +20,6 @@ import org.junit.Test;
 public class ServiceRegistryTest {
 
   @Test
-  public void serviceRegistry() {
-
-    final Object object1 = new Object();
-    final Object object2 = new Object();
-
-    // 
-    ServiceRegistry.configure(new ServiceRegistryConfiguration() {
-
-      public void configure(ConfigurationContext context) {
-        context.registerService(object1, "test1");
-        context.registerService(object2, new String[] { "test2", "test3" });
-      }
-    });
-
-    Assert.assertTrue(ServiceRegistry.instance().hasService("test1"));
-    Assert.assertTrue(ServiceRegistry.instance().hasService("test2"));
-    Assert.assertTrue(ServiceRegistry.instance().hasService("test3"));
-
-    Assert.assertEquals(ServiceRegistry.instance().getService("test1"), object1);
-    Assert.assertEquals(ServiceRegistry.instance().getService("test2"), object2);
-    Assert.assertEquals(ServiceRegistry.instance().getService("test3"), object2);
-
-    // 
-    try {
-      ServiceRegistry.instance().getService("not there");
-      Assert.fail();
-    } catch (Ant4EclipseException e) {
-      Assert.assertEquals("Service 'not there' is not available.", e.getMessage());
-    }
-
-    ServiceRegistry.reset();
-  }
-
-  @Test
   public void nullService() {
 
     try {
@@ -147,7 +113,7 @@ public class ServiceRegistryTest {
     });
 
     Assert.assertTrue(ServiceRegistry.instance().hasService(DummyService.class.getName()));
-    DummyService service = (DummyService) ServiceRegistry.instance().getService(DummyService.class.getName());
+    DummyService service = ServiceRegistry.instance().getService(DummyService.class);
     Assert.assertEquals(dummyService, service);
     Assert.assertTrue(dummyService.isInitialized());
 
