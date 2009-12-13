@@ -100,6 +100,9 @@ public abstract class NLS {
   /** - */
   private static final String MSG_COULDNOTSETFIELD         = "Could not set field '%s': %s\n";
 
+  /** - */
+  private static final String MSG_COULDNOTREADPROPERTIES   = "Could not read properties file '%s': %s\n";
+
   /** The file extensions for files that contain messages */
   private static final String EXTENSION                    = ".properties";
 
@@ -343,8 +346,11 @@ public abstract class NLS {
           messages.load(is);
         }
       } catch (IOException ex) {
-        System.err.println("Could not read properties file '" + variant + "': " + ex);
-        continue;
+        /**
+         * @todo [13-Dec-2009:KASI] This should cause a RuntimeException as there's something wrong in the application
+         *       setup.
+         */
+        System.err.printf(MSG_COULDNOTREADPROPERTIES, variant, ex.getMessage());
       } finally {
         Utilities.close(is);
       }
