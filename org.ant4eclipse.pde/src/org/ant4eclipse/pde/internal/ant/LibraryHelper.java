@@ -51,7 +51,7 @@ public class LibraryHelper {
   public static Library[] getLibraries(EclipseProject eclipseProject) {
 
     // get the plug-in project role
-    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(eclipseProject);
+    PluginProjectRole pluginProjectRole = eclipseProject.getRole(PluginProjectRole.class);
 
     // get the libraries
     PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();

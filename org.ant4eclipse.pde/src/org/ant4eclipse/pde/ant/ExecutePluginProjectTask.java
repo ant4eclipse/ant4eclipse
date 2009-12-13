@@ -200,7 +200,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
   private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) {
 
     // get the plug-in project role
-    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+    PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
 
     // get the bundle source
     BundleSource bundleSource = (BundleSource) pluginProjectRole.getBundleDescription().getUserObject();

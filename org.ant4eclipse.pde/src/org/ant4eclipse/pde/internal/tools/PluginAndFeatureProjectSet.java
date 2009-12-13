@@ -62,12 +62,12 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
     for (EclipseProject eclipseProject : eclipseProjects) {
 
       // add plug-in projects
-      if (PluginProjectRole.Helper.hasPluginProjectRole(eclipseProject)) {
-        addBundleDescription(PluginProjectRole.Helper.getPluginProjectRole(eclipseProject).getBundleDescription());
+      if (eclipseProject.hasRole(PluginProjectRole.class)) {
+        addBundleDescription(eclipseProject.getRole(PluginProjectRole.class).getBundleDescription());
       }
       // add feature projects
-      else if (FeatureProjectRole.Helper.hasFeatureProjectRole(eclipseProject)) {
-        FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(eclipseProject);
+      else if (eclipseProject.hasRole(FeatureProjectRole.class)) {
+        FeatureProjectRole featureProjectRole = eclipseProject.getRole(FeatureProjectRole.class);
         addFeaturesDescription(new FeatureDescription(eclipseProject, featureProjectRole.getFeatureManifest()));
       }
     }

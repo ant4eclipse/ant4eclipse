@@ -362,9 +362,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
               .getSpecifiedName()));
     }
 
-    this._buildProperties = getEclipseProject().hasRole(PluginProjectRole.class) ? PluginProjectRole.Helper
-        .getPluginProjectRole(getEclipseProject()).getBuildProperties() : FeatureProjectRole.Helper
-        .getFeatureProjectRole(getEclipseProject()).getBuildProperties();
+    this._buildProperties = getEclipseProject().hasRole(PluginProjectRole.class) ? getEclipseProject().getRole(PluginProjectRole.class).getBuildProperties() : getEclipseProject().getRole(FeatureProjectRole.class).getBuildProperties();
 
     // nothing to do if no inclusion pattern is defined
     if (this._sourceBundle && (!this._buildProperties.hasSourceIncludes())) {

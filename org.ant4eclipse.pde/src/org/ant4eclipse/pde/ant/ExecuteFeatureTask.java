@@ -520,7 +520,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     // let the target platform resolve the feature
     // case 1: pde feature project
     if (isProjectNameSet()) {
-      FeatureManifest featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject())
+      FeatureManifest featureManifest = getEclipseProject().getRole(FeatureProjectRole.class)
           .getFeatureManifest();
       return targetPlatform.resolveFeature(getEclipseProject(), featureManifest);
     }
