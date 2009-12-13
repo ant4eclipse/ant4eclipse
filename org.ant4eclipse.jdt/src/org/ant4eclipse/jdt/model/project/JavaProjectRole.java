@@ -18,7 +18,6 @@ import org.ant4eclipse.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 
 /**
@@ -148,23 +147,8 @@ public interface JavaProjectRole extends ProjectRole {
      * @return the java project role.
      */
     public static final JavaProjectRole getJavaProjectRole(EclipseProject eclipseProject) {
-      Assure.assertTrue(hasJavaProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-          + "\" must have JavaProjectRole!");
-
       return (JavaProjectRole) eclipseProject.getRole(JavaProjectRoleImpl.class);
     }
 
-    /**
-     * <p>
-     * Returns whether a {@link JavaProjectRole} is set or not.
-     * </p>
-     * 
-     * @return Returns whether a {@link JavaProjectRole} is set or not.
-     */
-    public static final boolean hasJavaProjectRole(EclipseProject eclipseProject) {
-      Assure.notNull(eclipseProject);
-
-      return eclipseProject.hasRole(JavaProjectRoleImpl.class);
-    }
   }
 }

@@ -146,7 +146,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     // declare result
     List<File> result = new LinkedList<File>();
 
-    if (JavaProjectRole.Helper.hasJavaProjectRole(this._eclipseProject)) {
+    if (this._eclipseProject.hasRole(JavaProjectRole.class)) {
       JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(this._eclipseProject);
 
       String[] sourcefolders = javaProjectRole.getSourceFolders();

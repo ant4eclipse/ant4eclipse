@@ -38,7 +38,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    * {@inheritDoc}
    */
   public boolean canHandle(EclipseProject project) {
-    return JavaProjectRole.Helper.hasJavaProjectRole(project);
+    return project.hasRole(JavaProjectRole.class);
   }
 
   /**
