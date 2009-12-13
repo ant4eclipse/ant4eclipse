@@ -36,7 +36,7 @@ import java.util.Set;
 public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
   /** the path of ant4eclipse configurations */
-  public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
+  public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/lib/ant4eclipse-configuration.properties";
 
   /** <b>All</b> configuration properties */
   private StringMap          _properties;
