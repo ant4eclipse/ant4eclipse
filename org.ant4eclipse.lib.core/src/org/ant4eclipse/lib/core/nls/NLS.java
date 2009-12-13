@@ -94,6 +94,12 @@ public abstract class NLS {
   /** - */
   private static final String MSG_COULDNOTINSTANTIATECLASS = "The class '%s' could not be instantiated using constructor '%s'";
 
+  /** - */
+  private static final String MSG_UNKNOWNPROPERTY          = "Message-Property '%s' does not exist at class '%s'\n";
+
+  /** - */
+  private static final String MSG_COULDNOTSETFIELD         = "Could not set field '%s': %s\n";
+
   /** The file extensions for files that contain messages */
   private static final String EXTENSION                    = ".properties";
 
@@ -134,22 +140,6 @@ public abstract class NLS {
 
     applyProperties(messages, clazz, nlsFields);
 
-    // Determine fields that have not been set (because the property
-    // is missing in the properties-file)
-    // Assign a dummy message to fields that don't have a message to
-    // avoid null pointer at runtime
-    for (Map.Entry<String, Field> entry : nlsFields.entrySet()) {
-      String fieldName = entry.getKey().toString();
-      if (!messages.containsKey(fieldName)) {
-        Field field = entry.getValue();
-        String defaultMessage = getDefaultMessage(field);
-        try {
-          field.set(null, getFieldValue(field, defaultMessage));
-        } catch (Exception ex) {
-          // should not happen
-        }
-      }
-    }
   }
 
   /**
@@ -164,23 +154,36 @@ public abstract class NLS {
    */
   @SuppressWarnings("unchecked")
   private static final void applyProperties(Properties messages, Class<?> clazz, Map<String, Field> fields) {
-    Enumeration<String> names = (Enumeration<String>) messages.propertyNames();
-    while (names.hasMoreElements()) {
-      String key = names.nextElement();
-      String value = messages.getProperty(key);
-      Field field = fields.get(key);
-      if (field == null) {
-        // Property not known
-        System.out.println("Message-Property '" + key + "' existiert nicht an Ziel-Klasse '" + clazz.getName() + "'");
-        continue;
+    for (Map.Entry<String, Field> entry : fields.entrySet()) {
+      String key = entry.getKey();
+      Field field = entry.getValue();
+      String value = null;
+      if (messages.containsKey(key)) {
+        value = messages.getProperty(key);
+      } else {
+        // no value found within the properties, so generate a default message in order
+        // to prevent npe's.
+        value = getDefaultMessage(field);
       }
       Object fieldValue = getFieldValue(field, value);
       try {
         field.set(null, fieldValue);
       } catch (Exception ex) {
-        System.err.println("Could not set field '" + field + "': " + ex);
-        continue;
+        /**
+         * @todo [13-Dec-2009:KASI] This should cause a RuntimeException as the code cannot rely on an initialised field
+         *       for this case.
+         */
+        System.err.printf(MSG_COULDNOTSETFIELD, field.getName(), ex.getMessage());
       }
+      messages.remove(key);
+    }
+    Enumeration<String> unset = (Enumeration<String>) messages.propertyNames();
+    while (unset.hasMoreElements()) {
+      /**
+       * @todo [13-Dec-2009:KASI] This should cause a RuntimeException as this is the result of misconfiguration (and
+       *       it's easily fixable, too).
+       */
+      System.out.printf(MSG_UNKNOWNPROPERTY, unset.nextElement(), clazz.getName());
     }
   }
 
