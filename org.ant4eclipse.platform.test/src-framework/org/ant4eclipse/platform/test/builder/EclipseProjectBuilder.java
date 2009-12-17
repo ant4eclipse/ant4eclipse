@@ -15,7 +15,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.testframework.FileHelper;
 
 import java.io.File;
 import java.util.Iterator;
@@ -81,8 +80,7 @@ public class EclipseProjectBuilder {
   public File createIn(File destinationDirectory) {
     Assure.isDirectory(destinationDirectory);
     File projectDir = new File(destinationDirectory, this._projectName);
-    FileHelper.createDirectory(projectDir);
-
+    Utilities.mkdirs(projectDir);
     createArtefacts(projectDir);
     return projectDir;
   }

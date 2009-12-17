@@ -60,7 +60,7 @@ public class TestDirectory {
       }
     }
     System.out.println("Create test dir: " + this._rootDir);
-    FileHelper.createDirectory(this._rootDir);
+    Utilities.mkdirs(this._rootDir);
   }
 
   public void dispose() {
@@ -119,7 +119,7 @@ public class TestDirectory {
     Assert.assertNotNull(name);
 
     File subdir = new File(this._rootDir, name);
-    FileHelper.createDirectory(subdir);
+    Utilities.mkdirs(subdir);
     return subdir;
   }
 

@@ -19,21 +19,6 @@ import java.io.IOException;
 
 public class FileHelper {
 
-  public static final void createDirectory(File directory) {
-    Assure.notNull(directory);
-
-    if (directory.isFile()) {
-      throw new RuntimeException("Directory '" + directory + "' is a file");
-    }
-    if (directory.isDirectory()) {
-      throw new RuntimeException("Directory '" + directory + "' already exists");
-    }
-
-    if (!directory.mkdirs()) {
-      throw new RuntimeException("Directory '" + directory + "' could not be created for an unkown reason");
-    }
-  }
-
   public static final void createFile(File file) {
     Assure.notNull(file);
 

@@ -14,7 +14,6 @@ package org.ant4eclipse.platform.test;
 import static org.junit.Assert.assertNotNull;
 
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.testframework.FileHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +59,7 @@ public class TestWorkspace {
       }
     }
     System.out.println("Create test dir: " + this._rootDir);
-    FileHelper.createDirectory(this._rootDir);
+    Utilities.mkdirs(this._rootDir);
   }
 
   public void dispose() {
@@ -88,9 +87,8 @@ public class TestWorkspace {
 
   public File createSubDirectory(String name) {
     assertNotNull(name);
-
     File subdir = new File(this._rootDir, name);
-    FileHelper.createDirectory(subdir);
+    Utilities.mkdirs(subdir);
     return subdir;
   }
 

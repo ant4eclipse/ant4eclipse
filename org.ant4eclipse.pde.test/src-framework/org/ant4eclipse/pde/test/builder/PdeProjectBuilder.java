@@ -73,7 +73,7 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   }
 
   protected void createBundleManifestFile(File projectDir) {
-    FileHelper.createDirectory(new File(projectDir, "META-INF"));
+    Utilities.mkdirs(new File(projectDir, "META-INF"));
     File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
     FileHelper.createFile(manifestFile);
     this._manifest.write(manifestFile);
