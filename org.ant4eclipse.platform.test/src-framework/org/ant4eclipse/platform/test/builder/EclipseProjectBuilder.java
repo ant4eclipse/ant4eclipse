@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test.builder;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.junit.Assert;
 
 import java.io.File;
 import java.util.Iterator;
@@ -37,7 +36,7 @@ public class EclipseProjectBuilder {
   private List<String> _referencedProjects;
 
   public EclipseProjectBuilder(String projectName) {
-    assertNotNull(projectName);
+    Assert.assertNotNull(projectName);
     this._projectName = projectName;
     this._natures = new LinkedList<String>();
     this._builders = new LinkedList<String>();
@@ -52,20 +51,19 @@ public class EclipseProjectBuilder {
   }
 
   public EclipseProjectBuilder withNature(String natureId) {
-    assertNotNull(natureId);
+    Assert.assertNotNull(natureId);
     this._natures.add(natureId);
     return this;
   }
 
   public EclipseProjectBuilder withProjectReference(String referencedProject) {
-    assertNotNull(referencedProject);
+    Assert.assertNotNull(referencedProject);
     this._referencedProjects.add(referencedProject);
     return this;
   }
 
   public EclipseProjectBuilder withBuilder(String buildCmd) {
-    assertNotNull(buildCmd);
-
+    Assert.assertNotNull(buildCmd);
     this._builders.add(buildCmd);
     return this;
   }
