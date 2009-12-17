@@ -57,7 +57,6 @@ public class TextEmitter {
   }
 
   public void append(String format, Object... args) {
-    this._buffer.append(this._indention);
     this._buffer.append(String.format(format, args));
   }
 
