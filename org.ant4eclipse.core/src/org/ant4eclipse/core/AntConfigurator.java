@@ -11,52 +11,37 @@
  **********************************************************************/
 package org.ant4eclipse.core;
 
+import org.ant4eclipse.core.ant.AntBasedLogger;
+
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
-import org.ant4eclipse.lib.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.util.StringMap;
+import org.apache.tools.ant.Project;
 
 /**
  * <p>
- * The class {@link DefaultConfigurator} provides static methods to configure Ant4Eclipse.
+ * The class {@link AntConfigurator} provides static methods to configure Ant4Eclipse.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class DefaultConfigurator {
+public class AntConfigurator {
 
   /**
    * <p>
-   * Configures Ant4Eclipse in a non-ant based environment.
-   * </p>
-   */
-  public static final void configureAnt4Eclipse() {
-    if (!ServiceRegistry.isConfigured()) {
-      Ant4EclipseLogger logger = new DefaultAnt4EclipseLogger();
-      Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
-      ServiceRegistry.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
-    }
-  }
-
-  /**
-   * <p>
-   * Configures Ant4Eclipse in a non-ant based environment.
+   * Configures Ant4Eclipse in a ant based environment (the standard case).
    * </p>
    * 
-   * @param properties
-   *          the configuration properties
+   * @param project
+   *          the ant project
    */
-  public static final void configureAnt4Eclipse(StringMap properties) {
+  public static final void configureAnt4Eclipse(Project project) {
     if (!ServiceRegistry.isConfigured()) {
-      if (properties == null) {
-        properties = new StringMap();
-      }
-      Ant4EclipseLogger logger = new DefaultAnt4EclipseLogger();
-      Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl(properties);
+      Ant4EclipseLogger logger = new AntBasedLogger(project);
+      Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
       ServiceRegistry.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
   }
