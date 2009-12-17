@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test;
 
-import org.ant4eclipse.core.DefaultConfigurator;
 
+import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.pydt.ant.GetPythonPathTask;
