@@ -11,20 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
 import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.junit.After;
+import org.junit.Before;
 
 import java.io.File;
-
-import junit.framework.TestCase;
 
 /**
  * Baseclass for all buildfile-based tests in the platform layer
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public abstract class AbstractTestDirectoryBasedTest extends TestCase {
+public abstract class AbstractTestDirectoryBasedTest {
 
   /** - */
   private TestDirectory _testWorkspace;
@@ -32,7 +31,7 @@ public abstract class AbstractTestDirectoryBasedTest extends TestCase {
   /**
    * Creates the Test Environment before execution of a test case
    */
-  @Override
+  @Before
   public void setUp() {
     DefaultConfigurator.configureAnt4Eclipse();
     this._testWorkspace = new TestDirectory();
@@ -41,28 +40,29 @@ public abstract class AbstractTestDirectoryBasedTest extends TestCase {
   /**
    * Disposes the test environment and resets the {@link ServiceRegistry}
    */
-  @Override
-  protected void tearDown() {
-    try {
-      super.tearDown();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  @After
+  public void tearDown() {
     this._testWorkspace.dispose();
     ServiceRegistry.reset();
+    this._testWorkspace = null;
   }
 
   /**
    * Returns a {@link TestDirectory} for this test case.
    * 
-   * @return
+   * @return A TestDirectory for this test case. Not <code>null</code> during a test.
    */
   protected TestDirectory getTestDirectory() {
     return this._testWorkspace;
   }
 
+  /**
+   * Returns the root directory of the workspace.
+   * 
+   * @return The root directory of the workspace. Not <code>null</code> during a test.
+   */
   protected File getTestDirectoryRootDir() {
     return this._testWorkspace.getRootDir();
   }
-}
+
+} /* ENDCLASS */

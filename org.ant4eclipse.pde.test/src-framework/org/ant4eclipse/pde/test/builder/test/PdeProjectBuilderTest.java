@@ -15,6 +15,7 @@ import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedTest;
+import org.junit.Assert;
 
 import java.io.File;
 import java.util.Arrays;
@@ -57,11 +58,12 @@ public class PdeProjectBuilderTest extends AbstractTestDirectoryBasedTest {
     Assure.isDirectory(parent);
 
     File[] children = parent.listFiles();
-    assertEquals(names.length, children.length);
+    Assert.assertEquals(names.length, children.length);
 
     List<String> namesList = new LinkedList<String>(Arrays.asList(names));
     for (File file : children) {
-      assertTrue(namesList.remove(file.getName()));
+      Assert.assertTrue(namesList.remove(file.getName()));
     }
   }
-}
+
+} /* ENDCLASS */
