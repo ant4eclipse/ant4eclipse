@@ -11,11 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
 import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
-import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
 import org.junit.Before;
 
@@ -23,8 +21,8 @@ import java.io.InputStream;
 
 /**
  * <p>
- * Base class for all AntEclipse test cases that require a configured {@link ServiceRegistry} and are not executed via a
- * {@link BuildFileTest}.
+ * Base class for all AntEclipse test cases that require a configured {@link ServiceRegistry} and are not executed
+ * within an Ant environment.
  * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
