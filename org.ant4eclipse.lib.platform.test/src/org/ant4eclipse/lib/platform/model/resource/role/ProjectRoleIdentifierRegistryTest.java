@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.resource.role;
+package org.ant4eclipse.lib.platform.model.resource.role;
 
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;

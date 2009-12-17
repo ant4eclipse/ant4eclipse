@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.internal.model.launcher;
+package org.ant4eclipse.lib.platform.internal.model.launcher;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
