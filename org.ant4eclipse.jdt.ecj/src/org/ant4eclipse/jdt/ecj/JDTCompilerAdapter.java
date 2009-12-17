@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.DefaultConfigurator;
+import org.ant4eclipse.core.AntConfigurator;
 
 import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 
@@ -76,7 +76,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     preconditions();
 
     // Step 2: Configure ant4eclipse
-    DefaultConfigurator.configureAnt4Eclipse(getProject());
+    AntConfigurator.configureAnt4Eclipse(getProject());
 
     // Step 3: Fetch compiler arguments
     EcjAdditionalCompilerArguments ecjAdditionalCompilerArguments = fetchEcjAdditionalCompilerArguments();

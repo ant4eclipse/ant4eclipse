@@ -30,8 +30,8 @@ public class Ant4EclipseConfiguratorTest {
   @Test
   public void testAnt4EclipseConfigurator_2() {
     Project project = new Project();
-    DefaultConfigurator.configureAnt4Eclipse(project);
-    DefaultConfigurator.configureAnt4Eclipse(project);
+    AntConfigurator.configureAnt4Eclipse(project);
+    AntConfigurator.configureAnt4Eclipse(project);
 
     ServiceRegistry.reset();
   }

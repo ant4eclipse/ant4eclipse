@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.DefaultConfigurator;
+import org.ant4eclipse.core.AntConfigurator;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
@@ -51,7 +51,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
       instances.add(this);
     }
     // configure ant4eclipse
-    DefaultConfigurator.configureAnt4Eclipse(project);
+    AntConfigurator.configureAnt4Eclipse(project);
 
   }
 

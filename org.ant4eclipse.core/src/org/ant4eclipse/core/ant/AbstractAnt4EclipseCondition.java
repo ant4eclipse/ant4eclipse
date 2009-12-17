@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.DefaultConfigurator;
+import org.ant4eclipse.core.AntConfigurator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
@@ -34,7 +34,7 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
     AbstractAnt4EclipseDataType.validateAll();
 
     // configure ant4eclipse
-    DefaultConfigurator.configureAnt4Eclipse(getProject());
+    AntConfigurator.configureAnt4Eclipse(getProject());
 
     // delegate the implementation
     try {
