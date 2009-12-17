@@ -40,20 +40,19 @@ public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTe
   public void dispose() {
     this._testWorkspace.dispose();
     super.dispose();
+    this._testWorkspace = null;
   }
 
   @Test
-  public void test_JdtLaunchConfig() throws Exception {
+  public void jdtLaunchConfig() throws Exception {
     LaunchConfigurationReader launchConfigurationReader = ServiceRegistry.instance().getService(
         LaunchConfigurationReader.class);
     InputStream inputStream = LaunchConfigurationReaderImplTest.class.getResourceAsStream("LocalJavaApplication.txt");
     File launchConfigurationFile = this._testWorkspace.createFile("LocalJavaApplication.launch", inputStream);
     LaunchConfiguration launchConfiguration = launchConfigurationReader
         .readLaunchConfiguration(launchConfigurationFile);
-
     Assert.assertNotNull(launchConfiguration);
     Assert.assertEquals("org.eclipse.jdt.launching.localJavaApplication", launchConfiguration.getType());
-
     Assert.assertTrue(launchConfiguration.getBooleanAttribute("myBoolean"));
     Assert.assertEquals("true", launchConfiguration.getAttribute("myBoolean"));
     Assert.assertFalse(launchConfiguration.getBooleanAttribute("org.eclipse.jdt.launching.DEFAULT_CLASSPATH"));

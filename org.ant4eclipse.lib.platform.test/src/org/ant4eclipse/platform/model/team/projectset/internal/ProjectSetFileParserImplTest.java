@@ -11,24 +11,22 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
-import static org.junit.Assert.assertTrue;
-
-
 import org.ant4eclipse.lib.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.lib.platform.model.team.projectset.internal.TeamProjectSetFileParserImpl;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ProjectSetFileParserImplTest extends ConfigurableAnt4EclipseTestCase {
 
   @Test
-  public void test_Factories() {
+  public void factories() {
     TeamProjectSetFileParserImpl projectSetFileParserImpl = new TeamProjectSetFileParserImpl();
     projectSetFileParserImpl.initialize();
     TeamProjectSetFactory factoryForProvider = projectSetFileParserImpl
         .getFactoryForProvider("org.eclipse.team.cvs.core.cvsnature");
-    assertTrue(factoryForProvider instanceof CvsTeamProjectSetFactory);
+    Assert.assertTrue(factoryForProvider instanceof CvsTeamProjectSetFactory);
   }
 
-}
+} /* ENDCLASS */
