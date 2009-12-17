@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.test.builder;
 
-import static java.lang.String.format;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
@@ -22,6 +18,7 @@ import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.StringTemplate;
+import org.junit.Assert;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,8 +123,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return this
    */
   public JdtProjectBuilder withClasspathEntry(String entry) {
-    assertNotNull(entry);
-
+    Assert.assertNotNull(entry);
     this._classpathEntries.add(entry);
     return this;
   }
@@ -137,28 +133,29 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
   }
 
   public JdtProjectBuilder withSrcClasspathEntry(String path, boolean exported) {
-    String line = format("<classpathentry kind='src' path='%s' exported='%s'/>", path, Boolean.valueOf(exported));
+    String line = String
+        .format("<classpathentry kind='src' path='%s' exported='%s'/>", path, Boolean.valueOf(exported));
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withSrcClasspathEntry(String path, String output, boolean exported) {
-    String line = format("<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output, Boolean
-        .valueOf(exported));
+    String line = String.format("<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output,
+        Boolean.valueOf(exported));
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withContainerClasspathEntry(String path) {
-    String line = format("<classpathentry kind='con' path='%s'/>", path);
+    String line = String.format("<classpathentry kind='con' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withVarClasspathEntry(String path) {
-    String line = format("<classpathentry kind='var' path='%s'/>", path);
+    String line = String.format("<classpathentry kind='var' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withOutputClasspathEntry(String path) {
-    String line = format(" <classpathentry kind='output' path='%s'/>", path);
+    String line = String.format(" <classpathentry kind='output' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
@@ -177,8 +174,8 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return
    */
   public JdtProjectBuilder withJreContainerClasspathEntry(String containerName) {
-    return withClasspathEntry(format("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>",
-        containerName));
+    return withClasspathEntry(String.format(
+        "<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>", containerName));
   }
 
   /**
@@ -204,14 +201,14 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     if (!sourceDir.exists()) {
       sourceDir.mkdirs();
     }
-    assertTrue(sourceDir.isDirectory());
+    Assert.assertTrue(sourceDir.isDirectory());
 
     ClassName className = ClassName.fromQualifiedClassName(sourceClass.getClassName());
     File packageDir = new File(sourceDir, className.getPackageAsDirectoryName());
     if (!packageDir.exists()) {
       packageDir.mkdirs();
     }
-    assertTrue(packageDir.isDirectory());
+    Assert.assertTrue(packageDir.isDirectory());
 
     File sourcefile = new File(sourceDir, className.asSourceFileName());
     try {
