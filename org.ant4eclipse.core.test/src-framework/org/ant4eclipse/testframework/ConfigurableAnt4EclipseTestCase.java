@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.core.DefaultConfigurator;
 
+import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.apache.tools.ant.BuildFileTest;
