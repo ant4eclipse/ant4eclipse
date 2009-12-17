@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.ant;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.DefaultConfigurator;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.apache.tools.ant.BuildException;
@@ -27,7 +27,7 @@ import org.apache.tools.ant.Task;
  * This class configures Ant4Eclipse before executing the task.
  * </p>
  * 
- * @see Ant4EclipseConfigurator#configureAnt4Eclipse(Project)
+ * @see DefaultConfigurator#configureAnt4Eclipse(Project)
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -51,7 +51,7 @@ public abstract class AbstractAnt4EclipseTask extends Task {
     super.setProject(project);
 
     // configure ant4eclipse
-    Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
+    DefaultConfigurator.configureAnt4Eclipse(getProject());
   }
 
   /**

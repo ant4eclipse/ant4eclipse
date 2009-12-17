@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.DefaultConfigurator;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -42,9 +42,9 @@ public class ConfigurableAnt4EclipseTestCase {
   public void setup() {
     StringMap properties = customAnt4EclipseConfiguration(new StringMap());
     if (properties == null) {
-      Ant4EclipseConfigurator.configureAnt4Eclipse();
+      DefaultConfigurator.configureAnt4Eclipse();
     } else {
-      Ant4EclipseConfigurator.configureAnt4Eclipse(properties);
+      DefaultConfigurator.configureAnt4Eclipse(properties);
     }
   }
 

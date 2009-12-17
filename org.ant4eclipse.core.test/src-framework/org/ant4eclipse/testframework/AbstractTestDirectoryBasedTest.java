@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.DefaultConfigurator;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 
@@ -34,7 +34,7 @@ public abstract class AbstractTestDirectoryBasedTest extends TestCase {
    */
   @Override
   public void setUp() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
+    DefaultConfigurator.configureAnt4Eclipse();
     this._testWorkspace = new TestDirectory();
   }
 

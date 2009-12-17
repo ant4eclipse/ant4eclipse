@@ -21,8 +21,8 @@ public class Ant4EclipseConfiguratorTest {
   @Test
   public void testAnt4EclipseConfigurator() {
 
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
+    DefaultConfigurator.configureAnt4Eclipse();
+    DefaultConfigurator.configureAnt4Eclipse();
 
     ServiceRegistry.reset();
   }
@@ -30,24 +30,24 @@ public class Ant4EclipseConfiguratorTest {
   @Test
   public void testAnt4EclipseConfigurator_2() {
     Project project = new Project();
-    Ant4EclipseConfigurator.configureAnt4Eclipse(project);
-    Ant4EclipseConfigurator.configureAnt4Eclipse(project);
+    DefaultConfigurator.configureAnt4Eclipse(project);
+    DefaultConfigurator.configureAnt4Eclipse(project);
 
     ServiceRegistry.reset();
   }
 
   @Test
   public void testAnt4EclipseConfigurator_3() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new StringMap());
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new StringMap());
+    DefaultConfigurator.configureAnt4Eclipse(new StringMap());
+    DefaultConfigurator.configureAnt4Eclipse(new StringMap());
 
     ServiceRegistry.reset();
   }
 
   @Test
   public void testAnt4EclipseConfigurator_4() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse((StringMap) null);
-    Ant4EclipseConfigurator.configureAnt4Eclipse((StringMap) null);
+    DefaultConfigurator.configureAnt4Eclipse((StringMap) null);
+    DefaultConfigurator.configureAnt4Eclipse((StringMap) null);
 
     ServiceRegistry.reset();
   }
