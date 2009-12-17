@@ -39,6 +39,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.jar.JarEntry;
@@ -56,20 +57,26 @@ import java.util.zip.ZipFile;
  */
 public class Utilities {
 
+  /** - */
+  private static final String OPEN            = "${";
+
+  /** - */
+  private static final String CLOSE           = "}";
+
   @NLSMessage("Exporting a resource is only supported for root based pathes !")
-  public static String       MSG_INVALIDRESOURCEPATH;
+  public static String        MSG_INVALIDRESOURCEPATH;
 
   @NLSMessage("Failed to delete '%s' !")
-  public static String       MSG_FAILEDTODELETE;
+  public static String        MSG_FAILEDTODELETE;
 
   /** - */
-  public static final String PROP_A4ETEMPDIR = "ant4eclipse.temp";
+  public static final String  PROP_A4ETEMPDIR = "ant4eclipse.temp";
 
   /** - */
-  public static final String NL              = System.getProperty("line.separator");
+  public static final String  NL              = System.getProperty("line.separator");
 
   /** - */
-  public static final String ENCODING        = System.getProperty("file.encoding");
+  public static final String  ENCODING        = System.getProperty("file.encoding");
 
   /**
    * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
@@ -1159,6 +1166,75 @@ public class Utilities {
     } else {
       return o1.equals(o2);
     }
+  }
+
+  /**
+   * <p>
+   * Performs a textual replacement for variables. Variables must be enclosed within {@link #OPEN} and {@link #CLOSE}.
+   * </p>
+   * 
+   * @param template
+   *          The template containing variable references. Not <code>null</code>.
+   * @param replacements
+   *          The replacement for the variables. Not <code>null</code>.
+   * 
+   * @return The evaluated result. Not <code>null</code>.
+   */
+  public static final String replaceTokens(String template, Map<String, String> replacements) {
+    return replaceTokens(template, replacements, OPEN, CLOSE);
+  }
+
+  /**
+   * <p>
+   * Performs a textual replacement for variables.
+   * </p>
+   * 
+   * @param template
+   *          The template containing variable references. Not <code>null</code>.
+   * @param replacements
+   *          The replacement for the variables. Not <code>null</code>.
+   * @param openlit
+   *          The opening literal for a variable reference. Neither <code>null</code> nor empty.
+   * @param closelit
+   *          The closing literal for a variable reference. Neither <code>null</code> nor empty.
+   * 
+   * @return The evaluated result. Not <code>null</code>.
+   */
+  public static final String replaceTokens(String template, Map<String, String> replacements, String openlit,
+      String closelit) {
+    Assure.paramNotNull("template", template);
+    Assure.paramNotNull("replacements", replacements);
+    Assure.paramNotNull("openlit", openlit);
+    Assure.paramNotNull("closelit", closelit);
+    StringBuffer buffer = new StringBuffer(template);
+    int index = buffer.indexOf(openlit);
+    while (index != -1) {
+      int next = buffer.indexOf(openlit, index + openlit.length());
+      int close = buffer.indexOf(closelit, index + openlit.length());
+      if (close == -1) {
+        // no closing anymore available, so there's no replacement operation to be done anymore
+        break;
+      }
+      if ((next != -1) && (next < close)) {
+        // no close for the current literal, so continue with the next candidate
+        index = next;
+        continue;
+      }
+      String key = buffer.substring(index + openlit.length(), close);
+      String value = replacements.get(key);
+      if (value != null) {
+        // remove the existing content
+        buffer.delete(index, close + closelit.length());
+        buffer.insert(index, value);
+        // this is advisable as the value might contain the key, so we're preventing a loop here
+        index += value.length();
+      } else {
+        // no replacement value found, so go on with the next candidate
+        index = close + closelit.length();
+      }
+      index = buffer.indexOf(openlit, index);
+    }
+    return buffer.toString();
   }
 
   /**

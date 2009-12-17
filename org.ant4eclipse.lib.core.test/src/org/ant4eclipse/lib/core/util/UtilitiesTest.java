@@ -14,7 +14,6 @@ package org.ant4eclipse.lib.core.util;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.test.JUnitUtilities;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,8 +26,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.jar.JarFile;
 
@@ -441,4 +442,31 @@ public class UtilitiesTest {
     }
 
   }
+
+  @Test
+  public void replaceTokens() {
+
+    Map<String, String> replacements = new Hashtable<String, String>();
+    replacements.put("dev1", "Gerd Wütherich");
+    replacements.put("devel2", "Nils Hartmann");
+    replacements.put("d3", "Daniel Kasmeroglu");
+
+    String template1 = "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}";
+    String result1 = Utilities.replaceTokens(template1, replacements);
+    Assert.assertEquals("${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
+        result1);
+
+    String result2 = Utilities.replaceTokens(template1, replacements, "$", "$");
+    Assert.assertEquals("${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}", result2);
+
+    String template2 = template1.replace('$', '@');
+    String result3 = Utilities.replaceTokens(template2, replacements, "@{", "}");
+    Assert.assertEquals("@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
+        result3);
+
+    String result4 = Utilities.replaceTokens("", replacements, "@{", "}");
+    Assert.assertEquals("", result4);
+
+  }
+
 } /* ENDCLASS */
