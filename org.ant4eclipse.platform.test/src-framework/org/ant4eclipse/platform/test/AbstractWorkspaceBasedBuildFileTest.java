@@ -59,10 +59,13 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    *          The name of the build file without folders
    * @return The name of the build file
    */
-  protected String getProjectBuildFile(String unqualifiedName) {
+  private String getProjectBuildFile(String unqualifiedName) {
     return getClass().getPackage().getName().replace('.', '/') + "/" + unqualifiedName;
   }
 
+  /**
+   * @todo [17-Dec-2009:KASI] Why do we need that ? Is the text checked anywhere ?
+   */
   @Override
   protected void runTest() throws Throwable {
     try {
@@ -104,7 +107,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
     return this._testWorkspace;
   }
 
-  protected File getTestWorkspaceDirectory() {
+  public File getTestWorkspaceDirectory() {
     return this._testWorkspace.getRootDir();
   }
 
