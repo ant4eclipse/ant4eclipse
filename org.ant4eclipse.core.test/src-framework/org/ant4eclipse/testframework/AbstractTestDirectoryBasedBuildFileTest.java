@@ -39,15 +39,11 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    * Disposes the test environment and resets the {@link ServiceRegistry}
    */
   @Override
-  protected void tearDown() {
-    try {
-      super.tearDown();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  protected void tearDown() throws Exception {
+    super.tearDown();
     this._testWorkspace.dispose();
     ServiceRegistry.reset();
+    this._testWorkspace = null;
   }
 
   /**
@@ -126,4 +122,5 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
   public String normalize(String string) {
     return string.replace('/', File.separatorChar).replace('\\', File.separatorChar);
   }
-}
+
+} /* ENDCLASS */
