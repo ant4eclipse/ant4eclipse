@@ -22,7 +22,7 @@ import java.io.InputStream;
 /**
  * The Test Environment contains a set of folder that are created before and removed after a test case.
  * 
- * @TODO this is work in progress...
+ * @todo [17-Dec-2009:KASI] Make use of the Utilities methods !!!
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -127,4 +127,4 @@ public class TestDirectory {
     return this._rootDir;
   }
 
-}
+} /* ENDCLASS */
