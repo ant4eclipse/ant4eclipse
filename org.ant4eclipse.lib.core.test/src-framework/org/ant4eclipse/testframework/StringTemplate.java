@@ -15,24 +15,22 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 
-import java.util.Iterator;
-
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
 public class StringTemplate {
 
   /** - */
-  private static String PREFIX  = "${";
+  private static final String OPEN  = "${";
 
   /** - */
-  private static String POSTFIX = "}";
+  private static final String CLOSE = "}";
 
   /** - */
-  private StringBuilder _stringTemplate;
+  private StringBuilder       _stringTemplate;
 
   /** - */
-  private StringMap     _stringsToReplace;
+  private StringMap           _stringsToReplace;
 
   /**
    * 
@@ -47,9 +45,7 @@ public class StringTemplate {
    */
   public StringTemplate(String content) {
     this();
-
     Assure.notNull(content);
-
     this._stringTemplate.append(content);
   }
 
@@ -58,7 +54,6 @@ public class StringTemplate {
    */
   public StringTemplate append(String content) {
     Assure.notNull(content);
-
     this._stringTemplate.append(content);
     return this;
   }
@@ -71,7 +66,6 @@ public class StringTemplate {
   public StringTemplate nl() {
     this._stringTemplate.append(Utilities.NL);
     return this;
-
   }
 
   /**
@@ -84,25 +78,35 @@ public class StringTemplate {
     this._stringsToReplace.put(name, value);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
-
-    String template = this._stringTemplate.toString();
-    Iterator<String> iterator = this._stringsToReplace.keySet().iterator();
-
-    while (iterator.hasNext()) {
-
-      String name = iterator.next();
-      String stringToReplace = PREFIX + name + POSTFIX;
-      String value = this._stringsToReplace.get(name);
-
-      int index = template.indexOf(stringToReplace);
-      while (index != -1) {
-        template = template.substring(0, index) + value + template.substring(index + stringToReplace.length());
-        index = template.indexOf(stringToReplace);
+    StringBuffer buffer = new StringBuffer(this._stringTemplate.toString());
+    int index = buffer.indexOf(OPEN);
+    while (index != -1) {
+      int close = buffer.indexOf(CLOSE, index);
+      if (close == -1) {
+        // no close, so continue with the next candidate
+        index = buffer.indexOf(OPEN, index + OPEN.length());
+        continue;
       }
+      String key = buffer.substring(index + OPEN.length(), close);
+      String value = this._stringsToReplace.get(key);
+      if (value != null) {
+        // remove the existing content
+        buffer.delete(index, close + CLOSE.length());
+        buffer.insert(index, value);
+        // this is advisable as the value might contain the key, so we're preventing a loop here
+        index += value.length();
+      } else {
+        // no replacement value found, so go on with the next candidate
+        index = close + CLOSE.length();
+      }
+      index = buffer.indexOf(OPEN, index);
     }
-
-    return template;
+    return buffer.toString();
   }
-}
+
+} /* ENDCLASS */
