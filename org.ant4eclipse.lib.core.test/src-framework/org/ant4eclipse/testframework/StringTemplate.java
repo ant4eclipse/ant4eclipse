@@ -21,16 +21,10 @@ import org.ant4eclipse.lib.core.util.Utilities;
 public class StringTemplate {
 
   /** - */
-  private static final String OPEN  = "${";
+  private StringBuilder _stringTemplate;
 
   /** - */
-  private static final String CLOSE = "}";
-
-  /** - */
-  private StringBuilder       _stringTemplate;
-
-  /** - */
-  private StringMap           _stringsToReplace;
+  private StringMap     _stringsToReplace;
 
   /**
    * 
@@ -83,30 +77,7 @@ public class StringTemplate {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer(this._stringTemplate.toString());
-    int index = buffer.indexOf(OPEN);
-    while (index != -1) {
-      int close = buffer.indexOf(CLOSE, index);
-      if (close == -1) {
-        // no close, so continue with the next candidate
-        index = buffer.indexOf(OPEN, index + OPEN.length());
-        continue;
-      }
-      String key = buffer.substring(index + OPEN.length(), close);
-      String value = this._stringsToReplace.get(key);
-      if (value != null) {
-        // remove the existing content
-        buffer.delete(index, close + CLOSE.length());
-        buffer.insert(index, value);
-        // this is advisable as the value might contain the key, so we're preventing a loop here
-        index += value.length();
-      } else {
-        // no replacement value found, so go on with the next candidate
-        index = close + CLOSE.length();
-      }
-      index = buffer.indexOf(OPEN, index);
-    }
-    return buffer.toString();
+    return Utilities.replaceTokens(this._stringTemplate.toString(), this._stringsToReplace);
   }
 
 } /* ENDCLASS */
