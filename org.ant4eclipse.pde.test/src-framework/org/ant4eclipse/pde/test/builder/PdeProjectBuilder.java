@@ -16,7 +16,6 @@ import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.testframework.FileHelper;
 
 import java.io.File;
 
@@ -75,7 +74,6 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   protected void createBundleManifestFile(File projectDir) {
     Utilities.mkdirs(new File(projectDir, "META-INF"));
     File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
-    FileHelper.createFile(manifestFile);
     this._manifest.write(manifestFile);
   }
 
