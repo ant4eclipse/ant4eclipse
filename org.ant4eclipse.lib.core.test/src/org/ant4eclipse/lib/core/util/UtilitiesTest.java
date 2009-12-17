@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.core.util;
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.test.JUnitUtilities;
+import org.ant4eclipse.testframework.JUnitUtilities;
 import org.junit.Assert;
 import org.junit.Test;
 
