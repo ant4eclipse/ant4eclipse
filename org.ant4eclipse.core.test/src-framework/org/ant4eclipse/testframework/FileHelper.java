@@ -12,7 +12,6 @@
 package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,20 +30,6 @@ public class FileHelper {
     } catch (IOException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
-  }
-
-  /**
-   * Returns the content of the resource from the classpath
-   * 
-   * @param resourceName
-   *          the name of the resource that should be loaded from the classpath
-   * @return the content of the resource
-   * @throws IOException
-   *           if the file not exits or if an I/O error occurs.
-   */
-  public static final String getResource(String resourceName) {
-    StringBuffer buffer = Utilities.readTextContent("/" + resourceName, Utilities.ENCODING, true);
-    return buffer.toString();
   }
 
 }

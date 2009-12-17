@@ -12,6 +12,7 @@
 package org.ant4eclipse.platform.test;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.FileHelper;
 import org.ant4eclipse.testframework.TestDirectory;
 
@@ -85,7 +86,8 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends EnhancedBuildF
    */
   protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
     String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
-    String buildFileContent = FileHelper.getResource(qualifiedBuildFileName);
+    StringBuffer buffer = Utilities.readTextContent("/" + qualifiedBuildFileName, Utilities.ENCODING, true);
+    String buildFileContent = buffer.toString();
     File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
     configureProject(buildFile.getAbsolutePath());
     getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
