@@ -89,7 +89,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    *          the feature manifest to set.
    */
   public void setFeature(FeatureManifest featuremanifest) {
-    Assure.notNull("featuremanifest", featuremanifest);
+    Assure.paramNotNull("featuremanifest", featuremanifest);
     this._feature = featuremanifest;
   }
 

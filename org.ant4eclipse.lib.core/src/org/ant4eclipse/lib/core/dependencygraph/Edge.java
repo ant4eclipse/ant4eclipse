@@ -43,7 +43,7 @@ public class Edge<T> {
    */
   public Edge(T aParent, T aChild) {
     Assure.paramNotNull("aParent", aParent);
-    Assure.notNull("aChild", aChild);
+    Assure.paramNotNull("aChild", aChild);
     this.parent = aParent;
     this.child = aChild;
   }
