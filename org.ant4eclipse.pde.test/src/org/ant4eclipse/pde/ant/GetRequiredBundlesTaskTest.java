@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
+import org.ant4eclipse.pde.test.PdeProjectBuilder;
 
 public class GetRequiredBundlesTaskTest extends AbstractPdeBuildFileTest {
 

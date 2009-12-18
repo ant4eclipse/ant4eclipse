@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pde.integration;
 
-import org.ant4eclipse.pde.test.builder.JarBundleBuilder;
-import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
+import org.ant4eclipse.pde.test.JarBundleBuilder;
+import org.ant4eclipse.pde.test.PdeProjectBuilder;
 
 import org.ant4eclipse.pde.ant.AbstractPdeBuildFileTest;
 
