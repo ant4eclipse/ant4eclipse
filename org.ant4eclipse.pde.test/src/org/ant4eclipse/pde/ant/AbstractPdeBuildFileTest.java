@@ -13,9 +13,9 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.jdt.ant.base.AbstractJdtTest;
 
-import org.ant4eclipse.pde.test.EchoLogfile;
 
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.testframework.EchoLogfile;
 
 import java.io.File;
 

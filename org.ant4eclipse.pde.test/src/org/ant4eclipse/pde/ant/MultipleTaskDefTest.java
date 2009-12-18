@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.pde.test.PdeProjectBuilder;
+import org.ant4eclipse.testframework.PdeProjectBuilder;
 
 /**
  * Tests the functionality while using multiple taskdef calls (these are causing multiple reloads and thus

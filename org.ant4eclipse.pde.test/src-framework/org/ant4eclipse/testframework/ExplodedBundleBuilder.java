@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.test;
+package org.ant4eclipse.testframework;
 
 public class ExplodedBundleBuilder {
 
