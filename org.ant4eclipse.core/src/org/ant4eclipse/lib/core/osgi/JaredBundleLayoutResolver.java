@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.osgi;
+package org.ant4eclipse.lib.core.osgi;
 
 
 import org.ant4eclipse.lib.core.Assure;
