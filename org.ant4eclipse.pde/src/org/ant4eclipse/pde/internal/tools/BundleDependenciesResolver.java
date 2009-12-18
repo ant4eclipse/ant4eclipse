@@ -14,7 +14,6 @@ package org.ant4eclipse.pde.internal.tools;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
-import org.ant4eclipse.core.util.ManifestHelper;
 
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
@@ -24,6 +23,7 @@ import org.ant4eclipse.pde.tools.PluginProjectLayoutResolver;
 
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;

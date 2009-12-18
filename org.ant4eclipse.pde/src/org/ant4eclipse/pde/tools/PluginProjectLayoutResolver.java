@@ -12,7 +12,6 @@
 package org.ant4eclipse.pde.tools;
 
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.util.ManifestHelper;
 
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
@@ -21,6 +20,7 @@ import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.io.File;
