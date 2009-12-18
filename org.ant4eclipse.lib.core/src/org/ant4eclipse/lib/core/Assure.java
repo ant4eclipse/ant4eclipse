@@ -67,7 +67,9 @@ public class Assure {
    *          the object that must be set.
    */
   public static final void paramNotNull(String parametername, Object object) {
-    notNull(String.format(MSG_NOTNULL, parametername), object);
+    if (object == null) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTNULL, parametername));
+    }
   }
 
   /**
@@ -163,22 +165,6 @@ public class Assure {
     if (object.length == 0) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
           parametername));
-    }
-  }
-
-  /**
-   * <p>
-   * Assert that the specified object is not null.
-   * </p>
-   * 
-   * @param message
-   *          an error message
-   * @param object
-   *          the object that must be set.
-   */
-  public static final void notNull(String message, Object object) {
-    if (object == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, message);
     }
   }
 
