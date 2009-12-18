@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.test.builder;
+package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
