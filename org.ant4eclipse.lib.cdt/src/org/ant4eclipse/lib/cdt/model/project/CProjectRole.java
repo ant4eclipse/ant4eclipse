@@ -9,13 +9,17 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.model;
+package org.ant4eclipse.lib.cdt.model.project;
+
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
- * Descriptional element for a record within a path.
+ * CProjectRole --
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PathEntry {
+public interface CProjectRole extends ProjectRole {
 
-} /* ENDCLASS */
+  String C_NATURE = "org.eclipse.cdt.core.cnature";
+
+} /* ENDINTERFACE */

@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.model.project;
+package org.ant4eclipse.lib.cdt.model.project;
 
 
-import org.ant4eclipse.cdt.internal.model.project.CCProjectRoleImpl;
 
+import org.ant4eclipse.lib.cdt.internal.model.project.CProjectRoleImpl;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -22,12 +22,12 @@ import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
 /**
  * <p>
- * {@link ProjectRoleIdentifier} for the c++ project role.
+ * {@link ProjectRoleIdentifier} for the c project role.
  * </p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public final class CCRoleIdentifier implements ProjectRoleIdentifier {
+public final class CRoleIdentifier implements ProjectRoleIdentifier {
 
   /**
    * <p>
@@ -35,7 +35,7 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(CCProjectRole.CC_NATURE));
+    return (project.hasNature(CProjectRole.C_NATURE));
   }
 
   /**
@@ -46,7 +46,7 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
     Assure.notNull(project);
-    final CCProjectRoleImpl result = new CCProjectRoleImpl(project);
+    final CProjectRoleImpl result = new CProjectRoleImpl(project);
     // ClasspathFileParser.parseClasspath(javaProjectRole);
     return result;
   }

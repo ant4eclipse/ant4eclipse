@@ -9,17 +9,17 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.model.project;
+package org.ant4eclipse.lib.cdt.model.project;
 
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
- * CProjectRole --
+ * CCProjectRole --
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public interface CProjectRole extends ProjectRole {
+public interface CCProjectRole extends ProjectRole {
 
-  String C_NATURE = "org.eclipse.cdt.core.cnature";
+  String CC_NATURE = "org.eclipse.cdt.core.ccnature";
 
 } /* ENDINTERFACE */

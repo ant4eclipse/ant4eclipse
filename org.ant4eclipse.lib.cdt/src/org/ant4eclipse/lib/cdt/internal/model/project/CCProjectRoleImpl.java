@@ -9,34 +9,34 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.internal.model.project;
+package org.ant4eclipse.lib.cdt.internal.model.project;
 
 
-import org.ant4eclipse.cdt.model.project.CProjectRole;
 
+import org.ant4eclipse.lib.cdt.model.project.CProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 
 /**
  * <p>
- * Implements the c project role.
+ * Implements the c++ project role.
  * </p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRole {
+public class CCProjectRoleImpl extends AbstractProjectRole implements CProjectRole {
 
-  public static final String NAME = "CProjectRole";
+  public static final String NAME = "CCProjectRole";
 
   /**
    * <p>
-   * Creates a new instance of type CProjectRole.
+   * Creates a new instance of type CCProjectRole.
    * </p>
    * 
    * @param eclipseProject
    *          the eclipse project
    */
-  public CProjectRoleImpl(EclipseProject eclipseProject) {
+  public CCProjectRoleImpl(EclipseProject eclipseProject) {
     super(NAME, eclipseProject);
   }
 
@@ -46,7 +46,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[CProjectRole:");
+    buffer.append("[CCProjectRole:");
     buffer.append(" NAME: ");
     buffer.append(NAME);
     buffer.append("]");
@@ -79,7 +79,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
     if (o.getClass() != getClass()) {
       return false;
     }
-    // CProjectRoleImpl other = (CProjectRoleImpl) o;
+    // CCProjectRoleImpl other = (CCProjectRoleImpl) o;
     return true;
   }
 

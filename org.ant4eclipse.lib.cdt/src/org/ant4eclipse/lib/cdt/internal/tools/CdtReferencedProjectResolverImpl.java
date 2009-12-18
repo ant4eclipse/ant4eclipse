@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.internal.tools;
+package org.ant4eclipse.lib.cdt.internal.tools;
 
 import org.ant4eclipse.lib.platform.internal.tools.PlatformReferencedProjectsResolver;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
