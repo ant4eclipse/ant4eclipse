@@ -13,7 +13,7 @@ package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.platform.ant.SubElementContribution;
 
-import org.ant4eclipse.pydt.internal.tools.UsedProjectsArgumentComponent;
+import org.ant4eclipse.lib.pydt.internal.tools.UsedProjectsArgumentComponent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

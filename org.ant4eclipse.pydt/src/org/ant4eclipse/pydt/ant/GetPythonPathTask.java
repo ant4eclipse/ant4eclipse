@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.ant;
 
-import org.ant4eclipse.pydt.internal.tools.PathExpander;
-import org.ant4eclipse.pydt.internal.tools.PythonResolver;
-import org.ant4eclipse.pydt.model.ResolvedPathEntry;
+import org.ant4eclipse.lib.pydt.internal.tools.PathExpander;
+import org.ant4eclipse.lib.pydt.internal.tools.PythonResolver;
+import org.ant4eclipse.lib.pydt.model.ResolvedPathEntry;
 
 import java.io.File;
 

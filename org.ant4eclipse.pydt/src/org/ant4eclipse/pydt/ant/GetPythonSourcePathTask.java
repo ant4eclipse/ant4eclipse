@@ -13,12 +13,12 @@ package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;
-import org.ant4eclipse.pydt.internal.model.project.PythonProjectRole;
-import org.ant4eclipse.pydt.internal.tools.PathExpander;
-import org.ant4eclipse.pydt.internal.tools.PythonResolver;
-import org.ant4eclipse.pydt.model.RawPathEntry;
-import org.ant4eclipse.pydt.model.ReferenceKind;
-import org.ant4eclipse.pydt.model.ResolvedPathEntry;
+import org.ant4eclipse.lib.pydt.internal.model.project.PythonProjectRole;
+import org.ant4eclipse.lib.pydt.internal.tools.PathExpander;
+import org.ant4eclipse.lib.pydt.internal.tools.PythonResolver;
+import org.ant4eclipse.lib.pydt.model.RawPathEntry;
+import org.ant4eclipse.lib.pydt.model.ReferenceKind;
+import org.ant4eclipse.lib.pydt.model.ResolvedPathEntry;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;
