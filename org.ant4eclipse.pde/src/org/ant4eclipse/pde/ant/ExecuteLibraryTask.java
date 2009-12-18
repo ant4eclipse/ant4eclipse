@@ -13,8 +13,6 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.jdt.ant.JdtExecutorValues;
 
-import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
-import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
@@ -24,6 +22,8 @@ import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
+import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;

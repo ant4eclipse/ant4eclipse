@@ -14,15 +14,15 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 
-import org.ant4eclipse.pde.model.product.ProductDefinition;
-import org.ant4eclipse.pde.model.product.ProductDefinitionParser;
-import org.ant4eclipse.pde.model.product.ProductOs;
 
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.model.product.ProductDefinition;
+import org.ant4eclipse.lib.pde.model.product.ProductDefinitionParser;
+import org.ant4eclipse.lib.pde.model.product.ProductOs;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject.PathStyle;
 import org.apache.tools.ant.BuildException;

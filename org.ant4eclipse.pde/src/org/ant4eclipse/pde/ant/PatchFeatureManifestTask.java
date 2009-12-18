@@ -13,13 +13,13 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 
-import org.ant4eclipse.pde.tools.PdeBuildHelper;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.osgi.framework.Version;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

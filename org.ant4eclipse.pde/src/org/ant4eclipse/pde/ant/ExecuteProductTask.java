@@ -14,13 +14,6 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.ant.FileListHelper;
 
-import org.ant4eclipse.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.pde.model.product.ProductDefinition;
-import org.ant4eclipse.pde.model.product.ProductDefinitionParser;
-import org.ant4eclipse.pde.model.product.ProductOs;
-import org.ant4eclipse.pde.tools.TargetPlatform;
-import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
@@ -32,6 +25,13 @@ import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.model.product.ProductDefinition;
+import org.ant4eclipse.lib.pde.model.product.ProductDefinitionParser;
+import org.ant4eclipse.lib.pde.model.product.ProductOs;
+import org.ant4eclipse.lib.pde.tools.TargetPlatform;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;

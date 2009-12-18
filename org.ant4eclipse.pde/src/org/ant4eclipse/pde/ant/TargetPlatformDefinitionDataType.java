@@ -13,13 +13,13 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
-import org.ant4eclipse.pde.tools.TargetPlatformDefinition;
-import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
 

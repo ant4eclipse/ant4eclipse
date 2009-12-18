@@ -13,17 +13,6 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.FileListHelper;
 
-import org.ant4eclipse.pde.internal.tools.FeatureDescription;
-import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
-import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
-import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Includes;
-import org.ant4eclipse.pde.model.featureproject.FeatureManifest.Plugin;
-import org.ant4eclipse.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.pde.tools.PdeBuildHelper;
-import org.ant4eclipse.pde.tools.ResolvedFeature;
-import org.ant4eclipse.pde.tools.TargetPlatform;
-import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
@@ -36,6 +25,17 @@ import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
+import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.lib.pde.model.featureproject.FeatureProjectRole;
+import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Includes;
+import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Plugin;
+import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
+import org.ant4eclipse.lib.pde.tools.ResolvedFeature;
+import org.ant4eclipse.lib.pde.tools.TargetPlatform;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;

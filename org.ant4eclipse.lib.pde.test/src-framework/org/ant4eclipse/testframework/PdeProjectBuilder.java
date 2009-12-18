@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 
 import java.io.File;
 
