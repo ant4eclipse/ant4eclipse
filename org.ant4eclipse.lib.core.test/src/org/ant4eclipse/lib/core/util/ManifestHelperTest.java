@@ -11,25 +11,24 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.core.util.ManifestHelper.ManifestHeaderElement;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.jar.Manifest;
 
-import junit.framework.TestCase;
+public class ManifestHelperTest {
 
-public class ManifestHelperTest extends TestCase {
-
+  @Test
   public void testManifestHelper() {
     Manifest manifest = new Manifest();
     manifest.getMainAttributes().putValue(ManifestHelper.BUNDLE_SYMBOLICNAME, "org.bruni;singleton:=true");
-
     ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
         ManifestHelper.BUNDLE_SYMBOLICNAME);
-
-    assertNotNull(elements);
-    assertEquals(elements.length, 1);
-    assertEquals(elements[0].getValues().length, 1);
-    assertEquals(elements[0].getValues()[0], "org.bruni");
+    Assert.assertNotNull(elements);
+    Assert.assertEquals(elements.length, 1);
+    Assert.assertEquals(elements[0].getValues().length, 1);
+    Assert.assertEquals(elements[0].getValues()[0], "org.bruni");
   }
-}
+
+} /* ENDCLASS */
