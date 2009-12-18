@@ -13,7 +13,7 @@ package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
 import org.ant4eclipse.pydt.test.BuildResult;
-import org.ant4eclipse.pydt.test.data.ProjectDescription;
+import org.ant4eclipse.testframework.ProjectDescription;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
