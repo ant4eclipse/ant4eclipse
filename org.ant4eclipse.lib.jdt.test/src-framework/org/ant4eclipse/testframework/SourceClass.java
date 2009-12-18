@@ -11,10 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.testframework.StringTemplate;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -100,4 +98,4 @@ public class SourceClass {
     return source.toString();
   }
 
-}
+} /* ENDCLASS */
