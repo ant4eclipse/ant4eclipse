@@ -7,7 +7,7 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.external"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.external.test"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.jdt"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.jdt.ecj"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.jdt.ecj"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.jdt.test"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.pde"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.platform"/>
