@@ -12,7 +12,6 @@
 package org.ant4eclipse.pde.ant;
 
 
-import org.ant4eclipse.pde.internal.ant.LibraryHelper;
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
@@ -25,6 +24,7 @@ import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.lib.pde.tools.LibraryHelper;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.apache.tools.ant.taskdefs.MacroDef;
