@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import org.ant4eclipse.core.util.ManifestHelper;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 
 import java.io.File;
 import java.io.FileInputStream;

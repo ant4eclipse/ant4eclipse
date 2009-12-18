@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.core.osgi;
 
-import org.ant4eclipse.core.util.ManifestHelper;
-import org.ant4eclipse.core.util.ManifestHelper.ManifestHeaderElement;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.util.ManifestHelper.ManifestHeaderElement;
 
 import java.io.File;
 import java.io.IOException;
