@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.util.ClassLoadingHelper;
-
 import org.ant4eclipse.jdt.JdtExceptionCode;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.ClassLoadingHelper;
 
 import java.io.BufferedReader;
 import java.io.File;
