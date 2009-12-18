@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.internal.model.pluginproject;
 
-import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.pde.model.featureproject.FeatureManifestParser;
@@ -19,6 +18,7 @@ import org.ant4eclipse.pde.model.pluginproject.Constants;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 
 import java.io.File;
 import java.io.FileInputStream;

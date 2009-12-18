@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pde.model.product;
 
-import org.ant4eclipse.pde.PdeExceptionCode;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.osgi.framework.Version;
 
 import java.io.InputStream;

@@ -14,7 +14,6 @@ package org.ant4eclipse.pde.ant;
 import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.ant.FileListHelper;
 
-import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.pde.model.product.ProductDefinition;
 import org.ant4eclipse.pde.model.product.ProductDefinitionParser;
@@ -32,6 +31,7 @@ import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;

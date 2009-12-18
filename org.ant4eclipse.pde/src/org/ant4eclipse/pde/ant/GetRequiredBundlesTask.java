@@ -12,7 +12,6 @@
 package org.ant4eclipse.pde.ant;
 
 
-import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
 import org.ant4eclipse.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.pde.internal.tools.UnresolvedBundleException;
@@ -32,6 +31,7 @@ import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType;
-
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 import java.util.List;

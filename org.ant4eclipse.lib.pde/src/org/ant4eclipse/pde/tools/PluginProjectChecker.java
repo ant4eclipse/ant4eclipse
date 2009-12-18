@@ -16,7 +16,6 @@ import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.pde.tools.PluginProjectChecker.Issue.IssueLevel;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
@@ -61,6 +60,7 @@ public class PluginProjectChecker {
                                                                                     + "- The build properties contains a library '%3$s' that doesn't contain a source directory. To fix this issue, please add a source directory to the library's source list 'source.%3$s'.\n";
 
   /** the LIBRARY_WITHOUT_OUTPUT_DIRECTORY */
+  @SuppressWarnings("unused")
   private static final String   LIBRARY_WITHOUT_OUTPUT_DIRECTORY                = ERRONEOUS_PROJECT_DEFINITION_MSG
                                                                                     + "- Inconsistent build properties file '%2$s'.\n"
                                                                                     + "- The build properties contains a library '%3$s' that doesn't contain a output directory. To fix this issue, please add a output directory to the library's output list 'output.%3$s'.\n";
@@ -217,6 +217,7 @@ public class PluginProjectChecker {
     private String     _message;
 
     /** the level */
+    @SuppressWarnings("unused")
     private IssueLevel _level;
 
     /**

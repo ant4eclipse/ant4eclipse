@@ -14,7 +14,7 @@ package org.ant4eclipse.pde.tools;
 import org.ant4eclipse.pde.model.buildproperties.AbstractBuildProperties;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.apache.tools.ant.BuildException;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.osgi.framework.Version;
 
 import java.io.File;
@@ -38,30 +38,6 @@ public class PdeBuildHelper {
   /** - */
   public static String       CONTEXT_QUALIFIER          = null;
 
-  // /**
-  // * Returns the destination directory for the given plugin, that is destDir/plugins/pluginFileName, where
-  // * pluginFileName is <code>smybolicname_version</code>
-  // *
-  // * <p>
-  // * If the directory does not exist it will be created. If the directory cannot be created a BuildException will be
-  // * thrown
-  // * </p>
-  // *
-  // * @destdir An existing destination directory.
-  // * @param effectiveVersion
-  // * Plugin version - must be "resolved", i.e. with replaced qualifier
-  // * @return An existing directory for the plugin
-  // */
-  // public static File getExistingPluginDestDirectory(File destdir, String symbolicPluginName, Version
-  // effectiveVersion) {
-  // Assert.notNull(destdir);
-  // Assert.notNull(symbolicPluginName);
-  // Assert.notNull(effectiveVersion);
-  //
-  // File pluginsDir = getExistingDirectory(destdir, "plugins", symbolicPluginName, effectiveVersion);
-  // return pluginsDir;
-  // }
-
   /**
    * Returns the destination directory for the given feature, that is destDir/features/featureFileName, where
    * featureFileName is <code>symbolicname_version</code>
@@ -76,39 +52,17 @@ public class PdeBuildHelper {
    *          Feature version - must be "resolved", i.e. with replaced qualifier
    * @return An existing directory for the feature
    */
-  public static File getExistingFeaturesDestDirectory(File destdir, String featureId, Version effectiveVersion) {
-    File pluginsDir = getExistingDirectory(destdir, "features", featureId, effectiveVersion);
-    return pluginsDir;
+  public static final File getExistingFeaturesDestDirectory(File destdir, String featureId, Version effectiveVersion) {
+    return getExistingDirectory(destdir, "features", featureId, effectiveVersion);
   }
 
-  private static File getExistingDirectory(File destdir, String kind, String id, Version effectiveVersion) {
-
+  private static final File getExistingDirectory(File destdir, String kind, String id, Version effectiveVersion) {
     // the "feature" or "plugins" directory inside the destdir
     File basedir = new File(destdir, kind);
-    if (basedir.exists() && !basedir.isDirectory()) {
-      throw new BuildException("'" + kind + "' directory '" + basedir.getAbsolutePath()
-          + "' exists, but is not a directory");
-    }
-
-    // split creation of plugin dir into two steps to get at slightly better
-    // error diagnostics if creation doesn't work
-    if (!basedir.exists()) {
-      if (!basedir.mkdirs()) {
-        throw new BuildException("Could not create '" + basedir + "' directory '" + basedir.getAbsolutePath()
-            + "' for an unknown reason");
-      }
-    }
-
+    Utilities.mkdirs(basedir);
     String fileName = getFileName(id, effectiveVersion);
-
     File pluginDir = new File(basedir, fileName);
-    if (!pluginDir.exists()) {
-      if (!pluginDir.mkdirs()) {
-        throw new BuildException("Could not create plugin directory '" + pluginDir.getAbsolutePath()
-            + "' for an unknown reason");
-      }
-    }
-
+    Utilities.mkdirs(pluginDir);
     return pluginDir;
   }
 
@@ -120,13 +74,8 @@ public class PdeBuildHelper {
    *          The resolved version (i.e. with replaced qualifier)
    * @return The filename for this bundle
    */
-  private static String getFileName(String id, Version effectiveVersion) {
-
-    StringBuffer pluginFileName = new StringBuffer();
-    pluginFileName.append(id);
-    pluginFileName.append('_');
-    pluginFileName.append(effectiveVersion.toString());
-    return pluginFileName.toString();
+  private static final String getFileName(String id, Version effectiveVersion) {
+    return String.format("%s_%s", id, effectiveVersion);
   }
 
   /**
@@ -155,7 +104,7 @@ public class PdeBuildHelper {
    *          The qualifier argument from the build.properties. Might be null
    * @return
    */
-  public static Version resolveVersion(Version version, String qualifier) {
+  public static final Version resolveVersion(Version version, String qualifier) {
     Assure.notNull(qualifier);
 
     Version qualifiedVersion = null;
@@ -175,9 +124,8 @@ public class PdeBuildHelper {
     return qualifiedVersion;
   }
 
-  public static boolean hasUnresolvedQualifier(Version version) {
+  public static final boolean hasUnresolvedQualifier(Version version) {
     Assure.notNull(version);
-
     return (version != null && "qualifier".equals(version.getQualifier()));
   }
 
@@ -189,7 +137,7 @@ public class PdeBuildHelper {
    * The context qualifier can explizitly set by using the ant4eclipse.contextQualifier System property. Note that this
    * is intended mainly for testing, since otherwise you can specify a qualifier in the build.properties
    */
-  public static String getResolvedContextQualifier() {
+  public static final String getResolvedContextQualifier() {
     if (CONTEXT_QUALIFIER == null) {
       CONTEXT_QUALIFIER = System.getProperty(CONTEXT_QUALIFIER_PROPERTY);
       if (CONTEXT_QUALIFIER == null) {

@@ -11,15 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-
-import org.ant4eclipse.pde.PdeExceptionCode;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
 import org.ant4eclipse.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.pde.internal.tools.UnresolvedBundlesAnalyzer;
 import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
-
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -28,6 +25,7 @@ import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
