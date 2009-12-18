@@ -14,7 +14,6 @@ package org.ant4eclipse.jdt.tools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -24,6 +23,7 @@ import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.DefaultEcli
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.ant4eclipse.testframework.JdtProjectBuilder;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.Test;
 
