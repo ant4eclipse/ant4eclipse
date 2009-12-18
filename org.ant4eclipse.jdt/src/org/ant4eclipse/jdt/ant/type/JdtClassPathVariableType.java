@@ -13,10 +13,10 @@ package org.ant4eclipse.jdt.ant.type;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
-import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 

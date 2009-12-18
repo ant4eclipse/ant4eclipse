@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant.containerargs;
 
-import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
 
 import org.ant4eclipse.platform.ant.SubElementContribution;
 
+import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

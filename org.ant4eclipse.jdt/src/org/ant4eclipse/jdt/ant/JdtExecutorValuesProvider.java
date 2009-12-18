@@ -11,18 +11,18 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ant;
 
-import org.ant4eclipse.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.jdt.tools.JdtResolver;
-import org.ant4eclipse.jdt.tools.ResolvedClasspath;
-import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry;
-import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
-import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.PathComponent;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.lib.jdt.tools.JdtResolver;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
+import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 
 import java.io.File;
 import java.util.List;

@@ -13,14 +13,14 @@ package org.ant4eclipse.jdt.ant.type;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
-import org.ant4eclipse.jdt.model.userlibrary.Archive;
-import org.ant4eclipse.jdt.model.userlibrary.UserLibraries;
-import org.ant4eclipse.jdt.model.userlibrary.UserLibrariesFileParser;
-import org.ant4eclipse.jdt.model.userlibrary.UserLibrary;
-import org.ant4eclipse.jdt.tools.classpathelements.ClassPathElementsRegistry;
 
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
+import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
+import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;
+import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrary;
+import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 

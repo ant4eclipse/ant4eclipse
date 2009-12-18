@@ -13,14 +13,14 @@ package org.ant4eclipse.jdt.ant.type;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
-import org.ant4eclipse.jdt.model.ContainerTypes;
-import org.ant4eclipse.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.model.ContainerTypes;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
