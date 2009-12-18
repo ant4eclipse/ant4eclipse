@@ -79,6 +79,23 @@ public class Utilities {
   public static final String  ENCODING        = System.getProperty("file.encoding");
 
   /**
+   * Returns a canonical representation of the supplied file.
+   * 
+   * @param file
+   *          The file which canonical representation is desired. Not <code>null</code>.
+   * 
+   * @return The canonical file. Not <code>null</code>.
+   */
+  public static final File getCanonicalFile(File file) {
+    Assure.paramNotNull("file", file);
+    try {
+      return file.getCanonicalFile();
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.CANONICAL_FILE, file);
+    }
+  }
+
+  /**
    * Reads the complete content of a text into a StringBuffer. Newlines will be transformed into the system specific
    * newlines (@see {@link #NL} unless requested otherwise.
    * 

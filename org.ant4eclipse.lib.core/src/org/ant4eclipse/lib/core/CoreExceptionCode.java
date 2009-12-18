@@ -139,6 +139,10 @@ public class CoreExceptionCode extends ExceptionCode {
   @NLSMessage("An invalid format has been used: %s")
   public static CoreExceptionCode ILLEGAL_FORMAT;
 
+  /** - */
+  @NLSMessage("Failed to access canonical file for path '%s'.")
+  public static CoreExceptionCode CANONICAL_FILE;
+
   static {
     NLS.initialize(CoreExceptionCode.class);
   }
