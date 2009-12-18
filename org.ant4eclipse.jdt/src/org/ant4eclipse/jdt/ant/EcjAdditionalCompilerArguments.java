@@ -198,8 +198,8 @@ public class EcjAdditionalCompilerArguments {
    * @param outputFolder
    */
   public void addSourceFolderForOutputFolder(File outputFolder, File[] sourceFolders) {
-    Assure.notNull(outputFolder);
-    Assure.notNull(sourceFolders);
+    Assure.paramNotNull("outputFolder", outputFolder);
+    Assure.paramNotNull("sourceFolders", sourceFolders);
 
     // get source folder map
     Set<File> sourceFolderSet = this._sourceFolderMap.get(sourceFolders);

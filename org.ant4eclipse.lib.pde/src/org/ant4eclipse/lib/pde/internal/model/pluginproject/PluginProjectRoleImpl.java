@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
@@ -64,8 +62,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * @return whether a plug-in project role is set or not.
    */
   public static final boolean hasPluginProjectRole(EclipseProject eclipseProject) {
-    Assure.notNull(eclipseProject);
-
+    Assure.paramNotNull("eclipseProject", eclipseProject);
     return eclipseProject.hasRole(PluginProjectRoleImpl.class);
   }
 
@@ -79,10 +76,8 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    */
   public PluginProjectRoleImpl(EclipseProject eclipseProject, BundleDescription description) {
     super(PLUGIN_PROJECT_ROLE_NAME, eclipseProject);
-
-    Assure.notNull(eclipseProject);
-    Assure.notNull(description);
-
+    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.paramNotNull("description", description);
     this._bundleDescription = description;
     this._buildProperties = null;
   }

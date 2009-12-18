@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
@@ -42,7 +40,7 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    */
   protected final void resolveProjectRelativeResource(EclipseProject project, String path,
       ClasspathResolverContext context) {
-    Assure.notNull(path);
+    Assure.paramNotNull("path", path);
 
     EclipseProject.PathStyle relative = context.isWorkspaceRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME
         : EclipseProject.PathStyle.ABSOLUTE;

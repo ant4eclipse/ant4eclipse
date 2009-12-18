@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -83,7 +82,7 @@ public class SvnAdapter extends VcsAdapter {
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.notNull(projectDescription);
+    Assure.paramNotNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
@@ -121,7 +120,7 @@ public class SvnAdapter extends VcsAdapter {
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.notNull(projectDescription);
+    Assure.paramNotNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
@@ -160,7 +159,7 @@ public class SvnAdapter extends VcsAdapter {
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.notNull(projectDescription);
+    Assure.paramNotNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 

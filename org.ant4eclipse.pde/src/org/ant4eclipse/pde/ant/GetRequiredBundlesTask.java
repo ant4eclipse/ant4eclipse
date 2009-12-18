@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-
-
 import org.ant4eclipse.platform.ant.core.GetPathComponent;
 import org.ant4eclipse.platform.ant.core.delegate.GetPathDelegate;
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
@@ -352,7 +350,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   public void addConfiguredBundle(BundleSpecification specification) {
 
     // assert not null
-    Assure.notNull(specification);
+    Assure.paramNotNull("specification", specification);
 
     // assert symbolic name is set
     if (Utilities.hasText(specification._symbolicName)) {

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.cdt.model.project;
 
-
-
 import org.ant4eclipse.lib.cdt.internal.model.project.CProjectRoleImpl;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -45,7 +43,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
     final CProjectRoleImpl result = new CProjectRoleImpl(project);
     // ClasspathFileParser.parseClasspath(javaProjectRole);
     return result;

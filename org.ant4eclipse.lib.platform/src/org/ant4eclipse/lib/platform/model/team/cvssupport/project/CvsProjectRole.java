@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.project;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
@@ -71,8 +70,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
       String branchOrVersionTag) {
     super(NAME, eclipseProject);
 
-    Assure.notNull(projectNameInRepository);
-    Assure.notNull(cvsRoot);
+    Assure.paramNotNull("projectNameInRepository", projectNameInRepository);
+    Assure.paramNotNull("cvsRoot", cvsRoot);
 
     this._cvsRoot = new CvsRoot(cvsRoot);
     this._projectNameInRepository = projectNameInRepository;
@@ -93,8 +92,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
       String branchOrVersionTag) {
     super(NAME, eclipseProject);
 
-    Assure.notNull(projectNameInRepository);
-    Assure.notNull(cvsRoot);
+    Assure.paramNotNull("projectNameInRepository", projectNameInRepository);
+    Assure.paramNotNull("cvsRoot", cvsRoot);
 
     this._cvsRoot = cvsRoot;
     this._projectNameInRepository = projectNameInRepository;

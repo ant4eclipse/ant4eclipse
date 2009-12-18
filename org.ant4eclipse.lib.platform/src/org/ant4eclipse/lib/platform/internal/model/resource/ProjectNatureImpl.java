@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 
@@ -35,8 +34,7 @@ public class ProjectNatureImpl implements ProjectNature {
    * @param name
    */
   public ProjectNatureImpl(String name) {
-    Assure.notNull(name);
-
+    Assure.paramNotNull("name", name);
     this._name = name;
   }
 

@@ -69,7 +69,7 @@ public class PythonResolver {
    *          <code>true</code> <=> Runtimes have to be ignored.
    */
   public PythonResolver(Workspace workspace, Mode mode, boolean ignoreruntimes) {
-    Assure.notNull(workspace);
+    Assure.paramNotNull("workspace", workspace);
     this._pathregistry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
     this._runtimeregistry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
     this._workspace = workspace;
@@ -87,7 +87,7 @@ public class PythonResolver {
    *          The unresolved entry pointing to a source folder. Not <code>null</code>.
    */
   private void resolveImpl(RawPathEntry entry) {
-    Assure.notNull(entry);
+    Assure.paramNotNull("entry", entry);
     ResolvedPathEntry result = this._pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
       result = newResolvedEntry(entry);
@@ -119,7 +119,7 @@ public class PythonResolver {
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
   public ResolvedPathEntry[] resolve(RawPathEntry... entries) {
-    Assure.notNull(entries);
+    Assure.paramNotNull("entries", entries);
     List<RawPathEntry> input = new ArrayList<RawPathEntry>();
     for (RawPathEntry entry : entries) {
       input.add(entry);
@@ -136,7 +136,7 @@ public class PythonResolver {
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
   public ResolvedPathEntry[] resolve(List<RawPathEntry> entries) {
-    Assure.notNull(entries);
+    Assure.paramNotNull("entries", entries);
     List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
     resolve(list, filter(entries));
     return list.toArray(new ResolvedPathEntry[list.size()]);

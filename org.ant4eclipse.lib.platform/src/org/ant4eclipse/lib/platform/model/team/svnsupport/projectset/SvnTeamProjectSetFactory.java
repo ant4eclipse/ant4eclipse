@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.svnsupport.projectset;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -47,8 +46,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assure.notNull(projectSetName);
-
+    Assure.paramNotNull("projectSetName", projectSetName);
     SvnTeamProjectSet svnTeamProjectSet = new SvnTeamProjectSet(projectSetName);
     return svnTeamProjectSet;
   }
@@ -61,7 +59,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assure.instanceOf("projectSet", projectSet, SvnTeamProjectSet.class);
-    Assure.notNull(reference);
+    Assure.paramNotNull("reference", reference);
 
     SvnTeamProjectSet svnTeamProjectSet = (SvnTeamProjectSet) projectSet;
 

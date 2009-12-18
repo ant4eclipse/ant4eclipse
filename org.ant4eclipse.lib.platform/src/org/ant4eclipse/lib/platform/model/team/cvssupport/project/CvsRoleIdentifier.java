@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.project;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -38,7 +37,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CvsRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
     CvsRoot cvsRoot = CvsParser.readCvsRoot(project);
     String repositoryName = CvsParser.readCvsRepositoryName(project);
     String tag = CvsParser.readTag(project);

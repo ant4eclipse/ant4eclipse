@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
@@ -35,7 +34,7 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
    */
   public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
 
-    Assure.notNull("Parameter 'launchConfigurationFile' must not be null", launchConfigurationFile);
+    Assure.paramNotNull("launchConfigurationFile", launchConfigurationFile);
     Assure.isFile(launchConfigurationFile);
 
     try {

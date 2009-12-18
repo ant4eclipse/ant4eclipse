@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -60,7 +59,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
-    Assure.notNull(names);
+    Assure.paramNotNull("names", names);
 
     // the result list with all the eclipse projects...
     List<EclipseProject> projects = new LinkedList<EclipseProject>();
@@ -100,7 +99,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
-    Assure.notNull(projectRole);
+    Assure.paramNotNull("projectRole", projectRole);
     Assure
         .assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
             "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(), ProjectRole.class
@@ -127,7 +126,7 @@ public final class WorkspaceImpl implements Workspace {
   }
 
   public void registerEclipseProject(EclipseProject eclipseProject) {
-    Assure.notNull(eclipseProject);
+    Assure.paramNotNull("eclipseProject", eclipseProject);
 
     // we have to use the specified name here instead of the directory name
     String key = eclipseProject.getSpecifiedName();

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
@@ -81,8 +80,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    *          the class path entry to add.
    */
   public final void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
-    Assure.notNull(resolvedClasspathEntry);
-
+    Assure.paramNotNull("resolvedClasspathEntry", resolvedClasspathEntry);
     if (!this._classpath.contains(resolvedClasspathEntry)) {
       this._classpath.add(resolvedClasspathEntry);
     }
@@ -96,13 +94,11 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * @param resolvedClasspathEntry
    */
   public final void addBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
-    Assure.notNull(resolvedClasspathEntry);
-
+    Assure.paramNotNull("resolvedClasspathEntry", resolvedClasspathEntry);
     if (this._bootclasspath != null) {
       // TODO: NLS
       throw new RuntimeException("FAIL");
     }
-
     this._bootclasspath = resolvedClasspathEntry;
   }
 

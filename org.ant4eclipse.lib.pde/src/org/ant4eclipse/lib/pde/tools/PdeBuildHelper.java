@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.model.buildproperties.AbstractBuildProperties;
@@ -105,7 +104,7 @@ public class PdeBuildHelper {
    * @return
    */
   public static final Version resolveVersion(Version version, String qualifier) {
-    Assure.notNull(qualifier);
+    Assure.paramNotNull("qualifier", qualifier);
 
     Version qualifiedVersion = null;
 
@@ -125,7 +124,7 @@ public class PdeBuildHelper {
   }
 
   public static final boolean hasUnresolvedQualifier(Version version) {
-    Assure.notNull(version);
+    Assure.paramNotNull("version", version);
     return (version != null && "qualifier".equals(version.getQualifier()));
   }
 

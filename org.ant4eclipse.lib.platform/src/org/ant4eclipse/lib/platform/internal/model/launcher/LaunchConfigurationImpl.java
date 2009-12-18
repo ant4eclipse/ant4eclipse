@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
@@ -71,7 +70,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
   }
 
   protected LaunchConfigAttribute getLaunchConfigAttribute(String attributeName) {
-    Assure.notNull("The parameter 'attributeName' must not be null", attributeName);
+    Assure.paramNotNull("attributeName", attributeName);
     return this._attributes.get(attributeName);
   }
 

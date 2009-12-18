@@ -67,7 +67,7 @@ public class ResolvedClasspathEntry {
    *          the source path entries
    */
   public ResolvedClasspathEntry(File[] classPathEntries, AccessRestrictions accessRestrictions, File[] sourcePathEntries) {
-    Assure.notNull(classPathEntries);
+    Assure.paramNotNull("classPathEntries", classPathEntries);
 
     this._classPathEntries = classPathEntries;
     this._accessRestrictions = accessRestrictions;

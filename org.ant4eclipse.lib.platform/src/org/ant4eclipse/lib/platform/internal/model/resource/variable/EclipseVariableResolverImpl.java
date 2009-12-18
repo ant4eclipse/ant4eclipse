@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.variable;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -69,7 +68,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * {@inheritDoc}
    */
   public final String resolveEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
-    Assure.notNull(string);
+    Assure.paramNotNull("string", string);
     // Assert.notNull(project);
     // resolve Eclipse variables
     StringMap eclipseVariables = getEclipseVariables(project);

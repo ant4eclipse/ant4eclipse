@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,9 +27,9 @@ public class AssureTest {
 
   @Test
   public void assertNotNull() {
-    Assure.notNull(new Object());
+    Assure.paramNotNull("dummy", new Object());
     try {
-      Assure.notNull(null);
+      Assure.paramNotNull("dummy", null);
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }

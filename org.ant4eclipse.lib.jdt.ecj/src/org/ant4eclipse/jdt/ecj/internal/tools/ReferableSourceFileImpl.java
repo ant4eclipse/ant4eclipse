@@ -28,9 +28,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    */
   public ReferableSourceFileImpl(File sourceFolder, String sourceFileName, String libraryLocation, byte libraryType) {
     super(sourceFolder, sourceFileName);
-
-    Assure.notNull(libraryLocation);
-
+    Assure.paramNotNull("libraryLocation", libraryLocation);
     this._referableType.setLibraryLocation(libraryLocation);
     this._referableType.setLibraryType(libraryType);
   }

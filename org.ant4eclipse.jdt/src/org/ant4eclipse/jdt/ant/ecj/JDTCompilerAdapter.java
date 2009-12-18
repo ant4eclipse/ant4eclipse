@@ -384,7 +384,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return
    */
   private String extractJavacCompilerArg(String argumentName, String defaultValue) {
-    Assure.notNull(argumentName);
+    Assure.paramNotNull("argumentName", argumentName);
 
     // Step 1: Get all compilerArguments
     String[] currentCompilerArgs = getJavac().getCurrentCompilerArgs();
@@ -452,8 +452,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return
    */
   private String[] readProblematicLine(SourceFile sourceFile, CategorizedProblem categorizedProblem) {
-    Assure.notNull(sourceFile);
-    Assure.notNull(categorizedProblem);
+    Assure.paramNotNull("sourceFile", sourceFile);
+    Assure.paramNotNull("categorizedProblem", categorizedProblem);
 
     int lineNumber = categorizedProblem.getSourceLineNumber();
     int sourceStart = categorizedProblem.getSourceStart();

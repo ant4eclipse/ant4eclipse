@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -74,7 +73,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public void setDefaultJavaRuntime(String id) {
-    Assure.notNull(id);
+    Assure.paramNotNull("id", id);
     Assure.assertTrue(hasJavaRuntime(id), "No JavaRuntime with id '" + id + "' registered!");
 
     this._defaultJavaRuntimeKey = id;
@@ -230,7 +229,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    *         <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
    */
   private JavaRuntime registerJavaRuntime(JavaRuntime javaRuntime, boolean isDefault) {
-    Assure.notNull(javaRuntime);
+    Assure.paramNotNull("javaRuntime", javaRuntime);
 
     // create path
     String id = javaRuntime.getId();

@@ -13,7 +13,6 @@ package org.ant4eclipse.jdt.ant.type;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -82,7 +81,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation());
 
-    Assure.notNull(javaRuntime);
+    Assure.paramNotNull("javaRuntime", javaRuntime);
 
     if (isDefault) {
       javaRuntimeRegistry.setDefaultJavaRuntime(runtime.getId());

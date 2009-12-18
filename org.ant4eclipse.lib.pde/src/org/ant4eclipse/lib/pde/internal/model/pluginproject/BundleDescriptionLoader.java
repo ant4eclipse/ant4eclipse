@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -52,7 +51,7 @@ public class BundleDescriptionLoader {
    */
   public static BundleDescription loadFromPluginProject(EclipseProject project) throws FileNotFoundException,
       IOException, BundleException {
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
 
     File manifestFile = project.getChild(Constants.OSGI_BUNDLE_MANIFEST);
     // TODO: handle projects with plugin.xml that may not have a MANIFEST-file

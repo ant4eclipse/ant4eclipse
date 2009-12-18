@@ -64,7 +64,7 @@ public class Assure {
    * @param object
    *          the object that must be set.
    */
-  public static final void notNull(Object object) {
+  private static final void notNull(Object object) {
     notNull("Object has to be set!", object);
   }
 
@@ -205,7 +205,7 @@ public class Assure {
    *          The type the parameter should be an instance of
    */
   public static final void instanceOf(String parameterName, Object parameter, Class<?> expectedType) {
-    notNull(String.format(MSG_NOTNULL, parameterName), parameter);
+    paramNotNull(parameterName, parameter);
     if (!expectedType.isInstance(parameter)) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_INVALIDTYPE,
           parameterName, expectedType.getName(), parameter.getClass().getName()));

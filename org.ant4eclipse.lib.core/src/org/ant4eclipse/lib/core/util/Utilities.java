@@ -292,7 +292,7 @@ public class Utilities {
    * @return true <=> The path could be deleted with success.
    */
   public static final boolean delete(File file) {
-    Assure.notNull(file);
+    Assure.paramNotNull("file", file);
     if (!file.exists()) {
       return true;
     }
@@ -336,7 +336,7 @@ public class Utilities {
    * @return The list containing all children. Not <code>null</code>.
    */
   public static final List<File> getAllChildren(File file) {
-    Assure.notNull(file);
+    Assure.paramNotNull("file", file);
     List<File> result = new LinkedList<File>();
     if (file.isDirectory()) {
       // add the children
@@ -385,9 +385,9 @@ public class Utilities {
    * @return The modified text. Not <code>null</code>.
    */
   public static final String replace(String input, String search, String replacement) {
-    Assure.notNull(input);
-    Assure.notNull(search);
-    Assure.notNull(replacement);
+    Assure.paramNotNull("input", input);
+    Assure.paramNotNull("search", search);
+    Assure.paramNotNull("replacement", replacement);
     int idx = input.indexOf(search);
     if (idx == -1) {
       return input;
@@ -428,8 +428,8 @@ public class Utilities {
    * @return The file which indicates the relative path. null in case the relative path could not be calculated.
    */
   public static final String calcRelative(File fromfile, File tofile) {
-    Assure.notNull(fromfile);
-    Assure.notNull(tofile);
+    Assure.paramNotNull("fromfile", fromfile);
+    Assure.paramNotNull("tofile", tofile);
     String frompath = null;
     String topath = null;
     try {
@@ -686,7 +686,7 @@ public class Utilities {
    */
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className, String arg) {
-    Assure.notNull("The parameter 'className' must not be null", className);
+    Assure.paramNotNull("className", className);
     Class<?> clazz = null;
     // Try to load class...
     try {
@@ -790,8 +790,8 @@ public class Utilities {
    *          The directory where the content shall be written to. Not <code>null</code>.
    */
   public static final void unpack(File zipfile, File destdir) {
-    Assure.notNull(zipfile);
-    Assure.notNull(destdir);
+    Assure.paramNotNull("zipfile", zipfile);
+    Assure.paramNotNull("destdir", destdir);
     byte[] buffer = new byte[16384];
     try {
       if (!destdir.isAbsolute()) {
@@ -829,8 +829,8 @@ public class Utilities {
    *           Copying failed for some reason.
    */
   public static final void copy(InputStream instream, OutputStream outstream, byte[] buffer) throws IOException {
-    Assure.notNull(instream);
-    Assure.notNull(outstream);
+    Assure.paramNotNull("instream", instream);
+    Assure.paramNotNull("outstream", outstream);
     Assure.nonEmpty("buffer", buffer);
     try {
       int read = instream.read(buffer);
@@ -939,7 +939,7 @@ public class Utilities {
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
   public static final File createFile(String content, String suffix, String encoding) {
-    Assure.notNull(content);
+    Assure.paramNotNull("content", content);
     Assure.nonEmpty(encoding);
     try {
       File result = File.createTempFile("a4e", suffix);
@@ -989,7 +989,6 @@ public class Utilities {
   public static final void writeFile(File destination, byte[] content) {
     Assure.paramNotNull("destination", destination);
     Assure.paramNotNull("content", content);
-    Assure.notNull(content);
     OutputStream output = null;
     try {
       output = new FileOutputStream(destination);
@@ -1010,7 +1009,7 @@ public class Utilities {
    * @return The name without the suffix.
    */
   public static final String stripSuffix(String name) {
-    Assure.notNull(name);
+    Assure.paramNotNull("name", name);
     int lidx = name.lastIndexOf('.');
     if (lidx != -1) {
       return name.substring(0, lidx);
@@ -1047,8 +1046,8 @@ public class Utilities {
    */
   public static final void expandJarFile(JarFile jarFile, File expansionDirectory) {
 
-    Assure.notNull(jarFile);
-    Assure.notNull(expansionDirectory);
+    Assure.paramNotNull("jarFile", jarFile);
+    Assure.paramNotNull("expansionDirectory", expansionDirectory);
 
     mkdirs(expansionDirectory);
 
@@ -1086,7 +1085,7 @@ public class Utilities {
   }
 
   private static void writeFile(InputStream inputStream, File file) {
-    Assure.notNull(inputStream);
+    Assure.paramNotNull("inputStream", inputStream);
 
     FileOutputStream fos = null;
     try {

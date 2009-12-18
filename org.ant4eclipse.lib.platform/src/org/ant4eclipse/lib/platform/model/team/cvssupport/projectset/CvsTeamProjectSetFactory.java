@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.projectset;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -44,7 +43,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assure.notNull(projectSetName);
+    Assure.paramNotNull("projectSetName", projectSetName);
     CvsTeamProjectSet projectSet = new CvsTeamProjectSet(projectSetName);
     return projectSet;
   }
@@ -54,7 +53,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assure.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
-    Assure.notNull(reference);
+    Assure.paramNotNull("reference", reference);
     A4ELogging.trace("parseReference ('%s')", reference);
 
     StringTokenizer stringTokenizer = new StringTokenizer(reference, ",");

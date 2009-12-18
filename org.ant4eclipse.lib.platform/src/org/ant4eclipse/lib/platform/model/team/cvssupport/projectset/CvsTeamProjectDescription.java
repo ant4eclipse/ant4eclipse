@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.projectset;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
@@ -47,8 +46,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public CvsTeamProjectDescription(String projectname, CvsRoot cvsroot, String nameInRepository, String tag) {
     super(projectname);
-    Assure.notNull(cvsroot);
-    Assure.notNull(nameInRepository);
+    Assure.paramNotNull("cvsroot", cvsroot);
+    Assure.paramNotNull("nameInRepository", nameInRepository);
 
     this._cvsRoot = cvsroot;
     this._nameInRepository = nameInRepository;
@@ -153,10 +152,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    *          the cvs password might be null
    */
   public void setCvsUserAndPassword(String cvsUser, String cvsPwd) {
-    Assure.notNull(cvsUser);
-
+    Assure.paramNotNull("cvsUser", cvsUser);
     A4ELogging.debug("setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd);
-
     this._cvsUser = cvsUser;
     this._cvsPwd = cvsPwd;
   }

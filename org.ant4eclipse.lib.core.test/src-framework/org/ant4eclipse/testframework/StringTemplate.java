@@ -39,7 +39,7 @@ public class StringTemplate {
    */
   public StringTemplate(String content) {
     this();
-    Assure.notNull(content);
+    Assure.paramNotNull("content", content);
     this._stringTemplate.append(content);
   }
 
@@ -47,7 +47,7 @@ public class StringTemplate {
    * @param content
    */
   public StringTemplate append(String content) {
-    Assure.notNull(content);
+    Assure.paramNotNull("content", content);
     this._stringTemplate.append(content);
     return this;
   }
@@ -67,8 +67,8 @@ public class StringTemplate {
    * @param value
    */
   public void replace(String name, String value) {
-    Assure.notNull(name);
-    Assure.notNull(value);
+    Assure.paramNotNull("name", name);
+    Assure.paramNotNull("value", value);
     this._stringsToReplace.put(name, value);
   }
 

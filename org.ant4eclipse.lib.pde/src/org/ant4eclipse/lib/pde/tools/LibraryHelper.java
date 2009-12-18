@@ -69,7 +69,7 @@ public class LibraryHelper {
    * @return
    */
   public static final String getSourceNameForLibrary(String libraryName) {
-    Assure.notNull(libraryName);
+    Assure.paramNotNull("libraryName", libraryName);
     String result = libraryName;
     if (result.endsWith(".jar")) {
       result = result.substring(0, result.length() - 4);

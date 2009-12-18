@@ -85,7 +85,7 @@ public abstract class AbstractAntProjectRaper<V> {
    */
   public final void setScopedValues(Map<String, V> scopedValues, String prefix) {
     Assure.assertTrue(this._scopedValues == null, "Scoped values are already set!");
-    Assure.notNull(scopedValues);
+    Assure.paramNotNull("scopedValues", scopedValues);
 
     // set the scoped values
     this._scopedValues = scopedValues;

@@ -22,7 +22,7 @@ class LaunchConfigAttribute {
   private Object _value;
 
   public LaunchConfigAttribute(String name) {
-    Assure.notNull("Parameter 'name' must not be null", name);
+    Assure.paramNotNull("name", name);
     this._name = name;
   }
 

@@ -36,7 +36,7 @@ public class LinkFileFactory {
    * @return An array of LinkFile objects representing all .link-files found in the directory.
    */
   public static LinkFile[] getLinkFiles(File directory) {
-    Assure.notNull(directory);
+    Assure.paramNotNull("directory", directory);
 
     File linksDir = new File(directory, "links");
 

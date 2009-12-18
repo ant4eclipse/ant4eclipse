@@ -49,8 +49,7 @@ public class LinkFile {
    *          the destination of the link file.
    */
   public LinkFile(File destination) {
-    Assure.notNull(destination);
-
+    Assure.paramNotNull("destination", destination);
     this._destination = destination;
   }
 

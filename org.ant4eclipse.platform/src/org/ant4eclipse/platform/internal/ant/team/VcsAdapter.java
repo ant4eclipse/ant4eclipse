@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -31,7 +30,7 @@ public abstract class VcsAdapter {
   private Project _antProject;
 
   public VcsAdapter(Project antProject) {
-    Assure.notNull(antProject);
+    Assure.paramNotNull("antProject", antProject);
     this._antProject = antProject;
   }
 
@@ -52,7 +51,7 @@ public abstract class VcsAdapter {
    */
   public final void checkoutProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assure.notNull(projectDescription);
+    Assure.paramNotNull("projectDescription", projectDescription);
 
     String projectName = projectDescription.getProjectName();
 
@@ -78,7 +77,7 @@ public abstract class VcsAdapter {
    */
   public final void updateProject(File destination, TeamProjectDescription projectDescription)
       throws Ant4EclipseException {
-    Assure.notNull(projectDescription);
+    Assure.paramNotNull("projectDescription", projectDescription);
     update(destination, projectDescription);
   }
 
@@ -97,7 +96,7 @@ public abstract class VcsAdapter {
    */
   public final void exportProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assure.notNull(projectDescription);
+    Assure.paramNotNull("projectDescription", projectDescription);
 
     String projectName = projectDescription.getProjectName();
 

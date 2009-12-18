@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
@@ -124,7 +123,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   }
 
   public TeamProjectSetFactory getFactoryForProvider(String providerId) {
-    Assure.notNull("Parameter 'providerId' must not be null", providerId);
+    Assure.paramNotNull("providerId", providerId);
 
     if (!this._factories.containsKey(providerId)) {
       throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);

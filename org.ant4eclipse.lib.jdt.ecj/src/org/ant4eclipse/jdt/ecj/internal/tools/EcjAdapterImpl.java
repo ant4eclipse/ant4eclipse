@@ -47,7 +47,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
    * {@inheritDoc}
    */
   public CompileJobResult compile(CompileJobDescription description) {
-    Assure.notNull(description);
+    Assure.paramNotNull("description", description);
 
     // create the name environment
     INameEnvironment nameEnvironment = new NameEnvironmentImpl(description.getClassFileLoader());

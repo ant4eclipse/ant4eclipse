@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -64,10 +63,10 @@ public class JavaRuntimeImpl implements JavaRuntime {
 
     Assure.nonEmpty(id);
     Assure.isDirectory(location);
-    Assure.notNull(libraries);
-    Assure.notNull(javaVersion);
-    Assure.notNull(javaSpecificationVersion);
-    Assure.notNull(javaProfile);
+    Assure.paramNotNull("libraries", libraries);
+    Assure.paramNotNull("javaVersion", javaVersion);
+    Assure.paramNotNull("javaSpecificationVersion", javaSpecificationVersion);
+    Assure.paramNotNull("javaProfile", javaProfile);
 
     this._id = id;
     this._location = location;

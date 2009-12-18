@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.platform.internal.model.resource.role.NatureNicknameRegistry;
@@ -143,7 +142,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public File getFolder(PathStyle pathstyle) {
-    Assure.notNull(pathstyle);
+    Assure.paramNotNull("pathstyle", pathstyle);
     if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
       return new File(".");
     } else if (pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
@@ -164,7 +163,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public boolean hasChild(String path) {
-    Assure.notNull(path);
+    Assure.paramNotNull("path", path);
     File child = getChild(path);
     return child.exists();
   }
@@ -187,7 +186,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public File[] getChildren(String[] path, PathStyle relative) {
-    Assure.notNull(path);
+    Assure.paramNotNull("path", path);
 
     File[] result = new File[path.length];
 
@@ -219,7 +218,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public File getSettingsFile(String settingsFileName) throws RuntimeException {
-    Assure.notNull("The parameter 'settingsFileName' must not be null", settingsFileName);
+    Assure.paramNotNull("settingsFileName", settingsFileName);
     Assure.assertTrue(hasSettingsFolder(), "The project '" + getFolderName() + "' must have a .settings folder");
 
     File settingsFile = new File(this._settingsFolder, settingsFileName);
@@ -240,7 +239,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public File getChild(String path, PathStyle pathstyle) {
-    Assure.notNull(path);
+    Assure.paramNotNull("path", path);
 
     String name = path;
     String rest = null;
@@ -308,7 +307,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    *          the nature to add.
    */
   public void addNature(ProjectNature nature) {
-    Assure.notNull(nature);
+    Assure.paramNotNull("nature", nature);
     if (!this._natures.contains(nature)) {
       this._natures.add(nature);
     }
@@ -318,7 +317,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public boolean hasNature(String natureName) {
-    Assure.notNull(natureName);
+    Assure.paramNotNull("natureName", natureName);
     return hasNature(new ProjectNatureImpl(natureName));
   }
 
@@ -326,7 +325,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public boolean hasNature(ProjectNature nature) {
-    Assure.notNull(nature);
+    Assure.paramNotNull("nature", nature);
 
     // nature unknown:
     if (!this._natures.contains(nature)) {
@@ -384,7 +383,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    *          Adds the specified role to the EclipseProject.
    */
   public void addRole(ProjectRole role) {
-    Assure.notNull(role);
+    Assure.paramNotNull("role", role);
     if (hasRole(role.getClass())) {
       throw new RuntimeException("ProjectRole " + role.getClass() + " is already set!");
     }
@@ -396,7 +395,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public boolean hasRole(Class<? extends ProjectRole> projectRoleClass) {
-    Assure.notNull(projectRoleClass);
+    Assure.paramNotNull("projectRoleClass", projectRoleClass);
     Iterator<ProjectRole> iterator = this._roles.iterator();
     while (iterator.hasNext()) {
       AbstractProjectRole role = (AbstractProjectRole) iterator.next();
@@ -412,7 +411,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @SuppressWarnings("unchecked")
   public <T extends ProjectRole> T getRole(Class<T> projectRoleClass) {
-    Assure.notNull(projectRoleClass);
+    Assure.paramNotNull("projectRoleClass", projectRoleClass);
     Assure.assertTrue(hasRole(projectRoleClass), "hasRole(projectRoleClass) on project '" + getFolderName()
         + "'has to be true for role '" + projectRoleClass + "'!");
 
@@ -442,8 +441,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    *          the specified build command to the project.
    */
   public void addBuildCommand(BuildCommand command) {
-    Assure.notNull(command);
-
+    Assure.paramNotNull("command", command);
     this._buildCommands.add(command);
   }
 
@@ -451,7 +449,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public boolean hasBuildCommand(String commandName) {
-    Assure.notNull(commandName);
+    Assure.paramNotNull("commandName", commandName);
     BuildCommand command = new BuildCommandImpl(commandName);
     return hasBuildCommand(command);
   }
@@ -460,7 +458,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public boolean hasBuildCommand(BuildCommand command) {
-    Assure.notNull(command);
+    Assure.paramNotNull("command", command);
     return this._buildCommands.contains(command);
   }
 
@@ -478,7 +476,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    *          the linked resource to add.
    */
   public void addLinkedResource(LinkedResourceImpl linkedResource) {
-    Assure.notNull(linkedResource);
+    Assure.paramNotNull("linkedResource", linkedResource);
 
     if (!this._linkedResources.contains(linkedResource)) {
       this._linkedResources.add(linkedResource);
@@ -509,7 +507,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @return true <=> The name applies to a specific linked resource.
    */
   public boolean isLinkedResource(String name) {
-    Assure.notNull(name);
+    Assure.paramNotNull("name", name);
     return (this._linkedResourceNames.contains(name));
   }
 

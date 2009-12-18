@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -59,7 +58,7 @@ public final class CvsRoot implements Cloneable {
    *          The encodedPassword to set.
    */
   public void setEncodedPassword(String encodedPassword) {
-    Assure.notNull(encodedPassword);
+    Assure.paramNotNull("encodedPassword", encodedPassword);
     this._encodedPassword = encodedPassword;
   }
 
@@ -70,7 +69,7 @@ public final class CvsRoot implements Cloneable {
    *          Sets a cvs user.
    */
   public void setUser(String user) {
-    Assure.notNull(user);
+    Assure.paramNotNull("user", user);
     this._user = user;
   }
 
@@ -190,7 +189,7 @@ public final class CvsRoot implements Cloneable {
    * @return the resolved root.
    */
   public CvsRoot getResolvedRoot(String username, String password) {
-    Assure.notNull(username);
+    Assure.paramNotNull("username", username);
 
     CvsRoot cvsRoot = null;
 

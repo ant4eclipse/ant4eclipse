@@ -37,7 +37,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
    * @param project
    */
   public AntBasedLogger(Project project) {
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
 
     this._project = project;
     this._project.addBuildListener(this);

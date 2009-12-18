@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 
@@ -99,7 +98,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param exported
    */
   public RawClasspathEntryImpl(int entryKind, String path, String output, boolean exported) {
-    Assure.notNull(path);
+    Assure.paramNotNull("path", path);
 
     this._entryKind = entryKind;
     this._path = path;
@@ -180,8 +179,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @return A numerical information specifying the entry kind.
    */
   private static int resolveEntryKind(String entryKind, String path) {
-    Assure.notNull(entryKind);
-    Assure.notNull(path);
+    Assure.paramNotNull("entryKind", entryKind);
+    Assure.paramNotNull("path", path);
 
     if ("con".equals(entryKind)) {
       return CPE_CONTAINER;

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -47,7 +46,7 @@ public class ProjectFileParser {
    * @return the supplied {@link EclipseProject} instance.
    */
   public static EclipseProjectImpl parseProject(EclipseProjectImpl eclipseProject) {
-    Assure.notNull(eclipseProject);
+    Assure.paramNotNull("eclipseProject", eclipseProject);
 
     // retrieve the '.project' file
     File projectFile = eclipseProject.getChild(".project");

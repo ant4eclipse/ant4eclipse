@@ -42,7 +42,7 @@ public class ProductDefinitionParser {
    */
   public static final ProductDefinition parseProductDefinition(InputStream inputstream) {
 
-    Assure.notNull(inputstream);
+    Assure.paramNotNull("inputstream", inputstream);
 
     XQueryHandler queryhandler = new XQueryHandler();
 

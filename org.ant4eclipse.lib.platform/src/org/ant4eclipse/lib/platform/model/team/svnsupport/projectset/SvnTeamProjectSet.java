@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.svnsupport.projectset;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.team.projectset.internal.AbstractTeamProjectSet;
 
@@ -47,7 +46,7 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
    *          the description to add.
    */
   public void addTeamProjectDescription(SvnTeamProjectDescription description) {
-    Assure.notNull(description);
+    Assure.paramNotNull("description", description);
     super.addTeamProjectDescription(description);
   }
 

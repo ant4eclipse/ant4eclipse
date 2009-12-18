@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.project;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.internal.model.project.ClasspathFileParser;
@@ -46,7 +44,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
     JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl(project);
     ClasspathFileParser.parseClasspath(javaProjectRole);
     return javaProjectRole;

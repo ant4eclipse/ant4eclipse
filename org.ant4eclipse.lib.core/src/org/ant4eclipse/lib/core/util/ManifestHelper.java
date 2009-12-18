@@ -79,7 +79,7 @@ public class ManifestHelper {
    *           if the symbolic name could not be found.
    */
   public static String getBundleSymbolicName(Manifest manifest) {
-    Assure.notNull(manifest);
+    Assure.paramNotNull("manifest", manifest);
 
     // get the manifest header elements
     ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
@@ -123,14 +123,14 @@ public class ManifestHelper {
   }
 
   public static String getManifestHeader(Manifest manifest, String header) {
-    Assure.notNull(manifest);
+    Assure.paramNotNull("manifest", manifest);
     Assure.nonEmpty(header);
 
     return manifest.getMainAttributes().getValue(header);
   }
 
   public static ManifestHeaderElement[] getManifestHeaderElements(Manifest manifest, String header) {
-    Assure.notNull(manifest);
+    Assure.paramNotNull("manifest", manifest);
     Assure.nonEmpty(header);
 
     String manifestValue = manifest.getMainAttributes().getValue(header);

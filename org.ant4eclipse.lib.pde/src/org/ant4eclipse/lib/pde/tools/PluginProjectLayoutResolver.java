@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
@@ -51,7 +47,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    *          the eclipse plug-in project that has to be resolved
    */
   public PluginProjectLayoutResolver(EclipseProject project) {
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
     Assure.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
 
     // set the eclipse project

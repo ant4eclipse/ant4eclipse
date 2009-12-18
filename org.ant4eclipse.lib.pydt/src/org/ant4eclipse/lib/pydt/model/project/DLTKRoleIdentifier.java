@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model.project;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -45,7 +44,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("PyDLTKRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull(project);
+    Assure.paramNotNull("project", project);
     PythonProjectRoleImpl result = new PythonProjectRoleImpl(project, true);
     DLTKParser.contributePathes(result);
     return result;

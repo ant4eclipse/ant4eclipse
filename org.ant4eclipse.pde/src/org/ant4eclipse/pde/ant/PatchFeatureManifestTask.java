@@ -13,7 +13,6 @@ package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -180,7 +179,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    * @throws Exception
    */
   protected void replaceVersions(File featureXml, String qualifier, StringMap newBundleVersions) throws Exception {
-    Assure.notNull(featureXml);
+    Assure.paramNotNull("featureXml", featureXml);
     Assure.assertTrue(featureXml.isFile(), "featureXml (" + featureXml + ") must point to an existing file");
 
     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

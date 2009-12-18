@@ -41,9 +41,8 @@ public class ScopedMacroDefinition<E> {
    * @param scope
    */
   public ScopedMacroDefinition(MacroDef macroDefinition, E scope) {
-    Assure.notNull(macroDefinition);
-    Assure.notNull(scope);
-
+    Assure.paramNotNull("macroDefinition", macroDefinition);
+    Assure.paramNotNull("scope", scope);
     this._macroDef = macroDefinition;
     this._scope = scope;
   }
