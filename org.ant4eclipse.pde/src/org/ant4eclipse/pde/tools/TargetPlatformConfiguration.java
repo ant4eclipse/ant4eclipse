@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pde.tools;
 
-import org.ant4eclipse.jdt.internal.model.jre.JavaProfileReader;
 
 import org.ant4eclipse.pde.model.pluginproject.Constants;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
 
 import java.util.HashMap;
