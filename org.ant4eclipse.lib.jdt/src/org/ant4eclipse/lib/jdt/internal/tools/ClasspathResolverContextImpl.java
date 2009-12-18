@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
@@ -102,7 +100,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
    * {@inheritDoc}
    */
   public JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key) {
-    Assure.nonEmpty(key);
+    Assure.nonEmpty("key", key);
 
     List<JdtClasspathContainerArgument> arguments = this._resolverJob.getJdtClasspathContainerArguments();
 

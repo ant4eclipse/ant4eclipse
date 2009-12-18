@@ -93,7 +93,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    * {@inheritDoc}
    */
   public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     Assure.paramNotNull("workspaceDefinition", workspaceDefinition);
 
     // create new workspace implementation

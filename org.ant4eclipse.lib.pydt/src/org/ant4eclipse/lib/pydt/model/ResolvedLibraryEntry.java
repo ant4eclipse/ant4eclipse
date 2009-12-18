@@ -35,8 +35,8 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    *          The location of the library. Neither <code>null</code> nor empty.
    */
   public ResolvedLibraryEntry(String owningproject, String location) {
-    Assure.nonEmpty(location);
-    Assure.nonEmpty(owningproject);
+    Assure.nonEmpty("location", location);
+    Assure.nonEmpty("owningproject", owningproject);
     this._owningproject = owningproject;
     this._location = location;
   }

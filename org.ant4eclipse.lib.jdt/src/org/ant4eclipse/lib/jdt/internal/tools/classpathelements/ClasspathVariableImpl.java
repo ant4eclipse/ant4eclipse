@@ -40,7 +40,7 @@ public class ClasspathVariableImpl implements ClassPathVariable {
    * @param path
    */
   public ClasspathVariableImpl(String name, File path) {
-    Assure.nonEmpty(name);
+    Assure.nonEmpty("name", name);
     Assure.paramNotNull("path", path);
 
     this._name = name;

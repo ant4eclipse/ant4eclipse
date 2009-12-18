@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -53,7 +52,7 @@ public class JavaRuntimeLoader {
    * @param location
    */
   public static JavaRuntime loadJavaRuntime(String id, File location) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     Assure.isDirectory(location);
 
     String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"

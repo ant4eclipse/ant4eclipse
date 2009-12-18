@@ -61,18 +61,6 @@ public class Assure {
    * Assert that the specified object is not null.
    * </p>
    * 
-   * @param object
-   *          the object that must be set.
-   */
-  private static final void notNull(Object object) {
-    notNull("Object has to be set!", object);
-  }
-
-  /**
-   * <p>
-   * Assert that the specified object is not null.
-   * </p>
-   * 
    * @param parameterName
    *          The name of the parameter that is checked
    * @param object
@@ -220,8 +208,8 @@ public class Assure {
    * @param string
    *          the string that must provide a value.
    */
-  public static final void nonEmpty(String string) {
-    notNull(string);
+  public static final void nonEmpty(String param, String string) {
+    paramNotNull(param, string);
     if (string.length() == 0) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, MSG_STRINGMUSTBENONEMPTY);
     }
@@ -235,8 +223,8 @@ public class Assure {
    * @param file
    *          the file that must exist.
    */
-  public static final void exists(File file) {
-    notNull(file);
+  public static final void exists(String param, File file) {
+    paramNotNull(param, file);
     if (!file.exists()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_RESOURCEDOESNOTEXIST,
           file.getAbsolutePath()));
@@ -252,7 +240,7 @@ public class Assure {
    *          the file that must be a file.
    */
   public static final void isFile(File file) {
-    Assure.exists(file);
+    Assure.exists("file", file);
     if (!file.isFile()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
           MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath()));
@@ -268,7 +256,7 @@ public class Assure {
    *          the file that must be a directory.
    */
   public static final void isDirectory(File file) {
-    Assure.exists(file);
+    Assure.exists("file", file);
     if (!file.isDirectory()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
           MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath()));

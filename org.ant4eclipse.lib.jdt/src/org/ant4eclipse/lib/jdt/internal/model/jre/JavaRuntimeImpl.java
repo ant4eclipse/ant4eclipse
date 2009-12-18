@@ -61,7 +61,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   JavaRuntimeImpl(String id, File location, File[] libraries, Version javaVersion, Version javaSpecificationVersion,
       JavaProfile javaProfile) {
 
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     Assure.isDirectory(location);
     Assure.paramNotNull("libraries", libraries);
     Assure.paramNotNull("javaVersion", javaVersion);

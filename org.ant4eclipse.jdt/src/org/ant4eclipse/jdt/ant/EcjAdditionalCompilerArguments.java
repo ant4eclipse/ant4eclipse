@@ -171,8 +171,7 @@ public class EcjAdditionalCompilerArguments {
    *          the boot access restriction.
    */
   public void setBootClassPathAccessRestrictions(String bootClassPathAccessRestrictions) {
-    Assure.nonEmpty(bootClassPathAccessRestrictions);
-
+    Assure.nonEmpty("bootClassPathAccessRestrictions", bootClassPathAccessRestrictions);
     this._bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
   }
 

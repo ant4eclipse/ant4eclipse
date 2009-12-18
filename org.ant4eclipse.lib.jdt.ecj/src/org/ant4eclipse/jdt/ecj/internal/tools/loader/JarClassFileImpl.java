@@ -45,7 +45,7 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
 
     super(libraryLocation, libraryType);
 
-    Assure.nonEmpty(zipEntryName);
+    Assure.nonEmpty("zipEntryName", zipEntryName);
     Assure.paramNotNull("zipFile", zipFile);
 
     this._zipEntryName = zipEntryName;

@@ -46,10 +46,9 @@ public class SourceFileImpl implements SourceFile {
    */
   public SourceFileImpl(File sourceFolder, String sourceFileName, File destinationFolder, String encoding) {
     Assure.isDirectory(sourceFolder);
-    Assure.nonEmpty(sourceFileName);
+    Assure.nonEmpty("sourceFileName", sourceFileName);
     Assure.isDirectory(destinationFolder);
-    Assure.nonEmpty(encoding);
-
+    Assure.nonEmpty("encoding", encoding);
     this._destinationFolder = destinationFolder;
     this._encoding = encoding;
     this._sourceFileName = sourceFileName;
@@ -82,8 +81,7 @@ public class SourceFileImpl implements SourceFile {
    */
   protected SourceFileImpl(File sourceFolder, String sourceFileName) {
     Assure.isDirectory(sourceFolder);
-    Assure.nonEmpty(sourceFileName);
-
+    Assure.nonEmpty("sourceFileName", sourceFileName);
     this._sourceFileName = sourceFileName;
     this._sourceFolder = sourceFolder;
     this._encoding = System.getProperty(FILE_ENCODING_SYSTEM_PROPERTY);

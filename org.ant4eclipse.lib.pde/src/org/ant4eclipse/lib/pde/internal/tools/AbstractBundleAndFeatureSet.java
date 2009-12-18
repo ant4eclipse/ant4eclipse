@@ -54,7 +54,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    *          a description of this {@link BundleAndFeatureSet}
    */
   protected AbstractBundleAndFeatureSet(String description) {
-    Assure.nonEmpty(description);
+    Assure.nonEmpty("description", description);
 
     // set the description
     this._description = description;
@@ -108,7 +108,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String featureId, Version version) {
-    Assure.nonEmpty(featureId);
+    Assure.nonEmpty("featureId", featureId);
     Assure.paramNotNull("version", version);
 
     // initialize if necessary
@@ -134,7 +134,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String featureId) {
-    Assure.nonEmpty(featureId);
+    Assure.nonEmpty("featureId", featureId);
 
     // initialize if necessary
     initialize();
@@ -169,7 +169,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public BundleDescription getBundleDescription(String bundleid) {
-    Assure.nonEmpty(bundleid);
+    Assure.nonEmpty("bundleid", bundleid);
 
     // initialize if necessary
     initialize();

@@ -42,7 +42,7 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
   public ResolvedRuntimeEntry(String owningproject, Version version, File[] libs) {
     Assure.paramNotNull("version", version);
     Assure.paramNotNull("libs", libs);
-    Assure.nonEmpty(owningproject);
+    Assure.nonEmpty("owningproject", owningproject);
     this._owningproject = owningproject;
     this._version = version;
     this._libs = libs;

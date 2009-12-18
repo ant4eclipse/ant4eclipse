@@ -859,7 +859,7 @@ public class Utilities {
    * @return The file keeping the exported content.
    */
   public static final File exportResource(String resource) {
-    Assure.nonEmpty(resource);
+    Assure.nonEmpty("resource", resource);
     Assure.assertTrue(resource.startsWith("/"), MSG_INVALIDRESOURCEPATH);
     String suffix = ".tmp";
     int lidx = resource.lastIndexOf('.');
@@ -883,7 +883,7 @@ public class Utilities {
    * @return The file keeping the exported content.
    */
   public static final File exportResource(String resource, String suffix) {
-    Assure.nonEmpty(resource);
+    Assure.nonEmpty("resource", resource);
     Assure.assertTrue(resource.startsWith("/"), MSG_INVALIDRESOURCEPATH);
     URL url = Utilities.class.getResource(resource);
     if (url == null) {
@@ -940,7 +940,7 @@ public class Utilities {
    */
   public static final File createFile(String content, String suffix, String encoding) {
     Assure.paramNotNull("content", content);
-    Assure.nonEmpty(encoding);
+    Assure.nonEmpty("encoding", encoding);
     try {
       File result = File.createTempFile("a4e", suffix);
       writeFile(result, content, encoding);
@@ -963,7 +963,7 @@ public class Utilities {
   public static final void writeFile(File destination, String content, String encoding) {
     Assure.paramNotNull("destination", destination);
     Assure.paramNotNull("content", content);
-    Assure.nonEmpty(encoding);
+    Assure.nonEmpty("encoding", encoding);
     OutputStream output = null;
     Writer writer = null;
     try {

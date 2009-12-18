@@ -208,7 +208,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   public String getOutputFolderForSourceFolder(final String sourceFolder) {
-    Assure.nonEmpty(sourceFolder);
+    Assure.nonEmpty("sourceFolder", sourceFolder);
 
     // normalize path
     final String normalizedSourceFolder = normalize(sourceFolder);

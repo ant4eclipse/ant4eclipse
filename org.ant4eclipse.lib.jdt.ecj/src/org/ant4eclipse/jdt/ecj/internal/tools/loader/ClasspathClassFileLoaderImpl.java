@@ -537,8 +537,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      *          the class path entry to add.
      */
     public void addClasspathEntry(File classpathEntry) {
-      Assure.exists(classpathEntry);
-
+      Assure.exists("classpathEntry", classpathEntry);
       this._classpathEntries.add(classpathEntry);
     }
 

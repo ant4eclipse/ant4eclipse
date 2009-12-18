@@ -37,7 +37,7 @@ public class FileListHelper {
    * @return a {@link FileList} that contains all children of the specified file.
    */
   public static FileList getFileList(File file) {
-    Assure.exists(file);
+    Assure.exists("file", file);
 
     File parentFile = file.getParentFile();
 

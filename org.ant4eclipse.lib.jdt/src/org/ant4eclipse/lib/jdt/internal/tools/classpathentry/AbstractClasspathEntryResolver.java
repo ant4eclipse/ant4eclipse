@@ -55,8 +55,7 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    *          The absolute resource.
    */
   protected final void resolveAbsoluteResource(String path, ClasspathResolverContext context) {
-    Assure.nonEmpty(path);
-
+    Assure.nonEmpty("path", path);
     context.addClasspathEntry(new ResolvedClasspathEntry(new File(path)));
   }
 

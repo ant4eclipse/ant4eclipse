@@ -54,7 +54,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     Assure.isDirectory(location);
 
     JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location);
@@ -83,7 +83,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public boolean hasJavaRuntime(String path) {
-    Assure.nonEmpty(path);
+    Assure.nonEmpty("path", path);
 
     // return true if a java runtime exists
     if (this._javaRuntimeCache.containsKey(path)) {
@@ -103,8 +103,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public boolean hasJavaProfile(String path) {
-    Assure.nonEmpty(path);
-
+    Assure.nonEmpty("path", path);
     return JavaProfileReader.getInstance().hasJavaProfile(path);
   }
 
@@ -112,7 +111,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public JavaRuntime getJavaRuntime(String path) {
-    Assure.nonEmpty(path);
+    Assure.nonEmpty("path", path);
 
     // return true if a java runtime exists
     if (this._javaRuntimeCache.containsKey(path)) {
@@ -132,8 +131,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public JavaProfile getJavaProfile(String path) {
-    Assure.nonEmpty(path);
-
+    Assure.nonEmpty("path", path);
     return JavaProfileReader.getInstance().getJavaProfile(path);
   }
 

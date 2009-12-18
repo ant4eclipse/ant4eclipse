@@ -35,9 +35,7 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
    */
   public FileClassFileImpl(File classfile, String libraryLocation, byte libraryType) {
     super(libraryLocation, libraryType);
-
-    Assure.exists(classfile);
-
+    Assure.exists("classfile", classfile);
     this._classfile = classfile;
   }
 

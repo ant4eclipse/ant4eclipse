@@ -41,8 +41,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public boolean hasProject(String name) {
-    Assure.nonEmpty(name);
-
+    Assure.nonEmpty("name", name);
     return this._projects.containsKey(name);
   }
 
@@ -50,8 +49,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject getProject(String name) {
-    Assure.nonEmpty(name);
-
+    Assure.nonEmpty("name", name);
     return this._projects.get(name);
   }
 

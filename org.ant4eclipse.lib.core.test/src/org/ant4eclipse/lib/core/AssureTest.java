@@ -52,7 +52,7 @@ public class AssureTest {
 
   @Test
   public void assertNonEmpty() {
-    Assure.nonEmpty("test");
+    Assure.nonEmpty("dummy", "test");
     Assure.nonEmpty("param", new boolean[] { false });
     Assure.nonEmpty("param", new byte[] { (byte) 0 });
     Assure.nonEmpty("param", new short[] { (short) 0 });
@@ -60,12 +60,12 @@ public class AssureTest {
     Assure.nonEmpty("param", new int[] { 0 });
     Assure.nonEmpty("param", new long[] { 0 });
     try {
-      Assure.nonEmpty("");
+      Assure.nonEmpty("dummy", "");
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
     try {
-      Assure.nonEmpty(null);
+      Assure.nonEmpty("dummy", (String) null);
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
@@ -109,13 +109,13 @@ public class AssureTest {
     testFile.deleteOnExit();
 
     // positive check for a file
-    Assure.exists(testFile);
+    Assure.exists("testFile", testFile);
 
     // positive check for a directory
-    Assure.exists(testFile.getParentFile());
+    Assure.exists("testFile.getParentFile()", testFile.getParentFile());
 
     try {
-      Assure.exists(new File("NICHT_DA"));
+      Assure.exists("NICHT_DA", new File("NICHT_DA"));
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }

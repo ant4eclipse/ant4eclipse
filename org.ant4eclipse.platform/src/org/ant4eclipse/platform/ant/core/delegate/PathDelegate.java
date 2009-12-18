@@ -60,8 +60,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final void setPathSeparator(String newpathseparator) {
-    Assure.nonEmpty(newpathseparator);
-
+    Assure.nonEmpty("newpathseparator", newpathseparator);
     this._pathSeparator = newpathseparator;
   }
 
@@ -69,7 +68,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final String getPathSeparator() {
-    return (this._pathSeparator);
+    return this._pathSeparator;
   }
 
   /**
@@ -83,8 +82,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final void setDirSeparator(String newdirseparator) {
-    Assure.nonEmpty(newdirseparator);
-
+    Assure.nonEmpty("newdirseparator", newdirseparator);
     this._dirSeparator = newdirseparator;
   }
 
@@ -92,14 +90,14 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final String getDirSeparator() {
-    return (this._dirSeparator);
+    return this._dirSeparator;
   }
 
   /**
    * {@inheritDoc}
    */
   public final boolean isDirSeparatorSet() {
-    return (this._dirSeparator != null);
+    return this._dirSeparator != null;
   }
 
   /**

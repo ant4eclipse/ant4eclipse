@@ -214,7 +214,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String id, Version version) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
 
     if (version == null) {
       return getFeatureDescription(id);
@@ -255,7 +255,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
 
     // 
     FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
@@ -302,7 +302,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public BundleDescription getBundleDescription(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
 
     // 
     BundleDescription bundleDescription = this._pluginProjectSet.getBundleDescription(id);

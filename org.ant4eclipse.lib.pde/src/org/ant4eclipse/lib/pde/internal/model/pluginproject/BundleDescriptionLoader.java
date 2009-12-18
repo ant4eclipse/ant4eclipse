@@ -107,7 +107,7 @@ public class BundleDescriptionLoader {
    * @throws FileParserException
    */
   public static BundleDescription parsePlugin(File file) {
-    Assure.exists(file);
+    Assure.exists("file", file);
     BundleDescription description = null;
     try {
       if (file.isFile() && file.getName().endsWith(".jar")) {

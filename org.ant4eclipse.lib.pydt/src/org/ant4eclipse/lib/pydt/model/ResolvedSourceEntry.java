@@ -33,7 +33,7 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    *          The name of the folder. <code>null</code> or not empty.
    */
   public ResolvedSourceEntry(String owningproject, String foldername) {
-    Assure.nonEmpty(owningproject);
+    Assure.nonEmpty("owningproject", owningproject);
     this._owningproject = owningproject;
     this._folder = foldername;
   }

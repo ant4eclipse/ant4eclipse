@@ -169,7 +169,7 @@ public final class ClassName {
    * @return a ClassName instance representing this qualified class name
    */
   public static final ClassName fromQualifiedClassName(String qualifiedClassName) {
-    Assure.nonEmpty(qualifiedClassName);
+    Assure.nonEmpty("qualifiedClassName", qualifiedClassName);
     return new ClassName(qualifiedClassName);
   }
 

@@ -93,7 +93,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public boolean hasRuntime(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     return this._runtimes.containsKey(id);
   }
 
@@ -102,7 +102,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    */
   public void registerRuntime(String id, File location, boolean sitepackages) {
 
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     Assure.paramNotNull("location", location);
 
     location = Utilities.getCanonicalFile(location);
@@ -241,7 +241,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public void setDefaultRuntime(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     if (!hasRuntime(id)) {
       throw new Ant4EclipseException(PydtExceptionCode.INVALIDDEFAULTID, id);
     }
@@ -264,7 +264,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   public PythonRuntime getRuntime(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
     return this._runtimes.get(id);
   }
 

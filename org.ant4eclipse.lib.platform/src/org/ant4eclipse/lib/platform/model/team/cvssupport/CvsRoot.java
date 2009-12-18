@@ -47,7 +47,7 @@ public final class CvsRoot implements Cloneable {
    * @throws IllegalArgumentException
    */
   public CvsRoot(String root) throws IllegalArgumentException {
-    Assure.nonEmpty(root);
+    Assure.nonEmpty("root", root);
     parse(root);
   }
 

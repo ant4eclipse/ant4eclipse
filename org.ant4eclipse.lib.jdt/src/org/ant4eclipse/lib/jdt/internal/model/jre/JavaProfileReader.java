@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -74,14 +73,12 @@ public class JavaProfileReader implements Lifecycle {
    * {@inheritDoc}
    */
   public JavaProfile getJavaProfile(String path) {
-    Assure.nonEmpty(path);
-
+    Assure.nonEmpty("path", path);
     return this._javaProfileCache.get(path);
   }
 
   public boolean hasJavaProfile(String path) {
-    Assure.nonEmpty(path);
-
+    Assure.nonEmpty("path", path);
     return this._javaProfileCache.containsKey(path);
   }
 

@@ -62,7 +62,7 @@ public class Version {
    *          A formatted version string. Neither <code>null</code> nor empty.
    */
   public Version(String version) {
-    Assure.nonEmpty(version);
+    Assure.nonEmpty("version", version);
 
     this._major = Integer.valueOf(0);
     this._minor = Integer.valueOf(0);

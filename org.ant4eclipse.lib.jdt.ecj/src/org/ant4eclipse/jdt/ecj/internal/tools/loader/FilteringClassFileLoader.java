@@ -56,7 +56,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   public FilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
 
     Assure.paramNotNull("classFileLoader", classFileLoader);
-    Assure.nonEmpty(filter);
+    Assure.nonEmpty("filter", filter);
 
     this._classFileLoader = classFileLoader;
     this._filter = filter;

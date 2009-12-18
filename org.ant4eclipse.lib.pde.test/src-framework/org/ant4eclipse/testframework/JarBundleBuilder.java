@@ -41,9 +41,7 @@ public class JarBundleBuilder {
    * @param name
    */
   public JarBundleBuilder(String name) {
-    super();
-
-    Assure.nonEmpty(name);
+    Assure.nonEmpty("name", name);
 
     // set the name
     this._name = name;

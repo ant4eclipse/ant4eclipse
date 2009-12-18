@@ -36,7 +36,7 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    */
   public ResolvedContainerEntry(String owningproject, File[] pathes) {
     Assure.paramNotNull("pathes", pathes);
-    Assure.nonEmpty(owningproject);
+    Assure.nonEmpty("owningproject", owningproject);
     this._owningproject = owningproject;
     this._pathes = pathes;
   }
