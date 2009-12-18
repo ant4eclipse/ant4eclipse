@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.ant;
 
-import org.ant4eclipse.core.ant.ExtendedBuildException;
 import org.ant4eclipse.core.ant.FileListHelper;
-
 
 import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
@@ -386,7 +384,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     }
 
     if (!this._product.isFile()) {
-      throw new ExtendedBuildException("The product configuration '%s' is not a regular file.", this._product);
+      throw new BuildException(String.format("The product configuration '%s' is not a regular file.", this._product));
     }
 
     if (this._os == null) {

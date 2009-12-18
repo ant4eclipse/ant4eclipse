@@ -12,8 +12,6 @@
 package org.ant4eclipse.pde.ant;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.core.ant.ExtendedBuildException;
-
 
 import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 
@@ -183,7 +181,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
       throw new BuildException("The attribute 'product' has to be set.");
     }
     if (!this._product.isFile()) {
-      throw new ExtendedBuildException("The product configuration '%s' is not a regular file.", this._product);
+      throw new BuildException(String.format("The product configuration '%s' is not a regular file.", this._product));
     }
     if (this._queries.isEmpty()) {
       throw new BuildException("There must be at least one <query> element.");
@@ -193,8 +191,9 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
         throw new BuildException("The attribute 'property' has to be set on a query.");
       }
       if (query._type == null) {
-        throw new ExtendedBuildException("The attribute 'query' has to be set to one of the following values: %s",
-            Utilities.listToString(QueryType.values(), null));
+        throw new BuildException(String.format(
+            "The attribute 'query' has to be set to one of the following values: %s", Utilities.listToString(QueryType
+                .values(), null)));
       }
       if ((query._type == QueryType.configini) || (query._type == QueryType.wsplugins)
           || (query._type == QueryType.wsfragments) || (query._type == QueryType.wsfeatures)) {
@@ -301,7 +300,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
         return null;
       }
     default:
-      throw new ExtendedBuildException("The query type '%s' is currently not implemented.", query._type);
+      throw new BuildException(String.format("The query type '%s' is currently not implemented.", query._type));
     }
   }
 
