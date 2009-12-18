@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.cdt.test"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.core.test"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.jdt.test"/>
