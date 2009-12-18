@@ -37,8 +37,8 @@ public class DefaultServiceRegistryConfiguration implements ServiceRegistryConfi
    *          The configuration to be used. Not <code>null</code>.
    */
   public DefaultServiceRegistryConfiguration(Ant4EclipseLogger loggerobj, Ant4EclipseConfiguration configobj) {
-    Assure.paramNotNull("loggerobj", loggerobj);
-    Assure.paramNotNull("configobj", configobj);
+    Assure.notNull("loggerobj", loggerobj);
+    Assure.notNull("configobj", configobj);
     this.logger = loggerobj;
     this.config = configobj;
   }

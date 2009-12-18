@@ -81,7 +81,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
       TargetPlatformConfiguration configuration, File[] targetlocations) {
-    Assure.paramNotNull("configuration", configuration);
+    Assure.notNull("configuration", configuration);
 
     // set the plug-in project set
     this._pluginProjectSet = pluginProjectSet;
@@ -348,8 +348,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
-    Assure.paramNotNull("source", source);
-    Assure.paramNotNull("manifest", manifest);
+    Assure.notNull("source", source);
+    Assure.notNull("manifest", manifest);
 
     ResolvedFeature resolvedFeature = new ResolvedFeature(source, manifest);
 
@@ -581,7 +581,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return the resolver errors as a string.
    */
   public static String dumpResolverErrors(BundleDescription description, boolean dumpHeader) {
-    Assure.paramNotNull("description", description);
+    Assure.notNull("description", description);
 
     StringBuffer stringBuffer = new StringBuffer();
     State state = description.getContainingState();
@@ -624,7 +624,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return the bundle info of the given bundle description.
    */
   static String getBundleInfo(BundleDescription description) {
-    Assure.paramNotNull("description", description);
+    Assure.notNull("description", description);
 
     BundleSource bundleSource = BundleSource.getBundleSource(description);
 

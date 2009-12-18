@@ -73,7 +73,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public void setDefaultJavaRuntime(String id) {
-    Assure.paramNotNull("id", id);
+    Assure.notNull("id", id);
     Assure.assertTrue(hasJavaRuntime(id), "No JavaRuntime with id '" + id + "' registered!");
 
     this._defaultJavaRuntimeKey = id;
@@ -227,7 +227,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    *         <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
    */
   private JavaRuntime registerJavaRuntime(JavaRuntime javaRuntime, boolean isDefault) {
-    Assure.paramNotNull("javaRuntime", javaRuntime);
+    Assure.notNull("javaRuntime", javaRuntime);
 
     // create path
     String id = javaRuntime.getId();

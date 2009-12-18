@@ -46,7 +46,7 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
    *          the description to add.
    */
   public void addTeamProjectDescription(SvnTeamProjectDescription description) {
-    Assure.paramNotNull("description", description);
+    Assure.notNull("description", description);
     super.addTeamProjectDescription(description);
   }
 

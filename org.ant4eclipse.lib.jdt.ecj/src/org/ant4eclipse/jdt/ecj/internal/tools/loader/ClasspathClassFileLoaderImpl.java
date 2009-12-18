@@ -70,7 +70,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    *          type
    */
   public ClasspathClassFileLoaderImpl(File entry, byte type) {
-    Assure.paramNotNull("entry", entry);
+    Assure.notNull("entry", entry);
 
     this._location = entry;
     this._type = type;
@@ -80,8 +80,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   public ClasspathClassFileLoaderImpl(File classPathEntry, byte type, File sourcePathEntry) {
-    Assure.paramNotNull("classPathEntry", classPathEntry);
-    Assure.paramNotNull("sourcePathEntry", sourcePathEntry);
+    Assure.notNull("classPathEntry", classPathEntry);
+    Assure.notNull("sourcePathEntry", sourcePathEntry);
 
     this._location = classPathEntry;
     this._type = type;
@@ -100,7 +100,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param classpathEntries
    */
   public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries) {
-    Assure.paramNotNull("location", location);
+    Assure.notNull("location", location);
 
     this._location = location;
     this._type = type;
@@ -110,7 +110,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries, File[] sourcePathEntries) {
-    Assure.paramNotNull("location", location);
+    Assure.notNull("location", location);
 
     this._location = location;
     this._type = type;
@@ -207,15 +207,15 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   protected void initialize(File[] classpathEntries, File[] sourcepathEntries) {
 
     // assert not null
-    Assure.paramNotNull("classpathEntries", classpathEntries);
-    Assure.paramNotNull("sourcepathEntries", sourcepathEntries);
+    Assure.notNull("classpathEntries", classpathEntries);
+    Assure.notNull("sourcepathEntries", sourcepathEntries);
 
     // assert that each entry is not null
     for (File classpathEntrie : classpathEntries) {
-      Assure.paramNotNull("classpathEntrie", classpathEntrie);
+      Assure.notNull("classpathEntrie", classpathEntrie);
     }
     for (File sourcepathEntry : sourcepathEntries) {
-      Assure.paramNotNull("sourcepathEntry", sourcepathEntry);
+      Assure.notNull("sourcepathEntry", sourcepathEntry);
     }
 
     // assign path entries

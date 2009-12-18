@@ -47,7 +47,7 @@ public class PathExpander {
    *          The project instance currently used for the path expansion. Not <code>null</code>.
    */
   public PathExpander(EclipseProject project) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     this._project = project;
     this._workspace = this._project.getWorkspace();
   }
@@ -63,8 +63,8 @@ public class PathExpander {
    * @return A list of resolved filesystem locations. Not <code>null</code>.
    */
   public File[] expand(ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle) {
-    Assure.paramNotNull("entries", entries);
-    Assure.paramNotNull("pathstyle", pathstyle);
+    Assure.notNull("entries", entries);
+    Assure.notNull("pathstyle", pathstyle);
     List<File> list = new ArrayList<File>();
     for (ResolvedPathEntry entry : entries) {
       expand(list, entry);

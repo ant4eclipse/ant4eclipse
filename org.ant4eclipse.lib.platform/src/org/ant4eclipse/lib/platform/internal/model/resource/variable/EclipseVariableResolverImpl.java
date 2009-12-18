@@ -68,7 +68,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * {@inheritDoc}
    */
   public final String resolveEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
-    Assure.paramNotNull("string", string);
+    Assure.notNull("string", string);
     // Assert.notNull(project);
     // resolve Eclipse variables
     StringMap eclipseVariables = getEclipseVariables(project);

@@ -34,7 +34,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    *          the name of the team project set.
    */
   public AbstractTeamProjectSet(String name) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
 
     this._name = name;
     this._projectDescriptions = new LinkedList<TeamProjectDescription>();
@@ -58,7 +58,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * {@inheritDoc}
    */
   public TeamProjectDescription getTeamProjectDescriptionByName(String name) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
 
     for (TeamProjectDescription description : this._projectDescriptions) {
       if (name.equals(description.getProjectName())) {
@@ -112,7 +112,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * @param description
    */
   protected void addTeamProjectDescription(TeamProjectDescription description) {
-    Assure.paramNotNull("description", description);
+    Assure.notNull("description", description);
     this._projectDescriptions.add(description);
   }
 

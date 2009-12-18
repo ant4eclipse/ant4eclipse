@@ -28,7 +28,7 @@ public class UnresolvedBundleException extends Exception {
    *          the bundle description
    */
   public UnresolvedBundleException(BundleDescription bundleDescription) {
-    Assure.paramNotNull("bundleDescription", bundleDescription);
+    Assure.notNull("bundleDescription", bundleDescription);
 
     // the bundle description
     this._bundleDescription = bundleDescription;

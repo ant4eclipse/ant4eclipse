@@ -103,7 +103,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   public void registerRuntime(String id, File location, boolean sitepackages) {
 
     Assure.nonEmpty("id", id);
-    Assure.paramNotNull("location", location);
+    Assure.notNull("location", location);
 
     location = Utilities.getCanonicalFile(location);
 

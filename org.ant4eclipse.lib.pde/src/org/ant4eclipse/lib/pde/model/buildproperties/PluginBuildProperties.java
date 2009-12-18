@@ -84,7 +84,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          add the specified library to the build properties.
    */
   public void addLibrary(Library library) {
-    Assure.paramNotNull("library", library);
+    Assure.notNull("library", library);
     if (!this._libraries.containsKey(library.getName())) {
       this._libraries.put(library.getName(), library);
     }
@@ -98,7 +98,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return The Library object or null if no such library exists
    */
   public Library getLibrary(String libraryName) {
-    Assure.paramNotNull("libraryName", libraryName);
+    Assure.notNull("libraryName", libraryName);
     return this._libraries.get(libraryName);
   }
 
@@ -110,7 +110,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return true or false
    */
   public boolean hasLibrary(String libraryName) {
-    Assure.paramNotNull("libraryName", libraryName);
+    Assure.notNull("libraryName", libraryName);
     return this._libraries.containsKey(libraryName);
   }
 
@@ -153,7 +153,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          The compileOrder to set.
    */
   void setJarsCompileOrder(String[] compileOrder) {
-    Assure.paramNotNull("compileOrder", compileOrder);
+    Assure.notNull("compileOrder", compileOrder);
     this._jarsCompileOrder = compileOrder;
   }
 
@@ -200,7 +200,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @param name
      */
     public Library(String name) {
-      Assure.paramNotNull("name", name);
+      Assure.notNull("name", name);
       this._name = name;
     }
 

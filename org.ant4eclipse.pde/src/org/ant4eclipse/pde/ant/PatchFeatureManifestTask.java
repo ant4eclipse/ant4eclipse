@@ -179,7 +179,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    * @throws Exception
    */
   protected void replaceVersions(File featureXml, String qualifier, StringMap newBundleVersions) throws Exception {
-    Assure.paramNotNull("featureXml", featureXml);
+    Assure.notNull("featureXml", featureXml);
     Assure.assertTrue(featureXml.isFile(), "featureXml (" + featureXml + ") must point to an existing file");
 
     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

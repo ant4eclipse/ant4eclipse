@@ -36,7 +36,7 @@ public class TargetDefinitionParser {
    * @return a target definition instance.
    */
   public static TargetDefinition parseTargetDefinition(InputStream inputStream) {
-    Assure.paramNotNull("inputStream", inputStream);
+    Assure.notNull("inputStream", inputStream);
 
     // create query handler
     XQueryHandler queryhandler = new XQueryHandler();

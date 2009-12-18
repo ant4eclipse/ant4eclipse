@@ -43,7 +43,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     final CProjectRoleImpl result = new CProjectRoleImpl(project);
     // ClasspathFileParser.parseClasspath(javaProjectRole);
     return result;

@@ -94,7 +94,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    *          the {@link Location} to add.
    */
   public void addConfiguredLocation(Location location) {
-    Assure.paramNotNull("location", location);
+    Assure.notNull("location", location);
     this._targetPlatformDefinition.addLocation(location.getDirectory());
   }
 

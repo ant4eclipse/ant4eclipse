@@ -184,7 +184,7 @@ public class ClasspathEntryResolverExecutor {
    *          the project to add.
    */
   public final void addReferencedProject(EclipseProject project) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     // adds the referenced project
     if (!this._referencedProjects.contains(project)) {
@@ -201,7 +201,7 @@ public class ClasspathEntryResolverExecutor {
    *          the project to add.
    */
   public final void resolveReferencedProject(EclipseProject project) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     // detect circular dependencies
     if (this._currentProject.contains(project)) {
@@ -264,7 +264,7 @@ public class ClasspathEntryResolverExecutor {
    *          the class path entry to resolve.
    */
   private final void resolveClasspathEntry(ClasspathEntry entry) {
-    Assure.paramNotNull("entry", entry);
+    Assure.notNull("entry", entry);
 
     // initialize handled
     boolean handled = false;

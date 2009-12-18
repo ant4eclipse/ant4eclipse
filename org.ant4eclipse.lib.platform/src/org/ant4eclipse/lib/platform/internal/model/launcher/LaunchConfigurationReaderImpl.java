@@ -34,7 +34,7 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
    */
   public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
 
-    Assure.paramNotNull("launchConfigurationFile", launchConfigurationFile);
+    Assure.notNull("launchConfigurationFile", launchConfigurationFile);
     Assure.isFile(launchConfigurationFile);
 
     try {

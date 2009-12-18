@@ -44,7 +44,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl(project);
     ClasspathFileParser.parseClasspath(javaProjectRole);
     return javaProjectRole;

@@ -46,8 +46,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public CvsTeamProjectDescription(String projectname, CvsRoot cvsroot, String nameInRepository, String tag) {
     super(projectname);
-    Assure.paramNotNull("cvsroot", cvsroot);
-    Assure.paramNotNull("nameInRepository", nameInRepository);
+    Assure.notNull("cvsroot", cvsroot);
+    Assure.notNull("nameInRepository", nameInRepository);
 
     this._cvsRoot = cvsroot;
     this._nameInRepository = nameInRepository;
@@ -152,7 +152,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    *          the cvs password might be null
    */
   public void setCvsUserAndPassword(String cvsUser, String cvsPwd) {
-    Assure.paramNotNull("cvsUser", cvsUser);
+    Assure.notNull("cvsUser", cvsUser);
     A4ELogging.debug("setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd);
     this._cvsUser = cvsUser;
     this._cvsPwd = cvsPwd;

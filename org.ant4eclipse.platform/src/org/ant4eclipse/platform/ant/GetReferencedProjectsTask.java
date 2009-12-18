@@ -137,7 +137,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    *          an (optional) separator that is used to separate the project names.
    */
   public void setSeparator(String separator) {
-    Assure.paramNotNull("separator", separator);
+    Assure.notNull("separator", separator);
     this._separator = separator;
   }
 

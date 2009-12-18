@@ -38,8 +38,8 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    *          is supposed to be neither <code>null</code> nor empty.
    */
   public PythonInterpreter(String name, String[] executables) {
-    Assure.paramNotNull("name", name);
-    Assure.paramNotNull("executables", executables);
+    Assure.notNull("name", name);
+    Assure.notNull("executables", executables);
     this._name = name;
     this._executables = executables;
   }
@@ -62,7 +62,7 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    * @return The location of the python executable or <code>null</code>.
    */
   public File lookup(File directory) {
-    Assure.paramNotNull("directory", directory);
+    Assure.notNull("directory", directory);
     for (String exename : this._executables) {
       for (String suffix : EXESUFFICES) {
         File candidate = new File(directory, exename + suffix);

@@ -53,7 +53,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
    * {@inheritDoc}
    */
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
-    Assure.paramNotNull("context", context);
+    Assure.notNull("context", context);
 
     // Step 1: get the plug-in project role
     EclipseProject eclipseProject = context.getCurrentProject();

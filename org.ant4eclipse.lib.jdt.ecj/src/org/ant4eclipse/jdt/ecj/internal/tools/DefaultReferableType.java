@@ -54,7 +54,7 @@ public class DefaultReferableType implements ReferableType {
    *          the library type
    */
   protected DefaultReferableType(String libraryLocation, byte libraryType) {
-    Assure.paramNotNull("libraryLocation", libraryLocation);
+    Assure.notNull("libraryLocation", libraryLocation);
     this._libraryLocation = libraryLocation;
     this._libraryType = libraryType;
   }

@@ -87,7 +87,7 @@ public class Utilities {
    * @return The canonical file. Not <code>null</code>.
    */
   public static final File getCanonicalFile(File file) {
-    Assure.paramNotNull("file", file);
+    Assure.notNull("file", file);
     try {
       return file.getCanonicalFile();
     } catch (IOException ex) {
@@ -273,7 +273,7 @@ public class Utilities {
   }
 
   public static final URL toURL(File file) {
-    Assure.paramNotNull("file", file);
+    Assure.notNull("file", file);
     URI uri = file.toURI();
     try {
       return uri.toURL();
@@ -292,7 +292,7 @@ public class Utilities {
    * @return true <=> The path could be deleted with success.
    */
   public static final boolean delete(File file) {
-    Assure.paramNotNull("file", file);
+    Assure.notNull("file", file);
     if (!file.exists()) {
       return true;
     }
@@ -336,7 +336,7 @@ public class Utilities {
    * @return The list containing all children. Not <code>null</code>.
    */
   public static final List<File> getAllChildren(File file) {
-    Assure.paramNotNull("file", file);
+    Assure.notNull("file", file);
     List<File> result = new LinkedList<File>();
     if (file.isDirectory()) {
       // add the children
@@ -385,9 +385,9 @@ public class Utilities {
    * @return The modified text. Not <code>null</code>.
    */
   public static final String replace(String input, String search, String replacement) {
-    Assure.paramNotNull("input", input);
-    Assure.paramNotNull("search", search);
-    Assure.paramNotNull("replacement", replacement);
+    Assure.notNull("input", input);
+    Assure.notNull("search", search);
+    Assure.notNull("replacement", replacement);
     int idx = input.indexOf(search);
     if (idx == -1) {
       return input;
@@ -428,8 +428,8 @@ public class Utilities {
    * @return The file which indicates the relative path. null in case the relative path could not be calculated.
    */
   public static final String calcRelative(File fromfile, File tofile) {
-    Assure.paramNotNull("fromfile", fromfile);
-    Assure.paramNotNull("tofile", tofile);
+    Assure.notNull("fromfile", fromfile);
+    Assure.notNull("tofile", tofile);
     String frompath = null;
     String topath = null;
     try {
@@ -569,7 +569,7 @@ public class Utilities {
    * @return A textual representation for the supplied list of values. Not <code>null</code>.
    */
   public static final String listToString(Object[] objects, String delimiter) {
-    Assure.paramNotNull("objects", objects);
+    Assure.notNull("objects", objects);
     if (delimiter == null) {
       delimiter = ",";
     }
@@ -607,7 +607,7 @@ public class Utilities {
    * @return The text representing the content of the supplied map.
    */
   public static final String toString(String title, Properties properties) {
-    Assure.paramNotNull("properties", properties);
+    Assure.notNull("properties", properties);
     StringBuilder buffer = new StringBuilder();
     if (title != null) {
       buffer.append(title);
@@ -631,7 +631,7 @@ public class Utilities {
    * @param directory
    */
   public static final void mkdirs(File directory) {
-    Assure.paramNotNull("directory", directory);
+    Assure.notNull("directory", directory);
     if (directory.isDirectory()) {
       return;
     }
@@ -654,7 +654,7 @@ public class Utilities {
    */
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className) {
-    Assure.paramNotNull("className", className);
+    Assure.notNull("className", className);
     Class<?> clazz = null;
     try {
       clazz = Class.forName(className);
@@ -686,7 +686,7 @@ public class Utilities {
    */
   @SuppressWarnings("unchecked")
   public static final <T> T newInstance(String className, String arg) {
-    Assure.paramNotNull("className", className);
+    Assure.notNull("className", className);
     Class<?> clazz = null;
     // Try to load class...
     try {
@@ -723,8 +723,8 @@ public class Utilities {
    * @return <code>true</code> <=> The supplied literal is part of the allowed values.
    */
   public static final boolean contains(String candidate, String... allowed) {
-    Assure.paramNotNull("candidate", candidate);
-    Assure.paramNotNull("allowed", allowed);
+    Assure.notNull("candidate", candidate);
+    Assure.notNull("allowed", allowed);
     for (String part : allowed) {
       if (candidate.equals(part)) {
         return true;
@@ -744,8 +744,8 @@ public class Utilities {
    * @return A list with the input elements that do match the specified type. Not <code>null</code>.
    */
   public static final List<Object> filter(List<Object> input, Class<?> clazz) {
-    Assure.paramNotNull("input", input);
-    Assure.paramNotNull("clazz", clazz);
+    Assure.notNull("input", input);
+    Assure.notNull("clazz", clazz);
     List<Object> result = new ArrayList<Object>();
     for (int i = 0; i < input.size(); i++) {
       if (clazz.isAssignableFrom(input.get(i).getClass())) {
@@ -765,8 +765,8 @@ public class Utilities {
    *          The destination file where the copy shall be created. Not <code>null</code>.
    */
   public static final void copy(URL source, File dest) {
-    Assure.paramNotNull("source", source);
-    Assure.paramNotNull("dest", dest);
+    Assure.notNull("source", source);
+    Assure.notNull("dest", dest);
     InputStream instream = null;
     OutputStream outstream = null;
     try {
@@ -790,8 +790,8 @@ public class Utilities {
    *          The directory where the content shall be written to. Not <code>null</code>.
    */
   public static final void unpack(File zipfile, File destdir) {
-    Assure.paramNotNull("zipfile", zipfile);
-    Assure.paramNotNull("destdir", destdir);
+    Assure.notNull("zipfile", zipfile);
+    Assure.notNull("destdir", destdir);
     byte[] buffer = new byte[16384];
     try {
       if (!destdir.isAbsolute()) {
@@ -829,8 +829,8 @@ public class Utilities {
    *           Copying failed for some reason.
    */
   public static final void copy(InputStream instream, OutputStream outstream, byte[] buffer) throws IOException {
-    Assure.paramNotNull("instream", instream);
-    Assure.paramNotNull("outstream", outstream);
+    Assure.notNull("instream", instream);
+    Assure.notNull("outstream", outstream);
     Assure.nonEmpty("buffer", buffer);
     try {
       int read = instream.read(buffer);
@@ -939,7 +939,7 @@ public class Utilities {
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
   public static final File createFile(String content, String suffix, String encoding) {
-    Assure.paramNotNull("content", content);
+    Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
     try {
       File result = File.createTempFile("a4e", suffix);
@@ -961,8 +961,8 @@ public class Utilities {
    *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    */
   public static final void writeFile(File destination, String content, String encoding) {
-    Assure.paramNotNull("destination", destination);
-    Assure.paramNotNull("content", content);
+    Assure.notNull("destination", destination);
+    Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
     OutputStream output = null;
     Writer writer = null;
@@ -987,8 +987,8 @@ public class Utilities {
    *          The content that has to be written. Not <code>null</code>.
    */
   public static final void writeFile(File destination, byte[] content) {
-    Assure.paramNotNull("destination", destination);
-    Assure.paramNotNull("content", content);
+    Assure.notNull("destination", destination);
+    Assure.notNull("content", content);
     OutputStream output = null;
     try {
       output = new FileOutputStream(destination);
@@ -1009,7 +1009,7 @@ public class Utilities {
    * @return The name without the suffix.
    */
   public static final String stripSuffix(String name) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
     int lidx = name.lastIndexOf('.');
     if (lidx != -1) {
       return name.substring(0, lidx);
@@ -1046,8 +1046,8 @@ public class Utilities {
    */
   public static final void expandJarFile(JarFile jarFile, File expansionDirectory) {
 
-    Assure.paramNotNull("jarFile", jarFile);
-    Assure.paramNotNull("expansionDirectory", expansionDirectory);
+    Assure.notNull("jarFile", jarFile);
+    Assure.notNull("expansionDirectory", expansionDirectory);
 
     mkdirs(expansionDirectory);
 
@@ -1085,7 +1085,7 @@ public class Utilities {
   }
 
   private static void writeFile(InputStream inputStream, File file) {
-    Assure.paramNotNull("inputStream", inputStream);
+    Assure.notNull("inputStream", inputStream);
 
     FileOutputStream fos = null;
     try {
@@ -1218,10 +1218,10 @@ public class Utilities {
    */
   public static final String replaceTokens(String template, Map<String, String> replacements, String openlit,
       String closelit) {
-    Assure.paramNotNull("template", template);
-    Assure.paramNotNull("replacements", replacements);
-    Assure.paramNotNull("openlit", openlit);
-    Assure.paramNotNull("closelit", closelit);
+    Assure.notNull("template", template);
+    Assure.notNull("replacements", replacements);
+    Assure.notNull("openlit", openlit);
+    Assure.notNull("closelit", closelit);
     StringBuffer buffer = new StringBuffer(template);
     int index = buffer.indexOf(openlit);
     while (index != -1) {

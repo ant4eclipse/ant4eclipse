@@ -48,7 +48,7 @@ public class BuildCommandImpl implements BuildCommand {
    *          triggers that would cause this builder to run in eclipse (might be null)
    */
   public BuildCommandImpl(String name, String triggers) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
     this._name = name;
     if ((triggers != null) && triggers.endsWith(",")) {
       if (triggers.length() > 1) { // remove trailing ,

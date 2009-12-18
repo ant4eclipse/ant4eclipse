@@ -46,7 +46,7 @@ public class ProjectFileParser {
    * @return the supplied {@link EclipseProject} instance.
    */
   public static EclipseProjectImpl parseProject(EclipseProjectImpl eclipseProject) {
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
 
     // retrieve the '.project' file
     File projectFile = eclipseProject.getChild(".project");

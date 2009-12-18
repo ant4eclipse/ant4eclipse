@@ -62,7 +62,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * @return whether a plug-in project role is set or not.
    */
   public static final boolean hasPluginProjectRole(EclipseProject eclipseProject) {
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
     return eclipseProject.hasRole(PluginProjectRoleImpl.class);
   }
 
@@ -76,8 +76,8 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    */
   public PluginProjectRoleImpl(EclipseProject eclipseProject, BundleDescription description) {
     super(PLUGIN_PROJECT_ROLE_NAME, eclipseProject);
-    Assure.paramNotNull("eclipseProject", eclipseProject);
-    Assure.paramNotNull("description", description);
+    Assure.notNull("eclipseProject", eclipseProject);
+    Assure.notNull("description", description);
     this._bundleDescription = description;
     this._buildProperties = null;
   }

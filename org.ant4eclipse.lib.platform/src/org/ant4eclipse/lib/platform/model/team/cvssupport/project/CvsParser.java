@@ -38,7 +38,7 @@ public class CvsParser {
    * @return true <=> The CVS project has been set.
    */
   public static boolean isCvsProject(EclipseProject project) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     return project.hasChild("CVS" + File.separator + "Root");
   }
 
@@ -54,7 +54,7 @@ public class CvsParser {
    *           Loading the content failed for some reason.
    */
   public static String readCvsRepositoryName(EclipseProject project) throws Ant4EclipseException {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     File cvsRepositoryFile = project.getChild("CVS" + File.separator + "Repository");
     return readFile(cvsRepositoryFile);
   }
@@ -71,7 +71,7 @@ public class CvsParser {
    *           Loading the root file failed.
    */
   public static CvsRoot readCvsRoot(EclipseProject project) throws Ant4EclipseException {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     File cvsRootFile = project.getChild("CVS" + File.separator + "Root");
 
@@ -80,7 +80,7 @@ public class CvsParser {
   }
 
   public static String readTag(EclipseProject project) throws Ant4EclipseException {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     if (!project.hasChild("CVS" + File.separator + "Tag")) {
       return null;

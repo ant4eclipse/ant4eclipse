@@ -94,7 +94,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    */
   public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
     Assure.nonEmpty("id", id);
-    Assure.paramNotNull("workspaceDefinition", workspaceDefinition);
+    Assure.notNull("workspaceDefinition", workspaceDefinition);
 
     // create new workspace implementation
     WorkspaceImpl workspace = new WorkspaceImpl();

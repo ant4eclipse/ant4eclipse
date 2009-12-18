@@ -46,7 +46,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assure.paramNotNull("projectSetName", projectSetName);
+    Assure.notNull("projectSetName", projectSetName);
     SvnTeamProjectSet svnTeamProjectSet = new SvnTeamProjectSet(projectSetName);
     return svnTeamProjectSet;
   }
@@ -59,7 +59,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assure.instanceOf("projectSet", projectSet, SvnTeamProjectSet.class);
-    Assure.paramNotNull("reference", reference);
+    Assure.notNull("reference", reference);
 
     SvnTeamProjectSet svnTeamProjectSet = (SvnTeamProjectSet) projectSet;
 

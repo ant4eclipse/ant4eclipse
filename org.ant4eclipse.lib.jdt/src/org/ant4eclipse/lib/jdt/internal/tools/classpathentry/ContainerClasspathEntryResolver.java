@@ -67,7 +67,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    * {@inheritDoc}
    */
   public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
-    Assure.paramNotNull("entry", entry);
+    Assure.notNull("entry", entry);
 
     // do not resolve if the class path entry is not visible
     if (!isClasspathEntryVisible(entry, context)) {

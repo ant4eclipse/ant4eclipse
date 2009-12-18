@@ -70,7 +70,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
   }
 
   protected LaunchConfigAttribute getLaunchConfigAttribute(String attributeName) {
-    Assure.paramNotNull("attributeName", attributeName);
+    Assure.notNull("attributeName", attributeName);
     return this._attributes.get(attributeName);
   }
 

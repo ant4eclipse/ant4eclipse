@@ -322,12 +322,12 @@ public class FeatureManifestImpl implements FeatureManifest {
    * @param plugin
    */
   public void addPlugin(Plugin plugin) {
-    Assure.paramNotNull("plugin", plugin);
+    Assure.notNull("plugin", plugin);
     this._plugins.add(plugin);
   }
 
   public void addIncludes(Includes includes) {
-    Assure.paramNotNull("includes", includes);
+    Assure.notNull("includes", includes);
     this._includes.add(includes);
   }
 

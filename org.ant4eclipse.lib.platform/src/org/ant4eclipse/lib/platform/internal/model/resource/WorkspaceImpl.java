@@ -57,7 +57,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
-    Assure.paramNotNull("names", names);
+    Assure.notNull("names", names);
 
     // the result list with all the eclipse projects...
     List<EclipseProject> projects = new LinkedList<EclipseProject>();
@@ -97,7 +97,7 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
-    Assure.paramNotNull("projectRole", projectRole);
+    Assure.notNull("projectRole", projectRole);
     Assure
         .assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
             "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(), ProjectRole.class
@@ -124,7 +124,7 @@ public final class WorkspaceImpl implements Workspace {
   }
 
   public void registerEclipseProject(EclipseProject eclipseProject) {
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
 
     // we have to use the specified name here instead of the directory name
     String key = eclipseProject.getSpecifiedName();

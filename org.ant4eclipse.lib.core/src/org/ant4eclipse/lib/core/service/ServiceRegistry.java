@@ -75,7 +75,7 @@ public class ServiceRegistry {
    *          the service registry configuration
    */
   public static void configure(ServiceRegistryConfiguration configuration) {
-    Assure.paramNotNull("configuration", configuration);
+    Assure.notNull("configuration", configuration);
     Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
 
     _instance = new ServiceRegistry();
@@ -270,8 +270,8 @@ public class ServiceRegistry {
      */
     public void registerService(Object service, String serviceIdentifier) {
       Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      Assure.paramNotNull("service", service);
-      Assure.paramNotNull("serviceIdentifier", serviceIdentifier);
+      Assure.notNull("service", service);
+      Assure.notNull("serviceIdentifier", serviceIdentifier);
 
       if (!ServiceRegistry.this._serviceMap.containsKey(serviceIdentifier)) {
         ServiceRegistry.this._serviceMap.put(serviceIdentifier, service);
@@ -286,8 +286,8 @@ public class ServiceRegistry {
      */
     public void registerService(Object service, String[] serviceIdentifier) {
       Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      Assure.paramNotNull("service", service);
-      Assure.paramNotNull("serviceIdentifier", serviceIdentifier);
+      Assure.notNull("service", service);
+      Assure.notNull("serviceIdentifier", serviceIdentifier);
       Assure.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
 
       for (int i = 0; i < serviceIdentifier.length; i++) {

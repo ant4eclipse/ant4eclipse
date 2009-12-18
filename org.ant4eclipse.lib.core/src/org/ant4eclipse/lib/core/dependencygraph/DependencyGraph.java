@@ -86,7 +86,7 @@ public final class DependencyGraph<T> {
    */
   public DependencyGraph(VertexRenderer<T> renderer) {
     this();
-    Assure.paramNotNull("renderer", renderer);
+    Assure.notNull("renderer", renderer);
     this._renderer = renderer;
   }
 
@@ -99,7 +99,7 @@ public final class DependencyGraph<T> {
    *          the vertex that will be added.
    */
   public void addVertex(T vertex) {
-    Assure.paramNotNull("vertex", vertex);
+    Assure.notNull("vertex", vertex);
     if (!this._vertices.contains(vertex)) {
       this._vertices.add(vertex);
     }
@@ -116,7 +116,7 @@ public final class DependencyGraph<T> {
    *         <code>false</code>.
    */
   public boolean containsVertex(T vertex) {
-    Assure.paramNotNull("vertex", vertex);
+    Assure.notNull("vertex", vertex);
     return this._vertices.contains(vertex);
   }
 
@@ -131,8 +131,8 @@ public final class DependencyGraph<T> {
    *          the child node
    */
   public void addEdge(T parent, T child) {
-    Assure.paramNotNull("parent", parent);
-    Assure.paramNotNull("child", child);
+    Assure.notNull("parent", parent);
+    Assure.notNull("child", child);
     addVertex(parent);
     addVertex(child);
     this._edges.add(new Edge<T>(parent, child));

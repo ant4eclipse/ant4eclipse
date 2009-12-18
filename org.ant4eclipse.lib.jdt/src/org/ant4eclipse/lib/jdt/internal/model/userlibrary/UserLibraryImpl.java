@@ -45,7 +45,7 @@ public class UserLibraryImpl implements UserLibrary {
    *          true <=> This library affects the boot class path.
    */
   public UserLibraryImpl(String name, boolean syslib) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
     this._name = name;
     this._systemlibrary = syslib;
     this._archives = new LinkedList<ArchiveImpl>();
@@ -98,7 +98,7 @@ public class UserLibraryImpl implements UserLibrary {
    *          The archive that will be added.
    */
   public void addArchive(ArchiveImpl arc) {
-    Assure.paramNotNull("arc", arc);
+    Assure.notNull("arc", arc);
     this._archives.add(arc);
   }
 } /* ENDCLASS */

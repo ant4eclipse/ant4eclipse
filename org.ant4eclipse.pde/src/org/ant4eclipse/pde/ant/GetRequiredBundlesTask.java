@@ -350,7 +350,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   public void addConfiguredBundle(BundleSpecification specification) {
 
     // assert not null
-    Assure.paramNotNull("specification", specification);
+    Assure.notNull("specification", specification);
 
     // assert symbolic name is set
     if (Utilities.hasText(specification._symbolicName)) {

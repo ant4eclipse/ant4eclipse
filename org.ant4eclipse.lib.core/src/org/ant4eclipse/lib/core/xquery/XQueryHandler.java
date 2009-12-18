@@ -154,7 +154,7 @@ public class XQueryHandler extends DefaultHandler {
    */
   public static void queryFile(File xmlfile, XQueryHandler handler) {
     Assure.isFile(xmlfile);
-    Assure.paramNotNull("handler", handler);
+    Assure.notNull("handler", handler);
     try {
       SAXParserFactory factory = getSAXParserFactory();
       factory.newSAXParser().parse(new FileInputStream(xmlfile), handler);
@@ -173,8 +173,8 @@ public class XQueryHandler extends DefaultHandler {
    *          The handler which provides all queries.
    */
   public static void queryInputStream(InputStream inputStream, XQueryHandler handler) {
-    Assure.paramNotNull("inputStream", inputStream);
-    Assure.paramNotNull("handler", handler);
+    Assure.notNull("inputStream", inputStream);
+    Assure.notNull("handler", handler);
     try {
       SAXParserFactory factory = getSAXParserFactory();
       factory.newSAXParser().parse(inputStream, handler);

@@ -41,7 +41,7 @@ public class SingletonProvider {
    * @return The singleton itself if it has been registered before.
    */
   public Object getSingleton(String key) {
-    Assure.paramNotNull("key", key);
+    Assure.notNull("key", key);
     return this.singletons.get(key);
   }
 
@@ -54,8 +54,8 @@ public class SingletonProvider {
    *          The singleton instance which has to be registered. Not <code>null</code>.
    */
   public void setSingleton(String key, Object singleton) {
-    Assure.paramNotNull("key", key);
-    Assure.paramNotNull("singleton", singleton);
+    Assure.notNull("key", key);
+    Assure.notNull("singleton", singleton);
     this.singletons.put(key, singleton);
   }
 
@@ -75,7 +75,7 @@ public class SingletonProvider {
    *          The new SingletonProvider instance. Not <code>null</code>.
    */
   public static final void setInstance(SingletonProvider newprovider) {
-    Assure.paramNotNull("newprovider", newprovider);
+    Assure.notNull("newprovider", newprovider);
     PROVIDER = newprovider;
   }
 

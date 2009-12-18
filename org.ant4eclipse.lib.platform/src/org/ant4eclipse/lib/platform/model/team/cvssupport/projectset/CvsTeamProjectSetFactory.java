@@ -43,7 +43,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assure.paramNotNull("projectSetName", projectSetName);
+    Assure.notNull("projectSetName", projectSetName);
     CvsTeamProjectSet projectSet = new CvsTeamProjectSet(projectSetName);
     return projectSet;
   }
@@ -53,7 +53,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assure.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
-    Assure.paramNotNull("reference", reference);
+    Assure.notNull("reference", reference);
     A4ELogging.trace("parseReference ('%s')", reference);
 
     StringTokenizer stringTokenizer = new StringTokenizer(reference, ",");

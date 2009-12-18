@@ -109,7 +109,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    */
   public FeatureDescription getFeatureDescription(String featureId, Version version) {
     Assure.nonEmpty("featureId", featureId);
-    Assure.paramNotNull("version", version);
+    Assure.notNull("version", version);
 
     // initialize if necessary
     initialize();
@@ -212,7 +212,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public final boolean containsBundle(String symbolicName) {
-    Assure.paramNotNull("symbolicName", symbolicName);
+    Assure.notNull("symbolicName", symbolicName);
 
     // initialize if necessary
     initialize();
@@ -241,7 +241,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    *          the {@link BundleDescription} to add.
    */
   protected final void addBundleDescription(BundleDescription bundleDescription) {
-    Assure.paramNotNull("bundleDescription", bundleDescription);
+    Assure.notNull("bundleDescription", bundleDescription);
     this._bundleDescriptionList.add(bundleDescription);
   }
 
@@ -254,7 +254,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    *          the {@link FeatureDescription} to add
    */
   protected final void addFeaturesDescription(FeatureDescription featureDescription) {
-    Assure.paramNotNull("featureDescription", featureDescription);
+    Assure.notNull("featureDescription", featureDescription);
     this._featureDescriptionList.add(featureDescription);
   }
 

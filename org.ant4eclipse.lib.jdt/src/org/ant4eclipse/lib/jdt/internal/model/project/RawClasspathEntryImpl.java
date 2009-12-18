@@ -98,7 +98,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param exported
    */
   public RawClasspathEntryImpl(int entryKind, String path, String output, boolean exported) {
-    Assure.paramNotNull("path", path);
+    Assure.notNull("path", path);
 
     this._entryKind = entryKind;
     this._path = path;
@@ -179,8 +179,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @return A numerical information specifying the entry kind.
    */
   private static int resolveEntryKind(String entryKind, String path) {
-    Assure.paramNotNull("entryKind", entryKind);
-    Assure.paramNotNull("path", path);
+    Assure.notNull("entryKind", entryKind);
+    Assure.notNull("path", path);
 
     if ("con".equals(entryKind)) {
       return CPE_CONTAINER;

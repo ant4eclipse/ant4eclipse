@@ -40,8 +40,8 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    *          The bundled libraries representing the runtime. Not <code>null</code>.
    */
   public ResolvedRuntimeEntry(String owningproject, Version version, File[] libs) {
-    Assure.paramNotNull("version", version);
-    Assure.paramNotNull("libs", libs);
+    Assure.notNull("version", version);
+    Assure.notNull("libs", libs);
     Assure.nonEmpty("owningproject", owningproject);
     this._owningproject = owningproject;
     this._version = version;

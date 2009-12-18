@@ -40,7 +40,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    *          The user library entry which shall be added.
    */
   public void addLibrary(UserLibraryImpl userlibrary) {
-    Assure.paramNotNull("userlibrary", userlibrary);
+    Assure.notNull("userlibrary", userlibrary);
     this._libraries.put(userlibrary.getName(), userlibrary);
   }
 
@@ -48,7 +48,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   public boolean hasLibrary(String name) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
     return this._libraries.containsKey(name);
   }
 
@@ -56,7 +56,7 @@ public final class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   public UserLibraryImpl getLibrary(String name) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
     return this._libraries.get(name);
   }
 

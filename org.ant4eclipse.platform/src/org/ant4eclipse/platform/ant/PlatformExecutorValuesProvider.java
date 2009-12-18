@@ -43,7 +43,7 @@ public class PlatformExecutorValuesProvider {
    * @param pathComponent
    */
   public PlatformExecutorValuesProvider(PathComponent pathComponent) {
-    Assure.paramNotNull("pathComponent", pathComponent);
+    Assure.notNull("pathComponent", pathComponent);
     this._pathComponent = pathComponent;
   }
 
@@ -55,8 +55,8 @@ public class PlatformExecutorValuesProvider {
    * @param executionValues
    */
   public void provideExecutorValues(EclipseProject eclipseProject, MacroExecutionValues executionValues) {
-    Assure.paramNotNull("eclipseProject", eclipseProject);
-    Assure.paramNotNull("executionValues", executionValues);
+    Assure.notNull("eclipseProject", eclipseProject);
+    Assure.notNull("executionValues", executionValues);
 
     // create scoped properties
     executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName());

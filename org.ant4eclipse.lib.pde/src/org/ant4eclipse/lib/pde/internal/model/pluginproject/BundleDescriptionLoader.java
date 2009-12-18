@@ -51,7 +51,7 @@ public class BundleDescriptionLoader {
    */
   public static BundleDescription loadFromPluginProject(EclipseProject project) throws FileNotFoundException,
       IOException, BundleException {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     File manifestFile = project.getChild(Constants.OSGI_BUNDLE_MANIFEST);
     // TODO: handle projects with plugin.xml that may not have a MANIFEST-file

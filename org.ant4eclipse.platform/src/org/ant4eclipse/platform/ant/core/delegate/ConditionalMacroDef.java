@@ -127,7 +127,7 @@ public class ConditionalMacroDef extends MacroDef {
      * @param conditionalMacroDef
      */
     public ConditionalNestedSequential(ConditionalMacroDef conditionalMacroDef) {
-      Assure.paramNotNull("conditionalMacroDef", conditionalMacroDef);
+      Assure.notNull("conditionalMacroDef", conditionalMacroDef);
 
       this._conditionalMacroDef = conditionalMacroDef;
     }

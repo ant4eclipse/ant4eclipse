@@ -324,7 +324,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    *          the eclipse classpath entries to set.
    */
   public void addEclipseClasspathEntry(RawClasspathEntry classpathEntry) {
-    Assure.paramNotNull("classpathEntry", classpathEntry);
+    Assure.notNull("classpathEntry", classpathEntry);
     this._eclipseClasspathEntries.add(classpathEntry);
   }
 

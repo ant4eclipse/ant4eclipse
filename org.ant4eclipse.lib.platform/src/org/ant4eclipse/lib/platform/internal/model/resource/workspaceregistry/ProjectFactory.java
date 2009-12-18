@@ -50,7 +50,7 @@ public class ProjectFactory {
 
     A4ELogging.trace("ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath());
 
-    Assure.paramNotNull("workspace", workspace);
+    Assure.notNull("workspace", workspace);
     Assure.isDirectory(projectDirectory);
 
     EclipseProjectImpl project = new EclipseProjectImpl(workspace, projectDirectory);

@@ -43,7 +43,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    *          the class file loader to use.
    */
   public NameEnvironmentImpl(ClassFileLoader classFileLoader) {
-    Assure.paramNotNull("classFileLoader", classFileLoader);
+    Assure.notNull("classFileLoader", classFileLoader);
     this._classFileLoader = classFileLoader;
   }
 
@@ -127,7 +127,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @return
    */
   protected NameEnvironmentAnswer findClass(String className) {
-    Assure.paramNotNull("className", className);
+    Assure.notNull("className", className);
     return findClass(ClassName.fromQualifiedClassName(className));
   }
 

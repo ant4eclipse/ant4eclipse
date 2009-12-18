@@ -44,7 +44,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("PyDLTKRoleIdentifier.applyRole(%s)", project);
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     PythonProjectRoleImpl result = new PythonProjectRoleImpl(project, true);
     DLTKParser.contributePathes(result);
     return result;

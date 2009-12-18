@@ -240,7 +240,7 @@ public class AbstractBuildProperties {
    * @param excludes
    */
   void setBinaryExcludes(String[] excludes) {
-    Assure.paramNotNull("excludes", excludes);
+    Assure.notNull("excludes", excludes);
     this._binExcludes = excludes;
   }
 
@@ -252,7 +252,7 @@ public class AbstractBuildProperties {
    * @param includes
    */
   void setBinaryIncludes(String[] includes) {
-    Assure.paramNotNull("includes", includes);
+    Assure.notNull("includes", includes);
     this._binIncludes = includes;
   }
 
@@ -264,7 +264,7 @@ public class AbstractBuildProperties {
    *          the srcIncludes to set
    */
   void setSourceIncludes(String[] srcIncludes) {
-    Assure.paramNotNull("srcIncludes", srcIncludes);
+    Assure.notNull("srcIncludes", srcIncludes);
     this._srcIncludes = srcIncludes;
   }
 
@@ -276,7 +276,7 @@ public class AbstractBuildProperties {
    *          the srcExcludes to set
    */
   void setSourceExcludes(String[] srcExcludes) {
-    Assure.paramNotNull("srcExcludes", srcExcludes);
+    Assure.notNull("srcExcludes", srcExcludes);
     this._srcExcludes = srcExcludes;
   }
 

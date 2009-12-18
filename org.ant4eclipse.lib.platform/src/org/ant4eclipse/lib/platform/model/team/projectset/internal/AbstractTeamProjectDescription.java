@@ -26,7 +26,7 @@ public class AbstractTeamProjectDescription implements TeamProjectDescription {
   }
 
   public AbstractTeamProjectDescription(String projectname) {
-    Assure.paramNotNull("projectname", projectname);
+    Assure.notNull("projectname", projectname);
     this._projectname = projectname;
   }
 

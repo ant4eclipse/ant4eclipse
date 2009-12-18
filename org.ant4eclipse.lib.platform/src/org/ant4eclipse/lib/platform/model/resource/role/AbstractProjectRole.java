@@ -41,7 +41,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
    */
   public AbstractProjectRole(String name, EclipseProject eclipseProject) {
     Assure.nonEmpty("name", name);
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
     this._name = name;
     this._eclipseProject = eclipseProject;
   }

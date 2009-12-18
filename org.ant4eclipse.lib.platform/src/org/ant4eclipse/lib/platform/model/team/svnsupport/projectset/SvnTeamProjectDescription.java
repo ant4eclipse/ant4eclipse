@@ -36,8 +36,8 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public SvnTeamProjectDescription(SvnTeamProjectSet teamProjectSet, String projectname, String url, String revision) {
     super(projectname);
-    Assure.paramNotNull("teamProjectSet", teamProjectSet);
-    Assure.paramNotNull("url", url);
+    Assure.notNull("teamProjectSet", teamProjectSet);
+    Assure.notNull("url", url);
 
     this._teamProjectSet = teamProjectSet;
     this._url = url;

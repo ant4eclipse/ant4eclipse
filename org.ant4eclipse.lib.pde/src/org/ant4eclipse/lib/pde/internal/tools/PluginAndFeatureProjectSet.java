@@ -41,7 +41,7 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
    */
   public PluginAndFeatureProjectSet(Workspace workspace) {
     super("workspace");
-    Assure.paramNotNull("workspace", workspace);
+    Assure.notNull("workspace", workspace);
     this._workspace = workspace;
   }
 

@@ -123,7 +123,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   }
 
   public TeamProjectSetFactory getFactoryForProvider(String providerId) {
-    Assure.paramNotNull("providerId", providerId);
+    Assure.notNull("providerId", providerId);
 
     if (!this._factories.containsKey(providerId)) {
       throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);

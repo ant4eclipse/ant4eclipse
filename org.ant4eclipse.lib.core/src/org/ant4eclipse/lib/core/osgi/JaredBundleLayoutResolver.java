@@ -59,7 +59,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    */
   public JaredBundleLayoutResolver(File location, File expansionDirectory) {
     Assure.isFile(location);
-    Assure.paramNotNull("expansionDirectory", expansionDirectory);
+    Assure.notNull("expansionDirectory", expansionDirectory);
 
     this._location = location;
     this._expansionDirectory = expansionDirectory;

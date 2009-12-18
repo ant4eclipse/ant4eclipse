@@ -50,7 +50,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    *          the prefix for all scoped values
    */
   public AbstractExecuteProjectTask(String prefix) {
-    Assure.paramNotNull("prefix", prefix);
+    Assure.notNull("prefix", prefix);
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(this);
     // create the delegates
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, prefix);

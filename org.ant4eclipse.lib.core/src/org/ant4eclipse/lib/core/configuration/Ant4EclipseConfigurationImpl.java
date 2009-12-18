@@ -50,7 +50,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    *          The backing properties
    */
   public Ant4EclipseConfigurationImpl(StringMap properties) {
-    Assure.paramNotNull("properties", properties);
+    Assure.notNull("properties", properties);
     this._properties = properties;
   }
 
@@ -67,7 +67,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public String getProperty(String propertyName) {
-    Assure.paramNotNull("propertyName", propertyName);
+    Assure.notNull("propertyName", propertyName);
     return this._properties.get(propertyName);
   }
 
@@ -75,7 +75,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public boolean hasProperty(String propertyName) {
-    Assure.paramNotNull("propertyName", propertyName);
+    Assure.notNull("propertyName", propertyName);
     return this._properties.containsKey(propertyName);
   }
 
@@ -83,7 +83,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public Iterable<Pair<String, String>> getAllProperties(String prefix) {
-    Assure.paramNotNull("prefix", prefix);
+    Assure.notNull("prefix", prefix);
     if (!prefix.endsWith(".")) {
       prefix += ".";
     }

@@ -115,8 +115,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    Assure.paramNotNull("macroDef", macroDef);
-    Assure.paramNotNull("provider", provider);
+    Assure.notNull("macroDef", macroDef);
+    Assure.notNull("provider", provider);
 
     if (macroDef instanceof ConditionalMacroDef) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
@@ -135,8 +135,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   private void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues) {
-    Assure.paramNotNull("macroDef", macroDef);
-    Assure.paramNotNull("macroExecutionValues", macroExecutionValues);
+    Assure.notNull("macroDef", macroDef);
+    Assure.notNull("macroExecutionValues", macroExecutionValues);
 
     if (macroDef instanceof ConditionalMacroDef) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;

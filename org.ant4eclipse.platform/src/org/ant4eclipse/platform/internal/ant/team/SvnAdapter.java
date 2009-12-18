@@ -82,7 +82,7 @@ public class SvnAdapter extends VcsAdapter {
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectDescription", projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
@@ -120,7 +120,7 @@ public class SvnAdapter extends VcsAdapter {
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectDescription", projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 
@@ -159,7 +159,7 @@ public class SvnAdapter extends VcsAdapter {
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectDescription", projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
 

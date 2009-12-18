@@ -55,7 +55,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @return Returns whether a feature project role is set or not.
    */
   public static boolean hasFeatureProjectRole(EclipseProject eclipseProject) {
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
     return eclipseProject.hasRole(FeatureProjectRoleImpl.class);
   }
 
@@ -69,7 +69,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    */
   public FeatureProjectRoleImpl(EclipseProject eclipseProject) {
     super(FEATURE_PROJECT_ROLE_NAME, eclipseProject);
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
     this._project = eclipseProject;
   }
 
@@ -89,7 +89,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    *          the feature manifest to set.
    */
   public void setFeature(FeatureManifest featuremanifest) {
-    Assure.paramNotNull("featuremanifest", featuremanifest);
+    Assure.notNull("featuremanifest", featuremanifest);
     this._feature = featuremanifest;
   }
 

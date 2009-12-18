@@ -47,7 +47,7 @@ public class RawPathEntry {
    */
   public RawPathEntry(String projectname, ReferenceKind refkind, String value, boolean export, boolean external) {
     Assure.nonEmpty("projectname", projectname);
-    Assure.paramNotNull("refkind", refkind);
+    Assure.notNull("refkind", refkind);
     this._projectname = projectname;
     this._kind = refkind;
     this._value = value;

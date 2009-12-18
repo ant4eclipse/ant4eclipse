@@ -28,7 +28,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
    * {@inheritDoc}
    */
   public void setUserAndPassword(String cvsUser, String cvsPwd) {
-    Assure.paramNotNull("cvsUser", cvsUser);
+    Assure.notNull("cvsUser", cvsUser);
     A4ELogging.debug("setUserAndPassword(%s, %s)", cvsUser, cvsPwd);
     for (TeamProjectDescription teamProjectDescription : getProjectDescriptions()) {
       CvsTeamProjectDescription description = (CvsTeamProjectDescription) teamProjectDescription;
@@ -40,7 +40,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
    * Overwritten method to make sure that the given TeamProjectDescription is an instance of a CvsTeamProjectDescription
    */
   public void addTeamProjectDescription(CvsTeamProjectDescription description) {
-    Assure.paramNotNull("description", description);
+    Assure.notNull("description", description);
     super.addTeamProjectDescription(description);
   }
 

@@ -44,7 +44,7 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("FeatureProjectRoleIdentifier.applyRole(%s)", project);
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
     File featureDescription = featureProjectRole.getFeatureXml();

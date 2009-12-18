@@ -39,7 +39,7 @@ public class FeatureManifestParser {
    * @return a Feature instance providing the content.
    */
   public static FeatureManifest parseFeature(InputStream inputStream) {
-    Assure.paramNotNull("inputStream", inputStream);
+    Assure.notNull("inputStream", inputStream);
 
     FeatureManifestImpl feature = new FeatureManifestImpl();
 

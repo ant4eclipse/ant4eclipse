@@ -54,7 +54,7 @@ public class JdtResolver {
    */
   public static final ResolvedClasspath resolveProjectClasspath(EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     // create a ResolverJob
     ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,

@@ -60,7 +60,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    *          the source file
    */
   public CompilationUnitImpl(SourceFile sourceFile) {
-    Assure.paramNotNull("sourceFile", sourceFile);
+    Assure.notNull("sourceFile", sourceFile);
 
     this._sourceFile = sourceFile;
 

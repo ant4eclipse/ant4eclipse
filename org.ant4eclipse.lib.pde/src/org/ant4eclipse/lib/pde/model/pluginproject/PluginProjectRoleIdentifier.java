@@ -40,7 +40,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("PluginProjectRoleIdentifier.applyRole(%s)", project);
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     BundleDescription description;
     try {

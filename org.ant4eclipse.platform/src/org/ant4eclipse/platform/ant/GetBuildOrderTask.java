@@ -172,7 +172,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * @return A String which contains the list of names.
    */
   private String convertToString(List<EclipseProject> projects, char separator) {
-    Assure.paramNotNull("projects", projects);
+    Assure.notNull("projects", projects);
 
     // create StringBuffer
     StringBuffer buffer = new StringBuffer();

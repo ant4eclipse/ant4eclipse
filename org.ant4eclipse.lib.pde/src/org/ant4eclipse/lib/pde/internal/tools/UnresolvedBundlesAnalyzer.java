@@ -28,7 +28,7 @@ public class UnresolvedBundlesAnalyzer {
    *          the target platform
    */
   public UnresolvedBundlesAnalyzer(TargetPlatform targetPlatform) {
-    Assure.paramNotNull("targetPlatform", targetPlatform);
+    Assure.notNull("targetPlatform", targetPlatform);
     // set the target platform
     this._targetPlatform = targetPlatform;
   }

@@ -58,7 +58,7 @@ public final class CvsRoot implements Cloneable {
    *          The encodedPassword to set.
    */
   public void setEncodedPassword(String encodedPassword) {
-    Assure.paramNotNull("encodedPassword", encodedPassword);
+    Assure.notNull("encodedPassword", encodedPassword);
     this._encodedPassword = encodedPassword;
   }
 
@@ -69,7 +69,7 @@ public final class CvsRoot implements Cloneable {
    *          Sets a cvs user.
    */
   public void setUser(String user) {
-    Assure.paramNotNull("user", user);
+    Assure.notNull("user", user);
     this._user = user;
   }
 
@@ -189,7 +189,7 @@ public final class CvsRoot implements Cloneable {
    * @return the resolved root.
    */
   public CvsRoot getResolvedRoot(String username, String password) {
-    Assure.paramNotNull("username", username);
+    Assure.notNull("username", username);
 
     CvsRoot cvsRoot = null;
 

@@ -42,7 +42,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * @param pathComponent
    */
   public JdtExecutorValuesProvider(PathComponent pathComponent) {
-    Assure.paramNotNull("pathComponent", pathComponent);
+    Assure.notNull("pathComponent", pathComponent);
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(pathComponent);
     this._pathComponent = pathComponent;
   }

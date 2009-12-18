@@ -139,7 +139,7 @@ public class JavaExecuter {
    *          the class path entries
    */
   public void setClasspathEntries(String[] classpathEntries) {
-    Assure.paramNotNull("classpathEntries", classpathEntries);
+    Assure.notNull("classpathEntries", classpathEntries);
 
     // create file array
     File[] files = new File[classpathEntries.length];
@@ -160,7 +160,7 @@ public class JavaExecuter {
    *          the class path entry
    */
   public void setClasspathEntries(File classpathEntry) {
-    Assure.paramNotNull("classpathEntry", classpathEntry);
+    Assure.notNull("classpathEntry", classpathEntry);
     setClasspathEntries(new File[] { classpathEntry });
   }
 
@@ -173,7 +173,7 @@ public class JavaExecuter {
    *          the class path entries
    */
   public void setClasspathEntries(File[] classpathEntries) {
-    Assure.paramNotNull("classpathEntries", classpathEntries);
+    Assure.notNull("classpathEntries", classpathEntries);
     this._classpathEntries = classpathEntries;
   }
 
@@ -186,7 +186,7 @@ public class JavaExecuter {
    *          the main class
    */
   public void setMainClass(String mainClass) {
-    Assure.paramNotNull("mainClass", mainClass);
+    Assure.notNull("mainClass", mainClass);
     this._mainClass = mainClass;
   }
 
@@ -199,7 +199,7 @@ public class JavaExecuter {
    *          the program arguments.
    */
   public void setArgs(String[] args) {
-    Assure.paramNotNull("args", args);
+    Assure.notNull("args", args);
 
     this._args = args;
   }

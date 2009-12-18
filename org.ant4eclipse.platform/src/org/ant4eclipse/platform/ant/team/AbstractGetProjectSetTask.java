@@ -99,7 +99,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    *          The command to set.
    */
   public void setCommand(VcsCommand command) {
-    Assure.paramNotNull("command", command);
+    Assure.notNull("command", command);
     this._command = command;
   }
 
@@ -165,7 +165,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   public void checkoutProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectSet", projectSet);
+    Assure.notNull("projectSet", projectSet);
 
     A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf(deleteExisting));
 
@@ -184,7 +184,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   public void exportProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectSet", projectSet);
+    Assure.notNull("projectSet", projectSet);
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
@@ -199,7 +199,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void updateProjectSet(File destination, TeamProjectSet projectSet) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectSet", projectSet);
+    Assure.notNull("projectSet", projectSet);
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
     for (TeamProjectDescription description : descriptions) {
       this._vcsAdapter.updateProject(destination, description);

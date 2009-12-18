@@ -80,7 +80,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    *          the class path entry to add.
    */
   public final void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
-    Assure.paramNotNull("resolvedClasspathEntry", resolvedClasspathEntry);
+    Assure.notNull("resolvedClasspathEntry", resolvedClasspathEntry);
     if (!this._classpath.contains(resolvedClasspathEntry)) {
       this._classpath.add(resolvedClasspathEntry);
     }
@@ -94,7 +94,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * @param resolvedClasspathEntry
    */
   public final void addBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
-    Assure.paramNotNull("resolvedClasspathEntry", resolvedClasspathEntry);
+    Assure.notNull("resolvedClasspathEntry", resolvedClasspathEntry);
     if (this._bootclasspath != null) {
       // TODO: NLS
       throw new RuntimeException("FAIL");

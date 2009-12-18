@@ -72,7 +72,7 @@ public class JavaProfileImpl implements JavaProfile {
    * @param properties
    */
   public JavaProfileImpl(StringMap properties) {
-    Assure.paramNotNull("properties", properties);
+    Assure.notNull("properties", properties);
     this._properties = properties;
     initialise();
   }
@@ -206,7 +206,7 @@ public class JavaProfileImpl implements JavaProfile {
      * @return
      */
     public boolean containsPackage(String packageName) {
-      Assure.paramNotNull("packageName", packageName);
+      Assure.notNull("packageName", packageName);
 
       //
       for (String package1 : this._includedPackages) {
@@ -229,8 +229,8 @@ public class JavaProfileImpl implements JavaProfile {
      * @return
      */
     private boolean matches(String osgiPattern, String string) {
-      Assure.paramNotNull("osgiPattern", osgiPattern);
-      Assure.paramNotNull("string", string);
+      Assure.notNull("osgiPattern", osgiPattern);
+      Assure.notNull("string", string);
       return string.matches(osgiPattern);
     }
   }

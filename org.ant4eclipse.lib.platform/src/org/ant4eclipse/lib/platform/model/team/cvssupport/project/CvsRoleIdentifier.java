@@ -37,7 +37,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CvsRoleIdentifier.applyRole(%s)", project);
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     CvsRoot cvsRoot = CvsParser.readCvsRoot(project);
     String repositoryName = CvsParser.readCvsRepositoryName(project);
     String tag = CvsParser.readTag(project);

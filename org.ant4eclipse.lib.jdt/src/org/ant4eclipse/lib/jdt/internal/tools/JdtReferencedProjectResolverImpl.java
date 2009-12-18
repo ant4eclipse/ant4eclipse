@@ -43,7 +43,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
 
     List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
 

@@ -44,10 +44,10 @@ public class ResolvedFeature {
    *          the FeatureManifest
    */
   public ResolvedFeature(Object source, FeatureManifest featureManifest) {
-    Assure.paramNotNull("source", source);
+    Assure.notNull("source", source);
     Assure.assertTrue(source instanceof EclipseProject || source instanceof File, String.format(
         "Feature source must be instance of %s or %s.", EclipseProject.class.getName(), File.class.getName()));
-    Assure.paramNotNull("featureManifest", featureManifest);
+    Assure.notNull("featureManifest", featureManifest);
     this._featureManifest = featureManifest;
     this._source = source;
   }

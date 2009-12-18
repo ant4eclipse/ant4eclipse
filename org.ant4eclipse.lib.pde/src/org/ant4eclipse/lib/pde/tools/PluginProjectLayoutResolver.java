@@ -47,7 +47,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    *          the eclipse plug-in project that has to be resolved
    */
   public PluginProjectLayoutResolver(EclipseProject project) {
-    Assure.paramNotNull("project", project);
+    Assure.notNull("project", project);
     Assure.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
 
     // set the eclipse project

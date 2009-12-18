@@ -73,7 +73,7 @@ public class CvsAdapter extends VcsAdapter {
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectDescription", projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
@@ -120,7 +120,7 @@ public class CvsAdapter extends VcsAdapter {
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectDescription", projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
@@ -163,7 +163,7 @@ public class CvsAdapter extends VcsAdapter {
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.paramNotNull("projectDescription", projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 

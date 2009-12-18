@@ -92,7 +92,7 @@ public class BundleDependenciesResolver {
   public List<BundleDependency> resolveBundleClasspath(BundleDescription description,
       boolean includeOptionalDependencies) throws UnresolvedBundleException {
 
-    Assure.paramNotNull("description", description);
+    Assure.notNull("description", description);
 
     // Step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
@@ -241,7 +241,7 @@ public class BundleDependenciesResolver {
    * @return
    */
   private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription) {
-    Assure.paramNotNull("bundleDescription", bundleDescription);
+    Assure.notNull("bundleDescription", bundleDescription);
 
     if (!bundleDescription.isResolved()) {
       String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
@@ -325,7 +325,7 @@ public class BundleDependenciesResolver {
    * @return
    */
   private BundleDependency getBundleDependency(BundleDescription bundleDescription) {
-    Assure.paramNotNull("bundleDescription", bundleDescription);
+    Assure.notNull("bundleDescription", bundleDescription);
 
     // get host
     BundleDescription host = getHost(bundleDescription);
@@ -373,7 +373,7 @@ public class BundleDependenciesResolver {
      *          the host
      */
     public BundleDependency(BundleDescription host) {
-      Assure.paramNotNull("host", host);
+      Assure.notNull("host", host);
 
       this._host = host;
       this._isRequiredBundle = false;
@@ -391,7 +391,7 @@ public class BundleDependenciesResolver {
      *          indicates that this bundle is the host for the root bundle
      */
     public BundleDependency(BundleDescription host, boolean isHostForRootBundle) {
-      Assure.paramNotNull("host", host);
+      Assure.notNull("host", host);
 
       this._host = host;
       this._isRequiredBundle = false;
@@ -410,7 +410,7 @@ public class BundleDependenciesResolver {
      *          the fragment (maybe <code>null</code>)
      */
     public BundleDependency(BundleDescription host, BundleDescription fragment) {
-      Assure.paramNotNull("host", host);
+      Assure.notNull("host", host);
 
       this._host = host;
       this._fragment = fragment;

@@ -36,7 +36,7 @@ public abstract class AbstractAntDelegate {
    *          the project component
    */
   public AbstractAntDelegate(ProjectComponent component) {
-    Assure.paramNotNull("component", component);
+    Assure.notNull("component", component);
     this._component = component;
   }
 

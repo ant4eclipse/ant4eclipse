@@ -34,7 +34,7 @@ public class ProjectNatureImpl implements ProjectNature {
    * @param name
    */
   public ProjectNatureImpl(String name) {
-    Assure.paramNotNull("name", name);
+    Assure.notNull("name", name);
     this._name = name;
   }
 

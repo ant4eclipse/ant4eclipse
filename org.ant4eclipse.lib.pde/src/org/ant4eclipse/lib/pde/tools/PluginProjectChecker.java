@@ -89,7 +89,7 @@ public class PluginProjectChecker {
    *          the eclipse project to check.
    */
   public PluginProjectChecker(EclipseProject eclipseProject) {
-    Assure.paramNotNull("eclipseProject", eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
 
     this._eclipseProject = eclipseProject;
     this._issues = new LinkedList<Issue>();

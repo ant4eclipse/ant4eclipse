@@ -27,9 +27,9 @@ public class AssureTest {
 
   @Test
   public void assertNotNull() {
-    Assure.paramNotNull("dummy", new Object());
+    Assure.notNull("dummy", new Object());
     try {
-      Assure.paramNotNull("dummy", null);
+      Assure.notNull("dummy", null);
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }

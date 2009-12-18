@@ -111,7 +111,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final String convertToString(File[] entries) {
-    Assure.paramNotNull("entries", entries);
+    Assure.notNull("entries", entries);
 
     // convert Files to String
     List<String> entriesAsString = new LinkedList<String>();
@@ -149,7 +149,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final Path convertToPath(File[] entries) {
-    Assure.paramNotNull("entries", entries);
+    Assure.notNull("entries", entries);
     Path antPath = new Path(getAntProject());
     for (File entry : entries) {
       // TODO getPath() vs. getAbsolutePath()
