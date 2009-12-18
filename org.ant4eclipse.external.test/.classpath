@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.external"/>
 	<classpathentry exported="true" kind="lib" path="libs/junit/junit-4.5.jar" sourcepath="libs/junit/junit-4.5-src.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/ant/ant-testutil.jar" sourcepath="libs/ant/ant-testutil-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="libs/ant/ant-antunit-1.1.jar" sourcepath="libs/ant/ant-antunit-1.1-src.zip"/>
