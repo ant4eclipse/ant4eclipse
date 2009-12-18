@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.tools;
+package org.ant4eclipse.lib.jdt.tools;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;

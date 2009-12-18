@@ -17,8 +17,8 @@ import org.ant4eclipse.jdt.ant.ExecuteJdtProjectTest;
 import org.ant4eclipse.jdt.ant.GetJdtClassPathTest;
 import org.ant4eclipse.jdt.ant.GetJdtClassPath_UnkownContainerTest;
 import org.ant4eclipse.jdt.ant.UserLibrariesTest;
-import org.ant4eclipse.jdt.tools.BuildOrderResolverTest;
 
+import org.ant4eclipse.lib.jdt.tools.BuildOrderResolverTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
