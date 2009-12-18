@@ -9,10 +9,18 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj;
+package org.ant4eclipse.jdt.ant.ecj;
 
 import org.ant4eclipse.core.AntConfigurator;
 
+import org.ant4eclipse.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.jdt.ecj.ClassFileLoaderFactory;
+import org.ant4eclipse.jdt.ecj.CompileJobResult;
+import org.ant4eclipse.jdt.ecj.DefaultCompileJobDescription;
+import org.ant4eclipse.jdt.ecj.EcjAdapter;
+import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.jdt.ecj.SourceFile;
+import org.ant4eclipse.jdt.ecj.SourceFileFactory;
 import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;

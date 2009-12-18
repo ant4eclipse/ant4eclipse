@@ -9,7 +9,9 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj;
+package org.ant4eclipse.jdt.ant.ecj;
+
+import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
