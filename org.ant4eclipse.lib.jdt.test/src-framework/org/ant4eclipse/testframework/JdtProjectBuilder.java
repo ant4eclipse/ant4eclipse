@@ -11,13 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
-
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
-import org.ant4eclipse.testframework.EclipseProjectBuilder;
-import org.ant4eclipse.testframework.StringTemplate;
 import org.junit.Assert;
 
 import java.io.File;
@@ -64,8 +60,11 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return the pre-configured JdtEclipseProjectBuilder
    */
   public static JdtProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
-    return new JdtProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src", false)
-        .withOutputClasspathEntry("bin");
+    JdtProjectBuilder result = new JdtProjectBuilder(projectName);
+    result.withJreContainerClasspathEntry();
+    result.withSrcClasspathEntry("src", false);
+    result.withOutputClasspathEntry("bin");
+    return result;
   }
 
   /**
@@ -218,8 +217,10 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     }
 
     StringTemplate classTemplate = new StringTemplate();
-    classTemplate.append("package ${packageName};").nl().append("public class ${className} {").nl().append(
-        sourceClass.generateUsageCode()).nl().append("} // end of class").nl();
+    classTemplate.append("package ${packageName};").nl();
+    classTemplate.append("public class ${className} {").nl();
+    classTemplate.append(sourceClass.generateUsageCode()).nl();
+    classTemplate.append("} // end of class").nl();
 
     classTemplate.replace("packageName", className.getPackageName());
     classTemplate.replace("className", className.getClassName());
