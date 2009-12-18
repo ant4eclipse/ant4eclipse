@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt;
+package org.ant4eclipse.lib.pydt;
 
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 import org.ant4eclipse.lib.core.nls.NLS;
@@ -42,6 +42,24 @@ public class PydtExceptionCode extends ExceptionCode {
 
   @NLSMessage("The path '%s' doesn't refer to a directory !")
   public static PydtExceptionCode NOTADIRECTORY;
+
+  @NLSMessage("An attempt has been made to register a python runtime using the id '%s' with different locations: '%s' <-> '%s' !")
+  public static PydtExceptionCode DUPLICATERUNTIME;
+
+  @NLSMessage("The python installation with the id '%s' and the location '%s' is not supported !")
+  public static PydtExceptionCode UNSUPPORTEDRUNTIME;
+
+  @NLSMessage("A python runtime with the id '%s' needs to be registered first !")
+  public static PydtExceptionCode INVALIDDEFAULTID;
+
+  @NLSMessage("A default python runtime could not be determined !")
+  public static PydtExceptionCode NODEFAULTRUNTIME;
+
+  @NLSMessage("The python properties file 'python.properties' is not available on the classpath (org/ant4eclipse/lib/pydt) !")
+  public static PydtExceptionCode MISSINGPYTHONPROPERTIES;
+
+  @NLSMessage("The python properties file 'python.properties' lacks executable definitions for key '%s' !")
+  public static PydtExceptionCode MISSINGEXECUTABLES;
 
   static {
     NLS.initialize(PydtExceptionCode.class);

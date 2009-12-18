@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
-import org.ant4eclipse.pydt.PydtExceptionCode;
+import org.ant4eclipse.lib.pydt.PydtExceptionCode;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedContainerEntry;
 import org.ant4eclipse.pydt.model.ResolvedLibraryEntry;

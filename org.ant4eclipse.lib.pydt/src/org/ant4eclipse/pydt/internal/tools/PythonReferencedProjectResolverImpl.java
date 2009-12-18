@@ -11,13 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.internal.tools;
 
-
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
-import org.ant4eclipse.pydt.ant.usedargs.UsedProjectsArgumentComponent;
 import org.ant4eclipse.pydt.model.ReferenceKind;
 import org.ant4eclipse.pydt.model.ResolvedPathEntry;
 import org.ant4eclipse.pydt.model.ResolvedProjectEntry;
@@ -108,8 +106,8 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
       if (!elements.isEmpty()) {
         UsedProjectsArgumentComponent args = (UsedProjectsArgumentComponent) elements.get(0);
         if (elements.size() > 1) {
-          A4ELogging.warn("Only one element '%s' is allowed ! Using the first one: '%s'.",
-              UsedProjectsArgumentComponent.ELEMENTNAME, String.valueOf(args));
+          A4ELogging.warn("Only one element '%s' is allowed ! Using the first one: '%s'.", "pydtReferencedProject",
+              String.valueOf(args));
         }
         return args;
       }

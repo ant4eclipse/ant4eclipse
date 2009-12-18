@@ -13,7 +13,7 @@ package org.ant4eclipse.pydt.ant;
 
 import org.ant4eclipse.platform.ant.SubElementContribution;
 
-import org.ant4eclipse.pydt.ant.usedargs.UsedProjectsArgumentComponent;
+import org.ant4eclipse.pydt.internal.tools.UsedProjectsArgumentComponent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -30,6 +30,8 @@ import java.util.Map;
  */
 public class PythonSubelementContribution implements SubElementContribution {
 
+  private static final String   ELEMENTNAME = "pydtReferencedProject";
+
   private Map<String, Class<?>> mapping;
 
   /**
@@ -38,7 +40,7 @@ public class PythonSubelementContribution implements SubElementContribution {
   public PythonSubelementContribution() {
     this.mapping = new Hashtable<String, Class<?>>();
     /** @todo [02-Aug-2009:KASI] Why do we only get lowercase names ? */
-    this.mapping.put(UsedProjectsArgumentComponent.ELEMENTNAME.toLowerCase(), UsedProjectsArgumentComponent.class);
+    this.mapping.put(ELEMENTNAME.toLowerCase(), UsedProjectsArgumentComponent.class);
   }
 
   /**
