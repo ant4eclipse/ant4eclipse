@@ -13,10 +13,10 @@ package org.ant4eclipse.jdt.test.builder;
 
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;
 
-import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.testframework.EclipseProjectBuilder;
 import org.ant4eclipse.testframework.StringTemplate;
 import org.junit.Assert;
 
