@@ -52,7 +52,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @return An entry for a java runtime environment.
    */
   public Runtime createJre() {
-    return (new Runtime());
+    return new Runtime();
   }
 
   public void setDefault(String defaultJre) {

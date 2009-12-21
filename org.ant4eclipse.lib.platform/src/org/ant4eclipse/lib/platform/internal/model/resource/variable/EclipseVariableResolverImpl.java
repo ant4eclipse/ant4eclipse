@@ -87,7 +87,7 @@ public class EclipseVariableResolverImpl implements EclipseVariableResolver {
    * {@inheritDoc}
    */
   public final StringMap getEclipseVariables() {
-    return (getEclipseVariables(null));
+    return getEclipseVariables(null);
   }
 
   /**

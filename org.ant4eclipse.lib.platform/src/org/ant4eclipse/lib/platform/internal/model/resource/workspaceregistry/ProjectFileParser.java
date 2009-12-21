@@ -199,7 +199,7 @@ public class ProjectFileParser {
         location = null;
       }
     }
-    return (location);
+    return location;
   }
 
   private static EclipseVariableResolver getEclipseVariableResolver() {

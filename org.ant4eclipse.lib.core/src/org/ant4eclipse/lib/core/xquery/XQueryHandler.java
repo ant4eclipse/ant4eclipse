@@ -83,7 +83,7 @@ public class XQueryHandler extends DefaultHandler {
   public XQuery createQuery(String query) {
     XQuery result = new XQuery(this._fileName, query);
     this._queries.add(result);
-    return (result);
+    return result;
   }
 
   /**

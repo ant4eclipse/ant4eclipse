@@ -172,7 +172,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   public File getChild(String path) {
-    return (getChild(path, PathStyle.ABSOLUTE));
+    return getChild(path, PathStyle.ABSOLUTE);
   }
 
   /**
@@ -198,7 +198,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   }
 
   protected boolean hasSettingsFolder() {
-    return (this._settingsFolder != null);
+    return this._settingsFolder != null;
   }
 
   /**
@@ -263,7 +263,7 @@ public final class EclipseProjectImpl implements EclipseProject {
       if ((pathstyle == PathStyle.ABSOLUTE) && (!result.isAbsolute())) {
         result = new File(this._projectDirectory, result.getPath());
       }
-      return (result);
+      return result;
     }
 
     //
@@ -271,13 +271,13 @@ public final class EclipseProjectImpl implements EclipseProject {
       if (path.length() == 0) {
         path = ".";
       }
-      return (new File(path));
+      return new File(path);
     } else if (pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
-      return (new File(this._projectDirectory.getName(), path));
+      return new File(this._projectDirectory.getName(), path);
     }
 
     // handle ABSOLUTE
-    return (new File(this._projectDirectory, path));
+    return new File(this._projectDirectory, path);
   }
 
   /**
@@ -292,12 +292,12 @@ public final class EclipseProjectImpl implements EclipseProject {
     int idx1 = str.indexOf('/');
     int idx2 = str.indexOf('\\');
     if ((idx1 == -1) && (idx2 == -1)) {
-      return (-1);
+      return -1;
     }
     if ((idx1 != -1) && (idx2 != -1)) {
-      return (Math.min(idx1, idx2));
+      return Math.min(idx1, idx2);
     }
-    return (Math.max(idx1, idx2));
+    return Math.max(idx1, idx2);
   }
 
   /**
@@ -508,7 +508,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   public boolean isLinkedResource(String name) {
     Assure.notNull("name", name);
-    return (this._linkedResourceNames.contains(name));
+    return this._linkedResourceNames.contains(name);
   }
 
   /**
@@ -548,19 +548,83 @@ public final class EclipseProjectImpl implements EclipseProject {
       return false;
     }
     EclipseProjectImpl castedObj = (EclipseProjectImpl) o;
-    return ((this._workspace == null ? castedObj._workspace == null : this._workspace.equals(castedObj._workspace))
-        && (this._projectDirectory == null ? castedObj._projectDirectory == null : this._projectDirectory
-            .equals(castedObj._projectDirectory))
-        && (this._specifiedName == null ? castedObj._specifiedName == null : this._specifiedName
-            .equals(castedObj._specifiedName))
-        && (this._comment == null ? castedObj._comment == null : this._comment.equals(castedObj._comment))
-        && (this._natures == null ? castedObj._natures == null : this._natures.equals(castedObj._natures))
-        && (this._roles == null ? castedObj._roles == null : this._roles.equals(castedObj._roles))
-        && (this._buildCommands == null ? castedObj._buildCommands == null : this._buildCommands
-            .equals(castedObj._buildCommands))
-        && (this._referencedProjects == null ? castedObj._referencedProjects == null : this._referencedProjects
-            .equals(castedObj._referencedProjects)) && (this._linkedResources == null ? castedObj._linkedResources == null
-        : this._linkedResources.equals(castedObj._linkedResources)));
+    if (this._workspace == null) {
+      if (castedObj._workspace != null) {
+        return false;
+      }
+    } else {
+      if (!this._workspace.equals(castedObj._workspace)) {
+        return false;
+      }
+    }
+    if (this._projectDirectory == null) {
+      if (castedObj._projectDirectory != null) {
+        return false;
+      }
+    } else {
+      if (!this._projectDirectory.equals(castedObj._projectDirectory)) {
+        return false;
+      }
+    }
+    if (this._specifiedName == null) {
+      if (castedObj._specifiedName != null) {
+        return false;
+      }
+    } else {
+      if (!this._specifiedName.equals(castedObj._specifiedName)) {
+        return false;
+      }
+    }
+    if (this._comment == null) {
+      if (castedObj._comment != null) {
+        return false;
+      }
+    } else {
+      if (!this._comment.equals(castedObj._comment)) {
+        return false;
+      }
+    }
+    if (this._natures == null) {
+      if (castedObj._natures != null) {
+        return false;
+      }
+    } else {
+      if (!this._natures.equals(castedObj._natures)) {
+        return false;
+      }
+    }
+    if (this._roles == null) {
+      if (castedObj._roles != null) {
+        return false;
+      }
+    } else {
+      if (!this._roles.equals(castedObj._roles)) {
+        return false;
+      }
+    }
+    if (this._buildCommands == null) {
+      if (castedObj._buildCommands != null) {
+        return false;
+      }
+    } else {
+      if (!this._buildCommands.equals(castedObj._buildCommands)) {
+        return false;
+      }
+    }
+    if (this._referencedProjects == null) {
+      if (castedObj._referencedProjects != null) {
+        return false;
+      }
+    } else {
+      if (!this._referencedProjects.equals(castedObj._referencedProjects)) {
+        return false;
+      }
+    }
+    if (this._linkedResources == null) {
+      return castedObj._linkedResources == null;
+    } else {
+      return this._linkedResources.equals(castedObj._linkedResources);
+    }
   }
 
   /**

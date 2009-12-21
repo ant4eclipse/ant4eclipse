@@ -35,11 +35,11 @@ class LaunchConfigAttribute {
   }
 
   public boolean isStringBasedAttribute() {
-    return (this._value instanceof String);
+    return this._value instanceof String;
   }
 
   public boolean isListAttribute() {
-    return (this._value instanceof ListAttribute);
+    return this._value instanceof ListAttribute;
   }
 
   public ListAttribute getListAttributeValue() {

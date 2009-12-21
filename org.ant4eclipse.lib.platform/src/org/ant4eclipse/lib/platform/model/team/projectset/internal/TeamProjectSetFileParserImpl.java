@@ -84,7 +84,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return (this._factories != null);
+    return this._factories != null;
   }
 
   /**

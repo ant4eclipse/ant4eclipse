@@ -65,7 +65,7 @@ public class ChunkyFile {
    * @return The number of available chunks.
    */
   public int getChunkCount() {
-    return (this._chunkdata.size());
+    return this._chunkdata.size();
   }
 
   /**
@@ -80,7 +80,7 @@ public class ChunkyFile {
     if ((index >= 0) && (index < this._chunkdata.size())) {
       return this._chunkdata.get(index);
     }
-    return (null);
+    return null;
   }
 
   /**
@@ -126,12 +126,12 @@ public class ChunkyFile {
           j++;
         }
         if (i == sequence.length) {
-          return (first);
+          return first;
         }
       }
       first++;
     }
-    return (-1);
+    return -1;
   }
 
 } /* ENDCLASS */

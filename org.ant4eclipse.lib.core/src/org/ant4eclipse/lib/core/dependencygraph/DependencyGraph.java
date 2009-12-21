@@ -244,7 +244,7 @@ public final class DependencyGraph<T> {
       result.addAll(removable);
     }
 
-    return (zeros < matrix.length);
+    return zeros < matrix.length;
   }
 
   /**
@@ -297,7 +297,7 @@ public final class DependencyGraph<T> {
     for (int i = 0; i < matrix.length; i++) {
       result[i] = sum(matrix[i]);
     }
-    return (result);
+    return result;
   }
 
   /**
@@ -318,7 +318,7 @@ public final class DependencyGraph<T> {
       }
     }
 
-    return (result);
+    return result;
   }
 
 } /* ENDCLASS */

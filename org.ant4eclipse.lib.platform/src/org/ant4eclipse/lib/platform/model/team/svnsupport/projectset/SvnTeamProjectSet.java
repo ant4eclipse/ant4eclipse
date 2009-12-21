@@ -59,11 +59,11 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
   }
 
   public boolean hasUser() {
-    return (this._user != null);
+    return this._user != null;
   }
 
   public boolean hasPassword() {
-    return (this._password != null);
+    return this._password != null;
   }
 
   /**

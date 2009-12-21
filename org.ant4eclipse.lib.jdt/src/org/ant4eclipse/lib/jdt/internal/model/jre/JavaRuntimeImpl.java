@@ -80,14 +80,14 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * {@inheritDoc}
    */
   public String getId() {
-    return (this._id);
+    return this._id;
   }
 
   /**
    * {@inheritDoc}
    */
   public File getLocation() {
-    return (this._location);
+    return this._location;
   }
 
   /**

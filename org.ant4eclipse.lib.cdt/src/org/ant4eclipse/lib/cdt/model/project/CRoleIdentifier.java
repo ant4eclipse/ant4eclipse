@@ -33,7 +33,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(CProjectRole.C_NATURE));
+    return project.hasNature(CProjectRole.C_NATURE);
   }
 
   /**

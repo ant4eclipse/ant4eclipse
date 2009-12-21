@@ -34,7 +34,7 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(PyDevProjectRole.NATURE));
+    return project.hasNature(PyDevProjectRole.NATURE);
   }
 
   /**

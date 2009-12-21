@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 
@@ -39,8 +38,12 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   }
 
   public static PdeProjectBuilder getPreConfiguredPdeProjectBuilder(String projectName) {
-    return (PdeProjectBuilder) new PdeProjectBuilder(projectName).withDefaultBundleManifest()
-        .withJreContainerClasspathEntry().withSrcClasspathEntry("src", false).withOutputClasspathEntry("bin");
+    PdeProjectBuilder result = new PdeProjectBuilder(projectName);
+    result.withDefaultBundleManifest();
+    result.withJreContainerClasspathEntry();
+    result.withSrcClasspathEntry("src", false);
+    result.withOutputClasspathEntry("bin");
+    return result;
   }
 
   /**
@@ -49,14 +52,14 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   @Override
   protected void createArtefacts(File projectDir) {
     super.createArtefacts(projectDir);
-
     createBundleManifestFile(projectDir);
     createPluginBuildPropertiesFile(projectDir);
   }
 
   protected PdeProjectBuilder withPdeNature() {
     withContainerClasspathEntry("org.eclipse.pde.core.requiredPlugins");
-    return (PdeProjectBuilder) withNature(PluginProjectRole.PLUGIN_NATURE);
+    withNature(PluginProjectRole.PLUGIN_NATURE);
+    return this;
   }
 
   protected PdeProjectBuilder withDefaultBundleManifest() {

@@ -32,7 +32,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
    * {@inheritDoc}
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(PluginProjectRole.PLUGIN_NATURE));
+    return project.hasNature(PluginProjectRole.PLUGIN_NATURE);
   }
 
   /**

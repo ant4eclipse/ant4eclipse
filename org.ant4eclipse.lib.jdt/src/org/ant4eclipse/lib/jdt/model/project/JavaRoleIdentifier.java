@@ -32,7 +32,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    * {@inheritDoc}
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(JavaProjectRole.JAVA_NATURE));
+    return project.hasNature(JavaProjectRole.JAVA_NATURE);
   }
 
   /**

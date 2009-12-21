@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathContainer;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -75,9 +76,17 @@ public class ClassPathContainerImpl implements ClassPathContainer {
     if (o.getClass() != getClass()) {
       return false;
     }
-    ClassPathContainerImpl castedObj = (ClassPathContainerImpl) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)) && java.util.Arrays
-        .equals(this._pathEntries, castedObj._pathEntries));
+    ClassPathContainerImpl other = (ClassPathContainerImpl) o;
+    if (this._name == null) {
+      if (other._name != null) {
+        return false;
+      }
+    } else {
+      if (!this._name.equals(other._name)) {
+        return false;
+      }
+    }
+    return Arrays.equals(this._pathEntries, other._pathEntries);
   }
 
   /**

@@ -78,7 +78,7 @@ public class BuildCommandImpl implements BuildCommand {
    * {@inheritDoc}
    */
   public boolean hasTriggers() {
-    return (this._triggers != null);
+    return this._triggers != null;
   }
 
   /**
@@ -95,8 +95,12 @@ public class BuildCommandImpl implements BuildCommand {
     if (o.getClass() != getClass()) {
       return false;
     }
-    BuildCommandImpl castedObj = (BuildCommandImpl) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)));
+    BuildCommandImpl other = (BuildCommandImpl) o;
+    if (this._name == null) {
+      return other._name == null;
+    } else {
+      return this._name.equals(other._name);
+    }
   }
 
   /**

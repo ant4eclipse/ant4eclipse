@@ -87,7 +87,7 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    * @return <code>true</code>, if the given entry is instance of type {@link ClasspathEntry}.
    */
   protected final boolean isRawClasspathEntry(ClasspathEntry entry) {
-    return (entry instanceof RawClasspathEntry);
+    return entry instanceof RawClasspathEntry;
   }
 
   // /**

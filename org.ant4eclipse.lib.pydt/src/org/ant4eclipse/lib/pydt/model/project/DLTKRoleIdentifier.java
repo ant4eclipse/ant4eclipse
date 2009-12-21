@@ -34,7 +34,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(DLTKProjectRole.NATURE));
+    return project.hasNature(DLTKProjectRole.NATURE);
   }
 
   /**

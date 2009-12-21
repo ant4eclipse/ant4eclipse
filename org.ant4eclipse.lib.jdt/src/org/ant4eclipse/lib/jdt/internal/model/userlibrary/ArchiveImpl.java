@@ -96,21 +96,21 @@ public class ArchiveImpl implements Archive {
    * {@inheritDoc}
    */
   public File getPath() {
-    return (this._path);
+    return this._path;
   }
 
   /**
    * {@inheritDoc}
    */
   public File getSource() {
-    return (this._source);
+    return this._source;
   }
 
   /**
    * {@inheritDoc}
    */
   public String getJavaDoc() {
-    return (this._javadoc);
+    return this._javadoc;
   }
 
 } /* ENDCLASS */

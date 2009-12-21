@@ -469,7 +469,7 @@ public class BundleDependenciesResolver {
      */
     public boolean hasFragments() {
       return (this._fragment != null)
-          || (isEclipseExtensibleAPI() && this._host.getFragments() != null && this._host.getFragments().length > 0);
+          || (isEclipseExtensibleAPI() && (this._host.getFragments() != null) && (this._host.getFragments().length > 0));
     }
 
     /**

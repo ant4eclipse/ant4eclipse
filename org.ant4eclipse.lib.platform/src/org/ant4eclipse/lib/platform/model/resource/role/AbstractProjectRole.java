@@ -75,7 +75,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
       return false;
     }
     AbstractProjectRole castedObj = (AbstractProjectRole) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)));
+    return (this._name == null ? castedObj._name == null : this._name.equals(castedObj._name));
   }
 
   /**

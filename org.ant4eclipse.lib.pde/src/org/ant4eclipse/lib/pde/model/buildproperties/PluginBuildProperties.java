@@ -397,7 +397,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return the source compatibility level or 1.3 (default value); never null
    */
   public String getJavacSource() {
-    return (this._javacSource == null ? "1.3" : this._javacSource);
+    return this._javacSource == null ? "1.3" : this._javacSource;
   }
 
   public void setJavacSource(String javacSource) {
@@ -408,7 +408,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return the class compatibility level or 1.2 (default value); never null
    */
   public String getJavacTarget() {
-    return (this._javacTarget == null ? "1.2" : this._javacTarget);
+    return this._javacTarget == null ? "1.2" : this._javacTarget;
   }
 
   public void setJavacTarget(String javacTarget) {

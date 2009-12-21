@@ -60,7 +60,7 @@ public class ProjectNatureImpl implements ProjectNature {
       return false;
     }
     ProjectNatureImpl castedObj = (ProjectNatureImpl) o;
-    return (this._name.equals(castedObj._name));
+    return this._name.equals(castedObj._name);
   }
 
   /**

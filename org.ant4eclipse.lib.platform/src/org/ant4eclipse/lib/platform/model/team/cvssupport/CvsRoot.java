@@ -301,7 +301,7 @@ public final class CvsRoot implements Cloneable {
   }
 
   private boolean isEmpty(String string) {
-    return (string == null || string.length() < 1);
+    return (string == null) || (string.length() < 1);
   }
 
   /**

@@ -146,6 +146,6 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return (this._registry != null && this._projectFactory != null);
+    return (this._registry != null) && (this._projectFactory != null);
   }
 }

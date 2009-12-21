@@ -76,7 +76,7 @@ public class BundleDescriptionLoader {
 
   private static boolean isSystemBundle(Manifest manifest) {
     String isSystemBundle = manifest.getMainAttributes().getValue("Eclipse-SystemBundle");
-    return (isSystemBundle != null) && "true".equals(isSystemBundle);
+    return "true".equals(isSystemBundle);
   }
 
   /**

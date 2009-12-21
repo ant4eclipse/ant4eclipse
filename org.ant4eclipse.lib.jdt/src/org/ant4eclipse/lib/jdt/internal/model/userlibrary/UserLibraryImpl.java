@@ -55,14 +55,14 @@ public class UserLibraryImpl implements UserLibrary {
    * {@inheritDoc}
    */
   public String getName() {
-    return (this._name);
+    return this._name;
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean isSystemLibrary() {
-    return (this._systemlibrary);
+    return this._systemlibrary;
   }
 
   /**
@@ -71,7 +71,7 @@ public class UserLibraryImpl implements UserLibrary {
   public ArchiveImpl[] getArchives() {
     ArchiveImpl[] result = new ArchiveImpl[this._archives.size()];
     this._archives.toArray(result);
-    return (result);
+    return result;
   }
 
   /**

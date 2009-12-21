@@ -125,7 +125,7 @@ public class PdeBuildHelper {
 
   public static final boolean hasUnresolvedQualifier(Version version) {
     Assure.notNull("version", version);
-    return (version != null && "qualifier".equals(version.getQualifier()));
+    return (version != null) && "qualifier".equals(version.getQualifier());
   }
 
   /**

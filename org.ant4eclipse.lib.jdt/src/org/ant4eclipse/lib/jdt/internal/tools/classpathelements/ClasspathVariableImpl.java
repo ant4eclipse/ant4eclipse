@@ -76,8 +76,20 @@ public class ClasspathVariableImpl implements ClassPathVariable {
       return false;
     }
     ClasspathVariableImpl castedObj = (ClasspathVariableImpl) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)) && (this._path == null ? castedObj._path == null
-        : this._path.equals(castedObj._path)));
+    if (this._name == null) {
+      if (castedObj._name != null) {
+        return false;
+      }
+    } else {
+      if (!this._name.equals(castedObj._name)) {
+        return false;
+      }
+    }
+    if (this._path == null) {
+      return castedObj._path == null;
+    } else {
+      return this._path.equals(castedObj._path);
+    }
   }
 
   /**

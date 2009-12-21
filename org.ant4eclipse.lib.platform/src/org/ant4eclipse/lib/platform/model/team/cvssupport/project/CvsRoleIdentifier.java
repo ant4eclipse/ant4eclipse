@@ -29,7 +29,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
    * {@inheritDoc}
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (CvsParser.isCvsProject(project));
+    return CvsParser.isCvsProject(project);
   }
 
   /**

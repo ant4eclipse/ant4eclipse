@@ -36,7 +36,7 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
    * {@inheritDoc}
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(FeatureProjectRole.FEATURE_NATURE));
+    return project.hasNature(FeatureProjectRole.FEATURE_NATURE);
   }
 
   /**
