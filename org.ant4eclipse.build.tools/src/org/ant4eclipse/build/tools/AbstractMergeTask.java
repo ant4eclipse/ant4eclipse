@@ -17,7 +17,6 @@ import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.ResourceCollection;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -110,14 +109,11 @@ public abstract class AbstractMergeTask extends Task {
    */
   @Override
   public final void execute() throws BuildException {
-
     // Validates that the task parameters are valid.
     validate();
-
     try {
       doExecute();
     } catch (Exception e) {
-      e.printStackTrace();
       throw new BuildException(e.getMessage(), e);
     }
   }
@@ -140,13 +136,8 @@ public abstract class AbstractMergeTask extends Task {
    *           if parameters are invalid
    */
   protected void validate() throws BuildException {
-
     if (!this._destinationFile.canWrite()) {
-      try {
-        this._destinationFile.createNewFile();
-      } catch (IOException e) {
-        throw new BuildException("Unable to write to " + this._destinationFile + ".");
-      }
+      throw new BuildException("Unable to write to " + this._destinationFile + ".");
     }
   }
 }

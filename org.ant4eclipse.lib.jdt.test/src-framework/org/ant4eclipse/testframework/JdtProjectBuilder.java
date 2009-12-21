@@ -17,7 +17,6 @@ import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.junit.Assert;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -210,11 +209,6 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     Assert.assertTrue(packageDir.isDirectory());
 
     File sourcefile = new File(sourceDir, className.asSourceFileName());
-    try {
-      sourcefile.createNewFile();
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
 
     StringTemplate classTemplate = new StringTemplate();
     classTemplate.append("package ${packageName};").nl();

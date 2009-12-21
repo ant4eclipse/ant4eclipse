@@ -17,7 +17,6 @@ import org.ant4eclipse.lib.core.util.Utilities;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
@@ -80,22 +79,12 @@ public class JarBundleBuilder {
     }
 
     File jarFile = new File(destinationDirectory, this._name + ".jar");
-    try {
-      jarFile.createNewFile();
-    } catch (IOException e) {
-      new RuntimeException(e);
-    }
 
     if (this._embeddedJarName == null) {
       createJarArchive(jarFile, this._manifest.getManifest());
     } else {
       File jarFile2 = new File(destinationDirectory, this._embeddedJarName + ".jar");
-      try {
-        jarFile2.createNewFile();
-        createJarArchive(jarFile, this._manifest.getManifest(), new File[] { jarFile2 });
-      } catch (IOException e) {
-        new RuntimeException(e);
-      }
+      createJarArchive(jarFile, this._manifest.getManifest(), new File[] { jarFile2 });
       jarFile2.delete();
     }
     return jarFile;

@@ -53,7 +53,6 @@ public class LibraryDetector {
     // write to file
     try {
       File outfile = new File(args[0]);
-      outfile.createNewFile();
       BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
       out.write(buffer.toString());
       out.close();
