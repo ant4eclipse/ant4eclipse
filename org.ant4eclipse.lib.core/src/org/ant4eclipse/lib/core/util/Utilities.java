@@ -890,7 +890,7 @@ public class Utilities {
       throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
     }
     try {
-      File result = File.createTempFile("a4e", suffix);
+      File result = createTempFile("", suffix, ENCODING);
       copy(url, result);
       return result.getCanonicalFile();
     } catch (IOException ex) {
