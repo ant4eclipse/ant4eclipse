@@ -938,7 +938,7 @@ public class Utilities {
    * 
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
-  public static final File createFile(String content, String suffix, String encoding) {
+  public static final File createTempFile(String content, String suffix, String encoding) {
     Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
     try {

@@ -196,7 +196,7 @@ public class UtilitiesTest {
 
   @Test
   public void createFile() {
-    File destfile = Utilities.createFile("Frösche", ".txt", "UTF-8");
+    File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
     URL url = getClass().getClassLoader().getResource("util/createfile.txt");
     File file = new File(url.getPath());
     Assert.assertEquals(file.length(), destfile.length());
