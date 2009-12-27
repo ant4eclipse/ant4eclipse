@@ -118,6 +118,8 @@
     <echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
     <echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
 
+    <mkdir dir="${executeJdtProject.default.output.directory}"/>
+    
     <javac 
       destdir="${executeJdtProject.default.output.directory}"
       debug="on"
