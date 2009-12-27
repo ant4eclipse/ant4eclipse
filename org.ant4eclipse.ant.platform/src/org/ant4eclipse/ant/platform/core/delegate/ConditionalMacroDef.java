@@ -11,10 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import org.ant4eclipse.core.ldapfilter.LdapFilter;
-import org.ant4eclipse.core.ldapfilter.ParseException;
-
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
+import org.ant4eclipse.lib.core.ldapfilter.ParseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.UnknownElement;

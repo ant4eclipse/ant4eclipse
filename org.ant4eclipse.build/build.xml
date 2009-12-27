@@ -11,8 +11,9 @@
   <!-- PROPERTIES                                                                              -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   
-  <property file="${file.buildsettings}"/>
-  <property file="${basedir}/default-build.properties"/>
+  <!-- <property file="${file.buildsettings}"/> -->
+  <property file="${basedir}/${ant.project.name}/kasimir.properties"/>
+  <property file="${basedir}/${ant.project.name}/default-build.properties"/>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- PATH DEFINITIONS                                                                        -->
@@ -66,7 +67,8 @@
   
   <target name="prepare" depends="init, clean">
     <mkdir dir="${destination}"/>
-    <mkdir dir="${dest.library}"/>
+    <mkdir dir="${dest.library}/classes"/>
+    <mkdir dir="${dest.library}/cfg"/>
     <mkdir dir="${dest.ant}"/>
     <mkdir dir="${dest.reports}"/>
   </target>
@@ -92,6 +94,25 @@
       
     </ant4eclipse:executeProjectSet>
     
+    <zip destfile="${dest.library}/org.ant4eclipse.jar">
+      <fileset dir="${dest.library}/classes" includes="**/*"/>
+    </zip>
+  
+    <echo>  ... Library build finished.</echo>
+    
+  </target>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- build.anttasks                                                                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build.anttasks" depends="prepare">
+    
+    <echo>Building A4E Ant Tasks ...</echo>
+    
+    
+    
+    <echo>  ... A4E Ant Tasks build finished.</echo>
+
   </target>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -193,13 +214,56 @@
         <antcall target="copy.resources" inheritrefs="true" />
       </ant4eclipse:forEachSourceDirectory>
 
+      <!-- Step 4: copy classfiles and resources -->
+      <ant4eclipse:forEachOutputDirectory unless="${_testProject}">
+        <antcall target="copy.to.merge.directory" inheritrefs="true" />
+      </ant4eclipse:forEachOutputDirectory>
+
     </ant4eclipse:executeJdtProject>
 
     <echo>Project "${executeProjectSet.project.name}" built</echo>
     
   </target>
 
-  <target name="build.ant4eclipse" depends="build.library">
+  <macrodef name="optional-load-file">
+    <attribute name="file"/>
+    <attribute name="property"/>
+    <sequential>
+      <antcontrib:if>
+        <available file="@{file}"/>
+        <antcontrib:then>
+          <antcontrib:var unset="true" name="@{property}"/>
+          <loadfile srcfile="@{file}" property="@{property}"/>
+        </antcontrib:then>
+        <antcontrib:else>
+          <antcontrib:var name="@{property}" value=""/>
+        </antcontrib:else>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+  
+  <target name="copy.to.merge.directory">
+    <echo>Copying '${executeJdtProject.output.directory}'</echo>
+    <copy toDir="${dest.library}/classes">
+      <fileset dir="${executeJdtProject.output.directory}">
+        <include name="**/*.class" />
+      </fileset>
+    </copy>
+    <!-- each project only contains one file, so we won't accidentally overwrite one file. -->
+    <copy toDir="${dest.library}/cfg" overwrite="true">
+      <fileset dir="${executeJdtProject.output.directory}">
+        <include name="**/ant4eclipse-configuration.properties" />
+      </fileset>
+      <mapper>
+        <flattenmapper/>
+      </mapper>
+    </copy>
+    <optional-load-file property="file1" file="${dest.library}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+    <optional-load-file property="file2" file="${dest.library}/cfg/ant4eclipse-configuration.properties"/>
+    <echo file="${dest.library}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
+  </target>
+
+  <target name="build.ant4eclipse" depends="build.library, build.anttasks">
     <echo>Launched</echo>
   </target>
   

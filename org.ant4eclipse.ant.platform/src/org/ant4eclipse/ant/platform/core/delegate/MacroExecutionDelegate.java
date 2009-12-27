@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import org.ant4eclipse.core.ldapfilter.LdapFilter;
-import org.ant4eclipse.core.ldapfilter.ParseException;
-
-
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -22,6 +18,8 @@ import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.ant.platform.core.delegate.helper.AntReferencesRaper;
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
+import org.ant4eclipse.lib.core.ldapfilter.ParseException;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
