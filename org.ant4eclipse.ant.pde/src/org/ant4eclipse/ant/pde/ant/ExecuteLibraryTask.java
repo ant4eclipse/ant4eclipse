@@ -14,7 +14,7 @@ package org.ant4eclipse.ant.pde.ant;
 
 
 
-import org.ant4eclipse.ant.jdt.ant.JdtExecutorValues;
+import org.ant4eclipse.ant.jdt.JdtExecutorValues;
 import org.ant4eclipse.ant.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.ant.core.delegate.MacroExecutionValuesProvider;

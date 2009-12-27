@@ -9,12 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.jdt.ant;
+package org.ant4eclipse.ant.jdt;
 
 
 
-import org.ant4eclipse.ant.jdt.ant.containerargs.JdtClasspathContainerArgumentComponent;
-import org.ant4eclipse.ant.jdt.ant.containerargs.JdtClasspathContainerArgumentDelegate;
+import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentComponent;
+import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.ant.platform.ant.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;

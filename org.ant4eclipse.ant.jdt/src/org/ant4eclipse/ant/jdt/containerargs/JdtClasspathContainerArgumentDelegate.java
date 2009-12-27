@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.jdt.ant.containerargs;
+package org.ant4eclipse.ant.jdt.containerargs;
 
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 

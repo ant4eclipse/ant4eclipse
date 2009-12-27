@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.jdt.ant.ecj;
+package org.ant4eclipse.ant.jdt.ecj;
 
 
 import org.ant4eclipse.jdt.ecj.ClassFileLoader;
@@ -24,7 +24,7 @@ import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 
 
 import org.ant4eclipse.ant.core.AntConfigurator;
-import org.ant4eclipse.ant.jdt.ant.EcjAdditionalCompilerArguments;
+import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
