@@ -17,6 +17,7 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
+    <mkdir dir="${destination}"/>
     <delete failonerror="true" includeemptydirs="true">
       <fileset dir="${destination}" includes="**/*"/>
     </delete>
