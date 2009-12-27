@@ -33,13 +33,11 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <taskdef 
-    classpathref="path.ant4eclipse"
     uri="antlib:org.ant4eclipse"
     resource="org/ant4eclipse/antlib.xml"
   />
 
   <taskdef 
-    classpathref="path.antcontrib"
     uri="antlib:net.sf.antcontrib"
     resource="net/sf/antcontrib/antlib.xml"
   />
