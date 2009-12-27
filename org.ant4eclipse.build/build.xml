@@ -10,10 +10,12 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- PROPERTIES                                                                              -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  
+
   <!-- <property file="${file.buildsettings}"/> -->
   <property file="${basedir}/${ant.project.name}/kasimir.properties"/>
   <property file="${basedir}/${ant.project.name}/default-build.properties"/>
+
+  <property environment="env"/>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- PATH DEFINITIONS                                                                        -->
@@ -22,7 +24,7 @@
   <path id="path.antcontrib">
     <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="ant-contrib*.jar"/>
   </path>
-  
+
   <path id="path.ant4eclipse">
     <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="org.ant4eclipse.jar"/>
   </path>
@@ -44,16 +46,75 @@
   />
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- MACRO DEFINITIONS                                                                       -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <macrodef name="optional-load-file">
+    <attribute name="file"/>
+    <attribute name="property"/>
+    <sequential>
+      <antcontrib:if>
+        <available file="@{file}"/>
+        <antcontrib:then>
+          <antcontrib:var unset="true" name="@{property}"/>
+          <loadfile srcfile="@{file}" property="@{property}"/>
+        </antcontrib:then>
+        <antcontrib:else>
+          <antcontrib:var name="@{property}" value=""/>
+        </antcontrib:else>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="optional-load-antlib">
+    <attribute name="file"/>
+    <attribute name="property"/>
+    <sequential>
+      <antcontrib:if>
+        <available file="@{file}"/>
+        <antcontrib:then>
+          <antcontrib:var unset="true" name="@{property}"/>
+          <loadfile srcfile="@{file}" property="@{property}">
+            <filterchain>
+              <tabstospaces/>
+              <linecontains negate="true">
+                <contains value="&lt;?xml"/>
+                <contains value="?&gt;"/>
+              </linecontains>
+              <linecontains negate="true">
+                <contains value="antlib&gt;"/>
+              </linecontains>
+            </filterchain>
+          </loadfile>
+        </antcontrib:then>
+        <antcontrib:else>
+          <antcontrib:var name="@{property}" value=""/>
+        </antcontrib:else>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- TARGET DEFINITIONS                                                                      -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
-    <echo>OUT: ${file.buildsettings}</echo>
-    <property name="dest.library"   value="${destination}/library"/>
-    <property name="dest.ant"       value="${destination}/ant"/>
+    
     <property name="dest.reports"   value="${destination}/reports"/>
+    <property name="dest.cfg"       value="${destination}/cfg"/>
+    
+    <antcontrib:if>
+      <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
+      <antcontrib:then>
+        <antcontrib:var name="revision" value="${env.SVN_REVISION}"/> 
+      </antcontrib:then>
+      <antcontrib:else>
+        <antcontrib:var name="revision" value="local-revision"/> 
+      </antcontrib:else>
+    </antcontrib:if>
+    
   </target>
-  
+
   <target name="clean">
     <antcontrib:if>
       <available file="${destination}"/>
@@ -64,57 +125,91 @@
       </antcontrib:then>
     </antcontrib:if>
   </target>
-  
+
   <target name="prepare" depends="init, clean">
     <mkdir dir="${destination}"/>
-    <mkdir dir="${dest.library}/classes"/>
-    <mkdir dir="${dest.library}/cfg"/>
-    <mkdir dir="${dest.ant}"/>
     <mkdir dir="${dest.reports}"/>
+    <mkdir dir="${dest.cfg}"/>
   </target>
-  
+
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- build.library                                                                           -->
   <!--                                                                                         -->
   <!-- Builds all library related projects which are used to provide the A4E core.             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.library" depends="prepare">
-    
+
     <echo>Building A4E library ...</echo>
-    
+
+    <antcontrib:var name="dir.dest" value="${destination}/library"/>
+    <mkdir dir="${dir.dest}/classes"/>
+
+    <antcontrib:var name="mode.library"  value="true"/>
+
     <ant4eclipse:executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectsetlib}"
       projectReferenceTypes="jdt"
     >
-      
+
       <ant4eclipse:forEachProject>
         <antcall target="build.project" inheritrefs="true" />
       </ant4eclipse:forEachProject>
-      
+
     </ant4eclipse:executeProjectSet>
-    
-    <zip destfile="${dest.library}/org.ant4eclipse.jar">
-      <fileset dir="${dest.library}/classes" includes="**/*"/>
+
+    <echo file="${destination}/library/classes/version.txt">${revision}</echo>
+
+    <zip destfile="${destination}/library/lib-ant4eclipse.jar">
+      <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
-  
+
     <echo>  ... Library build finished.</echo>
-    
+
   </target>
-  
+
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- build.anttasks                                                                          -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.anttasks" depends="prepare">
-    
+
     <echo>Building A4E Ant Tasks ...</echo>
-    
-    
-    
+
+    <antcontrib:var name="dir.dest" value="${destination}/ant"/>
+    <mkdir dir="${dir.dest}/classes"/>
+
+    <antcontrib:var name="mode.library"  value="false"/>
+
+    <ant4eclipse:executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+
+      <ant4eclipse:forEachProject>
+        <antcall target="build.project" inheritrefs="true" />
+      </ant4eclipse:forEachProject>
+
+    </ant4eclipse:executeProjectSet>
+
+    <!-- create a duplicate to support a smooth migration. -->
+    <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" todir="${destination}/ant/classes/org/ant4eclipse"/>
+
+    <echo file="${destination}/ant/classes/version.txt">${revision}</echo>
+
+    <zip destfile="${destination}/ant/ant-ant4eclipse.jar">
+      <fileset dir="${destination}/ant/classes" includes="**/*"/>
+    </zip>
+
+    <zip destfile="${destination}/ant/org.ant4eclipse.jar">
+      <fileset dir="${destination}/ant/classes" includes="**/*"/>
+      <zipfileset src="${destination}/library/lib-ant4eclipse.jar"/>
+    </zip>
+
     <echo>  ... A4E Ant Tasks build finished.</echo>
 
   </target>
-  
+
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- generate.source                                                                         -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -132,7 +227,7 @@
   <!-- compile.project                                                                         -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="compile.project" if="executeJdtProject.source.directories">
-    
+
     <echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
     <echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
     <echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
@@ -140,7 +235,7 @@
     <echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
 
     <mkdir dir="${executeJdtProject.default.output.directory}"/>
-    
+
     <javac 
       destdir="${executeJdtProject.default.output.directory}"
       debug="on"
@@ -165,9 +260,9 @@
         value="compiler.options.file.overrideJavacTask=true"
         compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" 
       />
-      
+
     </javac>
-    
+
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -186,7 +281,7 @@
   <!-- build.project                                                                           -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.project">
-    
+
     <echo>Building project "${executeProjectSet.project.name}"</echo>
 
     <ant4eclipse:executeJdtProject 
@@ -209,48 +304,78 @@
         <antcall target="compile.project" inheritrefs="true" />
       </ant4eclipse:forProject>
 
-      <!-- Step 3: copy resources -->
+      <!-- Step 3: copy resources stored within source folders -->
       <ant4eclipse:forEachSourceDirectory>
         <antcall target="copy.resources" inheritrefs="true" />
       </ant4eclipse:forEachSourceDirectory>
 
       <!-- Step 4: copy classfiles and resources -->
       <ant4eclipse:forEachOutputDirectory unless="${_testProject}">
-        <antcall target="copy.to.merge.directory" inheritrefs="true" />
+        <antcontrib:if>
+          <istrue value="${mode.library}"/>
+          <antcontrib:then>
+            <antcall target="lib.to.merge.directory" inheritrefs="true" />
+          </antcontrib:then>
+          <antcontrib:else>
+            <antcall target="anttask.to.merge.directory" inheritrefs="true" />
+          </antcontrib:else>
+        </antcontrib:if>
       </ant4eclipse:forEachOutputDirectory>
 
     </ant4eclipse:executeJdtProject>
 
     <echo>Project "${executeProjectSet.project.name}" built</echo>
-    
+
   </target>
 
-  <macrodef name="optional-load-file">
-    <attribute name="file"/>
-    <attribute name="property"/>
-    <sequential>
-      <antcontrib:if>
-        <available file="@{file}"/>
-        <antcontrib:then>
-          <antcontrib:var unset="true" name="@{property}"/>
-          <loadfile srcfile="@{file}" property="@{property}"/>
-        </antcontrib:then>
-        <antcontrib:else>
-          <antcontrib:var name="@{property}" value=""/>
-        </antcontrib:else>
-      </antcontrib:if>
-    </sequential>
-  </macrodef>
-  
-  <target name="copy.to.merge.directory">
+  <target name="anttask.to.merge.directory">
+
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
-    <copy toDir="${dest.library}/classes">
+
+    <copy toDir="${dir.dest}/classes">
       <fileset dir="${executeJdtProject.output.directory}">
-        <include name="**/*.class" />
+        <include name="**/*" />
+        <exclude name="**/ant4eclipse-configuration.properties" />
+        <exclude name="**/antlib.xml" />
       </fileset>
     </copy>
+
     <!-- each project only contains one file, so we won't accidentally overwrite one file. -->
-    <copy toDir="${dest.library}/cfg" overwrite="true">
+    <copy toDir="${dest.cfg}" overwrite="true">
+      <fileset dir="${executeJdtProject.output.directory}">
+        <include name="**/antlib.xml" />
+      </fileset>
+      <mapper>
+        <flattenmapper/>
+      </mapper>
+    </copy>
+
+    <optional-load-antlib property="file1" file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml"/>
+    <optional-load-antlib property="file2" file="${dest.cfg}/antlib.xml"/>
+
+    <!-- we probably should use the xmltask -->
+    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
+    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">${file1}${line.separator}</echo>
+    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">${file2}${line.separator}</echo>
+    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
+
+  </target>
+
+  <target name="lib.to.merge.directory">
+
+    <echo>Copying '${executeJdtProject.output.directory}'</echo>
+
+    <copy toDir="${dir.dest}/classes">
+      <fileset dir="${executeJdtProject.output.directory}">
+        <include name="**/*" />
+        <exclude name="**/ant4eclipse-configuration.properties" />
+        <exclude name="**/antlib.xml" />
+      </fileset>
+    </copy>
+
+    <!-- each project only contains one file, so we won't accidentally overwrite one file. -->
+    <copy toDir="${dest.cfg}" overwrite="true">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/ant4eclipse-configuration.properties" />
       </fileset>
@@ -258,13 +383,21 @@
         <flattenmapper/>
       </mapper>
     </copy>
-    <optional-load-file property="file1" file="${dest.library}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
-    <optional-load-file property="file2" file="${dest.library}/cfg/ant4eclipse-configuration.properties"/>
-    <echo file="${dest.library}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
+
+    <optional-load-file property="file1" file="${dir.dest}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+    <optional-load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
+
+    <echo file="${dir.dest}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
+
   </target>
 
   <target name="build.ant4eclipse" depends="build.library, build.anttasks">
-    <echo>Launched</echo>
+    <mkdir dir="${destination}/release"/>
+    <copy todir="${destination}/release">
+      <fileset dir="${destination}/library" includes="*.jar"/>
+      <fileset dir="${destination}/ant" includes="*.jar"/>
+    </copy>
+    <echo>Done</echo>
   </target>
   
 </project>
