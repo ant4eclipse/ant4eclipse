@@ -295,7 +295,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   public void initialize() {
 
     // export the python lister script, so it can be executed in order to access the pythonpath
-    this._pythonlister = Utilities.exportResource("/org/ant4eclipse/pydt/lister.py");
+    this._pythonlister = Utilities.exportResource("/org/ant4eclipse/lib/pydt/lister.py");
     if (!this._pythonlister.isAbsolute()) {
       this._pythonlister = this._pythonlister.getAbsoluteFile();
     }
