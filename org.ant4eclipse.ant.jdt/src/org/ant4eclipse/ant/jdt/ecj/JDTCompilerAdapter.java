@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
-
-
-
 import org.ant4eclipse.ant.core.AntConfigurator;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
@@ -241,7 +238,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    *          the compiler arguments, can be <code>null</code>.
    * @return the class file loader.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   private ClassFileLoader createClassFileLoader(EcjAdditionalCompilerArguments compilerArguments) {
 
     // Step 1: create class file loader list
