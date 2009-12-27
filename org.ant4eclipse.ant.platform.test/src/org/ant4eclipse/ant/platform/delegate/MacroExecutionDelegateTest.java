@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.platform.ant.delegate;
+package org.ant4eclipse.ant.platform.delegate;
 
 
 

@@ -12,11 +12,7 @@
 package org.ant4eclipse.ant.platform;
 
 
-import org.ant4eclipse.ant.platform.ant.ExecuteProjectBuildersTaskTest;
-import org.ant4eclipse.ant.platform.ant.GetProjectDirecoryTest;
-import org.ant4eclipse.ant.platform.ant.HasBuildCommandTest;
-import org.ant4eclipse.ant.platform.ant.HasNatureTest;
-import org.ant4eclipse.ant.platform.ant.delegate.MacroExecutionDelegateTest;
+import org.ant4eclipse.ant.platform.delegate.MacroExecutionDelegateTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
