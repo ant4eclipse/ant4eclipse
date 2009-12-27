@@ -53,14 +53,14 @@
   </target>
   
   <target name="clean">
-    <if>
+    <antcontrib:if>
       <available file="${destination}"/>
-      <then>
+      <antcontrib:then>
         <delete failonerror="true" includeemptydirs="true">
           <fileset dir="${destination}" includes="**/*"/>
         </delete>
-      </then>
-    </if>
+      </antcontrib:then>
+    </antcontrib:if>
   </target>
   
   <target name="prepare" depends="init, clean">
