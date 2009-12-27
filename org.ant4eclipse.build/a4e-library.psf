@@ -2,6 +2,7 @@
 <psf version="2.0">
 <provider id="org.tigris.subversion.subclipse.core.svnnature">
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/branches/library-refactoring/org.ant4eclipse.lib.core,org.ant4eclipse.lib.core"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/branches/library-refactoring/org.ant4eclipse.lib.core.ldapfilter,org.ant4eclipse.lib.core.ldapfilter"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/branches/library-refactoring/org.ant4eclipse.lib.cdt,org.ant4eclipse.lib.cdt"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/branches/library-refactoring/org.ant4eclipse.lib.jdt,org.ant4eclipse.lib.jdt"/>
 <project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/branches/library-refactoring/org.ant4eclipse.lib.pde,org.ant4eclipse.lib.pde"/>
