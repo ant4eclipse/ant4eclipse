@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <antlib>
-  <typedef name="hasNature" classname="org.ant4eclipse.platform.ant.HasNature" />
-  <typedef name="hasBuildCommand" classname="org.ant4eclipse.platform.ant.HasBuildCommand" />
-  <typedef name="getProjectDirectory" classname="org.ant4eclipse.platform.ant.GetProjectDirectoryTask" />
-  <typedef name="executeProjectSet" classname="org.ant4eclipse.platform.ant.ExecuteProjectSetTask" />
-  <typedef name="executeBuildCommands" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
-  <typedef name="cvsGetProjectSet" classname="org.ant4eclipse.platform.ant.team.CvsGetProjectSetTask" />
-  <typedef name="svnGetProjectSet" classname="org.ant4eclipse.platform.ant.team.SvnGetProjectSetTask" />
-  <typedef name="getBuildOrder" classname="org.ant4eclipse.platform.ant.GetBuildOrderTask" />
-  <typedef name="getUsedProjects" classname="org.ant4eclipse.platform.ant.GetUsedProjectsTask"/>
+  <typedef name="hasNature"                classname="org.ant4eclipse.ant.platform.HasNature" />
+  <typedef name="hasBuildCommand"          classname="org.ant4eclipse.ant.platform.HasBuildCommand" />
+  <typedef name="getProjectDirectory"      classname="org.ant4eclipse.ant.platform.GetProjectDirectoryTask" />
+  <typedef name="executeProjectSet"        classname="org.ant4eclipse.ant.platform.ExecuteProjectSetTask" />
+  <typedef name="executeBuildCommands"     classname="org.ant4eclipse.ant.platform.ExecuteProjectBuildersTask" />
+  <typedef name="cvsGetProjectSet"         classname="org.ant4eclipse.ant.platform.team.CvsGetProjectSetTask" />
+  <typedef name="svnGetProjectSet"         classname="org.ant4eclipse.ant.platform.team.SvnGetProjectSetTask" />
+  <typedef name="getBuildOrder"            classname="org.ant4eclipse.ant.platform.GetBuildOrderTask" />
+  <typedef name="getUsedProjects"          classname="org.ant4eclipse.ant.platform.GetUsedProjectsTask"/>
 </antlib>
