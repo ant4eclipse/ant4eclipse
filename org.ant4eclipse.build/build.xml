@@ -78,6 +78,8 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.library" depends="prepare">
     
+    <echo>Building A4E library ...</echo>
+    
     <ant4eclipse:executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectsetlib}"
@@ -85,13 +87,116 @@
     >
       
       <ant4eclipse:forEachProject>
-        <echo>Building project "${executeProjectSet.project.name}"</echo>
+        <antcall target="buildProject" inheritrefs="true" />
       </ant4eclipse:forEachProject>
       
     </ant4eclipse:executeProjectSet>
     
   </target>
   
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- generate.source                                                                         -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="generate.source">
+    <echo>Generating source in file '${executeJdtProject.project.directory}/build.xml'</echo>
+    <ant 
+      dir="${executeJdtProject.project.directory}"
+      antfile="build.xml"
+      target="generate.source"
+      inheritRefs="true" 
+    />
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- compile.project                                                                         -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="compile.project" if="executeJdtProject.source.directories">
+    
+    <echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
+    <echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
+    <echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
+    <echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
+    <echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
+
+    <javac 
+      destdir="${executeJdtProject.default.output.directory}"
+      debug="on"
+      compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter"
+    >
+
+      <src refid="executeJdtProject.source.directories.path" />
+      <bootclasspath refid="executeJdtProject.boot.classpath.path" />
+      <classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+
+      <compilerarg 
+        value="compiler.args.refid=executeJdtProject.compiler.args"
+        compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" 
+      />
+
+      <compilerarg 
+        value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
+        compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" 
+      />
+
+      <compilerarg 
+        value="compiler.options.file.overrideJavacTask=true"
+        compiler="org.ant4eclipse.jdt.ecj.JDTCompilerAdapter" 
+      />
+      
+    </javac>
+    
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- copy.resources                                                                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="copy.resources">
+    <echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
+    <copy todir="${executeJdtProject.output.directory}">
+      <fileset dir="${executeJdtProject.source.directory}">
+        <exclude name="**/*.java" />
+      </fileset>
+    </copy>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- build.project                                                                           -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build.project">
+    
+    <echo>Building project "${executeProjectSet.project.name}"</echo>
+
+    <ant4eclipse:executeJdtProject 
+      workspaceDirectory="${basedir}"
+      projectname="${executeProjectSet.project.name}"
+    >
+
+      <!-- Step 1: call generate.source -->
+      <ant4eclipse:forProject>
+        <antcontrib:if>
+          <available file="${executeJdtProject.project.directory}/build.xml"/>
+          <antcontrib:then>
+            <antcall target="generate.source" inheritrefs="true" />
+          </antcontrib:then>
+        </antcontrib:if>
+      </ant4eclipse:forProject>
+
+      <!-- Step 2: compile the project -->
+      <ant4eclipse:forProject>
+        <antcall target="compile.project" inheritrefs="true" />
+      </ant4eclipse:forProject>
+
+      <!-- Step 3: copy resources -->
+      <ant4eclipse:forEachSourceDirectory>
+        <antcall target="copy.resources" inheritrefs="true" />
+      </ant4eclipse:forEachSourceDirectory>
+
+    </ant4eclipse:executeJdtProject>
+
+    <echo>Project "${executeProjectSet.project.name}" built</echo>
+    
+  </target>
+
   <target name="build.ant4eclipse" depends="build.library">
     <echo>Launched</echo>
   </target>
