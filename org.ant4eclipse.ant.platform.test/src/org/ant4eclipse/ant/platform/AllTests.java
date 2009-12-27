@@ -9,19 +9,19 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse;
+package org.ant4eclipse.ant.platform;
 
 
-import org.ant4eclipse.ant.core.AntConfiguratorTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseConditionTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseDataTypeTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTaskTest;
-import org.ant4eclipse.ant.core.ant.AntCallTest;
+import org.ant4eclipse.ant.platform.ant.ExecuteProjectBuildersTaskTest;
+import org.ant4eclipse.ant.platform.ant.GetProjectDirecoryTest;
+import org.ant4eclipse.ant.platform.ant.HasBuildCommandTest;
+import org.ant4eclipse.ant.platform.ant.HasNatureTest;
+import org.ant4eclipse.ant.platform.ant.delegate.MacroExecutionDelegateTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { AntConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
-    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+@Suite.SuiteClasses( { ExecuteProjectBuildersTaskTest.class, HasNatureTest.class, HasBuildCommandTest.class,
+    GetProjectDirecoryTest.class, MacroExecutionDelegateTest.class })
 public class AllTests {
 }

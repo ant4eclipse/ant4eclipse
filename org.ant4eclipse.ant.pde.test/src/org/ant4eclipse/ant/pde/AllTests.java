@@ -9,19 +9,16 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse;
+package org.ant4eclipse.ant.pde;
 
-
-import org.ant4eclipse.ant.core.AntConfiguratorTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseConditionTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseDataTypeTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTaskTest;
-import org.ant4eclipse.ant.core.ant.AntCallTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { AntConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
-    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+@Suite.SuiteClasses( {/**
+ * PdeProjectFileSetTest.class , GetRequiredBundlesTaskTest.class,
+ * ExecutePluginProjectTaskTest.class, ExecutePluginLibraryTaskTest.class, FragmentTest.class, JarInJarTest.class
+ */
+})
 public class AllTests {
-}
+} /* ENDCLASS */

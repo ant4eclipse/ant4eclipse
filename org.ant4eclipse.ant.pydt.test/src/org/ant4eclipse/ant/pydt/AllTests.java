@@ -9,19 +9,22 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse;
+package org.ant4eclipse.ant.pydt;
 
-
-import org.ant4eclipse.ant.core.AntConfiguratorTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseConditionTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseDataTypeTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTaskTest;
-import org.ant4eclipse.ant.core.ant.AntCallTest;
+import org.ant4eclipse.ant.pydt.ant.PythonPathDLTKTest;
+import org.ant4eclipse.ant.pydt.ant.PythonPathPyDevTest;
+import org.ant4eclipse.ant.pydt.ant.SourcePathDLTKTest;
+import org.ant4eclipse.ant.pydt.ant.SourcePathPyDevTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+/**
+ * Testsuite used to invoke all tests available for the python setup.
+ * 
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
+ */
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { AntConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
-    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+@Suite.SuiteClasses( { SourcePathDLTKTest.class, SourcePathPyDevTest.class, PythonPathDLTKTest.class,
+    PythonPathPyDevTest.class })
 public class AllTests {
-}
+} /* ENDCLASS */

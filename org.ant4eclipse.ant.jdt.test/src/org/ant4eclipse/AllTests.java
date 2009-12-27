@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse;
 
-import org.ant4eclipse.jdt.ant.ClasspathContainersTest;
-import org.ant4eclipse.jdt.ant.ClasspathVariablesTest;
-import org.ant4eclipse.jdt.ant.ExecuteJdtProjectTest;
-import org.ant4eclipse.jdt.ant.GetJdtClassPathTest;
-import org.ant4eclipse.jdt.ant.GetJdtClassPath_UnkownContainerTest;
-import org.ant4eclipse.jdt.ant.UserLibrariesTest;
 
+import org.ant4eclipse.ant.jdt.ant.ClasspathContainersTest;
+import org.ant4eclipse.ant.jdt.ant.ClasspathVariablesTest;
+import org.ant4eclipse.ant.jdt.ant.ExecuteJdtProjectTest;
+import org.ant4eclipse.ant.jdt.ant.GetJdtClassPathTest;
+import org.ant4eclipse.ant.jdt.ant.GetJdtClassPath_UnkownContainerTest;
+import org.ant4eclipse.ant.jdt.ant.UserLibrariesTest;
 import org.ant4eclipse.lib.jdt.tools.BuildOrderResolverTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

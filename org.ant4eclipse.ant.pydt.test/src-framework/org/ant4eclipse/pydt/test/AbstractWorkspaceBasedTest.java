@@ -12,13 +12,13 @@
 package org.ant4eclipse.pydt.test;
 
 
+import org.ant4eclipse.ant.pydt.ant.GetPythonPathTask;
+import org.ant4eclipse.ant.pydt.ant.GetPythonSourcePathTask;
+import org.ant4eclipse.ant.pydt.ant.PythonDocumentationTask;
+import org.ant4eclipse.ant.pydt.ant.type.PythonContainer;
 import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.pydt.ant.GetPythonPathTask;
-import org.ant4eclipse.pydt.ant.GetPythonSourcePathTask;
-import org.ant4eclipse.pydt.ant.PythonDocumentationTask;
-import org.ant4eclipse.pydt.ant.type.PythonContainer;
 import org.ant4eclipse.testframework.ProjectDescription;
 import org.ant4eclipse.testframework.ProjectSuite;
 import org.ant4eclipse.testframework.ProjectSuiteApi;
