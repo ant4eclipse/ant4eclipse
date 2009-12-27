@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.platform.core.task;
 
 
-import org.ant4eclipse.ant.platform.ant.PlatformExecutorValuesProvider;
+import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;

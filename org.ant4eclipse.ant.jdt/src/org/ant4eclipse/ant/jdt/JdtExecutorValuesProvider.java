@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.jdt;
 
 
-import org.ant4eclipse.ant.platform.ant.PlatformExecutorValuesProvider;
+import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;

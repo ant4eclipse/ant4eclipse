@@ -14,7 +14,7 @@ package org.ant4eclipse.ant.platform.core.delegate;
 
 
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
-import org.ant4eclipse.ant.platform.ant.SubElementContribution;
+import org.ant4eclipse.ant.platform.SubElementContribution;
 import org.ant4eclipse.ant.platform.core.SubElementComponent;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
