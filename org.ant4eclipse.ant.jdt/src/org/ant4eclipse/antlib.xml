@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <antlib>
 
-  <typedef name="userLibraries" classname="org.ant4eclipse.jdt.ant.type.UserLibraryPath" />
-  <typedef name="installedJREs" classname="org.ant4eclipse.jdt.ant.type.JreContainer" />
-  <typedef name="jdtClassPathVariable" classname="org.ant4eclipse.jdt.ant.type.JdtClassPathVariableType" />
-  <typedef name="jdtClassPathLibrary" classname="org.ant4eclipse.jdt.ant.type.JdtClassPathContainerType" />
+  <typedef name="userLibraries"           classname="org.ant4eclipse.ant.jdt.type.UserLibraryPath" />
+  <typedef name="installedJREs"           classname="org.ant4eclipse.ant.jdt.type.JreContainer" />
+  <typedef name="jdtClassPathVariable"    classname="org.ant4eclipse.ant.jdt.type.JdtClassPathVariableType" />
+  <typedef name="jdtClassPathLibrary"     classname="org.ant4eclipse.ant.jdt.type.JdtClassPathContainerType" />
 
-  <typedef name="getJdtClassPath" classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
-  <typedef name="getJdtOutputPath" classname="org.ant4eclipse.jdt.ant.GetJdtOutputPathTask" />
-  <typedef name="getJdtSourcePath" classname="org.ant4eclipse.jdt.ant.GetJdtSourcePathTask" />
-  <typedef name="executeJdtProject" classname="org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask" />
+  <typedef name="getJdtClassPath"         classname="org.ant4eclipse.ant.jdt.GetJdtClassPathTask" />
+  <typedef name="getJdtOutputPath"        classname="org.ant4eclipse.ant.jdt.GetJdtOutputPathTask" />
+  <typedef name="getJdtSourcePath"        classname="org.ant4eclipse.ant.jdt.GetJdtSourcePathTask" />
+  <typedef name="executeJdtProject"       classname="org.ant4eclipse.ant.jdt.ExecuteJdtProjectTask" />
 
   <!-- deprecated: move to 'deprecated.xml' -->
-  <typedef name="jreContainer" classname="org.ant4eclipse.jdt.ant.type.JreContainer" />
+  <typedef name="jreContainer"            classname="org.ant4eclipse.ant.jdt.type.JreContainer" />
 
 </antlib>
