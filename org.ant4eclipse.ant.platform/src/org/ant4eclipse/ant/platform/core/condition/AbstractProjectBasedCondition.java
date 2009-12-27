@@ -11,11 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.condition;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseCondition;
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
-import org.ant4eclipse.ant.platform.core.WorkspaceComponent;
 import org.ant4eclipse.ant.platform.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
@@ -31,7 +28,7 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseCondition implements WorkspaceComponent,
+public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseCondition implements
     EclipseProjectComponent {
 
   /** the project delegate */
