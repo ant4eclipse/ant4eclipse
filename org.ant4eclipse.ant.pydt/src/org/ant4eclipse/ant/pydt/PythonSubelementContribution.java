@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.pydt.ant;
+package org.ant4eclipse.ant.pydt;
 
 
 import org.ant4eclipse.ant.platform.SubElementContribution;
