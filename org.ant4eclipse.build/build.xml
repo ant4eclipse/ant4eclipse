@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<project 
+  name="org.ant4eclipse.build"
+  basedir="."
+  default="build.ant4eclipse"
+>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- PROPERTIES                                                                              -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  
+  <property file="${file.buildsettings}"/>
+  <property file="${basedir}/default-build.properties"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- PATH DEFINITIONS                                                                        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <target name="init">
+    <delete failonerror="true" includeemptydirs="true">
+      <fileset dir="${destination}" includes="**/*"/>
+    </delete>
+  </target>
+  
+  <target name="build.ant4eclipse" depends="init">
+    <echo>Launched</echo>
+  </target>
+  
+</project>
