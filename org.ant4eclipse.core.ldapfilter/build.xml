@@ -6,18 +6,17 @@
          ================================= -->
   <target name="generate.source">
     <echo>Generating source code for "${executeProjectSet.project.name}"</echo>
-    
     <delete quiet="true">
       <fileset dir="${basedir}/src-gen">
         <include name="**/*" />
       </fileset>
     </delete>
     <mkdir dir="${basedir}/src-gen/org/ant4eclipse/core/ldapfilter" />
-
-
-    <javacc target="${basedir}/src/org/ant4eclipse/core/ldapfilter/LdapFilter.jj"
-            outputdirectory="${basedir}/src-gen/org/ant4eclipse/core/ldapfilter"
-            javacchome="${basedir}/build/javacc-4.2" />
+    <javacc 
+      target="${basedir}/src/org/ant4eclipse/core/ldapfilter/LdapFilter.jj"
+      outputdirectory="${basedir}/src-gen/org/ant4eclipse/core/ldapfilter"
+      javacchome="${basedir}/../org.ant4eclipse.external/libs/javacc-4.2" 
+    />
   </target>
 
 </project>
