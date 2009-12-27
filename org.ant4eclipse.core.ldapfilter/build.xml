@@ -13,7 +13,7 @@
     </delete>
     <mkdir dir="${basedir}/src-gen/org/ant4eclipse/core/ldapfilter" />
     <javacc 
-      target="${basedir}/src/org/ant4eclipse/core/ldapfilter/LdapFilter.jj"
+      target="${basedir}/LdapFilter.jj"
       outputdirectory="${basedir}/src-gen/org/ant4eclipse/core/ldapfilter"
       javacchome="${basedir}/../org.ant4eclipse.external/libs/javacc-4.2" 
     />
