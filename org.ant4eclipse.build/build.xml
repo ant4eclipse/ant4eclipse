@@ -397,4 +397,27 @@
     <echo>Done</echo>
   </target>
   
+  <target name="create.antlib">
+    <echo file="${basedir}/${ant.project.name}/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+    <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;antlib&gt;${line.separator}&lt;!-- --&gt;${line.separator}</echo>
+    <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
+    <antcontrib:for param="file">
+      <fileset dir="${basedir}" includes="**/*ant4eclipse*/bin/**/antlib.xml"/>
+      <sequential>
+        
+        <optional-load-antlib file="${basedir}/${ant.project.name}/antlib.xml" property="fcontent1"/>
+        <optional-load-antlib file="@{file}"                                   property="fcontent2"/>
+
+        <echo file="${basedir}/${ant.project.name}/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+        <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
+        <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">${fcontent1}${line.separator}${fcontent2}</echo>
+        <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
+
+        <antcontrib:var unset="true" name="fcontent1"/>
+        <antcontrib:var unset="true" name="fcontent2"/>
+        
+      </sequential>
+    </antcontrib:for>
+  </target>
+  
 </project>
