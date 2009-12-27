@@ -12,9 +12,9 @@
 package org.ant4eclipse.ant.platform.ant;
 
 
-import org.ant4eclipse.ant.platform.ant.core.SubElementComponent;
-import org.ant4eclipse.ant.platform.ant.core.delegate.SubElementDelegate;
-import org.ant4eclipse.ant.platform.ant.core.task.AbstractProjectBasedTask;
+import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;

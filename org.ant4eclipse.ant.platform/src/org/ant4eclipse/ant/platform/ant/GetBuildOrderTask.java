@@ -12,11 +12,11 @@
 package org.ant4eclipse.ant.platform.ant;
 
 
-import org.ant4eclipse.ant.platform.ant.core.ProjectReferenceAwareComponent;
-import org.ant4eclipse.ant.platform.ant.core.SubElementComponent;
-import org.ant4eclipse.ant.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
-import org.ant4eclipse.ant.platform.ant.core.delegate.SubElementDelegate;
-import org.ant4eclipse.ant.platform.ant.core.task.AbstractProjectSetBasedTask;
+import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
+import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;

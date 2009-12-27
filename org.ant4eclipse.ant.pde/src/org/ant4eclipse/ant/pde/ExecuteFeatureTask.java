@@ -15,10 +15,10 @@ package org.ant4eclipse.ant.pde;
 
 
 import org.ant4eclipse.ant.core.FileListHelper;
-import org.ant4eclipse.ant.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.ant.platform.ant.core.ScopedMacroDefinition;
-import org.ant4eclipse.ant.platform.ant.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.ant.platform.ant.core.task.AbstractExecuteProjectTask;
+import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;

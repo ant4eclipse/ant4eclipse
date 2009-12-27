@@ -14,7 +14,7 @@ package org.ant4eclipse.ant.pde;
 
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
-import org.ant4eclipse.ant.platform.ant.core.delegate.WorkspaceDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;

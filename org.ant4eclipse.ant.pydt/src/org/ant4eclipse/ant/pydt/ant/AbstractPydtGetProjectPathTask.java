@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.pydt.ant;
 
 
-import org.ant4eclipse.ant.platform.ant.core.task.AbstractGetProjectPathTask;
+import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;

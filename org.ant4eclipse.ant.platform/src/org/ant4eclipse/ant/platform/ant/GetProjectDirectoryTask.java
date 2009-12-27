@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.ant;
 
-import org.ant4eclipse.ant.platform.ant.core.task.AbstractGetProjectPathTask;
+import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 
 import java.io.File;
 

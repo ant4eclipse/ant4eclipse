@@ -12,8 +12,8 @@
 package org.ant4eclipse.ant.platform.ant;
 
 
-import org.ant4eclipse.ant.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.ant.platform.ant.core.PathComponent;
+import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;

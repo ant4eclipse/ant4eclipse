@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.platform.ant;
 
 
-import org.ant4eclipse.ant.platform.ant.core.condition.AbstractProjectBasedCondition;
+import org.ant4eclipse.ant.platform.core.condition.AbstractProjectBasedCondition;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 

@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.pde;
 
 
 
-import org.ant4eclipse.ant.platform.ant.core.task.AbstractProjectBasedTask;
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.tools.PluginProjectChecker;
 import org.ant4eclipse.lib.pde.tools.PluginProjectChecker.Issue;

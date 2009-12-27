@@ -12,9 +12,9 @@
 package org.ant4eclipse.ant.jdt;
 
 
-import org.ant4eclipse.ant.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.ant.platform.ant.core.ScopedMacroDefinition;
-import org.ant4eclipse.ant.platform.ant.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
