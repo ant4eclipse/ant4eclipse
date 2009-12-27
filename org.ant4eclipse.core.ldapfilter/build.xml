@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<project name="build.ant4eclipse" basedir="." default="generate.source">
+<project name="org.ant4eclipse.core.ldapfilter" basedir="." default="generate.source">
 
   <!-- ================================= 
           target: generate.source              
          ================================= -->
   <target name="generate.source">
-    <echo>Generating source code for "${executeProjectSet.project.name}"</echo>
+    <echo>Generating source code for "${ant.project.name}"</echo>
     <delete quiet="true">
       <fileset dir="${basedir}/src-gen">
         <include name="**/*" />
