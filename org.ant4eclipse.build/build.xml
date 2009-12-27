@@ -91,7 +91,7 @@
     
   </target>
   
-  <target name="build.ant4eclipse" depends="prepare">
+  <target name="build.ant4eclipse" depends="build.library">
     <echo>Launched</echo>
   </target>
   
