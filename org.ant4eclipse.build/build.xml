@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project 
   name="org.ant4eclipse.build"
-  basedir="."
+  basedir=".."
   default="build.ant4eclipse"
 >
 
