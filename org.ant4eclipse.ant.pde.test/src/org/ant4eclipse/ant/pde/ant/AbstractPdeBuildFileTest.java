@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.pde.ant;
 
 
 
-import org.ant4eclipse.ant.jdt.ant.base.AbstractJdtTest;
+import org.ant4eclipse.ant.jdt.base.AbstractJdtTest;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.EchoLogfile;
 

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.jdt.ant.base;
+package org.ant4eclipse.ant.jdt.base;
 
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
