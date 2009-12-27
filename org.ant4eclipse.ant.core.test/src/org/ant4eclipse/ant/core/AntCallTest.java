@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.core.ant;
+package org.ant4eclipse.ant.core;
 
 import java.io.File;
 

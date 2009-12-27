@@ -12,11 +12,11 @@
 package org.ant4eclipse;
 
 
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseConditionTest;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataTypeTest;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTaskTest;
+import org.ant4eclipse.ant.core.AntCallTest;
 import org.ant4eclipse.ant.core.AntConfiguratorTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseConditionTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseDataTypeTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTaskTest;
-import org.ant4eclipse.ant.core.ant.AntCallTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
