@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.pde.integration;
 
 
 
-import org.ant4eclipse.ant.pde.ant.AbstractPdeBuildFileTest;
+import org.ant4eclipse.ant.pde.AbstractPdeBuildFileTest;
 import org.ant4eclipse.testframework.PdeProjectBuilder;
 
 /**

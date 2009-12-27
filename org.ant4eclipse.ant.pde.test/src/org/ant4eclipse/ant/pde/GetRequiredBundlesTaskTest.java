@@ -9,33 +9,23 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.pde.ant;
+package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.testframework.PdeProjectBuilder;
 
-/**
- * Tests the functionality while using multiple taskdef calls (these are causing multiple reloads and thus
- * initialisation of class members).
- * 
- * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
- */
-public class MultipleTaskDefTest extends AbstractPdeBuildFileTest {
+public class GetRequiredBundlesTaskTest extends AbstractPdeBuildFileTest {
 
   @Override
   protected void setupDefaultBuildFile() throws Exception {
     // set up the build file
-    setupBuildFile("MultipleTaskDefTest.xml");
+    setupBuildFile("GetRequiredBundlesTaskTest.xml");
   }
 
   @Override
   protected void tearDown() throws Exception {
   }
 
-  /**
-   * <p>
-   * </p>
-   */
-  public void testAntCall() {
+  public void testGetRequiredBundlesTask() {
 
     // set some ant properties
     getProject().setProperty("projectname", "simpleproject1");
@@ -66,7 +56,7 @@ public class MultipleTaskDefTest extends AbstractPdeBuildFileTest {
     buffer.append("org.eclipse.core.variables_3.2.200.v20090521");
     buffer.append("org.eclipse.equinox.preferences_3.2.300.v20090520-1800");
 
-    expectLog("testAntCall", "beforedoExecuteafter");
+    // execute test
+    expectLogMatches("testGetRequiredBundles_inline", getExpectedTargetPlatformLog() + buffer.toString());
   }
-
-} /* ENDCLASS */
+}
