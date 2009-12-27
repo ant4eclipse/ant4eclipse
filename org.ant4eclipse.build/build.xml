@@ -3,6 +3,8 @@
   name="org.ant4eclipse.build"
   basedir=".."
   default="build.ant4eclipse"
+  xmlns:ant4eclipse="antlib:org.ant4eclipse"
+  xmlns:antcontrib="antlib:net.sf.antcontrib"
 >
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -16,18 +18,53 @@
   <!-- PATH DEFINITIONS                                                                        -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
+  <path id="path.antcontrib">
+    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="ant-contrib*.jar"/>
+  </path>
+  
+  <path id="path.ant4eclipse">
+    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="org.ant4eclipse.jar"/>
+  </path>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TASK DEFINITIONS                                                                        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <taskdef 
+    classpathref="path.ant4eclipse"
+    uri="antlib:org.ant4eclipse"
+    resource="org/ant4eclipse/antlib.xml"
+  />
+
+  <taskdef 
+    classpathref="path.antcontrib"
+    uri="antlib:net.sf.antcontrib"
+    resource="net/sf/antcontrib/antlib.xml"
+  />
+
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- TARGET DEFINITIONS                                                                      -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
-    <mkdir dir="${destination}"/>
-    <delete failonerror="true" includeemptydirs="true">
-      <fileset dir="${destination}" includes="**/*"/>
-    </delete>
     <property name="dest.library"   value="${destination}/library"/>
     <property name="dest.ant"       value="${destination}/ant"/>
     <property name="dest.reports"   value="${destination}/reports"/>
+  </target>
+  
+  <target name="clean">
+    <if>
+      <available file="${destination}"/>
+      <then>
+        <delete failonerror="true" includeemptydirs="true">
+          <fileset dir="${destination}" includes="**/*"/>
+        </delete>
+      </then>
+    </if>
+  </target>
+  
+  <target name="prepare" depends="init, clean">
+    <mkdir dir="${destination}"/>
     <mkdir dir="${dest.library}"/>
     <mkdir dir="${dest.ant}"/>
     <mkdir dir="${dest.reports}"/>
@@ -38,10 +75,23 @@
   <!--                                                                                         -->
   <!-- Builds all library related projects which are used to provide the A4E core.             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <target name="build.library" depends="init">
+  <target name="build.library" depends="prepare">
+    
+    <ant4eclipse:executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectsetlib}"
+      projectReferenceTypes="jdt"
+    >
+      
+      <ant4eclipse:forEachProject>
+        <echo>Building project "${executeProjectSet.project.name}"</echo>
+      </ant4eclipse:forEachProject>
+      
+    </ant4eclipse:executeProjectSet>
+    
   </target>
   
-  <target name="build.ant4eclipse" depends="init">
+  <target name="build.ant4eclipse" depends="prepare">
     <echo>Launched</echo>
   </target>
   
