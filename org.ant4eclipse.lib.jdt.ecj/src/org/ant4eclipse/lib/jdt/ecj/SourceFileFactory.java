@@ -1,6 +1,6 @@
-package org.ant4eclipse.jdt.ecj;
+package org.ant4eclipse.lib.jdt.ecj;
 
-import org.ant4eclipse.jdt.ecj.internal.tools.SourceFileImpl;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.SourceFileImpl;
 
 import java.io.File;
 

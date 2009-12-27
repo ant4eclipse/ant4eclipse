@@ -1,8 +1,8 @@
-package org.ant4eclipse.jdt.ecj.internal.tools;
+package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.jdt.ecj.SourceFile;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 
 import java.io.File;
 

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj;
+package org.ant4eclipse.lib.jdt.ecj;
 
 import java.util.Map;
 

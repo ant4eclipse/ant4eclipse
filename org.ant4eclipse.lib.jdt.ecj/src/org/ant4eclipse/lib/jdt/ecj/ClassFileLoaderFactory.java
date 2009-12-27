@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj;
+package org.ant4eclipse.lib.jdt.ecj;
 
-import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
-import org.ant4eclipse.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
-import org.ant4eclipse.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
 
 import java.io.File;
 

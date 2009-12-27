@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj.internal.tools;
+package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.jdt.ecj.ReferableType;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.ecj.ReferableType;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 /**

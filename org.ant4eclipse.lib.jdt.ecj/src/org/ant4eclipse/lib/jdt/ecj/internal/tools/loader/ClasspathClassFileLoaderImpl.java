@@ -9,17 +9,17 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj.internal.tools.loader;
+package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.jdt.ecj.ClassFile;
-import org.ant4eclipse.jdt.ecj.ClassFileLoader;
-import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
-import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
-import org.ant4eclipse.jdt.ecj.internal.tools.ReferableSourceFileImpl;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.jdt.ecj.ClassFile;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.lib.jdt.ecj.ReferableSourceFile;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.ReferableSourceFileImpl;
 
 import java.io.File;
 import java.io.FileFilter;

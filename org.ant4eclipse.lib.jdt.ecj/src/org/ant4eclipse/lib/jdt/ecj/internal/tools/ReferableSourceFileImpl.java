@@ -1,8 +1,8 @@
-package org.ant4eclipse.jdt.ecj.internal.tools;
+package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.jdt.ecj.ReferableSourceFile;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.ecj.ReferableSourceFile;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
 import java.io.File;

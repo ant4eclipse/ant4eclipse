@@ -9,14 +9,14 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ecj.internal.tools;
+package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.jdt.ecj.CompileJobDescription;
-import org.ant4eclipse.jdt.ecj.CompileJobResult;
-import org.ant4eclipse.jdt.ecj.EcjAdapter;
-import org.ant4eclipse.jdt.ecj.SourceFile;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
+import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
+import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
+import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 import org.eclipse.jdt.internal.compiler.Compiler;
 import org.eclipse.jdt.internal.compiler.DefaultErrorHandlingPolicies;
 import org.eclipse.jdt.internal.compiler.IErrorHandlingPolicy;

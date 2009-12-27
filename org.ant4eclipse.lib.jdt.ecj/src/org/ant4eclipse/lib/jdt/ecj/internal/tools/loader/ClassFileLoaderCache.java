@@ -1,8 +1,8 @@
-package org.ant4eclipse.jdt.ecj.internal.tools.loader;
+package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.jdt.ecj.ClassFileLoader;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.ant4eclipse.jdt.ecj;
+package org.ant4eclipse.lib.jdt.ecj;
 
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
