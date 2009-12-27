@@ -12,15 +12,6 @@
 package org.ant4eclipse.ant.jdt.ecj;
 
 
-import org.ant4eclipse.jdt.ecj.ClassFileLoader;
-import org.ant4eclipse.jdt.ecj.ClassFileLoaderFactory;
-import org.ant4eclipse.jdt.ecj.CompileJobResult;
-import org.ant4eclipse.jdt.ecj.DefaultCompileJobDescription;
-import org.ant4eclipse.jdt.ecj.EcjAdapter;
-import org.ant4eclipse.jdt.ecj.EcjExceptionCodes;
-import org.ant4eclipse.jdt.ecj.SourceFile;
-import org.ant4eclipse.jdt.ecj.SourceFileFactory;
-import org.ant4eclipse.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 
 
 import org.ant4eclipse.ant.core.AntConfigurator;
@@ -30,6 +21,15 @@ import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoaderFactory;
+import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
+import org.ant4eclipse.lib.jdt.ecj.DefaultCompileJobDescription;
+import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
+import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.lib.jdt.ecj.SourceFile;
+import org.ant4eclipse.lib.jdt.ecj.SourceFileFactory;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.taskdefs.condition.Os;
