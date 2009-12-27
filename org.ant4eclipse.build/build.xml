@@ -47,6 +47,7 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
+    <echo>OUT: ${file.buildsettings}</echo>
     <property name="dest.library"   value="${destination}/library"/>
     <property name="dest.ant"       value="${destination}/ant"/>
     <property name="dest.reports"   value="${destination}/reports"/>
