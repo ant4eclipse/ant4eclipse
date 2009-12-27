@@ -87,7 +87,7 @@
     >
       
       <ant4eclipse:forEachProject>
-        <antcall target="buildProject" inheritrefs="true" />
+        <antcall target="build.project" inheritrefs="true" />
       </ant4eclipse:forEachProject>
       
     </ant4eclipse:executeProjectSet>
