@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test;
 
-
-import org.ant4eclipse.ant.pydt.ant.GetPythonPathTask;
-import org.ant4eclipse.ant.pydt.ant.GetPythonSourcePathTask;
-import org.ant4eclipse.ant.pydt.ant.PythonDocumentationTask;
-import org.ant4eclipse.ant.pydt.ant.type.PythonContainer;
+import org.ant4eclipse.ant.pydt.GetPythonPathTask;
+import org.ant4eclipse.ant.pydt.GetPythonSourcePathTask;
+import org.ant4eclipse.ant.pydt.PythonDocumentationTask;
+import org.ant4eclipse.ant.pydt.type.PythonContainer;
 import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
