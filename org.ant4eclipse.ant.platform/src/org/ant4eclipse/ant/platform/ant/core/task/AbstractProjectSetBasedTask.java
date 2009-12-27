@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.platform.ant.core.task;
 
 
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.ant.core.WorkspaceProjectSetComponent;
 import org.ant4eclipse.ant.platform.ant.core.delegate.WorkspaceProjectSetDelegate;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;

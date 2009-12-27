@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.pde.ant;
 
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.StringMap;

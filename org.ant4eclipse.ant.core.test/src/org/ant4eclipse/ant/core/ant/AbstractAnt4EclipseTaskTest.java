@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core.ant;
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 

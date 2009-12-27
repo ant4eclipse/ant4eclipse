@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.jdt.ant.type;
 
 
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.apache.tools.ant.Project;

@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.core;
 
 
-import org.ant4eclipse.ant.core.ant.AntBasedLogger;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;

@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core.ant;
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.apache.tools.ant.Project;
 
 public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFileTest {

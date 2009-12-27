@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.platform.ant.core.task;
 
 
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.ant.core.TeamProjectSetComponent;
 import org.ant4eclipse.ant.platform.ant.core.delegate.TeamProjectSetDelegate;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;

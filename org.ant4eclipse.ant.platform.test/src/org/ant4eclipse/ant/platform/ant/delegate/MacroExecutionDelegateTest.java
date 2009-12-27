@@ -13,8 +13,8 @@ package org.ant4eclipse.ant.platform.ant.delegate;
 
 
 
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseBuildFileTest;
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.ant.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.ant.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.ant.core.delegate.MacroExecutionDelegate;

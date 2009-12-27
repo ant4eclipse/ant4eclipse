@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.platform.ant.core.task;
 
 
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.ant.platform.ant.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.ant.core.delegate.EclipseProjectDelegate;

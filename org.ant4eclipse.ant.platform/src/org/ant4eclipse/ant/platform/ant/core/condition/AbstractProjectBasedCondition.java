@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.platform.ant.core.condition;
 
 
 
-import org.ant4eclipse.ant.core.ant.AbstractAnt4EclipseCondition;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseCondition;
 import org.ant4eclipse.ant.platform.ant.core.EclipseProjectComponent;
 import org.ant4eclipse.ant.platform.ant.core.WorkspaceComponent;
 import org.ant4eclipse.ant.platform.ant.core.delegate.EclipseProjectDelegate;
