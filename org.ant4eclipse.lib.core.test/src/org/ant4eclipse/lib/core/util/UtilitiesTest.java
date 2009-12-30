@@ -417,7 +417,17 @@ public class UtilitiesTest {
   public void toURL() {
 
     URL expectedurl = getClass().getClassLoader().getResource("util/test-jar.jar");
-    File file = new File(expectedurl.getPath());
+    String path = expectedurl.getPath();
+
+    if (!Utilities.isWindows()) {
+      /**
+       * @todo [29-Dec-2009:KASI] This is somewhat odd. The 'getPath' is supposed to return the path itself. For some
+       *       reason the unix version returns the protocol, too.
+       */
+      path = path.substring(expectedurl.getProtocol().length());
+    }
+
+    File file = new File(path);
 
     URL url1 = Utilities.toURL(file);
     Assert.assertEquals(expectedurl, url1);
