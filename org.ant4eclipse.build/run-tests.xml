@@ -36,8 +36,8 @@
       <fileset dir="${destination}">
         <include name="library/*-test.jar"/>
         <include name="ant/*-test.jar"/>
-        <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
       </fileset>
+      <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
       <sequential>
         <unzip src="@{zipfile}" dest="${destination}/test"/>
       </sequential>
