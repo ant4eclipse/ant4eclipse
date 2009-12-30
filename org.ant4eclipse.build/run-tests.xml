@@ -29,11 +29,21 @@
       <fileset dir="${dir.dist}/libs" includes="ant-contrib*.jar"/>
     </path>
 
+    <mkdir dir="${destination}/test"/>
+    <for param="zipfile">
+      <fileset dir="${destination}">
+        <include name="library/*-test.jar"/>
+        <include name="ant/*-test.jar"/>
+        <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
+      </fileset>
+      <sequential>
+        <unzip src="@{zipfile}" dest="${destination}/test"/>
+      </sequential>
+    </for>
+    
     <path id="path.ant4eclipse">
-      <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
       <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
-      <fileset dir="${destination}/library" includes="*-test.jar"/>
-      <fileset dir="${destination}/ant" includes="*-test.jar"/>
+      <path path="${destination}/test"/>
     </path>
 
     <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
