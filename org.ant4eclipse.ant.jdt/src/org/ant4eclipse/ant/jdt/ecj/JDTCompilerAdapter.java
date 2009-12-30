@@ -238,7 +238,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    *          the compiler arguments, can be <code>null</code>.
    * @return the class file loader.
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   private ClassFileLoader createClassFileLoader(EcjAdditionalCompilerArguments compilerArguments) {
 
     // Step 1: create class file loader list
@@ -248,10 +248,11 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     classFileLoaderList.add(createBootClassLoader(compilerArguments));
 
     // Step 3: add class loader for class path entries
-    for (Iterator iterator = getJavac().getClasspath().iterator(); iterator.hasNext();) {
+    Iterator<FileResource> iterator = getJavac().getClasspath().iterator();
+    while (iterator.hasNext()) {
 
       // get the file resource that contains the class files
-      FileResource fileResource = (FileResource) iterator.next();
+      FileResource fileResource = iterator.next();
       File classesFile = fileResource.getFile();
       ClassFileLoader myclassFileLoader = null;
 
