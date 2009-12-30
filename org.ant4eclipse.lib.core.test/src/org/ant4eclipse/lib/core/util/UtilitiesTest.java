@@ -42,8 +42,7 @@ public class UtilitiesTest {
   @Test
   public void expandJarFile() throws IOException {
 
-    URL url = getClass().getClassLoader().getResource("util/test-jar.jar");
-    File file = new File(url.getPath());
+    File file = Utilities.exportResource("/util/test-jar.jar");
     File dir = verifyExpandedJar(file);
 
     // delete function test
@@ -294,8 +293,7 @@ public class UtilitiesTest {
 
   @Test
   public void getAndHasChild() throws IOException {
-    URL url = getClass().getClassLoader().getResource("util/test-jar.jar");
-    File file = new File(url.getPath());
+    File file = Utilities.exportResource("/util/test-jar.jar");
     File dir = verifyExpandedJar(file);
     Assert.assertTrue(Utilities.hasChild(dir, "test.jar"));
     File child1 = Utilities.getChild(dir, "test.jar");
