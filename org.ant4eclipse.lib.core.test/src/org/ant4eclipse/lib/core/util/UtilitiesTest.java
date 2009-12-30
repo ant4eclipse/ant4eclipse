@@ -208,8 +208,7 @@ public class UtilitiesTest {
   @Test
   public void createFile() {
     File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
-    URL url = getClass().getClassLoader().getResource("util/createfile.txt");
-    File file = new File(url.getPath());
+    File file = Utilities.exportResource("/util/createfile.txt");
     Assert.assertEquals(file.length(), destfile.length());
     byte[] current = JUnitUtilities.loadFile(destfile);
     byte[] expected = JUnitUtilities.loadFile(file);
@@ -268,8 +267,7 @@ public class UtilitiesTest {
   @Test
   public void getAllChildren() throws IOException {
 
-    URL url = getClass().getClassLoader().getResource("util/test-jar.jar");
-    File file = new File(url.getPath());
+    File file = Utilities.exportResource("/util/test-jar.jar");
     File dir = verifyExpandedJar(file);
 
     List<File> children1 = Utilities.getAllChildren(dir);
