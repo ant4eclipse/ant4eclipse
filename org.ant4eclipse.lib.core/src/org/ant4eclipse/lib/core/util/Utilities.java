@@ -436,17 +436,26 @@ public class Utilities {
     String frompath = null;
     String topath = null;
     try {
-      frompath = fromfile.getCanonicalPath();
+      frompath = fromfile.getCanonicalPath().replace('\\', '/');
     } catch (IOException ex) {
       return null;
     }
     try {
-      topath = tofile.getCanonicalPath();
+      topath = tofile.getCanonicalPath().replace('\\', '/');
     } catch (IOException ex) {
       return null;
     }
-    String[] fromstr = frompath.replace('\\', '/').split("/");
-    String[] tostr = topath.replace('\\', '/').split("/");
+    if (frompath.equals("/")) {
+      // special treatment for unix filesystems since split would result in an empty list
+      if (topath.startsWith("/")) {
+        return replace(topath.substring(1), "/", File.separator);
+      } else {
+        // the other path is invalid
+        return null;
+      }
+    }
+    String[] fromstr = frompath.split("/");
+    String[] tostr = topath.split("/");
     if (!fromstr[0].equals(tostr[0])) {
       // we're not working on the same device
       /**
