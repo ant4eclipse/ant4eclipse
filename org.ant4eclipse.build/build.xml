@@ -100,6 +100,7 @@
     <property name="dest.reports"   value="${destination}/reports"/>
     <property name="dest.cfg"       value="${destination}/cfg"/>
     
+    <echo>revision: ${env.SVN_REVISION}</echo>
     <antcontrib:if>
       <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
       <antcontrib:then>
@@ -112,7 +113,7 @@
     
   </target>
 
-  <target name="clean">
+  <target name="clean" depends="init">
     <antcontrib:if>
       <available file="${destination}"/>
       <antcontrib:then>
@@ -123,7 +124,7 @@
     </antcontrib:if>
   </target>
 
-  <target name="prepare" depends="init, clean">
+  <target name="prepare" depends="clean">
     <mkdir dir="${destination}"/>
     <mkdir dir="${dest.reports}"/>
     <mkdir dir="${dest.cfg}"/>
