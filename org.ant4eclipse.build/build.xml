@@ -3,8 +3,6 @@
   name="org.ant4eclipse.build"
   basedir=".."
   default="build.ant4eclipse"
-  xmlns:ant4eclipse="antlib:org.ant4eclipse"
-  xmlns:antcontrib="antlib:net.sf.antcontrib"
 >
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -32,15 +30,9 @@
   <!-- TASK DEFINITIONS                                                                        -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-  <taskdef 
-    uri="antlib:org.ant4eclipse"
-    resource="org/ant4eclipse/antlib.xml"
-  />
+  <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
-  <taskdef 
-    uri="antlib:net.sf.antcontrib"
-    resource="net/sf/antcontrib/antlib.xml"
-  />
+  <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- MACRO DEFINITIONS                                                                       -->
@@ -50,16 +42,16 @@
     <attribute name="file"/>
     <attribute name="property"/>
     <sequential>
-      <antcontrib:if>
+      <if>
         <available file="@{file}"/>
-        <antcontrib:then>
-          <antcontrib:var unset="true" name="@{property}"/>
+        <then>
+          <var unset="true" name="@{property}"/>
           <loadfile srcfile="@{file}" property="@{property}"/>
-        </antcontrib:then>
-        <antcontrib:else>
-          <antcontrib:var name="@{property}" value=""/>
-        </antcontrib:else>
-      </antcontrib:if>
+        </then>
+        <else>
+          <var name="@{property}" value=""/>
+        </else>
+      </if>
     </sequential>
   </macrodef>
 
@@ -67,10 +59,10 @@
     <attribute name="file"/>
     <attribute name="property"/>
     <sequential>
-      <antcontrib:if>
+      <if>
         <available file="@{file}"/>
-        <antcontrib:then>
-          <antcontrib:var unset="true" name="@{property}"/>
+        <then>
+          <var unset="true" name="@{property}"/>
           <loadfile srcfile="@{file}" property="@{property}">
             <filterchain>
               <tabstospaces/>
@@ -83,11 +75,11 @@
               </linecontains>
             </filterchain>
           </loadfile>
-        </antcontrib:then>
-        <antcontrib:else>
-          <antcontrib:var name="@{property}" value=""/>
-        </antcontrib:else>
-      </antcontrib:if>
+        </then>
+        <else>
+          <var name="@{property}" value=""/>
+        </else>
+      </if>
     </sequential>
   </macrodef>
 
@@ -96,17 +88,17 @@
     <attribute name="literal"/>
     <attribute name="property"/>
     <sequential>
-      <antcontrib:propertyregex property="ends-with_selection" input="@{candidate}" regexp="^(.+)(@{literal})$" select="\2" defaultValue=""/>
-      <antcontrib:if>
+      <propertyregex property="ends-with_selection" input="@{candidate}" regexp="^(.+)(@{literal})$" select="\2" defaultValue=""/>
+      <if>
         <equals arg1="" arg2="${ends-with_selection}"/>
-        <antcontrib:then>
-          <antcontrib:var name="@{property}" value="false"/>
-        </antcontrib:then>
-        <antcontrib:else>
-          <antcontrib:var name="@{property}" value="true"/>
-        </antcontrib:else>
-      </antcontrib:if>
-      <antcontrib:var unset="true" name="ends-with_selection"/>
+        <then>
+          <var name="@{property}" value="false"/>
+        </then>
+        <else>
+          <var name="@{property}" value="true"/>
+        </else>
+      </if>
+      <var unset="true" name="ends-with_selection"/>
     </sequential>
   </macrodef>
 
@@ -120,27 +112,27 @@
     <property name="dest.cfg"       value="${destination}/cfg"/>
 
     <!-- identify the current revision (or local build) -->
-    <antcontrib:if>
+    <if>
       <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
-      <antcontrib:then>
-        <antcontrib:var name="revision" value="local-revision"/> 
-      </antcontrib:then>
-      <antcontrib:else>
-        <antcontrib:var name="revision" value="${env.SVN_REVISION}"/> 
-      </antcontrib:else>
-    </antcontrib:if>
+      <then>
+        <var name="revision" value="local-revision"/> 
+      </then>
+      <else>
+        <var name="revision" value="${env.SVN_REVISION}"/> 
+      </else>
+    </if>
     
   </target>
 
   <target name="clean" depends="init">
-    <antcontrib:if>
+    <if>
       <available file="${destination}"/>
-      <antcontrib:then>
+      <then>
         <delete failonerror="true" includeemptydirs="true">
           <fileset dir="${destination}" includes="**/*"/>
         </delete>
-      </antcontrib:then>
-    </antcontrib:if>
+      </then>
+    </if>
   </target>
 
   <target name="prepare" depends="clean">
@@ -158,21 +150,21 @@
 
     <echo>Building A4E library ...</echo>
 
-    <antcontrib:var name="dir.dest" value="${destination}/library"/>
+    <var name="dir.dest" value="${destination}/library"/>
     <mkdir dir="${dir.dest}/classes"/>
     <mkdir dir="${dir.dest}/test-classes"/>
 
-    <antcontrib:var name="mode.library"  value="true"/>
+    <var name="mode.library"  value="true"/>
 
-    <ant4eclipse:executeProjectSet 
+    <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectsetlib}"
       projectReferenceTypes="jdt"
     >
-      <ant4eclipse:forEachProject>
+      <forEachProject>
         <antcall target="build.project" inheritrefs="true" />
-      </ant4eclipse:forEachProject>
-    </ant4eclipse:executeProjectSet>
+      </forEachProject>
+    </executeProjectSet>
 
     <echo file="${destination}/library/classes/version.txt">${revision}</echo>
 
@@ -195,21 +187,21 @@
 
     <echo>Building A4E Ant Tasks ...</echo>
 
-    <antcontrib:var name="dir.dest" value="${destination}/ant"/>
+    <var name="dir.dest" value="${destination}/ant"/>
     <mkdir dir="${dir.dest}/classes"/>
     <mkdir dir="${dir.dest}/test-classes"/>
 
-    <antcontrib:var name="mode.library"  value="false"/>
+    <var name="mode.library"  value="false"/>
 
-    <ant4eclipse:executeProjectSet 
+    <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectset}"
       projectReferenceTypes="jdt"
     >
-      <ant4eclipse:forEachProject>
+      <forEachProject>
         <antcall target="build.project" inheritrefs="true" />
-      </ant4eclipse:forEachProject>
-    </ant4eclipse:executeProjectSet>
+      </forEachProject>
+    </executeProjectSet>
 
     <!-- create a duplicate to support a smooth migration. -->
     <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" todir="${destination}/ant/classes/org/ant4eclipse"/>
@@ -307,45 +299,45 @@
 
     <echo>Building project "${executeProjectSet.project.name}"</echo>
 
-    <ant4eclipse:executeJdtProject 
+    <executeJdtProject 
       workspaceDirectory="${basedir}"
       projectname="${executeProjectSet.project.name}"
     >
 
       <!-- Step 1: call generate.source -->
-      <ant4eclipse:forProject>
-        <antcontrib:if>
+      <forProject>
+        <if>
           <available file="${executeJdtProject.project.directory}/build.xml"/>
-          <antcontrib:then>
+          <then>
             <antcall target="generate.source" inheritrefs="true" />
-          </antcontrib:then>
-        </antcontrib:if>
-      </ant4eclipse:forProject>
+          </then>
+        </if>
+      </forProject>
 
       <!-- Step 2: compile the project -->
-      <ant4eclipse:forProject>
+      <forProject>
         <antcall target="compile.project" inheritrefs="true" />
-      </ant4eclipse:forProject>
+      </forProject>
 
       <!-- Step 3: copy resources stored within source folders -->
-      <ant4eclipse:forEachSourceDirectory>
+      <forEachSourceDirectory>
         <antcall target="copy.resources" inheritrefs="true" />
-      </ant4eclipse:forEachSourceDirectory>
+      </forEachSourceDirectory>
 
       <!-- Step 4: copy classfiles and resources -->
-      <ant4eclipse:forEachOutputDirectory unless="${_testProject}">
-        <antcontrib:if>
+      <forEachOutputDirectory unless="${_testProject}">
+        <if>
           <istrue value="${mode.library}"/>
-          <antcontrib:then>
+          <then>
             <antcall target="lib.to.merge.directory" inheritrefs="true" />
-          </antcontrib:then>
-          <antcontrib:else>
+          </then>
+          <else>
             <antcall target="anttask.to.merge.directory" inheritrefs="true" />
-          </antcontrib:else>
-        </antcontrib:if>
-      </ant4eclipse:forEachOutputDirectory>
+          </else>
+        </if>
+      </forEachOutputDirectory>
 
-    </ant4eclipse:executeJdtProject>
+    </executeJdtProject>
 
     <echo>Project "${executeProjectSet.project.name}" built</echo>
 
@@ -356,15 +348,15 @@
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
 
     <ends-with candidate="${executeProjectSet.project.name}" literal=".test" property="testmode"/>
-    <antcontrib:if>
+    <if>
       <istrue value="${testmode}"/>
-      <antcontrib:then>
-        <antcontrib:var name="dir.classes" value="${dir.dest}/test-classes"/>
-      </antcontrib:then>
-      <antcontrib:else>
-        <antcontrib:var name="dir.classes" value="${dir.dest}/classes"/>
-      </antcontrib:else>
-    </antcontrib:if>
+      <then>
+        <var name="dir.classes" value="${dir.dest}/test-classes"/>
+      </then>
+      <else>
+        <var name="dir.classes" value="${dir.dest}/classes"/>
+      </else>
+    </if>
     
     <copy toDir="${dir.classes}">
       <fileset dir="${executeJdtProject.output.directory}">
@@ -401,15 +393,15 @@
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
 
     <ends-with candidate="${executeProjectSet.project.name}" literal=".test" property="testmode"/>
-    <antcontrib:if>
+    <if>
       <istrue value="${testmode}"/>
-      <antcontrib:then>
-        <antcontrib:var name="dir.classes" value="${dir.dest}/test-classes"/>
-      </antcontrib:then>
-      <antcontrib:else>
-        <antcontrib:var name="dir.classes" value="${dir.dest}/classes"/>
-      </antcontrib:else>
-    </antcontrib:if>
+      <then>
+        <var name="dir.classes" value="${dir.dest}/test-classes"/>
+      </then>
+      <else>
+        <var name="dir.classes" value="${dir.dest}/classes"/>
+      </else>
+    </if>
 
     <copy toDir="${dir.classes}">
       <fileset dir="${executeJdtProject.output.directory}">
@@ -443,19 +435,19 @@
     <mkdir dir="${destination}/distribution/macros"/>
     
     <!-- transfer all ant macros used for the ant tasks -->
-    <ant4eclipse:executeProjectSet 
+    <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectset}"
       projectReferenceTypes="jdt"
     >
-      <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+      <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
         <copy todir="${destination}/distribution/macros" flatten="true">
           <fileset dir="${basedir}/${executeProjectSet.project.name}">
             <include name="macros/*" />
           </fileset>
         </copy>
-      </ant4eclipse:forEachProject>
-    </ant4eclipse:executeProjectSet>
+      </forEachProject>
+    </executeProjectSet>
 
     <!-- copy libary dependencies -->
     <mkdir dir="${destination}/distribution/libs" />
@@ -501,28 +493,28 @@
   <target name="test.distribution" depends="build.distribution">
 
     <!-- Step 1: iterate over the project set and build each project -->
-    <ant4eclipse:executeProjectSet 
+    <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectset}"
       projectReferenceTypes="jdt"
     >
       <!-- build all test projects contained in the project set and execute their test classes -->
-      <ant4eclipse:forEachProject filter="(executeProjectSet.project.name=*.test)">
+      <forEachProject filter="(executeProjectSet.project.name=*.test)">
         <antcall target="test.project" inheritrefs="false" inheritall="false"/>
-      </ant4eclipse:forEachProject>
-    </ant4eclipse:executeProjectSet>
+      </forEachProject>
+    </executeProjectSet>
     
   </target>
     
   <target name="test.project">
     
     <!--
-    <ant4eclipse:executeJdtProject 
+    <executeJdtProject 
       workspaceDirectory="${basedir}"
       projectname="${executeProjectSet.project.name}"
     >
 
-      <ant4eclipse:forEachSourceDirectory>
+      <forEachSourceDirectory>
 
         <property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
@@ -539,8 +531,8 @@
           <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
           <env key="ECLIPSE_JAVA_350_LINUX_GTK_HOME" value="${test.pde.eclipse-java-350-linux-gtk.home}"/>
         </junit>
-      </ant4eclipse:forEachSourceDirectory>
-    </ant4eclipse:executeJdtProject>
+      </forEachSourceDirectory>
+    </executeJdtProject>
     -->
     
   </target>
@@ -553,7 +545,7 @@
     <echo file="${basedir}/${ant.project.name}/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
     <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;antlib&gt;${line.separator}&lt;!-- --&gt;${line.separator}</echo>
     <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
-    <antcontrib:for param="file">
+    <for param="file">
       <fileset dir="${basedir}" includes="**/*ant4eclipse*/bin/**/antlib.xml"/>
       <sequential>
         
@@ -565,11 +557,11 @@
         <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">${fcontent1}${line.separator}${fcontent2}</echo>
         <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
 
-        <antcontrib:var unset="true" name="fcontent1"/>
-        <antcontrib:var unset="true" name="fcontent2"/>
+        <var unset="true" name="fcontent1"/>
+        <var unset="true" name="fcontent2"/>
         
       </sequential>
-    </antcontrib:for>
+    </for>
   </target>
   
 </project>
