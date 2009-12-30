@@ -25,17 +25,6 @@
 
     <property name="dir.dist"       value="${destination}/distribution"/>
     
-    <!-- identify the current revision (or local build) -->
-    <if>
-      <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
-      <then>
-        <var name="revision" value="local-revision"/> 
-      </then>
-      <else>
-        <var name="revision" value="${env.SVN_REVISION}"/> 
-      </else>
-    </if>
-    
     <path id="path.antcontrib">
       <fileset dir="${dir.dist}/libs" includes="ant-contrib*.jar"/>
     </path>
@@ -48,6 +37,17 @@
 
     <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
+    <!-- identify the current revision (or local build) -->
+    <if>
+      <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
+      <then>
+        <var name="revision" value="local-revision"/> 
+      </then>
+      <else>
+        <var name="revision" value="${env.SVN_REVISION}"/> 
+      </else>
+    </if>
+    
   </target>
 
   <target name="test.project">
