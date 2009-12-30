@@ -389,12 +389,60 @@
 
   </target>
 
-  <target name="build.ant4eclipse" depends="build.library, build.anttasks">
-    <mkdir dir="${destination}/release"/>
-    <copy todir="${destination}/release">
+  <target name="build.distribution" depends="build.library, build.anttasks">
+
+    <!-- create the distribution now -->
+    <mkdir dir="${destination}/distribution/macros"/>
+    
+    <!-- transfer all ant macros used for the ant tasks -->
+    <ant4eclipse:executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+      <ant4eclipse:forEachProject>
+        <copy todir="${destination}/distribution/macros" flatten="true">
+          <fileset dir="${basedir}/${executeProjectSet.project.name}">
+            <include name="macros/*" />
+          </fileset>
+        </copy>
+      </ant4eclipse:forEachProject>
+    </ant4eclipse:executeProjectSet>
+
+    <!-- copy libary dependencies -->
+    <mkdir dir="${destination}/distribution/libs" />
+    <copy todir="${destination}/distribution/libs" flatten="true">
+      <fileset dir="${basedir}/org.ant4eclipse.external/libs">
+        <include name="ant-contrib/*.jar" />
+        <include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
+        <include name="ecj/*.jar" />
+        <include name="ecj/ECJ-LICENSE-epl-v10.html" />
+        <include name="equinox/*.jar" />
+        <include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
+        <exclude name="equinox/*source*.jar" />
+      </fileset>
+    </copy>
+
+    <copy todir="${destination}/distribution" flatten="true">
       <fileset dir="${destination}/library" includes="*.jar"/>
       <fileset dir="${destination}/ant" includes="*.jar"/>
     </copy>
+    
+    <echo file="${destination}/distribution/version.txt">${revision}</echo>
+    
+    <!-- zip the result -->
+    <zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
+      <fileset dir="${destination}/distribution" includes="**/*"/>
+    </zip>
+
+    <!-- tar the zip -->
+    <tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz" compression="gzip">
+      <zipfileset src="${destination}/org.ant4eclipse_${revision}.zip" />
+    </tar>
+
+  </target>
+  
+  <target name="build.ant4eclipse" depends="build.distribution">
     <echo>Done</echo>
   </target>
   
