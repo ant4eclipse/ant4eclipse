@@ -186,6 +186,7 @@
 
     <antcontrib:var name="dir.dest" value="${destination}/ant"/>
     <mkdir dir="${dir.dest}/classes"/>
+    <mkdir dir="${dir.dest}/test-classes"/>
 
     <antcontrib:var name="mode.library"  value="false"/>
 
@@ -196,6 +197,12 @@
     >
 
       <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <antcontrib:var name="mode.test"  value="false"/>
+        <antcall target="build.project" inheritrefs="true" />
+      </ant4eclipse:forEachProject>
+
+      <ant4eclipse:forEachProject filter="(executeProjectSet.project.name=*.test)">
+        <antcontrib:var name="mode.test"  value="true"/>
         <antcall target="build.project" inheritrefs="true" />
       </ant4eclipse:forEachProject>
 
