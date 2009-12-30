@@ -31,6 +31,7 @@
 
     <path id="path.ant4eclipse">
       <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
+      <fileset dir="${basedir}/org.ant4eclipse.external/junit" includes="junit-*.jar"/>
     </path>
 
     <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
