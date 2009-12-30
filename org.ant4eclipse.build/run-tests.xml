@@ -29,6 +29,8 @@
       <fileset dir="${dir.dist}/libs" includes="ant-contrib*.jar"/>
     </path>
 
+    <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
+
     <mkdir dir="${destination}/test"/>
     <for param="zipfile">
       <fileset dir="${destination}">
@@ -45,8 +47,6 @@
       <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
       <path path="${destination}/test"/>
     </path>
-
-    <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
 
     <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
