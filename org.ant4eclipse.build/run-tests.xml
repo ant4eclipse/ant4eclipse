@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<project 
+  name="org.ant4eclipse.build"
+  basedir=".."
+  default="tests.ant4eclipse"
+>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- PROPERTIES                                                                              -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <property file="${file.buildsettings}"/>
+  <property file="${basedir}/${ant.project.name}/default-build.properties"/>
+
+  <property environment="env"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TARGET DEFINITIONS                                                                      -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <target name="init">
+    
+    <property name="dest.reports"   value="${destination}/reports"/>
+    <property name="dest.cfg"       value="${destination}/cfg"/>
+
+    <property name="dir.dist"       value="${destination}/distribution"/>
+    
+    <!-- identify the current revision (or local build) -->
+    <if>
+      <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
+      <then>
+        <var name="revision" value="local-revision"/> 
+      </then>
+      <else>
+        <var name="revision" value="${env.SVN_REVISION}"/> 
+      </else>
+    </if>
+    
+    <path id="path.antcontrib">
+      <fileset dir="${dir.dist}/libs" includes="ant-contrib*.jar"/>
+    </path>
+
+    <path id="path.ant4eclipse">
+      <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
+    </path>
+
+    <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
+
+    <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
+
+  </target>
+
+  <target name="test.project">
+    
+    <!--
+    <executeJdtProject 
+      workspaceDirectory="${basedir}"
+      projectname="${executeProjectSet.project.name}"
+    >
+
+      <forEachSourceDirectory>
+
+        <property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}" />
+        <mkdir dir="${reports}" />
+
+        <junit dir="${basedir}/${executeProjectSet.project.name}"
+               fork="yes">
+          <classpath refid="executeJdtProject.classpath.absolute.runtime.path" />
+          <formatter type="xml" />
+          <batchtest todir="${reports}">
+            <fileset dir="${executeJdtProject.source.directory}">
+              <include name="**/AllTests.java" />
+            </fileset>
+          </batchtest>
+          <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
+          <env key="ECLIPSE_JAVA_350_LINUX_GTK_HOME" value="${test.pde.eclipse-java-350-linux-gtk.home}"/>
+        </junit>
+      </forEachSourceDirectory>
+    </executeJdtProject>
+    -->
+    
+  </target>
+  
+  <target name="tests.ant4eclipse" depends="init">
+    <echo>Done</echo>
+  </target>
+  
+</project>
