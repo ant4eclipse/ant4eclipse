@@ -417,6 +417,11 @@ public class UtilitiesTest {
   public void toURL() {
 
     URL expectedurl = getClass().getClassLoader().getResource("util/test-jar.jar");
+
+    // the test setup is required to provide the resource as a separate file and not contained
+    // within a jar (toURL is only supposed to handle normal file objects)
+    Assert.assertFalse(expectedurl.toExternalForm().startsWith("jar:"));
+
     String path = expectedurl.getPath();
 
     if (!Utilities.isWindows()) {
