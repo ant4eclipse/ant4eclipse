@@ -141,6 +141,7 @@
 
     <antcontrib:var name="dir.dest" value="${destination}/library"/>
     <mkdir dir="${dir.dest}/classes"/>
+    <mkdir dir="${dir.dest}/test-classes"/>
 
     <antcontrib:var name="mode.library"  value="true"/>
 
@@ -151,6 +152,12 @@
     >
 
       <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <antcontrib:var name="mode.test"  value="false"/>
+        <antcall target="build.project" inheritrefs="true" />
+      </ant4eclipse:forEachProject>
+
+      <ant4eclipse:forEachProject filter="(executeProjectSet.project.name=*.test)">
+        <antcontrib:var name="mode.test" value="true"/>
         <antcall target="build.project" inheritrefs="true" />
       </ant4eclipse:forEachProject>
 
@@ -160,6 +167,10 @@
 
     <zip destfile="${destination}/library/lib-ant4eclipse.jar">
       <fileset dir="${destination}/library/classes" includes="**/*"/>
+    </zip>
+
+    <zip destfile="${destination}/library/lib-ant4eclipse-test.jar">
+      <fileset dir="${destination}/library/test-classes" includes="**/*"/>
     </zip>
 
     <echo>  ... Library build finished.</echo>
@@ -197,6 +208,10 @@
 
     <zip destfile="${destination}/ant/ant-ant4eclipse.jar">
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
+    </zip>
+
+    <zip destfile="${destination}/ant/ant-ant4eclipse-test.jar">
+      <fileset dir="${destination}/ant/test-classes" includes="**/*"/>
     </zip>
 
     <zip destfile="${destination}/ant/org.ant4eclipse.jar">
@@ -330,7 +345,17 @@
 
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
 
-    <copy toDir="${dir.dest}/classes">
+    <antcontrib:if>
+      <istrue value="${mode.test}"/>
+      <antcontrib:then>
+        <antcontrib:var name="dir.classes" value="${dir.dest}/test-classes"/>
+      </antcontrib:then>
+      <antcontrib:else>
+        <antcontrib:var name="dir.classes" value="${dir.dest}/classes"/>
+      </antcontrib:else>
+    </antcontrib:if>
+    
+    <copy toDir="${dir.classes}">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/*" />
         <exclude name="**/ant4eclipse-configuration.properties" />
@@ -348,15 +373,15 @@
       </mapper>
     </copy>
 
-    <optional-load-antlib property="file1" file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml"/>
+    <optional-load-antlib property="file1" file="${dir.classes}/org/ant4eclipse/ant/antlib.xml"/>
     <optional-load-antlib property="file2" file="${dest.cfg}/antlib.xml"/>
 
     <!-- we probably should use the xmltask -->
-    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
-    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
-    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">${file1}${line.separator}</echo>
-    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">${file2}${line.separator}</echo>
-    <echo file="${dir.dest}/classes/org/ant4eclipse/ant/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
+    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
+    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">${file1}${line.separator}</echo>
+    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">${file2}${line.separator}</echo>
+    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
 
   </target>
 
@@ -364,7 +389,17 @@
 
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
 
-    <copy toDir="${dir.dest}/classes">
+    <antcontrib:if>
+      <istrue value="${mode.test}"/>
+      <antcontrib:then>
+        <antcontrib:var name="dir.classes" value="${dir.dest}/test-classes"/>
+      </antcontrib:then>
+      <antcontrib:else>
+        <antcontrib:var name="dir.classes" value="${dir.dest}/classes"/>
+      </antcontrib:else>
+    </antcontrib:if>
+
+    <copy toDir="${dir.classes}">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/*" />
         <exclude name="**/ant4eclipse-configuration.properties" />
@@ -382,10 +417,10 @@
       </mapper>
     </copy>
 
-    <optional-load-file property="file1" file="${dir.dest}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+    <optional-load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
     <optional-load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
 
-    <echo file="${dir.dest}/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
+    <echo file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
 
   </target>
 
