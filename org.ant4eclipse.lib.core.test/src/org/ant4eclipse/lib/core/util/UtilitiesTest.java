@@ -248,14 +248,21 @@ public class UtilitiesTest {
   }
 
   @Test
-  public void exportResource() {
+  public void exportResource() throws IOException {
     File exported = Utilities.exportResource("/util/createfile.txt", ".dat");
     Assert.assertTrue(exported.isFile());
     URL url = getClass().getClassLoader().getResource("util/createfile.txt");
-    File file = new File(url.getPath());
-    Assert.assertEquals(file.length(), exported.length());
+    ByteArrayOutputStream expectedout = new ByteArrayOutputStream();
+    InputStream instream = null;
+    try {
+      instream = url.openStream();
+      Utilities.copy(instream, expectedout, new byte[512]);
+    } finally {
+      Utilities.close(instream);
+    }
+    byte[] expected = expectedout.toByteArray();
+    Assert.assertEquals(expected.length, exported.length());
     byte[] current = JUnitUtilities.loadFile(exported);
-    byte[] expected = JUnitUtilities.loadFile(file);
     Assert.assertArrayEquals(expected, current);
   }
 
