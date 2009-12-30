@@ -48,28 +48,26 @@
       </else>
     </if>
     
+    <var name="dir.reports" value="${destination}/reports"/>
+    <mkdir dir="${dir.reports}"/>
+    
   </target>
 
-  <target name="test.project">
-    
-    <!--
+  <target name="test.project" depends="init">
     <executeJdtProject 
       workspaceDirectory="${basedir}"
       projectname="${executeProjectSet.project.name}"
     >
-
       <forEachSourceDirectory>
-
-        <property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}" />
+        <property name="reports" value="${dir.reports}/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
-
-        <junit dir="${basedir}/${executeProjectSet.project.name}"
-               fork="yes">
-          <classpath refid="executeJdtProject.classpath.absolute.runtime.path" />
+        <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
+          <!-- <classpath refid="executeJdtProject.classpath.absolute.runtime.path" /> -->
+          <classpath refid="path.ant4eclipse"/>
           <formatter type="xml" />
           <batchtest todir="${reports}">
             <fileset dir="${executeJdtProject.source.directory}">
-              <include name="**/AllTests.java" />
+              <include name="**/*Test.java" />
             </fileset>
           </batchtest>
           <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
@@ -77,11 +75,31 @@
         </junit>
       </forEachSourceDirectory>
     </executeJdtProject>
-    -->
     
   </target>
   
-  <target name="tests.ant4eclipse" depends="init">
+  <target name="test.library" depends="init">
+    
+    <echo>Testing A4E library ...</echo>
+    
+    <!-- Step 1: iterate over the project set and build each project -->
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectsetlib}"
+      projectReferenceTypes="jdt"
+    >
+
+      <!-- build all test projects contained in the project set 
+           and execute their test classes -->
+      <forEachProject filter="(executeProjectSet.project.name=*.test)">
+        <antcall target="test.project" inheritrefs="true" />
+      </forEachProject>
+      
+    </executeProjectSet>
+  
+  </target>
+  
+  <target name="tests.ant4eclipse" depends="test.library">
     <echo>Done</echo>
   </target>
   
