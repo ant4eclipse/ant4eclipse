@@ -424,7 +424,8 @@ public class UtilitiesTest {
        * @todo [29-Dec-2009:KASI] This is somewhat odd. The 'getPath' is supposed to return the path itself. For some
        *       reason the unix version returns the protocol, too.
        */
-      path = path.substring(expectedurl.getProtocol().length());
+      int idx = path.indexOf('/');
+      path = path.substring(idx);
     }
 
     File file = new File(path);
