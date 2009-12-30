@@ -418,11 +418,15 @@ public class UtilitiesTest {
 
     URL expectedurl = getClass().getClassLoader().getResource("util/test-jar.jar");
     File file = new File(expectedurl.getPath());
-    System.err.println("path: " + expectedurl.getPath());
 
     URL url1 = Utilities.toURL(file);
     Assert.assertEquals(expectedurl, url1);
 
+  }
+
+  public static final void main(String[] args) throws Exception {
+    URL expectedurl = UtilitiesTest.class.getClassLoader().getResource("util/test-jar.jar");
+    System.err.println("path: '" + expectedurl.getPath() + "'");
   }
 
   @Test
