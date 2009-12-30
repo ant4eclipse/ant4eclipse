@@ -150,7 +150,7 @@
       projectReferenceTypes="jdt"
     >
 
-      <ant4eclipse:forEachProject>
+      <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
         <antcall target="build.project" inheritrefs="true" />
       </ant4eclipse:forEachProject>
 
@@ -184,7 +184,7 @@
       projectReferenceTypes="jdt"
     >
 
-      <ant4eclipse:forEachProject>
+      <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
         <antcall target="build.project" inheritrefs="true" />
       </ant4eclipse:forEachProject>
 
@@ -400,7 +400,7 @@
       teamprojectset="${teamprojectset}"
       projectReferenceTypes="jdt"
     >
-      <ant4eclipse:forEachProject>
+      <ant4eclipse:forEachProject filter="(!(executeProjectSet.project.name=*.test))">
         <copy todir="${destination}/distribution/macros" flatten="true">
           <fileset dir="${basedir}/${executeProjectSet.project.name}">
             <include name="macros/*" />
@@ -430,6 +430,8 @@
     
     <echo file="${destination}/distribution/version.txt">${revision}</echo>
     
+    <echo file="${destination}/distribution/LICENSE.txt">@TODO</echo>
+    
     <!-- zip the result -->
     <zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
       <fileset dir="${destination}/distribution" includes="**/*"/>
@@ -440,6 +442,53 @@
       <zipfileset src="${destination}/org.ant4eclipse_${revision}.zip" />
     </tar>
 
+  </target>
+  
+  <target name="test.distribution" depends="build.distribution">
+
+    <!-- Step 1: iterate over the project set and build each project -->
+    <ant4eclipse:executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+      <!-- build all test projects contained in the project set and execute their test classes -->
+      <ant4eclipse:forEachProject filter="(executeProjectSet.project.name=*.test)">
+        <antcall target="test.project" inheritrefs="false" inheritall="false"/>
+      </ant4eclipse:forEachProject>
+    </ant4eclipse:executeProjectSet>
+    
+  </target>
+    
+  <target name="test.project">
+    
+    <!--
+    <ant4eclipse:executeJdtProject 
+      workspaceDirectory="${basedir}"
+      projectname="${executeProjectSet.project.name}"
+    >
+
+      <ant4eclipse:forEachSourceDirectory>
+
+        <property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}" />
+        <mkdir dir="${reports}" />
+
+        <junit dir="${basedir}/${executeProjectSet.project.name}"
+               fork="yes">
+          <classpath refid="executeJdtProject.classpath.absolute.runtime.path" />
+          <formatter type="xml" />
+          <batchtest todir="${reports}">
+            <fileset dir="${executeJdtProject.source.directory}">
+              <include name="**/AllTests.java" />
+            </fileset>
+          </batchtest>
+          <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
+          <env key="ECLIPSE_JAVA_350_LINUX_GTK_HOME" value="${test.pde.eclipse-java-350-linux-gtk.home}"/>
+        </junit>
+      </ant4eclipse:forEachSourceDirectory>
+    </ant4eclipse:executeJdtProject>
+    -->
+    
   </target>
   
   <target name="build.ant4eclipse" depends="build.distribution">
