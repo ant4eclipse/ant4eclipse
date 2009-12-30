@@ -99,15 +99,15 @@
     
     <property name="dest.reports"   value="${destination}/reports"/>
     <property name="dest.cfg"       value="${destination}/cfg"/>
-    
-    <echo>revision: ${env.SVN_REVISION}</echo>
+
+    <!-- identify the current revision (or local build) -->
     <antcontrib:if>
       <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
       <antcontrib:then>
-        <antcontrib:var name="revision" value="${env.SVN_REVISION}"/> 
+        <antcontrib:var name="revision" value="local-revision"/> 
       </antcontrib:then>
       <antcontrib:else>
-        <antcontrib:var name="revision" value="local-revision"/> 
+        <antcontrib:var name="revision" value="${env.SVN_REVISION}"/> 
       </antcontrib:else>
     </antcontrib:if>
     
