@@ -467,8 +467,14 @@
     </copy>
 
     <copy todir="${destination}/distribution" flatten="true">
-      <fileset dir="${destination}/library" includes="*.jar"/>
-      <fileset dir="${destination}/ant" includes="*.jar"/>
+      <fileset dir="${destination}/library">
+        <include name="*.jar"/>
+        <exclude name="*-test.jar"/>
+      </fileset>
+      <fileset dir="${destination}/ant">
+        <include name="*.jar"/>
+        <exclude name="*-test.jar"/>
+      </fileset>
     </copy>
     
     <echo file="${destination}/distribution/version.txt">${revision}</echo>
