@@ -78,6 +78,9 @@ public class Utilities {
   /** - */
   public static final String  ENCODING        = System.getProperty("file.encoding");
 
+  /** - */
+  private static final String OS              = System.getProperty("os.name");
+
   /**
    * Returns a canonical representation of the supplied file.
    * 
@@ -1251,6 +1254,15 @@ public class Utilities {
       index = buffer.indexOf(openlit, index);
     }
     return buffer.toString();
+  }
+
+  /**
+   * Returns <code>true</<code> if we're currently running under windows.
+   * 
+   * @return <code>true</code> <=> We're currently running under windows.
+   */
+  public static final boolean isWindows() {
+    return OS.toLowerCase().startsWith("windows");
   }
 
   /**

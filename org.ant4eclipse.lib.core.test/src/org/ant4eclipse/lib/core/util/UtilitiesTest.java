@@ -88,14 +88,26 @@ public class UtilitiesTest {
     String relative1 = Utilities.calcRelative(new File("/schnerd"), new File("/temp/rep/schrepp/depp"));
     Assert.assertEquals("../temp/rep/schrepp/depp".replace('/', File.separatorChar), relative1);
 
-    String relative2 = Utilities.calcRelative(new File("K:/schnerd"), new File("K:/temp/rep/schrepp/depp"));
-    Assert.assertEquals("../temp/rep/schrepp/depp".replace('/', File.separatorChar), relative2);
+    if (Utilities.isWindows()) {
 
-    String relative3 = Utilities.calcRelative(new File("K:/"), new File("K:/temp/rep/schrepp/depp"));
-    Assert.assertEquals("temp/rep/schrepp/depp".replace('/', File.separatorChar), relative3);
+      String relative2 = Utilities.calcRelative(new File("K:/schnerd"), new File("K:/temp/rep/schrepp/depp"));
+      Assert.assertEquals("../temp/rep/schrepp/depp".replace('/', File.separatorChar), relative2);
 
-    String relative4 = Utilities.calcRelative(new File("J:/"), new File("K:/temp/rep/schrepp/depp"));
-    Assert.assertEquals(null, relative4);
+      String relative3 = Utilities.calcRelative(new File("K:/"), new File("K:/temp/rep/schrepp/depp"));
+      Assert.assertEquals("temp/rep/schrepp/depp".replace('/', File.separatorChar), relative3);
+
+      String relative4 = Utilities.calcRelative(new File("J:/"), new File("K:/temp/rep/schrepp/depp"));
+      Assert.assertEquals(null, relative4);
+
+    } else {
+
+      String relative2 = Utilities.calcRelative(new File("/schnerd"), new File("/temp/rep/schrepp/depp"));
+      Assert.assertEquals("../temp/rep/schrepp/depp".replace('/', File.separatorChar), relative2);
+
+      String relative3 = Utilities.calcRelative(new File("/"), new File("/temp/rep/schrepp/depp"));
+      Assert.assertEquals("temp/rep/schrepp/depp".replace('/', File.separatorChar), relative3);
+
+    }
 
   }
 
