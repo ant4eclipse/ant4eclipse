@@ -6,26 +6,26 @@
 
   <!-- test testNonexistingNature -->
   <target name="testAntCall">
-    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
              target="before"
     />
     <echo>doExecute</echo>
-    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
              target="after"
     />
     
-    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
              target="notThere"
     />
     
-    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/notthere.xml"
+    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/notthere.xml"
              target="notThere"
     />
   </target>
   
   <!-- test testFileNotFoundAntCall -->
   <target name="testFileNotFoundAntCall">
-    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
              target="fileNotFound"
     />
   </target>
