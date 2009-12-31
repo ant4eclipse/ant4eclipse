@@ -207,7 +207,7 @@ public class UtilitiesTest {
 
   @Test
   public void createFile() {
-    File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
+    File destfile = Utilities.createTempFile("FrÃ¶sche", ".txt", "UTF-8");
     File file = Utilities.exportResource("/util/createfile.txt");
     Assert.assertEquals(file.length(), destfile.length());
     byte[] current = JUnitUtilities.loadFile(destfile);
@@ -328,7 +328,7 @@ public class UtilitiesTest {
       // wrong encoding !
       StringBuffer buffer1 = Utilities.readTextContent(instream, "ISO-8859-1", false);
       Assert.assertNotNull(buffer1);
-      Assert.assertEquals(new String("Frösche".getBytes("UTF-8"), "ISO-8859-1"), buffer1.toString());
+      Assert.assertEquals(new String("FrÃ¶sche".getBytes("UTF-8"), "ISO-8859-1"), buffer1.toString());
     } finally {
       Utilities.close(instream);
     }
@@ -338,7 +338,7 @@ public class UtilitiesTest {
       // correct encoding !
       StringBuffer buffer2 = Utilities.readTextContent(instream, "UTF-8", false);
       Assert.assertNotNull(buffer2);
-      Assert.assertEquals("Frösche", buffer2.toString());
+      Assert.assertEquals("FrÃ¶sche", buffer2.toString());
     } finally {
       Utilities.close(instream);
     }
@@ -348,7 +348,7 @@ public class UtilitiesTest {
     try {
       StringBuffer buffer2 = Utilities.readTextContent(instream, "UTF-8", false);
       Assert.assertNotNull(buffer2);
-      Assert.assertEquals("FröscheWürfelFlanch", buffer2.toString());
+      Assert.assertEquals("FrÃ¶scheWÃ¼rfelFlanch", buffer2.toString());
     } finally {
       Utilities.close(instream);
     }
@@ -358,7 +358,7 @@ public class UtilitiesTest {
     try {
       StringBuffer buffer2 = Utilities.readTextContent(instream, "UTF-8", true);
       Assert.assertNotNull(buffer2);
-      Assert.assertEquals("Frösche" + Utilities.NL + "Würfel" + Utilities.NL + "Flanch" + Utilities.NL, buffer2
+      Assert.assertEquals("FrÃ¶sche" + Utilities.NL + "WÃ¼rfel" + Utilities.NL + "Flanch" + Utilities.NL, buffer2
           .toString());
     } finally {
       Utilities.close(instream);
@@ -453,17 +453,17 @@ public class UtilitiesTest {
 
     // write the file using binary data
     File tempfile1 = JUnitUtilities.createTempFile();
-    Utilities.writeFile(tempfile1, "Frösche".getBytes("UTF-8"));
+    Utilities.writeFile(tempfile1, "Frï¿½sche".getBytes("UTF-8"));
 
     // write the file using character data (the String)
     File tempfile2 = JUnitUtilities.createTempFile();
-    Utilities.writeFile(tempfile2, "Frösche", "UTF-8");
+    Utilities.writeFile(tempfile2, "Frï¿½sche", "UTF-8");
 
     InputStream instream1 = new FileInputStream(tempfile1);
     try {
       StringBuffer buffer1 = Utilities.readTextContent(instream1, "UTF-8", false);
       Assert.assertNotNull(buffer1);
-      Assert.assertEquals("Frösche", buffer1.toString());
+      Assert.assertEquals("Frï¿½sche", buffer1.toString());
     } finally {
       Utilities.close(instream1);
     }
@@ -472,7 +472,7 @@ public class UtilitiesTest {
     try {
       StringBuffer buffer2 = Utilities.readTextContent(instream2, "UTF-8", false);
       Assert.assertNotNull(buffer2);
-      Assert.assertEquals("Frösche", buffer2.toString());
+      Assert.assertEquals("Frï¿½sche", buffer2.toString());
     } finally {
       Utilities.close(instream2);
     }
@@ -483,13 +483,13 @@ public class UtilitiesTest {
   public void replaceTokens() {
 
     Map<String, String> replacements = new Hashtable<String, String>();
-    replacements.put("dev1", "Gerd Wütherich");
+    replacements.put("dev1", "Gerd Wï¿½therich");
     replacements.put("devel2", "Nils Hartmann");
     replacements.put("d3", "Daniel Kasmeroglu");
 
     String template1 = "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}";
     String result1 = Utilities.replaceTokens(template1, replacements);
-    Assert.assertEquals("${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
+    Assert.assertEquals("${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd Wï¿½therich",
         result1);
 
     String result2 = Utilities.replaceTokens(template1, replacements, "$", "$");
@@ -497,7 +497,7 @@ public class UtilitiesTest {
 
     String template2 = template1.replace('$', '@');
     String result3 = Utilities.replaceTokens(template2, replacements, "@{", "}");
-    Assert.assertEquals("@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
+    Assert.assertEquals("@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd Wï¿½therich",
         result3);
 
     String result4 = Utilities.replaceTokens("", replacements, "@{", "}");
