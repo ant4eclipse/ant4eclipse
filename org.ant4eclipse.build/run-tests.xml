@@ -113,7 +113,28 @@
   
   </target>
   
-  <target name="tests.ant4eclipse" depends="test.library">
+  <target name="test.ant" depends="init">
+    
+    <echo>Testing A4E Ant tasks ...</echo>
+    
+    <!-- Step 1: iterate over the project set and build each project -->
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+
+      <!-- build all test projects contained in the project set 
+           and execute their test classes -->
+      <forEachProject filter="(executeProjectSet.project.name=*.test)">
+        <antcall target="test.project" inheritrefs="true" />
+      </forEachProject>
+      
+    </executeProjectSet>
+
+  </target>
+  
+  <target name="tests.ant4eclipse" depends="test.library,test.ant">
     <echo>Done</echo>
   </target>
   
