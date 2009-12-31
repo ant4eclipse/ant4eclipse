@@ -45,6 +45,7 @@
     
     <path id="path.ant4eclipse">
       <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
+      <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
       <path path="${destination}/test"/>
     </path>
 
