@@ -696,7 +696,7 @@ public class Utilities {
    * 
    * @return The newly instantiated type. Not <code>null</code>.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public static final <T> T newInstance(String className, String arg) {
     Assure.notNull("className", className);
     Class<?> clazz = null;

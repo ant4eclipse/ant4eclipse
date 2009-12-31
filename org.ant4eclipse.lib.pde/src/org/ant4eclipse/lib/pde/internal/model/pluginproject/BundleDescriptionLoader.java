@@ -86,7 +86,7 @@ public class BundleDescriptionLoader {
    * @param manifest
    * @return
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   private static Properties convertManifest(Manifest manifest) {
     Attributes attributes = manifest.getMainAttributes();
     Iterator iter = attributes.keySet().iterator();

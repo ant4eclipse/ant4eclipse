@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
-
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.apache.tools.ant.Project;
 
@@ -90,7 +89,7 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * @param key
    *          the key
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   private void removeProperty(String name) {
     Hashtable properties = null;
     // Ant 1.5 stores properties in Project
