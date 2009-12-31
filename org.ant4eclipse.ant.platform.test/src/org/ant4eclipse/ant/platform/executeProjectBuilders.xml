@@ -3,7 +3,7 @@
 <project name="execute-project-builders-test" basedir="." default="foo">
 
   <!-- definition of condition HasNature -->
-  <typedef name="executeProjectBuilders" classname="org.ant4eclipse.platform.ant.ExecuteProjectBuildersTask" />
+  <typedef name="executeProjectBuilders" classname="org.ant4eclipse.ant.platform.ExecuteProjectBuildersTask" />
 
   <target name="executeProjectBuilders">
 

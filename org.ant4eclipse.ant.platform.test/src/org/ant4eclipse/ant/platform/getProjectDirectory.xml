@@ -4,7 +4,7 @@
 
   <!-- definition of condition HasNature -->
   <typedef name="getProjectDirectory"
-           classname="org.ant4eclipse.platform.ant.GetProjectDirectoryTask"
+           classname="org.ant4eclipse.ant.platform.GetProjectDirectoryTask"
   />
 
   <!-- test testGetProjectDirectory -->

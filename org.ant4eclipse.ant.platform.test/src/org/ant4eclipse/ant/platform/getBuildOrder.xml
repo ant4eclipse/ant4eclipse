@@ -4,7 +4,7 @@
 
   <!-- definition of condition HasNature -->
   <typedef name="getBuildOrder"
-           classname="org.ant4eclipse.platform.ant.GetBuildOrderTask" />
+           classname="org.ant4eclipse.ant.platform.GetBuildOrderTask" />
 
   <target name="getBuildOrder">
 

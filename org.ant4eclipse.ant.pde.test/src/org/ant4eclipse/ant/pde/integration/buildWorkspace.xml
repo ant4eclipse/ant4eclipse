@@ -3,13 +3,13 @@
 <project name="execute-project-builders-test" basedir="." default="foo">
 
   <typedef name="executeProjectSet"
-           classname="org.ant4eclipse.platform.ant.ExecuteProjectSetTask" />
+           classname="org.ant4eclipse.ant.platform.ExecuteProjectSetTask" />
 
   <typedef name="executeJdtProject"
-           classname="org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask" />
+           classname="org.ant4eclipse.ant.jdt.ExecuteJdtProjectTask" />
 
   <typedef name="targetPlatform"
-           classname="org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType" />
+           classname="org.ant4eclipse.ant.pde.TargetPlatformDefinitionDataType" />
 
   <target name="buildWorkspace">
 

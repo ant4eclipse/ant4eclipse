@@ -2,7 +2,7 @@
 <project name="has-nature-test" basedir="." default="foo">
 
   <!-- definition of condition HasNature -->
-  <typedef name="hasNature" classname="org.ant4eclipse.platform.ant.HasNature" />
+  <typedef name="hasNature" classname="org.ant4eclipse.ant.platform.HasNature" />
 
   <!-- test gwtNatureLong -->
   <target name='testJdtNatureLong'>

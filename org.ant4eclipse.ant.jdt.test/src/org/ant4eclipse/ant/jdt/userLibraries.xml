@@ -4,10 +4,10 @@
 
   <!-- definition of type userLibraries -->
   <typedef name="userLibraries"
-           classname="org.ant4eclipse.jdt.ant.type.UserLibraryPath" />
+           classname="org.ant4eclipse.ant.jdt.type.UserLibraryPath" />
 
   <typedef name="getJdtClassPath"
-           classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+           classname="org.ant4eclipse.ant.jdt.GetJdtClassPathTask" />
 
   <target name="getJdtClassPath">
 

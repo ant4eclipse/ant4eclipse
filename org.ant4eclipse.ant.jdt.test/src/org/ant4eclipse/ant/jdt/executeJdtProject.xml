@@ -4,7 +4,7 @@
 
   <!-- definition of condition HasNature -->
   <typedef name="executeJdtProject"
-           classname="org.ant4eclipse.jdt.ant.ExecuteJdtProjectTask" />
+           classname="org.ant4eclipse.ant.jdt.ExecuteJdtProjectTask" />
 
   <target name="executeJdtProject_forEachSourceDirectory">
 

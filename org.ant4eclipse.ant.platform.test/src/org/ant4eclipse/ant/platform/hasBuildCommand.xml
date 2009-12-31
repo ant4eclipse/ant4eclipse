@@ -4,7 +4,7 @@
 
   <!-- definition of condition HasNature -->
   <typedef name="hasBuildCommand"
-           classname="org.ant4eclipse.platform.ant.HasBuildCommand" />
+           classname="org.ant4eclipse.ant.platform.HasBuildCommand" />
 
   <!-- test testHasBuildCommand -->
   <target name="testHasBuildCommand">

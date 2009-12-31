@@ -4,11 +4,11 @@
 
   <!-- definition of condition HasNature -->
   <typedef name="ant4EclipseTask"
-           classname="org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest$Ant4EclipseTask"
+           classname="org.ant4eclipse.ant.core.AbstractAnt4EclipseTaskTest$Ant4EclipseTask"
   />
   
   <typedef name="ant4EclipseFailureTask"
-           classname="org.ant4eclipse.core.ant.AbstractAnt4EclipseTaskTest$Ant4EclipseFailureTask"
+           classname="org.ant4eclipse.ant.core.AbstractAnt4EclipseTaskTest$Ant4EclipseFailureTask"
   />
 
   <!-- test testNonexistingNature -->
