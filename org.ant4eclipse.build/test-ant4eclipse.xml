@@ -23,7 +23,7 @@
   </target>
   
   <target name="clean" depends="init">
-    <delete includeemptydirs="true">
+    <delete includeemptydirs="true" failonerror="false">
       <fileset dir="${testing}" includes="**/*"/>
     </delete>
   </target>
