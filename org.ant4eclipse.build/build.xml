@@ -221,13 +221,6 @@
 
     <merge-ant4eclipse-configuration dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
     
-      <load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
-      <load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
-
-      <mkdir dir="${dir.classes}/org/ant4eclipse/lib"/>
-      <echo file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
-
-    
     <zip destfile="${destination}/library/lib-ant4eclipse.jar">
       <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
