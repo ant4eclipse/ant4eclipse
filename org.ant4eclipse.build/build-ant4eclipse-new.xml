@@ -321,7 +321,7 @@
     <!-- bundle a full version which includes the ant tasks and the library code. -->
     <zip destfile="${destination}/ant/org.ant4eclipse.jar">
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
-      <zipfileset src="${destination}/library/lib-ant4eclipse.jar"/>
+      <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
 
     <echo>  ... A4E Ant Tasks build finished.</echo>
