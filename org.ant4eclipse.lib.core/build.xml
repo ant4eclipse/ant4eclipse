@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="org.ant4eclipse.core.ldapfilter" basedir="." default="generate.source">
+<project name="org.ant4eclipse.lib.core" basedir="." default="generate.source">
 
   <!-- ================================= 
           target: generate.source              
