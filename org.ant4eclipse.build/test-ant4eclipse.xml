@@ -89,7 +89,7 @@
       projectname="${executeProjectSet.project.name}"
     >
       <forEachSourceDirectory>
-        <property name="reports" value="${dir.reports}/${executeProjectSet.project.name}" />
+        <property name="reports" value="${dest.reports}/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
           <!-- <classpath refid="executeJdtProject.classpath.absolute.runtime.path" /> -->
