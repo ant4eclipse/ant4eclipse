@@ -201,7 +201,7 @@
     <sequential>
       <var name="ma_content" value=""/>
       <for param="configurationfile">
-        <fileset dir="${dest.cfg}" includes="**/ant4eclipse-configuration.properties"/>
+        <fileset dir="${dest.cfg}" includes="**/antlib.xml"/>
         <sequential>
           <load-antlib property="ma_filecontent" file="@{configurationfile}"/>
           <append property="ma_content" value="${ma_filecontent}" delimiter="${line.separator}"/>
