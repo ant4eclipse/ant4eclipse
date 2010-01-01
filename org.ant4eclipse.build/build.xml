@@ -127,6 +127,58 @@
   </macrodef>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Merges all 'ant4eclipse-configuration.properties' to a single one.                      -->
+  <!--                                                                                         -->
+  <!-- @param dir    The directory which contains multiple property files.                     -->
+  <!-- @param dest   The destination where the resulting configuration shall be stored to.     -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="merge-ant4eclipse-configuration">
+    <attribute name="dir"/>
+    <attribute name="dest"/>
+    <sequential>
+      <var name="mac_content" value=""/>
+      <for param="configurationfile">
+        <fileset dir="@{dir}" includes="**/ant4eclipse-configuration.properties"/>
+        <sequential>
+          <loadfile srcfile="@{configurationfile}" property="mac_filecontent"/>
+          <append property="mac_content" value="${mac_filecontent}" delimiter="${line.separator}"/>
+          <var unset="true" name="mac_filecontent"/>
+        </sequential>
+      </for>
+      <echo file="@{dest}">${mac_content}</echo>
+      <var unset="true" name="mac_content"/>
+    </sequential>
+  </macrodef>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Merges all 'antlib.xml' files to a single one.                                          -->
+  <!--                                                                                         -->
+  <!-- @param dir    The directory which contains multiple antlib.xml files.                   -->
+  <!-- @param dest   The destination where the resulting antlib.xml shall be stored to.        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="merge-antlib">
+    <attribute name="dir"/>
+    <attribute name="dest"/>
+    <sequential>
+      <var name="ma_content" value=""/>
+      <for param="configurationfile">
+        <fileset dir="@{dir}" includes="**/antlib.xml"/>
+        <sequential>
+          <load-antlib property="ma_filecontent" file="@{configurationfile}"/>
+          <append property="ma_content" value="${ma_filecontent}" delimiter="${line.separator}"/>
+          <var unset="true" name="ma_filecontent"/>
+        </sequential>
+      </for>
+      <echo file="@{dest}" append="false">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+      <echo file="@{dest}" append="true" >&lt;antlib&gt;${line.separator}</echo>
+      <echo file="@{dest}" append="true" >${ma_content}${line.separator}</echo>
+      <echo file="@{dest}" append="true" >&lt;/antlib&gt;${line.separator}</echo>
+      <var unset="true" name="ma_content"/>
+    </sequential>
+  </macrodef>
+  
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- TARGET DEFINITIONS                                                                      -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
@@ -179,43 +231,6 @@
     <mkdir dir="${destination}/ant/test-classes"/>
   </target>
 
-  <macrodef name="merge-ant4eclipse-configuration">
-    <attribute name="dest"/>
-    <sequential>
-      <var name="mac_content" value=""/>
-      <for param="configurationfile">
-        <fileset dir="${dest.cfg}" includes="**/ant4eclipse-configuration.properties"/>
-        <sequential>
-          <loadfile srcfile="@{configurationfile}" property="mac_filecontent"/>
-          <append property="mac_content" value="${mac_filecontent}" delimiter="${line.separator}"/>
-          <var unset="true" name="mac_filecontent"/>
-        </sequential>
-      </for>
-      <echo file="@{dest}">${mac_content}</echo>
-      <var unset="true" name="mac_content"/>
-    </sequential>
-  </macrodef>
-  
-  <macrodef name="merge-antlib">
-    <attribute name="dest"/>
-    <sequential>
-      <var name="ma_content" value=""/>
-      <for param="configurationfile">
-        <fileset dir="${dest.cfg}" includes="**/antlib.xml"/>
-        <sequential>
-          <load-antlib property="ma_filecontent" file="@{configurationfile}"/>
-          <append property="ma_content" value="${ma_filecontent}" delimiter="${line.separator}"/>
-          <var unset="true" name="ma_filecontent"/>
-        </sequential>
-      </for>
-      <echo file="@{dest}" append="false">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
-      <echo file="@{dest}" append="true" >&lt;antlib&gt;${line.separator}</echo>
-      <echo file="@{dest}" append="true" >${ma_content}${line.separator}</echo>
-      <echo file="@{dest}" append="true" >&lt;/antlib&gt;${line.separator}</echo>
-      <var unset="true" name="ma_content"/>
-    </sequential>
-  </macrodef>
-  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Builds all library related projects which are used to provide the A4E core.             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -239,7 +254,10 @@
 
     <echo file="${destination}/library/classes/version.txt">${revision}</echo>
 
-    <merge-ant4eclipse-configuration dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+    <merge-ant4eclipse-configuration
+      dir="${dest.cfg}"
+      dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"
+    />
     
     <zip destfile="${destination}/library/lib-ant4eclipse.jar">
       <fileset dir="${destination}/library/classes" includes="**/*"/>
@@ -276,7 +294,10 @@
       </forEachProject>
     </executeProjectSet>
 
-    <merge-antlib dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"/>
+    <merge-antlib
+      dir="${dest.cfg}"
+      dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"
+    />
 
     <!-- create a duplicate to support a smooth migration. -->
     <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" todir="${destination}/ant/classes/org/ant4eclipse"/>
