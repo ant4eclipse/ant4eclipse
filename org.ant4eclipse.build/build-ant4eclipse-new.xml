@@ -536,7 +536,7 @@
     </zip>
 
     <!-- for convenience reasons (see the pickup process within the tests) -->
-    <copy file="${destination}/org.ant4eclipse_${revision}.zip" tofile="org.ant4eclipse.zip"/>
+    <copy file="${destination}/org.ant4eclipse_${revision}.zip" tofile="${destination}/org.ant4eclipse.zip"/>
     
     <!-- tar the zip -->
     <tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz" compression="gzip">
