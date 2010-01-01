@@ -38,7 +38,14 @@
   <!-- MACRO DEFINITIONS                                                                       -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-  <macrodef name="optional-load-file">
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Loads the file content in case the file exists.                                         -->
+  <!--                                                                                         -->
+  <!-- @param file       The file which has to be loaded.                                      -->
+  <!-- @param property   The property which will be set with the content. If the file doesn't  -->
+  <!--                   exist the value will be an empty string.                              -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="load-file">
     <attribute name="file"/>
     <attribute name="property"/>
     <sequential>
@@ -55,7 +62,15 @@
     </sequential>
   </macrodef>
 
-  <macrodef name="optional-load-antlib">
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Loads the useful part of an 'antlib.xml' description into a property.                   -->
+  <!--                                                                                         -->
+  <!-- @param file       The location of the 'antlib.xml' to be loaded..                       -->
+  <!-- @param property   The property which will be set with the content. If the file doesn't  -->
+  <!--                   exist the value will be an empty string. The content only consists    -->
+  <!--                   of the typedefinitions.                                               -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="load-antlib">
     <attribute name="file"/>
     <attribute name="property"/>
     <sequential>
@@ -66,10 +81,12 @@
           <loadfile srcfile="@{file}" property="@{property}">
             <filterchain>
               <tabstospaces/>
+              <!-- exclude the processing instruction -->
               <linecontains negate="true">
                 <contains value="&lt;?xml"/>
                 <contains value="?&gt;"/>
               </linecontains>
+              <!-- exclude the antlib tags -->
               <linecontains negate="true">
                 <contains value="antlib&gt;"/>
               </linecontains>
@@ -83,6 +100,13 @@
     </sequential>
   </macrodef>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Allows to tests whether a string ends with a specific literal or not.                   -->
+  <!--                                                                                         -->
+  <!-- @param candidate   The string to be tested.                                             -->
+  <!-- @param literal     The literal to be used for the end.                                  -->
+  <!-- @param property    The property which will receive a boolean value.                     -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <macrodef name="ends-with">
     <attribute name="candidate"/>
     <attribute name="literal"/>
@@ -106,9 +130,12 @@
   <!-- TARGET DEFINITIONS                                                                      -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- This target sets up some variables used for the build process.                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="init">
     
-    <property name="dest.reports"   value="${destination}/reports"/>
+    <!-- directory to be meant for the dynamic creation of configurations. -->
     <property name="dest.cfg"       value="${destination}/cfg"/>
 
     <!-- identify the current revision (or local build) -->
@@ -124,6 +151,9 @@
     
   </target>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Removes potentially existing data.                                                      -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="clean" depends="init">
     <if>
       <available file="${destination}"/>
@@ -135,15 +165,21 @@
     </if>
   </target>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Sets up the the directory structure for the upcoming build.                             -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="prepare" depends="clean">
     <mkdir dir="${destination}"/>
-    <mkdir dir="${dest.reports}"/>
     <mkdir dir="${dest.cfg}"/>
+    <!-- the library part goes in here. -->
+    <mkdir dir="${destination}/library/classes"/>
+    <mkdir dir="${destination}/library/test-classes"/>
+    <!-- the ant part goes in here. -->
+    <mkdir dir="${destination}/ant/classes"/>
+    <mkdir dir="${destination}/ant/test-classes"/>
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- build.library                                                                           -->
-  <!--                                                                                         -->
   <!-- Builds all library related projects which are used to provide the A4E core.             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.library" depends="prepare">
@@ -151,8 +187,6 @@
     <echo>Building A4E library ...</echo>
 
     <var name="dir.dest" value="${destination}/library"/>
-    <mkdir dir="${dir.dest}/classes"/>
-    <mkdir dir="${dir.dest}/test-classes"/>
 
     <var name="mode.library"  value="true"/>
 
@@ -376,8 +410,8 @@
       </mapper>
     </copy>
 
-    <optional-load-antlib property="file1" file="${dir.classes}/org/ant4eclipse/ant/antlib.xml"/>
-    <optional-load-antlib property="file2" file="${dest.cfg}/antlib.xml"/>
+    <load-antlib property="file1" file="${dir.classes}/org/ant4eclipse/ant/antlib.xml"/>
+    <load-antlib property="file2" file="${dest.cfg}/antlib.xml"/>
 
     <!-- we probably should use the xmltask -->
     <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
@@ -421,8 +455,8 @@
       </mapper>
     </copy>
 
-    <optional-load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
-    <optional-load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
+    <load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+    <load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
 
     <mkdir dir="${dir.classes}/org/ant4eclipse/lib"/>
     <echo file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
@@ -549,8 +583,8 @@
       <fileset dir="${basedir}" includes="**/*ant4eclipse*/bin/**/antlib.xml"/>
       <sequential>
         
-        <optional-load-antlib file="${basedir}/${ant.project.name}/antlib.xml" property="fcontent1"/>
-        <optional-load-antlib file="@{file}"                                   property="fcontent2"/>
+        <load-antlib file="${basedir}/${ant.project.name}/antlib.xml" property="fcontent1"/>
+        <load-antlib file="@{file}"                                   property="fcontent2"/>
 
         <echo file="${basedir}/${ant.project.name}/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
         <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
