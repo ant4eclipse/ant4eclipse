@@ -88,7 +88,7 @@
     
   </target>
 
-  <target name="test.project" depends="init">
+  <target name="test.project" depends="prepare">
     <executeJdtProject 
       workspaceDirectory="${basedir}"
       projectname="${executeProjectSet.project.name}"
@@ -114,7 +114,7 @@
     
   </target>
   
-  <target name="test.library" depends="init">
+  <target name="test.library" depends="prepare">
     
     <echo>Testing A4E library ...</echo>
     
@@ -135,7 +135,7 @@
   
   </target>
   
-  <target name="test.ant" depends="init">
+  <target name="test.ant" depends="prepare">
     
     <echo>Testing A4E Ant tasks ...</echo>
     
