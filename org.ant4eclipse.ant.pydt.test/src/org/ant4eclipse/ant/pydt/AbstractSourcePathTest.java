@@ -52,7 +52,7 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
   @Before
   public void setup() {
     super.setup();
-    this._sourcepathxml = getResource("/org/ant4eclipse/pydt/ant/sourcepath.xml");
+    this._sourcepathxml = getResource("/org/ant4eclipse/ant/pydt/sourcepath.xml");
   }
 
   /**
