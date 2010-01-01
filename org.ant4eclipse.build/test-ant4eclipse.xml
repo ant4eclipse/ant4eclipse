@@ -280,7 +280,7 @@
     <cobertura-reporting
       sourcesdir="${dest.cobertura}/sources"
       htmldir="${dest.cobertura}/html"
-      xmdir="${dest.cobertura}/xml"
+      xmldir="${dest.cobertura}/xml"
       datafile="${dest.cobertura}/cobertura.data"
     />
     <echo>Done</echo>
