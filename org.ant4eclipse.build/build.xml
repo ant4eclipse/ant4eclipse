@@ -441,7 +441,8 @@
       </fileset>
     </copy>
 
-    <copy toDir="${dest.cfg}">
+    <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}"/>
+    <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/antlib.xml" />
       </fileset>
@@ -472,7 +473,8 @@
       </fileset>
     </copy>
 
-    <copy toDir="${dest.cfg}">
+    <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}"/>
+    <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/ant4eclipse-configuration.properties" />
       </fileset>
