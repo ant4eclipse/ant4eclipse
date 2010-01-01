@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.pydt.ant;
+package org.ant4eclipse.ant.pydt;
 
 /**
  * Tests for the ant task: 'getPythonPath' using the Python PyDev implementation.
