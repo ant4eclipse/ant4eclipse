@@ -45,7 +45,7 @@
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
-        <fileset dir="${destination}/**/*-test.jar"/>
+        <fileset dir="${destination}" includes="**/*-test.jar"/>
         <sequential>
           <unzip src="@{zip}" dest="@{dest}/testcode"/>
         </sequential>
