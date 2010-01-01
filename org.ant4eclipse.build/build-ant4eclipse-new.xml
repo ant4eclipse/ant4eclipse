@@ -535,6 +535,9 @@
       <fileset dir="${destination}/distribution" includes="**/*"/>
     </zip>
 
+    <!-- for convenience reasons (see the pickup process within the tests) -->
+    <copy file="${destination}/org.ant4eclipse_${revision}.zip" tofile="org.ant4eclipse.zip"/>
+    
     <!-- tar the zip -->
     <tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz" compression="gzip">
       <zipfileset src="${destination}/org.ant4eclipse_${revision}.zip" />

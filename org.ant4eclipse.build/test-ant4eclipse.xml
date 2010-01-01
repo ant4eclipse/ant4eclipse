@@ -35,12 +35,13 @@
       <!-- unpack the a4e distribution we're using for the tests -->
       <mkdir dir="@{dest}/testcode"/>
       
-      <for param="zip">
-        <fileset dir="${destination}/org.*.zip"/>
-        <sequential>
-          <unzip src="@{zip}" dest="@{dest}"/>
-        </sequential>
-      </for>
+      <unzip src="${destination}/org.ant4eclipse.zip" dest="@{dest}"/>
+      
+      <!-- now declare ant-contrib based upon the release we have bundled -->
+      <path id="path.antcontrib">
+        <fileset dir="@{dest}/libs" includes="ant-contrib*.jar"/>
+      </path>
+      <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
@@ -49,12 +50,6 @@
           <unzip src="@{zip}" dest="@{dest}/testcode"/>
         </sequential>
       </for>
-
-      <!-- now declare ant-contrib based upon the release we have bundled -->
-      <path id="path.antcontrib">
-        <fileset dir="@{dest}/libs" includes="ant-contrib*.jar"/>
-      </path>
-      <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
 
       <!-- now declare the ant4eclipse tasks based upon our release -->
       <path id="path.ant4eclipse">
