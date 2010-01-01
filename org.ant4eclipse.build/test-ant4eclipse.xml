@@ -22,7 +22,7 @@
     <property name="dest.reports"   value="${testing}/reports"/>
   </target>
   
-  <target name="clean">
+  <target name="clean" depends="init">
     <delete includeemptydirs="true">
       <fileset dir="${testing}" includes="**/*"/>
     </delete>
@@ -64,7 +64,7 @@
     </sequential>
   </macrodef>
   
-  <target name="prepare">
+  <target name="prepare" depends="clean">
 
     <pickup-a4e dest="${testing}/distribution"/>
     
