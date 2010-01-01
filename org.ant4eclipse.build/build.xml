@@ -240,6 +240,8 @@
 
     <var name="dir.dest" value="${destination}/library"/>
 
+    <!-- build each normal project and it's related tests. the code will be copied into -->
+    <!-- a single directory afterwards.                                                 -->
     <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectsetlib}"
@@ -250,17 +252,21 @@
       </forEachProject>
     </executeProjectSet>
 
+    <!-- place a stamp about the revision (we could probably add some information) -->
     <echo file="${destination}/library/classes/version.txt">${revision}</echo>
 
+    <!-- generate the configuration file -->
     <merge-ant4eclipse-configuration
       dir="${dest.cfg}"
       dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"
     />
     
+    <!-- bundle the library version of a4e -->
     <zip destfile="${destination}/library/lib-ant4eclipse.jar">
       <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
 
+    <!-- bundle the test code since it's easier to handle as a single jar -->
     <zip destfile="${destination}/library/lib-ant4eclipse-test.jar">
       <fileset dir="${destination}/library/test-classes" includes="**/*"/>
     </zip>
@@ -270,16 +276,16 @@
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- build.anttasks                                                                          -->
+  <!-- Builds all ant4eclipse ant tasks.                                                       -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.anttasks" depends="prepare">
 
     <echo>Building A4E Ant Tasks ...</echo>
 
     <var name="dir.dest" value="${destination}/ant"/>
-    <mkdir dir="${dir.dest}/classes"/>
-    <mkdir dir="${dir.dest}/test-classes"/>
 
+    <!-- build each normal project and it's related tests. the code will be copied into -->
+    <!-- a single directory afterwards.                                                 -->
     <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectset}"
@@ -290,6 +296,7 @@
       </forEachProject>
     </executeProjectSet>
 
+    <!-- generate the ant declaration file -->
     <merge-antlib
       dir="${dest.cfg}"
       dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"
@@ -298,16 +305,20 @@
     <!-- create a duplicate to support a smooth migration. -->
     <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" todir="${destination}/ant/classes/org/ant4eclipse"/>
 
+    <!-- place a stamp about the revision (we could probably add some information) -->
     <echo file="${destination}/ant/classes/version.txt">${revision}</echo>
 
+    <!-- bundle the ant tasks themselves. -->
     <zip destfile="${destination}/ant/ant-ant4eclipse.jar">
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
     </zip>
 
+    <!-- bundle the test code into a single jar. -->
     <zip destfile="${destination}/ant/ant-ant4eclipse-test.jar">
       <fileset dir="${destination}/ant/test-classes" includes="**/*"/>
     </zip>
 
+    <!-- bundle a full version which includes the ant tasks and the library code. -->
     <zip destfile="${destination}/ant/org.ant4eclipse.jar">
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
       <zipfileset src="${destination}/library/lib-ant4eclipse.jar"/>
@@ -318,7 +329,7 @@
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- generate.source                                                                         -->
+  <!-- Executes source code generation steps when necessary.                                   -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="generate.source">
     <echo>Generating source in file '${executeJdtProject.project.directory}/build.xml'</echo>
@@ -373,7 +384,7 @@
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- copy.resources                                                                          -->
+  <!-- Copies all resources located in the source directories to the output directories.       -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="copy.resources">
     <echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
@@ -385,7 +396,7 @@
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- build.project                                                                           -->
+  <!-- Build a single project.                                                                 -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.project">
 
@@ -427,10 +438,15 @@
 
   </target>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- For convenience reason we're copying the generated code into specific folders so we     -->
+  <!-- can bundle them afterwards.                                                             -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="to.merge.directory">
 
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
 
+    <!-- we need to distinguish whether we're handling a testproject or not. -->
     <ends-with candidate="${executeProjectSet.project.name}" literal=".test" property="testmode"/>
     <if>
       <istrue value="${testmode}"/>
@@ -442,6 +458,7 @@
       </else>
     </if>
     
+    <!-- copy classfiles and resources -->
     <copy toDir="${dir.classes}">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/*" />
@@ -450,6 +467,7 @@
       </fileset>
     </copy>
 
+    <!-- copy declarative files (these will be postprocessed later) -->
     <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}"/>
     <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
       <fileset dir="${executeJdtProject.output.directory}">
@@ -460,6 +478,9 @@
 
   </target>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Build a complete distribution.                                                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="build.distribution" depends="build.library, build.anttasks">
 
     <!-- create the distribution now -->
@@ -521,78 +542,8 @@
 
   </target>
   
-  <target name="test.distribution" depends="build.distribution">
-
-    <!-- Step 1: iterate over the project set and build each project -->
-    <executeProjectSet 
-      workspaceDirectory="${basedir}"
-      teamprojectset="${teamprojectset}"
-      projectReferenceTypes="jdt"
-    >
-      <!-- build all test projects contained in the project set and execute their test classes -->
-      <forEachProject filter="(executeProjectSet.project.name=*.test)">
-        <antcall target="test.project" inheritrefs="false" inheritall="false"/>
-      </forEachProject>
-    </executeProjectSet>
-    
-  </target>
-    
-  <target name="test.project">
-    
-    <!--
-    <executeJdtProject 
-      workspaceDirectory="${basedir}"
-      projectname="${executeProjectSet.project.name}"
-    >
-
-      <forEachSourceDirectory>
-
-        <property name="reports" value="${destination}/test-reports/${executeProjectSet.project.name}" />
-        <mkdir dir="${reports}" />
-
-        <junit dir="${basedir}/${executeProjectSet.project.name}"
-               fork="yes">
-          <classpath refid="executeJdtProject.classpath.absolute.runtime.path" />
-          <formatter type="xml" />
-          <batchtest todir="${reports}">
-            <fileset dir="${executeJdtProject.source.directory}">
-              <include name="**/AllTests.java" />
-            </fileset>
-          </batchtest>
-          <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
-          <env key="ECLIPSE_JAVA_350_LINUX_GTK_HOME" value="${test.pde.eclipse-java-350-linux-gtk.home}"/>
-        </junit>
-      </forEachSourceDirectory>
-    </executeJdtProject>
-    -->
-    
-  </target>
-  
   <target name="build.ant4eclipse" depends="build.distribution">
     <echo>Done</echo>
-  </target>
-  
-  <target name="create.antlib">
-    <echo file="${basedir}/${ant.project.name}/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
-    <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;antlib&gt;${line.separator}&lt;!-- --&gt;${line.separator}</echo>
-    <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
-    <for param="file">
-      <fileset dir="${basedir}" includes="**/*ant4eclipse*/bin/**/antlib.xml"/>
-      <sequential>
-        
-        <load-antlib file="${basedir}/${ant.project.name}/antlib.xml" property="fcontent1"/>
-        <load-antlib file="@{file}"                                   property="fcontent2"/>
-
-        <echo file="${basedir}/${ant.project.name}/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
-        <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
-        <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">${fcontent1}${line.separator}${fcontent2}</echo>
-        <echo file="${basedir}/${ant.project.name}/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
-
-        <var unset="true" name="fcontent1"/>
-        <var unset="true" name="fcontent2"/>
-        
-      </sequential>
-    </for>
   </target>
   
 </project>
