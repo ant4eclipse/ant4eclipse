@@ -56,9 +56,9 @@ public class ProjectSuite implements ProjectSuiteApi {
     this._dltk = dltk;
     this._count = 1;
     this._formatter = new DecimalFormat("000");
-    this._sampleegg = getResource("/org/ant4eclipse/pydt/test/data/sample.egg");
-    this._samplejar = getResource("/org/ant4eclipse/pydt/test/data/sample.jar");
-    this._samplezip = getResource("/org/ant4eclipse/pydt/test/data/sample.zip");
+    this._sampleegg = getResource("/org/ant4eclipse/testframework/sample.egg");
+    this._samplejar = getResource("/org/ant4eclipse/testframework/sample.jar");
+    this._samplezip = getResource("/org/ant4eclipse/testframework/sample.zip");
   }
 
   /**
