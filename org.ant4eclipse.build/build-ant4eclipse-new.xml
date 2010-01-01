@@ -540,7 +540,7 @@
     
     <!-- tar the zip -->
     <tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz" compression="gzip">
-      <zipfileset src="${destination}/org.ant4eclipse_${revision}.zip" />
+      <fileset dir="${destination}/distribution" includes="**/*"/>
     </tar>
 
   </target>
