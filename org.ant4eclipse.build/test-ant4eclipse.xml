@@ -19,38 +19,60 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
+    <property name="dest.reports"   value="${testing}/reports"/>
+  </target>
+  
+  <target name="clean">
+    <delete includeemptydirs="true">
+      <fileset dir="${testing}" includes="**/*"/>
+    </delete>
+  </target>
+  
+  <macrodef name="pickup-a4e">
+    <attribute name="dest"/>
+    <sequential>
+      
+      <!-- unpack the a4e distribution we're using for the tests -->
+      <mkdir dir="@{dest}/testcode"/>
+      
+      <for param="zip">
+        <fileset dir="${destination}/org.*.zip"/>
+        <sequential>
+          <unzip src="@{zip}" dest="@{dest}"/>
+        </sequential>
+      </for>
+      
+      <!-- we also need the testcode for the execution -->
+      <for param="zip">
+        <fileset dir="${destination}/**/*-test.jar"/>
+        <sequential>
+          <unzip src="@{zip}" dest="@{dest}/testcode"/>
+        </sequential>
+      </for>
+
+      <!-- now declare ant-contrib based upon the release we have bundled -->
+      <path id="path.antcontrib">
+        <fileset dir="@{dest}/libs" includes="ant-contrib*.jar"/>
+      </path>
+      <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
+
+      <!-- now declare the ant4eclipse tasks based upon our release -->
+      <path id="path.ant4eclipse">
+        <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
+        <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
+        <path location="@{dest}/org.ant4eclipse.jar"/>
+        <path path="@{dest}/testcode"/>
+      </path>
+      
+      <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
+
+    </sequential>
+  </macrodef>
+  
+  <target name="prepare">
+
+    <pickup-a4e dest="${testing}/distribution"/>
     
-    <property name="dest.reports"   value="${destination}/reports"/>
-    <property name="dest.cfg"       value="${destination}/cfg"/>
-
-    <property name="dir.dist"       value="${destination}/distribution"/>
-    
-    <path id="path.antcontrib">
-      <fileset dir="${dir.dist}/libs" includes="ant-contrib*.jar"/>
-    </path>
-
-    <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
-
-    <mkdir dir="${destination}/test"/>
-    <for param="zipfile">
-      <fileset dir="${destination}">
-        <include name="library/*-test.jar"/>
-        <include name="ant/*-test.jar"/>
-      </fileset>
-      <fileset dir="${dir.dist}" includes="org.ant4eclipse.jar"/>
-      <sequential>
-        <unzip src="@{zipfile}" dest="${destination}/test"/>
-      </sequential>
-    </for>
-    
-    <path id="path.ant4eclipse">
-      <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
-      <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
-      <path path="${destination}/test"/>
-    </path>
-
-    <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
-
     <!-- identify the current revision (or local build) -->
     <if>
       <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
@@ -62,8 +84,7 @@
       </else>
     </if>
     
-    <var name="dir.reports" value="${destination}/reports"/>
-    <mkdir dir="${dir.reports}"/>
+    <mkdir dir="${dest.reports}"/>
     
   </target>
 
