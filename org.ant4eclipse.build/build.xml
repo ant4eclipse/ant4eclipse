@@ -240,8 +240,6 @@
 
     <var name="dir.dest" value="${destination}/library"/>
 
-    <var name="mode.library"  value="true"/>
-
     <executeProjectSet 
       workspaceDirectory="${basedir}"
       teamprojectset="${teamprojectsetlib}"
@@ -281,8 +279,6 @@
     <var name="dir.dest" value="${destination}/ant"/>
     <mkdir dir="${dir.dest}/classes"/>
     <mkdir dir="${dir.dest}/test-classes"/>
-
-    <var name="mode.library"  value="false"/>
 
     <executeProjectSet 
       workspaceDirectory="${basedir}"
@@ -421,16 +417,8 @@
       </forEachSourceDirectory>
 
       <!-- Step 4: copy classfiles and resources -->
-      <forEachOutputDirectory unless="${_testProject}">
-        <if>
-          <istrue value="${mode.library}"/>
-          <then>
-            <antcall target="lib.to.merge.directory" inheritrefs="true" />
-          </then>
-          <else>
-            <antcall target="anttask.to.merge.directory" inheritrefs="true" />
-          </else>
-        </if>
+      <forEachOutputDirectory>
+        <antcall target="to.merge.directory" inheritrefs="true" />
       </forEachOutputDirectory>
 
     </executeJdtProject>
@@ -439,7 +427,7 @@
 
   </target>
 
-  <target name="anttask.to.merge.directory">
+  <target name="to.merge.directory">
 
     <echo>Copying '${executeJdtProject.output.directory}'</echo>
 
@@ -466,37 +454,6 @@
     <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/antlib.xml" />
-      </fileset>
-    </copy>
-
-  </target>
-
-  <target name="lib.to.merge.directory">
-
-    <echo>Copying '${executeJdtProject.output.directory}'</echo>
-
-    <ends-with candidate="${executeProjectSet.project.name}" literal=".test" property="testmode"/>
-    <if>
-      <istrue value="${testmode}"/>
-      <then>
-        <var name="dir.classes" value="${dir.dest}/test-classes"/>
-      </then>
-      <else>
-        <var name="dir.classes" value="${dir.dest}/classes"/>
-      </else>
-    </if>
-
-    <copy toDir="${dir.classes}">
-      <fileset dir="${executeJdtProject.output.directory}">
-        <include name="**/*" />
-        <exclude name="**/ant4eclipse-configuration.properties" />
-        <exclude name="**/antlib.xml" />
-      </fileset>
-    </copy>
-
-    <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}"/>
-    <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
-      <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/ant4eclipse-configuration.properties" />
       </fileset>
     </copy>
