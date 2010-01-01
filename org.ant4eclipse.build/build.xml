@@ -39,30 +39,6 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- Loads the file content in case the file exists.                                         -->
-  <!--                                                                                         -->
-  <!-- @param file       The file which has to be loaded.                                      -->
-  <!-- @param property   The property which will be set with the content. If the file doesn't  -->
-  <!--                   exist the value will be an empty string.                              -->
-  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <macrodef name="load-file">
-    <attribute name="file"/>
-    <attribute name="property"/>
-    <sequential>
-      <if>
-        <available file="@{file}"/>
-        <then>
-          <var unset="true" name="@{property}"/>
-          <loadfile srcfile="@{file}" property="@{property}"/>
-        </then>
-        <else>
-          <var name="@{property}" value=""/>
-        </else>
-      </if>
-    </sequential>
-  </macrodef>
-
-  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Loads the useful part of an 'antlib.xml' description into a property.                   -->
   <!--                                                                                         -->
   <!-- @param file       The location of the 'antlib.xml' to be loaded..                       -->
@@ -126,6 +102,30 @@
     </sequential>
   </macrodef>
 
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Appends a value to a list.                                                              -->
+  <!--                                                                                         -->
+  <!-- @param property    The name of the variable used to contain a list.                     -->
+  <!-- @param value       The value which has to be added.                                     -->
+  <!-- @param delimiter   The delimiter which has to be used. (Default: ',')                   -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="append">
+    <attribute name="property"/>
+    <attribute name="value"/>
+    <attribute name="delimiter" default=","/>
+    <sequential>
+      <if>
+        <equals arg1="${@{property}}" arg2=""/>
+        <then>
+          <var name="@{property}" value="@{value}"/>
+        </then>
+        <else>
+          <var name="@{property}" value="${@{property}}@{delimiter}@{value}"/>
+        </else>
+      </if>
+    </sequential>
+  </macrodef>
+
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- TARGET DEFINITIONS                                                                      -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -179,6 +179,23 @@
     <mkdir dir="${destination}/ant/test-classes"/>
   </target>
 
+  <macrodef name="merge-ant4eclipse-configuration">
+    <attribute name="dest"/>
+    <sequential>
+      <var name="mac_content" value=""/>
+      <for param="configurationfile">
+        <fileset dir="${dest.cfg}" includes="**/ant4eclipse-configuration.properties"/>
+        <sequential>
+          <loadfile srcfile="@{configurationfile}" property="mac_filecontent"/>
+          <append property="mac_content" value="${mac_filecontent}" delimiter="${line.separator}"/>
+          <var unset="true" name="mac_filecontent"/>
+        </sequential>
+      </for>
+      <echo file="@{dest}">${mac_content}</echo>
+      <var unset="true" name="mac_content"/>
+    </sequential>
+  </macrodef>
+  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Builds all library related projects which are used to provide the A4E core.             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -202,6 +219,15 @@
 
     <echo file="${destination}/library/classes/version.txt">${revision}</echo>
 
+    <merge-ant4eclipse-configuration dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+    
+      <load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
+      <load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
+
+      <mkdir dir="${dir.classes}/org/ant4eclipse/lib"/>
+      <echo file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
+
+    
     <zip destfile="${destination}/library/lib-ant4eclipse.jar">
       <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
@@ -400,25 +426,25 @@
       </fileset>
     </copy>
 
-    <!-- each project only contains one file, so we won't accidentally overwrite one file. -->
     <copy toDir="${dest.cfg}" overwrite="true">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/antlib.xml" />
       </fileset>
-      <mapper>
-        <flattenmapper/>
-      </mapper>
     </copy>
 
+    <!--
     <load-antlib property="file1" file="${dir.classes}/org/ant4eclipse/ant/antlib.xml"/>
     <load-antlib property="file2" file="${dest.cfg}/antlib.xml"/>
+    -->
 
     <!-- we probably should use the xmltask -->
+    <!--
     <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
     <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
     <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">${file1}${line.separator}</echo>
     <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">${file2}${line.separator}</echo>
     <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
+    -->
 
   </target>
 
@@ -445,21 +471,19 @@
       </fileset>
     </copy>
 
-    <!-- each project only contains one file, so we won't accidentally overwrite one file. -->
     <copy toDir="${dest.cfg}" overwrite="true">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/ant4eclipse-configuration.properties" />
       </fileset>
-      <mapper>
-        <flattenmapper/>
-      </mapper>
     </copy>
 
+    <!--
     <load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
     <load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
 
     <mkdir dir="${dir.classes}/org/ant4eclipse/lib"/>
     <echo file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
+    -->
 
   </target>
 
