@@ -182,13 +182,9 @@
       teamprojectset="${teamprojectsetlib}"
       projectReferenceTypes="jdt"
     >
-      <forEachSourceDirectory filter="(!(executeProjectSet.project.name=*.test))">
-        <copy todir="${dest.cobertura}/sources">
-          <fileset dir="${executeJdtProject.source.directory}">
-            <exclude name="**/*.java" />
-          </fileset>
-        </copy>
-      </forEachSourceDirectory>
+      <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <antcall target="copy.sources"/>
+      </forEachProject>
     </executeProjectSet>
 
     <!-- identify the current revision (or local build) -->
