@@ -262,12 +262,12 @@
     />
     
     <!-- bundle the library version of a4e -->
-    <zip destfile="${destination}/library/lib-ant4eclipse.jar">
+    <zip destfile="${destination}/library/lib-ant4eclipse.jar" duplicate="preserve">
       <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
 
     <!-- bundle the test code since it's easier to handle as a single jar -->
-    <zip destfile="${destination}/library/lib-ant4eclipse-test.jar">
+    <zip destfile="${destination}/library/lib-ant4eclipse-test.jar" duplicate="preserve">
       <fileset dir="${destination}/library/test-classes" includes="**/*"/>
     </zip>
 
@@ -309,17 +309,17 @@
     <echo file="${destination}/ant/classes/version.txt">${revision}</echo>
 
     <!-- bundle the ant tasks themselves. -->
-    <zip destfile="${destination}/ant/ant-ant4eclipse.jar">
+    <zip destfile="${destination}/ant/ant-ant4eclipse.jar" duplicate="preserve">
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
     </zip>
 
     <!-- bundle the test code into a single jar. -->
-    <zip destfile="${destination}/ant/ant-ant4eclipse-test.jar">
+    <zip destfile="${destination}/ant/ant-ant4eclipse-test.jar" duplicate="preserve">
       <fileset dir="${destination}/ant/test-classes" includes="**/*"/>
     </zip>
 
     <!-- bundle a full version which includes the ant tasks and the library code. -->
-    <zip destfile="${destination}/ant/org.ant4eclipse.jar">
+    <zip destfile="${destination}/ant/org.ant4eclipse.jar" duplicate="preserve">
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
       <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
@@ -531,7 +531,7 @@
     <echo file="${destination}/distribution/LICENSE.txt">@TODO</echo>
     
     <!-- zip the result -->
-    <zip destfile="${destination}/org.ant4eclipse_${revision}.zip">
+    <zip destfile="${destination}/org.ant4eclipse_${revision}.zip" duplicate="preserve">
       <fileset dir="${destination}/distribution" includes="**/*"/>
     </zip>
 
