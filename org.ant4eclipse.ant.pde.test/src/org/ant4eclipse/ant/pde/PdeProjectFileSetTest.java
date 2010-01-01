@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedBuildFileTest;
 import org.ant4eclipse.testframework.PdeProjectBuilder;
 
@@ -20,7 +19,7 @@ public class PdeProjectFileSetTest extends AbstractTestDirectoryBasedBuildFileTe
   @Override
   public void setUp() {
     super.setUp();
-    configureProject("src/org/ant4eclipse/pde/ant/PdeProjectFileSetTest.xml");
+    configureProject("src/org/ant4eclipse/ant/pde/PdeProjectFileSetTest.xml");
   }
 
   public void testPdeProjectFileSet_simple() {

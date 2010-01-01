@@ -18,7 +18,7 @@ public class ExecutePluginProjectTaskTest extends AbstractTestDirectoryBasedBuil
   @Override
   public void setUp() {
     super.setUp();
-    configureProject("src/org/ant4eclipse/pde/ant/ExecutePluginProjectTaskTest.xml");
+    configureProject("src/org/ant4eclipse/ant/pde/ExecutePluginProjectTaskTest.xml");
   }
 
   public void testPdeProjectFileSet_simple() {

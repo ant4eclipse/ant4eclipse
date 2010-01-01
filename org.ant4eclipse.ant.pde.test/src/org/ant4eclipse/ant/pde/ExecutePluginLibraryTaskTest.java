@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedBuildFileTest;
 import org.ant4eclipse.testframework.PdeProjectBuilder;
 
@@ -21,7 +20,7 @@ public class ExecutePluginLibraryTaskTest extends AbstractTestDirectoryBasedBuil
   public void setUp() {
     super.setUp();
 
-    configureProject("src/org/ant4eclipse/pde/ant/ExecutePluginLibraryTaskTest.xml");
+    configureProject("src/org/ant4eclipse/ant/pde/ExecutePluginLibraryTaskTest.xml");
   }
 
   public void testPdeProjectFileSet_simple() {
