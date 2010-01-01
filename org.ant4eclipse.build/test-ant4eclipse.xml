@@ -63,13 +63,13 @@
       
       <unzip src="${destination}/org.ant4eclipse.zip" dest="@{dest}"/>
       
-      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse.jar" datafile="@{datafile}"/>
-      
       <!-- now declare ant-contrib based upon the release we have bundled -->
       <path id="path.antcontrib">
         <fileset dir="@{dest}/libs" includes="ant-contrib*.jar"/>
       </path>
       <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
+      
+      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse.jar" datafile="@{datafile}"/>
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
