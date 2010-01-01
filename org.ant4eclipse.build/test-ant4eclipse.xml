@@ -15,27 +15,55 @@
   <property environment="env"/>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- TARGET DEFINITIONS                                                                      -->
+  <!-- PATH DEFINITIONS                                                                        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  
+  <path id="path.cobertura">
+    <fileset dir="${basedir}/${ant.project.name}/libs/cobertura-1.9.2" includes="**/*.jar"/>
+  </path>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TASK DEFINITIONS                                                                        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  
+  <taskdef classpathref="path.cobertura" resource="tasks.properties"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- MACRO DEFINITIONS                                                                       -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-  <target name="init">
-    <property name="dest.reports"   value="${testing}/reports"/>
-  </target>
-  
-  <target name="clean" depends="init">
-    <delete includeemptydirs="true" failonerror="false">
-      <fileset dir="${testing}" includes="**/*"/>
-    </delete>
-  </target>
-  
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Performs an instrumentation on a jar file.                                              -->
+  <!--                                                                                         -->
+  <!-- @param jarfile    The jar file that has to be instrumented.                             -->
+  <!-- @param datafile   The data file used for the coverage process.                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="cobertura-instrumentation">
+    <attribute name="jarfile"/>
+    <attribute name="datafile"/>
+    <sequential>
+      <dirname  file="@{jarfile}" property="ci_dir"/>
+      <basename file="@{jarfile}" property="ci_name"/>
+      <cobertura-instrument datafile="@{datafile}">
+        <ignore regex="org.apache.*"/>
+        <fileset dir="${ci_dir}" includes="${ci_name}"/>
+      </cobertura-instrument>
+      <var unset="true" name="ci_dir"/>
+      <var unset="true" name="ci_name"/>
+    </sequential>
+  </macrodef>
+
   <macrodef name="pickup-a4e">
     <attribute name="dest"/>
+    <attribute name="datafile"/>
     <sequential>
       
       <!-- unpack the a4e distribution we're using for the tests -->
       <mkdir dir="@{dest}/testcode"/>
       
       <unzip src="${destination}/org.ant4eclipse.zip" dest="@{dest}"/>
+      
+      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse.jar" datafile="@{datafile}"/>
       
       <!-- now declare ant-contrib based upon the release we have bundled -->
       <path id="path.antcontrib">
@@ -64,10 +92,97 @@
     </sequential>
   </macrodef>
   
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Generates cobertura reports from recorded coverage data. The datafile is not allowed    -->
+  <!-- to be located within one of the directories '@{htmldir}' or '@{xmldir}'.                -->
+  <!--                                                                                         -->
+  <!-- @param datafile     The file containing the recorded coverage information.              -->
+  <!-- @param sourcesdir   A directory containing the used java sources.                       -->
+  <!-- @param htmldir      The directory where the html code shall be written to if wanted.    -->
+  <!--                     (Default: '')                                                       -->
+  <!-- @param xmldir       The directory where the xml code shall be written to if wanted.     -->
+  <!--                     (Default: '')                                                       -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="cobertura-reporting">
+    <attribute name="datafile"/>
+    <attribute name="sourcesdir"/>
+    <attribute name="htmldir" default=""/>
+    <attribute name="xmldir"  default=""/>
+    <sequential>
+      <if>
+        <not><equals arg1="@{htmldir}" arg2=""/></not>
+        <then>
+          <delete-dir dir="@{htmldir}" recreate="true"/>
+          <cobertura-report destdir="@{htmldir}" datafile="@{datafile}" format="html">
+            <fileset dir="@{sourcesdir}">
+              <include name="**/*.java"/>
+            </fileset>
+          </cobertura-report>
+        </then>
+      </if>
+      <if>
+        <not><equals arg1="@{xmldir}" arg2=""/></not>
+        <then>
+          <delete-dir dir="@{xmldir}" recreate="true"/>
+          <cobertura-report destdir="@{xmldir}" datafile="@{datafile}" format="xml">
+            <fileset dir="@{sourcesdir}">
+              <include name="**/*.java"/>
+            </fileset>
+          </cobertura-report>
+        </then>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TARGET DEFINITIONS                                                                      -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <target name="init">
+    <property name="dest.reports"     value="${testing}/reports"/>
+    <property name="dest.cobertura"   value="${testing}/cobertura"/>
+  </target>
+  
+  <target name="clean" depends="init">
+    <delete includeemptydirs="true" failonerror="false">
+      <fileset dir="${testing}" includes="**/*"/>
+    </delete>
+  </target>
+  
   <target name="prepare" depends="clean">
 
-    <pickup-a4e dest="${testing}/distribution"/>
+    <mkdir dir="${dest.cobertura}/sources"/>
     
+    <pickup-a4e dest="${testing}/distribution" datafile="${dest.cobertura}/cobertura.data"/>
+    
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+      <forEachSourceDirectory filter="(!(executeProjectSet.project.name=*.test))">
+        <copy todir="${dest.cobertura}/sources">
+          <fileset dir="${executeJdtProject.source.directory}">
+            <exclude name="**/*.java" />
+          </fileset>
+        </copy>
+      </forEachSourceDirectory>
+    </executeProjectSet>
+
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectsetlib}"
+      projectReferenceTypes="jdt"
+    >
+      <forEachSourceDirectory filter="(!(executeProjectSet.project.name=*.test))">
+        <copy todir="${dest.cobertura}/sources">
+          <fileset dir="${executeJdtProject.source.directory}">
+            <exclude name="**/*.java" />
+          </fileset>
+        </copy>
+      </forEachSourceDirectory>
+    </executeProjectSet>
+
     <!-- identify the current revision (or local build) -->
     <if>
       <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
@@ -92,8 +207,12 @@
         <property name="reports" value="${dest.reports}/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
-          <!-- <classpath refid="executeJdtProject.classpath.absolute.runtime.path" /> -->
-          <classpath refid="path.ant4eclipse"/>
+          <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
+          <classpath>
+            <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
+            <path refid="path.ant4eclipse"/>
+            <path refid="path.cobertura"/>
+          </classpath>
           <formatter type="xml" />
           <batchtest todir="${reports}">
             <fileset dir="${executeJdtProject.source.directory}">
@@ -152,6 +271,14 @@
   </target>
   
   <target name="tests.ant4eclipse" depends="test.library,test.ant">
+    <mkdir dir="${dest.cobertura}/html"/>
+    <mkdir dir="${dest.cobertura}/xml"/>
+    <cobertura-reporting
+      sourcesdir="${dest.cobertura}/sources"
+      htmldir="${dest.cobertura}/html"
+      xmdir="${dest.cobertura}/xml"
+      datafile="${dest.cobertura}/cobertura.data"
+    />
     <echo>Done</echo>
   </target>
   
