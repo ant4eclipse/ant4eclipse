@@ -196,6 +196,26 @@
     </sequential>
   </macrodef>
   
+  <macrodef name="merge-antlib">
+    <attribute name="dest"/>
+    <sequential>
+      <var name="ma_content" value=""/>
+      <for param="configurationfile">
+        <fileset dir="${dest.cfg}" includes="**/ant4eclipse-configuration.properties"/>
+        <sequential>
+          <load-antlib property="ma_filecontent" file="@{configurationfile}"/>
+          <append property="ma_content" value="${ma_filecontent}" delimiter="${line.separator}"/>
+          <var unset="true" name="ma_filecontent"/>
+        </sequential>
+      </for>
+      <echo file="@{dest}" append="false">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+      <echo file="@{dest}" append="true" >&lt;antlib&gt;${line.separator}</echo>
+      <echo file="@{dest}" append="true" >${ma_content}${line.separator}</echo>
+      <echo file="@{dest}" append="true" >&lt;/antlib&gt;${line.separator}</echo>
+      <var unset="true" name="ma_content"/>
+    </sequential>
+  </macrodef>
+  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Builds all library related projects which are used to provide the A4E core.             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -255,6 +275,8 @@
         <antcall target="build.project" inheritrefs="true" />
       </forEachProject>
     </executeProjectSet>
+
+    <merge-antlib dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"/>
 
     <!-- create a duplicate to support a smooth migration. -->
     <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" todir="${destination}/ant/classes/org/ant4eclipse"/>
@@ -419,25 +441,11 @@
       </fileset>
     </copy>
 
-    <copy toDir="${dest.cfg}" overwrite="true">
+    <copy toDir="${dest.cfg}">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/antlib.xml" />
       </fileset>
     </copy>
-
-    <!--
-    <load-antlib property="file1" file="${dir.classes}/org/ant4eclipse/ant/antlib.xml"/>
-    <load-antlib property="file2" file="${dest.cfg}/antlib.xml"/>
-    -->
-
-    <!-- we probably should use the xmltask -->
-    <!--
-    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
-    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">&lt;antlib&gt;${line.separator}</echo>
-    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">${file1}${line.separator}</echo>
-    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">${file2}${line.separator}</echo>
-    <echo file="${dir.classes}/org/ant4eclipse/ant/antlib.xml" append="true">&lt;/antlib&gt;${line.separator}</echo>
-    -->
 
   </target>
 
@@ -464,19 +472,11 @@
       </fileset>
     </copy>
 
-    <copy toDir="${dest.cfg}" overwrite="true">
+    <copy toDir="${dest.cfg}">
       <fileset dir="${executeJdtProject.output.directory}">
         <include name="**/ant4eclipse-configuration.properties" />
       </fileset>
     </copy>
-
-    <!--
-    <load-file property="file1" file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties"/>
-    <load-file property="file2" file="${dest.cfg}/ant4eclipse-configuration.properties"/>
-
-    <mkdir dir="${dir.classes}/org/ant4eclipse/lib"/>
-    <echo file="${dir.classes}/org/ant4eclipse/lib/ant4eclipse-configuration.properties">${file1}${line.separator}${file2}</echo>
-    -->
 
   </target>
 
