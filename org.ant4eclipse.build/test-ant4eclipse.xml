@@ -93,6 +93,43 @@
   </macrodef>
   
   <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Deletes a directory only in case it does exist.                                         -->
+  <!--                                                                                         -->
+  <!-- @param dir        The directory to be deleted.                                          -->
+  <!-- @param recreate   true <=> Create the directory after deletion has been finished.       -->
+  <!--                   (Default: false)                                                      -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="delete-dir">
+    <attribute name="dir"/>
+    <attribute name="recreate" default="false"/>
+    <sequential>
+      <if>
+        <available file="@{dir}"/>
+        <then>
+          <if>
+            <available file="@{dir}" type="dir"/>
+            <then>
+              <delete includeemptydirs="true" failonerror="true">
+                <fileset dir="@{dir}" includes="**/*"/>
+              </delete>
+              <delete dir="@{dir}" failonerror="true"/>
+            </then>
+            <else>
+              <fail message="the resource '@{dir}' does not denote a regular directory."/>
+            </else>
+          </if>
+        </then>
+      </if>
+      <if>
+        <istrue value="@{recreate}"/>
+        <then>
+          <mkdir dir="@{dir}"/>
+        </then>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Generates cobertura reports from recorded coverage data. The datafile is not allowed    -->
   <!-- to be located within one of the directories '@{htmldir}' or '@{xmldir}'.                -->
   <!--                                                                                         -->
