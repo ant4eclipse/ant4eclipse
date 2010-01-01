@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.ant.core"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.core.ldapfilter"/>
 	<classpathentry exported="true" kind="lib" path="/org.ant4eclipse.external/libs/svn/svnant-1.1.0-RC2/ganymed.jar"/>
 	<classpathentry exported="true" kind="lib" path="/org.ant4eclipse.external/libs/svn/svnant-1.1.0-RC2/javasvn.jar"/>
 	<classpathentry exported="true" kind="lib" path="/org.ant4eclipse.external/libs/svn/svnant-1.1.0-RC2/svnant.jar"/>
