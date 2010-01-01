@@ -602,11 +602,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
           stringBuffer.append(description.getLocation());
           stringBuffer.append("):\n");
         }
-        for (int i = 0; i < errors.length; i++) {
-          stringBuffer.append("  ");
-          stringBuffer.append(errors[i]);
-          if (i + 1 < errors.length) {
-            stringBuffer.append("\n");
+        if (errors != null) {
+          if (errors.length > 0) {
+            for (int i = 0; i < errors.length; i++) {
+              stringBuffer.append("  ");
+              stringBuffer.append(errors[i]);
+              if (i + 1 < errors.length) {
+                stringBuffer.append("\n");
+              }
+            }
           }
         }
       }
