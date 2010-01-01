@@ -149,6 +149,18 @@
     </delete>
   </target>
   
+  <target name="copy.sources">
+    <executeJdtProject workspaceDirectory="${basedir}" projectname="${executeProjectSet.project.name}">
+      <forEachSourceDirectory>
+        <copy todir="${dest.cobertura}/sources">
+          <fileset dir="${executeJdtProject.source.directory}">
+            <exclude name="**/*.java" />
+          </fileset>
+        </copy>
+      </forEachSourceDirectory>
+    </executeJdtProject>
+  </target>
+  
   <target name="prepare" depends="clean">
 
     <mkdir dir="${dest.cobertura}/sources"/>
@@ -160,13 +172,9 @@
       teamprojectset="${teamprojectset}"
       projectReferenceTypes="jdt"
     >
-      <forEachSourceDirectory filter="(!(executeProjectSet.project.name=*.test))">
-        <copy todir="${dest.cobertura}/sources">
-          <fileset dir="${executeJdtProject.source.directory}">
-            <exclude name="**/*.java" />
-          </fileset>
-        </copy>
-      </forEachSourceDirectory>
+      <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <antcall target="copy.sources"/>
+      </forEachProject>
     </executeProjectSet>
 
     <executeProjectSet 
