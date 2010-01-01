@@ -83,7 +83,7 @@
     
   </target>
 
-  <target name="test.project" depends="prepare">
+  <target name="test.project">
     <executeJdtProject 
       workspaceDirectory="${basedir}"
       projectname="${executeProjectSet.project.name}"
