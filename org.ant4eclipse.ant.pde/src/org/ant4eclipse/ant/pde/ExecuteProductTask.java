@@ -11,14 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
-
 import org.ant4eclipse.ant.core.FileListHelper;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -68,55 +67,60 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   }
 
   /** - */
-  private static final String         PROP_PRODUCTID       = "product.id";
+  private static final String         PROP_PRODUCTID         = "product.id";
 
   /** - */
-  private static final String         PROP_PRODUCTNAME     = "product.name";
+  private static final String         PROP_PRODUCTNAME       = "product.name";
 
   /** - */
-  private static final String         PROP_BASEDONFEATURES = "product.basedonfeatures";
+  private static final String         PROP_BASEDONFEATURES   = "product.basedonfeatures";
 
   /** - */
-  private static final String         PROP_APPLICATIONID   = "product.applicationid";
+  private static final String         PROP_APPLICATIONID     = "product.applicationid";
 
   /** - */
-  private static final String         PROP_LAUNCHERNAME    = "product.launchername";
+  private static final String         PROP_LAUNCHERNAME      = "product.launchername";
 
   /** - */
-  private static final String         PROP_VERSION         = "product.version";
+  private static final String         PROP_VERSION           = "product.version";
 
   /** - */
-  private static final String         PROP_VMARGS          = "product.vmargs";
+  private static final String         PROP_VMARGS            = "product.vmargs";
 
   /** - */
-  private static final String         PROP_PROGRAMARGS     = "product.programargs";
+  private static final String         PROP_PROGRAMARGS       = "product.programargs";
 
   /** - */
-  private static final String         PROP_CONFIGINI       = "product.configini";
+  private static final String         PROP_CONFIGINI         = "product.configini";
 
   /** - */
-  private static final String         PROP_GUIEXE          = "product.guiexe";
+  private static final String         PROP_GUIEXE            = "product.guiexe";
 
   /** - */
-  private static final String         PROP_CMDEXE          = "product.cmdexe";
+  private static final String         PROP_CMDEXE            = "product.cmdexe";
 
   /** - */
-  private static final String         PROP_FEATUREID       = "feature.id";
+  private static final String         PROP_FEATUREID         = "feature.id";
 
   /** - */
-  private static final String         PROP_FEATUREVERSION  = "feature.version";
+  private static final String         PROP_FEATUREVERSION    = "feature.version";
 
   /** - */
-  private static final String         PROP_PLUGINID        = "plugin.id";
+  private static final String         PROP_PLUGINID          = "plugin.id";
 
   /** - */
-  private static final String         PROP_PLUGINISSOURCE  = "plugin.isSource";
+  private static final String         PROP_PLUGINISSOURCE    = "plugin.isSource";
+
+  /**
+   * 
+   */
+  private static final String         PROP_PLUGINPROJECTNAME = "plugin.projectName";
 
   /** - */
-  private static final String         PROP_PLUGINFILE      = "plugin.file";
+  private static final String         PROP_PLUGINFILE        = "plugin.file";
 
   /** - */
-  private static final String         PROP_PLUGINFILELIST  = "plugin.filelist";
+  private static final String         PROP_PLUGINFILELIST    = "plugin.filelist";
 
   // programargs,
   // wsplugins,
@@ -511,15 +515,28 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   private void contributeForPlugin(StringMap properties, Map<String, Object> references, ProductDefinition productdef,
       String pluginid, TargetPlatform targetplatform) {
+    A4ELogging.info("contributeForPlugin pluginId: '%s'", pluginid);
     properties.put(PROP_PLUGINID, pluginid);
-    if (getWorkspace().hasProject(pluginid)) {
-      EclipseProject project = getWorkspace().getProject(pluginid);
+
+    if (!targetplatform.hasBundleDescription(pluginid)) {
+      throw new Ant4EclipseException(PdeExceptionCode.INVALID_PRODUCT_DEFINITION, productdef.getApplication(),
+          "plugin '" + pluginid + "' not found in workspace/target platform");
+    }
+
+    BundleDescription bundledesc = targetplatform.getBundleDescription(pluginid);
+
+    BundleSource bundlesource = (BundleSource) bundledesc.getUserObject();
+
+    if (bundlesource.isEclipseProject()) {
+      // Plug-in is a source project contained in the workspace
+      EclipseProject project = bundlesource.getAsEclipseProject();
       File location = project.getFolder();
       properties.put(PROP_PLUGINISSOURCE, "true");
       properties.put(PROP_PLUGINFILE, location.getAbsolutePath());
+      properties.put(PROP_PLUGINPROJECTNAME, project.getSpecifiedName());
     } else {
-      BundleDescription bundledesc = targetplatform.getBundleDescription(pluginid);
-      BundleSource bundlesource = (BundleSource) bundledesc.getUserObject();
+      // Plug-in comes from the target platform
+      A4ELogging.info("contributeForPlugin bundlesource: '%s'", bundlesource);
       File location = bundlesource.getAsFile();
       properties.put(PROP_PLUGINISSOURCE, "false");
       properties.put(PROP_PLUGINFILE, location.getAbsolutePath());

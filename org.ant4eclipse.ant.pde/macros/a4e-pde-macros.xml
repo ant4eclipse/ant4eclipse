@@ -605,9 +605,9 @@
           <antcontrib:if>
             <isfalse value="${executeProduct.product.basedonfeatures}"/>
             <then>
-              <echo> -> Building included plugin '${executeProduct.plugin.id}'</echo>
+              <echo> -> Building included plugin '${executeProduct.plugin.id}' from project: ${executeProduct.plugin.projectName}</echo>
               <buildPlugin 
-                projectName="${executeProduct.plugin.id}" 
+                projectName="${executeProduct.plugin.projectName}" 
                 workspaceDirectory="@{workspaceDirectory}" 
                 targetPlatformId="@{targetPlatformId}" 
                 packageAsJar="@{packageAsJar}"
