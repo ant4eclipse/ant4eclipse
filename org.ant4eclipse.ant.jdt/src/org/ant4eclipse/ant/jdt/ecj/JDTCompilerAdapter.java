@@ -259,13 +259,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       // jar files
       if (classesFile.isFile()) {
 
-        if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
-          myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
-        } else {
-          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
-              new File[] { classesFile }, new File[] {});
-          ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
-        }
+        // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
+        // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
+        // } else {
+        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+            new File[] { classesFile }, new File[] {});
+        // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
+        // }
 
       } else {
 
@@ -312,9 +312,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // Step 1: get the boot class path as specified in the javac task
     Path bootclasspath = getJavac().getBootclasspath();
 
-    if (ClassFileLoaderCache.getInstance().hasClassFileLoader(bootclasspath.toString())) {
-      return ClassFileLoaderCache.getInstance().getClassFileLoader(bootclasspath.toString());
-    }
+    // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(bootclasspath.toString())) {
+    // return ClassFileLoaderCache.getInstance().getClassFileLoader(bootclasspath.toString());
+    // }
 
     // Step 2: create ClassFileLoaders for each entry in the boot class path
     List<ClassFileLoader> bootClassFileLoaders = new LinkedList<ClassFileLoader>();
@@ -350,7 +350,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
           .getBootClassPathAccessRestrictions());
     }
 
-    ClassFileLoaderCache.getInstance().storeClassFileLoader(bootclasspath.toString(), classFileLoader);
+    // ClassFileLoaderCache.getInstance().storeClassFileLoader(bootclasspath.toString(), classFileLoader);
 
     return classFileLoader;
   }
