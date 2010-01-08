@@ -11,6 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ant4eclipse.ant.core.AntConfigurator;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
@@ -33,16 +43,6 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>
@@ -262,8 +262,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
         // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
         // } else {
-        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
-            new File[] { classesFile }, new File[] {});
+          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+              new File[] { classesFile }, new File[] {});
         // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
         // }
 
@@ -366,11 +366,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * &lt;code&gt; &lt;javac destdir=&quot;${executeJdtProject.default.output.directory}&quot;
    *   debug=&quot;on&quot;
    *   source=&quot;1.5&quot;&gt;
-   *   
    *   ...
-   * 
    *   &lt;compilerarg value=&quot;compiler.args.refid=executeJdtProject.compiler.args&quot;
-   *                compiler=&quot;org.ant4eclipse.jdt.ecj.JDTCompilerAdapter&quot; /&gt;
+   *                compiler=&quot;org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter&quot; /&gt;
    * &lt;/javac&gt;
    * &lt;/code&gt;
    * </pre>
