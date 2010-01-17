@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.internal.tools.classpathentry;
 
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.jdt.JdtExceptionCode;
 import org.ant4eclipse.jdt.model.ClasspathEntry;
 import org.ant4eclipse.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
-
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 /**
@@ -53,6 +54,12 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
     }
 
     // get the project
+
+    if (!context.getWorkspace().hasProject(projectname)) {
+      throw new Ant4EclipseException(JdtExceptionCode.REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION, context
+          .getCurrentProject(), projectname);
+    }
+
     EclipseProject referencedProject = context.getWorkspace().getProject(projectname);
 
     // resolve the class path for the referenced project.
