@@ -11,22 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.jdt.ecj;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
-
-import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
-import org.apache.tools.ant.taskdefs.condition.Os;
-import org.apache.tools.ant.types.Path;
-import org.apache.tools.ant.types.resources.FileResource;
-import org.eclipse.jdt.core.compiler.CategorizedProblem;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -36,6 +20,20 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.ant4eclipse.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.core.Assert;
+import org.ant4eclipse.core.exception.Ant4EclipseException;
+import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.core.util.StringMap;
+import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
+import org.apache.tools.ant.taskdefs.condition.Os;
+import org.apache.tools.ant.types.Path;
+import org.apache.tools.ant.types.resources.FileResource;
+import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
 /**
  * <p>
@@ -264,7 +262,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // get source folders if available
         File[] sourceFolders = new File[] {};
 
-        if (compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
+        if (compilerArguments != null && compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
           sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(classesFile);
         }
 
