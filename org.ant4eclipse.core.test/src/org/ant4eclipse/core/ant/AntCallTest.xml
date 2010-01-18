@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<project name="testAntCall" basedir="." default="foo">
+
+  <typedef name="antCall" classname="org.ant4eclipse.core.ant.AntCall" />
+
+  <!-- test testNonexistingNature -->
+  <target name="testAntCall">
+    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+             target="before"
+    />
+    <echo>doExecute</echo>
+    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+             target="after"
+    />
+    
+    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+             target="notThere"
+    />
+    
+    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/notthere.xml"
+             target="notThere"
+    />
+  </target>
+  
+  <!-- test testFileNotFoundAntCall -->
+  <target name="testFileNotFoundAntCall">
+    <antCall antfile="${basedir}/org/ant4eclipse/core/ant/AntCallTest-callback.xml"
+             target="fileNotFound"
+    />
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+</project>

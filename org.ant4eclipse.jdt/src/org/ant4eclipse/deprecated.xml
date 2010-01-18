@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<antlib>
+
+  <typedef name="getEclipseClasspath" classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+  <typedef name="getOutputpath" classname="org.ant4eclipse.jdt.ant.GetJdtOutputPathTask" />
+  <typedef name="getSourcepath" classname="org.ant4eclipse.jdt.ant.GetJdtSourcePathTask" />
+
+</antlib>

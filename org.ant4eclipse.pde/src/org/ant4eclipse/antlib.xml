@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<antlib>
+  <typedef name="targetPlatform" classname="org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType" />
+  <typedef name="executePluginProject" classname="org.ant4eclipse.pde.ant.ExecutePluginProjectTask" />
+  <typedef name="executeFeature" classname="org.ant4eclipse.pde.ant.ExecuteFeatureTask" />
+  <typedef name="executeProduct" classname="org.ant4eclipse.pde.ant.ExecuteProductTask" />
+  <typedef name="executePluginLibrary" classname="org.ant4eclipse.pde.ant.ExecuteLibraryTask" />
+  <typedef name="pdeProjectFileSet" classname="org.ant4eclipse.pde.ant.PdeProjectFileSet" />
+  <typedef name="patchFeatureManifest" classname="org.ant4eclipse.pde.ant.PatchFeatureManifestTask" />
+  <typedef name="checkPluginProject" classname="org.ant4eclipse.pde.ant.CheckPluginProjectTask" />
+  <typedef name="getRequiredBundles" classname="org.ant4eclipse.pde.ant.GetRequiredBundlesTask" />
+  <typedef name="queryProduct" classname="org.ant4eclipse.pde.ant.QueryProductTask"/>
+</antlib>
