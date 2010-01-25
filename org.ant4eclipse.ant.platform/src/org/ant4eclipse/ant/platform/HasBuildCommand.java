@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant;
+package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.platform.ant.core.condition.AbstractProjectBasedCondition;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
