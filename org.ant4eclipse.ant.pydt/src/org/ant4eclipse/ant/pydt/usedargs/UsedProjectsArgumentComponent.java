@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt.ant.usedargs;
+package org.ant4eclipse.ant.pydt.usedargs;
 
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
