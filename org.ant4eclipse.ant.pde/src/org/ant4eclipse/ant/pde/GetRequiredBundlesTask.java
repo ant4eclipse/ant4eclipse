@@ -16,15 +16,6 @@ import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.pde.PdeExceptionCode;
-import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver;
-import org.ant4eclipse.pde.internal.tools.TargetPlatformImpl;
-import org.ant4eclipse.pde.internal.tools.UnresolvedBundleException;
-import org.ant4eclipse.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
-import org.ant4eclipse.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.pde.tools.TargetPlatform;
-import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 
 import org.ant4eclipse.platform.model.resource.Workspace;
 
@@ -32,6 +23,15 @@ import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectPathTask;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver;
+import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
+import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
+import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
+import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.tools.TargetPlatform;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
+import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;

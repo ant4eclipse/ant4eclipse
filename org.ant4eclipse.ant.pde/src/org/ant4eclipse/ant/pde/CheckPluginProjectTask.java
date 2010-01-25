@@ -13,11 +13,11 @@ package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.core.logging.A4ELogging;
 
-import org.ant4eclipse.pde.tools.PluginProjectChecker;
-import org.ant4eclipse.pde.tools.PluginProjectChecker.Issue;
 
 
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
+import org.ant4eclipse.lib.pde.tools.PluginProjectChecker;
+import org.ant4eclipse.lib.pde.tools.PluginProjectChecker.Issue;
 import org.apache.tools.ant.BuildException;
 
 import java.util.List;
