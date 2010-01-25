@@ -17,10 +17,10 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.pydt.PydtExceptionCode;
-import org.ant4eclipse.pydt.model.pyre.PythonRuntime;
-import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
-import org.ant4eclipse.pydt.tools.PythonTools;
+import org.ant4eclipse.lib.pydt.PydtExceptionCode;
+import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntime;
+import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;
+import org.ant4eclipse.lib.pydt.tools.PythonTools;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

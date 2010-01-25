@@ -15,7 +15,7 @@ import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.pydt.model.pyre.PythonRuntimeRegistry;
+import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 
