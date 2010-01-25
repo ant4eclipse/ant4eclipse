@@ -21,8 +21,9 @@ import org.ant4eclipse.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
-import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.platform.ant.core.PathComponent;
+
+import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.ant.platform.core.PathComponent;
 
 import java.io.File;
 import java.util.List;

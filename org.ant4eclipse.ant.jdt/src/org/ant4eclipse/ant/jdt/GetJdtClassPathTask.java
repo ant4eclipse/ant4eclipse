@@ -15,10 +15,10 @@ import org.ant4eclipse.jdt.tools.JdtResolver;
 import org.ant4eclipse.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
-import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentDelegate;
+import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 
 import java.io.File;
 import java.util.List;
