@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ant;
+package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.jdt.model.project.JavaProjectRole;

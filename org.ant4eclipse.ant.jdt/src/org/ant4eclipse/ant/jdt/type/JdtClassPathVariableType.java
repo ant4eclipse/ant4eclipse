@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ant.type;
+package org.ant4eclipse.ant.jdt.type;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.core.util.Utilities;
