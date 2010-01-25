@@ -16,8 +16,8 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.pde.tools.PluginProjectChecker;
 import org.ant4eclipse.pde.tools.PluginProjectChecker.Issue;
 
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.apache.tools.ant.BuildException;
 
 import java.util.List;

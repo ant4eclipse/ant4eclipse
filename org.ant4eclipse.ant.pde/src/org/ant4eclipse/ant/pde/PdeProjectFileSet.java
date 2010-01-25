@@ -19,12 +19,12 @@ import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
-import org.ant4eclipse.platform.ant.core.EclipseProjectComponent;
-import org.ant4eclipse.platform.ant.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
+import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
+import org.ant4eclipse.ant.platform.core.delegate.EclipseProjectDelegate;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;

@@ -33,11 +33,12 @@ import org.ant4eclipse.pde.tools.TargetPlatform;
 import org.ant4eclipse.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
-import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.platform.ant.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.eclipse.osgi.service.resolver.BundleDescription;

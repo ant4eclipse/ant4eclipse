@@ -21,10 +21,10 @@ import org.ant4eclipse.pde.model.product.ProductDefinition;
 import org.ant4eclipse.pde.model.product.ProductDefinitionParser;
 import org.ant4eclipse.pde.model.product.ProductOs;
 
-import org.ant4eclipse.platform.ant.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.EclipseProject.PathStyle;
 
+import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.apache.tools.ant.BuildException;
 import org.osgi.framework.Version;
 
