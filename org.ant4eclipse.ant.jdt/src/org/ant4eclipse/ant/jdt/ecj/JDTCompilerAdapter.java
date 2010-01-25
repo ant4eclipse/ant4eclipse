@@ -36,7 +36,6 @@ import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
 import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 import org.ant4eclipse.lib.jdt.ecj.SourceFileFactory;
-import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.taskdefs.condition.Os;
@@ -272,7 +271,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // get source folders if available
         File[] sourceFolders = new File[] {};
 
-        if (compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
+        if ((compilerArguments != null) && compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
           sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(classesFile);
         }
 
