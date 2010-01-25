@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Pro_b
-Bundle-SymbolicName: pro_b
-Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.pro_b
-Import-Package: de.pro_a
