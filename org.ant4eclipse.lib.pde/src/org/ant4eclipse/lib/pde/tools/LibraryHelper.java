@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.internal.ant;
+package org.ant4eclipse.lib.pde.tools;
 
 import org.ant4eclipse.core.Assert;
 
