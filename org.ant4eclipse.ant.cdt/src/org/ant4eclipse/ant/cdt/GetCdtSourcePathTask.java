@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.ant;
+package org.ant4eclipse.ant.cdt;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 
