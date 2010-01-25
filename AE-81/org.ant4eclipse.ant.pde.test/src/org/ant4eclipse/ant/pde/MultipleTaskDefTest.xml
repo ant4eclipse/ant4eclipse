@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<project name="testAntCall" basedir="." default="foo">
+
+  <typedef name="targetPlatform"      classname="org.ant4eclipse.ant.pde.TargetPlatformDefinitionDataType" />
+  <typedef name="getRequiredBundles"  classname="org.ant4eclipse.ant.pde.GetRequiredBundlesTask" />
+
+  <target name="testAntCall">
+    
+    <targetPlatform id="bla">
+      <location dir="K:/programme/eclipse/eclipse-3.6"/>
+    </targetPlatform>
+    
+    <getRequiredBundles 
+      workspace="${workspaceDir}"
+      targetPlatformId="eclipse-3.5"
+      bundleSymbolicName="simpleproject1"
+      bundleVersion="1.0.0"
+      property="mypath"
+    />
+
+    <echo>${mypath}</echo>
+
+  </target>
+  
+  <!-- default dummy target -->
+  <target name="foo" />
+  
+</project>

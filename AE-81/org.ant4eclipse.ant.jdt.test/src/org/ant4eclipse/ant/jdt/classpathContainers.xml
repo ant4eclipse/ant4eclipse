@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<project name="getEclipseClasspath-test" basedir="." default="foo">
+
+  <!-- definition of type classpathContainers -->
+  <typedef name="jdtClassPathVariable"
+           classname="org.ant4eclipse.ant.jdt.type.JdtClassPathVariableType" />
+  <typedef name="jdtClassPathContainer"
+           classname="org.ant4eclipse.ant.jdt.type.JdtClassPathContainerType" />
+  <typedef name="getJdtClassPath"
+           classname="org.ant4eclipse.ant.jdt.GetJdtClassPathTask" />
+
+
+
+  <target name="getJdtClassPath">
+    <touch file="${workspaceDir}/${projectName}/testFile.txt"/>
+    <jdtClassPathContainer name="testContainer">
+      <fileset dir="${workspaceDir}" includes="${projectName}/testFile.txt"/>
+    </jdtClassPathContainer>
+    <getJdtClassPath workspace="${workspaceDir}"
+                     relative="${relative}"
+                     pathSeparator="${pathSeparator}"
+                     runtime="${runtimeClasspath}"
+                     projectName="${projectName}"
+                     property="classpath" />
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+</project>

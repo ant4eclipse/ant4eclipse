@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<project name="has-nature-test" basedir="." default="foo">
+
+  <typedef name="ant4EclipseDataType"
+           classname="org.ant4eclipse.ant.core.AbstractAnt4EclipseDataTypeTest$Ant4EclipseDataType"
+  />
+
+  <target name="testAbstractAnt4EclipseDataType">
+    <ant4EclipseDataType attribute="myAttribute"/>
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+</project>
