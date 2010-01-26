@@ -1,25 +1,25 @@
 package org.ant4eclipse.testframework;
 
+import org.junit.Assert;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.junit.Assert;
-
-public class EchoLogfile extends Assert {
+public class EchoLogfile {
 
   private final String         _echoLogfileName;
 
   private final BufferedReader _reader;
 
   public EchoLogfile(String echoLogfileName) throws FileNotFoundException {
-    assertNotNull(echoLogfileName != null);
+    Assert.assertNotNull(echoLogfileName);
     this._echoLogfileName = echoLogfileName;
 
     File echoLogfile = new File(echoLogfileName);
-    assertTrue(echoLogfile.exists());
+    Assert.assertTrue(echoLogfile.exists());
 
     this._reader = new BufferedReader(new FileReader(echoLogfile));
   }
@@ -40,7 +40,7 @@ public class EchoLogfile extends Assert {
       line = line.trim();
     }
 
-    assertEquals(expectedLine, line);
+    Assert.assertEquals(expectedLine, line);
   }
 
   /**

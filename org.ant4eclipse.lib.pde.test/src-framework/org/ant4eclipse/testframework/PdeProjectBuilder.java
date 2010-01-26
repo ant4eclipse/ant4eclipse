@@ -11,13 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
-
-
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.testframework.FileHelper;
-import org.ant4eclipse.testframework.JdtProjectBuilder;
-import org.ant4eclipse.testframework.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 
 import java.io.File;
 
@@ -43,8 +38,12 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   }
 
   public static PdeProjectBuilder getPreConfiguredPdeProjectBuilder(String projectName) {
-    return (PdeProjectBuilder) new PdeProjectBuilder(projectName).withDefaultBundleManifest()
-        .withJreContainerClasspathEntry().withSrcClasspathEntry("src", false).withOutputClasspathEntry("bin");
+    PdeProjectBuilder result = new PdeProjectBuilder(projectName);
+    result.withDefaultBundleManifest();
+    result.withJreContainerClasspathEntry();
+    result.withSrcClasspathEntry("src", false);
+    result.withOutputClasspathEntry("bin");
+    return result;
   }
 
   /**
@@ -53,14 +52,14 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   @Override
   protected void createArtefacts(File projectDir) {
     super.createArtefacts(projectDir);
-
     createBundleManifestFile(projectDir);
     createPluginBuildPropertiesFile(projectDir);
   }
 
   protected PdeProjectBuilder withPdeNature() {
     withContainerClasspathEntry("org.eclipse.pde.core.requiredPlugins");
-    return (PdeProjectBuilder) withNature(PluginProjectRole.PLUGIN_NATURE);
+    withNature(PluginProjectRole.PLUGIN_NATURE);
+    return this;
   }
 
   protected PdeProjectBuilder withDefaultBundleManifest() {
@@ -74,9 +73,8 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
   }
 
   protected void createBundleManifestFile(File projectDir) {
-    FileHelper.createDirectory(new File(projectDir, "META-INF"));
+    Utilities.mkdirs(new File(projectDir, "META-INF"));
     File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
-    FileHelper.createFile(manifestFile);
     this._manifest.write(manifestFile);
   }
 

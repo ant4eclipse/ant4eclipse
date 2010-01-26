@@ -32,6 +32,7 @@ public class BundleManifest {
 
   private String _bundleVersion                      = "0.0.0";
 
+  @SuppressWarnings("unused")
   private String _bundleRequiredExecutionEnvironment = "J2SE-1.5";
 
   private String _importPackage;
