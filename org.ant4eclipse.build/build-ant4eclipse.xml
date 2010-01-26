@@ -27,7 +27,7 @@
   <target name="build.ant4eclipse" depends="prepare">
 
     <!-- Step 1: iterate over the project set and build each project -->
-    <ant4eclipse:executeProjectSet workspace="${basedir}"
+    <ant4eclipse:executeProjectSet workspaceDirectory="${basedir}"
                                    teamprojectset="${teamprojectset}"
                                    projectReferenceTypes="jdt">
 
@@ -73,7 +73,7 @@
 
     <echo level="debug">Project ${executeProjectSet.project.name} -> ${_testProject}</echo>
 
-    <ant4eclipse:executeJdtProject workspace="${basedir}"
+    <ant4eclipse:executeJdtProject workspaceDirectory="${basedir}"
                                    projectname="${executeProjectSet.project.name}">
 
       <!-- Step 1: clean output directories -->
@@ -114,7 +114,7 @@
   <target name="testProject">
     <echo>Running tests in project "${executeProjectSet.project.name}"</echo>
 
-    <ant4eclipse:executeJdtProject workspace="${basedir}"
+    <ant4eclipse:executeJdtProject workspaceDirectory="${basedir}"
                                    projectname="${executeProjectSet.project.name}">
 
       <ant4eclipse:forEachSourceDirectory>
@@ -273,7 +273,7 @@
   <target name="buildDistribution">
 
     <!-- copy macros -->
-    <ant4eclipse:executeProjectSet workspace="${basedir}"
+    <ant4eclipse:executeProjectSet workspaceDirectory="${basedir}"
                                    teamprojectset="${teamprojectset}"
                                    projectReferenceTypes="jdt">
       <ant4eclipse:forEachProject>
