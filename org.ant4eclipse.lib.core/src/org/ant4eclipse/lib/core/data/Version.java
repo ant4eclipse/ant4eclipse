@@ -11,6 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.data;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
+
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -23,6 +29,9 @@ import java.util.StringTokenizer;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class Version {
+
+  @NLSMessage("The given version '%s' is invalid. Must match: <major> [ '.' <minor> [ '.' <micro> [ '_' <qualifier> ] ] ]")
+  public static String MSG_FORMATERROR;
 
   /** the major version */
   private Integer      _major;
@@ -37,6 +46,10 @@ public class Version {
   private String       _qualifier;
 
   private String       _str;
+
+  static {
+    NLS.initialize(Version.class);
+  }
 
   /**
    * Sets up this version information from the supplied formatted string. The format is as followed:<br/>
@@ -71,12 +84,14 @@ public class Version {
             this._qualifier = splitted[1];
           }
           if (st.hasMoreTokens()) {
-            throw new IllegalArgumentException("invalid format"); //$NON-NLS-1$
+            throw new Ant4EclipseException(CoreExceptionCode.ILLEGAL_FORMAT, String.format(MSG_FORMATERROR, version));
           }
         }
       }
+    } catch (NumberFormatException ex) {
+      throw new Ant4EclipseException(CoreExceptionCode.ILLEGAL_FORMAT, String.format(MSG_FORMATERROR, version));
     } catch (NoSuchElementException e) {
-      throw new IllegalArgumentException("invalid version format '" + version + "'"); //$NON-NLS-1$
+      throw new Ant4EclipseException(CoreExceptionCode.ILLEGAL_FORMAT, String.format(MSG_FORMATERROR, version));
     }
 
     // create a textual representation

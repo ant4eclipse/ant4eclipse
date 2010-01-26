@@ -158,8 +158,8 @@ public final class DependencyGraph<T> {
     // set each value to true iff there is a relationship form first to second...
     for (int i = 0; i < this._edges.size(); i++) {
       Edge<T> edge = this._edges.get(i);
-      int fromidx = this._vertices.indexOf(edge.parent);
-      int toidx = this._vertices.indexOf(edge.child);
+      int fromidx = this._vertices.indexOf(edge.getParent());
+      int toidx = this._vertices.indexOf(edge.getChild());
 
       if ((fromidx == -1) || (toidx == -1)) {
         // one of the edge's vertices has not been
@@ -318,142 +318,7 @@ public final class DependencyGraph<T> {
       }
     }
 
-    return (result);
-  }
-
-  /**
-   * <p>
-   * Interface for a vertex renderer. A vertex renderer is used to create a custom string representation of a vertex for
-   * further usage in an exception message.
-   * </p>
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   * 
-   * @param <T>
-   *          the type of the vertices
-   */
-  public interface VertexRenderer<T> {
-
-    /**
-     * <p>
-     * Must return an not-null string that represents the given vertex.
-     * </p>
-     * 
-     * @param vertex
-     *          the vertex to render.
-     * @return must return an not-null string that represents the given vertex.
-     */
-    public String renderVertex(T vertex);
-  }
-
-  /**
-   * <p>
-   * Internal representation of an edge.
-   * </p>
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   * 
-   * @param <T>
-   *          the type of the vertices
-   */
-  public static class Edge<T> {
-    /** parent */
-    private T parent;
-
-    /** child */
-    private T child;
-
-    /**
-     * <p>
-     * Creates a new instance of type Edge.
-     * </p>
-     * 
-     * @param aParent
-     *          the parent object
-     * @param aChild
-     *          the child object
-     */
-    public Edge(T aParent, T aChild) {
-      Assure.notNull(aParent);
-      Assure.notNull(aChild);
-
-      this.parent = aParent;
-      this.child = aChild;
-    }
-
-    /**
-     * <p>
-     * Returns the child object.
-     * </p>
-     * 
-     * @return the child object.
-     */
-    public T getChild() {
-      return this.child;
-    }
-
-    /**
-     * <p>
-     * Returns the parent object.
-     * </p>
-     * 
-     * @return the parent object.
-     */
-    public T getParent() {
-      return this.parent;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-      int PRIME = 31;
-      int result = 1;
-      result = PRIME * result + this.parent.hashCode();
-      result = PRIME * result + this.child.hashCode();
-      return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
-        return true;
-      }
-      if (obj == null) {
-        return false;
-      }
-      if (getClass() != obj.getClass()) {
-        return false;
-      }
-      @SuppressWarnings("unchecked")
-      Edge<T> other = (Edge<T>) obj;
-      if (!this.parent.equals(other.parent)) {
-        return false;
-      }
-      if (!this.child.equals(other.child)) {
-        return false;
-      }
-      return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-      StringBuffer result = new StringBuffer();
-      result.append("[Edge");
-      result.append(" parent:");
-      result.append(this.parent);
-      result.append(" child:");
-      result.append(this.child);
-      result.append("]");
-      return result.toString();
-    }
+    return result;
   }
 
 } /* ENDCLASS */

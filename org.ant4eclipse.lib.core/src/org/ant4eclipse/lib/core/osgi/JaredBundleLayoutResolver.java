@@ -12,6 +12,8 @@
 package org.ant4eclipse.lib.core.osgi;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -57,7 +59,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    */
   public JaredBundleLayoutResolver(File location, File expansionDirectory) {
     Assure.isFile(location);
-    Assure.notNull(expansionDirectory);
+    Assure.notNull("expansionDirectory", expansionDirectory);
 
     this._location = location;
     this._expansionDirectory = expansionDirectory;
@@ -157,12 +159,15 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     // unwrap jar file
     try {
       Utilities.expandJarFile(this._jarFile, destination);
-    } catch (IOException e) {
-      // log error
-      A4ELogging.error("Could not expand jar file '%s'. Reason: '%s'", this._location, e.getMessage());
-
-      // return 'self'
-      return new File[] { this._location };
+    } catch (Ant4EclipseException ex) {
+      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
+        // log error
+        A4ELogging.error("Could not expand jar file '%s'. Reason: '%s'", this._location, ex.getMessage());
+        // return 'self'
+        return new File[] { this._location };
+      } else {
+        throw ex;
+      }
     }
 
     // prepare results

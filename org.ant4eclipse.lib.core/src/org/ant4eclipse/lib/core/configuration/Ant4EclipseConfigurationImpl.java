@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.configuration;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.StringMap;
 
@@ -107,8 +110,8 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   private Enumeration<URL> getPropertyFiles() {
     try {
       return getClass().getClassLoader().getResources(A4E_CONFIGURATION_PROPERTIES);
-    } catch (IOException ioe) {
-      throw new RuntimeException("Could not detect propery files on classpath: " + ioe, ioe);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, A4E_CONFIGURATION_PROPERTIES);
     }
   }
 
