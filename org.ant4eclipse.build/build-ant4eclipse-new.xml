@@ -1,0 +1,552 @@
+<?xml version="1.0"?>
+<project 
+  name="org.ant4eclipse.build"
+  basedir=".."
+  default="build.ant4eclipse"
+>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- PROPERTIES                                                                              -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <property file="${file.buildsettings}"/>
+  <property file="${basedir}/${ant.project.name}/default-build.properties"/>
+
+  <property environment="env"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- PATH DEFINITIONS                                                                        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <path id="path.antcontrib">
+    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="ant-contrib*.jar"/>
+  </path>
+
+  <path id="path.ant4eclipse">
+    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="org.ant4eclipse.jar"/>
+  </path>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TASK DEFINITIONS                                                                        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
+
+  <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- MACRO DEFINITIONS                                                                       -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Loads the useful part of an 'antlib.xml' description into a property.                   -->
+  <!--                                                                                         -->
+  <!-- @param file       The location of the 'antlib.xml' to be loaded..                       -->
+  <!-- @param property   The property which will be set with the content. If the file doesn't  -->
+  <!--                   exist the value will be an empty string. The content only consists    -->
+  <!--                   of the typedefinitions.                                               -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="load-antlib">
+    <attribute name="file"/>
+    <attribute name="property"/>
+    <sequential>
+      <if>
+        <available file="@{file}"/>
+        <then>
+          <var unset="true" name="@{property}"/>
+          <loadfile srcfile="@{file}" property="@{property}">
+            <filterchain>
+              <tabstospaces/>
+              <!-- exclude the processing instruction -->
+              <linecontains negate="true">
+                <contains value="&lt;?xml"/>
+                <contains value="?&gt;"/>
+              </linecontains>
+              <!-- exclude the antlib tags -->
+              <linecontains negate="true">
+                <contains value="antlib&gt;"/>
+              </linecontains>
+            </filterchain>
+          </loadfile>
+        </then>
+        <else>
+          <var name="@{property}" value=""/>
+        </else>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Allows to tests whether a string ends with a specific literal or not.                   -->
+  <!--                                                                                         -->
+  <!-- @param candidate   The string to be tested.                                             -->
+  <!-- @param literal     The literal to be used for the end.                                  -->
+  <!-- @param property    The property which will receive a boolean value.                     -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="ends-with">
+    <attribute name="candidate"/>
+    <attribute name="literal"/>
+    <attribute name="property"/>
+    <sequential>
+      <propertyregex property="ends-with_selection" input="@{candidate}" regexp="^(.+)(@{literal})$" select="\2" defaultValue=""/>
+      <if>
+        <equals arg1="" arg2="${ends-with_selection}"/>
+        <then>
+          <var name="@{property}" value="false"/>
+        </then>
+        <else>
+          <var name="@{property}" value="true"/>
+        </else>
+      </if>
+      <var unset="true" name="ends-with_selection"/>
+    </sequential>
+  </macrodef>
+
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Appends a value to a list.                                                              -->
+  <!--                                                                                         -->
+  <!-- @param property    The name of the variable used to contain a list.                     -->
+  <!-- @param value       The value which has to be added.                                     -->
+  <!-- @param delimiter   The delimiter which has to be used. (Default: ',')                   -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="append">
+    <attribute name="property"/>
+    <attribute name="value"/>
+    <attribute name="delimiter" default=","/>
+    <sequential>
+      <if>
+        <equals arg1="${@{property}}" arg2=""/>
+        <then>
+          <var name="@{property}" value="@{value}"/>
+        </then>
+        <else>
+          <var name="@{property}" value="${@{property}}@{delimiter}@{value}"/>
+        </else>
+      </if>
+    </sequential>
+  </macrodef>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Merges all 'ant4eclipse-configuration.properties' to a single one.                      -->
+  <!--                                                                                         -->
+  <!-- @param dir    The directory which contains multiple property files.                     -->
+  <!-- @param dest   The destination where the resulting configuration shall be stored to.     -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="merge-ant4eclipse-configuration">
+    <attribute name="dir"/>
+    <attribute name="dest"/>
+    <sequential>
+      <var name="mac_content" value=""/>
+      <for param="configurationfile">
+        <fileset dir="@{dir}" includes="**/ant4eclipse-configuration.properties"/>
+        <sequential>
+          <loadfile srcfile="@{configurationfile}" property="mac_filecontent"/>
+          <append property="mac_content" value="${mac_filecontent}" delimiter="${line.separator}"/>
+          <var unset="true" name="mac_filecontent"/>
+        </sequential>
+      </for>
+      <echo file="@{dest}">${mac_content}</echo>
+      <var unset="true" name="mac_content"/>
+    </sequential>
+  </macrodef>
+  
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Merges all 'antlib.xml' files to a single one.                                          -->
+  <!--                                                                                         -->
+  <!-- @param dir    The directory which contains multiple antlib.xml files.                   -->
+  <!-- @param dest   The destination where the resulting antlib.xml shall be stored to.        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="merge-antlib">
+    <attribute name="dir"/>
+    <attribute name="dest"/>
+    <sequential>
+      <var name="ma_content" value=""/>
+      <for param="configurationfile">
+        <fileset dir="@{dir}" includes="**/antlib.xml"/>
+        <sequential>
+          <load-antlib property="ma_filecontent" file="@{configurationfile}"/>
+          <append property="ma_content" value="${ma_filecontent}" delimiter="${line.separator}"/>
+          <var unset="true" name="ma_filecontent"/>
+        </sequential>
+      </for>
+      <echo file="@{dest}" append="false">&lt;?xml version="1.0"?&gt;${line.separator}</echo>
+      <echo file="@{dest}" append="true" >&lt;antlib&gt;${line.separator}</echo>
+      <echo file="@{dest}" append="true" >${ma_content}${line.separator}</echo>
+      <echo file="@{dest}" append="true" >&lt;/antlib&gt;${line.separator}</echo>
+      <var unset="true" name="ma_content"/>
+    </sequential>
+  </macrodef>
+  
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- TARGET DEFINITIONS                                                                      -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- This target sets up some variables used for the build process.                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="init">
+    
+    <!-- directory to be meant for the dynamic creation of configurations. -->
+    <property name="dest.cfg"       value="${destination}/cfg"/>
+
+    <!-- identify the current revision (or local build) -->
+    <if>
+      <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}"/>
+      <then>
+        <var name="revision" value="local-revision"/> 
+      </then>
+      <else>
+        <var name="revision" value="${env.SVN_REVISION}"/> 
+      </else>
+    </if>
+    
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Removes potentially existing data.                                                      -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="clean" depends="init">
+    <if>
+      <available file="${destination}"/>
+      <then>
+        <delete failonerror="true" includeemptydirs="true">
+          <fileset dir="${destination}" includes="**/*"/>
+        </delete>
+      </then>
+    </if>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Sets up the the directory structure for the upcoming build.                             -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="prepare" depends="clean">
+    <mkdir dir="${destination}"/>
+    <mkdir dir="${dest.cfg}"/>
+    <!-- the library part goes in here. -->
+    <mkdir dir="${destination}/library/classes"/>
+    <mkdir dir="${destination}/library/test-classes"/>
+    <!-- the ant part goes in here. -->
+    <mkdir dir="${destination}/ant/classes"/>
+    <mkdir dir="${destination}/ant/test-classes"/>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Builds all library related projects which are used to provide the A4E core.             -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build.library" depends="prepare">
+
+    <echo>Building A4E library ...</echo>
+
+    <var name="dir.dest" value="${destination}/library"/>
+
+    <!-- build each normal project and it's related tests. the code will be copied into -->
+    <!-- a single directory afterwards.                                                 -->
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectsetlib}"
+      projectReferenceTypes="jdt"
+    >
+      <forEachProject>
+        <antcall target="build.project" inheritrefs="true" />
+      </forEachProject>
+    </executeProjectSet>
+
+    <!-- place a stamp about the revision (we could probably add some information) -->
+    <echo file="${destination}/library/classes/version.txt">${revision}</echo>
+
+    <!-- generate the configuration file -->
+    <merge-ant4eclipse-configuration
+      dir="${dest.cfg}"
+      dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"
+    />
+    
+    <!-- bundle the library version of a4e -->
+    <zip destfile="${destination}/library/lib-ant4eclipse.jar" duplicate="preserve">
+      <fileset dir="${destination}/library/classes" includes="**/*"/>
+    </zip>
+
+    <!-- bundle the test code since it's easier to handle as a single jar -->
+    <zip destfile="${destination}/library/lib-ant4eclipse-test.jar" duplicate="preserve">
+      <fileset dir="${destination}/library/test-classes" includes="**/*"/>
+    </zip>
+
+    <echo>  ... Library build finished.</echo>
+
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Builds all ant4eclipse ant tasks.                                                       -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build.anttasks" depends="prepare">
+
+    <echo>Building A4E Ant Tasks ...</echo>
+
+    <var name="dir.dest" value="${destination}/ant"/>
+
+    <!-- build each normal project and it's related tests. the code will be copied into -->
+    <!-- a single directory afterwards.                                                 -->
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+      <forEachProject>
+        <antcall target="build.project" inheritrefs="true" />
+      </forEachProject>
+    </executeProjectSet>
+
+    <!-- generate the ant declaration file -->
+    <merge-antlib
+      dir="${dest.cfg}"
+      dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"
+    />
+
+    <!-- create a duplicate to support a smooth migration. -->
+    <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" todir="${destination}/ant/classes/org/ant4eclipse"/>
+
+    <!-- place a stamp about the revision (we could probably add some information) -->
+    <echo file="${destination}/ant/classes/version.txt">${revision}</echo>
+
+    <!-- bundle the ant tasks themselves. -->
+    <zip destfile="${destination}/ant/ant-ant4eclipse.jar" duplicate="preserve">
+      <fileset dir="${destination}/ant/classes" includes="**/*"/>
+    </zip>
+
+    <!-- bundle the test code into a single jar. -->
+    <zip destfile="${destination}/ant/ant-ant4eclipse-test.jar" duplicate="preserve">
+      <fileset dir="${destination}/ant/test-classes" includes="**/*"/>
+    </zip>
+
+    <!-- bundle a full version which includes the ant tasks and the library code. -->
+    <zip destfile="${destination}/ant/org.ant4eclipse.jar" duplicate="preserve">
+      <fileset dir="${destination}/ant/classes" includes="**/*"/>
+      <fileset dir="${destination}/library/classes" includes="**/*"/>
+    </zip>
+
+    <echo>  ... A4E Ant Tasks build finished.</echo>
+
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Executes source code generation steps when necessary.                                   -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="generate.source">
+    <echo>Generating source in file '${executeJdtProject.project.directory}/build.xml'</echo>
+    <ant 
+      dir="${executeJdtProject.project.directory}"
+      antfile="build.xml"
+      target="generate.source"
+      inheritRefs="true" 
+    />
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- compile.project                                                                         -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="compile.project" if="executeJdtProject.source.directories">
+
+    <echo>Compiling jdt project '${executeJdtProject.project.name}'</echo>
+    <echo>  - source directories -> ${executeJdtProject.source.directories}</echo>
+    <echo>  - output directory   -> ${executeJdtProject.default.output.directory}</echo>
+    <echo>  - bootclasspath      -> ${executeJdtProject.boot.classpath}</echo>
+    <echo>  - classpath          -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
+
+    <mkdir dir="${executeJdtProject.default.output.directory}"/>
+
+    <javac 
+      destdir="${executeJdtProject.default.output.directory}"
+      debug="on"
+      compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter"
+    >
+
+      <src refid="executeJdtProject.source.directories.path" />
+      <bootclasspath refid="executeJdtProject.boot.classpath.path" />
+      <classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
+
+      <compilerarg 
+        value="compiler.args.refid=executeJdtProject.compiler.args"
+        compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" 
+      />
+
+      <compilerarg 
+        value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
+        compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" 
+      />
+
+      <compilerarg 
+        value="compiler.options.file.overrideJavacTask=true"
+        compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" 
+      />
+
+    </javac>
+
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Copies all resources located in the source directories to the output directories.       -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="copy.resources">
+    <echo>Copying resources from directory '${executeJdtProject.source.directory}'</echo>
+    <copy todir="${executeJdtProject.output.directory}">
+      <fileset dir="${executeJdtProject.source.directory}">
+        <exclude name="**/*.java" />
+      </fileset>
+    </copy>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Build a single project.                                                                 -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build.project">
+
+    <echo>Building project "${executeProjectSet.project.name}"</echo>
+
+    <executeJdtProject 
+      workspaceDirectory="${basedir}"
+      projectname="${executeProjectSet.project.name}"
+    >
+
+      <!-- Step 1: call generate.source -->
+      <forProject>
+        <if>
+          <available file="${executeJdtProject.project.directory}/build.xml"/>
+          <then>
+            <antcall target="generate.source" inheritrefs="true" />
+          </then>
+        </if>
+      </forProject>
+
+      <!-- Step 2: compile the project -->
+      <forProject>
+        <antcall target="compile.project" inheritrefs="true" />
+      </forProject>
+
+      <!-- Step 3: copy resources stored within source folders -->
+      <forEachSourceDirectory>
+        <antcall target="copy.resources" inheritrefs="true" />
+      </forEachSourceDirectory>
+
+      <!-- Step 4: copy classfiles and resources -->
+      <forEachOutputDirectory>
+        <antcall target="to.merge.directory" inheritrefs="true" />
+      </forEachOutputDirectory>
+
+    </executeJdtProject>
+
+    <echo>Project "${executeProjectSet.project.name}" built</echo>
+
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- For convenience reason we're copying the generated code into specific folders so we     -->
+  <!-- can bundle them afterwards.                                                             -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="to.merge.directory">
+
+    <echo>Copying '${executeJdtProject.output.directory}'</echo>
+
+    <!-- we need to distinguish whether we're handling a testproject or not. -->
+    <ends-with candidate="${executeProjectSet.project.name}" literal=".test" property="testmode"/>
+    <if>
+      <istrue value="${testmode}"/>
+      <then>
+        <var name="dir.classes" value="${dir.dest}/test-classes"/>
+      </then>
+      <else>
+        <var name="dir.classes" value="${dir.dest}/classes"/>
+      </else>
+    </if>
+    
+    <!-- copy classfiles and resources -->
+    <copy toDir="${dir.classes}">
+      <fileset dir="${executeJdtProject.output.directory}">
+        <include name="**/*" />
+        <exclude name="**/ant4eclipse-configuration.properties" />
+        <exclude name="**/antlib.xml" />
+      </fileset>
+    </copy>
+
+    <!-- copy declarative files (these will be postprocessed later) -->
+    <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}"/>
+    <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
+      <fileset dir="${executeJdtProject.output.directory}">
+        <include name="**/antlib.xml" />
+        <include name="**/ant4eclipse-configuration.properties" />
+      </fileset>
+    </copy>
+
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Build a complete distribution.                                                          -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build.distribution" depends="build.library, build.anttasks">
+
+    <!-- create the distribution now -->
+    <mkdir dir="${destination}/distribution/macros"/>
+    
+    <!-- transfer all ant macros used for the ant tasks -->
+    <executeProjectSet 
+      workspaceDirectory="${basedir}"
+      teamprojectset="${teamprojectset}"
+      projectReferenceTypes="jdt"
+    >
+      <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <copy todir="${destination}/distribution/macros" flatten="true">
+          <fileset dir="${basedir}/${executeProjectSet.project.name}">
+            <include name="macros/*" />
+          </fileset>
+        </copy>
+      </forEachProject>
+    </executeProjectSet>
+
+    <!-- copy libary dependencies -->
+    <mkdir dir="${destination}/distribution/libs" />
+    <copy todir="${destination}/distribution/libs" flatten="true">
+      <fileset dir="${basedir}/org.ant4eclipse.external/libs">
+        <include name="ant-contrib/*.jar" />
+        <include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
+        <include name="ecj/*.jar" />
+        <include name="ecj/ECJ-LICENSE-epl-v10.html" />
+        <include name="equinox/*.jar" />
+        <include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
+        <exclude name="equinox/*source*.jar" />
+      </fileset>
+    </copy>
+
+    <copy todir="${destination}/distribution" flatten="true">
+      <fileset dir="${destination}/library">
+        <include name="*.jar"/>
+        <exclude name="*-test.jar"/>
+      </fileset>
+      <fileset dir="${destination}/ant">
+        <include name="*.jar"/>
+        <exclude name="*-test.jar"/>
+      </fileset>
+    </copy>
+    
+    <echo file="${destination}/distribution/version.txt">${revision}</echo>
+    
+    <echo file="${destination}/distribution/LICENSE.txt">@TODO</echo>
+    
+    <!-- zip the result -->
+    <zip destfile="${destination}/org.ant4eclipse_${revision}.zip" duplicate="preserve">
+      <fileset dir="${destination}/distribution" includes="**/*"/>
+    </zip>
+
+    <!-- for convenience reasons (see the pickup process within the tests) -->
+    <copy file="${destination}/org.ant4eclipse_${revision}.zip" tofile="${destination}/org.ant4eclipse.zip"/>
+    
+    <!-- tar the zip -->
+    <tar destfile="${destination}/org.ant4eclipse_${revision}.tar.gz" compression="gzip">
+      <fileset dir="${destination}/distribution" includes="**/*"/>
+    </tar>
+
+  </target>
+  
+  <target name="build.ant4eclipse" depends="build.distribution">
+    <echo>Done</echo>
+  </target>
+  
+</project>
