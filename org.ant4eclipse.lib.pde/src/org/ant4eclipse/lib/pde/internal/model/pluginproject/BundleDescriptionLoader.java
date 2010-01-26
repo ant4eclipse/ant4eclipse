@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -54,7 +51,7 @@ public class BundleDescriptionLoader {
    */
   public static BundleDescription loadFromPluginProject(EclipseProject project) throws FileNotFoundException,
       IOException, BundleException {
-    Assure.notNull(project);
+    Assure.notNull("project", project);
 
     File manifestFile = project.getChild(Constants.OSGI_BUNDLE_MANIFEST);
     // TODO: handle projects with plugin.xml that may not have a MANIFEST-file
@@ -79,7 +76,7 @@ public class BundleDescriptionLoader {
 
   private static boolean isSystemBundle(Manifest manifest) {
     String isSystemBundle = manifest.getMainAttributes().getValue("Eclipse-SystemBundle");
-    return (isSystemBundle != null) && "true".equals(isSystemBundle);
+    return "true".equals(isSystemBundle);
   }
 
   /**
@@ -89,7 +86,7 @@ public class BundleDescriptionLoader {
    * @param manifest
    * @return
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   private static Properties convertManifest(Manifest manifest) {
     Attributes attributes = manifest.getMainAttributes();
     Iterator iter = attributes.keySet().iterator();
@@ -110,7 +107,7 @@ public class BundleDescriptionLoader {
    * @throws FileParserException
    */
   public static BundleDescription parsePlugin(File file) {
-    Assure.exists(file);
+    Assure.exists("file", file);
     BundleDescription description = null;
     try {
       if (file.isFile() && file.getName().endsWith(".jar")) {

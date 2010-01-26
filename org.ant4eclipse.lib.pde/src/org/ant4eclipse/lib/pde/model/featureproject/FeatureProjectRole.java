@@ -29,10 +29,10 @@ import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 public interface FeatureProjectRole extends ProjectRole {
 
   /** PLUGIN_NATURE */
-  public static final String FEATURE_NATURE            = "org.eclipse.pde.FeatureNature";
+  String FEATURE_NATURE            = "org.eclipse.pde.FeatureNature";
 
   /** PLUGIN_PROJECT_ROLE_NAME */
-  public static final String FEATURE_PROJECT_ROLE_NAME = "FeatureProjectRole";
+  String FEATURE_PROJECT_ROLE_NAME = "FeatureProjectRole";
 
   /**
    * <p>
@@ -41,7 +41,7 @@ public interface FeatureProjectRole extends ProjectRole {
    * 
    * @return the feature manifest.
    */
-  public FeatureManifest getFeatureManifest();
+  FeatureManifest getFeatureManifest();
 
   /**
    * <p>
@@ -50,7 +50,7 @@ public interface FeatureProjectRole extends ProjectRole {
    * 
    * @return <code>true</code> if the feature project has build properties, <code>false</code> otherwise.
    */
-  public boolean hasBuildProperties();
+  boolean hasBuildProperties();
 
   /**
    * <p>
@@ -59,7 +59,7 @@ public interface FeatureProjectRole extends ProjectRole {
    * 
    * @return the {@link FeatureBuildProperties}.
    */
-  public FeatureBuildProperties getBuildProperties();
+  FeatureBuildProperties getBuildProperties();
 
   /**
    * <p>

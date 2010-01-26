@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
@@ -62,6 +59,7 @@ public class PluginProjectChecker {
                                                                                     + "- The build properties contains a library '%3$s' that doesn't contain a source directory. To fix this issue, please add a source directory to the library's source list 'source.%3$s'.\n";
 
   /** the LIBRARY_WITHOUT_OUTPUT_DIRECTORY */
+  @SuppressWarnings("unused")
   private static final String   LIBRARY_WITHOUT_OUTPUT_DIRECTORY                = ERRONEOUS_PROJECT_DEFINITION_MSG
                                                                                     + "- Inconsistent build properties file '%2$s'.\n"
                                                                                     + "- The build properties contains a library '%3$s' that doesn't contain a output directory. To fix this issue, please add a output directory to the library's output list 'output.%3$s'.\n";
@@ -91,7 +89,7 @@ public class PluginProjectChecker {
    *          the eclipse project to check.
    */
   public PluginProjectChecker(EclipseProject eclipseProject) {
-    Assure.notNull(eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
 
     this._eclipseProject = eclipseProject;
     this._issues = new LinkedList<Issue>();
@@ -218,6 +216,7 @@ public class PluginProjectChecker {
     private String     _message;
 
     /** the level */
+    @SuppressWarnings("unused")
     private IssueLevel _level;
 
     /**

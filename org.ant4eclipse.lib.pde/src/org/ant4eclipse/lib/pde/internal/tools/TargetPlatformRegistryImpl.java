@@ -12,8 +12,6 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;

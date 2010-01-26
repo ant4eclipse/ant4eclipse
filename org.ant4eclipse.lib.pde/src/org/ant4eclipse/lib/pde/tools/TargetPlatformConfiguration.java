@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.pde.tools;
 
 
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.lib.pde.model.pluginproject.Constants;

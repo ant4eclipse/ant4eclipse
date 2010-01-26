@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StopWatch;
@@ -56,7 +54,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    *          a description of this {@link BundleAndFeatureSet}
    */
   protected AbstractBundleAndFeatureSet(String description) {
-    Assure.nonEmpty(description);
+    Assure.nonEmpty("description", description);
 
     // set the description
     this._description = description;
@@ -110,8 +108,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String featureId, Version version) {
-    Assure.nonEmpty(featureId);
-    Assure.notNull(version);
+    Assure.nonEmpty("featureId", featureId);
+    Assure.notNull("version", version);
 
     // initialize if necessary
     initialize();
@@ -136,7 +134,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String featureId) {
-    Assure.nonEmpty(featureId);
+    Assure.nonEmpty("featureId", featureId);
 
     // initialize if necessary
     initialize();
@@ -171,7 +169,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public BundleDescription getBundleDescription(String bundleid) {
-    Assure.nonEmpty(bundleid);
+    Assure.nonEmpty("bundleid", bundleid);
 
     // initialize if necessary
     initialize();
@@ -214,7 +212,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   public final boolean containsBundle(String symbolicName) {
-    Assure.notNull(symbolicName);
+    Assure.notNull("symbolicName", symbolicName);
 
     // initialize if necessary
     initialize();
@@ -243,8 +241,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    *          the {@link BundleDescription} to add.
    */
   protected final void addBundleDescription(BundleDescription bundleDescription) {
-    Assure.notNull(bundleDescription);
-
+    Assure.notNull("bundleDescription", bundleDescription);
     this._bundleDescriptionList.add(bundleDescription);
   }
 
@@ -257,8 +254,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    *          the {@link FeatureDescription} to add
    */
   protected final void addFeaturesDescription(FeatureDescription featureDescription) {
-    Assure.notNull(featureDescription);
-
+    Assure.notNull("featureDescription", featureDescription);
     this._featureDescriptionList.add(featureDescription);
   }
 

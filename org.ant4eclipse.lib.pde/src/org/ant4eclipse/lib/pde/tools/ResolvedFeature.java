@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
@@ -47,11 +44,10 @@ public class ResolvedFeature {
    *          the FeatureManifest
    */
   public ResolvedFeature(Object source, FeatureManifest featureManifest) {
-    Assure.notNull(source);
+    Assure.notNull("source", source);
     Assure.assertTrue(source instanceof EclipseProject || source instanceof File, String.format(
         "Feature source must be instance of %s or %s.", EclipseProject.class.getName(), File.class.getName()));
-    Assure.notNull(featureManifest);
-
+    Assure.notNull("featureManifest", featureManifest);
     this._featureManifest = featureManifest;
     this._source = source;
   }

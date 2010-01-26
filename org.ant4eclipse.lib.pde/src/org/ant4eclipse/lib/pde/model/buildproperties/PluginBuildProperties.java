@@ -84,8 +84,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          add the specified library to the build properties.
    */
   public void addLibrary(Library library) {
-    Assure.notNull(library);
-
+    Assure.notNull("library", library);
     if (!this._libraries.containsKey(library.getName())) {
       this._libraries.put(library.getName(), library);
     }
@@ -99,8 +98,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return The Library object or null if no such library exists
    */
   public Library getLibrary(String libraryName) {
-    Assure.notNull(libraryName);
-
+    Assure.notNull("libraryName", libraryName);
     return this._libraries.get(libraryName);
   }
 
@@ -112,8 +110,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return true or false
    */
   public boolean hasLibrary(String libraryName) {
-    Assure.notNull(libraryName);
-
+    Assure.notNull("libraryName", libraryName);
     return this._libraries.containsKey(libraryName);
   }
 
@@ -156,8 +153,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          The compileOrder to set.
    */
   void setJarsCompileOrder(String[] compileOrder) {
-    Assure.notNull(compileOrder);
-
+    Assure.notNull("compileOrder", compileOrder);
     this._jarsCompileOrder = compileOrder;
   }
 
@@ -204,8 +200,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @param name
      */
     public Library(String name) {
-      Assure.notNull(name);
-
+      Assure.notNull("name", name);
       this._name = name;
     }
 
@@ -402,7 +397,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return the source compatibility level or 1.3 (default value); never null
    */
   public String getJavacSource() {
-    return (this._javacSource == null ? "1.3" : this._javacSource);
+    return this._javacSource == null ? "1.3" : this._javacSource;
   }
 
   public void setJavacSource(String javacSource) {
@@ -413,7 +408,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return the class compatibility level or 1.2 (default value); never null
    */
   public String getJavacTarget() {
-    return (this._javacTarget == null ? "1.2" : this._javacTarget);
+    return this._javacTarget == null ? "1.2" : this._javacTarget;
   }
 
   public void setJavacTarget(String javacTarget) {

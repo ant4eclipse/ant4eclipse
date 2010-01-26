@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Pair;
@@ -82,7 +80,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
       TargetPlatformConfiguration configuration, File[] targetlocations) {
-    Assure.notNull(configuration);
+    Assure.notNull("configuration", configuration);
 
     // set the plug-in project set
     this._pluginProjectSet = pluginProjectSet;
@@ -215,7 +213,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String id, Version version) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
 
     if (version == null) {
       return getFeatureDescription(id);
@@ -256,7 +254,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
 
     // 
     FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
@@ -303,7 +301,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public BundleDescription getBundleDescription(String id) {
-    Assure.nonEmpty(id);
+    Assure.nonEmpty("id", id);
 
     // 
     BundleDescription bundleDescription = this._pluginProjectSet.getBundleDescription(id);
@@ -349,8 +347,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
-    Assure.notNull(source);
-    Assure.notNull(manifest);
+    Assure.notNull("source", source);
+    Assure.notNull("manifest", manifest);
 
     ResolvedFeature resolvedFeature = new ResolvedFeature(source, manifest);
 
@@ -406,7 +404,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param resolvedFeature
    * @throws BuildException
    */
-  private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) throws BuildException {
+  private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) {
 
     // 4. Retrieve BundlesDescriptions for feature plug-ins
     Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
@@ -582,7 +580,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return the resolver errors as a string.
    */
   public static String dumpResolverErrors(BundleDescription description, boolean dumpHeader) {
-    Assure.notNull(description);
+    Assure.notNull("description", description);
 
     StringBuffer stringBuffer = new StringBuffer();
     State state = description.getContainingState();
@@ -603,11 +601,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
           stringBuffer.append(description.getLocation());
           stringBuffer.append("):\n");
         }
-        for (int i = 0; i < errors.length; i++) {
-          stringBuffer.append("  ");
-          stringBuffer.append(errors[i]);
-          if (i + 1 < errors.length) {
-            stringBuffer.append("\n");
+        if (errors != null) {
+          if (errors.length > 0) {
+            for (int i = 0; i < errors.length; i++) {
+              stringBuffer.append("  ");
+              stringBuffer.append(errors[i]);
+              if (i + 1 < errors.length) {
+                stringBuffer.append("\n");
+              }
+            }
           }
         }
       }
@@ -625,7 +627,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return the bundle info of the given bundle description.
    */
   static String getBundleInfo(BundleDescription description) {
-    Assure.notNull(description);
+    Assure.notNull("description", description);
 
     BundleSource bundleSource = BundleSource.getBundleSource(description);
 

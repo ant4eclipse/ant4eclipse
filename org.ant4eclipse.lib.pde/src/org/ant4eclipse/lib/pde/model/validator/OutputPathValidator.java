@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.pde.model.validator;
 
 
 
-
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;

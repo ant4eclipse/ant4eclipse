@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.FeatureDescriptionLoader;

@@ -11,13 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.jar.Manifest;
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
@@ -25,6 +18,12 @@ import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.jar.Manifest;
 
 /**
  * The {@link PluginProjectLayoutResolver} implements a {@link BundleLayoutResolver} for eclipse plug-in projects.
@@ -48,7 +47,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    *          the eclipse plug-in project that has to be resolved
    */
   public PluginProjectLayoutResolver(EclipseProject project) {
-    Assure.notNull(project);
+    Assure.notNull("project", project);
     Assure.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
 
     // set the eclipse project

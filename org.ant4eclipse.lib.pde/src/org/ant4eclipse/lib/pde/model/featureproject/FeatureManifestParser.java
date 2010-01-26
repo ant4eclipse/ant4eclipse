@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.featureproject;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
@@ -41,7 +39,7 @@ public class FeatureManifestParser {
    * @return a Feature instance providing the content.
    */
   public static FeatureManifest parseFeature(InputStream inputStream) {
-    Assure.notNull(inputStream);
+    Assure.notNull("inputStream", inputStream);
 
     FeatureManifestImpl feature = new FeatureManifestImpl();
 

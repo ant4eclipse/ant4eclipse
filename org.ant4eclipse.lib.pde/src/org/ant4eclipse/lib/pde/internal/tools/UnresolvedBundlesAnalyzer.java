@@ -1,7 +1,5 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.eclipse.osgi.service.resolver.BundleDescription;
@@ -30,8 +28,7 @@ public class UnresolvedBundlesAnalyzer {
    *          the target platform
    */
   public UnresolvedBundlesAnalyzer(TargetPlatform targetPlatform) {
-    Assure.notNull(targetPlatform);
-
+    Assure.notNull("targetPlatform", targetPlatform);
     // set the target platform
     this._targetPlatform = targetPlatform;
   }

@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.featureproject;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
@@ -58,8 +55,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @return Returns whether a feature project role is set or not.
    */
   public static boolean hasFeatureProjectRole(EclipseProject eclipseProject) {
-    Assure.notNull(eclipseProject);
-
+    Assure.notNull("eclipseProject", eclipseProject);
     return eclipseProject.hasRole(FeatureProjectRoleImpl.class);
   }
 
@@ -73,7 +69,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    */
   public FeatureProjectRoleImpl(EclipseProject eclipseProject) {
     super(FEATURE_PROJECT_ROLE_NAME, eclipseProject);
-    Assure.notNull(eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
     this._project = eclipseProject;
   }
 
@@ -93,8 +89,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    *          the feature manifest to set.
    */
   public void setFeature(FeatureManifest featuremanifest) {
-    Assure.notNull(featuremanifest);
-
+    Assure.notNull("featuremanifest", featuremanifest);
     this._feature = featuremanifest;
   }
 

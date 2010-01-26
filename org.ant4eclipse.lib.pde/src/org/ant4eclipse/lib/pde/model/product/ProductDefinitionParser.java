@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.product;
 
-
+import java.io.InputStream;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -20,8 +20,6 @@ import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.osgi.framework.Version;
-
-import java.io.InputStream;
 
 /**
  * <p>
@@ -44,7 +42,7 @@ public class ProductDefinitionParser {
    */
   public static final ProductDefinition parseProductDefinition(InputStream inputstream) {
 
-    Assure.notNull(inputstream);
+    Assure.notNull("inputstream", inputstream);
 
     XQueryHandler queryhandler = new XQueryHandler();
 
@@ -92,7 +90,8 @@ public class ProductDefinitionParser {
     result.setApplication(applicationquery.getSingleResult());
     result.setId(idquery.getSingleResult());
     result.setName(namequery.getSingleResult());
-    result.setVersion(new Version(versionquery.getSingleResult()));
+    String versionString = versionquery.getSingleResult();
+    result.setVersion(new Version(versionString == null || "null".equals(versionString) ? "0.0.0" : versionString));
     result.setLaunchername(launchernamequery.getSingleResult());
     result.setSplashplugin(splashquery.getSingleResult());
     result.setBasedOnFeatures(Boolean.parseBoolean(usefeaturesquery.getSingleResult()));

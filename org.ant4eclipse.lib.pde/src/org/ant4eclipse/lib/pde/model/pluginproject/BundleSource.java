@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.pluginproject;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
@@ -41,7 +39,7 @@ public class BundleSource {
    * @return the bundle source.
    */
   public static BundleSource getBundleSource(BundleDescription bundleDescription) {
-    Assure.notNull(bundleDescription);
+    Assure.notNull("bundleDescription", bundleDescription);
 
     // retrieve the user object (that is always an instance of type BundleSource in our case)
     BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
@@ -75,8 +73,8 @@ public class BundleSource {
    *          the bundle manifest
    */
   public BundleSource(Object source, Manifest bundleManifest) {
-    Assure.notNull(source);
-    Assure.notNull(bundleManifest);
+    Assure.notNull("source", source);
+    Assure.notNull("bundleManifest", bundleManifest);
 
     this._source = source;
     this._bundleManifest = bundleManifest;
@@ -183,7 +181,7 @@ public class BundleSource {
    *          the class path root
    */
   public void setClasspathRoot(File classpathRoot) {
-    Assure.notNull(classpathRoot);
+    Assure.notNull("classpathRoot", classpathRoot);
     Assure.assertTrue(!hasClasspathRoot(), "Classpath root already set!");
 
     this._classpathRoot = classpathRoot;

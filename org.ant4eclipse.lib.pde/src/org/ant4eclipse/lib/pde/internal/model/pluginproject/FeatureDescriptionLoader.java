@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -44,7 +43,7 @@ public class FeatureDescriptionLoader {
    * @return the feature description
    */
   public static FeatureDescription parseFeature(File file) {
-    Assure.exists(file);
+    Assure.exists("file", file);
 
     if (file.isFile() && file.getName().endsWith(".jar")) {
       return parseFeatureJarFile(file);
