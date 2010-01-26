@@ -17,7 +17,7 @@ import org.ant4eclipse.platform.ant.core.PathComponent;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.ProjectNature;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -44,7 +44,7 @@ public class PlatformExecutorValuesProvider {
    * @param pathComponent
    */
   public PlatformExecutorValuesProvider(PathComponent pathComponent) {
-    Assert.notNull(pathComponent);
+    Assure.notNull(pathComponent);
 
     this._pathComponent = pathComponent;
   }
@@ -57,8 +57,8 @@ public class PlatformExecutorValuesProvider {
    * @param executionValues
    */
   public void provideExecutorValues(EclipseProject eclipseProject, MacroExecutionValues executionValues) {
-    Assert.notNull(eclipseProject);
-    Assert.notNull(executionValues);
+    Assure.notNull(eclipseProject);
+    Assure.notNull(executionValues);
 
     // create scoped properties
     executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName());

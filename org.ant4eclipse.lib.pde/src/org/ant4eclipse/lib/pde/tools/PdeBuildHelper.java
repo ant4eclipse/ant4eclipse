@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.pde.tools;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.AbstractBuildProperties;
 import org.apache.tools.ant.BuildException;
 import org.osgi.framework.Version;
@@ -157,7 +157,7 @@ public class PdeBuildHelper {
    * @return
    */
   public static Version resolveVersion(Version version, String qualifier) {
-    Assert.notNull(qualifier);
+    Assure.notNull(qualifier);
 
     Version qualifiedVersion = null;
 
@@ -177,7 +177,7 @@ public class PdeBuildHelper {
   }
 
   public static boolean hasUnresolvedQualifier(Version version) {
-    Assert.notNull(version);
+    Assure.notNull(version);
 
     return (version != null && "qualifier".equals(version.getQualifier()));
   }

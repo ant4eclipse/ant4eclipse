@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -70,7 +70,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    *          type
    */
   public ClasspathClassFileLoaderImpl(File entry, byte type) {
-    Assert.notNull(entry);
+    Assure.notNull(entry);
 
     this._location = entry;
     this._type = type;
@@ -80,8 +80,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   public ClasspathClassFileLoaderImpl(File classPathEntry, byte type, File sourcePathEntry) {
-    Assert.notNull(classPathEntry);
-    Assert.notNull(sourcePathEntry);
+    Assure.notNull(classPathEntry);
+    Assure.notNull(sourcePathEntry);
 
     this._location = classPathEntry;
     this._type = type;
@@ -100,7 +100,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param classpathEntries
    */
   public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries) {
-    Assert.notNull(location);
+    Assure.notNull(location);
 
     this._location = location;
     this._type = type;
@@ -110,7 +110,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   }
 
   public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries, File[] sourcePathEntries) {
-    Assert.notNull(location);
+    Assure.notNull(location);
 
     this._location = location;
     this._type = type;
@@ -207,15 +207,15 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   protected void initialize(File[] classpathEntries, File[] sourcepathEntries) {
 
     // assert not null
-    Assert.notNull(classpathEntries);
-    Assert.notNull(sourcepathEntries);
+    Assure.notNull(classpathEntries);
+    Assure.notNull(sourcepathEntries);
 
     // assert that each entry is not null
     for (File classpathEntrie : classpathEntries) {
-      Assert.notNull(classpathEntrie);
+      Assure.notNull(classpathEntrie);
     }
     for (File sourcepathEntry : sourcepathEntries) {
-      Assert.notNull(sourcepathEntry);
+      Assure.notNull(sourcepathEntry);
     }
 
     // assign path entries
@@ -323,7 +323,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @throws IOException
    */
   private String[] getAllPackagesFromJar(File jar) {
-    Assert.isFile(jar);
+    Assure.isFile(jar);
 
     // prepare result...
     List<String> result = new LinkedList<String>();
@@ -537,7 +537,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      *          the class path entry to add.
      */
     public void addClasspathEntry(File classpathEntry) {
-      Assert.exists(classpathEntry);
+      Assure.exists(classpathEntry);
 
       this._classpathEntries.add(classpathEntry);
     }
@@ -551,7 +551,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      *          the source path entry to add.
      */
     public void addSourcepathEntry(File sourcepathEntry) {
-      Assert.isDirectory(sourcepathEntry);
+      Assure.isDirectory(sourcepathEntry);
 
       this._sourcepathEntries.add(sourcepathEntry);
     }

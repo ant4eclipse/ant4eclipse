@@ -15,7 +15,7 @@ package org.ant4eclipse.lib.jdt.internal.tools;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -187,7 +187,7 @@ public class ClasspathEntryResolverExecutor {
    *          the project to add.
    */
   public final void addReferencedProject(EclipseProject project) {
-    Assert.notNull(project);
+    Assure.notNull(project);
 
     // adds the referenced project
     if (!this._referencedProjects.contains(project)) {
@@ -204,7 +204,7 @@ public class ClasspathEntryResolverExecutor {
    *          the project to add.
    */
   public final void resolveReferencedProject(EclipseProject project) {
-    Assert.notNull(project);
+    Assure.notNull(project);
 
     // detect circular dependencies
     if (this._currentProject.contains(project)) {
@@ -228,7 +228,7 @@ public class ClasspathEntryResolverExecutor {
 
     // assert raw class path entries
     // TODO: NLS
-    Assert.assertTrue(JavaProjectRole.Helper.getJavaProjectRole(project).hasRawClasspathEntries(), "");
+    Assure.assertTrue(JavaProjectRole.Helper.getJavaProjectRole(project).hasRawClasspathEntries(), "");
 
     // resolve the class path entries for this project
     resolveClasspathEntries(JavaProjectRole.Helper.getJavaProjectRole(project).getRawClasspathEntries());
@@ -267,7 +267,7 @@ public class ClasspathEntryResolverExecutor {
    *          the class path entry to resolve.
    */
   private final void resolveClasspathEntry(ClasspathEntry entry) {
-    Assert.notNull(entry);
+    Assure.notNull(entry);
 
     // initialize handled
     boolean handled = false;

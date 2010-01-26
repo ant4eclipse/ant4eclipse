@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * Resolved library record.
@@ -35,8 +35,8 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    *          The location of the library. Neither <code>null</code> nor empty.
    */
   public ResolvedLibraryEntry(String owningproject, String location) {
-    Assert.nonEmpty(location);
-    Assert.nonEmpty(owningproject);
+    Assure.nonEmpty(location);
+    Assure.nonEmpty(owningproject);
     this._owningproject = owningproject;
     this._location = location;
   }

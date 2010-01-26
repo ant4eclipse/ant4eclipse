@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 import java.util.Arrays;
@@ -143,7 +143,7 @@ public class EcjAdditionalCompilerArguments {
    * @return the output folder for a specific source folder.
    */
   public File getOutputFolder(File sourceFolder) {
-    Assert.isDirectory(sourceFolder);
+    Assure.isDirectory(sourceFolder);
 
     return this._outputFolderMap.get(sourceFolder);
   }
@@ -171,7 +171,7 @@ public class EcjAdditionalCompilerArguments {
    *          the boot access restriction.
    */
   public void setBootClassPathAccessRestrictions(String bootClassPathAccessRestrictions) {
-    Assert.nonEmpty(bootClassPathAccessRestrictions);
+    Assure.nonEmpty(bootClassPathAccessRestrictions);
 
     this._bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
   }
@@ -198,8 +198,8 @@ public class EcjAdditionalCompilerArguments {
    * @param outputFolder
    */
   public void addSourceFolderForOutputFolder(File outputFolder, File[] sourceFolders) {
-    Assert.notNull(outputFolder);
-    Assert.notNull(sourceFolders);
+    Assure.notNull(outputFolder);
+    Assure.notNull(sourceFolders);
 
     // get source folder map
     Set<File> sourceFolderSet = this._sourceFolderMap.get(sourceFolders);

@@ -15,7 +15,7 @@ package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
@@ -54,7 +54,7 @@ public class BundleDescriptionLoader {
    */
   public static BundleDescription loadFromPluginProject(EclipseProject project) throws FileNotFoundException,
       IOException, BundleException {
-    Assert.notNull(project);
+    Assure.notNull(project);
 
     File manifestFile = project.getChild(Constants.OSGI_BUNDLE_MANIFEST);
     // TODO: handle projects with plugin.xml that may not have a MANIFEST-file
@@ -110,7 +110,7 @@ public class BundleDescriptionLoader {
    * @throws FileParserException
    */
   public static BundleDescription parsePlugin(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
     BundleDescription description = null;
     try {
       if (file.isFile() && file.getName().endsWith(".jar")) {
@@ -134,7 +134,7 @@ public class BundleDescriptionLoader {
   }
 
   private static BundleDescription parsePluginJarFile(File file) {
-    Assert.isFile(file);
+    Assure.isFile(file);
 
     try {
       // create jar file
@@ -170,7 +170,7 @@ public class BundleDescriptionLoader {
   private static BundleDescription parsePluginDirectory(File directory) throws FileNotFoundException, IOException,
       BundleException {
 
-    Assert.isDirectory(directory);
+    Assure.isDirectory(directory);
 
     // support for plugins based on the osgi bundle model
     File bundleManifestFile = new File(directory, Constants.OSGI_BUNDLE_MANIFEST);

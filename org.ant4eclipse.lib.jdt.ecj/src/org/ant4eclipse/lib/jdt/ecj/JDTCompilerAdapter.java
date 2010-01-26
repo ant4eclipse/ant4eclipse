@@ -24,7 +24,7 @@ import java.util.List;
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
 
 import org.ant4eclipse.lib.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -373,7 +373,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return
    */
   private String extractJavacCompilerArg(String argumentName, String defaultValue) {
-    Assert.notNull(argumentName);
+    Assure.notNull(argumentName);
 
     // Step 1: Get all compilerArguments
     String[] currentCompilerArgs = getJavac().getCurrentCompilerArgs();
@@ -441,8 +441,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return
    */
   private String[] readProblematicLine(SourceFile sourceFile, CategorizedProblem categorizedProblem) {
-    Assert.notNull(sourceFile);
-    Assert.notNull(categorizedProblem);
+    Assure.notNull(sourceFile);
+    Assure.notNull(categorizedProblem);
 
     int lineNumber = categorizedProblem.getSourceLineNumber();
     int sourceStart = categorizedProblem.getSourceStart();

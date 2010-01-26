@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.pde.internal.tools;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.FeatureDescriptionLoader;
 import org.ant4eclipse.lib.pde.model.link.LinkFile;
@@ -53,7 +53,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
   public BinaryBundleAndFeatureSet(File targetPlatformLocation) {
     super("target platform location '" + targetPlatformLocation.getAbsolutePath() + "'");
 
-    Assert.isDirectory(targetPlatformLocation);
+    Assure.isDirectory(targetPlatformLocation);
 
     this._targetPlatformLocation = targetPlatformLocation;
   }

@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
 import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
@@ -46,8 +46,8 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
 
     super(libraryLocation, libraryType);
 
-    Assert.nonEmpty(zipEntryName);
-    Assert.notNull(zipFile);
+    Assure.nonEmpty(zipEntryName);
+    Assure.notNull(zipFile);
 
     this._zipEntryName = zipEntryName;
     this._zipFile = zipFile;

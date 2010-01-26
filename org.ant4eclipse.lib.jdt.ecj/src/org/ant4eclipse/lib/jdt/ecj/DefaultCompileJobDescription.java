@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.Iterator;
@@ -55,9 +55,9 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    */
   public DefaultCompileJobDescription(ClassFileLoader classFileLoader, StringMap compilerOptions,
       SourceFile[] sourceFiles) {
-    Assert.notNull(classFileLoader);
-    Assert.notNull(compilerOptions);
-    Assert.notNull(sourceFiles);
+    Assure.notNull(classFileLoader);
+    Assure.notNull(compilerOptions);
+    Assure.notNull(sourceFiles);
 
     this._classFileLoader = classFileLoader;
     this._compilerOptions = compilerOptions;
@@ -94,7 +94,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    *          the class file loader.
    */
   public void setClassFileLoader(ClassFileLoader classFileLoader) {
-    Assert.notNull(classFileLoader);
+    Assure.notNull(classFileLoader);
 
     this._classFileLoader = classFileLoader;
   }
@@ -108,7 +108,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    *          the compiler options.
    */
   public void setCompilerOptions(Map<String, String> compilerOptions) {
-    Assert.notNull(compilerOptions);
+    Assure.notNull(compilerOptions);
 
     this._compilerOptions = compilerOptions;
   }
@@ -122,7 +122,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    *          the source files.
    */
   public void setSourceFiles(SourceFile[] sourceFiles) {
-    Assert.notNull(sourceFiles);
+    Assure.notNull(sourceFiles);
     this._sourceFiles = sourceFiles;
   }
 

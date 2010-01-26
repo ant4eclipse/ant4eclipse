@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.core.delegate;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -37,7 +37,7 @@ public abstract class AbstractAntDelegate {
    *          the project component
    */
   public AbstractAntDelegate(ProjectComponent component) {
-    Assert.notNull(component);
+    Assure.notNull(component);
 
     this._component = component;
   }

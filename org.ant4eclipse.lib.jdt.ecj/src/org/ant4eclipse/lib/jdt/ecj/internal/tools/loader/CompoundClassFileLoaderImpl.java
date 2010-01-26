@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
@@ -31,7 +31,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   private Map<String, List<ClassFileLoader>> _allPackages;
 
   public CompoundClassFileLoaderImpl(ClassFileLoader[] classFileLoaders) {
-    Assert.notNull(classFileLoaders);
+    Assure.notNull(classFileLoaders);
 
     this._classFileLoaders = classFileLoaders;
 

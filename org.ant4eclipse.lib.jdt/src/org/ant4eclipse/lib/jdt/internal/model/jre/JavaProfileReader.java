@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -74,13 +74,13 @@ public class JavaProfileReader implements Lifecycle {
    * {@inheritDoc}
    */
   public JavaProfile getJavaProfile(String path) {
-    Assert.nonEmpty(path);
+    Assure.nonEmpty(path);
 
     return this._javaProfileCache.get(path);
   }
 
   public boolean hasJavaProfile(String path) {
-    Assert.nonEmpty(path);
+    Assure.nonEmpty(path);
 
     return this._javaProfileCache.containsKey(path);
   }

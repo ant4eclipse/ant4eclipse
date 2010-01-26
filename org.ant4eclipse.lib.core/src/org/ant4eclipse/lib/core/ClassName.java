@@ -36,7 +36,7 @@ public final class ClassName {
    * @return a ClassName instance representing this qualified class name
    */
   public static ClassName fromQualifiedClassName(String qualifiedClassName) {
-    Assert.nonEmpty(qualifiedClassName);
+    Assure.nonEmpty(qualifiedClassName);
 
     // split the qualified class name
     String[] splittedClassName = splitQualifiedClassName(qualifiedClassName);
@@ -167,7 +167,7 @@ public final class ClassName {
    * @return an array with exactly two items: {package name, class name}
    */
   private static String[] splitQualifiedClassName(String qualifiedClassName) {
-    Assert.nonEmpty(qualifiedClassName);
+    Assure.nonEmpty(qualifiedClassName);
 
     int v = qualifiedClassName.lastIndexOf('.');
     String packageName = "";
@@ -193,8 +193,8 @@ public final class ClassName {
    *          the class name.
    */
   private ClassName(String packageName, String className) {
-    Assert.notNull(packageName);
-    Assert.nonEmpty(className);
+    Assure.notNull(packageName);
+    Assure.nonEmpty(className);
 
     this._packageName = packageName;
     this._className = className;

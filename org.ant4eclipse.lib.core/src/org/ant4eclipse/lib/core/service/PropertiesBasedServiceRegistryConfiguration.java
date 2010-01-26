@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.service;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -53,7 +53,7 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
    *          The configuration to be used. Not <code>null</code>.
    */
   public PropertiesBasedServiceRegistryConfiguration(Ant4EclipseConfiguration ant4EclipseConfiguration) {
-    Assert.notNull(ant4EclipseConfiguration);
+    Assure.notNull(ant4EclipseConfiguration);
     this._ant4EclipseConfiguration = ant4EclipseConfiguration;
   }
 

@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.link;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
 
@@ -49,7 +49,7 @@ public class LinkFile {
    *          the destination of the link file.
    */
   public LinkFile(File destination) {
-    Assert.notNull(destination);
+    Assure.notNull(destination);
 
     this._destination = destination;
   }

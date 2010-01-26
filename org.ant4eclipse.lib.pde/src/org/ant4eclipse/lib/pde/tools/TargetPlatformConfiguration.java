@@ -14,7 +14,7 @@ package org.ant4eclipse.lib.pde.tools;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
 import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
@@ -173,7 +173,7 @@ public class TargetPlatformConfiguration {
   }
 
   private void assertNotLocked() {
-    Assert.assertTrue(!this._isLocked, "TargetPlatformConfiguration is locked!");
+    Assure.assertTrue(!this._isLocked, "TargetPlatformConfiguration is locked!");
   }
 
   // * org.osgi.framework.system.packages - the packages exported by the system bundle <br>

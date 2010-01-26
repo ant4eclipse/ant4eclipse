@@ -16,7 +16,7 @@ package org.ant4eclipse.lib.pde.model.pluginproject;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
@@ -89,7 +89,7 @@ public interface PluginProjectRole extends ProjectRole {
      * @return the plugin project role.
      */
     public static PluginProjectRole getPluginProjectRole(EclipseProject eclipseProject) {
-      Assert.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
+      Assure.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
           + "\" must have PluginProjectRole!");
 
       return (PluginProjectRole) eclipseProject.getRole(PluginProjectRole.class);
@@ -103,7 +103,7 @@ public interface PluginProjectRole extends ProjectRole {
      * @return Returns whether a {@link PluginProjectRole} is set or not.
      */
     public static final boolean hasPluginProjectRole(EclipseProject eclipseProject) {
-      Assert.notNull(eclipseProject);
+      Assure.notNull(eclipseProject);
 
       return eclipseProject.hasRole(PluginProjectRole.class);
     }

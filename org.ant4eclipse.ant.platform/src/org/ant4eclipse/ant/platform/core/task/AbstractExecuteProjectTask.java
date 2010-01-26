@@ -18,7 +18,7 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
@@ -51,7 +51,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    *          the prefix for all scoped values
    */
   public AbstractExecuteProjectTask(String prefix) {
-    Assert.notNull(prefix);
+    Assure.notNull(prefix);
 
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(this);
 

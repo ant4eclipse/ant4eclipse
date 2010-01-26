@@ -16,7 +16,7 @@ package org.ant4eclipse.ant.jdt;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.apache.tools.ant.BuildException;
 
@@ -175,7 +175,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     } else
     // resolve default folder
     {
-      Assert.assertTrue(DEFAULT_FOLDER.equals(this._resolve), "Illegal value for attribute resolve!");
+      Assure.assertTrue(DEFAULT_FOLDER.equals(this._resolve), "Illegal value for attribute resolve!");
 
       JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
       String path = javaProjectRole.getDefaultOutputFolder();

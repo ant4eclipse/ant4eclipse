@@ -17,7 +17,7 @@ import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
 
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
@@ -44,7 +44,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * @param pathComponent
    */
   public JdtExecutorValuesProvider(PathComponent pathComponent) {
-    Assert.notNull(pathComponent);
+    Assure.notNull(pathComponent);
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(pathComponent);
     this._pathComponent = pathComponent;
   }

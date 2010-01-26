@@ -24,7 +24,7 @@ import java.io.File;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class Assert {
+public class Assure {
 
   /**
    * <p>
@@ -120,7 +120,7 @@ public class Assert {
    *          the file that must be a file.
    */
   public static void isFile(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
     if (!file.isFile()) {
       String msg = String
           .format("Precondition violated: %s has to be a file, not a directory!", file.getAbsolutePath());
@@ -138,7 +138,7 @@ public class Assert {
    *          the file that must be a directory.
    */
   public static void isDirectory(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
     if (!file.isDirectory()) {
       String msg = String
           .format("Precondition violated: %s has to be a directory, not a file!", file.getAbsolutePath());

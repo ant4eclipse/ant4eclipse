@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
@@ -44,7 +44,7 @@ public class FeatureDescriptionLoader {
    * @return the feature description
    */
   public static FeatureDescription parseFeature(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
 
     if (file.isFile() && file.getName().endsWith(".jar")) {
       return parseFeatureJarFile(file);
@@ -71,7 +71,7 @@ public class FeatureDescriptionLoader {
    * @return the {@link FeatureDescription}
    */
   private static FeatureDescription parseFeatureJarFile(File file) {
-    Assert.isFile(file);
+    Assure.isFile(file);
 
     try {
       // create jar file
@@ -110,7 +110,7 @@ public class FeatureDescriptionLoader {
    *         <code>feature.xml</code> file, the method returns <code>null</code>.
    */
   private static FeatureDescription parseFeatureDirectory(File directory) {
-    Assert.isDirectory(directory);
+    Assure.isDirectory(directory);
 
     try {
       // create jar file

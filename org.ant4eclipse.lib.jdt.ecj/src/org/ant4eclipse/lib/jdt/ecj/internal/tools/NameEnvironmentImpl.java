@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -44,7 +44,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    *          the class file loader to use.
    */
   public NameEnvironmentImpl(ClassFileLoader classFileLoader) {
-    Assert.notNull(classFileLoader);
+    Assure.notNull(classFileLoader);
 
     this._classFileLoader = classFileLoader;
   }
@@ -129,7 +129,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @return
    */
   protected NameEnvironmentAnswer findClass(String className) {
-    Assert.notNull(className);
+    Assure.notNull(className);
     return findClass(ClassName.fromQualifiedClassName(className));
   }
 

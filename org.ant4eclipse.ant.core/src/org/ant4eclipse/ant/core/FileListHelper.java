@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.core;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.types.FileList;
 import org.apache.tools.ant.types.FileList.FileName;
@@ -38,7 +38,7 @@ public class FileListHelper {
    * @return a {@link FileList} that contains all children of the specified file.
    */
   public static FileList getFileList(File file) {
-    Assert.exists(file);
+    Assure.exists(file);
 
     File parentFile = file.getParentFile();
 

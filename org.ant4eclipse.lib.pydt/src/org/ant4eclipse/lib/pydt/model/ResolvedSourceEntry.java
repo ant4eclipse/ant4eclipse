@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 
 /**
  * Resolved record used to identify a source folder within a project.
@@ -33,7 +33,7 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    *          The name of the folder. <code>null</code> or not empty.
    */
   public ResolvedSourceEntry(String owningproject, String foldername) {
-    Assert.nonEmpty(owningproject);
+    Assure.nonEmpty(owningproject);
     this._owningproject = owningproject;
     this._folder = foldername;
   }

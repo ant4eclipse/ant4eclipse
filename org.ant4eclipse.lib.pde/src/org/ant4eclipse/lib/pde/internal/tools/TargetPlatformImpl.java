@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.pde.internal.tools;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -82,7 +82,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
       TargetPlatformConfiguration configuration, File[] targetlocations) {
-    Assert.notNull(configuration);
+    Assure.notNull(configuration);
 
     // set the plug-in project set
     this._pluginProjectSet = pluginProjectSet;
@@ -215,7 +215,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String id, Version version) {
-    Assert.nonEmpty(id);
+    Assure.nonEmpty(id);
 
     if (version == null) {
       return getFeatureDescription(id);
@@ -256,7 +256,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public FeatureDescription getFeatureDescription(String id) {
-    Assert.nonEmpty(id);
+    Assure.nonEmpty(id);
 
     // 
     FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
@@ -303,7 +303,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public BundleDescription getBundleDescription(String id) {
-    Assert.nonEmpty(id);
+    Assure.nonEmpty(id);
 
     // 
     BundleDescription bundleDescription = this._pluginProjectSet.getBundleDescription(id);
@@ -349,8 +349,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
-    Assert.notNull(source);
-    Assert.notNull(manifest);
+    Assure.notNull(source);
+    Assure.notNull(manifest);
 
     ResolvedFeature resolvedFeature = new ResolvedFeature(source, manifest);
 
@@ -582,7 +582,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return the resolver errors as a string.
    */
   public static String dumpResolverErrors(BundleDescription description, boolean dumpHeader) {
-    Assert.notNull(description);
+    Assure.notNull(description);
 
     StringBuffer stringBuffer = new StringBuffer();
     State state = description.getContainingState();
@@ -625,7 +625,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return the bundle info of the given bundle description.
    */
   static String getBundleInfo(BundleDescription description) {
-    Assert.notNull(description);
+    Assure.notNull(description);
 
     BundleSource bundleSource = BundleSource.getBundleSource(description);
 

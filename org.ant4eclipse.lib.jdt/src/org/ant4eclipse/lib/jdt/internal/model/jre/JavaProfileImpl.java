@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.ManifestHelper.ManifestHeaderElement;
@@ -73,7 +73,7 @@ public class JavaProfileImpl implements JavaProfile {
    * @param properties
    */
   public JavaProfileImpl(StringMap properties) {
-    Assert.notNull(properties);
+    Assure.notNull(properties);
 
     this._properties = properties;
 
@@ -209,7 +209,7 @@ public class JavaProfileImpl implements JavaProfile {
      * @return
      */
     public boolean containsPackage(String packageName) {
-      Assert.notNull(packageName);
+      Assure.notNull(packageName);
 
       //
       for (String package1 : this._includedPackages) {
@@ -232,8 +232,8 @@ public class JavaProfileImpl implements JavaProfile {
      * @return
      */
     private boolean matches(String osgiPattern, String string) {
-      Assert.notNull(osgiPattern);
-      Assert.notNull(string);
+      Assure.notNull(osgiPattern);
+      Assure.notNull(string);
 
       return string.matches(osgiPattern);
     }

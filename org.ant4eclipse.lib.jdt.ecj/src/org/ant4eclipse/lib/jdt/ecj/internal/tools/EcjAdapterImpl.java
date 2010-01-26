@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
@@ -48,7 +48,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
    * {@inheritDoc}
    */
   public CompileJobResult compile(CompileJobDescription description) {
-    Assert.notNull(description);
+    Assure.notNull(description);
 
     // create the name environment
     INameEnvironment nameEnvironment = new NameEnvironmentImpl(description.getClassFileLoader());

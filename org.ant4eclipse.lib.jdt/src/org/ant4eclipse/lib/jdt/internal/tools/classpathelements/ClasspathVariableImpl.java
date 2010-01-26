@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
 
 import java.io.File;
@@ -41,8 +41,8 @@ public class ClasspathVariableImpl implements ClassPathVariable {
    * @param path
    */
   public ClasspathVariableImpl(String name, File path) {
-    Assert.nonEmpty(name);
-    Assert.notNull(path);
+    Assure.nonEmpty(name);
+    Assure.notNull(path);
 
     this._name = name;
     this._path = path;

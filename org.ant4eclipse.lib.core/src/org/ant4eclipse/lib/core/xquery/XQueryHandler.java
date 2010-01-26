@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.core.xquery;
 
 
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -154,8 +154,8 @@ public class XQueryHandler extends DefaultHandler {
    *          The handler which provides all queries.
    */
   public static void queryFile(File xmlfile, XQueryHandler handler) {
-    Assert.isFile(xmlfile);
-    Assert.notNull(handler);
+    Assure.isFile(xmlfile);
+    Assure.notNull(handler);
 
     try {
       SAXParserFactory factory = getSAXParserFactory();
@@ -175,8 +175,8 @@ public class XQueryHandler extends DefaultHandler {
    *          The handler which provides all queries.
    */
   public static void queryInputStream(InputStream inputStream, XQueryHandler handler) {
-    Assert.notNull(inputStream);
-    Assert.notNull(handler);
+    Assure.notNull(inputStream);
+    Assure.notNull(handler);
 
     try {
       SAXParserFactory factory = getSAXParserFactory();
