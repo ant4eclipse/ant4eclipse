@@ -11,21 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import static java.lang.String.format;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-
-
-import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
-import org.ant4eclipse.platform.test.builder.StringTemplate;
-
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
+import org.junit.Assert;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +29,7 @@ import java.util.Map;
  */
 public class JdtProjectBuilder extends EclipseProjectBuilder {
 
-  private List<String>               _classpathEntries;
+  private List<String>                   _classpathEntries;
 
   /**
    * Holds all SourceClasses (grouped by their source folders) that should be added to this project.
@@ -48,7 +39,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * <li>Value: {@link SourceClasses} the SourceClasses in the source folder
    * </ul>
    */
-  private Map<String, SourceClasses> _sourceClasses;
+  private Map<String, List<SourceClass>> _sourceClasses;
 
   /**
    * Returns a "pre-configured" {@link JdtProjectBuilder}, that already has set:
@@ -68,8 +59,11 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return the pre-configured JdtEclipseProjectBuilder
    */
   public static JdtProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
-    return new JdtProjectBuilder(projectName).withJreContainerClasspathEntry().withSrcClasspathEntry("src", false)
-        .withOutputClasspathEntry("bin");
+    JdtProjectBuilder result = new JdtProjectBuilder(projectName);
+    result.withJreContainerClasspathEntry();
+    result.withSrcClasspathEntry("src", false);
+    result.withOutputClasspathEntry("bin");
+    return result;
   }
 
   /**
@@ -84,7 +78,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
   public JdtProjectBuilder(String projectName) {
     super(projectName);
 
-    this._sourceClasses = new Hashtable<String, SourceClasses>();
+    this._sourceClasses = new Hashtable<String, List<SourceClass>>();
     this._classpathEntries = new LinkedList<String>();
 
     // All JDT-Projects have a java builder and a java nature
@@ -103,12 +97,12 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    */
   public SourceClass withSourceClass(String sourceFolder, String className) {
     SourceClass sourceClass = new SourceClass(this, className);
-    SourceClasses sourceClasses = this._sourceClasses.get(sourceFolder);
+    List<SourceClass> sourceClasses = this._sourceClasses.get(sourceFolder);
     if (sourceClasses == null) {
-      sourceClasses = new SourceClasses();
+      sourceClasses = new LinkedList<SourceClass>();
       this._sourceClasses.put(sourceFolder, sourceClasses);
     }
-    sourceClasses.addSourceClass(sourceClass);
+    sourceClasses.add(sourceClass);
     return sourceClass;
   }
 
@@ -127,8 +121,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return this
    */
   public JdtProjectBuilder withClasspathEntry(String entry) {
-    assertNotNull(entry);
-
+    Assert.assertNotNull(entry);
     this._classpathEntries.add(entry);
     return this;
   }
@@ -138,28 +131,29 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
   }
 
   public JdtProjectBuilder withSrcClasspathEntry(String path, boolean exported) {
-    String line = format("<classpathentry kind='src' path='%s' exported='%s'/>", path, Boolean.valueOf(exported));
+    String line = String
+        .format("<classpathentry kind='src' path='%s' exported='%s'/>", path, Boolean.valueOf(exported));
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withSrcClasspathEntry(String path, String output, boolean exported) {
-    String line = format("<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output, Boolean
-        .valueOf(exported));
+    String line = String.format("<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output,
+        Boolean.valueOf(exported));
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withContainerClasspathEntry(String path) {
-    String line = format("<classpathentry kind='con' path='%s'/>", path);
+    String line = String.format("<classpathentry kind='con' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withVarClasspathEntry(String path) {
-    String line = format("<classpathentry kind='var' path='%s'/>", path);
+    String line = String.format("<classpathentry kind='var' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
   public JdtProjectBuilder withOutputClasspathEntry(String path) {
-    String line = format(" <classpathentry kind='output' path='%s'/>", path);
+    String line = String.format(" <classpathentry kind='output' path='%s'/>", path);
     return withClasspathEntry(line);
   }
 
@@ -178,8 +172,8 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return
    */
   public JdtProjectBuilder withJreContainerClasspathEntry(String containerName) {
-    return withClasspathEntry(format("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>",
-        containerName));
+    return withClasspathEntry(String.format(
+        "<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>", containerName));
   }
 
   /**
@@ -191,9 +185,9 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
 
     createClasspathFile(projectDir);
 
-    for (Map.Entry<String, SourceClasses> entry : this._sourceClasses.entrySet()) {
+    for (Map.Entry<String, List<SourceClass>> entry : this._sourceClasses.entrySet()) {
       String sourceFolder = entry.getKey();
-      List<SourceClass> sourceClasses = entry.getValue().getSourceClasses();
+      List<SourceClass> sourceClasses = entry.getValue();
       for (SourceClass sourceClass : sourceClasses) {
         createSourceClass(projectDir, sourceFolder, sourceClass);
       }
@@ -205,25 +199,22 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     if (!sourceDir.exists()) {
       sourceDir.mkdirs();
     }
-    assertTrue(sourceDir.isDirectory());
+    Assert.assertTrue(sourceDir.isDirectory());
 
     ClassName className = ClassName.fromQualifiedClassName(sourceClass.getClassName());
     File packageDir = new File(sourceDir, className.getPackageAsDirectoryName());
     if (!packageDir.exists()) {
       packageDir.mkdirs();
     }
-    assertTrue(packageDir.isDirectory());
+    Assert.assertTrue(packageDir.isDirectory());
 
     File sourcefile = new File(sourceDir, className.asSourceFileName());
-    try {
-      sourcefile.createNewFile();
-    } catch (IOException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
 
     StringTemplate classTemplate = new StringTemplate();
-    classTemplate.append("package ${packageName};").nl().append("public class ${className} {").nl().append(
-        sourceClass.generateUsageCode()).nl().append("} // end of class").nl();
+    classTemplate.append("package ${packageName};").nl();
+    classTemplate.append("public class ${className} {").nl();
+    classTemplate.append(sourceClass.generateUsageCode()).nl();
+    classTemplate.append("} // end of class").nl();
 
     classTemplate.replace("packageName", className.getPackageName());
     classTemplate.replace("className", className.getClassName());
@@ -243,27 +234,6 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
 
     File dotClasspathFile = new File(projectDir, ".classpath");
     Utilities.writeFile(dotClasspathFile, dotClasspath.toString(), "UTF-8");
-  }
-
-  /**
-   * Holds a list of {@link SourceClass SourceClasses}
-   * 
-   * @author Nils Hartmann (nils@nilshartmann.net)
-   */
-  class SourceClasses {
-    private List<SourceClass> _sourceClasses;
-
-    public SourceClasses() {
-      this._sourceClasses = new LinkedList<SourceClass>();
-    }
-
-    public void addSourceClass(SourceClass sourceClass) {
-      this._sourceClasses.add(sourceClass);
-    }
-
-    public List<SourceClass> getSourceClasses() {
-      return this._sourceClasses;
-    }
   }
 
 }

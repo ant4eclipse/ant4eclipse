@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
-import org.ant4eclipse.platform.test.builder.StringTemplate;
-
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -101,4 +98,4 @@ public class SourceClass {
     return source.toString();
   }
 
-}
+} /* ENDCLASS */
