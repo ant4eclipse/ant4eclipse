@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.model;
+package org.ant4eclipse.lib.cdt.model;
 
 /**
  * Types supported by the CDT build system.

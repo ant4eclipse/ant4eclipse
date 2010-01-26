@@ -9,12 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.cdt.internal.model.project;
+package org.ant4eclipse.lib.cdt.internal.model.project;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
-import org.ant4eclipse.cdt.model.project.CProjectRole;
+import org.ant4eclipse.lib.cdt.model.project.CProjectRole;
 
 /**
  * <p>
