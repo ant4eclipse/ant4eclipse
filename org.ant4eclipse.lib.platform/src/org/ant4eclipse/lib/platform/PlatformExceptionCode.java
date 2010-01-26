@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform;
+package org.ant4eclipse.lib.platform;
 
 import org.ant4eclipse.core.exception.ExceptionCode;
 import org.ant4eclipse.core.nls.NLS;
