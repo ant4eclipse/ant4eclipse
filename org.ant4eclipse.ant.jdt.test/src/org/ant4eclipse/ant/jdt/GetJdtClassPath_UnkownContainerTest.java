@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.jdt.ant;
+package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
@@ -19,18 +19,24 @@ import java.io.File;
 
 /**
  * <p>
+ * Tests, if the JDT classpath container
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
+public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTest {
+
+  /** - */
+  private File _simpleProjectBinDir;
 
   @Override
   public void setUp() throws Exception {
     super.setUp();
 
-    // set up the build file
-    setupBuildFile("classpathVariables.xml");
+    JdtProjectBuilder builder = JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject")
+        .withContainerClasspathEntry("UnkownContainer");
+
+    this._simpleProjectBinDir = new File(builder.createIn(getTestWorkspaceDirectory()), "bin");
   }
 
   /**
@@ -39,18 +45,13 @@ public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
    * 
    * @throws Exception
    */
-  public void testClasspathVariables() throws Exception {
-    // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withVarClasspathEntry("BRUNO_WALTER")
-        .withVarClasspathEntry("VAR2/test").createIn(getTestWorkspaceDirectory());
-
-    // set the properties
-    getProject().setProperty("projectName", "project");
-
-    // execute target
-    String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "bruno_walter"),
-        new File(getTestWorkspaceDirectory(), "var2/test"));
+  public void testSimple() throws Exception {
+    try {
+      String classpath = executeTestTarget("simpleproject", false, false);
+      assertClasspath(classpath, this._simpleProjectBinDir);
+    } catch (Exception e) {
+      return;
+    }
+    fail();
   }
-
 }
