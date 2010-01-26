@@ -12,7 +12,7 @@
 package org.ant4eclipse;
 
 
-import org.ant4eclipse.lib.core.Ant4EclipseConfiguratorTest;
+import org.ant4eclipse.lib.core.DefaultConfiguratorTest;
 import org.ant4eclipse.lib.core.AssertTest;
 import org.ant4eclipse.lib.core.ClassNameTest;
 import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseConditionTest;
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { ClassNameTest.class, AssertTest.class, Ant4EclipseConfiguratorTest.class,
+@Suite.SuiteClasses( { ClassNameTest.class, AssertTest.class, DefaultConfiguratorTest.class,
     XQueryHandlerTest.class, UtilitiesTest.class, PropertiesBasedServiceRegistryConfigurationTest.class,
     ServiceRegistryTest.class, NLSTest.class, FailureTest.class, LoggingUsageTest.class,
     DependencyGraphTest.class, AbstractAnt4EclipseConditionTest.class, AbstractAnt4EclipseDataTypeTest.class,

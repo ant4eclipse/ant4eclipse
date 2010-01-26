@@ -18,7 +18,7 @@ import org.ant4eclipse.lib.core.util.StringMap;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 
-public class Ant4EclipseConfiguratorTest {
+public class DefaultConfiguratorTest {
 
   @Test
   public void testAnt4EclipseConfigurator() {
