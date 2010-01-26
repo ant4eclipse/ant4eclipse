@@ -12,7 +12,8 @@
 package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
-import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
+
+import org.ant4eclipse.testframework.EclipseProjectBuilder;
 
 public class ExecuteProjectBuildersTaskTest extends AbstractWorkspaceBasedBuildFileTest {
 

@@ -12,17 +12,20 @@
 package org.ant4eclipse.platform.test;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.testframework.FileHelper;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.TestDirectory;
+import org.apache.tools.ant.BuildFileTest;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Baseclass for all buildfile-based tests in the platform layer
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public abstract class AbstractWorkspaceBasedBuildFileTest extends EnhancedBuildFileTest {
+public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest {
 
   private TestDirectory _testWorkspace;
 
@@ -56,10 +59,13 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends EnhancedBuildF
    *          The name of the build file without folders
    * @return The name of the build file
    */
-  protected String getProjectBuildFile(String unqualifiedName) {
+  private String getProjectBuildFile(String unqualifiedName) {
     return getClass().getPackage().getName().replace('.', '/') + "/" + unqualifiedName;
   }
 
+  /**
+   * @todo [17-Dec-2009:KASI] Why do we need that ? Is the text checked anywhere ?
+   */
   @Override
   protected void runTest() throws Throwable {
     try {
@@ -85,7 +91,8 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends EnhancedBuildF
    */
   protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
     String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
-    String buildFileContent = FileHelper.getResource(qualifiedBuildFileName);
+    StringBuffer buffer = Utilities.readTextContent("/" + qualifiedBuildFileName, Utilities.ENCODING, true);
+    String buildFileContent = buffer.toString();
     File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
     configureProject(buildFile.getAbsolutePath());
     getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
@@ -100,7 +107,20 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends EnhancedBuildF
     return this._testWorkspace;
   }
 
-  protected File getTestWorkspaceDirectory() {
+  public File getTestWorkspaceDirectory() {
     return this._testWorkspace.getRootDir();
   }
+
+  public void expectLogMatches(String target, String regExp) {
+
+    executeTarget(target);
+
+    String realLog = getLog();
+
+    Pattern patter = Pattern.compile(regExp);
+    Matcher matcher = patter.matcher(target);
+
+    assertTrue("expecting log to match \"" + regExp + "\" log was \"" + realLog + "\"", matcher.matches());
+  }
+
 }
