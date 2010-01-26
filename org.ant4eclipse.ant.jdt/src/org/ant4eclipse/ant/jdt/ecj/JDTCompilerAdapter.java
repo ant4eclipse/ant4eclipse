@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.lib.jdt.ecj;
+package org.ant4eclipse.ant.jdt.ecj;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -29,6 +29,15 @@ import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoaderFactory;
+import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
+import org.ant4eclipse.lib.jdt.ecj.DefaultCompileJobDescription;
+import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
+import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.lib.jdt.ecj.SourceFile;
+import org.ant4eclipse.lib.jdt.ecj.SourceFileFactory;
+import org.ant4eclipse.lib.jdt.ecj.EcjAdapter.Factory;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.taskdefs.condition.Os;
