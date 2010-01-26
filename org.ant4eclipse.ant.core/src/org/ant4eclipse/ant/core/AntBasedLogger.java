@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.BuildEvent;
@@ -38,7 +37,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
    * @param project
    */
   public AntBasedLogger(Project project) {
-    Assure.notNull(project);
+    Assure.notNull("project", project);
 
     this._project = project;
     this._project.addBuildListener(this);
