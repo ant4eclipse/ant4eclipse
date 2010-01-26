@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt.test;
 
-import org.ant4eclipse.core.util.Utilities;
-
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;

@@ -11,18 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt.test;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
-
-import org.ant4eclipse.ant.core.AntConfigurator;
-import org.ant4eclipse.ant.pydt.ant.GetPythonPathTask;
-import org.ant4eclipse.ant.pydt.ant.GetPythonSourcePathTask;
-import org.ant4eclipse.ant.pydt.ant.PythonDocumentationTask;
-import org.ant4eclipse.ant.pydt.ant.type.PythonContainer;
-import org.ant4eclipse.pydt.test.builder.WorkspaceBuilder;
-import org.ant4eclipse.pydt.test.data.ProjectDescription;
-import org.ant4eclipse.pydt.test.data.ProjectSuite;
-import org.ant4eclipse.pydt.test.data.ProjectSuiteApi;
+import org.ant4eclipse.ant.pydt.GetPythonPathTask;
+import org.ant4eclipse.ant.pydt.GetPythonSourcePathTask;
+import org.ant4eclipse.ant.pydt.PythonDocumentationTask;
+import org.ant4eclipse.ant.pydt.type.PythonContainer;
+import org.ant4eclipse.lib.core.DefaultConfigurator;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.testframework.ProjectDescription;
+import org.ant4eclipse.testframework.ProjectSuite;
+import org.ant4eclipse.testframework.ProjectSuiteApi;
+import org.ant4eclipse.testframework.WorkspaceBuilder;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
 import org.junit.After;
@@ -183,7 +182,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Before
   public void setup() {
-    AntConfigurator.configureAnt4Eclipse();
+    DefaultConfigurator.configureAnt4Eclipse();
     this._projectsuite = new ProjectSuite(this, this._dltk);
   }
 
