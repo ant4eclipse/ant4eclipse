@@ -78,7 +78,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
         : EclipseProject.PathStyle.ABSOLUTE;
 
     // resolve the source path
-    JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(getEclipseProject());
+    JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
     String[] paths = javaProjectRole.getSourceFolders();
     File[] result = getEclipseProject().getChildren(paths, relative);
 

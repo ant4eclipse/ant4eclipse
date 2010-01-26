@@ -52,7 +52,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @return An entry for a java runtime environment.
    */
   public Runtime createJre() {
-    return (new Runtime());
+    return new Runtime();
   }
 
   public void setDefault(String defaultJre) {
@@ -77,12 +77,11 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     boolean isDefault = runtime.getId().equals(this._defaultJre);
 
-    JavaRuntimeRegistry javaRuntimeRegistry = (JavaRuntimeRegistry) ServiceRegistry.instance().getService(
-        JavaRuntimeRegistry.class.getName());
+    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
 
     JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation());
 
-    Assure.notNull(javaRuntime);
+    Assure.notNull("javaRuntime", javaRuntime);
 
     if (isDefault) {
       javaRuntimeRegistry.setDefaultJavaRuntime(runtime.getId());

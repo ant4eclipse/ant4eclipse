@@ -147,7 +147,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     if (FOR_SOURCE_FOLDER.equals(this._resolve)) {
       requireSourceFolderSet();
 
-      JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
+      JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
 
       String pathName = javaProjectRole.getOutputFolderForSourceFolder(getSourceFolder());
       File resolvedPathEntry = getEclipseProject().getChild(pathName, relative);
@@ -156,7 +156,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     }
     // resolve all output folder
     else if (ALL.equals(this._resolve)) {
-      JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
+      JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
       String[] pathNames = javaProjectRole.getAllOutputFolders();
 
       // TODO: NLS
@@ -176,7 +176,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     {
       Assure.assertTrue(DEFAULT_FOLDER.equals(this._resolve), "Illegal value for attribute resolve!");
 
-      JavaProjectRole javaProjectRole = (JavaProjectRole) getEclipseProject().getRole(JavaProjectRole.class);
+      JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
       String path = javaProjectRole.getDefaultOutputFolder();
       File resolvedPathEntry = getEclipseProject().getChild(path, relative);
       return new File[] { resolvedPathEntry };
