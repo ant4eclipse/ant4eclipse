@@ -25,13 +25,13 @@ import org.apache.tools.ant.Project;
 
 /**
  * <p>
- * The class {@link Ant4EclipseConfigurator} provides static methods to configure Ant4Eclipse.
+ * The class {@link AntConfigurator} provides static methods to configure Ant4Eclipse.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class Ant4EclipseConfigurator {
+public class AntConfigurator {
 
   /**
    * <p>

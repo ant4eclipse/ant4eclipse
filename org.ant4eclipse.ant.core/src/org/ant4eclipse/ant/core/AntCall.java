@@ -62,7 +62,7 @@ public class AntCall extends Ant {
   public void execute() throws BuildException {
 
     // configure ant4eclipse
-    Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
+    AntConfigurator.configureAnt4Eclipse(getProject());
 
     try {
       // execute the super class

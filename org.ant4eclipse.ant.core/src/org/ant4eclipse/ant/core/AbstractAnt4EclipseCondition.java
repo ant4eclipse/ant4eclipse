@@ -34,7 +34,7 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
     AbstractAnt4EclipseDataType.validateAll();
 
     // configure ant4eclipse
-    Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
+    AntConfigurator.configureAnt4Eclipse(getProject());
 
     // delegate the implementation
     try {

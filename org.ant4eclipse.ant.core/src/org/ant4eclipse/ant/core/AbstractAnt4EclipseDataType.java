@@ -51,7 +51,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
       instances.add(this);
     }
     // configure ant4eclipse
-    Ant4EclipseConfigurator.configureAnt4Eclipse(project);
+    AntConfigurator.configureAnt4Eclipse(project);
 
   }
 

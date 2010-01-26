@@ -14,7 +14,7 @@ package org.ant4eclipse.ant.pydt.test;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.ant.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.ant.core.AntConfigurator;
 import org.ant4eclipse.pydt.ant.GetPythonPathTask;
 import org.ant4eclipse.pydt.ant.GetPythonSourcePathTask;
 import org.ant4eclipse.pydt.ant.PythonDocumentationTask;
@@ -183,7 +183,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Before
   public void setup() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
+    AntConfigurator.configureAnt4Eclipse();
     this._projectsuite = new ProjectSuite(this, this._dltk);
   }
 
