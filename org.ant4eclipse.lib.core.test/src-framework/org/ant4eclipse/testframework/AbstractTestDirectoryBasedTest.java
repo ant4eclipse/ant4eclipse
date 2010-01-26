@@ -56,13 +56,19 @@ public abstract class AbstractTestDirectoryBasedTest extends TestCase {
   /**
    * Returns a {@link TestDirectory} for this test case.
    * 
-   * @return
+   * @return A TestDirectory for this test case. Not <code>null</code> during a test.
    */
   protected TestDirectory getTestDirectory() {
     return this._testWorkspace;
   }
 
+  /**
+   * Returns the root directory of the workspace.
+   * 
+   * @return The root directory of the workspace. Not <code>null</code> during a test.
+   */
   protected File getTestDirectoryRootDir() {
     return this._testWorkspace.getRootDir();
   }
-}
+
+} /* ENDCLASS */

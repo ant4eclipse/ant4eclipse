@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import static org.junit.Assert.assertNotNull;
-
-import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.junit.Assert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,7 +22,7 @@ import java.io.InputStream;
 /**
  * The Test Environment contains a set of folder that are created before and removed after a test case.
  * 
- * @TODO this is work in progress...
+ * @todo [17-Dec-2009:KASI] Make use of the Utilities methods !!!
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -117,10 +116,10 @@ public class TestDirectory {
   }
 
   public File createSubDirectory(String name) {
-    assertNotNull(name);
+    Assert.assertNotNull(name);
 
     File subdir = new File(this._rootDir, name);
-    FileHelper.createDirectory(subdir);
+    Utilities.mkdirs(subdir);
     return subdir;
   }
 
@@ -128,4 +127,4 @@ public class TestDirectory {
     return this._rootDir;
   }
 
-}
+} /* ENDCLASS */

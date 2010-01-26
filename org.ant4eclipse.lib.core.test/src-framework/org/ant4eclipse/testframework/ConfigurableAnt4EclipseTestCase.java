@@ -23,8 +23,8 @@ import java.io.InputStream;
 
 /**
  * <p>
- * Base class for all AntEclipse test cases that require a configured {@link ServiceRegistry} and are not executed via a
- * {@link BuildFileTest}.
+ * Base class for all AntEclipse test cases that require a configured {@link ServiceRegistry} and are not executed
+ * within an Ant environment.
  * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
@@ -57,12 +57,18 @@ public class ConfigurableAnt4EclipseTestCase {
     } catch (Exception ex) {
       System.err.println("[Ant4EclipseTestCase] Could not reset ServiceRegistry: " + ex);
       ex.printStackTrace();
+      Assert.fail(ex.getMessage());
     }
   }
 
   /**
+   * Provides a set of properties used for the configuration. The supplied set is supposed to be altered and returned.
+   * If a <code>null</code> value is returned the default configuration takes place.
+   * 
    * @param properties
-   * @return
+   *          The current set of properties which is supposed to be altered. Not <code>null</code>.
+   * 
+   * @return The altered properties or <code>null</code>.
    */
   protected StringMap customAnt4EclipseConfiguration(StringMap properties) {
     return null;
