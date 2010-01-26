@@ -11,17 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,38 +32,37 @@ public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTe
   @Before
   public void setup() {
     super.setup();
-
     this._testWorkspace = new TestDirectory();
   }
 
-  @After
   @Override
+  @After
   public void dispose() {
     this._testWorkspace.dispose();
-
     super.dispose();
+    this._testWorkspace = null;
   }
 
   @Test
-  public void test_JdtLaunchConfig() throws Exception {
-    LaunchConfigurationReader launchConfigurationReader = LaunchConfigurationReader.Helper.getReader();
-    InputStream inputStream = getResource("LocalJavaApplication.txt");
+  public void jdtLaunchConfig() throws Exception {
+    LaunchConfigurationReader launchConfigurationReader = ServiceRegistry.instance().getService(
+        LaunchConfigurationReader.class);
+    InputStream inputStream = LaunchConfigurationReaderImplTest.class.getResourceAsStream("LocalJavaApplication.txt");
     File launchConfigurationFile = this._testWorkspace.createFile("LocalJavaApplication.launch", inputStream);
     LaunchConfiguration launchConfiguration = launchConfigurationReader
         .readLaunchConfiguration(launchConfigurationFile);
-
-    assertNotNull(launchConfiguration);
-    assertEquals("org.eclipse.jdt.launching.localJavaApplication", launchConfiguration.getType());
-
-    assertTrue(launchConfiguration.getBooleanAttribute("myBoolean"));
-    assertEquals("true", launchConfiguration.getAttribute("myBoolean"));
-    assertFalse(launchConfiguration.getBooleanAttribute("org.eclipse.jdt.launching.DEFAULT_CLASSPATH"));
-    assertEquals("/c/src/main/Main.java,/c/src/main/MainHelper.java", launchConfiguration
+    Assert.assertNotNull(launchConfiguration);
+    Assert.assertEquals("org.eclipse.jdt.launching.localJavaApplication", launchConfiguration.getType());
+    Assert.assertTrue(launchConfiguration.getBooleanAttribute("myBoolean"));
+    Assert.assertEquals("true", launchConfiguration.getAttribute("myBoolean"));
+    Assert.assertFalse(launchConfiguration.getBooleanAttribute("org.eclipse.jdt.launching.DEFAULT_CLASSPATH"));
+    Assert.assertEquals("/c/src/main/Main.java,/c/src/main/MainHelper.java", launchConfiguration
         .getAttribute("org.eclipse.debug.core.MAPPED_RESOURCE_PATHS"));
     String[] elements = launchConfiguration.getListAttribute("org.eclipse.debug.core.MAPPED_RESOURCE_PATHS");
-    assertNotNull(elements);
-    assertEquals(2, elements.length);
-    assertEquals("/c/src/main/Main.java", elements[0]);
-    assertEquals("/c/src/main/MainHelper.java", elements[1]);
+    Assert.assertNotNull(elements);
+    Assert.assertEquals(2, elements.length);
+    Assert.assertEquals("/c/src/main/Main.java", elements[0]);
+    Assert.assertEquals("/c/src/main/MainHelper.java", elements[1]);
   }
-}
+
+} /* ENDCLASS */

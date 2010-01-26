@@ -11,75 +11,70 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-
-import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CvsRootTest {
 
   @Test
-  public void test_Parse() {
+  public void parse() {
     CvsRoot cvsRoot = new CvsRoot(":pserver:rob:secret@ant4eclipse.org/cvsroot");
-    assertEquals("pserver", cvsRoot.getConnectionType());
-    assertEquals("rob", cvsRoot.getUser());
-    assertEquals("secret", cvsRoot.getEncodedPassword());
-    assertEquals("ant4eclipse.org", cvsRoot.getHost());
-    assertEquals("/cvsroot", cvsRoot.getRepository());
+    Assert.assertEquals("pserver", cvsRoot.getConnectionType());
+    Assert.assertEquals("rob", cvsRoot.getUser());
+    Assert.assertEquals("secret", cvsRoot.getEncodedPassword());
+    Assert.assertEquals("ant4eclipse.org", cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot", cvsRoot.getRepository());
   }
 
   @Test
-  public void test_NoPassword() {
+  public void noPassword() {
 
     CvsRoot cvsRoot = new CvsRoot(":pserver:rob@ant4eclipse.org/cvsroot");
-    assertEquals("pserver", cvsRoot.getConnectionType());
-    assertEquals("rob", cvsRoot.getUser());
-    assertNull(cvsRoot.getEncodedPassword());
-    assertEquals("ant4eclipse.org", cvsRoot.getHost());
-    assertEquals("/cvsroot", cvsRoot.getRepository());
+    Assert.assertEquals("pserver", cvsRoot.getConnectionType());
+    Assert.assertEquals("rob", cvsRoot.getUser());
+    Assert.assertNull(cvsRoot.getEncodedPassword());
+    Assert.assertEquals("ant4eclipse.org", cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot", cvsRoot.getRepository());
   }
 
   @Test
-  public void test_WithPort() {
+  public void withPort() {
     CvsRoot cvsRoot = new CvsRoot(":pserver:rob@ant4eclipse.org:1234/cvsroot");
-    assertEquals("pserver", cvsRoot.getConnectionType());
-    assertEquals("rob", cvsRoot.getUser());
-    assertNull(cvsRoot.getEncodedPassword());
-    assertEquals("ant4eclipse.org:1234", cvsRoot.getHost());
-    assertEquals("/cvsroot", cvsRoot.getRepository());
+    Assert.assertEquals("pserver", cvsRoot.getConnectionType());
+    Assert.assertEquals("rob", cvsRoot.getUser());
+    Assert.assertNull(cvsRoot.getEncodedPassword());
+    Assert.assertEquals("ant4eclipse.org:1234", cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot", cvsRoot.getRepository());
   }
 
   @Test
-  public void test_NoConnectionType_Ext() {
+  public void noConnectionTypeExt() {
     CvsRoot cvsRoot = new CvsRoot("rob@ant4eclipse.org:1234/cvsroot");
-    assertEquals("ext", cvsRoot.getConnectionType());
-    assertEquals("rob", cvsRoot.getUser());
-    assertNull(cvsRoot.getEncodedPassword());
-    assertEquals("ant4eclipse.org:1234", cvsRoot.getHost());
-    assertEquals("/cvsroot", cvsRoot.getRepository());
+    Assert.assertEquals("ext", cvsRoot.getConnectionType());
+    Assert.assertEquals("rob", cvsRoot.getUser());
+    Assert.assertNull(cvsRoot.getEncodedPassword());
+    Assert.assertEquals("ant4eclipse.org:1234", cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot", cvsRoot.getRepository());
   }
 
   @Test
-  public void test_No_ConnectionType_NoUser() {
+  public void noConnectionTypeNoUser() {
     CvsRoot cvsRoot = new CvsRoot("ant4eclipse.org:1234/cvsroot");
-    assertEquals("ext", cvsRoot.getConnectionType());
-    assertNull(cvsRoot.getUser());
-    assertNull(cvsRoot.getEncodedPassword());
-    assertEquals("ant4eclipse.org:1234", cvsRoot.getHost());
-    assertEquals("/cvsroot", cvsRoot.getRepository());
+    Assert.assertEquals("ext", cvsRoot.getConnectionType());
+    Assert.assertNull(cvsRoot.getUser());
+    Assert.assertNull(cvsRoot.getEncodedPassword());
+    Assert.assertEquals("ant4eclipse.org:1234", cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot", cvsRoot.getRepository());
   }
 
   @Test
-  public void test_LocalCvsRoot() {
+  public void localCvsRoot() {
     CvsRoot cvsRoot = new CvsRoot("/cvsroot");
-    assertEquals("local", cvsRoot.getConnectionType());
-    assertNull(cvsRoot.getUser());
-    assertNull(cvsRoot.getEncodedPassword());
-    assertNull(cvsRoot.getHost());
-    assertEquals("/cvsroot", cvsRoot.getRepository());
-
+    Assert.assertEquals("local", cvsRoot.getConnectionType());
+    Assert.assertNull(cvsRoot.getUser());
+    Assert.assertNull(cvsRoot.getEncodedPassword());
+    Assert.assertNull(cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot", cvsRoot.getRepository());
   }
 
-}
+} /* ENDCLASS */
