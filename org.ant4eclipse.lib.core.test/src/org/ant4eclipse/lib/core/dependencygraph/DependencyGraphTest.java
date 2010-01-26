@@ -9,15 +9,15 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.dependencygraph;
+package org.ant4eclipse.lib.core.dependencygraph;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Test;
 
 import java.util.List;

@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.pde.test.builder;
 
-import org.ant4eclipse.core.util.Utilities;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core.service;
+package org.ant4eclipse.lib.core.service;
 
 /**
  * Used for Service Registration tests
@@ -17,6 +17,6 @@ package org.ant4eclipse.core.service;
  * @author Nils Hartmann <nils@nilshartmann.net>
  * @version $Revision$
  */
-public class TestServiceBImpl {
+public class TestServiceAImpl {
 
 }

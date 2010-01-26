@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core;
+package org.ant4eclipse.lib.core;
 
 import static org.junit.Assert.assertEquals;
 

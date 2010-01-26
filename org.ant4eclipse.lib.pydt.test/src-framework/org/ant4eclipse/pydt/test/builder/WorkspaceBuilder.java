@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.builder;
 
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
+
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 

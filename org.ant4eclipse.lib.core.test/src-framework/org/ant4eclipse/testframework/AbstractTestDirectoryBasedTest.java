@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
 
 import org.ant4eclipse.ant.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 
 import java.io.File;
 

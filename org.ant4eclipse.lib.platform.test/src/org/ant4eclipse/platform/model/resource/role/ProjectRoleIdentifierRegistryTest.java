@@ -14,11 +14,11 @@ package org.ant4eclipse.platform.model.resource.role;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 

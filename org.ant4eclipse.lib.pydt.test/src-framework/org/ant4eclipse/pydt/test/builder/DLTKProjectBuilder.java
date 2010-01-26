@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.builder;
 
-import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.pydt.model.project.DLTKProjectRole;
 
 import java.io.File;
