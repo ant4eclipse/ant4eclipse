@@ -13,11 +13,11 @@ package org.ant4eclipse.lib.core.xquery;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -34,9 +34,9 @@ public class XQueryHandlerTest {
    *           Testing failed for some reason.
    */
   @Test
-  public void testQueries() throws Exception {
+  public void accessXmlFile() throws Exception {
 
-    InputStream inputStream = getClass().getClassLoader().getResourceAsStream("org/ant4eclipse/lang/xquery/data.xml");
+    InputStream inputStream = getClass().getClassLoader().getResourceAsStream("xquery/data.xml");
 
     XQueryHandler handler = new XQueryHandler();
 
@@ -134,16 +134,13 @@ public class XQueryHandlerTest {
   }
 
   @Test
-  public void testInvalidQueries() {
+  public void invalidQueries() {
     XQueryHandler handler = new XQueryHandler();
-
     try {
-      // retrieve the attributes 'name' and 'age'. the resulting arrays will have the
-      // same length because their length depends on the number of 'element' elements.
       handler.createQuery("database/element/@name");
-    } catch (Ant4EclipseException e) {
-      assertSame(e.getExceptionCode(), CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION);
-      assertEquals("Invalid x-query 'database/element/@name': Query needs to starts with a slash !", e.getMessage());
+    } catch (Ant4EclipseException ex) {
+      assertEquals(CoreExceptionCode.X_QUERY_INVALID_QUERY_EXCEPTION, ex.getExceptionCode());
     }
   }
+
 } /* ENDCLASS */

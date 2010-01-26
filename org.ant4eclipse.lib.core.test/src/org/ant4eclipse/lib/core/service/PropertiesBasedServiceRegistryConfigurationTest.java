@@ -14,10 +14,10 @@ package org.ant4eclipse.lib.core.service;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
-import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration.ConfigurationContext;
+import org.ant4eclipse.lib.core.service.ConfigurationContext;
+import org.ant4eclipse.lib.core.service.PropertiesBasedServiceRegistryConfiguration;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.junit.After;
 import org.junit.Before;

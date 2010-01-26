@@ -11,30 +11,27 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
+import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class A4ELogging_FailureTest {
+public class Failuretest {
 
   private static final Class<?> SERVICE_TYPE = Ant4EclipseLogger.class;
 
   @Before
   public void configureServiceRegistry() {
     ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
-
       public void configure(ConfigurationContext context) {
-        // do nothing
       }
     };
-
     ServiceRegistry.configure(configuration);
   }
 
@@ -44,12 +41,14 @@ public class A4ELogging_FailureTest {
   }
 
   @Test
-  public void testA4ELogging() {
+  public void logging() {
     try {
       A4ELogging.debug("Test");
-      fail();
+      Assert.fail();
     } catch (Ant4EclipseException exception) {
-      assertEquals(String.format("Service '%s' is not available.", SERVICE_TYPE.getName()), exception.getMessage());
+      Assert.assertEquals(String.format("Service '%s' is not available.", SERVICE_TYPE.getName()), exception
+          .getMessage());
     }
   }
-}
+
+} /* ENDCLASS */

@@ -40,4 +40,4 @@ public class TestMessages {
     NLS.initialize(TestMessages.class);
   }
 
-}
+} /* ENDCLASS */
