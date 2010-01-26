@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
-
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;

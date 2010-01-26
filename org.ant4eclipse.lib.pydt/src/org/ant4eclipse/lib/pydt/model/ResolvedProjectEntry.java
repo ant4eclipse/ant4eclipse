@@ -33,8 +33,8 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    *          The name of the project. Neither <code>null</code> nor empty.
    */
   public ResolvedProjectEntry(String owningproject, String name) {
-    Assure.nonEmpty(owningproject);
-    Assure.nonEmpty(name);
+    Assure.nonEmpty("owningproject", owningproject);
+    Assure.nonEmpty("name", name);
     this._owningproject = owningproject;
     this._projectname = name;
   }

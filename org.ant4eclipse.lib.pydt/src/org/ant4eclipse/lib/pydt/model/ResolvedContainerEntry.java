@@ -35,8 +35,8 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    *          The bundled pathes representing this container. Not <code>null</code>.
    */
   public ResolvedContainerEntry(String owningproject, File[] pathes) {
-    Assure.notNull(pathes);
-    Assure.nonEmpty(owningproject);
+    Assure.notNull("pathes", pathes);
+    Assure.nonEmpty("owningproject", owningproject);
     this._owningproject = owningproject;
     this._pathes = pathes;
   }

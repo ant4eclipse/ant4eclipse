@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.tools.PythonTools;
@@ -49,7 +48,7 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
    * {@inheritDoc}
    */
   public void initialize() {
-    File zip = Utilities.exportResource("/org/ant4eclipse/pydt/epydoc.zip");
+    File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
     this._epydoc = new File(zip.getParentFile(), "epydoc");
     Utilities.unpack(zip, this._epydoc);
     this._initialised = true;

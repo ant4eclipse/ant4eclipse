@@ -46,8 +46,8 @@ public class RawPathEntry {
    *          <code>true</code> <=> The value doesn't refer to a location within the workspace.
    */
   public RawPathEntry(String projectname, ReferenceKind refkind, String value, boolean export, boolean external) {
-    Assure.nonEmpty(projectname);
-    Assure.notNull(refkind);
+    Assure.nonEmpty("projectname", projectname);
+    Assure.notNull("refkind", refkind);
     this._projectname = projectname;
     this._kind = refkind;
     this._value = value;

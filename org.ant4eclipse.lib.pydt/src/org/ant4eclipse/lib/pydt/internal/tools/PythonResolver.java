@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -71,7 +69,7 @@ public class PythonResolver {
    *          <code>true</code> <=> Runtimes have to be ignored.
    */
   public PythonResolver(Workspace workspace, Mode mode, boolean ignoreruntimes) {
-    Assure.notNull(workspace);
+    Assure.notNull("workspace", workspace);
     this._pathregistry = ServiceRegistry.instance().getService(PathEntryRegistry.class);
     this._runtimeregistry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
     this._workspace = workspace;
@@ -89,7 +87,7 @@ public class PythonResolver {
    *          The unresolved entry pointing to a source folder. Not <code>null</code>.
    */
   private void resolveImpl(RawPathEntry entry) {
-    Assure.notNull(entry);
+    Assure.notNull("entry", entry);
     ResolvedPathEntry result = this._pathregistry.getResolvedPathEntry(entry);
     if (result == null) {
       result = newResolvedEntry(entry);
@@ -121,7 +119,7 @@ public class PythonResolver {
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
   public ResolvedPathEntry[] resolve(RawPathEntry... entries) {
-    Assure.notNull(entries);
+    Assure.notNull("entries", entries);
     List<RawPathEntry> input = new ArrayList<RawPathEntry>();
     for (RawPathEntry entry : entries) {
       input.add(entry);
@@ -138,7 +136,7 @@ public class PythonResolver {
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
   public ResolvedPathEntry[] resolve(List<RawPathEntry> entries) {
-    Assure.notNull(entries);
+    Assure.notNull("entries", entries);
     List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
     resolve(list, filter(entries));
     return list.toArray(new ResolvedPathEntry[list.size()]);
@@ -233,7 +231,7 @@ public class PythonResolver {
    */
   private List<RawPathEntry> loadEntries(EclipseProject project) {
     List<RawPathEntry> result = new ArrayList<RawPathEntry>();
-    PythonProjectRole role = (PythonProjectRole) project.getRole(PythonProjectRole.class);
+    PythonProjectRole role = project.getRole(PythonProjectRole.class);
     RawPathEntry[] entries = role.getRawPathEntries();
     for (RawPathEntry entry : entries) {
       if (entry.getKind() == ReferenceKind.Runtime) {

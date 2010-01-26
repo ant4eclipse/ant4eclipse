@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model.project;
 
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -36,7 +34,7 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(PyDevProjectRole.NATURE));
+    return project.hasNature(PyDevProjectRole.NATURE);
   }
 
   /**
@@ -46,7 +44,7 @@ public final class PyDevRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("PyDevRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull(project);
+    Assure.notNull("project", project);
     PythonProjectRoleImpl result = new PythonProjectRoleImpl(project, false);
     PyDevParser.contributePathes(result);
     return result;
