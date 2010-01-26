@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.model.project;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.lib.pydt.model.RawPathEntry;
 import org.ant4eclipse.lib.pydt.model.ReferenceKind;
 import org.ant4eclipse.lib.pydt.model.project.DLTKProjectRole;

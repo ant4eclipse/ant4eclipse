@@ -13,8 +13,6 @@ package org.ant4eclipse.lib.jdt.internal.tools;
 
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
@@ -22,6 +20,8 @@ import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ContainerClasspathE
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ProjectClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 
 import java.util.LinkedList;
 import java.util.List;

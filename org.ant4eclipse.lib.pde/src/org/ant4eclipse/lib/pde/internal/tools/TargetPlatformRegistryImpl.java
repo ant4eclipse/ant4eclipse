@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.pde.internal.tools;
 
 
 
-import org.ant4eclipse.platform.model.resource.Workspace;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -23,6 +22,7 @@ import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 import java.io.File;
 import java.util.Arrays;

@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.jdt.internal.tools;
 
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
@@ -24,6 +23,7 @@ import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ClasspathEntryResol
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.EmptyStackException;
 import java.util.LinkedList;

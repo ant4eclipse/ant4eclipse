@@ -13,13 +13,13 @@ package org.ant4eclipse.lib.pde.internal.model.featureproject;
 
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 
 import java.io.File;
 

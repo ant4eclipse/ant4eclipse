@@ -14,7 +14,6 @@ package org.ant4eclipse.lib.pde.tools;
 
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -29,6 +28,7 @@ import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundlesAnalyzer;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 import java.util.List;

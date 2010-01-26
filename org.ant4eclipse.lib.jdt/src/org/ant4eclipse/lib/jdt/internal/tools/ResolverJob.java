@@ -12,10 +12,10 @@
 package org.ant4eclipse.lib.jdt.internal.tools;
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
 
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 import java.util.List;
 

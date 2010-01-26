@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.jdt.tools;
 
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathEntryResolverExecutor;
@@ -28,6 +27,7 @@ import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ProjectClasspathEnt
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.SourceClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.VariableClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;
 
