@@ -9,14 +9,14 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.platform.team;
+package org.ant4eclipse.ant.platform.internal.team;
 
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
-import org.ant4eclipse.ant.platform.team.VcsException;
+import org.ant4eclipse.ant.platform.internal.team.VcsException;
 import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.Project;
 
