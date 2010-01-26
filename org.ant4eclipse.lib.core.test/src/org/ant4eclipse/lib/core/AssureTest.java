@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class AssertTest extends ConfigurableAnt4EclipseTestCase {
+public class AssureTest extends ConfigurableAnt4EclipseTestCase {
 
   /**
    * 
