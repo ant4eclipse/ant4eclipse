@@ -12,29 +12,16 @@
 package org.ant4eclipse;
 
 
-import org.ant4eclipse.lib.core.DefaultConfiguratorTest;
-import org.ant4eclipse.lib.core.AssureTest;
-import org.ant4eclipse.lib.core.ClassNameTest;
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseConditionTest;
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataTypeTest;
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTaskTest;
-import org.ant4eclipse.lib.core.ant.AntCallTest;
-import org.ant4eclipse.lib.core.dependencygraph.DependencyGraphTest;
-import org.ant4eclipse.lib.core.logging.FailureTest;
-import org.ant4eclipse.lib.core.logging.LoggingUsageTest;
-import org.ant4eclipse.lib.core.nls.NLSTest;
-import org.ant4eclipse.lib.core.service.PropertiesBasedServiceRegistryConfigurationTest;
-import org.ant4eclipse.lib.core.service.ServiceRegistryTest;
-import org.ant4eclipse.lib.core.util.UtilitiesTest;
-import org.ant4eclipse.lib.core.xquery.XQueryHandlerTest;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseConditionTest;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataTypeTest;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTaskTest;
+import org.ant4eclipse.ant.core.AntCallTest;
+import org.ant4eclipse.ant.core.AntConfiguratorTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { ClassNameTest.class, AssureTest.class, DefaultConfiguratorTest.class,
-    XQueryHandlerTest.class, UtilitiesTest.class, PropertiesBasedServiceRegistryConfigurationTest.class,
-    ServiceRegistryTest.class, NLSTest.class, FailureTest.class, LoggingUsageTest.class,
-    DependencyGraphTest.class, AbstractAnt4EclipseConditionTest.class, AbstractAnt4EclipseDataTypeTest.class,
-    AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+@Suite.SuiteClasses( { AntConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
+    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
 public class AllTests {
 }
