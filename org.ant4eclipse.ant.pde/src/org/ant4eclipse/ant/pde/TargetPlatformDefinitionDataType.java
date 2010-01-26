@@ -12,9 +12,8 @@
 package org.ant4eclipse.ant.pde;
 
 
-
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
@@ -94,8 +93,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    *          the {@link Location} to add.
    */
   public void addConfiguredLocation(Location location) {
-    Assure.notNull(location);
-
+    Assure.notNull("location", location);
     this._targetPlatformDefinition.addLocation(location.getDirectory());
   }
 

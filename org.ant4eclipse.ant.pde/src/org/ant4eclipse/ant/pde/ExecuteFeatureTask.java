@@ -13,14 +13,12 @@ package org.ant4eclipse.ant.pde;
 
 
 
-import org.ant4eclipse.platform.PlatformExceptionCode;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.ant.core.FileListHelper;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
-import org.ant4eclipse.lib.core.ant.FileListHelper;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Pair;
@@ -37,6 +35,8 @@ import org.ant4eclipse.lib.pde.tools.ResolvedFeature;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
+import org.ant4eclipse.lib.platform.PlatformExceptionCode;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.eclipse.osgi.service.resolver.BundleDescription;
