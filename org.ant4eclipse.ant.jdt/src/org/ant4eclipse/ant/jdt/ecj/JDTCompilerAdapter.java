@@ -21,9 +21,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
-
-import org.ant4eclipse.lib.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.ant.core.AntConfigurator;
+import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -37,7 +36,6 @@ import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
 import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 import org.ant4eclipse.lib.jdt.ecj.SourceFileFactory;
-import org.ant4eclipse.lib.jdt.ecj.EcjAdapter.Factory;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.taskdefs.condition.Os;
@@ -82,7 +80,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     preconditions();
 
     // Step 2: Configure ant4eclipse
-    Ant4EclipseConfigurator.configureAnt4Eclipse(getProject());
+    AntConfigurator.configureAnt4Eclipse(getProject());
 
     // Step 3: Fetch compiler arguments
     EcjAdditionalCompilerArguments ecjAdditionalCompilerArguments = fetchEcjAdditionalCompilerArguments();
@@ -249,10 +247,11 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     classFileLoaderList.add(createBootClassLoader(compilerArguments));
 
     // Step 3: add class loader for class path entries
-    for (Iterator iterator = getJavac().getClasspath().iterator(); iterator.hasNext();) {
+    Iterator<FileResource> iterator = getJavac().getClasspath().iterator();
+    while (iterator.hasNext()) {
 
       // get the file resource that contains the class files
-      FileResource fileResource = (FileResource) iterator.next();
+      FileResource fileResource = iterator.next();
       File classesFile = fileResource.getFile();
       ClassFileLoader myclassFileLoader = null;
 
@@ -262,8 +261,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
         // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
         // } else {
-        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
-            new File[] { classesFile }, new File[] {});
+          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+              new File[] { classesFile }, new File[] {});
         // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
         // }
 
@@ -272,7 +271,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // get source folders if available
         File[] sourceFolders = new File[] {};
 
-        if (compilerArguments != null && compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
+        if ((compilerArguments != null) && compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
           sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(classesFile);
         }
 
@@ -366,11 +365,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * &lt;code&gt; &lt;javac destdir=&quot;${executeJdtProject.default.output.directory}&quot;
    *   debug=&quot;on&quot;
    *   source=&quot;1.5&quot;&gt;
-   *   
    *   ...
-   * 
    *   &lt;compilerarg value=&quot;compiler.args.refid=executeJdtProject.compiler.args&quot;
-   *                compiler=&quot;org.ant4eclipse.jdt.ecj.JDTCompilerAdapter&quot; /&gt;
+   *                compiler=&quot;org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter&quot; /&gt;
    * &lt;/javac&gt;
    * &lt;/code&gt;
    * </pre>
@@ -382,7 +379,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return
    */
   private String extractJavacCompilerArg(String argumentName, String defaultValue) {
-    Assure.notNull(argumentName);
+    Assure.notNull("argumentName", argumentName);
 
     // Step 1: Get all compilerArguments
     String[] currentCompilerArgs = getJavac().getCurrentCompilerArgs();
@@ -450,8 +447,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    * @return
    */
   private String[] readProblematicLine(SourceFile sourceFile, CategorizedProblem categorizedProblem) {
-    Assure.notNull(sourceFile);
-    Assure.notNull(categorizedProblem);
+    Assure.notNull("sourceFile", sourceFile);
+    Assure.notNull("categorizedProblem", categorizedProblem);
 
     int lineNumber = categorizedProblem.getSourceLineNumber();
     int sourceStart = categorizedProblem.getSourceStart();

@@ -12,8 +12,8 @@
 package org.ant4eclipse.ant.jdt.type;
 
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;

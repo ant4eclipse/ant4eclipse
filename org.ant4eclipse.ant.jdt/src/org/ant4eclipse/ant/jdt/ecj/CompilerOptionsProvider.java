@@ -65,7 +65,7 @@ public class CompilerOptionsProvider {
   @SuppressWarnings("unchecked")
   public static StringMap getCompilerOptions(Javac javac, String projectCompilerOptionsFile,
       String globalCompilerOptionsFile) {
-    Assure.notNull(javac);
+    Assure.notNull("javac", javac);
 
     // get the project options
     StringMap projectOptions = getFileCompilerOptions(projectCompilerOptionsFile);

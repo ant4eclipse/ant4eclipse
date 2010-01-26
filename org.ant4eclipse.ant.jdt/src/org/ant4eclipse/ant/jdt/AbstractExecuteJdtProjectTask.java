@@ -12,13 +12,13 @@
 package org.ant4eclipse.ant.jdt;
 
 
-import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;
 
