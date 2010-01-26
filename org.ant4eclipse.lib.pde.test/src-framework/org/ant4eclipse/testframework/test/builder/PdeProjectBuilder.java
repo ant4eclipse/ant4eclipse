@@ -9,15 +9,15 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.test.builder;
+package org.ant4eclipse.testframework.test.builder;
 
 
 
-import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
 
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.FileHelper;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
+import org.ant4eclipse.testframework.model.pluginproject.PluginProjectRole;
 
 import java.io.File;
 

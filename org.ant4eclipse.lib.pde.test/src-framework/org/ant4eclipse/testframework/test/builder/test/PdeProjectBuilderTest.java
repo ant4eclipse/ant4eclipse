@@ -9,13 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.test.builder.test;
+package org.ant4eclipse.testframework.test.builder.test;
 
 
-import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
 
 import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedTest;
+import org.ant4eclipse.testframework.test.builder.PdeProjectBuilder;
 
 import java.io.File;
 import java.util.Arrays;

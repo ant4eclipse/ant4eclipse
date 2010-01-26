@@ -9,9 +9,9 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.test.builder.test;
+package org.ant4eclipse.testframework.test.builder.test;
 
-import org.ant4eclipse.pde.test.builder.PluginBuildProperties;
+import org.ant4eclipse.testframework.test.builder.PluginBuildProperties;
 
 import junit.framework.TestCase;
 

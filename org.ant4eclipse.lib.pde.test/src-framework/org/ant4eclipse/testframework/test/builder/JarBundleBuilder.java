@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.test.builder;
+package org.ant4eclipse.testframework.test.builder;
 
 
 import org.ant4eclipse.lib.core.Assert;

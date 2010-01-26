@@ -1,4 +1,4 @@
-package org.ant4eclipse.pde.test;
+package org.ant4eclipse.testframework.test;
 
 import java.io.BufferedReader;
 import java.io.File;
