@@ -33,7 +33,7 @@ import java.util.Set;
 public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
 
   /** the path of ant4eclipse configurations */
-  public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/ant4eclipse-configuration.properties";
+  public static final String A4E_CONFIGURATION_PROPERTIES = "org/ant4eclipse/lib/ant4eclipse-configuration.properties";
 
   /** <b>All</b> configuration properties */
   private StringMap          _properties;
@@ -47,9 +47,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    *          The backing properties
    */
   public Ant4EclipseConfigurationImpl(StringMap properties) {
-    if (properties == null) {
-      throw new IllegalArgumentException("Parameter 'properties' must not be null ");
-    }
+    Assure.notNull("properties", properties);
     this._properties = properties;
   }
 
@@ -66,9 +64,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public String getProperty(String propertyName) {
-    if (propertyName == null) {
-      throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
-    }
+    Assure.notNull("propertyName", propertyName);
     return this._properties.get(propertyName);
   }
 
@@ -76,10 +72,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public boolean hasProperty(String propertyName) {
-    if (propertyName == null) {
-      throw new IllegalArgumentException("Parameter 'propertyName' must not be null ");
-    }
-
+    Assure.notNull("propertyName", propertyName);
     return this._properties.containsKey(propertyName);
   }
 
@@ -87,16 +80,12 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   public Iterable<Pair<String, String>> getAllProperties(String prefix) {
-    if (prefix == null) {
-      throw new IllegalArgumentException("Parameter 'prefix' must not be null ");
-    }
+    Assure.notNull("prefix", prefix);
     if (!prefix.endsWith(".")) {
       prefix += ".";
     }
     Set<Map.Entry<String, String>> entries = this._properties.entrySet();
-
     List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
-
     for (Map.Entry<String, String> entry : entries) {
       String key = entry.getKey();
       String value = entry.getValue();
@@ -105,7 +94,6 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
         result.add(new Pair<String, String>(key, value));
       }
     }
-
     return result;
   }
 
@@ -143,4 +131,5 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     }
     return allProperties;
   }
-}
+
+} /* ENDCLASS */

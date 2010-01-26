@@ -40,7 +40,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
   private int             _logLevel;
 
-  private PrintStream     _printer;
+  private PrintStream _printer;
 
   /**
    * Sets up this logger implementation to make use of standard output.

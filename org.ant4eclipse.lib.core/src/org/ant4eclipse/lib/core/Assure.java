@@ -11,7 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 import java.io.File;
 
@@ -26,16 +28,32 @@ import java.io.File;
  */
 public class Assure {
 
-  /**
-   * <p>
-   * Assert that the specified object is not null.
-   * </p>
-   * 
-   * @param object
-   *          the object that must be set.
-   */
-  public static void notNull(Object object) {
-    notNull("Object has to be set!", object);
+  @NLSMessage("Parameter '%s' should be of type '%s' but is a '%s'")
+  public static String MSG_INVALIDTYPE;
+
+  @NLSMessage("The parameter '%s' is not supposed to be null.")
+  public static String MSG_NOTNULL;
+
+  @NLSMessage("The parameter '%s' is not supposed to be empty.")
+  public static String MSG_NOTEMPTY;
+
+  @NLSMessage("The supplied string is not allowed to be empty.")
+  public static String MSG_STRINGMUSTBENONEMPTY;
+
+  @NLSMessage("The resource '%s' does not exist !")
+  public static String MSG_RESOURCEDOESNOTEXIST;
+
+  @NLSMessage("The resource '%s' is not a regular file !")
+  public static String MSG_RESOURCEISNOTAREGULARFILE;
+
+  @NLSMessage("The resource '%s' is not a directory !")
+  public static String MSG_RESOURCEISNOTADIRECTORY;
+
+  @NLSMessage("The value %d is supposed to be in the range [%d..%d] !")
+  public static String MSG_VALUEOUTOFRANGE;
+
+  static {
+    NLS.initialize(Assure.class);
   }
 
   /**
@@ -43,15 +61,110 @@ public class Assure {
    * Assert that the specified object is not null.
    * </p>
    * 
-   * @param message
-   *          an error message
+   * @param parameterName
+   *          The name of the parameter that is checked
    * @param object
    *          the object that must be set.
    */
-  public static void notNull(String message, Object object) {
+  public static final void notNull(String parametername, Object object) {
     if (object == null) {
-      A4ELogging.debug(message);
-      throw new RuntimeException("Precondition violated: " + message);
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTNULL, parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, byte[] object) {
+    notNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, boolean[] object) {
+    notNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, char[] object) {
+    notNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, short[] object) {
+    notNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, int[] object) {
+    notNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
+    }
+  }
+
+  /**
+   * Asserts that the specified array is neither <code>null</code> nor empty.
+   * 
+   * @param parametername
+   *          The name of the parameter that has to be tested.
+   * @param object
+   *          The object that has to be tested.
+   */
+  public static final void nonEmpty(String parametername, long[] object) {
+    notNull(parametername, object);
+    if (object.length == 0) {
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
+          parametername));
     }
   }
 
@@ -65,15 +178,11 @@ public class Assure {
    * @param expectedType
    *          The type the parameter should be an instance of
    */
-  public static void instanceOf(String parameterName, Object parameter, Class<?> expectedType) {
-    if (parameter == null) {
-      throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
-          + expectedType.getName() + "' but was null");
-    }
-
+  public static final void instanceOf(String parameterName, Object parameter, Class<?> expectedType) {
+    notNull(parameterName, parameter);
     if (!expectedType.isInstance(parameter)) {
-      throw new RuntimeException("Precondition violated: Parameter '" + parameterName + "' should be of type '"
-          + expectedType.getName() + "' but is a '" + parameter.getClass().getName() + "'");
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_INVALIDTYPE,
+          parameterName, expectedType.getName(), parameter.getClass().getName()));
     }
   }
 
@@ -85,12 +194,10 @@ public class Assure {
    * @param string
    *          the string that must provide a value.
    */
-  public static void nonEmpty(String string) {
-    notNull(string);
+  public static final void nonEmpty(String param, String string) {
+    notNull(param, string);
     if (string.length() == 0) {
-      String msg = "Precondition violated: An empty string is not allowed here !";
-      A4ELogging.debug(msg);
-      throw new RuntimeException(msg);
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, MSG_STRINGMUSTBENONEMPTY);
     }
   }
 
@@ -102,12 +209,11 @@ public class Assure {
    * @param file
    *          the file that must exist.
    */
-  public static void exists(File file) {
-    notNull(file);
+  public static final void exists(String param, File file) {
+    notNull(param, file);
     if (!file.exists()) {
-      String msg = String.format("Precondition violated: %s has to exist!", file.getAbsolutePath());
-      A4ELogging.debug(msg);
-      throw new RuntimeException(msg);
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_RESOURCEDOESNOTEXIST,
+          file.getAbsolutePath()));
     }
   }
 
@@ -119,13 +225,11 @@ public class Assure {
    * @param file
    *          the file that must be a file.
    */
-  public static void isFile(File file) {
-    Assure.exists(file);
+  public static final void isFile(File file) {
+    Assure.exists("file", file);
     if (!file.isFile()) {
-      String msg = String
-          .format("Precondition violated: %s has to be a file, not a directory!", file.getAbsolutePath());
-      A4ELogging.debug(msg);
-      throw new RuntimeException(msg);
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+          MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath()));
     }
   }
 
@@ -137,13 +241,11 @@ public class Assure {
    * @param file
    *          the file that must be a directory.
    */
-  public static void isDirectory(File file) {
-    Assure.exists(file);
+  public static final void isDirectory(File file) {
+    Assure.exists("file", file);
     if (!file.isDirectory()) {
-      String msg = String
-          .format("Precondition violated: %s has to be a directory, not a file!", file.getAbsolutePath());
-      A4ELogging.debug(msg);
-      throw new RuntimeException(msg);
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+          MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath()));
     }
   }
 
@@ -157,10 +259,9 @@ public class Assure {
    * @param msg
    *          the message
    */
-  public static void assertTrue(boolean condition, String msg) {
+  public static final void assertTrue(boolean condition, String msg) {
     if (!condition) {
-      // A4ELogging.debug(errmsg);
-      throw new RuntimeException(String.format("Precondition violated: %s", msg));
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, msg);
     }
   }
 
@@ -176,12 +277,10 @@ public class Assure {
    * @param to
    *          the upper bound inclusive.
    */
-  public static void inRange(int value, int from, int to) {
+  public static final void inRange(int value, int from, int to) {
     if ((value < from) || (value > to)) {
-      String msg = String.format("Precondition violated: %d must be within the range %d..%d !", Integer.valueOf(value),
-          Integer.valueOf(from), Integer.valueOf(to));
-      A4ELogging.debug(msg);
-      throw new RuntimeException(msg);
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_VALUEOUTOFRANGE,
+          Integer.valueOf(value), Integer.valueOf(from), Integer.valueOf(to)));
     }
   }
 

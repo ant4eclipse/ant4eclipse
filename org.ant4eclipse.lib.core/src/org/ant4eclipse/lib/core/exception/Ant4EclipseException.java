@@ -20,14 +20,13 @@ package org.ant4eclipse.lib.core.exception;
  */
 public class Ant4EclipseException extends RuntimeException {
 
-  /** serialVersionUID */
-  private static final long serialVersionUID = -2322126644590371742L;
+  private static final Object[] NO_ARGS = new Object[0];
 
   /** - */
-  private ExceptionCode     _exceptionCode;
+  private ExceptionCode         _exceptionCode;
 
   /** - */
-  private Object[]          _args;
+  private Object[]              _args;
 
   /**
    * <p>
@@ -35,26 +34,32 @@ public class Ant4EclipseException extends RuntimeException {
    * </p>
    * 
    * @param cause
+   *          The exception indicating the original reason for a failure. Not <code>null</code>.
    * @param exceptionCode
+   *          The exception code used to point to the kind of failure that happened. Not <code>null</code>.
    * @param args
+   *          The arguments to be passed to the exception message.
    */
   public Ant4EclipseException(Throwable cause, ExceptionCode exceptionCode, Object... args) {
     super(cause);
-
     this._exceptionCode = exceptionCode;
-    this._args = args;
-
+    this._args = args != null ? args : NO_ARGS;
   }
 
   /**
+   * <p>
+   * Creates a new instance of type Ant4EclipseException.
+   * </p>
+   * 
    * @param exceptionCode
+   *          The exception code used to point to the kind of failure that happened. Not <code>null</code>.
    * @param args
+   *          The arguments to be passed to the exception message.
    */
   public Ant4EclipseException(ExceptionCode exceptionCode, Object... args) {
     super();
-
     this._exceptionCode = exceptionCode;
-    this._args = args != null ? args : new Object[0];
+    this._args = args != null ? args : NO_ARGS;
   }
 
   /**
@@ -84,6 +89,26 @@ public class Ant4EclipseException extends RuntimeException {
    */
   @Override
   public String getMessage() {
-    return String.format(this._exceptionCode.getMessage(), this._args);
+    try {
+      return String.format(this._exceptionCode.getMessage(), this._args);
+    } catch (Exception ex) {
+      // this really shouldn't happen but it's possible that it could because a user might alter the formatting
+      // string in a way not capable to handle the arguments. so the only thing we can do here is to make sure
+      // that the crippled message will be brought to the developer.
+      StringBuffer buffer = new StringBuffer();
+      buffer.append("internal error: formatting message was '");
+      buffer.append(this._exceptionCode.getMessage());
+      buffer.append("', arguments were: ");
+      if (this._args.length > 0) {
+        buffer.append(String.valueOf(this._args[0]));
+        for (int i = 1; i < this._args.length; i++) {
+          buffer.append(",");
+          buffer.append(String.valueOf(this._args[i]));
+        }
+      } else {
+        buffer.append("<none>");
+      }
+      return buffer.toString();
+    }
   }
 }

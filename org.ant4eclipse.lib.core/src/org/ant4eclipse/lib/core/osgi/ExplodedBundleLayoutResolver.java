@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.osgi;
 
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
 

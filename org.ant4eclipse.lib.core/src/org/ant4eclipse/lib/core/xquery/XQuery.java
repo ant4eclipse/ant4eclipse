@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.xquery;
 
-
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.xml.sax.Attributes;
@@ -148,13 +147,13 @@ public class XQuery {
     try {
 
       // indexed element
-      return (new IndexCompare(Integer.parseInt(condition), depth));
+      return new IndexCompare(Integer.parseInt(condition), depth);
 
     } catch (NumberFormatException ex) {
 
       // create a count-function used to calculate the number of occurrences
       if ("count()".equals(condition)) {
-        return (new CounterFunction(depth));
+        return new CounterFunction(depth);
       }
 
       // this must be an attributed expression
@@ -182,7 +181,7 @@ public class XQuery {
       }
 
       String testvalue = condition.substring(idx1 + 1, idx2);
-      return (new StringCompare(attrname, testvalue));
+      return new StringCompare(attrname, testvalue);
 
     }
 
@@ -203,16 +202,16 @@ public class XQuery {
     // there's a named element, so check it
     if ((!"*".equals(this._splitted[this._accept])) && (!element.equals(this._splitted[this._accept]))) {
       // it doesn't apply to this query, so leave here
-      return (false);
+      return false;
     }
 
     // check if the condition applies to the current state
     if (this._conditions[this._accept] != null) {
-      return (this._conditions[this._accept].check(element, attrs));
+      return this._conditions[this._accept].check(element, attrs);
     }
 
     // the current state is supported by this query
-    return (true);
+    return true;
 
   }
 
@@ -345,11 +344,11 @@ public class XQuery {
    */
   public String[] getResult() {
     if (this._values == null) {
-      return (new String[0]);
+      return new String[0];
     }
     String[] result = new String[this._values.size()];
     this._values.toArray(result);
-    return (result);
+    return result;
   }
 
   /**
@@ -364,9 +363,9 @@ public class XQuery {
       throw new Ant4EclipseException(CoreExceptionCode.X_QUERY_DUCPLICATE_ENTRY_EXCEPTION, this._xquery, this._fileName);
     }
     if (results.length == 0) {
-      return (null);
+      return null;
     }
-    return (results[0]);
+    return results[0];
   }
 
   /**
@@ -375,7 +374,7 @@ public class XQuery {
    * @return true <=> At least one result is available.
    */
   public boolean gotResult() {
-    return (this._values != null);
+    return this._values != null;
   }
 
   /**
@@ -389,7 +388,7 @@ public class XQuery {
   private int counter(int depth) {
     // -1 because the method 'adjustCounter' will be called before
     // the use of this function.
-    return (this._counter[depth] - 1);
+    return this._counter[depth] - 1;
   }
 
   /**
@@ -397,7 +396,7 @@ public class XQuery {
    */
   @Override
   public String toString() {
-    return (this._xquery);
+    return this._xquery;
   }
 
   /**
@@ -457,7 +456,7 @@ public class XQuery {
      * {@inheritDoc}
      */
     public boolean check(String element, Attributes attrs) {
-      return (counter(this.index) == this.level);
+      return counter(this.index) == this.level;
     }
 
   } /* ENDCLASS */
@@ -496,7 +495,7 @@ public class XQuery {
       values.set(values.size() - 1, String.valueOf(value + 1));
 
       // function evaluation, so we don't need to process anything else
-      return (false);
+      return false;
 
     }
 
@@ -528,7 +527,7 @@ public class XQuery {
      * {@inheritDoc}
      */
     public boolean check(String element, Attributes attrs) {
-      return (this.value.equals(attrs.getValue(this.attr)));
+      return this.value.equals(attrs.getValue(this.attr));
     }
 
   } /* ENDCLASS */

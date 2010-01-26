@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.nls;
 
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 import org.ant4eclipse.lib.core.util.Utilities;
 
@@ -22,11 +20,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Map.Entry;
 
 /**
  * <p>
@@ -76,18 +74,39 @@ import java.util.Map.Entry;
  * The NLSInitializer class has built-in support for Strings, Exception Codes and any <tt>public static</tt> fields that
  * are marked with {@link NLSMessage} and have a type with a single-argument constructor taking a String.
  * 
+ * @todo [10-Dec-2009:KASI] I need to recheck this. I suspect that the properties should be loaded completely for the
+ *       setup so applying the values would not happen within a custom Properties implementation (allows to remove some
+ *       checking code and to simplify this code).
+ * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public abstract class NLS {
 
-  /**
-   * The file extensions for files that contain messages
-   */
-  private static final String EXTENSION = ".properties";
+  /** - */
+  private static final String MSG_MISUSEDNLSANNOTATION     = "NLS-Annotation detected on field with wrong modifiers '%s.%s'. Field is %s";
 
-  /**
-   * all suffixes for current locale ("en_En", "en", "")
-   */
+  /** - */
+  private static final String MSG_DEFAULTMESSAGE           = "[WARN: No (default) message for field '%s' found]";
+
+  /** - */
+  private static final String MSG_MISSINGCONSTRUCTOR       = "Could not find constructor '%s' (String) on type : %s";
+
+  /** - */
+  private static final String MSG_COULDNOTINSTANTIATECLASS = "The class '%s' could not be instantiated using constructor '%s'";
+
+  /** - */
+  private static final String MSG_UNKNOWNPROPERTY          = "Message-Property '%s' does not exist at class '%s'\n";
+
+  /** - */
+  private static final String MSG_COULDNOTSETFIELD         = "Could not set field '%s': %s\n";
+
+  /** - */
+  private static final String MSG_COULDNOTREADPROPERTIES   = "Could not read properties file '%s': %s\n";
+
+  /** The file extensions for files that contain messages */
+  private static final String EXTENSION                    = ".properties";
+
+  /** all suffixes for current locale ("en_En", "en", "") */
   private static String[]     nlSuffixes;
 
   /**
@@ -96,7 +115,7 @@ public abstract class NLS {
    * @param clazz
    *          The class which field values will be setup with internationalised information. Not <code>null</code>.
    */
-  public static void initialize(Class<?> clazz) {
+  public static final void initialize(Class<?> clazz) {
     Field[] fields = clazz.getDeclaredFields();
 
     Map<String, Field> nlsFields = new Hashtable<String, Field>();
@@ -116,28 +135,58 @@ public abstract class NLS {
     // Create holder for the messages. The put()-method of MessageProperties
     // will set a new property not only to the properties instance but
     // also to the appropriate field on "clazz"
-    Properties messages = new MessageProperties(clazz, nlsFields);
+    Properties messages = new Properties();
 
     // Load messages from properties files and set them (via MessageProperties)
     // to the appropriate fields on clazz
     loadProperties(messages, variants);
 
-    // Determine fields that have not been set (because the property
-    // is missing in the properties-file)
-    // Assign a dummy message to fields that don't have a message to
-    // avoid null pointer at runtime
-    for (Entry<String, Field> entry : nlsFields.entrySet()) {
-      String fieldName = entry.getKey().toString();
-      if (!messages.containsKey(fieldName)) {
-        Field field = entry.getValue();
-        String defaultMessage = getDefaultMessage(field);
+    applyProperties(messages, clazz, nlsFields);
 
-        try {
-          field.set(null, getFieldValue(field, defaultMessage));
-        } catch (Exception ex) {
-          // should not happen
-        }
+  }
+
+  /**
+   * Applies all values located within a properties file, so the fields will get translated values.
+   * 
+   * @param messages
+   *          The properties providing all messages. Not <code>null</code>.
+   * @param clazz
+   *          The class which is only used for reporting. Not <code>null</code>.
+   * @param fields
+   *          The fields which have to be recognized for the changes. Not <code>null</code>.
+   */
+  @SuppressWarnings("unchecked")
+  private static final void applyProperties(Properties messages, Class<?> clazz, Map<String, Field> fields) {
+    for (Map.Entry<String, Field> entry : fields.entrySet()) {
+      String key = entry.getKey();
+      Field field = entry.getValue();
+      String value = null;
+      if (messages.containsKey(key)) {
+        value = messages.getProperty(key);
+      } else {
+        // no value found within the properties, so generate a default message in order
+        // to prevent npe's.
+        value = getDefaultMessage(field);
       }
+      Object fieldValue = getFieldValue(field, value);
+      try {
+        field.set(null, fieldValue);
+      } catch (Exception ex) {
+        /**
+         * @todo [13-Dec-2009:KASI] This should cause a RuntimeException as the code cannot rely on an initialised field
+         *       for this case.
+         */
+        System.err.printf(MSG_COULDNOTSETFIELD, field.getName(), ex.getMessage());
+      }
+      messages.remove(key);
+    }
+    Enumeration<String> unset = (Enumeration<String>) messages.propertyNames();
+    while (unset.hasMoreElements()) {
+      /**
+       * @todo [13-Dec-2009:KASI] This should cause a RuntimeException as this is the result of misconfiguration (and
+       *       it's easily fixable, too).
+       */
+      System.out.printf(MSG_UNKNOWNPROPERTY, unset.nextElement(), clazz.getName());
     }
   }
 
@@ -153,11 +202,10 @@ public abstract class NLS {
    *          The field
    * @return A message for the field. Never null
    */
-  private static String getDefaultMessage(Field field) {
+  private static final String getDefaultMessage(Field field) {
     NLSMessage nlsMessage = field.getAnnotation(NLSMessage.class);
-    if (nlsMessage == null || nlsMessage.value() == null) {
-      // Set a dummy message to avoid NPE
-      return "[WARN: No (default) message for field '" + field + "' found]";
+    if ((nlsMessage == null) || (nlsMessage.value() == null) || (nlsMessage.value().trim().length() == 0)) {
+      return String.format(MSG_DEFAULTMESSAGE, field);
     }
     return nlsMessage.value();
   }
@@ -171,14 +219,14 @@ public abstract class NLS {
    *          The value to convert
    * @return
    */
-  private static Object getFieldValue(Field field, String value) {
+  private static final Object getFieldValue(Field field, String value) {
     if (String.class == field.getType()) {
       // for fields of type String return value as-is
       return value;
+    } else {
+      // in all other cases try to construct an object using it's class single-arg constructor
+      return newObjectFromString(field.getType(), value);
     }
-
-    // in all other cases try to construct an object using it's class single-arg constructor
-    return newObjectFromString(field.getType(), value);
   }
 
   /**
@@ -193,27 +241,19 @@ public abstract class NLS {
    *          The message for the ExceptionCodes's constructor
    * @return the instantiated ExceptionCode
    */
-  private static Object newObjectFromString(Class<?> type, String message) {
+  private static final Object newObjectFromString(Class<?> type, String message) {
     Constructor<?> constructor;
     try {
       constructor = type.getDeclaredConstructor(String.class);
       constructor.setAccessible(true);
     } catch (Exception ex) {
-      throw new RuntimeException("Could not find constructor " + type.getSimpleName() + "(String) on type "
-          + type.getName() + ": " + ex, ex);
+      throw new RuntimeException(String.format(MSG_MISSINGCONSTRUCTOR, type.getSimpleName(), ex.getMessage()), ex);
     }
-
-    Object object;
     try {
-      object = constructor.newInstance(message);
+      return constructor.newInstance(message);
     } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, type.getName(), type
-          .getSimpleName()
-          + "(String)");
+      throw new RuntimeException(String.format(MSG_COULDNOTINSTANTIATECLASS, type.getName(), type.getSimpleName()), ex);
     }
-
-    return object;
-
   }
 
   /**
@@ -225,7 +265,7 @@ public abstract class NLS {
    *          the field to check
    * @return true if it is a "NLS field" that should be set to a localized value
    */
-  private static boolean isNLSField(Field field) {
+  private static final boolean isNLSField(Field field) {
     int modifier = field.getModifiers();
 
     String problem = null;
@@ -240,28 +280,27 @@ public abstract class NLS {
     }
 
     NLSMessage nlsMessage = field.getAnnotation(NLSMessage.class);
-
     if (problem != null) {
       if (nlsMessage == null) {
         // not an NLS field, no problem, just ignore it
         return false;
       }
       // NLS-annotation on a field with wrong modifiers (not public static non-final)
-      throw new RuntimeException("NLS-Annotation detected on field with wrong modifiers '"
-          + field.getDeclaringClass().getName() + "." + field.getName() + "'. Field is " + problem);
+      throw new RuntimeException(String.format(MSG_MISUSEDNLSANNOTATION, field.getDeclaringClass().getName(), field
+          .getName(), problem));
     }
 
     // NLS fields are fields with @NLSMessage annotation and fields with type String and Exception code (and subclasses)
-    return (nlsMessage != null || field.getType() == String.class || ExceptionCode.class.isAssignableFrom(field
-        .getType()));
+    return (nlsMessage != null) || (field.getType() == String.class)
+        || ExceptionCode.class.isAssignableFrom(field.getType());
   }
 
-  /*
+  /**
    * Build an array of property files to search. The returned array contains the property fields in order from most
    * specific to most generic. So, in the FR_fr locale, it will return file_fr_FR.properties, then file_fr.properties,
    * and finally file.properties.
    */
-  private static String[] buildVariants(String root) {
+  private static final String[] buildVariants(String root) {
     if (nlSuffixes == null) {
       // build list of suffixes for loading resource bundles
       String nl = Locale.getDefault().toString();
@@ -298,7 +337,7 @@ public abstract class NLS {
    * @param variants
    *          file names to read
    */
-  private static void loadProperties(Properties messages, String[] variants) {
+  private static final void loadProperties(Properties messages, String[] variants) {
     for (String variant : variants) {
       InputStream is = null;
       try {
@@ -307,65 +346,15 @@ public abstract class NLS {
           messages.load(is);
         }
       } catch (IOException ex) {
-        System.err.println("Could not read properties file '" + variant + "': " + ex);
-        continue;
+        /**
+         * @todo [13-Dec-2009:KASI] This should cause a RuntimeException as there's something wrong in the application
+         *       setup.
+         */
+        System.err.printf(MSG_COULDNOTREADPROPERTIES, variant, ex.getMessage());
       } finally {
         Utilities.close(is);
       }
     }
   }
 
-  /**
-   * MessageProperties holds the messages for a class
-   * 
-   * @author Nils Hartmann <nils@nilshartmann.net>
-   * @version $Revision$
-   */
-  static class MessageProperties extends Properties {
-
-    private static final long  serialVersionUID = 1L;
-
-    /** the class this MessageProperties objects holds the messages for */
-    private Class<?>           _targetClass;
-
-    /**
-     * all the fields on the target class that can have messages assigned to
-     */
-    private Map<String, Field> _fields;
-
-    public MessageProperties(Class<?> targetClass, Map<String, Field> fields) {
-      this._targetClass = targetClass;
-      this._fields = fields;
-    }
-
-    @Override
-    public synchronized Object put(Object key, Object value) {
-      if (containsKey(key)) {
-        // the given field as already been set. simply return it's first value (we don't want to override)
-        return super.get(key);
-      }
-
-      Field field = this._fields.get(key);
-
-      if (field == null) {
-        // Property not known
-        System.out.println("Message-Property '" + key + "' existiert nicht an Ziel-Klasse '" + this._targetClass + "'");
-        return null;
-      }
-
-      Object fieldValue = getFieldValue(field, (String) value);
-
-      try {
-        field.set(null, fieldValue);
-      } catch (Exception ex) {
-        System.err.println("Could not set field '" + field + "': " + ex);
-        return null;
-      }
-
-      // Avoid setting the field more than one time
-      super.put(key, fieldValue);
-
-      return null;
-    }
-  }
-}
+} /* ENDCLASS */

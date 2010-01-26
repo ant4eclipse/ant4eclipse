@@ -79,7 +79,7 @@ public class ManifestHelper {
    *           if the symbolic name could not be found.
    */
   public static String getBundleSymbolicName(Manifest manifest) {
-    Assure.notNull(manifest);
+    Assure.notNull("manifest", manifest);
 
     // get the manifest header elements
     ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
@@ -123,15 +123,14 @@ public class ManifestHelper {
   }
 
   public static String getManifestHeader(Manifest manifest, String header) {
-    Assure.notNull(manifest);
-    Assure.nonEmpty(header);
-
+    Assure.notNull("manifest", manifest);
+    Assure.nonEmpty("header", header);
     return manifest.getMainAttributes().getValue(header);
   }
 
   public static ManifestHeaderElement[] getManifestHeaderElements(Manifest manifest, String header) {
-    Assure.notNull(manifest);
-    Assure.nonEmpty(header);
+    Assure.notNull("manifest", manifest);
+    Assure.nonEmpty("header", header);
 
     String manifestValue = manifest.getMainAttributes().getValue(header);
 
@@ -143,7 +142,7 @@ public class ManifestHelper {
   }
 
   public static ManifestHeaderElement[] getManifestHeaderElements(String manifestValue) {
-    Assure.nonEmpty(manifestValue);
+    Assure.nonEmpty("manifestValue", manifestValue);
 
     String[] elements = splitHeader(manifestValue);
     List<ManifestHeaderElement> result = new LinkedList<ManifestHeaderElement>();
@@ -247,7 +246,7 @@ public class ManifestHelper {
    * @return
    */
   private static boolean lookup(char[] array, int index, String pattern) {
-    Assure.nonEmpty(pattern);
+    Assure.nonEmpty("pattern", pattern);
 
     if (index + pattern.length() > array.length) {
       return false;

@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.service;
 
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration.ConfigurationContext;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,6 +45,9 @@ import java.util.Map;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * 
+ * @todo [10-Dec-2009:KASI] The static reference should be removed so that classloading won't cleanup existing data
+ *       (happens within a taskdef if ant).
  */
 public class ServiceRegistry {
 
@@ -72,8 +75,8 @@ public class ServiceRegistry {
    *          the service registry configuration
    */
   public static void configure(ServiceRegistryConfiguration configuration) {
-    parameterNotNull("configuration", configuration);
-    assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
+    Assure.notNull("configuration", configuration);
+    Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
 
     _instance = new ServiceRegistry();
     configuration.configure(_instance.new ConfigurationContextImpl());
@@ -103,7 +106,7 @@ public class ServiceRegistry {
    * </p>
    */
   public static void reset() {
-    assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
+    Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
 
     // if the service registry is configured, it is also initialized and needs to be disposed
     _instance.dispose();
@@ -123,8 +126,7 @@ public class ServiceRegistry {
    * @return the instance.
    */
   public static ServiceRegistry instance() {
-    assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
-
+    Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
     return _instance;
   }
 
@@ -172,30 +174,12 @@ public class ServiceRegistry {
    */
   @SuppressWarnings("unchecked")
   public <T> T getService(Class<T> serviceType) {
-    return (T) getService(serviceType.getName());
-  }
-
-  /**
-   * <p>
-   * Gives access to a specific service.
-   * </p>
-   * 
-   * @param serviceIdentifier
-   *          The identifier used to select a service.
-   * 
-   * @return The service instance. Not <code>null</code>.
-   * 
-   * @throws Ant4EclipseException
-   *           if the desired service is not available.
-   */
-  public final Object getService(String serviceIdentifier) {
-    Object result = this._serviceMap.get(serviceIdentifier);
-
+    Object result = this._serviceMap.get(serviceType.getName());
     if (result == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceIdentifier);
+      throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceType.getName());
     }
+    return (T) result;
 
-    return result;
   }
 
   /**
@@ -213,7 +197,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void initialize() {
-    assertTrue(!isInitialized(), "Service registry already has been initialized!");
+    Assure.assertTrue(!isInitialized(), "Service registry already has been initialized!");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -238,7 +222,7 @@ public class ServiceRegistry {
    * </p>
    */
   private void dispose() {
-    assertTrue(isInitialized(), "Service registry is not initialized.");
+    Assure.assertTrue(isInitialized(), "Service registry is not initialized.");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
 
@@ -266,38 +250,6 @@ public class ServiceRegistry {
 
   /**
    * <p>
-   * Assert that the specified object is not null.
-   * </p>
-   * 
-   * @param message
-   *          an error message
-   * @param object
-   *          the object that must be set.
-   */
-  private static void parameterNotNull(String parameterName, Object parameter) {
-    if (parameter == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.ASSERT_PARAMETER_NOT_NULL_FAILED, parameterName);
-    }
-  }
-
-  /**
-   * <p>
-   * Assert that the given condition is <code>true</code>
-   * </p>
-   * 
-   * @param condition
-   *          the condition
-   * @param msg
-   *          the message
-   */
-  private static void assertTrue(boolean condition, String msg) {
-    if (!condition) {
-      throw new Ant4EclipseException(CoreExceptionCode.ASSERT_TRUE_FAILED, msg);
-    }
-  }
-
-  /**
-   * <p>
    * Creates an instance of type {@link ServiceRegistry}.
    * </p>
    */
@@ -311,12 +263,15 @@ public class ServiceRegistry {
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  protected class ConfigurationContextImpl implements ConfigurationContext {
+  private class ConfigurationContextImpl implements ConfigurationContext {
 
-    public final void registerService(Object service, String serviceIdentifier) {
-      assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      parameterNotNull("service", service);
-      parameterNotNull("serviceIdentifier", serviceIdentifier);
+    /**
+     * {@inheritDoc}
+     */
+    public void registerService(Object service, String serviceIdentifier) {
+      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
+      Assure.notNull("service", service);
+      Assure.notNull("serviceIdentifier", serviceIdentifier);
 
       if (!ServiceRegistry.this._serviceMap.containsKey(serviceIdentifier)) {
         ServiceRegistry.this._serviceMap.put(serviceIdentifier, service);
@@ -326,14 +281,17 @@ public class ServiceRegistry {
       }
     }
 
-    public final void registerService(Object service, String[] serviceIdentifier) {
-      assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
-      parameterNotNull("service", service);
-      parameterNotNull("serviceIdentifier", serviceIdentifier);
-      assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
+    /**
+     * {@inheritDoc}
+     */
+    public void registerService(Object service, String[] serviceIdentifier) {
+      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
+      Assure.notNull("service", service);
+      Assure.notNull("serviceIdentifier", serviceIdentifier);
+      Assure.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");
 
       for (int i = 0; i < serviceIdentifier.length; i++) {
-        assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
+        Assure.assertTrue(serviceIdentifier[i] != null, "Parameter serviceIdentifier[" + i + "] has to be set!");
       }
 
       for (String object : serviceIdentifier) {
@@ -347,5 +305,7 @@ public class ServiceRegistry {
         ServiceRegistry.this._serviceOrdering.add(service);
       }
     }
-  }
-}
+
+  } /* ENDCLASS */
+
+} /* ENDCLASS */

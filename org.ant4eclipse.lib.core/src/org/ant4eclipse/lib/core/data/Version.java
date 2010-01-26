@@ -25,18 +25,18 @@ import java.util.StringTokenizer;
 public class Version {
 
   /** the major version */
-  private Integer _major;
+  private Integer      _major;
 
   /** the minor version */
-  private Integer _minor;
+  private Integer      _minor;
 
   /** the micro version */
-  private Integer _micro;
+  private Integer      _micro;
 
   /** the qualifier version */
-  private String  _qualifier;
+  private String       _qualifier;
 
-  private String  _str;
+  private String       _str;
 
   /**
    * Sets up this version information from the supplied formatted string. The format is as followed:<br/>
@@ -49,6 +49,7 @@ public class Version {
    *          A formatted version string. Neither <code>null</code> nor empty.
    */
   public Version(String version) {
+    Assure.nonEmpty("version", version);
 
     this._major = Integer.valueOf(0);
     this._minor = Integer.valueOf(0);

@@ -43,7 +43,7 @@ public class ClassLoadingHelper {
    * @return the class path entries for the specified class.
    */
   public static String[] getClasspathEntriesFor(Class<?> clazz) {
-    Assure.notNull(clazz);
+    Assure.notNull("clazz", clazz);
 
     // get class loader
     ClassLoader classLoader = clazz.getClassLoader();

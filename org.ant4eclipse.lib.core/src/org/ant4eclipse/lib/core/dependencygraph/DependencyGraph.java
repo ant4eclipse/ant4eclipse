@@ -86,7 +86,7 @@ public final class DependencyGraph<T> {
    */
   public DependencyGraph(VertexRenderer<T> renderer) {
     this();
-    Assure.notNull(renderer);
+    Assure.notNull("renderer", renderer);
     this._renderer = renderer;
   }
 
@@ -99,8 +99,7 @@ public final class DependencyGraph<T> {
    *          the vertex that will be added.
    */
   public void addVertex(T vertex) {
-    Assure.notNull(vertex);
-
+    Assure.notNull("vertex", vertex);
     if (!this._vertices.contains(vertex)) {
       this._vertices.add(vertex);
     }
@@ -117,8 +116,7 @@ public final class DependencyGraph<T> {
    *         <code>false</code>.
    */
   public boolean containsVertex(T vertex) {
-    Assure.notNull(vertex);
-
+    Assure.notNull("vertex", vertex);
     return this._vertices.contains(vertex);
   }
 
@@ -133,9 +131,8 @@ public final class DependencyGraph<T> {
    *          the child node
    */
   public void addEdge(T parent, T child) {
-    Assure.notNull(parent);
-    Assure.notNull(child);
-
+    Assure.notNull("parent", parent);
+    Assure.notNull("child", child);
     addVertex(parent);
     addVertex(child);
     this._edges.add(new Edge<T>(parent, child));
@@ -247,7 +244,7 @@ public final class DependencyGraph<T> {
       result.addAll(removable);
     }
 
-    return (zeros < matrix.length);
+    return zeros < matrix.length;
   }
 
   /**
@@ -300,7 +297,7 @@ public final class DependencyGraph<T> {
     for (int i = 0; i < matrix.length; i++) {
       result[i] = sum(matrix[i]);
     }
-    return (result);
+    return result;
   }
 
   /**
