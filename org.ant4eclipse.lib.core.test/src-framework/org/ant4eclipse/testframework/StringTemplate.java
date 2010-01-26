@@ -11,23 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
-
-import java.util.Iterator;
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
 public class StringTemplate {
-
-  /** - */
-  private static String PREFIX  = "${";
-
-  /** - */
-  private static String POSTFIX = "}";
 
   /** - */
   private StringBuilder _stringTemplate;
@@ -48,9 +39,7 @@ public class StringTemplate {
    */
   public StringTemplate(String content) {
     this();
-
-    Assert.notNull(content);
-
+    Assure.notNull("content", content);
     this._stringTemplate.append(content);
   }
 
@@ -58,8 +47,7 @@ public class StringTemplate {
    * @param content
    */
   public StringTemplate append(String content) {
-    Assert.notNull(content);
-
+    Assure.notNull("content", content);
     this._stringTemplate.append(content);
     return this;
   }
@@ -72,7 +60,6 @@ public class StringTemplate {
   public StringTemplate nl() {
     this._stringTemplate.append(Utilities.NL);
     return this;
-
   }
 
   /**
@@ -80,30 +67,17 @@ public class StringTemplate {
    * @param value
    */
   public void replace(String name, String value) {
-    Assert.notNull(name);
-    Assert.notNull(value);
+    Assure.notNull("name", name);
+    Assure.notNull("value", value);
     this._stringsToReplace.put(name, value);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
-
-    String template = this._stringTemplate.toString();
-    Iterator<String> iterator = this._stringsToReplace.keySet().iterator();
-
-    while (iterator.hasNext()) {
-
-      String name = iterator.next();
-      String stringToReplace = PREFIX + name + POSTFIX;
-      String value = this._stringsToReplace.get(name);
-
-      int index = template.indexOf(stringToReplace);
-      while (index != -1) {
-        template = template.substring(0, index) + value + template.substring(index + stringToReplace.length());
-        index = template.indexOf(stringToReplace);
-      }
-    }
-
-    return template;
+    return Utilities.replaceTokens(this._stringTemplate.toString(), this._stringsToReplace);
   }
-}
+
+} /* ENDCLASS */
