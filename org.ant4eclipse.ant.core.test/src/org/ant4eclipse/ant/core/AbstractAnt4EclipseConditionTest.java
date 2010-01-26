@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseCondition;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
