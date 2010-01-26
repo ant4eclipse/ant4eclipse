@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt.ant;
+package org.ant4eclipse.ant.pydt.ant;
 
 /**
  * Tests for the ant task: 'getPythonSourcePath' using the Python DLTK implementation.

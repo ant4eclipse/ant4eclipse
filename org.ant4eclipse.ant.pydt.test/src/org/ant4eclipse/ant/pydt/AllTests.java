@@ -9,12 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt;
+package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.pydt.ant.PythonPathDLTKTest;
-import org.ant4eclipse.pydt.ant.PythonPathPyDevTest;
-import org.ant4eclipse.pydt.ant.SourcePathDLTKTest;
-import org.ant4eclipse.pydt.ant.SourcePathPyDevTest;
+import org.ant4eclipse.ant.pydt.ant.PythonPathDLTKTest;
+import org.ant4eclipse.ant.pydt.ant.PythonPathPyDevTest;
+import org.ant4eclipse.ant.pydt.ant.SourcePathDLTKTest;
+import org.ant4eclipse.ant.pydt.ant.SourcePathPyDevTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

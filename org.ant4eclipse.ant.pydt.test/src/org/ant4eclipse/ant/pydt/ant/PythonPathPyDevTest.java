@@ -9,19 +9,19 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt.ant;
+package org.ant4eclipse.ant.pydt.ant;
 
 /**
- * Tests for the ant task: 'getPythonSourcePath' using the Python PyDev implementation.
+ * Tests for the ant task: 'getPythonPath' using the Python PyDev implementation.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathPyDevTest extends AbstractSourcePathTest {
+public class PythonPathPyDevTest extends AbstractPythonPathTest {
 
   /**
    * Initialises this set of tests.
    */
-  public SourcePathPyDevTest() {
+  public PythonPathPyDevTest() {
     super(false);
   }
 

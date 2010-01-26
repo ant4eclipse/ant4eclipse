@@ -15,10 +15,10 @@ import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.ant.core.AntConfigurator;
-import org.ant4eclipse.pydt.ant.GetPythonPathTask;
-import org.ant4eclipse.pydt.ant.GetPythonSourcePathTask;
-import org.ant4eclipse.pydt.ant.PythonDocumentationTask;
-import org.ant4eclipse.pydt.ant.type.PythonContainer;
+import org.ant4eclipse.ant.pydt.ant.GetPythonPathTask;
+import org.ant4eclipse.ant.pydt.ant.GetPythonSourcePathTask;
+import org.ant4eclipse.ant.pydt.ant.PythonDocumentationTask;
+import org.ant4eclipse.ant.pydt.ant.type.PythonContainer;
 import org.ant4eclipse.pydt.test.builder.WorkspaceBuilder;
 import org.ant4eclipse.pydt.test.data.ProjectDescription;
 import org.ant4eclipse.pydt.test.data.ProjectSuite;
