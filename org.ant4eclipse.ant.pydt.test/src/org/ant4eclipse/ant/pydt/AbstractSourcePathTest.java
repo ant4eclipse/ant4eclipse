@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.ant.pydt.test.AbstractWorkspaceBasedTest;
-import org.ant4eclipse.ant.pydt.test.BuildResult;
-import org.ant4eclipse.pydt.test.data.ProjectDescription;
+import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
+import org.ant4eclipse.pydt.test.BuildResult;
+import org.ant4eclipse.testframework.ProjectDescription;
 import org.apache.tools.ant.BuildException;
 import org.junit.After;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class AbstractSourcePathTest extends AbstractWorkspaceBasedTest {
   @Before
   public void setup() {
     super.setup();
-    this._sourcepathxml = getResource("/org/ant4eclipse/pydt/ant/sourcepath.xml");
+    this._sourcepathxml = getResource("/org/ant4eclipse/ant/pydt/sourcepath.xml");
   }
 
   /**

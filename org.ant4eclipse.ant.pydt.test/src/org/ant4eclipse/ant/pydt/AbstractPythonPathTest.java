@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.ant.pydt.test.AbstractWorkspaceBasedTest;
-import org.ant4eclipse.ant.pydt.test.BuildResult;
-import org.ant4eclipse.pydt.test.data.ProjectDescription;
+import org.ant4eclipse.pydt.test.AbstractWorkspaceBasedTest;
+import org.ant4eclipse.pydt.test.BuildResult;
+import org.ant4eclipse.testframework.ProjectDescription;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,7 +53,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
   @Before
   public void setup() {
     super.setup();
-    this._pythonpathxml = getResource("/org/ant4eclipse/pydt/ant/pythonpath.xml");
+    this._pythonpathxml = getResource("/org/ant4eclipse/ant/pydt/pythonpath.xml");
   }
 
   /**
