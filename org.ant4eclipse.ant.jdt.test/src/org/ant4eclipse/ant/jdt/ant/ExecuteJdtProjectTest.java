@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ant;
+package org.ant4eclipse.ant.jdt.ant;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
-import org.ant4eclipse.jdt.ant.base.AbstractJdtTest;
+import org.ant4eclipse.ant.jdt.ant.base.AbstractJdtTest;
 
 import java.io.File;
 

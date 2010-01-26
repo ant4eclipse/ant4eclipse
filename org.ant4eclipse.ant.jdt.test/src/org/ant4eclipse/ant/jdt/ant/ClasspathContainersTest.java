@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.jdt.ant;
+package org.ant4eclipse.ant.jdt.ant;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
-import org.ant4eclipse.jdt.ant.base.AbstractJdtClassPathTest;
+import org.ant4eclipse.ant.jdt.ant.base.AbstractJdtClassPathTest;
 
 import java.io.File;
 
@@ -23,14 +23,14 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
+public class ClasspathContainersTest extends AbstractJdtClassPathTest {
 
   @Override
   public void setUp() throws Exception {
     super.setUp();
 
     // set up the build file
-    setupBuildFile("classpathVariables.xml");
+    setupBuildFile("classpathContainers.xml");
   }
 
   /**
@@ -39,18 +39,16 @@ public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
    * 
    * @throws Exception
    */
-  public void testClasspathVariables() throws Exception {
+  public void testClasspathContainers() throws Exception {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withVarClasspathEntry("BRUNO_WALTER")
-        .withVarClasspathEntry("VAR2/test").createIn(getTestWorkspaceDirectory());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withContainerClasspathEntry("testContainer").createIn(
+        getTestWorkspaceDirectory());
 
     // set the properties
     getProject().setProperty("projectName", "project");
 
     // execute target
     String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "bruno_walter"),
-        new File(getTestWorkspaceDirectory(), "var2/test"));
+    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "project/testFile.txt"));
   }
-
 }
