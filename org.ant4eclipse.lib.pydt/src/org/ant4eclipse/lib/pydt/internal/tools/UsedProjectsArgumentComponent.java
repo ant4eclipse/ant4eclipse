@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
-import org.apache.tools.ant.types.EnumeratedAttribute;
-
 /**
  * Subelement representation used as an python specific argument for the GetUsedProjectsTask.
  * 
@@ -20,18 +18,25 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  */
 public class UsedProjectsArgumentComponent {
 
-  public static final UsedProjectsArgumentComponent DEFAULT     = new UsedProjectsArgumentComponent();
+  /**
+   * EnumeratedAttribute used to control the resolving process.
+   */
+  public static enum Mode {
 
-  public static final String                        ELEMENTNAME = "pydtReferencedProject";
+    all, exported, direct;
+
+  } /* ENDENUM */
+
+  public static final UsedProjectsArgumentComponent DEFAULT = new UsedProjectsArgumentComponent();
 
   /** resolve projects that are declared as exported (thus their dependencies) */
-  private boolean                                   _export     = false;
+  private boolean                                   _export = false;
 
   /** generally resolve all referenced projects */
-  private boolean                                   _all        = true;
+  private boolean                                   _all    = true;
 
   /** do not resolve dependencies of referenced projects (even if they're declared as exported) */
-  private boolean                                   _direct     = false;
+  private boolean                                   _direct = false;
 
   /**
    * Only return directly referenced projects.
@@ -71,11 +76,11 @@ public class UsedProjectsArgumentComponent {
     this._export = false;
     this._direct = false;
     if (mode != null) {
-      if (mode.isExported()) {
+      if (mode == Mode.exported) {
         this._export = true;
-      } else if (mode.isDirect()) {
+      } else if (mode == Mode.direct) {
         this._direct = true;
-      } else /* if (mode.isAll()) */{
+      } else /* if (mode == Mode.all) */{
         this._all = true;
       }
     } else {
@@ -83,55 +88,5 @@ public class UsedProjectsArgumentComponent {
       this._all = true;
     }
   }
-
-  /**
-   * EnumeratedAttribute used to control the resolving process.
-   */
-  public static final class Mode extends EnumeratedAttribute {
-
-    private static final String   NAME_ALL      = "all";
-
-    private static final String   NAME_EXPORTED = "exported";
-
-    private static final String   NAME_DIRECT   = "direct";
-
-    private static final String[] VALUES        = { NAME_ALL, NAME_EXPORTED, NAME_DIRECT };
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public String[] getValues() {
-      return VALUES;
-    }
-
-    /**
-     * Returns <code>true</code> if the supplied value is mode <code>all</code>.
-     * 
-     * @return <code>true</code> <=> The supplied value is mode <code>all</code>.
-     */
-    public boolean isAll() {
-      return NAME_ALL.equalsIgnoreCase(getValue());
-    }
-
-    /**
-     * Returns <code>true</code> if the supplied value is mode <code>exported</code>.
-     * 
-     * @return <code>true</code> <=> The supplied value is mode <code>exported</code>.
-     */
-    public boolean isExported() {
-      return NAME_EXPORTED.equalsIgnoreCase(getValue());
-    }
-
-    /**
-     * Returns <code>true</code> if the supplied value is mode <code>exported</code>.
-     * 
-     * @return <code>true</code> <=> The supplied value is mode <code>exported</code>.
-     */
-    public boolean isDirect() {
-      return NAME_DIRECT.equalsIgnoreCase(getValue());
-    }
-
-  } /* ENDCLASS */
 
 } /* ENDCLASS */
