@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * <p>

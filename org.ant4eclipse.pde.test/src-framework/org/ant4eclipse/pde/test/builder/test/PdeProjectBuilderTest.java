@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.pde.test.builder.test;
 
-import org.ant4eclipse.core.Assert;
 
 import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedTest;
 
 import java.io.File;

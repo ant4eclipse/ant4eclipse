@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.projectset;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.internal.AbstractTeamProjectSet;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.util.Iterator;
 

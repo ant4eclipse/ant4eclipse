@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.projectset.internal;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
@@ -25,6 +23,9 @@ import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
+
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Lifecycle;
 
 import java.io.File;
 import java.util.Hashtable;

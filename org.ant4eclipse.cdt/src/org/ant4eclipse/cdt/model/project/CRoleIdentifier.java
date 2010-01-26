@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.cdt.model.project;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
@@ -19,6 +18,8 @@ import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 
 import org.ant4eclipse.cdt.internal.model.project.CProjectRoleImpl;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * <p>

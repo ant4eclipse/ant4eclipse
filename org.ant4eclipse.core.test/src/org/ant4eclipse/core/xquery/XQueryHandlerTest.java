@@ -15,9 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
-import org.ant4eclipse.core.CoreExceptionCode;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.junit.Test;
 
 import java.io.InputStream;

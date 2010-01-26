@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.model.resource;
 
-import org.ant4eclipse.core.Assert;
 
 import org.ant4eclipse.platform.model.resource.BuildCommand;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * <p>

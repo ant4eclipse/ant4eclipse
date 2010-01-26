@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.project;
 
-import org.ant4eclipse.core.Assert;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * Implements the cvs role of a project.

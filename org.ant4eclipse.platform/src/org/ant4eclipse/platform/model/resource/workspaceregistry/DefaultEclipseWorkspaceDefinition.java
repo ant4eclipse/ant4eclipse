@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.internal.model.resource.workspaceregistry.LocationFileParser;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.io.File;
 import java.io.FileFilter;

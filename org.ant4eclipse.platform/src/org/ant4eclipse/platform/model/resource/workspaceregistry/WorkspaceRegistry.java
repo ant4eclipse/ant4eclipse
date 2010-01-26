@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.service.ServiceRegistry;
 
 import org.ant4eclipse.platform.model.resource.Workspace;
+
+import org.ant4eclipse.lib.core.Lifecycle;
 
 /**
  * <p>

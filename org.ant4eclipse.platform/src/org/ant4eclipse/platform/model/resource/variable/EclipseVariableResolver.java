@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.resource.variable;
 
-import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.util.StringMap;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
+
+import org.ant4eclipse.lib.core.Lifecycle;
 
 /**
  * <p>

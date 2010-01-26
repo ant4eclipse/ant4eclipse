@@ -13,6 +13,7 @@ package org.ant4eclipse.core;
 
 import static org.junit.Assert.assertEquals;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 

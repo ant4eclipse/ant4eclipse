@@ -16,9 +16,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.ant4eclipse.core.Lifecycle;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.lib.core.Lifecycle;
 import org.junit.Test;
 
 public class ServiceRegistryTest {

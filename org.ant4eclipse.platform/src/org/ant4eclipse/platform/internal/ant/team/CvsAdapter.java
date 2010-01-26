@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.platform.internal.ant.team;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.core.logging.A4ELogging;
 
@@ -19,6 +18,7 @@ import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Cvs;
 

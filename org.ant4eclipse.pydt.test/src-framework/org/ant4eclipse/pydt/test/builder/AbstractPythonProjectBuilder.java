@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.pydt.test.builder;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
+
+import org.ant4eclipse.lib.core.Assert;
 
 import java.io.File;
 import java.net.URL;

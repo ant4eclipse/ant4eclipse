@@ -11,13 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.platform.model.team.cvssupport.project;
 
-import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
+
+import org.ant4eclipse.lib.core.Assert;
 
 /**
  * Identifier for a CVS role.

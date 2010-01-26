@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.core.nls;
 
-import org.ant4eclipse.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
 
 public class TestMessages {
 
