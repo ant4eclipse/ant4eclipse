@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.jdt;
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentDelegate;

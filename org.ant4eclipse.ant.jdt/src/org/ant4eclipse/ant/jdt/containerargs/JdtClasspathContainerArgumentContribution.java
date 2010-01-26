@@ -12,8 +12,8 @@
 package org.ant4eclipse.ant.jdt.containerargs;
 
 
-import org.ant4eclipse.platform.ant.SubElementContribution;
 
+import org.ant4eclipse.ant.platform.SubElementContribution;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;

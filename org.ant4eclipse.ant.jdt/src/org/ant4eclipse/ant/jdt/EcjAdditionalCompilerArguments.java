@@ -171,8 +171,7 @@ public class EcjAdditionalCompilerArguments {
    *          the boot access restriction.
    */
   public void setBootClassPathAccessRestrictions(String bootClassPathAccessRestrictions) {
-    Assure.nonEmpty(bootClassPathAccessRestrictions);
-
+    Assure.nonEmpty("bootClassPathAccessRestrictions", bootClassPathAccessRestrictions);
     this._bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
   }
 
@@ -198,8 +197,8 @@ public class EcjAdditionalCompilerArguments {
    * @param outputFolder
    */
   public void addSourceFolderForOutputFolder(File outputFolder, File[] sourceFolders) {
-    Assure.notNull(outputFolder);
-    Assure.notNull(sourceFolders);
+    Assure.notNull("outputFolder", outputFolder);
+    Assure.notNull("sourceFolders", sourceFolders);
 
     // get source folder map
     Set<File> sourceFolderSet = this._sourceFolderMap.get(sourceFolders);

@@ -12,8 +12,7 @@
 package org.ant4eclipse.ant.jdt;
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.lib.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
@@ -94,6 +93,6 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
       throw new RuntimeException(buffer.toString());
     }
 
-    return (result);
+    return result;
   }
 }
