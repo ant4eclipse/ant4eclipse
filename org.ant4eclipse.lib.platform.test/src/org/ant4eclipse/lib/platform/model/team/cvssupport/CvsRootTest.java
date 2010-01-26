@@ -9,13 +9,13 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.team.cvssupport;
+package org.ant4eclipse.lib.platform.model.team.cvssupport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import org.ant4eclipse.platform.model.team.cvssupport.CvsRoot;
 
+import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
 import org.junit.Test;
 
 public class CvsRootTest {

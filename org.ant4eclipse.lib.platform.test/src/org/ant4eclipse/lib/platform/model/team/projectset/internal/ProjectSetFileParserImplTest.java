@@ -9,14 +9,14 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.model.team.projectset.internal;
+package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
 import static org.junit.Assert.assertTrue;
 
-import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFactory;
-import org.ant4eclipse.platform.model.team.projectset.internal.TeamProjectSetFileParserImpl;
 
+import org.ant4eclipse.lib.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
+import org.ant4eclipse.lib.platform.model.team.projectset.internal.TeamProjectSetFileParserImpl;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.junit.Test;
 

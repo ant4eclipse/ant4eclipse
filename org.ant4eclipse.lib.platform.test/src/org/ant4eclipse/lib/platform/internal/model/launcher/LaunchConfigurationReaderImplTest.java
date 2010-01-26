@@ -9,16 +9,16 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.internal.model.launcher;
+package org.ant4eclipse.lib.platform.internal.model.launcher;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import org.ant4eclipse.platform.model.launcher.LaunchConfiguration;
-import org.ant4eclipse.platform.model.launcher.LaunchConfigurationReader;
 
+import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
+import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.junit.After;
