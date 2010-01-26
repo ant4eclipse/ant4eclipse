@@ -9,12 +9,12 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde.integration;
+package org.ant4eclipse.ant.pde.integration;
 
 import org.ant4eclipse.pde.test.builder.JarBundleBuilder;
 import org.ant4eclipse.pde.test.builder.PdeProjectBuilder;
 
-import org.ant4eclipse.pde.ant.AbstractPdeBuildFileTest;
+import org.ant4eclipse.ant.pde.ant.AbstractPdeBuildFileTest;
 
 public class JarInJarTest extends AbstractPdeBuildFileTest {
 

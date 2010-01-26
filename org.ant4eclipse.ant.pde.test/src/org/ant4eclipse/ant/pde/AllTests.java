@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pde;
+package org.ant4eclipse.ant.pde;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
