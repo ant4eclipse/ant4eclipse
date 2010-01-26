@@ -17,6 +17,7 @@ import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.SubElementContribution;
 import org.ant4eclipse.ant.platform.core.SubElementComponent;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
@@ -106,8 +107,9 @@ public class SubElementDelegate extends AbstractAntDelegate implements SubElemen
     this._subElements = new LinkedList<Object>();
 
     // get all properties that defines a SubElementContributor
-    Iterable<Pair<String, String>> subElementContributionEntries = Ant4EclipseConfiguration.Helper
-        .getAnt4EclipseConfiguration().getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> subElementContributionEntries = config
+        .getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
 
     List<SubElementContribution> subElementContributions = new LinkedList<SubElementContribution>();
 
