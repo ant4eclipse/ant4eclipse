@@ -11,15 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.cdt.model.project;
 
-import org.ant4eclipse.core.logging.A4ELogging;
-
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.platform.model.resource.role.ProjectRoleIdentifier;
-
-
 import org.ant4eclipse.lib.cdt.internal.model.project.CCProjectRoleImpl;
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
 /**
  * <p>
@@ -36,7 +33,7 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
    * </p>
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(CCProjectRole.CC_NATURE));
+    return project.hasNature(CCProjectRole.CC_NATURE);
   }
 
   /**
@@ -46,7 +43,7 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
-    Assert.notNull(project);
+    Assure.notNull("project", project);
     final CCProjectRoleImpl result = new CCProjectRoleImpl(project);
     // ClasspathFileParser.parseClasspath(javaProjectRole);
     return result;
