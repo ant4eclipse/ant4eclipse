@@ -89,8 +89,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
       throw new BuildException("Missing parameter 'id' on jre!");
     }
 
-    PythonRuntimeRegistry registry = (PythonRuntimeRegistry) ServiceRegistry.instance().getService(
-        PythonRuntimeRegistry.class.getName());
+    PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
 
     registry.registerRuntime(runtime._id, runtime._location, this._sitepackages);
 

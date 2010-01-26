@@ -49,7 +49,7 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
   protected void preconditions() throws BuildException {
     super.preconditions();
     if (!this._allowMultipleFolders) {
-      PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
+      PythonProjectRole role = getEclipseProject().getRole(PythonProjectRole.class);
       RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);
       if (entries.length > 1) {
         throw new Ant4EclipseException(PydtExceptionCode.MULTIPLEFOLDERS, getEclipseProject().getSpecifiedName());
@@ -62,7 +62,7 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
    */
   @Override
   protected File[] resolvePath() {
-    PythonProjectRole role = (PythonProjectRole) getEclipseProject().getRole(PythonProjectRole.class);
+    PythonProjectRole role = getEclipseProject().getRole(PythonProjectRole.class);
     PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, true);
     PathExpander expander = new PathExpander(getEclipseProject());
     RawPathEntry[] entries = role.getRawPathEntries(ReferenceKind.Source);

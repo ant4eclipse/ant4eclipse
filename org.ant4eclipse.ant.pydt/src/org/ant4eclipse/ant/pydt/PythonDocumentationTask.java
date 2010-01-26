@@ -134,7 +134,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
     String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, options);
 
     // save the script
-    File script = Utilities.createFile(code, ".py", "ASCII");
+    File script = Utilities.createTempFile(code, ".py", "ASCII");
 
     // execute the script
     Utilities.execute(executable, null, script.getAbsolutePath());
