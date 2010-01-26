@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
 
-import org.ant4eclipse.ant.jdt.ant.base.AbstractJdtTest;
+import org.ant4eclipse.ant.jdt.base.AbstractJdtTest;
 
 import java.io.File;
 
