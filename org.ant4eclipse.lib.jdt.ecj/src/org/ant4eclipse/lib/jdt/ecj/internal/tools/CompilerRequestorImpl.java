@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 
-
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;

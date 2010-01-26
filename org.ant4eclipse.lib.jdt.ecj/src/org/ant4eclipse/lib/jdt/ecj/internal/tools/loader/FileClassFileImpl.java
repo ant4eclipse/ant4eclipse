@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.DefaultReferableType;
@@ -36,9 +35,7 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
    */
   public FileClassFileImpl(File classfile, String libraryLocation, byte libraryType) {
     super(libraryLocation, libraryType);
-
-    Assure.exists(classfile);
-
+    Assure.exists("classfile", classfile);
     this._classfile = classfile;
   }
 

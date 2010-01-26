@@ -31,7 +31,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   private Map<String, List<ClassFileLoader>> _allPackages;
 
   public CompoundClassFileLoaderImpl(ClassFileLoader[] classFileLoaders) {
-    Assure.notNull(classFileLoaders);
+    Assure.notNull("classFileLoaders", classFileLoaders);
 
     this._classFileLoaders = classFileLoaders;
 
