@@ -12,9 +12,8 @@
 package org.ant4eclipse.testframework;
 
 
-
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.lib.platform.test.builder.EclipseProjectBuilder;
+import org.ant4eclipse.testframework.EclipseProjectBuilder;
 
 import java.io.File;
 
