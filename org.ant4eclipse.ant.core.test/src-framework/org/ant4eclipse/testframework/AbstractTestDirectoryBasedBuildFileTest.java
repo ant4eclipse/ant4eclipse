@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildFileTest;
 
 import java.io.File;
@@ -39,15 +39,11 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    * Disposes the test environment and resets the {@link ServiceRegistry}
    */
   @Override
-  protected void tearDown() {
-    try {
-      super.tearDown();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  protected void tearDown() throws Exception {
+    super.tearDown();
     this._testWorkspace.dispose();
     ServiceRegistry.reset();
+    this._testWorkspace = null;
   }
 
   /**
@@ -90,7 +86,8 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    */
   protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
     String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
-    String buildFileContent = FileHelper.getResource(qualifiedBuildFileName);
+    StringBuffer buffer = Utilities.readTextContent("/" + qualifiedBuildFileName, Utilities.ENCODING, true);
+    String buildFileContent = buffer.toString();
     File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
     configureProject(buildFile.getAbsolutePath());
     getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
@@ -125,4 +122,5 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
   public String normalize(String string) {
     return string.replace('/', File.separatorChar).replace('\\', File.separatorChar);
   }
-}
+
+} /* ENDCLASS */
