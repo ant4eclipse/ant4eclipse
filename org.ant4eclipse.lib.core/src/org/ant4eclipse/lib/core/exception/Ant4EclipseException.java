@@ -111,4 +111,5 @@ public class Ant4EclipseException extends RuntimeException {
       return buffer.toString();
     }
   }
+
 } /* ENDCLASS */
