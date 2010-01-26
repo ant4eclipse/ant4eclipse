@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.platform.ant.delegate;
+package org.ant4eclipse.ant.platform.delegate;
 
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseBuildFileTest;
 import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
