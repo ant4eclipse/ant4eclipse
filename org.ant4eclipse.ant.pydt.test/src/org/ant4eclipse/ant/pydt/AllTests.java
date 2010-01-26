@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.ant.pydt.ant.PythonPathDLTKTest;
-import org.ant4eclipse.ant.pydt.ant.PythonPathPyDevTest;
-import org.ant4eclipse.ant.pydt.ant.SourcePathDLTKTest;
-import org.ant4eclipse.ant.pydt.ant.SourcePathPyDevTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

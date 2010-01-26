@@ -9,20 +9,20 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.pydt.ant;
+package org.ant4eclipse.ant.pydt;
 
 /**
- * Tests for the ant task: 'getPythonSourcePath' using the Python PyDev implementation.
+ * Tests for the ant task: 'getPythonSourcePath' using the Python DLTK implementation.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class SourcePathPyDevTest extends AbstractSourcePathTest {
+public class SourcePathDLTKTest extends AbstractSourcePathTest {
 
   /**
    * Initialises this set of tests.
    */
-  public SourcePathPyDevTest() {
-    super(false);
+  public SourcePathDLTKTest() {
+    super(true);
   }
 
 } /* ENDCLASS */
