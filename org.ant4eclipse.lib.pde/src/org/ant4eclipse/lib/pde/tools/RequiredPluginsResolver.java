@@ -13,6 +13,7 @@ package org.ant4eclipse.lib.pde.tools;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
@@ -52,11 +53,11 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
    * {@inheritDoc}
    */
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
-    Assure.notNull(context);
+    Assure.notNull("context", context);
 
     // Step 1: get the plug-in project role
     EclipseProject eclipseProject = context.getCurrentProject();
-    PluginProjectRole pluginProjectRole = (PluginProjectRole) eclipseProject.getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = eclipseProject.getRole(PluginProjectRole.class);
 
     // Step 2: get the bundle description
     BundleDescription pluginProjectDescription = pluginProjectRole.getBundleDescription();
@@ -147,7 +148,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   private TargetPlatform getTargetPlatform(ClasspathResolverContext context) {
 
     // get the TargetPlatform
-    TargetPlatformRegistry registry = TargetPlatformRegistry.Helper.getRegistry();
+    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
 
     // get the target platform argument
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");

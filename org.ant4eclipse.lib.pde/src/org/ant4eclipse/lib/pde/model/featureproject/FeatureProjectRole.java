@@ -12,11 +12,7 @@
 package org.ant4eclipse.lib.pde.model.featureproject;
 
 
-
-
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.FeatureBuildProperties;
-import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
@@ -61,45 +57,4 @@ public interface FeatureProjectRole extends ProjectRole {
    */
   FeatureBuildProperties getBuildProperties();
 
-  /**
-   * <p>
-   * Helper class to access the {@link FeatureProjectRole}.
-   * </p>
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  public static class Helper {
-
-    /**
-     * <p>
-     * Returns the {@link FeatureProjectRole}.
-     * </p>
-     * 
-     * @param eclipseProject
-     *          the eclipse project
-     * @return the {@link FeatureProjectRole}
-     */
-    public static final FeatureProjectRole getFeatureProjectRole(EclipseProject eclipseProject) {
-      Assure.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-          + "\" must have FeatureProjectRole!");
-
-      // returns the feature project role
-      return (FeatureProjectRole) eclipseProject.getRole(FeatureProjectRole.class);
-    }
-
-    /**
-     * <p>
-     * Returns <code>true</code>, if the eclipse project contains a feature project role.
-     * </p>
-     * 
-     * @param eclipseProject
-     *          the eclipse project
-     * @return <code>true</code> if the eclipse project contains a feature project role.
-     */
-    public static final boolean hasFeatureProjectRole(EclipseProject eclipseProject) {
-      Assure.notNull(eclipseProject);
-
-      return eclipseProject.hasRole(FeatureProjectRole.class);
-    }
-  }
 }

@@ -96,7 +96,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     // resolve the bundle class path
     String bundleClasspath[] = ManifestHelper.getBundleClasspath(this._manifest);
 
-    PluginProjectRole pluginProjectRole = (PluginProjectRole) this._eclipseProject.getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = this._eclipseProject.getRole(PluginProjectRole.class);
 
     PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
     File baseDir = this._eclipseProject.getFolder();
@@ -142,8 +142,8 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     // declare result
     List<File> result = new LinkedList<File>();
 
-    if (JavaProjectRole.Helper.hasJavaProjectRole(this._eclipseProject)) {
-      JavaProjectRole javaProjectRole = JavaProjectRole.Helper.getJavaProjectRole(this._eclipseProject);
+    if (this._eclipseProject.hasRole(JavaProjectRole.class)) {
+      JavaProjectRole javaProjectRole = this._eclipseProject.getRole(JavaProjectRole.class);
 
       String[] sourcefolders = javaProjectRole.getSourceFolders();
       for (String sourcefolder : sourcefolders) {

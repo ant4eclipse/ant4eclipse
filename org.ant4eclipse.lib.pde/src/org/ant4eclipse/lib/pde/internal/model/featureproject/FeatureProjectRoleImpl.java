@@ -46,7 +46,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
     Assure.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have FeatureProjectRole!");
 
-    return (FeatureProjectRoleImpl) eclipseProject.getRole(FeatureProjectRoleImpl.class);
+    return eclipseProject.getRole(FeatureProjectRoleImpl.class);
   }
 
   /**

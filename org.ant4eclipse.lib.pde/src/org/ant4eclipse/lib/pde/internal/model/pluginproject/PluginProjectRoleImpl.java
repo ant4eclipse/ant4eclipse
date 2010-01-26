@@ -12,8 +12,6 @@
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.jdt.internal.model.project.JavaProjectRoleImpl;
-import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -53,7 +51,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
     Assure.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
         + "\" must have PluginProjectRole!");
 
-    return (PluginProjectRoleImpl) eclipseProject.getRole(PluginProjectRoleImpl.class);
+    return eclipseProject.getRole(PluginProjectRoleImpl.class);
   }
 
   /**
@@ -112,42 +110,4 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
     this._buildProperties = buildProperties;
   }
 
-  /**
-   * <p>
-   * Helper class that provides methods for retrieving the {@link PluginProjectRoleImpl} from a given
-   * {@link EclipseProject}.
-   * </p>
-   * 
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  public static class Helper {
-
-    /**
-     * <p>
-     * Returns the {@link JavaProjectRole}. If a {@link JavaProjectRole} is not set, an exception will be thrown.
-     * </p>
-     * 
-     * @return the java project role.
-     */
-    public static final PluginProjectRoleImpl getPluginProjectRole(EclipseProject eclipseProject) {
-      Assure.assertTrue(hasJavaProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-          + "\" must have PluginProjectRole!");
-
-      return (PluginProjectRoleImpl) eclipseProject.getRole(PluginProjectRoleImpl.class);
-    }
-
-    /**
-     * <p>
-     * Returns whether a {@link JavaProjectRole} is set or not.
-     * </p>
-     * 
-     * @return Returns whether a {@link JavaProjectRole} is set or not.
-     */
-    public static final boolean hasJavaProjectRole(EclipseProject eclipseProject) {
-      Assure.notNull(eclipseProject);
-
-      return eclipseProject.hasRole(JavaProjectRoleImpl.class);
-    }
-  }
 }

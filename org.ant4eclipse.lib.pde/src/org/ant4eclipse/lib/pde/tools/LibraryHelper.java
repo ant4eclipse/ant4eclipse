@@ -11,13 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-
-import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties;
-import org.ant4eclipse.pde.model.buildproperties.PluginBuildProperties.Library;
-import org.ant4eclipse.pde.model.pluginproject.PluginProjectRole;
-
-
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
+import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
+import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.Arrays;
@@ -48,7 +45,7 @@ public class LibraryHelper {
    */
   public static final Library[] getLibraries(EclipseProject eclipseProject) {
     // get the plug-in project role
-    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(eclipseProject);
+    PluginProjectRole pluginProjectRole = eclipseProject.getRole(PluginProjectRole.class);
     // get the libraries
     PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
     // TODO: should we take sourceIncludes for source builds?

@@ -12,9 +12,11 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Plugin;
@@ -22,7 +24,6 @@ import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.tools.ResolvedFeature;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
-import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.framework.internal.core.FrameworkProperties;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
@@ -421,8 +422,8 @@ public final class TargetPlatformImpl implements TargetPlatform {
             Version.emptyVersion) ? null : plugin.getVersion());
         // TODO: NLS
         if (bundleDescription == null) {
-          throw new BuildException("Could not find bundle with id '" + plugin.getId() + "' and version '"
-              + plugin.getVersion() + "' in workspace or target platform!");
+          throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, plugin.getId(), plugin
+              .getVersion());
         }
         // TODO: NLS
         if (!bundleDescription.isResolved()) {
