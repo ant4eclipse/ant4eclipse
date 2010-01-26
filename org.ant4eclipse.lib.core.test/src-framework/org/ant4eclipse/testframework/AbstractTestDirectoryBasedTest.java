@@ -11,20 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
-import org.ant4eclipse.ant.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.junit.After;
+import org.junit.Before;
 
 import java.io.File;
-
-import junit.framework.TestCase;
 
 /**
  * Baseclass for all buildfile-based tests in the platform layer
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public abstract class AbstractTestDirectoryBasedTest extends TestCase {
+public abstract class AbstractTestDirectoryBasedTest {
 
   /** - */
   private TestDirectory _testWorkspace;
@@ -32,25 +31,20 @@ public abstract class AbstractTestDirectoryBasedTest extends TestCase {
   /**
    * Creates the Test Environment before execution of a test case
    */
-  @Override
+  @Before
   public void setUp() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
+    DefaultConfigurator.configureAnt4Eclipse();
     this._testWorkspace = new TestDirectory();
   }
 
   /**
    * Disposes the test environment and resets the {@link ServiceRegistry}
    */
-  @Override
-  protected void tearDown() {
-    try {
-      super.tearDown();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  @After
+  public void tearDown() {
     this._testWorkspace.dispose();
     ServiceRegistry.reset();
+    this._testWorkspace = null;
   }
 
   /**

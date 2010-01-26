@@ -11,15 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-
-import org.ant4eclipse.ant.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
-import org.apache.tools.ant.BuildFileTest;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
-
-import java.io.InputStream;
 
 /**
  * <p>
@@ -42,9 +39,9 @@ public class ConfigurableAnt4EclipseTestCase {
   public void setup() {
     StringMap properties = customAnt4EclipseConfiguration(new StringMap());
     if (properties == null) {
-      Ant4EclipseConfigurator.configureAnt4Eclipse();
+      DefaultConfigurator.configureAnt4Eclipse();
     } else {
-      Ant4EclipseConfigurator.configureAnt4Eclipse(properties);
+      DefaultConfigurator.configureAnt4Eclipse(properties);
     }
   }
 
@@ -74,25 +71,4 @@ public class ConfigurableAnt4EclipseTestCase {
     return null;
   }
 
-  /**
-   * Returns an {@link InputStream} to the given resource that must be specified relative to getClass()
-   * 
-   * @param name
-   * @return
-   */
-  protected InputStream getResource(String name) {
-    String packagename = "/" + getClass().getPackage().getName().replace('.', '/');
-
-    String qualifiedResourceName = packagename + "/" + name;
-
-    InputStream stream = getClass().getResourceAsStream(qualifiedResourceName);
-    if (stream == null) {
-      System.err.println("Resource '" + qualifiedResourceName + "' not found!");
-      throw new RuntimeException("Resource '" + qualifiedResourceName + "' not found!");
-    }
-
-    return stream;
-
-  }
-
-}
+} /* ENDCLASS */

@@ -60,7 +60,7 @@ public class TestDirectory {
       }
     }
     System.out.println("Create test dir: " + this._rootDir);
-    FileHelper.createDirectory(this._rootDir);
+    Utilities.mkdirs(this._rootDir);
   }
 
   public void dispose() {

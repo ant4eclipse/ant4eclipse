@@ -11,46 +11,31 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-
-import org.ant4eclipse.ant.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
-import org.apache.tools.ant.Project;
 import org.junit.Test;
 
 public class DefaultConfiguratorTest {
 
   @Test
-  public void testAnt4EclipseConfigurator() {
-
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
-    Ant4EclipseConfigurator.configureAnt4Eclipse();
-
+  public void simpleConfigurator() {
+    DefaultConfigurator.configureAnt4Eclipse();
+    DefaultConfigurator.configureAnt4Eclipse();
     ServiceRegistry.reset();
   }
 
   @Test
-  public void testAnt4EclipseConfigurator_2() {
-    Project project = new Project();
-    Ant4EclipseConfigurator.configureAnt4Eclipse(project);
-    Ant4EclipseConfigurator.configureAnt4Eclipse(project);
-
+  public void configurationWithEmptySettings() {
+    DefaultConfigurator.configureAnt4Eclipse(new StringMap());
+    DefaultConfigurator.configureAnt4Eclipse(new StringMap());
     ServiceRegistry.reset();
   }
 
   @Test
-  public void testAnt4EclipseConfigurator_3() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new StringMap());
-    Ant4EclipseConfigurator.configureAnt4Eclipse(new StringMap());
-
+  public void configurationWithoutSettings() {
+    DefaultConfigurator.configureAnt4Eclipse(null);
+    DefaultConfigurator.configureAnt4Eclipse(null);
     ServiceRegistry.reset();
   }
 
-  @Test
-  public void testAnt4EclipseConfigurator_4() {
-    Ant4EclipseConfigurator.configureAnt4Eclipse((StringMap) null);
-    Ant4EclipseConfigurator.configureAnt4Eclipse((StringMap) null);
-
-    ServiceRegistry.reset();
-  }
-}
+} /* ENDCLASS */
