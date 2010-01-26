@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;
 import org.ant4eclipse.lib.pydt.internal.tools.PythonUtilities;
 import org.apache.tools.ant.BuildException;

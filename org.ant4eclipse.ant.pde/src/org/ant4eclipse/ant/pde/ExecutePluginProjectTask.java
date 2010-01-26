@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.ManifestHelper;
 
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
@@ -21,6 +19,8 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.pde.internal.ant.LibraryHelper;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;

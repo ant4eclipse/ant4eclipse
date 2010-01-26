@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 

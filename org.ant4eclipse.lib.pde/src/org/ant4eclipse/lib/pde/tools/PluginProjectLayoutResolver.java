@@ -17,11 +17,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.Manifest;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.util.ManifestHelper;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;

@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.featureproject;
 
-import org.ant4eclipse.core.Assert;
 
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.osgi.framework.Version;
 

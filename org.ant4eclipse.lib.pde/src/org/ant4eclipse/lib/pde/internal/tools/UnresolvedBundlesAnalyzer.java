@@ -1,8 +1,8 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;

@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;

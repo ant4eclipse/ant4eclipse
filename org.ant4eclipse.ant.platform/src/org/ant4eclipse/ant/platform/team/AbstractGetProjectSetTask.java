@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.team;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractTeamProjectSetBasedTask;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 

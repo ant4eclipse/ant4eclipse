@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.model.pyre;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.ant.ExtendedBuildException;
-import org.ant4eclipse.core.data.Version;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.ant.ExtendedBuildException;
+import org.ant4eclipse.lib.core.data.Version;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.model.PythonInterpreter;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntime;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;

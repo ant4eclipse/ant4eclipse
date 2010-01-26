@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-import org.ant4eclipse.core.Assert;
 
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.AbstractProjectRole;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;

@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.FeatureDescriptionLoader;
 import org.ant4eclipse.lib.pde.model.link.LinkFile;

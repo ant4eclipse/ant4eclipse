@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools.classpathelements;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 
 import java.io.File;

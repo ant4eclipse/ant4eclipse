@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 
-import org.ant4eclipse.core.Assert;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
 
 import java.io.File;

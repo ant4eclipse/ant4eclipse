@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
-import org.ant4eclipse.core.Assert;
 
 
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.Project;
 
 import java.lang.reflect.Field;

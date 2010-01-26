@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 
 /**

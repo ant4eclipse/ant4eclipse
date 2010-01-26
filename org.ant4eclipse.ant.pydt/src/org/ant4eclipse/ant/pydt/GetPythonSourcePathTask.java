@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;
 import org.ant4eclipse.lib.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.lib.pydt.internal.tools.PathExpander;

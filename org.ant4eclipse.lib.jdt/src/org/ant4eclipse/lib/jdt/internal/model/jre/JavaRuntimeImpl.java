@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.data.Version;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 

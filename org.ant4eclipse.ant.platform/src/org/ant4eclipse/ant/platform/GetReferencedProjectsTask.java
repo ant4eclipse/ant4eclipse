@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.Utilities;
 
 import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 

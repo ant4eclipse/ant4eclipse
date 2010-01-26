@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
 
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;
 

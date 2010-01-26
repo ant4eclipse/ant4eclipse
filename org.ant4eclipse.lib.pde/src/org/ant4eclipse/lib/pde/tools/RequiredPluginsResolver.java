@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;

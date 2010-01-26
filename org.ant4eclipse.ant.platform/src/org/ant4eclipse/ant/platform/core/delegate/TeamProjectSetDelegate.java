@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import org.ant4eclipse.core.ant.delegate.AbstractAntDelegate;
 
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSetFileParser;
 
 import org.ant4eclipse.ant.platform.core.TeamProjectSetComponent;
+import org.ant4eclipse.lib.core.ant.delegate.AbstractAntDelegate;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

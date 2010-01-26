@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

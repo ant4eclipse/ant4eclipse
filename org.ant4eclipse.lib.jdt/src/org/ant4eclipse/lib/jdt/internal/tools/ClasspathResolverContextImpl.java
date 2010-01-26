@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;

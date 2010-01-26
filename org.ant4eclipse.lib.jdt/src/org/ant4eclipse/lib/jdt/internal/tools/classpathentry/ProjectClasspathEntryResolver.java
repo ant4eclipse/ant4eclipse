@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;

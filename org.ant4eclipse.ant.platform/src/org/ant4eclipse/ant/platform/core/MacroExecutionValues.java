@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core;
 
-import org.ant4eclipse.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.HashMap;
 import java.util.Map;

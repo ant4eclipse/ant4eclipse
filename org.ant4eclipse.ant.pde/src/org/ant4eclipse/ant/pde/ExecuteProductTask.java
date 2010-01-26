@@ -18,12 +18,6 @@ import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.ant4eclipse.core.ant.ExtendedBuildException;
-import org.ant4eclipse.core.ant.FileListHelper;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.platform.PlatformExceptionCode;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
@@ -31,6 +25,12 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
+import org.ant4eclipse.lib.core.ant.ExtendedBuildException;
+import org.ant4eclipse.lib.core.ant.FileListHelper;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinition;

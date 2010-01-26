@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
 
 
 import org.ant4eclipse.platform.model.resource.Workspace;
 
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.pde.ant.TargetPlatformDefinitionDataType;
 
 import java.util.List;

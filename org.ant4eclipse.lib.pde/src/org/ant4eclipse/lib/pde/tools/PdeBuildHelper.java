@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.pde.model.buildproperties.AbstractBuildProperties;
 import org.apache.tools.ant.BuildException;
 import org.osgi.framework.Version;

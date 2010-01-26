@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathEntryResolverExecutor;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathResolverContextImpl;
 import org.ant4eclipse.lib.jdt.internal.tools.ResolvedClasspathImpl;

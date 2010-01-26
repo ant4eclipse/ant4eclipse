@@ -11,16 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.core.osgi.ExplodedBundleLayoutResolver;
-import org.ant4eclipse.core.osgi.JaredBundleLayoutResolver;
-import org.ant4eclipse.core.util.ManifestHelper;
 
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
+import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
+import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;

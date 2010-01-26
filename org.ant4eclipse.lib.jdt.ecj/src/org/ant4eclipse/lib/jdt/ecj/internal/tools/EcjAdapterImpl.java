@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;

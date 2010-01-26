@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.container;
 
-import org.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;

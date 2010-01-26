@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
 
 
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.ResourceCollection;

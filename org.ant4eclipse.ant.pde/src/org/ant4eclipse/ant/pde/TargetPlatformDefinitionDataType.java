@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;

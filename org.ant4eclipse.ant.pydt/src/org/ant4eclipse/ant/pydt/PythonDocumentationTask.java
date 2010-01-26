@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntime;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;

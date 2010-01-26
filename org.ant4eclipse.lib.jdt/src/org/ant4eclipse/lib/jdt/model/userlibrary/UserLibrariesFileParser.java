@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.userlibrary;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 
 import java.io.File;
 

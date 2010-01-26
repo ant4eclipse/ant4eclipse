@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.Lifecycle;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;

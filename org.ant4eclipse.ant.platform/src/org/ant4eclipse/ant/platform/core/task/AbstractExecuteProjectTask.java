@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.task;
 
-import org.ant4eclipse.core.Assert;
 
 import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
 
@@ -19,6 +18,7 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.DynamicElement;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;

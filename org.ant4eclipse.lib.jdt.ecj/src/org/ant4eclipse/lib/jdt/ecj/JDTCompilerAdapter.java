@@ -21,13 +21,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.StringMap;
-import org.ant4eclipse.core.util.Utilities;
 import org.ant4eclipse.jdt.ant.EcjAdditionalCompilerArguments;
+
+import org.ant4eclipse.lib.core.Ant4EclipseConfigurator;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.taskdefs.condition.Os;

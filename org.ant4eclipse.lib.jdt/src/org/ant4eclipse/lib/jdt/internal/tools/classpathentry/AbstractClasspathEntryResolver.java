@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
-import org.ant4eclipse.core.Assert;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;

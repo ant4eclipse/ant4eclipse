@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-import org.ant4eclipse.core.Assert;
 
 import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
 import org.ant4eclipse.platform.ant.core.SubElementComponent;
@@ -21,6 +20,7 @@ import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.apache.tools.ant.BuildException;
 
 import java.util.Iterator;

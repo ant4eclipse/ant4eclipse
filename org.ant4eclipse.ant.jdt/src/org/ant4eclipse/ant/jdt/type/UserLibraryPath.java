@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.core.logging.A4ELogging;
 
 
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;

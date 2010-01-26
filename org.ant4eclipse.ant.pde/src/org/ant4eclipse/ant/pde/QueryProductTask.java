@@ -11,16 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
-import org.ant4eclipse.core.ant.ExtendedBuildException;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.Utilities;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.model.resource.EclipseProject.PathStyle;
 
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.lib.core.ant.ExtendedBuildException;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinition;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinitionParser;

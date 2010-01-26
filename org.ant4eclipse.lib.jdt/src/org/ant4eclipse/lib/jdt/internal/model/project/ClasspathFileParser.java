@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 
 import java.io.File;
 

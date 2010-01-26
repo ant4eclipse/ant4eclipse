@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ContainerClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ProjectClasspathEntryResolver;

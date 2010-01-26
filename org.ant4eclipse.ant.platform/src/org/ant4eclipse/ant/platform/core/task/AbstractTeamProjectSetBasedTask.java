@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.task;
 
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseTask;
 
 import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 import org.ant4eclipse.ant.platform.core.TeamProjectSetComponent;
 import org.ant4eclipse.ant.platform.core.delegate.TeamProjectSetDelegate;
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTask;
 
 import java.io.File;
 

@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;

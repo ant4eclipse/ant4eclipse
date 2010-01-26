@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
 
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Plugin;

@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-import org.ant4eclipse.core.Ant4EclipseConfigurator;
 
+import org.ant4eclipse.lib.core.Ant4EclipseConfigurator;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.taskdefs.condition.Condition;

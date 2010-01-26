@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.ant.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
 
 
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;

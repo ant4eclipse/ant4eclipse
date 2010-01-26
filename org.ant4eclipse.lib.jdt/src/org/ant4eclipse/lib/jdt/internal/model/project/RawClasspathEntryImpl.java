@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-import org.ant4eclipse.core.Assert;
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 
 import java.io.File;

@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.core.Assert;
 
 
 
+import org.ant4eclipse.lib.core.Assert;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
 import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;

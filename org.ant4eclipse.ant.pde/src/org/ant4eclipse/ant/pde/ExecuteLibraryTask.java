@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
 
 
 
@@ -22,6 +21,7 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ant.JdtExecutorValues;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;

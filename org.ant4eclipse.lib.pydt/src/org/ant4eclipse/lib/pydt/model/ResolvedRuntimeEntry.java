@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.core.Assert;
-import org.ant4eclipse.core.data.Version;
+import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.data.Version;
 
 import java.io.File;
 
