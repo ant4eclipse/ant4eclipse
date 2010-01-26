@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.core;
+package org.ant4eclipse.ant.core;
 
 import org.ant4eclipse.core.ant.AntBasedLogger;
 import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
