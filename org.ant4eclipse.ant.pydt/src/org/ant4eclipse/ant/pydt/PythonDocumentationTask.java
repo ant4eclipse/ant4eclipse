@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.pydt;
 
 
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;

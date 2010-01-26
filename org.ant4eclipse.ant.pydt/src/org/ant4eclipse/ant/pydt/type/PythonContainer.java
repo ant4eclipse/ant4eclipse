@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.pydt.type;
 
 
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;
