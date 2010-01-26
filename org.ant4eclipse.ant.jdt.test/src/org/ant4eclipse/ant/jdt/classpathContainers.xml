@@ -4,11 +4,11 @@
 
   <!-- definition of type classpathContainers -->
   <typedef name="jdtClassPathVariable"
-           classname="org.ant4eclipse.jdt.ant.type.JdtClassPathVariableType" />
+           classname="org.ant4eclipse.ant.jdt.type.JdtClassPathVariableType" />
   <typedef name="jdtClassPathContainer"
-           classname="org.ant4eclipse.jdt.ant.type.JdtClassPathContainerType" />
+           classname="org.ant4eclipse.ant.jdt.type.JdtClassPathContainerType" />
   <typedef name="getJdtClassPath"
-           classname="org.ant4eclipse.jdt.ant.GetJdtClassPathTask" />
+           classname="org.ant4eclipse.ant.jdt.GetJdtClassPathTask" />
 
 
 

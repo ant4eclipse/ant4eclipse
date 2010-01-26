@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import org.ant4eclipse.jdt.test.builder.JdtProjectBuilder;
+
 
 import org.ant4eclipse.ant.jdt.base.AbstractJdtTest;
+import org.ant4eclipse.testframework.JdtProjectBuilder;
 
 import java.io.File;
 
