@@ -14,14 +14,14 @@ package org.ant4eclipse.lib.pde.tools;
 import org.ant4eclipse.core.Assert;
 import org.ant4eclipse.core.exception.Ant4EclipseException;
 
-import org.ant4eclipse.jdt.model.ClasspathEntry;
-import org.ant4eclipse.jdt.tools.container.ClasspathContainerResolver;
-import org.ant4eclipse.jdt.tools.container.ClasspathResolverContext;
-import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
 
 
 import org.ant4eclipse.platform.model.resource.EclipseProject;
 
+import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
+import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
+import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver;
 import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;

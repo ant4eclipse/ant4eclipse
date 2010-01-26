@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.jdt.ant.JdtExecutorValues;
+import org.ant4eclipse.lib.jdt.ant.JdtExecutorValues;
 
 /**
  * <p>

@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.containerargs;
 
-import org.ant4eclipse.jdt.tools.container.JdtClasspathContainerArgument;
+import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 
 import java.util.List;
 

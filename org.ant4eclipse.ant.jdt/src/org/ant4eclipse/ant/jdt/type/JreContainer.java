@@ -17,10 +17,10 @@ import org.ant4eclipse.core.logging.A4ELogging;
 import org.ant4eclipse.core.service.ServiceRegistry;
 import org.ant4eclipse.core.util.Utilities;
 
-import org.ant4eclipse.jdt.model.ContainerTypes;
-import org.ant4eclipse.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.jdt.model.jre.JavaRuntimeRegistry;
 
+import org.ant4eclipse.lib.jdt.model.ContainerTypes;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
