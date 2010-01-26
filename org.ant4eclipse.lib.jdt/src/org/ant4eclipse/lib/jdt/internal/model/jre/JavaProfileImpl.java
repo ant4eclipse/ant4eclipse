@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -73,10 +72,8 @@ public class JavaProfileImpl implements JavaProfile {
    * @param properties
    */
   public JavaProfileImpl(StringMap properties) {
-    Assure.notNull(properties);
-
+    Assure.notNull("properties", properties);
     this._properties = properties;
-
     initialise();
   }
 
@@ -209,7 +206,7 @@ public class JavaProfileImpl implements JavaProfile {
      * @return
      */
     public boolean containsPackage(String packageName) {
-      Assure.notNull(packageName);
+      Assure.notNull("packageName", packageName);
 
       //
       for (String package1 : this._includedPackages) {
@@ -232,9 +229,8 @@ public class JavaProfileImpl implements JavaProfile {
      * @return
      */
     private boolean matches(String osgiPattern, String string) {
-      Assure.notNull(osgiPattern);
-      Assure.notNull(string);
-
+      Assure.notNull("osgiPattern", osgiPattern);
+      Assure.notNull("string", string);
       return string.matches(osgiPattern);
     }
   }

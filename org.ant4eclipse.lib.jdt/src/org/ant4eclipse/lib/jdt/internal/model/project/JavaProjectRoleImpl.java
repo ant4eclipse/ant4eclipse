@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -86,7 +83,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     }
     RawClasspathEntry[] result = new RawClasspathEntry[templist.size()];
     templist.toArray(result);
-    return (result);
+    return result;
   }
 
   /**
@@ -211,7 +208,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   public String getOutputFolderForSourceFolder(final String sourceFolder) {
-    Assure.nonEmpty(sourceFolder);
+    Assure.nonEmpty("sourceFolder", sourceFolder);
 
     // normalize path
     final String normalizedSourceFolder = normalize(sourceFolder);
@@ -327,8 +324,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    *          the eclipse classpath entries to set.
    */
   public void addEclipseClasspathEntry(RawClasspathEntry classpathEntry) {
-    Assure.notNull(classpathEntry);
-
+    Assure.notNull("classpathEntry", classpathEntry);
     this._eclipseClasspathEntries.add(classpathEntry);
   }
 

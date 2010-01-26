@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
 
-
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;

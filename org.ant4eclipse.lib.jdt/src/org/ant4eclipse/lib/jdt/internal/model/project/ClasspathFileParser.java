@@ -24,7 +24,7 @@ import java.io.File;
 public class ClasspathFileParser {
 
   public static void parseClasspath(JavaProjectRoleImpl javaProjectRole) {
-    Assure.notNull(javaProjectRole);
+    Assure.notNull("javaProjectRole", javaProjectRole);
 
     File classpathFile = javaProjectRole.getEclipseProject().getChild(".classpath");
 

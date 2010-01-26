@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ContainerClasspathEntryResolver;
@@ -46,7 +43,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    * {@inheritDoc}
    */
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
-    Assure.notNull(project);
+    Assure.notNull("project", project);
 
     List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
 

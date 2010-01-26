@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
 
@@ -54,7 +53,7 @@ public class ArchiveImpl implements Archive {
    *          The location of the javadocs as an url.
    */
   public ArchiveImpl(File path, File source, String javadoc) {
-    Assure.exists(path);
+    Assure.exists("path", path);
     this._path = path;
     setSource(source);
     setJavaDoc(javadoc);
@@ -97,21 +96,21 @@ public class ArchiveImpl implements Archive {
    * {@inheritDoc}
    */
   public File getPath() {
-    return (this._path);
+    return this._path;
   }
 
   /**
    * {@inheritDoc}
    */
   public File getSource() {
-    return (this._source);
+    return this._source;
   }
 
   /**
    * {@inheritDoc}
    */
   public String getJavaDoc() {
-    return (this._javadoc);
+    return this._javadoc;
   }
 
 } /* ENDCLASS */

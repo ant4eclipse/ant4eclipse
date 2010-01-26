@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -140,7 +139,7 @@ public class JavaExecuter {
    *          the class path entries
    */
   public void setClasspathEntries(String[] classpathEntries) {
-    Assure.notNull(classpathEntries);
+    Assure.notNull("classpathEntries", classpathEntries);
 
     // create file array
     File[] files = new File[classpathEntries.length];
@@ -161,8 +160,7 @@ public class JavaExecuter {
    *          the class path entry
    */
   public void setClasspathEntries(File classpathEntry) {
-    Assure.notNull(classpathEntry);
-
+    Assure.notNull("classpathEntry", classpathEntry);
     setClasspathEntries(new File[] { classpathEntry });
   }
 
@@ -175,8 +173,7 @@ public class JavaExecuter {
    *          the class path entries
    */
   public void setClasspathEntries(File[] classpathEntries) {
-    Assure.notNull(classpathEntries);
-
+    Assure.notNull("classpathEntries", classpathEntries);
     this._classpathEntries = classpathEntries;
   }
 
@@ -189,8 +186,7 @@ public class JavaExecuter {
    *          the main class
    */
   public void setMainClass(String mainClass) {
-    Assure.notNull(mainClass);
-
+    Assure.notNull("mainClass", mainClass);
     this._mainClass = mainClass;
   }
 
@@ -203,7 +199,7 @@ public class JavaExecuter {
    *          the program arguments.
    */
   public void setArgs(String[] args) {
-    Assure.notNull(args);
+    Assure.notNull("args", args);
 
     this._args = args;
   }

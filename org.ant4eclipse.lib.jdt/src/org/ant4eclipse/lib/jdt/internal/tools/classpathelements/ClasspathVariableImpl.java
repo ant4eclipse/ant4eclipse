@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
 
@@ -41,8 +40,8 @@ public class ClasspathVariableImpl implements ClassPathVariable {
    * @param path
    */
   public ClasspathVariableImpl(String name, File path) {
-    Assure.nonEmpty(name);
-    Assure.notNull(path);
+    Assure.nonEmpty("name", name);
+    Assure.notNull("path", path);
 
     this._name = name;
     this._path = path;
@@ -77,8 +76,20 @@ public class ClasspathVariableImpl implements ClassPathVariable {
       return false;
     }
     ClasspathVariableImpl castedObj = (ClasspathVariableImpl) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)) && (this._path == null ? castedObj._path == null
-        : this._path.equals(castedObj._path)));
+    if (this._name == null) {
+      if (castedObj._name != null) {
+        return false;
+      }
+    } else {
+      if (!this._name.equals(castedObj._name)) {
+        return false;
+      }
+    }
+    if (this._path == null) {
+      return castedObj._path == null;
+    } else {
+      return this._path.equals(castedObj._path);
+    }
   }
 
   /**
