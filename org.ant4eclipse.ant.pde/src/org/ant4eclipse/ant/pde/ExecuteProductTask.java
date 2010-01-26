@@ -16,9 +16,9 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
-import org.ant4eclipse.lib.core.ant.ExtendedBuildException;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -242,8 +242,8 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     configuration.setPreferProjects(true);
 
     // fetch the target platform
-    TargetPlatform targetplatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
-        getTargetPlatformId(), configuration);
+    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
+    TargetPlatform targetplatform = registry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
 
     StringMap properties = new StringMap();
     contributeForAll(properties, productdef, targetplatform);
@@ -388,7 +388,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     }
 
     if (!this._product.isFile()) {
-      throw new ExtendedBuildException("The product configuration '%s' is not a regular file.", this._product);
+      throw new BuildException(String.format("The product configuration '%s' is not a regular file.", this._product));
     }
 
     if (this._os == null) {

@@ -15,6 +15,7 @@ package org.ant4eclipse.ant.pde;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
@@ -80,7 +81,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     }
 
     // add the target platform definition
-    TargetPlatformRegistry targetPlatformRegistry = TargetPlatformRegistry.Helper.getRegistry();
+    TargetPlatformRegistry targetPlatformRegistry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
     targetPlatformRegistry.addTargetPlatformDefinition(this._id, this._targetPlatformDefinition);
   }
 

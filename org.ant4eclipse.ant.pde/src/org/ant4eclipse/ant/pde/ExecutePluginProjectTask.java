@@ -24,7 +24,7 @@ import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
-import org.ant4eclipse.lib.pde.internal.ant.LibraryHelper;
+import org.ant4eclipse.lib.pde.tools.LibraryHelper;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.apache.tools.ant.taskdefs.MacroDef;
@@ -200,7 +200,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
   private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) {
 
     // get the plug-in project role
-    PluginProjectRole pluginProjectRole = PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+    PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
 
     // get the bundle source
     BundleSource bundleSource = (BundleSource) pluginProjectRole.getBundleDescription().getUserObject();

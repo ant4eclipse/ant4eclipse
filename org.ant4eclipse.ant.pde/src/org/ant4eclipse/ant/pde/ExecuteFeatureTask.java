@@ -21,6 +21,7 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -513,13 +514,13 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     configuration.setPreferProjects(true);
 
     // fetch the target platform
-    TargetPlatform targetPlatform = TargetPlatformRegistry.Helper.getRegistry().getInstance(getWorkspace(),
-        getTargetPlatformId(), configuration);
+    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
+    TargetPlatform targetPlatform = registry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
 
     // let the target platform resolve the feature
     // case 1: pde feature project
     if (isProjectNameSet()) {
-      FeatureManifest featureManifest = FeatureProjectRole.Helper.getFeatureProjectRole(getEclipseProject())
+      FeatureManifest featureManifest = getEclipseProject().getRole(FeatureProjectRole.class)
           .getFeatureManifest();
       return targetPlatform.resolveFeature(getEclipseProject(), featureManifest);
     }

@@ -267,7 +267,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
    * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    */
   protected final PluginProjectRole getPluginProjectRole() {
-    return PluginProjectRole.Helper.getPluginProjectRole(getEclipseProject());
+    return getEclipseProject().getRole(PluginProjectRole.class);
   }
 
   /**

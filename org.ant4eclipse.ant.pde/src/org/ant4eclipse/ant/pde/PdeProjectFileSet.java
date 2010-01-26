@@ -178,7 +178,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return the default exclusions value.
    */
   public synchronized boolean getDefaultexcludes() {
-    return (isReference()) ? getRef(getProject()).getDefaultexcludes() : this._useDefaultExcludes;
+    return isReference() ? getRef(getProject()).getDefaultexcludes() : this._useDefaultExcludes;
   }
 
   /**
@@ -204,7 +204,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
    * @return <code>boolean</code> indicating whether the file set is case sensitive.
    */
   public synchronized boolean isCaseSensitive() {
-    return (isReference()) ? getRef(getProject()).isCaseSensitive() : this._caseSensitive;
+    return isReference() ? getRef(getProject()).isCaseSensitive() : this._caseSensitive;
   }
 
   /**
@@ -361,9 +361,9 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseDataType implements Re
               .getSpecifiedName()));
     }
 
-    this._buildProperties = getEclipseProject().hasRole(PluginProjectRole.class) ? PluginProjectRole.Helper
-        .getPluginProjectRole(getEclipseProject()).getBuildProperties() : FeatureProjectRole.Helper
-        .getFeatureProjectRole(getEclipseProject()).getBuildProperties();
+    this._buildProperties = getEclipseProject().hasRole(PluginProjectRole.class) ? getEclipseProject().getRole(
+        PluginProjectRole.class).getBuildProperties() : getEclipseProject().getRole(FeatureProjectRole.class)
+        .getBuildProperties();
 
     // nothing to do if no inclusion pattern is defined
     if (this._sourceBundle && (!this._buildProperties.hasSourceIncludes())) {
