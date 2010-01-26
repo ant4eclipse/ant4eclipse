@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.cdt;
 
 
-import org.ant4eclipse.cdt.internal.tools.CdtUtilities;
+import org.ant4eclipse.lib.cdt.internal.tools.CdtUtilities;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 import org.apache.tools.ant.BuildException;
