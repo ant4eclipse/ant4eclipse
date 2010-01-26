@@ -3,9 +3,9 @@
 <project name="testAntCall" basedir="." default="foo">
 
   <typedef name="targetPlatform"
-           classname="org.ant4eclipse.pde.ant.TargetPlatformDefinitionDataType" />
+           classname="org.ant4eclipse.ant.pde.TargetPlatformDefinitionDataType" />
   <typedef name="getRequiredBundles"
-           classname="org.ant4eclipse.pde.ant.GetRequiredBundlesTask" />
+           classname="org.ant4eclipse.ant.pde.GetRequiredBundlesTask" />
 
   <!-- ================================= 
           target: name              
