@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.testframework.test.data;
+package org.ant4eclipse.testframework;
 
 import java.net.URL;
 

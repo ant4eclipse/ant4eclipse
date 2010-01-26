@@ -9,12 +9,8 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.testframework.test.data;
+package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.testframework.test.builder.DLTKProjectBuilder;
-import org.ant4eclipse.testframework.test.builder.PyDevProjectBuilder;
-import org.ant4eclipse.testframework.test.builder.PythonProjectBuilder;
-import org.ant4eclipse.testframework.test.builder.WorkspaceBuilder;
 import org.junit.Assert;
 
 import java.net.URL;
