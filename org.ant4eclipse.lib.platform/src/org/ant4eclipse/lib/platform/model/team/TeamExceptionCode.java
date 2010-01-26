@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.platform.team;
+package org.ant4eclipse.lib.platform.model.team;
 
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 
