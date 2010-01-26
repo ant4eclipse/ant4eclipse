@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant;
+package org.ant4eclipse.ant.platform.ant;
 
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;

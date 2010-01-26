@@ -9,50 +9,53 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.platform.ant;
+package org.ant4eclipse.ant.platform.ant;
 
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 import org.ant4eclipse.platform.test.builder.EclipseProjectBuilder;
 
-public class GetBuildOrderTaskTest extends AbstractWorkspaceBasedBuildFileTest {
+public class ExecuteProjectBuildersTaskTest extends AbstractWorkspaceBasedBuildFileTest {
 
   @Override
   public void setUp() throws Exception {
     super.setUp();
 
-    setupBuildFile("getBuildOrder.xml");
+    setupBuildFile("executeProjectSet.xml");
   }
 
-  public void testGetBuildOrder_1() {
+  public void testExecuteProjectBuilders_1() {
     new EclipseProjectBuilder("simpleproject_1").createIn(getTestWorkspaceDirectory());
-    new EclipseProjectBuilder("simpleproject_2").withProjectReference("simpleproject_1").createIn(
-        getTestWorkspaceDirectory());
-
-    getTestWorkspace().createFile("projectSet.psf", createPsfContent());
-
-    expectLog("getBuildOrder", "simpleproject_1,simpleproject_2");
-  }
-
-  public void testGetBuildOrder_2() {
-    new EclipseProjectBuilder("simpleproject_1").withProjectReference("simpleproject_2").createIn(
-        getTestWorkspaceDirectory());
     new EclipseProjectBuilder("simpleproject_2").createIn(getTestWorkspaceDirectory());
 
-    getTestWorkspace().createFile("projectSet.psf", createPsfContent());
+    getTestWorkspace().createFile("projectSet.psf", createPsfContent(false));
 
-    expectLog("getBuildOrder", "simpleproject_2,simpleproject_1");
+    expectLog("executeProjectSet", "simpleproject_1simpleproject_2");
   }
 
-  private String createPsfContent() {
-    StringBuffer buffer = new StringBuffer();
+  public void testExecuteProjectBuilders_2() {
 
+    // this variety also makes use of the filter functionality
+    new EclipseProjectBuilder("simpleproject_1").createIn(getTestWorkspaceDirectory());
+    new EclipseProjectBuilder("simpleproject_2.test").createIn(getTestWorkspaceDirectory());
+
+    getTestWorkspace().createFile("projectSet.psf", createPsfContent(true));
+
+    expectLog("executeProjectSetFiltered", "simpleproject_1");
+  }
+
+  private String createPsfContent(boolean test) {
+    StringBuffer buffer = new StringBuffer();
+    String part = test ? ".test" : "";
     buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
     buffer.append("<psf version=\"2.0\">");
     buffer.append("<provider id=\"org.tigris.subversion.subclipse.core.svnnature\">");
     buffer
         .append("<project reference=\"0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/simpleproject_1,simpleproject_1\"/>");
     buffer
-        .append("<project reference=\"0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/simpleproject_2,simpleproject_2\"/>");
+        .append(String
+            .format(
+                "<project reference=\"0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/simpleproject_2%s,simpleproject_2%s\"/>",
+                part, part));
     buffer.append("</provider>");
     buffer.append("</psf>");
 
