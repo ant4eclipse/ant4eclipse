@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.core;
 
 
-import org.ant4eclipse.lib.core.Ant4EclipseConfigurator;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;

@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.core;
 
 
-import org.ant4eclipse.lib.core.Ant4EclipseConfigurator;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
 
