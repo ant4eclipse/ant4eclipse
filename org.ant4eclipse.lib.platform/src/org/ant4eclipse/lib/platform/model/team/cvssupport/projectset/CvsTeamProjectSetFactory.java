@@ -11,11 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.projectset;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
@@ -45,7 +43,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assert.notNull(projectSetName);
+    Assure.notNull("projectSetName", projectSetName);
     CvsTeamProjectSet projectSet = new CvsTeamProjectSet(projectSetName);
     return projectSet;
   }
@@ -54,8 +52,8 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
-    Assert.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
-    Assert.notNull(reference);
+    Assure.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
+    Assure.notNull("reference", reference);
     A4ELogging.trace("parseReference ('%s')", reference);
 
     StringTokenizer stringTokenizer = new StringTokenizer(reference, ",");

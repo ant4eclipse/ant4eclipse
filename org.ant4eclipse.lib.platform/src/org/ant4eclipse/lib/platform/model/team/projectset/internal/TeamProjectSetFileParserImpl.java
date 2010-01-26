@@ -11,17 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
@@ -85,14 +84,14 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return (this._factories != null);
+    return this._factories != null;
   }
 
   /**
    * {@inheritDoc}
    */
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
-    Assert.isFile(projectSetFile);
+    Assure.isFile(projectSetFile);
 
     XQueryHandler queryhandler2 = new XQueryHandler();
 
@@ -124,7 +123,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   }
 
   public TeamProjectSetFactory getFactoryForProvider(String providerId) {
-    Assert.notNull("Parameter 'providerId' must not be null", providerId);
+    Assure.notNull("providerId", providerId);
 
     if (!this._factories.containsKey(providerId)) {
       throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);

@@ -11,13 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-import org.ant4eclipse.core.util.Utilities;
-import org.ant4eclipse.core.xquery.XQuery;
-import org.ant4eclipse.core.xquery.XQueryHandler;
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.xquery.XQuery;
+import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.platform.internal.model.resource.BuildCommandImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.LinkedResourceImpl;
@@ -48,7 +46,7 @@ public class ProjectFileParser {
    * @return the supplied {@link EclipseProject} instance.
    */
   public static EclipseProjectImpl parseProject(EclipseProjectImpl eclipseProject) {
-    Assert.notNull(eclipseProject);
+    Assure.notNull("eclipseProject", eclipseProject);
 
     // retrieve the '.project' file
     File projectFile = eclipseProject.getChild(".project");
@@ -201,7 +199,7 @@ public class ProjectFileParser {
         location = null;
       }
     }
-    return (location);
+    return location;
   }
 
   private static EclipseVariableResolver getEclipseVariableResolver() {

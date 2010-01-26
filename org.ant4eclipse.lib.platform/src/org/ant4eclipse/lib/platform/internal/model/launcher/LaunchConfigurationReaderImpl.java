@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.xml.sax.Attributes;
@@ -36,8 +34,8 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
    */
   public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
 
-    Assert.notNull("Parameter 'launchConfigurationFile' must not be null", launchConfigurationFile);
-    Assert.isFile(launchConfigurationFile);
+    Assure.notNull("launchConfigurationFile", launchConfigurationFile);
+    Assure.isFile(launchConfigurationFile);
 
     try {
       SAXParser parser = getParserFactory().newSAXParser();

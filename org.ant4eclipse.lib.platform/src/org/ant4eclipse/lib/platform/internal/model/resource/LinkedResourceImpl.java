@@ -78,7 +78,7 @@ public class LinkedResourceImpl {
    * @return The location relative to the project. Maybe null in case no relative location can be calculated.
    */
   public String getRelativeLocation() {
-    return (this._relativelocation);
+    return this._relativelocation;
   }
 
   /**

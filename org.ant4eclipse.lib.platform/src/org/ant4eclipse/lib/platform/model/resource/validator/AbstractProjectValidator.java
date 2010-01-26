@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
-import org.ant4eclipse.core.logging.A4ELogging;
 
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 

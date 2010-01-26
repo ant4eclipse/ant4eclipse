@@ -11,10 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.logging.A4ELogging;
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
@@ -52,8 +50,8 @@ public class ProjectFactory {
 
     A4ELogging.trace("ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath());
 
-    Assert.notNull(workspace);
-    Assert.isDirectory(projectDirectory);
+    Assure.notNull("workspace", workspace);
+    Assure.isDirectory(projectDirectory);
 
     EclipseProjectImpl project = new EclipseProjectImpl(workspace, projectDirectory);
 

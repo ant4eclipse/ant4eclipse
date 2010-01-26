@@ -11,11 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.project;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.Utilities;
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
@@ -40,7 +38,7 @@ public class CvsParser {
    * @return true <=> The CVS project has been set.
    */
   public static boolean isCvsProject(EclipseProject project) {
-    Assert.notNull(project);
+    Assure.notNull("project", project);
     return project.hasChild("CVS" + File.separator + "Root");
   }
 
@@ -56,10 +54,8 @@ public class CvsParser {
    *           Loading the content failed for some reason.
    */
   public static String readCvsRepositoryName(EclipseProject project) throws Ant4EclipseException {
-    Assert.notNull(project);
-
+    Assure.notNull("project", project);
     File cvsRepositoryFile = project.getChild("CVS" + File.separator + "Repository");
-
     return readFile(cvsRepositoryFile);
   }
 
@@ -75,7 +71,7 @@ public class CvsParser {
    *           Loading the root file failed.
    */
   public static CvsRoot readCvsRoot(EclipseProject project) throws Ant4EclipseException {
-    Assert.notNull(project);
+    Assure.notNull("project", project);
 
     File cvsRootFile = project.getChild("CVS" + File.separator + "Root");
 
@@ -84,7 +80,7 @@ public class CvsParser {
   }
 
   public static String readTag(EclipseProject project) throws Ant4EclipseException {
-    Assert.notNull(project);
+    Assure.notNull("project", project);
 
     if (!project.hasChild("CVS" + File.separator + "Tag")) {
       return null;
@@ -113,7 +109,8 @@ public class CvsParser {
     try {
       buffy = Utilities.readTextContent(file, Utilities.ENCODING, false);
     } catch (Ant4EclipseException e) {
-      throw new Ant4EclipseException(e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e.toString());
+      throw new Ant4EclipseException(e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e
+          .toString());
     }
     return buffy.toString();
   }

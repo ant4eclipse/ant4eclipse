@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 
 /**
@@ -36,8 +34,7 @@ public class ProjectNatureImpl implements ProjectNature {
    * @param name
    */
   public ProjectNatureImpl(String name) {
-    Assert.notNull(name);
-
+    Assure.notNull("name", name);
     this._name = name;
   }
 
@@ -63,7 +60,7 @@ public class ProjectNatureImpl implements ProjectNature {
       return false;
     }
     ProjectNatureImpl castedObj = (ProjectNatureImpl) o;
-    return (this._name.equals(castedObj._name));
+    return this._name.equals(castedObj._name);
   }
 
   /**

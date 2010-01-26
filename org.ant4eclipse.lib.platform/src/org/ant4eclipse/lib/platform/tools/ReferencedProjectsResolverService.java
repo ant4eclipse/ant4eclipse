@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.tools;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;

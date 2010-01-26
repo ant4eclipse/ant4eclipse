@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.tools;
 
-import org.ant4eclipse.core.dependencygraph.DependencyGraph;
-import org.ant4eclipse.core.dependencygraph.DependencyGraph.VertexRenderer;
 
+import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph;
+import org.ant4eclipse.lib.core.dependencygraph.VertexRenderer;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 

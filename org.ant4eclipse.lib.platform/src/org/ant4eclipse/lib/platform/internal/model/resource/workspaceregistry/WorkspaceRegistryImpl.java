@@ -11,11 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.core.logging.A4ELogging;
-
-
-import org.ant4eclipse.lib.core.Assert;
-import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
@@ -35,7 +32,7 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
+public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
   /** The factory used to build projects */
   private ProjectFactory         _projectFactory;
@@ -96,8 +93,8 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
    * {@inheritDoc}
    */
   public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
-    Assert.nonEmpty(id);
-    Assert.notNull(workspaceDefinition);
+    Assure.nonEmpty("id", id);
+    Assure.notNull("workspaceDefinition", workspaceDefinition);
 
     // create new workspace implementation
     WorkspaceImpl workspace = new WorkspaceImpl();
@@ -149,6 +146,6 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry, Lifecycle {
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return (this._registry != null && this._projectFactory != null);
+    return (this._registry != null) && (this._projectFactory != null);
   }
 }

@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 
 public class AbstractTeamProjectDescription implements TeamProjectDescription {
@@ -28,7 +26,7 @@ public class AbstractTeamProjectDescription implements TeamProjectDescription {
   }
 
   public AbstractTeamProjectDescription(String projectname) {
-    Assert.notNull(projectname);
+    Assure.notNull("projectname", projectname);
     this._projectname = projectname;
   }
 

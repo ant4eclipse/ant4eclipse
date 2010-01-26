@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
 
 /**
@@ -50,7 +48,7 @@ public class BuildCommandImpl implements BuildCommand {
    *          triggers that would cause this builder to run in eclipse (might be null)
    */
   public BuildCommandImpl(String name, String triggers) {
-    Assert.notNull(name);
+    Assure.notNull("name", name);
     this._name = name;
     if ((triggers != null) && triggers.endsWith(",")) {
       if (triggers.length() > 1) { // remove trailing ,
@@ -80,7 +78,7 @@ public class BuildCommandImpl implements BuildCommand {
    * {@inheritDoc}
    */
   public boolean hasTriggers() {
-    return (this._triggers != null);
+    return this._triggers != null;
   }
 
   /**
@@ -97,8 +95,12 @@ public class BuildCommandImpl implements BuildCommand {
     if (o.getClass() != getClass()) {
       return false;
     }
-    BuildCommandImpl castedObj = (BuildCommandImpl) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name)));
+    BuildCommandImpl other = (BuildCommandImpl) o;
+    if (this._name == null) {
+      return other._name == null;
+    } else {
+      return this._name.equals(other._name);
+    }
   }
 
   /**

@@ -13,8 +13,8 @@ package org.ant4eclipse.lib.platform.internal.model.resource.encoding;
 
 public class ResourcesPreferencesParser {
 
-  private static final String RESOURCES_PREFERENCES_FILE = ".settings/org.eclipse.core.resources.prefs";
+  // private static final String RESOURCES_PREFERENCES_FILE = ".settings/org.eclipse.core.resources.prefs";
 
-  private static final String ENCODING_PREFIX            = "encoding/";
+  // private static final String ENCODING_PREFIX = "encoding/";
 
 }

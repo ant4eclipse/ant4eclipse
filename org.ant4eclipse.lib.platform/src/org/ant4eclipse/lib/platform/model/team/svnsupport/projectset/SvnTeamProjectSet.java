@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.svnsupport.projectset;
 
-
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.team.projectset.internal.AbstractTeamProjectSet;
 
 /**
@@ -48,7 +46,7 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
    *          the description to add.
    */
   public void addTeamProjectDescription(SvnTeamProjectDescription description) {
-    Assert.notNull(description);
+    Assure.notNull("description", description);
     super.addTeamProjectDescription(description);
   }
 
@@ -61,11 +59,11 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
   }
 
   public boolean hasUser() {
-    return (this._user != null);
+    return this._user != null;
   }
 
   public boolean hasPassword() {
-    return (this._password != null);
+    return this._password != null;
   }
 
   /**
