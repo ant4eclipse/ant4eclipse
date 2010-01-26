@@ -12,8 +12,7 @@
 package org.ant4eclipse.ant.platform.core.task;
 
 
-import org.ant4eclipse.platform.ant.PlatformExecutorValuesProvider;
-
+import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
@@ -51,10 +50,8 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    *          the prefix for all scoped values
    */
   public AbstractExecuteProjectTask(String prefix) {
-    Assure.notNull(prefix);
-
+    Assure.notNull("prefix", prefix);
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(this);
-
     // create the delegates
     this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, prefix);
   }

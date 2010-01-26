@@ -11,15 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-
-
+import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.helper.AntPropertiesRaper;
 import org.ant4eclipse.ant.platform.core.delegate.helper.AntReferencesRaper;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
 import org.ant4eclipse.lib.core.ldapfilter.ParseException;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -115,8 +113,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    Assure.notNull(macroDef);
-    Assure.notNull(provider);
+    Assure.notNull("macroDef", macroDef);
+    Assure.notNull("provider", provider);
 
     if (macroDef instanceof ConditionalMacroDef) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
@@ -135,8 +133,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   private void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues) {
-    Assure.notNull(macroDef);
-    Assure.notNull(macroExecutionValues);
+    Assure.notNull("macroDef", macroDef);
+    Assure.notNull("macroExecutionValues", macroExecutionValues);
 
     if (macroDef instanceof ConditionalMacroDef) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;

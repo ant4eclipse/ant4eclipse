@@ -11,14 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.internal.team;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.logging.A4ELogging;
-
-import org.ant4eclipse.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
-
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
+import org.ant4eclipse.lib.platform.model.team.cvssupport.projectset.CvsTeamProjectDescription;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Cvs;
 
@@ -74,9 +72,9 @@ public class CvsAdapter extends VcsAdapter {
    */
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
+    Assure.isDirectory(destination);
+    Assure.notNull("projectDescription", projectDescription);
+    Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
     CvsTeamProjectDescription cvsTeamProjectDescription = (CvsTeamProjectDescription) projectDescription;
@@ -121,9 +119,9 @@ public class CvsAdapter extends VcsAdapter {
    */
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
+    Assure.isDirectory(destination);
+    Assure.notNull("projectDescription", projectDescription);
+    Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
     A4ELogging.debug("update(%s, %s)", destination, projectDescription);
@@ -164,9 +162,9 @@ public class CvsAdapter extends VcsAdapter {
    */
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assert.isDirectory(destination);
-    Assert.notNull(projectDescription);
-    Assert.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
+    Assure.isDirectory(destination);
+    Assure.notNull("projectDescription", projectDescription);
+    Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
 
     A4ELogging.debug("checkout(%s, %s)", destination, projectDescription);

@@ -11,13 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.internal.team;
 
-import org.ant4eclipse.core.exception.Ant4EclipseException;
-import org.ant4eclipse.core.util.Utilities;
-
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
-
-import org.ant4eclipse.ant.platform.internal.team.VcsException;
-import org.ant4eclipse.lib.core.Assert;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 import org.apache.tools.ant.Project;
 
 import java.io.File;
@@ -33,7 +30,7 @@ public abstract class VcsAdapter {
   private Project _antProject;
 
   public VcsAdapter(Project antProject) {
-    Assert.notNull(antProject);
+    Assure.notNull("antProject", antProject);
     this._antProject = antProject;
   }
 
@@ -54,7 +51,7 @@ public abstract class VcsAdapter {
    */
   public final void checkoutProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assert.notNull(projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
 
     String projectName = projectDescription.getProjectName();
 
@@ -80,7 +77,7 @@ public abstract class VcsAdapter {
    */
   public final void updateProject(File destination, TeamProjectDescription projectDescription)
       throws Ant4EclipseException {
-    Assert.notNull(projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
     update(destination, projectDescription);
   }
 
@@ -99,7 +96,7 @@ public abstract class VcsAdapter {
    */
   public final void exportProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assert.notNull(projectDescription);
+    Assure.notNull("projectDescription", projectDescription);
 
     String projectName = projectDescription.getProjectName();
 

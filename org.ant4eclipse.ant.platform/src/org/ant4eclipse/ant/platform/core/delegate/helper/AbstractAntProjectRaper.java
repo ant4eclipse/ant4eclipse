@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
 
-
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.Project;
@@ -86,7 +85,7 @@ public abstract class AbstractAntProjectRaper<V> {
    */
   public final void setScopedValues(Map<String, V> scopedValues, String prefix) {
     Assure.assertTrue(this._scopedValues == null, "Scoped values are already set!");
-    Assure.notNull(scopedValues);
+    Assure.notNull("scopedValues", scopedValues);
 
     // set the scoped values
     this._scopedValues = scopedValues;
@@ -166,8 +165,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * @exception NoSuchFieldException
    *              Darn, nothing to fondle.
    */
-  @SuppressWarnings("unchecked")
-  public static Field getField(Class thisClass, String fieldName) throws NoSuchFieldException {
+  public static Field getField(Class<?> thisClass, String fieldName) throws NoSuchFieldException {
     if (thisClass == null) {
       throw new NoSuchFieldException("Invalid field : " + fieldName);
     }
@@ -193,17 +191,17 @@ public abstract class AbstractAntProjectRaper<V> {
      * @param key
      * @return
      */
-    public V getValue(String key);
+    V getValue(String key);
 
     /**
      * @param key
      * @param value
      */
-    public void setValue(String key, V value);
+    void setValue(String key, V value);
 
     /**
      * @param key
      */
-    public void unsetValue(String key);
+    void unsetValue(String key);
   }
 }

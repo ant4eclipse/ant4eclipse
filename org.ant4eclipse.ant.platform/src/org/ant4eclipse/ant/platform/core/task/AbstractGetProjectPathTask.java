@@ -12,15 +12,15 @@
 package org.ant4eclipse.ant.platform.core.task;
 
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.resource.role.ProjectRole;
 
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
 import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
 

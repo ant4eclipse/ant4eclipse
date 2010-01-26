@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core;
 
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolver;
 
+import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 import org.apache.tools.ant.BuildException;
 
 /**

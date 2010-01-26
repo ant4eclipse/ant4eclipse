@@ -12,14 +12,13 @@
 package org.ant4eclipse.ant.platform.team;
 
 
-import org.ant4eclipse.platform.internal.ant.team.VcsAdapter;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectDescription;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
-
 import org.ant4eclipse.ant.platform.core.task.AbstractTeamProjectSetBasedTask;
+import org.ant4eclipse.ant.platform.internal.team.VcsAdapter;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
@@ -100,8 +99,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    *          The command to set.
    */
   public void setCommand(VcsCommand command) {
-    Assure.notNull(command);
-
+    Assure.notNull("command", command);
     this._command = command;
   }
 
@@ -167,10 +165,9 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   public void checkoutProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.notNull(projectSet);
+    Assure.notNull("projectSet", projectSet);
 
-    A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet,
-        Boolean.valueOf(deleteExisting));
+    A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf(deleteExisting));
 
     TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
 
@@ -187,7 +184,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   public void exportProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.notNull(projectSet);
+    Assure.notNull("projectSet", projectSet);
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
@@ -202,10 +199,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void updateProjectSet(File destination, TeamProjectSet projectSet) throws Ant4EclipseException {
     Assure.isDirectory(destination);
-    Assure.notNull(projectSet);
-
+    Assure.notNull("projectSet", projectSet);
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
-
     for (TeamProjectDescription description : descriptions) {
       this._vcsAdapter.updateProject(destination, description);
     }

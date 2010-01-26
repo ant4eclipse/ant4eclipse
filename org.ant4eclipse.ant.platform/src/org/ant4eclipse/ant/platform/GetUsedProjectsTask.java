@@ -12,13 +12,12 @@
 package org.ant4eclipse.ant.platform;
 
 
-import org.ant4eclipse.platform.ant.core.SubElementComponent;
-import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectBasedTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.ReferencedProjectsResolverService;
-
+import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolverService;
 import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;

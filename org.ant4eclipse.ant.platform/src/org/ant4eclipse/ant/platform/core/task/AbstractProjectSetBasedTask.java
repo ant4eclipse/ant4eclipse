@@ -12,12 +12,12 @@
 package org.ant4eclipse.ant.platform.core.task;
 
 
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
+import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.WorkspaceProjectSetComponent;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceProjectSetDelegate;
-import org.ant4eclipse.lib.core.ant.AbstractAnt4EclipseTask;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 
 import java.io.File;
 

@@ -13,9 +13,9 @@ package org.ant4eclipse.ant.platform.core.delegate;
 
 
 
+import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.ant.delegate.AbstractAntDelegate;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
@@ -60,8 +60,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final void setPathSeparator(String newpathseparator) {
-    Assure.nonEmpty(newpathseparator);
-
+    Assure.nonEmpty("newpathseparator", newpathseparator);
     this._pathSeparator = newpathseparator;
   }
 
@@ -69,7 +68,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final String getPathSeparator() {
-    return (this._pathSeparator);
+    return this._pathSeparator;
   }
 
   /**
@@ -83,8 +82,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final void setDirSeparator(String newdirseparator) {
-    Assure.nonEmpty(newdirseparator);
-
+    Assure.nonEmpty("newdirseparator", newdirseparator);
     this._dirSeparator = newdirseparator;
   }
 
@@ -92,14 +90,14 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final String getDirSeparator() {
-    return (this._dirSeparator);
+    return this._dirSeparator;
   }
 
   /**
    * {@inheritDoc}
    */
   public final boolean isDirSeparatorSet() {
-    return (this._dirSeparator != null);
+    return this._dirSeparator != null;
   }
 
   /**
@@ -113,7 +111,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final String convertToString(File[] entries) {
-    Assure.notNull(entries);
+    Assure.notNull("entries", entries);
 
     // convert Files to String
     List<String> entriesAsString = new LinkedList<String>();
@@ -151,7 +149,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   public final Path convertToPath(File[] entries) {
-    Assure.notNull(entries);
+    Assure.notNull("entries", entries);
     Path antPath = new Path(getAntProject());
     for (File entry : entries) {
       // TODO getPath() vs. getAbsolutePath()

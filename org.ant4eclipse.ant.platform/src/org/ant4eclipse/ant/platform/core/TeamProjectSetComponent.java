@@ -11,8 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core;
 
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

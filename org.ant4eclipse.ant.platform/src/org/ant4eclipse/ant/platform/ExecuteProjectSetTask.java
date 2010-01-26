@@ -11,19 +11,19 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-import org.ant4eclipse.platform.ant.core.MacroExecutionComponent;
-import org.ant4eclipse.platform.ant.core.MacroExecutionValues;
-import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
-import org.ant4eclipse.platform.ant.core.ScopedMacroDefinition;
-import org.ant4eclipse.platform.ant.core.SubElementComponent;
-import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionDelegate;
-import org.ant4eclipse.platform.ant.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
-import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetPathBasedTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.BuildOrderResolver;
 
+import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
+import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
+import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
+import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetPathBasedTask;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;

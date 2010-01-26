@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
-
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.apache.tools.ant.Project;
 
@@ -90,7 +89,7 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    * @param key
    *          the key
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   private void removeReference(String key) {
     try {
       Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "references");
@@ -112,7 +111,7 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    * @param value
    *          the value
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   private void setReference(String key, Object value) {
     try {
       Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "references");

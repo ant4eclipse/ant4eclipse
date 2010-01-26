@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.model.resource.Workspace;
-import org.ant4eclipse.platform.model.team.projectset.TeamProjectSet;
 
 import org.ant4eclipse.ant.platform.core.ProjectSetComponent;
 import org.ant4eclipse.ant.platform.core.WorkspaceComponent;
 import org.ant4eclipse.ant.platform.core.WorkspaceProjectSetComponent;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 

@@ -12,15 +12,14 @@
 package org.ant4eclipse.ant.platform;
 
 
-import org.ant4eclipse.platform.ant.core.ProjectReferenceAwareComponent;
-import org.ant4eclipse.platform.ant.core.SubElementComponent;
-import org.ant4eclipse.platform.ant.core.delegate.ProjectReferenceAwareDelegate;
-import org.ant4eclipse.platform.ant.core.delegate.SubElementDelegate;
-import org.ant4eclipse.platform.ant.core.task.AbstractProjectSetBasedTask;
-import org.ant4eclipse.platform.model.resource.EclipseProject;
-import org.ant4eclipse.platform.tools.BuildOrderResolver;
-
+import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
+import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
 
 import java.util.Iterator;
@@ -173,7 +172,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * @return A String which contains the list of names.
    */
   private String convertToString(List<EclipseProject> projects, char separator) {
-    Assure.notNull(projects);
+    Assure.notNull("projects", projects);
 
     // create StringBuffer
     StringBuffer buffer = new StringBuffer();
