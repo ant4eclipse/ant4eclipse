@@ -60,8 +60,8 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   public void initialize() {
-    Iterable<Pair<String, String>> teamProviders = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(TEAMPROVIDER_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> teamProviders = config.getAllProperties(TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
 
     for (Pair<String, String> teamProvider : teamProviders) {

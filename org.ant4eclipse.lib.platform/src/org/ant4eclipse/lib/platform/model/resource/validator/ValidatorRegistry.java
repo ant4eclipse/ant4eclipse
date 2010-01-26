@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-import org.ant4eclipse.core.util.Utilities;
 
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Pair;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
@@ -48,8 +49,8 @@ public class ValidatorRegistry {
   protected void init() {
 
     // get all properties that defines a ProjectRoleIdentifier
-    Iterable<Pair<String, String>> entries = Ant4EclipseConfiguration.Helper.getAnt4EclipseConfiguration()
-        .getAllProperties(PREFIX_VALIDATOR);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> entries = config.getAllProperties(PREFIX_VALIDATOR);
 
     List<ProjectValidator> validators = new ArrayList<ProjectValidator>();
 

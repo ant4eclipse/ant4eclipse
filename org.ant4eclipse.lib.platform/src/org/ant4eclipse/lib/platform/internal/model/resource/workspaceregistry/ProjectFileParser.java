@@ -203,8 +203,7 @@ public class ProjectFileParser {
   }
 
   private static EclipseVariableResolver getEclipseVariableResolver() {
-    EclipseVariableResolver resolver = (EclipseVariableResolver) ServiceRegistry.instance().getService(
-        EclipseVariableResolver.class.getName());
+    EclipseVariableResolver resolver = ServiceRegistry.instance().getService(EclipseVariableResolver.class);
     return resolver;
   }
 

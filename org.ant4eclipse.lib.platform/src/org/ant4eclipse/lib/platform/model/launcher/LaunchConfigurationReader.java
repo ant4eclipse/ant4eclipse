@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.launcher;
 
-import org.ant4eclipse.core.service.ServiceRegistry;
-
 import java.io.File;
 
 /**
@@ -31,22 +29,5 @@ public interface LaunchConfigurationReader {
    * @return The {@link LaunchConfiguration}-instance
    */
   LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile);
-
-  /**
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link LaunchConfigurationReader} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link LaunchConfigurationReader}
-     */
-    public static LaunchConfigurationReader getReader() {
-      return (LaunchConfigurationReader) ServiceRegistry.instance().getService(
-          LaunchConfigurationReader.class.getName());
-    }
-  }
 
 }

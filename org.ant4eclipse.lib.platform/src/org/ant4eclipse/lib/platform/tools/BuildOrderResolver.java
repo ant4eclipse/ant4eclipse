@@ -68,9 +68,8 @@ public class BuildOrderResolver {
       }
 
       // resolve referenced projects
-      List<EclipseProject> referencedProjects = referenceTypes != null ? ReferencedProjectsResolverService.Helper
-          .getService().resolveReferencedProjects(eclipseProject, referenceTypes, additionalElements)
-          : ReferencedProjectsResolverService.Helper.getService().resolveReferencedProjects(eclipseProject,
+      List<EclipseProject> referencedProjects = referenceTypes != null ? ServiceRegistry.instance().getService(ReferencedProjectsResolverService.class).resolveReferencedProjects(eclipseProject, referenceTypes, additionalElements)
+          : ServiceRegistry.instance().getService(ReferencedProjectsResolverService.class).resolveReferencedProjects(eclipseProject,
               additionalElements);
 
       // add referenced projects to the dependency graph

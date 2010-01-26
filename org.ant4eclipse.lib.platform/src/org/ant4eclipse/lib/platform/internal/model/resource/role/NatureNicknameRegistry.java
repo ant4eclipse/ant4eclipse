@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.role;
 
-import org.ant4eclipse.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.core.logging.A4ELogging;
-import org.ant4eclipse.core.util.Pair;
-
 import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -48,8 +48,8 @@ public class NatureNicknameRegistry implements Lifecycle {
     }
 
     // get all properties that defines a nature nickname
-    Iterable<Pair<String, String>> natureNicknameEntries = Ant4EclipseConfiguration.Helper
-        .getAnt4EclipseConfiguration().getAllProperties(NATURE_NICKNAME_PREFIX);
+    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Iterable<Pair<String, String>> natureNicknameEntries = config.getAllProperties(NATURE_NICKNAME_PREFIX);
 
     Map<String, List<String>> nicknames = new Hashtable<String, List<String>>();
     for (Pair<String, String> natureNicknameEntry : natureNicknameEntries) {

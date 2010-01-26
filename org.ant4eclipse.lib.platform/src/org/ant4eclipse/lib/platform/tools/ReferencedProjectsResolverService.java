@@ -68,20 +68,4 @@ public interface ReferencedProjectsResolverService {
    */
   List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements);
 
-  /**
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link ReferencedProjectsResolverService} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link ReferencedProjectsResolverService}
-     */
-    public static ReferencedProjectsResolverService getService() {
-      return (ReferencedProjectsResolverService) ServiceRegistry.instance().getService(
-          ReferencedProjectsResolverService.class.getName());
-    }
-  }
 }
