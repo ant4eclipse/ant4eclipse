@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt.test.builder;
+package org.ant4eclipse.testframework.test.builder;
 
 import java.io.File;
 import java.net.URL;

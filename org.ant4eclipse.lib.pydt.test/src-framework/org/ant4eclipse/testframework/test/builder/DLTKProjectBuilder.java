@@ -9,11 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.pydt.test.builder;
+package org.ant4eclipse.testframework.test.builder;
 
 
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.pydt.model.project.DLTKProjectRole;
+import org.ant4eclipse.testframework.model.project.DLTKProjectRole;
 
 import java.io.File;
 import java.net.URL;
