@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.userlibrary;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-
 import java.io.File;
 
 /**
@@ -32,22 +30,4 @@ public interface UserLibrariesFileParser {
    */
   UserLibraries parseUserLibrariesFile(File configuration);
 
-  /**
-   * <p>
-   * Helper class to access the {@link UserLibrariesFileParser}.
-   * </p>
-   */
-  static class Helper {
-
-    /**
-     * <p>
-     * Fetches the {@link UserLibrariesFileParser} instance from the {@link ServiceRegistry}.
-     * </p>
-     * 
-     * @return the registered {@link UserLibrariesFileParser}
-     */
-    public static UserLibrariesFileParser getUserLibrariesFileParser() {
-      return (UserLibrariesFileParser) ServiceRegistry.instance().getService(UserLibrariesFileParser.class.getName());
-    }
-  }
 } /* ENDCLASS */

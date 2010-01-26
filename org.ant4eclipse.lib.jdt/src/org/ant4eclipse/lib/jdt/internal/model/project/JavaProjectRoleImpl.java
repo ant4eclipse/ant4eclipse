@@ -312,9 +312,12 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     if (o.getClass() != getClass()) {
       return false;
     }
-    JavaProjectRoleImpl castedObj = (JavaProjectRoleImpl) o;
-    return ((this._eclipseClasspathEntries == null ? castedObj._eclipseClasspathEntries == null
-        : this._eclipseClasspathEntries.equals(castedObj._eclipseClasspathEntries)));
+    JavaProjectRoleImpl other = (JavaProjectRoleImpl) o;
+    if (this._eclipseClasspathEntries == null) {
+      return other._eclipseClasspathEntries == null;
+    } else {
+      return this._eclipseClasspathEntries.equals(other._eclipseClasspathEntries);
+    }
   }
 
   /**
@@ -340,7 +343,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   }
 
   private JavaRuntimeRegistry getJavaRuntimeRegistry() {
-    return (JavaRuntimeRegistry) ServiceRegistry.instance().getService(JavaRuntimeRegistry.class.getName());
+    return ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
   }
 
   /**

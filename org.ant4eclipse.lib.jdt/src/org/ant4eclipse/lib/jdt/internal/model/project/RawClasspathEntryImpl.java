@@ -232,11 +232,27 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
     if (o.getClass() != getClass()) {
       return false;
     }
-    RawClasspathEntryImpl castedObj = (RawClasspathEntryImpl) o;
-    return ((this._path == null ? castedObj._path == null : this._path.equals(castedObj._path))
-        && (this._entryKind == castedObj._entryKind)
-        && (this._outputLocation == null ? castedObj._outputLocation == null : this._outputLocation
-            .equals(castedObj._outputLocation)) && (this._exported == castedObj._exported));
+    RawClasspathEntryImpl other = (RawClasspathEntryImpl) o;
+    if (this._entryKind != other._entryKind) {
+      return false;
+    }
+    if (this._exported != other._exported) {
+      return false;
+    }
+    if (this._path == null) {
+      if (other._path != null) {
+        return false;
+      }
+    } else {
+      if (!this._path.equals(other._path)) {
+        return false;
+      }
+    }
+    if (this._outputLocation == null) {
+      return other._outputLocation == null;
+    } else {
+      return this._outputLocation.equals(other._outputLocation);
+    }
   }
 
   /**

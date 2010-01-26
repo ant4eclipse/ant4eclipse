@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.project;
 
-
-
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.internal.model.project.ClasspathFileParser;
@@ -35,7 +32,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    * {@inheritDoc}
    */
   public boolean isRoleSupported(EclipseProject project) {
-    return (project.hasNature(JavaProjectRole.JAVA_NATURE));
+    return project.hasNature(JavaProjectRole.JAVA_NATURE);
   }
 
   /**
@@ -47,7 +44,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    */
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull(project);
+    Assure.notNull("project", project);
     JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl(project);
     ClasspathFileParser.parseClasspath(javaProjectRole);
     return javaProjectRole;

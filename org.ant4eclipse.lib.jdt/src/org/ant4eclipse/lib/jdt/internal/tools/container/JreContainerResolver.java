@@ -13,6 +13,7 @@ package org.ant4eclipse.lib.jdt.internal.tools.container;
 
 
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
@@ -45,7 +46,7 @@ public class JreContainerResolver implements ClasspathContainerResolver {
       return;
     }
 
-    JavaRuntimeRegistry javaRuntimeRegistry = JavaRuntimeRegistry.Helper.getRegistry();
+    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
 
     String path = classpathEntry.getPath();
 

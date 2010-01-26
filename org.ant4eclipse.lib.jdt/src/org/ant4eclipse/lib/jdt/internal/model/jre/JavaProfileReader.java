@@ -147,6 +147,6 @@ public class JavaProfileReader implements Lifecycle {
   // }
 
   public static JavaProfileReader getInstance() {
-    return (JavaProfileReader) ServiceRegistry.instance().getService(JavaProfileReader.class.getName());
+    return ServiceRegistry.instance().getService(JavaProfileReader.class);
   }
 }

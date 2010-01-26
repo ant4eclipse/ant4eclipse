@@ -127,41 +127,4 @@ public interface JavaProjectRole extends ProjectRole {
    */
   String getDefaultOutputFolder();
 
-  /**
-   * <p>
-   * Helper class that provides methods for retrieving the {@link JavaProjectRole} from a given {@link EclipseProject}.
-   * </p>
-   * 
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  public class Helper {
-
-    /**
-     * <p>
-     * Returns the {@link JavaProjectRole}. If a {@link JavaProjectRole} is not set, an exception will be thrown.
-     * </p>
-     * 
-     * @return the java project role.
-     */
-    public static final JavaProjectRole getJavaProjectRole(EclipseProject eclipseProject) {
-      Assure.assertTrue(hasJavaProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-          + "\" must have JavaProjectRole!");
-
-      return (JavaProjectRole) eclipseProject.getRole(JavaProjectRoleImpl.class);
-    }
-
-    /**
-     * <p>
-     * Returns whether a {@link JavaProjectRole} is set or not.
-     * </p>
-     * 
-     * @return Returns whether a {@link JavaProjectRole} is set or not.
-     */
-    public static final boolean hasJavaProjectRole(EclipseProject eclipseProject) {
-      Assure.notNull(eclipseProject);
-
-      return eclipseProject.hasRole(JavaProjectRoleImpl.class);
-    }
-  }
 }
