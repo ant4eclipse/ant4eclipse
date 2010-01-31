@@ -68,6 +68,7 @@
       </path>
       <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
       
+      <!-- instrument our a4e release version (ant + lib) using cobertura -->
       <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse.jar" datafile="@{datafile}"/>
       
       <!-- we also need the testcode for the execution -->
