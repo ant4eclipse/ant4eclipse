@@ -9,7 +9,6 @@
   <!-- PROPERTIES                                                                              -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-  <property file="${file.buildsettings}"/>
   <property file="${basedir}/${ant.project.name}/default-build.properties"/>
 
   <property environment="env"/>
