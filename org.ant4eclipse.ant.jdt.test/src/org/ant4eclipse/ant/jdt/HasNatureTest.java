@@ -9,12 +9,11 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.ant.platform;
+package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
-import org.ant4eclipse.testframework.EclipseProjectBuilder;
-import org.apache.tools.ant.BuildException;
+import org.ant4eclipse.testframework.JdtProjectBuilder;
 
 public class HasNatureTest extends AbstractWorkspaceBasedBuildFileTest {
 
@@ -22,26 +21,16 @@ public class HasNatureTest extends AbstractWorkspaceBasedBuildFileTest {
   public void setUp() throws Exception {
     super.setUp();
     setupBuildFile("hasNature.xml");
-    EclipseProjectBuilder builder = new EclipseProjectBuilder("simpleproject");
-    builder.withNature("org.ant4eclipse.testnature");
+    JdtProjectBuilder builder = new JdtProjectBuilder("jdtproject");
     builder.createIn(getTestWorkspaceDirectory());
   }
 
-  public void testNonexistingNature() {
-    expectLog("testNonexistingNature", "OK");
+  public void testJdtNatureLong() {
+    expectLog("testJdtNatureLong", "OK");
   }
 
-  public void testExistingNature() {
-    expectLog("testExistingNature", "OK");
+  public void testJdtNatureShort() {
+    expectLog("testJdtNatureShort", "OK");
   }
 
-  public void testProjectAttribute() {
-    try {
-      expectLog("testProjectAttribute", "OK");
-    } catch (BuildException e) {
-      // ok
-      return;
-    }
-    fail();
-  }
 }
