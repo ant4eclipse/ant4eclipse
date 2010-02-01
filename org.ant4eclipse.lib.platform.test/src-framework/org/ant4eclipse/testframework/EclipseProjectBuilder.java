@@ -13,10 +13,10 @@ package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.testframework.TextEmitter;
 import org.junit.Assert;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,11 +36,14 @@ public class EclipseProjectBuilder {
 
   private List<String> _referencedProjects;
 
+  private List<File>   _resources;
+
   public EclipseProjectBuilder(String projectName) {
     Assert.assertNotNull(projectName);
     this._projectName = projectName;
     this._natures = new LinkedList<String>();
     this._builders = new LinkedList<String>();
+    this._resources = new LinkedList<File>();
     this._referencedProjects = new LinkedList<String>();
   }
 
@@ -69,6 +72,12 @@ public class EclipseProjectBuilder {
     return this;
   }
 
+  public EclipseProjectBuilder withResource(File resource) {
+    Assert.assertNotNull(resource);
+    this._resources.add(resource);
+    return this;
+  }
+
   /**
    * Creates this project
    * 
@@ -86,6 +95,18 @@ public class EclipseProjectBuilder {
 
   protected void createArtefacts(File projectDir) {
     createProjectFile(projectDir);
+    importResources(projectDir);
+  }
+
+  protected void importResources(File projectDir) {
+    for (File resource : this._resources) {
+      try {
+        File destfile = new File(projectDir, resource.getName());
+        Utilities.copy(resource.toURI().toURL(), destfile);
+      } catch (MalformedURLException ex) {
+        Assert.fail(ex.getMessage());
+      }
+    }
   }
 
   protected void createProjectFile(File projectDir) {
