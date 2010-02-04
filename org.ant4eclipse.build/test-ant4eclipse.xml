@@ -258,8 +258,7 @@
           <formatter type="xml" />
           <batchtest todir="${reports}">
             <fileset dir="${executeJdtProject.source.directory}">
-              <include name="**/*Test.java" />
-              <exclude name="**/Abstract*.java" />
+              <include name="**/AllTests.java" />
             </fileset>
           </batchtest>
           <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
