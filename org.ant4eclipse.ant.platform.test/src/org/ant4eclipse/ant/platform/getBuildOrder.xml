@@ -8,7 +8,7 @@
 
   <target name="getBuildOrder">
 
-    <getBuildOrder workspace="${workspaceDir}"
+    <getBuildOrder workspaceDirectory="${workspaceDir}"
                    teamprojectset="projectSet.psf"
                    buildOrderProperty="test" />
 
