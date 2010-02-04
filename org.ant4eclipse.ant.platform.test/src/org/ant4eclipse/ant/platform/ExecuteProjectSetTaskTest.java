@@ -52,6 +52,29 @@ public class ExecuteProjectSetTaskTest extends AbstractWorkspaceBasedBuildFileTe
   }
 
   /**
+   * @note [04-Feb-2010:KASI] This snippet was laying around within the ExecuteProjectBuildersTaskTest. It's obviously
+   *       meant to be part of this test, so make use of it ;-)
+   */
+  private String createPsfContent(boolean test) {
+    StringBuffer buffer = new StringBuffer();
+    String part = test ? ".test" : "";
+    buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+    buffer.append("<psf version=\"2.0\">");
+    buffer.append("<provider id=\"org.tigris.subversion.subclipse.core.svnnature\">");
+    buffer
+        .append("<project reference=\"0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/simpleproject_1,simpleproject_1\"/>");
+    buffer
+        .append(String
+            .format(
+                "<project reference=\"0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/simpleproject_2%s,simpleproject_2%s\"/>",
+                part, part));
+    buffer.append("</provider>");
+    buffer.append("</psf>");
+
+    return buffer.toString();
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
