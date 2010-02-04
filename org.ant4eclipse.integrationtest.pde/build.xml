@@ -4,7 +4,7 @@
          default="build"
          xmlns:ant4eclipse="antlib:org.ant4eclipse">
 
-  <import file="${basedir}/../org.ant4eclipse.pde/macros/a4e-pde-macros.xml" />
+  <import file="${basedir}/../org.ant4eclipse.ant.pde/macros/a4e-pde-macros.xml" />
 
   <!-- define environment properties -->
   <property file="${basedir}\environment.properties" />
