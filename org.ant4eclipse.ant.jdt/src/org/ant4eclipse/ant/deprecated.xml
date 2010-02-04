@@ -4,5 +4,6 @@
   <typedef name="getEclipseClasspath"   classname="org.ant4eclipse.ant.jdt.GetJdtClassPathTask" />
   <typedef name="getOutputpath"         classname="org.ant4eclipse.ant.jdt.GetJdtOutputPathTask" />
   <typedef name="getSourcepath"         classname="org.ant4eclipse.ant.jdt.GetJdtSourcePathTask" />
+  <typedef name="jreContainer"          classname="org.ant4eclipse.ant.jdt.type.JreContainer" />
 
 </antlib>
