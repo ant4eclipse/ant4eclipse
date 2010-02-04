@@ -9,12 +9,17 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.lib.pde;
+package org.ant4eclipse.lib.platform;
 
+import org.ant4eclipse.lib.platform.internal.model.launcher.LaunchConfigurationReaderImplTest;
+import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifierRegistryTest;
+import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRootTest;
+import org.ant4eclipse.lib.platform.model.team.projectset.internal.ProjectSetFileParserImplTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
-public class PDETests {
+@Suite.SuiteClasses({ LaunchConfigurationReaderImplTest.class, ProjectRoleIdentifierRegistryTest.class,
+    CvsRootTest.class, ProjectSetFileParserImplTest.class })
+public class AllPlatformTests {
 } /* ENDCLASS */

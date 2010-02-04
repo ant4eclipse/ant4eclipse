@@ -17,5 +17,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ BuildOrderResolverTest.class })
-public class JDTTests {
+public class AllJDTTests {
 } /* ENDCLASS */

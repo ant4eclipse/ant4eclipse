@@ -11,16 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.test;
 
-import org.ant4eclipse.lib.core.CoreTests;
-import org.ant4eclipse.lib.jdt.JDTTests;
-import org.ant4eclipse.lib.pde.PDETests;
-import org.ant4eclipse.lib.platform.PlatformTests;
+import org.ant4eclipse.lib.core.AllCoreTests;
+import org.ant4eclipse.lib.jdt.AllJDTTests;
+import org.ant4eclipse.lib.pde.AllPDETests;
+import org.ant4eclipse.lib.platform.AllPlatformTests;
 import org.ant4eclipse.lib.pydt.AllPydtTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ CoreTests.class, JDTTests.class, PDETests.class, PlatformTests.class,
+@Suite.SuiteClasses({ AllCoreTests.class, AllJDTTests.class, AllPDETests.class, AllPlatformTests.class,
     AllPydtTests.class })
 public class LibTests {
 } /* ENDCLASS */

@@ -29,5 +29,5 @@ import org.junit.runners.Suite;
     DependencyGraphTest.class, Failuretest.class, LoggingUsageTest.class, NLSTest.class,
     PropertiesBasedServiceRegistryConfigurationTest.class, ServiceRegistryTest.class, ManifestHelperTest.class,
     UtilitiesTest.class, XQueryHandlerTest.class })
-public class CoreTests {
+public class AllCoreTests {
 } /* ENDCLASS */
