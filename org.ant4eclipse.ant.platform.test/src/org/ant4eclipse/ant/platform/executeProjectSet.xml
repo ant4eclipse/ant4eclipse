@@ -6,32 +6,52 @@
   <typedef name="executeProjectSet" classname="org.ant4eclipse.ant.platform.ExecuteProjectSetTask" />
 
   <target name="executeProjectSet">
-
-    <executeProjectSet workspaceDirectory="${workspaceDir}"
-                   teamprojectset="projectSet.psf" >
-
-        <forEachProject>
-          <echo>${executeProjectSet.project.name}</echo>
-        </forEachProject>
-
-
+    <executeProjectSet 
+      workspaceDirectory="${workspaceDir}"
+      teamprojectset="org.ant4eclipse.lib.core/valid-projectset.psf"
+    >
+      <forEachProject>
+        <echo>${executeProjectSet.project.directory}~</echo>
+      </forEachProject>
     </executeProjectSet>
-
   </target>
 
   <target name="executeProjectSetFiltered">
-
-    <executeProjectSet workspaceDirectory="${workspaceDir}"
-                   teamprojectset="projectSet.psf">
-
-        <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
-          <echo>${executeProjectSet.project.name}</echo>
-        </forEachProject>
-
+    <executeProjectSet 
+      workspaceDirectory="${workspaceDir}"
+      teamprojectset="org.ant4eclipse.lib.core/valid-projectset.psf"
+    >
+      <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <echo>${executeProjectSet.project.directory}~</echo>
+      </forEachProject>
     </executeProjectSet>
+  </target>
 
+  <target name="executeInvalidProjectSet">
+    <executeProjectSet 
+      workspaceDirectory="${workspaceDir}"
+      teamprojectset="org.ant4eclipse.lib.core/invalid-projectset.psf"
+      resolvebuildorder="false"
+    >
+      <forEachProject>
+        <echo>${executeProjectSet.project.directory}~</echo>
+      </forEachProject>
+    </executeProjectSet>
+  </target>
+
+  <target name="executeInvalidProjectSetFiltered">
+    <executeProjectSet 
+      workspaceDirectory="${workspaceDir}"
+      teamprojectset="org.ant4eclipse.lib.core/invalid-projectset.psf"
+      resolvebuildorder="false"
+    >
+      <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
+        <echo>${executeProjectSet.project.directory}~</echo>
+      </forEachProject>
+    </executeProjectSet>
   </target>
 
   <!-- default dummy target -->
   <target name="foo" />
+  
 </project>
