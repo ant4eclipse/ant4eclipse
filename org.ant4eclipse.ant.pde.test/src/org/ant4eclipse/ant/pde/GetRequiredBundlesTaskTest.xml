@@ -17,7 +17,7 @@
       <location dir="${targetplatform.2}" />
     </targetPlatform>
 
-    <getRequiredBundles workspace="${workspaceDir}"
+    <getRequiredBundles workspaceDirectory="${workspaceDir}"
                         targetPlatformId="eclipse-3.5"
                         includeOptionalDependencies="true"
                         bundleSymbolicName="simpleproject1"

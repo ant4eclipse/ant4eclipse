@@ -8,7 +8,7 @@
 
   <target name="testExecutePluginLibrary">
 
-    <executePluginLibrary workspace="${workspaceDirectory}"
+    <executePluginLibrary workspaceDirectory="${workspaceDirectory}"
                           projectname="${project.name}"
                           libraryname="${library.name}">
 
