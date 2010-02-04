@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-import org.ant4eclipse.ant.core.AbstractAnt4EclipseCondition;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
@@ -37,7 +36,7 @@ public class AbstractAnt4EclipseConditionTest extends AbstractAnt4EclipseBuildFi
   public void testAbstractAnt4EclipseFailureCondition() {
     assertPropertyUnset("test");
     expectSpecificBuildException("testAbstractAnt4EclipseFailureCondition", "Ant4EclipseException",
-        "org.ant4eclipse.core.exception.Ant4EclipseException: Directory 'Bla' could not be created for an unkown reason");
+        "org.ant4eclipse.lib.core.exception.Ant4EclipseException: Directory 'Bla' could not be created for an unkown reason");
     assertPropertyUnset("test");
   }
 
