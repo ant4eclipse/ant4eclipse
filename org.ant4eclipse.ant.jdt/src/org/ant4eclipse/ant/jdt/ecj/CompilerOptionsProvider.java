@@ -69,12 +69,12 @@ public class CompilerOptionsProvider {
     // get the project options
     StringMap projectOptions = getFileCompilerOptions(projectCompilerOptionsFile);
     if (A4ELogging.isTraceingEnabled()) {
-      A4ELogging.trace("projectOptions: '%s'.", projectOptions);
+      A4ELogging.trace("Read projectOptions from '%s': '%s'.", projectCompilerOptionsFile, projectOptions);
     }
     // get the default options
     StringMap defaultOptions = getFileCompilerOptions(globalCompilerOptionsFile);
     if (A4ELogging.isTraceingEnabled()) {
-      A4ELogging.trace("defaultOptions: '%s'.", defaultOptions);
+      A4ELogging.trace("Read defaultOptions from '%s': '%s'.", globalCompilerOptionsFile, defaultOptions);
     }
     // get the javac options
     StringMap javacOptions = getJavacCompilerOptions(javac);

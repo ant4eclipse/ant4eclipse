@@ -68,7 +68,13 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
   /** the refid key for compiler.options.file */
   private static final String COMPILER_OPTIONS_FILE             = "compiler.options.file";
 
-  /** the refid key for default compiler options file */
+  /**
+   * the refid key for default compiler options file.
+   * 
+   * <p>
+   * If not set or set to an empty string no default compiler settings will be used
+   * </p>
+   */
   private static final String DEFAULT_COMPILER_OPTIONS_FILE     = "default.compiler.options.file";
 
   /**
@@ -261,8 +267,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
         // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
         // } else {
-          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
-              new File[] { classesFile }, new File[] {});
+        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+            new File[] { classesFile }, new File[] {});
         // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
         // }
 
