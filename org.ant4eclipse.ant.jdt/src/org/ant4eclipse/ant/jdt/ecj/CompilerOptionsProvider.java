@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import java.io.File;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -21,10 +24,6 @@ import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.apache.tools.ant.taskdefs.Javac;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.util.Util;
-
-import java.io.File;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * <p>
@@ -246,9 +245,12 @@ public class CompilerOptionsProvider {
    * <p>
    * Returns the compiler options for the given compiler options file.
    * </p>
+   * <p>
+   * If fileName is null or empty no file is read.
+   * </p>
    * 
    * @param fileName
-   *          the compiler options file.
+   *          the compiler options file. Might be null or empty string
    * @return the map with the compiler options.
    */
   private static StringMap getFileCompilerOptions(String fileName) {
