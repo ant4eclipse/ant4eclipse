@@ -15,7 +15,6 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -209,8 +208,6 @@ public class ServiceRegistry {
         try {
           ((Lifecycle) service).initialize();
         } catch (Exception e) {
-          e.printStackTrace();
-          A4ELogging.info(e.getMessage());
           throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
               .getName());
         }

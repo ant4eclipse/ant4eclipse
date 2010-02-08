@@ -51,7 +51,6 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
    */
   public void initialize() {
     try {
-      System.err.println("STARTING INITIALIZE");
       File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
       this._epydoc = new File(zip.getParentFile(), "epydoc");
       Utilities.unpack(zip, this._epydoc);
