@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -37,6 +36,8 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
                                                          + "  sys.argv=[]\n%s" + "  cli.cli()\n";
 
   private static final String MSG_DOCS_NOT_SUPPORTED = "Generation of documentation is currently not supported for python with major version >= 3 !";
+
+  private static final String MSG_DOCS_NOT_AVAILABLE = "The epydoc could not be unpacked onto your system, so this feature is not available.";
 
   private String              _runtimeid             = null;
 
@@ -117,6 +118,12 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
     }
 
     PythonTools pythontools = ServiceRegistry.instance().getService(PythonTools.class);
+    File install = pythontools.getEpydocInstallation();
+    if (install == null) {
+      A4ELogging.warn(MSG_DOCS_NOT_AVAILABLE);
+      return;
+    }
+
     File executable = runtime.getExecutable();
 
     Utilities.mkdirs(this._destdir);
@@ -129,7 +136,6 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
     collectModules(options);
 
     // generate the python script used to generate the documentation
-    File install = pythontools.getEpydocInstallation();
     String name = Utilities.stripSuffix(install.getName());
     String code = String.format(SCRIPT, pythonEscape(install.getAbsolutePath()), name, options);
 
