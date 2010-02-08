@@ -11,7 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
+import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.tools.PythonTools;
 
@@ -48,9 +50,16 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
    * {@inheritDoc}
    */
   public void initialize() {
-    File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
-    this._epydoc = new File(zip.getParentFile(), "epydoc");
-    Utilities.unpack(zip, this._epydoc);
+    try {
+      File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
+      this._epydoc = new File(zip.getParentFile(), "epydoc");
+      Utilities.unpack(zip, this._epydoc);
+    } catch (Ant4EclipseException ex) {
+      // if unpacking failed we consider the python doc feature unavailable
+      if (ex.getExceptionCode() != CoreExceptionCode.UNPACKING_FAILED) {
+        throw ex;
+      }
+    }
     this._initialised = true;
   }
 

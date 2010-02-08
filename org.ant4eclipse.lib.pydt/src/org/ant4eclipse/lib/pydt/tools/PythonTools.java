@@ -23,7 +23,8 @@ public interface PythonTools {
   /**
    * Returns the location of the epydoc installation.
    * 
-   * @return The location of the epydoc installation. Not <code>null</code>.
+   * @return The location of the epydoc installation. Maybe <code>null</code> in case the python documentation tool
+   *         could not be unpacked.
    */
   File getEpydocInstallation();
 
