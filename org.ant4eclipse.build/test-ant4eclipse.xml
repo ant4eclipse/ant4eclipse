@@ -189,15 +189,20 @@
   </target>
   
   <target name="copy.sources">
-    <executeJdtProject workspaceDirectory="${basedir}" projectname="${executeProjectSet.project.name}">
+		<copy todir="${dest.cobertura}/sources">
+			<jdtProjectFileSet workspaceDirectory="${basedir}" projectname="${executeProjectSet.project.name}"
+				includeOutputFolders="false" includeSourceFolders="true"/>
+		</copy>
+<!--  	
+    <executeJdtProject >
       <forEachSourceDirectory>
-        <copy todir="${dest.cobertura}/sources">
           <fileset dir="${executeJdtProject.source.directory}">
             <exclude name="**/*.java" />
           </fileset>
         </copy>
       </forEachSourceDirectory>
     </executeJdtProject>
+-->    
   </target>
   
   <target name="prepare" depends="clean">
