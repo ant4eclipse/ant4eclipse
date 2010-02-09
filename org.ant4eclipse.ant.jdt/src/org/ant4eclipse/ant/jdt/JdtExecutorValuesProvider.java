@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import java.io.File;
+import java.util.List;
 
 import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -22,9 +24,6 @@ import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
-
-import java.io.File;
-import java.util.List;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
@@ -144,6 +143,16 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
           SOURCE_DIRECTORIES_PATH,
           this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
               javaProjectRole.getSourceFolders())));
+
+      executionValues.getProperties().put(
+          OUTPUT_DIRECTORIES,
+          this._pathComponent.convertToString(javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getAllOutputFolders())));
+
+      executionValues.getReferences().put(
+          OUTPUT_DIRECTORIES_PATH,
+          this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getAllOutputFolders())));
 
       for (String sourceFolderName : javaProjectRole.getSourceFolders()) {
         String outputFolderName = javaProjectRole.getOutputFolderForSourceFolder(sourceFolderName);
