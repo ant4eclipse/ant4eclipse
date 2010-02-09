@@ -21,7 +21,7 @@ import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.LinkedResourceImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.ProjectNatureImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.variable.EclipseVariableResolver;
+import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
 
 import java.io.File;
 import java.util.StringTokenizer;
@@ -189,11 +189,11 @@ public class ProjectFileParser {
   private static final String getLocation(EclipseProjectImpl eclipseProject, String variable) {
     String key = "${" + variable + "}";
 
-    String location = getEclipseVariableResolver().resolveEclipseVariables(key, eclipseProject, null);
+    String location = getEclipseVariableResolver().substituteEclipseVariables(key, eclipseProject, null);
     if (key.equals(location)) {
       // fallback for the internal prefs of an eclipse .metadata dir
       key = "${pathvariable." + variable + "}";
-      location = getEclipseVariableResolver().resolveEclipseVariables(key, eclipseProject, null);
+      location = getEclipseVariableResolver().substituteEclipseVariables(key, eclipseProject, null);
       if (key.equals(location)) {
         // the result is the key itself, so resolving failed
         location = null;
@@ -202,8 +202,8 @@ public class ProjectFileParser {
     return location;
   }
 
-  private static EclipseVariableResolver getEclipseVariableResolver() {
-    EclipseVariableResolver resolver = ServiceRegistry.instance().getService(EclipseVariableResolver.class);
+  private static EclipseStringSubstitutionService getEclipseVariableResolver() {
+    EclipseStringSubstitutionService resolver = ServiceRegistry.instance().getService(EclipseStringSubstitutionService.class);
     return resolver;
   }
 

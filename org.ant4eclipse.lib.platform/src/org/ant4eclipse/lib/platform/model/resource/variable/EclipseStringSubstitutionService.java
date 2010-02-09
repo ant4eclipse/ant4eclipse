@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.variable;
 
-
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -22,17 +21,7 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public interface EclipseVariableResolver extends Lifecycle {
-
-  /**
-   * Changes a variable for this instance.
-   * 
-   * @param key
-   *          The name of the variable.
-   * @param value
-   *          The value of the variable. A value of null causes the variable to be removed.
-   */
-  void setEclipseVariable(String key, String value);
+public interface EclipseStringSubstitutionService extends Lifecycle {
 
   /**
    * Substitutes all occurences of an eclipse <b>variable</b> (aka as <b>property</b> in ant)in the given string.
@@ -50,23 +39,6 @@ public interface EclipseVariableResolver extends Lifecycle {
    * @param otherProperties
    *          Table with variable names as keys and their values as values. Might be null.
    */
-  String resolveEclipseVariables(String string, EclipseProject project, StringMap otherProperties);
-
-  /**
-   * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
-   * 
-   * @return The map providing the necessary (key, value) pairs.
-   */
-  StringMap getEclipseVariables();
-
-  /**
-   * Returns a map with the eclipse variables where each key corresponds to a key allowing to access it's value.
-   * 
-   * @param project
-   *          The Eclipse project allowing to produce some project specific variables.
-   * 
-   * @return The map providing the necessary (key, value) pairs.
-   */
-  StringMap getEclipseVariables(EclipseProject project);
+  String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties);
 
 } /* ENDINTERFACE */
