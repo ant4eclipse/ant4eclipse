@@ -47,7 +47,7 @@ public class CompilerOptionsProvider {
    * <li><a href=
    * "http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/ref-preferences-compiler.htm"
    * >Java Compiler Preferences </a></li>
-   * <li><ahref="http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/compiler/ref-preferences-errors-warnings.htm"
+   * <li><a href="http://help.eclipse.org/galileo/topic/org.eclipse.jdt.doc.user/reference/preferences/java/compiler/ref-preferences-errors-warnings.htm"
    * >Java Compiler Errors/Warnings Preferences</a></li>
    * </ul>
    * </p>
