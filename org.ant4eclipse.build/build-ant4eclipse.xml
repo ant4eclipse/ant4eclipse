@@ -323,6 +323,12 @@
       <fileset dir="${destination}/ant/classes" includes="**/*"/>
       <fileset dir="${destination}/library/classes" includes="**/*"/>
     </zip>
+  	
+  	<!-- create a source jar which includes the ant tasks and the library sources. -->
+  	<zip destfile="${destination}/ant/org.ant4eclipse-sources.jar" duplicate="preserve">
+  		<fileset dir="${destination}/ant/sources" includes="**/*"/>
+  	  <fileset dir="${destination}/library/sources" includes="**/*"/>
+  	</zip>
 
     <echo>  ... A4E Ant Tasks build finished.</echo>
 
@@ -451,21 +457,27 @@
     <if>
       <istrue value="${testmode}"/>
       <then>
-        <var name="dir.classes" value="${dir.dest}/test-classes"/>
+        <var name="dir.base" value="${dir.dest}/test-"/>
       </then>
       <else>
-        <var name="dir.classes" value="${dir.dest}/classes"/>
+        <var name="dir.base" value="${dir.dest}/"/>
       </else>
     </if>
     
     <!-- copy classfiles and resources -->
-    <copy toDir="${dir.classes}">
-      <fileset dir="${executeJdtProject.output.directory}">
-        <include name="**/*" />
-        <exclude name="**/ant4eclipse-configuration.properties" />
-        <exclude name="**/antlib.xml" />
-      </fileset>
+  	<copy toDir="${dir.base}classes">
+  		<jdtProjectFileSet workspaceDirectory="${basedir}" 
+  			projectName="${executeProjectSet.project.name}">
+  			<exclude name="**/ant4eclipse-configuration.properties" />
+  		  <exclude name="**/antlib.xml" />
+  		</jdtProjectFileSet>
     </copy>
+  	
+  	<copy toDir="${dir.base}sources">
+  			<jdtProjectFileSet workspaceDirectory="${basedir}" 
+  				projectName="${executeProjectSet.project.name}"
+  				includeSourceFolders="true" includeOutputFolders="false"/>
+  	</copy>
 
     <!-- copy declarative files (these will be postprocessed later) -->
     <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}"/>
