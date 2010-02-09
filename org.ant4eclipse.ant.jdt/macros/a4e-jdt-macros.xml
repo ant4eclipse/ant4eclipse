@@ -70,7 +70,7 @@
              description="Post-process the generated files from compilation, for example to do bytecode enhancement on Java classes." />
     <element name="finish"
              optional="true"
-             description="Finish the build process can be used to take further actions, like packaging the project" />
+             description="Finish the build process. This can be used to take further actions, like packaging the project" />
     <sequential>
 
       <echo>
