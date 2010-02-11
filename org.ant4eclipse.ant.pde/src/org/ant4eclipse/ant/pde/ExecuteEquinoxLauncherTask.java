@@ -11,6 +11,7 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.model.launcher.EquinoxLaunchConfigurationWrapper;
 import org.ant4eclipse.lib.pde.model.launcher.SelectedLaunchConfigurationBundle;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
@@ -158,7 +159,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
 
     // Step 4a: run the macro for each workspace bundle
     for (SelectedLaunchConfigurationBundle selectedWorkspaceBundle : selectedWorkspaceBundles) {
-      executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(selectedWorkspaceBundle, true));
+      executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(wrapper, selectedWorkspaceBundle, true));
     }
 
     // Step 5: Get all selected bundles from target platform
@@ -166,7 +167,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
 
     // Step 5a: Run the macro for each selected target platform bundle
     for (SelectedLaunchConfigurationBundle selectedTargetBundle : selectedTargetBundles) {
-      executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(selectedTargetBundle, false));
+      executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(wrapper, selectedTargetBundle, false));
     }
 
   }
@@ -182,7 +183,9 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
    * @return
    */
   protected MacroExecutionValuesProvider createBundleMacroExecuteValuesProvider(
-      final SelectedLaunchConfigurationBundle selectedBundle, final boolean workspaceBundle) {
+      final EquinoxLaunchConfigurationWrapper wrapper, final SelectedLaunchConfigurationBundle selectedBundle,
+      final boolean workspaceBundle) {
+    notNull("wrapper", wrapper);
     notNull("launchConfigurationBundleInfo", selectedBundle);
 
     final BundleDescription bundleDescription = getResolvedBundle(selectedBundle);
@@ -199,12 +202,31 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
         properties.put("selectedBundle.autoStart", selectedBundle.getAutoStart());
         properties.put("selectedBundle.workspaceBundle", Boolean.toString(workspaceBundle));
         properties.put("selectedBundle.targetBundle", Boolean.toString(!workspaceBundle));
+        final String resolvedStartLevel = wrapper.getResolvedStartLevel(selectedBundle);
+        properties.put("selectedBundle.resolvedStartLevel", resolvedStartLevel);
+        final String resolvedAutoStart = wrapper.getResolvedAutoStart(selectedBundle);
+        properties.put("selectedBundle.resolvedAutoStart", resolvedAutoStart);
+
+        // set the "bundle start parameter" as expected in osgi.bundles property
+        String bundleStart = "";
+        if (Utilities.hasText(resolvedStartLevel)) {
+          bundleStart = "@" + resolvedStartLevel;
+        }
+        if (Utilities.hasText(resolvedAutoStart)) {
+          if (Utilities.hasText(bundleStart)) {
+            bundleStart += ":" + resolvedAutoStart;
+          } else {
+            bundleStart = "@" + resolvedAutoStart;
+          }
+        }
+
+        properties.put("selectedBundle.startParameter", bundleStart);
 
         if (bundleDescription != null) {
           BundleSource bundlesource = (BundleSource) bundleDescription.getUserObject();
 
           properties.put("resolvedBundle.version", bundleDescription.getVersion().toString());
-
+          properties.put("resolvedBundle.isSystemBundle", Boolean.toString(bundleDescription.getBundleId() == 0));
           if (bundlesource.isEclipseProject()) {
             // Plug-in is a source project contained in the workspace
             EclipseProject project = bundlesource.getAsEclipseProject();

@@ -34,6 +34,13 @@ public class EquinoxLaunchConfigurationWrapper {
   public static final String        WORKSPACE_BUNDLES_ATTRIBUTE_NAME  = "workspace_bundles";
 
   /**
+   * Name of the attribute that contains the default start level
+   */
+  public static final String        DEFAULT_START_LEVEL_NAME          = "default_start_level";
+
+  public static final String        DEFAULT_AUTO_START                = "default_auto_start";
+
+  /**
    * The wrapped launch configuration. Must not be null
    */
   private final LaunchConfiguration _launchConfiguration;
@@ -102,5 +109,72 @@ public class EquinoxLaunchConfigurationWrapper {
     }
 
     return result.toArray(new SelectedLaunchConfigurationBundle[0]);
+  }
+
+  public String getDefaultStartLevel() {
+    String defaultStartLevel = this._launchConfiguration.getAttribute(DEFAULT_START_LEVEL_NAME);
+    if (defaultStartLevel == null) {
+      defaultStartLevel = "4";
+    }
+    return defaultStartLevel;
+  }
+
+  public String getDefaultAutoStart() {
+    String defaultAutoStart = this._launchConfiguration.getAttribute(DEFAULT_AUTO_START);
+    if (defaultAutoStart == null) {
+      return "true";
+    }
+    return defaultAutoStart;
+  }
+
+  /**
+   * Returns an empty string if the given start level is the same as the default start level in this launch
+   * configuration
+   * 
+   * @return
+   */
+  public String getResolvedStartLevel(SelectedLaunchConfigurationBundle selectedBundle) {
+    notNull("selectedBundle", selectedBundle);
+    String startLevel = selectedBundle.getStartLevel();
+    if ("default".equals(startLevel)) {
+      return "";
+    }
+
+    return startLevel;
+  }
+
+  /**
+   * Returns the 'resolved' value of the autoStart property of a selected bundle that can be used in an 'osgi.bundles'
+   * properties of a Equinox config.ini file
+   * 
+   * <p>
+   * The 'resolved' value is either an empty string or "start". It is set to start if the selectedBundle has set its
+   * autoStart level to 'true' or if its set to 'default' and the default autostart value of the launch configuration is
+   * 'true'
+   * 
+   * @param selectedBundle
+   * @return
+   */
+  public String getResolvedAutoStart(SelectedLaunchConfigurationBundle selectedBundle) {
+    notNull("selectedBundle", selectedBundle);
+
+    String autoStart = selectedBundle.getAutoStart();
+
+    if ("false".equalsIgnoreCase(autoStart)) {
+      return "";
+    }
+
+    if ("true".equalsIgnoreCase(autoStart)) {
+      return "start";
+    }
+
+    // must be set to default. check if default of this launch configuration is 'true'
+
+    if ("true".equalsIgnoreCase(getDefaultAutoStart())) {
+      return "start";
+    }
+
+    // is set to default and default auto start is 'false' -> return empty string
+    return "";
   }
 }
