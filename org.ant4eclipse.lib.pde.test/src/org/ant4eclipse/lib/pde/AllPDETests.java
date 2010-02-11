@@ -11,10 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde;
 
+import org.ant4eclipse.lib.pde.model.launcher.SelectedLaunchConfigurationBundleParserTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
+@Suite.SuiteClasses( { SelectedLaunchConfigurationBundleParserTest.class })
 public class AllPDETests {
 } /* ENDCLASS */
