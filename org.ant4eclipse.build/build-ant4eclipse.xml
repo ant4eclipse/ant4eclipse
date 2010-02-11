@@ -145,6 +145,10 @@
           <var unset="true" name="mac_filecontent"/>
         </sequential>
       </for>
+    	<var unset="true" name="mac_destdir"/>
+    	<dirname property="mac_destdir" file="@{dest}"/>
+    	<echo>destdir: ${mac_destdir}</echo>
+    	<mkdir dir="${mac_destdir}"/>
       <echo file="@{dest}">${mac_content}</echo>
       <var unset="true" name="mac_content"/>
     </sequential>
@@ -300,6 +304,12 @@
     <merge-antlib
       dir="${dest.cfg}"
       dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"
+    />
+  	
+    <!-- generate the (complete) configuration file -->
+    <merge-ant4eclipse-configuration
+      dir="${dest.cfg}"
+      dest="${destination}/ant/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties"
     />
 
     <!-- create a duplicate to support a smooth migration. -->
