@@ -11,12 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import java.io.File;
 
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
+import org.ant4eclipse.ant.platform.core.delegate.ConditionalMacroDef;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.lib.jdt.tools.JdtResolver;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.types.FileSet;
 
 /**
  * <p>
@@ -27,22 +36,26 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask implements JdtExecutorValues {
 
   /** the constant for SCOPE_PROJECT_ELEMENT_NAME */
-  private static final String SCOPE_PROJECT_ELEMENT_NAME          = "ForProject";
+  private static final String SCOPE_PROJECT_ELEMENT_NAME                    = "ForProject";
 
   /** the constant for SCOPE_TARGET_DIRECTORY_ELEMENT_NAME */
-  private static final String SCOPE_TARGET_DIRECTORY_ELEMENT_NAME = "ForEachOutputDirectory";
+  private static final String SCOPE_TARGET_DIRECTORY_ELEMENT_NAME           = "ForEachOutputDirectory";
 
   /** the constant for SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME */
-  private static final String SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME = "ForEachSourceDirectory";
+  private static final String SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME           = "ForEachSourceDirectory";
+
+  private static final String SCOPE_FOR_EACH_RUNTIME_CLASSPATH_ELEMENT_NAME = "ForEachRuntimeClasspathEntry";
 
   /** the constant for SCOPE_SOURCE_DIRECTORY */
-  public static final String  SCOPE_SOURCE_DIRECTORY              = "SCOPE_SOURCE_DIRECTORY";
+  public static final String  SCOPE_SOURCE_DIRECTORY                        = "SCOPE_SOURCE_DIRECTORY";
 
   /** the constant for SCOPE_TARGET_DIRECTORY */
-  public static final String  SCOPE_TARGET_DIRECTORY              = "SCOPE_TARGET_DIRECTORY";
+  public static final String  SCOPE_TARGET_DIRECTORY                        = "SCOPE_TARGET_DIRECTORY";
 
   /** the constant for SCOPE_PROJECT */
-  public static final String  SCOPE_PROJECT                       = "SCOPE_PROJECT";
+  public static final String  SCOPE_PROJECT                                 = "SCOPE_PROJECT";
+
+  public static final String  SCOPE_FOR_EACH_RUNTIME_CLASSPATH              = "SCOPE_FOR_EACH_RUNTIME_CLASSPATH";
 
   /**
    * <p>
@@ -81,6 +94,10 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     // handle SCOPE_PROJECT
     else if (SCOPE_PROJECT_ELEMENT_NAME.equalsIgnoreCase(name)) {
       return createScopedMacroDefinition(SCOPE_PROJECT);
+    }
+    // handle SCOPE_FOR_EACH_RUNTIME_CLASSPATH
+    else if (SCOPE_FOR_EACH_RUNTIME_CLASSPATH_ELEMENT_NAME.equalsIgnoreCase(name)) {
+      return createScopedMacroDefinition(SCOPE_FOR_EACH_RUNTIME_CLASSPATH);
     }
 
     // delegate to template method
@@ -148,6 +165,10 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       // execute SCOPE_PROJECT
       else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
         executeProjectScopedMacroDef(macroDef);
+      }
+      // execute SCOPE_PROJECT
+      else if (SCOPE_FOR_EACH_RUNTIME_CLASSPATH.equals(scopedMacroDefinition.getScope())) {
+        executeForEachRuntimeClasspathScopedMacroDef(macroDef);
       }
       // delegate to template method
       else {
@@ -231,6 +252,85 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
           addAdditionalExecutionValues(values);
 
           // return the values
+          return values;
+        }
+      });
+    }
+  }
+
+  /**
+   * <p>
+   * Executed the given MacroDef for each (resolved) runtime classpath entry of the Eclipse project
+   * </p>
+   * 
+   * @param macroDef
+   */
+  private void executeForEachRuntimeClasspathScopedMacroDef(MacroDef macroDef) {
+    Assure.instanceOf("macroDef", macroDef, ConditionalMacroDef.class);
+
+    // Get the ConditionalMacroDef to access the macros attributes
+    ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
+
+    // Read the 'reverse' attribute
+    final boolean reverse = Boolean.valueOf(conditionalMacroDef.getAttribute("reverse", "false"));
+
+    final JavaProjectRole javaProjectRole = getJavaProjectRole();
+
+    // Resolve the absolute and relative classpaths
+    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
+        false, true, getJdtClasspathContainerArguments());
+    ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
+        true, true, getJdtClasspathContainerArguments());
+
+    // get the entries
+    final File[] absoluteClasspathFiles = cpAbsoluteRuntime.getClasspathFiles();
+    final File[] relativeClasspathFiles = cpRelativeRuntime.getClasspathFiles();
+
+    if (absoluteClasspathFiles.length != relativeClasspathFiles.length) {
+      // TODO NLS
+      throw new RuntimeException("number of absolute classpath entries (" + absoluteClasspathFiles.length + ")"
+          + "must match number of relative classpath entries (" + relativeClasspathFiles.length + ")");
+    }
+
+    // reverse the classpath order if requested
+    if (reverse) {
+      Utilities.reverse(absoluteClasspathFiles);
+      Utilities.reverse(relativeClasspathFiles);
+    }
+
+    // invoke callback template for each classpath entry
+    for (int i = 0; i < absoluteClasspathFiles.length; i++) {
+      final int index = i;
+      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+
+        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+          final StringMap properties = values.getProperties();
+          // add absolute path
+          properties.put("classpathEntry.absolute", absoluteClasspathFiles[index].getAbsolutePath());
+
+          // add relative path
+          properties.put("classpathEntry.relative", relativeClasspathFiles[index].getPath());
+
+          // add name (last part of the path)
+          properties.put("classpathEntry.name", relativeClasspathFiles[index].getName());
+
+          // add informations about file system resource
+          properties.put("classpathEntry.isExisting", Boolean.toString(absoluteClasspathFiles[index].exists()));
+          properties.put("classpathEntry.isFile", Boolean.toString(absoluteClasspathFiles[index].isFile()));
+          properties.put("classpathEntry.isFolder", Boolean.toString(absoluteClasspathFiles[index].isDirectory()));
+
+          // create a FileSet for the entry describing it's content
+          FileSet fileSet = new FileSet();
+          fileSet.setProject(getProject());
+          if (absoluteClasspathFiles[index].isFile()) {
+            fileSet.setFile(absoluteClasspathFiles[index]);
+          } else if (absoluteClasspathFiles[index].isDirectory()) {
+            fileSet.setDir(absoluteClasspathFiles[index]);
+          }
+
+          // add the FileSet as reference
+          values.getReferences().put("classpathEntry.fileSet", fileSet);
+
           return values;
         }
       });
