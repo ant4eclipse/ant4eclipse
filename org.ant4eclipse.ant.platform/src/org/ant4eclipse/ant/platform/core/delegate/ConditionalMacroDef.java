@@ -11,18 +11,20 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
-import org.ant4eclipse.lib.core.ldapfilter.ParseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.UnknownElement;
-import org.apache.tools.ant.taskdefs.MacroDef;
-
 import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
+import org.ant4eclipse.lib.core.ldapfilter.ParseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.StringMap;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DynamicAttribute;
+import org.apache.tools.ant.UnknownElement;
+import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
  * <p>
@@ -70,6 +72,20 @@ public class ConditionalMacroDef extends MacroDef {
   }
 
   /**
+   * Returns the value of the given attribute or <tt>defaultValue</tt> if the attribute has not been set on this
+   * ConditionalMacroDef
+   * 
+   * @param name
+   *          The name of the attribute
+   * @param defaultValue
+   *          The default value that is returned when the attribute is not set
+   * @return The attribute value or defaultValue
+   */
+  public String getAttribute(String name, String defaultValue) {
+    return this._conditionalNestedSequential.getAttribute(name, defaultValue);
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -105,19 +121,22 @@ public class ConditionalMacroDef extends MacroDef {
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  public static class ConditionalNestedSequential extends MacroDef.NestedSequential {
+  public static class ConditionalNestedSequential extends MacroDef.NestedSequential implements DynamicAttribute {
 
     /** the sequential should only be executed if '_if == true' */
-    private boolean             _if     = true;
+    private boolean             _if         = true;
 
     /** the sequential should only be executed if '_unless == false' */
-    private boolean             _unless = false;
+    private boolean             _unless     = false;
 
     /** a filter expression to filter the elements to execute a sequential for */
-    private String              _filter = null;
+    private String              _filter     = null;
 
     /** the parent conditional macro definition */
     private ConditionalMacroDef _conditionalMacroDef;
+
+    /** a {@link StringMap} containing the (dynamic) attributes of this Sequential */
+    private StringMap           _attributes = new StringMap();
 
     /**
      * <p>
@@ -244,6 +263,29 @@ public class ConditionalMacroDef extends MacroDef {
      */
     public void setUnless(boolean unless) {
       this._unless = unless;
+    }
+
+    /**
+     * Allows the specification of additional attributes on a MacroDefinition
+     * 
+     * @see org.apache.tools.ant.DynamicAttribute#setDynamicAttribute(java.lang.String, java.lang.String)
+     * 
+     */
+    public void setDynamicAttribute(String name, String value) throws BuildException {
+      this._attributes.put(name, value);
+    }
+
+    /**
+     * Returns the attribute with the given name or <tt>defaultValue</tt> if the attribute has not been set.
+     * 
+     * @param name
+     *          the attribute name
+     * @param defaultValue
+     *          the default value
+     * @return the attribute value or defaultValie
+     */
+    public String getAttribute(String name, String defaultValue) {
+      return this._attributes.get(name, defaultValue);
     }
   }
 }
