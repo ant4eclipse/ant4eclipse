@@ -279,23 +279,22 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     // Resolve the absolute and relative classpaths
     ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
         false, true, getJdtClasspathContainerArguments());
-    ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-        true, true, getJdtClasspathContainerArguments());
+    // ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
+    // true, true, getJdtClasspathContainerArguments());
 
     // get the entries
     final File[] absoluteClasspathFiles = cpAbsoluteRuntime.getClasspathFiles();
-    final File[] relativeClasspathFiles = cpRelativeRuntime.getClasspathFiles();
+    // final File[] relativeClasspathFiles = cpRelativeRuntime.getClasspathFiles();
 
-    if (absoluteClasspathFiles.length != relativeClasspathFiles.length) {
-      // TODO NLS
-      throw new RuntimeException("number of absolute classpath entries (" + absoluteClasspathFiles.length + ")"
-          + "must match number of relative classpath entries (" + relativeClasspathFiles.length + ")");
-    }
+    // // TODO NLS
+    // throw new RuntimeException("number of absolute classpath entries (" + absoluteClasspathFiles.length + ")"
+    // + "must match number of relative classpath entries (" + relativeClasspathFiles.length + ")");
+    // }
 
     // reverse the classpath order if requested
     if (reverse) {
       Utilities.reverse(absoluteClasspathFiles);
-      Utilities.reverse(relativeClasspathFiles);
+      // Utilities.reverse(relativeClasspathFiles);
     }
 
     // invoke callback template for each classpath entry
@@ -308,11 +307,11 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
           // add absolute path
           properties.put("classpathEntry.absolute", absoluteClasspathFiles[index].getAbsolutePath());
 
-          // add relative path
-          properties.put("classpathEntry.relative", relativeClasspathFiles[index].getPath());
+          // // add relative path
+          // properties.put("classpathEntry.relative", relativeClasspathFiles[index].getPath());
 
           // add name (last part of the path)
-          properties.put("classpathEntry.name", relativeClasspathFiles[index].getName());
+          properties.put("classpathEntry.name", absoluteClasspathFiles[index].getName());
 
           // add informations about file system resource
           properties.put("classpathEntry.isExisting", Boolean.toString(absoluteClasspathFiles[index].exists()));
