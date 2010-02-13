@@ -11,12 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.nls.NLSMessage;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +29,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -46,6 +42,12 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>
@@ -501,6 +503,19 @@ public class Utilities {
   }
 
   /**
+   * Reverses the order of the elements in the specified array.
+   * 
+   * @param array
+   *          the array whose elements are to be reversed.
+   */
+  public static <T> void reverse(T[] array) {
+    if (array != null) {
+      final List<T> list = Arrays.asList(array);
+      Collections.reverse(list);
+    }
+  }
+
+  /**
    * <p>
    * Check if a String has text. More specifically, returns <code>true</code> if the string not <code>null<code>, it's <code>length is > 0</code>,
    * and it has at least one non-whitespace character.
@@ -696,7 +711,7 @@ public class Utilities {
    * 
    * @return The newly instantiated type. Not <code>null</code>.
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @SuppressWarnings( { "unchecked", "rawtypes" })
   public static final <T> T newInstance(String className, String arg) {
     Assure.notNull("className", className);
     Class<?> clazz = null;
