@@ -303,6 +303,10 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+
+          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values);
+
           final StringMap properties = values.getProperties();
           // add absolute path
           properties.put("classpathEntry.absolute", absoluteClasspathFiles[index].getAbsolutePath());
