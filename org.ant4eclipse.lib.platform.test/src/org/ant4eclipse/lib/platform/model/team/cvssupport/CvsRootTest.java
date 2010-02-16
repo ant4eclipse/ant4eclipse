@@ -27,6 +27,17 @@ public class CvsRootTest {
   }
 
   @Test
+  public void noUser() {
+    CvsRoot cvsRoot = new CvsRoot(":pserver:ant4eclipse.org:/cvsroot/ant4eclipse");
+    Assert.assertEquals("pserver", cvsRoot.getConnectionType());
+    Assert.assertFalse(cvsRoot.hasUser());
+    Assert.assertNull(cvsRoot.getUser());
+    Assert.assertNull(cvsRoot.getEncodedPassword());
+    Assert.assertEquals("ant4eclipse.org", cvsRoot.getHost());
+    Assert.assertEquals("/cvsroot/ant4eclipse", cvsRoot.getRepository());
+  }
+
+  @Test
   public void noPassword() {
 
     CvsRoot cvsRoot = new CvsRoot(":pserver:rob@ant4eclipse.org/cvsroot");

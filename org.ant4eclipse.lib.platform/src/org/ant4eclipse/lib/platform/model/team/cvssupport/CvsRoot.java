@@ -285,7 +285,11 @@ public final class CvsRoot implements Cloneable {
       if (separator == -1) {
         throw (new IllegalArgumentException());
       }
-      this._host = root.substring(0, separator);
+      if (root.charAt(separator - 1) == ':') {
+        this._host = root.substring(0, separator - 1);
+      } else {
+        this._host = root.substring(0, separator);
+      }
       this._repository = root.substring(separator);
     }
 
@@ -316,6 +320,7 @@ public final class CvsRoot implements Cloneable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + (this._connectionType == null ? 0 : this._connectionType.hashCode());
@@ -329,6 +334,7 @@ public final class CvsRoot implements Cloneable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
