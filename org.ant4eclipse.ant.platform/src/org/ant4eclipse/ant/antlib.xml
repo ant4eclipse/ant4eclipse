@@ -10,4 +10,5 @@
   <typedef name="getBuildOrder"            classname="org.ant4eclipse.ant.platform.GetBuildOrderTask" />
   <typedef name="getUsedProjects"          classname="org.ant4eclipse.ant.platform.GetUsedProjectsTask"/>
   <typedef name="executeLauncher"  	       classname="org.ant4eclipse.ant.platform.ExecuteLauncherTask"/>
+  <typedef name="executeTeamProjectSet"    classname="org.ant4eclipse.ant.platform.ExecuteTeamProjectSetTask"/>
 </antlib>

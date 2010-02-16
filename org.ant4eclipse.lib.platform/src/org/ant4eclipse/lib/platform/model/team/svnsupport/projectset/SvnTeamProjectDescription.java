@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.platform.model.team.svnsupport.projectset;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
 public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
@@ -71,6 +72,12 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public SvnTeamProjectSet getTeamProjectSet() {
     return this._teamProjectSet;
+  }
+
+  @Override
+  protected void addSpecificProperties(StringMap properties) {
+    properties.put("svn.revision", getRevision());
+    properties.put("svn.url", getUrl());
   }
 
   /**

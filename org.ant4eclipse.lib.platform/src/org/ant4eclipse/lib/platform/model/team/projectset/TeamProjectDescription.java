@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset;
 
+import org.ant4eclipse.lib.core.util.StringMap;
+
 /**
  * <p>
  * Implements a description of a project to be shared in a team. The description contains the name, the
@@ -28,5 +30,12 @@ public interface TeamProjectDescription {
    * @return Returns the name of the project.
    */
   String getProjectName();
+
+  /**
+   * Returns the informations of this TeamProjectDescription as Properties.
+   * 
+   * @return
+   */
+  StringMap getAsProperties();
 
 }

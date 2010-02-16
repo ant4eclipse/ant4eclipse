@@ -12,9 +12,10 @@
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 
-public class AbstractTeamProjectDescription implements TeamProjectDescription {
+public abstract class AbstractTeamProjectDescription implements TeamProjectDescription {
   /** the name of the project */
   private String _projectname;
 
@@ -29,6 +30,27 @@ public class AbstractTeamProjectDescription implements TeamProjectDescription {
     Assure.notNull("projectname", projectname);
     this._projectname = projectname;
   }
+
+  public StringMap getAsProperties() {
+    // Create properties object
+    StringMap properties = new StringMap();
+
+    // add project name
+    properties.put("projectName", this._projectname);
+
+    // add provider-specific properties
+    addSpecificProperties(properties);
+
+    // return properties
+    return properties;
+  }
+
+  /**
+   * Add (provider-)specific properties to the given StringMap
+   * 
+   * @param properties
+   */
+  protected abstract void addSpecificProperties(StringMap properties);
 
   /**
    * {@inheritDoc}

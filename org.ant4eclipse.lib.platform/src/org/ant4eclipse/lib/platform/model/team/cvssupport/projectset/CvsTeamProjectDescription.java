@@ -11,8 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.projectset;
 
+import static org.ant4eclipse.lib.core.Assure.notNull;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
 import org.ant4eclipse.lib.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
@@ -158,6 +161,31 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
     this._cvsPwd = cvsPwd;
   }
 
+  @Override
+  protected void addSpecificProperties(StringMap properties) {
+    notNull("properties", properties);
+
+    // add basic properties
+    properties.put("cvs.nameInRepository", this._nameInRepository);
+    properties.put("cvs.isHead", Boolean.toString(isHead()));
+    properties.put("cvs.hasBranchOrVersionTag", Boolean.toString(hasBranchOrVersionTag()));
+    if (hasBranchOrVersionTag()) {
+      properties.put("cvs.branchOrTag", getBranchOrVersionTag());
+    }
+
+    // add cvsRoot as properties
+    CvsRoot cvsRoot = getCvsRoot();
+    properties.put("cvs.cvsRoot", cvsRoot.toString());
+    properties.put("cvs.cvsRoot.connectionType", cvsRoot.getConnectionType());
+    properties.put("cvs.cvsRoot.host", cvsRoot.getHost());
+    properties.put("cvs.cvsRoot.repository", cvsRoot.getRepository());
+    final boolean hasUser = cvsRoot.hasUser();
+    properties.put("cvs.cvsRoot.hasUser", Boolean.toString(hasUser));
+    if (hasUser) {
+      properties.put("cvs.cvsRoot.user", cvsRoot.getUser());
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -184,6 +212,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
@@ -210,6 +239,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int hashCode = super.hashCode();
     hashCode = 31 * hashCode + (this._cvsRoot == null ? 0 : this._cvsRoot.hashCode());
