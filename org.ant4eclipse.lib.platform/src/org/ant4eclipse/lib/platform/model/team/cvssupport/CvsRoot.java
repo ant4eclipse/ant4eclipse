@@ -285,6 +285,8 @@ public final class CvsRoot implements Cloneable {
       if (separator == -1) {
         throw (new IllegalArgumentException());
       }
+
+      // handle empty port (both host:/repositorypath and host/repositorypath are allowed)
       if (root.charAt(separator - 1) == ':') {
         this._host = root.substring(0, separator - 1);
       } else {
