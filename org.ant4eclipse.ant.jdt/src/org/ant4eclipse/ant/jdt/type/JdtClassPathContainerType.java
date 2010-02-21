@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
@@ -50,6 +48,8 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    */
   public JdtClassPathContainerType(Project project) {
     super(project);
+
+    this._resources = new Union();
   }
 
   /**
@@ -80,9 +80,6 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    *          resource collection to add.
    */
   public void add(ResourceCollection rc) {
-    if (this._resources == null) {
-      this._resources = new Union();
-    }
     this._resources.add(rc);
   }
 
@@ -94,7 +91,8 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
     // TODO: validate
 
     // fetch the ClassPathElementsRegistry
-    ClassPathElementsRegistry variablesRegistry = ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
+    ClassPathElementsRegistry variablesRegistry = ServiceRegistry.instance()
+        .getService(ClassPathElementsRegistry.class);
 
     // fetch the provided files
     List<File> files = new LinkedList<File>();
