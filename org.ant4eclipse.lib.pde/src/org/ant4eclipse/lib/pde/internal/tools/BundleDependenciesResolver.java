@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
@@ -29,6 +28,7 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -95,16 +95,13 @@ public class BundleDependenciesResolver {
 
     Assure.notNull("description", description);
 
+    // A4ELogging.info("resolveBundleClasspath(%s)", TargetPlatformImpl.getBundleInfo(description));
+    // new RuntimeException().printStackTrace();
+
     // Step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
       throw new UnresolvedBundleException(description);
     }
-
-    // ImportPackageSpecification[] importPackageSpecifications = bundleDescription.getImportPackages();
-    // for (ImportPackageSpecification importPackageSpecification : importPackageSpecifications) {
-    // BaseDescription baseDescription = importPackageSpecification.getSupplier();
-    // A4ELogging.info(baseDescription.getSupplier().toString());
-    // }
 
     // Step 2: add all packages that are imported...
     for (ExportPackageDescription exportPackageDescription : description.getResolvedImports()) {
@@ -242,10 +239,33 @@ public class BundleDependenciesResolver {
    * @return
    */
   private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription) {
+
+    // TODO: AE-171
+    // A4ELogging
+    // .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
+
+    return getReexportedBundles(bundleDescription, new HashSet<BundleDescription>());
+  }
+
+  /**
+   * @param bundleDescription
+   * @return
+   */
+  private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription,
+      Set<BundleDescription> resolvedDescriptions) {
+
     Assure.notNull("bundleDescription", bundleDescription);
 
-    A4ELogging
-        .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
+    // return if bundle already is resolved
+    if (resolvedDescriptions.contains(bundleDescription)) {
+      return new BundleDescription[] {};
+    } else {
+      resolvedDescriptions.add(bundleDescription);
+    }
+
+    // TODO: AE-171
+    // A4ELogging.info("-> Resolving reexported bundles for bundle '%s'", TargetPlatformImpl
+    // .getBundleInfo(bundleDescription));
 
     if (!bundleDescription.isResolved()) {
       String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
@@ -272,7 +292,7 @@ public class BundleDependenciesResolver {
           resultSet.add(reexportedBundle);
 
           // add all re-exported bundle description recursively
-          for (BundleDescription rereexportedBundle : getReexportedBundles(reexportedBundle)) {
+          for (BundleDescription rereexportedBundle : getReexportedBundles(reexportedBundle, resolvedDescriptions)) {
             resultSet.add(rereexportedBundle);
           }
 
@@ -290,7 +310,7 @@ public class BundleDependenciesResolver {
       resultSet.add(fragment);
 
       // add all re-exported bundles
-      for (BundleDescription reexportedBundle : getReexportedBundles(fragment)) {
+      for (BundleDescription reexportedBundle : getReexportedBundles(fragment, resolvedDescriptions)) {
         resultSet.add(reexportedBundle);
       }
     }
