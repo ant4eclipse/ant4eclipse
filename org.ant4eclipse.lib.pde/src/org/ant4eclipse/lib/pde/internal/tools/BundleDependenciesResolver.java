@@ -244,10 +244,8 @@ public class BundleDependenciesResolver {
   private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription) {
     Assure.notNull("bundleDescription", bundleDescription);
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl
-          .getBundleInfo(bundleDescription));
-    }
+    A4ELogging
+        .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
 
     if (!bundleDescription.isResolved()) {
       String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
