@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
@@ -28,7 +29,6 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -244,7 +244,7 @@ public class BundleDependenciesResolver {
     // A4ELogging
     // .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
 
-    return getReexportedBundles(bundleDescription, new HashSet<BundleDescription>());
+    return getReexportedBundles(bundleDescription, new LinkedList<BundleDescription>());
   }
 
   /**
@@ -252,12 +252,33 @@ public class BundleDependenciesResolver {
    * @return
    */
   private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription,
-      Set<BundleDescription> resolvedDescriptions) {
+      List<BundleDescription> resolvedDescriptions) {
 
     Assure.notNull("bundleDescription", bundleDescription);
 
     // return if bundle already is resolved
     if (resolvedDescriptions.contains(bundleDescription)) {
+
+      // compute cycle list...
+      List<BundleDescription> cycleList = resolvedDescriptions.subList(resolvedDescriptions.indexOf(bundleDescription),
+          resolvedDescriptions.size());
+
+      // create the cycle list...
+      StringBuilder builder = new StringBuilder();
+      for (BundleDescription description : cycleList) {
+        builder.append(description.getSymbolicName() + "_" + description.getVersion());
+        builder.append(" -> ");
+      }
+      builder.append(bundleDescription.getSymbolicName() + "_" + bundleDescription.getVersion());
+
+      // create warning...
+      A4ELogging.warn("****************************");
+      A4ELogging
+          .warn(
+              "Attention! The specified bundles contain cyclic dependencies via requiredBundle/reexport definitions (e.g. '%s').",
+              builder.toString());
+      A4ELogging.warn("****************************");
+
       return new BundleDescription[] {};
     } else {
       resolvedDescriptions.add(bundleDescription);
