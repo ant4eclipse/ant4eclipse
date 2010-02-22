@@ -114,7 +114,7 @@ public class BundleDependenciesResolver {
       addRequiredBundle(requiredBundle);
 
       // add all re-exported bundles also...
-      for (BundleDescription reexportedBundle : getReexportedBundles(requiredBundle)) {
+      for (BundleDescription reexportedBundle : getReexportedBundles(description, requiredBundle)) {
         addRequiredBundle(reexportedBundle);
       }
     }
@@ -238,13 +238,16 @@ public class BundleDependenciesResolver {
    * @param bundleDescription
    * @return
    */
-  private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription) {
+  private BundleDescription[] getReexportedBundles(BundleDescription root, BundleDescription bundleDescription) {
 
     // TODO: AE-171
     // A4ELogging
     // .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
 
-    return getReexportedBundles(bundleDescription, new LinkedList<BundleDescription>());
+    List<BundleDescription> resolvedDescriptions = new LinkedList<BundleDescription>();
+    resolvedDescriptions.add(root);
+
+    return getReexportedBundles(bundleDescription, resolvedDescriptions);
   }
 
   /**
@@ -335,6 +338,8 @@ public class BundleDependenciesResolver {
         resultSet.add(reexportedBundle);
       }
     }
+
+    resolvedDescriptions.remove(bundleDescription);
 
     // return the result
     return resultSet.toArray(new BundleDescription[resultSet.size()]);
