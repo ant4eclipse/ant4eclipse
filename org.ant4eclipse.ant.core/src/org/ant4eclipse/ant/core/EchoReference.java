@@ -57,7 +57,7 @@ public class EchoReference extends Task {
   public void execute() throws BuildException {
     if (this._refId != null) {
       Object reference = getProject().getReference(this._refId);
-      A4ELogging.debug("Reference '" + this._refId + "': " + reference != null ? reference.toString() : "null");
+      A4ELogging.debug("Reference '%s': %s", this._refId, reference != null ? reference.toString() : "null");
     }
   }
 }

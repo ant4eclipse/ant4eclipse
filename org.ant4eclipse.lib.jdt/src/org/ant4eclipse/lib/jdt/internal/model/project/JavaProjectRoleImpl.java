@@ -218,7 +218,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
 
       public String resolve(RawClasspathEntry entry) {
 
-        A4ELogging.debug("Trying to resolve RawClasspathEntry '" + entry + "' as sourcefolder '" + sourceFolder + "'");
+        A4ELogging.debug("Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder);
 
         // try to retrieve the output folder for a 'normal' source folder
         if ((entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && normalizedSourceFolder.equals(entry.getPath())) {
@@ -226,8 +226,8 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
         }
 
         // try to retrieve the output folder for a 'linked' source folder
-        A4ELogging.debug("Trying to resolve project child '" + getEclipseProject().getChild(entry.getPath())
-            + "' as sourcefolder '" + sourceFolder + "'");
+        A4ELogging.debug("Trying to resolve project child '%s' as sourcefolder '%s'.", getEclipseProject().getChild(
+            entry.getPath()), sourceFolder);
         // if (getEclipseProject().hasChild(entry.getPath())) {
         if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(), EclipseProject.PathStyle.ABSOLUTE)
             .getPath())) {

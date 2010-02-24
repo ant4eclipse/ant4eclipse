@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.container;
 
-
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
@@ -59,8 +58,8 @@ public class JreContainerResolver implements ClasspathContainerResolver {
       if (javaRuntime == null) {
         // TODO
         javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
-        A4ELogging.warn("Could not find JRE for " + path + ". Using default JRE (Version: "
-            + javaRuntime.getJavaVersion() + ", Location: " + javaRuntime.getLocation() + ") !");
+        A4ELogging.warn("Could not find JRE for %s. Using default JRE (Version: %s, Location: %s).", path, javaRuntime
+            .getJavaVersion(), javaRuntime.getLocation());
 
         // the default runtime has been chosen since there's no other possibility.
         // registering the runtime prevents successive fallbacks and annoying redundant warnings.

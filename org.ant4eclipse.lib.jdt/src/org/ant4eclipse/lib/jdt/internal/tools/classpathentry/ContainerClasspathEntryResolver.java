@@ -78,11 +78,11 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
 
     // log
     if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("ContainerClasspathEntryResolver.resolve(" + entry + ", " + context + ")");
+      A4ELogging.debug("ContainerClasspathEntryResolver.resolve(%s, %s)", entry, context);
     }
 
     if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("_containerresolver: " + this._containerresolver);
+      A4ELogging.debug("_containerresolver: %s", this._containerresolver);
     }
 
     // set 'handled' to false
@@ -95,13 +95,13 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
       ClasspathContainerResolver classpathContainerResolver = iterator.next();
 
       if (A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Try " + classpathContainerResolver);
+        A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Try %s", classpathContainerResolver);
       }
 
       if (classpathContainerResolver.canResolveContainer(entry)) {
 
         if (A4ELogging.isDebuggingEnabled()) {
-          A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Use " + classpathContainerResolver);
+          A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Use %s", classpathContainerResolver);
         }
 
         handled = true;

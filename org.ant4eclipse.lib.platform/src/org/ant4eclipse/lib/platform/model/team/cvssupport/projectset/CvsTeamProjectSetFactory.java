@@ -68,8 +68,10 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
       // it might happen that a project has more than one CVS tag, thus more tokens. Eclipse seems to
       // use *always* the first, regardless whether there are more tags specified.
       // (See org.eclipse.team.internal.ccvs.ui.CVSProjectSetSerializer#addToWorkspace)
-      A4ELogging.warn("Unusual reference in psf file. Expected to have five tokens, but have: " + tokensCount
-          + " in reference '" + reference + "'. Ignoring extra tokens.");
+      A4ELogging
+          .warn(
+              "Unusual reference in psf file. Expected to have five tokens, but have: %s in reference '%s'. Ignoring extra tokens.",
+              tokensCount, reference);
     }
 
     String[] token = new String[tokensCount];
