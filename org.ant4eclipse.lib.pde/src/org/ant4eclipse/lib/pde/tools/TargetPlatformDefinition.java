@@ -64,6 +64,6 @@ public class TargetPlatformDefinition {
    * @return all the locations defined in this target platform location.
    */
   public final File[] getLocations() {
-    return this._locations.toArray(new File[0]);
+    return this._locations.toArray(new File[this._locations.size()]);
   }
 }
