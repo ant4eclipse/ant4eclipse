@@ -24,6 +24,13 @@ import org.ant4eclipse.lib.core.nls.NLSMessage;
  */
 public class JdtExceptionCode extends ExceptionCode {
 
+  @NLSMessage("\n\nNo 'jdtClassPathLibrary' defined for library entry '%1$s'.\n"
+      + "To resolve this problem, please define a 'jdtClassPathLibrary' element inside your ant build file:\n\n"
+      + "<ant4eclipse:jdtClassPathLibrary name=\"%1$s\">\n" + "  <fileset dir=\"...\"/>\n"
+      + "</ant4eclipse:jdtClassPathLibrary >\n" + "\n"
+      + "See http://www.ant4eclipse.org/node/54 for further information.")
+  public static JdtExceptionCode CP_CONTAINER_NOT_HANDLED = null;
+
   @NLSMessage("The specified directory '%s' doesn't point to a valid java runtime environment.")
   public static JdtExceptionCode INVALID_JRE_DIRECTORY;
 

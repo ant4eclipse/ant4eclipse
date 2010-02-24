@@ -14,10 +14,12 @@ package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
@@ -110,8 +112,8 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
 
     // throw exception if not handled
     if (!handled) {
-      // TODO
-      throw new RuntimeException("Container '" + entry + "' not handled!");
+      throw new Ant4EclipseException(JdtExceptionCode.CP_CONTAINER_NOT_HANDLED, entry.getPath(), context
+          .getCurrentProject().getSpecifiedName());
     }
   }
 
