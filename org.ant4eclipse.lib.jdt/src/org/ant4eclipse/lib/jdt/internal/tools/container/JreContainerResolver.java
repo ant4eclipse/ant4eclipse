@@ -49,6 +49,11 @@ public class JreContainerResolver implements ClasspathContainerResolver {
 
     String path = classpathEntry.getPath();
 
+    // issue AE-116: re-replace '%' with ' '
+    if (path.contains("%")) {
+      path = path.replace('%', ' ');
+    }
+
     JavaRuntime javaRuntime = null;
     if (path.equals(ContainerTypes.JRE_CONTAINER)) {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
