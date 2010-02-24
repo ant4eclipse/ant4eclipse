@@ -30,6 +30,37 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   private TestDirectory _testWorkspace;
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getError() {
+    try {
+      return super.getError();
+    } catch (NullPointerException ex) {
+      /** @see #getOutput() */
+      return "";
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getOutput() {
+    // we're catching the 'NullPointerException' here as the original method calls the
+    // helper method 'cleanedBuffer' in order to alter the buffer. unfortunately the
+    // buffer itself get's only initialised shortly before the first target is being
+    // executed, so this method causes this error and it's only purpose is the handling
+    // of cr characters. if we wouldn't catch this, a failure in one of these methods
+    // would cover other errors.
+    try {
+      return super.getOutput();
+    } catch (NullPointerException ex) {
+      return "";
+    }
+  }
+
+  /**
    * Creates the Test Environment before execution of a test case
    */
   @Override
