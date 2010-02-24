@@ -84,7 +84,7 @@
       <path id="path.ant4eclipse">
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
-      	<path refid="path.cobertura" />
+        <path refid="path.cobertura" />
         <path location="@{dest}/org.ant4eclipse.jar"/>
         <path path="@{dest}/testcode"/>
       </path>
@@ -189,20 +189,10 @@
   </target>
   
   <target name="copy.sources">
-		<copy todir="${dest.cobertura}/sources">
-			<jdtProjectFileSet workspaceDirectory="${basedir}" projectname="${executeProjectSet.project.name}"
-				includeOutputFolders="false" includeSourceFolders="true"/>
-		</copy>
-<!--  	
-    <executeJdtProject >
-      <forEachSourceDirectory>
-          <fileset dir="${executeJdtProject.source.directory}">
-            <exclude name="**/*.java" />
-          </fileset>
-        </copy>
-      </forEachSourceDirectory>
-    </executeJdtProject>
--->    
+    <copy todir="${dest.cobertura}/sources">
+      <jdtProjectFileSet workspaceDirectory="${basedir}" projectname="${executeProjectSet.project.name}"
+        includeOutputFolders="false" includeSourceFolders="true"/>
+    </copy>
   </target>
   
   <target name="prepare" depends="clean">
