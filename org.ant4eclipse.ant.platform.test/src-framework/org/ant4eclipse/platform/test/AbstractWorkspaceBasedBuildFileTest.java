@@ -15,10 +15,13 @@ import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.apache.tools.ant.BuildFileTest;
+import org.apache.tools.ant.Project;
 
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import junit.framework.ComparisonFailure;
 
 /**
  * Baseclass for all buildfile-based tests in the platform layer
@@ -101,6 +104,8 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   protected void runTest() throws Throwable {
     try {
       super.runTest();
+    } catch (ComparisonFailure f) {
+      throw f;
     } catch (Throwable t) {
       System.err.println(getName() + " throws exception (" + t + "). Output:");
       System.err.println(getError());
@@ -121,11 +126,29 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    * @see {@link #configureProject(String)}
    */
   protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
+    setupBuildFile(unqualifiedBuildFileName, Project.MSG_DEBUG);
+  }
+
+  /**
+   * Copies the given build.xml-file from the classpath to the testenvironment's root directory and configures the ant
+   * project
+   * 
+   * <p>
+   * This methods sets the build project property <tt>workspaceDir</tt> to the workspace directory
+   * 
+   * @param unqualifiedBuildFileName
+   *          the unqualified name of the build file, that must be accessible from classpath
+   * @param priority
+   *          the ant priority used for the logs.
+   * @throws Exception
+   * @see {@link #configureProject(String)}
+   */
+  protected void setupBuildFile(String unqualifiedBuildFileName, int priority) throws Exception {
     String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
     StringBuffer buffer = Utilities.readTextContent("/" + qualifiedBuildFileName, Utilities.ENCODING, true);
     String buildFileContent = buffer.toString();
     File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
-    configureProject(buildFile.getAbsolutePath());
+    configureProject(buildFile.getAbsolutePath(), priority);
     getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
   }
 
