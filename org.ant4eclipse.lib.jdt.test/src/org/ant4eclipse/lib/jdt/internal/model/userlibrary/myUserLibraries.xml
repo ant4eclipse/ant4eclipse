@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<eclipse-userlibraries version="2">
+    <library name="J2EE Library" systemlibrary="false">
+        <archive path="../server/default/lib/servlet-api.jar"/>
+        <archive path="../server/default/lib/jsp-api.jar"/>
+        <archive path="../server/default/lib/activation.jar"/>
+        <archive path="../server/default/lib/mail.jar"/>
+    </library>
+</eclipse-userlibraries>

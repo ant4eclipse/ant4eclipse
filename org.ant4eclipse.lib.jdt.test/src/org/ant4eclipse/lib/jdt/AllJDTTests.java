@@ -11,11 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt;
 
+import org.ant4eclipse.lib.jdt.internal.model.userlibrary.UserLibrariesFileParserImplTest;
 import org.ant4eclipse.lib.jdt.tools.BuildOrderResolverTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ BuildOrderResolverTest.class })
+@Suite.SuiteClasses( { BuildOrderResolverTest.class, UserLibrariesFileParserImplTest.class })
 public class AllJDTTests {
 } /* ENDCLASS */

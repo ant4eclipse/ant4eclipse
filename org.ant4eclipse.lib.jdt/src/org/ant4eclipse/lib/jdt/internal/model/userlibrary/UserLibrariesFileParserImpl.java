@@ -11,13 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 
+import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
+
+import java.io.File;
 
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;
-
-import java.io.File;
 
 /**
  * Parsing class used to process an eclipse user library configuration file.
@@ -31,6 +32,8 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
    */
   public UserLibraries parseUserLibrariesFile(File configuration) {
     UserLibrariesImpl userlibs = new UserLibrariesImpl();
+
+    trace("Parsing UserLibraries configuration file '%s'", configuration);
 
     XQueryHandler queryhandler2 = new XQueryHandler();
 
