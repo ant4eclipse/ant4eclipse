@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <eclipse-userlibraries version="2">
     <library name="J2EE Library" systemlibrary="false">
-        <archive path="../server/default/lib/servlet-api.jar"/>
-        <archive path="../server/default/lib/jsp-api.jar"/>
-        <archive path="../server/default/lib/activation.jar"/>
-        <archive path="../server/default/lib/mail.jar"/>
+        <archive path="src/org/ant4eclipse/lib/jdt/internal/model/userlibrary/library1.jar"/>
+        <archive path="src/org/ant4eclipse/lib/jdt/internal/model/userlibrary/library2.jar"/>
+        <archive path="src/org/ant4eclipse/lib/jdt/internal/model/userlibrary/library3.jar"/>
+        <archive path="src/org/ant4eclipse/lib/jdt/internal/model/userlibrary/library4.jar"/>
     </library>
 </eclipse-userlibraries>
+

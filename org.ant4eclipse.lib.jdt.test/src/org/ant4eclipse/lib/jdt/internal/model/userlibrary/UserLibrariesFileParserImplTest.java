@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
+import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrary;
 import org.ant4eclipse.testframework.AbstractTestDirectoryBasedTest;
@@ -27,7 +28,12 @@ public class UserLibrariesFileParserImplTest extends AbstractTestDirectoryBasedT
     assertTrue(userLibraries.hasLibrary("J2EE Library"));
     final UserLibrary library = userLibraries.getLibrary("J2EE Library");
     assertNotNull(library);
+    assertNotNull(library.getArchives());
     assertEquals(4, library.getArchives().length);
+    File expectedPath = new File("src/org/ant4eclipse/lib/jdt/internal/model/userlibrary/library1.jar");
+    final Archive firstLibrary = library.getArchives()[0];
+    assertNotNull(firstLibrary);
+    assertEquals(expectedPath, firstLibrary.getPath());
 
   }
 }
