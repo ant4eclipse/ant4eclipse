@@ -1,0 +1,61 @@
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>XMLListener AntUnit Listener</title>
+  </head>
+
+  <body>
+    <h2><a name="xmllistener">Failure AntUnit Listener</a></h2>
+
+    <h3>Description</h3>
+
+    <p>Writes reports similar to the &quot;failure&quot; JUnit formatter.</p><p>This AntUnitListener creates a new buildfile with a target for each failed test target in the AntUnit run. The generated target calls the failed target (with setUp and tearDown if present in the called project). <br></p><p>This is intended for rerunning just failed tests.<br></p>
+
+    
+
+    <h3>Parameters</h3>
+    <table border="1" cellpadding="2" cellspacing="0">
+      <tr>
+        <td valign="top"><b>Attribute</b></td>
+        <td valign="top"><b>Description</b></td>
+        <td align="center" valign="top"><b>Required</b></td>
+      </tr>
+      <tr>
+        <td valign="top">file</td>
+        <td valign="top">Where to write the generated buildfile.<br></td>
+        <td align="center">Yes.</td>
+      </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+<pre> <br>    &lt;au:antunit&gt; 
+      &lt;fileset dir=&quot;${tests}&quot; includes=&quot;*.xml&quot;/&gt; 
+      &lt;au:failurelistener file=&quot;${build.dir}/failed-tests/failed.xml&quot;/&gt; 
+    &lt;/au:antunit&gt; <br>
+</pre>
+
+    <p>Runs AntUnit on all XML files in the directory
+    <code>${tests}</code> and collecting all failed tests. If there was a failure the file <code>${build.dir}/failed-tests/failed.xml</code> is created and has a <em>textXXX </em>target for each failed test. Additionally it has a default target <em>antunit</em> which runs all these failed tests.<br> </p>
+
+  </body>
+</html>

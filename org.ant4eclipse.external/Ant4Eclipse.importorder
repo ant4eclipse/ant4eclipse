@@ -1,0 +1,22 @@
+#Organize Import Order
+#Fri Jun 26 07:25:30 GMT+01:00 2009
+19=java
+18=javax
+17=org
+16=com
+15=org.ant4eclipse.cdt
+14=org.ant4eclipse.cdt.test
+13=org.ant4eclipse.platform
+12=org.ant4eclipse.platform.test
+11=org.ant4eclipse.pde
+10=org.ant4eclipse.pde.test
+9=org.ant4eclipse.jdt
+8=org.ant4eclipse.jdt.ecj
+7=org.ant4eclipse.jdt.test
+6=org.ant4eclipse.integrationtest.pde
+5=org.ant4eclipse.external
+4=org.ant4eclipse.external.test
+3=org.ant4eclipse.build
+2=org.ant4eclipse.build.tools
+1=org.ant4eclipse.core
+0=org.ant4eclipse.core.test

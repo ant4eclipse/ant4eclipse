@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-framework"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.ant.core"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.test"/>
+	<classpathentry exported="true" kind="lib" path="/org.ant4eclipse.external/libs/ant-antunit/ant-testutil.jar" sourcepath="/org.ant4eclipse.external/libs/ant-antunit/ant-testutil-src.zip"/>
+	<classpathentry exported="true" kind="lib" path="/org.ant4eclipse.external/libs/ant-antunit/ant-launcher-1.7.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

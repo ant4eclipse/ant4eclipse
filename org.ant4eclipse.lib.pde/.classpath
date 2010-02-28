@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/org.ant4eclipse.lib.jdt"/>
+	<classpathentry exported="true" kind="lib" path="/org.ant4eclipse.external/libs/equinox/org.eclipse.osgi_3.5.0.v20090520.jar" sourcepath="/org.ant4eclipse.external/libs/equinox/org.eclipse.osgi.source_3.5.0.v20090520.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

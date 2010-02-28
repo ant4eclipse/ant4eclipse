@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<antlib>
+  <typedef name="getPythonSourcePath" classname="org.ant4eclipse.ant.pydt.GetPythonSourcePathTask" />
+  <typedef name="getPythonPath"       classname="org.ant4eclipse.ant.pydt.GetPythonPathTask" />
+  <typedef name="pythonDoc"           classname="org.ant4eclipse.ant.pydt.PythonDocumentationTask" />
+  <typedef name="pythonContainer"     classname="org.ant4eclipse.ant.pydt.type.PythonContainer" />
+</antlib>
