@@ -68,9 +68,16 @@
     <element name="post-compile"
              optional="true"
              description="Post-process the generated files from compilation, for example to do bytecode enhancement on Java classes." />
+  	<element name="post-copy-resources"
+  					 optional="true"
+  					 description="Post-process a source folder after resource have been copied to classes folder" />
+  	<element name="postprocess-outputDirectory"
+  					 optional="true"
+  					 description="Post-process an output folder after sources have been compiled resources have been copied. " />
     <element name="finish"
              optional="true"
              description="Finish the build process. This can be used to take further actions, like packaging the project" />
+  	
     <sequential>
 
       <echo>
@@ -167,9 +174,17 @@
               <exclude name="**/*.java" />
             </fileset>
           </copy>
+        	
+        	<!-- Invoke 'post-copy-resources' template to allow customized processing -->
+        	<post-copy-resources />
         </ant4eclipse:forEachSourceDirectory>
       	
-      	<!-- Step 7: Finish build proecess -->
+      	<!-- Step 7: Post-Process output directories -->
+      	<ant4eclipse:forEachOutputDirectory>
+      		<postprocess-outputDirectory />
+      	</ant4eclipse:forEachOutputDirectory>
+      	
+      	<!-- Step 8: Finish build process -->
         <ant4eclipse:forProject>
         	<!-- Invoke 'finish' template -->
         	<finish/>
