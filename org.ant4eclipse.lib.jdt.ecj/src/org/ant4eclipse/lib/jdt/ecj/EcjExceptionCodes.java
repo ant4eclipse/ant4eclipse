@@ -54,6 +54,11 @@ public class EcjExceptionCodes extends ExceptionCode {
   @NLSMessage("The javac source path attibute is not supported by the JDTCompilerAdapter.")
   public static ExceptionCode     JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION;
 
+  @NLSMessage("No destination path has been set. You must either set a destination path using the"
+      + "'destdir' attribute of the 'javac' task or you must reference a 'EcjAdditionalCompilerArguments' object"
+      + "(e.g. from executeJdtProject)")
+  public static ExceptionCode     NO_DEST_PATH_SET;
+
   static {
     NLS.initialize(EcjExceptionCodes.class);
   }

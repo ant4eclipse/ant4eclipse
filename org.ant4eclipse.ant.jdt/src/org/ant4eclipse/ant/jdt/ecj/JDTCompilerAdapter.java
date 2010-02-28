@@ -196,6 +196,10 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       File destinationFolder = compilerArguments != null ? compilerArguments.getOutputFolder(sourceFolder)
           : defaultDestinationFolder;
 
+      if (destinationFolder == null) {
+        throw new Ant4EclipseException(EcjExceptionCodes.NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT);
+      }
+
       // add the new source file
       sourceFiles.add(SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder,
           getDefaultEncoding()));
