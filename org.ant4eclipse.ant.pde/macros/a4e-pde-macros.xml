@@ -30,6 +30,7 @@
     <attribute name="buildSourceJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="newBundleVersion" default="" />
+  	<attribute name="clean" default="true" />
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -142,11 +143,8 @@
                                            value="@{targetPlatformId}" />
 
             <!-- Step 6.1: Clean all output directories -->
-            <ant4eclipse:forEachOutputDirectory>
-              <echo>Scrubbing directory '${buildPlugin.output.directory}'</echo>
-              <delete dir="${buildPlugin.output.directory}"
-                      quiet="true" />
-              <mkdir dir="${buildPlugin.output.directory}" />
+            <ant4eclipse:forEachOutputDirectory if="@{clean}">
+            	<scrub-directory dir="${buildPlugin.output.directory}" />
             </ant4eclipse:forEachOutputDirectory>
 
             <!-- Step 6.2: Compile the sources -->
@@ -714,6 +712,7 @@
     <attribute name="packagePluginsAsJar" default="true" />
     <attribute name="packagePluginSourcesAsJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
+  	<attribute name="cleanPluginBuild" default="true" />
     <sequential>
 
       <!-- executes the defined feature -->
@@ -755,7 +754,8 @@
                        destination="@{destination}"
                        packageAsJar="@{packagePluginsAsJar}"
                        buildSourceJar="@{packagePluginSourcesAsJar}"
-                       defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" />
+                       defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" 
+          			   clean="@{cleanPluginBuild}"/>
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3.2: Copy plug-ins  -->
