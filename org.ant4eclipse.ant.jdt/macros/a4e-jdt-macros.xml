@@ -130,7 +130,7 @@
           <echo>  - output directories -> ${buildJdtProject.default.output.directory}</echo>
           <echo>  - bootclasspath      -> ${buildJdtProject.boot.classpath}</echo>
           <echo>  - classpath          -> ${buildJdtProject.classpath.absolute.compiletime}</echo>
-          <javac destdir="${buildJdtProject.default.output.directory}"
+          <javac 
                  compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter"
           			 source="@{sourceLevel}" target="@{targetLevel}">
             <!-- let ejc read compiler settings from the project's '.settings' directory -->
@@ -139,7 +139,10 @@
 
           	<!-- Set default options if no project specific settings have been made -->
           	<compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}"
-          	            compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" /> 
+          	            compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" />
+          	
+          	<!-- Set Compiler Arguments from 'executeJdtProject' task (source folders, access restrictions) -->
+          	<compilerarg value="compiler.args.refid=buildJdtProject.compiler.args" compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" />
           	
             <!-- set the source folders that are passed in from 'fromProject' -->
             <src refid="buildJdtProject.source.directories.path" />
