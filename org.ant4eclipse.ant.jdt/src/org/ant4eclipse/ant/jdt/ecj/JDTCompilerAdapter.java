@@ -196,6 +196,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       File destinationFolder = compilerArguments != null ? compilerArguments.getOutputFolder(sourceFolder)
           : defaultDestinationFolder;
 
+      // make sure a destination folder is set
       if (destinationFolder == null) {
         throw new Ant4EclipseException(EcjExceptionCodes.NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT);
       }
