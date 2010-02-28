@@ -71,7 +71,7 @@
   	<element name="post-copy-resources"
   					 optional="true"
   					 description="Post-process a source folder after resource have been copied to classes folder" />
-  	<element name="postprocess-outputDirectory"
+  	<element name="postprocess-output-directory"
   					 optional="true"
   					 description="Post-process an output folder after sources have been compiled resources have been copied. " />
     <element name="finish"
@@ -181,7 +181,7 @@
       	
       	<!-- Step 7: Post-Process output directories -->
       	<ant4eclipse:forEachOutputDirectory>
-      		<postprocess-outputDirectory />
+      		<postprocess-output-directory />
       	</ant4eclipse:forEachOutputDirectory>
       	
       	<!-- Step 8: Finish build process -->
