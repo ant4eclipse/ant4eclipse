@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
-
-
 import org.ant4eclipse.ant.core.FileListHelper;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
@@ -45,6 +42,7 @@ import org.osgi.framework.Version;
 
 import java.io.File;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * <p>
@@ -218,6 +216,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   @Override
   public void doExecute() {
 
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("Executing feature");
+    }
+
     // set a default version if feature version is not set
     if (this._featureId != null && this._featureVersion == null) {
       this._featureVersion = Version.emptyVersion;
@@ -226,8 +228,21 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     // resolve the feature
     this._resolvedFeature = resolveFeature();
 
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("Resolved feature is...");
+      List<Pair<Plugin, BundleDescription>> list = this._resolvedFeature.getPluginToBundleDescptionList();
+      for (Pair<Plugin, BundleDescription> pair : list) {
+        A4ELogging.debug("Resolved plug-in '%s (%s)' to bundle '%s (%s)'.", pair.getFirst().getId(), pair.getFirst()
+            .getVersion(), pair.getSecond().getSymbolicName(), pair.getSecond().getVersion());
+      }
+    }
+
     // extract the resolved bundle versions
     this._resolvedBundleVersions = extractBundleVersions();
+
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("Resolved bundle versions: '%s'", this._resolvedBundleVersions);
+    }
 
     // execute scoped macro definitions
     for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
@@ -282,6 +297,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * @param macroDef
    */
   private void executePluginScopedMacroDef(MacroDef macroDef) {
+
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("executePluginScopedMacroDef");
+    }
 
     for (final Pair<Plugin, BundleDescription> pluginAndBundleDescription : this._resolvedFeature
         .getPluginToBundleDescptionList()) {
@@ -361,6 +380,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   private void executeRootFeatureScopedMacroDef(MacroDef macroDef) {
 
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("executeRootFeatureScopedMacroDef");
+    }
+
     // execute macro
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
@@ -439,6 +462,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    *          the macro definition to execute
    */
   private void executeIncludedFeatureScopedMacroDef(MacroDef macroDef) {
+
+    if (A4ELogging.isDebuggingEnabled()) {
+      A4ELogging.debug("executeIncludedFeatureScopedMacroDef");
+    }
 
     // iterate over the includes>
     for (final Pair<Includes, FeatureDescription> pair : this._resolvedFeature.getIncludesToFeatureDescriptionList()) {
@@ -520,8 +547,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     // let the target platform resolve the feature
     // case 1: pde feature project
     if (isProjectNameSet()) {
-      FeatureManifest featureManifest = getEclipseProject().getRole(FeatureProjectRole.class)
-          .getFeatureManifest();
+      FeatureManifest featureManifest = getEclipseProject().getRole(FeatureProjectRole.class).getFeatureManifest();
       return targetPlatform.resolveFeature(getEclipseProject(), featureManifest);
     }
     // case 2: feature taken from the target platform
