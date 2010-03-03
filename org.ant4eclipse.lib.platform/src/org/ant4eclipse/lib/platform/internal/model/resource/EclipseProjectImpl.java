@@ -633,14 +633,12 @@ public final class EclipseProjectImpl implements EclipseProject {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._workspace == null ? 0 : this._workspace.hashCode());
     hashCode = 31 * hashCode + (this._projectDirectory == null ? 0 : this._projectDirectory.hashCode());
     hashCode = 31 * hashCode + (this._specifiedName == null ? 0 : this._specifiedName.hashCode());
     hashCode = 31 * hashCode + (this._comment == null ? 0 : this._comment.hashCode());
     hashCode = 31 * hashCode + (this._natures == null ? 0 : this._natures.hashCode());
     hashCode = 31 * hashCode + (this._roles == null ? 0 : this._roles.hashCode());
     hashCode = 31 * hashCode + (this._buildCommands == null ? 0 : this._buildCommands.hashCode());
-    hashCode = 31 * hashCode + (this._referencedProjects == null ? 0 : this._referencedProjects.hashCode());
     hashCode = 31 * hashCode + (this._linkedResources == null ? 0 : this._linkedResources.hashCode());
     return hashCode;
   }
