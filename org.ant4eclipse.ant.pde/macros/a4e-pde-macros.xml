@@ -30,7 +30,7 @@
     <attribute name="buildSourceJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="newBundleVersion" default="" />
-  	<attribute name="clean" default="true" />
+    <attribute name="clean" default="true" />
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -144,7 +144,7 @@
 
             <!-- Step 6.1: Clean all output directories -->
             <ant4eclipse:forEachOutputDirectory if="@{clean}">
-            	<scrub-directory dir="${buildPlugin.output.directory}" />
+              <scrub-directory dir="${buildPlugin.output.directory}" />
             </ant4eclipse:forEachOutputDirectory>
 
             <!-- Step 6.2: Compile the sources -->
@@ -162,7 +162,7 @@
               <javac destdir="${buildPlugin.default.output.directory}"
                      compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter"
                      source="1.5"
-                     target="1.5" >
+                     target="1.5">
 
                 <src refid="buildPlugin.source.directories.path" />
                 <bootclasspath refid="buildPlugin.boot.classpath.path" />
@@ -231,7 +231,8 @@
 
             <ant4eclipse:forEachSourceDirectory>
               <echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
-              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}" overwrite="true">
+              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}"
+                    overwrite="true">
                 <fileset dir="${executePluginLibrary.source.directory}">
                   <exclude name="**/*.java" />
                 </fileset>
@@ -344,18 +345,19 @@
                   deleteonexit="true" />
         </ant4eclipse:forProject>
 
+        <ant4eclipse:forProject>
+          <!-- template element 'deploy' -->
+          <deploy />
+        </ant4eclipse:forProject>
+
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
           - Step 8: Build the source bundle
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <ant4eclipse:forProject if="@{buildSourceJar}">
           <buildSourceBundle workspaceDirectory="@{workspaceDirectory}"
                              projectName="@{projectName}"
-                             destination="@{destination}" />
-        </ant4eclipse:forProject>
-
-        <ant4eclipse:forProject>
-            <!-- template element 'deploy' -->
-            <deploy />
+                             destination="@{destination}"
+                             newBundleVersion="@{newBundleVersion}" />
         </ant4eclipse:forProject>
 
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -364,10 +366,13 @@
         <ant4eclipse:forProject>
           <!-- the property has been set, so we need to remove it otherwise it cannot be altered -->
           <!-- by subsequent calls of this macro. -->
-          <antcontrib:var unset="true" name="buildPlugin.newBundleVersion"/>
+          <antcontrib:var unset="true" name="buildPlugin.newBundleVersion" />
         </ant4eclipse:forProject>
 
       </ant4eclipse:executePluginProject>
+
+
+
     </sequential>
   </macrodef>
 
@@ -450,7 +455,7 @@
             <ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
                                            projectname="@{projectName}"
                                            excludeLibraries="true"
-                                           sourceBundle="true"/>
+                                           sourceBundle="true" />
           </copy>
 
           <mkdir dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/META-INF" />
@@ -492,7 +497,7 @@
         <ant4eclipse:forProject>
           <!-- the property has been set, so we need to remove it otherwise it cannot be altered -->
           <!-- by subsequent calls of this macro. -->
-          <antcontrib:var unset="true" name="buildPlugin.newBundleVersion"/>
+          <antcontrib:var unset="true" name="buildPlugin.newBundleVersion" />
         </ant4eclipse:forProject>
 
       </ant4eclipse:executePluginProject>
@@ -507,11 +512,11 @@
   <!-- @param condition   The condition which decides whether the cleanup takes place or not.  -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <macrodef name="scrub-directory">
-    <attribute name="dir"/>
-    <attribute name="condition" default="true"/>
+    <attribute name="dir" />
+    <attribute name="condition" default="true" />
     <sequential>
       <antcontrib:if>
-        <antcontrib:istrue value="@{condition}"/>
+        <antcontrib:istrue value="@{condition}" />
         <antcontrib:then>
           <echo>Scrubbing directory '@{dir}'</echo>
           <delete dir="@{dir}" quiet="true" />
@@ -531,12 +536,12 @@
     <attribute name="productfile" />
     <attribute name="targetPlatformId" />
     <attribute name="destination" />
-    <attribute name="os" default="win32"/>
+    <attribute name="os" default="win32" />
     <attribute name="clearDestination" default="false" />
     <attribute name="defaultCompilerOptionsFile" default="" />
-    <attribute name="packageAsJar" default="false"/>
-    <attribute name="commandline" default="false"/>
-    <attribute name="packageSources" default="true"/>
+    <attribute name="packageAsJar" default="false" />
+    <attribute name="commandline" default="false" />
+    <attribute name="packageSources" default="true" />
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -549,19 +554,17 @@
 
     <sequential>
 
-      <ant4eclipse:executeProduct
-        workspaceDirectory="@{workspaceDirectory}"
-        targetPlatformId="@{targetPlatformId}"
-        product="@{productfile}"
-        os="@{os}"
-      >
+      <ant4eclipse:executeProduct workspaceDirectory="@{workspaceDirectory}"
+                                  targetPlatformId="@{targetPlatformId}"
+                                  product="@{productfile}"
+                                  os="@{os}">
 
         <ant4eclipse:forProduct>
           <echo>Building product ${executeProduct.product.name} version ${executeProduct.product.version}</echo>
         </ant4eclipse:forProduct>
 
         <ant4eclipse:forProduct>
-          <validate/>
+          <validate />
         </ant4eclipse:forProduct>
 
         <!-- Step 1: Scrub destination directory if requested -->
@@ -580,20 +583,18 @@
         <!-- Step 3a: Build included features if this product is based on features -->
         <ant4eclipse:forEachFeature>
           <antcontrib:if>
-            <istrue value="${executeProduct.product.basedonfeatures}"/>
+            <istrue value="${executeProduct.product.basedonfeatures}" />
             <then>
               <echo> -> Building included feature '${executeProduct.feature.id}' - '${executeProduct.feature.version}'</echo>
-              <buildFeature
-                workspaceDirectory="@{workspaceDirectory}"
-                featureId="${executeProduct.feature.id}"
-                featureVersion="${executeProduct.feature.version}"
-                targetPlatformId="@{targetPlatformId}"
-                destination="@{destination}"
-                packageAsJar="@{packageAsJar}"
-                packagePluginsAsJar="@{packageAsJar}"
-                packagePluginSourcesAsJar="@{packageSources}"
-                defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
-              />
+              <buildFeature workspaceDirectory="@{workspaceDirectory}"
+                            featureId="${executeProduct.feature.id}"
+                            featureVersion="${executeProduct.feature.version}"
+                            targetPlatformId="@{targetPlatformId}"
+                            destination="@{destination}"
+                            packageAsJar="@{packageAsJar}"
+                            packagePluginsAsJar="@{packageAsJar}"
+                            packagePluginSourcesAsJar="@{packageSources}"
+                            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachFeature>
@@ -601,18 +602,16 @@
         <!-- Step 3b: Build included plugins if this product is based on plugins -->
         <ant4eclipse:forEachPlugin filter="(executeProduct.plugin.isSource=true)">
           <antcontrib:if>
-            <isfalse value="${executeProduct.product.basedonfeatures}"/>
+            <isfalse value="${executeProduct.product.basedonfeatures}" />
             <then>
               <echo> -> Building included plugin '${executeProduct.plugin.id}' from project: ${executeProduct.plugin.projectName}</echo>
-              <buildPlugin
-                projectName="${executeProduct.plugin.projectName}" 
-                workspaceDirectory="@{workspaceDirectory}"
-                targetPlatformId="@{targetPlatformId}"
-                packageAsJar="@{packageAsJar}"
-                destination="@{destination}"
-                defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
-                buildSourceJar="@{packageSources}"
-              />
+              <buildPlugin projectName="${executeProduct.plugin.projectName}"
+                           workspaceDirectory="@{workspaceDirectory}"
+                           targetPlatformId="@{targetPlatformId}"
+                           packageAsJar="@{packageAsJar}"
+                           destination="@{destination}"
+                           defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+                           buildSourceJar="@{packageSources}" />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachPlugin>
@@ -620,7 +619,7 @@
         <!-- Step 3c: Copy plugins from the target platform -->
         <ant4eclipse:forEachPlugin filter="(executeProduct.plugin.isSource=false)">
           <antcontrib:if>
-            <isfalse value="${executeProduct.product.basedonfeatures}"/>
+            <isfalse value="${executeProduct.product.basedonfeatures}" />
             <then>
               <echo>Copying bundle '${executeProduct.plugin.file} (${executeProduct.plugin.id})' </echo>
               <copy todir="@{destination}/${a4e.plugins.directory}">
@@ -640,17 +639,22 @@
 
           <!-- create the ini file for the launcher -->
           <antcontrib:if>
-            <equals arg1="" arg2="${executeProduct.product.vmargs}"/>
+            <equals arg1="" arg2="${executeProduct.product.vmargs}" />
             <then>
               <!-- no arguments to set -->
-              <echo file="@{destination}/${executeProduct.product.launchername}.ini"></echo>
+              <echo file="@{destination}/${executeProduct.product.launchername}.ini">
+              </echo>
             </then>
             <else>
               <!-- set vm arguments -->
               <echo file="@{destination}/${executeProduct.product.launchername}.ini">-vmargs&#10;</echo>
-              <antcontrib:for param="vmarg" list="${executeProduct.product.vmargs}" delimiter=" " trim="true">
+              <antcontrib:for param="vmarg"
+                              list="${executeProduct.product.vmargs}"
+                              delimiter=" "
+                              trim="true">
                 <sequential>
-                  <echo file="@{destination}/${executeProduct.product.launchername}.ini" append="true">@{vmarg}&#10;</echo>
+                  <echo file="@{destination}/${executeProduct.product.launchername}.ini"
+                        append="true">@{vmarg}&#10;</echo>
                 </sequential>
               </antcontrib:for>
             </else>
@@ -658,22 +662,33 @@
 
           <antcontrib:if>
             <and>
-              <not><equals arg1="" arg2="${executeProduct.product.configini}"/></not>
-              <available file="${executeProduct.product.configini}" type="file"/>
+              <not>
+                <equals arg1="" arg2="${executeProduct.product.configini}" />
+              </not>
+              <available file="${executeProduct.product.configini}"
+                         type="file" />
             </and>
             <then>
-              <copy file="${executeProduct.product.configini}" todir="@{destination}/configuration" overwrite="true"/>
+              <copy file="${executeProduct.product.configini}"
+                    todir="@{destination}/configuration"
+                    overwrite="true" />
             </then>
           </antcontrib:if>
 
           <antcontrib:if>
-            <istrue value="@{commandline}"/>
+            <istrue value="@{commandline}" />
             <then>
-              <copy file="${executeProduct.product.cmdexe}" tofile="@{destination}/${executeProduct.product.launchername}.exe" overwrite="true"/>
+              <copy file="${executeProduct.product.cmdexe}"
+                    tofile="@{destination}/${executeProduct.product.launchername}.exe"
+                    overwrite="true" />
             </then>
             <else>
-              <copy file="${executeProduct.product.guiexe}" tofile="@{destination}/${executeProduct.product.launchername}.exe" overwrite="true"/>
-              <copy file="${executeProduct.product.cmdexe}" tofile="@{destination}/${executeProduct.product.launchername}c.exe" overwrite="true"/>
+              <copy file="${executeProduct.product.guiexe}"
+                    tofile="@{destination}/${executeProduct.product.launchername}.exe"
+                    overwrite="true" />
+              <copy file="${executeProduct.product.cmdexe}"
+                    tofile="@{destination}/${executeProduct.product.launchername}c.exe"
+                    overwrite="true" />
             </else>
           </antcontrib:if>
 
@@ -712,7 +727,7 @@
     <attribute name="packagePluginsAsJar" default="true" />
     <attribute name="packagePluginSourcesAsJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
-  	<attribute name="cleanPluginBuild" default="true" />
+    <attribute name="cleanPluginBuild" default="true" />
     <sequential>
 
       <!-- executes the defined feature -->
@@ -754,8 +769,8 @@
                        destination="@{destination}"
                        packageAsJar="@{packagePluginsAsJar}"
                        buildSourceJar="@{packagePluginSourcesAsJar}"
-                       defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" 
-          			   clean="@{cleanPluginBuild}"/>
+                       defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+                       clean="@{cleanPluginBuild}" />
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3.2: Copy plug-ins  -->
