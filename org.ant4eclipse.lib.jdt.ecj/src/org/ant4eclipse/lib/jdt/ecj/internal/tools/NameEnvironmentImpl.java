@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -31,6 +30,17 @@ import org.eclipse.jdt.internal.compiler.env.NameEnvironmentAnswer;
  */
 public class NameEnvironmentImpl implements INameEnvironment {
 
+  // the debug flag
+  private static boolean  DEBUG_ALL            = false;
+
+  // the debug flag
+  private static boolean  DEBUG_TYPE_NOT_FOUND = false;
+
+  static {
+    DEBUG_ALL = "true".equals(System.getProperty("ant4eclipse.debug.nameenv"));
+    DEBUG_TYPE_NOT_FOUND = "true".equals(System.getProperty("ant4eclipse.debug.nameenv.missingtypes"));
+  }
+
   /** used to find binary type as requested by the compiler */
   private ClassFileLoader _classFileLoader;
 
@@ -45,6 +55,11 @@ public class NameEnvironmentImpl implements INameEnvironment {
   public NameEnvironmentImpl(ClassFileLoader classFileLoader) {
     Assure.notNull("classFileLoader", classFileLoader);
     this._classFileLoader = classFileLoader;
+
+    if (DEBUG_ALL || DEBUG_TYPE_NOT_FOUND) {
+      A4ELogging.info("NameEnvironment tracing enabled.");
+    }
+
   }
 
   /**
@@ -111,11 +126,11 @@ public class NameEnvironmentImpl implements INameEnvironment {
 
     boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
 
-    if (A4ELogging.isTraceingEnabled()) {
+    if (DEBUG_ALL) {
       if (packageFound) {
-        A4ELogging.trace("Package '%s' found...", qualifiedPackageName);
+        A4ELogging.info("Package '%s' found...", qualifiedPackageName);
       } else {
-        A4ELogging.trace("Package '%s' not found...", qualifiedPackageName);
+        A4ELogging.info("Package '%s' not found...", qualifiedPackageName);
       }
     }
 
@@ -148,8 +163,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
     // return new NameEnvironmentAnswer if classFile was found
     if (classFile != null) {
 
-      if (A4ELogging.isTraceingEnabled()) {
-        A4ELogging.trace("Loading class '%s' from '%s'.", className.getQualifiedClassName(), classFile
+      if (DEBUG_ALL) {
+        A4ELogging.info("Loading class '%s' from '%s'.", className.getQualifiedClassName(), classFile
             .getLibraryLocation());
       }
 
@@ -164,8 +179,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
     // load source file from class file loader
     if (sourceFile != null) {
 
-      if (A4ELogging.isTraceingEnabled()) {
-        A4ELogging.trace("Loading class '%s' as source from '%s'.", className.getQualifiedClassName(), sourceFile
+      if (DEBUG_ALL) {
+        A4ELogging.info("Loading class '%s' as source from '%s'.", className.getQualifiedClassName(), sourceFile
             .getSourceFile().getAbsolutePath());
       }
 
@@ -174,8 +189,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
     }
 
     // else return null
-    if (A4ELogging.isTraceingEnabled()) {
-      A4ELogging.trace("Could not load class '%s'.", className.getQualifiedClassName());
+    if (DEBUG_TYPE_NOT_FOUND) {
+      A4ELogging.info("Could not load class '%s'.", className.getQualifiedClassName());
     }
     return null;
   }
@@ -202,32 +217,4 @@ public class NameEnvironmentImpl implements INameEnvironment {
     }
     return result.toString();
   }
-
-  // /**
-  // * <p>
-  // * ONLY USED FOR DEBUGGING PURPOSE.
-  // * </p>
-  // *
-  // * @param array
-  // * @return
-  // */
-  // private static String asString(char[][] array) {
-  // // define result
-  // StringBuffer result = new StringBuffer();
-  //
-  // // compute result
-  // if (array != null) {
-  // for (int i = 0; i < array.length; i++) {
-  // result.append("{").append(new String(array[i])).append("}");
-  // if (i < array.length - 1) {
-  // result.append(",");
-  // }
-  // }
-  // } else {
-  // result.append("(null)");
-  // }
-  //
-  // // return result
-  // return result.toString();
-  // }
 }
