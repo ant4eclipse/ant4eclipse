@@ -783,7 +783,7 @@
 
         <!-- Step 4: Build feature itself -->
         <ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
-                                    filter="(executeProduct.feature.isSource=true)">
+                                    filter="(executeFeature.feature.isSource=true)">
 
           <echo>Building feature project '${executeFeature.feature.file.name} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
 
@@ -819,7 +819,7 @@
 
         <!-- if feature is already built, we only have to copy the jar / directory -->
         <ant4eclipse:forRootFeature unless="@{skipBuildFeature}"
-                                    filter="(executeProduct.feature.isSource=false)">
+                                    filter="(executeFeature.feature.isSource=false)">
 
           <echo>Copying feature '${executeFeature.feature.file} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
 
