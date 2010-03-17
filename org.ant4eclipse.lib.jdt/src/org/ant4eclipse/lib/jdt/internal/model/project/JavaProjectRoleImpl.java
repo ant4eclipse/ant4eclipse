@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -24,10 +28,6 @@ import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>
@@ -208,7 +208,11 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   public String getOutputFolderForSourceFolder(final String sourceFolder) {
-    Assure.nonEmpty("sourceFolder", sourceFolder);
+    Assure.notNull("sourceFolder", sourceFolder);
+
+    if ("".equals(sourceFolder)) {
+      return getDefaultOutputFolder();
+    }
 
     // normalize path
     final String normalizedSourceFolder = normalize(sourceFolder);
