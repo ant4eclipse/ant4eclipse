@@ -668,7 +668,18 @@ public class BundleDependenciesResolver {
     private void addAllExportedPackages(BundleDescription bundleDescription, AccessRestrictions accessRestrictions) {
 
       // get all exported packages of the given bundle description
-      ExportPackageDescription[] exportPackageDescriptions = bundleDescription.getSelectedExports();
+      List<ExportPackageDescription> exportPackageDescriptions = new LinkedList<ExportPackageDescription>();
+
+      // TODO: We should resolve and add the bundle of the selected exporter as well...
+      exportPackageDescriptions.addAll(Arrays.asList(bundleDescription.getSelectedExports()));
+      exportPackageDescriptions.addAll(Arrays.asList(bundleDescription.getSubstitutedExports()));
+
+      // System.err.println(bundleDescription.getSymbolicName() + " (Exports) : "
+      // + Arrays.asList(bundleDescription.getExportPackages()));
+      // System.err.println(bundleDescription.getSymbolicName() + " (SelectedExports) : "
+      // + Arrays.asList(bundleDescription.getSelectedExports()));
+      // System.err.println(bundleDescription.getSymbolicName() + " (SubstitutedExports) : "
+      // + Arrays.asList(bundleDescription.getSubstitutedExports()));
 
       // add all exported packages to the list of public (=visible) packages
       for (ExportPackageDescription exportPackageDescription : exportPackageDescriptions) {
