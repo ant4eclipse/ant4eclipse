@@ -669,10 +669,20 @@
                          type="file" />
             </and>
             <then>
+              <!-- copy the config.ini provided by the product configuration. -->
               <copy file="${executeProduct.product.configini}"
                     todir="@{destination}/configuration"
                     overwrite="true" />
             </then>
+            <else>
+              <!-- generate a default config.ini which just starts the workbench. -->
+              <echo file="@{destination}/configuration/config.ini" append="false"># Product Runtime Configuration File</echo>
+              <echo file="@{destination}/configuration/config.ini" append="true">eclipse.application=${executeProduct.product.applicationid}</echo>
+              <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles.defaultStartLevel=4</echo>
+              <echo file="@{destination}/configuration/config.ini" append="true">eclipse.product=${executeProduct.product.id}</echo>
+              <echo file="@{destination}/configuration/config.ini" append="true">osgi.splashPath=platform:/base/plugins/org.eclipse.platform</echo>
+              <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles=org.eclipse.core.runtime@start,org.eclipse.osgi@start,org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start</echo>
+            </else>
           </antcontrib:if>
 
           <antcontrib:if>
