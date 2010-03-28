@@ -66,4 +66,25 @@ public class TargetPlatformDefinition {
   public final File[] getLocations() {
     return this._locations.toArray(new File[this._locations.size()]);
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("[");
+    buffer.append(getClass().getSimpleName());
+    buffer.append(": _locations={");
+    if (!this._locations.isEmpty()) {
+      buffer.append(this._locations.get(0).getAbsolutePath());
+      for (int i = 1; i < this._locations.size(); i++) {
+        buffer.append(",");
+        buffer.append(this._locations.get(i).getAbsolutePath());
+      }
+    }
+    buffer.append("}]");
+    return buffer.toString();
+  }
+
 }

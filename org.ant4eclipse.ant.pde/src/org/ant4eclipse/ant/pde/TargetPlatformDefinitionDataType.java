@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -99,6 +98,22 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString() {
+    StringBuffer buffer = new StringBuffer();
+    buffer.append("[");
+    buffer.append(this.getClass().getSimpleName());
+    buffer.append(": _id=");
+    buffer.append(this._id);
+    buffer.append(", _targetPlatformDefinition=");
+    buffer.append(this._targetPlatformDefinition);
+    buffer.append("]");
+    return buffer.toString();
+  }
+
+  /**
    * <p>
    * Implements a target platform location.
    * </p>
@@ -129,7 +144,6 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      */
     public Location(File directory) {
       Assure.isDirectory(directory);
-
       this._directory = directory;
     }
 
@@ -154,7 +168,6 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      */
     public void setDir(File directory) {
       Assure.isDirectory(directory);
-
       this._directory = directory;
     }
 
