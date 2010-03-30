@@ -11,6 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,12 +48,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>
@@ -692,6 +692,29 @@ public class Utilities {
     T object = null;
     try {
       object = (T) clazz.newInstance();
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+    }
+    // return the constructed object
+    return object;
+  }
+
+  @SuppressWarnings("unchecked")
+  public static final <T> T newInstance(String className, Class<?>[] types, Object[] args) {
+    Assure.notNull("className", className);
+    Class<?> clazz = null;
+    try {
+      clazz = Class.forName(className);
+    } catch (Exception ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
+    }
+    // try to instantiate...
+    T object = null;
+    try {
+      Constructor<?> constructor = clazz.getDeclaredConstructor(types);
+      constructor.setAccessible(true);
+      constructor.newInstance(args);
+      object = (T) constructor.newInstance(args);
     } catch (Exception ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
     }

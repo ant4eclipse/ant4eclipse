@@ -12,13 +12,17 @@
 package org.ant4eclipse.ant.jdt.containerargs;
 
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.apache.tools.ant.DynamicAttribute;
 
 import java.util.List;
 
 /**
+ * <p>
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public interface JdtClasspathContainerArgumentComponent {
+public interface JdtClasspathContainerArgumentComponent extends DynamicAttribute {
 
   /**
    * <p>
@@ -26,6 +30,7 @@ public interface JdtClasspathContainerArgumentComponent {
    * 
    * @return
    */
+  @Deprecated
   JdtClasspathContainerArgument createJdtClasspathContainerArgument();
 
   /**

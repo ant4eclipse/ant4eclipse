@@ -105,7 +105,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
     List<JdtClasspathContainerArgument> arguments = this._resolverJob.getJdtClasspathContainerArguments();
 
     for (JdtClasspathContainerArgument jdtClasspathContainerArgument : arguments) {
-      if (key.equals(jdtClasspathContainerArgument.getKey())) {
+      if (key.equalsIgnoreCase(jdtClasspathContainerArgument.getKey())) {
         return jdtClasspathContainerArgument;
       }
     }

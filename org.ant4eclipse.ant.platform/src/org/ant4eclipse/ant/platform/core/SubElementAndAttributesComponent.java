@@ -11,18 +11,21 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core;
 
+import org.apache.tools.ant.DynamicAttribute;
 import org.apache.tools.ant.DynamicElement;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- * Interface for all ant4eclipse tasks, conditions and types that have to deal with dynamic sub elements.
+ * Interface for all ant4eclipse tasks, conditions and types that have to deal with dynamic sub elements and/or
+ * attributes.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public interface SubElementComponent extends DynamicElement {
+public interface SubElementAndAttributesComponent extends DynamicElement, DynamicAttribute {
 
   /**
    * <p>
@@ -32,4 +35,13 @@ public interface SubElementComponent extends DynamicElement {
    * @return a list with all known sub elements.
    */
   List<Object> getSubElements();
+
+  /**
+   * <p>
+   * Returns a map with all known sub attributes.
+   * </p>
+   * 
+   * @return a map with all known sub attributes.
+   */
+  Map<String, String> getSubAttributes();
 }

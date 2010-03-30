@@ -11,14 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.apache.tools.ant.BuildException;
 
 import java.io.File;
 import java.util.List;
@@ -47,7 +46,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
     super();
 
     // create the JdtClasspathContainerArgumentDelegate
-    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
+    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(this);
   }
 
   /**
@@ -88,6 +87,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   /**
    * {@inheritDoc}
    */
+  @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
@@ -97,6 +97,13 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    */
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setDynamicAttribute(String name, String value) throws BuildException {
+    this._classpathContainerArgumentDelegate.setDynamicAttribute(name, value);
   }
 
   /**

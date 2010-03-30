@@ -11,14 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentComponent;
 import org.ant4eclipse.ant.jdt.containerargs.JdtClasspathContainerArgumentDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.apache.tools.ant.BuildException;
 
 import java.util.List;
 
@@ -51,7 +50,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
     super(prefix);
 
     // create the delegates
-    this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate();
+    this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(this);
 
     // create the JdtExecutorValuesProvider
     this._executorValuesProvider = new JdtExecutorValuesProvider(this);
@@ -60,6 +59,14 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
   /**
    * {@inheritDoc}
    */
+  public void setDynamicAttribute(String attributeName, String value) throws BuildException {
+    this._jdtClasspathContainerArgumentDelegate.setDynamicAttribute(attributeName, value);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Deprecated
   public final JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }

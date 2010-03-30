@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-
-import org.ant4eclipse.ant.platform.core.SubElementComponent;
-import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.SubElementAndAttributesComponent;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementAndAttributesDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -23,6 +22,7 @@ import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,37 +32,40 @@ import java.util.List;
  * @author Nils Hartmann (nils@nilshartmann.net)
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class GetUsedProjectsTask extends AbstractProjectBasedTask implements SubElementComponent {
+public class GetUsedProjectsTask extends AbstractProjectBasedTask implements SubElementAndAttributesComponent {
 
   /** the default seperator */
-  private final static String DEFAULT_SEPARATOR = ",";
+  private final static String             DEFAULT_SEPARATOR = ",";
 
   /**
    * The name of an ant property that will hold the list of referenced projects
    */
-  private String              _property;
+  private String                          _property;
 
   /**
    * An (optional) specified separator that is used to separate the project names (defaults to <b>
    * {@link #DEFAULT_SEPARATOR}</b>)
    */
-  private String              _separator;
+  private String                          _separator;
 
   /**
    * Allows to enable self inclusion of the used project if set to <code>true</code>.
    */
-  private boolean             _selfinclude;
+  private boolean                         _selfinclude;
 
   /**
    * The reference type that is used for the resolving process of projects. A value of <code>null</code> means that all
    * reference types are being tried.
    */
-  private String[]            _referencetypes;
+  private String[]                        _referencetypes;
 
-  private SubElementDelegate  _subElementDelegate;
+  /**
+   *
+   */
+  private SubElementAndAttributesDelegate _subElementAndAttributesDelegate;
 
   public GetUsedProjectsTask() {
-    this._subElementDelegate = new SubElementDelegate(this);
+    this._subElementAndAttributesDelegate = new SubElementAndAttributesDelegate(this);
     this._referencetypes = null;
     this._selfinclude = false;
   }
@@ -121,14 +124,28 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * {@inheritDoc}
    */
   public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementDelegate.createDynamicElement(name);
+    return this._subElementAndAttributesDelegate.createDynamicElement(name);
   }
 
   /**
    * {@inheritDoc}
    */
   public List<Object> getSubElements() {
-    return this._subElementDelegate.getSubElements();
+    return this._subElementAndAttributesDelegate.getSubElements();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Map<String, String> getSubAttributes() {
+    return this._subElementAndAttributesDelegate.getSubAttributes();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setDynamicAttribute(String name, String value) throws BuildException {
+    this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
   }
 
   /**

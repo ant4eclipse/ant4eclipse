@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import java.io.File;
-
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.ConditionalMacroDef;
@@ -26,6 +24,8 @@ import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileSet;
+
+import java.io.File;
 
 /**
  * <p>

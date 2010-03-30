@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-
 import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
-import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.SubElementAndAttributesComponent;
 import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
-import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementAndAttributesDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetBasedTask;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -24,6 +23,7 @@ import org.apache.tools.ant.BuildException;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,17 +33,17 @@ import java.util.List;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements SubElementComponent,
+public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements SubElementAndAttributesComponent,
     ProjectReferenceAwareComponent {
 
   /** the delegate used for handling sub elements (e.g. &lt;jdtClasspathContainerArgument&gt; */
-  private SubElementDelegate            _subElementDelegate;
+  private SubElementAndAttributesDelegate _subElementAndAttributesDelegate;
 
   /** the project reference delegate */
-  private ProjectReferenceAwareDelegate _projectReferenceAwareDelegate;
+  private ProjectReferenceAwareDelegate   _projectReferenceAwareDelegate;
 
   /** the property that should hold the ordered projects */
-  private String                        _buildorderProperty;
+  private String                          _buildorderProperty;
 
   /**
    * <p>
@@ -54,7 +54,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
     super();
 
     // create delegates
-    this._subElementDelegate = new SubElementDelegate(this);
+    this._subElementAndAttributesDelegate = new SubElementAndAttributesDelegate(this);
     this._projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
   }
 
@@ -90,14 +90,28 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * {@inheritDoc}
    */
   public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementDelegate.createDynamicElement(name);
+    return this._subElementAndAttributesDelegate.createDynamicElement(name);
   }
 
   /**
    * {@inheritDoc}
    */
   public List<Object> getSubElements() {
-    return this._subElementDelegate.getSubElements();
+    return this._subElementAndAttributesDelegate.getSubElements();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Map<String, String> getSubAttributes() {
+    return this._subElementAndAttributesDelegate.getSubAttributes();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setDynamicAttribute(String name, String value) throws BuildException {
+    this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
   }
 
   /**
@@ -155,7 +169,8 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
 
     // calculate build order
     List<EclipseProject> orderedProjects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
-        this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate.getSubElements());
+        this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementAndAttributesDelegate
+            .getSubElements());
 
     // set property
     getProject().setProperty(this._buildorderProperty, convertToString(orderedProjects, ','));

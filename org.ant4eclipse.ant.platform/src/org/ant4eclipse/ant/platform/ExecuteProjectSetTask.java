@@ -11,16 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
-import org.ant4eclipse.ant.platform.core.SubElementComponent;
+import org.ant4eclipse.ant.platform.core.SubElementAndAttributesComponent;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
-import org.ant4eclipse.ant.platform.core.delegate.SubElementDelegate;
+import org.ant4eclipse.ant.platform.core.delegate.SubElementAndAttributesDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetPathBasedTask;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
@@ -30,27 +29,28 @@ import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
  */
 public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask implements MacroExecutionComponent<Scope>,
-    SubElementComponent, ProjectReferenceAwareComponent {
+    SubElementAndAttributesComponent, ProjectReferenceAwareComponent {
 
   /** the {@link MacroExecutionDelegate} */
-  private MacroExecutionDelegate<Scope>  _macroExecutionDelegate;
+  private MacroExecutionDelegate<Scope>   _macroExecutionDelegate;
 
-  /** the {@link SubElementDelegate} */
-  private SubElementDelegate             _subElementDelegate;
+  /** the {@link SubElementAndAttributesDelegate} */
+  private SubElementAndAttributesDelegate _subElementAndAttributeDelegate;
 
   /** the {@link ProjectReferenceAwareDelegate} */
-  private ProjectReferenceAwareDelegate  _projectReferenceAwareDelegate;
+  private ProjectReferenceAwareDelegate   _projectReferenceAwareDelegate;
 
   /** the {@link PlatformExecutorValuesProvider} */
-  private PlatformExecutorValuesProvider _platformExecutorValuesProvider;
+  private PlatformExecutorValuesProvider  _platformExecutorValuesProvider;
 
   /** indicates if the build order should be resolved */
-  private boolean                        _resolveBuildOrder = true;
+  private boolean                         _resolveBuildOrder = true;
 
   /**
    * <p>
@@ -60,7 +60,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   public ExecuteProjectSetTask() {
     // create the MacroExecutionDelegate
     this._macroExecutionDelegate = new MacroExecutionDelegate<Scope>(this, "executeProjectSet");
-    this._subElementDelegate = new SubElementDelegate(this);
+    this._subElementAndAttributeDelegate = new SubElementAndAttributesDelegate(this);
     this._projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(getPathDelegate());
   }
@@ -165,7 +165,8 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     if (this._resolveBuildOrder) {
       // resolve the build order
       projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
-          this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementDelegate.getSubElements());
+          this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementAndAttributeDelegate
+              .getSubElements());
     } else {
       // only get the specified projects
       projects = Arrays.asList(getWorkspace().getProjects(getProjectNames(), false));
@@ -207,14 +208,28 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * {@inheritDoc}
    */
   public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementDelegate.createDynamicElement(name);
+    return this._subElementAndAttributeDelegate.createDynamicElement(name);
   }
 
   /**
    * {@inheritDoc}
    */
   public List<Object> getSubElements() {
-    return this._subElementDelegate.getSubElements();
+    return this._subElementAndAttributeDelegate.getSubElements();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Map<String, String> getSubAttributes() {
+    return this._subElementAndAttributeDelegate.getSubAttributes();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setDynamicAttribute(String name, String value) throws BuildException {
+    this._subElementAndAttributeDelegate.setDynamicAttribute(name, value);
   }
 
 }
