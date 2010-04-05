@@ -749,6 +749,7 @@
 
         <ant4eclipse:forRootFeature>
           <echo>Building feature '${executeFeature.feature.id}_${executeFeature.feature.version}'</echo>
+          <echo> - feature.isSource: '${executeFeature.feature.isSource}'</echo>
         </ant4eclipse:forRootFeature>
 
         <!-- Step 1: Scrub destination directory  -->
