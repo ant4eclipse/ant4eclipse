@@ -1,0 +1,70 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>assertTrue Task</title>
+  </head>
+
+  <body>
+    <h2><a name="assertTrue">AssertTrue</a></h2>
+
+    <h3>Description</h3>
+
+    <p>Asserts a condition and makes the build fail (using a special
+    kind of BuildException) if it doesn't hold true.</p>
+
+    <h3>Parameters</h3>
+    <table border="1" cellpadding="2" cellspacing="0">
+      <tr>
+        <td valign="top"><b>Attribute</b></td>
+        <td valign="top"><b>Description</b></td>
+        <td align="center" valign="top"><b>Required</b></td>
+      </tr>
+      <tr>
+        <td valign="top">message</td>
+        <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Assertion failed".</td>
+        <td align="center">No.</td>
+      </tr>
+    </table>
+
+    <h3>Parameters specified as nested elements</h3>
+    <h4>exactly one supported condition</h4>
+
+    <p>You can use all supported conditions of Ant's core as well as
+    any class that implements the Condition interface as a nested
+    child element.  This element is required - exactly one child - and
+    specifies the condition to assert.</p>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail with the message "foo is bar" if the
+      property <code>foo</code> has the value bar:</p>
+
+    <pre>
+      &lt;assertTrue message="foo is bar"&gt;
+        &lt;not&gt;
+          &lt;equals arg1="${foo}" arg2="bar"/&gt;
+        &lt;/not&gt;
+      &lt;/assertTrue message="foo is bar"&gt;
+    </pre>
+
+    <hr/>
+  </body>
+</html>

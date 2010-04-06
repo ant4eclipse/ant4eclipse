@@ -1,0 +1,714 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>More Assertion Tasks</title>
+  </head>
+
+  <body>
+    <h1>More Assertion Tasks</h1>
+
+    <p>This Ant library also provides a couple of pre-defined
+    assertions that are specializations of the <a
+    href="assert.html">&lt;assertTrue&gt;</a> task.</p>
+
+    <h2><a name="assertFalse">AssertFalse</a></h2>
+
+    <h3>Description</h3>
+
+    <p>Negates &lt;assertTrue&gt;.  Supports the same attributes and
+    nested elements as &lt;assertTrue&gt; but makes the build fail if
+    the nested condition is true.</p>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail with the message "foo is bar" if the
+      property foo has the value bar:</p>
+
+    <pre>
+      &lt;assertFalse message="foo is bar"&gt;
+        &lt;equals arg1="${foo}" arg2="bar"/&gt;
+      &lt;/assertFalse&gt;
+    </pre>
+
+    <h2><a name="assertEquals">assertEquals</a></h2>
+
+    <p>Asserts that its two arguments are equal.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">expected</td>
+          <td valign="top">First string to test.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">actual</td>
+          <td valign="top">Second string to test.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected
+            '<em>expected</em>' but was '<em>actual</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+        <tr>
+          <td valign="top">casesensitive</td>
+          <td valign="top">Perform a case sensitive comparision.
+            Default is true.</td>
+          <td valign="top" align="center">No</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail with the message "foo is not bar" if the
+      property foo doesn't hold the value bar regardless of case:</p>
+
+    <pre>
+      &lt;assertEquals message="foo is not bar" expected="bar"
+                      actual="${foo}" casesensitive="false"/&gt;
+    </pre>
+
+    <h2><a name="assertPropertySet">assertPropertySet</a></h2>
+
+    <p>Asserts that a property has a value.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">name</td>
+          <td valign="top">Name of the property.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected
+            property '<em>name</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail with the message "Expected property 'foo'"
+    if the property foo is not defined:</p>
+
+    <pre>
+      &lt;assertPropertySet name="foo"/&gt;
+    </pre>
+
+    <h2><a name="assertPropertyEquals">assertPropertyEquals</a></h2>
+
+    <p>Asserts that a given property is set and holds a certain
+    value.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">name</td>
+          <td valign="top">Name of the property.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">value</td>
+          <td valign="top">Expected value.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true. Defaults to "Expected property
+            '<em>name</em>' to have value '<em>value</em>' but was
+            '<em>value of property name</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+        <tr>
+          <td valign="top">casesensitive</td>
+          <td valign="top">Perform a case sensitive comparision.
+            Default is true.</td>
+          <td valign="top" align="center">No</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail with the message "foo is not bar" if the
+      property foo doesn't hold the value bar regardless of case:</p>
+
+    <pre>
+      &lt;assertPropertyEquals message="foo is not bar" value="bar"
+                              name="foo" casesensitive="false"/&gt;
+    </pre>
+
+    <h2><a name="assertFileExists">assertFileExists</a></h2>
+
+    <p>Asserts that a given file exists.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">file</td>
+          <td valign="top">Location of the file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected
+            file '<em>file</em>' to exist".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the file ${ant.home}/lib/ant.jar doesn't
+      exist:</p>
+
+    <pre>
+      &lt;assertFileExists file="${ant.home}/lib/ant.jar"/&gt;
+    </pre>
+
+    <h2><a name="assertFileDoesntExist">assertFileDoesntExist</a></h2>
+
+    <p>Asserts that a given file does not exist.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">file</td>
+          <td valign="top">Location of the file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Didn't expect
+            file '<em>file</em>' to exist".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the file ${ant.home}/lib/ant.jar
+      exists:</p>
+
+    <pre>
+      &lt;assertFileDoesntExist file="${ant.home}/lib/ant.jar"/&gt;
+    </pre>
+
+    <h2><a name="assertDestIsUpToDate">assertDestIsUpToDate</a></h2>
+
+    <p>Asserts that a dest file is more recent than the source
+      file.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">src</td>
+          <td valign="top">source file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">dest</td>
+          <td valign="top">dest file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected '<em>dest</em>'
+            to be more recent than '<em>src</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the file ${ant.home}/lib/ant.jar is
+      more recent than the current build file:</p>
+
+    <pre>
+      &lt;assertDestIsUptodate dest="${ant.file}" src="${ant.home}/lib/ant.jar"/&gt;
+    </pre>
+
+    <h2><a name="assertDestIsOutofDate">assertDestIsOutofDate</a></h2>
+
+    <p>Asserts that a source file is more recent than the dest
+      file.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">src</td>
+          <td valign="top">source file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">dest</td>
+          <td valign="top">dest file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected '<em>src</em>'
+            to be more recent than '<em>dest</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the file ${ant.home}/lib/ant.jar is
+      older than the current build file:</p>
+
+    <pre>
+      &lt;assertDestIsOutofdate dest="${ant.file}" src="${ant.home}/lib/ant.jar"/&gt;
+    </pre>
+
+    <h2><a name="assertFilesMatch">assertFilesMatch</a></h2>
+
+    <p>Asserts that two files have the same content.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">expected</td>
+          <td valign="top">first file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">actual</td>
+          <td valign="top">second file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected files '<em>expected</em>'
+            and '<em>actual</em>' to match".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+    
+    <h3>Example</h3>
+
+    <p>Make the build fail if the file build.xml and backups/build.xml
+    differ.</p>
+
+    <pre>
+      &lt;assertFilesMatch expected="backups/build.xml" actual="build.xml"/&gt;
+    </pre>
+
+    <h2><a name="assertFilesDiffer">assertFilesDiffer</a></h2>
+
+    <p>Asserts that two files have different content.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">expected</td>
+          <td valign="top">first file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">actual</td>
+          <td valign="top">second file.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected files '<em>expected</em>'
+            and '<em>actual</em>' to differ".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+    
+    <h3>Example</h3>
+
+    <p>Make the build fail if the file build.xml and backups/build.xml
+    match.</p>
+
+    <pre>
+      &lt;assertFilesDiffer expected="backups/build.xml" actual="build.xml"/&gt;
+    </pre>
+
+    <h2><a name="assertReferenceSet">assertReferenceSet</a></h2>
+
+    <p>Asserts that a reference has a value.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">refid</td>
+          <td valign="top">Id of the reference.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected
+            reference '<em>id</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail with the message "Expected reference 'foo'"
+    if the reference foo is not defined:</p>
+
+    <pre>
+      &lt;assertReferenceSet name="foo"/&gt;
+    </pre>
+
+    <h2><a name="assertReferenceIsType">assertReferenceIsType</a></h2>
+
+    <p>Asserts that a reference has a value of a given type.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">refid</td>
+          <td valign="top">Id of the reference.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">type</td>
+          <td valign="top">Name of the data type or task this
+          reference is expected to be.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">message</td>
+          <td valign="top">Message for the exception if the condition
+            doesn't hold true.  Defaults to "Expected
+            reference '<em>id</em>' to be a '<em>type</em>'".</td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the reference <em>classpath</em> has not
+    been set or doesn't point to a &lt;path&gt;.</p>
+
+    <pre>
+      &lt;assertReferenceIsType refid="classpath" type="path"/>
+    </pre>
+
+    <h2><a name="assertMatches">assertMatches</a></h2>
+
+    <p>Asserts that a string matches a given regular expression.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">string</td>
+          <td valign="top">The string to test.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">pattern</td>
+          <td valign="top">The pattern to test the string against.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">casesensitive</td>
+          <td valign="top">
+            Perform a case sensitive match.
+            Default is true.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+        <tr>
+          <td valign="top">multiline</td>
+          <td valign="top">
+          Perform a multi line match.
+          Default is false.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+        <tr>
+          <td valign="top">singleline</td>
+          <td valign="top">
+            This allows '.' to match new lines.
+            SingleLine is not to be confused with multiline,
+            SingleLine is a perl
+            regex term, it corresponds to dotall in java regex.
+            Default is false.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the property abc does not contain
+      "abc" regardless of case:
+    </p>
+    <pre>
+      &lt;assertMatches string="${abc}" pattern="abc" 
+                     casesensitive="false"/></pre>
+
+
+    <h2><a name="assertDoesntMatch">assertDoesntMatch</a></h2>
+
+    <p>Asserts that a string doesn't match a given regular expression.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">string</td>
+          <td valign="top">The string to test.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">pattern</td>
+          <td valign="top">The pattern to test the string against.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">casesensitive</td>
+          <td valign="top">
+            Perform a case sensitive match.
+            Default is true.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+        <tr>
+          <td valign="top">multiline</td>
+          <td valign="top">
+          Perform a multi line match.
+          Default is false.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+        <tr>
+          <td valign="top">singleline</td>
+          <td valign="top">
+            This allows '.' to match new lines.
+            SingleLine is not to be confused with multiline,
+            SingleLine is a perl
+            regex term, it corresponds to dotall in java regex.
+            Default is false.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Make the build fail if the property abc contains
+      "abc" regardless of case:
+    </p>
+    <pre>
+      &lt;assertDoesntMatch string="${abc}" pattern="abc" 
+                     casesensitive="false"/></pre>
+
+    <h2><a name="assertLogContains">assertLogContains</a></h2>
+
+    <p>Asserts that the build log contains a given message.</p>
+
+    <p>Only works in the context of an &lt;antunit&gt; task.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">text</td>
+          <td valign="top">The text to search for.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">level</td>
+          <td valign="top">The level the message should have been
+          logged at - the task will also look into more severe
+          levels.  One of "error", "warning", "info", "verbose", "debug".</td>
+          <td valign="top" align="center">No</td>
+        </tr>
+    </table>
+
+    <h2><a name="assertLogDoesntContain">assertLogDoesntContain</a></h2>
+
+    <p>Asserts that the build log doesn't contain a given message.</p>
+
+    <p>Only works in the context of an &lt;antunit&gt; task.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+        <tr>
+          <td valign="top"><b>Attribute</b></td>
+          <td valign="top"><b>Description</b></td>
+          <td align="center" valign="top"><b>Required</b></td>
+        </tr>
+        <tr>
+          <td valign="top">text</td>
+          <td valign="top">The text to search for.</td>
+          <td valign="top" align="center">Yes</td>
+        </tr>
+        <tr>
+          <td valign="top">level</td>
+          <td valign="top">The level the message should have been
+          logged at - the task will also look into more severe
+          levels.  One of "error", "warning", "info", "verbose", "debug".</td>
+          <td valign="top" align="center">No</td>
+        </tr>
+    </table>
+
+    <h2><a name="assertResourceContains">assertResourceContains</a></h2>
+
+    <p>Asserts that a resource's content includes a given string.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+      <tr>
+        <td valign="top"><b>Attribute</b></td>
+        <td valign="top"><b>Description</b></td>
+        <td align="center" valign="top"><b>Required</b></td>
+      </tr>
+      <tr>
+        <td valign="top">resource</td>
+        <td valign="top">Location of the resource to load.</td>
+        <td valign="top" align="center">Yes</td>
+      </tr>
+      <tr>
+        <td valign="top">value</td>
+        <td valign="top">The text to search for.</td>
+        <td valign="top" align="center">Yes</td>
+      </tr>
+        <tr>
+          <td valign="top">casesensitive</td>
+          <td valign="top">
+            Perform a case sensitive match.
+            Default is true.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+      <tr>
+        <td valign="top">message</td>
+        <td valign="top">Message for the exception if the condition
+          doesn't hold true.  Defaults to "Expected resource
+          '<em>resource</em>' to contain value '<em>value</em>' but
+          was '<em>content of resource</em>'".</td>
+        <td align="center">No.</td>
+      </tr>
+    </table>
+
+    <h2><a name="assertResourceDoesntContain">assertResourceDoesntContain</a></h2>
+
+    <p>Asserts that a resource's content doesn't include a given string.</p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+      <tr>
+        <td valign="top"><b>Attribute</b></td>
+        <td valign="top"><b>Description</b></td>
+        <td align="center" valign="top"><b>Required</b></td>
+      </tr>
+      <tr>
+        <td valign="top">resource</td>
+        <td valign="top">Location of the resource to load.</td>
+        <td valign="top" align="center">Yes</td>
+      </tr>
+      <tr>
+        <td valign="top">value</td>
+        <td valign="top">The text to search for.</td>
+        <td valign="top" align="center">Yes</td>
+      </tr>
+        <tr>
+          <td valign="top">casesensitive</td>
+          <td valign="top">
+            Perform a case sensitive match.
+            Default is true.
+          </td>
+          <td align="center">No.</td>
+        </tr>
+      <tr>
+        <td valign="top">message</td>
+        <td valign="top">Message for the exception if the condition
+          doesn't hold true.  Defaults to "Didn't expect resource
+          '<em>resource</em>' to contain value '<em>value</em>' but
+          was '<em>content of resource</em>'".</td>
+        <td align="center">No.</td>
+      </tr>
+    </table>
+
+    <hr/>
+  </body>
+</html>

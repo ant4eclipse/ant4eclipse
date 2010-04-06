@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<antlib>
+  <typedef name="antCall"       classname="org.ant4eclipse.ant.core.AntCall" />
+  <typedef name="echoReference" classname="org.ant4eclipse.ant.core.EchoReference" />
+</antlib>

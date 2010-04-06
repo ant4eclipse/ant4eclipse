@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.tigris.subversion.subclipse.core.svnnature">
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.core,org.ant4eclipse.lib.core"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.core.test,org.ant4eclipse.lib.core.test"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.external,org.ant4eclipse.external"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/lib.jdt,org.lib.jdt"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/lib.jdt.ecj,lib.jdt.ecj"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/lib.jdt.test,lib.jdt.test"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.platform,org.ant4eclipse.lib.platform"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.platform.test,org.ant4eclipse.lib.platform.test"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.pde,org.ant4eclipse.lib.pde"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.pde.test,org.ant4eclipse.lib.pde.test"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.pydt,org.ant4eclipse.lib.pydt"/>
+<project reference="0.9.3,http://svn.javakontor.org/ant4eclipse/trunk/org.ant4eclipse.lib.pydt.test,org.ant4eclipse.lib.pydt.test"/>
+</provider>
+</psf>

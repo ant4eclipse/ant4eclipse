@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<project name="testAntCall" basedir="." default="foo">
+
+  <typedef name="pluginProjectFileSet"
+           classname="org.ant4eclipse.ant.pde.PdeProjectFileSet" />
+
+  <target name="testMultipleDirectoriesFileSet">
+
+    <pluginProjectFileSet workspaceDirectory="${workspace}"
+                          projectname="${projectname}"
+                          includes="${bin.includes}"
+                          excludes="${bin.excludes}"
+                          id="xyz.fileset" />
+
+    <echo-multiDirFileSet filesetref="xyz.fileset" />
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+
+  <macrodef name="echo-multiDirFileSet">
+    <attribute name="filesetref" />
+    <sequential>
+      <pathconvert pathsep="
+  " property="@{filesetref}.echopath">
+        <resources refid="@{filesetref}" />
+      </pathconvert>
+      <echo>${@{filesetref}.echopath}</echo>
+    </sequential>
+  </macrodef>
+
+</project>
