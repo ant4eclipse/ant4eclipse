@@ -443,6 +443,8 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       throw new Ant4EclipseException(EcjExceptionCodes.NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT, compilerArgsRefid);
     }
 
+    A4ELogging.debug("Using compilerArguments '%s'", compilerArguments);
+
     // Step 5: Return the result
     return compilerArguments;
   }
