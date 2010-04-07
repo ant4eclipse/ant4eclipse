@@ -11,7 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.validator;
 
-
+import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
@@ -19,11 +22,6 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.validator.AbstractProjectValidator;
-
-import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  * <p>
@@ -67,7 +65,16 @@ public class OutputPathValidator extends AbstractProjectValidator {
       }
 
       PluginBuildProperties buildproperties = pluginrole.getBuildProperties();
-      if (buildproperties != null) {
+      if (buildproperties == null) {
+        // at this point a missing build.properties file is a warning only, as it is generally possible to work with
+        // plug-in projects
+        // that don't have a build.properties file (you can for example get the classpath of this project).
+        // A missing build.properties is only an *error* if the project should be build and that is handled in the
+        // PluginProjectChecker
+        addWarning(
+            project,
+            "Plug-in project does not have a build.properties file. You won't be able to build this project using the ant4eclipse tasks.");
+      } else {
 
         // get the library representing the project itself
         PluginBuildProperties.Library library = buildproperties.getLibrary(".");
@@ -85,18 +92,17 @@ public class OutputPathValidator extends AbstractProjectValidator {
           }
         }
 
-      }
-
-      /**
-       * @todo [03-Dec-2009:KASI] Hm, should we check for this ? Some people might use different output for test code
-       *       which should not become part of the deployed artifacts. On the other hand such a message might be handy.
-       *       Perhaps we should provide a switch to adjust the behaviour here.
-       */
-      Iterator<String> iterator = jdtoutputpathes.iterator();
-      while (iterator.hasNext()) {
-        String output = iterator.next();
-        addWarning(project, String.format(
-            "build.properties does not contain output path '%s'. you will probably miss some classes", output));
+        /**
+         * @todo [03-Dec-2009:KASI] Hm, should we check for this ? Some people might use different output for test code
+         *       which should not become part of the deployed artifacts. On the other hand such a message might be
+         *       handy. Perhaps we should provide a switch to adjust the behaviour here.
+         */
+        Iterator<String> iterator = jdtoutputpathes.iterator();
+        while (iterator.hasNext()) {
+          String output = iterator.next();
+          addWarning(project, String.format(
+              "build.properties does not contain output path '%s'. you will probably miss some classes", output));
+        }
       }
 
     }

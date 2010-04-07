@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
-
+import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
@@ -40,6 +40,9 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    *          The types of role supported by this validator. Not <code>null</code>.
    */
   public AbstractProjectValidator(String ident, Class<?>... roleclasses) {
+    Assure.nonEmpty("ident", ident);
+    Assure.notNull("roleclasses", roleclasses);
+
     this._types = roleclasses;
     this._key = ident;
   }
@@ -72,7 +75,7 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    *          A warning message. Neither <code>null</code> nor empty.
    */
   protected void addWarning(EclipseProject project, String message) {
-    A4ELogging.warn("%s: %s > %s", project.getSpecifiedName(), this._key, message);
+    A4ELogging.warn("Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
   }
 
   /**
@@ -86,7 +89,7 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    *          An error message. Neither <code>null</code> nor empty.
    */
   protected void addError(EclipseProject project, String message) {
-    A4ELogging.error("%s: %s > %s", project.getSpecifiedName(), this._key, message);
+    A4ELogging.error("Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
   }
 
 } /* ENDCLASS */

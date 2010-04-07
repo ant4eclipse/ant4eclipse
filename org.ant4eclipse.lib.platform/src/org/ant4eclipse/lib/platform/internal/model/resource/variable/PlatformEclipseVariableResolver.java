@@ -26,7 +26,7 @@ public class PlatformEclipseVariableResolver implements EclipseVariableResolver 
     resolvedVariables.put("build_project", eclipseProject.getFolder().getAbsolutePath());
     resolvedVariables.put("build_type", "full");
     resolvedVariables.put("project_loc", eclipseProject.getFolder().getAbsolutePath());
-    resolvedVariables.put("project_name", eclipseProject.getFolderName());
+    resolvedVariables.put("project_name", eclipseProject.getSpecifiedName());
     resolvedVariables.put("project_path", eclipseProject.getFolderName());
     // TODO !!
     resolvedVariables.put("workspace_loc", eclipseProject.getFolder().getParent());
