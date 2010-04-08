@@ -12,6 +12,8 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.ant4eclipse.lib.pde.model.launcher.EquinoxLaunchConfigurationWrapper;
 import org.ant4eclipse.lib.pde.model.launcher.SelectedLaunchConfigurationBundle;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
@@ -265,6 +267,36 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
       warn("Bundle '%s' with version '%s' not found in target platform", bundleSymbolicName, osgiVersion);
     }
     return bundleDescription;
+  }
+
+  @Override
+  protected MacroExecutionValues provideDefaultMacroExecutionValues(MacroExecutionValues values) {
+    final MacroExecutionValues defaultValues = super.provideDefaultMacroExecutionValues(values);
+
+    // Add JRE-Location to scoped properties
+    JavaRuntime javaRuntime = getJavaRuntime();
+    defaultValues.getProperties().put("jre.location", javaRuntime.getLocation().getAbsolutePath());
+
+    return defaultValues;
+  }
+
+  /**
+   * Returns the Java Runtime for the current launch configuration
+   * 
+   * @return
+   */
+  protected JavaRuntime getJavaRuntime() {
+    LaunchConfiguration launchConfiguration = getLaunchConfiguration();
+    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
+
+    String vmPath = launchConfiguration.getAttribute("org.eclipse.jdt.launching.JRE_CONTAINER");
+    if (vmPath == null) {
+      return javaRuntimeRegistry.getDefaultJavaRuntime();
+    }
+
+    JavaRuntime javaRuntime = javaRuntimeRegistry.getJavaRuntimeForPath(vmPath);
+    return javaRuntime;
+
   }
 
 }

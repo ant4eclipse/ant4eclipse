@@ -84,6 +84,17 @@ public interface JavaRuntimeRegistry {
   JavaRuntime getJavaRuntime(String id);
 
   /**
+   * Returns the java runtime for the given path (i.e.
+   * 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5')
+   * 
+   * @param path
+   *          The path
+   * @return The matching runtime. In case no runtime can be discovered, the default runtime is returned. If no default
+   *         runtime is set, an Exception is thrown
+   */
+  JavaRuntime getJavaRuntimeForPath(String path);
+
+  /**
    * <p>
    * Returns the default Java Runtime.
    * </p>

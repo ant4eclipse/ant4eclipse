@@ -96,24 +96,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
       return null;
     }
 
-    if (ContainerTypes.JRE_CONTAINER.equals(runtimeEntry.getPath())) {
-      return getJavaRuntimeRegistry().getDefaultJavaRuntime();
-    }
-
-    JavaRuntime javaRuntime = null;
-
-    if (runtimeEntry.getPath().startsWith(ContainerTypes.VMTYPE_PREFIX)) {
-      javaRuntime = getJavaRuntimeRegistry().getJavaRuntime(
-          runtimeEntry.getPath().substring(ContainerTypes.VMTYPE_PREFIX.length()));
-    }
-
-    if (javaRuntime != null) {
-      return javaRuntime;
-    }
-
-    A4ELogging.warn("No java runtime '%s' defined - using default runtime.", runtimeEntry.getPath());
-
-    return getJavaRuntimeRegistry().getDefaultJavaRuntime();
+    return getJavaRuntimeRegistry().getJavaRuntimeForPath(runtimeEntry.getPath());
   }
 
   /**

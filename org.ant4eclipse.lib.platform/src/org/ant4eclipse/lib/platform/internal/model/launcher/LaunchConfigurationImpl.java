@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
-import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
-
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
+import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 
 public class LaunchConfigurationImpl implements LaunchConfiguration {
 
@@ -41,6 +41,9 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
 
   public boolean getBooleanAttribute(String attributeName) {
     LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
+    if (launchConfigAttribute == null) {
+      return false;
+    }
     return Boolean.parseBoolean(launchConfigAttribute.getStringValue());
   }
 

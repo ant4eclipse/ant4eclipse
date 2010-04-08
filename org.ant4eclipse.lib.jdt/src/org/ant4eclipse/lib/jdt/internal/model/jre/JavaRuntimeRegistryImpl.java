@@ -11,17 +11,20 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.jdt.JdtExceptionCode;
-import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
-import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
+import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.jdt.JdtExceptionCode;
+import org.ant4eclipse.lib.jdt.model.ContainerTypes;
+import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 
 /**
  * <p>
@@ -125,6 +128,35 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     return null;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#getJavaRuntimeForPath(java.lang.String)
+   */
+  public JavaRuntime getJavaRuntimeForPath(String path) {
+    Assure.notNull("path", path);
+
+    trace("Determining JRE for path '%s'", path);
+
+    if (ContainerTypes.JRE_CONTAINER.equals(path)) {
+      return getDefaultJavaRuntime();
+    }
+
+    JavaRuntime javaRuntime = null;
+
+    if (path.startsWith(ContainerTypes.VMTYPE_PREFIX)) {
+      javaRuntime = getJavaRuntime(path.substring(ContainerTypes.VMTYPE_PREFIX.length()));
+    }
+
+    if (javaRuntime != null) {
+      return javaRuntime;
+    }
+
+    A4ELogging.warn("No java runtime '%s' defined - using default runtime.", path);
+
+    return getDefaultJavaRuntime();
   }
 
   /**

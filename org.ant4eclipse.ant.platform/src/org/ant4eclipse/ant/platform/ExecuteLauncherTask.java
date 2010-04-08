@@ -2,6 +2,9 @@ package org.ant4eclipse.ant.platform;
 
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
+import java.io.File;
+import java.util.Collection;
+
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
@@ -14,9 +17,6 @@ import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
-
-import java.io.File;
-import java.util.Collection;
 
 public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
@@ -101,8 +101,6 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
       LaunchConfigurationReader launchConfigurationReader = ServiceRegistry.instance().getService(
           LaunchConfigurationReader.class);
-
-      System.out.println(" * * * READING LAUNCH CONFIG: " + getLaunchConfigurationFile());
 
       final LaunchConfiguration launchConfiguration = launchConfigurationReader
           .readLaunchConfiguration(getLaunchConfigurationFile());
