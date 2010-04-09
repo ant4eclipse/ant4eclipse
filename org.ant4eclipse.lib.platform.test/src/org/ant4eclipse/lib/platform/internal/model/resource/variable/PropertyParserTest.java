@@ -77,6 +77,7 @@ public class PropertyParserTest {
     assertThat(this._propertyArgs.get(1), is(equalTo("myWorkspace")));
   }
 
+  @Test
   public void stringWithPropertyAndArgument() {
     String value = "${project_loc:abc}";
     this._propertyParser.parsePropertyString(value, this._fragments, this._propertyRefs, this._propertyArgs);
@@ -86,7 +87,7 @@ public class PropertyParserTest {
     assertThat(this._propertyRefs.size(), is(1));
     assertThat(this._propertyRefs.get(0), is(equalTo("project_loc")));
     assertThat(this._propertyArgs.size(), is(1));
-    assertThat(this._propertyArgs.get(1), is("abc"));
+    assertThat(this._propertyArgs.get(0), is("abc"));
 
   }
 }
