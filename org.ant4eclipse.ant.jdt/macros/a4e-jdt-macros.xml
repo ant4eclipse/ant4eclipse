@@ -126,8 +126,8 @@
           <mkdir dir="${buildJdtProject.output.directory}" />
         </ant4eclipse:forEachOutputDirectory>
 
-        <!-- Step 5: Compile the project using the eclipse java compiler (ejc) -->
-        <ant4eclipse:forProject>
+        <!-- Step 5: Compile the project (as long as it has at least one source dir) using the eclipse java compiler (ejc) -->
+        <ant4eclipse:forProject filter="(buildJdtProject.source.directories=*)">
         	
           <!-- template element 'pre-compile' -->
           <pre-compile />
