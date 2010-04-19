@@ -74,10 +74,12 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
         true, true, jdtClasspathContainerArguments);
 
-    if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
-      // TODO
-      compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
-          .getAccessRestrictions().asFormattedString());
+    if (cpAbsoluteCompiletime.hasBootClasspath()) {
+      if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
+        // TODO
+        compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
+            .getAccessRestrictions().asFormattedString());
+      }
     }
 
     ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
@@ -101,8 +103,10 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
       }
     }
 
-    executionValues.getProperties().put(BOOT_CLASSPATH,
-        this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
+    if (cpAbsoluteCompiletime.hasBootClasspath()) {
+      executionValues.getProperties().put(BOOT_CLASSPATH,
+          this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
+    }
     executionValues.getProperties().put(CLASSPATH_ABSOLUTE_COMPILETIME,
         this._pathComponent.convertToString(cpAbsoluteCompiletime.getClasspathFiles()));
     executionValues.getProperties().put(CLASSPATH_RELATIVE_COMPILETIME,
@@ -112,8 +116,10 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     executionValues.getProperties().put(CLASSPATH_RELATIVE_RUNTIME,
         this._pathComponent.convertToString(cpRelativeRuntime.getClasspathFiles()));
 
-    executionValues.getReferences().put(BOOT_CLASSPATH_PATH,
-        this._pathComponent.convertToPath(cpAbsoluteCompiletime.getBootClasspathFiles()));
+    if (cpAbsoluteCompiletime.hasBootClasspath()) {
+      executionValues.getReferences().put(BOOT_CLASSPATH_PATH,
+          this._pathComponent.convertToPath(cpAbsoluteCompiletime.getBootClasspathFiles()));
+    }
     executionValues.getReferences().put(CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
         this._pathComponent.convertToPath(cpAbsoluteCompiletime.getClasspathFiles()));
     executionValues.getReferences().put(CLASSPATH_RELATIVE_COMPILETIME_PATH,

@@ -42,10 +42,11 @@ public interface ResolvedClasspath {
 
   /**
    * <p>
-   * Returns the boot class path entries.
+   * Returns the boot class path entries or null if no boot class path has been set
    * </p>
    * 
-   * @return the boot class path
+   * @return the boot class path or null
+   * @see #hasBootClasspath()
    */
   ResolvedClasspathEntry getBootClasspath();
 
@@ -54,7 +55,18 @@ public interface ResolvedClasspath {
    * Convenience method that returns all files contained in the resolved boot class path entries as a single array.
    * </p>
    * 
-   * @return all files contained in the resolved boot class path entries as a single array.
+   * @return all files contained in the resolved boot class path entries as a single array. Returns an empty array if no
+   *         boot class path has been set
+   * @see #hasBootClasspath()
    */
   File[] getBootClasspathFiles();
+
+  /**
+   * Returns whether a boot class path has been set or not
+   * 
+   * @return true if a boot class path has been set, otherwise false
+   * @see #hasBootClasspath()
+   * 
+   */
+  boolean hasBootClasspath();
 }

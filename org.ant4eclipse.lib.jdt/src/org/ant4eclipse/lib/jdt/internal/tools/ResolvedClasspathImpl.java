@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
-import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
-
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 
 /**
  * <p>
@@ -31,7 +31,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   /** the list with all the resolved path entries */
   private List<ResolvedClasspathEntry> _classpath;
 
-  /** - * */
+  /** the boot class path. Might be null * */
   private ResolvedClasspathEntry       _bootclasspath;
 
   /**
@@ -61,7 +61,17 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * {@inheritDoc}
    */
   public File[] getBootClasspathFiles() {
+    if (!hasBootClasspath()) {
+      return new File[0];
+    }
     return this._bootclasspath.getClassPathEntries();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasBootClasspath() {
+    return (this._bootclasspath != null);
   }
 
   /**
