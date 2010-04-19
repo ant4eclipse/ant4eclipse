@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
@@ -29,6 +28,7 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -110,16 +110,17 @@ public class BundleDependenciesResolver {
 
     // Step 3: add all packages that come from required bundles...
     for (BundleDescription requiredBundle : description.getResolvedRequires()) {
+
       // add the required bundles...
       addRequiredBundle(requiredBundle);
-
-      // add all re-exported bundles also...
-      for (BundleDescription reexportedBundle : getReexportedBundles(description, requiredBundle)) {
-        addRequiredBundle(reexportedBundle);
-      }
     }
 
-    // Step 4: if the bundle is a fragment, we have to add the dependencies of the host as well
+    // Step 4: add all re-exported bundles also...
+    for (BundleDescription reexportedBundle : getReexportedBundles(description)) {
+      addRequiredBundle(reexportedBundle);
+    }
+
+    // Step 5: if the bundle is a fragment, we have to add the dependencies of the host as well
     if (isFragment(description)) {
       BundleDescription hostDescription = getHost(description);
       resolveBundleClasspath(hostDescription);
@@ -238,7 +239,7 @@ public class BundleDependenciesResolver {
    * @param bundleDescription
    * @return
    */
-  private BundleDescription[] getReexportedBundles(BundleDescription root, BundleDescription bundleDescription) {
+  private Set<BundleDescription> getReexportedBundles(BundleDescription root) {
 
     // TODO: AE-171
     // A4ELogging
@@ -246,15 +247,22 @@ public class BundleDependenciesResolver {
 
     List<BundleDescription> resolvedDescriptions = new LinkedList<BundleDescription>();
     resolvedDescriptions.add(root);
+    for (BundleDescription requiredBundle : root.getResolvedRequires()) {
+      resolvedDescriptions.add(requiredBundle);
+    }
 
-    return getReexportedBundles(bundleDescription, resolvedDescriptions);
+    Set<BundleDescription> result = new HashSet<BundleDescription>();
+    for (BundleDescription requiredBundle : root.getResolvedRequires()) {
+      result.addAll(getReexportedBundles(requiredBundle, resolvedDescriptions));
+    }
+    return result;
   }
 
   /**
    * @param bundleDescription
    * @return
    */
-  private BundleDescription[] getReexportedBundles(BundleDescription bundleDescription,
+  private Set<BundleDescription> getReexportedBundles(BundleDescription bundleDescription,
       List<BundleDescription> resolvedDescriptions) {
 
     Assure.notNull("bundleDescription", bundleDescription);
@@ -262,27 +270,29 @@ public class BundleDependenciesResolver {
     // return if bundle already is resolved
     if (resolvedDescriptions.contains(bundleDescription)) {
 
-      // compute cycle list...
-      List<BundleDescription> cycleList = resolvedDescriptions.subList(resolvedDescriptions.indexOf(bundleDescription),
-          resolvedDescriptions.size());
+      // // compute cycle list...
+      // List<BundleDescription> cycleList = resolvedDescriptions.subList( /*
+      // * resolvedDescriptions.indexOf(bundleDescription
+      // * )
+      // */0, resolvedDescriptions.size());
+      //
+      // // create the cycle list...
+      // StringBuilder builder = new StringBuilder();
+      // for (BundleDescription description : cycleList) {
+      // builder.append(description.getSymbolicName() + "_" + description.getVersion());
+      // builder.append(" -> ");
+      // }
+      // builder.append(bundleDescription.getSymbolicName() + "_" + bundleDescription.getVersion());
+      //
+      // // create warning...
+      // A4ELogging.warn("****************************");
+      // A4ELogging
+      // .warn(
+      // "Attention! The specified bundles contain cyclic dependencies via requiredBundle/reexport definitions (e.g. '%s').",
+      // builder.toString());
+      // A4ELogging.warn("****************************");
 
-      // create the cycle list...
-      StringBuilder builder = new StringBuilder();
-      for (BundleDescription description : cycleList) {
-        builder.append(description.getSymbolicName() + "_" + description.getVersion());
-        builder.append(" -> ");
-      }
-      builder.append(bundleDescription.getSymbolicName() + "_" + bundleDescription.getVersion());
-
-      // create warning...
-      A4ELogging.warn("****************************");
-      A4ELogging
-          .warn(
-              "Attention! The specified bundles contain cyclic dependencies via requiredBundle/reexport definitions (e.g. '%s').",
-              builder.toString());
-      A4ELogging.warn("****************************");
-
-      return new BundleDescription[] {};
+      return new HashSet<BundleDescription>();
     } else {
       resolvedDescriptions.add(bundleDescription);
     }
@@ -342,7 +352,7 @@ public class BundleDependenciesResolver {
     resolvedDescriptions.remove(bundleDescription);
 
     // return the result
-    return resultSet.toArray(new BundleDescription[resultSet.size()]);
+    return resultSet;
   }
 
   /**
