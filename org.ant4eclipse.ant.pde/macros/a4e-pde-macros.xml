@@ -775,7 +775,7 @@
         <!-- Step 3: Build the plug-ins  -->
         <!-- Step 3.1: Build the plug-ins  -->
         <ant4eclipse:forEachPlugin filter="(executeFeature.plugin.isSource=true)">
-          <echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolvedversion})' </echo>
+          <echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
           <buildPlugin workspaceDirectory="@{workspaceDirectory}"
                        projectName="${executeFeature.plugin.filename}"
                        targetplatformid="@{targetPlatformId}"
@@ -788,7 +788,7 @@
 
         <!-- Step 3.2: Copy plug-ins  -->
         <ant4eclipse:forEachPlugin filter="(executeFeature.plugin.isSource=false)">
-          <echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolvedversion})' </echo>
+          <echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
           <copy todir="@{destination}/${a4e.plugins.directory}">
             <filelist refid="executeFeature.plugin.filelist" />
           </copy>
