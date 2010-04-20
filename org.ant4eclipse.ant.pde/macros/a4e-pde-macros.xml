@@ -675,13 +675,15 @@
                     overwrite="true" />
             </then>
             <else>
+              
               <!-- generate a default config.ini which just starts the workbench. -->
               <echo file="@{destination}/configuration/config.ini" append="false"># Product Runtime Configuration File${line.separator}</echo>
               <echo file="@{destination}/configuration/config.ini" append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
               <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles.defaultStartLevel=4${line.separator}</echo>
               <echo file="@{destination}/configuration/config.ini" append="true">eclipse.product=${executeProduct.product.id}${line.separator}</echo>
               <echo file="@{destination}/configuration/config.ini" append="true">osgi.splashPath=platform:/base/plugins/org.eclipse.platform${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles=org.eclipse.core.runtime@start,org.eclipse.osgi@start,org.eclipse.equinox.common@2:start,org.eclipse.update.configurator@3:start${line.separator}</echo>
+              <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles=${executeProduct.osgi.bundles}${line.separator}</echo>
+              
             </else>
           </antcontrib:if>
 

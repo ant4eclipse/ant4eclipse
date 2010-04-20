@@ -111,6 +111,9 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /** - */
   private static final String         PROP_PLUGINISSOURCE    = "plugin.isSource";
 
+  /** - */
+  private static final String         PROP_OSGIBUNDLES       = "osgi.bundles";
+
   /**
    * 
    */
@@ -408,6 +411,107 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   }
 
   /**
+   * @see "http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/configuration.htm"
+   * 
+   * @param targetlocations
+   *          The target platform locations currently registered. Not <code>null</code>.
+   * 
+   * @return A comma separated list of all osgi bundles. Not <code>null</code>.
+   */
+  private String collectOsgiBundles(File[] targetlocations) {
+
+    StringMap properties = new StringMap();
+
+    Map<String, Integer> bundles = new Hashtable<String, Integer>();
+    Map<String, Boolean> tostart = new Hashtable<String, Boolean>();
+
+    for (File targetlocation : targetlocations) {
+      File configini = new File(targetlocation, "configuration/config.ini");
+      if (configini.isFile()) {
+
+        // load the current bundle list of a specific configuration
+        properties.extendProperties(configini);
+        String bundlelist = properties.get("osgi.bundles", null);
+        if (bundlelist != null) {
+
+          // separate the bundle parts
+          String[] parts = bundlelist.split(",");
+          for (String bundlepart : parts) {
+
+            // check if it's a bundle which needs to be started
+            boolean isstart = bundlepart.endsWith(":start");
+            if (isstart) {
+              bundlepart = bundlepart.substring(0, bundlepart.length() - 6); // 6 == ":start".length()
+            }
+            int idx = bundlepart.lastIndexOf('@');
+
+            // get the startlevel
+            int startlevel = -1;
+            if (idx != -1) {
+              startlevel = Integer.parseInt(bundlepart.substring(idx + 1));
+              bundlepart = bundlepart.substring(0, idx);
+            }
+
+            // make sure we don't override the current entries with bad values
+            if (bundles.containsKey(bundlepart)) {
+              if (startlevel > bundles.get(bundlepart).intValue()) {
+                // the last stored start level is higher so we're using the highest start level
+                startlevel = bundles.get(bundlepart).intValue();
+              }
+            }
+            if (tostart.containsKey(bundlepart)) {
+              if (tostart.get(bundlepart).booleanValue()) {
+                // if the bundle shall be started it will be started
+                isstart = true; // tostart.get(part).booleanValue()
+              }
+            }
+
+            // register the current settings
+            bundles.put(bundlepart, Integer.valueOf(startlevel));
+            tostart.put(bundlepart, Boolean.valueOf(isstart));
+
+          }
+        }
+      }
+    }
+
+    // if none could be found we're setting up some defaults which are basically
+    // a guess (should be probably provided as a resource in future)
+    if (bundles.isEmpty()) {
+      bundles.put("org.eclipse.core.runtime", Integer.valueOf(-1));
+      tostart.put("org.eclipse.core.runtime", Boolean.TRUE);
+      bundles.put("org.eclipse.osgi", Integer.valueOf(2));
+      tostart.put("org.eclipse.osgi", Boolean.TRUE);
+      bundles.put("org.eclipse.equinox.common", Integer.valueOf(2));
+      tostart.put("org.eclipse.equinox.common", Boolean.TRUE);
+      bundles.put("org.eclipse.update.configurator", Integer.valueOf(3));
+      tostart.put("org.eclipse.update.configurator", Boolean.TRUE);
+    }
+
+    // create a textual description for the bundlelist
+    StringBuffer buffer = new StringBuffer();
+    for (Map.Entry<String, Integer> entry : bundles.entrySet()) {
+      if (buffer.length() > 0) {
+        buffer.append(",");
+      }
+      String bundle = entry.getKey();
+      int startlevel = bundles.get(bundle).intValue();
+      boolean start = tostart.get(bundle).booleanValue();
+      if (start) {
+        if (startlevel > 0) {
+          buffer.append(String.format("%s@%d:start", bundle, Integer.valueOf(startlevel)));
+        } else {
+          buffer.append(String.format("%s@start", bundle));
+        }
+      } else {
+        buffer.append(bundle);
+      }
+    }
+    return buffer.toString();
+
+  }
+
+  /**
    * Contributes general settings to the macro execution properties.
    * 
    * @param properties
@@ -427,6 +531,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     properties.put(PROP_VERSION, String.valueOf(productdef.getVersion()));
     properties.put(PROP_VMARGS, productdef.getVmArgs(this._os));
     properties.put(PROP_PROGRAMARGS, productdef.getProgramArgs(this._os));
+    properties.put(PROP_OSGIBUNDLES, collectOsgiBundles(targetplatform.getLocations()));
 
     String configini = productdef.getConfigIni(this._os);
     if (configini == null) {
