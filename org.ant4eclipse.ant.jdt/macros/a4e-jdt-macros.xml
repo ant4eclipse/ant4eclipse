@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
-<project name="a4e-jdt-macros" basedir="." xmlns:ant4eclipse="antlib:org.ant4eclipse">
+<project name="a4e-jdt-macros" basedir="." xmlns:ant4eclipse="antlib:org.ant4eclipse" xmlns:antcontrib="antlib:net.sf.antcontrib">
 
-  <!-- define ant4eclipse tasks -->
+  <!-- define antcontrib tasks -->
+  <taskdef uri="antlib:net.sf.antcontrib"
+           resource="net/sf/antcontrib/antlib.xml" />
+
+	<!-- define ant4eclipse tasks -->
   <taskdef uri="antlib:org.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
   <!-- ===============================================================================================================
@@ -120,10 +124,19 @@
       	</ant4eclipse:forProject>
       	
         <!-- Step 4: clean output directories -->
+        <!-- Step 4: clean output directories -->
         <ant4eclipse:forEachOutputDirectory>
-          <echo> * Cleaning output directory '${buildJdtProject.output.directory}'</echo>
-          <delete dir="${buildJdtProject.output.directory}" quiet="true" />
-          <mkdir dir="${buildJdtProject.output.directory}" />
+         	<antcontrib:if>
+         		<equals arg1="${buildJdtProject.output.directory}" arg2="${buildJdtProject.project.directory}"/>
+         		<antcontrib:then>
+         			<echo level="warning"> * NOT cleaning output directory '${buildJdtProject.output.directory}' as it points to the projects (${buildJdtProject.project.name}) root folder</echo>
+         		</antcontrib:then>
+         		<antcontrib:else>
+           		<echo> * Cleaning output directory '${buildJdtProject.output.directory}' project: ${buildJdtProject.project.directory}</echo>
+ 			          <delete dir="${buildJdtProject.output.directory}" quiet="true" />
+ 			          <mkdir dir="${buildJdtProject.output.directory}" />
+         		</antcontrib:else>
+        	</antcontrib:if>
         </ant4eclipse:forEachOutputDirectory>
 
         <!-- Step 5: Compile the project (as long as it has at least one source dir) using the eclipse java compiler (ejc) -->
