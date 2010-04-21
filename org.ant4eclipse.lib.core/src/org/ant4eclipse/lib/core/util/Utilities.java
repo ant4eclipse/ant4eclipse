@@ -11,12 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.nls.NLSMessage;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,6 +42,13 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>
@@ -82,6 +83,10 @@ public class Utilities {
 
   /** - */
   private static final String OS              = System.getProperty("os.name");
+
+  static {
+    NLS.initialize(Utilities.class);
+  }
 
   /**
    * Returns a canonical representation of the supplied file.
