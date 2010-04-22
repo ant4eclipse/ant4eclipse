@@ -346,7 +346,7 @@ public class BundleDependenciesResolver {
       }
     }
 
-    resolvedDescriptions.remove(bundleDescription);
+    // resolvedDescriptions.remove(bundleDescription);
 
     // return the result
     return resultSet;
