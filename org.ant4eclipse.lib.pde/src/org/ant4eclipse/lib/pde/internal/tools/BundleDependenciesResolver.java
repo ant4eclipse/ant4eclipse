@@ -247,9 +247,6 @@ public class BundleDependenciesResolver {
 
     List<BundleDescription> resolvedDescriptions = new LinkedList<BundleDescription>();
     resolvedDescriptions.add(root);
-    for (BundleDescription requiredBundle : root.getResolvedRequires()) {
-      resolvedDescriptions.add(requiredBundle);
-    }
 
     Set<BundleDescription> result = new HashSet<BundleDescription>();
     for (BundleDescription requiredBundle : root.getResolvedRequires()) {
