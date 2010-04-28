@@ -44,7 +44,7 @@ public class ProductDefinition {
   private boolean                   _basedonfeatures;
 
   /** - */
-  private List<ConfigurationRecord> _configrecords;
+  private List<BundleStartRecord> _configrecords;
 
   /** - */
   private List<String>              _pluginids;
@@ -77,7 +77,7 @@ public class ProductDefinition {
    * Initialises this data structure.
    */
   public ProductDefinition() {
-    this._configrecords = new ArrayList<ConfigurationRecord>();
+    this._configrecords = new ArrayList<BundleStartRecord>();
     this._pluginids = new ArrayList<String>();
     this._fragmentids = new ArrayList<String>();
     this._name = null;
@@ -122,8 +122,8 @@ public class ProductDefinition {
    * 
    * @return A list of all ConfigurationRecord instances. Not <code>null</code>.
    */
-  public ConfigurationRecord[] getConfigurationRecords() {
-    ConfigurationRecord[] result = new ConfigurationRecord[this._configrecords.size()];
+  public BundleStartRecord[] getConfigurationRecords() {
+    BundleStartRecord[] result = new BundleStartRecord[this._configrecords.size()];
     this._configrecords.toArray(result);
     Arrays.sort(result);
     return result;
@@ -294,7 +294,7 @@ public class ProductDefinition {
    * @param record
    *          The ConfigurationRecord which has to be added. Not <code>null</code>.
    */
-  void addConfigurationRecord(ConfigurationRecord record) {
+  void addConfigurationRecord(BundleStartRecord record) {
     this._configrecords.add(record);
   }
 

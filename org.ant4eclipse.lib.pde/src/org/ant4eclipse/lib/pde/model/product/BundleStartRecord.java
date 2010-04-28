@@ -13,12 +13,12 @@ package org.ant4eclipse.lib.pde.model.product;
 
 /**
  * <p>
- * A ConfigurationRecord just provides the information needed for the setup of the config.ini file.
+ * A BundleStartRecord just provides the information needed for the setup of the config.ini file.
  * </p>
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
+public class BundleStartRecord implements Comparable<BundleStartRecord> {
 
   /** - */
   private boolean _autostart;
@@ -32,7 +32,7 @@ public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
   /**
    * Initialises this data structure.
    */
-  public ConfigurationRecord() {
+  public BundleStartRecord() {
     this._autostart = false;
     this._id = null;
     this._startlevel = 4;
@@ -101,7 +101,7 @@ public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ConfigurationRecord:");
+    buffer.append("[BundleStartRecord:");
     buffer.append(" _id: ");
     buffer.append(this._id);
     buffer.append(", _autostart: ");
@@ -128,7 +128,7 @@ public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
   /**
    * {@inheritDoc}
    */
-  public int compareTo(ConfigurationRecord other) {
+  public int compareTo(BundleStartRecord other) {
     if (other != null) {
       return this._id.compareTo(other._id);
     }

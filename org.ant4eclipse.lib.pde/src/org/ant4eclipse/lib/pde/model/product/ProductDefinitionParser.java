@@ -148,7 +148,7 @@ public class ProductDefinitionParser {
     String[] configautostarts = configstartquery.getResult();
     String[] configlevels = configlevelquery.getResult();
     for (int i = 0; i < configids.length; i++) {
-      ConfigurationRecord record = new ConfigurationRecord();
+      BundleStartRecord record = new BundleStartRecord();
       record.setId(configids[i]);
       record.setAutoStart(Boolean.parseBoolean(configautostarts[i]));
       record.setStartLevel(Integer.parseInt(configlevels[i]));
