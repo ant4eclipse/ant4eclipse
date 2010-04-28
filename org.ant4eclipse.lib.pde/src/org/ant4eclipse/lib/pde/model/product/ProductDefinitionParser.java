@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.product;
 
-import java.io.InputStream;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -20,6 +18,8 @@ import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.osgi.framework.Version;
+
+import java.io.InputStream;
 
 /**
  * <p>
@@ -83,6 +83,10 @@ public class ProductDefinitionParser {
     XQuery vmsolarisquery = queryhandler.createQuery("/product/vm/solaris");
     XQuery vmwin32query = queryhandler.createQuery("/product/vm/win32");
 
+    XQuery configidquery = queryhandler.createQuery("/product/configurations/plugin/@id");
+    XQuery configstartquery = queryhandler.createQuery("/product/configurations/plugin/@autoStart");
+    XQuery configlevelquery = queryhandler.createQuery("/product/configurations/plugin/@startLevel");
+
     XQueryHandler.queryInputStream(inputstream, queryhandler);
 
     ProductDefinition result = new ProductDefinition();
@@ -138,6 +142,17 @@ public class ProductDefinitionParser {
     String[] featureversions = featureversionquery.getResult();
     for (int i = 0; i < featureids.length; i++) {
       result.addFeature(featureids[i], new Version(featureversions[i]));
+    }
+
+    String[] configids = configidquery.getResult();
+    String[] configautostarts = configstartquery.getResult();
+    String[] configlevels = configlevelquery.getResult();
+    for (int i = 0; i < configids.length; i++) {
+      ConfigurationRecord record = new ConfigurationRecord();
+      record.setId(configids[i]);
+      record.setAutoStart(Boolean.parseBoolean(configautostarts[i]));
+      record.setStartLevel(Integer.parseInt(configlevels[i]));
+      result.addConfigurationRecord(record);
     }
 
     validate(result);

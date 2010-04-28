@@ -29,51 +29,55 @@ import java.util.Map;
 public class ProductDefinition {
 
   /** - */
-  private String                 _name;
+  private String                    _name;
 
   /** - */
-  private String                 _id;
+  private String                    _id;
 
   /** - */
-  private String                 _application;
+  private String                    _application;
 
   /** - */
-  private Version                _version;
+  private Version                   _version;
 
   /** - */
-  private boolean                _basedonfeatures;
+  private boolean                   _basedonfeatures;
 
   /** - */
-  private List<String>           _pluginids;
+  private List<ConfigurationRecord> _configrecords;
 
   /** - */
-  private List<String>           _fragmentids;
+  private List<String>              _pluginids;
 
   /** - */
-  private Map<ProductOs, String> _configini;
+  private List<String>              _fragmentids;
 
   /** - */
-  private Map<ProductOs, String> _programargs;
+  private Map<ProductOs, String>    _configini;
 
   /** - */
-  private Map<ProductOs, String> _vmargs;
+  private Map<ProductOs, String>    _programargs;
 
   /** - */
-  private String                 _launchername;
+  private Map<ProductOs, String>    _vmargs;
 
   /** - */
-  private Map<ProductOs, String> _vm;
+  private String                    _launchername;
 
   /** - */
-  private String                 _splashplugin;
+  private Map<ProductOs, String>    _vm;
 
   /** - */
-  private Map<String, Version>   _features;
+  private String                    _splashplugin;
+
+  /** - */
+  private Map<String, Version>      _features;
 
   /**
    * Initialises this data structure.
    */
   public ProductDefinition() {
+    this._configrecords = new ArrayList<ConfigurationRecord>();
     this._pluginids = new ArrayList<String>();
     this._fragmentids = new ArrayList<String>();
     this._name = null;
@@ -109,6 +113,18 @@ public class ProductDefinition {
    */
   public String[] getFeatureIds() {
     String[] result = this._features.keySet().toArray(new String[this._features.size()]);
+    Arrays.sort(result);
+    return result;
+  }
+
+  /**
+   * Returns a list of all ConfigurationRecord instances.
+   * 
+   * @return A list of all ConfigurationRecord instances. Not <code>null</code>.
+   */
+  public ConfigurationRecord[] getConfigurationRecords() {
+    ConfigurationRecord[] result = new ConfigurationRecord[this._configrecords.size()];
+    this._configrecords.toArray(result);
     Arrays.sort(result);
     return result;
   }
@@ -270,6 +286,16 @@ public class ProductDefinition {
     if (path != null) {
       this._configini.put(os, path.trim());
     }
+  }
+
+  /**
+   * Adds the supplied ConfigurationRecord to this product definition.
+   * 
+   * @param record
+   *          The ConfigurationRecord which has to be added. Not <code>null</code>.
+   */
+  void addConfigurationRecord(ConfigurationRecord record) {
+    this._configrecords.add(record);
   }
 
   /**
