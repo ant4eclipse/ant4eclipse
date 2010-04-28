@@ -21,6 +21,7 @@ import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.LinkedResourceImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.ProjectNatureImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService;
 import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
 
 import java.io.File;
@@ -136,7 +137,30 @@ public class ProjectFileParser {
           }
         }
       }
-      String relative = Utilities.calcRelative(eclipseProject.getFolder(), new File(location));
+
+      // 
+      File locationAsFile = new File(location);
+      if (!locationAsFile.exists() && location.contains("/")) {
+        String variableName = location.substring(0, location.indexOf("/"));
+
+        LinkedResourcePathVariableService variableService = ServiceRegistry.instance().getService(
+            LinkedResourcePathVariableService.class);
+
+        String variable = variableService.getLinkedResourcePath(variableName);
+
+        if (variable != null) {
+          location = variable + location.substring(location.indexOf("/"));
+          locationAsFile = new File(location);
+        }
+      }
+
+      // throw exception if file does not exist
+      if (!locationAsFile.exists()) {
+        // TODO
+        throw new RuntimeException("Linked Resource does not exist!");
+      }
+
+      String relative = Utilities.calcRelative(eclipseProject.getFolder(), locationAsFile);
       int typeAsInt = Integer.parseInt(linkedResourceTypes[i]);
       LinkedResourceImpl linkedResource = new LinkedResourceImpl(linkedResourceNames[i], location, relative, typeAsInt);
       eclipseProject.addLinkedResource(linkedResource);
@@ -203,7 +227,8 @@ public class ProjectFileParser {
   }
 
   private static EclipseStringSubstitutionService getEclipseVariableResolver() {
-    EclipseStringSubstitutionService resolver = ServiceRegistry.instance().getService(EclipseStringSubstitutionService.class);
+    EclipseStringSubstitutionService resolver = ServiceRegistry.instance().getService(
+        EclipseStringSubstitutionService.class);
     return resolver;
   }
 

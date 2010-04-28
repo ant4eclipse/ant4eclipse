@@ -263,6 +263,13 @@ public final class EclipseProjectImpl implements EclipseProject {
       if ((pathstyle == PathStyle.ABSOLUTE) && (!result.isAbsolute())) {
         result = new File(this._projectDirectory, result.getPath());
       }
+
+      // TODO: remove
+      if (!result.exists()) {
+        throw new RuntimeException(result.getAbsolutePath());
+      }
+
+      //
       return result;
     }
 

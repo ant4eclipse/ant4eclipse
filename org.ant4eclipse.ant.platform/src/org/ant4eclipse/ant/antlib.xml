@@ -2,6 +2,7 @@
 <antlib>
   <typedef name="hasNature"                classname="org.ant4eclipse.ant.platform.HasNature" />
   <typedef name="hasBuildCommand"          classname="org.ant4eclipse.ant.platform.HasBuildCommand" />
+  <typedef name="linkedResourceVariable"   classname="org.ant4eclipse.ant.platform.LinkedResourcePathVariable" />  
   <typedef name="getProjectDirectory"      classname="org.ant4eclipse.ant.platform.GetProjectDirectoryTask" />
   <typedef name="executeProjectSet"        classname="org.ant4eclipse.ant.platform.ExecuteProjectSetTask" />
   <typedef name="executeBuildCommands"     classname="org.ant4eclipse.ant.platform.ExecuteProjectBuildersTask" />
