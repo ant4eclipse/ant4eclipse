@@ -67,4 +67,21 @@ public interface RawClasspathEntry extends ClasspathEntry {
    */
   boolean isExported();
 
+  /**
+   * <p>
+   * Returns the include patterns.
+   * </p>
+   * 
+   * @return the include patterns.
+   */
+  String getIncludes();
+
+  /**
+   * <p>
+   * Returns the exclude patterns.
+   * </p>
+   * 
+   * @return the exclude patterns.
+   */
+  String getExcludes();
 }

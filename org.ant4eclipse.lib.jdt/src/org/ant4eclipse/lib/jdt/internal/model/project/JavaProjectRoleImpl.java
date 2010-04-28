@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
@@ -28,6 +24,10 @@ import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -145,11 +145,49 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   }
 
   /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public boolean hasExcludeOrIncludeFiltersForSourceFolders() {
+
+    for (RawClasspathEntry entry : getRawClasspathEntries()) {
+
+      if (entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE
+          && (entry.getIncludes() != null || entry.getExcludes() != null)) {
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getExcludePatternsForSourceFolder(String sourceFolder) {
+    RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
+
+    return rawClasspathEntry.getExcludes() != null ? rawClasspathEntry.getExcludes().replace('|', ' ') : "";
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getIncludePatternsForSourceFolder(String sourceFolder) {
+    RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
+
+    return rawClasspathEntry.getIncludes() != null ? rawClasspathEntry.getIncludes().replace('|', ' ') : "**";
+  }
+
+  /**
    * {@inheritDoc}
    */
   public String[] getAllOutputFolders() {
 
-    EntryResolver.Condition condition = new EntryResolver.Condition() {
+    EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
       public String resolve(RawClasspathEntry entry) {
         if (entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT) {
           return entry.getPath();
@@ -160,7 +198,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
       }
     };
 
-    return EntryResolver.resolveEntries(condition, this);
+    return EntryResolver.resolveEntries(condition, this).toArray(new String[0]);
   }
 
   /**
@@ -168,7 +206,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   public String getDefaultOutputFolder() {
 
-    EntryResolver.Condition condition = new EntryResolver.Condition() {
+    EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
       public String resolve(RawClasspathEntry entry) {
         if (entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT) {
           return entry.getPath();
@@ -177,7 +215,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
       }
     };
 
-    String[] result = EntryResolver.resolveEntries(condition, this);
+    String[] result = EntryResolver.resolveEntries(condition, this).toArray(new String[0]);
 
     if (result.length > 0) {
       return result[0];
@@ -201,7 +239,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     final String normalizedSourceFolder = normalize(sourceFolder);
 
     // Implementation of the EntryResolver.Condition
-    EntryResolver.Condition condition = new EntryResolver.Condition() {
+    EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
 
       public String resolve(RawClasspathEntry entry) {
 
@@ -242,7 +280,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
       }
     };
 
-    String[] result = EntryResolver.resolveEntries(condition, this);
+    String[] result = EntryResolver.resolveEntries(condition, this).toArray(new String[0]);
 
     if (result.length == 0) {
       StringBuffer buffer = new StringBuffer();
@@ -346,5 +384,74 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     }
 
     return null;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceFolder
+   * @return
+   */
+  private RawClasspathEntry getEntryForSourceFolder(final String sourceFolder) {
+    Assure.notNull("sourceFolder", sourceFolder);
+
+    if ("".equals(sourceFolder)) {
+      return null;
+    }
+
+    // normalize path
+    final String normalizedSourceFolder = normalize(sourceFolder);
+
+    // Implementation of the EntryResolver.Condition
+    EntryResolver.Condition<RawClasspathEntry> condition = new EntryResolver.Condition<RawClasspathEntry>() {
+
+      public RawClasspathEntry resolve(RawClasspathEntry entry) {
+
+        A4ELogging.debug("Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder);
+
+        // try to retrieve the output folder for a 'normal' source folder
+        if ((entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && normalizedSourceFolder.equals(entry.getPath())) {
+          return entry;
+        }
+
+        // try to retrieve the output folder for a 'linked' source folder
+        A4ELogging.debug("Trying to resolve project child '%s' as sourcefolder '%s'.", getEclipseProject().getChild(
+            entry.getPath()), sourceFolder);
+
+        // if (getEclipseProject().hasChild(entry.getPath())) {
+        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(), EclipseProject.PathStyle.ABSOLUTE)
+            .getPath())) {
+          return entry;
+        }
+
+        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME).getPath())) {
+          return entry;
+        }
+
+        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME).getPath())) {
+          return entry;
+        }
+
+        return null;
+      }
+    };
+
+    List<RawClasspathEntry> result = EntryResolver.resolveEntries(condition, this);
+
+    if (result.size() == 0) {
+      StringBuffer buffer = new StringBuffer();
+      buffer.append("The source folder '");
+      buffer.append(sourceFolder);
+      buffer.append("' does not exist in project '");
+      buffer.append(getEclipseProject().getFolderName());
+      buffer.append("'!");
+      throw new RuntimeException(buffer.toString());
+    } else {
+      return result.get(0);
+    }
+
   }
 }

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.project;
 
-
-
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
@@ -97,6 +95,32 @@ public interface JavaProjectRole extends ProjectRole {
    * @return the source folders for this project.
    */
   String[] getSourceFolders();
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceFolder
+   * @return
+   */
+  String getIncludePatternsForSourceFolder(String sourceFolder);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceFolder
+   * @return
+   */
+  String getExcludePatternsForSourceFolder(String sourceFolder);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  boolean hasExcludeOrIncludeFiltersForSourceFolders();
 
   /**
    * <p>

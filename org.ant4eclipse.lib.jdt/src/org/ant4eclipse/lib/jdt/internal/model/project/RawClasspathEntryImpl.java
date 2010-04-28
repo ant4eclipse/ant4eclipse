@@ -26,14 +26,20 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /** the path */
   private String  _path;
 
-  /** the entrykind */
+  /** the entry kind */
   private int     _entryKind;
 
-  /** the outputlocation */
+  /** the output location */
   private String  _outputLocation;
 
   /** whether or not the entry is exported */
   private boolean _exported = true;
+
+  /** - */
+  private String  _includes;
+
+  /** - */
+  private String  _excludes;
 
   /**
    * Creates a new instance of type EclipseClasspathEntry
@@ -117,22 +123,6 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
     }
   }
 
-  // public boolean isProjectRelative() {
-  // return false;
-  // }
-  //
-  // public EclipseProject getDeclaringEclipseProject() {
-  // return null;
-  // }
-  //
-  // public EclipseProject getReferencedEclipseProject() {
-  // return null;
-  // }
-  //
-  // public String getProjectRelativePath() {
-  // return null;
-  // }
-
   /**
    * {@inheritDoc}
    */
@@ -166,6 +156,40 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   public boolean isExported() {
     return this._exported;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getIncludes() {
+    return this._includes;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getExcludes() {
+    return this._excludes;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param includes
+   */
+  public void setIncludes(String includes) {
+    this._includes = includes;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param excludes
+   */
+  public void setExcludes(String excludes) {
+    this._excludes = excludes;
   }
 
   /**

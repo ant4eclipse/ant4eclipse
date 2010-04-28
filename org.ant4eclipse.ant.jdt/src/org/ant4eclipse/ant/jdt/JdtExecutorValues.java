@@ -31,6 +31,8 @@ public interface JdtExecutorValues {
 
   String SOURCE_DIRECTORIES_PATH             = "source.directories.path";
 
+  String SOURCE_FILTERED_FILESET_PATH        = "source.filtered.fileset.path";
+
   String OUTPUT_DIRECTORIES_PATH             = "output.directories.path";
 
   String OUTPUT_DIRECTORY_PATH               = "output.directory.path";
@@ -60,6 +62,10 @@ public interface JdtExecutorValues {
   String OUTPUT_DIRECTORY_NAME               = "output.directory.name";
 
   String SOURCE_DIRECTORY                    = "source.directory";
+
+  String SOURCE_DIRECTORY_EXCLUDES           = "source.directory.excludes";
+
+  String SOURCE_DIRECTORY_INCLUDES           = "source.directory.includes";
 
   String SOURCE_DIRECTORY_NAME               = "source.directory.name";
 

@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import java.io.File;
-import java.util.List;
-
 import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
@@ -24,6 +21,12 @@ import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
+import org.apache.tools.ant.ProjectComponent;
+import org.apache.tools.ant.types.FileSet;
+import org.apache.tools.ant.types.Path;
+
+import java.io.File;
+import java.util.List;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
@@ -33,6 +36,9 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
   /** the platform executor values provider */
   private PlatformExecutorValuesProvider _platformExecutorValuesProvider;
 
+  /** the project component */
+  private ProjectComponent               _projectComponent;
+
   /**
    * <p>
    * The path delegate.
@@ -40,10 +46,11 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * 
    * @param pathComponent
    */
-  public JdtExecutorValuesProvider(PathComponent pathComponent) {
+  public JdtExecutorValuesProvider(PathComponent pathComponent, ProjectComponent projectComponent) {
     Assure.notNull("pathComponent", pathComponent);
     this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(pathComponent);
     this._pathComponent = pathComponent;
+    this._projectComponent = projectComponent;
   }
 
   /**
@@ -150,6 +157,15 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
           this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
               javaProjectRole.getSourceFolders())));
 
+      // Support for filtered java source directory:
+      // in this case we create a path that contains a file set with
+      // all included java source files...
+      if (javaProjectRole.hasExcludeOrIncludeFiltersForSourceFolders()) {
+        Path sourceFilteredFileSetPath = createFilteredSourceFilePath(javaProjectRole);
+        compilerArguments.setSourceFilteredFilesetPath(sourceFilteredFileSetPath);
+        executionValues.getReferences().put(SOURCE_FILTERED_FILESET_PATH, sourceFilteredFileSetPath);
+      }
+
       executionValues.getProperties().put(
           OUTPUT_DIRECTORIES,
           this._pathComponent.convertToString(javaProjectRole.getEclipseProject().getChildren(
@@ -170,5 +186,38 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
     // return compilerArguments
     return compilerArguments;
+  }
+
+  /**
+   * <p>
+   * Returns an ant {@link Path} that contains a file set with all included source files.
+   * </p>
+   * 
+   * @param javaProjectRole
+   *          the java project role
+   * @return the ant {@link Path}
+   */
+  public final Path createFilteredSourceFilePath(JavaProjectRole javaProjectRole) {
+
+    // the ant path
+    Path antPath = new Path(this._projectComponent.getProject());
+
+    // the source folder
+    for (String sourceFolder : javaProjectRole.getSourceFolders()) {
+
+      File folder = javaProjectRole.getEclipseProject().getChild(sourceFolder);
+      String includePattern = javaProjectRole.getIncludePatternsForSourceFolder(sourceFolder);
+      String excludePattern = javaProjectRole.getExcludePatternsForSourceFolder(sourceFolder);
+
+      FileSet fileSet = new FileSet();
+      fileSet.setDir(folder);
+      fileSet.setIncludes(includePattern);
+      fileSet.setExcludes(excludePattern);
+
+      antPath.addFileset(fileSet);
+    }
+
+    // return the ant path
+    return antPath;
   }
 }

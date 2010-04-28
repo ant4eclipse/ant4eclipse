@@ -22,32 +22,32 @@ public class EntryResolver {
    * @param entryResolver
    * @return A list of resolved paths.
    */
-  public static String[] resolveEntries(Condition condition, JavaProjectRoleImpl javaProjectRole) {
+  public static <T> List<T> resolveEntries(Condition<T> condition, JavaProjectRoleImpl javaProjectRole) {
 
-    List<String> result = new LinkedList<String>();
+    List<T> result = new LinkedList<T>();
 
     RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
 
     for (RawClasspathEntry rawClasspathEntrie : rawClasspathEntries) {
 
-      String path = condition.resolve(rawClasspathEntrie);
+      T path = condition.resolve(rawClasspathEntrie);
 
       if (path != null) {
         result.add(path);
       }
     }
-    return result.toArray(new String[result.size()]);
+    return result;
   }
 
   /**
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  public static interface Condition {
+  public static interface Condition<T> {
 
     /**
      * @param entry
      * @return The path.
      */
-    public String resolve(RawClasspathEntry entry);
+    public T resolve(RawClasspathEntry entry);
   }
 }

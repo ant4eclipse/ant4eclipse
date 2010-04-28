@@ -11,16 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.ant.core.AntConfigurator;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
@@ -42,6 +32,16 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * <p>
@@ -182,8 +182,39 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     // get the files to compile
     List<SourceFile> sourceFiles = new LinkedList<SourceFile>();
 
+    File[] filelist = getJavac().getFileList();
+
+    // support for filtered filesets
+    if (compilerArguments.hasSourceFilteredFilesetPath()) {
+
+      // create the result list
+      List<File> files = new LinkedList<File>();
+
+      Path path = compilerArguments.getSourceFilteredFilesetPath();
+      Iterator<?> iterator = path.iterator();
+      while (iterator.hasNext()) {
+        Object object = iterator.next();
+        if (object instanceof FileResource) {
+          FileResource fileResource = (FileResource) object;
+          File sourceFile = fileResource.getFile();
+          // only handle java files
+          if (sourceFile.getName().endsWith(".java")) {
+            files.add(fileResource.getFile());
+          }
+        }
+      }
+
+      // set the file list
+      filelist = files.toArray(new File[0]);
+
+      // log
+      A4ELogging.info("Compiling %s source %s (filtered %s source %s from source file list).", filelist.length,
+          filelist.length > 1 ? "files" : "file", this.compileList.length - filelist.length, this.compileList.length
+              - filelist.length > 1 ? "files" : "file");
+    }
+
     // iterate over all the source files and create SourceFile
-    for (File file : getJavac().getFileList()) {
+    for (File file : filelist) {
 
       // get the source folder
       File sourceFolder = getSourceFolder(file);

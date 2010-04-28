@@ -12,6 +12,7 @@
 package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.apache.tools.ant.types.Path;
 
 import java.io.File;
 import java.util.Arrays;
@@ -35,6 +36,8 @@ import java.util.Set;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class EcjAdditionalCompilerArguments {
+
+  private Path                 _sourceFilteredFilesetPath;
 
   /** maps source folders to output folders */
   private Map<File, File>      _outputFolderMap;
@@ -211,5 +214,35 @@ public class EcjAdditionalCompilerArguments {
 
     // add the source folder
     sourceFolderSet.addAll(Arrays.asList(sourceFolders));
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public boolean hasSourceFilteredFilesetPath() {
+    return this._sourceFilteredFilesetPath != null;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public Path getSourceFilteredFilesetPath() {
+    return this._sourceFilteredFilesetPath;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param sourceFilteredFilesetPath
+   */
+  public void setSourceFilteredFilesetPath(Path sourceFilteredFilesetPath) {
+    this._sourceFilteredFilesetPath = sourceFilteredFilesetPath;
   }
 }

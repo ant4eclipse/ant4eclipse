@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
-
-
 import org.ant4eclipse.ant.jdt.JdtExecutorValues;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
@@ -180,6 +177,17 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
           values.getProperties().put(JdtExecutorValues.SOURCE_DIRECTORY_NAME, librarySourceDirectory);
           values.getReferences().put(JdtExecutorValues.SOURCE_DIRECTORY_PATH,
               convertToPath(getEclipseProject().getChild(librarySourceDirectory)));
+
+          // add the include/exclude patterns
+          if (getEclipseProject().hasRole(JavaProjectRole.class)) {
+            JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
+
+            values.getProperties().put(JdtExecutorValues.SOURCE_DIRECTORY_INCLUDES,
+                javaProjectRole.getIncludePatternsForSourceFolder(librarySourceDirectory));
+
+            values.getProperties().put(JdtExecutorValues.SOURCE_DIRECTORY_EXCLUDES,
+                javaProjectRole.getExcludePatternsForSourceFolder(librarySourceDirectory));
+          }
 
           // return the result
           return values;

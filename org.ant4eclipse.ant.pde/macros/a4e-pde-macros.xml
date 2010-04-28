@@ -190,7 +190,9 @@
             <ant4eclipse:forEachSourceDirectory>
               <echo>Copying resources from directory '${buildPlugin.source.directory}' to '${buildPlugin.output.directory}'</echo>
               <copy todir="${buildPlugin.output.directory}">
-                <fileset dir="${buildPlugin.source.directory}">
+                <fileset dir="${buildPlugin.source.directory}"
+                         includes="${buildPlugin.source.directory.includes}"
+                         excludes="${buildPlugin.source.directory.excludes}">
                   <exclude name="**/*.java" />
                 </fileset>
               </copy>
@@ -224,16 +226,16 @@
 
             <ant4eclipse:forEachOutputDirectory>
               <echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
-              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}">
-                <fileset dir="${executePluginLibrary.output.directory}" />
-              </copy>
+              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}" />
             </ant4eclipse:forEachOutputDirectory>
 
             <ant4eclipse:forEachSourceDirectory>
               <echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
               <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}"
                     overwrite="true">
-                <fileset dir="${executePluginLibrary.source.directory}">
+                <fileset dir="${executePluginLibrary.source.directory}"
+                         includes="${executePluginLibrary.source.directory.includes}"
+                         excludes="${executePluginLibrary.source.directory.excludes}">
                   <exclude name="**/*.java" />
                 </fileset>
               </copy>
@@ -287,7 +289,9 @@
             <ant4eclipse:forEachSourceDirectory>
               <echo>Copying resources from directory '${executePluginLibrary.source.directory}' to '${buildPlugin.project.directory}/${a4e.self.directory}'</echo>
               <copy todir="${buildPlugin.project.directory}/${a4e.self.directory}">
-                <fileset dir="${executePluginLibrary.source.directory}">
+                <fileset dir="${executePluginLibrary.source.directory}"
+                         includes="${executePluginLibrary.source.directory.includes}"
+                         excludes="${executePluginLibrary.source.directory.excludes}">
                   <exclude name="**/*.java" />
                 </fileset>
               </copy>
@@ -415,7 +419,9 @@
 
             <ant4eclipse:forEachSourceDirectory>
               <copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/">
-                <fileset dir="${executePluginLibrary.source.directory}" />
+                <fileset dir="${executePluginLibrary.source.directory}"
+                         includes="${executePluginLibrary.source.directory.includes}"
+                         excludes="${executePluginLibrary.source.directory.excludes}" />
               </copy>
             </ant4eclipse:forEachSourceDirectory>
 
@@ -434,7 +440,9 @@
 
             <ant4eclipse:forEachSourceDirectory>
               <copy todir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}.source_${buildPlugin.newBundleVersion}/${buildPlugin.library.name}.src">
-                <fileset dir="${executePluginLibrary.source.directory}" />
+                <fileset dir="${executePluginLibrary.source.directory}"
+                         includes="${executePluginLibrary.source.directory.includes}"
+                         excludes="${executePluginLibrary.source.directory.excludes}" />
               </copy>
             </ant4eclipse:forEachSourceDirectory>
 
@@ -675,15 +683,21 @@
                     overwrite="true" />
             </then>
             <else>
-              
+
               <!-- generate a default config.ini which just starts the workbench. -->
-              <echo file="@{destination}/configuration/config.ini" append="false"># Product Runtime Configuration File${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini" append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles.defaultStartLevel=4${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini" append="true">eclipse.product=${executeProduct.product.id}${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini" append="true">osgi.splashPath=platform:/base/plugins/org.eclipse.platform${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini" append="true">osgi.bundles=${executeProduct.osgi.bundles}${line.separator}</echo>
-              
+              <echo file="@{destination}/configuration/config.ini"
+                    append="false"># Product Runtime Configuration File${line.separator}</echo>
+              <echo file="@{destination}/configuration/config.ini"
+                    append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
+              <echo file="@{destination}/configuration/config.ini"
+                    append="true">osgi.bundles.defaultStartLevel=4${line.separator}</echo>
+              <echo file="@{destination}/configuration/config.ini"
+                    append="true">eclipse.product=${executeProduct.product.id}${line.separator}</echo>
+              <echo file="@{destination}/configuration/config.ini"
+                    append="true">osgi.splashPath=platform:/base/plugins/org.eclipse.platform${line.separator}</echo>
+              <echo file="@{destination}/configuration/config.ini"
+                    append="true">osgi.bundles=${executeProduct.osgi.bundles}${line.separator}</echo>
+
             </else>
           </antcontrib:if>
 

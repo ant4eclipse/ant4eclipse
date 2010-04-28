@@ -19,6 +19,9 @@ import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import java.io.File;
 
 /**
+ * <p>
+ * </p>
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ClasspathFileParser {
@@ -36,6 +39,8 @@ public class ClasspathFileParser {
     XQuery pathquery = queryhandler.createQuery("/classpath/classpathentry/@path");
     XQuery outputquery = queryhandler.createQuery("/classpath/classpathentry/@output");
     XQuery exportedquery = queryhandler.createQuery("/classpath/classpathentry/@exported");
+    XQuery includedquery = queryhandler.createQuery("/classpath/classpathentry/@including");
+    XQuery excludedquery = queryhandler.createQuery("/classpath/classpathentry/@excluding");
 
     // parse the file
     XQueryHandler.queryFile(classpathFile, queryhandler);
@@ -44,19 +49,29 @@ public class ClasspathFileParser {
     String[] pathes = pathquery.getResult();
     String[] outputs = outputquery.getResult();
     String[] exporteds = exportedquery.getResult();
+    String[] includes = includedquery.getResult();
+    String[] excludes = excludedquery.getResult();
 
     for (int i = 0; i < exporteds.length; i++) {
       String path = Utilities.removeTrailingPathSeparator(pathes[i]);
+      RawClasspathEntryImpl rawClasspathEntryImpl = null;
       if (outputs[i] != null) {
-        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path, Utilities
-            .removeTrailingPathSeparator(outputs[i])));
+        rawClasspathEntryImpl = new RawClasspathEntryImpl(kinds[i], path, Utilities
+            .removeTrailingPathSeparator(outputs[i]));
+        javaProjectRole.addEclipseClasspathEntry(rawClasspathEntryImpl);
       } else if (exporteds[i] != null) {
-        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path, Boolean
-            .parseBoolean(exporteds[i])));
+        rawClasspathEntryImpl = new RawClasspathEntryImpl(kinds[i], path, Boolean.parseBoolean(exporteds[i]));
+        javaProjectRole.addEclipseClasspathEntry(rawClasspathEntryImpl);
       } else {
-        javaProjectRole.addEclipseClasspathEntry(new RawClasspathEntryImpl(kinds[i], path));
+        rawClasspathEntryImpl = new RawClasspathEntryImpl(kinds[i], path);
+        javaProjectRole.addEclipseClasspathEntry(rawClasspathEntryImpl);
+      }
+      if (includes[i] != null) {
+        rawClasspathEntryImpl.setIncludes(includes[i]);
+      }
+      if (excludes[i] != null) {
+        rawClasspathEntryImpl.setExcludes(excludes[i]);
       }
     }
   }
-
 }

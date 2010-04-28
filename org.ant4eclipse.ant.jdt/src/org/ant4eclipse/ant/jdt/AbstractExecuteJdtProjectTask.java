@@ -53,7 +53,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
     this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(this);
 
     // create the JdtExecutorValuesProvider
-    this._executorValuesProvider = new JdtExecutorValuesProvider(this);
+    this._executorValuesProvider = new JdtExecutorValuesProvider(this, this);
   }
 
   /**

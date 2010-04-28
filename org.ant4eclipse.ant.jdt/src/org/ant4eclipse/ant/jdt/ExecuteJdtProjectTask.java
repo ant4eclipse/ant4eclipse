@@ -200,6 +200,10 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
           // add source and output directory
           values.getProperties().put(SOURCE_DIRECTORY_NAME, sourceFolder);
           values.getProperties().put(SOURCE_DIRECTORY, convertToString(getEclipseProject().getChild(sourceFolder)));
+          values.getProperties().put(SOURCE_DIRECTORY_INCLUDES,
+              getJavaProjectRole().getIncludePatternsForSourceFolder(sourceFolder));
+          values.getProperties().put(SOURCE_DIRECTORY_EXCLUDES,
+              getJavaProjectRole().getExcludePatternsForSourceFolder(sourceFolder));
           values.getProperties().put(OUTPUT_DIRECTORY_NAME, sourceFolder);
           values.getProperties().put(
               OUTPUT_DIRECTORY,
