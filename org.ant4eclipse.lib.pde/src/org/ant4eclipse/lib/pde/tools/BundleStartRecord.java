@@ -9,7 +9,7 @@
  * Contributors:
  *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
-package org.ant4eclipse.lib.pde.model.product;
+package org.ant4eclipse.lib.pde.tools;
 
 /**
  * <p>

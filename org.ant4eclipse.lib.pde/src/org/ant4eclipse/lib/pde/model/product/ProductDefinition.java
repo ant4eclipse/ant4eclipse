@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.product;
 
+import org.ant4eclipse.lib.pde.tools.BundleStartRecord;
 import org.osgi.framework.Version;
 
 import java.util.ArrayList;

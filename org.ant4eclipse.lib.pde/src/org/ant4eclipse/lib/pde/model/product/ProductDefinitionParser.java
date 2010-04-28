@@ -17,6 +17,7 @@ import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.tools.BundleStartRecord;
 import org.osgi.framework.Version;
 
 import java.io.InputStream;
