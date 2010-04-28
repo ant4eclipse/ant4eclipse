@@ -44,7 +44,7 @@ public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
    * @param newid
    *          The new id for the corresponding plugin. Neither <code>null</code> nor empty.
    */
-  void setId(String newid) {
+  public void setId(String newid) {
     this._id = newid;
   }
 
@@ -63,7 +63,7 @@ public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
    * @param newautostart
    *          <code>true</code> <=> Enables the autostart for the corresponding plugin.
    */
-  void setAutoStart(boolean newautostart) {
+  public void setAutoStart(boolean newautostart) {
     this._autostart = newautostart;
   }
 
@@ -82,7 +82,7 @@ public class ConfigurationRecord implements Comparable<ConfigurationRecord> {
    * @param newstartlevel
    *          The new start level.
    */
-  void setStartLevel(int newstartlevel) {
+  public void setStartLevel(int newstartlevel) {
     this._startlevel = newstartlevel;
   }
 
