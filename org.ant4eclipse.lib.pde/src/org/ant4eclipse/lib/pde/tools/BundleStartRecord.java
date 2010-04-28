@@ -35,7 +35,41 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
   public BundleStartRecord() {
     this._autostart = false;
     this._id = null;
-    this._startlevel = 4;
+    this._startlevel = -1;
+  }
+
+  /**
+   * Initialises this data structure from a compound description used for the bundle start.
+   * 
+   * @param description
+   *          A compound description for the start information which has the following structure:
+   * 
+   *          <bundleid> [ '@' <startlevel>] [ ':' 'start' ]
+   */
+  public BundleStartRecord(String description) {
+    this();
+    this._autostart = description.endsWith(":start");
+    if (this._autostart) {
+      description = description.substring(0, description.length() - 6); // 6 == ":start".length()
+    }
+    int idx = description.lastIndexOf('@');
+    // get the startlevel
+    if (idx != -1) {
+      this._startlevel = Integer.parseInt(description.substring(idx + 1));
+      description = description.substring(0, idx);
+    }
+    this._id = description;
+  }
+
+  /**
+   * Returns a short textual description of this record.
+   * 
+   * @return A short textual description of this record. Not <code>null</code>.
+   */
+  public String getShortDescription() {
+    String suffix = this._autostart ? ":start" : "";
+    String level = this._startlevel > 0 ? String.format("@%d", Integer.valueOf(this._startlevel)) : "";
+    return String.format("%s%s%s", this._id, level, suffix);
   }
 
   /**
