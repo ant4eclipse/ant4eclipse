@@ -26,6 +26,8 @@ import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinition;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinitionParser;
 import org.ant4eclipse.lib.pde.model.product.ProductOs;
+import org.ant4eclipse.lib.pde.tools.BundleStartRecord;
+import org.ant4eclipse.lib.pde.tools.SimpleConfiguratorBundles;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
@@ -40,7 +42,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,6 +58,18 @@ import java.util.Map;
  */
 public class ExecuteProductTask extends AbstractExecuteProjectTask implements PdeExecutorValues,
     TargetPlatformAwareComponent {
+
+  /** - */
+  private static final String MSG_USING_HARDCODED       = "Failed to detect bundles, so the following hard coded ones are used:";
+
+  /** - */
+  private static final String MSG_FAILED_BUNDLESINFO    = "Failed to load bundles info file '%s'. Cause: %s";
+
+  /** - */
+  private static final String MSG_ACCESSING_BUNDLESINFO = "Accessing bundles info file '%s' to identify start bundles...";
+
+  /** - */
+  private static final String MSG_ACCESSING_CONFIGINI   = "Accessing file '%s' to identify start bundles...";
 
   /** - */
   private static enum Scope {
@@ -415,97 +432,98 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    * 
    * @param targetlocations
    *          The target platform locations currently registered. Not <code>null</code>.
+   * @param records
+   *          The start records provided the product configuration file. Not <code>null</code>.
    * 
    * @return A comma separated list of all osgi bundles. Not <code>null</code>.
    */
-  private String collectOsgiBundles(File[] targetlocations) {
+  private String collectOsgiBundles(File[] targetlocations, BundleStartRecord[] records) {
 
     StringMap properties = new StringMap();
 
-    Map<String, Integer> bundles = new Hashtable<String, Integer>();
-    Map<String, Boolean> tostart = new Hashtable<String, Boolean>();
+    List<BundleStartRecord> startrecords = new ArrayList<BundleStartRecord>();
 
     for (File targetlocation : targetlocations) {
+
       File configini = new File(targetlocation, "configuration/config.ini");
       if (configini.isFile()) {
 
+        A4ELogging.debug(MSG_ACCESSING_CONFIGINI, configini);
+
         // load the current bundle list of a specific configuration
         properties.extendProperties(configini);
+
+        boolean gotsimpleconfigurator = false;
         String bundlelist = properties.get("osgi.bundles", null);
         if (bundlelist != null) {
-
           // separate the bundle parts
           String[] parts = bundlelist.split(",");
           for (String bundlepart : parts) {
-
-            // check if it's a bundle which needs to be started
-            boolean isstart = bundlepart.endsWith(":start");
-            if (isstart) {
-              bundlepart = bundlepart.substring(0, bundlepart.length() - 6); // 6 == ":start".length()
+            BundleStartRecord record = new BundleStartRecord(bundlepart);
+            startrecords.add(record);
+            if (record.getId().indexOf(SimpleConfiguratorBundles.ID_SIMPLECONFIGURATOR) != -1) {
+              gotsimpleconfigurator = true;
             }
-            int idx = bundlepart.lastIndexOf('@');
-
-            // get the startlevel
-            int startlevel = -1;
-            if (idx != -1) {
-              startlevel = Integer.parseInt(bundlepart.substring(idx + 1));
-              bundlepart = bundlepart.substring(0, idx);
-            }
-
-            // make sure we don't override the current entries with bad values
-            if (bundles.containsKey(bundlepart)) {
-              if (startlevel > bundles.get(bundlepart).intValue()) {
-                // the last stored start level is higher so we're using the highest start level
-                startlevel = bundles.get(bundlepart).intValue();
-              }
-            }
-            if (tostart.containsKey(bundlepart)) {
-              if (tostart.get(bundlepart).booleanValue()) {
-                // if the bundle shall be started it will be started
-                isstart = true; // tostart.get(part).booleanValue()
-              }
-            }
-
-            // register the current settings
-            bundles.put(bundlepart, Integer.valueOf(startlevel));
-            tostart.put(bundlepart, Boolean.valueOf(isstart));
-
           }
         }
+
+        if (gotsimpleconfigurator) {
+          File bundlesinfo = new File(targetlocation,
+              "configuration/org.eclipse.equinox.simpleconfigurator/bundles.info");
+          if (bundlesinfo.isFile()) {
+            A4ELogging.debug(MSG_ACCESSING_BUNDLESINFO, bundlesinfo);
+            try {
+              SimpleConfiguratorBundles simpleconfig = new SimpleConfiguratorBundles(bundlesinfo);
+              BundleStartRecord[] screcords = simpleconfig.getBundleStartRecords();
+              for (BundleStartRecord record : screcords) {
+                if (record.isAutoStart()) {
+                  startrecords.add(record);
+                }
+              }
+            } catch (RuntimeException ex) {
+              A4ELogging.debug(MSG_FAILED_BUNDLESINFO, bundlesinfo, ex.getMessage());
+            }
+          }
+        }
+
       }
     }
 
     // if none could be found we're setting up some defaults which are basically
     // a guess (should be probably provided as a resource in future)
-    if (bundles.isEmpty()) {
-      bundles.put("org.eclipse.core.runtime", Integer.valueOf(-1));
-      tostart.put("org.eclipse.core.runtime", Boolean.TRUE);
-      bundles.put("org.eclipse.osgi", Integer.valueOf(2));
-      tostart.put("org.eclipse.osgi", Boolean.TRUE);
-      bundles.put("org.eclipse.equinox.common", Integer.valueOf(2));
-      tostart.put("org.eclipse.equinox.common", Boolean.TRUE);
-      bundles.put("org.eclipse.update.configurator", Integer.valueOf(3));
-      tostart.put("org.eclipse.update.configurator", Boolean.TRUE);
+    if (startrecords.isEmpty()) {
+      startrecords.add(new BundleStartRecord("org.eclipse.core.runtime@-1:start"));
+      startrecords.add(new BundleStartRecord("org.eclipse.osgi@2:start"));
+      startrecords.add(new BundleStartRecord("org.eclipse.equinox.common@2:start"));
+      startrecords.add(new BundleStartRecord("org.eclipse.update.configurator@3:start"));
+      A4ELogging.debug(MSG_USING_HARDCODED);
+      for (int i = 0; i < startrecords.size(); i++) {
+        A4ELogging.debug("\t%s", startrecords.get(i).getShortDescription());
+      }
+    }
+
+    for (BundleStartRecord record : records) {
+      startrecords.add(record);
+    }
+
+    // merge records denoting the same plugin id
+    Collections.sort(startrecords);
+    for (int i = startrecords.size() - 1; i > 0; i--) {
+      BundleStartRecord current = startrecords.get(i);
+      BundleStartRecord previous = startrecords.get(i - 1);
+      if (current.getId().equals(previous.getId())) {
+        previous.setAutoStart(previous.isAutoStart() || current.isAutoStart());
+        previous.setStartLevel(Math.min(previous.getStartLevel(), current.getStartLevel()));
+        startrecords.remove(i);
+      }
     }
 
     // create a textual description for the bundlelist
     StringBuffer buffer = new StringBuffer();
-    for (Map.Entry<String, Integer> entry : bundles.entrySet()) {
-      if (buffer.length() > 0) {
-        buffer.append(",");
-      }
-      String bundle = entry.getKey();
-      int startlevel = bundles.get(bundle).intValue();
-      boolean start = tostart.get(bundle).booleanValue();
-      if (start) {
-        if (startlevel > 0) {
-          buffer.append(String.format("%s@%d:start", bundle, Integer.valueOf(startlevel)));
-        } else {
-          buffer.append(String.format("%s@start", bundle));
-        }
-      } else {
-        buffer.append(bundle);
-      }
+    buffer.append(startrecords.get(0).getShortDescription());
+    for (int i = 1; i < startrecords.size(); i++) {
+      buffer.append(",");
+      buffer.append(startrecords.get(i).getShortDescription());
     }
     return buffer.toString();
 
@@ -531,7 +549,8 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     properties.put(PROP_VERSION, String.valueOf(productdef.getVersion()));
     properties.put(PROP_VMARGS, productdef.getVmArgs(this._os));
     properties.put(PROP_PROGRAMARGS, productdef.getProgramArgs(this._os));
-    properties.put(PROP_OSGIBUNDLES, collectOsgiBundles(targetplatform.getLocations()));
+    properties.put(PROP_OSGIBUNDLES, collectOsgiBundles(targetplatform.getLocations(), productdef
+        .getConfigurationRecords()));
 
     String configini = productdef.getConfigIni(this._os);
     if (configini == null) {
