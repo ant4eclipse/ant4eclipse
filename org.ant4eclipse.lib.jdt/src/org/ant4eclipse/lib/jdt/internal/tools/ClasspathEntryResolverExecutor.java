@@ -225,7 +225,9 @@ public class ClasspathEntryResolverExecutor {
 
     // assert raw class path entries
     // TODO: NLS
-    Assure.assertTrue(project.getRole(JavaProjectRole.class).hasRawClasspathEntries(), "");
+    Assure.assertTrue(project.getRole(JavaProjectRole.class).hasRawClasspathEntries(), String.format(
+        "The JDT project '%s' (%s) doesn't contain any class path entries.", project.getFolderName(), project
+            .getFolder().getAbsolutePath()));
 
     // resolve the class path entries for this project
     resolveClasspathEntries(project.getRole(JavaProjectRole.class).getRawClasspathEntries());
