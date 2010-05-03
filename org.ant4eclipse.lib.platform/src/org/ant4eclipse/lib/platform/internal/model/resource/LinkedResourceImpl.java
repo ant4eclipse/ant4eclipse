@@ -12,7 +12,9 @@
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
 /**
- * Represents a "linked resource" of an eclipse project
+ * <p>
+ * Represents a "linked resource" of an eclipse project.
+ * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */

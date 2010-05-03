@@ -253,10 +253,12 @@ public final class EclipseProjectImpl implements EclipseProject {
     if (isLinkedResource(name)) {
       LinkedResourceImpl resource = getLinkedResource(name);
       if ((pathstyle != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null)) {
-        // TODO
-        throw (new RuntimeException("cannot calculate relative location for linked resource '" + name + "' !"));
+        return (new File(resource.getLocation()));
       }
-      File result = new File(pathstyle != PathStyle.ABSOLUTE ? resource.getRelativeLocation() : resource.getLocation());
+
+      File result = pathstyle != PathStyle.ABSOLUTE ? new File(getFolder(), resource.getRelativeLocation()) : new File(
+          resource.getLocation());
+
       if (rest != null) {
         result = new File(result, rest);
       }
