@@ -36,6 +36,11 @@ import org.eclipse.jdt.internal.compiler.util.Util;
 public class CompilerOptionsProvider {
 
   /**
+   * This property enables the javadoc parsing in ECJ (same as <tt>-enableJavadoc</tt> on the command line)
+   */
+  public final static String ENABLE_JAVADOC_SUPPORT = "org.eclipse.jdt.core.compiler.doc.comment.support";
+
+  /**
    * <p>
    * Creates the compiler options for the JDT compiler.
    * </p>
@@ -86,6 +91,13 @@ public class CompilerOptionsProvider {
     if (A4ELogging.isTraceingEnabled()) {
       A4ELogging.trace("mergedMap: '%s'.", mergedMap);
     }
+
+    // [AE-201] If not enabled/disabled explicitly, enable ECJ javadoc parsing support
+    // to find references inside javadoc
+    if (!mergedMap.containsKey(ENABLE_JAVADOC_SUPPORT)) {
+      mergedMap.put(ENABLE_JAVADOC_SUPPORT, "enabled");
+    }
+
     // create result
     CompilerOptions compilerOptions = new CompilerOptions(mergedMap);
 
