@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
@@ -90,11 +89,11 @@ public final class EcjAdapterImpl implements EcjAdapter {
   }
 
   private void setupAnnotationProcessor(Compiler compiler) {
-    compiler.annotationProcessorManager = Utilities
-        .newInstance("org.eclipse.jdt.internal.compiler.apt.dispatch.BatchAnnotationProcessorManager");
-    compiler.annotationProcessorManager.configure(compiler, new String[0]);
-    // annotationManager.setErr(this.err);
-    // annotationManager.setOut(this.out);
+    // compiler.annotationProcessorManager = Utilities
+    // .newInstance("org.eclipse.jdt.internal.compiler.apt.dispatch.BatchAnnotationProcessorManager");
+    // compiler.annotationProcessorManager.configure(null, new String[0]);
+    // // annotationManager.setErr(this.err);
+    // // annotationManager.setOut(this.out);
   }
 
   /**
