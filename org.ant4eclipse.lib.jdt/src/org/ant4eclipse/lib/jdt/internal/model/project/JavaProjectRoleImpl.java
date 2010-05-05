@@ -11,12 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.imageio.spi.ServiceRegistry;
-
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -24,7 +22,12 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 /**
  * <p>
  * Implements the java project role.
