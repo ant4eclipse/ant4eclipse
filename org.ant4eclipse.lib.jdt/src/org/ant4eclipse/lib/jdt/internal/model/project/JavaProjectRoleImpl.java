@@ -11,10 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.util.StringMap;
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.imageio.spi.ServiceRegistry;
+
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -22,12 +24,6 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
-import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>
@@ -170,7 +166,8 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   public String getExcludePatternsForSourceFolder(String sourceFolder) {
     RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
 
-    return rawClasspathEntry.getExcludes() != null ? rawClasspathEntry.getExcludes().replace('|', ' ') : "";
+    return (rawClasspathEntry != null && rawClasspathEntry.getExcludes() != null) ? rawClasspathEntry.getExcludes()
+        .replace('|', ' ') : "";
   }
 
   /**
@@ -179,7 +176,8 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   public String getIncludePatternsForSourceFolder(String sourceFolder) {
     RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
 
-    return rawClasspathEntry.getIncludes() != null ? rawClasspathEntry.getIncludes().replace('|', ' ') : "**";
+    return (rawClasspathEntry != null && rawClasspathEntry.getIncludes() != null) ? rawClasspathEntry.getIncludes()
+        .replace('|', ' ') : "**";
   }
 
   /**
@@ -391,7 +389,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * </p>
    * 
    * @param sourceFolder
-   * @return
+   * @return The RawClasspathEntry for the sourcefolder or <tt>null</tt>
    */
   private RawClasspathEntry getEntryForSourceFolder(final String sourceFolder) {
     Assure.notNull("sourceFolder", sourceFolder);
