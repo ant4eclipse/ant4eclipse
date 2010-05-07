@@ -38,5 +38,5 @@ public interface CompileJobResult {
    * 
    * @return the {@link CategorizedProblem CategorizedProblems}.
    */
-  public CategorizedProblem[] getCategorizedProblems();
+  CategorizedProblem[] getCategorizedProblems();
 }
