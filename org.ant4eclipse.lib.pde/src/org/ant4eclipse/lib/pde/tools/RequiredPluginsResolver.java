@@ -158,7 +158,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       // get the one and only target platform
       if (registry.getTargetPlatformDefinitionIds().size() == 1) {
         String id = registry.getTargetPlatformDefinitionIds().get(0);
-        return registry.getInstance(context.getWorkspace(), id, new TargetPlatformConfiguration());
+        return registry.getInstance(context.getWorkspace(), id, new PlatformConfiguration());
       }
 
       // throw new Ant4EclipseException
@@ -167,7 +167,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
       // get the TargetPlatform
       return registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
-          new TargetPlatformConfiguration());
+          new PlatformConfiguration());
     }
   }
 }

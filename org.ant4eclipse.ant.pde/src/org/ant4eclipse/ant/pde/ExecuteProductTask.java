@@ -18,7 +18,6 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -27,10 +26,9 @@ import org.ant4eclipse.lib.pde.model.product.ProductDefinition;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinitionParser;
 import org.ant4eclipse.lib.pde.model.product.ProductOs;
 import org.ant4eclipse.lib.pde.tools.BundleStartRecord;
+import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.SimpleConfiguratorBundles;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -217,6 +215,27 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  public String getPlatformConfigurationId() {
+    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isPlatformConfigurationIdSet() {
+    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setPlatformConfigurationId(String platformConfigurationId) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public Object createDynamicElement(String name) {
     for (Scope scope : Scope.values()) {
       if (scope.name().equalsIgnoreCase(name)) {
@@ -258,12 +277,11 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     ProductDefinition productdef = loadProductDefinition();
 
     // create a new target platform configuration
-    TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
+    PlatformConfiguration configuration = new PlatformConfiguration();
     configuration.setPreferProjects(true);
 
     // fetch the target platform
-    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
-    TargetPlatform targetplatform = registry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
+    TargetPlatform targetplatform = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace());
 
     StringMap properties = new StringMap();
     contributeForAll(properties, productdef, targetplatform);

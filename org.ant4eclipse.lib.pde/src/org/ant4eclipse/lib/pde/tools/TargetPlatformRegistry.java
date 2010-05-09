@@ -55,6 +55,33 @@ public interface TargetPlatformRegistry {
 
   /**
    * <p>
+   * </p>
+   * 
+   * @param identifier
+   * @param platformConfiguration
+   */
+  void addPlatformConfiguration(String identifier, PlatformConfiguration platformConfiguration);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param identifier
+   * @return
+   */
+  boolean hasPlatformConfiguration(String identifier);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param identifier
+   * @return
+   */
+  PlatformConfiguration getPlatformConfiguration(String identifier);
+
+  /**
+   * <p>
    * Returns the target platform definition IDs.
    * </p>
    * 
@@ -76,7 +103,7 @@ public interface TargetPlatformRegistry {
    * @return the TargetPlatform
    */
   TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
-      TargetPlatformConfiguration targetPlatformConfiguration);
+      PlatformConfiguration targetPlatformConfiguration);
 
   /**
    * Removes all target platforms from the factory.

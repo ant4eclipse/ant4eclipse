@@ -23,7 +23,7 @@ import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.tools.ResolvedFeature;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
+import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.eclipse.osgi.framework.internal.core.FrameworkProperties;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
@@ -57,7 +57,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private List<BundleAndFeatureSet>   _binaryBundleSets;
 
   /** the target platform configuration */
-  private TargetPlatformConfiguration _configuration;
+  private PlatformConfiguration _configuration;
 
   /** the state object */
   private State                       _state;
@@ -75,12 +75,12 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param binaryBundleSets
    *          an array of bundle sets that contain the binary bundles, may <code>null</code>.
    * @param configuration
-   *          the {@link TargetPlatformConfiguration} of this target platform
+   *          the {@link PlatformConfiguration} of this target platform
    * @param targetlocations
    *          a list of all targetplatform locations providing the bundles. Neither <code>null</code> nor empty.
    */
   public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
-      TargetPlatformConfiguration configuration, File[] targetlocations) {
+      PlatformConfiguration configuration, File[] targetlocations) {
     Assure.notNull("configuration", configuration);
 
     // set the plug-in project set
@@ -112,7 +112,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
-  public TargetPlatformConfiguration getTargetPlatformConfiguration() {
+  public PlatformConfiguration getTargetPlatformConfiguration() {
     return this._configuration;
   }
 

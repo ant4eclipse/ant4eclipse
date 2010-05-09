@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
 import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
@@ -19,7 +18,6 @@ import org.ant4eclipse.ant.platform.core.task.AbstractProjectPathTask;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver;
@@ -27,9 +25,6 @@ import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
@@ -81,9 +76,6 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
 
   /** the bundle specifications */
   private LinkedList<BundleSpecification> _bundleSpecifications;
-
-  /** the target platform */
-  private TargetPlatform                  _targetPlatform;
 
   /** */
   private Set<BundleDescription>          _resolvedBundleDescriptions;
@@ -179,6 +171,27 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getPlatformConfigurationId() {
+    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isPlatformConfigurationIdSet() {
+    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setPlatformConfigurationId(String platformConfigurationId) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
 
   /**
@@ -388,20 +401,17 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     // step 1: clear the result list
     this._resolvedBundleDescriptions.clear();
 
-    // step 2: get the target platform
-    initTargetPlatform();
-
-    // step 3: add the bundle specification attribute to the the list of (root) bundle specifications
+    // step 2: add the bundle specification attribute to the the list of (root) bundle specifications
     if (Utilities.hasText(this._bundleSymbolicName)) {
       this._bundleSpecifications.add(new BundleSpecification(this._bundleSymbolicName, this._bundleVersion));
     }
 
-    // step 4: resolve required bundles for all bundle specifications
+    // step 3: resolve required bundles for all bundle specifications
     for (BundleSpecification bundleSpecification : this._bundleSpecifications) {
 
       // get the resolved bundle description from the target platform
-      BundleDescription bundleDescription = this._targetPlatform.getResolvedBundle(bundleSpecification
-          .getSymbolicName(), bundleSpecification.getVersion());
+      BundleDescription bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace())
+          .getResolvedBundle(bundleSpecification.getSymbolicName(), bundleSpecification.getVersion());
 
       // if not resolved bundle description is found, throw an exception
       if (bundleDescription == null) {
@@ -413,7 +423,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
       resolveReferencedBundles(bundleDescription);
     }
 
-    // step 5: resolve the path
+    // step 4: resolve the path
     List<File> result = new LinkedList<File>();
 
     for (BundleDescription bundleDescription : this._resolvedBundleDescriptions) {
@@ -447,24 +457,6 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     if (isPropertySet()) {
       populateProperty();
     }
-  }
-
-  /**
-   * <p>
-   * Helper method. Initializes the target platform.
-   * </p>
-   */
-  private void initTargetPlatform() {
-
-    // create the configuration
-    TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
-    configuration.setPreferProjects(true);
-
-    // get the target platform registry
-    TargetPlatformRegistry targetPlatformRegistry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
-
-    // set the target platform
-    this._targetPlatform = targetPlatformRegistry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
   }
 
   /**

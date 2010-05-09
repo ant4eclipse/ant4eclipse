@@ -32,12 +32,12 @@ public interface TargetPlatform {
 
   /**
    * <p>
-   * Returns the {@link TargetPlatformConfiguration} for this {@link TargetPlatform}.
+   * Returns the {@link PlatformConfiguration} for this {@link TargetPlatform}.
    * </p>
    * 
-   * @return the {@link TargetPlatformConfiguration} for this {@link TargetPlatform}.
+   * @return the {@link PlatformConfiguration} for this {@link TargetPlatform}.
    */
-  TargetPlatformConfiguration getTargetPlatformConfiguration();
+  PlatformConfiguration getTargetPlatformConfiguration();
 
   /**
    * <p>

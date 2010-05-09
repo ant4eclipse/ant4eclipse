@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * TargetPlatformConfiguration --
  */
-public class TargetPlatformConfiguration {
+public class PlatformConfiguration {
 
   /** - */
   private boolean             _preferProjects = true;
@@ -41,7 +41,7 @@ public class TargetPlatformConfiguration {
   /**
    * 
    */
-  public TargetPlatformConfiguration() {
+  public PlatformConfiguration() {
     this._preferProjects = true;
 
     this._configurationProperties = new HashMap<Object, Object>();
@@ -157,7 +157,7 @@ public class TargetPlatformConfiguration {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    TargetPlatformConfiguration other = (TargetPlatformConfiguration) obj;
+    PlatformConfiguration other = (PlatformConfiguration) obj;
     if (this._configurationProperties == null) {
       if (other._configurationProperties != null) {
         return false;

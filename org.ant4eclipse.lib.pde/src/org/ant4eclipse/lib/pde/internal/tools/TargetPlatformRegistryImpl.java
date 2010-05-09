@@ -11,13 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
@@ -48,6 +47,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
   /** the target platform definitions */
   private Map<String, TargetPlatformDefinition>  _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
+
+  /** the platform configurations */
+  private Map<String, PlatformConfiguration>     _platformConfigurationMap   = new HashMap<String, PlatformConfiguration>();
 
   /** - */
   private Map<TargetPlatformKey, TargetPlatform> _targetPlatformMap          = new HashMap<TargetPlatformKey, TargetPlatform>();
@@ -83,6 +85,28 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   }
 
   /**
+   * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#addPlatformConfiguration(java.lang.String,
+   *      org.ant4eclipse.lib.pde.tools.PlatformConfiguration)
+   */
+  public void addPlatformConfiguration(String identifier, PlatformConfiguration platformConfiguration) {
+    this._platformConfigurationMap.put(identifier, platformConfiguration);
+  }
+
+  /**
+   * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#getPlatformConfiguration(java.lang.String)
+   */
+  public PlatformConfiguration getPlatformConfiguration(String identifier) {
+    return this._platformConfigurationMap.get(identifier);
+  }
+
+  /**
+   * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#hasPlatformConfiguration(java.lang.String)
+   */
+  public boolean hasPlatformConfiguration(String identifier) {
+    return this._platformConfigurationMap.containsKey(identifier);
+  }
+
+  /**
    * {@inheritDoc}
    */
   public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
@@ -101,7 +125,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * {@inheritDoc}
    */
   public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
-      TargetPlatformConfiguration targetPlatformConfiguration) {
+      PlatformConfiguration targetPlatformConfiguration) {
 
     if (A4ELogging.isTraceingEnabled()) {
       A4ELogging.trace("getInstance(%s, %s, %s)", workspace, targetPlatformDefinitionIdentifier,
@@ -163,7 +187,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @return an instance of type {@link TargetPlatform} with the specified configuration.
    */
   private TargetPlatform getInstance(Workspace workspace, File[] targetLocations,
-      TargetPlatformConfiguration targetPlatformConfiguration) {
+      PlatformConfiguration targetPlatformConfiguration) {
 
     Assure.assertTrue((workspace != null) || (targetLocations != null),
         "Parameter workspace or targetLocations has to be set !");
@@ -233,13 +257,13 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   private class TargetPlatformKey {
 
     /** the workspace */
-    private Workspace                   _workspace;
+    private Workspace             _workspace;
 
     /** the target locations */
-    private File[]                      _targetLocations;
+    private File[]                _targetLocations;
 
     /** the target platform configuration */
-    private TargetPlatformConfiguration _targetPlatformConfiguration;
+    private PlatformConfiguration _targetPlatformConfiguration;
 
     /**
      * <p>
@@ -254,7 +278,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      *          the target platform configuration
      */
     public TargetPlatformKey(Workspace workspace, File[] targetLocations,
-        TargetPlatformConfiguration targetPlatformConfiguration) {
+        PlatformConfiguration targetPlatformConfiguration) {
 
       this._targetLocations = targetLocations;
       this._targetPlatformConfiguration = targetPlatformConfiguration;

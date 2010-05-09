@@ -18,7 +18,6 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -29,10 +28,9 @@ import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
+import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.ResolvedFeature;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -126,6 +124,27 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getPlatformConfigurationId() {
+    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isPlatformConfigurationIdSet() {
+    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setPlatformConfigurationId(String platformConfigurationId) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
 
   /**
@@ -537,12 +556,11 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   private ResolvedFeature resolveFeature() {
 
     // create a new target platform configuration
-    TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
+    PlatformConfiguration configuration = new PlatformConfiguration();
     configuration.setPreferProjects(true);
 
     // fetch the target platform
-    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
-    TargetPlatform targetPlatform = registry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
+    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace());
 
     // let the target platform resolve the feature
     // case 1: pde feature project

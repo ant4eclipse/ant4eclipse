@@ -3,8 +3,6 @@ package org.ant4eclipse.ant.pde;
 import static org.ant4eclipse.lib.core.Assure.notNull;
 import static org.ant4eclipse.lib.core.logging.A4ELogging.warn;
 
-import java.io.File;
-
 import org.ant4eclipse.ant.core.FileListHelper;
 import org.ant4eclipse.ant.platform.ExecuteLauncherTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -17,9 +15,6 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.ant4eclipse.lib.pde.model.launcher.EquinoxLaunchConfigurationWrapper;
 import org.ant4eclipse.lib.pde.model.launcher.SelectedLaunchConfigurationBundle;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformConfiguration;
-import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -27,52 +22,80 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
 
+import java.io.File;
+
 /**
  * Executes a Equinox Launch Configuration (type="org.eclipse.pde.ui.EquinoxLauncher")
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
- * 
  */
-public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
+public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements TargetPlatformAwareComponent {
 
   /**
    * The forEachBundle scope that is invoked for each bundle that is selected either from the workspace or the target
    * platform
    */
-  public static final String SCOPE_FOR_EACH_SELECTED_BUNDLE = "forEachSelectedBundle";
+  public static final String          SCOPE_FOR_EACH_SELECTED_BUNDLE = "forEachSelectedBundle";
 
-  /**
-   * The id of the target platform
-   */
-  private String             _targetPlatformId;
-
-  /**
-   * The target platform that is used to resolve the selected bundles
-   */
-  private TargetPlatform     _targetPlatform;
+  /** - */
+  private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
   /**
    * Create new instance
    */
   public ExecuteEquinoxLauncherTask() {
     super("executeEquinoxLauncher");
+
+    this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
   /**
-   * @return the id of the target platform that should be used to resolve the selected bundles
+   * {@inheritDoc}
    */
-  public String getTargetPlatformId() {
-    return this._targetPlatformId;
+  public String getPlatformConfigurationId() {
+    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
 
   /**
-   * Sets the id of the target platform that should be used to resolve the selected bundles
-   * 
-   * @param targetPlatformId
-   *          id of the target platform
+   * {@inheritDoc}
    */
-  public void setTargetPlatformId(String targetPlatformId) {
-    this._targetPlatformId = targetPlatformId;
+  public final String getTargetPlatformId() {
+    return this._targetPlatformAwareDelegate.getTargetPlatformId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isPlatformConfigurationIdSet() {
+    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final boolean isTargetPlatformIdSet() {
+    return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setPlatformConfigurationId(String platformConfigurationId) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void setTargetPlatformId(String targetPlatformId) {
+    this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public final void requireTargetPlatformIdSet() {
+    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -105,9 +128,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
   protected void preconditions() throws BuildException {
     super.preconditions();
 
-    if (this._targetPlatformId == null) {
-      throw new BuildException("You must set argument 'targetPlatformId'");
-    }
+    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -123,51 +144,30 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
   }
 
   /**
-   * <p>
-   * Helper method. Initializes the target platform.
-   * </p>
-   */
-  private void initTargetPlatform() {
-
-    // create the configuration
-    TargetPlatformConfiguration configuration = new TargetPlatformConfiguration();
-    configuration.setPreferProjects(true);
-
-    // get the target platform registry
-    TargetPlatformRegistry targetPlatformRegistry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
-
-    // set the target platform
-    this._targetPlatform = targetPlatformRegistry.getInstance(getWorkspace(), getTargetPlatformId(), configuration);
-  }
-
-  /**
    * Run the 'forEachSelectedBundle' macro
    * 
    * @param macroDef
    */
   private void executeForEachSelectedBundleScopedMacroDef(MacroDef macroDef) {
 
-    // Step 1: initialise and resolve the target platform
-    initTargetPlatform();
-
-    // Step 2: read the launchconfiguration file
+    // Step 1: read the launchconfiguration file
     final LaunchConfiguration launchConfiguration = getLaunchConfiguration();
 
-    // Step 3: Create a EquinoxLaunchConfigurationWrapper to access Equinox-specific settings in launch config
+    // Step 2: Create a EquinoxLaunchConfigurationWrapper to access Equinox-specific settings in launch config
     EquinoxLaunchConfigurationWrapper wrapper = new EquinoxLaunchConfigurationWrapper(launchConfiguration);
 
-    // Step 4: Get all selected workspace bundles
+    // Step 3: Get all selected workspace bundles
     final SelectedLaunchConfigurationBundle[] selectedWorkspaceBundles = wrapper.getSelectedWorkspaceBundles();
 
-    // Step 4a: run the macro for each workspace bundle
+    // Step 3a: run the macro for each workspace bundle
     for (SelectedLaunchConfigurationBundle selectedWorkspaceBundle : selectedWorkspaceBundles) {
       executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(wrapper, selectedWorkspaceBundle, true));
     }
 
-    // Step 5: Get all selected bundles from target platform
+    // Step 4: Get all selected bundles from target platform
     final SelectedLaunchConfigurationBundle[] selectedTargetBundles = wrapper.getSelectedTargetBundles();
 
-    // Step 5a: Run the macro for each selected target platform bundle
+    // Step 4a: Run the macro for each selected target platform bundle
     for (SelectedLaunchConfigurationBundle selectedTargetBundle : selectedTargetBundles) {
       executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(wrapper, selectedTargetBundle, false));
     }
@@ -262,10 +262,13 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask {
     Version osgiVersion = (launchConfigurationBundleInfo.hasVersion() ? new Version(launchConfigurationBundleInfo
         .getVersion()) : null);
 
-    BundleDescription bundleDescription = this._targetPlatform.getResolvedBundle(bundleSymbolicName, osgiVersion);
+    BundleDescription bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace())
+        .getResolvedBundle(bundleSymbolicName, osgiVersion);
+
     if (bundleDescription == null) {
       warn("Bundle '%s' with version '%s' not found in target platform", bundleSymbolicName, osgiVersion);
     }
+
     return bundleDescription;
   }
 

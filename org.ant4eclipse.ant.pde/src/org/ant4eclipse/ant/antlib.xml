@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <antlib>
   <typedef name="targetPlatform"          classname="org.ant4eclipse.ant.pde.TargetPlatformDefinitionDataType" />
+  <typedef name="platformConfiguration"   classname="org.ant4eclipse.ant.pde.PlatformConfigurationDataType" />
   <typedef name="executePluginProject"    classname="org.ant4eclipse.ant.pde.ExecutePluginProjectTask" />
   <typedef name="executeFeature"          classname="org.ant4eclipse.ant.pde.ExecuteFeatureTask" />
   <typedef name="executeProduct"          classname="org.ant4eclipse.ant.pde.ExecuteProductTask" />

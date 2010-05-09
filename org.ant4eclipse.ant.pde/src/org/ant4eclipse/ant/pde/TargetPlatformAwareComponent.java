@@ -56,4 +56,32 @@ public interface TargetPlatformAwareComponent {
    * </p>
    */
   void requireTargetPlatformIdSet();
+
+  /**
+   * <p>
+   * Sets the platform configuration id.
+   * </p>
+   * 
+   * @param platformConfigurationId
+   *          the id of the platform configuration and tested.
+   */
+  void setPlatformConfigurationId(String platformConfigurationId);
+
+  /**
+   * <p>
+   * Returns whether the platform configuration is set.
+   * </p>
+   * 
+   * @return whether the platform configuration is set.
+   */
+  boolean isPlatformConfigurationIdSet();
+
+  /**
+   * <p>
+   * Returns the platform configuration id or <code>null</code>, if no platform configuration id has been set.
+   * </p>
+   * 
+   * @return the platform configuration id or <code>null</code>, if no platform configuration id has been set.
+   */
+  String getPlatformConfigurationId();
 }
