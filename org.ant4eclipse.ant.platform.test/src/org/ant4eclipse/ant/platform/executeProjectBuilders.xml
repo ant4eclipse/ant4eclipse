@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<project name="execute-project-builders-test" basedir="." default="foo">
+
+  <!-- definition of condition HasNature -->
+  <typedef name="executeBuildCommands"     classname="org.ant4eclipse.ant.platform.ExecuteProjectBuildersTask" />
+
+  <target name="executeProjectBuilders">
+
+    <executeBuildCommands workspaceDirectory='${workspaceDir}' projectName='simpleproject'>
+
+      <org.eclipse.jdt.core.javabuilder>
+        <echo>org.eclipse.jdt.core.javabuilder~</echo>
+      </org.eclipse.jdt.core.javabuilder>
+
+      <org.ant4eclipse.anotherbuilder>
+        <echo>org.ant4eclipse.anotherbuilder~</echo>
+      </org.ant4eclipse.anotherbuilder>
+
+    </executeBuildCommands>
+
+  </target>
+
+  <!-- default dummy target -->
+  <target name="foo" />
+  
+</project>
