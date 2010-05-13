@@ -11,10 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import java.io.File;
+import java.util.List;
+
 import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
@@ -24,9 +28,6 @@ import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
-
-import java.io.File;
-import java.util.List;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
@@ -138,12 +139,16 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
     // resolve default output folder
     String defaultOutputFolderName = javaProjectRole.getDefaultOutputFolder();
-    File defaultOutputFolder = javaProjectRole.getEclipseProject().getChild(defaultOutputFolderName);
-    executionValues.getProperties().put(DEFAULT_OUTPUT_DIRECTORY_NAME, defaultOutputFolderName);
-    executionValues.getProperties().put(DEFAULT_OUTPUT_DIRECTORY,
-        this._pathComponent.convertToString(defaultOutputFolder));
-    executionValues.getReferences().put(DEFAULT_OUTPUT_DIRECTORY_PATH,
-        this._pathComponent.convertToPath(defaultOutputFolder));
+    if (defaultOutputFolderName == null) {
+      A4ELogging.info("Project '%s' has no output folder", javaProjectRole.getEclipseProject().getSpecifiedName());
+    } else {
+      File defaultOutputFolder = javaProjectRole.getEclipseProject().getChild(defaultOutputFolderName);
+      executionValues.getProperties().put(DEFAULT_OUTPUT_DIRECTORY_NAME, defaultOutputFolderName);
+      executionValues.getProperties().put(DEFAULT_OUTPUT_DIRECTORY,
+          this._pathComponent.convertToString(defaultOutputFolder));
+      executionValues.getReferences().put(DEFAULT_OUTPUT_DIRECTORY_PATH,
+          this._pathComponent.convertToPath(defaultOutputFolder));
+    }
 
     if (javaProjectRole.getSourceFolders().length > 0) {
 
