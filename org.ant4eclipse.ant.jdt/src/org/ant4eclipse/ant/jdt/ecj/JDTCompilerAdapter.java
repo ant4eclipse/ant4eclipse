@@ -208,9 +208,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       filelist = files.toArray(new File[0]);
 
       // log
-      A4ELogging.info("Compiling %s source %s (filtered %s source %s from source file list).", filelist.length,
-          filelist.length > 1 ? "files" : "file", this.compileList.length - filelist.length, this.compileList.length
-              - filelist.length > 1 ? "files" : "file");
+      A4ELogging.info("Compiling %s source %s (filtered %s source %s from source file list).", Integer
+          .valueOf(filelist.length), filelist.length > 1 ? "files" : "file", Integer.valueOf(this.compileList.length
+          - filelist.length), this.compileList.length - filelist.length > 1 ? "files" : "file");
     }
 
     // iterate over all the source files and create SourceFile
