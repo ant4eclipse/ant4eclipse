@@ -232,9 +232,19 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
         throw new Ant4EclipseException(EcjExceptionCodes.NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT);
       }
 
-      // add the new source file
-      sourceFiles.add(SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder,
-          getDefaultEncoding()));
+      // BUG-FIX for http://www.javakontor.org:8080/jira/browse/AE-203
+      // compile package-info.java first
+      if (sourceFileName.endsWith("package-info.java")) {
+        // add the new source file
+        sourceFiles.add(0, SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder,
+            getDefaultEncoding()));
+      }
+      // END BUG-FIX
+      else {
+        // add the new source file
+        sourceFiles.add(SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder,
+            getDefaultEncoding()));
+      }
     }
 
     // return the result
