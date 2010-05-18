@@ -159,8 +159,7 @@
               <echo>  - bootclasspath      -> ${buildPlugin.boot.classpath}</echo>
               <echo>  - classpath          -> ${buildPlugin.classpath.absolute.compiletime}</echo>
 
-              <javac destdir="${buildPlugin.default.output.directory}"
-                     compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter"
+              <jdtCompiler destdir="${buildPlugin.default.output.directory}"
                      source="1.5"
                      target="1.5">
 
@@ -179,7 +178,7 @@
                 <!-- pass the path of the default compiler options file -->
                 <compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}"
                              compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" />
-              </javac>
+              </jdtCompiler>
 
               <!-- template element 'post-compile' -->
               <post-compile />
