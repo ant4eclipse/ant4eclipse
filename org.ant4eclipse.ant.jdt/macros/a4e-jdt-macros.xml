@@ -75,7 +75,7 @@
       </echo>
 
       <ant4eclipse:executeJdtProject workspaceDirectory="@{workspaceDirectory}" projectName="@{projectName}" prefix="buildJdtProject">
-        <jdtClasspathContainerArgument key="target.platform" value="@{targetPlatformId}" />
+        <jdtClasspath ContainerArgument key="target.platform" value="@{targetPlatformId}" />
 
 
         <ant4eclipse:forProject>
