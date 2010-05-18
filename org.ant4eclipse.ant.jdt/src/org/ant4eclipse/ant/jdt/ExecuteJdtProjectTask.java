@@ -276,7 +276,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
 
     // Read the 'reverse' attribute
-    final boolean reverse = Boolean.valueOf(conditionalMacroDef.getAttribute("reverse", "false"));
+    final boolean reverse = Boolean.parseBoolean(conditionalMacroDef.getAttribute("reverse", "false"));
 
     final JavaProjectRole javaProjectRole = getJavaProjectRole();
 
