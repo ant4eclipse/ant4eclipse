@@ -70,8 +70,8 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
       // (See org.eclipse.team.internal.ccvs.ui.CVSProjectSetSerializer#addToWorkspace)
       A4ELogging
           .warn(
-              "Unusual reference in psf file. Expected to have five tokens, but have: %s in reference '%s'. Ignoring extra tokens.",
-              tokensCount, reference);
+              "Unusual reference in psf file. Expected to have five tokens, but have: %d in reference '%s'. Ignoring extra tokens.",
+              Integer.valueOf(tokensCount), reference);
     }
 
     String[] token = new String[tokensCount];

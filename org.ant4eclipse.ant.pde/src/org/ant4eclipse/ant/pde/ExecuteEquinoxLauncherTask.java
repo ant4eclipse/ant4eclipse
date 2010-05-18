@@ -180,6 +180,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * <p>
    * The providered that is returned contains all properties and references that should passed to the macro
    * 
+   * @param wrapper
    * @param selectedBundle
    * @param workspaceBundle
    * @return

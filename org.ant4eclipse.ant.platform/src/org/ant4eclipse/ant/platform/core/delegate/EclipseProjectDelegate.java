@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -52,6 +51,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
     throw new Ant4EclipseException(PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT);

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.task;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
 import org.ant4eclipse.ant.platform.core.delegate.EclipseProjectDelegate;
@@ -127,6 +125,7 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);

@@ -73,6 +73,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public Object createSubElement(String name, ProjectComponent component) throws BuildException {
     init();

@@ -87,6 +87,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();

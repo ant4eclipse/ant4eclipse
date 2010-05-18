@@ -53,6 +53,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setWorkspace(File workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
@@ -124,6 +125,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
     this._projectDelegate.setProject(projectPath);

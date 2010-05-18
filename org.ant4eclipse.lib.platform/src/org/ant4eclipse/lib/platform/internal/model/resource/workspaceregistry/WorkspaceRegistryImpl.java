@@ -103,7 +103,8 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     File[] projectFolders = workspaceDefinition.getProjectFolders();
 
     if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=%s.", projectFolders.length);
+      A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=%d.", Integer
+          .valueOf(projectFolders.length));
     }
 
     // read the projects and add them to the workspace

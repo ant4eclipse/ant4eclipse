@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.task;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.WorkspaceProjectSetComponent;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceProjectSetDelegate;
@@ -160,6 +158,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setWorkspace(File workspace) {
     this._workspaceProjectSetDelegate.setWorkspace(workspace);

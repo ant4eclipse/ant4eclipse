@@ -85,6 +85,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     init();

@@ -131,6 +131,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Override
   @Deprecated
   public final void setWorkspace(File workspace) {

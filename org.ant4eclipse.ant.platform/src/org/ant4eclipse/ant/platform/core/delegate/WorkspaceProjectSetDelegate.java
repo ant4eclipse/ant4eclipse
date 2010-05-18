@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-
 import org.ant4eclipse.ant.platform.core.ProjectSetComponent;
 import org.ant4eclipse.ant.platform.core.WorkspaceComponent;
 import org.ant4eclipse.ant.platform.core.WorkspaceProjectSetComponent;
@@ -188,6 +187,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setWorkspace(File workspace) {
     this._workspaceComponent.setWorkspace(workspace);

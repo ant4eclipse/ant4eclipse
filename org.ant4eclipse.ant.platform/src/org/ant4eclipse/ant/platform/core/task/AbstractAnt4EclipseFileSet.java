@@ -1,10 +1,5 @@
 package org.ant4eclipse.ant.platform.core.task;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
 import org.ant4eclipse.ant.platform.core.delegate.EclipseProjectDelegate;
@@ -16,6 +11,11 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection,
     EclipseProjectComponent {
@@ -180,6 +180,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);
@@ -195,6 +196,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   public final void setWorkspace(File workspace) {
     this._eclipseProjectDelegate.setWorkspace(workspace);
