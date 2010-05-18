@@ -11,5 +11,6 @@
   <typedef name="getJdtOutputPath"        classname="org.ant4eclipse.ant.jdt.GetJdtOutputPathTask" />
   <typedef name="getJdtSourcePath"        classname="org.ant4eclipse.ant.jdt.GetJdtSourcePathTask" />
   <typedef name="executeJdtProject"       classname="org.ant4eclipse.ant.jdt.ExecuteJdtProjectTask" />
+  <typedef name="jdtcompiler"             classname="org.ant4eclipse.ant.jdt.JdtCompilerTask"/>
 
 </antlib>
