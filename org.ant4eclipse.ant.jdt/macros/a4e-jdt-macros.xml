@@ -52,7 +52,7 @@
     <attribute name="projectName" />
     <attribute name="targetPlatformId" default="" />
     <attribute name="defaultCompilerOptionsFile" default="" />
-    <attribute name="targetLevel" default="" />
+    <attribute name="targetLevel" default="1.5" />
     <attribute name="sourceLevel" default="@{targetLevel}" />
 
     <!-- element definitions for lifecycle phases -->
