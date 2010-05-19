@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
+import org.ant4eclipse.lib.core.DefaultInstanceContainer;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
@@ -37,7 +38,7 @@ public class LoggingUsageTest {
         context.registerService(new DefaultAnt4EclipseLogger(printer), SERVICE_TYPE.getName());
       }
     };
-    ServiceRegistryAccess.configure(configuration);
+    ServiceRegistryAccess.configure(new DefaultInstanceContainer(), configuration);
   }
 
   /**

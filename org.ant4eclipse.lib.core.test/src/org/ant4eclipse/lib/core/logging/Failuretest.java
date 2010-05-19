@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
+import org.ant4eclipse.lib.core.DefaultInstanceContainer;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
@@ -30,7 +31,7 @@ public class Failuretest {
       public void configure(ConfigurationContext context) {
       }
     };
-    ServiceRegistryAccess.configure(configuration);
+    ServiceRegistryAccess.configure(new DefaultInstanceContainer(), configuration);
   }
 
   @After

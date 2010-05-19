@@ -24,10 +24,10 @@ import org.ant4eclipse.lib.core.Assure;
 public class ServiceRegistryAccess {
 
   /** the instance */
-  private static ServiceRegistry _instance;
+  private static InstanceContainer<ServiceRegistry> _instance;
 
   /** indicates whether the registry is configured **/
-  private static boolean         _configured = false;
+  private static boolean                            _configured = false;
 
   /**
    * <p>
@@ -37,13 +37,13 @@ public class ServiceRegistryAccess {
    * @param configuration
    *          the service registry configuration
    */
-  public static void configure(ServiceRegistryConfiguration configuration) {
+  public static void configure(InstanceContainer<ServiceRegistry> container, ServiceRegistryConfiguration configuration) {
     Assure.notNull("configuration", configuration);
     Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
-    _instance = new ServiceRegistry(configuration);
+    container.setInstance(new ServiceRegistry(configuration));
     _configured = true;
     try {
-      _instance.initialize();
+      _instance.getInstance().initialize();
     } catch (RuntimeException exception) {
       _configured = false;
       throw exception;
@@ -70,7 +70,7 @@ public class ServiceRegistryAccess {
     Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
 
     // if the service registry is configured, it is also initialized and needs to be disposed
-    _instance.dispose();
+    _instance.getInstance().dispose();
 
     // set configured = false;
     _configured = false;
@@ -88,7 +88,7 @@ public class ServiceRegistryAccess {
    */
   public static ServiceRegistry instance() {
     Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
-    return _instance;
+    return _instance.getInstance();
   }
 
 }

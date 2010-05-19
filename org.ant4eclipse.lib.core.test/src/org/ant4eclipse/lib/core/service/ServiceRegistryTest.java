@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.core.service;
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.DefaultInstanceContainer;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Assert;
@@ -23,7 +24,7 @@ public class ServiceRegistryTest {
   public void nullService() {
 
     try {
-      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(null, "null");
         }
@@ -34,7 +35,7 @@ public class ServiceRegistryTest {
     }
 
     try {
-      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService("null", (String) null);
         }
@@ -50,7 +51,7 @@ public class ServiceRegistryTest {
   public void duplicateIdentifierException() {
     try {
       // 
-      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(new Object(), "test1");
           context.registerService(new Object(), new String[] { "test1", "test3" });
@@ -62,7 +63,7 @@ public class ServiceRegistryTest {
     }
     try {
       // 
-      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(new Object(), "test1");
           context.registerService(new Object(), "test1");
@@ -78,7 +79,7 @@ public class ServiceRegistryTest {
   public void initialisationException() {
     try {
       // 
-      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(new NonInitialitationDummyService(), "test1");
         }
@@ -91,7 +92,7 @@ public class ServiceRegistryTest {
 
   @Test
   public void disposeException() {
-    ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+    ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
       public void configure(ConfigurationContext context) {
         context.registerService(new NonDisposeDummyService(), "test1");
       }
@@ -105,7 +106,7 @@ public class ServiceRegistryTest {
     final DummyService dummyService = new DummyService();
 
     // 
-    ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+    ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new ServiceRegistryConfiguration() {
 
       public void configure(ConfigurationContext context) {
         context.registerService(dummyService, DummyService.class.getName());
@@ -159,6 +160,7 @@ public class ServiceRegistryTest {
   }
 
   public class NonDisposeDummyService extends DummyService {
+    @Override
     public void dispose() {
       throw new RuntimeException();
     }
