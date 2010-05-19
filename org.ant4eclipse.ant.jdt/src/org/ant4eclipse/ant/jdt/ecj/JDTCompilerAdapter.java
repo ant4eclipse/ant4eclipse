@@ -183,6 +183,9 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
     List<SourceFile> sourceFiles = new LinkedList<SourceFile>();
 
     File[] filelist = getJavac().getFileList();
+    for (File file : filelist) {
+      A4ELogging.debug("Sourcefile provided by the javac-task: %s", file);
+    }
 
     // support for filtered filesets
     if (compilerArguments.hasSourceFilteredFilesetPath()) {
@@ -205,7 +208,10 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
       }
 
       // set the file list
-      filelist = files.toArray(new File[0]);
+      filelist = files.toArray(new File[files.size()]);
+      for (File file : filelist) {
+        A4ELogging.debug("Sourcefile which passed the filters: %s", file);
+      }
 
       // log
       A4ELogging.info("Compiling %s source %s (filtered %s source %s from source file list).", Integer
