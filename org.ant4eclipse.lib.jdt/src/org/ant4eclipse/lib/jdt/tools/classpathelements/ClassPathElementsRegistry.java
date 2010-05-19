@@ -15,10 +15,12 @@ import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- * The {@link ClassPathElementsRegistry} allows to register class path container and variables:
+ * The {@link ClassPathElementsRegistry} allows to register class path container and variables. Please be aware that
+ * this registry takes care of conflicting names.
  * </p>
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients.
@@ -98,6 +100,16 @@ public interface ClassPathElementsRegistry {
    *          the path
    */
   void registerClassPathVariable(String name, File path);
+
+  /**
+   * <p>
+   * Registers a list of class path variables.
+   * </p>
+   * 
+   * @param vars
+   *          a map representing the class path variables. Not <code>null</code>.
+   */
+  void registerClassPathVariables(Map<String, File> vars);
 
   /**
    * <p>

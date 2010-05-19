@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathContainer;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
@@ -104,6 +106,28 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    * {@inheritDoc}
    */
   public void registerClassPathVariable(String name, File path) {
-    this._classpathVariables.put(name, new ClasspathVariableImpl(name, path));
+    if (path.isDirectory()) {
+      throw new Ant4EclipseException(JdtExceptionCode.INVALID_CLASSPATH_VARIABLE, name, path);
+    }
+    ClassPathVariable newvar = new ClasspathVariableImpl(name, path);
+    ClassPathVariable oldvar = this._classpathVariables.get(name);
+    if (oldvar != null) {
+      // we already got an entry, so check if they're unequal (equal locations won't do any harm, so we consider them
+      // legal
+      if (!oldvar.getPath().equals(newvar.getPath())) {
+        throw new Ant4EclipseException(JdtExceptionCode.CONFLICTING_CLASSPATH_VARIABLES, name, oldvar.getPath(), newvar
+            .getPath());
+      }
+    }
+    this._classpathVariables.put(name, newvar);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void registerClassPathVariables(Map<String, File> vars) {
+    for (Map.Entry<String, File> var : vars.entrySet()) {
+      registerClassPathVariable(var.getKey(), var.getValue());
+    }
   }
 }
