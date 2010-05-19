@@ -24,7 +24,7 @@ import java.io.File;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class ClasspathVariableImp implements ClassPathVariable {
+public class ClassPathVariableImpl implements ClassPathVariable {
 
   /** the name of the class path variable */
   private String _name;
@@ -40,7 +40,7 @@ public class ClasspathVariableImp implements ClassPathVariable {
    * @param name
    * @param path
    */
-  public ClasspathVariableImp(String name, File path) {
+  public ClassPathVariableImpl(String name, File path) {
     Assure.nonEmpty("name", name);
     Assure.notNull("path", path);
 
@@ -76,7 +76,7 @@ public class ClasspathVariableImp implements ClassPathVariable {
     if (o.getClass() != getClass()) {
       return false;
     }
-    ClasspathVariableImp castedObj = (ClasspathVariableImp) o;
+    ClassPathVariableImpl castedObj = (ClassPathVariableImpl) o;
     if (this._name == null) {
       if (castedObj._name != null) {
         return false;
