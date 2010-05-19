@@ -11,16 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 
 import java.io.File;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,10 +34,13 @@ import java.io.File;
 public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
 
   /** the name of the class path variable */
-  private String _name;
+  private String _name    = null;
 
   /** the path of this class path variable */
-  private File   _path;
+  private File   _path    = null;
+
+  /** the location of the properties file containing the declarations */
+  private File   _varfile = null;
 
   /**
    * <p>
@@ -47,6 +51,18 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    */
   public JdtClassPathVariableType(Project project) {
     super(project);
+  }
+
+  /**
+   * <p>
+   * Sets the location of a properties file which contains the class path variables.
+   * </p>
+   * 
+   * @param varfile
+   *          A properties file pointing to a set of class path variables.
+   */
+  public void setFile(File varfile) {
+    this._varfile = varfile;
   }
 
   /**
@@ -69,7 +85,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    *          the name to set
    */
   public void setName(String name) {
-    this._name = name;
+    this._name = Utilities.cleanup(name);
   }
 
   /**
@@ -100,21 +116,29 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    */
   @Override
   protected void doValidate() {
-    // assert path set
-    if (this._path == null) {
-      // TODO: NLS
+
+    Map<String, File> classpathvars = new Hashtable<String, File>();
+
+    if ((this._path != null) && (this._name != null)) {
+      classpathvars.put(this._name, this._path);
+    } else if (this._path != null) {
+      throw new BuildException("Missing parameter 'name' on classpathVariable!");
+    } else if (this._name != null) {
       throw new BuildException("Missing parameter 'path' on classpathVariable!");
     }
 
-    // assert name set
-    if (!Utilities.hasText(this._name)) {
-      // TODO: NLS
-      throw new BuildException("Missing parameter 'name' on classpathVariable!");
+    // load the classpath variables from the file
+    if (this._varfile != null) {
+      StringMap map = new StringMap(this._varfile);
+      for (Map.Entry<String, String> pair : map.entrySet()) {
+        classpathvars.put(pair.getKey(), new File(pair.getValue()));
+      }
     }
 
-    ClassPathElementsRegistry variablesRegistry = ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
+    ClassPathElementsRegistry variablesRegistry = ServiceRegistry.instance()
+        .getService(ClassPathElementsRegistry.class);
 
-    // TODO: what to do if classpathVariable already registered?
-    variablesRegistry.registerClassPathVariable(this._name, this._path);
+    variablesRegistry.registerClassPathVariables(classpathvars);
   }
+
 }
