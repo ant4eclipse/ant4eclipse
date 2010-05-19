@@ -40,7 +40,8 @@ public class ServiceRegistryAccess {
   public static void configure(InstanceContainer<ServiceRegistry> container, ServiceRegistryConfiguration configuration) {
     Assure.notNull("configuration", configuration);
     Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
-    container.setInstance(new ServiceRegistry(configuration));
+    _instance = container;
+    _instance.setInstance(new ServiceRegistry(configuration));
     _configured = true;
     try {
       _instance.getInstance().initialize();
