@@ -63,6 +63,12 @@ public class JdtExceptionCode extends ExceptionCode {
   @NLSMessage("Exception whilst resolving the classpath entry '%s' of project '%s': '%s'")
   public static JdtExceptionCode EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY;
 
+  @NLSMessage("The class path variable '%s' points to the invalid location '%s' !")
+  public static JdtExceptionCode INVALID_CLASSPATH_VARIABLE;
+
+  @NLSMessage("The class path variable '%s' is declared at least once with different locations: '%s' <-> '%s' !")
+  public static JdtExceptionCode CONFLICTING_CLASSPATH_VARIABLES;
+
   static {
     NLS.initialize(JdtExceptionCode.class);
   }
