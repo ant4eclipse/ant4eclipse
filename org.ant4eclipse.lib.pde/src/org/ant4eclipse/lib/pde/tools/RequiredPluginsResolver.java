@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.pde.tools;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
@@ -148,7 +148,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   private TargetPlatform getTargetPlatform(ClasspathResolverContext context) {
 
     // get the TargetPlatform
-    TargetPlatformRegistry registry = ServiceRegistry.instance().getService(TargetPlatformRegistry.class);
+    TargetPlatformRegistry registry = ServiceRegistryAccess.instance().getService(TargetPlatformRegistry.class);
 
     // get the target platform argument
     JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
@@ -166,8 +166,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     } else {
 
       // get the TargetPlatform
-      return registry.getInstance(context.getWorkspace(), containerArgument.getValue(),
-          new PlatformConfiguration());
+      return registry.getInstance(context.getWorkspace(), containerArgument.getValue(), new PlatformConfiguration());
     }
   }
 }

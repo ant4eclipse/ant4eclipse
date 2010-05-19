@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.core.logging;
 
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.After;
 import org.junit.Assert;
@@ -37,7 +37,7 @@ public class LoggingUsageTest {
         context.registerService(new DefaultAnt4EclipseLogger(printer), SERVICE_TYPE.getName());
       }
     };
-    ServiceRegistry.configure(configuration);
+    ServiceRegistryAccess.configure(configuration);
   }
 
   /**
@@ -53,7 +53,7 @@ public class LoggingUsageTest {
 
   @After
   public void disposeServiceRegistry() {
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
   @Test
@@ -94,8 +94,8 @@ public class LoggingUsageTest {
 
   @Test
   public void debugDisabled() {
-    DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistry.instance()
-        .getService(SERVICE_TYPE);
+    DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistryAccess.instance().getService(
+        SERVICE_TYPE);
     loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.debug("no args");
     A4ELogging.debug("single arg is: %d", Integer.valueOf(12));
@@ -114,8 +114,8 @@ public class LoggingUsageTest {
 
   @Test
   public void tracingDisabled() {
-    DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistry.instance()
-        .getService(SERVICE_TYPE);
+    DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistryAccess.instance().getService(
+        SERVICE_TYPE);
     loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.trace("no args");
     A4ELogging.trace("single arg is: %d", Integer.valueOf(12));

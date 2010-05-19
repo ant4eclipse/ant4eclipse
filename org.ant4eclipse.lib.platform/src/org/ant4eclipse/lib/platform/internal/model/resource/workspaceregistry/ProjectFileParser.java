@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
@@ -143,7 +143,7 @@ public class ProjectFileParser {
       if (!locationAsFile.exists() && location.contains("/")) {
         String variableName = location.substring(0, location.indexOf("/"));
 
-        LinkedResourcePathVariableService variableService = ServiceRegistry.instance().getService(
+        LinkedResourcePathVariableService variableService = ServiceRegistryAccess.instance().getService(
             LinkedResourcePathVariableService.class);
 
         String variable = variableService.getLinkedResourcePath(variableName);
@@ -227,7 +227,7 @@ public class ProjectFileParser {
   }
 
   private static EclipseStringSubstitutionService getEclipseVariableResolver() {
-    EclipseStringSubstitutionService resolver = ServiceRegistry.instance().getService(
+    EclipseStringSubstitutionService resolver = ServiceRegistryAccess.instance().getService(
         EclipseStringSubstitutionService.class);
     return resolver;
   }

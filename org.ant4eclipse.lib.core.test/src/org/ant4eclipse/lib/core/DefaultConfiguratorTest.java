@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.junit.Test;
 
@@ -21,21 +21,21 @@ public class DefaultConfiguratorTest {
   public void simpleConfigurator() {
     DefaultConfigurator.configureAnt4Eclipse();
     DefaultConfigurator.configureAnt4Eclipse();
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
   @Test
   public void configurationWithEmptySettings() {
     DefaultConfigurator.configureAnt4Eclipse(new StringMap());
     DefaultConfigurator.configureAnt4Eclipse(new StringMap());
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
   @Test
   public void configurationWithoutSettings() {
     DefaultConfigurator.configureAnt4Eclipse(null);
     DefaultConfigurator.configureAnt4Eclipse(null);
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
 } /* ENDCLASS */

@@ -16,7 +16,7 @@ import org.ant4eclipse.ant.platform.SubAttributeContribution;
 import org.ant4eclipse.ant.platform.SubElementContribution;
 import org.ant4eclipse.ant.platform.core.SubElementAndAttributesComponent;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
@@ -147,7 +147,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     // create the lists of dynamic attributes
     this._subAttributes = new HashMap<String, String>();
 
-    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
 
     // /////
     // Create and set sub-elements...

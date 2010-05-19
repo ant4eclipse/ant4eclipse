@@ -12,10 +12,8 @@
 package org.ant4eclipse.lib.core.logging;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.service.ConfigurationContext;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,12 +30,12 @@ public class Failuretest {
       public void configure(ConfigurationContext context) {
       }
     };
-    ServiceRegistry.configure(configuration);
+    ServiceRegistryAccess.configure(configuration);
   }
 
   @After
   public void disposeServiceRegistry() {
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
   @Test

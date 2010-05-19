@@ -11,8 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-import org.ant4eclipse.ant.core.AntConfigurator;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.apache.tools.ant.Project;
 import org.junit.Test;
 
@@ -23,7 +22,7 @@ public class AntConfiguratorTest {
     Project project = new Project();
     AntConfigurator.configureAnt4Eclipse(project);
     AntConfigurator.configureAnt4Eclipse(project);
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
 } /* ENDCLASS */

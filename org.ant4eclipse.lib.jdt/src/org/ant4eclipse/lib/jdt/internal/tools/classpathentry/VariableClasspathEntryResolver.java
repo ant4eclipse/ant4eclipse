@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
-
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
@@ -68,7 +67,8 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
     }
 
     // get variablesRegistry
-    ClassPathElementsRegistry elementsRegistry = ServiceRegistry.instance().getService(ClassPathElementsRegistry.class);
+    ClassPathElementsRegistry elementsRegistry = ServiceRegistryAccess.instance().getService(
+        ClassPathElementsRegistry.class);
 
     // resolve variable
     if (elementsRegistry.hasClassPathVariable(variable)) {

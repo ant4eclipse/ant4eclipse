@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.internal.model.resource.role.NatureNicknameRegistry;
 import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -339,7 +339,8 @@ public final class EclipseProjectImpl implements EclipseProject {
     // nature unknown:
     if (!this._natures.contains(nature)) {
 
-      NatureNicknameRegistry nicknameRegistry = ServiceRegistry.instance().getService(NatureNicknameRegistry.class);
+      NatureNicknameRegistry nicknameRegistry = ServiceRegistryAccess.instance().getService(
+          NatureNicknameRegistry.class);
 
       // try if the user supplied an abbreviation
       String abbreviation = nature.getName().toLowerCase();

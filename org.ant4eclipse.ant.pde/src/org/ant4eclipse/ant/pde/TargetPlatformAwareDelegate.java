@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
@@ -112,7 +112,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
     if (this._targetPlatform == null) {
 
       // get the target platform registry
-      TargetPlatformRegistry targetPlatformRegistry = ServiceRegistry.instance().getService(
+      TargetPlatformRegistry targetPlatformRegistry = ServiceRegistryAccess.instance().getService(
           TargetPlatformRegistry.class);
 
       // define the platform configuration

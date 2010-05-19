@@ -51,84 +51,14 @@ import java.util.Map;
  */
 public class ServiceRegistry {
 
-  /** the instance */
-  private static ServiceRegistry _instance;
-
   /** the service map **/
-  private Map<String, Object>    _serviceMap;
+  private Map<String, Object> _serviceMap;
 
   /** list that contains the ordering of the services **/
-  private List<Object>           _serviceOrdering;
-
-  /** indicates whether the registry is configured **/
-  private static boolean         _configured    = false;
+  private List<Object>        _serviceOrdering;
 
   /** indicates whether the registry instance is initialized **/
-  private boolean                _isInitialized = false;
-
-  /**
-   * <p>
-   * Configures the {@link ServiceRegistry}. The registry has to be configured before it can be used.
-   * </p>
-   * 
-   * @param configuration
-   *          the service registry configuration
-   */
-  public static void configure(ServiceRegistryConfiguration configuration) {
-    Assure.notNull("configuration", configuration);
-    Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
-
-    _instance = new ServiceRegistry();
-    configuration.configure(_instance.new ConfigurationContextImpl());
-    _configured = true;
-    try {
-      _instance.initialize();
-    } catch (RuntimeException exception) {
-      _configured = false;
-      throw exception;
-    }
-  }
-
-  /**
-   * <p>
-   * Returns <code>true</code> if the {@link ServiceRegistry} already is configured, <code>false</code> otherwise.
-   * </p>
-   * 
-   * @return <code>true</code> if the {@link ServiceRegistry} already is configured, <code>false</code> otherwise.
-   */
-  public static boolean isConfigured() {
-    return _configured;
-  }
-
-  /**
-   * <p>
-   * Resets the {@link ServiceRegistry}.
-   * </p>
-   */
-  public static void reset() {
-    Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
-
-    // if the service registry is configured, it is also initialized and needs to be disposed
-    _instance.dispose();
-
-    // set configured = false;
-    _configured = false;
-
-    // set instance to null
-    _instance = null;
-  }
-
-  /**
-   * <p>
-   * Returns the instance.
-   * </p>
-   * 
-   * @return the instance.
-   */
-  public static ServiceRegistry instance() {
-    Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
-    return _instance;
-  }
+  private boolean             _isInitialized = false;
 
   /**
    * <p>
@@ -196,7 +126,8 @@ public class ServiceRegistry {
    * <p>
    * </p>
    */
-  private void initialize() {
+  void initialize() {
+
     Assure.assertTrue(!isInitialized(), "Service registry already has been initialized!");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
@@ -221,7 +152,8 @@ public class ServiceRegistry {
    * <p>
    * </p>
    */
-  private void dispose() {
+  void dispose() {
+
     Assure.assertTrue(isInitialized(), "Service registry is not initialized.");
 
     Iterator<Object> iterator = this._serviceOrdering.iterator();
@@ -252,10 +184,14 @@ public class ServiceRegistry {
    * <p>
    * Creates an instance of type {@link ServiceRegistry}.
    * </p>
+   * 
+   * @param configuration
+   *          the service registry configuration
    */
-  private ServiceRegistry() {
+  ServiceRegistry(ServiceRegistryConfiguration configuration) {
     this._serviceMap = new HashMap<String, Object>();
     this._serviceOrdering = new LinkedList<Object>();
+    configuration.configure(new ConfigurationContextImpl());
   }
 
   /**

@@ -14,9 +14,7 @@ package org.ant4eclipse.lib.jdt.tools;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-
-
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
@@ -57,7 +55,7 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
 
   @Test
   public void buildOrder() {
-    WorkspaceRegistry workspaceRegistry = ServiceRegistry.instance().getService(WorkspaceRegistry.class);
+    WorkspaceRegistry workspaceRegistry = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class);
     Workspace workspace = workspaceRegistry.registerWorkspace(this._testWorkspace.getRootDir().getAbsolutePath(),
         new DefaultEclipseWorkspaceDefinition(this._testWorkspace.getRootDir()));
 

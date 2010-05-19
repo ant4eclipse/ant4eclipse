@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.jdt.containerargs;
 
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.apache.tools.ant.BuildException;
@@ -126,7 +126,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     this._knownAttributesList = new LinkedList<String>();
 
     // get all properties that defines a SubElementContributor
-    Ant4EclipseConfiguration config = ServiceRegistry.instance().getService(Ant4EclipseConfiguration.class);
+    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> subElementContributionEntries = config.getAllProperties(CLASSPATH_ATTRIBUTE_PREFIX);
 
     for (Pair<String, String> pair : subElementContributionEntries) {

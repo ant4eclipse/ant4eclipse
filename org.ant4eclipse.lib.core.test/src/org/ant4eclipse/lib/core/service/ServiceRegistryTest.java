@@ -23,7 +23,7 @@ public class ServiceRegistryTest {
   public void nullService() {
 
     try {
-      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(null, "null");
         }
@@ -34,7 +34,7 @@ public class ServiceRegistryTest {
     }
 
     try {
-      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService("null", (String) null);
         }
@@ -50,7 +50,7 @@ public class ServiceRegistryTest {
   public void duplicateIdentifierException() {
     try {
       // 
-      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(new Object(), "test1");
           context.registerService(new Object(), new String[] { "test1", "test3" });
@@ -62,7 +62,7 @@ public class ServiceRegistryTest {
     }
     try {
       // 
-      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(new Object(), "test1");
           context.registerService(new Object(), "test1");
@@ -78,7 +78,7 @@ public class ServiceRegistryTest {
   public void initialisationException() {
     try {
       // 
-      ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+      ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
         public void configure(ConfigurationContext context) {
           context.registerService(new NonInitialitationDummyService(), "test1");
         }
@@ -91,12 +91,12 @@ public class ServiceRegistryTest {
 
   @Test
   public void disposeException() {
-    ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+    ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
       public void configure(ConfigurationContext context) {
         context.registerService(new NonDisposeDummyService(), "test1");
       }
     });
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
   }
 
   @Test
@@ -105,27 +105,27 @@ public class ServiceRegistryTest {
     final DummyService dummyService = new DummyService();
 
     // 
-    ServiceRegistry.configure(new ServiceRegistryConfiguration() {
+    ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
 
       public void configure(ConfigurationContext context) {
         context.registerService(dummyService, DummyService.class.getName());
       }
     });
 
-    Assert.assertTrue(ServiceRegistry.instance().hasService(DummyService.class.getName()));
-    DummyService service = ServiceRegistry.instance().getService(DummyService.class);
+    Assert.assertTrue(ServiceRegistryAccess.instance().hasService(DummyService.class.getName()));
+    DummyService service = ServiceRegistryAccess.instance().getService(DummyService.class);
     Assert.assertEquals(dummyService, service);
     Assert.assertTrue(dummyService.isInitialized());
 
-    Assert.assertTrue(ServiceRegistry.instance().hasService(DummyService.class));
-    service = ServiceRegistry.instance().getService(DummyService.class);
+    Assert.assertTrue(ServiceRegistryAccess.instance().hasService(DummyService.class));
+    service = ServiceRegistryAccess.instance().getService(DummyService.class);
     Assert.assertEquals(dummyService, service);
     Assert.assertTrue(dummyService.isInitialized());
 
-    ServiceRegistry.reset();
-    Assert.assertFalse(ServiceRegistry.isConfigured());
+    ServiceRegistryAccess.reset();
+    Assert.assertFalse(ServiceRegistryAccess.isConfigured());
     try {
-      ServiceRegistry.reset();
+      ServiceRegistryAccess.reset();
       Assert.fail();
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
@@ -152,6 +152,7 @@ public class ServiceRegistryTest {
   }
 
   public class NonInitialitationDummyService extends DummyService {
+    @Override
     public void initialize() {
       throw new RuntimeException();
     }

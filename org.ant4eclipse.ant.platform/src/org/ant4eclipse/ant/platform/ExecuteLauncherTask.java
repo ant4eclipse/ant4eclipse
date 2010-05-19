@@ -2,21 +2,21 @@ package org.ant4eclipse.ant.platform;
 
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
-import java.io.File;
-import java.util.Collection;
-
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
+
+import java.io.File;
+import java.util.Collection;
 
 public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
@@ -99,7 +99,7 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
     if (this._launchConfiguration == null) {
 
-      LaunchConfigurationReader launchConfigurationReader = ServiceRegistry.instance().getService(
+      LaunchConfigurationReader launchConfigurationReader = ServiceRegistryAccess.instance().getService(
           LaunchConfigurationReader.class);
 
       final LaunchConfiguration launchConfiguration = launchConfigurationReader
@@ -126,7 +126,7 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
    */
   protected MacroExecutionValues provideDefaultMacroExecutionValues(MacroExecutionValues values) {
     final LaunchConfiguration launchConfiguration = getLaunchConfiguration();
-    final EclipseStringSubstitutionService eclipseVariableResolver = ServiceRegistry.instance().getService(
+    final EclipseStringSubstitutionService eclipseVariableResolver = ServiceRegistryAccess.instance().getService(
         EclipseStringSubstitutionService.class);
     final Collection<String> attributeNames = launchConfiguration.getAttributeNames();
     for (String attributeName : attributeNames) {

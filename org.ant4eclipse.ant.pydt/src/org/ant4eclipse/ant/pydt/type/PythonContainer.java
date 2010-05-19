@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt.type;
 
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
@@ -89,7 +88,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
       throw new BuildException("Missing parameter 'id' on jre!");
     }
 
-    PythonRuntimeRegistry registry = ServiceRegistry.instance().getService(PythonRuntimeRegistry.class);
+    PythonRuntimeRegistry registry = ServiceRegistryAccess.instance().getService(PythonRuntimeRegistry.class);
 
     registry.registerRuntime(runtime._id, runtime._location, this._sitepackages);
 

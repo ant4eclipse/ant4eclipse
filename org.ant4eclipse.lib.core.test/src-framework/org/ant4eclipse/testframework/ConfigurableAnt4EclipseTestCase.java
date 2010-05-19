@@ -13,6 +13,7 @@ package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.junit.After;
 import org.junit.Assert;
@@ -48,8 +49,8 @@ public class ConfigurableAnt4EclipseTestCase {
   @After
   public void dispose() {
     try {
-      if (ServiceRegistry.isConfigured()) {
-        ServiceRegistry.reset();
+      if (ServiceRegistryAccess.isConfigured()) {
+        ServiceRegistryAccess.reset();
       }
     } catch (Exception ex) {
       System.err.println("[Ant4EclipseTestCase] Could not reset ServiceRegistry: " + ex);

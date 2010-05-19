@@ -11,12 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.apache.tools.ant.Project;
 
 /**
@@ -38,10 +37,10 @@ public class AntConfigurator {
    *          the ant project
    */
   public static final void configureAnt4Eclipse(Project project) {
-    if (!ServiceRegistry.isConfigured()) {
+    if (!ServiceRegistryAccess.isConfigured()) {
       Ant4EclipseLogger logger = new AntBasedLogger(project);
       Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
-      ServiceRegistry.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
+      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
   }
 

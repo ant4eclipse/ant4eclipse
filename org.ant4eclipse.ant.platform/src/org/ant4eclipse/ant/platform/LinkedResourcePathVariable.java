@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService;
 import org.apache.tools.ant.Project;
@@ -90,7 +90,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
   protected void doValidate() {
 
     // fetch the ClassPathElementsRegistry
-    LinkedResourcePathVariableService variableService = ServiceRegistry.instance().getService(
+    LinkedResourcePathVariableService variableService = ServiceRegistryAccess.instance().getService(
         LinkedResourcePathVariableService.class);
 
     // 

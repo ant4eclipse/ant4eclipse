@@ -7,7 +7,7 @@ import org.ant4eclipse.ant.core.FileListHelper;
 import org.ant4eclipse.ant.platform.ExecuteLauncherTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
@@ -291,7 +291,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   protected JavaRuntime getJavaRuntime() {
     LaunchConfiguration launchConfiguration = getLaunchConfiguration();
-    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
+    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
 
     String vmPath = launchConfiguration.getAttribute("org.eclipse.jdt.launching.JRE_CONTAINER");
     if (vmPath == null) {

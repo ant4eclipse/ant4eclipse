@@ -1,7 +1,6 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
 
 import java.util.HashMap;
@@ -40,6 +39,6 @@ public class ClassFileLoaderCache {
   }
 
   public static ClassFileLoaderCache getInstance() {
-    return ServiceRegistry.instance().getService(ClassFileLoaderCache.class);
+    return ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class);
   }
 }

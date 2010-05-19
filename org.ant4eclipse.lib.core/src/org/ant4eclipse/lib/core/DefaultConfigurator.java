@@ -16,7 +16,7 @@ import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.logging.DefaultAnt4EclipseLogger;
 import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 
 /**
@@ -35,10 +35,10 @@ public class DefaultConfigurator {
    * </p>
    */
   public static final void configureAnt4Eclipse() {
-    if (!ServiceRegistry.isConfigured()) {
+    if (!ServiceRegistryAccess.isConfigured()) {
       Ant4EclipseLogger logger = new DefaultAnt4EclipseLogger();
       Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
-      ServiceRegistry.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
+      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
   }
 
@@ -51,13 +51,13 @@ public class DefaultConfigurator {
    *          the configuration properties
    */
   public static final void configureAnt4Eclipse(StringMap properties) {
-    if (!ServiceRegistry.isConfigured()) {
+    if (!ServiceRegistryAccess.isConfigured()) {
       if (properties == null) {
         properties = new StringMap();
       }
       Ant4EclipseLogger logger = new DefaultAnt4EclipseLogger();
       Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl(properties);
-      ServiceRegistry.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
+      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
   }
 

@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.jdt.internal.model.project;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
@@ -28,6 +28,7 @@ import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+
 /**
  * <p>
  * Implements the java project role.
@@ -369,7 +370,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   }
 
   private JavaRuntimeRegistry getJavaRuntimeRegistry() {
-    return ServiceRegistry.instance().getService(JavaRuntimeRegistry.class);
+    return ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
   }
 
   /**

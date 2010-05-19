@@ -13,6 +13,7 @@ package org.ant4eclipse.testframework;
 
 import org.ant4eclipse.lib.core.DefaultConfigurator;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.junit.After;
 import org.junit.Before;
 
@@ -43,7 +44,7 @@ public abstract class AbstractTestDirectoryBasedTest {
   @After
   public void tearDown() {
     this._testWorkspace.dispose();
-    ServiceRegistry.reset();
+    ServiceRegistryAccess.reset();
     this._testWorkspace = null;
   }
 

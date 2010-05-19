@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
@@ -45,7 +45,7 @@ public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTe
 
   @Test
   public void jdtLaunchConfig() throws Exception {
-    LaunchConfigurationReader launchConfigurationReader = ServiceRegistry.instance().getService(
+    LaunchConfigurationReader launchConfigurationReader = ServiceRegistryAccess.instance().getService(
         LaunchConfigurationReader.class);
     InputStream inputStream = LaunchConfigurationReaderImplTest.class.getResourceAsStream("LocalJavaApplication.txt");
     File launchConfigurationFile = this._testWorkspace.createFile("LocalJavaApplication.launch", inputStream);

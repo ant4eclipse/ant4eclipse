@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
@@ -147,6 +147,6 @@ public class JavaProfileReader implements Lifecycle {
   // }
 
   public static JavaProfileReader getInstance() {
-    return ServiceRegistry.instance().getService(JavaProfileReader.class);
+    return ServiceRegistryAccess.instance().getService(JavaProfileReader.class);
   }
 }
