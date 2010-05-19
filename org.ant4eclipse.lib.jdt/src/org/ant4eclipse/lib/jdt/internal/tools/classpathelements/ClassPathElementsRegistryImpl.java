@@ -109,7 +109,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
     if (path.isDirectory()) {
       throw new Ant4EclipseException(JdtExceptionCode.INVALID_CLASSPATH_VARIABLE, name, path);
     }
-    ClassPathVariable newvar = new ClasspathVariableImpl(name, path);
+    ClassPathVariable newvar = new ClasspathVariableImp(name, path);
     ClassPathVariable oldvar = this._classpathVariables.get(name);
     if (oldvar != null) {
       // we already got an entry, so check if they're unequal (equal locations won't do any harm, so we consider them
