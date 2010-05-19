@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class ClasspathVariableImpl implements ClassPathVariable {
     Assure.notNull("path", path);
 
     this._name = name;
-    this._path = path;
+    this._path = Utilities.getCanonicalFile(path);
   }
 
   /**

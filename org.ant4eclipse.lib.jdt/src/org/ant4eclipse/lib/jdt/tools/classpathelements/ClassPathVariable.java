@@ -28,10 +28,11 @@ public interface ClassPathVariable extends ClassPathElement {
 
   /**
    * <p>
-   * Returns the path of the class path variable.
+   * Returns the path of the class path variable. The returned path is canonical.
    * </p>
    * 
-   * @return the path of the class path variable.
+   * @return the path of the class path variable. Not <code>null</code>.
    */
   File getPath();
+
 }
