@@ -527,6 +527,9 @@
         </copy>
       </forEachProject>
     </executeProjectSet>
+    
+    <!-- copy license file -->
+    <copy file="${basedir}/org.ant4eclipse.build/ant4eclipse-license.html" todir="${destination}/distribution" flatten="true" />
 
     <!-- copy libary dependencies -->
     <mkdir dir="${destination}/distribution/libs" />
