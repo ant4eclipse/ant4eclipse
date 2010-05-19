@@ -24,7 +24,7 @@ import org.ant4eclipse.lib.core.Assure;
 public class ServiceRegistryAccess {
 
   /** the instance */
-  private static InstanceContainer<ServiceRegistry> _instance;
+  private static ServiceRegistry _instance;
 
   /**
    * <p>
@@ -34,14 +34,12 @@ public class ServiceRegistryAccess {
    * @param configuration
    *          the service registry configuration
    */
-  public static void configure(InstanceContainer<ServiceRegistry> container, ServiceRegistryConfiguration configuration) {
-    Assure.notNull("container", container);
+  public static void configure(ServiceRegistryConfiguration configuration) {
     Assure.notNull("configuration", configuration);
     Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
-    _instance = container;
-    _instance.setInstance(new ServiceRegistry(configuration));
+    _instance = new ServiceRegistry(configuration);
     try {
-      _instance.getInstance().initialize();
+      _instance.initialize();
     } catch (RuntimeException exception) {
       _instance = null;
       throw exception;
@@ -78,7 +76,7 @@ public class ServiceRegistryAccess {
    */
   public static ServiceRegistry instance() {
     Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
-    return _instance.getInstance();
+    return _instance;
   }
 
 }

@@ -15,8 +15,6 @@ import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
-import org.ant4eclipse.lib.core.service.InstanceContainer;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.apache.tools.ant.Project;
 
@@ -30,8 +28,6 @@ import org.apache.tools.ant.Project;
  */
 public class AntConfigurator {
 
-  private static final String KEY_REGISTRY = "org.ant4eclipse.serviceregistry";
-
   /**
    * <p>
    * Configures Ant4Eclipse in a ant based environment (the standard case).
@@ -44,33 +40,8 @@ public class AntConfigurator {
     if (!ServiceRegistryAccess.isConfigured()) {
       Ant4EclipseLogger logger = new AntBasedLogger(project);
       Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
-      ServiceRegistryAccess.configure(new LocalInstanceContainer(project), new DefaultServiceRegistryConfiguration(
-          logger, configuration));
+      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
-  }
-
-  private static class LocalInstanceContainer implements InstanceContainer<ServiceRegistry> {
-
-    private Project _antproject;
-
-    public LocalInstanceContainer(Project project) {
-      this._antproject = project;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ServiceRegistry getInstance() {
-      return (ServiceRegistry) this._antproject.getReference(KEY_REGISTRY);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setInstance(ServiceRegistry value) {
-      this._antproject.addReference(KEY_REGISTRY, value);
-    }
-
   }
 
 } /* ENDCLASS */

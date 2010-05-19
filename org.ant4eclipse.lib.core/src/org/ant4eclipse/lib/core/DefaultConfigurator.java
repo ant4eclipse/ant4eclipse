@@ -38,8 +38,7 @@ public class DefaultConfigurator {
     if (!ServiceRegistryAccess.isConfigured()) {
       Ant4EclipseLogger logger = new DefaultAnt4EclipseLogger();
       Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
-      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new DefaultServiceRegistryConfiguration(logger,
-          configuration));
+      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
   }
 
@@ -58,8 +57,7 @@ public class DefaultConfigurator {
       }
       Ant4EclipseLogger logger = new DefaultAnt4EclipseLogger();
       Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl(properties);
-      ServiceRegistryAccess.configure(new DefaultInstanceContainer(), new DefaultServiceRegistryConfiguration(logger,
-          configuration));
+      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
     }
   }
 
