@@ -42,7 +42,7 @@ public class JdtCompilerTask extends Javac {
    */
   @Override
   public void execute() throws BuildException {
-    setCompiler(JDTCompilerAdapter.class.getName());
+    super.setCompiler(JDTCompilerAdapter.class.getName());
     super.execute();
   }
 
