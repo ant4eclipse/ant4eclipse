@@ -11,15 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.Hashtable;
 import java.util.Map;
@@ -207,6 +208,26 @@ public class StringMap extends Hashtable<String, String> {
       return get(key);
     } else {
       return defvalue;
+    }
+  }
+
+  /**
+   * Stores the content of this map into the supplied file. This is useful for debugging purposes.
+   * 
+   * @param destination
+   *          The destination file used to receive the properties. Not <code>null</code>.
+   */
+  public void save(File destination) {
+    Properties properties = new Properties();
+    properties.putAll(this);
+    OutputStream outstream = null;
+    try {
+      outstream = new FileOutputStream(destination);
+      properties.store(outstream, null);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+    } finally {
+      Utilities.close(outstream);
     }
   }
 
