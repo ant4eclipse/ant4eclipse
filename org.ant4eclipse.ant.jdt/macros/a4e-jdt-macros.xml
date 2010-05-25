@@ -130,7 +130,7 @@
           <echo>  - output directories -> ${buildJdtProject.default.output.directory}</echo>
           <echo>  - bootclasspath      -> ${buildJdtProject.boot.classpath}</echo>
           <echo>  - classpath          -> ${buildJdtProject.classpath.absolute.compiletime}</echo>
-          <jdtCompiler source="@{sourceLevel}" target="@{targetLevel}" destdir="${buildJdtProject.default.output.directory}">
+          <ant4eclipse:jdtCompiler source="@{sourceLevel}" target="@{targetLevel}" destdir="${buildJdtProject.default.output.directory}">
             <!-- let ecj read compiler settings from the project's '.settings' directory -->
             <compilerarg value="compiler.options.file=${buildJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs" compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
@@ -148,7 +148,7 @@
 
             <!-- set our compile-time classpath -->
             <classpath refid="buildJdtProject.classpath.absolute.compiletime.path" />
-          </jdtCompiler>
+          </ant4eclipse:jdtCompiler>
 
           <!-- template element 'post-compile' -->
           <post-compile />
