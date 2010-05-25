@@ -52,7 +52,7 @@ import java.util.List;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class JDTCompilerAdapter extends DefaultCompilerAdapter {
+public class EcjCompilerAdapter extends DefaultCompilerAdapter {
 
   private static final String ANT4ECLIPSE_DEFAULT_FILE_ENCODING = "ant4eclipse.default.file.encoding";
 
@@ -152,7 +152,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
 
   /**
    * <p>
-   * Checks the preconditions of the JDTCompilerAdapter
+   * Checks the preconditions of the EcjCompilerAdapter
    * </p>
    * 
    * @throws BuildException
@@ -425,7 +425,7 @@ public class JDTCompilerAdapter extends DefaultCompilerAdapter {
    *   source=&quot;1.5&quot;&gt;
    *   ...
    *   &lt;compilerarg value=&quot;compiler.args.refid=executeJdtProject.compiler.args&quot;
-   *                compiler=&quot;org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter&quot; /&gt;
+   *                compiler=&quot;org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter&quot; /&gt;
    * &lt;/javac&gt;
    * &lt;/code&gt;
    * </pre>

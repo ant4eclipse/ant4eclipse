@@ -23,9 +23,9 @@ import java.util.Set;
 
 /**
  * <p>
- * Internal helper class to hand over some additional information to ant4eclipse's JDTCompilerAdapter. Some information
+ * Internal helper class to hand over some additional information to ant4eclipse's EcjCompilerAdapter. Some information
  * - e.g. access restrictions or output folders for specific source folders - can not be defined using ant's standard
- * <code>javac</code>. To allow the JDTCompilerAdapter to access and use these information, an instance of this class is
+ * <code>javac</code>. To allow the EcjCompilerAdapter to access and use these information, an instance of this class is
  * used.
  * </p>
  * <p>

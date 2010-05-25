@@ -51,7 +51,7 @@ public class EcjExceptionCodes extends ExceptionCode {
   @NLSMessage("Source folder for source file '%s' does not exist.")
   public static ExceptionCode     SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST;
 
-  @NLSMessage("The javac source path attibute is not supported by the JDTCompilerAdapter.")
+  @NLSMessage("The javac source path attibute is not supported by the EcjCompilerAdapter.")
   public static ExceptionCode     JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION;
 
   @NLSMessage("No destination path has been set. You must either set a destination path using the"

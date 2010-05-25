@@ -386,20 +386,20 @@
 
     <javac destdir="${executeJdtProject.default.output.directory}"
            debug="on"
-           compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter">
+           compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter">
 
       <src refid="executeJdtProject.source.directories.path" />
       <bootclasspath refid="executeJdtProject.boot.classpath.path" />
       <classpath refid="executeJdtProject.classpath.absolute.compiletime.path" />
 
       <compilerarg value="compiler.args.refid=executeJdtProject.compiler.args"
-                   compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" />
+                   compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
       <compilerarg value="compiler.options.file=${executeJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
-                   compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" />
+                   compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
       <compilerarg value="compiler.options.file.overrideJavacTask=true"
-                   compiler="org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter" />
+                   compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
     </javac>
 

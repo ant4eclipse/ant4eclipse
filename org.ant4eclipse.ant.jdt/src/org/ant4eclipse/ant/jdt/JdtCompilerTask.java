@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import org.ant4eclipse.ant.jdt.ecj.JDTCompilerAdapter;
+import org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.Javac;
 
 /**
  * <p>
- * This task is an extension to the Javac compiler task which makes use of the {@link JDTCompilerAdapter}. The most
+ * This task is an extension to the Javac compiler task which makes use of the {@link EcjCompilerAdapter}. The most
  * important advantage is that the compiler implementation is provided using the classloader of the a4e package which
  * means that the package itself is not required to be provided together with the ant distribution.
  * </p>
@@ -42,7 +42,7 @@ public class JdtCompilerTask extends Javac {
    */
   @Override
   public void execute() throws BuildException {
-    super.setCompiler(JDTCompilerAdapter.class.getName());
+    super.setCompiler(EcjCompilerAdapter.class.getName());
     super.execute();
   }
 
