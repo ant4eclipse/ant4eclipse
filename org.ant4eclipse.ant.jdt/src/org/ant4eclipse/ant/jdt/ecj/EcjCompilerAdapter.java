@@ -188,7 +188,7 @@ public class EcjCompilerAdapter extends DefaultCompilerAdapter {
     }
 
     // support for filtered filesets
-    if (compilerArguments.hasSourceFilteredFilesetPath()) {
+    if ((compilerArguments != null) && compilerArguments.hasSourceFilteredFilesetPath()) {
 
       // create the result list
       List<File> files = new LinkedList<File>();
