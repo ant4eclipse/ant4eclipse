@@ -3,7 +3,7 @@
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- This ant macro file doesn't make use of namespaces and therefore doesn't require A4E to -->
-  <!-- be part of Ant's classpath. Therefore it's required to make used of Ant 1.8 .           -->
+  <!-- be part of Ant's classpath.                                                             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   
   <!-- ===============================================================================================================
@@ -129,7 +129,7 @@
           <echo>  - output directories -> ${buildJdtProject.default.output.directory}</echo>
           <echo>  - bootclasspath      -> ${buildJdtProject.boot.classpath}</echo>
           <echo>  - classpath          -> ${buildJdtProject.classpath.absolute.compiletime}</echo>
-          <jdtCompiler enhance="true" source="@{sourceLevel}" target="@{targetLevel}" destdir="${buildJdtProject.default.output.directory}">
+          <jdtCompiler source="@{sourceLevel}" target="@{targetLevel}" destdir="${buildJdtProject.default.output.directory}">
             <!-- let ecj read compiler settings from the project's '.settings' directory -->
             <compilerarg value="compiler.options.file=${buildJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs" compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 

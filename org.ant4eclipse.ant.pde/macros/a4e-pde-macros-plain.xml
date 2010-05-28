@@ -3,7 +3,7 @@
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- This ant macro file doesn't make use of namespaces and therefore doesn't require A4E to -->
-  <!-- be part of Ant's classpath. Therefore it's required to make used of Ant 1.8 .           -->
+  <!-- be part of Ant's classpath.                                                             -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <!--definition of directory properties -->
@@ -153,7 +153,7 @@
               <echo>  - bootclasspath      -> ${buildPlugin.boot.classpath}</echo>
               <echo>  - classpath          -> ${buildPlugin.classpath.absolute.compiletime}</echo>
 
-              <jdtCompiler enhance="true" destdir="${buildPlugin.default.output.directory}"
+              <jdtCompiler destdir="${buildPlugin.default.output.directory}"
                      source="1.5"
                      target="1.5">
 
