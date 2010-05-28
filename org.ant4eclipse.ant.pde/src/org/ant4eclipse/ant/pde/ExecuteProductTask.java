@@ -588,13 +588,10 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     String guiexe = "eclipse";
     String cmdexe = "eclipse";
 
-    switch (this._os) {
-    case win32:
+    if (this._os == ProductOs.win32) {
+      // for windows we've got two different executables
       guiexe = "eclipse.exe";
       cmdexe = "eclipsec.exe";
-      break;
-    default:
-      throw new RuntimeException("NYI");
     }
 
     File fileguiexe = null;
