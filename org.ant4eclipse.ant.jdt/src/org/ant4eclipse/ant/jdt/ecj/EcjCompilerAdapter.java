@@ -85,7 +85,10 @@ public class EcjCompilerAdapter extends DefaultCompilerAdapter {
     // Step 1: check preconditions
     preconditions();
 
-    // Step 2: Configure ant4eclipse
+    // Step 2: Configure ant4eclipse: This is unnecessary if the adapter is launched within the
+    // JdtCompilerTask as it's using the defining classpath. But it's still useful in case someone
+    // wants to make use of the original Javac task. Anyway there's no harm in using this function
+    // anymore.
     AntConfigurator.configureAnt4Eclipse(getProject());
 
     // Step 3: Fetch compiler arguments
