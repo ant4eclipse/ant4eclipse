@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfigurationImpl;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
+import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.apache.tools.ant.Project;
 
@@ -28,6 +29,8 @@ import org.apache.tools.ant.Project;
  */
 public class AntConfigurator {
 
+  private static final String REF_REGISTRY = "org.ant4eclipse.SERVICEREGISTRY";
+
   /**
    * <p>
    * Configures Ant4Eclipse in a ant based environment (the standard case).
@@ -37,10 +40,27 @@ public class AntConfigurator {
    *          the ant project
    */
   public static final void configureAnt4Eclipse(Project project) {
+
     if (!ServiceRegistryAccess.isConfigured()) {
-      Ant4EclipseLogger logger = new AntBasedLogger(project);
-      Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
-      ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
+
+      Object existing = project.getReference(REF_REGISTRY);
+      if ((existing != null) && (existing instanceof ServiceRegistry)) {
+
+        // restore the previously existing registry
+        ServiceRegistryAccess.restore((ServiceRegistry) existing);
+
+      } else {
+
+        // this project doesn't use a4e yet, so we need to set it up
+        Ant4EclipseLogger logger = new AntBasedLogger(project);
+        Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
+        ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
+
+        // backup the registry, so we can reuse it if necessary
+        project.addReference(REF_REGISTRY, ServiceRegistryAccess.instance());
+
+      }
+
     }
   }
 
