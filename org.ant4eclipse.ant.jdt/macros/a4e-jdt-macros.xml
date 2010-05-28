@@ -5,7 +5,7 @@
   <taskdef uri="antlib:net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" />
 
   <!-- define ant4eclipse tasks -->
-  <taskdef uri="antlib:org.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
+  <taskdef uri="antlib:org.ant4eclipse" resource="org/ant4eclipse/ant/antlib.xml" />
 
   <!-- ===============================================================================================================
           macro: createCompilerOptionFile
