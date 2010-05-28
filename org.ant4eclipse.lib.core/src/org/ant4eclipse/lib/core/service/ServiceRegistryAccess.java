@@ -34,7 +34,7 @@ public class ServiceRegistryAccess {
    * @param configuration
    *          the service registry configuration
    */
-  public static void configure(ServiceRegistryConfiguration configuration) {
+  public static final void configure(ServiceRegistryConfiguration configuration) {
     Assure.notNull("configuration", configuration);
     Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
     _instance = new ServiceRegistry(configuration);
@@ -48,12 +48,26 @@ public class ServiceRegistryAccess {
 
   /**
    * <p>
+   * This function allows to restore a registry. The supplied registry is configured as this {@link #instance()} is the
+   * only way to access an instance.
+   * </p>
+   * 
+   * @param registry
+   *          The registry used to be restored. Not <code>null</code>.
+   */
+  public static final void restore(ServiceRegistry registry) {
+    Assure.notNull("registry", registry);
+    _instance = registry;
+  }
+
+  /**
+   * <p>
    * Returns <code>true</code> if the {@link ServiceRegistry} already is configured, <code>false</code> otherwise.
    * </p>
    * 
    * @return <code>true</code> if the {@link ServiceRegistry} already is configured, <code>false</code> otherwise.
    */
-  public static boolean isConfigured() {
+  public static final boolean isConfigured() {
     return _instance != null;
   }
 
@@ -62,7 +76,7 @@ public class ServiceRegistryAccess {
    * Resets the {@link ServiceRegistry}.
    * </p>
    */
-  public static void reset() {
+  public static final void reset() {
     instance().dispose();
     _instance = null;
   }
@@ -74,7 +88,7 @@ public class ServiceRegistryAccess {
    * 
    * @return the instance.
    */
-  public static ServiceRegistry instance() {
+  public static final ServiceRegistry instance() {
     Assure.assertTrue(isConfigured(), "ServiceRegistry has to be configured.");
     return _instance;
   }
