@@ -58,16 +58,19 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     TargetPlatformAwareComponent {
 
   /** - */
-  private static final String MSG_USING_HARDCODED       = "Failed to detect bundles, so the following hard coded ones are used:";
+  private static final String MSG_USING_HARDCODED              = "Failed to detect bundles, so the following hard coded ones are used:";
 
   /** - */
-  private static final String MSG_FAILED_BUNDLESINFO    = "Failed to load bundles info file '%s'. Cause: %s";
+  private static final String MSG_FAILED_BUNDLESINFO           = "Failed to load bundles info file '%s'. Cause: %s";
 
   /** - */
-  private static final String MSG_ACCESSING_BUNDLESINFO = "Accessing bundles info file '%s' to identify start bundles...";
+  private static final String MSG_ACCESSING_BUNDLESINFO        = "Accessing bundles info file '%s' to identify start bundles...";
 
   /** - */
-  private static final String MSG_ACCESSING_CONFIGINI   = "Accessing file '%s' to identify start bundles...";
+  private static final String MSG_ACCESSING_CONFIGINI          = "Accessing file '%s' to identify start bundles...";
+
+  /** - */
+  private static final String MSG_FAILED_TO_LOOKUP_EXECUTABLES = "The lookup of eclipse executables within the target platform locations failed !";
 
   /** - */
   private static enum Scope {
@@ -614,7 +617,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     }
 
     if ((fileguiexe == null) || (filecmdexe == null)) {
-      throw new RuntimeException("NYI");
+      throw new BuildException(MSG_FAILED_TO_LOOKUP_EXECUTABLES);
     }
 
     properties.put(PROP_GUIEXE, fileguiexe.getAbsolutePath());
