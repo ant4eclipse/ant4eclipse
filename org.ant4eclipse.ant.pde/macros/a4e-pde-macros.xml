@@ -225,7 +225,9 @@
 
             <ant4eclipse:forEachOutputDirectory>
               <echo>Copying resources from directory '${executePluginLibrary.output.directory}' to '@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}'</echo>
-              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}" />
+              <copy todir="@{destination}/${a4e.temp.directory}/${buildPlugin.library.name}">
+                <fileset dir="${executePluginLibrary.output.directory}" />
+              </copy>
             </ant4eclipse:forEachOutputDirectory>
 
             <ant4eclipse:forEachSourceDirectory>
