@@ -11,17 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathelements;
 
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathContainer;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import java.io.File;
 
 /**
  * <p>
@@ -112,8 +112,8 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
       // we already got an entry, so check if they're unequal (equal locations won't do any harm, so we consider them
       // legal
       if (!oldvar.getPath().equals(newvar.getPath())) {
-        throw new Ant4EclipseException(JdtExceptionCode.CONFLICTING_CLASSPATH_VARIABLES, name, oldvar.getPath(),
-            newvar.getPath());
+        throw new Ant4EclipseException(JdtExceptionCode.CONFLICTING_CLASSPATH_VARIABLES, name, oldvar.getPath(), newvar
+            .getPath());
       }
     }
     this._classpathVariables.put(name, newvar);
