@@ -12,10 +12,12 @@
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
+import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.internal.model.resource.BuildCommandImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.LinkedResourceImpl;
@@ -156,8 +158,8 @@ public class ProjectFileParser {
 
       // throw exception if file does not exist
       if (!locationAsFile.exists()) {
-        // TODO
-        throw new RuntimeException("Linked Resource does not exist!");
+        throw new Ant4EclipseException(PlatformExceptionCode.LINKED_RESOURCE_DOES_NOT_EXIST, locationAsFile
+            .getAbsolutePath(), projectName);
       }
 
       String relative = Utilities.calcRelative(eclipseProject.getFolder(), locationAsFile);

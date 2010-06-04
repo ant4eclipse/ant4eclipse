@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform;
 
-
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 import org.ant4eclipse.lib.core.nls.NLS;
 import org.ant4eclipse.lib.core.nls.NLSMessage;
@@ -22,6 +21,9 @@ public class PlatformExceptionCode extends ExceptionCode {
   public static String                MISSING_CONNECTION_TYPE = "Missing connection type";
 
   public static String                MISSING_REPOSITORY      = "Missing repository";
+
+  @NLSMessage("The linked resource '%s' in project '%s' does not exist.")
+  public static ExceptionCode         LINKED_RESOURCE_DOES_NOT_EXIST;
 
   @NLSMessage("Specified project '%s' does not exist.")
   public static ExceptionCode         SPECIFIED_PROJECT_DOES_NOT_EXIST;
