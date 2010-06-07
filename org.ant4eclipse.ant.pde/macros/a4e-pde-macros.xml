@@ -31,6 +31,7 @@
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="newBundleVersion" default="" />
     <attribute name="clean" default="true" />
+    <attribute name="useEcj" default="true"/>
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -159,7 +160,7 @@
               <echo>  - bootclasspath      -> ${buildPlugin.boot.classpath}</echo>
               <echo>  - classpath          -> ${buildPlugin.classpath.absolute.compiletime}</echo>
 
-              <ant4eclipse:jdtCompiler destdir="${buildPlugin.default.output.directory}"
+              <ant4eclipse:jdtCompiler useecj="@{useEcj}" destdir="${buildPlugin.default.output.directory}"
                      source="1.5"
                      target="1.5">
 
@@ -551,6 +552,7 @@
     <attribute name="packageAsJar" default="false" />
     <attribute name="commandline" default="false" />
     <attribute name="packageSources" default="true" />
+    <attribute name="useEcj" default="true"/>
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -603,7 +605,9 @@
                             packageAsJar="@{packageAsJar}"
                             packagePluginsAsJar="@{packageAsJar}"
                             packagePluginSourcesAsJar="@{packageSources}"
-                            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}" />
+                            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+                            useEcj="@{useEcj}"
+              />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachFeature>
@@ -620,7 +624,9 @@
                            packageAsJar="@{packageAsJar}"
                            destination="@{destination}"
                            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
-                           buildSourceJar="@{packageSources}" />
+                           buildSourceJar="@{packageSources}"
+                           useEcj="@{useEcj}"
+              />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachPlugin>
@@ -755,6 +761,7 @@
     <attribute name="packagePluginSourcesAsJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="cleanPluginBuild" default="true" />
+    <attribute name="useEcj" default="true"/>
     <sequential>
 
       <!-- executes the defined feature -->
@@ -784,7 +791,9 @@
                         featureVersion="${executeFeature.feature.resolved.version}"
                         targetPlatformId="@{targetPlatformId}"
                         destination="@{destination}"
-                        packageAsJar="@{packageAsJar}" />
+                        packageAsJar="@{packageAsJar}"
+                        useEcj="@{useEcj}"
+          />
         </ant4eclipse:forEachIncludedFeature>
 
         <!-- Step 3: Build the plug-ins  -->
@@ -798,7 +807,9 @@
                        packageAsJar="@{packagePluginsAsJar}"
                        buildSourceJar="@{packagePluginSourcesAsJar}"
                        defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
-                       clean="@{cleanPluginBuild}" />
+                       clean="@{cleanPluginBuild}"
+                       useEcj="@{useEcj}"
+          />
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3.2: Copy plug-ins  -->
