@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -194,6 +193,13 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    */
   protected File[] getClasspathEntries() {
     return this._classpathEntries;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public File[] getClasspath() {
+    return getClasspathEntries();
   }
 
   /**

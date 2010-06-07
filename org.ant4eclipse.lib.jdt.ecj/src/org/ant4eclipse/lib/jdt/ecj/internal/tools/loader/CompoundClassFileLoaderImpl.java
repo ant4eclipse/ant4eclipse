@@ -11,13 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.lib.jdt.ecj.ReferableSourceFile;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,6 +40,30 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
     this._allPackages = new HashMap<String, List<ClassFileLoader>>();
 
     initialise();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public File[] getClasspath() {
+    List<File> files = new ArrayList<File>();
+    List<String> set = new ArrayList<String>();
+    for (ClassFileLoader loader : this._classFileLoaders) {
+      File[] entries = loader.getClasspath();
+      for (File entry : entries) {
+        entry = Utilities.getCanonicalFile(entry);
+        String path = entry.getAbsolutePath();
+        if (Utilities.isWindows()) {
+          // for windows the case makes no difference
+          path = path.toLowerCase();
+        }
+        if (!set.contains(path)) {
+          set.add(path);
+          files.add(entry);
+        }
+      }
+    }
+    return files.toArray(new File[files.size()]);
   }
 
   /**

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -23,6 +22,7 @@ import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.eclipse.jdt.internal.compiler.env.AccessRule;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -65,6 +65,13 @@ public class FilteringClassFileLoader implements ClassFileLoader {
     this._excludes = new LinkedList<String>();
 
     init();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public File[] getClasspath() {
+    return this._classFileLoader.getClasspath();
   }
 
   /**

@@ -13,6 +13,8 @@ package org.ant4eclipse.lib.jdt.ecj;
 
 import org.ant4eclipse.lib.core.ClassName;
 
+import java.io.File;
+
 /**
  * <p>
  * {@link ClassFileLoader} instances are used to load {@link ClassFile ClassFiles} that are required during the
@@ -69,4 +71,14 @@ public interface ClassFileLoader {
    *         if no such source can be found.
    */
   ReferableSourceFile loadSource(ClassName className);
+
+  /**
+   * Returns a list of File entries describing classpath entries associated with this ClassFileLoader instance. Please
+   * note that the list may not be complete if the implementation of this interface provides a class from an unknown
+   * source. Each returned File instance has to be canonical.
+   * 
+   * @return A list of File entries constituting the classpath. Not <code>null</code>
+   */
+  File[] getClasspath();
+
 }
