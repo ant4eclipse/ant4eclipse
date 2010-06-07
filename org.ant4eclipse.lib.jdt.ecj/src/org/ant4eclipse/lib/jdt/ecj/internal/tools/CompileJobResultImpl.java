@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
@@ -35,11 +34,11 @@ public class CompileJobResultImpl implements CompileJobResult {
     return this._categorizedProblems == null ? new CategorizedProblem[0] : this._categorizedProblems;
   }
 
-  void setSucceeded(boolean succeeded) {
+  public void setSucceeded(boolean succeeded) {
     this._succeeded = succeeded;
   }
 
-  protected void setCategorizedProblems(CategorizedProblem[] categorizedProblems) {
+  public void setCategorizedProblems(CategorizedProblem[] categorizedProblems) {
     this._categorizedProblems = categorizedProblems;
   }
 }
