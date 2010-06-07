@@ -12,6 +12,7 @@
 package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter;
+import org.ant4eclipse.ant.jdt.ecj.JavacCompilerAdapter;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.Javac;
@@ -34,9 +35,21 @@ public class JdtCompilerTask extends Javac {
 
   private static final String MSG_FAILURE           = "The compilation failed. Check the output for more information.";
 
-  private String              errprop               = null;
+  private String              _errprop              = null;
 
-  private String              updateprop            = null;
+  private String              _updateprop           = null;
+
+  private boolean             _useecj               = true;
+
+  /**
+   * Enables/disables the use of the ecj compiler.
+   * 
+   * @param enable
+   *          <code>true</code> <=> Enables the use of the ecj compiler.
+   */
+  public void setUseecj(boolean enable) {
+    this._useecj = enable;
+  }
 
   /**
    * As we're responsible for the compilation we're handling the property values as well.
@@ -45,7 +58,7 @@ public class JdtCompilerTask extends Javac {
    */
   @Override
   public void setErrorProperty(String prop) {
-    this.errprop = prop;
+    this._errprop = prop;
   }
 
   /**
@@ -55,7 +68,7 @@ public class JdtCompilerTask extends Javac {
    */
   @Override
   public void setUpdatedProperty(String prop) {
-    this.updateprop = prop;
+    this._updateprop = prop;
   }
 
   /**
@@ -67,7 +80,11 @@ public class JdtCompilerTask extends Javac {
    * @return The CompilerAdapter instance used for the compilation process. Not <code>null</code>.
    */
   protected CompilerAdapter getNewCompilerAdapter() {
-    return new EcjCompilerAdapter();
+    if (this._useecj) {
+      return new EcjCompilerAdapter();
+    } else {
+      return new JavacCompilerAdapter();
+    }
   }
 
   /**
@@ -102,15 +119,15 @@ public class JdtCompilerTask extends Javac {
       if (adapter.execute()) {
 
         // everything went fine, so we can mark this using a proeprty if desired
-        if (this.updateprop != null) {
-          getProject().setNewProperty(this.updateprop, "true");
+        if (this._updateprop != null) {
+          getProject().setNewProperty(this._updateprop, "true");
         }
 
       } else {
 
         // damn it. we need to mark the error.
-        if (this.errprop != null) {
-          getProject().setNewProperty(this.errprop, "true");
+        if (this._errprop != null) {
+          getProject().setNewProperty(this._errprop, "true");
         }
         if (this.failOnError) {
           throw new BuildException(MSG_FAILURE, getLocation());
