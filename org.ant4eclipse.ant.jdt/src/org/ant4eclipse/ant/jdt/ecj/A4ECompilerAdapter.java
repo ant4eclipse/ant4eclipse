@@ -20,6 +20,7 @@ import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoaderFactory;
+import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.DefaultCompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
@@ -51,7 +52,7 @@ import java.util.List;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class A4ECompilerAdapter extends DefaultCompilerAdapter {
+public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
   private static final String ANT4ECLIPSE_DEFAULT_FILE_ENCODING = "ant4eclipse.default.file.encoding";
 
@@ -107,10 +108,7 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // Step 3: Fetch compiler arguments
     EcjAdditionalCompilerArguments ecjAdditionalCompilerArguments = fetchEcjAdditionalCompilerArguments();
 
-    // Step 4: Create the EcjAdapter
-    EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
-
-    // Step 5: create CompileJobDescription
+    // Step 4: create CompileJobDescription
     DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
     SourceFile[] sourceFiles = getSourceFilesToCompile(ecjAdditionalCompilerArguments);
     compileJobDescription.setSourceFiles(sourceFiles);
@@ -128,7 +126,7 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
     }
 
     // Step 6: Compile
-    CompileJobResult compileJobResult = ejcAdapter.compile(compileJobDescription);
+    CompileJobResult compileJobResult = compile(compileJobDescription);
 
     // Step 7: dump result
     CategorizedProblem[] categorizedProblems = compileJobResult.getCategorizedProblems();
@@ -165,6 +163,16 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
     return true;
 
   }
+
+  /**
+   * Runs the compilation according to the supplied compilation description.
+   * 
+   * @param description
+   *          The description which provides all necessary information for the compilation.
+   * 
+   * @return A descriptional instance which provides some information which came up during the compilation.
+   */
+  protected abstract CompileJobResult compile(CompileJobDescription description);
 
   /**
    * <p>

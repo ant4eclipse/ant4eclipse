@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
+import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
+import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
+
 /**
  * <p>
  * Implements a javac compiler adapter for the eclipse compiler for java (ecj). The ant4eclipse javac compiler
@@ -22,4 +26,14 @@ package org.ant4eclipse.ant.jdt.ecj;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class EcjCompilerAdapter extends A4ECompilerAdapter {
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected CompileJobResult compile(CompileJobDescription description) {
+    EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
+    return ejcAdapter.compile(description);
+  }
+
 } /* ENDCALSS */
