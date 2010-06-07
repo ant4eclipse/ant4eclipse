@@ -77,9 +77,23 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
   private static final String DEFAULT_COMPILER_OPTIONS_FILE     = "default.compiler.options.file";
 
   /**
+   * <p>
+   * Checks the preconditions of the A4ECompilerAdapter
+   * </p>
+   * 
+   * @throws BuildException
+   */
+  private void preconditions() throws BuildException {
+    // source path is not supported!
+    if (getJavac().getSourcepath() != null) {
+      throw new Ant4EclipseException(EcjExceptionCodes.JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION);
+    }
+  }
+
+  /**
    * {@inheritDoc}
    */
-  public boolean execute() {
+  public boolean execute() throws BuildException {
 
     // Step 1: check preconditions
     preconditions();
@@ -125,7 +139,6 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
       String fileName = String.valueOf(categorizedProblem.getOriginatingFileName());
       for (SourceFile sourceFile : sourceFiles) {
         if (fileName.equals(sourceFile.getSourceFileName())) {
-
           Object[] args = new Object[7];
           args[0] = Integer.valueOf(i + 1);
           args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
@@ -150,21 +163,7 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // Step 8: Return
     return true;
-  }
 
-  /**
-   * <p>
-   * Checks the preconditions of the EcjCompilerAdapter
-   * </p>
-   * 
-   * @throws BuildException
-   */
-  private void preconditions() throws BuildException {
-
-    // source path is not supported!
-    if (getJavac().getSourcepath() != null) {
-      throw new Ant4EclipseException(EcjExceptionCodes.JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION);
-    }
   }
 
   /**
@@ -586,4 +585,4 @@ public class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // Step 4: last resort: return the default file encoding
     return System.getProperty("file.encoding");
   }
-}
+} /* ENDCLASS */
