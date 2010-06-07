@@ -11,6 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +29,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
@@ -42,13 +50,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.nls.NLS;
-import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>
@@ -739,7 +740,7 @@ public class Utilities {
    * 
    * @return The newly instantiated type. Not <code>null</code>.
    */
-  @SuppressWarnings( { "unchecked", "rawtypes" })
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public static final <T> T newInstance(String className, String arg) {
     Assure.notNull("className", className);
     Class<?> clazz = null;
@@ -1315,6 +1316,33 @@ public class Utilities {
    */
   public static final boolean isWindows() {
     return OS.toLowerCase().startsWith("windows");
+  }
+
+  /**
+   * Splits the supplied text into a list of lines. Only lines with content will be delivered. The returned list is
+   * allowed to be altered.
+   * 
+   * @param text
+   *          The text which has to be splitted. Not <code>null</code>.
+   * 
+   * @return The list of lines provided by the supplied text.
+   */
+  public static final List<String> splitText(String text) {
+    List<String> result = new ArrayList<String>();
+    BufferedReader reader = new BufferedReader(new StringReader(text));
+    try {
+      String line = reader.readLine();
+      while (line != null) {
+        if (Utilities.cleanup(line) != null) {
+          result.add(line);
+        }
+        line = reader.readLine();
+      }
+    } catch (IOException ex) {
+      // as we're only working within memory this shouldn't happen
+      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+    }
+    return result;
   }
 
   /**
