@@ -32,8 +32,7 @@ public class EcjCompilerAdapter extends A4ECompilerAdapter {
    */
   @Override
   protected CompileJobResult compile(CompileJobDescription description) {
-    EcjAdapter ejcAdapter = EcjAdapter.Factory.create();
-    return ejcAdapter.compile(description);
+    return EcjAdapter.Factory.create().compile(description);
   }
 
 } /* ENDCALSS */

@@ -114,7 +114,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     compileJobDescription.setSourceFiles(sourceFiles);
     compileJobDescription.setClassFileLoader(createClassFileLoader(ecjAdditionalCompilerArguments));
 
-    // Step 5.1: set the compiler options
+    // Step 5: set the compiler options
     String compilerOptionsFileName = extractJavacCompilerArg(COMPILER_OPTIONS_FILE, null);
     String defaultCompilerOptionsFileName = extractJavacCompilerArg(DEFAULT_COMPILER_OPTIONS_FILE, null);
     StringMap compilerOptions = CompilerOptionsProvider.getCompilerOptions(getJavac(), compilerOptionsFileName,
@@ -133,7 +133,6 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     for (int i = 0; i < categorizedProblems.length; i++) {
       CategorizedProblem categorizedProblem = categorizedProblems[i];
-
       String fileName = String.valueOf(categorizedProblem.getOriginatingFileName());
       for (SourceFile sourceFile : sourceFiles) {
         if (fileName.equals(sourceFile.getSourceFileName())) {
