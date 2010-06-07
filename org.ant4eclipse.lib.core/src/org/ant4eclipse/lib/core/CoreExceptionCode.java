@@ -61,6 +61,10 @@ public class CoreExceptionCode extends ExceptionCode {
   public static CoreExceptionCode COULD_NOT_INSTANTIATE_CLASS;
 
   /** - */
+  @NLSMessage("Could not access method '%s' on type '%s'")
+  public static CoreExceptionCode COULD_NOT_ACCESS_METHOD;
+
+  /** - */
   @NLSMessage("Parameter '%s' must be set on task '%s'")
   public static CoreExceptionCode PARAMETER_MUST_BE_SET_ON_TASK;
 
