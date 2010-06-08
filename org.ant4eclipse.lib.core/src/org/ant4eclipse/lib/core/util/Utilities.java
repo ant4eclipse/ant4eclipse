@@ -1382,6 +1382,9 @@ public class Utilities {
      *          The encoding to be used while accessing the strem. Not <code>null</code>.
      */
     public OutputCopier(InputStream instream, StringBuffer dest, String encoding) throws UnsupportedEncodingException {
+      if (encoding == null) {
+        encoding = ENCODING;
+      }
       this._source = new BufferedReader(new InputStreamReader(instream, encoding));
       this._receiver = dest;
     }
