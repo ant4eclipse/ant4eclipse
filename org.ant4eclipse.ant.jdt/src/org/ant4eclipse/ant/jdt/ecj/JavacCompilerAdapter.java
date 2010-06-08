@@ -19,6 +19,7 @@ import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.CompileJobResultImpl;
+import org.apache.tools.ant.types.Path;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.IProblemFactory;
@@ -109,6 +110,26 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
   }
 
   /**
+   * Concatenates the supplied list of path entries.
+   * 
+   * @param list
+   *          The list of path entries. Not <code>null</code>.
+   * 
+   * @return The concatenated path list. Not <code>null</code>.
+   */
+  private String getConcatenatedPath(String[] list) {
+    this._buffer.setLength(0);
+    if (list.length > 0) {
+      this._buffer.append(list[0]);
+      for (int i = 1; i < list.length; i++) {
+        this._buffer.append(PATH_SEPARATOR);
+        this._buffer.append(list[i]);
+      }
+    }
+    return this._buffer.toString();
+  }
+
+  /**
    * Calculates the debugging options according to the supplied description.
    * 
    * @param description
@@ -141,6 +162,110 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
   }
 
   /**
+   * Evaluates some arguments to setup output options for the compilation process.
+   * 
+   * @param description
+   *          The descriptional instance providing all information to run a compile job. Not <code>null</code>.
+   * 
+   * @return The options used to control the compilation process. Not <code>null</code>.
+   */
+  private String getCompileOptions(CompileJobDescription description) {
+    this._buffer.setLength(0);
+    if (description.getCompilerOptions().containsKey(CompilerOptions.OPTION_ReportMissingSerialVersion)) {
+      this._buffer.append("serial");
+    } else {
+      this._buffer.append("-serial");
+    }
+    this._buffer.append(",");
+    if (description.getCompilerOptions().containsKey(CompilerOptions.OPTION_ReportFallthroughCase)) {
+      this._buffer.append("fallthrough");
+    } else {
+      this._buffer.append("-fallthrough");
+    }
+    this._buffer.append(",");
+    if (description.getCompilerOptions().containsKey(CompilerOptions.OPTION_ReportUncheckedTypeOperation)) {
+      this._buffer.append("unchecked");
+    } else {
+      this._buffer.append("-unchecked");
+    }
+    this._buffer.append(",");
+    if (description.getCompilerOptions().containsKey(CompilerOptions.OPTION_ReportFinallyBlockNotCompletingNormally)) {
+      this._buffer.append("finally");
+    } else {
+      this._buffer.append("-finally");
+    }
+    if (this._buffer.length() == 0) {
+      // the recommended options
+      return "-Xlint";
+    } else {
+      // the specified options
+      return String.format("-Xlint:%s", this._buffer);
+    }
+  }
+
+  /**
+   * Creates a list with commandline arguments shared among all source files.
+   * 
+   * @param description
+   *          The description used for the compilation process. Not <code>null</code>.
+   * 
+   * @return The list with commandline arguments. Not <code>null</code>.
+   */
+  private List<String> createCommonArgs(CompileJobDescription description) {
+
+    Map<String, String> options = description.getCompilerOptions();
+
+    List<String> result = new ArrayList<String>();
+
+    result.add(getCompileOptions(description));
+
+    Path bootclasspath = getJavac().getBootclasspath();
+    if (bootclasspath != null) {
+      result.add("-bootclasspath");
+      result.add(getConcatenatedPath(bootclasspath.list()));
+    }
+
+    Path extdirs = getJavac().getExtdirs();
+    if (extdirs != null) {
+      result.add("-extdirs");
+      result.add(getConcatenatedPath(extdirs.list()));
+    }
+
+    result.add("-classpath");
+    result.add(getClasspath(description));
+
+    result.add(String.format("-g:%s", getDebugOptions(description)));
+
+    if (A4ELogging.isDebuggingEnabled()) {
+      result.add("-verbose");
+    }
+
+    if (options.containsKey(CompilerOptions.OPTION_Source)) {
+      result.add("-source");
+      result.add(options.get(CompilerOptions.OPTION_Source));
+    }
+
+    if (options.containsKey(CompilerOptions.OPTION_Compliance)) {
+      result.add("-target");
+      result.add(options.get(CompilerOptions.OPTION_Compliance));
+    }
+
+    if (options.containsKey(CompilerOptions.OPTION_Encoding)) {
+      result.add("-encoding");
+      result.add(options.get(CompilerOptions.OPTION_Encoding));
+    }
+
+    if (options.containsKey(CompilerOptions.OPTION_ReportDeprecation)
+        || options.containsKey(CompilerOptions.OPTION_ReportDeprecationInDeprecatedCode)
+        || options.containsKey(CompilerOptions.OPTION_ReportDeprecationWhenOverridingDeprecatedMethod)) {
+      result.add("-deprecation");
+    }
+
+    return result;
+
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -148,45 +273,15 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
 
     try {
 
-      Map<String, String> options = description.getCompilerOptions();
-
       List<CategorizedProblem> problems = new ArrayList<CategorizedProblem>();
+      List<String> preparedargs = createCommonArgs(description);
       List<String> arguments = new ArrayList<String>();
       boolean succeeded = true;
       for (SourceFile sourcefile : description.getSourceFiles()) {
 
         // setup the commandline arguments for the javac executable
         arguments.clear();
-
-        arguments.add("-classpath");
-        arguments.add(getClasspath(description));
-
-        arguments.add(String.format("-g:%s", getDebugOptions(description)));
-
-        if (A4ELogging.isDebuggingEnabled()) {
-          arguments.add("-verbose");
-        }
-
-        if (options.containsKey(CompilerOptions.OPTION_Source)) {
-          arguments.add("-source");
-          arguments.add(options.get(CompilerOptions.OPTION_Source));
-        }
-
-        if (options.containsKey(CompilerOptions.OPTION_Compliance)) {
-          arguments.add("-target");
-          arguments.add(options.get(CompilerOptions.OPTION_Compliance));
-        }
-
-        if (options.containsKey(CompilerOptions.OPTION_Encoding)) {
-          arguments.add("-encoding");
-          arguments.add(options.get(CompilerOptions.OPTION_Encoding));
-        }
-
-        if (options.containsKey(CompilerOptions.OPTION_ReportDeprecation)
-            || options.containsKey(CompilerOptions.OPTION_ReportDeprecationInDeprecatedCode)
-            || options.containsKey(CompilerOptions.OPTION_ReportDeprecationWhenOverridingDeprecatedMethod)) {
-          arguments.add("-deprecation");
-        }
+        arguments.addAll(preparedargs);
 
         arguments.add("-d");
         arguments.add(sourcefile.getDestinationFolder().getAbsolutePath());
@@ -198,9 +293,6 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
         try {
           Integer returncode = (Integer) this._compile.invoke(this._javac, new Object[] { arglist });
           if (returncode.intValue() != 0) {
-            // source:line : message
-            // snippet
-            // pointer
             singlesuccess = false;
           }
         } finally {
