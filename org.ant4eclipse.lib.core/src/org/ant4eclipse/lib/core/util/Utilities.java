@@ -161,7 +161,7 @@ public class Utilities {
    * @param input
    *          The resource providing the text content. Must be a valid resource.
    * @param encoding
-   *          The encoding to be used for the file. Neither <code>null</code> nor empty.
+   *          The encoding to be used for the file. Maybe <code>null</code>.
    * @param includenewlines
    *          <code>true</code> <=> Allow newlines or remove them otherwise.
    * 
@@ -1328,12 +1328,27 @@ public class Utilities {
    * @return The list of lines provided by the supplied text.
    */
   public static final List<String> splitText(String text) {
+    return splitText(text, false);
+  }
+
+  /**
+   * Splits the supplied text into a list of lines. Only lines with content will be delivered. The returned list is
+   * allowed to be altered.
+   * 
+   * @param text
+   *          The text which has to be splitted. Not <code>null</code>.
+   * @param incall
+   *          <code>true</code> <=> Include all lines.
+   * 
+   * @return The list of lines provided by the supplied text.
+   */
+  public static final List<String> splitText(String text, boolean incall) {
     List<String> result = new ArrayList<String>();
     BufferedReader reader = new BufferedReader(new StringReader(text));
     try {
       String line = reader.readLine();
       while (line != null) {
-        if (Utilities.cleanup(line) != null) {
+        if (incall || (Utilities.cleanup(line) != null)) {
           result.add(line);
         }
         line = reader.readLine();
@@ -1362,7 +1377,7 @@ public class Utilities {
      * @param instream
      *          The stream which provides the content. Not <code>null</code>.
      * @param dest
-     *          The destination buffer used to get the output. Not <code>null</code>.
+     *          The destination buffer used to get the output. Maybe <code>null</code>.
      * @param encoding
      *          The encoding to be used while accessing the strem. Not <code>null</code>.
      */
