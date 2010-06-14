@@ -109,7 +109,17 @@ public class ServiceRegistry {
       throw new Ant4EclipseException(CoreExceptionCode.SERVICE_NOT_AVAILABLE, serviceType.getName());
     }
     return (T) result;
+  }
 
+  /**
+   * Returns a list of all currently registered services.
+   * 
+   * @return A list of all currently registered services. Not <code>null</code>.
+   */
+  public Object[] getAllServices() {
+    Object[] result = new Object[this._serviceMap.size()];
+    this._serviceMap.values().toArray(result);
+    return result;
   }
 
   /**
