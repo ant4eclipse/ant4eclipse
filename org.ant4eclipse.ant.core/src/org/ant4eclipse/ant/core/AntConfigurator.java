@@ -56,6 +56,14 @@ public class AntConfigurator {
         Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
         ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
 
+        // configures all ant services
+        Object[] services = ServiceRegistryAccess.instance().getAllServices();
+        for (Object service : services) {
+          if (service instanceof AntService) {
+            ((AntService) service).configure(project);
+          }
+        }
+
         // backup the registry, so we can reuse it if necessary
         project.addReference(REF_REGISTRY, ServiceRegistryAccess.instance());
 
