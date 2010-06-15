@@ -162,6 +162,17 @@
       <echo>destdir: ${mac_destdir}</echo>
       <mkdir dir="${mac_destdir}" />
       <echo file="@{dest}">${mac_content}</echo>
+      <var unset="true" name="mac_filecontent"/>
+      <loadfile srcfile="@{dest}" property="mac_filecontent">
+        <!-- drop services that are declared multiple times through the ant and lib layer. -->
+        <!-- should be configurable in future.                                             -->
+        <filterchain>
+          <linecontains>
+            <contains value="org.ant4eclipse.lib.jdt.internal.tools.classpathelements.ClassPathElementsRegistryImpl" negate="true"/>
+          </linecontains>
+        </filterchain>
+      </loadfile>
+      <echo file="@{dest}">${mac_filecontent}</echo>
       <var unset="true" name="mac_content" />
     </sequential>
   </macrodef>
