@@ -66,9 +66,6 @@ public final class EcjAdapterImpl implements EcjAdapter {
     // create the compiler requestor
     CompilerRequestorImpl requestor = new CompilerRequestorImpl();
 
-    // in any case disallow forbidden references
-    compilerOptions.put("org.eclipse.jdt.core.compiler.problem.forbiddenReference", "error");
-
     // create the compiler
     Compiler compiler = new Compiler(nameEnvironment, policy, new CompilerOptions(compilerOptions), requestor,
         problemFactory);

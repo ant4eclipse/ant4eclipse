@@ -40,6 +40,8 @@ public class CompilerOptionsProvider {
    */
   public final static String ENABLE_JAVADOC_SUPPORT = "org.eclipse.jdt.core.compiler.doc.comment.support";
 
+  public final static String FORBIDDEN_REFERENCE    = "org.eclipse.jdt.core.compiler.problem.forbiddenReference";
+
   /**
    * <p>
    * Creates the compiler options for the JDT compiler.
@@ -96,6 +98,11 @@ public class CompilerOptionsProvider {
     // to find references inside javadoc
     if (!mergedMap.containsKey(ENABLE_JAVADOC_SUPPORT)) {
       mergedMap.put(ENABLE_JAVADOC_SUPPORT, "enabled");
+    }
+
+    // If not enabled/disabled explicitly, set ECJ forbidden reference to 'error
+    if (!mergedMap.containsKey(FORBIDDEN_REFERENCE)) {
+      mergedMap.put(FORBIDDEN_REFERENCE, "error");
     }
 
     // create result
