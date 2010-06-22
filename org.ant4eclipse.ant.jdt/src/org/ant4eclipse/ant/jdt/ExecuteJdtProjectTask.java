@@ -21,6 +21,7 @@ import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileSet;
@@ -280,9 +281,11 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
 
     final JavaProjectRole javaProjectRole = getJavaProjectRole();
 
+    final EclipseProject project = javaProjectRole.getEclipseProject();
+
     // Resolve the absolute and relative classpaths
-    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-        false, true, getJdtClasspathContainerArguments());
+    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(project, false, true,
+        getJdtClasspathContainerArguments());
     // ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
     // true, true, getJdtClasspathContainerArguments());
 
@@ -325,6 +328,16 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
           properties.put("classpathEntry.isExisting", Boolean.toString(absoluteClasspathFiles[index].exists()));
           properties.put("classpathEntry.isFile", Boolean.toString(absoluteClasspathFiles[index].isFile()));
           properties.put("classpathEntry.isFolder", Boolean.toString(absoluteClasspathFiles[index].isDirectory()));
+
+          String relative = Utilities.calcRelative(absoluteClasspathFiles[index], project.getFolder());
+          if ((relative == null) || (relative.indexOf("..") != -1)) {
+            // the calculation of a diff path failed or the relative path "moves" outside of the
+            // projects directory
+            properties.put("classpathEntry.isProjectRelative", "false");
+          } else {
+            // we've got a project relative classpath entry
+            properties.put("classpathEntry.isProjectRelative", "true");
+          }
 
           // create a FileSet for the entry describing it's content
           FileSet fileSet = new FileSet();
