@@ -329,7 +329,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
           properties.put("classpathEntry.isFile", Boolean.toString(absoluteClasspathFiles[index].isFile()));
           properties.put("classpathEntry.isFolder", Boolean.toString(absoluteClasspathFiles[index].isDirectory()));
 
-          String relative = Utilities.calcRelative(absoluteClasspathFiles[index], project.getFolder());
+          String relative = Utilities.calcRelative(project.getFolder(), absoluteClasspathFiles[index]);
           if ((relative == null) || (relative.indexOf("..") != -1)) {
             // the calculation of a diff path failed or the relative path "moves" outside of the
             // projects directory
