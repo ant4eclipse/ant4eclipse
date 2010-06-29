@@ -38,9 +38,15 @@ public class CompilerOptionsProvider {
   /**
    * This property enables the javadoc parsing in ECJ (same as <tt>-enableJavadoc</tt> on the command line)
    */
-  public final static String ENABLE_JAVADOC_SUPPORT = "org.eclipse.jdt.core.compiler.doc.comment.support";
+  public static final String  ENABLE_JAVADOC_SUPPORT = "org.eclipse.jdt.core.compiler.doc.comment.support";
 
-  public final static String FORBIDDEN_REFERENCE    = "org.eclipse.jdt.core.compiler.problem.forbiddenReference";
+  public static final String  FORBIDDEN_REFERENCE    = "org.eclipse.jdt.core.compiler.problem.forbiddenReference";
+
+  /** prefix used for the exported preferences */
+  private static final String PREFS_INSTANCE         = "/instance/";
+
+  /** we're only interested in jdt settings */
+  private static final String PREFS_JDTTYPE          = "org.eclipse.jdt.core/";
 
   /**
    * <p>
@@ -69,7 +75,7 @@ public class CompilerOptionsProvider {
    * @return the map with the merged compiler options.
    */
   @SuppressWarnings("unchecked")
-  public static StringMap getCompilerOptions(Javac javac, String projectCompilerOptionsFile,
+  public static final StringMap getCompilerOptions(Javac javac, String projectCompilerOptionsFile,
       String globalCompilerOptionsFile) {
     Assure.notNull("javac", javac);
 
@@ -132,7 +138,7 @@ public class CompilerOptionsProvider {
    * @return the compiler options specified in the javac task.
    */
   @SuppressWarnings("unchecked")
-  private static StringMap getJavacCompilerOptions(Javac javac) {
+  private static final StringMap getJavacCompilerOptions(Javac javac) {
 
     StringMap result = new StringMap();
 
@@ -272,12 +278,13 @@ public class CompilerOptionsProvider {
    *          the compiler options file. Might be null or empty string
    * @return the map with the compiler options.
    */
-  private static StringMap getFileCompilerOptions(String fileName) {
+  private static final StringMap getFileCompilerOptions(String fileName) {
     if (Utilities.hasText(fileName)) {
       try {
         File compilerOptionsFile = new File(fileName);
         if (compilerOptionsFile.exists() && compilerOptionsFile.isFile()) {
           StringMap compilerOptionsMap = new StringMap(compilerOptionsFile);
+          compilerOptionsMap = convertPreferences(compilerOptionsMap);
           return compilerOptionsMap;
         }
       } catch (Exception e) {
@@ -289,6 +296,34 @@ public class CompilerOptionsProvider {
   }
 
   /**
+   * This function alters the supplied options so exported preferences containing jdt compiler settings will be altered
+   * while removing the preference related prefix.
+   * 
+   * @param options
+   *          The options currently used. Maybe an exported preferences file. Not <code>null</code>.
+   * 
+   * @return The altered settings. Not <code>null</code>.
+   */
+  private static final StringMap convertPreferences(StringMap options) {
+    StringMap result = new StringMap();
+    for (Map.Entry<String, String> entry : options.entrySet()) {
+      if (entry.getKey().startsWith(PREFS_INSTANCE)) {
+        // this is an exported preferences key
+        String key = entry.getKey().substring(PREFS_INSTANCE.length());
+        if (key.startsWith(PREFS_JDTTYPE)) {
+          // we've got a jdt related setting, so use it
+          key = key.substring(PREFS_JDTTYPE.length());
+          result.put(key, entry.getValue());
+        }
+      } else {
+        // not recognized as a preferences key
+        result.put(entry.getKey(), entry.getValue());
+      }
+    }
+    return result;
+  }
+
+  /**
    * <p>
    * </p>
    * 
@@ -297,7 +332,7 @@ public class CompilerOptionsProvider {
    * @param options_3
    * @return
    */
-  private static StringMap mergeCompilerOptions(StringMap options_1, StringMap options_2, StringMap options_3) {
+  private static final StringMap mergeCompilerOptions(StringMap options_1, StringMap options_2, StringMap options_3) {
 
     StringMap result = new StringMap();
     if (options_3 != null) {
