@@ -32,6 +32,7 @@
     <attribute name="newBundleVersion" default="" />
     <attribute name="clean" default="true" />
     <attribute name="useEcj" default="true"/>
+    <attribute name="noWarn" default="false"/>
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -162,7 +163,8 @@
 
               <ant4eclipse:jdtCompiler useecj="@{useEcj}" destdir="${buildPlugin.default.output.directory}"
                      source="1.5"
-                     target="1.5">
+                     target="1.5"
+                     noWarn="@{noWarn}">
 
                 <src refid="buildPlugin.source.directories.path" />
                 <bootclasspath refid="buildPlugin.boot.classpath.path" />

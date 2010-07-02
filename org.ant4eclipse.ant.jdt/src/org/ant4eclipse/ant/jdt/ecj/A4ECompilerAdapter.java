@@ -133,21 +133,23 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     for (int i = 0; i < categorizedProblems.length; i++) {
       CategorizedProblem categorizedProblem = categorizedProblems[i];
-      String fileName = String.valueOf(categorizedProblem.getOriginatingFileName());
-      for (SourceFile sourceFile : sourceFiles) {
-        if (fileName.equals(sourceFile.getSourceFileName())) {
-          Object[] args = new Object[7];
-          args[0] = Integer.valueOf(i + 1);
-          args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
-          args[2] = sourceFile.getSourceFile().getAbsolutePath();
-          args[3] = Integer.valueOf(categorizedProblem.getSourceLineNumber());
-          String[] problematicLine = readProblematicLine(sourceFile, categorizedProblem);
-          args[4] = problematicLine[0];
-          args[5] = problematicLine[1];
-          args[6] = categorizedProblem.getMessage();
-          A4ELogging.error(COMPILE_PROBLEM_MESSAGE, args);
-          if (i + 1 == categorizedProblems.length) {
-            A4ELogging.error("----------");
+      if (categorizedProblem.isError() || (categorizedProblem.isWarning() && !getJavac().getNowarn())) {
+        String fileName = String.valueOf(categorizedProblem.getOriginatingFileName());
+        for (SourceFile sourceFile : sourceFiles) {
+          if (fileName.equals(sourceFile.getSourceFileName())) {
+            Object[] args = new Object[7];
+            args[0] = Integer.valueOf(i + 1);
+            args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
+            args[2] = sourceFile.getSourceFile().getAbsolutePath();
+            args[3] = Integer.valueOf(categorizedProblem.getSourceLineNumber());
+            String[] problematicLine = readProblematicLine(sourceFile, categorizedProblem);
+            args[4] = problematicLine[0];
+            args[5] = problematicLine[1];
+            args[6] = categorizedProblem.getMessage();
+            A4ELogging.error(COMPILE_PROBLEM_MESSAGE, args);
+            if (i + 1 == categorizedProblems.length) {
+              A4ELogging.error("----------");
+            }
           }
         }
       }
