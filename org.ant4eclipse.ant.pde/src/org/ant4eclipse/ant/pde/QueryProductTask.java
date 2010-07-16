@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -137,7 +135,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param workspace
    *          The workspace directory. Not <code>null</code>.
    */
-  public void setWorkspaceDirectory(File workspace) {
+  public void setWorkspaceDirectory(String workspace) {
     this._workspacedelegate.setWorkspaceDirectory(workspace);
   }
 
@@ -197,7 +195,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
       }
       if ((query._type == QueryType.configini) || (query._type == QueryType.wsplugins)
           || (query._type == QueryType.wsfragments) || (query._type == QueryType.wsfeatures)) {
-        this._workspacedelegate.requireWorkspaceDirectorySet();
+        this._workspacedelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
       }
     }
   }

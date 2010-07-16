@@ -292,7 +292,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   protected void preconditions() throws BuildException {
 
     // require workspace directory set...
-    requireWorkspaceDirectorySet();
+    requireWorkspaceDirectoryOrWorkspaceIdSet();
 
     // require target platform id set...
     requireTargetPlatformIdSet();

@@ -51,7 +51,6 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
     throw new Ant4EclipseException(PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT);
@@ -75,9 +74,9 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    * {@inheritDoc}
    */
   public final void requireWorkspaceAndProjectNameSet() {
-    if (!isWorkspaceDirectorySet() || !isProjectNameSet()) {
-      // TODO
-      throw new BuildException("You have to specify the workspacedirectory and projectName attributes!");
+
+    if (!(isWorkspaceDirectorySet() || isWorkspaceIdSet()) || !isProjectNameSet()) {
+      throw new Ant4EclipseException(PlatformExceptionCode.MISSING_WORKSPACE_AND_PROJECT_NAME);
     }
   }
 
@@ -91,8 +90,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
       if (getWorkspace().hasProject(this._projectName)) {
         this._eclipseProject = getWorkspace().getProject(this._projectName);
       } else {
-        // TODO
-        throw new BuildException("The specified project '" + this._projectName + "' does not exists in the workspace.");
+        throw new Ant4EclipseException(PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, this._projectName);
       }
     }
 
@@ -104,17 +102,13 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    * {@inheritDoc}
    */
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
+
+    // 
     if (!getEclipseProject().hasRole(projectRoleClass)) {
 
-      // TODO
-      StringBuffer buffer = new StringBuffer();
-      buffer.append("Project ");
-      buffer.append(this._projectName);
-      buffer.append(" must have role");
-      buffer.append(projectRoleClass.getName());
-      buffer.append("!");
-
-      throw new BuildException(buffer.toString());
+      // throw exception
+      throw new Ant4EclipseException(PlatformExceptionCode.MISSING_PROJECT_ROLE, this._projectName, projectRoleClass
+          .getName());
     }
   }
 }

@@ -226,12 +226,33 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   public final void requireWorkspaceAndProjectNameSet() {
     this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
-
+  
   /**
    * {@inheritDoc}
    */
-  public final void requireWorkspaceDirectorySet() {
-    this._projectDelegate.requireWorkspaceDirectorySet();
+  public String getWorkspaceId() {
+    return this._projectDelegate.getWorkspaceId();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isWorkspaceIdSet() {
+    return this._projectDelegate.isWorkspaceIdSet();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
+    this._projectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void setWorkspaceId(String identifier) {
+    this._projectDelegate.setWorkspaceId(identifier);
   }
 
   /**
@@ -296,14 +317,14 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
    * {@inheritDoc}
    */
   @SuppressWarnings("deprecation")
-  public final void setWorkspace(File workspace) {
+  public final void setWorkspace(String workspace) {
     this._projectDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setWorkspaceDirectory(File workspaceDirectory) {
+  public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 

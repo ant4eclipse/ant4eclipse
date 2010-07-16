@@ -158,7 +158,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   protected void doExecute() {
     // check required attributes
     requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
-    requireWorkspaceDirectorySet();
+    requireWorkspaceDirectoryOrWorkspaceIdSet();
 
     // get all eclipse projects and calculate the build order if necessary
     List<EclipseProject> projects = null;

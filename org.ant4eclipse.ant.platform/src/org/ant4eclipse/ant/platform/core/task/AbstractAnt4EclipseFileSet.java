@@ -173,14 +173,34 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
-  public final void requireWorkspaceDirectorySet() {
-    this._eclipseProjectDelegate.requireWorkspaceDirectorySet();
+  public String getWorkspaceId() {
+    return this._eclipseProjectDelegate.getWorkspaceId();
   }
 
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("deprecation")
+  public boolean isWorkspaceIdSet() {
+    return this._eclipseProjectDelegate.isWorkspaceIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
+    this._eclipseProjectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setWorkspaceId(String identifier) {
+    this._eclipseProjectDelegate.setWorkspaceId(identifier);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   @Deprecated
   public void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);
@@ -196,16 +216,15 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("deprecation")
   @Deprecated
-  public final void setWorkspace(File workspace) {
+  public final void setWorkspace(String workspace) {
     this._eclipseProjectDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setWorkspaceDirectory(File workspaceDirectory) {
+  public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 

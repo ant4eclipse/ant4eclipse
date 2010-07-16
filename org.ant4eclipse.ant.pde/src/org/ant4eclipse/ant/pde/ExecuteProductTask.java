@@ -421,7 +421,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
 
     super.preconditions();
 
-    requireWorkspaceDirectorySet();
+    requireWorkspaceDirectoryOrWorkspaceIdSet();
     requireTargetPlatformIdSet();
 
     if (this._product == null) {

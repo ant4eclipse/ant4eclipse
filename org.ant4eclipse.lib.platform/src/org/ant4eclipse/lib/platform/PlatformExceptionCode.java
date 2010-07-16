@@ -22,6 +22,24 @@ public class PlatformExceptionCode extends ExceptionCode {
 
   public static String                MISSING_REPOSITORY      = "Missing repository";
 
+  @NLSMessage("No workspace with id '%s' registered.")
+  public static ExceptionCode         UNKNOWN_WORKSPACE_ID;
+
+  @NLSMessage("Either workspace directory or workspace id has to be set. You can't specify both.")
+  public static ExceptionCode         WORKSPACE_DIRECTORY_AND_WORKSPACE_ID_SET;
+
+  @NLSMessage("Workspace directory '%s' does not exist.")
+  public static ExceptionCode         WORKSPACE_DIRECTORY_DOES_NOT_EXIST;
+
+  @NLSMessage("You have to specify the 'workspaceDirectory' or 'workspaceId' attribute.")
+  public static ExceptionCode         MISSING_WORKSPACE_DIRECTORY_OR_WORKSPACE_ID;
+
+  @NLSMessage("You have to specify the 'workspaceDirectory' (or 'workspaceId') and 'projectName' attributes.")
+  public static ExceptionCode         MISSING_WORKSPACE_AND_PROJECT_NAME;
+
+  @NLSMessage("Project '%s' must have role '%s'.")
+  public static ExceptionCode         MISSING_PROJECT_ROLE;
+
   @NLSMessage("The linked resource '%s' in project '%s' does not exist.")
   public static ExceptionCode         LINKED_RESOURCE_DOES_NOT_EXIST;
 

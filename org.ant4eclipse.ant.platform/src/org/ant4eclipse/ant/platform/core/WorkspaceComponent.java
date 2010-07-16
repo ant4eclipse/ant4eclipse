@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core;
 
-
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 
@@ -44,11 +43,11 @@ public interface WorkspaceComponent {
    * @param workspace
    *          the workspace directory
    * 
-   * @deprecated use {@link WorkspaceComponent#setWorkspaceDirectory(File)} instead. This method is for backward
+   * @deprecated use {@link WorkspaceComponent#setWorkspaceDirectory(String)} instead. This method is for backward
    *             compatibility only.
    */
   @Deprecated
-  void setWorkspace(File workspace);
+  void setWorkspace(String workspace);
 
   /**
    * <p>
@@ -58,7 +57,7 @@ public interface WorkspaceComponent {
    * @param workspace
    *          the workspace directory
    */
-  void setWorkspaceDirectory(File workspaceDirectory);
+  void setWorkspaceDirectory(String workspaceDirectory);
 
   /**
    * <p>
@@ -80,10 +79,23 @@ public interface WorkspaceComponent {
 
   /**
    * <p>
+   * Sets the workspace id.
+   * </p>
+   * 
+   * @param identifier
+   */
+  void setWorkspaceId(String identifier);
+
+  String getWorkspaceId();
+
+  boolean isWorkspaceIdSet();
+
+  /**
+   * <p>
    * Throws an {@link BuildException} if the workspace directory has not been set.
    * </p>
    */
-  void requireWorkspaceDirectorySet();
+  void requireWorkspaceDirectoryOrWorkspaceIdSet();
 
   /**
    * <p>

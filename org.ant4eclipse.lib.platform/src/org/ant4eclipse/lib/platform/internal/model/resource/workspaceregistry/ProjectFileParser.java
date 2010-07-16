@@ -171,6 +171,18 @@ public class ProjectFileParser {
     return eclipseProject;
   }
 
+  /**
+   * Determines whether a given directory is an eclipse project directory
+   * 
+   * @param directory
+   *          the directory to test
+   * @return true, if the directory is an eclipse project directory
+   */
+  public static boolean isProjectDirectory(File directory) {
+    return directory != null && directory.exists() && directory.isDirectory()
+        && new File(directory, ".project").exists();
+  }
+
   /*
    * TODO:
    * 

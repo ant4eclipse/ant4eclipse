@@ -11,16 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 
-
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.LocationFileParser;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.LocationFileParser;
+import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.ProjectFileParser;
 
 /**
  * <p>
@@ -118,7 +118,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @return <code>true</code>, if the specified directory is an eclipse project directory.
    */
   private boolean isProjectDirectory(File directory) {
-    return isDirectory(directory) && new File(directory, ".project").exists();
+    return ProjectFileParser.isProjectDirectory(directory);
   }
 
   /**

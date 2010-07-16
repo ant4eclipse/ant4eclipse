@@ -126,12 +126,33 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public void requireTeamProjectSetSet() {
     this._workspaceProjectSetDelegate.requireTeamProjectSetSet();
   }
-
+  
   /**
    * {@inheritDoc}
    */
-  public void requireWorkspaceDirectorySet() {
-    this._workspaceProjectSetDelegate.requireWorkspaceDirectorySet();
+  public String getWorkspaceId() {
+    return this._workspaceProjectSetDelegate.getWorkspaceId();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isWorkspaceIdSet() {
+    return this._workspaceProjectSetDelegate.isWorkspaceIdSet();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
+    this._workspaceProjectSetDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  public void setWorkspaceId(String identifier) {
+    this._workspaceProjectSetDelegate.setWorkspaceId(identifier);
   }
 
   /**
@@ -158,16 +179,15 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("deprecation")
   @Deprecated
-  public void setWorkspace(File workspace) {
+  public void setWorkspace(String workspace) {
     this._workspaceProjectSetDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setWorkspaceDirectory(File workspaceDirectory) {
+  public void setWorkspaceDirectory(String workspaceDirectory) {
     this._workspaceProjectSetDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 

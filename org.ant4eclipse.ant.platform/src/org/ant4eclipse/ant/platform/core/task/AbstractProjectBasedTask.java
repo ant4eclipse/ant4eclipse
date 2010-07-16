@@ -96,8 +96,29 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
   /**
    * {@inheritDoc}
    */
-  public void requireWorkspaceDirectorySet() {
-    this._eclipseProjectDelegate.requireWorkspaceDirectorySet();
+  public String getWorkspaceId() {
+    return this._eclipseProjectDelegate.getWorkspaceId();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isWorkspaceIdSet() {
+    return this._eclipseProjectDelegate.isWorkspaceIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
+    this._eclipseProjectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setWorkspaceId(String identifier) {
+    this._eclipseProjectDelegate.setWorkspaceId(identifier);
   }
 
   /**
@@ -111,21 +132,20 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    * {@inheritDoc}
    */
   @SuppressWarnings("deprecation")
-  public void setWorkspace(File workspace) {
+  public void setWorkspace(String workspace) {
     this._eclipseProjectDelegate.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setWorkspaceDirectory(File workspaceDirectory) {
+  public void setWorkspaceDirectory(String workspaceDirectory) {
     this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);

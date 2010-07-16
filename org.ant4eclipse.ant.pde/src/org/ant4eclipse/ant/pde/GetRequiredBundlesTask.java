@@ -124,17 +124,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public final void requireWorkspaceDirectorySet() {
-    this._workspaceDelegate.requireWorkspaceDirectorySet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @SuppressWarnings("deprecation")
-  @Override
   @Deprecated
-  public final void setWorkspace(File workspace) {
+  public final void setWorkspace(String workspace) {
     this._workspaceDelegate.setWorkspace(workspace);
   }
 
@@ -142,7 +133,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public final void setWorkspaceDirectory(File workspaceDirectory) {
+  public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._workspaceDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 

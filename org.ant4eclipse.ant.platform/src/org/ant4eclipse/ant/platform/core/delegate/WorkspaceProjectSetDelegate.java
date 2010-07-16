@@ -180,24 +180,32 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
-  public void requireWorkspaceDirectorySet() {
-    this._workspaceComponent.requireWorkspaceDirectorySet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @SuppressWarnings("deprecation")
   @Deprecated
-  public void setWorkspace(File workspace) {
+  public void setWorkspace(String workspace) {
     this._workspaceComponent.setWorkspace(workspace);
   }
 
   /**
    * {@inheritDoc}
    */
-  public void setWorkspaceDirectory(File workspaceDirectory) {
+  public void setWorkspaceDirectory(String workspaceDirectory) {
     this._workspaceComponent.setWorkspaceDirectory(workspaceDirectory);
+  }
+
+  public String getWorkspaceId() {
+    return this._workspaceComponent.getWorkspaceId();
+  }
+
+  public boolean isWorkspaceIdSet() {
+    return this._workspaceComponent.isWorkspaceIdSet();
+  }
+
+  public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
+    this._workspaceComponent.requireWorkspaceDirectoryOrWorkspaceIdSet();
+  }
+
+  public void setWorkspaceId(String identifier) {
+    this._workspaceComponent.setWorkspaceId(identifier);
   }
 
 }

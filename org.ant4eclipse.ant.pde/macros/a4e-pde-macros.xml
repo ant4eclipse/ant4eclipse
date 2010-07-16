@@ -22,7 +22,8 @@
           target: buildPlugin
          ================================= -->
   <macrodef name="buildPlugin" description="builds a single plug-in project.">
-    <attribute name="workspaceDirectory" />
+    <attribute name="workspaceDirectory" default="" />
+    <attribute name="workspaceId" default="" />
     <attribute name="projectName" />
     <attribute name="targetPlatformId" />
     <attribute name="destination" />
@@ -31,8 +32,8 @@
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="newBundleVersion" default="" />
     <attribute name="clean" default="true" />
-    <attribute name="useEcj" default="true"/>
-    <attribute name="noWarn" default="false"/>
+    <attribute name="useEcj" default="true" />
+    <attribute name="noWarn" default="false" />
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -69,6 +70,7 @@
     <sequential>
 
       <ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
+                                        workspaceId="@{workspaceId}"
                                         projectName="@{projectName}"
                                         prefix="buildPlugin">
 
@@ -90,6 +92,7 @@
 
           <!-- check project consistency -->
           <ant4eclipse:checkPluginProject workspaceDirectory="@{workspaceDirectory}"
+                                          workspaceId="@{workspaceId}"
                                           projectName="@{projectName}" />
 
           <!-- template element 'validate' -->
@@ -132,12 +135,14 @@
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <antcontrib:if>
         <ant4eclipse:hasNature workspaceDirectory="@{workspaceDirectory}"
+                               workspaceId="@{workspaceId}"
                                projectName="@{projectName}"
                                nature="org.eclipse.jdt.core.javanature" />
         <antcontrib:then>
 
           <!-- Execute the JDT project -->
           <ant4eclipse:executeJdtProject workspaceDirectory="@{workspaceDirectory}"
+                                         workspaceId="@{workspaceId}"
                                          projectName="@{projectName}"
                                          prefix="buildPlugin">
 
@@ -161,10 +166,11 @@
               <echo>  - bootclasspath      -> ${buildPlugin.boot.classpath}</echo>
               <echo>  - classpath          -> ${buildPlugin.classpath.absolute.compiletime}</echo>
 
-              <ant4eclipse:jdtCompiler useecj="@{useEcj}" destdir="${buildPlugin.default.output.directory}"
-                     source="1.5"
-                     target="1.5"
-                     noWarn="@{noWarn}">
+              <ant4eclipse:jdtCompiler useecj="@{useEcj}"
+                                       destdir="${buildPlugin.default.output.directory}"
+                                       source="1.5"
+                                       target="1.5"
+                                       noWarn="@{noWarn}">
 
                 <src refid="buildPlugin.source.directories.path" />
                 <bootclasspath refid="buildPlugin.boot.classpath.path" />
@@ -208,6 +214,7 @@
         - Step 7: Package the bundle
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
       <ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
+                                        workspaceId="@{workspaceId}"
                                         projectName="@{projectName}"
                                         prefix="buildPlugin">
 
@@ -280,6 +287,7 @@
 
           <!-- just copy everything to the 'self' directory -->
           <ant4eclipse:executePluginLibrary workspaceDirectory="@{workspaceDirectory}"
+                                            workspaceId="@{workspaceId}"
                                             projectname="${buildPlugin.project.name}"
                                             libraryname="${buildPlugin.library.name}">
 
@@ -322,6 +330,7 @@
 
             <!-- file set defined by the projects build properties -->
             <ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
+                                           workspaceId="@{workspaceId}"
                                            projectname="@{projectName}" />
           </copy>
 
@@ -363,6 +372,7 @@
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <ant4eclipse:forProject if="@{buildSourceJar}">
           <buildSourceBundle workspaceDirectory="@{workspaceDirectory}"
+                             workspaceId="@{workspaceId}"
                              projectName="@{projectName}"
                              destination="@{destination}"
                              newBundleVersion="@{newBundleVersion}" />
@@ -390,13 +400,15 @@
          ================================= -->
   <macrodef name="buildSourceBundle"
             description="builds a source bundle for a given plug-in project.">
-    <attribute name="workspaceDirectory" />
+    <attribute name="workspaceDirectory" default="" />
+    <attribute name="workspaceId" default="" />
     <attribute name="projectName" />
     <attribute name="destination" />
     <attribute name="newBundleVersion" default="" />
     <sequential>
 
       <ant4eclipse:executePluginProject workspaceDirectory="@{workspaceDirectory}"
+                                        workspaceId="@{workspaceId}"
                                         projectName="@{projectName}"
                                         prefix="buildPlugin">
 
@@ -418,6 +430,7 @@
         <ant4eclipse:forEachPluginLibrary filter="(buildPlugin.library.isSelf=true)">
 
           <ant4eclipse:executePluginLibrary workspaceDirectory="@{workspaceDirectory}"
+                                            workspaceId="@{workspaceId}"
                                             projectname="${buildPlugin.project.name}"
                                             libraryname="${buildPlugin.library.name}">
 
@@ -439,6 +452,7 @@
         <ant4eclipse:forEachPluginLibrary filter="(buildPlugin.library.isSelf=false)">
 
           <ant4eclipse:executePluginLibrary workspaceDirectory="@{workspaceDirectory}"
+                                            workspaceId="@{workspaceId}"
                                             projectname="${buildPlugin.project.name}"
                                             libraryname="${buildPlugin.library.name}">
 
@@ -465,6 +479,7 @@
 
             <!-- file set defined by the projects build properties -->
             <ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
+                                           workspaceId="@{workspaceId}"
                                            projectname="@{projectName}"
                                            excludeLibraries="true"
                                            sourceBundle="true" />
@@ -544,7 +559,8 @@
        ================================= -->
   <macrodef name="buildProduct">
 
-    <attribute name="workspaceDirectory" />
+    <attribute name="workspaceDirectory" default="" />
+    <attribute name="workspaceId" default="" />
     <attribute name="productfile" />
     <attribute name="targetPlatformId" />
     <attribute name="destination" />
@@ -554,7 +570,7 @@
     <attribute name="packageAsJar" default="false" />
     <attribute name="commandline" default="false" />
     <attribute name="packageSources" default="true" />
-    <attribute name="useEcj" default="true"/>
+    <attribute name="useEcj" default="true" />
 
     <!-- element definitions for lifecycle phases -->
     <element name="validate"
@@ -568,6 +584,7 @@
     <sequential>
 
       <ant4eclipse:executeProduct workspaceDirectory="@{workspaceDirectory}"
+                                  workspaceId="@{workspaceId}"
                                   targetPlatformId="@{targetPlatformId}"
                                   product="@{productfile}"
                                   os="@{os}">
@@ -600,6 +617,7 @@
             <then>
               <echo> -> Building included feature '${executeProduct.feature.id}' - '${executeProduct.feature.version}'</echo>
               <buildFeature workspaceDirectory="@{workspaceDirectory}"
+                            workspaceId="@{workspaceId}"
                             featureId="${executeProduct.feature.id}"
                             featureVersion="${executeProduct.feature.version}"
                             targetPlatformId="@{targetPlatformId}"
@@ -608,8 +626,7 @@
                             packagePluginsAsJar="@{packageAsJar}"
                             packagePluginSourcesAsJar="@{packageSources}"
                             defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
-                            useEcj="@{useEcj}"
-              />
+                            useEcj="@{useEcj}" />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachFeature>
@@ -622,13 +639,13 @@
               <echo> -> Building included plugin '${executeProduct.plugin.id}' from project: ${executeProduct.plugin.projectName}</echo>
               <buildPlugin projectName="${executeProduct.plugin.projectName}"
                            workspaceDirectory="@{workspaceDirectory}"
+                           workspaceId="@{workspaceId}"
                            targetPlatformId="@{targetPlatformId}"
                            packageAsJar="@{packageAsJar}"
                            destination="@{destination}"
                            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
                            buildSourceJar="@{packageSources}"
-                           useEcj="@{useEcj}"
-              />
+                           useEcj="@{useEcj}" />
             </then>
           </antcontrib:if>
         </ant4eclipse:forEachPlugin>
@@ -750,7 +767,8 @@
          ================================= -->
   <macrodef name="buildFeature">
 
-    <attribute name="workspaceDirectory" />
+    <attribute name="workspaceDirectory" default="" />
+    <attribute name="workspaceId" default="" />
     <attribute name="projectName" default="" />
     <attribute name="featureId" default="" />
     <attribute name="featureVersion" default="" />
@@ -763,11 +781,12 @@
     <attribute name="packagePluginSourcesAsJar" default="true" />
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="cleanPluginBuild" default="true" />
-    <attribute name="useEcj" default="true"/>
+    <attribute name="useEcj" default="true" />
     <sequential>
 
       <!-- executes the defined feature -->
       <ant4eclipse:executeFeature workspaceDirectory="@{workspaceDirectory}"
+                                  workspaceId="@{workspaceId}"
                                   projectName="@{projectName}"
                                   featureId="@{featureId}"
                                   featureVersion="@{featureVersion}"
@@ -789,13 +808,13 @@
         <ant4eclipse:forEachIncludedFeature>
           <echo> -> Building included feature '${executeFeature.feature.id}'</echo>
           <buildFeature workspaceDirectory="@{workspaceDirectory}"
+                        workspaceId="@{workspaceId}"
                         featureId="${executeFeature.feature.id}"
                         featureVersion="${executeFeature.feature.resolved.version}"
                         targetPlatformId="@{targetPlatformId}"
                         destination="@{destination}"
                         packageAsJar="@{packageAsJar}"
-                        useEcj="@{useEcj}"
-          />
+                        useEcj="@{useEcj}" />
         </ant4eclipse:forEachIncludedFeature>
 
         <!-- Step 3: Build the plug-ins  -->
@@ -803,6 +822,7 @@
         <ant4eclipse:forEachPlugin filter="(executeFeature.plugin.isSource=true)">
           <echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
           <buildPlugin workspaceDirectory="@{workspaceDirectory}"
+                       workspaceId="@{workspaceId}"
                        projectName="${executeFeature.plugin.filename}"
                        targetplatformid="@{targetPlatformId}"
                        destination="@{destination}"
@@ -810,8 +830,7 @@
                        buildSourceJar="@{packagePluginSourcesAsJar}"
                        defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
                        clean="@{cleanPluginBuild}"
-                       useEcj="@{useEcj}"
-          />
+                       useEcj="@{useEcj}" />
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3.2: Copy plug-ins  -->
@@ -834,6 +853,7 @@
 
             <!-- file set defined by the projects build properties -->
             <ant4eclipse:pdeProjectFileSet workspaceDirectory="@{workspaceDirectory}"
+                                           workspaceId="@{workspaceId}"
                                            projectname="${executeFeature.feature.file.name}" />
           </copy>
 

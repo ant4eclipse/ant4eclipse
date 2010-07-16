@@ -163,7 +163,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   protected void doExecute() {
-    requireWorkspaceDirectorySet();
+    requireWorkspaceDirectoryOrWorkspaceIdSet();
     requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
     requireBuildorderPropertySet();
 
