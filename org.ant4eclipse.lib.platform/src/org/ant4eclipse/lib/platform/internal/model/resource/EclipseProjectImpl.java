@@ -13,6 +13,7 @@ package org.ant4eclipse.lib.platform.internal.model.resource;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.internal.model.resource.role.NatureNicknameRegistry;
 import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -82,7 +83,7 @@ public final class EclipseProjectImpl implements EclipseProject {
     Assure.isDirectory(projectDirectory);
 
     this._workspace = workspace;
-    this._projectDirectory = projectDirectory;
+    this._projectDirectory = Utilities.getCanonicalFile(projectDirectory);
     this._natures = new LinkedList<ProjectNature>();
     this._roles = new LinkedList<ProjectRole>();
     this._buildCommands = new LinkedList<BuildCommand>();
