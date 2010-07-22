@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import java.io.File;
-import java.util.List;
-
 import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
@@ -28,6 +25,9 @@ import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
+import java.util.List;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 

@@ -245,7 +245,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
       // make sure a destination folder is set
       if (destinationFolder == null) {
-        throw new Ant4EclipseException(EcjExceptionCodes.NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT);
+        throw new Ant4EclipseException(EcjExceptionCodes.NO_DEST_PATH_SET);
       }
 
       // BUG-FIX for http://www.javakontor.org:8080/jira/browse/AE-203

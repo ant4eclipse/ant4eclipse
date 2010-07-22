@@ -165,6 +165,7 @@
                                    source="@{sourceLevel}"
                                    target="@{targetLevel}"
                                    destdir="${buildJdtProject.default.output.directory}">
+            
             <!-- let ecj read compiler settings from the project's '.settings' directory -->
             <compilerarg value="compiler.options.file=${buildJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
                          compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />

@@ -245,4 +245,15 @@ public class EcjAdditionalCompilerArguments {
   public void setSourceFilteredFilesetPath(Path sourceFilteredFilesetPath) {
     this._sourceFilteredFilesetPath = sourceFilteredFilesetPath;
   }
+
+  /**
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "EcjAdditionalCompilerArguments [_sourceFolderMap=" + this._sourceFolderMap + ", _outputFolderMap="
+        + this._outputFolderMap + ", _bootClassPathAccessRestrictions=" + this._bootClassPathAccessRestrictions
+        + ", _accessRestrictions=" + this._accessRestrictions + ", _sourceFilteredFilesetPath="
+        + this._sourceFilteredFilesetPath + "]";
+  }
 }
