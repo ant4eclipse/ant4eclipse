@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
-<project name="a4e-jdt-macros" basedir="." xmlns:ant4eclipse="antlib:org.ant4eclipse" xmlns:antcontrib="antlib:net.sf.antcontrib">
+<project name="a4e-jdt-macros"
+         basedir="."
+         xmlns:ant4eclipse="antlib:org.ant4eclipse"
+         xmlns:antcontrib="antlib:net.sf.antcontrib">
 
   <!-- define antcontrib tasks -->
-  <taskdef uri="antlib:net.sf.antcontrib" resource="net/sf/antcontrib/antlib.xml" />
+  <taskdef uri="antlib:net.sf.antcontrib"
+           resource="net/sf/antcontrib/antlib.xml" />
 
   <!-- define ant4eclipse tasks -->
-  <taskdef uri="antlib:org.ant4eclipse" resource="org/ant4eclipse/ant/antlib.xml" />
+  <taskdef uri="antlib:org.ant4eclipse"
+           resource="org/ant4eclipse/ant/antlib.xml" />
 
   <!-- ===============================================================================================================
           macro: createCompilerOptionFile
@@ -48,36 +53,58 @@
           defaultCompilerOptionsFile 'wins', i.e. overrides the target/sourceLevel argument
          ==============================================================================================================
     -->
-  <macrodef name="buildJdtProject" description="builds a single JDT-based eclipse project">
-    <attribute name="workspaceDirectory" />
+  <macrodef name="buildJdtProject"
+            description="builds a single JDT-based eclipse project">
+    
+    <attribute name="workspaceDirectory" default="" />
+    <attribute name="workspaceId" default="" />
     <attribute name="projectName" />
     <attribute name="targetPlatformId" default="" />
     <attribute name="defaultCompilerOptionsFile" default="" />
     <attribute name="targetLevel" default="1.5" />
     <attribute name="sourceLevel" default="@{targetLevel}" />
-    <attribute name="useEcj" default="true"/>
-    
+    <attribute name="useEcj" default="true" />
+
     <!-- element definitions for lifecycle phases -->
-    <element name="initialize" optional="true" description="Initialize build state, e.g. set properties or create directories." />
-    <element name="generate-sources" optional="true" description="Generate any source code for inclusion in compilation." />
-    <element name="generate-resources" optional="true" description="Generate resources for inclusion in the package." />
-    <element name="pre-compile" optional="true" description="Execute additional steps before compilation." />
-    <element name="post-compile" optional="true" description="Post-process the generated files from compilation, for example to do bytecode enhancement on Java classes." />
-    <element name="post-copy-resources" optional="true" description="Post-process a source folder after resource have been copied to classes folder" />
-    <element name="postprocess-output-directory" optional="true" description="Post-process an output folder after sources have been compiled resources have been copied. " />
-    <element name="finish" optional="true" description="Finish the build process. This can be used to take further actions, like packaging the project" />
+    <element name="initialize"
+             optional="true"
+             description="Initialize build state, e.g. set properties or create directories." />
+    <element name="generate-sources"
+             optional="true"
+             description="Generate any source code for inclusion in compilation." />
+    <element name="generate-resources"
+             optional="true"
+             description="Generate resources for inclusion in the package." />
+    <element name="pre-compile"
+             optional="true"
+             description="Execute additional steps before compilation." />
+    <element name="post-compile"
+             optional="true"
+             description="Post-process the generated files from compilation, for example to do bytecode enhancement on Java classes." />
+    <element name="post-copy-resources"
+             optional="true"
+             description="Post-process a source folder after resource have been copied to classes folder" />
+    <element name="postprocess-output-directory"
+             optional="true"
+             description="Post-process an output folder after sources have been compiled resources have been copied. " />
+    <element name="finish"
+             optional="true"
+             description="Finish the build process. This can be used to take further actions, like packaging the project" />
 
     <sequential>
 
       <echo>
       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
       * * *  Building project @{projectName}
-      * * *  in workspace     @{workspaceDirectory}
       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
       </echo>
 
-      <ant4eclipse:executeJdtProject workspaceDirectory="@{workspaceDirectory}" projectName="@{projectName}" prefix="buildJdtProject">
-        <jdtClasspathContainerArgument key="target.platform" value="@{targetPlatformId}" />
+      <ant4eclipse:executeJdtProject workspaceDirectory="@{workspaceDirectory}"
+                                     workspaceId="@{workspaceId}"
+                                     projectName="@{projectName}"
+                                     prefix="buildJdtProject">
+        <jdtClasspathContainerArgument key="target.platform"
+                                       value="@{targetPlatformId}" />
 
 
         <ant4eclipse:forProject>
@@ -109,7 +136,8 @@
         <!-- Step 4: clean output directories -->
         <ant4eclipse:forEachOutputDirectory>
           <antcontrib:if>
-            <equals arg1="${buildJdtProject.output.directory}" arg2="${buildJdtProject.project.directory}" />
+            <equals arg1="${buildJdtProject.output.directory}"
+                    arg2="${buildJdtProject.project.directory}" />
             <antcontrib:then>
               <echo level="warning"> * NOT cleaning output directory '${buildJdtProject.output.directory}' as it points to the projects (${buildJdtProject.project.name}) root folder</echo>
             </antcontrib:then>
@@ -132,15 +160,22 @@
           <echo>  - output directories -> ${buildJdtProject.default.output.directory}</echo>
           <echo>  - bootclasspath      -> ${buildJdtProject.boot.classpath}</echo>
           <echo>  - classpath          -> ${buildJdtProject.classpath.absolute.compiletime}</echo>
-          <ant4eclipse:jdtCompiler useecj="@{useEcj}" source="@{sourceLevel}" target="@{targetLevel}" destdir="${buildJdtProject.default.output.directory}">
+          
+          <ant4eclipse:jdtCompiler useecj="@{useEcj}"
+                                   source="@{sourceLevel}"
+                                   target="@{targetLevel}"
+                                   destdir="${buildJdtProject.default.output.directory}">
             <!-- let ecj read compiler settings from the project's '.settings' directory -->
-            <compilerarg value="compiler.options.file=${buildJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs" compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
+            <compilerarg value="compiler.options.file=${buildJdtProject.project.directory}/.settings/org.eclipse.jdt.core.prefs"
+                         compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
             <!-- Set default options if no project specific settings have been made -->
-            <compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}" compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
+            <compilerarg value="default.compiler.options.file=@{defaultCompilerOptionsFile}"
+                         compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
             <!-- Set Compiler Arguments from 'executeJdtProject' task (source folders, access restrictions) -->
-            <compilerarg value="compiler.args.refid=buildJdtProject.compiler.args" compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
+            <compilerarg value="compiler.args.refid=buildJdtProject.compiler.args"
+                         compiler="org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter" />
 
             <!-- set the source folders that are passed in from 'fromProject' -->
             <src refid="buildJdtProject.source.directories.path" />
