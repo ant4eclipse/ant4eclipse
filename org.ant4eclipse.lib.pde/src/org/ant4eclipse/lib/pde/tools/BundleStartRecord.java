@@ -67,8 +67,32 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @return A short textual description of this record. Not <code>null</code>.
    */
   public String getShortDescription() {
-    String suffix = this._autostart ? ":start" : "";
-    return String.format("%s@%d%s", this._id, Integer.valueOf(this._startlevel), suffix);
+
+    StringBuilder result = new StringBuilder();
+
+    // set the identifier
+    result.append(this._id);
+
+    // set the start level
+    if (this._startlevel > 0 || this._autostart) {
+
+      // append ampersand
+      result.append("@");
+
+      // set the start level
+      if (this._startlevel > 0) {
+        result.append(this._startlevel);
+        result.append(":");
+      }
+      // set the auto start
+      if (this._autostart) {
+        result.append("start");
+      }
+
+    }
+
+    // return the result
+    return result.toString();
   }
 
   /**

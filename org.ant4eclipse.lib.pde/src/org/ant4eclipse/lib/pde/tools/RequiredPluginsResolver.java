@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.pde.tools;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
@@ -150,15 +151,37 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // get the TargetPlatform
     TargetPlatformRegistry registry = ServiceRegistryAccess.instance().getService(TargetPlatformRegistry.class);
 
-    // get the target platform argument
-    JdtClasspathContainerArgument containerArgument = context.getJdtClasspathContainerArgument("target.platform");
+    // get the container arguments
+    JdtClasspathContainerArgument targetPlatformContainerArgument = context
+        .getJdtClasspathContainerArgument("targetPlatformId");
 
-    if (containerArgument == null) {
+    JdtClasspathContainerArgument platformConfigurationIdContainerArgument = context
+        .getJdtClasspathContainerArgument("platformConfigurationId");
+
+    // get the platform configuration
+    PlatformConfiguration configuration = null;
+
+    if (platformConfigurationIdContainerArgument != null) {
+      String platformConfigurationId = platformConfigurationIdContainerArgument.getValue();
+
+      if (Utilities.hasText(platformConfigurationId)) {
+        configuration = registry.getPlatformConfiguration(platformConfigurationId);
+        if (configuration == null) {
+          throw new Ant4EclipseException(PdeExceptionCode.UKNOWN_PLATFORM_CONFIGURATION, platformConfigurationId);
+        }
+      }
+    }
+
+    if (configuration == null) {
+      configuration = new PlatformConfiguration();
+    }
+
+    if (targetPlatformContainerArgument == null) {
 
       // get the one and only target platform
       if (registry.getTargetPlatformDefinitionIds().size() == 1) {
         String id = registry.getTargetPlatformDefinitionIds().get(0);
-        return registry.getInstance(context.getWorkspace(), id, new PlatformConfiguration());
+        return registry.getInstance(context.getWorkspace(), id, configuration);
       }
 
       // throw new Ant4EclipseException
@@ -166,7 +189,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     } else {
 
       // get the TargetPlatform
-      return registry.getInstance(context.getWorkspace(), containerArgument.getValue(), new PlatformConfiguration());
+      return registry.getInstance(context.getWorkspace(), targetPlatformContainerArgument.getValue(), configuration);
     }
   }
 }

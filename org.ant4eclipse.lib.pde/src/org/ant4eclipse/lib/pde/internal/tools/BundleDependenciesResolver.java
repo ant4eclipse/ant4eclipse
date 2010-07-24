@@ -48,16 +48,7 @@ import java.util.jar.Manifest;
 public class BundleDependenciesResolver {
 
   /** ECLIPSE_EXTENSIBLE_API */
-  private static final String                      ECLIPSE_EXTENSIBLE_API            = "Eclipse-ExtensibleAPI";
-
-  /** the default expansion directory **/
-  private static final String                      DEFAULT_EXPANSION_DIRECTORY       = System
-                                                                                         .getProperty("java.io.tmpdir")
-                                                                                         + File.separatorChar
-                                                                                         + "a4e_expand_dir";
-
-  /** the name of the expansion directory property **/
-  private static final String                      EXPANSION_DIRECTORY_PROPERTY_NAME = "a4e.expansion.directory";
+  private static final String                      ECLIPSE_EXTENSIBLE_API = "Eclipse-ExtensibleAPI";
 
   /** the map of all resolved bundles */
   private Map<BundleDescription, BundleDependency> _resolvedBundles;
@@ -173,8 +164,7 @@ public class BundleDependenciesResolver {
     }
     // jar -> JaredBundleLayoutResolver
     else {
-      String expansionDirectory = System.getProperty(EXPANSION_DIRECTORY_PROPERTY_NAME, DEFAULT_EXPANSION_DIRECTORY);
-      return new JaredBundleLayoutResolver(location, new File(expansionDirectory));
+      return new JaredBundleLayoutResolver(location, ExpansionDirectory.getExpansionDir());
     }
   }
 

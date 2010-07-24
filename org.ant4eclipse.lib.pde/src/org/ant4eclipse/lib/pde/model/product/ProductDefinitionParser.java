@@ -48,6 +48,7 @@ public class ProductDefinitionParser {
     XQueryHandler queryhandler = new XQueryHandler();
 
     XQuery namequery = queryhandler.createQuery("/product/@name");
+    XQuery uidquery = queryhandler.createQuery("/product/@uid");
     XQuery idquery = queryhandler.createQuery("/product/@id");
     XQuery applicationquery = queryhandler.createQuery("/product/@application");
     XQuery versionquery = queryhandler.createQuery("/product/@version");
@@ -92,11 +93,18 @@ public class ProductDefinitionParser {
 
     ProductDefinition result = new ProductDefinition();
 
-    result.setApplication(applicationquery.getSingleResult());
-    result.setId(idquery.getSingleResult());
+    result.setUid(uidquery.getSingleResult());
     result.setName(namequery.getSingleResult());
     String versionString = versionquery.getSingleResult();
-    result.setVersion(new Version(versionString == null || "null".equals(versionString) ? "0.0.0" : versionString));
+    try {
+      result.setVersion(new Version(versionString == null || "null".equals(versionString) ? "0.0.0" : versionString));
+    } catch (Exception e) {
+      throw new Ant4EclipseException(e, PdeExceptionCode.INVALID_CONFIGURATION_VALUE, versionString, "version");
+    }
+
+    result.setApplication(applicationquery.getSingleResult());
+    result.setId(idquery.getSingleResult());
+
     result.setLaunchername(launchernamequery.getSingleResult());
     result.setSplashplugin(splashquery.getSingleResult());
     result.setBasedOnFeatures(Boolean.parseBoolean(usefeaturesquery.getSingleResult()));
@@ -172,9 +180,11 @@ public class ProductDefinitionParser {
     if ((result.getName() == null) || (result.getName().length() == 0)) {
       throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, "", "name");
     }
-    if ((result.getId() == null) || (result.getId().length() == 0)) {
-      throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, "", "id");
-    }
+
+    // [GERD - 22.07.2010] The product id is optional!
+    // if ((result.getId() == null) || (result.getId().length() == 0)) {
+    // throw new Ant4EclipseException(PdeExceptionCode.INVALID_CONFIGURATION_VALUE, "", "id");
+    // }
     for (ProductOs os : ProductOs.values()) {
       String configini = result.getConfigIni(os);
       if (configini != null) {

@@ -26,6 +26,7 @@
     <attribute name="workspaceId" default="" />
     <attribute name="projectName" />
     <attribute name="targetPlatformId" />
+    <attribute name="platformConfigurationId" default="" />
     <attribute name="destination" />
     <attribute name="packageAsJar" default="true" />
     <attribute name="buildSourceJar" default="true" />
@@ -144,10 +145,9 @@
           <ant4eclipse:executeJdtProject workspaceDirectory="@{workspaceDirectory}"
                                          workspaceId="@{workspaceId}"
                                          projectName="@{projectName}"
-                                         prefix="buildPlugin">
-
-            <jdtClasspathContainerArgument key="target.platform"
-                                           value="@{targetPlatformId}" />
+                                         prefix="buildPlugin"
+                                         targetPlatformId="@{targetPlatformId}"
+                                         platformConfigurationId="@{platformConfigurationId}">
 
             <!-- Step 6.1: Clean all output directories -->
             <ant4eclipse:forEachOutputDirectory if="@{clean}">
@@ -553,6 +553,50 @@
     </sequential>
   </macrodef>
 
+  <macrodef name="executeIfSet">
+    <attribute name="property" />
+    <element name="elements" implicit="true" />
+    <sequential>
+      <antcontrib:if>
+        <and>
+          <isset property="@{property}" />
+          <not>
+            <equals arg1="" arg2="@{property}" />
+          </not>
+        </and>
+        <antcontrib:then>
+          <elements />
+        </antcontrib:then>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="executeIfTrue">
+    <attribute name="property" />
+    <element name="elements" implicit="true" />
+    <sequential>
+      <antcontrib:if>
+        <antcontrib:istrue value="@{property}" />
+        <antcontrib:then>
+          <elements />
+        </antcontrib:then>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="executeIfFalse">
+    <attribute name="property" />
+    <element name="elements" implicit="true" />
+    <sequential>
+      <antcontrib:if>
+        <antcontrib:isfalse value="@{property}" />
+        <antcontrib:then>
+          <elements />
+        </antcontrib:then>
+      </antcontrib:if>
+    </sequential>
+  </macrodef>
+
   <!-- =================================
           macro       : buildProduct
           description : Builds an eclipse product. Each contained plug-in project will be build.
@@ -563,13 +607,14 @@
     <attribute name="workspaceId" default="" />
     <attribute name="productfile" />
     <attribute name="targetPlatformId" />
+    <attribute name="platformConfigurationId" default="" />
     <attribute name="destination" />
     <attribute name="os" default="win32" />
     <attribute name="clearDestination" default="false" />
     <attribute name="defaultCompilerOptionsFile" default="" />
-    <attribute name="packageAsJar" default="false" />
+    <attribute name="packageAsJar" default="true" />
     <attribute name="commandline" default="false" />
-    <attribute name="packageSources" default="true" />
+    <attribute name="packageSources" default="false" />
     <attribute name="useEcj" default="true" />
 
     <!-- element definitions for lifecycle phases -->
@@ -586,6 +631,7 @@
       <ant4eclipse:executeProduct workspaceDirectory="@{workspaceDirectory}"
                                   workspaceId="@{workspaceId}"
                                   targetPlatformId="@{targetPlatformId}"
+                                  platformConfigurationId="@{platformConfigurationId}"
                                   product="@{productfile}"
                                   os="@{os}">
 
@@ -621,6 +667,7 @@
                             featureId="${executeProduct.feature.id}"
                             featureVersion="${executeProduct.feature.version}"
                             targetPlatformId="@{targetPlatformId}"
+                            platformConfigurationId="@{platformConfigurationId}"
                             destination="@{destination}"
                             packageAsJar="@{packageAsJar}"
                             packagePluginsAsJar="@{packageAsJar}"
@@ -641,6 +688,7 @@
                            workspaceDirectory="@{workspaceDirectory}"
                            workspaceId="@{workspaceId}"
                            targetPlatformId="@{targetPlatformId}"
+                           platformConfigurationId="@{platformConfigurationId}"
                            packageAsJar="@{packageAsJar}"
                            destination="@{destination}"
                            defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
@@ -666,34 +714,53 @@
         <!-- Step 4: Generate artifacts -->
         <ant4eclipse:forProduct>
 
-          <!-- create the .eclipseproduct file -->
-          <echo file="@{destination}/.eclipseproduct">version=1.0.0&#10;</echo>
-          <echo file="@{destination}/.eclipseproduct" append="true">name=${executeProduct.product.name}&#10;</echo>
-          <echo file="@{destination}/.eclipseproduct" append="true">id=${executeProduct.product.id}&#10;</echo>
+          <!-- Step 4.1: Create the '.eclipseproduct' file -->
+          <tstamp>
+            <format property="CREATED_TSTAMP"
+                    pattern="EEE MMM dd HH:mm:ss z yyyy"
+                    locale="en,UK" />
+          </tstamp>
+          <echo file="@{destination}/.eclipseproduct">#Eclipse Product File&#10;</echo>
+          <echo file="@{destination}/.eclipseproduct" append="true">#${CREATED_TSTAMP}&#10;</echo>
+          <executeIfSet property="executeProduct.product.name">
+            <echo file="@{destination}/.eclipseproduct" append="true">name=${executeProduct.product.name}&#10;</echo>
+          </executeIfSet>
+          <executeIfSet property="executeProduct.product.id">
+            <echo file="@{destination}/.eclipseproduct" append="true">id=${executeProduct.product.id}&#10;</echo>
+          </executeIfSet>
 
-          <!-- create the ini file for the launcher -->
-          <antcontrib:if>
-            <equals arg1="" arg2="${executeProduct.product.vmargs}" />
-            <then>
-              <!-- no arguments to set -->
-              <echo file="@{destination}/${executeProduct.product.launchername}.ini">
-              </echo>
-            </then>
-            <else>
-              <!-- set vm arguments -->
-              <echo file="@{destination}/${executeProduct.product.launchername}.ini">-vmargs&#10;</echo>
-              <antcontrib:for param="vmarg"
-                              list="${executeProduct.product.vmargs}"
-                              delimiter=" "
-                              trim="true">
-                <sequential>
-                  <echo file="@{destination}/${executeProduct.product.launchername}.ini"
-                        append="true">@{vmarg}&#10;</echo>
-                </sequential>
-              </antcontrib:for>
-            </else>
-          </antcontrib:if>
+          <!-- Step 4.2: Create the 'launcher.ini' file -->
+          <echo file="@{destination}/${executeProduct.product.launchername}.ini" />
 
+          <!-- set the programm args -->
+          <executeIfSet property="executeProduct.product.programargs">
+            <antcontrib:for param="arg"
+                            list="${executeProduct.product.programargs}"
+                            delimiter=" "
+                            trim="true">
+              <sequential>
+                <echo file="@{destination}/${executeProduct.product.launchername}.ini"
+                      append="true">@{arg}&#10;</echo>
+              </sequential>
+            </antcontrib:for>
+          </executeIfSet>
+
+          <!-- set vm arguments -->
+          <executeIfSet property="executeProduct.product.vmargs">
+            <echo file="@{destination}/${executeProduct.product.launchername}.ini"
+                  append="true">-vmargs&#10;</echo>
+            <antcontrib:for param="vmarg"
+                            list="${executeProduct.product.vmargs}"
+                            delimiter=" "
+                            trim="true">
+              <sequential>
+                <echo file="@{destination}/${executeProduct.product.launchername}.ini"
+                      append="true">@{vmarg}&#10;</echo>
+              </sequential>
+            </antcontrib:for>
+          </executeIfSet>
+
+          <!-- Step 4.3: Create the 'config.ini' file -->
           <antcontrib:if>
             <and>
               <not>
@@ -703,31 +770,50 @@
                          type="file" />
             </and>
             <then>
+
               <!-- copy the config.ini provided by the product configuration. -->
               <copy file="${executeProduct.product.configini}"
                     todir="@{destination}/configuration"
                     overwrite="true" />
+
             </then>
             <else>
 
               <!-- generate a default config.ini which just starts the workbench. -->
               <echo file="@{destination}/configuration/config.ini"
-                    append="false"># Product Runtime Configuration File${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini"
-                    append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
+                    append="false">#Product Runtime Configuration File${line.separator}</echo>
+              <executeIfSet property="executeProduct.product.applicationid">
+                <echo file="@{destination}/configuration/config.ini"
+                      append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
+              </executeIfSet>
+              <executeIfSet property="executeProduct.product.applicationid">
+                <echo file="@{destination}/configuration/config.ini"
+                      append="true">eclipse.product=${executeProduct.product.applicationid}${line.separator}</echo>
+              </executeIfSet>
               <echo file="@{destination}/configuration/config.ini"
                     append="true">osgi.bundles.defaultStartLevel=4${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini"
-                    append="true">eclipse.product=${executeProduct.product.id}${line.separator}</echo>
-              <echo file="@{destination}/configuration/config.ini"
-                    append="true">osgi.splashPath=platform:/base/plugins/org.eclipse.platform${line.separator}</echo>
+              <executeIfSet property="executeProduct.product.splashplugin">
+                <echo file="@{destination}/configuration/config.ini"
+                      append="true">osgi.splashPath=${executeProduct.product.splashplugin}${line.separator}</echo>
+              </executeIfSet>
               <echo file="@{destination}/configuration/config.ini"
                     append="true">osgi.bundles=${executeProduct.osgi.bundles}${line.separator}</echo>
 
             </else>
           </antcontrib:if>
 
-          <antcontrib:if>
+          <!-- Step 6: Copy (and rename) the native launcher artifacts -->
+          <copy todir="@{destination}">
+            <filelist refid="executeProduct.product.nativelauncher.filelist" />
+            <filtermapper>
+              <replacestring from="eclipse"
+                             to="${executeProduct.product.launchername}" />
+              <replacestring from="launcher"
+                             to="${executeProduct.product.launchername}" />
+            </filtermapper>
+          </copy>
+
+          <!--antcontrib:if>
             <istrue value="@{commandline}" />
             <then>
               <copy file="${executeProduct.product.cmdexe}"
@@ -742,10 +828,11 @@
                     tofile="@{destination}/${executeProduct.product.launchername}c.exe"
                     overwrite="true" />
             </else>
-          </antcontrib:if>
+          </antcontrib:if -->
 
         </ant4eclipse:forProduct>
 
+        <!-- Step 7: Deploy-Callback -->
         <ant4eclipse:forProduct>
           <!-- template element 'deploy' -->
           <deploy />
@@ -773,6 +860,7 @@
     <attribute name="featureId" default="" />
     <attribute name="featureVersion" default="" />
     <attribute name="targetPlatformId" />
+    <attribute name="platformConfigurationId" default="" />
     <attribute name="destination" />
     <attribute name="clearDestination" default="false" />
     <attribute name="skipBuildFeature" default="false" />
@@ -790,7 +878,8 @@
                                   projectName="@{projectName}"
                                   featureId="@{featureId}"
                                   featureVersion="@{featureVersion}"
-                                  targetPlatformId="@{targetPlatformId}">
+                                  targetPlatformId="@{targetPlatformId}"
+                                  platformConfigurationId="@{platformConfigurationId}">
 
         <ant4eclipse:forRootFeature>
           <echo>Building feature '${executeFeature.feature.id}_${executeFeature.feature.version}'</echo>
@@ -812,6 +901,7 @@
                         featureId="${executeFeature.feature.id}"
                         featureVersion="${executeFeature.feature.resolved.version}"
                         targetPlatformId="@{targetPlatformId}"
+                        platformConfigurationId="@{platformConfigurationId}"
                         destination="@{destination}"
                         packageAsJar="@{packageAsJar}"
                         useEcj="@{useEcj}" />
@@ -825,6 +915,7 @@
                        workspaceId="@{workspaceId}"
                        projectName="${executeFeature.plugin.filename}"
                        targetplatformid="@{targetPlatformId}"
+                       platformConfigurationId="@{platformConfigurationId}"
                        destination="@{destination}"
                        packageAsJar="@{packagePluginsAsJar}"
                        buildSourceJar="@{packagePluginSourcesAsJar}"

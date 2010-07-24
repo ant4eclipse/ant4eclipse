@@ -21,14 +21,17 @@ import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Includes;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest.Plugin;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.ResolvedFeature;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
-import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.eclipse.osgi.framework.internal.core.FrameworkProperties;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.Version;
 
 import java.io.File;
@@ -51,19 +54,19 @@ import java.util.Properties;
 public final class TargetPlatformImpl implements TargetPlatform {
 
   /** the bundle set that contains the plug-in projects */
-  private BundleAndFeatureSet         _pluginProjectSet;
+  private BundleAndFeatureSet       _pluginProjectSet;
 
   /** contains a list of all the binary bundle sets that belong to this target location */
-  private List<BundleAndFeatureSet>   _binaryBundleSets;
+  private List<BundleAndFeatureSet> _binaryBundleSets;
 
   /** the target platform configuration */
-  private PlatformConfiguration _configuration;
+  private PlatformConfiguration     _configuration;
 
   /** the state object */
-  private State                       _state;
+  private State                     _state;
 
   /** - */
-  private File[]                      _targetplatformLocations;
+  private File[]                    _targetplatformLocations;
 
   /**
    * <p>
@@ -298,6 +301,38 @@ public final class TargetPlatformImpl implements TargetPlatform {
     return getFeatureDescription(id) != null;
   }
 
+  public boolean matchesPlatformFilter(String id) {
+    try {
+
+      //
+      BundleDescription bundleDescription = getBundleDescription(id);
+      if (bundleDescription == null) {
+        return true;
+      }
+
+      //
+      String platformFilter = bundleDescription.getPlatformFilter();
+      if (platformFilter == null) {
+        return true;
+      }
+
+      String arch = getTargetPlatformConfiguration().getArchitecture();
+      String os = getTargetPlatformConfiguration().getOperatingSystem();
+      String ws = getTargetPlatformConfiguration().getWindowingSystem();
+
+      Properties dictionary = new Properties();
+      dictionary.put("osgi.ws", ws);
+      dictionary.put("osgi.os", os);
+      dictionary.put("osgi.arch", arch);
+
+      Filter filter = FrameworkUtil.createFilter(platformFilter);
+      return filter.match(dictionary);
+    } catch (InvalidSyntaxException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -427,13 +462,16 @@ public final class TargetPlatformImpl implements TargetPlatform {
         }
         // TODO: NLS
         if (!bundleDescription.isResolved()) {
-          String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
-          String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
-          throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo,
-              resolverErrors));
+          if (!TargetPlatformImpl.platformFilterDoesNotMatch(bundleDescription)) {
+            String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
+            String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
+            throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo,
+                resolverErrors));
+          }
+        } else {
+          bundleDescriptions.add(bundleDescription);
+          map.put(bundleDescription, plugin);
         }
-        bundleDescriptions.add(bundleDescription);
-        map.put(bundleDescription, plugin);
       }
     }
 
@@ -567,6 +605,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     // finally return false
     return false;
+  }
+
+  public static boolean platformFilterDoesNotMatch(BundleDescription description) {
+    Assure.notNull("description", description);
+
+    State state = description.getContainingState();
+    ResolverError[] errors = state.getResolverErrors(description);
+
+    return errors != null && errors.length == 1 && errors[0].getType() == ResolverError.PLATFORM_FILTER;
   }
 
   /**

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.eclipse.osgi.service.resolver.BundleDescription;
@@ -138,6 +137,15 @@ public interface TargetPlatform {
    * @return <code>true</code> if this target platform contains a bundle description with the given id.
    */
   boolean hasBundleDescription(String id);
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param bundleDescriptionId
+   * @return
+   */
+  boolean matchesPlatformFilter(String bundleDescriptionId);
 
   /**
    * <p>

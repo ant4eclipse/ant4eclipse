@@ -12,6 +12,9 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+
+import java.io.File;
 
 /**
  * <p>
@@ -33,7 +36,7 @@ public class FeatureDescription {
    * </p>
    * 
    * @param source
-   *          the source of this feature (e.g. an eclipse feature project, a jar file or a directory))
+   *          the source of this feature (e.g. an eclipse feature project, a jar file or a directory)
    * @param featureManifest
    *          the {@link FeatureManifest}
    */
@@ -46,12 +49,25 @@ public class FeatureDescription {
 
   /**
    * <p>
+   * The source of this feature (e.g. an eclipse feature project, a jar file or a directory).
    * </p>
    * 
-   * @return the source
+   * @return the source of this feature (e.g. an eclipse feature project, a jar file or a directory)
    */
   public Object getSource() {
     return this._source;
+  }
+
+  public boolean isFeatureProject() {
+    return this._source instanceof EclipseProject;
+  }
+
+  public boolean isJarFile() {
+    return this._source instanceof File && ((File) this._source).isFile();
+  }
+
+  public boolean isDirectory() {
+    return this._source instanceof File && ((File) this._source).isDirectory();
   }
 
   /**

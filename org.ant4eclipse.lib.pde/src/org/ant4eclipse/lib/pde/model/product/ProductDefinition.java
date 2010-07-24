@@ -16,9 +16,12 @@ import org.osgi.framework.Version;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * <p>
@@ -30,58 +33,62 @@ import java.util.Map;
 public class ProductDefinition {
 
   /** - */
-  private String                    _name;
+  private String                         _name;
 
   /** - */
-  private String                    _id;
+  private String                         _uid;
 
   /** - */
-  private String                    _application;
+  private String                         _id;
 
   /** - */
-  private Version                   _version;
+  private String                         _application;
 
   /** - */
-  private boolean                   _basedonfeatures;
+  private Version                        _version;
 
   /** - */
-  private List<BundleStartRecord> _configrecords;
+  private boolean                        _basedonfeatures;
 
   /** - */
-  private List<String>              _pluginids;
+  private Map<String, BundleStartRecord> _configrecords;
 
   /** - */
-  private List<String>              _fragmentids;
+  private List<String>                   _pluginids;
 
   /** - */
-  private Map<ProductOs, String>    _configini;
+  private List<String>                   _fragmentids;
 
   /** - */
-  private Map<ProductOs, String>    _programargs;
+  private Map<ProductOs, String>         _configini;
 
   /** - */
-  private Map<ProductOs, String>    _vmargs;
+  private Map<ProductOs, String>         _programargs;
 
   /** - */
-  private String                    _launchername;
+  private Map<ProductOs, String>         _vmargs;
 
   /** - */
-  private Map<ProductOs, String>    _vm;
+  private String                         _launchername;
 
   /** - */
-  private String                    _splashplugin;
+  private Map<ProductOs, String>         _vm;
 
   /** - */
-  private Map<String, Version>      _features;
+  private String                         _splashplugin;
+
+  /** - */
+  private Map<String, Version>           _features;
 
   /**
    * Initialises this data structure.
    */
   public ProductDefinition() {
-    this._configrecords = new ArrayList<BundleStartRecord>();
+    this._configrecords = new HashMap<String, BundleStartRecord>();
     this._pluginids = new ArrayList<String>();
     this._fragmentids = new ArrayList<String>();
     this._name = null;
+    this._uid = null;
     this._id = null;
     this._application = null;
     this._version = Version.emptyVersion;
@@ -119,15 +126,57 @@ public class ProductDefinition {
   }
 
   /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public FeatureId[] getFeatureIdentifiers() {
+
+    //
+    List<FeatureId> result = new LinkedList<FeatureId>();
+
+    //
+    for (Entry<String, Version> featureId : this._features.entrySet()) {
+      result.add(new FeatureId(featureId.getKey(), featureId.getValue()));
+    }
+
+    //
+    return result.toArray(new FeatureId[0]);
+  }
+
+  /**
    * Returns a list of all ConfigurationRecord instances.
    * 
    * @return A list of all ConfigurationRecord instances. Not <code>null</code>.
    */
   public BundleStartRecord[] getConfigurationRecords() {
     BundleStartRecord[] result = new BundleStartRecord[this._configrecords.size()];
-    this._configrecords.toArray(result);
+    this._configrecords.values().toArray(result);
     Arrays.sort(result);
     return result;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param id
+   * @return
+   */
+  public boolean hasConfigurationRecord(String id) {
+    return this._configrecords.containsKey(id);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param id
+   * @return
+   */
+  public BundleStartRecord getConfigurationRecord(String id) {
+    return this._configrecords.get(id);
   }
 
   /**
@@ -161,6 +210,10 @@ public class ProductDefinition {
     return this._splashplugin;
   }
 
+  public boolean hasSplashplugin() {
+    return this._splashplugin != null;
+  }
+
   /**
    * Changes the name of the launcher.
    * 
@@ -178,6 +231,10 @@ public class ProductDefinition {
    */
   public String getLaunchername() {
     return this._launchername;
+  }
+
+  public boolean hasLaunchername() {
+    return this._launchername != null;
   }
 
   /**
@@ -296,7 +353,7 @@ public class ProductDefinition {
    *          The ConfigurationRecord which has to be added. Not <code>null</code>.
    */
   void addConfigurationRecord(BundleStartRecord record) {
-    this._configrecords.add(record);
+    this._configrecords.put(record.getId(), record);
   }
 
   /**
@@ -347,6 +404,22 @@ public class ProductDefinition {
   }
 
   /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public List<String> getPluginAndFragmentIds() {
+
+    List<String> result = new LinkedList<String>();
+
+    result.addAll(this._pluginids);
+    result.addAll(this._fragmentids);
+
+    return result;
+  }
+
+  /**
    * Changes the name for this product.
    * 
    * @param newname
@@ -363,6 +436,32 @@ public class ProductDefinition {
    */
   public String getName() {
     return this._name;
+  }
+
+  public boolean hasName() {
+    return this._name != null;
+  }
+
+  /**
+   * <p>
+   * Returns the uid.
+   * </p>
+   * 
+   * @return the
+   */
+  public String getUid() {
+    return this._uid;
+  }
+
+  /**
+   * <p>
+   * Sets the uid.
+   * </p>
+   * 
+   * @param uid
+   */
+  public void setUid(String uid) {
+    this._uid = uid;
   }
 
   /**
@@ -384,6 +483,10 @@ public class ProductDefinition {
     return this._id;
   }
 
+  public boolean hasId() {
+    return this._id != null;
+  }
+
   /**
    * Changes the application id associated with this product.
    * 
@@ -403,6 +506,10 @@ public class ProductDefinition {
     return this._application;
   }
 
+  public boolean hasApplication() {
+    return this._application != null;
+  }
+
   /**
    * Changes the version for this product.
    * 
@@ -420,6 +527,10 @@ public class ProductDefinition {
    */
   public Version getVersion() {
     return this._version;
+  }
+
+  public boolean hasVersion() {
+    return this._version != null;
   }
 
   /**
@@ -604,6 +715,33 @@ public class ProductDefinition {
       result = 31 * result + (vm == null ? 0 : vm.hashCode());
     }
     return result;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+   */
+  public class FeatureId {
+
+    private String  _id;
+
+    private Version _version;
+
+    public FeatureId(String id, Version version) {
+      super();
+      this._id = id;
+      this._version = version;
+    }
+
+    public String getId() {
+      return this._id;
+    }
+
+    public Version getVersion() {
+      return this._version;
+    }
   }
 
 } /* ENDCLASS */

@@ -25,6 +25,10 @@ import org.ant4eclipse.lib.core.nls.NLSMessage;
 public class PdeExceptionCode extends ExceptionCode {
 
   /** - */
+  @NLSMessage("Unknown platform configuration '%s'.")
+  public static ExceptionCode    UKNOWN_PLATFORM_CONFIGURATION = null;
+
+  /** - */
   @NLSMessage("\n%s")
   public static ExceptionCode    BUNDLE_NOT_RESOLVED_EXCEPTION;
 

@@ -574,8 +574,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
         A4ELogging.debug("Trying to get feature '%s_%s' from target platform.", this._featureId, this._featureVersion);
       }
 
-      FeatureDescription featureDescription = targetPlatform.getFeatureDescription(this._featureId,
-          this._featureVersion);
+      Version resolvedVersion = PdeBuildHelper.resolveVersion(this._featureVersion, PdeBuildHelper
+          .getResolvedContextQualifier());
+
+      FeatureDescription featureDescription = targetPlatform.getFeatureDescription(this._featureId, resolvedVersion);
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
       return targetPlatform.resolveFeature(featureDescription.getSource(), featureManifest);
     }

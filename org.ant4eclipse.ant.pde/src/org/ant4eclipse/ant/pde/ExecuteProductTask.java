@@ -17,22 +17,19 @@ import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinition;
 import org.ant4eclipse.lib.pde.model.product.ProductDefinitionParser;
 import org.ant4eclipse.lib.pde.model.product.ProductOs;
-import org.ant4eclipse.lib.pde.tools.BundleStartRecord;
 import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
-import org.ant4eclipse.lib.pde.tools.SimpleConfiguratorBundles;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
+import org.apache.tools.ant.types.FileList;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
 
@@ -40,11 +37,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -58,90 +50,80 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     TargetPlatformAwareComponent {
 
   /** - */
-  private static final String MSG_USING_HARDCODED              = "Failed to detect bundles, so the following hard coded ones are used:";
-
-  /** - */
-  private static final String MSG_FAILED_BUNDLESINFO           = "Failed to load bundles info file '%s'. Cause: %s";
-
-  /** - */
-  private static final String MSG_ACCESSING_BUNDLESINFO        = "Accessing bundles info file '%s' to identify start bundles...";
-
-  /** - */
-  private static final String MSG_ACCESSING_CONFIGINI          = "Accessing file '%s' to identify start bundles...";
-
-  /** - */
-  private static final String MSG_FAILED_TO_LOOKUP_EXECUTABLES = "The lookup of eclipse executables within the target platform locations failed !";
-
-  /** - */
   private static enum Scope {
+
     /** - */
     ForProduct,
+
     /** - */
     ForEachFeature,
-    // /** - */
-    // ForEachTargetFeature,
+
     /** - */
     ForEachPlugin
   }
 
   /** - */
-  private static final String         PROP_PRODUCTID         = "product.id";
+  private static final String         PROP_PRODUCTID               = "product.id";
 
   /** - */
-  private static final String         PROP_PRODUCTNAME       = "product.name";
+  private static final String         PROP_PRODUCTNAME             = "product.name";
 
   /** - */
-  private static final String         PROP_BASEDONFEATURES   = "product.basedonfeatures";
+  private static final String         PROP_BASEDONFEATURES         = "product.basedonfeatures";
 
   /** - */
-  private static final String         PROP_APPLICATIONID     = "product.applicationid";
+  private static final String         PROP_APPLICATIONID           = "product.applicationid";
 
   /** - */
-  private static final String         PROP_LAUNCHERNAME      = "product.launchername";
+  private static final String         PROP_LAUNCHERNAME            = "product.launchername";
 
   /** - */
-  private static final String         PROP_VERSION           = "product.version";
+  private static final String         PROP_VERSION                 = "product.version";
 
   /** - */
-  private static final String         PROP_VMARGS            = "product.vmargs";
+  private static final String         PROP_VMARGS                  = "product.vmargs";
 
   /** - */
-  private static final String         PROP_PROGRAMARGS       = "product.programargs";
+  private static final String         PROP_PROGRAMARGS             = "product.programargs";
 
   /** - */
-  private static final String         PROP_CONFIGINI         = "product.configini";
+  private static final String         PROP_CONFIGINI               = "product.configini";
 
   /** - */
-  private static final String         PROP_GUIEXE            = "product.guiexe";
+  private static final String         PROP_SPLASH_PLUGIN           = "product.splashplugin";
+
+  // /** - */
+  // private static final String PROP_GUIEXE = "product.guiexe";
+  //
+  // /** - */
+  // private static final String PROP_CMDEXE = "product.cmdexe";
 
   /** - */
-  private static final String         PROP_CMDEXE            = "product.cmdexe";
+  private static final String         REF_NATIVE_LAUNCHER_FILELIST = "product.nativelauncher.filelist";
 
   /** - */
-  private static final String         PROP_FEATUREID         = "feature.id";
+  private static final String         PROP_FEATUREID               = "feature.id";
 
   /** - */
-  private static final String         PROP_FEATUREVERSION    = "feature.version";
+  private static final String         PROP_FEATUREVERSION          = "feature.version";
 
   /** - */
-  private static final String         PROP_PLUGINID          = "plugin.id";
+  private static final String         PROP_PLUGINID                = "plugin.id";
 
   /** - */
-  private static final String         PROP_PLUGINISSOURCE    = "plugin.isSource";
+  private static final String         PROP_PLUGINISSOURCE          = "plugin.isSource";
 
   /** - */
-  private static final String         PROP_OSGIBUNDLES       = "osgi.bundles";
-
-  /**
-   * 
-   */
-  private static final String         PROP_PLUGINPROJECTNAME = "plugin.projectName";
+  private static final String         PROP_OSGIBUNDLES             = "osgi.bundles";
 
   /** - */
-  private static final String         PROP_PLUGINFILE        = "plugin.file";
+  private static final String         PROP_PLUGINPROJECTNAME       = "plugin.projectName";
 
   /** - */
-  private static final String         PROP_PLUGINFILELIST    = "plugin.filelist";
+  private static final String         PROP_PLUGINFILE              = "plugin.file";
+
+  /** - */
+  private static final String         PROP_PLUGINFILELIST          = "plugin.filelist";
 
   // programargs,
   // wsplugins,
@@ -286,24 +268,24 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     // fetch the target platform
     TargetPlatform targetplatform = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace());
 
-    StringMap properties = new StringMap();
-    contributeForAll(properties, productdef, targetplatform);
+    // StringMap properties = new StringMap();
+    // contributeForAll(properties, null, productdef, targetplatform);
 
     // execute scoped macro definitions
     for (ScopedMacroDefinition<String> scopedmacro : getScopedMacroDefinitions()) {
       Scope scope = Scope.valueOf(scopedmacro.getScope());
       switch (scope) {
       case ForProduct:
-        executeForProduct(productdef, scopedmacro.getMacroDef(), properties, targetplatform);
+        executeForProduct(productdef, scopedmacro.getMacroDef(), targetplatform);
         break;
       case ForEachFeature:
-        executeForEachFeature(productdef, scopedmacro.getMacroDef(), properties, targetplatform);
+        executeForEachFeature(productdef, scopedmacro.getMacroDef(), targetplatform);
         break;
       // case ForEachTargetFeature:
       // executeForEachTargetFeature(productdef, scopedmacro.getMacroDef(), targetplatform);
       // break;
       case ForEachPlugin:
-        executeForEachPlugin(productdef, scopedmacro.getMacroDef(), properties, targetplatform);
+        executeForEachPlugin(productdef, scopedmacro.getMacroDef(), targetplatform);
         break;
       }
     }
@@ -322,24 +304,54 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void executeForEachPlugin(ProductDefinition productdef, MacroDef macrodef, StringMap forall,
-      TargetPlatform targetplatform) {
+  private void executeForEachPlugin(final ProductDefinition productdef, MacroDef macrodef,
+      final TargetPlatform targetplatform) {
 
-    StringMap properties = new StringMap();
-    properties.putAll(forall);
+    // iterate over all plug-in identifiers
+    for (final String id : productdef.getPluginAndFragmentIds()) {
 
-    Map<String, Object> references = new Hashtable<String, Object>();
+      // check if bundle exists
+      if (!targetplatform.hasBundleDescription(id)) {
+        throw new Ant4EclipseException(PdeExceptionCode.INVALID_PRODUCT_DEFINITION, productdef.getApplication(),
+            "plugin '" + id + "' not found in workspace/target platform");
+      }
 
-    String[] pluginids = productdef.getPluginIds();
-    for (String pluginid : pluginids) {
-      contributeForPlugin(properties, references, productdef, pluginid, targetplatform);
-      executeMacroInstance(macrodef, new LocalMacroExecutionValuesProvider(properties, references));
-    }
+      if (targetplatform.matchesPlatformFilter(id)) {
 
-    String[] fragmentids = productdef.getFragmentIds();
-    for (String fragmentid : fragmentids) {
-      contributeForPlugin(properties, references, productdef, fragmentid, targetplatform);
-      executeMacroInstance(macrodef, new LocalMacroExecutionValuesProvider(properties, references));
+        executeMacroInstance(macrodef, new MacroExecutionValuesProvider() {
+
+          public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+
+            // set 'general' properties
+            contributeForAll(values, productdef, targetplatform);
+
+            // set the plugin id
+            values.getProperties().put(PROP_PLUGINID, id);
+
+            BundleDescription bundledesc = targetplatform.getBundleDescription(id);
+            BundleSource bundlesource = (BundleSource) bundledesc.getUserObject();
+
+            if (bundlesource.isEclipseProject()) {
+              // Plug-in is a source project contained in the workspace
+              EclipseProject project = bundlesource.getAsEclipseProject();
+              File location = project.getFolder();
+              values.getProperties().put(PROP_PLUGINISSOURCE, "true");
+              values.getProperties().put(PROP_PLUGINFILE, location.getAbsolutePath());
+              values.getProperties().put(PROP_PLUGINPROJECTNAME, project.getSpecifiedName());
+            } else {
+              // Plug-in comes from the target platform
+              File location = bundlesource.getAsFile();
+              values.getProperties().put(PROP_PLUGINISSOURCE, "false");
+              values.getProperties().put(PROP_PLUGINFILE, location.getAbsolutePath());
+
+              values.getReferences().put(PROP_PLUGINFILELIST, FileListHelper.getFileList(location));
+            }
+
+            // return the result
+            return values;
+          }
+        });
+      }
     }
 
   }
@@ -356,16 +368,29 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void executeForEachFeature(ProductDefinition productdef, MacroDef macrodef, StringMap forall,
-      TargetPlatform targetplatform) {
+  private void executeForEachFeature(final ProductDefinition productdef, MacroDef macrodef,
+      final TargetPlatform targetplatform) {
 
-    StringMap properties = new StringMap();
-    properties.putAll(forall);
+    for (final String featureid : productdef.getFeatureIds()) {
 
-    String[] featureids = productdef.getFeatureIds();
-    for (String featureid : featureids) {
-      contributeForFeature(properties, productdef, featureid);
-      executeMacroInstance(macrodef, new LocalMacroExecutionValuesProvider(properties));
+      executeMacroInstance(macrodef, new MacroExecutionValuesProvider() {
+
+        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+
+          // set 'general' properties
+          contributeForAll(values, productdef, targetplatform);
+
+          // set feature id
+          values.getProperties().put(PROP_FEATUREID, featureid);
+
+          // set version
+          Version version = productdef.getFeatureVersion(featureid);
+          values.getProperties().put(PROP_FEATUREVERSION, String.valueOf(version));
+
+          // return result
+          return values;
+        }
+      });
     }
 
   }
@@ -406,11 +431,21 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void executeForProduct(ProductDefinition productdef, MacroDef macrodef, StringMap forall,
-      TargetPlatform targetplatform) {
-    StringMap properties = new StringMap();
-    properties.putAll(forall);
-    executeMacroInstance(macrodef, new LocalMacroExecutionValuesProvider(properties));
+  private void executeForProduct(final ProductDefinition productdef, MacroDef macrodef,
+      final TargetPlatform targetplatform) {
+
+    // execute the macro
+    executeMacroInstance(macrodef, new MacroExecutionValuesProvider() {
+
+      public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+
+        // set 'general' properties
+        contributeForAll(values, productdef, targetplatform);
+
+        // return result
+        return values;
+      }
+    });
   }
 
   /**
@@ -449,290 +484,172 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   }
 
   /**
-   * @see "http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/configuration.htm"
-   * 
-   * @param targetlocations
-   *          The target platform locations currently registered. Not <code>null</code>.
-   * @param records
-   *          The start records provided the product configuration file. Not <code>null</code>.
-   * 
-   * @return A comma separated list of all osgi bundles. Not <code>null</code>.
-   */
-  private String collectOsgiBundles(File[] targetlocations, BundleStartRecord[] records) {
-
-    StringMap properties = new StringMap();
-
-    List<BundleStartRecord> startrecords = new ArrayList<BundleStartRecord>();
-
-    for (File targetlocation : targetlocations) {
-
-      File configini = new File(targetlocation, "configuration/config.ini");
-      if (configini.isFile()) {
-
-        A4ELogging.debug(MSG_ACCESSING_CONFIGINI, configini);
-
-        // load the current bundle list of a specific configuration
-        properties.extendProperties(configini);
-
-        boolean gotsimpleconfigurator = false;
-        String bundlelist = properties.get("osgi.bundles", null);
-        if (bundlelist != null) {
-          // separate the bundle parts
-          String[] parts = bundlelist.split(",");
-          for (String bundlepart : parts) {
-            BundleStartRecord record = new BundleStartRecord(bundlepart);
-            startrecords.add(record);
-            if (record.getId().indexOf(SimpleConfiguratorBundles.ID_SIMPLECONFIGURATOR) != -1) {
-              gotsimpleconfigurator = true;
-            }
-          }
-        }
-
-        if (gotsimpleconfigurator) {
-          File bundlesinfo = new File(targetlocation,
-              "configuration/org.eclipse.equinox.simpleconfigurator/bundles.info");
-          if (bundlesinfo.isFile()) {
-            A4ELogging.debug(MSG_ACCESSING_BUNDLESINFO, bundlesinfo);
-            try {
-              SimpleConfiguratorBundles simpleconfig = new SimpleConfiguratorBundles(bundlesinfo);
-              BundleStartRecord[] screcords = simpleconfig.getBundleStartRecords();
-              for (BundleStartRecord record : screcords) {
-                if (record.isAutoStart()) {
-                  startrecords.add(record);
-                }
-              }
-            } catch (RuntimeException ex) {
-              A4ELogging.debug(MSG_FAILED_BUNDLESINFO, bundlesinfo, ex.getMessage());
-            }
-          }
-        }
-
-      }
-    }
-
-    // if none could be found we're setting up some defaults which are basically
-    // a guess (should be probably provided as a resource in future)
-    if (startrecords.isEmpty()) {
-      startrecords.add(new BundleStartRecord("org.eclipse.core.runtime@-1:start"));
-      startrecords.add(new BundleStartRecord("org.eclipse.osgi@2:start"));
-      startrecords.add(new BundleStartRecord("org.eclipse.equinox.common@2:start"));
-      startrecords.add(new BundleStartRecord("org.eclipse.update.configurator@3:start"));
-      A4ELogging.debug(MSG_USING_HARDCODED);
-      for (int i = 0; i < startrecords.size(); i++) {
-        A4ELogging.debug("\t%s", startrecords.get(i).getShortDescription());
-      }
-    }
-
-    for (BundleStartRecord record : records) {
-      startrecords.add(record);
-    }
-
-    // merge records denoting the same plugin id
-    Collections.sort(startrecords);
-    for (int i = startrecords.size() - 1; i > 0; i--) {
-      BundleStartRecord current = startrecords.get(i);
-      BundleStartRecord previous = startrecords.get(i - 1);
-      if (current.getId().equals(previous.getId())) {
-        previous.setAutoStart(previous.isAutoStart() || current.isAutoStart());
-        previous.setStartLevel(Math.min(previous.getStartLevel(), current.getStartLevel()));
-        startrecords.remove(i);
-      }
-    }
-
-    // create a textual description for the bundlelist
-    StringBuffer buffer = new StringBuffer();
-    buffer.append(startrecords.get(0).getShortDescription());
-    for (int i = 1; i < startrecords.size(); i++) {
-      buffer.append(",");
-      buffer.append(startrecords.get(i).getShortDescription());
-    }
-    return buffer.toString();
-
-  }
-
-  /**
+   * <p>
    * Contributes general settings to the macro execution properties.
+   * </p>
    * 
-   * @param properties
-   *          The properties used to be filled with the settings. Not <code>null</code>.
+   * @param values
    * @param productdef
    *          The product definition instance providing the necessary information. Not <code>null</code>.
    * @param targetplatform
    *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
    */
-  private void contributeForAll(StringMap properties, ProductDefinition productdef, TargetPlatform targetplatform) {
+  private void contributeForAll(MacroExecutionValues values, ProductDefinition productdef, TargetPlatform targetplatform) {
 
-    properties.put(PROP_PRODUCTID, productdef.getId());
-    properties.put(PROP_PRODUCTNAME, productdef.getName());
-    properties.put(PROP_BASEDONFEATURES, String.valueOf(productdef.isBasedOnFeatures()));
-    properties.put(PROP_APPLICATIONID, productdef.getApplication());
-    properties.put(PROP_LAUNCHERNAME, productdef.getLaunchername());
-    properties.put(PROP_VERSION, String.valueOf(productdef.getVersion()));
-    properties.put(PROP_VMARGS, productdef.getVmArgs(this._os));
-    properties.put(PROP_PROGRAMARGS, productdef.getProgramArgs(this._os));
-    properties.put(PROP_OSGIBUNDLES, collectOsgiBundles(targetplatform.getLocations(), productdef
-        .getConfigurationRecords()));
+    values.getProperties().put(PROP_PRODUCTNAME, productdef.getName());
+    values.getProperties().put(PROP_BASEDONFEATURES, String.valueOf(productdef.isBasedOnFeatures()));
+
+    if (productdef.hasId()) {
+      values.getProperties().put(PROP_PRODUCTID, productdef.getId());
+    }
+
+    if (productdef.hasApplication()) {
+      values.getProperties().put(PROP_APPLICATIONID, productdef.getApplication());
+    }
+
+    values.getProperties().put(PROP_LAUNCHERNAME,
+        productdef.hasLaunchername() ? productdef.getLaunchername() : "eclipse");
+
+    values.getProperties().put(PROP_VERSION, String.valueOf(productdef.getVersion()));
+    values.getProperties().put(PROP_VMARGS, productdef.getVmArgs(this._os));
+    values.getProperties().put(PROP_PROGRAMARGS, productdef.getProgramArgs(this._os));
+    values.getProperties().put(PROP_OSGIBUNDLES, ConfigurationHelper.getOsgiBundles(productdef, targetplatform));
 
     String configini = productdef.getConfigIni(this._os);
     if (configini == null) {
-      properties.put(PROP_CONFIGINI, "");
+      values.getProperties().put(PROP_CONFIGINI, "");
     } else {
       int endofprojectname = configini.indexOf('/', 1);
       String projectname = configini.substring(1, endofprojectname);
       String childname = configini.substring(endofprojectname + 1);
       EclipseProject project = getWorkspace().getProject(projectname);
       File path = project.getChild(childname);
-      properties.put(PROP_CONFIGINI, path.getAbsolutePath());
+      values.getProperties().put(PROP_CONFIGINI, path.getAbsolutePath());
     }
 
-    String guiexe = "eclipse";
-    String cmdexe = "eclipse";
+    // get executables
+    FileList fileList = NativeLauncherHelper.getNativeLauncher(targetplatform);
+    values.getReferences().put(REF_NATIVE_LAUNCHER_FILELIST, fileList);
 
-    if (this._os == ProductOs.win32) {
-      // for windows we've got two different executables
-      guiexe = "eclipse.exe";
-      cmdexe = "eclipsec.exe";
-    }
-
-    File fileguiexe = null;
-    File filecmdexe = null;
-
-    File[] targetlocations = targetplatform.getLocations();
-    for (File targetlocation : targetlocations) {
-      if (fileguiexe == null) {
-        File child = new File(targetlocation, guiexe);
-        if (child.isFile()) {
-          fileguiexe = child;
-        }
-      }
-      if (filecmdexe == null) {
-        File child = new File(targetlocation, cmdexe);
-        if (child.isFile()) {
-          filecmdexe = child;
-        }
-      }
-    }
-
-    if ((fileguiexe == null) || (filecmdexe == null)) {
-      throw new BuildException(MSG_FAILED_TO_LOOKUP_EXECUTABLES);
-    }
-
-    properties.put(PROP_GUIEXE, fileguiexe.getAbsolutePath());
-    properties.put(PROP_CMDEXE, filecmdexe.getAbsolutePath());
+    // //
+    // properties.put(PROP_GUIEXE, executables[0].getAbsolutePath());
+    // properties.put(PROP_CMDEXE, executables[1].getAbsolutePath());
 
   }
 
-  /**
-   * Contributes feature specific settings to the macro execution properties.
-   * 
-   * @param properties
-   *          The properties used to be filled with the settings. Not <code>null</code>.
-   * @param productdef
-   *          The product definition instance providing the necessary information. Not <code>null</code>.
-   * @param featureid
-   *          The id of the feature which specific settings shall be applied. Neither <code>null</code> nor empty.
-   */
-  private void contributeForFeature(StringMap properties, ProductDefinition productdef, String featureid) {
+  // /**
+  // * Contributes feature specific settings to the macro execution properties.
+  // *
+  // * @param properties
+  // * The properties used to be filled with the settings. Not <code>null</code>.
+  // * @param productdef
+  // * The product definition instance providing the necessary information. Not <code>null</code>.
+  // * @param featureid
+  // * The id of the feature which specific settings shall be applied. Neither <code>null</code> nor empty.
+  // */
+  // private void contributeForFeature(StringMap properties, ProductDefinition productdef, String featureid) {
+  //
+  // Version version = productdef.getFeatureVersion(featureid);
+  //
+  // properties.put(PROP_FEATUREID, featureid);
+  // properties.put(PROP_FEATUREVERSION, String.valueOf(version));
+  //
+  // }
 
-    Version version = productdef.getFeatureVersion(featureid);
+  // /**
+  // * Contributes plugin specific settings to the macro execution properties.
+  // *
+  // * @param properties
+  // * The properties used to be filled with the settings. Not <code>null</code>.
+  // * @param references
+  // * The references that will be accessible by the macro. Not <code>null</code>.
+  // * @param productdef
+  // * The product definition instance providing the necessary information. Not <code>null</code>.
+  // * @param pluginid
+  // * The id of the plugin which specific settings shall be applied. Neither <code>null</code> nor empty.
+  // * @param targetplatform
+  // * The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
+  // */
+  // private void contributeForPlugin(StringMap properties, Map<String, Object> references, ProductDefinition
+  // productdef,
+  // String pluginid, TargetPlatform targetplatform) {
+  // A4ELogging.info("contributeForPlugin pluginId: '%s'", pluginid);
+  // properties.put(PROP_PLUGINID, pluginid);
+  //
+  // if (!targetplatform.hasBundleDescription(pluginid)) {
+  // throw new Ant4EclipseException(PdeExceptionCode.INVALID_PRODUCT_DEFINITION, productdef.getApplication(),
+  // "plugin '" + pluginid + "' not found in workspace/target platform");
+  // }
+  //
+  // BundleDescription bundledesc = targetplatform.getBundleDescription(pluginid);
+  //
+  // BundleSource bundlesource = (BundleSource) bundledesc.getUserObject();
+  //
+  // if (bundlesource.isEclipseProject()) {
+  // // Plug-in is a source project contained in the workspace
+  // EclipseProject project = bundlesource.getAsEclipseProject();
+  // File location = project.getFolder();
+  // properties.put(PROP_PLUGINISSOURCE, "true");
+  // properties.put(PROP_PLUGINFILE, location.getAbsolutePath());
+  // properties.put(PROP_PLUGINPROJECTNAME, project.getSpecifiedName());
+  // } else {
+  // // Plug-in comes from the target platform
+  // A4ELogging.info("contributeForPlugin bundlesource: '%s'", bundlesource);
+  // File location = bundlesource.getAsFile();
+  // properties.put(PROP_PLUGINISSOURCE, "false");
+  // properties.put(PROP_PLUGINFILE, location.getAbsolutePath());
+  // references.put(PROP_PLUGINFILELIST, FileListHelper.getFileList(location));
+  // }
+  //
+  // }
 
-    properties.put(PROP_FEATUREID, featureid);
-    properties.put(PROP_FEATUREVERSION, String.valueOf(version));
-
-  }
-
-  /**
-   * Contributes plugin specific settings to the macro execution properties.
-   * 
-   * @param properties
-   *          The properties used to be filled with the settings. Not <code>null</code>.
-   * @param references
-   *          The references that will be accessible by the macro. Not <code>null</code>.
-   * @param productdef
-   *          The product definition instance providing the necessary information. Not <code>null</code>.
-   * @param pluginid
-   *          The id of the plugin which specific settings shall be applied. Neither <code>null</code> nor empty.
-   * @param targetplatform
-   *          The TargetPlatform used to resolve the bundles against. Not <code>null</code>.
-   */
-  private void contributeForPlugin(StringMap properties, Map<String, Object> references, ProductDefinition productdef,
-      String pluginid, TargetPlatform targetplatform) {
-    A4ELogging.info("contributeForPlugin pluginId: '%s'", pluginid);
-    properties.put(PROP_PLUGINID, pluginid);
-
-    if (!targetplatform.hasBundleDescription(pluginid)) {
-      throw new Ant4EclipseException(PdeExceptionCode.INVALID_PRODUCT_DEFINITION, productdef.getApplication(),
-          "plugin '" + pluginid + "' not found in workspace/target platform");
-    }
-
-    BundleDescription bundledesc = targetplatform.getBundleDescription(pluginid);
-
-    BundleSource bundlesource = (BundleSource) bundledesc.getUserObject();
-
-    if (bundlesource.isEclipseProject()) {
-      // Plug-in is a source project contained in the workspace
-      EclipseProject project = bundlesource.getAsEclipseProject();
-      File location = project.getFolder();
-      properties.put(PROP_PLUGINISSOURCE, "true");
-      properties.put(PROP_PLUGINFILE, location.getAbsolutePath());
-      properties.put(PROP_PLUGINPROJECTNAME, project.getSpecifiedName());
-    } else {
-      // Plug-in comes from the target platform
-      A4ELogging.info("contributeForPlugin bundlesource: '%s'", bundlesource);
-      File location = bundlesource.getAsFile();
-      properties.put(PROP_PLUGINISSOURCE, "false");
-      properties.put(PROP_PLUGINFILE, location.getAbsolutePath());
-      references.put(PROP_PLUGINFILELIST, FileListHelper.getFileList(location));
-    }
-
-  }
-
-  /**
-   * Implementation of a custom MacroExecutionValuesProvider. It's purpose is to provide the several properties for the
-   * scoped macros to make them functional.
-   */
-  private static class LocalMacroExecutionValuesProvider implements MacroExecutionValuesProvider {
-
-    /** - */
-    private StringMap           _properties;
-
-    /** - */
-    private Map<String, Object> _references;
-
-    /**
-     * Initialises this provider using a specified product definition file.
-     * 
-     * @param properties
-     *          The properties to be set. Not <code>null</code>.
-     */
-    public LocalMacroExecutionValuesProvider(StringMap properties) {
-      this(properties, null);
-    }
-
-    /**
-     * Initialises this provider using a specified product definition file.
-     * 
-     * @param properties
-     *          The properties to be set. Not <code>null</code>.
-     * @param references
-     *          The references that have to be applied. Maybe <code>null</code>.
-     */
-    public LocalMacroExecutionValuesProvider(StringMap properties, Map<String, Object> references) {
-      this._properties = properties;
-      this._references = references;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
-      values.getProperties().putAll(this._properties);
-      if (this._references != null) {
-        values.getReferences().putAll(this._references);
-      }
-      return values;
-    }
-
-  } /* ENDCLASS */
+  // /**
+  // * Implementation of a custom MacroExecutionValuesProvider. It's purpose is to provide the several properties for
+  // the
+  // * scoped macros to make them functional.
+  // */
+  // private static class LocalMacroExecutionValuesProvider implements MacroExecutionValuesProvider {
+  //
+  // /** - */
+  // private StringMap _properties;
+  //
+  // /** - */
+  // private Map<String, Object> _references;
+  //
+  // /**
+  // * Initialises this provider using a specified product definition file.
+  // *
+  // * @param properties
+  // * The properties to be set. Not <code>null</code>.
+  // */
+  // public LocalMacroExecutionValuesProvider(StringMap properties) {
+  // this(properties, null);
+  // }
+  //
+  // /**
+  // * Initialises this provider using a specified product definition file.
+  // *
+  // * @param properties
+  // * The properties to be set. Not <code>null</code>.
+  // * @param references
+  // * The references that have to be applied. Maybe <code>null</code>.
+  // */
+  // public LocalMacroExecutionValuesProvider(StringMap properties, Map<String, Object> references) {
+  // this._properties = properties;
+  // this._references = references;
+  // }
+  //
+  // /**
+  // * {@inheritDoc}
+  // */
+  // public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+  // values.getProperties().putAll(this._properties);
+  // if (this._references != null) {
+  // values.getReferences().putAll(this._references);
+  // }
+  // return values;
+  // }
+  //
+  // } /* ENDCLASS */
 
 } /* ENDCLASS */
