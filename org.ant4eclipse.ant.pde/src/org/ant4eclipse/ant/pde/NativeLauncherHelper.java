@@ -27,6 +27,8 @@ import java.io.File;
 
 /**
  * <p>
+ * Helper class to create an ant {@link FileList} that contains all files that belongs to a native launcher for a
+ * specific platform (e.g. eclipse.exe and eclipsec.exe).
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -47,59 +49,22 @@ public class NativeLauncherHelper {
    * </p>
    * 
    * @param targetPlatform
+   *          the target platform
    * 
-   * @return
+   * @return the file list that contains all files that belongs to a native launcher for a specific platform (e.g.
+   *         eclipse.exe and eclipsec.exe).
    */
   public static FileList getNativeLauncher(TargetPlatform targetPlatform) {
 
-    // get native launchers from the executable feature ('org.eclipse.equinox.executable')
+    // 1. step: try to get native launchers from the executable feature (feature 'org.eclipse.equinox.executable')
     FileList fileList = getNativeLauncherFromExecutableFeature(targetPlatform);
 
     if (fileList != null) {
       return fileList;
     }
 
-    // TODO: USE mativeeclipse.properties
-
-    String guiexe = "eclipse";
-    String cmdexe = "eclipse";
-
-    if ("win32".equals(targetPlatform.getTargetPlatformConfiguration().getOperatingSystem())) {
-
-      // for windows we've got two different executables
-      guiexe = "eclipse.exe";
-      cmdexe = "eclipsec.exe";
-    }
-
-    File targetLocation = null;
-
-    File[] targetlocations = targetPlatform.getLocations();
-    for (File loc : targetlocations) {
-      File eclipseExe = new File(loc, guiexe);
-      File eclipsecExe = new File(loc, cmdexe);
-      if (eclipseExe.isFile() || eclipsecExe.isFile()) {
-        targetLocation = loc;
-        break;
-      }
-    }
-
-    //
-    if (targetLocation == null) {
-      throw new BuildException(MSG_FAILED_TO_LOOKUP_EXECUTABLES);
-    }
-
-    fileList = new FileList();
-    fileList.setDir(targetLocation);
-
-    FileName fileName = new FileList.FileName();
-    fileName.setName(guiexe);
-    fileList.addConfiguredFile(fileName);
-
-    fileName = new FileList.FileName();
-    fileName.setName(cmdexe);
-    fileList.addConfiguredFile(fileName);
-
-    return fileList;
+    // 2. step: try to load the native launcher form the underlying eclipse installation
+    return getNativeLauncherFromEclipseInstallation(targetPlatform);
   }
 
   /**
@@ -108,7 +73,8 @@ public class NativeLauncherHelper {
    * </p>
    * 
    * @param targetPlatform
-   * @return
+   * @return the file list that contains all files that belongs to a native launcher for a specific platform (e.g.
+   *         eclipse.exe and eclipsec.exe).
    */
   private static FileList getNativeLauncherFromExecutableFeature(TargetPlatform targetPlatform) {
 
@@ -181,27 +147,72 @@ public class NativeLauncherHelper {
     throw new RuntimeException("Unknown deployment format for feature 'org.eclipse.equinox.executable'.");
   }
 
-  // /**
-  // * <p>
-  // * </p>
-  // *
-  // */
-  // private static void getNativeLauncherFromEclipseInstallation() {
-  //
-  // Properties launcherProperties = null;
-  //
-  // try {
-  // launcherProperties = new Properties();
-  // launcherProperties.load(ExecutableFinder.class.getClassLoader().getResourceAsStream(
-  // "org/ant4eclipse/ant/pde/nativelauncher.properties"));
-  // } catch (IOException e) {
-  // // TODO Auto-generated catch block
-  // e.printStackTrace();
-  // return null;
-  // }
-  //
-  // System.err.println(launcherProperties.get(ws + "." + os + "." + arch));
-  // }
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param targetPlatform
+   * @return the file list that contains all files that belongs to a native launcher for a specific platform (e.g.
+   *         eclipse.exe and eclipsec.exe).
+   */
+  private static FileList getNativeLauncherFromEclipseInstallation(TargetPlatform targetPlatform) {
+
+    // Properties launcherProperties = null;
+    //
+    // try {
+    // launcherProperties = new Properties();
+    // launcherProperties.load(ExecutableFinder.class.getClassLoader().getResourceAsStream(
+    // "org/ant4eclipse/ant/pde/nativelauncher.properties"));
+    // } catch (IOException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // return null;
+    // }
+    //
+    // System.err.println(launcherProperties.get(ws + "." + os + "." + arch));
+
+    // START
+    // TODO: USE mativeeclipse.properties
+    String guiexe = "eclipse";
+    String cmdexe = "eclipse";
+
+    if ("win32".equals(targetPlatform.getTargetPlatformConfiguration().getOperatingSystem())) {
+
+      // for windows we've got two different executables
+      guiexe = "eclipse.exe";
+      cmdexe = "eclipsec.exe";
+    }
+
+    File targetLocation = null;
+
+    File[] targetlocations = targetPlatform.getLocations();
+    for (File loc : targetlocations) {
+      File eclipseExe = new File(loc, guiexe);
+      File eclipsecExe = new File(loc, cmdexe);
+      if (eclipseExe.isFile() || eclipsecExe.isFile()) {
+        targetLocation = loc;
+        break;
+      }
+    }
+
+    //
+    if (targetLocation == null) {
+      throw new BuildException(MSG_FAILED_TO_LOOKUP_EXECUTABLES);
+    }
+
+    FileList fileList = new FileList();
+    fileList.setDir(targetLocation);
+
+    FileName fileName = new FileList.FileName();
+    fileName.setName(guiexe);
+    fileList.addConfiguredFile(fileName);
+
+    fileName = new FileList.FileName();
+    fileName.setName(cmdexe);
+    fileList.addConfiguredFile(fileName);
+
+    return fileList;
+  }
 
   /**
    * <p>
@@ -214,17 +225,21 @@ public class NativeLauncherHelper {
    */
   private static FileList getAllChildren(File directory) {
 
+    // assert that directory is a directory
     Assure.isDirectory(directory);
 
+    // create the result file list
     FileList fileList = new FileList();
     fileList.setDir(directory);
 
+    // add all children to the file list
     for (File child : Utilities.getAllChildren(directory)) {
       FileName fileName = new FileList.FileName();
       fileName.setName(child.getAbsolutePath().substring(directory.getAbsolutePath().length() + 1));
       fileList.addConfiguredFile(fileName);
     }
 
+    // return the result
     return fileList;
   }
 

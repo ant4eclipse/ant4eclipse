@@ -15,6 +15,8 @@ import java.io.File;
 
 /**
  * <p>
+ * Helper class to fetch the expansion directory. The expansion directory is used to extract files from bundles or
+ * features during the runtime of ant4eclipse.
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -28,31 +30,34 @@ public class ExpansionDirectory {
   /** the name of the expansion directory property **/
   public static final String EXPANSION_DIRECTORY_PROPERTY_NAME = "a4e.expansion.directory";
 
-  /** - */
+  /** the expansion directory */
   private static File        expansionDir                      = null;
 
   /**
    * <p>
+   * Returns the expansion directory.
    * </p>
    * 
-   * @return
+   * @return the expansion directory.
    */
   public static synchronized File getExpansionDir() {
 
+    // if the expansion directory is not set, create it...
     if (expansionDir == null) {
 
+      // get the directory name
       String expansionDirectory = System.getProperty(ExpansionDirectory.EXPANSION_DIRECTORY_PROPERTY_NAME,
           ExpansionDirectory.DEFAULT_EXPANSION_DIRECTORY);
 
+      // create the directory
       expansionDir = new File(expansionDirectory);
-
       expansionDir.deleteOnExit();
-
       if (!expansionDir.exists()) {
         expansionDir.mkdirs();
       }
     }
 
+    // return the expansion directory
     return expansionDir;
   }
 }

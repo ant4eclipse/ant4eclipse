@@ -95,9 +95,6 @@ public class BundleDependenciesResolver {
 
     Assure.notNull("description", description);
 
-    // A4ELogging.info("resolveBundleClasspath(%s)", TargetPlatformImpl.getBundleInfo(description));
-    // new RuntimeException().printStackTrace();
-
     // Step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
       throw new UnresolvedBundleException(description);

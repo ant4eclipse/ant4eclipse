@@ -92,12 +92,6 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /** - */
   private static final String         PROP_SPLASH_PLUGIN           = "product.splashplugin";
 
-  // /** - */
-  // private static final String PROP_GUIEXE = "product.guiexe";
-  //
-  // /** - */
-  // private static final String PROP_CMDEXE = "product.cmdexe";
-
   /** - */
   private static final String         REF_NATIVE_LAUNCHER_FILELIST = "product.nativelauncher.filelist";
 
@@ -124,11 +118,6 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
 
   /** - */
   private static final String         PROP_PLUGINFILELIST          = "plugin.filelist";
-
-  // programargs,
-  // wsplugins,
-  // wsfragments,
-  // wsfeatures,
 
   /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
