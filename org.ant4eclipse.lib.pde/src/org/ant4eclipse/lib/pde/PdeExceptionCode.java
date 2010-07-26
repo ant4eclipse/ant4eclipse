@@ -25,8 +25,12 @@ import org.ant4eclipse.lib.core.nls.NLSMessage;
 public class PdeExceptionCode extends ExceptionCode {
 
   /** - */
+  @NLSMessage("The launcher bundle '%s' does not exist in the target platform.")
+  public static ExceptionCode    LAUNCHER_BUNDLE_DOES_NOT_EXIST = null;
+
+  /** - */
   @NLSMessage("Unknown platform configuration '%s'.")
-  public static ExceptionCode    UKNOWN_PLATFORM_CONFIGURATION = null;
+  public static ExceptionCode    UKNOWN_PLATFORM_CONFIGURATION  = null;
 
   /** - */
   @NLSMessage("\n%s")
