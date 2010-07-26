@@ -63,6 +63,12 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   }
 
   /** - */
+  private static final String FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER = "org.eclipse.equinox.launcher.%s.%s.%s";
+
+  /** - */
+  private static final String BUNDLE_ORG_ECLIPSE_EQUINOX_LAUNCHER   = "org.eclipse.equinox.launcher";
+
+  /** - */
   private static final String         PROP_PRODUCTID               = "product.id";
 
   /** - */
@@ -94,6 +100,12 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
 
   /** - */
   private static final String         REF_NATIVE_LAUNCHER_FILELIST = "product.nativelauncher.filelist";
+
+  /** - */
+  private static final String         PROP_LAUNCHER_PLUGIN         = "product.launcherplugin";
+
+  /** - */
+  private static final String         PROP_LAUNCHER_FRAGMENT       = "product.launcherfragment";
 
   /** - */
   private static final String         PROP_FEATUREID               = "feature.id";
@@ -520,10 +532,27 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     FileList fileList = NativeLauncherHelper.getNativeLauncher(targetplatform);
     values.getReferences().put(REF_NATIVE_LAUNCHER_FILELIST, fileList);
 
-    // //
-    // properties.put(PROP_GUIEXE, executables[0].getAbsolutePath());
-    // properties.put(PROP_CMDEXE, executables[1].getAbsolutePath());
+    // set the launcher jars
+    // - set the host launcher jar
+    BundleDescription launcherHost = targetplatform.getBundleDescription(BUNDLE_ORG_ECLIPSE_EQUINOX_LAUNCHER);
+    if (launcherHost == null) {
+      throw new Ant4EclipseException(PdeExceptionCode.LAUNCHER_BUNDLE_DOES_NOT_EXIST,
+          BUNDLE_ORG_ECLIPSE_EQUINOX_LAUNCHER);
+    }
+    BundleSource launcherHostSource = (BundleSource) launcherHost.getUserObject();
+    values.getProperties().put(PROP_LAUNCHER_PLUGIN, launcherHostSource.getAsFile().getAbsolutePath());
 
+    // - set the fragment launcher jar
+    PlatformConfiguration configuration = targetplatform.getTargetPlatformConfiguration();
+    String launcherFragmentName = String.format(FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER, configuration
+        .getWindowingSystem(), configuration.getOperatingSystem(), configuration.getArchitecture());
+    BundleDescription launcherFragment = targetplatform.getBundleDescription(launcherFragmentName);
+    if (launcherFragment == null) {
+      throw new Ant4EclipseException(PdeExceptionCode.LAUNCHER_BUNDLE_DOES_NOT_EXIST,
+          FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER);
+    }
+    BundleSource launcherFragmentSource = (BundleSource) launcherFragment.getUserObject();
+    values.getProperties().put(PROP_LAUNCHER_FRAGMENT, launcherFragmentSource.getAsFile().getAbsolutePath());
   }
 
   // /**
