@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
-
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 
 import java.io.File;
@@ -68,7 +68,14 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
     // WORKSPACE_RELATIVE_PATH
     else if (getPathType(entry, context) == WORKSPACE_RELATIVE_PATH) {
       String[] splitted = splitHeadAndTail(entry.getPath());
-      resolveProjectRelativeResource(context.getWorkspace().getProject(splitted[0]), splitted[1], context);
+
+      // AE-225: Classpath resolution fails if a project is added as a library
+      if (splitted.length == 1) {
+        context.addClasspathEntry(new ResolvedClasspathEntry(context.getCurrentProject().getFolder()));
+      } else {
+        resolveProjectRelativeResource(context.getWorkspace().getProject(splitted[0]), splitted[1], context);
+      }
+
     }
 
     // ABSOULTE_PATH
@@ -118,7 +125,18 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
 
         String[] splitted = splitHeadAndTail(entrypath);
 
-        if (context.getWorkspace().hasProject(splitted[0])
+        // AE-225: Classpath resolution fails if a project is added as a library
+        if (splitted.length == 1) {
+
+          if (context.getWorkspace().hasProject(splitted[0])) {
+            // path exists in the workspace; treat as "workspace relative path"
+            return WORKSPACE_RELATIVE_PATH;
+          } else {
+            // path does not exist in the workspace; treat as "real" absolute path
+            return ABSOLUTE_PATH;
+          }
+
+        } else if (context.getWorkspace().hasProject(splitted[0])
             && context.getWorkspace().getProject(splitted[0]).hasChild(splitted[1])) {
           // path exists in the workspace; treat as "workspace relative path"
           return WORKSPACE_RELATIVE_PATH;
@@ -149,10 +167,16 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
       path = path.substring(1);
     }
 
-    String[] result = new String[2];
+    String[] result;
 
-    result[0] = path.substring(0, path.indexOf("/"));
-    result[1] = path.substring(path.indexOf("/") + 1);
+    // AE-225: Classpath resolution fails if a project is added as a library
+    if (path.indexOf("/") != -1) {
+      result = new String[2];
+      result[0] = path.substring(0, path.indexOf("/"));
+      result[1] = path.substring(path.indexOf("/") + 1);
+    } else {
+      return new String[] { path };
+    }
 
     return result;
   }
