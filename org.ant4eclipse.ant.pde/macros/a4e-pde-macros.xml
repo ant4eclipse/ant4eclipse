@@ -714,7 +714,17 @@
         <!-- Step 4: Generate artifacts -->
         <ant4eclipse:forProduct>
 
-          <!-- Step 4.1: Create the '.eclipseproduct' file -->
+          <echo>Copying bundle '${executeProduct.product.launcherplugin}' </echo>
+          <copy file="${executeProduct.product.launcherplugin}"
+                todir="@{destination}/${a4e.plugins.directory}"
+                overwrite="true" />
+
+          <echo>Copying bundle '${executeProduct.product.launcherfragment}' </echo>
+          <copy file="${executeProduct.product.launcherfragment}"
+                todir="@{destination}/${a4e.plugins.directory}"
+                overwrite="true" />
+
+          <!-- Step 4.2: Create the '.eclipseproduct' file -->
           <tstamp>
             <format property="CREATED_TSTAMP"
                     pattern="EEE MMM dd HH:mm:ss z yyyy"
@@ -729,7 +739,7 @@
             <echo file="@{destination}/.eclipseproduct" append="true">id=${executeProduct.product.id}&#10;</echo>
           </executeIfSet>
 
-          <!-- Step 4.2: Create the 'launcher.ini' file -->
+          <!-- Step 4.3: Create the 'launcher.ini' file -->
           <echo file="@{destination}/${executeProduct.product.launchername}.ini" />
 
           <!-- set the programm args -->
@@ -760,7 +770,7 @@
             </antcontrib:for>
           </executeIfSet>
 
-          <!-- Step 4.3: Create the 'config.ini' file -->
+          <!-- Step 4.4: Create the 'config.ini' file -->
           <antcontrib:if>
             <and>
               <not>
