@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.io.File;
 
@@ -71,7 +72,8 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
 
       // AE-225: Classpath resolution fails if a project is added as a library
       if (splitted.length == 1) {
-        context.addClasspathEntry(new ResolvedClasspathEntry(context.getCurrentProject().getFolder()));
+        EclipseProject referencedProject = context.getWorkspace().getProject(splitted[0]);
+        context.addClasspathEntry(new ResolvedClasspathEntry(referencedProject.getFolder()));
       } else {
         resolveProjectRelativeResource(context.getWorkspace().getProject(splitted[0]), splitted[1], context);
       }
