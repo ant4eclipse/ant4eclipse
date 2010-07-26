@@ -134,4 +134,11 @@ public interface TargetPlatformRegistry {
    */
   boolean hasCurrent();
 
+  /**
+   * <p>
+   * Refreshes all target platforms that are defined in this registry.
+   * </p>
+   */
+  void refreshAll();
+
 }

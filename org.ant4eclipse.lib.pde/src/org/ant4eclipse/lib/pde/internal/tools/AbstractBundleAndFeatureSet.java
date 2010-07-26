@@ -84,21 +84,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
       return;
     }
 
-    // debug
-    A4ELogging.info("Trying to read bundles and feature from '%s'.", this._description);
-
-    // create stop watch for debugging purpose
-    StopWatch stopWatch = new StopWatch();
-
-    // refresh
-    stopWatch.start();
     refresh();
-    stopWatch.stop();
-
-    // debug
-    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", Long.valueOf(stopWatch
-        .getElapsedTime()), Integer.valueOf(this._bundleDescriptionList.size()), Integer
-        .valueOf(this._featureDescriptionList.size()));
 
     // set initialized
     this._isInitialised = true;
@@ -263,7 +249,16 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * Refreshes the {@link BundleAndFeatureSet}.
    * </p>
    */
-  private final void refresh() {
+  public final void refresh() {
+
+    // debug
+    A4ELogging.info("Trying to read bundles and feature from '%s'.", this._description);
+
+    // create stop watch for debugging purpose
+    StopWatch stopWatch = new StopWatch();
+
+    // refresh
+    stopWatch.start();
 
     // clear list of bundles...
     this._bundleDescriptionList.clear();
@@ -275,5 +270,12 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     readBundlesAndFeatures();
 
     this._isInitialised = true;
+
+    stopWatch.stop();
+
+    // debug
+    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", Long.valueOf(stopWatch
+        .getElapsedTime()), Integer.valueOf(this._bundleDescriptionList.size()), Integer
+        .valueOf(this._featureDescriptionList.size()));
   }
 }

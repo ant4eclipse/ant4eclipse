@@ -57,6 +57,15 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  public void refreshAll() {
+    for (TargetPlatform targetPlatform : this._targetPlatformMap.values()) {
+      targetPlatform.refresh();
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   public TargetPlatform getCurrent() {
     return this._currentTargetPlatform;
   }

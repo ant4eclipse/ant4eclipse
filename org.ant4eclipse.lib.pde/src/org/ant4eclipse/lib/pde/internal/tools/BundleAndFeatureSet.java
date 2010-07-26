@@ -45,6 +45,14 @@ public interface BundleAndFeatureSet {
 
   /**
    * <p>
+   * Refreshes the {@link BundleAndFeatureSet} (which means that the bundles and features will be reed again from the
+   * underlying location).
+   * </p>
+   */
+  void refresh();
+
+  /**
+   * <p>
    * Returns all {@link BundleDescription BundleDescriptions} that are contained in this {@link BundleAndFeatureSet}.
    * </p>
    * 

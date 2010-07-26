@@ -164,4 +164,12 @@ public interface TargetPlatform {
    * @return A list of all locations used by this TargetPlatform. Neither <code>null</code> nor empty.
    */
   File[] getLocations();
+
+  /**
+   * <p>
+   * Refreshes this target platform.
+   * </p>
+   * 
+   */
+  void refresh();
 }

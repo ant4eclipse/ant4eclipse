@@ -146,8 +146,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   }
 
   /**
-   * <p>
-   * </p>
+   * {@inheritDoc}
    */
   private void initialize() {
     if (this._state == null) {
@@ -165,14 +164,19 @@ public final class TargetPlatformImpl implements TargetPlatform {
   }
 
   /**
-   * <p>
-   * </p>
-   * 
+   * {@inheritDoc}
    */
   public void refresh() {
 
-    this._state = null;
-    initialize();
+    if (this._pluginProjectSet != null) {
+      this._pluginProjectSet.refresh();
+    }
+
+    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+      bundleSet.refresh();
+    }
+
+    this._state = resolve();
   }
 
   /**
