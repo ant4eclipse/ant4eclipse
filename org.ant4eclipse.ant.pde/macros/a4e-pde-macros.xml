@@ -714,15 +714,17 @@
         <!-- Step 4: Generate artifacts -->
         <ant4eclipse:forProduct>
 
-          <echo>Copying bundle '${executeProduct.product.launcherplugin}' </echo>
-          <copy file="${executeProduct.product.launcherplugin}"
-                todir="@{destination}/${a4e.plugins.directory}"
-                overwrite="true" />
+          <echo>Copying launcher bundle...</echo>
+          <copy todir="@{destination}/${a4e.plugins.directory}"
+                overwrite="true">
+            <filelist refid="executeProduct.product.launcherplugin.filelist" />
+          </copy>
 
-          <echo>Copying bundle '${executeProduct.product.launcherfragment}' </echo>
-          <copy file="${executeProduct.product.launcherfragment}"
-                todir="@{destination}/${a4e.plugins.directory}"
-                overwrite="true" />
+          <echo>Copying launcher fragment...</echo>
+          <copy todir="@{destination}/${a4e.plugins.directory}"
+                overwrite="true">
+            <filelist refid="executeProduct.product.launcherfragment.filelist" />
+          </copy>
 
           <!-- Step 4.2: Create the '.eclipseproduct' file -->
           <tstamp>

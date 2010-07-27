@@ -63,73 +63,73 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   }
 
   /** - */
-  private static final String FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER = "org.eclipse.equinox.launcher.%s.%s.%s";
+  private static final String         FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER = "org.eclipse.equinox.launcher.%s.%s.%s";
 
   /** - */
-  private static final String BUNDLE_ORG_ECLIPSE_EQUINOX_LAUNCHER   = "org.eclipse.equinox.launcher";
+  private static final String         BUNDLE_ORG_ECLIPSE_EQUINOX_LAUNCHER   = "org.eclipse.equinox.launcher";
 
   /** - */
-  private static final String         PROP_PRODUCTID               = "product.id";
+  private static final String         PROP_PRODUCTID                        = "product.id";
 
   /** - */
-  private static final String         PROP_PRODUCTNAME             = "product.name";
+  private static final String         PROP_PRODUCTNAME                      = "product.name";
 
   /** - */
-  private static final String         PROP_BASEDONFEATURES         = "product.basedonfeatures";
+  private static final String         PROP_BASEDONFEATURES                  = "product.basedonfeatures";
 
   /** - */
-  private static final String         PROP_APPLICATIONID           = "product.applicationid";
+  private static final String         PROP_APPLICATIONID                    = "product.applicationid";
 
   /** - */
-  private static final String         PROP_LAUNCHERNAME            = "product.launchername";
+  private static final String         PROP_LAUNCHERNAME                     = "product.launchername";
 
   /** - */
-  private static final String         PROP_VERSION                 = "product.version";
+  private static final String         PROP_VERSION                          = "product.version";
 
   /** - */
-  private static final String         PROP_VMARGS                  = "product.vmargs";
+  private static final String         PROP_VMARGS                           = "product.vmargs";
 
   /** - */
-  private static final String         PROP_PROGRAMARGS             = "product.programargs";
+  private static final String         PROP_PROGRAMARGS                      = "product.programargs";
 
   /** - */
-  private static final String         PROP_CONFIGINI               = "product.configini";
+  private static final String         PROP_CONFIGINI                        = "product.configini";
 
   /** - */
-  private static final String         PROP_SPLASH_PLUGIN           = "product.splashplugin";
+  private static final String         PROP_SPLASH_PLUGIN                    = "product.splashplugin";
 
   /** - */
-  private static final String         REF_NATIVE_LAUNCHER_FILELIST = "product.nativelauncher.filelist";
+  private static final String         REF_NATIVE_LAUNCHER_FILELIST          = "product.nativelauncher.filelist";
 
   /** - */
-  private static final String         PROP_LAUNCHER_PLUGIN         = "product.launcherplugin";
+  private static final String         REF_LAUNCHER_PLUGIN_FILELIST          = "product.launcherplugin.filelist";
 
   /** - */
-  private static final String         PROP_LAUNCHER_FRAGMENT       = "product.launcherfragment";
+  private static final String         REF_LAUNCHER_FRAGMENT_FILELIST        = "product.launcherfragment.filelist";
 
   /** - */
-  private static final String         PROP_FEATUREID               = "feature.id";
+  private static final String         PROP_FEATUREID                        = "feature.id";
 
   /** - */
-  private static final String         PROP_FEATUREVERSION          = "feature.version";
+  private static final String         PROP_FEATUREVERSION                   = "feature.version";
 
   /** - */
-  private static final String         PROP_PLUGINID                = "plugin.id";
+  private static final String         PROP_PLUGINID                         = "plugin.id";
 
   /** - */
-  private static final String         PROP_PLUGINISSOURCE          = "plugin.isSource";
+  private static final String         PROP_PLUGINISSOURCE                   = "plugin.isSource";
 
   /** - */
-  private static final String         PROP_OSGIBUNDLES             = "osgi.bundles";
+  private static final String         PROP_OSGIBUNDLES                      = "osgi.bundles";
 
   /** - */
-  private static final String         PROP_PLUGINPROJECTNAME       = "plugin.projectName";
+  private static final String         PROP_PLUGINPROJECTNAME                = "plugin.projectName";
 
   /** - */
-  private static final String         PROP_PLUGINFILE              = "plugin.file";
+  private static final String         PROP_PLUGINFILE                       = "plugin.file";
 
   /** - */
-  private static final String         PROP_PLUGINFILELIST          = "plugin.filelist";
+  private static final String         PROP_PLUGINFILELIST                   = "plugin.filelist";
 
   /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
@@ -540,7 +540,12 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
           BUNDLE_ORG_ECLIPSE_EQUINOX_LAUNCHER);
     }
     BundleSource launcherHostSource = (BundleSource) launcherHost.getUserObject();
-    values.getProperties().put(PROP_LAUNCHER_PLUGIN, launcherHostSource.getAsFile().getAbsolutePath());
+    if (launcherHostSource.isEclipseProject()) {
+      // TODO
+      throw new RuntimeException("");
+    }
+    FileList launcherHostFileList = FileListHelper.getFileList(launcherHostSource.getAsFile());
+    values.getReferences().put(REF_LAUNCHER_PLUGIN_FILELIST, launcherHostFileList);
 
     // - set the fragment launcher jar
     PlatformConfiguration configuration = targetplatform.getTargetPlatformConfiguration();
@@ -552,7 +557,12 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
           FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER);
     }
     BundleSource launcherFragmentSource = (BundleSource) launcherFragment.getUserObject();
-    values.getProperties().put(PROP_LAUNCHER_FRAGMENT, launcherFragmentSource.getAsFile().getAbsolutePath());
+    if (launcherFragmentSource.isEclipseProject()) {
+      // TODO
+      throw new RuntimeException("");
+    }
+    FileList launcherFragmentFileList = FileListHelper.getFileList(launcherFragmentSource.getAsFile());
+    values.getReferences().put(REF_LAUNCHER_FRAGMENT_FILELIST, launcherFragmentFileList);
   }
 
   // /**
