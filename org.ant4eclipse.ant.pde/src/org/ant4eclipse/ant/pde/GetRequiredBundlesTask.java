@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
-import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectPathTask;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -25,7 +24,6 @@ import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
@@ -46,9 +44,6 @@ import java.util.Set;
  */
 public class GetRequiredBundlesTask extends AbstractProjectPathTask implements TargetPlatformAwareComponent,
     GetPathComponent {
-
-  /** the workspace delegate */
-  private WorkspaceDelegate               _workspaceDelegate;
 
   /** the target platform delegate */
   private TargetPlatformAwareDelegate     _targetPlatformAwareDelegate;
@@ -87,54 +82,12 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   public GetRequiredBundlesTask() {
 
-    // create the delegates
-    this._workspaceDelegate = new WorkspaceDelegate(this);
+    // // create the delegates
     this._getPathComponent = new GetPathDelegate(this);
     this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
 
     this._bundleSpecifications = new LinkedList<BundleSpecification>();
     this._resolvedBundleDescriptions = new HashSet<BundleDescription>();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final Workspace getWorkspace() {
-    return this._workspaceDelegate.getWorkspace();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final File getWorkspaceDirectory() {
-    return this._workspaceDelegate.getWorkspaceDirectory();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final boolean isWorkspaceDirectorySet() {
-    return this._workspaceDelegate.isWorkspaceDirectorySet();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Deprecated
-  public final void setWorkspace(String workspace) {
-    this._workspaceDelegate.setWorkspace(workspace);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void setWorkspaceDirectory(String workspaceDirectory) {
-    this._workspaceDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
   /**
