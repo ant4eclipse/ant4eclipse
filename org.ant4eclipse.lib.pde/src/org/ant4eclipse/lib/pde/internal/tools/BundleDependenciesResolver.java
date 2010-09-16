@@ -113,7 +113,7 @@ public class BundleDependenciesResolver {
     }
 
     // Step 4: add all re-exported bundles also...
-    for (BundleDescription reexportedBundle : getReexportedBundles(description)) {
+    for (BundleDescription reexportedBundle : getReexportedBundles(description, description)) {
       addRequiredBundle(reexportedBundle);
     }
 
@@ -233,17 +233,23 @@ public class BundleDependenciesResolver {
    * @param bundleDescription
    * @return
    */
-  private Set<BundleDescription> getReexportedBundles(BundleDescription root) {
+  private Set<BundleDescription> getReexportedBundles(BundleDescription description, BundleDescription root) {
+
+    List<BundleDescription> resolvedDescriptions = new LinkedList<BundleDescription>();
+    Set<BundleDescription> result = new HashSet<BundleDescription>();
+
+    // do not add the root to the list of re-exported bundles
+    if (description.equals(root)) {
+      return result;
+    }
 
     // TODO: AE-171
     // A4ELogging
     // .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
 
-    List<BundleDescription> resolvedDescriptions = new LinkedList<BundleDescription>();
-    resolvedDescriptions.add(root);
+    resolvedDescriptions.add(description);
 
-    Set<BundleDescription> result = new HashSet<BundleDescription>();
-    for (BundleDescription requiredBundle : root.getResolvedRequires()) {
+    for (BundleDescription requiredBundle : description.getResolvedRequires()) {
       result.addAll(getReexportedBundles(requiredBundle, resolvedDescriptions));
     }
     return result;
