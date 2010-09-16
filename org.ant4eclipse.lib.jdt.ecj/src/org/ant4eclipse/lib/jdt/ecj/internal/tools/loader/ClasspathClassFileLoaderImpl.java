@@ -575,9 +575,17 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
 
         if (classpathEntry.isDirectory()) {
           File result = new File(classpathEntry, className.asClassFileName());
+
           if (result.exists()) {
-            return new FileClassFileImpl(result, classpathEntry.getAbsolutePath(),
-                ClasspathClassFileLoaderImpl.this._type);
+
+            try {
+              if (result.getName().equals(result.getCanonicalFile().getName())) {
+                return new FileClassFileImpl(result, classpathEntry.getAbsolutePath(),
+                    ClasspathClassFileLoaderImpl.this._type);
+              }
+            } catch (IOException e) {
+              // do nothing
+            }
           }
         } else {
           try {
