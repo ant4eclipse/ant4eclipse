@@ -317,7 +317,7 @@ public class BundleDependenciesResolver {
         BundleDescription reexportedBundle = (BundleDescription) specification.getSupplier();
 
         // only add the re-exported bundle if it is not null
-        if (reexportedBundle != null && !resolvedDescriptions.contains(bundleDescription)) {
+        if (reexportedBundle != null && !resolvedDescriptions.contains(reexportedBundle)) {
 
           // add the bundle description
           resultSet.add(reexportedBundle);
