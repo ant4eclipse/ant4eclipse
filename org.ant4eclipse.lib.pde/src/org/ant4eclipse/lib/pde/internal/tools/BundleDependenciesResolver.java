@@ -77,7 +77,12 @@ public class BundleDependenciesResolver {
    * @throws UnresolvedBundleException
    */
   public List<BundleDependency> resolveBundleClasspath(BundleDescription description) throws UnresolvedBundleException {
-    return resolveBundleClasspath(description, true);
+
+    // create the result list
+    List<BundleDependency> result = resolveBundleClasspath(description, true);
+
+    // return the result
+    return result;
   }
 
   /**
@@ -238,11 +243,6 @@ public class BundleDependenciesResolver {
     List<BundleDescription> resolvedDescriptions = new LinkedList<BundleDescription>();
     Set<BundleDescription> result = new HashSet<BundleDescription>();
 
-    // do not add the root to the list of re-exported bundles
-    if (description.equals(root)) {
-      return result;
-    }
-
     // TODO: AE-171
     // A4ELogging
     // .info("Resolving reexported bundles for bundle '%s'", TargetPlatformImpl.getBundleInfo(bundleDescription));
@@ -317,7 +317,7 @@ public class BundleDependenciesResolver {
         BundleDescription reexportedBundle = (BundleDescription) specification.getSupplier();
 
         // only add the re-exported bundle if it is not null
-        if (reexportedBundle != null) {
+        if (reexportedBundle != null && !resolvedDescriptions.contains(bundleDescription)) {
 
           // add the bundle description
           resultSet.add(reexportedBundle);
