@@ -102,6 +102,10 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
         }
       }
 
+      if (A4ELogging.isDebuggingEnabled()) {
+        A4ELogging.debug("Resolved cp entry: %s", resolvedClasspathEntry.toString());
+      }
+
       // set access restrictions
       if (resolvedClasspathEntry.hasAccessRestrictions()) {
         AccessRestrictions accessRestrictions = resolvedClasspathEntry.getAccessRestrictions();
