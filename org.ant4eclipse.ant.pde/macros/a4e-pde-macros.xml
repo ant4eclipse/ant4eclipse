@@ -876,6 +876,7 @@
     <attribute name="destination" />
     <attribute name="clearDestination" default="false" />
     <attribute name="skipBuildFeature" default="false" />
+    <attribute name="skipBuildPlugins" default="false" />
     <attribute name="packageAsJar" default="true" />
     <attribute name="packagePluginsAsJar" default="true" />
     <attribute name="packagePluginSourcesAsJar" default="true" />
@@ -916,32 +917,39 @@
                         platformConfigurationId="@{platformConfigurationId}"
                         destination="@{destination}"
                         packageAsJar="@{packageAsJar}"
-                        useEcj="@{useEcj}" />
+                        useEcj="@{useEcj}"
+                        skipBuildPlugins="@{skipBuildPlugins}" />
         </ant4eclipse:forEachIncludedFeature>
+
+
 
         <!-- Step 3: Build the plug-ins  -->
         <!-- Step 3.1: Build the plug-ins  -->
         <ant4eclipse:forEachPlugin filter="(executeFeature.plugin.isSource=true)">
-          <echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
-          <buildPlugin workspaceDirectory="@{workspaceDirectory}"
-                       workspaceId="@{workspaceId}"
-                       projectName="${executeFeature.plugin.filename}"
-                       targetplatformid="@{targetPlatformId}"
-                       platformConfigurationId="@{platformConfigurationId}"
-                       destination="@{destination}"
-                       packageAsJar="@{packagePluginsAsJar}"
-                       buildSourceJar="@{packagePluginSourcesAsJar}"
-                       defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
-                       clean="@{cleanPluginBuild}"
-                       useEcj="@{useEcj}" />
+          <executeIfFalse property="@{skipBuildPlugins}">
+            <echo>Building plug-in project '${executeFeature.plugin.filename} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
+            <buildPlugin workspaceDirectory="@{workspaceDirectory}"
+                         workspaceId="@{workspaceId}"
+                         projectName="${executeFeature.plugin.filename}"
+                         targetplatformid="@{targetPlatformId}"
+                         platformConfigurationId="@{platformConfigurationId}"
+                         destination="@{destination}"
+                         packageAsJar="@{packagePluginsAsJar}"
+                         buildSourceJar="@{packagePluginSourcesAsJar}"
+                         defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
+                         clean="@{cleanPluginBuild}"
+                         useEcj="@{useEcj}" />
+          </executeIfFalse>
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 3.2: Copy plug-ins  -->
         <ant4eclipse:forEachPlugin filter="(executeFeature.plugin.isSource=false)">
-          <echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
-          <copy todir="@{destination}/${a4e.plugins.directory}">
-            <filelist refid="executeFeature.plugin.filelist" />
-          </copy>
+          <executeIfFalse property="@{skipBuildPlugins}">
+            <echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
+            <copy todir="@{destination}/${a4e.plugins.directory}">
+              <filelist refid="executeFeature.plugin.filelist" />
+            </copy>
+          </executeIfFalse>
         </ant4eclipse:forEachPlugin>
 
         <!-- Step 4: Build feature itself -->
