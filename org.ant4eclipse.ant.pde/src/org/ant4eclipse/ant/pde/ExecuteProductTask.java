@@ -553,8 +553,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
         .getWindowingSystem(), configuration.getOperatingSystem(), configuration.getArchitecture());
     BundleDescription launcherFragment = targetplatform.getBundleDescription(launcherFragmentName);
     if (launcherFragment == null) {
-      throw new Ant4EclipseException(PdeExceptionCode.LAUNCHER_BUNDLE_DOES_NOT_EXIST,
-          FRAGMENT_ORG_ECLIPSE_EQUINOX_LAUNCHER);
+      throw new Ant4EclipseException(PdeExceptionCode.LAUNCHER_BUNDLE_DOES_NOT_EXIST, launcherFragmentName);
     }
     BundleSource launcherFragmentSource = (BundleSource) launcherFragment.getUserObject();
     if (launcherFragmentSource.isEclipseProject()) {
