@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
+import org.ant4eclipse.lib.core.util.Utilities;
+
 import java.io.File;
 
 /**
@@ -51,7 +53,17 @@ public class ExpansionDirectory {
 
       // create the directory
       expansionDir = new File(expansionDirectory);
+
+      // delete expansion directory if is exists. This is necessary to prevent invalid bundle content if
+      // the same version number is used in several builds
+      if (expansionDir.exists()) {
+        Utilities.delete(expansionDir);
+      }
+
+      // set delete on exit
       expansionDir.deleteOnExit();
+
+      // create if not exists
       if (!expansionDir.exists()) {
         expansionDir.mkdirs();
       }
