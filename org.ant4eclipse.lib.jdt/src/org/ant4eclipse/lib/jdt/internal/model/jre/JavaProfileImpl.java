@@ -68,6 +68,9 @@ public class JavaProfileImpl implements JavaProfile {
 
   private List<String>        _executionEnvironments          = new LinkedList<String>();
 
+  /** - */
+  private String              _associatedJavaRuntimeId;
+
   /**
    * @param properties
    */
@@ -117,6 +120,26 @@ public class JavaProfileImpl implements JavaProfile {
    */
   public List<String> getSystemPackages() {
     return Collections.unmodifiableList(this._systemPackagesList);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public String getAssociatedJavaRuntimeId() {
+    return this._associatedJavaRuntimeId;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param associatedJavaRuntimeId
+   */
+  public void setAssociatedJavaRuntimeId(String associatedJavaRuntimeId) {
+    this._associatedJavaRuntimeId = associatedJavaRuntimeId;
   }
 
   /**

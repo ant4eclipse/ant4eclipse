@@ -80,15 +80,13 @@ public class JavaRuntimeLoader {
     Version javaVersion = new Version(values[0]);
     String sunbootclasspath = values[1];
     String javaextdirs = values[2];
-    // String javaendorseddirs = values[3];
+    String javaendorseddirs = values[3];
     Version javaSpecificationVersion = new Version(values[4]);
 
     List<File> files = new LinkedList<File>();
+    addFiles(javaendorseddirs, false, files);
     addFiles(sunbootclasspath, false, files);
     addFiles(javaextdirs, true, files);
-
-    // addFiles(javaendorseddirs);
-    // TODO: ext-libs!!
 
     File[] libraries = files.toArray(new File[0]);
 

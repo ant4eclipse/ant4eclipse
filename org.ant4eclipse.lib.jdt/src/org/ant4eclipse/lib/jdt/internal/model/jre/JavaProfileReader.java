@@ -17,6 +17,7 @@ import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -80,6 +81,24 @@ public class JavaProfileReader implements Lifecycle {
   public boolean hasJavaProfile(String path) {
     Assure.nonEmpty("path", path);
     return this._javaProfileCache.containsKey(path);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param profileFile
+   * @return
+   */
+  public void registerProfile(File profileFile, String jreId) {
+    Assure.exists("profileFile", profileFile);
+    Assure.nonEmpty("jreId", jreId);
+
+    StringMap props = new StringMap(profileFile);
+    JavaProfileImpl javaProfile = new JavaProfileImpl(props);
+    javaProfile.setAssociatedJavaRuntimeId(jreId);
+
+    this._javaProfileCache.put(javaProfile.getName(), javaProfile);
   }
 
   /**

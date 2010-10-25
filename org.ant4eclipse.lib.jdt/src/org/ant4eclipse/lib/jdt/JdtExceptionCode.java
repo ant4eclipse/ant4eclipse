@@ -24,6 +24,10 @@ import org.ant4eclipse.lib.core.nls.NLSMessage;
  */
 public class JdtExceptionCode extends ExceptionCode {
 
+  /** the ant attribute is not set */
+  @NLSMessage("Attribute '%s' is not set.")
+  public static JdtExceptionCode ANT_ATTRIBUTE_NOT_SET;
+
   @NLSMessage("\n\nNo 'jdtClassPathLibrary' defined for library entry '%1$s'.\n"
       + "To resolve this problem, please define a 'jdtClassPathLibrary' element inside your ant build file:\n\n"
       + "<ant4eclipse:jdtClassPathLibrary name=\"%1$s\">\n" + "  <fileset dir=\"...\"/>\n"

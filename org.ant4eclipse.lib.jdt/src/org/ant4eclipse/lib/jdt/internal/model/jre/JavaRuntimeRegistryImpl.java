@@ -13,10 +13,6 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -25,6 +21,10 @@ import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -124,7 +124,12 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // return if a java profile exists
     JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
     if (javaProfile != null) {
-      return getJavaRuntime(javaProfile);
+
+      if (((JavaProfileImpl) javaProfile).getAssociatedJavaRuntimeId() != null) {
+        return getJavaRuntime(((JavaProfileImpl) javaProfile).getAssociatedJavaRuntimeId());
+      } else {
+        return getJavaRuntime(javaProfile);
+      }
     }
 
     return null;
