@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.core.data;
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,17 +21,17 @@ public class VersionTest {
   @Test
   public void illegalFormat() {
     try {
-      new Version("a");
+      Version.newBundleVersion("a");
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode());
     }
     try {
-      new Version("1.2.3.4");
+      Version.newBundleVersion("1.2.3.4");
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode());
     }
     try {
-      new Version(" ");
+      Version.newBundleVersion(" ");
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode());
     }
@@ -40,10 +39,10 @@ public class VersionTest {
 
   @Test
   public void validFormat() {
-    Assert.assertEquals("1.0.0", String.valueOf(new Version("1")));
-    Assert.assertEquals("1.2.0", String.valueOf(new Version("1.2")));
-    Assert.assertEquals("1.2.3", String.valueOf(new Version("1.2.3")));
-    Assert.assertEquals("1.2.3_a", String.valueOf(new Version("1.2.3_a")));
+    Assert.assertEquals("1.0.0", String.valueOf(Version.newBundleVersion("1")));
+    Assert.assertEquals("1.2.0", String.valueOf(Version.newBundleVersion("1.2")));
+    Assert.assertEquals("1.2.3", String.valueOf(Version.newBundleVersion("1.2.3")));
+    Assert.assertEquals("1.2.3_a", String.valueOf(Version.newBundleVersion("1.2.3_a")));
   }
 
 } /* ENDCLASS */
