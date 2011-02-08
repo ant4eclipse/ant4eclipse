@@ -61,7 +61,39 @@ public class Version {
    * @param version
    *          A formatted version string. Neither <code>null</code> nor empty.
    */
-  public Version(String version) {
+  public static final Version newBundleVersion(String version) {
+    Assure.nonEmpty("version", version);
+    return new Version(version, true);
+  }
+
+  /**
+   * Sets up this version information from the supplied formatted string. The format is as followed:<br/>
+   * 
+   * &lt;major&gt;['.'&lt;minor&gt;['.'&lt;micro&gt;[&lt;qualifier&gt;]]]
+   * 
+   * The meaning of the qualifier depends on the context where the version information is used.
+   * 
+   * @param version
+   *          A formatted version string. Neither <code>null</code> nor empty.
+   */
+  public static final Version newStandardVersion(String version) {
+    Assure.nonEmpty("version", version);
+    return new Version(version, false);
+  }
+
+  /**
+   * Sets up this version information from the supplied formatted string. The format is as followed:<br/>
+   * 
+   * &lt;major&gt;['.'&lt;minor&gt;['.'&lt;micro&gt;['_'&lt;qualifier&gt;]]]
+   * 
+   * The meaning of the qualifier depends on the context where the version information is used.
+   * 
+   * @param version
+   *          A formatted version string. Neither <code>null</code> nor empty.
+   * @param bundleversion
+   *          <code>true</code> <=> The format of the version denotes a bundle version.
+   */
+  private Version(String version, boolean bundleversion) {
     Assure.nonEmpty("version", version);
 
     this._major = Integer.valueOf(0);
@@ -77,12 +109,18 @@ public class Version {
         if (st.hasMoreTokens()) {
 
           String microWithQualifier = st.nextToken();
-          String[] splitted = microWithQualifier.split("_");
-
-          this._micro = Integer.valueOf(splitted[0]);
-          if (splitted.length > 1) {
-            this._qualifier = splitted[1];
+          int firstpos = indexOf(microWithQualifier, bundleversion ? '_' : '_', '-');
+          if (firstpos == -1) {
+            // no delimiter
+            this._micro = Integer.valueOf(microWithQualifier);
+          } else {
+            // with delimiter separating the qualifier
+            this._micro = Integer.valueOf(microWithQualifier.substring(0, firstpos));
+            if (firstpos < microWithQualifier.length() - 1) {
+              this._qualifier = microWithQualifier.substring(firstpos + 1);
+            }
           }
+
           if (st.hasMoreTokens()) {
             throw new Ant4EclipseException(CoreExceptionCode.ILLEGAL_FORMAT, String.format(MSG_FORMATERROR, version));
           }
@@ -107,6 +145,30 @@ public class Version {
     }
     this._str = buffer.toString();
 
+  }
+
+  /**
+   * Determines the leftmost character position of a list of candidates.
+   * 
+   * @param str
+   *          The String where to look for. Not <code>null</code>.
+   * @param candidates
+   *          The characters to look for.
+   * 
+   * @return The position of the leftmost found character or -1.
+   */
+  private int indexOf(String str, char... candidates) {
+    int result = Integer.MAX_VALUE;
+    for (char ch : candidates) {
+      int pos = str.indexOf(ch);
+      if (pos != -1) {
+        result = Math.min(result, pos);
+      }
+    }
+    if (result == Integer.MAX_VALUE) {
+      result = -1;
+    }
+    return result;
   }
 
   /**

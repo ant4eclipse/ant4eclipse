@@ -77,11 +77,11 @@ public class JavaRuntimeLoader {
     String result = contents.toString();
     // System.out.println(result);
     String[] values = result.split("\\|");
-    Version javaVersion = new Version(values[0]);
+    Version javaVersion = Version.newStandardVersion(values[0]);
     String sunbootclasspath = values[1];
     String javaextdirs = values[2];
     String javaendorseddirs = values[3];
-    Version javaSpecificationVersion = new Version(values[4]);
+    Version javaSpecificationVersion = Version.newBundleVersion(values[4]);
 
     List<File> files = new LinkedList<File>();
     addFiles(javaendorseddirs, false, files);
@@ -96,7 +96,6 @@ public class JavaRuntimeLoader {
     properties.put(JAVA_SPECIFICATION_NAME, values[5]);
 
     String javaProfileName = getVmProfile(properties);
-
     JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
     JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile(javaProfileName);
 

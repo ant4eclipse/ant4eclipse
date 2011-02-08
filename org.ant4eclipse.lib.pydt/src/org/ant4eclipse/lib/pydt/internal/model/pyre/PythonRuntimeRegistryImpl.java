@@ -143,7 +143,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     }
 
     // load version number and library records
-    Version version = new Version(extraction[0]);
+    Version version = Version.newStandardVersion(extraction[0]);
     File[] libs = new File[extraction.length - 1];
     for (int i = 0; i < libs.length; i++) {
       libs[i] = new File(extraction[i + 1]);
