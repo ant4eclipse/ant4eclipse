@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.delegate;
 
+
+
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseBuildFileTest;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -30,7 +32,6 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
 
   @Override
   public void setUp() throws Exception {
-    System.out.println("PATH=" + System.getProperty("java.class.path"));
     super.setUp();
     getProject().setProperty("hurz.test", "initial");
   }
