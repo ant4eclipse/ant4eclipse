@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.delegate;
 
-
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseBuildFileTest;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -37,6 +35,7 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
   }
 
   public void testMacroExecute() {
+    System.out.println("PATH=" + System.getProperty("java.class.path"));
     MacroExecuteTask.counter = 0;
     expectLog("testMacroExecute", "initial!0.test!1.test!0.test!initial!2.test!initial");
   }
