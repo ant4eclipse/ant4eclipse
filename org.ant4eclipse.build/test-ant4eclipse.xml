@@ -242,6 +242,14 @@
       projectname="${executeProjectSet.project.name}"
     >
       <forEachSourceDirectory>
+
+        <echo>Testing project ${executeProjectSet.project.name} ...</echo>
+        <echo>  - source directories  -> ${executeJdtProject.source.directories}</echo>
+        <echo>  - output directory    -> ${executeJdtProject.default.output.directory}</echo>
+        <echo>  - bootclasspath       -> ${executeJdtProject.boot.classpath}</echo>
+        <echo>  - classpath           -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
+        <echo>  - classpath (runtime) -> ${executeJdtProject.classpath.absolute.runtime}</echo>
+
         <property name="reports" value="${dest.reports}/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
