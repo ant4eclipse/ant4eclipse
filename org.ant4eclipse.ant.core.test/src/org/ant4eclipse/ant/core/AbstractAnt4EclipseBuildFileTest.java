@@ -14,6 +14,7 @@ package org.ant4eclipse.ant.core;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.apache.tools.ant.BuildFileTest;
+import org.apache.tools.ant.Project;
 
 import java.io.File;
 
@@ -32,7 +33,8 @@ public abstract class AbstractAnt4EclipseBuildFileTest extends BuildFileTest {
   @Override
   public void setUp() throws Exception {
     this._testDirectory = new TestDirectory(true);
-
+    System.err.println("PROJECT: "
+        + getClass().getResource(String.format("/%s.class", Project.class.getName().replace('.', '/'))));
     File buildFile = this._testDirectory.createFile(getBuildFileName(), getResource(getBuildFileName()).openStream());
 
     configureProject(buildFile.getAbsolutePath());
