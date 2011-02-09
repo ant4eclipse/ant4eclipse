@@ -252,7 +252,7 @@
 
         <property name="reports" value="${dest.reports}/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
-        <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
+        <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes" includeantruntime="false">
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
           <classpath>
             <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
