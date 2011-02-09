@@ -30,12 +30,12 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
 
   @Override
   public void setUp() throws Exception {
+    System.out.println("PATH=" + System.getProperty("java.class.path"));
     super.setUp();
     getProject().setProperty("hurz.test", "initial");
   }
 
   public void testMacroExecute() {
-    System.out.println("PATH=" + System.getProperty("java.class.path"));
     MacroExecuteTask.counter = 0;
     expectLog("testMacroExecute", "initial!0.test!1.test!0.test!initial!2.test!initial");
   }
