@@ -250,6 +250,8 @@ public class ClasspathEntryResolverExecutor {
     for (ClasspathEntry classpathEntry : classpathEntries) {
       try {
         resolveClasspathEntry(classpathEntry);
+      } catch (Ant4EclipseException e) {
+        throw e;
       } catch (Exception e) {
         throw new Ant4EclipseException(e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry,
             (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage());
