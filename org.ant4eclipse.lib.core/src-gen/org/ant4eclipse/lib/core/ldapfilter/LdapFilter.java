@@ -45,7 +45,8 @@ public class LdapFilter implements LdapFilterConstants {
     }
     String scopedProperty = (String) _properties.get(attributeKey);
     String regExpValue = value.replaceAll("\u005c\u005c*", ".*");
-    return Pattern.matches(regExpValue, scopedProperty);
+    boolean result = Pattern.matches(regExpValue, scopedProperty);
+    return result;
   }
 
   private boolean approx(String attributeKey, String value) throws ParseException
@@ -94,7 +95,24 @@ public class LdapFilter implements LdapFilterConstants {
 
   final public boolean validate() throws ParseException {
   boolean value;
-    value = filter();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case BRACKET_OPEN:
+      value = filter();
+      break;
+    case AND:
+    case AND_ORG:
+    case OR:
+    case OR_ORG:
+    case NOT:
+    case NOT_ORG:
+    case STRING:
+      value = filtercomp();
+      break;
+    default:
+      jj_la1[0] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
     jj_consume_token(0);
     {if (true) return value;}
     throw new Error("Missing return statement in function");
@@ -130,7 +148,7 @@ public class LdapFilter implements LdapFilterConstants {
       value = attributeValueComparison();
       break;
     default:
-      jj_la1[0] = jj_gen;
+      jj_la1[1] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -158,7 +176,7 @@ public class LdapFilter implements LdapFilterConstants {
       operator = jj_consume_token(LESS);
       break;
     default:
-      jj_la1[1] = jj_gen;
+      jj_la1[2] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -170,7 +188,7 @@ public class LdapFilter implements LdapFilterConstants {
       value = jj_consume_token(WILDCARD_STRING);
       break;
     default:
-      jj_la1[2] = jj_gen;
+      jj_la1[3] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -209,7 +227,7 @@ public class LdapFilter implements LdapFilterConstants {
       jj_consume_token(NOT_ORG);
       break;
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[4] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -229,7 +247,7 @@ public class LdapFilter implements LdapFilterConstants {
       jj_consume_token(AND_ORG);
       break;
     default:
-      jj_la1[4] = jj_gen;
+      jj_la1[5] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -259,7 +277,7 @@ public class LdapFilter implements LdapFilterConstants {
       jj_consume_token(OR_ORG);
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[6] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -292,7 +310,7 @@ public class LdapFilter implements LdapFilterConstants {
         ;
         break;
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[7] = jj_gen;
         break label_1;
       }
     }
@@ -309,13 +327,13 @@ public class LdapFilter implements LdapFilterConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[7];
+  final private int[] jj_la1 = new int[8];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x13f00,0xf0,0x30000,0x3000,0x300,0xc00,0x4000,};
+      jj_la1_0 = new int[] {0x17f00,0x13f00,0xf0,0x30000,0x3000,0x300,0xc00,0x4000,};
    }
 
   /** Constructor with InputStream. */
@@ -329,7 +347,7 @@ public class LdapFilter implements LdapFilterConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -343,7 +361,7 @@ public class LdapFilter implements LdapFilterConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -353,7 +371,7 @@ public class LdapFilter implements LdapFilterConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -363,7 +381,7 @@ public class LdapFilter implements LdapFilterConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -372,7 +390,7 @@ public class LdapFilter implements LdapFilterConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -381,7 +399,7 @@ public class LdapFilter implements LdapFilterConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -437,7 +455,7 @@ public class LdapFilter implements LdapFilterConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 8; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
