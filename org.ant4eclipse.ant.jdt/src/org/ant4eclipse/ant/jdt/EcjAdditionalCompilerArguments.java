@@ -204,7 +204,7 @@ public class EcjAdditionalCompilerArguments {
     Assure.notNull("sourceFolders", sourceFolders);
 
     // get source folder map
-    Set<File> sourceFolderSet = this._sourceFolderMap.get(sourceFolders);
+    Set<File> sourceFolderSet = this._sourceFolderMap.get(outputFolder);
 
     // if no source folder map exists, create a new one
     if (sourceFolderSet == null) {
