@@ -280,7 +280,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // get the absoult path
     String absolutePath = sourceFile.getAbsolutePath();
-    System.err.println("## absolutepath: " + absolutepath);
+    System.err.println("## absolutepath: " + absolutePath);
 
     // get the list of all source directories
     String[] srcDirs = getJavac().getSrcdir().list();
