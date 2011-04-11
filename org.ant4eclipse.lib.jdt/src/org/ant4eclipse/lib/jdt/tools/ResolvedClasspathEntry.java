@@ -188,6 +188,7 @@ public class ResolvedClasspathEntry {
     int result = 1;
     result = prime * result + ((this._accessRestrictions == null) ? 0 : this._accessRestrictions.hashCode());
     result = prime * result + ResolvedClasspathEntry.hashCode(this._classPathEntries);
+    result = prime * result + ResolvedClasspathEntry.hashCode(this._sourcePathEntries);
     return result;
   }
 
@@ -214,6 +215,9 @@ public class ResolvedClasspathEntry {
       return false;
     }
     if (!Arrays.equals(this._classPathEntries, other._classPathEntries)) {
+      return false;
+    }
+    if (!Arrays.equals(this._sourcePathEntries, other._sourcePathEntries)) {
       return false;
     }
     return true;
