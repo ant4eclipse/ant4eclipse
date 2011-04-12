@@ -232,6 +232,13 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // iterate over all the source files and create SourceFile
     for (File file : filelist) {
 
+	  if (!hasSourceFolder(file)) {
+	    // the user has restricted the source folders for the compilation.
+		// f.e. the project has two source folders while the user only compiles one at
+		// a time
+	    continue;
+	  }
+	
       // get the source folder
       File sourceFolder = getSourceFolder(file);
 
@@ -280,14 +287,12 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // get the absolute path
     String absolutePath = sourceFile.getAbsolutePath();
-    A4ELogging.info("getSourceFolder: %s", absolutePath);
 
     // get the list of all source directories
     String[] srcDirs = getJavac().getSrcdir().list();
 
     // find the 'right' source directory
     for (String srcDir : srcDirs) {
-      A4ELogging.info("srcDir: %s", srcDir);
       if (absolutePath.startsWith(srcDir) && absolutePath.charAt(srcDir.length()) == File.separatorChar) {
         return new File(srcDir);
       }
@@ -296,6 +301,35 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // source folder for source file does not exist...
     throw new Ant4EclipseException(EcjExceptionCodes.SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST, sourceFile
         .getAbsolutePath());
+  }
+
+    /**
+   * <p>
+   * Returns <code>true</code> if there's a source folder for the given source file.
+   * </p>
+   * 
+   * @param sourceFile
+   *          the source file.
+   * @return <code>true</code> the source folder exists for the given source file.
+   */
+  private boolean hasSourceFolder(File sourceFile) {
+
+    // get the absolute path
+    String absolutePath = sourceFile.getAbsolutePath();
+
+    // get the list of all source directories
+    String[] srcDirs = getJavac().getSrcdir().list();
+
+    // find the 'right' source directory
+    for (String srcDir : srcDirs) {
+      A4ELogging.info("srcDir: %s", srcDir);
+      if (absolutePath.startsWith(srcDir) && absolutePath.charAt(srcDir.length()) == File.separatorChar) {
+        return true;
+      }
+    }
+
+    // source folder for source file does not exist...
+    return false;
   }
 
   /**
