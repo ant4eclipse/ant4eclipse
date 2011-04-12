@@ -13,6 +13,9 @@ package org.ant4eclipse.lib.jdt.ecj;
 
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
+import java.io.File;
+import java.util.Map;
+
 /**
  * <p>
  * The {@link CompileJobResult} represents a compile job result.
@@ -39,4 +42,12 @@ public interface CompileJobResult {
    * @return the {@link CategorizedProblem CategorizedProblems}.
    */
   CategorizedProblem[] getCategorizedProblems();
+
+  /**
+   * Returns a map for the class files that have been compiled.
+   * 
+   * @return A map for the class files that have been compiled. Not <code>null</code>.
+   */
+  Map<String, File> getCompiledClassFiles();
+
 }

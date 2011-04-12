@@ -14,11 +14,17 @@ package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.Map;
+
 public class CompileJobResultImpl implements CompileJobResult {
 
   private boolean              _succeeded;
 
   private CategorizedProblem[] _categorizedProblems;
+
+  private Map<String, File>    _compiledclassfiles;
 
   /**
    * {@inheritDoc}
@@ -41,4 +47,26 @@ public class CompileJobResultImpl implements CompileJobResult {
   public void setCategorizedProblems(CategorizedProblem[] categorizedProblems) {
     this._categorizedProblems = categorizedProblems;
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  public Map<String, File> getCompiledClassFiles() {
+    if (this._compiledclassfiles == null) {
+      return Collections.EMPTY_MAP;
+    } else {
+      return this._compiledclassfiles;
+    }
+  }
+
+  /**
+   * Changes the map which contains the compiled class files.
+   * 
+   * @param compiledclasses
+   *          A map for the class files. Maybe <code>null</code>.
+   */
+  public void setCompiledClassFiles(Map<String, File> compiledclasses) {
+    this._compiledclassfiles = compiledclasses;
+  }
+
 }

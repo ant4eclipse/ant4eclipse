@@ -108,6 +108,10 @@ public class CoreExceptionCode extends ExceptionCode {
   public static CoreExceptionCode COULD_NOT_EXPORT_RESOURCE;
 
   /** - */
+  @NLSMessage("Could not copy file '%s' to '%s'.")
+  public static CoreExceptionCode COPY_FAILURE;
+
+  /** - */
   @NLSMessage("Launching the executable '%s' failed.")
   public static CoreExceptionCode EXECUTION_FAILURE;
 

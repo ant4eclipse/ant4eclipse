@@ -43,6 +43,7 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -155,6 +156,16 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
       }
     }
 
+    // if the destination directory has been specified for the javac task we might need
+    // to copy the generated class files
+    if (compileJobResult.succeeded() && (getJavac().getDestdir() != null)) {
+      /**
+       * @todo [12-Apr-2011:KASI] This needs to be supported for Javac, too. It would be possible to use the destdir
+       *       alternatively but references like the EcjAdditionalCompilerArguments need to be adopted in this case.
+       */
+      cloneClasses(getJavac().getDestdir(), compileJobResult.getCompiledClassFiles());
+    }
+
     // throw Exception if compilation was not successful
     if (!compileJobResult.succeeded()) {
       throw new Ant4EclipseException(EcjExceptionCodes.COMPILATION_WAS_NOT_SUCCESFUL);
@@ -163,6 +174,25 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // Step 8: Return
     return true;
 
+  }
+
+  /**
+   * Clones all generated class files while copying them into the user specified directory.
+   * 
+   * @param destdir
+   *          The destination director to save the classes to. Not <code>null</code>.
+   * @param compiledclasses
+   *          A map which provides all compiled classes. Not <code>null</code>.
+   */
+  private void cloneClasses(File destdir, Map<String, File> compiledclasses) {
+    if (!destdir.isAbsolute()) {
+      destdir = destdir.getAbsoluteFile();
+    }
+    for (Map.Entry<String, File> entry : compiledclasses.entrySet()) {
+      File destfile = new File(destdir, entry.getKey());
+      Utilities.mkdirs(destfile.getParentFile());
+      Utilities.copy(entry.getValue(), destfile);
+    }
   }
 
   /**
@@ -232,13 +262,13 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // iterate over all the source files and create SourceFile
     for (File file : filelist) {
 
-	  if (!hasSourceFolder(file)) {
-	    // the user has restricted the source folders for the compilation.
-		// f.e. the project has two source folders while the user only compiles one at
-		// a time
-	    continue;
-	  }
-	
+      if (!hasSourceFolder(file)) {
+        // the user has restricted the source folders for the compilation.
+        // f.e. the project has two source folders while the user only compiles one at
+        // a time
+        continue;
+      }
+
       // get the source folder
       File sourceFolder = getSourceFolder(file);
 
@@ -259,8 +289,8 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
       // compile package-info.java first
       if (sourceFileName.endsWith("package-info.java")) {
         // add the new source file
-        sourceFiles.add(0, SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder,
-            getDefaultEncoding()));
+        sourceFiles.add(0,
+            SourceFileFactory.createSourceFile(sourceFolder, sourceFileName, destinationFolder, getDefaultEncoding()));
       }
       // END BUG-FIX
       else {
@@ -271,7 +301,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     }
 
     // return the result
-    return sourceFiles.toArray(new SourceFile[0]);
+    return sourceFiles.toArray(new SourceFile[sourceFiles.size()]);
   }
 
   /**
@@ -299,11 +329,11 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     }
 
     // source folder for source file does not exist...
-    throw new Ant4EclipseException(EcjExceptionCodes.SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST, sourceFile
-        .getAbsolutePath());
+    throw new Ant4EclipseException(EcjExceptionCodes.SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST,
+        sourceFile.getAbsolutePath());
   }
 
-    /**
+  /**
    * <p>
    * Returns <code>true</code> if there's a source folder for the given source file.
    * </p>
@@ -444,12 +474,12 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
       // Step 4: debug
       if (A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug("Boot class path access restrictions: '%s'", compilerArguments
-            .getBootClassPathAccessRestrictions());
+        A4ELogging.debug("Boot class path access restrictions: '%s'",
+            compilerArguments.getBootClassPathAccessRestrictions());
       }
 
-      classFileLoader = ClassFileLoaderFactory.createFilteringClassFileLoader(classFileLoader, compilerArguments
-          .getBootClassPathAccessRestrictions());
+      classFileLoader = ClassFileLoaderFactory.createFilteringClassFileLoader(classFileLoader,
+          compilerArguments.getBootClassPathAccessRestrictions());
     }
 
     // ClassFileLoaderCache.getInstance().storeClassFileLoader(bootclasspath.toString(), classFileLoader);

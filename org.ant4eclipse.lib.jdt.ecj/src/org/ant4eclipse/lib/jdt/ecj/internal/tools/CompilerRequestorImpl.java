@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -24,8 +23,11 @@ import org.eclipse.jdt.internal.compiler.ICompilerRequestor;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -44,6 +46,9 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
   /** the list of categorized problems */
   protected List<CategorizedProblem> _categorizedProblems;
 
+  /** collection of class files which have been compiled */
+  private Map<String, File>          _compiledClassFiles;
+
   /**
    * <p>
    * Creates a new instance of type {@link CompilerRequestorImpl}.
@@ -52,6 +57,16 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
   public CompilerRequestorImpl() {
     this._compilationSuccessful = true;
     this._categorizedProblems = new LinkedList<CategorizedProblem>();
+    this._compiledClassFiles = new Hashtable<String, File>();
+  }
+
+  /**
+   * Returns a map for the compiled class files.
+   * 
+   * @return A map for the compiled class files. Not <code>null</code>.
+   */
+  public Map<String, File> getCompiledClassFiles() {
+    return Collections.unmodifiableMap(this._compiledClassFiles);
   }
 
   /**
@@ -102,6 +117,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
         try {
           A4ELogging.debug("writing class file: '%s'", classFile);
           Utilities.writeFile(classFile, classFile2.getBytes());
+          this._compiledClassFiles.put(classFileName.toString(), classFile);
         } catch (Ant4EclipseException ioe) {
           A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(), ioe.toString());
           ioe.printStackTrace();
