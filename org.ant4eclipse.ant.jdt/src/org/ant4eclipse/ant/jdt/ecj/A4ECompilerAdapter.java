@@ -322,7 +322,6 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // find the 'right' source directory
     for (String srcDir : srcDirs) {
-      A4ELogging.info("srcDir: %s", srcDir);
       if (absolutePath.startsWith(srcDir) && absolutePath.charAt(srcDir.length()) == File.separatorChar) {
         return true;
       }
