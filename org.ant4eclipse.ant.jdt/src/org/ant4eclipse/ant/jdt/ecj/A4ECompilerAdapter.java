@@ -280,18 +280,14 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // get the absolute path
     String absolutePath = sourceFile.getAbsolutePath();
-    if (A4ELogging.isTraceingEnabled()) {
-      A4ELogging.trace("getSourceFolder: %s", absolutePath);
-	}
+    A4ELogging.info("getSourceFolder: %s", absolutePath);
 
     // get the list of all source directories
     String[] srcDirs = getJavac().getSrcdir().list();
 
     // find the 'right' source directory
     for (String srcDir : srcDirs) {
-	  if (A4ELogging.isTraceingEnabled()) {
-        A4ELogging.trace("srcDir: %s", srcDir);
-	  }
+      A4ELogging.info("srcDir: %s", srcDir);
       if (absolutePath.startsWith(srcDir) && absolutePath.charAt(srcDir.length()) == File.separatorChar) {
         return new File(srcDir);
       }
