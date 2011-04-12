@@ -217,10 +217,10 @@ public class Utilities {
   }
 
   /**
-   * Closes the supplied stream if it's available.
+   * Closes the supplied Closeable if it's available.
    * 
-   * @param stream
-   *          The stream that has to be closed. Maybe <code>null</code>.
+   * @param closeable
+   *          The closeable that has to be closed. Maybe <code>null</code>.
    */
   public static final void close(Closeable closeable) {
     if (closeable != null) {
