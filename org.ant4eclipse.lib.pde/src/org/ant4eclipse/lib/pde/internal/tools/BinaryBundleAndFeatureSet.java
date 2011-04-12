@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.FeatureDescriptionLoader;
@@ -51,9 +50,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
    */
   public BinaryBundleAndFeatureSet(File targetPlatformLocation) {
     super("target platform location '" + targetPlatformLocation.getAbsolutePath() + "'");
-
-    Assure.isDirectory(targetPlatformLocation);
-
+    Assure.isDirectory("targetPlatformLocation", targetPlatformLocation);
     this._targetPlatformLocation = targetPlatformLocation;
   }
 
@@ -109,7 +106,7 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
       featuresDirectory = this._targetPlatformLocation;
     }
 
-    // 
+    //
     readFeature(featuresDirectory);
 
     // 2. read plugins from linked directories in target location

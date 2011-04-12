@@ -16,8 +16,8 @@ import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.util.ManifestHelper.ManifestHeaderElement;
+import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +58,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    *          the expansion directory
    */
   public JaredBundleLayoutResolver(File location, File expansionDirectory) {
-    Assure.isFile(location);
+    Assure.isFile("location", location);
     Assure.notNull("expansionDirectory", expansionDirectory);
 
     this._location = location;

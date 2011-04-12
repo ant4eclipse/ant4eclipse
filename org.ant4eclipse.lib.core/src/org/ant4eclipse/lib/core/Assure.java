@@ -68,7 +68,8 @@ public class Assure {
    */
   public static final void notNull(String parametername, Object object) {
     if (object == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTNULL, parametername));
+      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION,
+          String.format(MSG_NOTNULL, parametername));
     }
   }
 
@@ -225,8 +226,8 @@ public class Assure {
    * @param file
    *          the file that must be a file.
    */
-  public static final void isFile(File file) {
-    Assure.exists("file", file);
+  public static final void isFile(String param, File file) {
+    Assure.exists(param, file);
     if (!file.isFile()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
           MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath()));
@@ -241,8 +242,8 @@ public class Assure {
    * @param file
    *          the file that must be a directory.
    */
-  public static final void isDirectory(File file) {
-    Assure.exists("file", file);
+  public static final void isDirectory(String param, File file) {
+    Assure.exists(param, file);
     if (!file.isDirectory()) {
       throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
           MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath()));

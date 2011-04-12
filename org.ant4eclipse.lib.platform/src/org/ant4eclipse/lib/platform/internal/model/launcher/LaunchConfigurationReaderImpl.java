@@ -34,16 +34,15 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
    */
   public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
 
-    Assure.notNull("launchConfigurationFile", launchConfigurationFile);
-    Assure.isFile(launchConfigurationFile);
+    Assure.isFile("launchConfigurationFile", launchConfigurationFile);
 
     try {
       SAXParser parser = getParserFactory().newSAXParser();
       LaunchConfigHandler handler = new LaunchConfigHandler();
       parser.parse(launchConfigurationFile, handler);
 
-      LaunchConfigurationImpl launchConfigurationImpl = new LaunchConfigurationImpl(handler
-          .getLaunchConfigurationType(), handler.getAttributes());
+      LaunchConfigurationImpl launchConfigurationImpl = new LaunchConfigurationImpl(
+          handler.getLaunchConfigurationType(), handler.getAttributes());
       return launchConfigurationImpl;
     } catch (Exception ex) {
       ex.printStackTrace();

@@ -80,6 +80,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
     CompileJobResultImpl result = new CompileJobResultImpl();
     result.setSucceeded(requestor.isCompilationSuccessful());
     result.setCategorizedProblems(requestor.getCategorizedProblems());
+    result.setCompiledClassFiles(requestor.getCompiledClassFiles());
 
     // return the result
     return result;

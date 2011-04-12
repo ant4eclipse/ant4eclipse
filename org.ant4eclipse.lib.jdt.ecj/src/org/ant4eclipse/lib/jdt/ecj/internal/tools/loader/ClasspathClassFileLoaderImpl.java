@@ -329,7 +329,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @throws IOException
    */
   private String[] getAllPackagesFromJar(File jar) {
-    Assure.isFile(jar);
+    Assure.isFile("jar", jar);
 
     // prepare result...
     List<String> result = new LinkedList<String>();
@@ -340,8 +340,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     try {
       jarFile = new JarFile(jar);
     } catch (IOException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION, jar
-          .getAbsolutePath());
+      throw new Ant4EclipseException(EcjExceptionCodes.COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION,
+          jar.getAbsolutePath());
     }
 
     // Iterate over entries...
@@ -556,8 +556,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      *          the source path entry to add.
      */
     public void addSourcepathEntry(File sourcepathEntry) {
-      Assure.isDirectory(sourcepathEntry);
-
+      Assure.isDirectory("sourcepathEntry", sourcepathEntry);
       this._sourcepathEntries.add(sourcepathEntry);
     }
 
@@ -623,11 +622,11 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
           if (packageDir.isDirectory()) {
             for (String name : packageDir.list()) {
               if (javaFileName.equals(name)
-                  && new File(classpathEntry, className.asSourceFileName().replace('/', File.separatorChar).replace(
-                      '\\', File.separatorChar)).exists()) {
-                return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName().replace('/',
-                    File.separatorChar).replace('\\', File.separatorChar), classpathEntry.getAbsolutePath(),
-                    ClasspathClassFileLoaderImpl.this._type);
+                  && new File(classpathEntry, className.asSourceFileName().replace('/', File.separatorChar)
+                      .replace('\\', File.separatorChar)).exists()) {
+                return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName()
+                    .replace('/', File.separatorChar).replace('\\', File.separatorChar),
+                    classpathEntry.getAbsolutePath(), ClasspathClassFileLoaderImpl.this._type);
               }
             }
           }

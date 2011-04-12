@@ -82,7 +82,7 @@ public class LinkFileFactory {
    * 
    */
   public static LinkFile parseLinkFile(File linkFile) {
-    Assure.isFile(linkFile);
+    Assure.isFile("linkFile", linkFile);
     A4ELogging.debug("Parsing link file '%s'", linkFile.getAbsolutePath());
     StringMap p = new StringMap(linkFile);
     String path = p.get("path");

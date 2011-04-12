@@ -58,7 +58,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    */
   public JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault) {
     Assure.nonEmpty("id", id);
-    Assure.isDirectory(location);
+    Assure.isDirectory("location", location);
 
     JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location);
 

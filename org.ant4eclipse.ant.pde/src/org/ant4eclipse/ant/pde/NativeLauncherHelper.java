@@ -20,8 +20,8 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 import org.apache.tools.ant.types.FileList;
-import org.apache.tools.ant.types.PatternSet;
 import org.apache.tools.ant.types.FileList.FileName;
+import org.apache.tools.ant.types.PatternSet;
 
 import java.io.File;
 
@@ -226,7 +226,7 @@ public class NativeLauncherHelper {
   private static FileList getAllChildren(File directory) {
 
     // assert that directory is a directory
-    Assure.isDirectory(directory);
+    Assure.isDirectory("directory", directory);
 
     // create the result file list
     FileList fileList = new FileList();

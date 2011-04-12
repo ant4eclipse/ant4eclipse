@@ -146,8 +146,7 @@ public class EcjAdditionalCompilerArguments {
    * @return the output folder for a specific source folder.
    */
   public File getOutputFolder(File sourceFolder) {
-    Assure.isDirectory(sourceFolder);
-
+    Assure.isDirectory("sourceFolder", sourceFolder);
     return this._outputFolderMap.get(sourceFolder);
   }
 
@@ -204,7 +203,7 @@ public class EcjAdditionalCompilerArguments {
     Assure.notNull("sourceFolders", sourceFolders);
 
     // get source folder map
-    Set<File> sourceFolderSet = this._sourceFolderMap.get(sourceFolders);
+    Set<File> sourceFolderSet = this._sourceFolderMap.get(outputFolder);
 
     // if no source folder map exists, create a new one
     if (sourceFolderSet == null) {

@@ -81,7 +81,7 @@ public class SvnAdapter extends VcsAdapter {
    */
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
@@ -108,8 +108,8 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "checkout", ex
-          .toString());
+      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "checkout",
+          ex.toString());
     }
 
   }
@@ -119,7 +119,7 @@ public class SvnAdapter extends VcsAdapter {
    */
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
@@ -148,8 +148,8 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "export", ex
-          .toString());
+      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "export",
+          ex.toString());
     }
   }
 
@@ -158,7 +158,7 @@ public class SvnAdapter extends VcsAdapter {
    */
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
         "ProjectDescription must be a SvnTeamProjectDescription");
@@ -180,8 +180,8 @@ public class SvnAdapter extends VcsAdapter {
     try {
       task.execute();
     } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "update", ex
-          .toString());
+      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "update",
+          ex.toString());
     }
   }
 

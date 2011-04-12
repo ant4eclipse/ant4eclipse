@@ -19,6 +19,7 @@ import org.ant4eclipse.lib.core.nls.NLS;
 import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +29,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -36,6 +36,7 @@ import java.lang.reflect.Constructor;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,8 +45,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -221,61 +222,10 @@ public class Utilities {
    * @param stream
    *          The stream that has to be closed. Maybe <code>null</code>.
    */
-  public static final void close(InputStream stream) {
-    if (stream != null) {
+  public static final void close(Closeable closeable) {
+    if (closeable != null) {
       try {
-        stream.close();
-      } catch (IOException ex) {
-        // generally not interesting so a warning is apropriate here
-        A4ELogging.warn(ex.getMessage());
-      }
-    }
-  }
-
-  /**
-   * Closes the supplied stream if it's available.
-   * 
-   * @param stream
-   *          The stream that has to be closed. Maybe <code>null</code>.
-   */
-  public static final void close(OutputStream stream) {
-    if (stream != null) {
-      try {
-        stream.close();
-      } catch (IOException ex) {
-        // generally not interesting so a warning is apropriate here
-        A4ELogging.warn(ex.getMessage());
-      }
-    }
-  }
-
-  /**
-   * Closes the supplied writer if it's available.
-   * 
-   * @param writer
-   *          The writer which has to be closed. Maybe <code>null</code>.
-   */
-  public static final void close(Writer writer) {
-    if (writer != null) {
-      try {
-        writer.close();
-      } catch (IOException ex) {
-        // generally not interesting so a warning is apropriate here
-        A4ELogging.warn(ex.getMessage());
-      }
-    }
-  }
-
-  /**
-   * Closes the supplied reader if it's available.
-   * 
-   * @param reader
-   *          The reader which has to be closed. Maybe <code>null</code>.
-   */
-  public static final void close(Reader reader) {
-    if (reader != null) {
-      try {
-        reader.close();
+        closeable.close();
       } catch (IOException ex) {
         // generally not interesting so a warning is apropriate here
         A4ELogging.warn(ex.getMessage());
@@ -523,8 +473,8 @@ public class Utilities {
 
   /**
    * <p>
-   * Check if a String has text. More specifically, returns <code>true</code> if the string not <code>null<code>, it's <code>length is > 0</code>,
-   * and it has at least one non-whitespace character.
+   * Check if a String has text. More specifically, returns <code>true</code> if the string not
+   * <code>null<code>, it's <code>length is > 0</code>, and it has at least one non-whitespace character.
    * </p>
    * <p>
    * 
@@ -867,6 +817,37 @@ public class Utilities {
       }
     } catch (IOException ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.UNPACKING_FAILED, zipfile);
+    }
+  }
+
+  /**
+   * Copies one file to another location.
+   * 
+   * @param source
+   *          The original File which has to be copied. Not <code>null</code>.
+   * @param to
+   *          The destination File which has to be written. Not <code>null</code>.
+   */
+  public static final void copy(File source, File to) {
+    Assure.isFile("source", source);
+    Assure.notNull("to", to);
+    FileInputStream instream = null;
+    FileOutputStream outstream = null;
+    FileChannel readchannel = null;
+    FileChannel writechannel = null;
+    try {
+      instream = new FileInputStream(source);
+      outstream = new FileOutputStream(to);
+      readchannel = instream.getChannel();
+      writechannel = outstream.getChannel();
+      readchannel.transferTo(0, readchannel.size(), writechannel);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COPY_FAILURE, source.getAbsolutePath(), to.getAbsolutePath());
+    } finally {
+      close(readchannel);
+      close(writechannel);
+      close(instream);
+      close(outstream);
     }
   }
 

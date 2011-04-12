@@ -85,7 +85,7 @@ public class JavaExecuter {
    * @return a new {@link JavaExecuter}
    */
   public static JavaExecuter createWithA4eClasspath(File jreLocation) {
-    Assure.isDirectory(jreLocation);
+    Assure.isDirectory("jreLocation", jreLocation);
 
     // check if the location points to a JDK (instead a JRE)...
     File jreDirectory = new File(jreLocation, "jre");
@@ -125,8 +125,7 @@ public class JavaExecuter {
    *          the directory of the java runtime.
    */
   public JavaExecuter(File jreDirectory) {
-    Assure.isDirectory(jreDirectory);
-
+    Assure.isDirectory("jreDirectory", jreDirectory);
     this._jreDirectory = jreDirectory;
   }
 
