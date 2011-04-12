@@ -144,7 +144,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      *          the directory.
      */
     public Location(File directory) {
-      Assure.isDirectory(directory);
+      Assure.isDirectory("directory", directory);
       this._directory = directory;
     }
 
@@ -168,7 +168,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      *          the directory
      */
     public void setDir(File directory) {
-      Assure.isDirectory(directory);
+      Assure.isDirectory("directory", directory);
       this._directory = directory;
     }
 

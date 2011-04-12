@@ -86,7 +86,7 @@ public class EclipseProjectBuilder {
    * @return The project directory
    */
   public File createIn(File destinationDirectory) {
-    Assure.isDirectory(destinationDirectory);
+    Assure.isDirectory("destinationDirectory", destinationDirectory);
     File projectDir = new File(destinationDirectory, this._projectName);
     Utilities.mkdirs(projectDir);
     createArtefacts(projectDir);

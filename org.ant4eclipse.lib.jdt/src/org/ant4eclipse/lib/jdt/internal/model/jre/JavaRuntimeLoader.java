@@ -53,7 +53,7 @@ public class JavaRuntimeLoader {
    */
   public static JavaRuntime loadJavaRuntime(String id, File location) {
     Assure.nonEmpty("id", id);
-    Assure.isDirectory(location);
+    Assure.isDirectory("location", location);
 
     String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"
         + Math.round(Math.random() * 1000000000);

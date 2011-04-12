@@ -53,8 +53,8 @@ public class FeatureDescriptionLoader {
 
     if (A4ELogging.isDebuggingEnabled()) {
       // warn if feature description is null
-      A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(), file
-          .getAbsoluteFile());
+      A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(),
+          file.getAbsoluteFile());
     }
     // return null
     return null;
@@ -70,7 +70,7 @@ public class FeatureDescriptionLoader {
    * @return the {@link FeatureDescription}
    */
   private static FeatureDescription parseFeatureJarFile(File file) {
-    Assure.isFile(file);
+    Assure.isFile("file", file);
 
     try {
       // create jar file
@@ -109,7 +109,7 @@ public class FeatureDescriptionLoader {
    *         <code>feature.xml</code> file, the method returns <code>null</code>.
    */
   private static FeatureDescription parseFeatureDirectory(File directory) {
-    Assure.isDirectory(directory);
+    Assure.isDirectory("directory", directory);
 
     try {
       // create jar file

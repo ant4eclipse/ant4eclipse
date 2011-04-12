@@ -49,8 +49,7 @@ public class TargetPlatformDefinition {
    *          the location to add
    */
   public void addLocation(File location) {
-    Assure.isDirectory(location);
-
+    Assure.isDirectory("location", location);
     if (!this._locations.contains(location)) {
       this._locations.add(location);
     }

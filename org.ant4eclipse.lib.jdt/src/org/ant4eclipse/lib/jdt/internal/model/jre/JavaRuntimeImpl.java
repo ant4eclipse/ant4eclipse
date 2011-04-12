@@ -62,7 +62,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
       JavaProfile javaProfile) {
 
     Assure.nonEmpty("id", id);
-    Assure.isDirectory(location);
+    Assure.isDirectory("location", location);
     Assure.notNull("libraries", libraries);
     Assure.notNull("javaVersion", javaVersion);
     Assure.notNull("javaSpecificationVersion", javaSpecificationVersion);

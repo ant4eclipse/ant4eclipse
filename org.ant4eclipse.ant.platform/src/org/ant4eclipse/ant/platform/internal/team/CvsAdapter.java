@@ -72,7 +72,7 @@ public class CvsAdapter extends VcsAdapter {
    */
   @Override
   protected void export(File destination, TeamProjectDescription projectDescription) {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
@@ -97,8 +97,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(), e
-          .toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(),
+          e.toString());
     }
   }
 
@@ -119,7 +119,7 @@ public class CvsAdapter extends VcsAdapter {
    */
   @Override
   protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
@@ -142,8 +142,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(), e
-          .toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(),
+          e.toString());
     }
   }
 
@@ -162,7 +162,7 @@ public class CvsAdapter extends VcsAdapter {
    */
   @Override
   protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectDescription", projectDescription);
     Assure.assertTrue(projectDescription instanceof CvsTeamProjectDescription,
         "ProjectDescription must be a CvsTeamProjectDescription");
@@ -185,8 +185,8 @@ public class CvsAdapter extends VcsAdapter {
     try {
       cvs.execute();
     } catch (Exception e) {
-      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(), e
-          .toString());
+      throw new Ant4EclipseException(e, PlatformExceptionCode.ERROR_WHILE_EXECUTING_CVS_COMMAND, cvs.getCommand(),
+          e.toString());
     }
   }
 
@@ -210,8 +210,8 @@ public class CvsAdapter extends VcsAdapter {
     cvs.setCvsRoot(projectDescription.getResolvedCvsRoot().toString());
     cvs.setDest(destination);
 
-    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf(this._quiet), Boolean
-        .valueOf(this._reallyQuiet));
+    A4ELogging.debug("CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf(this._quiet),
+        Boolean.valueOf(this._reallyQuiet));
     cvs.setQuiet(this._quiet);
     cvs.setReallyquiet(this._reallyQuiet);
     return cvs;

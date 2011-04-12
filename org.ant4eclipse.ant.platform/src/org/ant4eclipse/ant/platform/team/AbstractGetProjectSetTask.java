@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.team;
 
-
 import org.ant4eclipse.ant.platform.core.task.AbstractTeamProjectSetBasedTask;
 import org.ant4eclipse.ant.platform.internal.team.VcsAdapter;
 import org.ant4eclipse.lib.core.Assure;
@@ -164,7 +163,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void checkoutProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectSet", projectSet);
 
     A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf(deleteExisting));
@@ -183,7 +182,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void exportProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
       throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectSet", projectSet);
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
@@ -198,7 +197,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    */
   public void updateProjectSet(File destination, TeamProjectSet projectSet) throws Ant4EclipseException {
-    Assure.isDirectory(destination);
+    Assure.isDirectory("destination", destination);
     Assure.notNull("projectSet", projectSet);
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
     for (TeamProjectDescription description : descriptions) {

@@ -116,8 +116,8 @@ public class BundleDescriptionLoader {
         description = parsePluginDirectory(file);
       }
       if (description == null && A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE.getMessage(), file
-            .getAbsoluteFile());
+        A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_BUNDLE_MANIFEST_FILE.getMessage(),
+            file.getAbsoluteFile());
       }
     } catch (FileNotFoundException e) {
       throw new RuntimeException(e.getMessage(), e);
@@ -131,7 +131,7 @@ public class BundleDescriptionLoader {
   }
 
   private static BundleDescription parsePluginJarFile(File file) {
-    Assure.isFile(file);
+    Assure.isFile("file", file);
 
     try {
       // create jar file
@@ -167,7 +167,7 @@ public class BundleDescriptionLoader {
   private static BundleDescription parsePluginDirectory(File directory) throws FileNotFoundException, IOException,
       BundleException {
 
-    Assure.isDirectory(directory);
+    Assure.isDirectory("directory", directory);
 
     // support for plugins based on the osgi bundle model
     File bundleManifestFile = new File(directory, Constants.OSGI_BUNDLE_MANIFEST);

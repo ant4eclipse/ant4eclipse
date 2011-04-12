@@ -91,7 +91,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
-    Assure.isFile(projectSetFile);
+    Assure.isFile("projectSetFile", projectSetFile);
 
     XQueryHandler queryhandler2 = new XQueryHandler();
 

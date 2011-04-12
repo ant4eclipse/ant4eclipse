@@ -153,7 +153,7 @@ public class XQueryHandler extends DefaultHandler {
    *          The handler which provides all queries.
    */
   public static void queryFile(File xmlfile, XQueryHandler handler) {
-    Assure.isFile(xmlfile);
+    Assure.isFile("xmlfile", xmlfile);
     Assure.notNull("handler", handler);
     try {
       SAXParserFactory factory = getSAXParserFactory();

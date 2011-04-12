@@ -146,8 +146,7 @@ public class EcjAdditionalCompilerArguments {
    * @return the output folder for a specific source folder.
    */
   public File getOutputFolder(File sourceFolder) {
-    Assure.isDirectory(sourceFolder);
-
+    Assure.isDirectory("sourceFolder", sourceFolder);
     return this._outputFolderMap.get(sourceFolder);
   }
 

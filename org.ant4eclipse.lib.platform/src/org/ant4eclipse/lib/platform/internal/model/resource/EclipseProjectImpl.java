@@ -80,7 +80,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    *          the name of the project
    */
   public EclipseProjectImpl(Workspace workspace, File projectDirectory) {
-    Assure.isDirectory(projectDirectory);
+    Assure.isDirectory("projectDirectory", projectDirectory);
 
     this._workspace = workspace;
     this._projectDirectory = Utilities.getCanonicalFile(projectDirectory);

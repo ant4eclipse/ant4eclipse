@@ -130,22 +130,22 @@ public class AssureTest {
     System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
     testFile.deleteOnExit();
 
-    Assure.isFile(testFile);
+    Assure.isFile("bibo", testFile);
 
     try {
-      Assure.isFile(testFile.getParentFile());
+      Assure.isFile("bibo", testFile.getParentFile());
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
-      Assure.isFile(nonexistingDir);
+      Assure.isFile("bibo", nonexistingDir);
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
-      Assure.isFile(new File("NICHT_DA"));
+      Assure.isFile("bibo", new File("NICHT_DA"));
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
@@ -163,16 +163,16 @@ public class AssureTest {
     testFile.deleteOnExit();
     System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
 
-    Assure.isDirectory(testFile.getParentFile());
+    Assure.isDirectory("dodo", testFile.getParentFile());
 
     try {
-      Assure.isDirectory(testFile);
+      Assure.isDirectory("dodo", testFile);
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
 
     try {
-      Assure.isDirectory(new File("NICHT_DA"));
+      Assure.isDirectory("dodo", new File("NICHT_DA"));
     } catch (Ant4EclipseException ex) {
       Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
     }
