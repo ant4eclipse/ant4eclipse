@@ -63,7 +63,7 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
     // .getProject("simpleproject3"), null);
 
     List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(workspace, new String[] { "simpleproject3",
-        "simpleproject2" }, null, null);
+        "simpleproject32" }, null, null);
 
     assertEquals(2, projects.size());
     assertSame(workspace.getProject("simpleproject2"), projects.get(0));
