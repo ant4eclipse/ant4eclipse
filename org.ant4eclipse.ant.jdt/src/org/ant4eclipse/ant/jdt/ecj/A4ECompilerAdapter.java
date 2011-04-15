@@ -317,14 +317,12 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // get the absolute path
     String absolutePath = sourceFile.getAbsolutePath();
-    System.err.println("## absolutepath: " + absolutePath);
 
     // get the list of all source directories
     String[] srcDirs = getJavac().getSrcdir().list();
 
     // find the 'right' source directory
     for (String srcDir : srcDirs) {
-      System.err.println("## srcdir: " + srcDir);
       if (absolutePath.startsWith(srcDir) && absolutePath.charAt(srcDir.length()) == File.separatorChar) {
         return new File(srcDir);
       }

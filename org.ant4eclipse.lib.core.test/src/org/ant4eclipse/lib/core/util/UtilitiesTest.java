@@ -64,7 +64,7 @@ public class UtilitiesTest {
     } finally {
       jarfile.close();
     }
-    Assert.assertTrue(new File(destdir1, "atest.jar").isFile());
+    Assert.assertTrue(new File(destdir1, "test.jar").isFile());
     Assert.assertTrue(new File(destdir1, "test.txt").isFile());
     Assert.assertTrue(new File(destdir1, "test2.jar").isFile());
     Assert.assertTrue(new File(destdir1, "META-INF").isDirectory());
@@ -85,7 +85,7 @@ public class UtilitiesTest {
   public void calcRelative() {
 
     String relative1 = Utilities.calcRelative(new File("/schnerd"), new File("/temp/rep/schrepp/depp"));
-    Assert.assertEquals("../temp/rep/schreppl/depp".replace('/', File.separatorChar), relative1);
+    Assert.assertEquals("../temp/rep/schrepp/depp".replace('/', File.separatorChar), relative1);
 
     if (Utilities.isWindows()) {
 
