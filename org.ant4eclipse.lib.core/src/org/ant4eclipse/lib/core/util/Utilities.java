@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -231,6 +232,38 @@ public class Utilities {
         A4ELogging.warn(ex.getMessage());
       }
     }
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(InputStream instream) {
+    close((Closeable) instream);
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(OutputStream outstream) {
+    close((Closeable) outstream);
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(Reader reader) {
+    close((Closeable) reader);
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(Writer writer) {
+    close((Closeable) writer);
   }
 
   public static final URL toURL(File file) {
