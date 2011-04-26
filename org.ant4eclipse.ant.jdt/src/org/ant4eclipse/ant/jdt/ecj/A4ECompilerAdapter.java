@@ -163,7 +163,8 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
        * @todo [12-Apr-2011:KASI] This needs to be supported for Javac, too. It would be possible to use the destdir
        *       alternatively but references like the EcjAdditionalCompilerArguments need to be adopted in this case.
        */
-      cloneClasses(getJavac().getDestdir(), compileJobResult.getCompiledClassFiles());
+      File destdir = Utilities.getCanonicalFile(getJavac().getDestdir());
+      cloneClasses(destdir, compileJobResult.getCompiledClassFiles());
     }
 
     // throw Exception if compilation was not successful
@@ -189,9 +190,11 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
       destdir = destdir.getAbsoluteFile();
     }
     for (Map.Entry<String, File> entry : compiledclasses.entrySet()) {
-      File destfile = new File(destdir, entry.getKey());
+      File destfile = Utilities.getCanonicalFile(new File(destdir, entry.getKey()));
       Utilities.mkdirs(destfile.getParentFile());
-      Utilities.copy(entry.getValue(), destfile);
+      if (!destfile.equals(entry.getValue())) {
+        Utilities.copy(entry.getValue(), destfile);
+      }
     }
   }
 
@@ -659,4 +662,5 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // Step 4: last resort: return the default file encoding
     return System.getProperty("file.encoding");
   }
+
 } /* ENDCLASS */
