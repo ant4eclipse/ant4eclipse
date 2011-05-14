@@ -438,13 +438,13 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     // step 3: resolve the referenced bundles
     for (BundleDependency bundleDependency : bundleDependencies) {
 
-      // resolve the host
-      resolveReferencedBundles(bundleDependency.getHost());
-
-      // resolve the fragments
-      for (BundleDescription fragment : bundleDependency.getFragments()) {
-        resolveReferencedBundles(fragment);
-      }
+      // // resolve the host
+      // resolveReferencedBundles(bundleDependency.getHost());
+      //
+      // // resolve the fragments
+      // for (BundleDescription fragment : bundleDependency.getFragments()) {
+      // resolveReferencedBundles(fragment);
+      // }
     }
   }
 

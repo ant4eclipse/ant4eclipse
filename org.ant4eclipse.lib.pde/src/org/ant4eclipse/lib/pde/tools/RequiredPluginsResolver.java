@@ -13,9 +13,11 @@ package org.ant4eclipse.lib.pde.tools;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
@@ -29,6 +31,7 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -134,6 +137,20 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
       // add the class path entries - these entries are used for the class path
       context.addClasspathEntry(bundleDependency.getResolvedClasspathEntry());
+    }
+
+    // add the host to the class path
+    if (BundleDependenciesResolver.isFragment(resolvedBundleDescription)) {
+
+      //
+      BundleDescription host = BundleDependenciesResolver.getHost(resolvedBundleDescription);
+
+      BundleLayoutResolver layoutResolver = BundleDependenciesResolver.getBundleLayoutResolver(host);
+      //
+      ResolvedClasspathEntry entry = new ResolvedClasspathEntry(layoutResolver.resolveBundleClasspathEntries());
+
+      //
+      context.addClasspathEntry(entry);
     }
   }
 
