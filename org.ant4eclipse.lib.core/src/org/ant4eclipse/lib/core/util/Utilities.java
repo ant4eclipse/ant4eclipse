@@ -1017,7 +1017,7 @@ public class Utilities {
       return result.getCanonicalFile();
     } catch (IOException ex) {
       A4ELogging.debug("Temp dir: %s", System.getProperty("java.io.tmpdir"));
-      A4ELogging.debug("CanWrite: %s", new File().canWrite(System.getProperty("java.io.tmpdir")));
+      A4ELogging.debug("CanWrite: %s", new File(System.getProperty("java.io.tmpdir")).canWrite());
       throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     }
   }
