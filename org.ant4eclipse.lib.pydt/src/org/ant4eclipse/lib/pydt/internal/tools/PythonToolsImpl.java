@@ -28,12 +28,22 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
 
   private File    _epydoc      = null;
 
-  private boolean _initialised = false;
-
   /**
    * {@inheritDoc}
    */
   public File getEpydocInstallation() {
+    if (this._epydoc == null) {
+      try {
+        File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
+        this._epydoc = new File(zip.getParentFile(), "epydoc");
+        Utilities.unpack(zip, this._epydoc);
+      } catch (Ant4EclipseException ex) {
+        // if unpacking failed we consider the python doc feature unavailable
+        if (ex.getExceptionCode() != CoreExceptionCode.UNPACKING_FAILED) {
+          throw ex;
+        }
+      }
+    }
     return this._epydoc;
   }
 
@@ -50,24 +60,13 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
    * {@inheritDoc}
    */
   public void initialize() {
-    try {
-      File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
-      this._epydoc = new File(zip.getParentFile(), "epydoc");
-      Utilities.unpack(zip, this._epydoc);
-    } catch (Ant4EclipseException ex) {
-      // if unpacking failed we consider the python doc feature unavailable
-      if (ex.getExceptionCode() != CoreExceptionCode.UNPACKING_FAILED) {
-        throw ex;
-      }
-    }
-    this._initialised = true;
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean isInitialized() {
-    return this._initialised;
+    return true;
   }
 
 } /* ENDCLASS */
