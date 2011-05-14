@@ -51,9 +51,10 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
    * {@inheritDoc}
    */
   public void dispose() {
-    Utilities.delete(this._epydoc);
+    if (this._epydoc != null) {
+      Utilities.delete(this._epydoc);
+    }
     this._epydoc = null;
-    this._initialised = false;
   }
 
   /**
