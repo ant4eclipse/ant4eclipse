@@ -964,7 +964,7 @@ public class Utilities {
       copy(url, result);
       return result.getCanonicalFile();
     } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     }
   }
 
@@ -992,7 +992,7 @@ public class Utilities {
       }
       return result;
     } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     }
   }
 
@@ -1016,7 +1016,7 @@ public class Utilities {
       writeFile(result, content, encoding);
       return result.getCanonicalFile();
     } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     }
   }
 
@@ -1041,7 +1041,7 @@ public class Utilities {
       writer = new OutputStreamWriter(output, encoding);
       writer.write(content);
     } catch (IOException ex) {
-      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     } finally {
       close(writer);
       close(output);
