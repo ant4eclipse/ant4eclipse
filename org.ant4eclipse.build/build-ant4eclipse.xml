@@ -228,12 +228,12 @@
       </not>
       <then>
         <if>
-          <equals arg1="${env.SVN_REVISION}" arg2="$${env.SVN_REVISION}" />
+          <equals arg1="${env.BUILD_NUMBER}" arg2="$${env.BUILD_NUMBER}" />
           <then>
             <var name="revision" value="local-revision" />
           </then>
           <else>
-            <var name="revision" value="${env.SVN_REVISION}" />
+            <var name="revision" value="${env.BUILD_NUMBER}" />
           </else>
         </if>
       </then>
