@@ -120,7 +120,6 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
         EclipseProject eclipseProject = context.getCurrentProject();
         PluginProjectRole role = eclipseProject.getRole(PluginProjectRole.class);
         additionalBundles = role.getBuildProperties().getAdditionalBundles();
-        System.err.println("additionalBundles: " + additionalBundles);
       }
 
       bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription,
