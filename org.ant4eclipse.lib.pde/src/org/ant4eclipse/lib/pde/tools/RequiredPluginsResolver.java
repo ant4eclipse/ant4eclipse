@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
+import java.util.List;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
@@ -23,16 +25,13 @@ import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver;
+import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundlesAnalyzer;
-import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * <p>
@@ -70,8 +69,8 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     TargetPlatform targetPlatform = getTargetPlatform(context);
 
     // Step 5: resolve the bundle dependencies
-    BundleDescription resolvedBundleDescription = targetPlatform.getResolvedBundle(pluginProjectDescription
-        .getSymbolicName(), pluginProjectDescription.getVersion());
+    BundleDescription resolvedBundleDescription = targetPlatform.getResolvedBundle(
+        pluginProjectDescription.getSymbolicName(), pluginProjectDescription.getVersion());
 
     resolveBundleClassPath(context, resolvedBundleDescription, targetPlatform);
 
@@ -90,7 +89,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // if (bundleSource.isEclipseProject()) {
     // context.addReferencedProjects(bundleSource.getAsEclipseProject());
     // }
-    //      
+    //
     // // get the layout resolver for the host and add the host's class path entries to the class path
     // BundleLayoutResolver hostLayoutResolver = BundleDependenciesResolver.getBundleLayoutResolver(hostDescription);
     // File[] hostClasspathEntries = hostLayoutResolver.resolveBundleClasspathEntries();
@@ -114,7 +113,18 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     List<BundleDependency> bundleDependencies = null;
 
     try {
-      bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription);
+
+      String[] additionalBundles = null;
+
+      if (!context.isRuntime() && context.hasCurrentProject()) {
+        EclipseProject eclipseProject = context.getCurrentProject();
+        PluginProjectRole role = eclipseProject.getRole(PluginProjectRole.class);
+        additionalBundles = role.getBuildProperties().getAdditionalBundles();
+        System.err.println("additionalBundles: " + additionalBundles);
+      }
+
+      bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription,
+          targetPlatform, additionalBundles);
     } catch (UnresolvedBundleException e) {
 
       // try to find the root cause
@@ -122,8 +132,8 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
           .getBundleDescription());
 
       // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
-      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION, TargetPlatformImpl
-          .dumpResolverErrors(description, true));
+      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
+          TargetPlatformImpl.dumpResolverErrors(description, true));
     }
 
     // add all dependencies to the class path

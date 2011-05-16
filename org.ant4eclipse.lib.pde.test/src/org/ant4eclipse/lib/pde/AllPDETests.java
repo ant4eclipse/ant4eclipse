@@ -11,12 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde;
 
+import org.ant4eclipse.lib.pde.model.buildproperties.BuildPropertiesParserTest;
 import org.ant4eclipse.lib.pde.model.launcher.SelectedLaunchConfigurationBundleParserTest;
 import org.ant4eclipse.lib.pde.model.launcher.SimpleConfiguratorBundlesTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ SelectedLaunchConfigurationBundleParserTest.class, SimpleConfiguratorBundlesTest.class })
+@Suite.SuiteClasses({ SelectedLaunchConfigurationBundleParserTest.class, SimpleConfiguratorBundlesTest.class,
+    BuildPropertiesParserTest.class })
 public class AllPDETests {
 } /* ENDCLASS */

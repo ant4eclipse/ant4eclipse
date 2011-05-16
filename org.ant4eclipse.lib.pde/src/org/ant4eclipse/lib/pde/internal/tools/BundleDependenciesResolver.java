@@ -11,19 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
-import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
-import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
-import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
-import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.lib.pde.tools.PluginProjectLayoutResolver;
-import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.eclipse.osgi.internal.resolver.StateHelperImpl;
-import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.osgi.service.resolver.ExportPackageDescription;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +20,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
+import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
+import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
+import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
+import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.tools.PluginProjectLayoutResolver;
+import org.ant4eclipse.lib.pde.tools.TargetPlatform;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.eclipse.osgi.internal.resolver.StateHelperImpl;
+import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.ExportPackageDescription;
+import org.eclipse.osgi.service.resolver.StateHelper;
 
 /**
  * <p>
@@ -44,6 +47,10 @@ import java.util.Set;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class BundleDependenciesResolver {
+  public List<BundleDependency> resolveBundleClasspath(BundleDescription description) throws UnresolvedBundleException {
+
+    return resolveBundleClasspath(description, null, null);
+  }
 
   /**
    * <p>
@@ -55,7 +62,8 @@ public class BundleDependenciesResolver {
    * @return
    * @throws UnresolvedBundleException
    */
-  public List<BundleDependency> resolveBundleClasspath(BundleDescription description) throws UnresolvedBundleException {
+  public List<BundleDependency> resolveBundleClasspath(BundleDescription description, TargetPlatform targetPlatform,
+      String[] additionalBundles) throws UnresolvedBundleException {
 
     Assure.notNull("description", description);
 
@@ -64,8 +72,14 @@ public class BundleDependenciesResolver {
       throw new UnresolvedBundleException(description);
     }
 
-    // 
-    ExportPackageDescription[] packageDescriptions = StateHelperImpl.getInstance().getVisiblePackages(description);
+    // Get visible packages that are exported by other bundles
+    StateHelper stateHelper = StateHelperImpl.getInstance();
+    ExportPackageDescription[] packageDescriptions = stateHelper.getVisiblePackages(description);
+
+    // Get exported packages from 'additional bundles'
+    if (additionalBundles != null) {
+      packageDescriptions = addAditionalPackages(packageDescriptions, targetPlatform, additionalBundles);
+    }
 
     Map<BundleDescription, BundleDependency> map = new HashMap<BundleDescription, BundleDependency>();
     List<BundleDependency> bundleDependencies = new ArrayList<BundleDependency>();
@@ -92,6 +106,33 @@ public class BundleDependenciesResolver {
     }
 
     return bundleDependencies;
+  }
+
+  /**
+   * @param packageDescriptions
+   * @param targetPlatform
+   * @param additionalBundles
+   * @return
+   */
+  private ExportPackageDescription[] addAditionalPackages(ExportPackageDescription[] packageDescriptions,
+      TargetPlatform targetPlatform, String[] additionalBundles) {
+
+    List<ExportPackageDescription> allDescriptions = new LinkedList<ExportPackageDescription>();
+    allDescriptions.addAll(Arrays.asList(packageDescriptions));
+
+    for (String additionalBundle : additionalBundles) {
+      BundleDescription resolvedBundle = targetPlatform.getResolvedBundle(additionalBundle, null);
+      ExportPackageDescription[] exportPackages = resolvedBundle.getExportPackages();
+      for (ExportPackageDescription exportPackageDescription : exportPackages) {
+        if (!allDescriptions.contains(exportPackageDescription)) {
+          A4ELogging.debug("Add additional exported package %s", exportPackageDescription);
+          allDescriptions.add(exportPackageDescription);
+        }
+      }
+    }
+
+    return allDescriptions.toArray(new ExportPackageDescription[0]);
+
   }
 
   /**
@@ -236,8 +277,8 @@ public class BundleDependenciesResolver {
       BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._bundleDescription);
       classfiles.addAll(Arrays.asList(layoutResolver.resolveBundleClasspathEntries()));
       if (layoutResolver instanceof PluginProjectLayoutResolver) {
-        sourcefiles.addAll(Arrays
-            .asList(((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders()));
+        sourcefiles
+            .addAll(Arrays.asList(((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders()));
       }
 
       // resolve the fragments
@@ -258,8 +299,8 @@ public class BundleDependenciesResolver {
       }
 
       // return the result
-      return new ResolvedClasspathEntry(classfiles.toArray(new File[0]), accessRestrictions, sourcefiles
-          .toArray(new File[0]));
+      return new ResolvedClasspathEntry(classfiles.toArray(new File[0]), accessRestrictions,
+          sourcefiles.toArray(new File[0]));
     }
 
     /**
@@ -307,4 +348,5 @@ public class BundleDependenciesResolver {
       this._exportedPackages.add(packageName);
     }
   }
+
 }
