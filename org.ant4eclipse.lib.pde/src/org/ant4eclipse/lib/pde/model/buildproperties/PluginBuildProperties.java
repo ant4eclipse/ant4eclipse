@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.buildproperties;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
@@ -40,6 +40,14 @@ public class PluginBuildProperties extends AbstractBuildProperties {
 
   /** Returns the class compatibility level. (if not set 1.2 is the default value) */
   private String               _javacTarget = "1.2";
+
+  /**
+   * The list of additional bundles, that are added to the compile-time classpath only (<b>additional.bundles</b>).
+   * 
+   * <p>
+   * This property can be set using the "Automated Management of Dependencies" section in the Manifest editor
+   */
+  private String[]             _additionalBundles;
 
   /**
    *
@@ -155,6 +163,31 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   void setJarsCompileOrder(String[] compileOrder) {
     Assure.notNull("compileOrder", compileOrder);
     this._jarsCompileOrder = compileOrder;
+  }
+
+  /**
+   * @return the additionalBundles
+   */
+  public String[] getAdditionalBundles() {
+    return this._additionalBundles;
+  }
+
+  /**
+   * @param additionalBundles
+   *          the additionalBundles to set
+   */
+  public void setAdditionalBundles(String[] additionalBundles) {
+    Assure.notNull("additionalBundles", additionalBundles);
+    this._additionalBundles = additionalBundles;
+  }
+
+  /**
+   * Returns true, if there additional bundles defined, that should be added to compile time classpath
+   * 
+   * @return
+   */
+  public boolean hasAdditionalBundles() {
+    return (this._additionalBundles != null);
   }
 
   /**

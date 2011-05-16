@@ -11,16 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.pde.PdeExceptionCode;
-import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
-import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.osgi.service.resolver.StateObjectFactory;
-import org.osgi.framework.BundleException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,6 +20,16 @@ import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.StateObjectFactory;
+import org.osgi.framework.BundleException;
 
 public class BundleDescriptionLoader {
   /** - */
