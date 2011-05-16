@@ -34,6 +34,7 @@ import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.internal.resolver.StateHelperImpl;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 import org.eclipse.osgi.service.resolver.StateHelper;
 
@@ -78,7 +79,7 @@ public class BundleDependenciesResolver {
 
     // Get exported packages from 'additional bundles'
     if (additionalBundles != null) {
-      packageDescriptions = addAditionalPackages(packageDescriptions, targetPlatform, additionalBundles);
+      packageDescriptions = addAdditionalPackages(packageDescriptions, targetPlatform, additionalBundles);
     }
 
     Map<BundleDescription, BundleDependency> map = new HashMap<BundleDescription, BundleDependency>();
@@ -114,24 +115,44 @@ public class BundleDependenciesResolver {
    * @param additionalBundles
    * @return
    */
-  private ExportPackageDescription[] addAditionalPackages(ExportPackageDescription[] packageDescriptions,
+  private ExportPackageDescription[] addAdditionalPackages(ExportPackageDescription[] packageDescriptions,
       TargetPlatform targetPlatform, String[] additionalBundles) {
 
     List<ExportPackageDescription> allDescriptions = new LinkedList<ExportPackageDescription>();
     allDescriptions.addAll(Arrays.asList(packageDescriptions));
 
     for (String additionalBundle : additionalBundles) {
+      A4ELogging.info("Adding additional bundle '%s'", additionalBundle);
       BundleDescription resolvedBundle = targetPlatform.getResolvedBundle(additionalBundle, null);
-      ExportPackageDescription[] exportPackages = resolvedBundle.getExportPackages();
-      for (ExportPackageDescription exportPackageDescription : exportPackages) {
-        if (!allDescriptions.contains(exportPackageDescription)) {
-          A4ELogging.debug("Add additional exported package %s", exportPackageDescription);
-          allDescriptions.add(exportPackageDescription);
-        }
-      }
+      addAdditionalPackages(allDescriptions, targetPlatform, resolvedBundle);
     }
 
     return allDescriptions.toArray(new ExportPackageDescription[0]);
+
+  }
+
+  private void addAdditionalPackages(List<ExportPackageDescription> exportedPackages, TargetPlatform targetPlatform,
+      BundleDescription resolvedBundle) {
+
+    // Add exported package from resolvedBundle
+    A4ELogging.debug("Adding packages from '%s' to classpath", resolvedBundle);
+    ExportPackageDescription[] exportPackages = resolvedBundle.getExportPackages();
+    for (ExportPackageDescription exportPackageDescription : exportPackages) {
+      if (!exportedPackages.contains(exportPackageDescription)) {
+        A4ELogging.debug("Add additional exported package %s", exportPackageDescription);
+        exportedPackages.add(exportPackageDescription);
+      }
+    }
+
+    // Add packages from re-exported required bundle
+    BundleSpecification[] requiredBundles = resolvedBundle.getRequiredBundles();
+    for (BundleSpecification bundleSpecification : requiredBundles) {
+      if (bundleSpecification.isExported()) {
+        A4ELogging.debug("Add re-exported bundle %s", bundleSpecification);
+
+        addAdditionalPackages(exportedPackages, targetPlatform, bundleSpecification.getSupplier().getSupplier());
+      }
+    }
 
   }
 
