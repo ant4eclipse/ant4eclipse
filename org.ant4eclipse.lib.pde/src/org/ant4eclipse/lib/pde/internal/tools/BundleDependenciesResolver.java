@@ -36,7 +36,6 @@ import org.eclipse.osgi.internal.resolver.StateHelperImpl;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
-import org.eclipse.osgi.service.resolver.StateHelper;
 
 /**
  * <p>
@@ -63,29 +62,41 @@ public class BundleDependenciesResolver {
    * @return
    * @throws UnresolvedBundleException
    */
-  public List<BundleDependency> resolveBundleClasspath(BundleDescription description, TargetPlatform targetPlatform,
-      String[] additionalBundles) throws UnresolvedBundleException {
+  public List<BundleDependency> resolveBundleClasspath(final BundleDescription description,
+      TargetPlatform targetPlatform, String[] additionalBundles) throws UnresolvedBundleException {
 
     Assure.notNull("description", description);
 
-    // Step 1: throw exception if bundle description is not resolved
+    // step 1: throw exception if bundle description is not resolved
     if (!description.isResolved()) {
       throw new UnresolvedBundleException(description);
     }
 
-    // Get visible packages that are exported by other bundles
-    StateHelper stateHelper = StateHelperImpl.getInstance();
-    ExportPackageDescription[] packageDescriptions = stateHelper.getVisiblePackages(description);
+    // step 2: if the bundle is a fragment - get the host
+    BundleDescription rootDescription = isFragment(description) ? getHost(description) : description;
 
-    // Get exported packages from 'additional bundles'
-    if (additionalBundles != null) {
-      packageDescriptions = addAdditionalPackages(packageDescriptions, targetPlatform, additionalBundles);
+    // step 3: get visible packages that are exported by other bundles
+    List<ExportPackageDescription> allPackageDescriptions = new LinkedList<ExportPackageDescription>();
+
+    // step 4: add the host visible packages
+    allPackageDescriptions.addAll(Arrays.asList(StateHelperImpl.getInstance().getVisiblePackages(rootDescription)));
+
+    // step 5: add the fragment visible packages
+    for (BundleDescription fragmentDescription : rootDescription.getFragments()) {
+      allPackageDescriptions.addAll(Arrays
+          .asList(StateHelperImpl.getInstance().getVisiblePackages(fragmentDescription)));
     }
 
-    Map<BundleDescription, BundleDependency> map = new HashMap<BundleDescription, BundleDependency>();
-    List<BundleDependency> bundleDependencies = new ArrayList<BundleDependency>();
+    // step 6: Get exported packages from 'additional bundles'
+    if (additionalBundles != null) {
+      allPackageDescriptions.addAll(addAdditionalPackages(targetPlatform, additionalBundles));
+    }
 
-    for (ExportPackageDescription exportPackageDescription : packageDescriptions) {
+    // step 7: create the result
+    Map<BundleDescription, BundleDependency> map = new HashMap<BundleDescription, BundleDependency>();
+    List<BundleDependency> result = new ArrayList<BundleDependency>();
+
+    for (ExportPackageDescription exportPackageDescription : allPackageDescriptions) {
 
       //
       BundleDescription bundleDescription = exportPackageDescription.getSupplier();
@@ -99,38 +110,47 @@ public class BundleDependenciesResolver {
       } else {
         bundleDependency = new BundleDependency(bundleDescription);
         map.put(bundleDescription, bundleDependency);
-        bundleDependencies.add(bundleDependency);
+        result.add(bundleDependency);
       }
 
       //
       bundleDependency.addExportedPackage(exportPackageDescription.getName());
     }
 
-    return bundleDependencies;
+    // return the result
+    return result;
   }
 
   /**
+   * <p>
+   * </p>
+   * 
    * @param packageDescriptions
    * @param targetPlatform
    * @param additionalBundles
    * @return
    */
-  private ExportPackageDescription[] addAdditionalPackages(ExportPackageDescription[] packageDescriptions,
-      TargetPlatform targetPlatform, String[] additionalBundles) {
+  private List<ExportPackageDescription> addAdditionalPackages(TargetPlatform targetPlatform, String[] additionalBundles) {
 
-    List<ExportPackageDescription> allDescriptions = new LinkedList<ExportPackageDescription>();
-    allDescriptions.addAll(Arrays.asList(packageDescriptions));
+    List<ExportPackageDescription> result = new LinkedList<ExportPackageDescription>();
 
     for (String additionalBundle : additionalBundles) {
       A4ELogging.info("Adding additional bundle '%s'", additionalBundle);
       BundleDescription resolvedBundle = targetPlatform.getResolvedBundle(additionalBundle, null);
-      addAdditionalPackages(allDescriptions, targetPlatform, resolvedBundle);
+      addAdditionalPackages(result, targetPlatform, resolvedBundle);
     }
 
-    return allDescriptions.toArray(new ExportPackageDescription[0]);
-
+    return result;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param exportedPackages
+   * @param targetPlatform
+   * @param resolvedBundle
+   */
   private void addAdditionalPackages(List<ExportPackageDescription> exportedPackages, TargetPlatform targetPlatform,
       BundleDescription resolvedBundle) {
 
@@ -149,11 +169,9 @@ public class BundleDependenciesResolver {
     for (BundleSpecification bundleSpecification : requiredBundles) {
       if (bundleSpecification.isExported()) {
         A4ELogging.debug("Add re-exported bundle %s", bundleSpecification);
-
         addAdditionalPackages(exportedPackages, targetPlatform, bundleSpecification.getSupplier().getSupplier());
       }
     }
-
   }
 
   /**
@@ -355,6 +373,26 @@ public class BundleDependenciesResolver {
 
       // return the result
       return result;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
+    public BundleDescription getHost() {
+      return this._bundleDescription;
+    }
+
+    /**
+     * <p>
+     * </p>
+     * 
+     * @return
+     */
+    public BundleDescription[] getFragments() {
+      return this._bundleDescription.getFragments();
     }
 
     /**

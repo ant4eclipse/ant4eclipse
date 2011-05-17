@@ -11,6 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectPathTask;
@@ -20,20 +27,13 @@ import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver;
+import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
-import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -346,7 +346,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     // step 1: clear the result list
     this._resolvedBundleDescriptions.clear();
 
-    // step 2: add the bundle specification attribute to the the list of (root) bundle specifications
+    // step 2: add the bundle specification attribute to the the list of
+    // (root) bundle specifications
     if (Utilities.hasText(this._bundleSymbolicName)) {
       this._bundleSpecifications.add(new BundleSpecification(this._bundleSymbolicName, this._bundleVersion));
     }
@@ -360,8 +361,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
 
       // if not resolved bundle description is found, throw an exception
       if (bundleDescription == null) {
-        throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, bundleSpecification
-            .getSymbolicName(), bundleSpecification.getVersion());
+        throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND,
+            bundleSpecification.getSymbolicName(), bundleSpecification.getVersion());
       }
 
       // resolve the required ones
@@ -373,7 +374,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
 
     for (BundleDescription bundleDescription : this._resolvedBundleDescriptions) {
 
-      // don't add the bundle if bundle source is an eclipse project and _includeWorkspaceBundles == false
+      // don't add the bundle if bundle source is an eclipse project and
+      // _includeWorkspaceBundles == false
       BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
       if (this._includeWorkspaceBundles || !(bundleSource.isEclipseProject())) {
 
@@ -431,20 +433,20 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
       bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(bundleDescription);
     } catch (UnresolvedBundleException e) {
       // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
-      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION, TargetPlatformImpl
-          .dumpResolverErrors(bundleDescription, true));
+      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
+          TargetPlatformImpl.dumpResolverErrors(bundleDescription, true));
     }
 
     // step 3: resolve the referenced bundles
     for (BundleDependency bundleDependency : bundleDependencies) {
 
-      // // resolve the host
-      // resolveReferencedBundles(bundleDependency.getHost());
-      //
-      // // resolve the fragments
-      // for (BundleDescription fragment : bundleDependency.getFragments()) {
-      // resolveReferencedBundles(fragment);
-      // }
+      // resolve the host
+      resolveReferencedBundles(bundleDependency.getHost());
+
+      // resolve the fragments
+      for (BundleDescription fragment : bundleDependency.getFragments()) {
+        resolveReferencedBundles(fragment);
+      }
     }
   }
 
@@ -458,12 +460,14 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     requirePathIdOrPropertySet();
     requireTargetPlatformIdSet();
 
-    // if attribute 'bundleSymbolicName' is set, no 'bundle' element is allowed
+    // if attribute 'bundleSymbolicName' is set, no 'bundle' element is
+    // allowed
     if (Utilities.hasText(this._bundleSymbolicName) && !this._bundleSpecifications.isEmpty()) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_X_OR_ELEMENT_Y, "bundleSymbolicName", "bundle");
     }
 
-    // if attribute 'bundleVersion' is set, 'bundleSymbolicName' must be specified
+    // if attribute 'bundleVersion' is set, 'bundleSymbolicName' must be
+    // specified
     if (!Utilities.hasText(this._bundleSymbolicName) && Utilities.hasText(this._bundleVersion)) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_X_WITHOUT_ATTRIBUTE_Y, "bundleVersion",
           "bundleSymbolicName");
