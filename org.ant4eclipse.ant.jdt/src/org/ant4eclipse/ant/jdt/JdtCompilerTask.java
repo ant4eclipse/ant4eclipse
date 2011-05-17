@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import org.ant4eclipse.ant.jdt.ecj.A4ECompilerAdapter;
 import org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter;
 import org.ant4eclipse.ant.jdt.ecj.JavacCompilerAdapter;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -40,6 +41,18 @@ public class JdtCompilerTask extends Javac {
   private String              _updateprop           = null;
 
   private boolean             _useecj               = true;
+
+  private boolean             _warnings             = true;
+
+  /**
+   * Enables/disables the generation of warn messages.
+   * 
+   * @param enable
+   *          <code>true</code> <=> Generate warn messages.
+   */
+  public void setWarnings(boolean enable) {
+    this._warnings = enable;
+  }
 
   /**
    * Enables/disables the use of the ecj compiler.
@@ -80,11 +93,14 @@ public class JdtCompilerTask extends Javac {
    * @return The CompilerAdapter instance used for the compilation process. Not <code>null</code>.
    */
   protected CompilerAdapter getNewCompilerAdapter() {
+    A4ECompilerAdapter result = null;
     if (this._useecj) {
-      return new EcjCompilerAdapter();
+      result = new EcjCompilerAdapter();
     } else {
-      return new JavacCompilerAdapter();
+      result = new JavacCompilerAdapter();
     }
+    result.setWarnings(this._warnings);
+    return result;
   }
 
   /**

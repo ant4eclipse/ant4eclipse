@@ -78,6 +78,18 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
    */
   private static final String DEFAULT_COMPILER_OPTIONS_FILE     = "default.compiler.options.file";
 
+  private boolean             _warnings                         = true;
+
+  /**
+   * Enables/disables the generation of warn messages.
+   * 
+   * @param newwarnings
+   *          <code>true</code> <=> Enable warn messages.
+   */
+  public void setWarnings(boolean newwarnings) {
+    this._warnings = newwarnings;
+  }
+
   /**
    * <p>
    * Checks the preconditions of the A4ECompilerAdapter
@@ -138,6 +150,11 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
         String fileName = String.valueOf(categorizedProblem.getOriginatingFileName());
         for (SourceFile sourceFile : sourceFiles) {
           if (fileName.equals(sourceFile.getSourceFileName())) {
+            if (!categorizedProblem.isError()) {
+              if (!this._warnings) {
+                continue;
+              }
+            }
             Object[] args = new Object[7];
             args[0] = Integer.valueOf(i + 1);
             args[1] = categorizedProblem.isError() ? "ERROR" : "WARNING";
