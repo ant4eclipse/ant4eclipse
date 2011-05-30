@@ -47,6 +47,6 @@
 <mapEntry key="revision" value="HEAD"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/org.ant4eclipse.build/build-ant4eclipse.xml}"/>
-<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dconfigfile=${workspace_loc}/org.ant4eclipse.build/build.properties"/>
+<stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dconfigfile=${project_loc:org.ant4eclipse.build}/build.properties"/>
 <stringAttribute key="process_factory_id" value="org.eclipse.ant.ui.remoteAntProcessFactory"/>
 </launchConfiguration>

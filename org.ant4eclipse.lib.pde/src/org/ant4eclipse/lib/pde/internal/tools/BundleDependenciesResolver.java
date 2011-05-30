@@ -277,7 +277,7 @@ public class BundleDependenciesResolver {
    * 
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
-  public class BundleDependency {
+  public static class BundleDependency {
 
     /** the host */
     private BundleDescription _bundleDescription;
@@ -406,6 +406,45 @@ public class BundleDependenciesResolver {
     private void addExportedPackage(String packageName) {
       this._exportedPackages.add(packageName);
     }
+
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + ((this._bundleDescription == null) ? 0 : this._bundleDescription.hashCode());
+      result = prime * result + ((this._exportedPackages == null) ? 0 : this._exportedPackages.hashCode());
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) {
+        return true;
+      }
+      if (obj == null) {
+        return false;
+      }
+      if (getClass() != obj.getClass()) {
+        return false;
+      }
+      BundleDependency other = (BundleDependency) obj;
+      if (this._bundleDescription == null) {
+        if (other._bundleDescription != null) {
+          return false;
+        }
+      } else if (!this._bundleDescription.equals(other._bundleDescription)) {
+        return false;
+      }
+      if (this._exportedPackages == null) {
+        if (other._exportedPackages != null) {
+          return false;
+        }
+      } else if (!this._exportedPackages.equals(other._exportedPackages)) {
+        return false;
+      }
+      return true;
+    }
+
   }
 
 }
