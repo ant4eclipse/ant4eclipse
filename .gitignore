@@ -1,3 +1,5 @@
 bin
 /.metadata/
+org.ant4eclipse.build/build.properties
+org.ant4eclipse.build/destination/
 org.ant4eclipse.integrationtest.pde/*

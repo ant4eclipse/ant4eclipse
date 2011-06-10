@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.pde.tools;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.ant4eclipse.lib.core.Assure;
@@ -75,7 +76,6 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // Step 5: resolve the bundle dependencies
     BundleDescription resolvedBundleDescription = targetPlatform.getResolvedBundle(
         pluginProjectDescription.getSymbolicName(), pluginProjectDescription.getVersion());
-
     resolveBundleClassPath(context, resolvedBundleDescription, targetPlatform);
 
     // Step 7: if the plug-in project is a fragment, we have to add the
@@ -131,6 +131,16 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
       bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription,
           targetPlatform, additionalBundles);
+
+      if (context.isRuntime()) {
+        // add dependent bundles
+        List<BundleDependency> dependencies = new LinkedList<BundleDependenciesResolver.BundleDependency>(
+            bundleDependencies);
+        for (BundleDependency dependency : dependencies) {
+          addDependentBundles(dependency, bundleDependencies);
+        }
+      }
+
     } catch (UnresolvedBundleException e) {
 
       // try to find the root cause
@@ -221,6 +231,26 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // .getResolvedClasspathEntry());
     // }
     // }
+  }
+
+  private void addDependentBundles(BundleDependency referencedBundle, List<BundleDependency> bundleDependencies)
+      throws UnresolvedBundleException {
+
+    // Get the dependencies of the bundle
+    List<BundleDependency> dependentBundleDependencies = new BundleDependenciesResolver()
+        .resolveBundleClasspath(referencedBundle.getHost());
+
+    // Add all dependencies of the bundle to the result list
+    for (BundleDependency bundleDependency : dependentBundleDependencies) {
+      if (!bundleDependencies.contains(bundleDependency)) {
+        bundleDependencies.add(bundleDependency);
+
+        // add the dependencies
+        addDependentBundles(bundleDependency, bundleDependencies);
+      }
+
+    }
+
   }
 
   /**
