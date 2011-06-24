@@ -2,4 +2,5 @@
 <antlib>
   <typedef name="antCall"       classname="org.ant4eclipse.ant.core.AntCall" />
   <typedef name="echoReference" classname="org.ant4eclipse.ant.core.EchoReference" />
+  <typedef name="stopWatch"     classname="org.ant4eclipse.ant.core.StopWatchTask" />
 </antlib>

@@ -15,54 +15,83 @@ package org.ant4eclipse.lib.core.util;
  * <p>
  * Implements a stop watch.
  * </p>
+ * <p>
+ * A stop watch can be started and stoped multiple times.
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class StopWatch {
 
-  /** the start time */
-  private long    startTime = 0;
+  /** The name of the stop watch */
+  private final String _name;
 
-  /** the stop time */
-  private long    stopTime  = 0;
+  private int          _invocations  = 0;
 
-  /** is the stop watch running? */
-  private boolean _running  = false;
+  private long         _elapsedTime;
+
+  private long         _runningSince = -1;
+
+  public StopWatch(String name) {
+    super();
+    this._name = name;
+  }
+
+  public long stop() {
+    if (this._runningSince == -1) {
+      return this._elapsedTime;
+    }
+
+    long elapsedTime = System.currentTimeMillis() - this._runningSince;
+    this._elapsedTime += elapsedTime;
+    this._runningSince = -1;
+    return elapsedTime;
+  }
 
   /**
-   * <p>
-   * Starts the stop watch.
-   * </p>
+   * (Re)starts the StopWatch
    */
   public void start() {
-    this.startTime = System.currentTimeMillis();
-    this._running = true;
+    this._invocations++;
+    this._runningSince = System.currentTimeMillis();
   }
 
   /**
-   * <p>
-   * Stops the stop watch.
-   * </p>
-   */
-  public void stop() {
-    this.stopTime = System.currentTimeMillis();
-    this._running = false;
-  }
-
-  /**
-   * <p>
-   * Returns the elapsed time.
-   * </p>
+   * Returns the total time this stop watch has been run
    * 
-   * @return the elapsed time.
+   * @return
    */
   public long getElapsedTime() {
-    long elapsed;
-    if (this._running) {
-      elapsed = (System.currentTimeMillis() - this.startTime);
-    } else {
-      elapsed = (this.stopTime - this.startTime);
-    }
-    return elapsed;
+    return this._elapsedTime;
   }
+
+  /**
+   * returns the average time (in ms) this stop watch has been run
+   * 
+   * @return
+   */
+  public double getAverageTime() {
+    if (this._invocations == 0) {
+      return 0;
+    }
+    return this._elapsedTime / this._invocations;
+  }
+
+  /**
+   * returns how often this stop watch has been used
+   * 
+   * @return
+   */
+  public int getInvocations() {
+    return this._invocations;
+    }
+
+  /**
+   * Returns the name of this stop watch
+   * 
+   * @return
+   */
+  public String getName() {
+    return this._name;
+  }
+
 }
