@@ -550,7 +550,7 @@
       <fileset dir="${basedir}/org.ant4eclipse.external/libs">
         <include name="ant-contrib/*.jar" />
         <include name="ant-contrib/ANT-CONTRIB-LICENSE.txt" />
-        <include name="ecj/*.jar" />
+        <include name="ecj/ecj-*.jar" />
         <include name="ecj/ECJ-LICENSE-epl-v10.html" />
         <include name="equinox/*.jar" />
         <include name="equinox/EQUINOX-LICENSE-epl-v10.html" />
