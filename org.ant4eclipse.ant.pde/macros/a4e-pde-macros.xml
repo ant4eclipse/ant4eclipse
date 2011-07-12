@@ -37,6 +37,7 @@
 		<attribute name="useEcj" default="true" />
 		<attribute name="noWarn" default="false" />
 		<attribute name="debug" default="false" />
+		<attribute name="resolvedClassPaths" default="absolute.compiletime,absolute.runtime,relative.compiletime,relative.runtime" />
 
 		<!-- element definitions for lifecycle phases -->
 		<element name="validate"
@@ -155,7 +156,8 @@
 					                               projectName="@{projectName}"
 					                               prefix="buildPlugin"
 					                               targetPlatformId="@{targetPlatformId}"
-					                               platformConfigurationId="@{platformConfigurationId}">
+					                               platformConfigurationId="@{platformConfigurationId}"
+												   resolvedClassPaths="@{resolvedClassPaths}">
 
 						<!-- Step 6.1: Clean all output directories -->
 						<ant4eclipse:forEachOutputDirectory if="@{clean}">

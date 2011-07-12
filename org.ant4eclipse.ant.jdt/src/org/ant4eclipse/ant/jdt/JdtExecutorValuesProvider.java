@@ -11,11 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import java.io.File;
+import java.util.List;
+import java.util.Set;
+
 import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
@@ -25,9 +30,6 @@ import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
-
-import java.io.File;
-import java.util.List;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
@@ -63,7 +65,12 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * @param executionValues
    */
   public EcjAdditionalCompilerArguments provideExecutorValues(JavaProjectRole javaProjectRole,
-      List<JdtClasspathContainerArgument> jdtClasspathContainerArguments, MacroExecutionValues executionValues) {
+      List<JdtClasspathContainerArgument> jdtClasspathContainerArguments, MacroExecutionValues executionValues,
+      Set<String> requestedPaths) {
+
+    System.out.println("requestedPaths: " + requestedPaths);
+
+    PerformanceLogging.start(getClass(), "provideExecutorValues");
 
     // provide the executor values from the platform component
     this._platformExecutorValuesProvider.provideExecutorValues(javaProjectRole.getEclipseProject(), executionValues);
@@ -73,14 +80,31 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     executionValues.getReferences().put(COMPILER_ARGS, compilerArguments);
 
     // resolve (boot) class path
-    ResolvedClasspath cpAbsoluteCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-        false, false, jdtClasspathContainerArguments);
-    ResolvedClasspath cpRelativeCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-        true, false, jdtClasspathContainerArguments);
-    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-        false, true, jdtClasspathContainerArguments);
-    ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-        true, true, jdtClasspathContainerArguments);
+    ResolvedClasspath cpAbsoluteCompiletime = null;
+    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_ABSOLUTE_COMPILETIME)) {
+      cpAbsoluteCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), false, false,
+          jdtClasspathContainerArguments);
+    }
+
+    ResolvedClasspath cpRelativeCompiletime = null;
+    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_RELATIVE_COMPILETIME)) {
+      cpRelativeCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), true, false,
+          jdtClasspathContainerArguments);
+    }
+
+    ResolvedClasspath cpAbsoluteRuntime = null;
+    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_ABSOLUTE_RUNTIME)) {
+      cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), false, true,
+          jdtClasspathContainerArguments);
+    }
+
+    ResolvedClasspath cpRelativeRuntime = null;
+    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_RELATIVE_RUNTIME)) {
+      cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), true, true,
+          jdtClasspathContainerArguments);
+    }
+
+    if (cpAbsoluteCompiletime != null) {
 
     if (cpAbsoluteCompiletime.hasBootClasspath()) {
       if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
@@ -91,7 +115,6 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     }
 
     ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
-
     for (ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries) {
 
       // set source folder for output folder
@@ -119,14 +142,9 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
       executionValues.getProperties().put(BOOT_CLASSPATH,
           this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
     }
+
     executionValues.getProperties().put(CLASSPATH_ABSOLUTE_COMPILETIME,
         this._pathComponent.convertToString(cpAbsoluteCompiletime.getClasspathFiles()));
-    executionValues.getProperties().put(CLASSPATH_RELATIVE_COMPILETIME,
-        this._pathComponent.convertToString(cpRelativeCompiletime.getClasspathFiles()));
-    executionValues.getProperties().put(CLASSPATH_ABSOLUTE_RUNTIME,
-        this._pathComponent.convertToString(cpAbsoluteRuntime.getClasspathFiles()));
-    executionValues.getProperties().put(CLASSPATH_RELATIVE_RUNTIME,
-        this._pathComponent.convertToString(cpRelativeRuntime.getClasspathFiles()));
 
     if (cpAbsoluteCompiletime.hasBootClasspath()) {
       executionValues.getReferences().put(BOOT_CLASSPATH_PATH,
@@ -134,12 +152,28 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     }
     executionValues.getReferences().put(CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
         this._pathComponent.convertToPath(cpAbsoluteCompiletime.getClasspathFiles()));
+    }
+
+    if (cpRelativeCompiletime != null) {
+      executionValues.getProperties().put(CLASSPATH_RELATIVE_COMPILETIME,
+          this._pathComponent.convertToString(cpRelativeCompiletime.getClasspathFiles()));
     executionValues.getReferences().put(CLASSPATH_RELATIVE_COMPILETIME_PATH,
         this._pathComponent.convertToPath(cpRelativeCompiletime.getClasspathFiles()));
+    }
+
+    if (cpAbsoluteRuntime != null) {
+      executionValues.getProperties().put(CLASSPATH_ABSOLUTE_RUNTIME,
+          this._pathComponent.convertToString(cpAbsoluteRuntime.getClasspathFiles()));
     executionValues.getReferences().put(CLASSPATH_ABSOLUTE_RUNTIME_PATH,
         this._pathComponent.convertToPath(cpAbsoluteRuntime.getClasspathFiles()));
+    }
+
+    if (cpRelativeRuntime != null) {
+      executionValues.getProperties().put(CLASSPATH_RELATIVE_RUNTIME,
+          this._pathComponent.convertToString(cpRelativeRuntime.getClasspathFiles()));
     executionValues.getReferences().put(CLASSPATH_RELATIVE_RUNTIME_PATH,
         this._pathComponent.convertToPath(cpRelativeRuntime.getClasspathFiles()));
+    }
 
     // resolve default output folder
     String defaultOutputFolderName = javaProjectRole.getDefaultOutputFolder();
@@ -192,6 +226,8 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
         compilerArguments.addOutputFolderForSourceFolder(sourceFolder, outputFolder);
       }
     }
+
+    PerformanceLogging.stop(getClass(), "provideExecutorValues");
 
     // return compilerArguments
     return compilerArguments;

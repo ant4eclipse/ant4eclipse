@@ -11,6 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.ConditionalMacroDef;
@@ -25,8 +31,6 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileSet;
-
-import java.io.File;
 
 /**
  * <p>
@@ -58,6 +62,31 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
 
   public static final String  SCOPE_FOR_EACH_RUNTIME_CLASSPATH              = "SCOPE_FOR_EACH_RUNTIME_CLASSPATH";
 
+  /** - */
+  public static final String       CLASSPATH_ABSOLUTE_COMPILETIME                = "absolute.compiletime";
+
+  /** - */
+  public static final String       CLASSPATH_ABSOLUTE_RUNTIME                    = "absolute.runtime";
+
+  /** - */
+  public static final String       CLASSPATH_RELATIVE_COMPILETIME                = "relative.compiletime";
+
+  /** - */
+  public static final String       CLASSPATH_RELATIVE_RUNTIME                    = "relative.runtime";
+
+  /** - */
+  private static final Set<String> CLASSPATH_POSSIBLE_VALUES                     = Collections
+                                                                                     .unmodifiableSet(new HashSet<String>(
+                                                                                         Arrays
+                                                                                             .asList(
+                                                                                                 CLASSPATH_ABSOLUTE_COMPILETIME,
+                                                                                                 CLASSPATH_ABSOLUTE_RUNTIME,
+                                                                                                 CLASSPATH_RELATIVE_COMPILETIME,
+                                                                                                 CLASSPATH_RELATIVE_RUNTIME)));
+
+  /** - */
+  private Set<String>              _resolvedClassPaths                           = CLASSPATH_POSSIBLE_VALUES;
+
   /**
    * <p>
    * Creates a new instance of type {@link ExecuteJdtProjectTask}.
@@ -77,6 +106,39 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    */
   protected ExecuteJdtProjectTask(String prefix) {
     super(prefix);
+  }
+
+  /**
+   * @param resolvedClassPaths
+   */
+  public void setResolvedClassPaths(String resolvedClassPaths) {
+
+    //
+    this._resolvedClassPaths = new HashSet<String>();
+
+    //
+    if (resolvedClassPaths == null) {
+      return;
+    }
+
+    //
+    String[] paths = resolvedClassPaths.split(",");
+
+    //
+    for (String path : paths) {
+
+      String trimmedPath = path.trim().toLowerCase();
+
+      // Make sure argument is valid
+      if (!CLASSPATH_POSSIBLE_VALUES.contains(trimmedPath)) {
+        throw new BuildException(String.format(
+            "Invalid value for Parameter 'resolvedClassPaths' specified: '%s'. Allowed values are: '%s'", path,
+            CLASSPATH_POSSIBLE_VALUES));
+      }
+
+      // add value
+      this._resolvedClassPaths.add(trimmedPath);
+    }
   }
 
   /**
@@ -196,7 +258,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-              values);
+              values, ExecuteJdtProjectTask.this._resolvedClassPaths);
 
           // add source and output directory
           values.getProperties().put(SOURCE_DIRECTORY_NAME, sourceFolder);
@@ -246,7 +308,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
 
           // get the default jdt executor values
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-              values);
+              values, ExecuteJdtProjectTask.this._resolvedClassPaths);
 
           // add output directory
           values.getProperties().put(OUTPUT_DIRECTORY_NAME, outFolder);
@@ -312,7 +374,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-              values);
+              values, ExecuteJdtProjectTask.this._resolvedClassPaths);
 
           final StringMap properties = values.getProperties();
           // add absolute path
@@ -372,7 +434,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
 
         // get the default jdt executor values
         getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-            values);
+            values, ExecuteJdtProjectTask.this._resolvedClassPaths);
 
         // add additional execution values if necessary
         addAdditionalExecutionValues(values);
