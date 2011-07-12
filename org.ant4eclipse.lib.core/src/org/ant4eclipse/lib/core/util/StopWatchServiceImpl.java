@@ -48,21 +48,9 @@ public class StopWatchServiceImpl implements StopWatchService {
 
   public void dumpAll() {
 
-    dumpAll("name:", new Comparator<StopWatch>() {
-      public int compare(StopWatch o1, StopWatch o2) {
-        return o1.getName().compareTo(o2.getName());
-      }
-    });
-
     dumpAll("total time:", new Comparator<StopWatch>() {
       public int compare(StopWatch o1, StopWatch o2) {
         return Long.valueOf(o2.getElapsedTime()).compareTo(o1.getElapsedTime());
-      }
-    });
-
-    dumpAll("invocations:", new Comparator<StopWatch>() {
-      public int compare(StopWatch o1, StopWatch o2) {
-        return Integer.valueOf(o2.getInvocations()).compareTo(o1.getInvocations());
       }
     });
 
