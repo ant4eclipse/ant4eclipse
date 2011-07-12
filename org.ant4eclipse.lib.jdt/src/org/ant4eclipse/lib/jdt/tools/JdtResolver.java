@@ -11,7 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools;
 
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathEntryResolverExecutor;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathResolverContextImpl;
 import org.ant4eclipse.lib.jdt.internal.tools.ResolvedClasspathImpl;
@@ -26,8 +31,6 @@ import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.VariableClasspathEn
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
-import java.util.List;
-
 /**
  * <p>
  * Helper class. Use this class to resolve the class path of a given eclipse project.
@@ -36,6 +39,8 @@ import java.util.List;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JdtResolver {
+
+  private static final Map<String, ResolvedClasspath> _classpathCache = new Hashtable<String, ResolvedClasspath>();
 
   /**
    * <p>
@@ -54,6 +59,25 @@ public class JdtResolver {
    */
   public static final ResolvedClasspath resolveProjectClasspath(EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
+
+    String cacheKey = getCacheKey(project, resolveRelative, isRuntimeClasspath);
+    ResolvedClasspath resolvedClasspath = _classpathCache.get(cacheKey);
+    if (resolvedClasspath == null) {
+      PerformanceLogging.start(JdtResolver.class, "resolveProjectClasspath");
+      PerformanceLogging.start(JdtResolver.class, "resolveProjectClasspath-" + project.getSpecifiedName());
+      resolvedClasspath = doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath,
+          classpathContainerArguments);
+      _classpathCache.put(cacheKey, resolvedClasspath);
+      PerformanceLogging.stop(JdtResolver.class, "resolveProjectClasspath");
+      PerformanceLogging.stop(JdtResolver.class, "resolveProjectClasspath-" + project.getSpecifiedName());
+    }
+
+    return resolvedClasspath;
+  }
+
+  private static final ResolvedClasspath doResolveProjectClasspath(EclipseProject project, boolean resolveRelative,
+      boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
+
     Assure.notNull("project", project);
 
     // create a ResolverJob
@@ -77,5 +101,10 @@ public class JdtResolver {
 
     // return the ResolvedClasspath
     return resolvedClasspath;
+  }
+
+  private static String getCacheKey(EclipseProject project, boolean resolveRelative, boolean runtimeClasspath) {
+    // TODO include classpathContainerArguments in key
+    return project.getSpecifiedName() + "." + resolveRelative + "." + runtimeClasspath;
   }
 }

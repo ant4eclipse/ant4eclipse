@@ -13,17 +13,45 @@ package org.ant4eclipse.lib.core.util;
 
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 
+/**
+ * Used for ant4eclipse internal performance logging
+ * 
+ * @author
+ * 
+ */
 public class PerformanceLogging {
 
+  private static final boolean ENABLE_PERFORMANCE_LOGGING = Boolean.getBoolean("ant4eclipse.enablePerformanceLogging");
+
+  /**
+   * Starts the performance logging. The given class and name are used as identifier for the StopWatch that should be
+   * used
+   * 
+   * @param source
+   * @param name
+   */
   public static void start(Class<?> source, String name) {
-    // TODO enable logging via property
+    if (ENABLE_PERFORMANCE_LOGGING) {
     getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).start();
   }
-
-  public static void stop(Class<?> source, String name) {
-    getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).stop();
   }
 
+  /**
+   * Stops the performance logging. The given class and name are used as identifier for the StopWatch that should be
+   * used
+   * 
+   * @param source
+   * @param name
+   */
+  public static void stop(Class<?> source, String name) {
+    if (ENABLE_PERFORMANCE_LOGGING) {
+    getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).stop();
+  }
+  }
+
+  /**
+   * @return the registered instance of the {@link StopWatchService}
+   */
   private static StopWatchService getStopWatchService() {
     return ServiceRegistryAccess.instance().getService(StopWatchService.class);
   }
