@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StopWatch;
@@ -18,10 +22,6 @@ import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>
@@ -255,7 +255,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     A4ELogging.info("Trying to read bundles and feature from '%s'.", this._description);
 
     // create stop watch for debugging purpose
-    StopWatch stopWatch = new StopWatch();
+    StopWatch stopWatch = new StopWatch(this.getClass().getName() + "#refresh");
 
     // refresh
     stopWatch.start();
@@ -274,8 +274,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     stopWatch.stop();
 
     // debug
-    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.", Long.valueOf(stopWatch
-        .getElapsedTime()), Integer.valueOf(this._bundleDescriptionList.size()), Integer
-        .valueOf(this._featureDescriptionList.size()));
+    A4ELogging.info("Needed %s ms to read %s bundles and %s features from bundle set.",
+        Long.valueOf(stopWatch.getElapsedTime()), Integer.valueOf(this._bundleDescriptionList.size()),
+        Integer.valueOf(this._featureDescriptionList.size()));
   }
 }
