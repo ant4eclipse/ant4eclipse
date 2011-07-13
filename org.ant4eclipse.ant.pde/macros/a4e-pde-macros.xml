@@ -22,6 +22,8 @@
           target: buildPlugin
          ================================= -->
 	<macrodef name="buildPlugin" description="builds a single plug-in project.">
+		<attribute name="skipCompile" default="false" />
+		<attribute name="skipPackage" default="false" />
 		<attribute name="workspaceDirectory" default="" />
 		<attribute name="workspaceId" default="" />
 		<attribute name="projectName" />
@@ -58,6 +60,12 @@
 		<element name="post-compile"
 		         optional="true"
 		         description="Post-process the generated files from compilation, for example to do bytecode enhancement on Java classes." />
+		<element name="pre-copy-resources"
+		         optional="true"
+		         description="Execute additional steps before copying resources from source to bin folder." />
+		<element name="post-copy-resources"
+		         optional="true"
+		         description="Execute additional steps after copying resources from source to bin folder." />
 		<element name="pre-package-library"
 		         optional="true"
 		         description="Execute additonal steps before packaging a library" />
@@ -73,6 +81,20 @@
 		<element name="post-package"
 		         optional="true"
 		         description="Execute additonal steps after copying the final content to the destination directory." />
+		<element name="pre-jar"
+		         optional="true"
+		         description="Execute additonal steps before JARing the final bundle" />
+		<element name="post-jar"
+		         optional="true"
+		         description="Execute additonal steps afterJARing the final bundle." />
+
+		<element name="pre-build-source-bundle"
+		         optional="true"
+		         description="Execute additonal steps before building the source bundle." />
+		<element name="post-build-source-bundle"
+		         optional="true"
+		         description="Execute additonal steps after building the source bundle." />
+
 		<element name="deploy"
 		         optional="true"
 		         description="Perform any operations necessary to prepare a package before the actual packaging." />
@@ -144,10 +166,15 @@
         - Compiles the plug-in project (only in case that the project has the nature 'org.eclipse.jdt.core.javanature').
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 			<antcontrib:if>
+				<and>
 				<ant4eclipse:hasNature workspaceDirectory="@{workspaceDirectory}"
 				                       workspaceId="@{workspaceId}"
 				                       projectName="@{projectName}"
 				                       nature="org.eclipse.jdt.core.javanature" />
+					<not>
+						<equals arg1="@{skipCompile}" arg2="true" />
+					</not>
+				</and>
 				<antcontrib:then>
 
 					<!-- Execute the JDT project -->
@@ -207,6 +234,7 @@
 
 						<!-- Step 6.3: Copy the resources -->
 						<ant4eclipse:forEachSourceDirectory>
+							<pre-copy-resources />
 							<echo>Copying resources from directory '${buildPlugin.source.directory}' to '${buildPlugin.output.directory}'</echo>
 							<copy todir="${buildPlugin.output.directory}">
 								<fileset dir="${buildPlugin.source.directory}"
@@ -215,11 +243,18 @@
 									<exclude name="**/*.java" />
 								</fileset>
 							</copy>
+							<post-copy-resources />
 						</ant4eclipse:forEachSourceDirectory>
 
 					</ant4eclipse:executeJdtProject>
 				</antcontrib:then>
 			</antcontrib:if>
+
+			<antcontrib:if>
+				<not>
+					<equals arg1="@{skipPackage}" arg2="true" />
+				</not>
+				<antcontrib:then>
 
 			<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         - Step 7: Package the bundle
@@ -361,22 +396,20 @@
 					<post-package />
 
 				</ant4eclipse:forProject>
-
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
           - if bundle should be packaged as a jar file (the default),
                   - we have to jar the bundle.
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject if="@{packageAsJar}">
+							<pre-jar />
 					<jar destfile="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}.jar"
 					     basedir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}"
 					     manifest="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}/META-INF/MANIFEST.MF"
 					     index="@{index}" />
-				</ant4eclipse:forProject>
-
-				<ant4eclipse:forProject if="@{packageAsJar}">
 					<delete dir="@{destination}/${a4e.plugins.directory}/${buildPlugin.bundle.symbolicname}_${buildPlugin.newBundleVersion}"
 					        quiet="true"
 					        deleteonexit="true" />
+							<post-jar />
 				</ant4eclipse:forProject>
 
 				<ant4eclipse:forProject>
@@ -388,11 +421,13 @@
           - Step 8: Build the source bundle
           - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 				<ant4eclipse:forProject if="@{buildSourceJar}">
+							<pre-build-source-bundle />
 					<buildSourceBundle workspaceDirectory="@{workspaceDirectory}"
 					                   workspaceId="@{workspaceId}"
 					                   projectName="@{projectName}"
 					                   destination="@{destination}"
 					                   newBundleVersion="@{newBundleVersion}" />
+							<post-build-source-bundle />
 				</ant4eclipse:forProject>
 
 				<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -406,6 +441,8 @@
 				</ant4eclipse:forProject>
 
 			</ant4eclipse:executePluginProject>
+				</antcontrib:then>
+			</antcontrib:if>
 
 
 
