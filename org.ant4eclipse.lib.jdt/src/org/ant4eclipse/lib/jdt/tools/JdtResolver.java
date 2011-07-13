@@ -40,6 +40,12 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
  */
 public class JdtResolver {
 
+  /**
+   * System-Property that allows disabling the Jdt-Resolver Cache
+   */
+  private static final boolean                        DISABLE_CACHE   = Boolean
+                                                                          .getBoolean("ant4eclipse.disableJdtResolverCache");
+
   private static final Map<String, ResolvedClasspath> _classpathCache = new Hashtable<String, ResolvedClasspath>();
 
   /**
@@ -60,18 +66,27 @@ public class JdtResolver {
   public static final ResolvedClasspath resolveProjectClasspath(EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
 
-    String cacheKey = getCacheKey(project, resolveRelative, isRuntimeClasspath);
-    ResolvedClasspath resolvedClasspath = _classpathCache.get(cacheKey);
-    if (resolvedClasspath == null) {
-      PerformanceLogging.start(JdtResolver.class, "resolveProjectClasspath");
-      PerformanceLogging.start(JdtResolver.class, "resolveProjectClasspath-" + project.getSpecifiedName());
-      resolvedClasspath = doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath,
-          classpathContainerArguments);
-      _classpathCache.put(cacheKey, resolvedClasspath);
-      PerformanceLogging.stop(JdtResolver.class, "resolveProjectClasspath");
-      PerformanceLogging.stop(JdtResolver.class, "resolveProjectClasspath-" + project.getSpecifiedName());
+    if (DISABLE_CACHE) {
+      // cache is disabled, always re-resolve classpath
+      return doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath, classpathContainerArguments);
     }
 
+    // determine the key for the cached classpath
+    String cacheKey = getCacheKey(project, resolveRelative, isRuntimeClasspath);
+
+    // try to get ResolvedClasspath from the cache
+    ResolvedClasspath resolvedClasspath = _classpathCache.get(cacheKey);
+
+    if (resolvedClasspath == null) {
+      // Classpath has not been resolved yet -> resolve it now
+      resolvedClasspath = doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath,
+          classpathContainerArguments);
+
+      // add the resolved classpath to the cache
+      _classpathCache.put(cacheKey, resolvedClasspath);
+    }
+
+    // return the classpath
     return resolvedClasspath;
   }
 
@@ -79,6 +94,9 @@ public class JdtResolver {
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
 
     Assure.notNull("project", project);
+
+    // Start performance logging
+    PerformanceLogging.start(JdtResolver.class, "doResolveProjectClasspath");
 
     // create a ResolverJob
     ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
@@ -98,6 +116,9 @@ public class JdtResolver {
     // execute the job
     executor.resolve(job.getRootProject(), resolvers,
         new ClasspathResolverContextImpl(executor, job, resolvedClasspath));
+
+    // stop performance logging
+    PerformanceLogging.stop(JdtResolver.class, "doResolveProjectClasspath");
 
     // return the ResolvedClasspath
     return resolvedClasspath;
