@@ -11,6 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
+import java.io.File;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -21,10 +27,6 @@ import org.ant4eclipse.lib.jdt.ecj.internal.tools.DefaultReferableType;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 import org.eclipse.jdt.internal.compiler.env.AccessRule;
-
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * <p>
@@ -45,6 +47,9 @@ public class FilteringClassFileLoader implements ClassFileLoader {
 
   /** the exclude patterns */
   private List<String>    _excludes;
+
+  /** - */
+  private Set<String>     _containedPackages;
 
   /**
    * <p>
@@ -121,14 +126,27 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   private ReferableType setAccessRestrictions(ReferableType referableType, ClassName className) {
 
+    //
+    if (referableType == null) {
+      return referableType;
+    }
+
+    // try 'shortcut'
+    if (this._containedPackages != null && this._containedPackages.contains(className.getPackageName())) {
+      return referableType;
+    }
+
+    //
     String classFileName = className.asClassFileName();
 
+    //
     for (String includePattern : this._includes) {
       if (classFileName.matches(includePattern)) {
         return referableType;
       }
     }
 
+    //
     for (String exludePattern : this._excludes) {
       if (classFileName.matches(exludePattern)) {
 
@@ -151,8 +169,21 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * </p>
    */
   private void init() {
-    String[] parts = this._filter.split(";");
-    for (String part : parts) {
+
+    //
+    this._containedPackages = new HashSet<String>();
+
+    //
+    for (String part : this._filter.split(";")) {
+
+      // step 0:
+      if (part.matches("\\+.*/\\*")) {
+        this._containedPackages.add(part.substring(1, part.length() - 2).replace('/', '.'));
+      } else if (part.matches("\\-\\*\\*/\\*")) {
+        //
+      } else {
+        this._containedPackages = null;
+      }
 
       // step 1: replace all occurrences of '**/*' with '###' (temporary step)
       String transformedPart = part.substring(1).replaceAll("\\*\\*/\\*", "###");
@@ -174,5 +205,4 @@ public class FilteringClassFileLoader implements ClassFileLoader {
       }
     }
   }
-
 }
