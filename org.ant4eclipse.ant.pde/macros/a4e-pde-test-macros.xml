@@ -44,21 +44,8 @@
 
 				<ant4eclipse:forLauncher>
 
-
-					<delete file="@{tempDir}/pde_test_port.properties"
-					        quiet="true" />
-					<java classname="pde.test.utils.PDETestPortLocator"
-					      fork="yes"
-					      classpath="${executePdeJunitLauncher.collectorCP}"
-					      dir="@{tempDir}/config" />
-					<waitfor maxwait="5"
-					         maxwaitunit="second"
-					         checkevery="100"
-					         checkeveryunit="millisecond">
-						<available file="@{tempDir}/config/pde_test_port.properties" />
-					</waitfor>
-					<property file="@{tempDir}/config/pde_test_port.properties" />
-					<echo message="Using port ${pde.test.port} for listening to PDE Test run" />
+					<!-- setPdeTestPort -->
+					<setPdeTestPort  tempDir="@{tempDir}" />
 
 					<!-- writeConfigIni -->
 					<writeConfigIni tempDir="@{tempDir}" />
@@ -91,11 +78,16 @@
 
 			<java jar="${executePdeJunitLauncher.osgi.framework}"
 			      fork="true"
-			      failonerror="true"
+			      failonerror="false"
 			      maxmemory="1200m"
 			      dir="${executePdeJunitLauncher.testplugin.location}">
 
 				<sysproperty key="osgi.noShutdown" value="false" />
+				<sysproperty key="org.osgi.framework.bootdelegation"
+				             value="${executePdeJunitLauncher.org.osgi.framework.bootdelegation}" />
+
+				<sysproperty key="org.osgi.framework.system.packages"
+				             value="${executePdeJunitLauncher.org.osgi.framework.system.packages}" />
 
 				<arg value="-configuration" />
 				<arg value="file:@{tempDir}/config" />
@@ -137,7 +129,7 @@
 			<java classpath="${executePdeJunitLauncher.collectorCP}"
 			      classname="pde.test.utils.PDETestResultsCollector"
 			      fork="true"
-			      failonerror="true"
+			      failonerror="false"
 			      maxmemory="1200m"
 			      dir="@{targetDirectory}">
 
@@ -167,5 +159,34 @@ osgi.configuration.cascaded=false
 
 		</sequential>
 	</macrodef>
+	
+	<!-- - - - - - - - - - - - - - - - - -
+          macrodef: setPdeTestPort          
+         - - - - - - - - - - - - - - - - - -->
+    <macrodef name="setPdeTestPort">
+		<attribute name="tempDir" />
+        <sequential>
+        	
+        	<antcontrib:var name="pde.test.port" unset="true" />
+        	
+			<delete file="@{tempDir}/pde_test_port.properties"
+			        quiet="true" />
+			
+        	<java classname="pde.test.utils.PDETestPortLocator"
+			      fork="yes"
+			      classpath="${executePdeJunitLauncher.collectorCP}"
+			      dir="@{tempDir}/config" />
+			<waitfor maxwait="5"
+			         maxwaitunit="second"
+			         checkevery="100"
+			         checkeveryunit="millisecond">
+				<available file="@{tempDir}/config/pde_test_port.properties" />
+			</waitfor>
+			
+        	<property file="@{tempDir}/config/pde_test_port.properties" />
+			
+        	<echo message="Using port ${pde.test.port} for listening to PDE Test run" />
+        </sequential>
+    </macrodef>
 
 </project>

@@ -10,6 +10,7 @@ import org.ant4eclipse.ant.platform.ExecuteLauncherTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
@@ -27,6 +28,14 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 /**
  * <p>
  * Executes a PDE JUnit Launch Configuration (type="org.eclipse.pde.ui.EquinoxLauncher")
+ * </p>
+ * <p>
+ * TODOS:
+ * <ul>
+ * <li>Support for 'All workspace and enabled target plug-ins'</li>
+ * <li>If the test bundle is a fragment bundle, the host must be set as test bundle</li>
+ * <li></li>
+ * </ul>
  * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
@@ -142,6 +151,17 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     JavaRuntime javaRuntime = getJavaRuntime();
     defaultValues.getProperties().put("jre.location", javaRuntime.getLocation().getAbsolutePath());
 
+    StringMap jrtProperties = javaRuntime.getJavaProfile().getProperties();
+
+    defaultValues.getProperties().put("org.osgi.framework.system.packages",
+        jrtProperties.get("org.osgi.framework.system.packages"));
+
+    defaultValues.getProperties().put("org.osgi.framework.bootdelegation",
+        jrtProperties.get("org.osgi.framework.bootdelegation"));
+
+    defaultValues.getProperties().put("org.osgi.framework.executionenvironment",
+        jrtProperties.get("org.osgi.framework.executionenvironment"));
+
     // compute the bundle information
     computeBundlesInfo();
     defaultValues.getProperties().put("bundles.info", this._bundlesInfo.toString());
@@ -158,8 +178,13 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
 
     // set the test plug-in name and location
     PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
-    defaultValues.getProperties().put("testplugin.name", pluginProjectRole.getBundleDescription().getSymbolicName());
-    defaultValues.getProperties().put("testplugin.location", pluginProjectRole.getBundleDescription().getLocation());
+    BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
+    bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace()).getResolvedBundle(
+        bundleDescription.getSymbolicName(), bundleDescription.getVersion());
+    BundleDescription bundleHost = BundleDependenciesResolver.getHost(bundleDescription);
+
+    defaultValues.getProperties().put("testplugin.name", bundleHost.getSymbolicName());
+    defaultValues.getProperties().put("testplugin.location", bundleDescription.getLocation());
 
     // find contained test classes
     defaultValues.getProperties().put("test.classes",
