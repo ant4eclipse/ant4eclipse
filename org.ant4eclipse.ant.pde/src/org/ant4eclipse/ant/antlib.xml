@@ -13,4 +13,5 @@
   <typedef name="getRequiredBundles"      classname="org.ant4eclipse.ant.pde.GetRequiredBundlesTask" />
   <typedef name="queryProduct"            classname="org.ant4eclipse.ant.pde.QueryProductTask"/>
   <typedef name="executeEquinoxLauncher"  classname="org.ant4eclipse.ant.pde.ExecuteEquinoxLauncherTask"/>
+  <typedef name="executePdeJunitLauncher" classname="org.ant4eclipse.ant.pde.ExecutePdeJunitLauncherTask"/>
 </antlib>
