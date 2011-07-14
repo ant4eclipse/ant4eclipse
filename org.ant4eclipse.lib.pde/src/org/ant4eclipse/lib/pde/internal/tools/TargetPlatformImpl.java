@@ -11,6 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -33,14 +41,6 @@ import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.Version;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * <p>
@@ -231,10 +231,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
       return getFeatureDescription(id);
     }
 
-    // 
+    //
     FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id, version);
 
-    // 
+    //
     if (featureDescription != null) {
       return featureDescription;
     }
@@ -264,10 +264,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
   public FeatureDescription getFeatureDescription(String id) {
     Assure.nonEmpty("id", id);
 
-    // 
+    //
     FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
 
-    // 
+    //
     if (featureDescription != null) {
       return featureDescription;
     }
@@ -343,10 +343,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
   public BundleDescription getBundleDescription(String id) {
     Assure.nonEmpty("id", id);
 
-    // 
+    //
     BundleDescription bundleDescription = this._pluginProjectSet.getBundleDescription(id);
 
-    // 
+    //
     if (bundleDescription != null) {
       return bundleDescription;
     }
@@ -359,6 +359,48 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
       // get the feature manifest
       bundleDescription = bundleSet.getBundleDescription(id);
+
+      // if match -> set as result
+      if (bundleDescription != null) {
+        if (result == null) {
+          result = bundleDescription;
+        } else {
+          // the current bundle description has a higher version, so use this one
+          if (result.getVersion().compareTo(bundleDescription.getVersion()) < 0) {
+            result = bundleDescription;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public BundleDescription getBundleDescriptionFromWorkspace(String symbolicName) {
+    Assure.nonEmpty("symbolicName", symbolicName);
+
+    //
+    return this._pluginProjectSet.getBundleDescription(symbolicName);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public BundleDescription getBundleDescriptionFromBinaryBundles(String symbolicName) {
+    Assure.nonEmpty("symbolicName", symbolicName);
+
+    //
+    BundleDescription bundleDescription = null;
+    BundleDescription result = null;
+
+    // iterate over feature descriptions
+    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+
+      // get the feature manifest
+      bundleDescription = bundleSet.getBundleDescription(symbolicName);
 
       // if match -> set as result
       if (bundleDescription != null) {
@@ -452,17 +494,17 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     for (Plugin plugin : manifest.getPlugins()) {
 
-      if (matches(plugin.getOperatingSystem(), plugin.getMachineArchitecture(), plugin.getWindowingSystem(), plugin
-          .getLocale())) {
+      if (matches(plugin.getOperatingSystem(), plugin.getMachineArchitecture(), plugin.getWindowingSystem(),
+          plugin.getLocale())) {
 
         // if a plug-in reference uses a version, the exact version must be found in the workspace
         // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
-        BundleDescription bundleDescription = this._state.getBundle(plugin.getId(), plugin.getVersion().equals(
-            Version.emptyVersion) ? null : plugin.getVersion());
+        BundleDescription bundleDescription = this._state.getBundle(plugin.getId(),
+            plugin.getVersion().equals(Version.emptyVersion) ? null : plugin.getVersion());
         // TODO: NLS
         if (bundleDescription == null) {
-          throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, plugin.getId(), plugin
-              .getVersion());
+          throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, plugin.getId(),
+              plugin.getVersion());
         }
         // TODO: NLS
         if (!bundleDescription.isResolved()) {
@@ -585,7 +627,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   private static boolean contains(String element, String commaSeparatedList) {
 
-    // 
+    //
     if (element == null || element.trim().equals("")) {
       return true;
     }
@@ -601,7 +643,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     // iterate over all the list elements
     for (String listElement : elements) {
 
-      // 
+      //
       if (element.trim().equalsIgnoreCase(listElement)) {
         return true;
       }

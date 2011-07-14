@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
+import java.io.File;
+
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
-
-import java.io.File;
 
 /**
  * <p>
@@ -172,4 +172,8 @@ public interface TargetPlatform {
    * 
    */
   void refresh();
+
+  BundleDescription getBundleDescriptionFromWorkspace(String symbolicName);
+
+  BundleDescription getBundleDescriptionFromBinaryBundles(String symbolicName);
 }

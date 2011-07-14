@@ -21,24 +21,29 @@ public class EquinoxLaunchConfigurationWrapper {
   /**
    * The supported launch configuration type
    */
-  public final static String        EQUINOX_LAUNCH_CONFIGURATION_TYPE = "org.eclipse.pde.ui.EquinoxLauncher";
+  public final static String        EQUINOX_LAUNCH_CONFIGURATION_TYPE   = "org.eclipse.pde.ui.EquinoxLauncher";
+
+  /**
+   * The supported launch configuration type
+   */
+  public final static String        PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE = "org.eclipse.pde.ui.JunitLaunchConfig";
 
   /**
    * Name of the attribute that contains the list with selected bundles from the target platform
    */
-  public static final String        TARGET_BUNDLES_ATTRIBUTE_NAME     = "target_bundles";
+  public static final String        TARGET_BUNDLES_ATTRIBUTE_NAME       = "target_bundles";
 
   /**
    * Name of the attribute that contains the list with selected bundles from the workspace
    */
-  public static final String        WORKSPACE_BUNDLES_ATTRIBUTE_NAME  = "workspace_bundles";
+  public static final String        WORKSPACE_BUNDLES_ATTRIBUTE_NAME    = "workspace_bundles";
 
   /**
    * Name of the attribute that contains the default start level
    */
-  public static final String        DEFAULT_START_LEVEL_NAME          = "default_start_level";
+  public static final String        DEFAULT_START_LEVEL_NAME            = "default_start_level";
 
-  public static final String        DEFAULT_AUTO_START                = "default_auto_start";
+  public static final String        DEFAULT_AUTO_START                  = "default_auto_start";
 
   /**
    * The wrapped launch configuration. Must not be null
@@ -46,7 +51,9 @@ public class EquinoxLaunchConfigurationWrapper {
   private final LaunchConfiguration _launchConfiguration;
 
   /**
+   * <p>
    * Returns true if the specified LaunchConfiguration represents a Equinox launch configuration
+   * </p>
    * 
    * @param launchConfiguration
    * @return
@@ -54,6 +61,18 @@ public class EquinoxLaunchConfigurationWrapper {
   public static boolean isEquinoxLaunchConfiguration(LaunchConfiguration launchConfiguration) {
     notNull("launchConfiguration", launchConfiguration);
     return (EQUINOX_LAUNCH_CONFIGURATION_TYPE.equals(launchConfiguration.getType()));
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param launchConfiguration
+   * @return
+   */
+  public static boolean isPdeJunitLaunchConfiguration(LaunchConfiguration launchConfiguration) {
+    notNull("launchConfiguration", launchConfiguration);
+    return (PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE.equals(launchConfiguration.getType()));
   }
 
   /**
