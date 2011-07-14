@@ -200,8 +200,9 @@ public class BundleDependenciesResolver {
    */
   public static BundleDescription getHost(BundleDescription bundleDescription) {
 
+    //
     if (!bundleDescription.isResolved()) {
-      throw new RuntimeException();
+      throw new RuntimeException(String.format("Bundle '%s' is not resolved.", bundleDescription.getSymbolicName()));
     }
 
     // bundle description describes a fragment ->
