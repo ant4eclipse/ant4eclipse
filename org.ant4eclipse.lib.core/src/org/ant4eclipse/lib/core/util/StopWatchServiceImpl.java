@@ -26,9 +26,6 @@ public class StopWatchServiceImpl implements StopWatchService {
 
   public StopWatchServiceImpl() {
     this._managedStopWatches = new Hashtable<String, StopWatch>();
-
-    System.out.println("StopWatchService erzeugt!!!");
-
   }
 
   public StopWatch getOrCreateStopWatch(String name) {

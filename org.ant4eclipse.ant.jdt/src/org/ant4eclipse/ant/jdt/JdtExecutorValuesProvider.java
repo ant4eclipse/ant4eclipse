@@ -68,8 +68,6 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
       List<JdtClasspathContainerArgument> jdtClasspathContainerArguments, MacroExecutionValues executionValues,
       Set<String> requestedPaths) {
 
-    System.out.println("requestedPaths: " + requestedPaths);
-
     PerformanceLogging.start(getClass(), "provideExecutorValues");
 
     // provide the executor values from the platform component
@@ -106,73 +104,73 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
     if (cpAbsoluteCompiletime != null) {
 
-    if (cpAbsoluteCompiletime.hasBootClasspath()) {
-      if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
-        // TODO
-        compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
-            .getAccessRestrictions().asFormattedString());
-      }
-    }
-
-    ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
-    for (ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries) {
-
-      // set source folder for output folder
-      if (resolvedClasspathEntry.hasSourcePathEntries()) {
-        File[] sourcePathEntries = resolvedClasspathEntry.getSourcePathEntries();
-        for (File file : resolvedClasspathEntry.getClassPathEntries()) {
-          compilerArguments.addSourceFolderForOutputFolder(file, sourcePathEntries);
+      if (cpAbsoluteCompiletime.hasBootClasspath()) {
+        if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
+          // TODO
+          compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
+              .getAccessRestrictions().asFormattedString());
         }
       }
 
-      if (A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug("Resolved cp entry: %s", resolvedClasspathEntry.toString());
-      }
+      ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
+      for (ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries) {
 
-      // set access restrictions
-      if (resolvedClasspathEntry.hasAccessRestrictions()) {
-        AccessRestrictions accessRestrictions = resolvedClasspathEntry.getAccessRestrictions();
-        for (File file : resolvedClasspathEntry.getClassPathEntries()) {
-          compilerArguments.addAccessRestrictions(file, accessRestrictions.asFormattedString());
+        // set source folder for output folder
+        if (resolvedClasspathEntry.hasSourcePathEntries()) {
+          File[] sourcePathEntries = resolvedClasspathEntry.getSourcePathEntries();
+          for (File file : resolvedClasspathEntry.getClassPathEntries()) {
+            compilerArguments.addSourceFolderForOutputFolder(file, sourcePathEntries);
+          }
+        }
+
+        if (A4ELogging.isDebuggingEnabled()) {
+          A4ELogging.debug("Resolved cp entry: %s", resolvedClasspathEntry.toString());
+        }
+
+        // set access restrictions
+        if (resolvedClasspathEntry.hasAccessRestrictions()) {
+          AccessRestrictions accessRestrictions = resolvedClasspathEntry.getAccessRestrictions();
+          for (File file : resolvedClasspathEntry.getClassPathEntries()) {
+            compilerArguments.addAccessRestrictions(file, accessRestrictions.asFormattedString());
+          }
         }
       }
-    }
 
-    if (cpAbsoluteCompiletime.hasBootClasspath()) {
-      executionValues.getProperties().put(BOOT_CLASSPATH,
-          this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
-    }
+      if (cpAbsoluteCompiletime.hasBootClasspath()) {
+        executionValues.getProperties().put(BOOT_CLASSPATH,
+            this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
+      }
 
-    executionValues.getProperties().put(CLASSPATH_ABSOLUTE_COMPILETIME,
-        this._pathComponent.convertToString(cpAbsoluteCompiletime.getClasspathFiles()));
+      executionValues.getProperties().put(CLASSPATH_ABSOLUTE_COMPILETIME,
+          this._pathComponent.convertToString(cpAbsoluteCompiletime.getClasspathFiles()));
 
-    if (cpAbsoluteCompiletime.hasBootClasspath()) {
-      executionValues.getReferences().put(BOOT_CLASSPATH_PATH,
-          this._pathComponent.convertToPath(cpAbsoluteCompiletime.getBootClasspathFiles()));
-    }
-    executionValues.getReferences().put(CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
-        this._pathComponent.convertToPath(cpAbsoluteCompiletime.getClasspathFiles()));
+      if (cpAbsoluteCompiletime.hasBootClasspath()) {
+        executionValues.getReferences().put(BOOT_CLASSPATH_PATH,
+            this._pathComponent.convertToPath(cpAbsoluteCompiletime.getBootClasspathFiles()));
+      }
+      executionValues.getReferences().put(CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
+          this._pathComponent.convertToPath(cpAbsoluteCompiletime.getClasspathFiles()));
     }
 
     if (cpRelativeCompiletime != null) {
       executionValues.getProperties().put(CLASSPATH_RELATIVE_COMPILETIME,
           this._pathComponent.convertToString(cpRelativeCompiletime.getClasspathFiles()));
-    executionValues.getReferences().put(CLASSPATH_RELATIVE_COMPILETIME_PATH,
-        this._pathComponent.convertToPath(cpRelativeCompiletime.getClasspathFiles()));
+      executionValues.getReferences().put(CLASSPATH_RELATIVE_COMPILETIME_PATH,
+          this._pathComponent.convertToPath(cpRelativeCompiletime.getClasspathFiles()));
     }
 
     if (cpAbsoluteRuntime != null) {
       executionValues.getProperties().put(CLASSPATH_ABSOLUTE_RUNTIME,
           this._pathComponent.convertToString(cpAbsoluteRuntime.getClasspathFiles()));
-    executionValues.getReferences().put(CLASSPATH_ABSOLUTE_RUNTIME_PATH,
-        this._pathComponent.convertToPath(cpAbsoluteRuntime.getClasspathFiles()));
+      executionValues.getReferences().put(CLASSPATH_ABSOLUTE_RUNTIME_PATH,
+          this._pathComponent.convertToPath(cpAbsoluteRuntime.getClasspathFiles()));
     }
 
     if (cpRelativeRuntime != null) {
       executionValues.getProperties().put(CLASSPATH_RELATIVE_RUNTIME,
           this._pathComponent.convertToString(cpRelativeRuntime.getClasspathFiles()));
-    executionValues.getReferences().put(CLASSPATH_RELATIVE_RUNTIME_PATH,
-        this._pathComponent.convertToPath(cpRelativeRuntime.getClasspathFiles()));
+      executionValues.getReferences().put(CLASSPATH_RELATIVE_RUNTIME_PATH,
+          this._pathComponent.convertToPath(cpRelativeRuntime.getClasspathFiles()));
     }
 
     // resolve default output folder
