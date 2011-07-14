@@ -24,6 +24,9 @@ final class JUnitVisitor extends EmptyVisitor {
   /** the name of the class */
   private String  _className;
 
+  /** the name of the class */
+  private String  _superClassName;
+
   /**
    * {@inheritDoc}
    */
@@ -46,6 +49,7 @@ final class JUnitVisitor extends EmptyVisitor {
   public void visit(int arg0, int arg1, String arg2, String arg3, String arg4, String[] arg5) {
     this._isAbstract = ((arg1 & Opcodes.ACC_ABSTRACT) != 0);
     this._className = arg2.replace('/', '.');
+    this._superClassName = arg4.replace('/', '.');
   }
 
   /**
@@ -73,6 +77,16 @@ final class JUnitVisitor extends EmptyVisitor {
 
   /**
    * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public boolean hasTestAnnotations() {
+    return this._hasTestAnnotations;
+  }
+
+  /**
+   * <p>
    * Returns the name of the class.
    * </p>
    * 
@@ -80,5 +94,15 @@ final class JUnitVisitor extends EmptyVisitor {
    */
   public String getClassName() {
     return this._className;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public String getSuperClassName() {
+    return this._superClassName;
   }
 }
