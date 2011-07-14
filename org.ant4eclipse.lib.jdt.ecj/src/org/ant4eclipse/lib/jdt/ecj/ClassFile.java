@@ -33,4 +33,12 @@ public interface ClassFile extends ReferableType {
    * @return this class file as an {@link IBinaryType}.
    */
   IBinaryType getBinaryType();
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  byte[] getBytes();
 }

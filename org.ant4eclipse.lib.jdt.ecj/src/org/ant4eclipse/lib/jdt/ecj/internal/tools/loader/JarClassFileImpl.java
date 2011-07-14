@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
+import java.io.IOException;
+import java.util.zip.ZipFile;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -20,9 +22,7 @@ import org.ant4eclipse.lib.jdt.ecj.internal.tools.DefaultReferableType;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFormatException;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
-
-import java.io.IOException;
-import java.util.zip.ZipFile;
+import org.eclipse.jdt.internal.compiler.util.Util;
 
 /**
  * DefaultClassFile --
@@ -50,6 +50,14 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
 
     this._zipEntryName = zipEntryName;
     this._zipFile = zipFile;
+  }
+
+  public byte[] getBytes() {
+    try {
+      return Util.getZipEntryByteContent(this._zipFile.getEntry(this._zipEntryName), this._zipFile);
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   /**

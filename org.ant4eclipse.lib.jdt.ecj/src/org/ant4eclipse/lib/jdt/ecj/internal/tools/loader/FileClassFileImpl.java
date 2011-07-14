@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
+import java.io.File;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.DefaultReferableType;
 import org.eclipse.jdt.internal.compiler.classfmt.ClassFileReader;
 import org.eclipse.jdt.internal.compiler.env.IBinaryType;
-
-import java.io.File;
+import org.eclipse.jdt.internal.compiler.util.Util;
 
 /**
  * FileClassFileImpl --
@@ -37,6 +37,14 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
     super(libraryLocation, libraryType);
     Assure.exists("classfile", classfile);
     this._classfile = classfile;
+  }
+
+  public byte[] getBytes() {
+    try {
+      return Util.getFileByteContent(this._classfile);
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   /**
