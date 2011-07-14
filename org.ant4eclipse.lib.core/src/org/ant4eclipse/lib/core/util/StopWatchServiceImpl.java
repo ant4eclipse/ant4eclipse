@@ -54,16 +54,19 @@ public class StopWatchServiceImpl implements StopWatchService {
   }
 
   private void dumpAll(String key, Comparator<StopWatch> comparator) {
+
     List<StopWatch> stopwatches = new LinkedList<StopWatch>(this._managedStopWatches.values());
-    Collections.sort(stopwatches, comparator);
-    A4ELogging.info(stopwatches.size() + " stopwatches ordered by " + key);
     for (StopWatch stopWatch : stopwatches) {
       stopWatch.stop();
+    }
+
+    Collections.sort(stopwatches, comparator);
+    A4ELogging.info(stopwatches.size() + " stopwatches ordered by " + key);
+
+    for (StopWatch stopWatch : stopwatches) {
       A4ELogging.info(String.format("  '%s' took total '%f' sec (invocations: %d, average: %f sec)",
           stopWatch.getName(), (double) stopWatch.getElapsedTime() / 1000, stopWatch.getInvocations(),
           stopWatch.getAverageTime() / 1000));
     }
-
   }
-
 }
