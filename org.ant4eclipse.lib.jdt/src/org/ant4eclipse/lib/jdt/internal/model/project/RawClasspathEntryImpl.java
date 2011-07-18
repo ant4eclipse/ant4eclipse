@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
+import java.io.File;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
-
-import java.io.File;
 
 /**
  * Encapsulates an entry in a Java project classpath.
@@ -190,6 +190,16 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   public void setExcludes(String excludes) {
     this._excludes = excludes;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param path
+   */
+  public void setPath(String path) {
+    this._path = path;
   }
 
   /**
