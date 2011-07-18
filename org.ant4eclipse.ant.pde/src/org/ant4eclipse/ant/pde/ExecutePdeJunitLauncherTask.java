@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.ant4eclipse.ant.pde.analysis.TestClassAnalyser;
 import org.ant4eclipse.ant.platform.ExecuteLauncherTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -152,13 +153,10 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     defaultValues.getProperties().put("jre.location", javaRuntime.getLocation().getAbsolutePath());
 
     StringMap jrtProperties = javaRuntime.getJavaProfile().getProperties();
-
     defaultValues.getProperties().put("org.osgi.framework.system.packages",
         jrtProperties.get("org.osgi.framework.system.packages"));
-
     defaultValues.getProperties().put("org.osgi.framework.bootdelegation",
         jrtProperties.get("org.osgi.framework.bootdelegation"));
-
     defaultValues.getProperties().put("org.osgi.framework.executionenvironment",
         jrtProperties.get("org.osgi.framework.executionenvironment"));
 
@@ -183,7 +181,8 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
         bundleDescription.getSymbolicName(), bundleDescription.getVersion());
     BundleDescription bundleHost = BundleDependenciesResolver.getHost(bundleDescription);
 
-    defaultValues.getProperties().put("testplugin.name", bundleHost.getSymbolicName());
+    defaultValues.getProperties().put("testplugin.bundlehost.name", bundleHost.getSymbolicName());
+    defaultValues.getProperties().put("testplugin.name", bundleDescription.getSymbolicName());
     defaultValues.getProperties().put("testplugin.location", bundleDescription.getLocation());
 
     // find contained test classes
@@ -305,7 +304,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
 
     //
     if (description == null) {
-      throw new RuntimeException(String.format("Bundle '%s' does not exist!", symName));
+      A4ELogging.warn("Bundle '%s' does not exist!", symName);
     }
 
     //

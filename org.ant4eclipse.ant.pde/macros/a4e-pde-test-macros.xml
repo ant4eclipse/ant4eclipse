@@ -24,14 +24,16 @@
 		<attribute name="launchConfigurationFile" />
 		<attribute name="targetDirectory" />
 		<attribute name="tempDir" />
+		<attribute name="additionalClassPathRefId" default="emptyPathRefId" />
 		<sequential>
+
+			<path id="emptyPathRefId" />
 
 			<!-- -->
 			<delete dir="@{tempDir}" quiet="true" />
 			<mkdir dir="@{tempDir}" />
 			<mkdir dir="@{tempDir}/config" />
 			<mkdir dir="@{tempDir}/workspace" />
-
 
 			<!-- -->
 			<ant4eclipse:executePdeJunitLauncher workspaceDirectory="@{workspaceDirectory}"
@@ -45,7 +47,7 @@
 				<ant4eclipse:forLauncher>
 
 					<!-- setPdeTestPort -->
-					<setPdeTestPort  tempDir="@{tempDir}" />
+					<setPdeTestPort tempDir="@{tempDir}" />
 
 					<!-- writeConfigIni -->
 					<writeConfigIni tempDir="@{tempDir}" />
@@ -55,7 +57,8 @@
 					<echo file="@{tempDir}/config/dev.properties">${executePdeJunitLauncher.dev.properties}</echo>
 
 					<parallel>
-						<launchLauncher tempDir="@{tempDir}" />
+						<launchLauncher tempDir="@{tempDir}"
+						                additionalClassPathRefId="@{additionalClassPathRefId}" />
 						<launchListener targetDirectory="@{targetDirectory}" />
 					</parallel>
 				</ant4eclipse:forLauncher>
@@ -73,21 +76,27 @@
          - - - - - - - - - - - - - - - - - -->
 	<macrodef name="launchLauncher">
 		<attribute name="tempDir" />
+		<attribute name="additionalClassPathRefId" />
 		<sequential>
 			<echo>Launching launcher...</echo>
-
-			<java jar="${executePdeJunitLauncher.osgi.framework}"
+			<echo>${executePdeJunitLauncher.org.osgi.framework.bootdelegation}</echo>
+			<java className="org.eclipse.core.runtime.adaptor.EclipseStarter"
 			      fork="true"
 			      failonerror="false"
 			      maxmemory="1200m"
 			      dir="${executePdeJunitLauncher.testplugin.location}">
 
+				<classpath>
+					<pathelement location="${executePdeJunitLauncher.osgi.framework}" />
+					<path refid="@{additionalClassPathRefId}" />
+				</classpath>
+
 				<sysproperty key="osgi.noShutdown" value="false" />
+				<sysproperty key="osgi.compatibility.bootdelegation"
+				             value="true" />
+				<sysproperty key="osgi.parentClassloader" value="app" />
 				<sysproperty key="org.osgi.framework.bootdelegation"
 				             value="${executePdeJunitLauncher.org.osgi.framework.bootdelegation}" />
-
-				<sysproperty key="org.osgi.framework.system.packages"
-				             value="${executePdeJunitLauncher.org.osgi.framework.system.packages}" />
 
 				<arg value="-configuration" />
 				<arg value="file:@{tempDir}/config" />
@@ -98,7 +107,7 @@
 				<arg value="-application" />
 				<arg value="org.eclipse.pde.junit.runtime.coretestapplication" />
 				<arg value="-testpluginname" />
-				<arg value="${executePdeJunitLauncher.testplugin.name}" />
+				<arg value="${executePdeJunitLauncher.testplugin.bundlehost.name}" />
 				<arg value="-testNameFile" />
 				<arg value="@{tempDir}/config/testNames.txt" />
 				<arg value="-testLoaderClass" />
@@ -122,9 +131,6 @@
 		<sequential>
 
 			<echo>Launching listener</echo>
-
-			<delete dir="@{targetDirectory}" quiet="true" />
-			<mkdir dir="@{targetDirectory}" />
 
 			<java classpath="${executePdeJunitLauncher.collectorCP}"
 			      classname="pde.test.utils.PDETestResultsCollector"
@@ -159,20 +165,19 @@ osgi.configuration.cascaded=false
 
 		</sequential>
 	</macrodef>
-	
+
 	<!-- - - - - - - - - - - - - - - - - -
           macrodef: setPdeTestPort          
          - - - - - - - - - - - - - - - - - -->
-    <macrodef name="setPdeTestPort">
+	<macrodef name="setPdeTestPort">
 		<attribute name="tempDir" />
-        <sequential>
-        	
-        	<antcontrib:var name="pde.test.port" unset="true" />
-        	
-			<delete file="@{tempDir}/pde_test_port.properties"
-			        quiet="true" />
-			
-        	<java classname="pde.test.utils.PDETestPortLocator"
+		<sequential>
+
+			<antcontrib:var name="pde.test.port" unset="true" />
+
+			<delete file="@{tempDir}/pde_test_port.properties" quiet="true" />
+
+			<java classname="pde.test.utils.PDETestPortLocator"
 			      fork="yes"
 			      classpath="${executePdeJunitLauncher.collectorCP}"
 			      dir="@{tempDir}/config" />
@@ -182,11 +187,11 @@ osgi.configuration.cascaded=false
 			         checkeveryunit="millisecond">
 				<available file="@{tempDir}/config/pde_test_port.properties" />
 			</waitfor>
-			
-        	<property file="@{tempDir}/config/pde_test_port.properties" />
-			
-        	<echo message="Using port ${pde.test.port} for listening to PDE Test run" />
-        </sequential>
-    </macrodef>
+
+			<property file="@{tempDir}/config/pde_test_port.properties" />
+
+			<echo message="Using port ${pde.test.port} for listening to PDE Test run" />
+		</sequential>
+	</macrodef>
 
 </project>
