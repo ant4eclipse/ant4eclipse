@@ -135,7 +135,7 @@ public class BundleDependenciesResolver {
     List<ExportPackageDescription> result = new LinkedList<ExportPackageDescription>();
 
     for (String additionalBundle : additionalBundles) {
-      A4ELogging.info("Adding additional bundle '%s'", additionalBundle);
+      A4ELogging.debug("Adding additional bundle '%s'", additionalBundle);
       BundleDescription resolvedBundle = targetPlatform.getResolvedBundle(additionalBundle, null);
       addAdditionalPackages(result, targetPlatform, resolvedBundle);
     }
