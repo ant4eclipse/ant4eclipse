@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
@@ -15,17 +16,17 @@ import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann
  */
-public class ClassFileLoaderCache {
+public class ClassFileLoaderCache implements Lifecycle {
 
   /**
-   * System-Property that allows disabling the ClassFileLoaderCache
+   * System-Property that enables the ClassFileLoaderCache
    */
-  private static final boolean         DISABLE_CACHE = Boolean.getBoolean("ant4eclipse.disableClassFileLoaderCache");
+  private static final boolean         ENABLE_CACHE = Boolean.getBoolean("ant4eclipse.enableClassFileLoaderCache");
 
   /**
    * System-Property that enables tracing of the cache. <b>This is very verbose!</b>
    */
-  private static final boolean         TRACE_CACHE   = Boolean.getBoolean("ant4eclipse.traceClassFileLoaderCache");
+  private static final boolean         TRACE_CACHE  = Boolean.getBoolean("ant4eclipse.traceClassFileLoaderCache");
 
   /** the class file loader map */
   private Map<Object, ClassFileLoader> _classFileLoaderMap;
@@ -33,12 +34,15 @@ public class ClassFileLoaderCache {
   /**
    * Hit counter
    */
-  private int                          _hits         = 0;
+  private int                          _hits        = 0;
 
   /**
    * Miss counter
    */
-  private int                          _missed       = 0;
+  private int                          _missed      = 0;
+
+  /** - */
+  private boolean                      _initialized;
 
   /**
    * <p>
@@ -47,48 +51,98 @@ public class ClassFileLoaderCache {
    */
   public ClassFileLoaderCache() {
     this._classFileLoaderMap = new HashMap<Object, ClassFileLoader>();
-    System.out.println("ClassFileLoaderCache is " + (DISABLE_CACHE ? "" : "not ") + "disabled");
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isInitialized() {
+    A4ELogging.info("ClassFileLoaderCache is " + (ENABLE_CACHE ? "not " : "") + "disabled");
+    return this._initialized;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void initialize() {
+    this._initialized = true;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void dispose() {
+    this._initialized = false;
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  public void clear() {
+    this._classFileLoaderMap.clear();
+    this._hits = 0;
+    this._missed = 0;
+
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param key
+   * @param classFileLoader
+   */
   public void storeClassFileLoader(Object key, ClassFileLoader classFileLoader) {
-    if (!DISABLE_CACHE) {
+    if (ENABLE_CACHE) {
       if (TRACE_CACHE) {
         A4ELogging.debug("Store ClassFileLoader in cache for: '" + key + "' -> " + classFileLoader);
         A4ELogging.debug("  Packages: " + Arrays.asList(classFileLoader.getAllPackages()));
       }
-    this._classFileLoaderMap.put(key, classFileLoader);
-  }
+      this._classFileLoaderMap.put(key, classFileLoader);
+    }
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param key
+   * @return
+   */
   public ClassFileLoader getClassFileLoader(Object key) {
     ClassFileLoader classFileLoader = this._classFileLoaderMap.get(key);
     if (classFileLoader != null) {
       this._hits++;
-      if (!DISABLE_CACHE && TRACE_CACHE) {
+      if (ENABLE_CACHE && TRACE_CACHE) {
         A4ELogging.debug("Got ClassFileLoader from cache for: " + key);
       }
     } else {
       this._missed++;
-      if (!DISABLE_CACHE && TRACE_CACHE) {
+      if (ENABLE_CACHE && TRACE_CACHE) {
         A4ELogging.debug("Missed ClassFileLoader in cache for: " + key);
       }
     }
     return classFileLoader;
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param key
+   * @return
+   */
   public boolean hasClassFileLoader(Object key) {
     return this._classFileLoaderMap.containsKey(key);
-  }
-
-  public static ClassFileLoaderCache getInstance() {
-    return ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class);
   }
 
   /**
    * Dumps the current content and hit statistics of the ClassFileLoaderCache via A4ELogging
    */
   public void dump() {
-    if (DISABLE_CACHE) {
+
+    if (!ENABLE_CACHE) {
       A4ELogging.info("ClassFileLoaderCache has been disabled. Anyway there have been " + (this._missed + this._hits)
           + " calls to the cache.");
     } else {
@@ -99,5 +153,9 @@ public class ClassFileLoaderCache {
         A4ELogging.info("  Packages: " + Arrays.asList(entry.getValue().getAllPackages()));
       }
     }
+  }
+
+  public static ClassFileLoaderCache getInstance() {
+    return ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class);
   }
 }
