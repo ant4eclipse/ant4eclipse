@@ -11,6 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
+import java.io.File;
+import java.lang.reflect.Method;
+
 import org.ant4eclipse.ant.jdt.ecj.A4ECompilerAdapter;
 import org.ant4eclipse.ant.jdt.ecj.EcjCompilerAdapter;
 import org.ant4eclipse.ant.jdt.ecj.JavacCompilerAdapter;
@@ -18,8 +21,6 @@ import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.Javac;
 import org.apache.tools.ant.taskdefs.compilers.CompilerAdapter;
-
-import java.io.File;
 
 /**
  * <p>
@@ -43,6 +44,11 @@ public class JdtCompilerTask extends Javac {
   private boolean             _useecj               = true;
 
   private boolean             _warnings             = true;
+
+  /**
+   * The CompilerAdapter for this compilation
+   */
+  private A4ECompilerAdapter  _a4eCompilerAdapter;
 
   /**
    * Enables/disables the generation of warn messages.
@@ -92,15 +98,16 @@ public class JdtCompilerTask extends Javac {
    * 
    * @return The CompilerAdapter instance used for the compilation process. Not <code>null</code>.
    */
-  protected CompilerAdapter getNewCompilerAdapter() {
-    A4ECompilerAdapter result = null;
+  protected CompilerAdapter getOrCreateCompilerAdapter() {
+    if (this._a4eCompilerAdapter == null) {
     if (this._useecj) {
-      result = new EcjCompilerAdapter();
+        this._a4eCompilerAdapter = new EcjCompilerAdapter();
     } else {
-      result = new JavacCompilerAdapter();
+        this._a4eCompilerAdapter = new JavacCompilerAdapter();
+      }
+      this._a4eCompilerAdapter.setWarnings(this._warnings);
     }
-    result.setWarnings(this._warnings);
-    return result;
+    return this._a4eCompilerAdapter;
   }
 
   /**
@@ -128,7 +135,7 @@ public class JdtCompilerTask extends Javac {
       }
 
       // obtain an adapter used to run the compilation process
-      CompilerAdapter adapter = getNewCompilerAdapter();
+      CompilerAdapter adapter = getOrCreateCompilerAdapter();
       adapter.setJavac(this);
 
       // launch the compilation process
@@ -170,6 +177,15 @@ public class JdtCompilerTask extends Javac {
   @Override
   public void execute() throws BuildException {
     super.setCompiler(EcjCompilerAdapter.class.getName());
+    super.setIncludeantruntime(false);
+
+    // Set Compiler Adapter (only if Ant >= 1.8.0);
+    try {
+      Method addAdapterMethod = getClass().getMethod("add", CompilerAdapter.class);
+      addAdapterMethod.invoke(this, getOrCreateCompilerAdapter());
+    } catch (Exception ex) {
+      // ignore
+    }
     super.execute();
   }
 
