@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -20,10 +24,10 @@ import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
-
-import java.io.File;
 
 /**
  * A datatype used as a container for classpathes.
@@ -78,7 +82,10 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
 
-    JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation());
+    // If specified: add files for jre (otherwise required JRE jars are determined automatically)
+    List<File> jreFiles = getSelectedJreFiles(runtime);
+
+    JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation(), jreFiles);
 
     Assure.notNull("javaRuntime", javaRuntime);
 
@@ -101,11 +108,38 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     }
   }
 
+  /**
+   * Returns the files that are selected by {@link FileSet FileSets} for the specified runtime.
+   * <p>
+   * Returns <tt>null</tt> if there are files specified explicitly
+   * 
+   * @param runtime
+   * @return
+   */
+  private List<File> getSelectedJreFiles(Runtime runtime) {
+    if (!runtime.hasFileSets()) {
+      return null;
+    }
+    List<File> files = new LinkedList<File>();
+    List<FileSet> fileSets = runtime.getFileSets();
+    for (FileSet fileSet : fileSets) {
+      DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
+      File dir = fileSet.getDir();
+      String[] includedFiles = directoryScanner.getIncludedFiles();
+      for (String includedFile : includedFiles) {
+        files.add(new File(dir, includedFile));
+      }
+    }
+    return files;
+  }
+
   public static class Runtime {
 
     private String _id;
 
     private File   _location;
+
+    private List<FileSet> _fileSets;
 
     public String getId() {
       return this._id;
@@ -121,6 +155,26 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     public void setLocation(File location) {
       this._location = location;
+    }
+
+    public void addFileSet(FileSet fileSet) {
+      if (this._fileSets == null) {
+        this._fileSets = new LinkedList<FileSet>();
+      }
+      this._fileSets.add(fileSet);
+    }
+
+    /**
+     * Might return null if no filesets have been specified by the user
+     * 
+     * @return
+     */
+    public List<FileSet> getFileSets() {
+      return this._fileSets;
+    }
+
+    public boolean hasFileSets() {
+      return this._fileSets != null;
     }
   }
 } /* ENDCLASS */

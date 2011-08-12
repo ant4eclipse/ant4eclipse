@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.jdt.model.jre;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -40,14 +41,34 @@ public interface JavaRuntimeRegistry {
 
   /**
    * <p>
+   * Registers the java runtime that is specified using the given location and the specified files with the
+   * {@link JavaRuntimeRegistry}.
+   * </p>
+   * <p>
+   * If <b>jreFiles</b> is <tt>null</tt>, the files for the jre are automatically determined
+   * 
+   * @param id
+   * @param location
+   * @param jreFiles
+   *          the jreFiles that define the jre or null
+   * @return
+   */
+  JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles);
+
+  /**
+   * <p>
    * Registers the java runtime that is specified using the given location with the {@link JavaRuntimeRegistry}.
    * </p>
+   * 
+   * <p>
+   * Same as {@link #registerJavaRuntime(String, File, List<File>) registerJavaRuntime(String, File, null)}
    * 
    * @param id
    *          the id of java runtime
    * @param location
    *          the location
    * @return the {@link JavaRuntime}
+   * 
    */
   JavaRuntime registerJavaRuntime(String id, File location);
 

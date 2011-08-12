@@ -13,6 +13,11 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -21,10 +26,6 @@ import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <p>
@@ -57,19 +58,35 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault) {
-    Assure.nonEmpty("id", id);
-    Assure.isDirectory("location", location);
+    return registerJavaRuntime(id, location, null, isDefault);
 
-    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location);
-
-    return registerJavaRuntime(javaRuntime, isDefault);
   }
 
   /**
    * {@inheritDoc}
    */
   public JavaRuntime registerJavaRuntime(String id, File location) {
-    return registerJavaRuntime(id, location, false);
+    return registerJavaRuntime(id, location, null);
+
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#registerJavaRuntime(java.lang.String, java.io.File,
+   * java.util.List)
+   */
+  public JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles) {
+    return registerJavaRuntime(id, location, jreFiles, false);
+  }
+
+  private JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles, boolean isDefault) {
+    Assure.nonEmpty("id", id);
+    Assure.isDirectory("location", location);
+
+    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, jreFiles);
+
+    return registerJavaRuntime(javaRuntime, isDefault);
   }
 
   /**
@@ -324,6 +341,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // create new java runtime
     A4ELogging.debug("Using JRE defined in system property 'java.home' (%s)", location.getAbsolutePath());
-    return JavaRuntimeLoader.loadJavaRuntime("java.home", location);
+    return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null);
   }
 }

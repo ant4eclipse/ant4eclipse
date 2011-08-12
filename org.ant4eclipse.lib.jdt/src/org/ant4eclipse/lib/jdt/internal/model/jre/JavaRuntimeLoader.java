@@ -11,15 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.data.Version;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.lib.jdt.internal.model.jre.support.LibraryDetector;
-import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
-import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
-import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -27,6 +18,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.data.Version;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.internal.model.jre.support.LibraryDetector;
+import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
+import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 
 public class JavaRuntimeLoader {
   /**  */
@@ -50,8 +51,11 @@ public class JavaRuntimeLoader {
   /**
    * @param id
    * @param location
+   * @param files
+   *          the list of (jar-)files defining this java runtime or null if the file should be determined from the
+   *          JavaRuntime's location
    */
-  public static JavaRuntime loadJavaRuntime(String id, File location) {
+  public static JavaRuntime loadJavaRuntime(String id, File location, List<File> files) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
 
@@ -83,10 +87,14 @@ public class JavaRuntimeLoader {
     String javaendorseddirs = values[3];
     Version javaSpecificationVersion = Version.newBundleVersion(values[4]);
 
-    List<File> files = new LinkedList<File>();
+    if (files != null) {
+      A4ELogging.debug("Using specified files for JRE '%s': '%s'", id, files);
+    } else {
+      files = new LinkedList<File>();
     addFiles(javaendorseddirs, false, files);
     addFiles(sunbootclasspath, false, files);
     addFiles(javaextdirs, true, files);
+    }
 
     File[] libraries = files.toArray(new File[0]);
 
