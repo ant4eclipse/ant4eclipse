@@ -17,8 +17,11 @@ import java.io.File;
 
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
+import org.ant4eclipse.lib.jdt.EclipsePathUtil;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 /**
  * Parsing class used to process an eclipse user library configuration file.
@@ -30,7 +33,7 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
   /**
    * {@inheritDoc}
    */
-  public UserLibraries parseUserLibrariesFile(File configuration) {
+  public UserLibraries parseUserLibrariesFile(File configuration, Workspace workspace) {
     UserLibrariesImpl userlibs = new UserLibrariesImpl();
 
     trace("Parsing UserLibraries configuration file '%s'", configuration);
@@ -72,8 +75,20 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
       int arccount = Integer.parseInt(counters[i]);
       while (arccount > 0) {
 
+        String path = pathes[j];
+        File archiveFile;
+        int pathType = EclipsePathUtil.getPathType(path, workspace);
+        if (pathType == EclipsePathUtil.ABSOLUTE_PATH) {
+          archiveFile = new File(path);
+        } else {
+          // Workspace relative
+          String[] splitted = EclipsePathUtil.splitHeadAndTail(path);
+          EclipseProject project = workspace.getProject(splitted[0]);
+          archiveFile = project.getChild(splitted[1]);
+        }
+
         // create an Archive instance for each 'archive' element.
-        ArchiveImpl archive = new ArchiveImpl(new File(pathes[j]));
+        ArchiveImpl archive = new ArchiveImpl(archiveFile);
         userlib.addArchive(archive);
 
         if ((sources[j] != null) && (!"".equals(sources[j].trim()))) {

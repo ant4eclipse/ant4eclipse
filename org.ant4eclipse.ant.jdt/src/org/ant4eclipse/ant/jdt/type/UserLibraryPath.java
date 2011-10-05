@@ -11,7 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
+import java.io.File;
+
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.ant.core.HasReferencesDataType;
+import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
@@ -19,21 +23,23 @@ import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrary;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
-
-import java.io.File;
 
 /**
  * Simple path extension that allows to be configured using an eclipse configuration file.
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class UserLibraryPath extends AbstractAnt4EclipseDataType {
+public class UserLibraryPath extends AbstractAnt4EclipseDataType implements HasReferencesDataType {
 
   private static final String PREFIX = "org.eclipse.jdt.USER_LIBRARY/";
 
   private File                _userlibfile;
+
+  private WorkspaceDelegate   _workspaceDelegate;
 
   /**
    * Simply initializes this new type.
@@ -43,7 +49,24 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    */
   public UserLibraryPath(Project project) {
     super(project);
+    this._workspaceDelegate = new WorkspaceDelegate(this);
     this._userlibfile = null;
+  }
+
+  /**
+   * Set the identifier of the workspace
+   */
+  public void setWorkspaceId(String identifier) {
+    this._workspaceDelegate.setWorkspaceId(identifier);
+  }
+
+  /**
+   * Sets the directory of the workspace
+   *
+   * @param workspaceDirectory
+   */
+  public void setWorkspaceDirectory(String workspaceDirectory) {
+    this._workspaceDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
 
   /**
@@ -53,12 +76,31 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    *          The new user library configuration file.
    */
   public void setUserlibraries(File userlib) {
-    if (!userlib.isFile()) {
-      A4ELogging.warn("missing file '%s'", userlib.getPath());
-    } else {
       this._userlibfile = userlib;
-      loadConfigurationFile();
+    // if (!userlib.isFile()) {
+    // A4ELogging.warn("missing file '%s'", userlib.getPath());
+    // } else {
+    // this._userlibfile = userlib;
+    // loadConfigurationFile();
+    // }
+  }
+
+  @Override
+  protected void doValidate() {
+    if (this._userlibfile == null) {
+      throw new BuildException("Property userlibraries must be set");
     }
+
+    // if (!_workspaceDelegate.isWorkspaceDirectorySet() && _workspaceDelegate.isWorkspaceIdSet()) {
+    // A4ELogging.warn("No workspace directory or id has been set. Will not be able to resolve ")
+    // }
+
+    if (!this._userlibfile.isFile()) {
+      A4ELogging.warn("missing file '%s'", this._userlibfile.getPath());
+      return;
+    }
+
+    loadConfigurationFile();
   }
 
   /**
@@ -68,9 +110,10 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    */
   private void loadConfigurationFile() {
     try {
+
       UserLibrariesFileParser parser = ServiceRegistryAccess.instance().getService(UserLibrariesFileParser.class);
 
-      UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile);
+      UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile, getWorkspace());
       String[] libs = userlibs.getAvailableLibraries();
       for (String lib : libs) {
         UserLibrary library = userlibs.getLibrary(lib);
@@ -84,12 +127,23 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
         getProject().addReference(PREFIX + lib, path);
 
         // add it to the ClassPathElementsRegistry
-        ServiceRegistryAccess.instance().getService(ClassPathElementsRegistry.class).registerClassPathContainer(
-            PREFIX + library.getName(), library.getArchiveFiles());
+        ServiceRegistryAccess.instance().getService(ClassPathElementsRegistry.class)
+            .registerClassPathContainer(PREFIX + library.getName(), library.getArchiveFiles());
       }
     } catch (Exception ex) {
+      ex.printStackTrace();
       A4ELogging.error("Failed to load userlibraries file.\n'%s'.", ex);
     }
+  }
+
+  /**
+   * @return the workspace specified or null if no workspace has been set
+   */
+  private Workspace getWorkspace() {
+    if (this._workspaceDelegate.isWorkspaceDirectorySet() || this._workspaceDelegate.isWorkspaceIdSet()) {
+      return this._workspaceDelegate.getWorkspace();
+    }
+    return null;
   }
 
 } /* ENDCLASS */

@@ -11,12 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Base type for all ant4eclipse types.
@@ -30,7 +29,7 @@ import java.util.Set;
 public abstract class AbstractAnt4EclipseDataType extends DataType {
 
   /** - */
-  private static Set<AbstractAnt4EclipseDataType> instances  = new HashSet<AbstractAnt4EclipseDataType>();
+  private static List<AbstractAnt4EclipseDataType> instances  = new LinkedList<AbstractAnt4EclipseDataType>();
 
   /** - */
   private boolean                                 _validated = false;
@@ -47,7 +46,12 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
 
     // add instance
     synchronized (instances) {
+      if (instances.isEmpty() || (this instanceof HasReferencesDataType)) {
+        // add to end
       instances.add(this);
+      } else {
+        instances.add(0, this);
+      }
     }
     // configure ant4eclipse
     AntConfigurator.configureAnt4Eclipse(project);

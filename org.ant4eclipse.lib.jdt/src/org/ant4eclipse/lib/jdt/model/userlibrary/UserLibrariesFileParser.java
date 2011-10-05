@@ -13,6 +13,8 @@ package org.ant4eclipse.lib.jdt.model.userlibrary;
 
 import java.io.File;
 
+import org.ant4eclipse.lib.platform.model.resource.Workspace;
+
 /**
  * <p>
  * Parsing class used to process an eclipse user library configuration file.
@@ -27,7 +29,9 @@ public interface UserLibrariesFileParser {
    * 
    * @param configuration
    *          The eclipse user library configuration file.
+   * @param workspace
+   *          The workspace definition that is used to resolve relative paths or null
    */
-  UserLibraries parseUserLibrariesFile(File configuration);
+  UserLibraries parseUserLibrariesFile(File configuration, Workspace workspace);
 
 } /* ENDCLASS */
