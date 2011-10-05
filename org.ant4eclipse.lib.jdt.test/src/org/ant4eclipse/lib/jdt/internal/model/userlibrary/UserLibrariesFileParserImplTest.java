@@ -22,7 +22,7 @@ public class UserLibrariesFileParserImplTest extends AbstractTestDirectoryBasedT
         getClass().getResourceAsStream("myUserLibraries.xml"));
 
     UserLibrariesFileParserImpl fileParserImpl = new UserLibrariesFileParserImpl();
-    final UserLibraries userLibraries = fileParserImpl.parseUserLibrariesFile(testFile);
+    final UserLibraries userLibraries = fileParserImpl.parseUserLibrariesFile(testFile, null);
     assertNotNull(userLibraries);
     assertEquals(1, userLibraries.getAvailableLibraries().length);
     assertTrue(userLibraries.hasLibrary("J2EE Library"));
