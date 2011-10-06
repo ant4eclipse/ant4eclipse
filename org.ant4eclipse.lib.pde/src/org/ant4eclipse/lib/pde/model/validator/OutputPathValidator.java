@@ -61,7 +61,7 @@ public class OutputPathValidator extends AbstractProjectValidator {
           EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME);
       Set<String> jdtoutputpathes = new HashSet<String>();
       for (File outputfolder : outputfolders) {
-        jdtoutputpathes.add(outputfolder.getName().replace('\\', '/'));
+        jdtoutputpathes.add(outputfolder.getPath().replace('\\', '/'));
       }
 
       PluginBuildProperties buildproperties = pluginrole.getBuildProperties();
