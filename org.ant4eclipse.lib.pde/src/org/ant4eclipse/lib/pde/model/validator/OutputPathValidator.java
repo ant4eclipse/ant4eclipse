@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.ant4eclipse.lib.core.logging.A4ELevel;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.util.PropertyService;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
@@ -49,6 +52,7 @@ public class OutputPathValidator extends AbstractProjectValidator {
 
     PluginProjectRole pluginrole = (PluginProjectRole) role;
     EclipseProject project = pluginrole.getEclipseProject();
+    PropertyService properties = ServiceRegistryAccess.instance().getService(PropertyService.class);
 
     // this test currently looks strange but future versions of eclipse will support non-java plugins, so we better
     // check for it
@@ -97,11 +101,14 @@ public class OutputPathValidator extends AbstractProjectValidator {
          *       which should not become part of the deployed artifacts. On the other hand such a message might be
          *       handy. Perhaps we should provide a switch to adjust the behaviour here.
          */
+        A4ELevel missingOuputPath = A4ELevel.parse(
+            properties.getProperty("ant4eclipse.build.properties.missingOuputPath"), A4ELevel.WARN);
         Iterator<String> iterator = jdtoutputpathes.iterator();
         while (iterator.hasNext()) {
           String output = iterator.next();
-          addWarning(project, String.format(
-              "build.properties does not contain output path '%s'. you will probably miss some classes", output));
+          String message = String.format(
+              "build.properties does not contain output path '%s'. you will probably miss some classes", output);
+          addMessage(project, missingOuputPath, message);
         }
       }
 
