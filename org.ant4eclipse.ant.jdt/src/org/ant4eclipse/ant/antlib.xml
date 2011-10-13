@@ -3,6 +3,7 @@
 
   <typedef name="userLibraries"                 classname="org.ant4eclipse.ant.jdt.type.UserLibraryPath" />
   <typedef name="installedJREs"                 classname="org.ant4eclipse.ant.jdt.type.JreContainer" />
+  <typedef name="jre"                           classname="org.ant4eclipse.ant.jdt.type.JreContainer$Runtime" />
   <typedef name="customExecutionEnvironment"    classname="org.ant4eclipse.ant.jdt.type.ExecutionEnvironmentDefinitionDataType" />
   <typedef name="jdtClassPathVariable"          classname="org.ant4eclipse.ant.jdt.type.JdtClassPathVariableType" />
   <typedef name="jdtClassPathLibrary"           classname="org.ant4eclipse.ant.jdt.type.JdtClassPathContainerType" />
