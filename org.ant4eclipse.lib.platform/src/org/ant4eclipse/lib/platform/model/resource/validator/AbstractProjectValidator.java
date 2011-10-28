@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELevel;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
@@ -63,6 +64,22 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    * @todo [03-Dec-2009:KASI] At the moment validation inconsistencies will only be logged. We probably might want to
    *       attach them to the projects.
    */
+
+  /**
+   * <p>
+   * Informs the user about a validation problem.
+   * </p>
+   * 
+   * @param project
+   *          The project used for the message. Not <code>null</code>.
+   * @param level
+   *          The log level for the message.
+   * @param message
+   *          A validation message. Neither <code>null</code> nor empty.
+   */
+  protected void addMessage(EclipseProject project, A4ELevel level, String message) {
+    A4ELogging.log(level, "Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
+  }
 
   /**
    * <p>

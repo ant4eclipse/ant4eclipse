@@ -102,6 +102,36 @@ public class A4ELogging {
   }
 
   /**
+   * Dumps information based on log level.
+   * 
+   * @param level
+   *          The level on which to log.
+   * @param msg
+   *          A formatting message. Neither <code>null</code> nor empty.
+   * @param args
+   *          The arguments used for the formatted message.
+   */
+  public static final void log(A4ELevel level, String msg, Object... args) {
+    switch (level) {
+    case TRACE:
+      trace(msg, args);
+      break;
+    case DEBUG:
+      debug(msg, args);
+      break;
+    case INFO:
+      info(msg, args);
+      break;
+    case WARN:
+      warn(msg, args);
+      break;
+    case ERROR:
+      error(msg, args);
+      break;
+    }
+  }
+
+  /**
    * Returns an instance of a logger currently provided by the registry.
    * 
    * @return An instance of a logger currently provided by the registry. Not <code>null</code>.
