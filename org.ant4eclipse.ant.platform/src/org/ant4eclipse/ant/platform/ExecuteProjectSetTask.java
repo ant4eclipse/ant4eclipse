@@ -12,8 +12,11 @@
 package org.ant4eclipse.ant.platform;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -53,6 +56,9 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
 
   /** indicates if the build order should be resolved */
   private boolean                         _resolveBuildOrder = true;
+
+  /** indicates the number of concurrent threads */
+  private int                             _threadCount       = 1;
 
   /**
    * <p>
@@ -153,6 +159,26 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     return this._macroExecutionDelegate.getScopedMacroDefinitions();
   }
 
+  public int getThreadCount() {
+    return this._threadCount;
+  }
+
+  public void setThreadCount(int threads) {
+    this._threadCount = threads;
+  }
+
+  @Override
+  protected void preconditions() throws BuildException {
+    super.preconditions();
+
+    if (this._resolveBuildOrder && this._threadCount > 1) {
+      throw new BuildException("In parallel mode (threadCount>1) build order can not be resolved");
+    }
+    if (this._threadCount < 1) {
+      throw new BuildException("ThreadCount must at least be 1");
+    }
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -168,6 +194,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     // get all eclipse projects and calculate the build order if necessary
     List<EclipseProject> projects = null;
     if (this._resolveBuildOrder) {
+
       // resolve the build order
       projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
           this._projectReferenceAwareDelegate.getProjectReferenceTypes(),
@@ -177,27 +204,95 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
       projects = Arrays.asList(getWorkspace().getProjects(getProjectNames(), false));
     }
 
+    final BuildCallable[] buildCallables = new BuildCallable[this._threadCount];
+    for (int i = 0; i < buildCallables.length; i++) {
+      buildCallables[i] = new BuildCallable();
+    }
+
+    int callableIndex = 0;
+    for (final EclipseProject eclipseProject : projects) {
+      buildCallables[callableIndex].addProject(eclipseProject);
+      callableIndex++;
+      if (callableIndex >= buildCallables.length) {
+        callableIndex = 0;
+      }
+    }
+
     // execute the macro definitions
     for (ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {
-      for (final EclipseProject eclipseProject : projects) {
+
+      //
+      for (BuildCallable buildCallable : buildCallables) {
+        buildCallable.setScopedMacroDefinition(scopedMacroDefinition);
+      }
+
+      // create the future tasks
+      @SuppressWarnings("unchecked")
+      FutureTask<Void>[] futureTasks = new FutureTask[this._threadCount];
+      for (int i = 0; i < futureTasks.length; i++) {
+        futureTasks[i] = new FutureTask<Void>(buildCallables[i]);
+        new Thread(futureTasks[i]).start();
+      }
+
+      // collect the result
+      for (FutureTask<Void> futureTask : futureTasks) {
+        try {
+          futureTask.get();
+        } catch (Exception e) {
+          throw new BuildException(e);
+        }
+      }
+
+    }
+
+    stopWatchService.getOrCreateStopWatch("executeProjectSet").stop();
+
+  }
+
+  class BuildCallable implements Callable<Void> {
+    private final List<EclipseProject>   _projects = new LinkedList<EclipseProject>();
+
+    private ScopedMacroDefinition<Scope> _scopedMacroDefinition;
+
+    public void addProject(EclipseProject project) {
+      this._projects.add(project);
+
+    }
+
+    public void setScopedMacroDefinition(ScopedMacroDefinition<Scope> scopedMacroDefinition) {
+      this._scopedMacroDefinition = scopedMacroDefinition;
+
+    }
+
+    public Void call() throws Exception {
+
+      System.out.println(String.format("ExecuteProjectSetTask[%s] 1: %s", Thread.currentThread(), this._projects));
+
+      for (final EclipseProject eclipseProject : this._projects) {
+
+        System.out.println(String.format("ExecuteProjectSetTask[%s] 2: %s", Thread.currentThread(),
+            eclipseProject.getSpecifiedName()));
 
         // execute macro instance
-        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(),
-            new MacroExecutionValuesProvider() {
+        ExecuteProjectSetTask.this._macroExecutionDelegate.executeMacroInstance(
+            this._scopedMacroDefinition.getMacroDef(), new MacroExecutionValuesProvider() {
 
               public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
                 // set the values
                 ExecuteProjectSetTask.this._platformExecutorValuesProvider
                     .provideExecutorValues(eclipseProject, values);
 
+                System.out.println(String.format("ExecuteProjectSetTask[%s] 3: %s", Thread.currentThread(),
+                    values.getProperties()));
+
                 // return result
                 return values;
               }
             });
-      }
-    }
-    stopWatchService.getOrCreateStopWatch("executeProjectSet").stop();
 
+      }
+      return null;
+    }
   }
 
   /**
