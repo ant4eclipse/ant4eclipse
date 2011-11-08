@@ -226,20 +226,32 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
         buildCallable.setScopedMacroDefinition(scopedMacroDefinition);
       }
 
-      // create the future tasks
-      @SuppressWarnings("unchecked")
-      FutureTask<Void>[] futureTasks = new FutureTask[this._threadCount];
-      for (int i = 0; i < futureTasks.length; i++) {
-        futureTasks[i] = new FutureTask<Void>(buildCallables[i]);
-        new Thread(futureTasks[i]).start();
-      }
+      if (buildCallables.length > 1) {
 
-      // collect the result
-      for (FutureTask<Void> futureTask : futureTasks) {
+        // create the future tasks
+        @SuppressWarnings("unchecked")
+        FutureTask<Void>[] futureTasks = new FutureTask[this._threadCount];
+        for (int i = 0; i < futureTasks.length; i++) {
+          futureTasks[i] = new FutureTask<Void>(buildCallables[i]);
+
+          Thread thread = new Thread(futureTasks[i]);
+          thread.setName("A4E-" + thread.getName());
+          thread.start();
+        }
+        // collect the result
+        for (FutureTask<Void> futureTask : futureTasks) {
+          try {
+            futureTask.get();
+          } catch (Exception e) {
+            throw new BuildException(e);
+          }
+        }
+      } else {
         try {
-          futureTask.get();
+          buildCallables[0].call();
         } catch (Exception e) {
-          throw new BuildException(e);
+          // TODO Auto-generated catch block
+          e.printStackTrace();
         }
       }
 
@@ -266,12 +278,12 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
 
     public Void call() throws Exception {
 
-      System.out.println(String.format("ExecuteProjectSetTask[%s] 1: %s", Thread.currentThread(), this._projects));
+      // System.out.println(String.format("ExecuteProjectSetTask[%s] 1: %s", Thread.currentThread(), this._projects));
 
       for (final EclipseProject eclipseProject : this._projects) {
 
-        System.out.println(String.format("ExecuteProjectSetTask[%s] 2: %s", Thread.currentThread(),
-            eclipseProject.getSpecifiedName()));
+        // System.out.println(String.format("ExecuteProjectSetTask[%s] 2: %s", Thread.currentThread(),
+        // eclipseProject.getSpecifiedName()));
 
         // execute macro instance
         ExecuteProjectSetTask.this._macroExecutionDelegate.executeMacroInstance(
@@ -282,8 +294,8 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
                 ExecuteProjectSetTask.this._platformExecutorValuesProvider
                     .provideExecutorValues(eclipseProject, values);
 
-                System.out.println(String.format("ExecuteProjectSetTask[%s] 3: %s", Thread.currentThread(),
-                    values.getProperties()));
+                // System.out.println(String.format("ExecuteProjectSetTask[%s] 3: %s", Thread.currentThread(),
+                // values.getProperties()));
 
                 // return result
                 return values;

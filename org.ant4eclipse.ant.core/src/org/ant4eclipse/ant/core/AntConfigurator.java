@@ -18,6 +18,7 @@ import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.PropertyHelper;
 
 /**
  * <p>
@@ -42,6 +43,9 @@ public class AntConfigurator {
   public static final void configureAnt4Eclipse(Project project) {
 
     if (!ServiceRegistryAccess.isConfigured()) {
+
+      // set ant4eclipse property helper
+      PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
 
       Object existing = project.getReference(REF_REGISTRY);
       if ((existing != null) && (existing instanceof ServiceRegistry)) {

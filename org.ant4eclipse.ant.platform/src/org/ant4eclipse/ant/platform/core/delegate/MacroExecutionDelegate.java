@@ -11,6 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
+import java.io.StringReader;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -22,14 +27,11 @@ import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
 import org.ant4eclipse.lib.core.ldapfilter.ParseException;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
-import org.apache.tools.ant.taskdefs.MacroInstance;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
-
-import java.io.StringReader;
-import java.util.LinkedList;
-import java.util.List;
+import org.apache.tools.ant.taskdefs.MacroInstance;
 
 /**
  * <p>
@@ -159,12 +161,18 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     instance.setMacroDef(macroDef);
 
     // create raper
-    AntPropertiesRaper antPropertiesRaper = new AntPropertiesRaper(getAntProject());
-    AntReferencesRaper antReferencesRaper = new AntReferencesRaper(getAntProject());
+    AntPropertiesRaper antPropertiesRaper = new AntPropertiesRaper(getAntProject(), Thread.currentThread());
+    AntReferencesRaper antReferencesRaper = new AntReferencesRaper(getAntProject(), Thread.currentThread());
 
     // set scoped values
     antPropertiesRaper.setScopedValues(macroExecutionValues.getProperties(), this._prefix);
     antReferencesRaper.setScopedValues(macroExecutionValues.getReferences(), this._prefix);
+
+    // ******
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getAntProject());
+    // System.out.println("*-*-* " + ((ThreadDispatchingPropertyHelper) propertyHelper.getNext()).getThreadProperties());
+    // System.out.println(macroExecutionValues);
+    // ******
 
     // execute macro instance
     instance.execute();

@@ -11,16 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
-
-import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
-import org.ant4eclipse.lib.core.Assure;
-import org.apache.tools.ant.Project;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
+import org.ant4eclipse.lib.core.Assure;
+import org.apache.tools.ant.Project;
 
 /**
  * <p>
@@ -50,6 +49,9 @@ public abstract class AbstractAntProjectRaper<V> {
   /** the value accessor */
   private AntProjectValueAccessor<V> _valueAccessor;
 
+  /** - */
+  private Thread                     _currentThread;
+
   /**
    * <p>
    * Creates a new instance of type {@link AbstractAntProjectRaper}.
@@ -58,8 +60,19 @@ public abstract class AbstractAntProjectRaper<V> {
    * @param antProject
    *          the ant project
    */
-  public AbstractAntProjectRaper(Project antProject) {
+  public AbstractAntProjectRaper(Project antProject, Thread thread) {
     this._antProject = antProject;
+    this._currentThread = thread;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @return
+   */
+  public Thread getCurrentThread() {
+    return this._currentThread;
   }
 
   /**
