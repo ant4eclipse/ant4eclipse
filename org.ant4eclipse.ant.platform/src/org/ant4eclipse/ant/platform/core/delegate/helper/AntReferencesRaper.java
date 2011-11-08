@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
+import java.util.Hashtable;
+
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.apache.tools.ant.Project;
-
-import java.util.Hashtable;
 
 /**
  * <p>
@@ -35,8 +35,14 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    * @param antProject
    *          the ant project
    */
-  public AntReferencesRaper(Project antProject) {
-    super(antProject);
+  public AntReferencesRaper(Project antProject, Thread currentThread) {
+    super(antProject, currentThread);
+
+    //
+    final String threadPrefix = Long.toString(currentThread.getId());
+
+    //
+    antProject.setProperty("currentThreadId", threadPrefix);
 
     // set the value accessor
     setValueAccessor(new AntProjectValueAccessor<Object>() {
@@ -64,7 +70,9 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        *          the value to set
        */
       public void setValue(String key, Object value) {
-        setReference(key, value);
+
+        //
+        setReference(threadPrefix + "." + key, value);
       }
 
       /**
@@ -76,7 +84,7 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        *          the key
        */
       public void unsetValue(String key) {
-        removeReference(key);
+        removeReference(threadPrefix + "." + key);
       }
     });
   }
