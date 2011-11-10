@@ -11,12 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.testframework.JUnitUtilities;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -33,7 +27,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.jar.JarFile;
 
-public class UtilitiesTest {
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.ant4eclipse.testframework.JUnitUtilities;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
   /**
    * This one is also used to test the {@link Utilities#delete(File)} function. It would be nicer if we could separate
@@ -316,8 +317,8 @@ public class UtilitiesTest {
     Assert.assertEquals("", Utilities.listToString(new Object[0], null));
     Assert.assertEquals("A,B,C", Utilities.listToString(new Object[] { "A", "B", "C" }, null));
     Assert.assertEquals("ABC", Utilities.listToString(new Object[] { "A", "B", "C" }, ""));
-    Assert.assertEquals("12#13.0#14.0#NaN", Utilities.listToString(new Object[] { Integer.valueOf(12),
-        Float.valueOf(13), Double.valueOf(14), Double.valueOf(Double.NaN) }, "#"));
+    Assert.assertEquals("12#13.0#14.0#NaN", Utilities.listToString(
+        new Object[] { Integer.valueOf(12), Float.valueOf(13), Double.valueOf(14), Double.valueOf(Double.NaN) }, "#"));
   }
 
   @Test
@@ -358,8 +359,8 @@ public class UtilitiesTest {
     try {
       StringBuffer buffer2 = Utilities.readTextContent(instream, "UTF-8", true);
       Assert.assertNotNull(buffer2);
-      Assert.assertEquals("Frösche" + Utilities.NL + "Würfel" + Utilities.NL + "Flanch" + Utilities.NL, buffer2
-          .toString());
+      Assert.assertEquals("Frösche" + Utilities.NL + "Würfel" + Utilities.NL + "Flanch" + Utilities.NL,
+          buffer2.toString());
     } finally {
       Utilities.close(instream);
     }
@@ -410,8 +411,8 @@ public class UtilitiesTest {
     Properties properties = new Properties();
     properties.setProperty("A", "A-Value");
     properties.setProperty("B", "B-Value");
-    Assert.assertEquals("'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'" + Utilities.NL, Utilities
-        .toString(properties));
+    Assert.assertEquals("'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'" + Utilities.NL,
+        Utilities.toString(properties));
     Assert.assertEquals("my-title" + Utilities.NL + "'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'"
         + Utilities.NL, Utilities.toString("my-title", properties));
   }
@@ -489,16 +490,16 @@ public class UtilitiesTest {
 
     String template1 = "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}";
     String result1 = Utilities.replaceTokens(template1, replacements);
-    Assert.assertEquals("${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich",
-        result1);
+    Assert.assertEquals(
+        "${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich", result1);
 
     String result2 = Utilities.replaceTokens(template1, replacements, "$", "$");
     Assert.assertEquals("${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}", result2);
 
     String template2 = template1.replace('$', '@');
     String result3 = Utilities.replaceTokens(template2, replacements, "@{", "}");
-    Assert.assertEquals("@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich",
-        result3);
+    Assert.assertEquals(
+        "@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich", result3);
 
     String result4 = Utilities.replaceTokens("", replacements, "@{", "}");
     Assert.assertEquals("", result4);
