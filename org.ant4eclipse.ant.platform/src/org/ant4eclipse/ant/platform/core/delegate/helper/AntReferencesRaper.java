@@ -73,6 +73,9 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
 
         //
         setReference(threadPrefix + "." + key, value);
+
+        // unsafe! Only for backward compatibility
+        setReference(key, value);
       }
 
       /**
@@ -85,6 +88,9 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        */
       public void unsetValue(String key) {
         removeReference(threadPrefix + "." + key);
+
+        // unsafe! Only for backward compatibility
+        removeReference(key);
       }
     });
   }
