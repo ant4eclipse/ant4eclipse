@@ -11,8 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -64,6 +67,10 @@ public abstract class AbstractAnt4EclipseTask extends Task {
       preconditions();
       doExecute();
     } catch (Exception ex) {
+      StringWriter sw = new StringWriter();
+      ex.printStackTrace(new PrintWriter(sw));
+
+      A4ELogging.error("Execute of %s failed: %s%n%s", getClass().getName(), ex, sw);
       throw new BuildException(ex.toString(), ex);
     }
   }
