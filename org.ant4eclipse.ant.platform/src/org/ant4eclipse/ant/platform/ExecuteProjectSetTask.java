@@ -250,8 +250,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
         try {
           buildCallables[0].call();
         } catch (Exception e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
+          throw new BuildException(e);
         }
       }
 
