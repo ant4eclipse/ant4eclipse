@@ -757,7 +757,7 @@
 						<then>
 							<echo>Copying bundle '${executeProduct.plugin.file} (${executeProduct.plugin.id})' </echo>
 							<copy todir="@{destination}/${a4e.plugins.directory}">
-								<filelist refid="executeProduct.plugin.filelist" />
+								<filelist refid="${currentThreadId}.executeProduct.plugin.filelist" />
 							</copy>
 						</then>
 					</antcontrib:if>
@@ -769,13 +769,13 @@
 					<echo>Copying launcher bundle...</echo>
 					<copy todir="@{destination}/${a4e.plugins.directory}"
 					      overwrite="true">
-						<filelist refid="executeProduct.product.launcherplugin.filelist" />
+						<filelist refid="${currentThreadId}.executeProduct.product.launcherplugin.filelist" />
 					</copy>
 
 					<echo>Copying launcher fragment...</echo>
 					<copy todir="@{destination}/${a4e.plugins.directory}"
 					      overwrite="true">
-						<filelist refid="executeProduct.product.launcherfragment.filelist" />
+						<filelist refid="${currentThreadId}.executeProduct.product.launcherfragment.filelist" />
 					</copy>
 
 					<!-- Step 4.2: Create the '.eclipseproduct' file -->
@@ -871,7 +871,7 @@
 
 					<!-- Step 6: Copy (and rename) the native launcher artifacts -->
 					<copy todir="@{destination}">
-						<filelist refid="executeProduct.product.nativelauncher.filelist" />
+						<filelist refid="${currentThreadId}.executeProduct.product.nativelauncher.filelist" />
 						<filtermapper>
 							<replacestring from="eclipse"
 							               to="${executeProduct.product.launchername}" />
@@ -1005,7 +1005,7 @@
 					<executeIfFalse property="@{skipBuildPlugins}">
 						<echo>Copying bundle '${executeFeature.plugin.file} (${executeFeature.plugin.id}_${executeFeature.plugin.resolved.version})' </echo>
 						<copy todir="@{destination}/${a4e.plugins.directory}">
-							<filelist refid="executeFeature.plugin.filelist" />
+							<filelist refid="${currentThreadId}.executeFeature.plugin.filelist" />
 						</copy>
 					</executeIfFalse>
 				</ant4eclipse:forEachPlugin>
@@ -1054,7 +1054,7 @@
 					<echo>Copying feature '${executeFeature.feature.file} (${executeFeature.feature.id}_${executeFeature.feature.resolved.version})' </echo>
 
 					<copy todir="@{destination}/${a4e.features.directory}">
-						<filelist refid="executeFeature.feature.filelist" />
+						<filelist refid="${currentThreadId}.executeFeature.feature.filelist" />
 					</copy>
 
 				</ant4eclipse:forRootFeature>
