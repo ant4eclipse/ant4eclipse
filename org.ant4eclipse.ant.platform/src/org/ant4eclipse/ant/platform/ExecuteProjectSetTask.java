@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
@@ -243,6 +244,13 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
           try {
             futureTask.get();
           } catch (Exception e) {
+            Throwable t = e;
+            if (e instanceof ExecutionException) {
+              t = ((ExecutionException) e).getCause();
+            }
+            if (t instanceof BuildException) {
+              throw (BuildException) t;
+            }
             throw new BuildException(e);
           }
         }
@@ -250,7 +258,15 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
         try {
           buildCallables[0].call();
         } catch (Exception e) {
+          Throwable t = e;
+          if (e instanceof ExecutionException) {
+            t = ((ExecutionException) e).getCause();
+          }
+          if (t instanceof BuildException) {
+            throw (BuildException) t;
+          }
           throw new BuildException(e);
+
         }
       }
 
