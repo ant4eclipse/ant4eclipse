@@ -7,7 +7,7 @@
   <import file="${basedir}/../org.ant4eclipse.ant.pde/macros/a4e-pde-macros.xml" />
 
   <!-- define environment properties -->
-  <property file="${basedir}\environment.properties" />
+  <property file="${basedir}/environment.properties" />
 
   <!-- define your jdk location here -->
   <ant4eclipse:installedJREs>
@@ -18,7 +18,7 @@
   <!-- define the target platform location -->
   <ant4eclipse:targetPlatform id="target.platform">
     <location dir="${target.platform.location.1}" />
-    <location dir="${target.platform.location.2}" />  
+    <location dir="${target.platform.location.2}" />
   </ant4eclipse:targetPlatform>
 
   <!-- =================================
@@ -26,23 +26,98 @@
          ================================= -->
   <target name="build">
 
-    <delete dir="d:/plugins" quiet="true" />
-    <mkdir dir="d:/plugins" />    
+    <delete dir="${destination.directory}" quiet="true" />
+    <mkdir dir="${destination.directory}" />
+
+    <ant4eclipse:getJdtClassPath workspaceDirectory="${basedir}/workspace"
+                                 projectName="req1"
+                                 property="test" />
+
+    <echo>${test}</echo>
+
+    <!-- buildPlugin workspaceDirectory="${basedir}/workspace"
+                 projectname="ReferencingProject"
+                 targetplatformid="target.platform"
+                 destination="${destination.directory}" / -->
+
+    <!-- ant4eclipse:getBuildOrder workspaceDirectory="${basedir}/workspace"
+                   projectNames="req1,req2,req3"
+                   buildOrderProperty="test" />
     
-    <!-- <buildPlugin workspace="${basedir}/workspace"
+    <echo>${test}</echo -->
+
+    <!-- <ant4eclipse:userLibraries userlibraries="userlib.xml"/>
+
+		<ant4eclipse:getJdtClassPath property="classpath"
+		                             workspaceDirectory="${basedir}/workspace"
+		                             projectName="A1"
+		                             pathSeparator=";"
+		                             relative="true" />
+
+		<echo>${classpath}</echo> -->
+
+    <!-- buildPlugin workspaceDirectory="${basedir}/workspace"
+                 projectname="A1"
+                 targetplatformid="target.platform"
+                 destination="${destination.directory}">
+
+
+    </buildPlugin -->
+
+    <!-- buildPlugin workspaceDirectory="${basedir}/workspace"
+		             projectname="A2"
+		             targetplatformid="target.platform"
+		             destination="${destination.directory}" / -->
+
+
+    <!-- buildPlugin workspaceDirectory="${basedir}/workspace"
                  projectname="example-bundle"
                  targetplatformid="target.platform"
-                 destination="d:/plugins" />
+                 destination="${destination.directory}"
+                 newbundleversion="2.3.4.5">
 
-    <buildPlugin workspace="${basedir}/workspace"
+      <validate>
+        <echo>validate: ${buildPlugin.newBundleVersion}</echo>
+      </validate>
+
+      <pre-compile>
+        <echo>pre-compile: ${buildPlugin.newBundleVersion}</echo>
+      </pre-compile>
+
+      <pre-package-library>
+        <echo>pre-package-library: ${buildPlugin.newBundleVersion}</echo>
+      </pre-package-library>
+
+      <deploy>
+        <echo>deploy: ${buildPlugin.newBundleVersion}</echo>
+      </deploy>
+
+    </buildPlugin -->
+
+    <!-- buildPlugin workspaceDirectory="${basedir}/workspace"
                  projectname="testproject"
                  targetplatformid="target.platform"
-                 destination="d:/plugins" /> -->
+                 destination="${destination.directory}" /> 
 
-    <buildFeature workspaceDirectory="${basedir}/workspace"
+		<buildPlugin workspaceDirectory="${basedir}/workspace"
+		             projectname="requirebundle"
+		             targetplatformid="target.platform"
+		             destination="${destination.directory}" /> -->
+
+    <!-- buildPlugin workspaceDirectory="${basedir}/workspace"
+		             projectname="req1"
+		             targetplatformid="target.platform"
+		             destination="${destination.directory}" / -->
+
+    <!-- buildFeature workspaceDirectory="${basedir}/workspace"
                   projectName="test.feature"
                   targetplatformid="target.platform"
-                  destination="d:/plugins" />
+                  destination="${destination.directory}" /> -->
+
+    <!-- buildFeature workspaceDirectory="${basedir}/workspace"
+                  projectName="test.feature"
+                  targetplatformid="target.platform"
+                  destination="${destination.directory}" / -->
 
   </target>
 

@@ -11,10 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
+import java.util.Hashtable;
+import java.util.Properties;
+
+import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
 import org.apache.tools.ant.Project;
-
-import java.util.Hashtable;
+import org.apache.tools.ant.PropertyHelper;
 
 /**
  * <p>
@@ -35,8 +38,10 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * @param antProject
    *          the ant project
    */
-  public AntPropertiesRaper(Project antProject) {
-    super(antProject);
+  public AntPropertiesRaper(Project antProject, Thread thread) {
+    super(antProject, thread);
+
+    registerThread();
 
     // set the value accessor
     setValueAccessor(new AntProjectValueAccessor<String>() {
@@ -83,6 +88,44 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
 
   /**
    * <p>
+   * </p>
+   */
+  private void registerThread() {
+
+    //
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getAntProject()).getNext();
+
+    //
+    if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
+      ((ThreadDispatchingPropertyHelper) propertyHelper).registerThread(Thread.currentThread());
+    }
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param name
+   */
+  private void removeProperty(String name) {
+    //
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getAntProject()).getNext();
+
+    //
+    if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
+      // System.out.println(String.format(" - - - removeProperty(%s)", name));
+      ThreadDispatchingPropertyHelper threadDispatchingPropertyHelper = (ThreadDispatchingPropertyHelper) propertyHelper;
+      Properties threadProperties = threadDispatchingPropertyHelper.getThreadProperties();
+      if (threadProperties != null) {
+        threadProperties.remove(name);
+      } else {
+        _removeProperty(name);
+      }
+    }
+  }
+
+  /**
+   * <p>
    * Removes the given value from the ant project properties.
    * </p>
    * 
@@ -90,7 +133,7 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    *          the key
    */
   @SuppressWarnings("rawtypes")
-  private void removeProperty(String name) {
+  private void _removeProperty(String name) {
     Hashtable properties = null;
     // Ant 1.5 stores properties in Project
     try {
@@ -113,9 +156,13 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
     // Ant 1.6 uses a PropertyHelper, can check for it by checking for a
     // reference to "ant.PropertyHelper"
     try {
+
+      // MULTITHREADING!!
       Object property_helper = getAntProject().getReference("ant.PropertyHelper");
       if (property_helper != null) {
         try {
+
+          // MULTITHREADING!!
           properties = (Hashtable) AbstractAntProjectRaper.getValue(property_helper, "properties");
           if (properties != null) {
             properties.remove(name);
@@ -124,6 +171,8 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
           // ignore
         }
         try {
+
+          // MULTITHREADING!!
           properties = (Hashtable) AbstractAntProjectRaper.getValue(property_helper, "userProperties");
           if (properties != null) {
             properties.remove(name);
