@@ -21,6 +21,39 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
 
   /**
    * <p>
+   * </p>
+   * 
+   * @param project
+   * @return the {@link ThreadDispatchingPropertyHelper}
+   */
+  public static ThreadDispatchingPropertyHelper getInstance(Project project) {
+    Assure.notNull("project", project);
+
+    //
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(project).getNext();
+
+    //
+    if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
+      return (ThreadDispatchingPropertyHelper) propertyHelper;
+    }
+
+    //
+    return null;
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param project
+   * @return
+   */
+  public static boolean hasInstance(Project project) {
+    return getInstance(project) != null;
+  }
+
+  /**
+   * <p>
    * Creates a new instance of type {@link ThreadDispatchingPropertyHelper}.
    * </p>
    * 
@@ -34,6 +67,37 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
 
     //
     this._propertiesMap = new HashMap<Thread, Properties>();
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param thread
+   * @return <code>true</code>, if the given thread is registered.
+   */
+  public boolean isThreadRegistered(Thread thread) {
+
+    //
+    return this._propertiesMap.containsKey(thread);
+  }
+
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param name
+   * @return true, if the property has been removed
+   */
+  public boolean removeProperty(String name) {
+
+    //
+    if (isThreadRegistered(Thread.currentThread())) {
+      return this._propertiesMap.get(Thread.currentThread()).remove(name) != null;
+    }
+
+    // return false
+    return false;
   }
 
   /**
@@ -56,6 +120,13 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
     }
   }
 
+  /**
+   * <p>
+   * </p>
+   * 
+   * @param thread
+   * @return
+   */
   private boolean isAnt4EclipseThread(Thread thread) {
     return thread.getName().startsWith("A4E-");
   }

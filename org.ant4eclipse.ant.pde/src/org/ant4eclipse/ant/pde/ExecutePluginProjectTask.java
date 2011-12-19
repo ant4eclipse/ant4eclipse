@@ -12,10 +12,8 @@
 package org.ant4eclipse.ant.pde;
 
 import java.io.File;
-import java.util.Properties;
 import java.util.jar.Manifest;
 
-import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
@@ -29,7 +27,6 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.pde.tools.LibraryHelper;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
-import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.osgi.framework.Version;
 
@@ -95,14 +92,6 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
       MacroDef macroDef = scopedMacroDefinition.getMacroDef();
-
-      //
-      PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getProject()).getNext();
-      if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
-        ThreadDispatchingPropertyHelper threadDispatchingPropertyHelper = (ThreadDispatchingPropertyHelper) propertyHelper;
-        Properties properties = threadDispatchingPropertyHelper.getThreadProperties();
-        // System.out.println(String.format(" - - - [%s] %s", Thread.currentThread().hashCode(), properties));
-      }
 
       // execute SCOPE_LIBRARY
       if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
