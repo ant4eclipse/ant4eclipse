@@ -99,6 +99,8 @@
       
       <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
+      <property refid="path.cobertura" property="coberturapath"/>
+      
     </sequential>
   </macrodef>
   
@@ -282,6 +284,7 @@
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
+          <jvmarg line="-Dclover.path=${coberturapath}"/>
           <classpath>
             <path refid="path.ant4eclipse"/>
             <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
