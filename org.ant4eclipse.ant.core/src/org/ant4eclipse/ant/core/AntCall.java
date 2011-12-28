@@ -65,8 +65,9 @@ public class AntCall extends Ant {
     try {
       // execute the super class
       super.execute();
+      log("### success");
     } catch (BuildException buildException) {
-      buildException.printStackTrace();
+      log("### " + buildException.getMessage());
       // get the cause of the BuildException
       Throwable cause = getCause(buildException);
 
