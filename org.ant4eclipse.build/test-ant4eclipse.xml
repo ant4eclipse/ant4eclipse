@@ -99,7 +99,7 @@
       
       <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
-      <property refid="path.cobertura" property="coberturapath"/>
+      <property refid="path.cobertura" name="coberturapath"/>
       
     </sequential>
   </macrodef>
