@@ -8,6 +8,7 @@
 
   <!-- test testNonexistingNature -->
   <target name="testAntCall">
+    <echo>THISFILE: ${ant.file.testAntCall}</echo>
     <antCall antfile="${dir.testAntCall}/AntCallTest-callback.xml"
              target="before"
     />
