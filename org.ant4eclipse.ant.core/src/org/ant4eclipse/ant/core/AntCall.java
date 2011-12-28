@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Ant;
@@ -62,11 +61,12 @@ public class AntCall extends Ant {
 
     // configure ant4eclipse
     AntConfigurator.configureAnt4Eclipse(getProject());
-
+    log("### antcall: " + getAntFile());
     try {
       // execute the super class
       super.execute();
     } catch (BuildException buildException) {
+      buildException.printStackTrace();
       // get the cause of the BuildException
       Throwable cause = getCause(buildException);
 
