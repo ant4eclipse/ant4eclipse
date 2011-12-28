@@ -11,6 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
+import org.ant4eclipse.testframework.JUnitUtilities;
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,13 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.jar.JarFile;
-
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
-import org.ant4eclipse.testframework.JUnitUtilities;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
@@ -58,7 +58,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
    * @return The destination directory keeping the content
    */
   private File verifyExpandedJar(File file) throws IOException {
-    File destdir1 = JUnitUtilities.createTempDir();
+    File destdir1 = JUnitUtilities.createTempDir(false);
     JarFile jarfile = new JarFile(file);
     try {
       Utilities.expandJarFile(jarfile, destdir1);
@@ -490,16 +490,16 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
     String template1 = "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}";
     String result1 = Utilities.replaceTokens(template1, replacements);
-    Assert.assertEquals(
-        "${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich", result1);
+    Assert.assertEquals("${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich",
+        result1);
 
     String result2 = Utilities.replaceTokens(template1, replacements, "$", "$");
     Assert.assertEquals("${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}", result2);
 
     String template2 = template1.replace('$', '@');
     String result3 = Utilities.replaceTokens(template2, replacements, "@{", "}");
-    Assert.assertEquals(
-        "@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich", result3);
+    Assert.assertEquals("@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd W�therich",
+        result3);
 
     String result4 = Utilities.replaceTokens("", replacements, "@{", "}");
     Assert.assertEquals("", result4);
