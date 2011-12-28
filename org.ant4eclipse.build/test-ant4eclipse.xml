@@ -71,12 +71,7 @@
       <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
       
       <!-- instrument our a4e release version (ant + lib) using cobertura -->
-      <for param="jarfile">
-        <fileset dir="@{dest}" includes="org.ant4eclipse*.jar"/>
-        <sequential>
-          <cobertura-instrumentation jarfile="@{jarfile}" datafile="@{datafile}"/>
-        </sequential>
-      </for>
+      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse_${revision}.jar" datafile="@{datafile}"/>
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
@@ -91,7 +86,7 @@
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
         <path refid="path.cobertura" />
-        <path location="@{dest}/org.ant4eclipse.jar"/>
+        <path location="@{dest}/org.ant4eclipse_${revision}.jar"/>
         <path path="@{dest}/testcode"/>
       </path>
       
@@ -184,8 +179,28 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
+    
     <property name="dest.reports"     value="${testing}/reports"/>
     <property name="dest.cobertura"   value="${testing}/cobertura"/>
+    
+    <!-- identify the current revision (or local build) -->
+    <if>
+      <not>
+        <isset property="revision" />
+      </not>
+      <then>
+        <if>
+          <equals arg1="${env.BUILD_NUMBER}" arg2="$${env.BUILD_NUMBER}" />
+          <then>
+            <var name="revision" value="local-revision" />
+          </then>
+          <else>
+            <var name="revision" value="${env.BUILD_NUMBER}" />
+          </else>
+        </if>
+      </then>
+    </if>
+    
   </target>
   
   <target name="clean" depends="init">
@@ -262,9 +277,8 @@
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
           <classpath>
-            <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
             <path refid="path.ant4eclipse"/>
-            <path refid="path.cobertura"/>
+            <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
           </classpath>
           <formatter type="xml" />
           <batchtest todir="${reports}">
