@@ -250,6 +250,7 @@
         <echo>  - classpath           -> ${executeJdtProject.classpath.absolute.compiletime}</echo>
         <echo>  - classpath (runtime) -> ${executeJdtProject.classpath.absolute.runtime}</echo>
 
+        <echo>  - cobertura           -> ${dest.cobertura}/cobertura.data</echo>
         <property name="reports" value="${dest.reports}/${executeProjectSet.project.name}" />
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
