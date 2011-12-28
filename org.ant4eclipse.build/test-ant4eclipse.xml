@@ -42,6 +42,7 @@
     <attribute name="jarfile"/>
     <attribute name="datafile"/>
     <sequential>
+      <echo level="verbose" msg="#cobertura-instrumentation( jarfile = '@{jarfile}', datafile = '@{datafile}' )"/>
       <dirname  file="@{jarfile}" property="ci_dir"/>
       <basename file="@{jarfile}" property="ci_name"/>
       <cobertura-instrument datafile="@{datafile}">
