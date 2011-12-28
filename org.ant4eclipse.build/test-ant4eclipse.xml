@@ -93,6 +93,7 @@
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
         <path refid="path.cobertura" />
         <path location="@{dest}/org.ant4eclipse_${revision}.jar"/>
+        <path location="${basedir}/org.ant4eclipse.build/libs/org.eclipse.osgi_3.5.0.v20090520.jar"/>
         <path path="@{dest}/testcode"/>
       </path>
       
