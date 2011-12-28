@@ -61,13 +61,10 @@ public class AntCall extends Ant {
 
     // configure ant4eclipse
     AntConfigurator.configureAnt4Eclipse(getProject());
-    log("### antcall: " + getAntFile());
     try {
       // execute the super class
       super.execute();
-      log("### success");
     } catch (BuildException buildException) {
-      log("### " + buildException.getMessage());
       // get the cause of the BuildException
       Throwable cause = getCause(buildException);
 
