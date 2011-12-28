@@ -71,7 +71,12 @@
       <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
       
       <!-- instrument our a4e release version (ant + lib) using cobertura -->
-      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse.jar" datafile="@{datafile}"/>
+      <for param="jarfile">
+        <fileset dir="@{dest}" includes="org.ant4eclipse*.jar"/>
+        <sequential>
+          <cobertura-instrumentation jarfile="@{jarfile}" datafile="@{datafile}"/>
+        </sequential>
+      </for>
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
