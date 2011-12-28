@@ -91,9 +91,9 @@
       <path id="path.ant4eclipse">
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
+        <fileset dir="${basedir}/org.ant4eclipse.external/libs/equinox" includes="*.jar"/>
         <path refid="path.cobertura" />
         <path location="@{dest}/org.ant4eclipse_${revision}.jar"/>
-        <path location="${basedir}/org.ant4eclipse.build/libs/org.eclipse.osgi_3.5.0.v20090520.jar"/>
         <path path="@{dest}/testcode"/>
       </path>
       
@@ -284,7 +284,6 @@
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
           <classpath>
             <path refid="path.ant4eclipse"/>
-            <path refid="path.cobertura"/>
             <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
           </classpath>
           <formatter type="xml" />
