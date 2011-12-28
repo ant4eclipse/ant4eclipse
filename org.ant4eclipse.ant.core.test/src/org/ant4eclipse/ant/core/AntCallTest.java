@@ -23,10 +23,9 @@ public class AntCallTest extends AbstractAnt4EclipseBuildFileTest {
   @Override
   public void setUp() throws Exception {
     super.setUp();
+    getTestDirectory().createFile("AntCallTest-callback.xml", getResource("AntCallTest-callback.xml").openStream());
     String userDir = System.getProperty("user.dir");
-
     File workspaceDir = new File(userDir);
-
     getProject().setProperty("basedir", workspaceDir.getAbsolutePath() + File.separator + "src");
   }
 

@@ -2,30 +2,32 @@
 
 <project name="testAntCall" basedir="." default="foo">
 
+  <dirname file="${ant.file.testAntCall}" property="dir.testAntCall"/> 
+  
   <typedef name="antCall" classname="org.ant4eclipse.ant.core.AntCall" />
 
   <!-- test testNonexistingNature -->
   <target name="testAntCall">
-    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
+    <antCall antfile="${dir.testAntCall}/AntCallTest-callback.xml"
              target="before"
     />
     <echo>doExecute</echo>
-    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
+    <antCall antfile="${dir.testAntCall}/AntCallTest-callback.xml"
              target="after"
     />
     
-    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
+    <antCall antfile="${dir.testAntCall}/AntCallTest-callback.xml"
              target="notThere"
     />
     
-    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/notthere.xml"
+    <antCall antfile="${dir.testAntCall}/notthere.xml"
              target="notThere"
     />
   </target>
   
   <!-- test testFileNotFoundAntCall -->
   <target name="testFileNotFoundAntCall">
-    <antCall antfile="${basedir}/org/ant4eclipse/ant/core/AntCallTest-callback.xml"
+    <antCall antfile="${dir.testAntCall}/AntCallTest-callback.xml"
              target="fileNotFound"
     />
   </target>
