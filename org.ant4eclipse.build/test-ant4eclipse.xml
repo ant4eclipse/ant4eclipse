@@ -22,11 +22,11 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   
   <path id="path.cobertura">
-    <fileset dir="${basedir}/${ant.project.name}/libs/cobertura-1.9.2" includes="**/*.jar"/>
+    <fileset dir="${dir.a4e.build}/libs/cobertura-1.9.2" includes="**/*.jar"/>
   </path>
 
   <path id="path.antcontrib">
-    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="ant-contrib*.jar" />
+    <fileset dir="${dir.a4e.build}/libs" includes="ant-contrib*.jar" />
   </path>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -240,7 +240,7 @@
       projectReferenceTypes="jdt"
     >
       <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
-        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="copy.sources"/>
+        <ant antfile="${file.a4e.build}" target="copy.sources"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -250,7 +250,7 @@
       projectReferenceTypes="jdt"
     >
       <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
-        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="copy.sources"/>
+        <ant antfile="${file.a4e.build}" target="copy.sources"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -318,7 +318,7 @@
       <!-- build all test projects contained in the project set 
            and execute their test classes -->
       <forEachProject filter="(executeProjectSet.project.name=*.test)">
-        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="test.project" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" target="test.project" inheritrefs="true" />
       </forEachProject>
       
     </executeProjectSet>
@@ -339,7 +339,7 @@
       <!-- build all test projects contained in the project set 
            and execute their test classes -->
       <forEachProject filter="(executeProjectSet.project.name=*.test)">
-        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="test.project" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" target="test.project" inheritrefs="true" />
       </forEachProject>
       
     </executeProjectSet>
