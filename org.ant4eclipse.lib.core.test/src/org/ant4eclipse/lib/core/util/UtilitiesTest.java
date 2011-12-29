@@ -211,8 +211,11 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
     File file = Utilities.exportResource("/util/createfile.txt");
 //    Assert.assertEquals(file.length(), destfile.length());
+    System.err.println("@destfile: " + destfile.getAbsolutePath());
+    System.err.println("@file: " + file.getAbsolutePath());
     byte[] current = JUnitUtilities.loadFile(destfile);
     byte[] expected = JUnitUtilities.loadFile(file);
+    System.err.println();
     for(byte c : current) {
       System.err.println("#c := " + c);
     }
