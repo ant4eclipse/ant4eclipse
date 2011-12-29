@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<antlib>
-  <typedef name="echoReference" classname="org.ant4eclipse.ant.core.EchoReference" />
-  <typedef name="stopWatch"     classname="org.ant4eclipse.ant.core.StopWatchTask" />
-</antlib>

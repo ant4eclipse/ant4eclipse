@@ -11,14 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
@@ -29,13 +21,19 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.SubElementAndAttributesDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetPathBasedTask;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.StopWatchService;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 /**
  * @author Gerd Wuetherich (gerd@gerd-wuetherich.de)
@@ -185,8 +183,6 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    */
   @Override
   protected void doExecute() {
-    StopWatchService stopWatchService = ServiceRegistryAccess.instance().getService(StopWatchService.class);
-    stopWatchService.getOrCreateStopWatch("executeProjectSet").start();
 
     // check required attributes
     requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
@@ -271,8 +267,6 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
       }
 
     }
-
-    stopWatchService.getOrCreateStopWatch("executeProjectSet").stop();
 
   }
 

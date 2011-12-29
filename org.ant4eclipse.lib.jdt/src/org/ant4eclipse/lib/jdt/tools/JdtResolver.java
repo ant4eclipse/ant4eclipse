@@ -11,10 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools;
 
-import java.util.List;
-
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathEntryResolverExecutor;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathResolverContextImpl;
 import org.ant4eclipse.lib.jdt.internal.tools.ResolvedClasspathImpl;
@@ -29,6 +26,8 @@ import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.VariableClasspathEn
 import org.ant4eclipse.lib.jdt.internal.tools.container.JdtResolverCache;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+
+import java.util.List;
 
 /**
  * <p>
@@ -104,9 +103,6 @@ public class JdtResolver {
 
     Assure.notNull("project", project);
 
-    // Start performance logging
-    PerformanceLogging.start(JdtResolver.class, "doResolveProjectClasspath");
-
     // create a ResolverJob
     ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
         classpathContainerArguments);
@@ -125,9 +121,6 @@ public class JdtResolver {
     // execute the job
     executor.resolve(job.getRootProject(), resolvers,
         new ClasspathResolverContextImpl(executor, job, resolvedClasspath));
-
-    // stop performance logging
-    PerformanceLogging.stop(JdtResolver.class, "doResolveProjectClasspath");
 
     // return the ResolvedClasspath
     return resolvedClasspath;

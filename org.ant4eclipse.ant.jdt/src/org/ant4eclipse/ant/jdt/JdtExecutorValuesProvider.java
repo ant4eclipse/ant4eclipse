@@ -11,16 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import java.io.File;
-import java.util.List;
-import java.util.Set;
-
 import org.ant4eclipse.ant.platform.PlatformExecutorValuesProvider;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.JdtResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
@@ -30,6 +25,10 @@ import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
+import java.util.List;
+import java.util.Set;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
@@ -67,8 +66,6 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
   public EcjAdditionalCompilerArguments provideExecutorValues(JavaProjectRole javaProjectRole,
       List<JdtClasspathContainerArgument> jdtClasspathContainerArguments, MacroExecutionValues executionValues,
       Set<String> requestedPaths) {
-
-    PerformanceLogging.start(getClass(), "provideExecutorValues");
 
     // provide the executor values from the platform component
     this._platformExecutorValuesProvider.provideExecutorValues(javaProjectRole.getEclipseProject(), executionValues);
@@ -224,8 +221,6 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
         compilerArguments.addOutputFolderForSourceFolder(sourceFolder, outputFolder);
       }
     }
-
-    PerformanceLogging.stop(getClass(), "provideExecutorValues");
 
     // return compilerArguments
     return compilerArguments;

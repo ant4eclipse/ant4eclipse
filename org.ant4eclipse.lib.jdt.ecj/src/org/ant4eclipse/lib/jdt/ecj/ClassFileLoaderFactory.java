@@ -11,14 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj;
 
-import java.io.File;
-import java.util.Arrays;
-
-import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
+
+import java.io.File;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -70,28 +69,20 @@ public class ClassFileLoaderFactory {
    */
   public static ClassFileLoader createClasspathClassFileLoader(File source, byte type, File[] classpathEntries,
       File[] sourcepathEntries) {
-    PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-mitSourcePath");
-    PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-mitSourcePath-" + source);
-    try {
-      ClassFileLoaderCacheKey cacheKey = new ClassFileLoaderCacheKey(source, type, classpathEntries, sourcepathEntries);
+    ClassFileLoaderCacheKey cacheKey = new ClassFileLoaderCacheKey(source, type, classpathEntries, sourcepathEntries);
 
-      // Try to get already initialized ClassFileLoader from cache
-      ClassFileLoader classFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(cacheKey);
-      if (classFileLoader == null) {
-        // Create new ClassFileLoader
-        classFileLoader = new ClasspathClassFileLoaderImpl(source, type, classpathEntries, sourcepathEntries);
+    // Try to get already initialized ClassFileLoader from cache
+    ClassFileLoader classFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(cacheKey);
+    if (classFileLoader == null) {
+      // Create new ClassFileLoader
+      classFileLoader = new ClasspathClassFileLoaderImpl(source, type, classpathEntries, sourcepathEntries);
 
-        // add ClassFileLoader to Cache
-        ClassFileLoaderCache.getInstance().storeClassFileLoader(cacheKey, classFileLoader);
-  }
-
-      // Return the ClassFileLoader
-      return classFileLoader;
-    } finally {
-      // Stop performance logging
-      PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-mitSourcePath");
-      PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-mitSourcePath-" + source);
+      // add ClassFileLoader to Cache
+      ClassFileLoaderCache.getInstance().storeClassFileLoader(cacheKey, classFileLoader);
     }
+
+    // Return the ClassFileLoader
+    return classFileLoader;
   }
 
   private static class ClassFileLoaderCacheKey {
@@ -199,25 +190,18 @@ public class ClassFileLoaderFactory {
    * @return a new instance of type {@link ClassFileLoader}.
    */
   public static ClassFileLoader createClasspathClassFileLoader(File entry, byte type) {
-    PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneAlles");
-    PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneAlles-" + entry);
-    try {
-      String cacheKey = String.valueOf(entry) + "/" + type;
-      // Try to get ClassFileLoader from cache
-      ClassFileLoader classFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(cacheKey);
-      if (classFileLoader == null) {
-        // Create new ClassFileLoader
-        classFileLoader = new ClasspathClassFileLoaderImpl(entry, type);
+    String cacheKey = String.valueOf(entry) + "/" + type;
+    // Try to get ClassFileLoader from cache
+    ClassFileLoader classFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(cacheKey);
+    if (classFileLoader == null) {
+      // Create new ClassFileLoader
+      classFileLoader = new ClasspathClassFileLoaderImpl(entry, type);
 
-        // add to cache
-        ClassFileLoaderCache.getInstance().storeClassFileLoader(cacheKey, classFileLoader);
-      }
-
-      return classFileLoader;
-    } finally {
-      PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneAlles");
-      PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneAlles-" + entry);
+      // add to cache
+      ClassFileLoaderCache.getInstance().storeClassFileLoader(cacheKey, classFileLoader);
     }
+
+    return classFileLoader;
   }
 
   /**
@@ -232,12 +216,7 @@ public class ClassFileLoaderFactory {
    *         loaders.
    */
   public static ClassFileLoader createCompoundClassFileLoader(ClassFileLoader[] classFileLoaders) {
-    PerformanceLogging.start(ClassFileLoaderFactory.class, "createCompoundClassFileLoader");
-    try {
     return new CompoundClassFileLoaderImpl(classFileLoaders);
-    } finally {
-      PerformanceLogging.stop(ClassFileLoaderFactory.class, "createCompoundClassFileLoader");
-    }
   }
 
   /**
@@ -253,12 +232,7 @@ public class ClassFileLoaderFactory {
    * @return the class file loader
    */
   public static ClassFileLoader createFilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
-    PerformanceLogging.start(ClassFileLoaderFactory.class, "createFilteringClassFileLoader");
-    try {
     return new FilteringClassFileLoader(classFileLoader, filter);
-    } finally {
-      PerformanceLogging.stop(ClassFileLoaderFactory.class, "createFilteringClassFileLoader");
-    }
   }
 
 }
