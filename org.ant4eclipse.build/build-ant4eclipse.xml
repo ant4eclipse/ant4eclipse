@@ -285,7 +285,7 @@
                        teamprojectset="${teamprojectsetlib}"
                        projectReferenceTypes="jdt">
       <forEachProject>
-        <ant antfile="${file.a4e.build}" target="build.project" inheritrefs="true"/>
+        <ant antfile="${ant.project.name}/${file.a4e.build}" target="build.project" inheritrefs="true"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -327,7 +327,7 @@
                        teamprojectset="${teamprojectset}"
                        projectReferenceTypes="jdt">
       <forEachProject>
-        <ant antfile="${file.a4e.build}" target="build.project" inheritrefs="true" />
+        <ant antfile="${ant.project.name}/${file.a4e.build}" target="build.project" inheritrefs="true" />
       </forEachProject>
     </executeProjectSet>
 
@@ -446,24 +446,24 @@
         <if>
           <available file="${executeJdtProject.project.directory}/build.xml" />
           <then>
-            <ant antfile="${file.a4e.build}" target="generate.source" inheritrefs="true" />
+            <ant antfile="${ant.project.name}/${file.a4e.build}" target="generate.source" inheritrefs="true" />
           </then>
         </if>
       </forProject>
 
       <!-- Step 2: compile the project -->
       <forProject>
-        <ant antfile="${file.a4e.build}" target="compile.project" inheritrefs="true" />
+        <ant antfile="${ant.project.name}/${file.a4e.build}" target="compile.project" inheritrefs="true" />
       </forProject>
 
       <!-- Step 3: copy resources stored within source folders -->
       <forEachSourceDirectory>
-        <ant antfile="${file.a4e.build}" target="copy.resources" inheritrefs="true" />
+        <ant antfile="${ant.project.name}/${file.a4e.build}" target="copy.resources" inheritrefs="true" />
       </forEachSourceDirectory>
 
       <!-- Step 4: copy classfiles and resources -->
       <forEachOutputDirectory>
-        <ant antfile="${file.a4e.build}" target="to.merge.directory" inheritrefs="true" />
+        <ant antfile="${ant.project.name}/${file.a4e.build}" target="to.merge.directory" inheritrefs="true" />
       </forEachOutputDirectory>
 
     </executeJdtProject>
