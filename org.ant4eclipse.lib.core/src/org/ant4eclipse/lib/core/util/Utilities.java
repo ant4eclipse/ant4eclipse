@@ -11,13 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.nls.NLS;
-import org.ant4eclipse.lib.core.nls.NLSMessage;
-
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -29,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -51,6 +45,13 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>
@@ -231,6 +232,38 @@ public class Utilities {
         A4ELogging.warn(ex.getMessage());
       }
     }
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(InputStream instream) {
+    close((Closeable) instream);
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(OutputStream outstream) {
+    close((Closeable) outstream);
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(Reader reader) {
+    close((Closeable) reader);
+  }
+
+  /**
+   * @see #close(Closeable)
+   */
+  @Deprecated
+  public static final void close(Writer writer) {
+    close((Closeable) writer);
   }
 
   public static final URL toURL(File file) {
