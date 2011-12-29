@@ -213,6 +213,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    Assert.assertEquals(file.length(), destfile.length());
     System.err.println("@destfile: " + destfile.getAbsolutePath());
     System.err.println("@file: " + file.getAbsolutePath());
+    System.err.println("@encoding: " + System.getProperty("file.encoding"));
     byte[] current = JUnitUtilities.loadFile(destfile);
     byte[] expected = JUnitUtilities.loadFile(file);
     System.err.println();
