@@ -51,7 +51,6 @@ public class BuildResult {
     this._collected = new ArrayList<String>();
     this._collectedbytarget = new Hashtable<String, List<String>>();
     String abspath = workspacedir.getAbsolutePath();
-    System.err.println("##{" + abspath + "}");
     this._workspacepathes = new ArrayList<String>();
     this._workspacepathes.add(abspath.replace('\\', '/'));
     this._workspacepathes.add(abspath.replace('/', '\\'));
