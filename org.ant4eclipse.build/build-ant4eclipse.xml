@@ -284,7 +284,7 @@
                        teamprojectset="${teamprojectsetlib}"
                        projectReferenceTypes="jdt">
       <forEachProject>
-        <antcall target="build.project" inheritrefs="true" />
+        <ant target="build.project" inheritrefs="true"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -326,7 +326,7 @@
                        teamprojectset="${teamprojectset}"
                        projectReferenceTypes="jdt">
       <forEachProject>
-        <antcall target="build.project" inheritrefs="true" />
+        <ant target="build.project" inheritrefs="true" />
       </forEachProject>
     </executeProjectSet>
 
@@ -445,24 +445,24 @@
         <if>
           <available file="${executeJdtProject.project.directory}/build.xml" />
           <then>
-            <antcall target="generate.source" inheritrefs="true" />
+            <ant target="generate.source" inheritrefs="true" />
           </then>
         </if>
       </forProject>
 
       <!-- Step 2: compile the project -->
       <forProject>
-        <antcall target="compile.project" inheritrefs="true" />
+        <ant target="compile.project" inheritrefs="true" />
       </forProject>
 
       <!-- Step 3: copy resources stored within source folders -->
       <forEachSourceDirectory>
-        <antcall target="copy.resources" inheritrefs="true" />
+        <ant target="copy.resources" inheritrefs="true" />
       </forEachSourceDirectory>
 
       <!-- Step 4: copy classfiles and resources -->
       <forEachOutputDirectory>
-        <antcall target="to.merge.directory" inheritrefs="true" />
+        <ant target="to.merge.directory" inheritrefs="true" />
       </forEachOutputDirectory>
 
     </executeJdtProject>
