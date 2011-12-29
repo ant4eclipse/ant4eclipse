@@ -22,11 +22,11 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   
   <path id="path.cobertura">
-    <fileset dir="${basedir}/${ant.project.name}/libs/cobertura-1.9.2" includes="**/*.jar"/>
+    <fileset dir="${dir.a4e.build}/libs/cobertura-1.9.2" includes="**/*.jar"/>
   </path>
 
   <path id="path.antcontrib">
-    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="ant-contrib*.jar" />
+    <fileset dir="${dir.a4e.build}/libs" includes="ant-contrib*.jar" />
   </path>
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

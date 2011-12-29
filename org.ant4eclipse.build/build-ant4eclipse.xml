@@ -18,13 +18,11 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <path id="path.antcontrib">
-    <fileset dir="${basedir}/org.ant4eclipse.build/libs"
-             includes="ant-contrib*.jar" />
+    <fileset dir="${dir.a4e.build}/libs" includes="ant-contrib*.jar" />
   </path>
 
   <path id="path.ant4eclipse">
-    <fileset dir="${basedir}/org.ant4eclipse.build/libs"
-             includes="org.ant4eclipse.jar" />
+    <fileset dir="${dir.a4e.build}/libs" includes="org.ant4eclipse.jar" />
   </path>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
