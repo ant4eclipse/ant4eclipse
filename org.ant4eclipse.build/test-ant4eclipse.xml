@@ -348,6 +348,13 @@
   </target>
   
   <target name="tests.ant4eclipse" depends="test.library,test.ant">
+    <mkdir dir="${dest.reports}/html"/>
+    <junitreport todir="${dest.reports}/html">
+      <fileset dir="${dest.reports}">
+        <include name="**/TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${dest.reports}/html"/>
+    </junitreport>
     <mkdir dir="${dest.cobertura}/html"/>
     <mkdir dir="${dest.cobertura}/xml"/>
     <cobertura-reporting
