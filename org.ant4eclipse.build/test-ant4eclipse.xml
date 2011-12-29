@@ -295,10 +295,6 @@
               <include name="**/All*Tests.java" />
             </fileset>
           </batchtest>
-          <!--
-          <env key="ECLIPSE_JAVA_350_WIN32_HOME" value="${test.pde.eclipse-java-350-win32.home}"/>
-          <env key="ECLIPSE_JAVA_350_LINUX_GTK_HOME" value="${test.pde.eclipse-java-350-linux-gtk.home}"/>
-          -->
         </junit>
       </forEachSourceDirectory>
     </executeJdtProject>
