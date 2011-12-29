@@ -5,6 +5,9 @@
   <!-- PROPERTIES                                                                              -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
+  <dirname  file="${ant.file.org.ant4eclipse.build}"  property="dir.a4e.build"/>
+  <basename file="${ant.file.org.ant4eclipse.build}"  property="file.a4e.build"/>
+  
   <property file="${configfile}" />
   <property file="${basedir}/${ant.project.name}/default-build.properties" />
 
@@ -284,7 +287,7 @@
                        teamprojectset="${teamprojectsetlib}"
                        projectReferenceTypes="jdt">
       <forEachProject>
-        <ant target="build.project" inheritrefs="true"/>
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="build.project" inheritrefs="true"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -326,7 +329,7 @@
                        teamprojectset="${teamprojectset}"
                        projectReferenceTypes="jdt">
       <forEachProject>
-        <ant target="build.project" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="build.project" inheritrefs="true" />
       </forEachProject>
     </executeProjectSet>
 
@@ -445,24 +448,24 @@
         <if>
           <available file="${executeJdtProject.project.directory}/build.xml" />
           <then>
-            <ant target="generate.source" inheritrefs="true" />
+            <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="generate.source" inheritrefs="true" />
           </then>
         </if>
       </forProject>
 
       <!-- Step 2: compile the project -->
       <forProject>
-        <ant target="compile.project" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="compile.project" inheritrefs="true" />
       </forProject>
 
       <!-- Step 3: copy resources stored within source folders -->
       <forEachSourceDirectory>
-        <ant target="copy.resources" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="copy.resources" inheritrefs="true" />
       </forEachSourceDirectory>
 
       <!-- Step 4: copy classfiles and resources -->
       <forEachOutputDirectory>
-        <ant target="to.merge.directory" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="to.merge.directory" inheritrefs="true" />
       </forEachOutputDirectory>
 
     </executeJdtProject>

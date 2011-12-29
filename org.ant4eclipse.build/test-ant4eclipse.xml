@@ -9,6 +9,9 @@
   <!-- PROPERTIES                                                                              -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
+  <dirname  file="${ant.file.org.ant4eclipse.build}"  property="dir.a4e.build"/>
+  <basename file="${ant.file.org.ant4eclipse.build}"  property="file.a4e.build"/>
+
   <property file="${configfile}" />
   <property file="${basedir}/${ant.project.name}/default-build.properties"/>
 
@@ -237,7 +240,7 @@
       projectReferenceTypes="jdt"
     >
       <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
-        <ant target="copy.sources"/>
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="copy.sources"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -247,7 +250,7 @@
       projectReferenceTypes="jdt"
     >
       <forEachProject filter="(!(executeProjectSet.project.name=*.test))">
-        <ant target="copy.sources"/>
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="copy.sources"/>
       </forEachProject>
     </executeProjectSet>
 
@@ -315,7 +318,7 @@
       <!-- build all test projects contained in the project set 
            and execute their test classes -->
       <forEachProject filter="(executeProjectSet.project.name=*.test)">
-        <ant target="test.project" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="test.project" inheritrefs="true" />
       </forEachProject>
       
     </executeProjectSet>
@@ -336,7 +339,7 @@
       <!-- build all test projects contained in the project set 
            and execute their test classes -->
       <forEachProject filter="(executeProjectSet.project.name=*.test)">
-        <ant target="test.project" inheritrefs="true" />
+        <ant antfile="${file.a4e.build}" dir="${dir.a4e.build}" target="test.project" inheritrefs="true" />
       </forEachProject>
       
     </executeProjectSet>
