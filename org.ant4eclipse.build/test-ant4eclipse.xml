@@ -13,6 +13,7 @@
   <basename file="${ant.file.org.ant4eclipse.build}"  property="file.a4e.build"/>
 
   <property file="${configfile}" />
+  <property file="${basedir}/${ant.project.name}/${user.name}-build.properties"/>
   <property file="${basedir}/${ant.project.name}/default-build.properties"/>
 
   <property environment="env"/>
