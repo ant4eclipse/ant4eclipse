@@ -288,6 +288,7 @@
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
+          <jvmarg line="-Dfile.encoding=UTF-8"/>
           <jvmarg line="-Dclover.path=${coberturapath}"/>
           <classpath>
             <path refid="path.ant4eclipse"/>
@@ -348,7 +349,7 @@
   </target>
   
   <target name="tests.ant4eclipse" depends="test.library,test.ant">
-    <mkdir dir="${dest.reports}/html"/>
+    <delete-dir dir="${dest.reports}/html" recreate="true"/>
     <junitreport todir="${dest.reports}/html">
       <fileset dir="${dest.reports}">
         <include name="**/TEST-*.xml"/>
