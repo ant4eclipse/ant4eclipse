@@ -11,17 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse;
 
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseConditionTest;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataTypeTest;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTaskTest;
-import org.ant4eclipse.ant.core.AntCallTest;
 import org.ant4eclipse.ant.core.AntConfiguratorTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( { AntConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
-    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class, AntCallTest.class })
+@Suite.SuiteClasses({ AntConfiguratorTest.class, AbstractAnt4EclipseConditionTest.class,
+    AbstractAnt4EclipseDataTypeTest.class, AbstractAnt4EclipseTaskTest.class })
 public class AllTests {
 }
