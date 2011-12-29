@@ -14,8 +14,10 @@ package org.ant4eclipse.ant.platform;
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
 import org.ant4eclipse.testframework.EclipseProjectBuilder;
+import org.junit.Assert;
 
 import java.io.File;
+import java.io.IOException;
 
 public class GetProjectDirecoryTest extends AbstractWorkspaceBasedBuildFileTest {
 
@@ -30,7 +32,11 @@ public class GetProjectDirecoryTest extends AbstractWorkspaceBasedBuildFileTest 
   }
 
   public void testGetProjectDirectory() {
-    expectLog("testGetProjectDirectory", getTestWorkspaceDirectory().getAbsolutePath() + File.separator
-        + "simpleproject");
+    try {
+      expectLog("testGetProjectDirectory", getTestWorkspaceDirectory().getCanonicalPath() + File.separator
+          + "simpleproject");
+    } catch (IOException ex) {
+      Assert.fail(ex.getMessage());
+    }
   }
 }
