@@ -11,6 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.nls.NLS;
+import org.ant4eclipse.lib.core.nls.NLSMessage;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -45,13 +52,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.nls.NLS;
-import org.ant4eclipse.lib.core.nls.NLSMessage;
 
 /**
  * <p>
@@ -884,11 +884,6 @@ public class Utilities {
     }
   }
 
-  public static final void main(String[] args) {
-    File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
-    Utilities.copy(destfile, new File("D:/exported-or.txt"));
-  }
-  
   /**
    * Copies the complete content from an InputStream into an OutputStream using a specified buffer. Both streams will be
    * closed after completion or in case an exception comes up.
@@ -1016,13 +1011,6 @@ public class Utilities {
   public static final File createTempFile(String content, String suffix, String encoding) {
     Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
-    System.out.println("#classpath:");
-    String[] cp = System.getProperty("java.class.path").split(";");
-    Arrays.sort(cp);
-    for(String p : cp) {
-      System.out.println("\t" + p);
-    }
-    System.getProperties().list(System.out);
     try {
       File result = File.createTempFile("a4e", suffix);
       writeFile(result, content, encoding);
@@ -1049,16 +1037,15 @@ public class Utilities {
     Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
     OutputStream output = null;
-//    Writer writer = null;
+    Writer writer = null;
     try {
       output = new FileOutputStream(destination);
-      output.write(content.getBytes(encoding));
-//      writer = new OutputStreamWriter(output, encoding);
-//      writer.write(content);
+      writer = new OutputStreamWriter(output, encoding);
+      writer.write(content);
     } catch (IOException ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     } finally {
-//      close(writer);
+      close(writer);
       close(output);
     }
   }

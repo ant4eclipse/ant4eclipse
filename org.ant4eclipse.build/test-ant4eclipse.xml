@@ -81,7 +81,7 @@
       <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
       
       <!-- instrument our a4e release version (ant + lib) using cobertura -->
-      <!-- <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse_${revision}.jar" datafile="@{datafile}"/> -->
+      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse_${revision}.jar" datafile="@{datafile}"/>
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
@@ -297,7 +297,7 @@
           <formatter type="xml" />
           <batchtest todir="${reports}">
             <fileset dir="${executeJdtProject.source.directory}">
-              <include name="**/Utilities*Test.java" />
+              <include name="**/All*Tests.java" />
             </fileset>
           </batchtest>
         </junit>
