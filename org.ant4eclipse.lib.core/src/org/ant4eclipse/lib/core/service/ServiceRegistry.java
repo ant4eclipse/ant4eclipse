@@ -55,9 +55,6 @@ public class ServiceRegistry {
   /** list that contains the ordering of the services **/
   private List<Object>        _serviceOrdering;
 
-  /** indicates whether the registry instance is initialized **/
-  private boolean             _isInitialized = false;
-
   /**
    * <p>
    * Returns <code>true</code> if a service with the identifier <code>serviceType.getName()</code> is registered.
@@ -122,41 +119,6 @@ public class ServiceRegistry {
 
   /**
    * <p>
-   * </p>
-   * 
-   * @return
-   */
-  private final boolean isInitialized() {
-    return this._isInitialized;
-  }
-
-  /**
-   * <p>
-   * </p>
-   */
-  void initialize() {
-    Assure.assertTrue(!isInitialized(), "Service registry already has been initialized!");
-    setInitialized(true);
-  }
-
-  /**
-   * <p>
-   * </p>
-   */
-  void dispose() {
-    Assure.assertTrue(isInitialized(), "Service registry is not initialized.");
-    setInitialized(false);
-  }
-
-  /**
-   * @param b
-   */
-  private void setInitialized(boolean b) {
-    this._isInitialized = b;
-  }
-
-  /**
-   * <p>
    * Creates an instance of type {@link ServiceRegistry}.
    * </p>
    * 
@@ -181,7 +143,6 @@ public class ServiceRegistry {
      */
     @Override
     public void registerService(Object service, String serviceIdentifier) {
-      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       Assure.notNull("service", service);
       Assure.notNull("serviceIdentifier", serviceIdentifier);
 
@@ -198,7 +159,6 @@ public class ServiceRegistry {
      */
     @Override
     public void registerService(Object service, String[] serviceIdentifier) {
-      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       Assure.notNull("service", service);
       Assure.notNull("serviceIdentifier", serviceIdentifier);
       Assure.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");

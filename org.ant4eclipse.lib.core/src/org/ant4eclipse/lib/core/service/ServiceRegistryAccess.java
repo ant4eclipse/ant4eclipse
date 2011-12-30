@@ -38,12 +38,6 @@ public class ServiceRegistryAccess {
     Assure.notNull("configuration", configuration);
     Assure.assertTrue(!isConfigured(), "ServiceRegistry already is configured.");
     _instance = new ServiceRegistry(configuration);
-    try {
-      _instance.initialize();
-    } catch (RuntimeException exception) {
-      _instance = null;
-      throw exception;
-    }
   }
 
   /**
@@ -77,7 +71,6 @@ public class ServiceRegistryAccess {
    * </p>
    */
   public static final void reset() {
-    instance().dispose();
     _instance = null;
   }
 

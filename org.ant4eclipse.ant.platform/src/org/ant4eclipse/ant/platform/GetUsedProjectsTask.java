@@ -170,7 +170,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     requireWorkspaceAndProjectNameSet();
     if (this._referencetypes != null) {
       // check if we can use the provided reference type
-      String[] allowed = getResolver().getReferenceTypes();
+      String[] allowed = ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class).getReferenceTypes();
       for (String reftype : this._referencetypes) {
         if (!Utilities.contains(reftype, allowed)) {
           throw new BuildException("The 'referencetypes' value '" + reftype + "' is not supported.");
@@ -189,7 +189,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
       this._separator = DEFAULT_SEPARATOR;
     }
 
-    String[] types = getResolver().getReferenceTypes();
+    String[] types = ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class).getReferenceTypes();
     if (this._referencetypes != null) {
       // there's a restriction provided by the user
       types = this._referencetypes;
@@ -199,7 +199,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     List<EclipseProject> referenced = new ArrayList<EclipseProject>();
 
     // load the directly referenced projects
-    referenced.addAll(getResolver().resolveReferencedProjects(project, types, getSubElements()));
+    referenced.addAll(ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class).resolveReferencedProjects(project, types, getSubElements()));
 
     if (this._selfinclude) {
       // include ourselves as requested
@@ -218,19 +218,6 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
 
     getProject().setProperty(this._property, buffer.toString());
 
-  }
-
-  /**
-   * Returns the currently registered resolver service.
-   * 
-   * @return The currently registered resolver service. Not <code>null</code>.
-   */
-  private ReferencedProjectsResolverService getResolver() {
-    /**
-     * @todo [09-Jul-2009:KASI] The inner convenience classes located in service interfaces should be removed. I'm just
-     *       using this shortcut here in order to support refactoring in future.
-     */
-    return ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class);
   }
 
 } /* ENDCLASS */

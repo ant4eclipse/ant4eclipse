@@ -1,12 +1,11 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
 
 /**
  * <p>
@@ -129,7 +128,4 @@ public class ClassFileLoaderCache {
     }
   }
 
-  public static ClassFileLoaderCache getInstance() {
-    return ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class);
-  }
 }

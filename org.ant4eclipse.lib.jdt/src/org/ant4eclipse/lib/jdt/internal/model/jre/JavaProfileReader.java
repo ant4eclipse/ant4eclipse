@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
@@ -115,46 +114,4 @@ public class JavaProfileReader {
     return result.toArray(new JavaProfile[result.size()]);
   }
 
-  // /**
-  // * @param profile
-  // * @return
-  // */
-  // public static JavaProfile readProfile(String profile) {
-  // Assert.notNull(profile);
-  // String profileName = profile + ".profile";
-  // A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
-  // StringMap profileProperties = new StringMap("/profiles/" + profileName);
-  // return new JavaProfileImpl(profileProperties);
-  // }
-
-  // public static String getVMProfile(File jreLocation) {
-  //
-  // JavaLauncher javaLauncher = JavaLauncher.createWithA4eClasspath(jreLocation);
-  //
-  // javaLauncher.setMainClass("net.sf.ant4eclipse.model.jdt.jre.internal.support.LegacySystemProperties");
-  // javaLauncher.setArgs(new String[] { JAVA_SPECIFICATION_VERSION, "java.vendor" });
-  // javaLauncher.execute();
-  //
-  // String[] sysout = javaLauncher.getSystemOut();
-  // // for (int i = 0; i < sysout.length; i++) {
-  // // System.err.println(i + " : " + sysout[i]);
-  // // }
-  //
-  // // String[] syserr = javaLauncher.getSystemErr();
-  // // for (int i = 0; i < syserr.length; i++) {
-  // // System.err.println(syserr[i]);
-  // // }
-  //
-  // Properties properties = new Properties();
-  // for (int i = 0; i < sysout.length; i++) {
-  // String[] prop = sysout[i].split("=");
-  // properties.put(prop[0], prop[1]);
-  // }
-  //
-  // return getVmProfile(properties);
-  // }
-
-  public static JavaProfileReader getInstance() {
-    return ServiceRegistryAccess.instance().getService(JavaProfileReader.class);
-  }
 }
