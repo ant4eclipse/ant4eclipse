@@ -17,13 +17,6 @@ package org.ant4eclipse.lib.core;
 public interface Lifecycle {
 
   /**
-   * Returns <code>true</code> if the supplied service already has been initialised.
-   * 
-   * @return <code>true</code> <=> The service already has been initialised.
-   */
-  boolean isInitialized();
-
-  /**
    * Initializes this service.
    */
   void initialize();

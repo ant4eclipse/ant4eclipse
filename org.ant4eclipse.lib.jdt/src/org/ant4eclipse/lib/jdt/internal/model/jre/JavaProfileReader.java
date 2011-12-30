@@ -59,14 +59,6 @@ public class JavaProfileReader implements Lifecycle {
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isInitialized() {
-    return this._javaProfileCache != null;
-  }
-
-  /**
    * @return
    */
   public JavaProfile readDefaultProfile() {

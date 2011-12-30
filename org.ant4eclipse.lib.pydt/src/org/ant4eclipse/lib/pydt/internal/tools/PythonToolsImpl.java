@@ -66,12 +66,4 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
   public void initialize() {
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isInitialized() {
-    return true;
-  }
-
 } /* ENDCLASS */

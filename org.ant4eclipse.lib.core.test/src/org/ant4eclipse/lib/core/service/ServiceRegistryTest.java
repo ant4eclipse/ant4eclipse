@@ -122,12 +122,10 @@ public class ServiceRegistryTest {
     Assert.assertTrue(ServiceRegistryAccess.instance().hasService(DummyService.class.getName()));
     DummyService service = ServiceRegistryAccess.instance().getService(DummyService.class);
     Assert.assertEquals(dummyService, service);
-    Assert.assertTrue(dummyService.isInitialized());
 
     Assert.assertTrue(ServiceRegistryAccess.instance().hasService(DummyService.class));
     service = ServiceRegistryAccess.instance().getService(DummyService.class);
     Assert.assertEquals(dummyService, service);
-    Assert.assertTrue(dummyService.isInitialized());
 
     ServiceRegistryAccess.reset();
     Assert.assertFalse(ServiceRegistryAccess.isConfigured());
@@ -143,22 +141,14 @@ public class ServiceRegistryTest {
    */
   public class DummyService implements Lifecycle {
 
-    private boolean _initialized = false;
-
     @Override
     public void initialize() {
-      this._initialized = true;
     }
 
     @Override
     public void dispose() {
-      this._initialized = false;
     }
 
-    @Override
-    public boolean isInitialized() {
-      return this._initialized;
-    }
   }
 
   public class NonInitialitationDummyService extends DummyService {

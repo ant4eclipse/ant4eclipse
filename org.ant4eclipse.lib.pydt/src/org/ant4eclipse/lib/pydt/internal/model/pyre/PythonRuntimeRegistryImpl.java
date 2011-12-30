@@ -69,8 +69,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
 
   private PythonInterpreter[]        _interpreters            = null;
 
-  private boolean                    _initialised             = false;
-
   /**
    * Tries to determine the location of a python interpreter.
    * 
@@ -293,7 +291,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     this._listerdir = null;
     this._currentdir = null;
     this._interpreters = null;
-    this._initialised = false;
   }
 
   /**
@@ -332,16 +329,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
     }
     this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
     Arrays.sort(this._interpreters);
-    this._initialised = true;
 
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isInitialized() {
-    return this._initialised;
   }
 
 } /* ENDCLASS */

@@ -26,9 +26,6 @@ import java.util.Map;
  */
 public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePathVariableService, Lifecycle {
 
-  /** indicates if the service has been initialized or not */
-  private boolean             _isInitialized;
-
   /** the variables map */
   private Map<String, String> _variables;
 
@@ -54,20 +51,8 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
    */
   @Override
   public void initialize() {
-
     // initialize the variables map
     this._variables = new HashMap<String, String>();
-
-    // set initialized
-    this._isInitialized = true;
-  }
-
-  /**
-   * @see org.ant4eclipse.lib.core.Lifecycle#isInitialized()
-   */
-  @Override
-  public boolean isInitialized() {
-    return this._isInitialized;
   }
 
   /**
@@ -75,12 +60,8 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
    */
   @Override
   public void dispose() {
-
     // clears the variables map
     this._variables.clear();
     this._variables = null;
-
-    // set initialize to false
-    this._isInitialized = false;
   }
 }

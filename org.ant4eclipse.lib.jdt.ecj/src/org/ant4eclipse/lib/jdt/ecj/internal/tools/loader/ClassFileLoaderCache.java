@@ -41,9 +41,6 @@ public class ClassFileLoaderCache implements Lifecycle {
    */
   private int                          _missed      = 0;
 
-  /** - */
-  private boolean                      _initialized;
-
   /**
    * <p>
    * Creates a new instance of type ClassFileLoaderCache.
@@ -57,17 +54,7 @@ public class ClassFileLoaderCache implements Lifecycle {
    * {@inheritDoc}
    */
   @Override
-  public boolean isInitialized() {
-    A4ELogging.info("ClassFileLoaderCache is " + (ENABLE_CACHE ? "not " : "") + "disabled");
-    return this._initialized;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void initialize() {
-    this._initialized = true;
   }
 
   /**
@@ -75,7 +62,6 @@ public class ClassFileLoaderCache implements Lifecycle {
    */
   @Override
   public void dispose() {
-    this._initialized = false;
   }
 
   /**

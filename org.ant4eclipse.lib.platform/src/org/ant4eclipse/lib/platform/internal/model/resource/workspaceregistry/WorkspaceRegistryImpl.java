@@ -152,11 +152,4 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     this._projectFactory = new ProjectFactory();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isInitialized() {
-    return (this._registry != null) && (this._projectFactory != null);
-  }
 }

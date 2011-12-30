@@ -80,14 +80,6 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
    * {@inheritDoc}
    */
   @Override
-  public boolean isInitialized() {
-    return false;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
     Assure.notNull("string", string);
     // resolve Eclipse variables

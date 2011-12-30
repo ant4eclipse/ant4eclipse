@@ -74,14 +74,6 @@ public class NatureNicknameRegistry implements Lifecycle {
    * {@inheritDoc}
    */
   @Override
-  public boolean isInitialized() {
-    return this._initialized;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void dispose() {
     // nothing to do...
   }

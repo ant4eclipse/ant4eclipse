@@ -44,10 +44,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
 
   /** the static container resolver list */
   private List<ClasspathContainerResolver> _containerresolver;
-
-  /** indicates if the resolver is initialized or not */
-  private boolean                          _isInitialized                            = false;
-
+  
   /**
    * <p>
    * Creates a new instance of type {@link ContainerClasspathEntryResolver}.
@@ -156,16 +153,6 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
         ((Lifecycle) classpathContainerResolver).initialize();
       }
     }
-    // set initialized to true
-    this._isInitialized = true;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isInitialized() {
-    return this._isInitialized;
   }
 
   /**
@@ -181,7 +168,5 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
         ((Lifecycle) classpathContainerResolver).dispose();
       }
     }
-    // set initialized to true
-    this._isInitialized = false;
   }
 }
