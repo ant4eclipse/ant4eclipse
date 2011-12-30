@@ -209,6 +209,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
   @Test
   public void createFile() {
     File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
+    Utilities.copy(destfile, new File("D:/exported.txt"));
     File file = Utilities.exportResource("/util/createfile.txt");
 //    Assert.assertEquals(file.length(), destfile.length());
     System.err.println("@destfile: " + destfile.getAbsolutePath());
