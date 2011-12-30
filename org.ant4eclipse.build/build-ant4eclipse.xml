@@ -514,12 +514,17 @@
 
     <!-- copy declarative files (these will be postprocessed later) -->
     <mkdir dir="${dest.cfg}/${executeProjectSet.project.name}" />
-    <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
-      <fileset dir="${executeJdtProject.output.directory}">
-        <include name="**/antlib.xml" />
-        <include name="**/ant4eclipse-configuration.properties" />
-      </fileset>
-    </copy>
+    <if>
+      <available file="${executeJdtProject.output.directory}"/>
+      <then>
+        <copy toDir="${dest.cfg}/${executeProjectSet.project.name}" flatten="true">
+          <fileset dir="${executeJdtProject.output.directory}">
+            <include name="**/antlib.xml" />
+            <include name="**/ant4eclipse-configuration.properties" />
+          </fileset>
+        </copy>
+      </then>
+    </if>
 
   </target>
 
