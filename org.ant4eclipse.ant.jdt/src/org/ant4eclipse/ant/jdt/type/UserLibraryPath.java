@@ -14,7 +14,6 @@ package org.ant4eclipse.ant.jdt.type;
 import java.io.File;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.ant.core.HasReferencesDataType;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
@@ -33,7 +32,7 @@ import org.apache.tools.ant.types.Path;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public class UserLibraryPath extends AbstractAnt4EclipseDataType implements HasReferencesDataType {
+public class UserLibraryPath extends AbstractAnt4EclipseDataType {
 
   private static final String PREFIX = "org.eclipse.jdt.USER_LIBRARY/";
 

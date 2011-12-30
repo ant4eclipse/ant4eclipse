@@ -46,12 +46,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
 
     // add instance
     synchronized (instances) {
-      if (instances.isEmpty() || (this instanceof HasReferencesDataType)) {
-        // add to end
       instances.add(this);
-      } else {
-        instances.add(0, this);
-      }
     }
     // configure ant4eclipse
     AntConfigurator.configureAnt4Eclipse(project);
