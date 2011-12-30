@@ -101,14 +101,14 @@ public class JavaExecuter {
 
     // TODO
     // patch for the usage with clover instrumented classes...
-    String ant4eclipseCloverPath = System.getProperty("clover.path");
-    if (ant4eclipseCloverPath != null) {
-      String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split(File.pathSeparator);
-      String[] finalEntries = new String[ant4eclipseCloverPathEntries.length + classpathentries.length];
-      System.arraycopy(ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length);
-      System.arraycopy(classpathentries, 0, finalEntries, ant4eclipseCloverPathEntries.length, classpathentries.length);
-      classpathentries = finalEntries;
-    }
+//    String ant4eclipseCloverPath = System.getProperty("clover.path");
+//    if (ant4eclipseCloverPath != null) {
+//      String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split(File.pathSeparator);
+//      String[] finalEntries = new String[ant4eclipseCloverPathEntries.length + classpathentries.length];
+//      System.arraycopy(ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length);
+//      System.arraycopy(classpathentries, 0, finalEntries, ant4eclipseCloverPathEntries.length, classpathentries.length);
+//      classpathentries = finalEntries;
+//    }
 
     javaExecuter.setClasspathEntries(classpathentries);
 
