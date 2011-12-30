@@ -1016,6 +1016,13 @@ public class Utilities {
   public static final File createTempFile(String content, String suffix, String encoding) {
     Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
+    System.out.println("#classpath:");
+    String[] cp = System.getProperty("java.class.path").split(";");
+    Arrays.sort(cp);
+    for(String p : cp) {
+      System.out.println("\t" + p);
+    }
+    System.getProperties().list(System.out);
     try {
       File result = File.createTempFile("a4e", suffix);
       writeFile(result, content, encoding);
