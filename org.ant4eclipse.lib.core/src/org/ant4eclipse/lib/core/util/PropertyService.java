@@ -23,5 +23,5 @@ public interface PropertyService {
    *          The property name to lookup.
    * @return The property value or null.
    */
-  public String getProperty(String propertyName);
+  String getProperty(String propertyName);
 }
