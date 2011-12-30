@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService;
 
 import java.util.HashMap;
@@ -24,10 +23,10 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePathVariableService, Lifecycle {
+public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePathVariableService {
 
   /** the variables map */
-  private Map<String, String> _variables;
+  private Map<String, String> _variables = new HashMap<String, String>();
 
   /**
    * @see org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService#getLinkedResourcePath(java.lang.String)
@@ -44,15 +43,6 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   @Override
   public void registerLinkedResourcePathVariable(String pathVariable, String location) {
     this._variables.put(pathVariable, location);
-  }
-
-  /**
-   * @see org.ant4eclipse.lib.core.Lifecycle#initialize()
-   */
-  @Override
-  public void initialize() {
-    // initialize the variables map
-    this._variables = new HashMap<String, String>();
   }
 
 }

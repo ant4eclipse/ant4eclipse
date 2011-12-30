@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.core.service;
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -139,19 +138,10 @@ public class ServiceRegistryTest {
 
   /**
    */
-  public class DummyService implements Lifecycle {
-
-    @Override
-    public void initialize() {
-    }
-
+  public class DummyService {
   }
 
   public class NonInitialitationDummyService extends DummyService {
-    @Override
-    public void initialize() {
-      throw new RuntimeException();
-    }
   }
 
   public class NonDisposeDummyService extends DummyService {

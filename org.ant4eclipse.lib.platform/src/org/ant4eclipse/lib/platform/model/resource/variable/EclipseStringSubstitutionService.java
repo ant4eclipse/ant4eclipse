@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.variable;
 
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
@@ -21,7 +20,7 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public interface EclipseStringSubstitutionService extends Lifecycle {
+public interface EclipseStringSubstitutionService {
 
   /**
    * Substitutes all occurences of an eclipse <b>variable</b> (aka as <b>property</b> in ant)in the given string.

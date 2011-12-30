@@ -35,17 +35,13 @@ import java.util.Map;
 public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
   /** The factory used to build projects */
-  private ProjectFactory         _projectFactory;
+  private ProjectFactory         _projectFactory = new ProjectFactory();
 
   /** the workspace map (String, Workspace) */
-  private Map<String, Workspace> _registry;
+  private Map<String, Workspace> _registry = new HashMap<String, Workspace>();
 
   /** the 'current' workspace */
   private Workspace              _current;
-
-  public WorkspaceRegistryImpl() {
-    super();
-  }
 
   /**
    * {@inheritDoc}
@@ -131,15 +127,6 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
     // return the workspace
     return workspace;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
-    this._registry = new HashMap<String, Workspace>();
-    this._projectFactory = new ProjectFactory();
   }
 
 }

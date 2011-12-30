@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pydt.internal.tools;
 
 import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.tools.PythonTools;
@@ -24,7 +23,7 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonToolsImpl implements PythonTools, Lifecycle {
+public class PythonToolsImpl implements PythonTools {
 
   private File    _epydoc      = null;
 
@@ -46,13 +45,6 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
       }
     }
     return this._epydoc;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
   }
 
 } /* ENDCLASS */

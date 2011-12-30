@@ -13,11 +13,9 @@ package org.ant4eclipse.lib.core.service;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -137,24 +135,7 @@ public class ServiceRegistry {
    * </p>
    */
   void initialize() {
-
     Assure.assertTrue(!isInitialized(), "Service registry already has been initialized!");
-
-    Iterator<Object> iterator = this._serviceOrdering.iterator();
-
-    while (iterator.hasNext()) {
-      Object service = iterator.next();
-
-      if (service instanceof Lifecycle) {
-        try {
-          ((Lifecycle) service).initialize();
-        } catch (Exception e) {
-          throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
-              .getName());
-        }
-      }
-    }
-
     setInitialized(true);
   }
 

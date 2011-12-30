@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.role;
 
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
@@ -28,7 +27,7 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class NatureNicknameRegistry implements Lifecycle {
+public class NatureNicknameRegistry {
 
   /** The prefix of properties that holds a nature nickname */
   public static final String        NATURE_NICKNAME_PREFIX = "natureNickname";
@@ -36,17 +35,14 @@ public class NatureNicknameRegistry implements Lifecycle {
   /** all known nicknames */
   private Map<String, List<String>> _nicknames;
 
-  /** - */
-  private boolean                   _initialized           = false;
-
+  public NatureNicknameRegistry() {
+    initialize();
+  }
+  
   /**
    * {@inheritDoc}
    */
-  @Override
-  public void initialize() {
-    if (this._initialized) {
-      return;
-    }
+  private void initialize() {
 
     // get all properties that defines a nature nickname
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
@@ -67,7 +63,6 @@ public class NatureNicknameRegistry implements Lifecycle {
 
     this._nicknames = nicknames;
 
-    this._initialized = true;
   }
 
   /**

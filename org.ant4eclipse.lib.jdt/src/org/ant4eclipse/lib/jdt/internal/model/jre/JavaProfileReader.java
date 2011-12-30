@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -28,16 +27,19 @@ import java.util.Map;
  * Taken from Framework!
  * </p>
  */
-public class JavaProfileReader implements Lifecycle {
+public class JavaProfileReader {
 
   /** the java profile cache */
   private Map<String, JavaProfile> _javaProfileCache;
 
+  public JavaProfileReader() {
+    initialize();
+  }
+  
   /**
    * {@inheritDoc}
    */
-  @Override
-  public void initialize() {
+  private void initialize() {
 
     this._javaProfileCache = new HashMap<String, JavaProfile>();
 

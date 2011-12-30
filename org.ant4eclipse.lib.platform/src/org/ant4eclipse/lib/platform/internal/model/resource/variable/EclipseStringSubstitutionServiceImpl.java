@@ -46,11 +46,14 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /** Parser used to parse a String with properties */
   private PropertyParser            _propertyParser          = new PropertyParser();
 
+  public EclipseStringSubstitutionServiceImpl() {
+    initialize();
+  }
+  
   /**
    * {@inheritDoc}
    */
-  @Override
-  public void initialize() {
+  private void initialize() {
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> entries = config.getAllProperties(PREFIX_VARIABLE_RESOLVER);
 

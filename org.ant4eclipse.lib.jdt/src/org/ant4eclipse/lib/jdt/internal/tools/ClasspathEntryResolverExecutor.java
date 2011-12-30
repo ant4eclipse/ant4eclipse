@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
@@ -156,13 +155,6 @@ public class ClasspathEntryResolverExecutor {
 
     // set the resolver context
     this._resolverContext = classpathResolverContext;
-
-    // Initialize Entry Resolvers
-    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
-      if (entryResolver instanceof Lifecycle) {
-        ((Lifecycle) entryResolver).initialize();
-      }
-    }
 
     // resolve the class path
     resolveReferencedProject(rootProject);
