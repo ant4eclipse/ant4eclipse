@@ -57,6 +57,7 @@
       <basename file="@{jarfile}" property="ci_name"/>
       <cobertura-instrument datafile="@{datafile}">
         <ignore regex="org.apache.*"/>
+        <ignore regex=".*LibraryDetector.*"/>
         <fileset dir="${ci_dir}" includes="${ci_name}" excludes="**/LibraryDetector.class"/>
       </cobertura-instrument>
       <var unset="true" name="ci_dir"/>
