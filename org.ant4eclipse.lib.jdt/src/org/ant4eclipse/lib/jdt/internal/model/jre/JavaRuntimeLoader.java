@@ -81,6 +81,7 @@ public class JavaRuntimeLoader {
     String result = contents.toString();
     // System.out.println(result);
     String[] values = result.split("\\|");
+    A4ELogging.debug("Got Java version '%s'", values[0]);
     Version javaVersion = Version.newStandardVersion(values[0]);
     String sunbootclasspath = values[1];
     String javaextdirs = values[2];
