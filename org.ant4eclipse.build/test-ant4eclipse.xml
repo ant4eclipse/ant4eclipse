@@ -297,7 +297,7 @@
           <formatter type="xml" />
           <batchtest todir="${reports}">
             <fileset dir="${executeJdtProject.source.directory}">
-              <include name="**/All*Tests.java" />
+              <include name="**/Utilities*Test.java" />
             </fileset>
           </batchtest>
         </junit>
