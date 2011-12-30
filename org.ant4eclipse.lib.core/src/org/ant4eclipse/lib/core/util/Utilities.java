@@ -884,6 +884,11 @@ public class Utilities {
     }
   }
 
+  public static final void main(String[] args) {
+    File destfile = Utilities.createTempFile("Frösche", ".txt", "UTF-8");
+    Utilities.copy(destfile, new File("D:/exported-or.txt"));
+  }
+  
   /**
    * Copies the complete content from an InputStream into an OutputStream using a specified buffer. Both streams will be
    * closed after completion or in case an exception comes up.
@@ -1037,15 +1042,16 @@ public class Utilities {
     Assure.notNull("content", content);
     Assure.nonEmpty("encoding", encoding);
     OutputStream output = null;
-    Writer writer = null;
+//    Writer writer = null;
     try {
       output = new FileOutputStream(destination);
-      writer = new OutputStreamWriter(output, encoding);
-      writer.write(content);
+      output.write(content.getBytes(encoding));
+//      writer = new OutputStreamWriter(output, encoding);
+//      writer.write(content);
     } catch (IOException ex) {
       throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
     } finally {
-      close(writer);
+//      close(writer);
       close(output);
     }
   }
