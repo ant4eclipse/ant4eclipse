@@ -305,6 +305,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     //
     if (description == null) {
       A4ELogging.warn("Bundle '%s' does not exist!", symName);
+      return;
     }
 
     //

@@ -14,6 +14,7 @@ package org.ant4eclipse.testframework;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -128,10 +129,10 @@ public class JarBundleBuilder {
         // Write file to archive
         FileInputStream in = new FileInputStream(tobeJared[i]);
         Utilities.copy(in, out, buffer);
-        Utilities.close(in);
+        Utilities.close((Closeable)in);
       }
-      Utilities.close(out);
-      Utilities.close(stream);
+      Utilities.close((Closeable)out);
+      Utilities.close((Closeable)stream);
       System.out.println("Adding completed OK");
     } catch (Exception ex) {
       ex.printStackTrace();

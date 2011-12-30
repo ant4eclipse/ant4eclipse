@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.platform.internal.model.resource;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class ChunkyFile {
       A4ELogging.error(ex.getMessage());
       throw (ex);
     } finally {
-      Utilities.close(input);
+      Utilities.close((Closeable)input);
     }
   }
 

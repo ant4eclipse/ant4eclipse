@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.util.Utilities;
 import org.junit.Assert;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -111,7 +112,7 @@ public class TestDirectory {
     while ((bytesRead = inputStream.read(buffer, 0, buffer.length)) != -1) {
       output.write(buffer, 0, bytesRead);
     }
-    Utilities.close(inputStream);
+    Utilities.close((Closeable)inputStream);
     return createFile(fileName, output.toString());
   }
 

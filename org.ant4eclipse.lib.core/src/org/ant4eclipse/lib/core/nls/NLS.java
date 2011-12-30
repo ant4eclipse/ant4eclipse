@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.core.nls;
 import org.ant4eclipse.lib.core.exception.ExceptionCode;
 import org.ant4eclipse.lib.core.util.Utilities;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -352,7 +353,7 @@ public abstract class NLS {
          */
         System.err.printf(MSG_COULDNOTREADPROPERTIES, variant, ex.getMessage());
       } finally {
-        Utilities.close(is);
+        Utilities.close((Closeable)is);
       }
     }
   }
