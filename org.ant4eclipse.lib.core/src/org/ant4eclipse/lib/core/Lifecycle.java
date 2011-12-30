@@ -21,10 +21,4 @@ public interface Lifecycle {
    */
   void initialize();
 
-  /**
-   * Marks this service instance as disposable which means that it's no longer used by application code thus allowing to
-   * perform some cleanup operations here.
-   */
-  void dispose();
-
 } /* ENDINTERFACE */

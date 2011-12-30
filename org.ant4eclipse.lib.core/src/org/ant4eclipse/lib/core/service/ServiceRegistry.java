@@ -163,23 +163,7 @@ public class ServiceRegistry {
    * </p>
    */
   void dispose() {
-
     Assure.assertTrue(isInitialized(), "Service registry is not initialized.");
-
-    Iterator<Object> iterator = this._serviceOrdering.iterator();
-
-    while (iterator.hasNext()) {
-      Object service = iterator.next();
-      if (service instanceof Lifecycle) {
-        try {
-          ((Lifecycle) service).dispose();
-        } catch (Exception e) {
-          // no need to do anything here...
-          System.err.printf(CoreExceptionCode.SERVICE_COULD_NOT_BE_DISPOSED.getMessage(), service);
-        }
-      }
-    }
-
     setInitialized(false);
   }
 

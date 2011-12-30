@@ -137,16 +137,6 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    * {@inheritDoc}
    */
   @Override
-  public void dispose() {
-    this._registry.clear();
-    this._registry = null;
-    this._projectFactory = null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void initialize() {
     this._registry = new HashMap<String, Workspace>();
     this._projectFactory = new ProjectFactory();

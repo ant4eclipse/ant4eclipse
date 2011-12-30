@@ -155,18 +155,4 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    // initialize all registered container resolvers
-    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
-    while (iterator.hasNext()) {
-      ClasspathContainerResolver classpathContainerResolver = iterator.next();
-      if (classpathContainerResolver instanceof Lifecycle) {
-        ((Lifecycle) classpathContainerResolver).dispose();
-      }
-    }
-  }
 }

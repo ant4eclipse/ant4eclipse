@@ -78,14 +78,6 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    * {@inheritDoc}
    */
   @Override
-  public void dispose() {
-    this._factories = null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
     Assure.isFile("projectSetFile", projectSetFile);
 

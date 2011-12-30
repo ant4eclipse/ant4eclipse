@@ -71,14 +71,6 @@ public class NatureNicknameRegistry implements Lifecycle {
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-    // nothing to do...
-  }
-
-  /**
    * <p>
    * Returns <code>true</code> if the registry contains a nature for the given nickname.
    * </p>

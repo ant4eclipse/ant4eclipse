@@ -51,14 +51,6 @@ public class JavaProfileReader implements Lifecycle {
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-
-  }
-
-  /**
    * @return
    */
   public JavaProfile readDefaultProfile() {

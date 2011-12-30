@@ -55,13 +55,4 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
     this._variables = new HashMap<String, String>();
   }
 
-  /**
-   * @see org.ant4eclipse.lib.core.Lifecycle#dispose()
-   */
-  @Override
-  public void dispose() {
-    // clears the variables map
-    this._variables.clear();
-    this._variables = null;
-  }
 }

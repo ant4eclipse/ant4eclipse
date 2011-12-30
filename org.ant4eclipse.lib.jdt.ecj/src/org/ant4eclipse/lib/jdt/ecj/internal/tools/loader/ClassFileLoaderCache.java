@@ -58,13 +58,6 @@ public class ClassFileLoaderCache implements Lifecycle {
   }
 
   /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void dispose() {
-  }
-
-  /**
    * <p>
    * </p>
    */

@@ -167,12 +167,6 @@ public class ClasspathEntryResolverExecutor {
     // resolve the class path
     resolveReferencedProject(rootProject);
 
-    // Dispose Entry Resolvers
-    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
-      if (entryResolver instanceof Lifecycle) {
-        ((Lifecycle) entryResolver).dispose();
-      }
-    }
   }
 
   /**

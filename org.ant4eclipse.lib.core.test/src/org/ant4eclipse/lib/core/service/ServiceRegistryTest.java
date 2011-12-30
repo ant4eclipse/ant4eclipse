@@ -145,10 +145,6 @@ public class ServiceRegistryTest {
     public void initialize() {
     }
 
-    @Override
-    public void dispose() {
-    }
-
   }
 
   public class NonInitialitationDummyService extends DummyService {
@@ -159,9 +155,5 @@ public class ServiceRegistryTest {
   }
 
   public class NonDisposeDummyService extends DummyService {
-    @Override
-    public void dispose() {
-      throw new RuntimeException();
-    }
   }
 }

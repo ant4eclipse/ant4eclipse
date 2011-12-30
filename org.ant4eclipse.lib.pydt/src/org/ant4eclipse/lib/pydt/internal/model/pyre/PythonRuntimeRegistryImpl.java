@@ -283,20 +283,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   @Override
-  public void dispose() {
-    this._runtimes.clear();
-    Utilities.delete(this._pythonlister);
-    this._defaultid = null;
-    this._pythonlister = null;
-    this._listerdir = null;
-    this._currentdir = null;
-    this._interpreters = null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void initialize() {
 
     // export the python lister script, so it can be executed in order to access the pythonpath
