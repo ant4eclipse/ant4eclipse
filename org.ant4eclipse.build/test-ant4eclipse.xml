@@ -288,7 +288,6 @@
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
-          <jvmarg line="-Dfile.encoding=UTF-8"/>
           <jvmarg line="-Dclover.path=${coberturapath}"/>
           <classpath>
             <path refid="path.ant4eclipse"/>
