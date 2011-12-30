@@ -60,6 +60,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasRawClasspathEntries() {
     return !this._eclipseClasspathEntries.isEmpty();
   }
@@ -67,6 +68,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public RawClasspathEntry[] getRawClasspathEntries() {
     return this._eclipseClasspathEntries.toArray(new RawClasspathEntry[0]);
   }
@@ -74,6 +76,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public RawClasspathEntry[] getRawClasspathEntries(int entrykind) {
     LinkedList<ClasspathEntry> templist = new LinkedList<ClasspathEntry>();
     for (ClasspathEntry entry : this._eclipseClasspathEntries) {
@@ -89,6 +92,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaRuntime getJavaRuntime() {
     RawClasspathEntry runtimeEntry = getJreClasspathEntry();
 
@@ -102,6 +106,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaProfile getJavaProfile() {
     if (getJreClasspathEntry().getPath().startsWith(ContainerTypes.VMTYPE_PREFIX)) {
       return getJavaRuntimeRegistry().getJavaProfile(
@@ -113,6 +118,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public StringMap getCompilerOptions() {
 
     StringMap result = null;
@@ -132,6 +138,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getSourceFolders() {
 
     RawClasspathEntry[] entries = getRawClasspathEntries(RawClasspathEntry.CPE_SOURCE);
@@ -150,6 +157,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * 
    * @return
    */
+  @Override
   public boolean hasExcludeOrIncludeFiltersForSourceFolders() {
 
     for (RawClasspathEntry entry : getRawClasspathEntries()) {
@@ -167,6 +175,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getExcludePatternsForSourceFolder(String sourceFolder) {
     RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
 
@@ -177,6 +186,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getIncludePatternsForSourceFolder(String sourceFolder) {
     RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
 
@@ -187,9 +197,11 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getAllOutputFolders() {
 
     EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
+      @Override
       public String resolve(RawClasspathEntry entry) {
         if (entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT) {
           return entry.getPath();
@@ -206,9 +218,11 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getDefaultOutputFolder() {
 
     EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
+      @Override
       public String resolve(RawClasspathEntry entry) {
         if (entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT) {
           return entry.getPath();
@@ -230,6 +244,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getOutputFolderForSourceFolder(final String sourceFolder) {
     Assure.notNull("sourceFolder", sourceFolder);
 
@@ -243,6 +258,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     // Implementation of the EntryResolver.Condition
     EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
 
+      @Override
       public String resolve(RawClasspathEntry entry) {
 
         A4ELogging.debug("Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder);
@@ -418,6 +434,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     // Implementation of the EntryResolver.Condition
     EntryResolver.Condition<RawClasspathEntry> condition = new EntryResolver.Condition<RawClasspathEntry>() {
 
+      @Override
       public RawClasspathEntry resolve(RawClasspathEntry entry) {
 
         A4ELogging.debug("Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder);

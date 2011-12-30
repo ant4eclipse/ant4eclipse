@@ -46,6 +46,7 @@ public class DefaultServiceRegistryConfiguration implements ServiceRegistryConfi
   /**
    * {@inheritDoc}
    */
+  @Override
   public void configure(ConfigurationContext context) {
 
     // 1. add Ant4EclipseLogger

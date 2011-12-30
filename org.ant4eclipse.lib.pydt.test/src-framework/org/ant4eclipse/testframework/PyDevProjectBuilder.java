@@ -60,6 +60,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void useProject(String projectname, boolean export) {
     withProjectReference(projectname);
     if (!export) {
@@ -135,6 +136,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setSourceFolder(String sourcename) {
     this._sourcepath = "/" + getProjectName() + "/" + sourcename;
   }
@@ -142,6 +144,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addSourceFolder(String additionalfolder) {
     this._sourcepathes.add("/" + getProjectName() + "/" + additionalfolder);
   }
@@ -149,6 +152,7 @@ public class PyDevProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String importInternalLibrary(URL location) {
     String file = location.getFile();
     int lidx = file.lastIndexOf('/');

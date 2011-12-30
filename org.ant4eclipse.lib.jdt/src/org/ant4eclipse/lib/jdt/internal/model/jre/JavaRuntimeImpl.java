@@ -79,6 +79,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getId() {
     return this._id;
   }
@@ -86,6 +87,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getLocation() {
     return this._location;
   }
@@ -93,6 +95,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getLibraries() {
     return this._libraries;
   }
@@ -108,6 +111,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Version getJavaVersion() {
     return this._javaVersion;
   }
@@ -115,6 +119,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Version getSpecificationVersion() {
     return this._javaSpecificationVersion;
   }
@@ -122,6 +127,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaProfile getJavaProfile() {
     return this._javaProfile;
   }

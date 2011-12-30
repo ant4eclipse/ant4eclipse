@@ -57,6 +57,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getProjectFolders() {
 
     // define the result
@@ -64,6 +65,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
 
     // read all directories in the workspace directory
     File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {
+      @Override
       public boolean accept(File file) {
         boolean accepted = file.isDirectory() && !".metadata".equals(file.getName()) && isProjectDirectory(file);
         String message = String
@@ -83,6 +85,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
 
       // read all directories in the METADATA_PROJECTS directory
       directories = this._metadataLocationDirectory.listFiles(new FileFilter() {
+        @Override
         public boolean accept(File file) {
           boolean accepted = file.isDirectory() && isLocationDirectory(file);
           String message = String

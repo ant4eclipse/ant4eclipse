@@ -55,6 +55,7 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        * @param key
        *          the key
        */
+      @Override
       public Object getValue(String key) {
         return getAntProject().getReference(key);
       }
@@ -69,6 +70,7 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        * @param value
        *          the value to set
        */
+      @Override
       public void setValue(String key, Object value) {
 
         //
@@ -86,6 +88,7 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        * @param key
        *          the key
        */
+      @Override
       public void unsetValue(String key) {
         removeReference(threadPrefix + "." + key);
 

@@ -71,6 +71,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void useProject(String projectname, boolean export) {
     BuildPathEntry entry = new BuildPathEntry();
     entry._exported = export;
@@ -149,6 +150,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setSourceFolder(String sourcename) {
     this._sourceentry._path = sourcename;
   }
@@ -156,6 +158,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addSourceFolder(String additionalfolder) {
     BuildPathEntry entry = new BuildPathEntry();
     entry._combine = true;
@@ -168,6 +171,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String importInternalLibrary(URL location) {
     BuildPathEntry entry = new BuildPathEntry();
     entry._combine = true;
@@ -199,6 +203,7 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String toString() {
       return "<buildpathentry exported=\"" + this._exported + "\" kind=\"" + this._kind.name() + "\" path=\""
           + this._path + "\" combineaccessrules=\"" + this._combine + "\"/>";

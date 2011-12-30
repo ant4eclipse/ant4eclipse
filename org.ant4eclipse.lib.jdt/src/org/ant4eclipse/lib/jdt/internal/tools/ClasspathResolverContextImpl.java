@@ -46,6 +46,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getCurrentProject() {
     try {
       return this._executor.getCurrentProject();
@@ -57,6 +58,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasCurrentProject() {
     return this._executor.hasCurrentProject();
   }
@@ -64,6 +66,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolveProjectClasspath(EclipseProject project) {
     this._executor.resolveReferencedProject(project);
   }
@@ -71,6 +74,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Workspace getWorkspace() {
     return this._resolverJob.getWorkspace();
   }
@@ -78,6 +82,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isCurrentProjectRoot() {
     return this._resolverJob.getRootProject().equals(getCurrentProject());
   }
@@ -85,6 +90,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isRuntime() {
     return this._resolverJob.isRuntimeClasspath();
   }
@@ -92,6 +98,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._resolverJob.getJdtClasspathContainerArguments();
   }
@@ -99,6 +106,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key) {
     Assure.nonEmpty("key", key);
 
@@ -116,6 +124,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isWorkspaceRelative() {
     return this._resolverJob.isRelative();
   }
@@ -123,6 +132,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
     if (this._resolvedClasspath != null) {
       this._resolvedClasspath.addBootClasspathEntry(resolvedClasspathEntry);
@@ -132,6 +142,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
     if (this._resolvedClasspath != null) {
       this._resolvedClasspath.addClasspathEntry(resolvedClasspathEntry);
@@ -141,6 +152,7 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addReferencedProjects(EclipseProject eclipseProject) {
     this._executor.addReferencedProject(eclipseProject);
   }

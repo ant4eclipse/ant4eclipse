@@ -41,6 +41,7 @@ public class ProjectNatureImpl implements ProjectNature {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getName() {
     return this._name;
   }

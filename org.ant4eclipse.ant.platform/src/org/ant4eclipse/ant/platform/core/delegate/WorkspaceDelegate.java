@@ -57,6 +57,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   @Deprecated
   public final void setWorkspace(String workspace) {
     A4ELogging.warn("The attribute 'workspace' is deprecated. Please use 'workspaceDirectory' instead !");
@@ -66,6 +67,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setWorkspaceDirectory(String workspaceDirectory) {
 
     //
@@ -85,6 +87,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final File getWorkspaceDirectory() {
     return this._workspaceDirectory;
   }
@@ -92,6 +95,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isWorkspaceDirectorySet() {
     return this._workspaceDirectory != null && !this._workspaceDirectory.equals("");
   }
@@ -99,6 +103,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setWorkspaceId(String identifier) {
 
     this._workspaceId = identifier;
@@ -108,6 +113,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getWorkspaceId() {
     return this._workspaceId;
   }
@@ -115,6 +121,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isWorkspaceIdSet() {
     return this._workspaceId != null && !this._workspaceId.equals("");
   }
@@ -122,6 +129,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     if (!(isWorkspaceDirectorySet() || isWorkspaceIdSet())) {
       throw new Ant4EclipseException(PlatformExceptionCode.MISSING_WORKSPACE_DIRECTORY_OR_WORKSPACE_ID);
@@ -134,6 +142,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Workspace getWorkspace() {
     requireWorkspaceDirectoryOrWorkspaceIdSet();
 

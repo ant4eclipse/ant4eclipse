@@ -60,6 +60,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDynamicAttribute(String attributeName, String value) throws BuildException {
     init();
 
@@ -85,6 +86,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
   /**
    * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("deprecation")
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
@@ -103,6 +105,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     init();
 

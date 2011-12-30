@@ -31,6 +31,7 @@ public class JreContainerResolver implements ClasspathContainerResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolveContainer(ClasspathEntry classpathEntry) {
     return classpathEntry.getPath().startsWith(ContainerTypes.JRE_CONTAINER);
   }
@@ -38,6 +39,7 @@ public class JreContainerResolver implements ClasspathContainerResolver {
   /**
    * @param resolver
    */
+  @Override
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
     //
 

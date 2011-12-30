@@ -42,6 +42,7 @@ public class NatureNicknameRegistry implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
     if (this._initialized) {
       return;
@@ -72,6 +73,7 @@ public class NatureNicknameRegistry implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return this._initialized;
   }
@@ -79,6 +81,7 @@ public class NatureNicknameRegistry implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     // nothing to do...
   }

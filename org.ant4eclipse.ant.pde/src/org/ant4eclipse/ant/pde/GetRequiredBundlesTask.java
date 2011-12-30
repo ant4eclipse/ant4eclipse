@@ -93,6 +93,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getTargetPlatformId() {
     return this._targetPlatformAwareDelegate.getTargetPlatformId();
   }
@@ -100,6 +101,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isTargetPlatformIdSet() {
     return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
@@ -107,6 +109,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireTargetPlatformIdSet() {
     this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
@@ -114,6 +117,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
@@ -121,6 +125,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlatformConfigurationId() {
     return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
@@ -128,6 +133,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPlatformConfigurationIdSet() {
     return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
@@ -135,6 +141,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPlatformConfigurationId(String platformConfigurationId) {
     this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
@@ -142,6 +149,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPathId() {
     return this._getPathComponent.getPathId();
   }
@@ -149,6 +157,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getProperty() {
     return this._getPathComponent.getProperty();
   }
@@ -156,6 +165,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getResolvedPath() {
     return this._getPathComponent.getResolvedPath();
   }
@@ -163,6 +173,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPathIdSet() {
     return this._getPathComponent.isPathIdSet();
   }
@@ -170,6 +181,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPropertySet() {
     return this._getPathComponent.isPropertySet();
   }
@@ -177,6 +189,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRelative() {
     return this._getPathComponent.isRelative();
   }
@@ -184,6 +197,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void populatePathId() {
     this._getPathComponent.populatePathId();
   }
@@ -191,6 +205,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void populateProperty() {
     this._getPathComponent.populateProperty();
   }
@@ -198,6 +213,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requirePathIdOrPropertySet() {
     this._getPathComponent.requirePathIdOrPropertySet();
   }
@@ -205,6 +221,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPathId(String id) {
     this._getPathComponent.setPathId(id);
   }
@@ -212,6 +229,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setProperty(String property) {
     this._getPathComponent.setProperty(property);
   }
@@ -219,6 +237,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setRelative(boolean relative) {
     this._getPathComponent.setRelative(relative);
   }
@@ -226,6 +245,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setResolvedPath(File[] resolvedPath) {
     this._getPathComponent.setResolvedPath(resolvedPath);
   }

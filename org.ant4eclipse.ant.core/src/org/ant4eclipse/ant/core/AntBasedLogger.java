@@ -46,6 +46,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setContext(Object context) {
     this._context.set(context);
   }
@@ -53,6 +54,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDebuggingEnabled() {
     return true;
   }
@@ -60,6 +62,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isTraceingEnabled() {
     return true;
   }
@@ -67,6 +70,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void debug(String msg, Object... args) {
     log(Project.MSG_VERBOSE, msg, args);
   }
@@ -74,6 +78,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void trace(String msg, Object... args) {
     log(Project.MSG_DEBUG, msg, args);
   }
@@ -81,6 +86,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void info(String msg, Object... args) {
     log(Project.MSG_INFO, msg, args);
   }
@@ -88,6 +94,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void warn(String msg, Object... args) {
     log(Project.MSG_WARN, msg, args);
   }
@@ -95,6 +102,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void error(String msg, Object... args) {
     log(Project.MSG_ERR, msg, args);
   }
@@ -102,6 +110,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void taskStarted(BuildEvent event) {
     setContext(event.getTask());
   }
@@ -109,6 +118,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void taskFinished(BuildEvent event) {
     setContext(null);
   }
@@ -116,6 +126,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void targetStarted(BuildEvent event) {
     setContext(event.getTarget());
   }
@@ -123,6 +134,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void targetFinished(BuildEvent event) {
     setContext(null);
   }
@@ -130,6 +142,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void messageLogged(BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
@@ -137,6 +150,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void buildStarted(BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }
@@ -144,6 +158,7 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void buildFinished(BuildEvent event) {
     // emtpy method block - we don't need this event here...
   }

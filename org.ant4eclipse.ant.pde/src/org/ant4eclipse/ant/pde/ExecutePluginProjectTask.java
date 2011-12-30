@@ -64,6 +64,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) {
 
     // handle 'forEachPluginLibrary' element
@@ -121,6 +122,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     // execute the macro instance
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
         // set the platform execution values
@@ -154,6 +156,7 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
       // execute the macro instance
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // add the library name

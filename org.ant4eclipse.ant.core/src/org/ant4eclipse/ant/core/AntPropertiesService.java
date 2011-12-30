@@ -22,6 +22,7 @@ public class AntPropertiesService extends SystemPropertiesService implements Ant
 
   private Project _project;
 
+  @Override
   public void configure(Project project) {
     this._project = project;
   }

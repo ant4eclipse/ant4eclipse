@@ -95,6 +95,7 @@ public class ArchiveImpl implements Archive {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getPath() {
     return this._path;
   }
@@ -102,6 +103,7 @@ public class ArchiveImpl implements Archive {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getSource() {
     return this._source;
   }
@@ -109,6 +111,7 @@ public class ArchiveImpl implements Archive {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getJavaDoc() {
     return this._javadoc;
   }

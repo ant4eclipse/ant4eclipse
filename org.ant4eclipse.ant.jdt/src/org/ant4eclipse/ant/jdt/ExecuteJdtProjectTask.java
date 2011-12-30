@@ -144,6 +144,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Object createDynamicElement(String name) throws BuildException {
 
     // handle SCOPE_SOURCE_DIRECTORY
@@ -255,6 +256,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
@@ -304,6 +306,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // get the default jdt executor values
@@ -371,6 +374,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       final int index = i;
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
@@ -430,6 +434,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     // execute macro
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
 
         // get the default jdt executor values

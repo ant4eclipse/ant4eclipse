@@ -45,6 +45,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getClasspath() {
     List<File> files = new ArrayList<File>();
     List<String> set = new ArrayList<String>();
@@ -69,6 +70,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getAllPackages() {
     return this._allPackages.keySet().toArray(new String[0]);
   }
@@ -76,6 +78,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasPackage(String packageName) {
     return this._allPackages.containsKey(packageName);
   }
@@ -83,6 +86,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ClassFile loadClass(ClassName className) {
 
     // get the class file loader list
@@ -123,6 +127,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ReferableSourceFile loadSource(ClassName className) {
 
     // TODO: Access restrictions for source files!!

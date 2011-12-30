@@ -61,6 +61,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public byte getType() {
     return LIBRARY;
   }
@@ -68,6 +69,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getLocation() {
     return this._location;
   }
@@ -75,6 +77,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Manifest getManifest() {
     return this._manifest;
   }
@@ -82,6 +85,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] resolveBundleClasspathEntries() {
 
     // prepare results

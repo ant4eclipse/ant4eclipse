@@ -52,6 +52,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlatformConfigurationId() {
     return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
@@ -59,6 +60,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getTargetPlatformId() {
     return this._targetPlatformAwareDelegate.getTargetPlatformId();
   }
@@ -66,6 +68,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPlatformConfigurationIdSet() {
     return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
@@ -73,6 +76,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isTargetPlatformIdSet() {
     return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
@@ -80,6 +84,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPlatformConfigurationId(String platformConfigurationId) {
     this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
@@ -87,6 +92,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
@@ -94,6 +100,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireTargetPlatformIdSet() {
     this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
@@ -194,6 +201,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
     final BundleDescription bundleDescription = getResolvedBundle(selectedBundle);
 
     return new MacroExecutionValuesProvider() {
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
         values = provideDefaultMacroExecutionValues(values);
 

@@ -43,6 +43,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return this._name;
   }
@@ -50,6 +51,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TeamProjectDescription[] getTeamProjectDescriptions() {
     return this._projectDescriptions.toArray(new TeamProjectDescription[0]);
   }
@@ -57,6 +59,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TeamProjectDescription getTeamProjectDescriptionByName(String name) {
     Assure.notNull("name", name);
 
@@ -72,6 +75,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getProjectNames() {
 
     String[] result = new String[this._projectDescriptions.size()];

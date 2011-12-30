@@ -66,6 +66,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getProperty(String propertyName) {
     Assure.notNull("propertyName", propertyName);
     return this._properties.get(propertyName);
@@ -74,6 +75,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasProperty(String propertyName) {
     Assure.notNull("propertyName", propertyName);
     return this._properties.containsKey(propertyName);
@@ -82,6 +84,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Iterable<Pair<String, String>> getAllProperties(String prefix) {
     Assure.notNull("prefix", prefix);
     if (!prefix.endsWith(".")) {

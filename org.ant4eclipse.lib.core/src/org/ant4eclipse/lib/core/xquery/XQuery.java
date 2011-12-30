@@ -455,6 +455,7 @@ public class XQuery {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean check(String element, Attributes attrs) {
       return counter(this.index) == this.level;
     }
@@ -481,6 +482,7 @@ public class XQuery {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean check(String element, Attributes attrs) {
 
       if (counter(this.index) == 0) {
@@ -526,6 +528,7 @@ public class XQuery {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean check(String element, Attributes attrs) {
       return this.value.equals(attrs.getValue(this.attr));
     }

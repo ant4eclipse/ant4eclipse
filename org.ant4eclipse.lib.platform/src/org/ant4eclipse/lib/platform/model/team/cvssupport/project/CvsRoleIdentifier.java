@@ -28,6 +28,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRoleSupported(EclipseProject project) {
     return CvsParser.isCvsProject(project);
   }
@@ -35,6 +36,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CvsRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
@@ -48,6 +50,7 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void postProcess(final EclipseProject project) {
   }
 

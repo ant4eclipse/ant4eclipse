@@ -71,6 +71,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlatformConfigurationId() {
     return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
@@ -78,6 +79,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getTargetPlatformId() {
     return this._targetPlatformAwareDelegate.getTargetPlatformId();
   }
@@ -85,6 +87,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPlatformConfigurationIdSet() {
     return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
@@ -92,6 +95,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isTargetPlatformIdSet() {
     return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
@@ -99,6 +103,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPlatformConfigurationId(String platformConfigurationId) {
     this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
@@ -106,6 +111,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
@@ -113,6 +119,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireTargetPlatformIdSet() {
     this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }

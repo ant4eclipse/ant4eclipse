@@ -60,6 +60,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_CONTAINER)
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_CONTAINER) */;
@@ -68,6 +69,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
     Assure.notNull("entry", entry);
 
@@ -120,6 +122,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
     this._containerresolver = new LinkedList<ClasspathContainerResolver>();
 
@@ -160,6 +163,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return this._isInitialized;
   }
@@ -167,6 +171,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     // initialize all registered container resolvers
     Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();

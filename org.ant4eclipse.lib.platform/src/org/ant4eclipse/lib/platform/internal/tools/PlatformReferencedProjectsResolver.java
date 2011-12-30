@@ -25,6 +25,7 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canHandle(EclipseProject project) {
     return true;
   }
@@ -32,6 +33,7 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
 
     // get referenced projects

@@ -49,6 +49,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getName() {
     return this._name;
   }
@@ -56,6 +57,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getEclipseProject() {
     return this._eclipseProject;
   }

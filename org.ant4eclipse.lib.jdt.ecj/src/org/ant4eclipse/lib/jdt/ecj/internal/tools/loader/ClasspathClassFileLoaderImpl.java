@@ -130,6 +130,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasPackage(String packageName) {
     return this._allPackages.containsKey(packageName);
   }
@@ -137,6 +138,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getAllPackages() {
     Set<String> keys = this._allPackages.keySet();
     return keys.toArray(new String[0]);
@@ -198,6 +200,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getClasspath() {
     return getClasspathEntries();
   }
@@ -429,6 +432,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     List<String> result = new LinkedList<String>();
 
     File[] children = directory.listFiles(new FileFilter() {
+      @Override
       public boolean accept(File pathname) {
         return pathname.isDirectory();
       }
@@ -453,6 +457,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     result.add(newPrefix + directory.getName());
 
     File[] children = directory.listFiles(new FileFilter() {
+      @Override
       public boolean accept(File pathname) {
         return pathname.isDirectory();
       }
@@ -466,6 +471,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ClassFile loadClass(ClassName className) {
 
     if (!hasPackage(className.getPackageName())) {
@@ -478,6 +484,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ReferableSourceFile loadSource(ClassName className) {
     if (!hasPackage(className.getPackageName())) {
       return null;

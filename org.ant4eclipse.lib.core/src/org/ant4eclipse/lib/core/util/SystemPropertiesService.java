@@ -16,6 +16,7 @@ package org.ant4eclipse.lib.core.util;
  */
 public class SystemPropertiesService implements PropertyService {
 
+  @Override
   public String getProperty(String propertyName) {
     return Utilities.cleanup(System.getProperty(propertyName));
   }

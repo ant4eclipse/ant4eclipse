@@ -69,6 +69,7 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
         this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(),
             new MacroExecutionValuesProvider() {
 
+          @Override
               public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
                 values.getProperties().put("test", counter + ".test");
                 counter++;
@@ -78,6 +79,7 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
       }
     }
 
+    @Override
     public NestedSequential createDynamicElement(String name) throws BuildException {
       return this._macroExecutionDelegate.createScopedMacroDefinition(name);
     }

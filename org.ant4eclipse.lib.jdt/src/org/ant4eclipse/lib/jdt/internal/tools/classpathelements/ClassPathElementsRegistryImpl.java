@@ -56,6 +56,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<ClassPathContainer> getClasspathContainer() {
     return new LinkedList<ClassPathContainer>(this._classpathContainer.values());
   }
@@ -63,6 +64,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public ClassPathContainer getClassPathContainer(String name) {
     return this._classpathContainer.get(name);
   }
@@ -70,6 +72,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasClassPathContainer(String name) {
     return this._classpathContainer.containsKey(name);
   }
@@ -77,6 +80,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void registerClassPathContainer(String name, File[] pathEntries) {
     this._classpathContainer.put(name, new ClassPathContainerImpl(name, pathEntries));
   }
@@ -84,6 +88,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public ClassPathVariable getClassPathVariable(String name) {
     return this._classpathVariables.get(name);
   }
@@ -91,6 +96,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<ClassPathVariable> getClasspathVariables() {
     return new LinkedList<ClassPathVariable>(this._classpathVariables.values());
   }
@@ -98,6 +104,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasClassPathVariable(String name) {
     return this._classpathVariables.containsKey(name);
   }
@@ -105,6 +112,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void registerClassPathVariable(String name, File path) {
     ClassPathVariable newvar = new ClassPathVariableImpl(name, path);
     ClassPathVariable oldvar = this._classpathVariables.get(name);
@@ -122,6 +130,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void registerClassPathVariables(Map<String, File> vars) {
     for (Map.Entry<String, File> var : vars.entrySet()) {
       registerClassPathVariable(var.getKey(), var.getValue());

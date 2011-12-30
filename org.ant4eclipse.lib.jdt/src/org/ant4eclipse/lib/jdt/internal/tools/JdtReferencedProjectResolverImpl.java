@@ -35,6 +35,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canHandle(EclipseProject project) {
     return project.hasRole(JavaProjectRole.class);
   }
@@ -42,6 +43,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
     Assure.notNull("project", project);
 

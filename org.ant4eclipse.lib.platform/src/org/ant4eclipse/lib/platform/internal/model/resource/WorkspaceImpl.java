@@ -40,6 +40,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasProject(String name) {
     Assure.nonEmpty("name", name);
     return this._projects.containsKey(name);
@@ -48,6 +49,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getProject(String name) {
     Assure.nonEmpty("name", name);
     return this._projects.get(name);
@@ -56,6 +58,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
     Assure.notNull("names", names);
 
@@ -88,6 +91,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject[] getAllProjects() {
     Collection<EclipseProject> projects = this._projects.values();
     return projects.toArray(new EclipseProject[0]);
@@ -96,6 +100,7 @@ public final class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
     Assure.notNull("projectRole", projectRole);
     Assure

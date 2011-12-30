@@ -52,6 +52,7 @@ public class BuildOrderResolver {
     // create a dependency graph
     DependencyGraph<EclipseProject> dependencyGraph = new DependencyGraph<EclipseProject>(
         new VertexRenderer<EclipseProject>() {
+          @Override
           public String renderVertex(EclipseProject eclipseProject) {
             return eclipseProject.getSpecifiedName();
           }

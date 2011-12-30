@@ -31,6 +31,7 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getEpydocInstallation() {
     if (this._epydoc == null) {
       try {
@@ -50,6 +51,7 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     if (this._epydoc != null) {
       Utilities.delete(this._epydoc);
@@ -60,12 +62,14 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return true;
   }

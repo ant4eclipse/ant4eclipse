@@ -49,6 +49,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformId = targetPlatformId;
   }
@@ -56,6 +57,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isTargetPlatformIdSet() {
     return this._targetPlatformId != null;
   }
@@ -63,6 +65,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getTargetPlatformId() {
     return this._targetPlatformId;
   }
@@ -70,6 +73,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireTargetPlatformIdSet() {
     if (!isTargetPlatformIdSet()) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "targetPlatformId");
@@ -79,6 +83,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlatformConfigurationId() {
     return this._platformConfigurationId;
   }
@@ -86,6 +91,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPlatformConfigurationIdSet() {
     return this._platformConfigurationId != null;
   }
@@ -93,6 +99,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPlatformConfigurationId(String platformConfigurationId) {
     this._platformConfigurationId = platformConfigurationId;
   }

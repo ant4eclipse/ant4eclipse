@@ -33,6 +33,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
    * Returns <code>true</code> if the given project has the nature of the Python DLTK framework.
    * </p>
    */
+  @Override
   public boolean isRoleSupported(EclipseProject project) {
     return project.hasNature(DLTKProjectRole.NATURE);
   }
@@ -42,6 +43,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
    * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
    * </p>
    */
+  @Override
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("PyDLTKRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
@@ -53,6 +55,7 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void postProcess(EclipseProject project) {
   }
 

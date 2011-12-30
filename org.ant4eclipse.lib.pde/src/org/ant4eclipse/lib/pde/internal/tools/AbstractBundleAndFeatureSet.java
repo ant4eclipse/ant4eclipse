@@ -76,6 +76,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void initialize() {
 
     // return if already initialized
@@ -92,6 +93,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  @Override
   public FeatureDescription getFeatureDescription(String featureId, Version version) {
     Assure.nonEmpty("featureId", featureId);
     Assure.notNull("version", version);
@@ -118,6 +120,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  @Override
   public FeatureDescription getFeatureDescription(String featureId) {
     Assure.nonEmpty("featureId", featureId);
 
@@ -153,6 +156,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription getBundleDescription(String bundleid) {
     Assure.nonEmpty("bundleid", bundleid);
 
@@ -185,6 +189,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  @Override
   public final List<BundleDescription> getAllBundleDescriptions() {
 
     // initialize if necessary
@@ -196,6 +201,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean containsBundle(String symbolicName) {
     Assure.notNull("symbolicName", symbolicName);
 
@@ -248,6 +254,7 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * Refreshes the {@link BundleAndFeatureSet}.
    * </p>
    */
+  @Override
   public final void refresh() {
 
     // debug

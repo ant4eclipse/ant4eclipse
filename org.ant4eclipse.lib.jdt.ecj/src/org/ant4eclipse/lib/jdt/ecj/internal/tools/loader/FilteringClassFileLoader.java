@@ -75,6 +75,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getClasspath() {
     return this._classFileLoader.getClasspath();
   }
@@ -82,6 +83,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getAllPackages() {
     return this._classFileLoader.getAllPackages();
   }
@@ -89,6 +91,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasPackage(String packageName) {
     return this._classFileLoader.hasPackage(packageName);
   }
@@ -96,6 +99,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ClassFile loadClass(ClassName className) {
 
     ClassFile result = this._classFileLoader.loadClass(className);
@@ -108,6 +112,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ReferableSourceFile loadSource(ClassName className) {
 
     ReferableSourceFile result = this._classFileLoader.loadSource(className);

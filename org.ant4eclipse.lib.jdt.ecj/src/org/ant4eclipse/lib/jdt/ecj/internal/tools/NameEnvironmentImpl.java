@@ -65,6 +65,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
   /**
    * @see org.eclipse.jdt.internal.compiler.env.INameEnvironment#cleanup()
    */
+  @Override
   public void cleanup() {
     // nothing to do here...
   }
@@ -72,6 +73,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
   /**
    * {@inheritDoc}
    */
+  @Override
   public NameEnvironmentAnswer findType(char[][] compoundTypeName) {
 
     // convert char array to string(buffer)
@@ -92,6 +94,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
   /**
    * {@inheritDoc}
    */
+  @Override
   public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
 
     StringBuffer result = new StringBuffer();
@@ -115,6 +118,7 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * <p>
    * This method also returns true for top level packages
    */
+  @Override
   public boolean isPackage(char[][] parentPackageName, char[] packageName) {
 
     String qualifiedPackageName = toJavaName(parentPackageName);

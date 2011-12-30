@@ -45,6 +45,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
     Assure.notNull("projectSetName", projectSetName);
     SvnTeamProjectSet svnTeamProjectSet = new SvnTeamProjectSet(projectSetName);
@@ -57,6 +58,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    * Parses a "reference" in a subversion-Project Set file.
    * </p>
    */
+  @Override
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assure.instanceOf("projectSet", projectSet, SvnTeamProjectSet.class);
     Assure.notNull("reference", reference);

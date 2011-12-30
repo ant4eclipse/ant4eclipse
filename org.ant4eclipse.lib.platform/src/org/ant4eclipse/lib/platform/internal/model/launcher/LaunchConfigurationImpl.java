@@ -35,10 +35,12 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
     }
   }
 
+  @Override
   public Collection<String> getAttributeNames() {
     return this._attributes.keySet();
   }
 
+  @Override
   public boolean getBooleanAttribute(String attributeName) {
     LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
     if (launchConfigAttribute == null) {
@@ -47,6 +49,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
     return Boolean.parseBoolean(launchConfigAttribute.getStringValue());
   }
 
+  @Override
   public String getAttribute(String attributeName) {
 
     LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
@@ -57,6 +60,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
     return String.valueOf(launchConfigAttribute.getValue());
   }
 
+  @Override
   public String[] getListAttribute(String attributeName) {
     LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
     if (launchConfigAttribute == null) {
@@ -77,6 +81,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
     return this._attributes.get(attributeName);
   }
 
+  @Override
   public String getType() {
     return this._type;
   }

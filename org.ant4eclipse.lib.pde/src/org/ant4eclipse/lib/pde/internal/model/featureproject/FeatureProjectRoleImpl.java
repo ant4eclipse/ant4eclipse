@@ -76,6 +76,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
   /**
    * {@inheritDoc}
    */
+  @Override
   public FeatureManifest getFeatureManifest() {
     return this._feature;
   }
@@ -96,6 +97,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasBuildProperties() {
     return this._buildProperties != null;
   }
@@ -103,6 +105,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
   /**
    * {@inheritDoc}
    */
+  @Override
   public FeatureBuildProperties getBuildProperties() {
     return this._buildProperties;
   }

@@ -98,6 +98,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getProjectReferenceTypes() {
     return this._projectReferenceAwareDelegate.getProjectReferenceTypes();
   }
@@ -105,6 +106,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isProjectReferenceTypesSet() {
     return this._projectReferenceAwareDelegate.isProjectReferenceTypesSet();
   }
@@ -112,6 +114,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireProjectReferenceTypesSet() {
     this._projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
   }
@@ -119,6 +122,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setProjectReferenceTypes(String referenceTypes) {
     this._projectReferenceAwareDelegate.setProjectReferenceTypes(referenceTypes);
   }
@@ -126,6 +130,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPrefix() {
     return this._macroExecutionDelegate.getPrefix();
   }
@@ -133,6 +138,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPrefix(String prefix) {
     this._macroExecutionDelegate.setPrefix(prefix);
   }
@@ -140,6 +146,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public NestedSequential createScopedMacroDefinition(Scope scope) {
     return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
   }
@@ -147,6 +154,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
     this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
   }
@@ -154,6 +162,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<ScopedMacroDefinition<Scope>> getScopedMacroDefinitions() {
     return this._macroExecutionDelegate.getScopedMacroDefinitions();
   }
@@ -285,6 +294,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
 
     }
 
+    @Override
     public Void call() throws Exception {
 
       // System.out.println(String.format("ExecuteProjectSetTask[%s] 1: %s", Thread.currentThread(), this._projects));
@@ -298,6 +308,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
         ExecuteProjectSetTask.this._macroExecutionDelegate.executeMacroInstance(
             this._scopedMacroDefinition.getMacroDef(), new MacroExecutionValuesProvider() {
 
+              @Override
               public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
                 // set the values
                 ExecuteProjectSetTask.this._platformExecutorValuesProvider
@@ -330,6 +341,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementAndAttributeDelegate.createDynamicElement(name);
   }
@@ -337,6 +349,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Object> getSubElements() {
     return this._subElementAndAttributeDelegate.getSubElements();
   }
@@ -344,6 +357,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public Map<String, String> getSubAttributes() {
     return this._subElementAndAttributeDelegate.getSubAttributes();
   }
@@ -351,6 +365,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
     this._subElementAndAttributeDelegate.setDynamicAttribute(name, value);
   }

@@ -32,6 +32,7 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
   /**
    * {@inheritDoc}
    */
+  @Override
   public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
 
     Assure.isFile("launchConfigurationFile", launchConfigurationFile);

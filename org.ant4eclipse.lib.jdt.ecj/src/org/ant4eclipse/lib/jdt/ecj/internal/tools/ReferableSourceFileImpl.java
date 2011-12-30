@@ -36,6 +36,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
   /**
    * {@inheritDoc}
    */
+  @Override
   public final AccessRestriction getAccessRestriction() {
     return this._referableType.getAccessRestriction();
   }
@@ -43,6 +44,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getLibraryLocation() {
     return this._referableType.getLibraryLocation();
   }
@@ -50,6 +52,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
   /**
    * {@inheritDoc}
    */
+  @Override
   public byte getLibraryType() {
     return this._referableType.getLibraryType();
   }
@@ -57,6 +60,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean hasAccessRestriction() {
     return this._referableType.hasAccessRestriction();
   }

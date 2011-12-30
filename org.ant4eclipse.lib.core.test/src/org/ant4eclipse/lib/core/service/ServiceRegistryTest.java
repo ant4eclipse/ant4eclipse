@@ -24,6 +24,7 @@ public class ServiceRegistryTest {
 
     try {
       ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+        @Override
         public void configure(ConfigurationContext context) {
           context.registerService(null, "null");
         }
@@ -35,6 +36,7 @@ public class ServiceRegistryTest {
 
     try {
       ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+        @Override
         public void configure(ConfigurationContext context) {
           context.registerService("null", (String) null);
         }
@@ -51,6 +53,7 @@ public class ServiceRegistryTest {
     try {
       // 
       ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+        @Override
         public void configure(ConfigurationContext context) {
           context.registerService(new Object(), "test1");
           context.registerService(new Object(), new String[] { "test1", "test3" });
@@ -63,6 +66,7 @@ public class ServiceRegistryTest {
     try {
       // 
       ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+        @Override
         public void configure(ConfigurationContext context) {
           context.registerService(new Object(), "test1");
           context.registerService(new Object(), "test1");
@@ -79,6 +83,7 @@ public class ServiceRegistryTest {
     try {
       // 
       ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+        @Override
         public void configure(ConfigurationContext context) {
           context.registerService(new NonInitialitationDummyService(), "test1");
         }
@@ -92,6 +97,7 @@ public class ServiceRegistryTest {
   @Test
   public void disposeException() {
     ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
+      @Override
       public void configure(ConfigurationContext context) {
         context.registerService(new NonDisposeDummyService(), "test1");
       }
@@ -107,6 +113,7 @@ public class ServiceRegistryTest {
     // 
     ServiceRegistryAccess.configure(new ServiceRegistryConfiguration() {
 
+      @Override
       public void configure(ConfigurationContext context) {
         context.registerService(dummyService, DummyService.class.getName());
       }
@@ -138,14 +145,17 @@ public class ServiceRegistryTest {
 
     private boolean _initialized = false;
 
+    @Override
     public void initialize() {
       this._initialized = true;
     }
 
+    @Override
     public void dispose() {
       this._initialized = false;
     }
 
+    @Override
     public boolean isInitialized() {
       return this._initialized;
     }

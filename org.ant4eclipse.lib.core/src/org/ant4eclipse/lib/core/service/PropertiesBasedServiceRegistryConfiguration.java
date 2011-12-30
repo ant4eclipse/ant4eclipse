@@ -60,6 +60,7 @@ public class PropertiesBasedServiceRegistryConfiguration implements ServiceRegis
   /**
    * {@inheritDoc}
    */
+  @Override
   public void configure(ConfigurationContext context) {
     Assure.notNull("context", context);
 

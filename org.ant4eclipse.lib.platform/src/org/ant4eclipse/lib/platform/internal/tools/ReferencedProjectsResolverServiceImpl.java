@@ -48,6 +48,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getReferenceTypes() {
 
     // lazy initialization of the resolver services
@@ -60,6 +61,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, String[] referenceTypes,
       List<Object> additionalElements) {
 
@@ -94,6 +96,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
     return resolveReferencedProjects(project, getReferenceTypes(), additionalElements);
   }

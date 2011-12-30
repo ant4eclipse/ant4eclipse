@@ -57,6 +57,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void refreshAll() {
     for (TargetPlatform targetPlatform : this._targetPlatformMap.values()) {
       targetPlatform.refresh();
@@ -66,6 +67,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TargetPlatform getCurrent() {
     return this._currentTargetPlatform;
   }
@@ -73,6 +75,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasCurrent() {
     return this._currentTargetPlatform != null;
   }
@@ -80,6 +83,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setCurrent(TargetPlatform targetPlatform) {
     this._currentTargetPlatform = targetPlatform;
   }
@@ -87,6 +91,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void clear() {
     this._bundleAndFeatureSetMap.clear();
     this._targetPlatformDefnitionMap.clear();
@@ -97,6 +102,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#addPlatformConfiguration(java.lang.String,
    *      org.ant4eclipse.lib.pde.tools.PlatformConfiguration)
    */
+  @Override
   public void addPlatformConfiguration(String identifier, PlatformConfiguration platformConfiguration) {
     this._platformConfigurationMap.put(identifier, platformConfiguration);
   }
@@ -104,6 +110,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#getPlatformConfiguration(java.lang.String)
    */
+  @Override
   public PlatformConfiguration getPlatformConfiguration(String identifier) {
     return this._platformConfigurationMap.get(identifier);
   }
@@ -111,6 +118,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#hasPlatformConfiguration(java.lang.String)
    */
+  @Override
   public boolean hasPlatformConfiguration(String identifier) {
     return this._platformConfigurationMap.containsKey(identifier);
   }
@@ -118,6 +126,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
     this._targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
 
@@ -126,6 +135,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<String> getTargetPlatformDefinitionIds() {
     return Collections.unmodifiableList(new LinkedList<String>(this._targetPlatformDefnitionMap.keySet()));
   }
@@ -133,6 +143,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       PlatformConfiguration targetPlatformConfiguration) {
 
@@ -155,6 +166,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TargetPlatformDefinition getTargetPlatformDefinition(String identifier) {
     return this._targetPlatformDefnitionMap.get(identifier);
   }
@@ -162,6 +174,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasTargetPlatformDefinition(String identifier) {
     return this._targetPlatformDefnitionMap.containsKey(identifier);
   }

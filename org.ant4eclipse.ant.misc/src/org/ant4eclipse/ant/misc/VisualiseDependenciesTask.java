@@ -80,6 +80,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementAndAttributesDelegate.createDynamicElement(name);
   }
@@ -87,6 +88,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Object> getSubElements() {
     return this._subElementAndAttributesDelegate.getSubElements();
   }
@@ -94,6 +96,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
   /**
    * {@inheritDoc}
    */
+  @Override
   public Map<String, String> getSubAttributes() {
     return this._subElementAndAttributesDelegate.getSubAttributes();
   }
@@ -101,6 +104,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
     this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
   }
@@ -206,20 +210,24 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
       this.buffer = storage;
     }
 
+    @Override
     public void begin() {
       this.buffer.writeLine("digraph example {");
       this.buffer.indent();
     }
 
+    @Override
     public void edge(String from, String to) {
       this.buffer.writeLineF("%s -> %s;", from, to);
     }
 
+    @Override
     public void end() {
       this.buffer.dedent();
       this.buffer.writeLine("}");
     }
 
+    @Override
     public void node(String name, String label) {
       this.buffer.writeLineF("%s [label=\"%s\", shape=box];", name, label);
     }

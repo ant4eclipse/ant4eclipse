@@ -71,6 +71,7 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
   /**
    * {@inheritDoc}
    */
+  @Override
   public final TeamProjectSet getTeamProjectSet() {
     return this._projectSetDelegate.getTeamProjectSet();
   }
@@ -78,6 +79,7 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isTeamProjectSetSet() {
     return this._projectSetDelegate.isTeamProjectSetSet();
   }
@@ -85,6 +87,7 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireTeamProjectSetSet() {
     this._projectSetDelegate.requireTeamProjectSetSet();
   }
@@ -92,6 +95,7 @@ public abstract class AbstractTeamProjectSetBasedTask extends AbstractAnt4Eclips
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setTeamProjectSet(File projectSet) {
     this._projectSetDelegate.setTeamProjectSet(projectSet);
   }

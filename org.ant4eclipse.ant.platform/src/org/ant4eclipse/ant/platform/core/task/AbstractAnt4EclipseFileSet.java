@@ -124,6 +124,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     this._eclipseProjectDelegate.ensureRole(projectRoleClass);
   }
@@ -131,6 +132,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getEclipseProject() throws BuildException {
     return this._eclipseProjectDelegate.getEclipseProject();
   }
@@ -138,6 +140,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Workspace getWorkspace() {
     return this._eclipseProjectDelegate.getWorkspace();
   }
@@ -145,6 +148,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final File getWorkspaceDirectory() {
     return this._eclipseProjectDelegate.getWorkspaceDirectory();
   }
@@ -152,6 +156,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isProjectNameSet() {
     return this._eclipseProjectDelegate.isProjectNameSet();
   }
@@ -159,6 +164,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isWorkspaceDirectorySet() {
     return this._eclipseProjectDelegate.isWorkspaceDirectorySet();
   }
@@ -166,6 +172,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireWorkspaceAndProjectNameSet() {
     this._eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
   }
@@ -173,6 +180,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getWorkspaceId() {
     return this._eclipseProjectDelegate.getWorkspaceId();
   }
@@ -180,6 +188,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isWorkspaceIdSet() {
     return this._eclipseProjectDelegate.isWorkspaceIdSet();
   }
@@ -187,6 +196,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     this._eclipseProjectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
@@ -194,6 +204,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setWorkspaceId(String identifier) {
     this._eclipseProjectDelegate.setWorkspaceId(identifier);
   }
@@ -201,6 +212,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   @Deprecated
   public void setProject(File projectPath) {
     this._eclipseProjectDelegate.setProject(projectPath);
@@ -209,6 +221,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setProjectName(String projectName) {
     this._eclipseProjectDelegate.setProjectName(projectName);
   }
@@ -216,6 +229,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   @Deprecated
   public final void setWorkspace(String workspace) {
     this._eclipseProjectDelegate.setWorkspace(workspace);
@@ -224,6 +238,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
@@ -231,6 +246,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isFilesystemOnly() {
     return true;
   }
@@ -260,6 +276,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public Iterator<Resource> iterator() {
     computeFileSet();
 
@@ -269,6 +286,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   /**
    * {@inheritDoc}
    */
+  @Override
   public int size() {
     computeFileSet();
 

@@ -108,6 +108,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getLocations() {
     return this._targetplatformLocations;
   }
@@ -115,6 +116,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public PlatformConfiguration getTargetPlatformConfiguration() {
     return this._configuration;
   }
@@ -122,6 +124,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription getResolvedBundle(String symbolicName, Version version) {
     return this._state.getBundle(symbolicName, version);
   }
@@ -129,6 +132,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription[] getBundlesWithResolverErrors() {
 
     // create result
@@ -166,6 +170,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void refresh() {
 
     if (this._pluginProjectSet != null) {
@@ -220,6 +225,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public FeatureDescription getFeatureDescription(String id, Version version) {
     Assure.nonEmpty("id", id);
 
@@ -254,6 +260,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasFeatureDescription(String id, Version version) {
     return getFeatureDescription(id, version) != null;
   }
@@ -261,6 +268,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public FeatureDescription getFeatureDescription(String id) {
     Assure.nonEmpty("id", id);
 
@@ -301,10 +309,12 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasFeatureDescription(String id) {
     return getFeatureDescription(id) != null;
   }
 
+  @Override
   public boolean matchesPlatformFilter(String id) {
     try {
 
@@ -340,6 +350,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription getBundleDescription(String id) {
     Assure.nonEmpty("id", id);
 
@@ -379,6 +390,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription getBundleDescriptionFromWorkspace(String symbolicName) {
     Assure.nonEmpty("symbolicName", symbolicName);
 
@@ -389,6 +401,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription getBundleDescriptionFromBinaryBundles(String symbolicName) {
     Assure.nonEmpty("symbolicName", symbolicName);
 
@@ -421,6 +434,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasBundleDescription(String id) {
     return getBundleDescription(id) != null;
   }
@@ -428,6 +442,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
     Assure.notNull("source", source);
     Assure.notNull("manifest", manifest);

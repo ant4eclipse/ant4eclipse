@@ -29,6 +29,7 @@ public class CompileJobResultImpl implements CompileJobResult {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean succeeded() {
     return this._succeeded;
   }
@@ -36,6 +37,7 @@ public class CompileJobResultImpl implements CompileJobResult {
   /**
    * {@inheritDoc}
    */
+  @Override
   public CategorizedProblem[] getCategorizedProblems() {
     return this._categorizedProblems == null ? new CategorizedProblem[0] : this._categorizedProblems;
   }
@@ -51,6 +53,7 @@ public class CompileJobResultImpl implements CompileJobResult {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Map<String, File> getCompiledClassFiles() {
     if (this._compiledclassfiles == null) {
       return Collections.EMPTY_MAP;

@@ -30,6 +30,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_PROJECT)
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_PROJECT) */;
@@ -38,6 +39,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 
     // return immediately if the class path entry is not visible

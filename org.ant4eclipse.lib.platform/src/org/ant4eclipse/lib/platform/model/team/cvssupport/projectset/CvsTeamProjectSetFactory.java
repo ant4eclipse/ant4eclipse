@@ -42,6 +42,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
   /**
    * {@inheritDoc}
    */
+  @Override
   public TeamProjectSet createTeamProjectSet(String projectSetName) {
     Assure.notNull("projectSetName", projectSetName);
     CvsTeamProjectSet projectSet = new CvsTeamProjectSet(projectSetName);
@@ -51,6 +52,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
     Assure.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
     Assure.notNull("reference", reference);

@@ -46,6 +46,7 @@ public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTe
     /**
      * {@inheritDoc}
      */
+    @Override
     public ProjectRole createRole(EclipseProject project) {
       return null;
     }
@@ -53,6 +54,7 @@ public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTe
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isRoleSupported(EclipseProject project) {
       return false;
     }
@@ -60,6 +62,7 @@ public class ProjectRoleIdentifierRegistryTest extends ConfigurableAnt4EclipseTe
     /**
      * {@inheritDoc}
      */
+    @Override
     public void postProcess(EclipseProject project) {
     }
 

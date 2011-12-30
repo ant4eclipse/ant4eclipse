@@ -53,6 +53,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolveContainer(ClasspathEntry classpathEntry) {
     return classpathEntry.getPath().startsWith(CONTAINER_TYPE_PDE_REQUIRED_PLUGINS);
   }
@@ -60,6 +61,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
     Assure.notNull("context", context);
 

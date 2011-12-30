@@ -22,6 +22,7 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getProjectName() {
     return this._projectname;
   }
@@ -31,6 +32,7 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
     this._projectname = projectname;
   }
 
+  @Override
   public StringMap getAsProperties() {
     // Create properties object
     StringMap properties = new StringMap();

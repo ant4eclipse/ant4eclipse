@@ -38,6 +38,7 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isResolved(RawPathEntry entry) {
     Assure.notNull("entry", entry);
     return this._resolvedentries.containsKey(entry);
@@ -46,6 +47,7 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void registerResolvedPathEntry(RawPathEntry origin, ResolvedPathEntry solution) {
     Assure.notNull("origin", origin);
     Assure.notNull("solution", solution);
@@ -55,6 +57,7 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ResolvedPathEntry getResolvedPathEntry(RawPathEntry entry) {
     Assure.notNull("entry", entry);
     return this._resolvedentries.get(entry);

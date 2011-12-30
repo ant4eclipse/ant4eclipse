@@ -51,6 +51,7 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canValidate(ProjectRole role) {
     for (Class<?> type : this._types) {
       if (type.isAssignableFrom(role.getClass())) {

@@ -82,6 +82,7 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectDescription createEmptyProject(URL script, int projectsettings) {
     ProjectDescription result = new ProjectDescription();
     result.setPrimaryProjectname(newName());
@@ -104,6 +105,7 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectDescription createComplexProject(URL script, int projectsettings) {
     ProjectDescription result = new ProjectDescription();
     result.setPrimaryProjectname(newName());
@@ -140,6 +142,7 @@ public class ProjectSuite implements ProjectSuiteApi {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectDescription createCyclicProject(URL script, int projectsettings) {
     ProjectDescription result = new ProjectDescription();
     result.setPrimaryProjectname(newName());

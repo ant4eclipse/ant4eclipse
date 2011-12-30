@@ -126,6 +126,7 @@ public class JavaRuntimeLoader {
           list.add(file);
         } else if (file.isDirectory() && addChildrenIfDirectory) {
           File[] children = file.listFiles(new FilenameFilter() {
+            @Override
             public boolean accept(File dir, String name) {
               return name.endsWith(".jar");
             }

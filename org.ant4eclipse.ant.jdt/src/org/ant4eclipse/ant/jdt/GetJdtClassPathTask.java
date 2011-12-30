@@ -87,6 +87,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   /**
    * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("deprecation")
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
@@ -96,6 +97,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }
@@ -103,6 +105,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
     this._classpathContainerArgumentDelegate.setDynamicAttribute(name, value);
   }

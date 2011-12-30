@@ -46,6 +46,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setProjectName(String project) {
     this._projectDelegate.setProjectName(project);
   }
@@ -53,6 +54,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   @Deprecated
   public void setWorkspace(String workspace) {
     this._projectDelegate.setWorkspaceDirectory(workspace);
@@ -61,6 +63,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
@@ -68,6 +71,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     this._projectDelegate.ensureRole(projectRoleClass);
   }
@@ -75,6 +79,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getEclipseProject() throws BuildException {
     return this._projectDelegate.getEclipseProject();
   }
@@ -82,6 +87,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Workspace getWorkspace() {
     return this._projectDelegate.getWorkspace();
   }
@@ -89,6 +95,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final File getWorkspaceDirectory() {
     return this._projectDelegate.getWorkspaceDirectory();
   }
@@ -96,6 +103,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isProjectNameSet() {
     return this._projectDelegate.isProjectNameSet();
   }
@@ -103,6 +111,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isWorkspaceDirectorySet() {
     return this._projectDelegate.isWorkspaceDirectorySet();
   }
@@ -110,6 +119,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getWorkspaceId() {
     return this._projectDelegate.getWorkspaceId();
   }
@@ -117,6 +127,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isWorkspaceIdSet() {
     return this._projectDelegate.isWorkspaceIdSet();
   }
@@ -124,6 +135,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     this._projectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
@@ -131,6 +143,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setWorkspaceId(String identifier) {
     this._projectDelegate.setWorkspaceId(identifier);
   }
@@ -138,6 +151,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireWorkspaceAndProjectNameSet() {
     this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
@@ -145,6 +159,7 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
   /**
    * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("deprecation")
   public void setProject(File projectPath) {
     this._projectDelegate.setProject(projectPath);

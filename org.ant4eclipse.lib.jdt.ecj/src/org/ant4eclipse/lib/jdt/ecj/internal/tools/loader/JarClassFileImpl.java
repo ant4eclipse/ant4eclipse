@@ -52,6 +52,7 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
     this._zipFile = zipFile;
   }
 
+  @Override
   public byte[] getBytes() {
     try {
       return Util.getZipEntryByteContent(this._zipFile.getEntry(this._zipEntryName), this._zipFile);
@@ -63,6 +64,7 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
   /**
    * {@inheritDoc}
    */
+  @Override
   public final IBinaryType getBinaryType() {
     try {
       return ClassFileReader.read(this._zipFile, this._zipEntryName, true);

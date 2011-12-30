@@ -47,6 +47,7 @@ public final class UserLibrariesImpl implements UserLibraries {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasLibrary(String name) {
     Assure.notNull("name", name);
     return this._libraries.containsKey(name);
@@ -55,6 +56,7 @@ public final class UserLibrariesImpl implements UserLibraries {
   /**
    * {@inheritDoc}
    */
+  @Override
   public UserLibraryImpl getLibrary(String name) {
     Assure.notNull("name", name);
     return this._libraries.get(name);
@@ -63,6 +65,7 @@ public final class UserLibrariesImpl implements UserLibraries {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getAvailableLibraries() {
     String[] result = new String[this._libraries.size()];
     this._libraries.keySet().toArray(result);

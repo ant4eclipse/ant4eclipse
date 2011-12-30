@@ -87,6 +87,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final char[] getMainTypeName() {
     return this._mainTypeName;
 
@@ -95,6 +96,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final char[][] getPackageName() {
     return this._packageName;
   }
@@ -102,6 +104,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final char[] getFileName() {
     return this._fileName;
   }
@@ -109,6 +112,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final char[] getContents() {
     String filename = new String(this._fileName);
     File sourceFile = new File(this._sourceFile.getSourceFolder(), filename);

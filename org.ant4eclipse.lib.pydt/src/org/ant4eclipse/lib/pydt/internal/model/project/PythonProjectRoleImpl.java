@@ -54,6 +54,7 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDLTK() {
     return this._isdltk;
   }
@@ -80,6 +81,7 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   /**
    * {@inheritDoc}
    */
+  @Override
   public RawPathEntry[] getRawPathEntries() {
     return this._rawpathentries.toArray(new RawPathEntry[this._rawpathentries.size()]);
   }
@@ -87,6 +89,7 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   /**
    * {@inheritDoc}
    */
+  @Override
   public RawPathEntry[] getRawPathEntries(ReferenceKind kind) {
     List<RawPathEntry> result = new ArrayList<RawPathEntry>();
     for (RawPathEntry entry : this._rawpathentries) {

@@ -578,6 +578,7 @@ public class TargetDefinition {
       return result;
     }
 
+    @Override
     public boolean equals(Object obj) {
       if (this == obj) {
         return true;
@@ -665,6 +666,7 @@ public class TargetDefinition {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int hashCode() {
       int prime = 31;
       int result = 1;
@@ -678,6 +680,7 @@ public class TargetDefinition {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean equals(Object obj) {
       if (this == obj) {
         return true;
@@ -719,6 +722,7 @@ public class TargetDefinition {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[Content:");

@@ -33,6 +33,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_LIBRARY)
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_ARCHIVE) */;
@@ -41,6 +42,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 
     // do not resolve if the class path entry is not visible

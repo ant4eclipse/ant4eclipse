@@ -69,6 +69,7 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setUserAndPassword(String user, String pwd) {
     this._user = user;
     this._password = pwd;

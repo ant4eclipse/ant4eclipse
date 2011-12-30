@@ -31,6 +31,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRoleSupported(EclipseProject project) {
     return project.hasNature(JavaProjectRole.JAVA_NATURE);
   }
@@ -42,6 +43,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
    * Adds a {@link JavaProjectRole} to the given project and parses the class path.
    * </p>
    */
+  @Override
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
@@ -53,6 +55,7 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void postProcess(EclipseProject project) {
   }
 

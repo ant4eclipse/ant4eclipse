@@ -27,6 +27,7 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setUserAndPassword(String cvsUser, String cvsPwd) {
     Assure.notNull("cvsUser", cvsUser);
     A4ELogging.debug("setUserAndPassword(%s, %s)", cvsUser, cvsPwd);

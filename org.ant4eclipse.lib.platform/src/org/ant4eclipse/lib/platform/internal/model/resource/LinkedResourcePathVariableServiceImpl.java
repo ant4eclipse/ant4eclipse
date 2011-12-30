@@ -35,6 +35,7 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   /**
    * @see org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService#getLinkedResourcePath(java.lang.String)
    */
+  @Override
   public String getLinkedResourcePath(String pathVariable) {
     return this._variables.get(pathVariable);
   }
@@ -43,6 +44,7 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
    * @see org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService#registerLinkedResourcePathVariable(java.lang.String,
    *      java.lang.String)
    */
+  @Override
   public void registerLinkedResourcePathVariable(String pathVariable, String location) {
     this._variables.put(pathVariable, location);
   }
@@ -50,6 +52,7 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   /**
    * @see org.ant4eclipse.lib.core.Lifecycle#initialize()
    */
+  @Override
   public void initialize() {
 
     // initialize the variables map
@@ -62,6 +65,7 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   /**
    * @see org.ant4eclipse.lib.core.Lifecycle#isInitialized()
    */
+  @Override
   public boolean isInitialized() {
     return this._isInitialized;
   }
@@ -69,6 +73,7 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   /**
    * @see org.ant4eclipse.lib.core.Lifecycle#dispose()
    */
+  @Override
   public void dispose() {
 
     // clears the variables map

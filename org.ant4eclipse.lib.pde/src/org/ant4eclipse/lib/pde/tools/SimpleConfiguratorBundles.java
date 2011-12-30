@@ -95,6 +95,7 @@ public class SimpleConfiguratorBundles {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     int result = 1;
     for (int i = 0; i < this._records.size(); i++) {

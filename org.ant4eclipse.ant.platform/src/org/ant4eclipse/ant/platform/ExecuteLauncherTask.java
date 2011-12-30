@@ -112,6 +112,7 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
   private void executeLauncherScopedMacroDef(MacroDef macroDef) {
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
         return provideDefaultMacroExecutionValues(values);
       }
@@ -139,6 +140,7 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
     return values;
   }
 
+  @Override
   public Object createDynamicElement(String name) throws BuildException {
     // handle 'ForLauncher' element
     if (SCOPE_NAME_LAUNCHER.equalsIgnoreCase(name)) {

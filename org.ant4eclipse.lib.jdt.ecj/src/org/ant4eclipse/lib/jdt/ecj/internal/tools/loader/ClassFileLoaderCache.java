@@ -56,6 +56,7 @@ public class ClassFileLoaderCache implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     A4ELogging.info("ClassFileLoaderCache is " + (ENABLE_CACHE ? "not " : "") + "disabled");
     return this._initialized;
@@ -64,6 +65,7 @@ public class ClassFileLoaderCache implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
     this._initialized = true;
   }
@@ -71,6 +73,7 @@ public class ClassFileLoaderCache implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     this._initialized = false;
   }

@@ -55,6 +55,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isAllWorkspaceProjects() {
     return this._allWorkspaceProjects;
   }
@@ -62,6 +63,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet() {
     if (!this._allWorkspaceProjects && !isProjectNamesSet() && !isTeamProjectSetSet()) {
       // TODO
@@ -72,6 +74,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setAllWorkspaceProjects(boolean allprojects) {
     this._allWorkspaceProjects = allprojects;
   }
@@ -79,6 +82,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getProjectNames() {
 
     // if 'allProjects' return all workspace projects
@@ -103,6 +107,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public TeamProjectSet getTeamProjectSet() {
     return this._projectSetComponent.getTeamProjectSet();
   }
@@ -110,6 +115,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isProjectNamesSet() {
     return this._projectSetComponent.isProjectNamesSet();
   }
@@ -117,6 +123,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isTeamProjectSetSet() {
     return this._projectSetComponent.isTeamProjectSetSet();
   }
@@ -124,6 +131,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireProjectNamesSet() {
     this._projectSetComponent.requireProjectNamesSet();
   }
@@ -131,6 +139,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireTeamProjectSetOrProjectNamesSet() {
     this._projectSetComponent.requireTeamProjectSetOrProjectNamesSet();
   }
@@ -138,6 +147,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireTeamProjectSetSet() {
     this._projectSetComponent.requireTeamProjectSetSet();
   }
@@ -145,6 +155,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setProjectNames(String projectNames) {
     this._projectSetComponent.setProjectNames(projectNames);
   }
@@ -152,6 +163,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setTeamProjectSet(File projectSetFile) {
     this._projectSetComponent.setTeamProjectSet(projectSetFile);
   }
@@ -159,6 +171,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public Workspace getWorkspace() {
     return this._workspaceComponent.getWorkspace();
   }
@@ -166,6 +179,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getWorkspaceDirectory() {
     return this._workspaceComponent.getWorkspaceDirectory();
   }
@@ -173,6 +187,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isWorkspaceDirectorySet() {
     return this._workspaceComponent.isWorkspaceDirectorySet();
   }
@@ -180,6 +195,7 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   @Deprecated
   public void setWorkspace(String workspace) {
     this._workspaceComponent.setWorkspace(workspace);
@@ -188,22 +204,27 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setWorkspaceDirectory(String workspaceDirectory) {
     this._workspaceComponent.setWorkspaceDirectory(workspaceDirectory);
   }
 
+  @Override
   public String getWorkspaceId() {
     return this._workspaceComponent.getWorkspaceId();
   }
 
+  @Override
   public boolean isWorkspaceIdSet() {
     return this._workspaceComponent.isWorkspaceIdSet();
   }
 
+  @Override
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     this._workspaceComponent.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
 
+  @Override
   public void setWorkspaceId(String identifier) {
     this._workspaceComponent.setWorkspaceId(identifier);
   }

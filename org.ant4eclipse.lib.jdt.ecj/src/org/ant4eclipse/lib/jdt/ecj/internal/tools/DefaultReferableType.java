@@ -62,6 +62,7 @@ public class DefaultReferableType implements ReferableType {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getLibraryLocation() {
     return this._libraryLocation;
   }
@@ -69,6 +70,7 @@ public class DefaultReferableType implements ReferableType {
   /**
    * {@inheritDoc}
    */
+  @Override
   public byte getLibraryType() {
     return this._libraryType;
   }
@@ -76,6 +78,7 @@ public class DefaultReferableType implements ReferableType {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final AccessRestriction getAccessRestriction() {
     return this._accessRestriction;
   }
@@ -83,6 +86,7 @@ public class DefaultReferableType implements ReferableType {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean hasAccessRestriction() {
     return this._accessRestriction != null;
   }

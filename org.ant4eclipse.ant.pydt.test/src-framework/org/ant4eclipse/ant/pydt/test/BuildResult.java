@@ -123,18 +123,21 @@ public class BuildResult {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void buildFinished(BuildEvent evt) {
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void buildStarted(BuildEvent evt) {
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void messageLogged(BuildEvent evt) {
       addLine(BuildResult.this._collected, evt.getMessage());
       if (evt.getTarget() != null) {
@@ -151,24 +154,28 @@ public class BuildResult {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void targetFinished(BuildEvent evt) {
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void targetStarted(BuildEvent evt) {
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void taskFinished(BuildEvent evt) {
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void taskStarted(BuildEvent evt) {
     }
 

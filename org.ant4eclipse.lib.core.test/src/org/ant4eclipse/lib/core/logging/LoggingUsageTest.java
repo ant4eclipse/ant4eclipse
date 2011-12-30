@@ -32,6 +32,7 @@ public class LoggingUsageTest {
   public void configureServiceRegistry() {
     this.byteout.reset();
     ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
+      @Override
       public void configure(ConfigurationContext context) {
         PrintStream printer = new PrintStream(LoggingUsageTest.this.byteout);
         context.registerService(new DefaultAnt4EclipseLogger(printer), SERVICE_TYPE.getName());

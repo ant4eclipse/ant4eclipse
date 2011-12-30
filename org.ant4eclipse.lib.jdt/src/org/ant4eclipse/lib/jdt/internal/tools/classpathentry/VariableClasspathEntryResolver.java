@@ -45,6 +45,7 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
    *          the class path entry to resolve.
    * @return <code>true</code>, if the {@link ClasspathEntry} is of kind {@link RawClasspathEntry.CPE_VARIABLE}.
    */
+  @Override
   public boolean canResolve(ClasspathEntry entry) {
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_VARIABLE);
   }
@@ -52,6 +53,7 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
 
     // get the path

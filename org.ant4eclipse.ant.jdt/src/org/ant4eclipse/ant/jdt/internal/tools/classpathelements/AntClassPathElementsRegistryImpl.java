@@ -33,6 +33,7 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
   /**
    * {@inheritDoc}
    */
+  @Override
   public void configure(Project project) {
     this._project = project;
   }

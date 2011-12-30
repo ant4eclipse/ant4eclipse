@@ -72,6 +72,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void acceptResult(CompilationResult result) {
 
     // get the compilation unit...

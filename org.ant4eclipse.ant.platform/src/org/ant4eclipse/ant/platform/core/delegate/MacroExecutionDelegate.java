@@ -83,6 +83,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPrefix() {
     return this._prefix;
   }
@@ -90,6 +91,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPrefix(String prefix) {
     this._prefix = prefix;
   }
@@ -97,6 +99,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<ScopedMacroDefinition<E>> getScopedMacroDefinitions() {
     return this._macroDefs;
   }
@@ -104,6 +107,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
+  @Override
   public NestedSequential createScopedMacroDefinition(E scope) {
     MacroDef macroDef = new ConditionalMacroDef();
     macroDef.setProject(getAntProject());
@@ -114,6 +118,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   /**
    * {@inheritDoc}
    */
+  @Override
   public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
     Assure.notNull("macroDef", macroDef);
     Assure.notNull("provider", provider);

@@ -51,6 +51,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @Override
   @Deprecated
   public void setProject(File projectPath) {
     throw new Ant4EclipseException(PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT);
@@ -59,6 +60,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setProjectName(String projectName) {
     this._projectName = projectName;
   }
@@ -66,6 +68,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isProjectNameSet() {
     return this._projectName != null;
   }
@@ -73,6 +76,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireWorkspaceAndProjectNameSet() {
 
     if (!(isWorkspaceDirectorySet() || isWorkspaceIdSet()) || !isProjectNameSet()) {
@@ -83,6 +87,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getEclipseProject() throws BuildException {
 
     // get eclipse project if it is not already set
@@ -101,6 +106,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   /**
    * {@inheritDoc}
    */
+  @Override
   public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
 
     // 

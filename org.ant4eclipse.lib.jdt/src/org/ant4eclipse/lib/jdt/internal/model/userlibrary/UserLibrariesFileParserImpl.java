@@ -33,6 +33,7 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
   /**
    * {@inheritDoc}
    */
+  @Override
   public UserLibraries parseUserLibrariesFile(File configuration, Workspace workspace) {
     UserLibrariesImpl userlibs = new UserLibrariesImpl();
 

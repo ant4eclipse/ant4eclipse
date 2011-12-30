@@ -70,11 +70,13 @@ public class PropertiesBasedServiceRegistryConfigurationTest {
 
     Map<String, Object> _registeredServices = new Hashtable<String, Object>();
 
+    @Override
     public void registerService(Object service, String serviceIdentifier) {
       this._registeredServices.put(serviceIdentifier, service);
 
     }
 
+    @Override
     public void registerService(Object service, String[] serviceIdentifiers) {
       fail("registerService should not be called");
 

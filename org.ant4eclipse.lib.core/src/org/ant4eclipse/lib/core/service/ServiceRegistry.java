@@ -214,6 +214,7 @@ public class ServiceRegistry {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void registerService(Object service, String serviceIdentifier) {
       Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       Assure.notNull("service", service);
@@ -230,6 +231,7 @@ public class ServiceRegistry {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void registerService(Object service, String[] serviceIdentifier) {
       Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       Assure.notNull("service", service);

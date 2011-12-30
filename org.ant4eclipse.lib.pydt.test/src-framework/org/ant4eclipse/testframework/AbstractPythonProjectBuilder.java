@@ -42,6 +42,7 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
   /**
    * {@inheritDoc}
    */
+  @Override
   public File populate(WorkspaceBuilder workspacebuilder) {
     Assure.notNull("workspacebuilder", workspacebuilder);
     return workspacebuilder.addProject(this);
@@ -50,6 +51,7 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setBuildScript(URL location) {
     Assure.notNull("location", location);
     this._buildscript = location;

@@ -44,6 +44,7 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getOwningProjectname() {
     return this._owningproject;
   }
@@ -51,6 +52,7 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ReferenceKind getKind() {
     return ReferenceKind.Container;
   }

@@ -185,6 +185,7 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int compareTo(BundleStartRecord other) {
     if (other != null) {
       return this._id.compareTo(other._id);

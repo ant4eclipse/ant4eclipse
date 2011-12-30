@@ -75,6 +75,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public byte getType() {
     return LIBRARY;
   }
@@ -82,6 +83,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getLocation() {
     return this._location;
   }
@@ -89,6 +91,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Manifest getManifest() {
     return this._manifest;
   }
@@ -96,6 +99,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] resolveBundleClasspathEntries() {
 
     // expand if necessary

@@ -45,6 +45,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * 
    * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#createScopedMacroDefinition(java.lang.Object)
    */
+  @Override
   public NestedSequential createScopedMacroDefinition(String scope) {
     return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
   }
@@ -56,6 +57,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * org.ant4eclipse.ant.platform.core.MacroExecutionComponent#executeMacroInstance(org.apache.tools.ant.taskdefs.MacroDef
    * , org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider)
    */
+  @Override
   public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
     this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
 
@@ -66,6 +68,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * 
    * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#getPrefix()
    */
+  @Override
   public String getPrefix() {
     return this._macroExecutionDelegate.getPrefix();
   }
@@ -75,6 +78,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * 
    * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#getScopedMacroDefinitions()
    */
+  @Override
   public List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
     return this._macroExecutionDelegate.getScopedMacroDefinitions();
   }
@@ -84,6 +88,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * 
    * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#setPrefix(java.lang.String)
    */
+  @Override
   public void setPrefix(String prefix) {
     this._macroExecutionDelegate.setPrefix(prefix);
 
@@ -94,6 +99,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * 
    * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
    */
+  @Override
   public final Object createDynamicElement(String name) throws BuildException {
 
     // handle SCOPE_FOR_EACH_PROJECT
@@ -149,6 +155,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
     for (final TeamProjectDescription teamProjectDescription : teamProjectDescriptions) {
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
           // Get Properties from teamProjectDescription...
           final StringMap teamProjectDescriptionProperties = teamProjectDescription.getAsProperties();

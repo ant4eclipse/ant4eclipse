@@ -48,6 +48,7 @@ public class OutputPathValidator extends AbstractProjectValidator {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void validate(ProjectRole role) {
 
     PluginProjectRole pluginrole = (PluginProjectRole) role;

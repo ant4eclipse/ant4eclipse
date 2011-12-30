@@ -59,6 +59,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> teamProviders = config.getAllProperties(TEAMPROVIDER_PREFIX);
@@ -76,6 +77,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     this._factories = null;
   }
@@ -83,6 +85,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return this._factories != null;
   }
@@ -90,6 +93,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   /**
    * {@inheritDoc}
    */
+  @Override
   public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
     Assure.isFile("projectSetFile", projectSetFile);
 

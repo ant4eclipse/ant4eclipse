@@ -50,6 +50,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Workspace getCurrent() {
     return this._current;
   }
@@ -57,6 +58,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasCurrent() {
     return this._current != null;
   }
@@ -64,6 +66,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setCurrent(Workspace currentWorkspace) {
     this._current = currentWorkspace;
   }
@@ -71,6 +74,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setCurrent(String id) {
     this._current = getWorkspace(id);
   }
@@ -78,6 +82,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Workspace getWorkspace(String id) {
     return this._registry.get(id);
   }
@@ -85,6 +90,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean containsWorkspace(String id) {
     return this._registry.containsKey(id);
   }
@@ -92,6 +98,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
     Assure.nonEmpty("id", id);
     Assure.notNull("workspaceDefinition", workspaceDefinition);
@@ -129,6 +136,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     this._registry.clear();
     this._registry = null;
@@ -138,6 +146,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
     this._registry = new HashMap<String, Workspace>();
     this._projectFactory = new ProjectFactory();
@@ -146,6 +155,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return (this._registry != null) && (this._projectFactory != null);
   }

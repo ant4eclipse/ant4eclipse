@@ -46,6 +46,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final ResolvedClasspathEntry[] getClasspath() {
     return this._classpath.toArray(new ResolvedClasspathEntry[0]);
   }
@@ -53,6 +54,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final ResolvedClasspathEntry getBootClasspath() {
     return this._bootclasspath;
   }
@@ -60,6 +62,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getBootClasspathFiles() {
     if (!hasBootClasspath()) {
       return new File[0];
@@ -70,6 +73,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasBootClasspath() {
     return (this._bootclasspath != null);
   }
@@ -77,6 +81,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getClasspathFiles() {
     return resolveClasspathToFiles(this._classpath);
   }

@@ -39,6 +39,7 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
     this._classfile = classfile;
   }
 
+  @Override
   public byte[] getBytes() {
     try {
       return Util.getFileByteContent(this._classfile);
@@ -50,6 +51,7 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
   /**
    * {@inheritDoc}
    */
+  @Override
   public final IBinaryType getBinaryType() {
     try {
       return ClassFileReader.read(this._classfile, true);

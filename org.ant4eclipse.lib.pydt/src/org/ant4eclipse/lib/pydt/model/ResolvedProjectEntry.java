@@ -42,6 +42,7 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getOwningProjectname() {
     return this._owningproject;
   }
@@ -49,6 +50,7 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ReferenceKind getKind() {
     return ReferenceKind.Project;
   }

@@ -49,6 +49,7 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
     //
   }
@@ -56,6 +57,7 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> entries = config.getAllProperties(PREFIX_VARIABLE_RESOLVER);
@@ -77,6 +79,7 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return false;
   }
@@ -84,6 +87,7 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
     Assure.notNull("string", string);
     // resolve Eclipse variables

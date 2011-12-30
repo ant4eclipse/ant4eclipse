@@ -112,6 +112,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getApplication() {
     return this._application;
   }
@@ -119,6 +120,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getColocationAffinity() {
     return this._colocationAffinity;
   }
@@ -126,6 +128,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * @return flag that, if "true", indicates that the feature cannot be installed in a group with other features.
    */
+  @Override
   public boolean isExclusive() {
     return this._exclusive;
   }
@@ -133,6 +136,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getId() {
     return this._id;
   }
@@ -140,6 +144,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getImage() {
     return this._image;
   }
@@ -147,6 +152,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getLocale() {
     return this._locale;
   }
@@ -154,6 +160,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getMachineArchitecture() {
     return this._machineArchitecture;
   }
@@ -161,6 +168,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getOperatingSystem() {
     return this._operatingSystem;
   }
@@ -168,6 +176,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlugin() {
     return this._plugin;
   }
@@ -175,6 +184,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPrimary() {
     return this._primary;
   }
@@ -182,6 +192,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * @return display label identifying the organization providing this component.
    */
+  @Override
   public String getProviderName() {
     return this._providerName;
   }
@@ -189,6 +200,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * @return component version (eg. 1.0.3), required
    */
+  @Override
   public Version getVersion() {
     return this._version;
   }
@@ -196,6 +208,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getWindowingSystem() {
     return this._windowingSystem;
   }
@@ -203,6 +216,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getLabel() {
     return this.label;
   }
@@ -210,6 +224,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Plugin> getPlugins() {
     return this._plugins;
   }
@@ -217,6 +232,7 @@ public class FeatureManifestImpl implements FeatureManifest {
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Includes> getIncludes() {
     return this._includes;
   }
@@ -396,6 +412,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return
      */
+    @Override
     public String getDownloadSize() {
       return this._downloadSize;
     }
@@ -406,6 +423,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return
      */
+    @Override
     public boolean isFragment() {
       return this._fragment;
     }
@@ -416,6 +434,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return
      */
+    @Override
     public String getId() {
       return this._id;
     }
@@ -426,6 +445,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return
      */
+    @Override
     public String getInstallSize() {
       return this._installSize;
     }
@@ -436,70 +456,87 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return
      */
+    @Override
     public String getLocale() {
       return this._locale;
     }
 
+    @Override
     public String getMachineArchitecture() {
       return this._machineArchitecture;
     }
 
+    @Override
     public String getOperatingSystem() {
       return this._operatingSystem;
     }
 
+    @Override
     public boolean isUnpack() {
       return this._unpack;
     }
 
+    @Override
     public Version getVersion() {
       return this._version;
     }
 
+    @Override
     public String getWindowingSystem() {
       return this._windowingSystem;
     }
 
+    @Override
     public boolean hasDownloadSize() {
       return this._downloadSize != null;
     }
 
+    @Override
     public boolean hasId() {
       return this._id != null;
     }
 
+    @Override
     public boolean hasInstallSize() {
       return this._installSize != null;
     }
 
+    @Override
     public boolean hasLocale() {
       return this._locale != null;
     }
 
+    @Override
     public boolean hasMachineArchitecture() {
       return this._machineArchitecture != null;
     }
 
+    @Override
     public boolean hasOperatingSystem() {
       return this._operatingSystem != null;
     }
 
+    @Override
     public boolean hasVersion() {
       return this._version != null;
     }
 
+    @Override
     public boolean hasWindowingSystem() {
       return this._windowingSystem != null;
     }
 
+    @Override
     public String getEffectiveVersion() {
       return this._effectiveVersion;
     }
 
+    @Override
     public void setEffectiveVersion(String effectiveVersion) {
       this._effectiveVersion = effectiveVersion;
     }
 
+    @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
       buffer.append("[Plugin:");
@@ -527,6 +564,7 @@ public class FeatureManifestImpl implements FeatureManifest {
       return buffer.toString();
     }
 
+    @Override
     public int hashCode() {
       int PRIME = 31;
       int result = 1;
@@ -543,6 +581,7 @@ public class FeatureManifestImpl implements FeatureManifest {
       return result;
     }
 
+    @Override
     public boolean equals(Object obj) {
       if (this == obj) {
         return true;
@@ -700,6 +739,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the id
      */
+    @Override
     public String getId() {
       return this._id;
     }
@@ -721,6 +761,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the version
      */
+    @Override
     public Version getVersion() {
       return this._version;
     }
@@ -742,6 +783,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the name
      */
+    @Override
     public String getName() {
       return this._name;
     }
@@ -763,6 +805,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the optional
      */
+    @Override
     public boolean isOptional() {
       return this._optional;
     }
@@ -784,6 +827,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the searchLocation
      */
+    @Override
     public String getSearchLocation() {
       return this._searchLocation;
     }
@@ -805,6 +849,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the operatingSystem
      */
+    @Override
     public String getOperatingSystem() {
       return this._operatingSystem;
     }
@@ -826,6 +871,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the machineArchitecture
      */
+    @Override
     public String getMachineArchitecture() {
       return this._machineArchitecture;
     }
@@ -847,6 +893,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the windowingSystem
      */
+    @Override
     public String getWindowingSystem() {
       return this._windowingSystem;
     }
@@ -868,6 +915,7 @@ public class FeatureManifestImpl implements FeatureManifest {
      * 
      * @return the locale
      */
+    @Override
     public String getLocale() {
       return this._locale;
     }

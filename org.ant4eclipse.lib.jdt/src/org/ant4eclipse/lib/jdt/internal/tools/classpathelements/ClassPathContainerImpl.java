@@ -51,6 +51,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return this._name;
   }
@@ -58,6 +59,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getPathEntries() {
     return this._pathEntries;
   }

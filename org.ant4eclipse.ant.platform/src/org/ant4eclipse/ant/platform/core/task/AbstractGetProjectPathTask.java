@@ -97,6 +97,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getDirSeparator() {
     return this._getPathDelegate.getDirSeparator();
   }
@@ -104,6 +105,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public EclipseProject getEclipseProject() throws BuildException {
     return this._projectDelegate.getEclipseProject();
   }
@@ -111,6 +113,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getPathId() {
     return this._getPathDelegate.getPathId();
   }
@@ -118,6 +121,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getPathSeparator() {
     return this._getPathDelegate.getPathSeparator();
   }
@@ -125,6 +129,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getProperty() {
     return this._getPathDelegate.getProperty();
   }
@@ -132,6 +137,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final File[] getResolvedPath() {
     return this._getPathDelegate.getResolvedPath();
   }
@@ -139,6 +145,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Workspace getWorkspace() {
     return this._projectDelegate.getWorkspace();
   }
@@ -146,6 +153,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final File getWorkspaceDirectory() {
     return this._projectDelegate.getWorkspaceDirectory();
   }
@@ -153,6 +161,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isDirSeparatorSet() {
     return this._getPathDelegate.isDirSeparatorSet();
   }
@@ -160,6 +169,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isPathIdSet() {
     return this._getPathDelegate.isPathIdSet();
   }
@@ -167,6 +177,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isPathSeparatorSet() {
     return this._getPathDelegate.isPathSeparatorSet();
   }
@@ -174,6 +185,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isProjectNameSet() {
     return this._projectDelegate.isProjectNameSet();
   }
@@ -181,6 +193,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isPropertySet() {
     return this._getPathDelegate.isPropertySet();
   }
@@ -188,6 +201,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isRelative() {
     return this._getPathDelegate.isRelative();
   }
@@ -195,6 +209,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isWorkspaceDirectorySet() {
     return this._projectDelegate.isWorkspaceDirectorySet();
   }
@@ -202,6 +217,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void populatePathId() {
     this._getPathDelegate.populatePathId();
   }
@@ -209,6 +225,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void populateProperty() {
     this._getPathDelegate.populateProperty();
   }
@@ -216,6 +233,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requirePathIdOrPropertySet() {
     this._getPathDelegate.requirePathIdOrPropertySet();
   }
@@ -223,6 +241,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireWorkspaceAndProjectNameSet() {
     this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
@@ -230,6 +249,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getWorkspaceId() {
     return this._projectDelegate.getWorkspaceId();
   }
@@ -237,6 +257,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isWorkspaceIdSet() {
     return this._projectDelegate.isWorkspaceIdSet();
   }
@@ -244,6 +265,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     this._projectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
@@ -251,6 +273,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setWorkspaceId(String identifier) {
     this._projectDelegate.setWorkspaceId(identifier);
   }
@@ -258,6 +281,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setDirSeparator(String newdirseparator) {
     this._getPathDelegate.setDirSeparator(newdirseparator);
   }
@@ -265,6 +289,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setPathId(String id) {
     this._getPathDelegate.setPathId(id);
   }
@@ -272,6 +297,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setPathSeparator(String newpathseparator) {
     this._getPathDelegate.setPathSeparator(newpathseparator);
   }
@@ -279,6 +305,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setProjectName(String projectName) {
     this._projectDelegate.setProjectName(projectName);
   }
@@ -286,6 +313,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("deprecation")
   @Deprecated
   public void setProject(File projectPath) {
@@ -295,6 +323,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setProperty(String property) {
     this._getPathDelegate.setProperty(property);
   }
@@ -302,6 +331,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setRelative(boolean relative) {
     this._getPathDelegate.setRelative(relative);
   }
@@ -309,6 +339,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setResolvedPath(File[] resolvedPath) {
     this._getPathDelegate.setResolvedPath(resolvedPath);
   }
@@ -317,6 +348,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
    * {@inheritDoc}
    */
   @SuppressWarnings("deprecation")
+            @Override
   public final void setWorkspace(String workspace) {
     this._projectDelegate.setWorkspace(workspace);
   }
@@ -324,6 +356,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
@@ -331,6 +364,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Path convertToPath(File entry) {
     return this._getPathDelegate.convertToPath(entry);
   }
@@ -338,6 +372,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String convertToString(File entry) {
     return this._getPathDelegate.convertToString(entry);
   }
@@ -345,6 +380,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Path convertToPath(File[] entries) {
     return this._getPathDelegate.convertToPath(entries);
   }
@@ -352,6 +388,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String convertToString(File[] entries) {
     return this._getPathDelegate.convertToString(entries);
   }
@@ -359,6 +396,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
     this._projectDelegate.ensureRole(projectRoleClass);
   }

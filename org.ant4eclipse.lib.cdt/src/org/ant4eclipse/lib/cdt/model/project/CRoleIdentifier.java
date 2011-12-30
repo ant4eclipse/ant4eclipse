@@ -32,6 +32,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
    * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.cdt.core.cnature"</code>.
    * </p>
    */
+  @Override
   public boolean isRoleSupported(EclipseProject project) {
     return project.hasNature(CProjectRole.C_NATURE);
   }
@@ -41,6 +42,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
    * Adds a {@link CProjectRole} to the given project and parses the pathes.
    * </p>
    */
+  @Override
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
@@ -52,6 +54,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void postProcess(EclipseProject project) {
   }
 

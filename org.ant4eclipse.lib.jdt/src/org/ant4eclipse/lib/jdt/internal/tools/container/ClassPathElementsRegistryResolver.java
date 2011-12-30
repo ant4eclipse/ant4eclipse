@@ -30,6 +30,7 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolveContainer(ClasspathEntry classpathEntry) {
     return getClassPathElementsRegistry().hasClassPathContainer(classpathEntry.getPath());
   }
@@ -37,6 +38,7 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
     ClassPathContainer container = getClassPathElementsRegistry().getClassPathContainer(classpathEntry.getPath());
     context.addClasspathEntry(new ResolvedClasspathEntry(container.getPathEntries()));

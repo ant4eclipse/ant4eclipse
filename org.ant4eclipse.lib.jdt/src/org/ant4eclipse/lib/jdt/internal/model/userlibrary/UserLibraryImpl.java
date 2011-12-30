@@ -54,6 +54,7 @@ public class UserLibraryImpl implements UserLibrary {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return this._name;
   }
@@ -61,6 +62,7 @@ public class UserLibraryImpl implements UserLibrary {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isSystemLibrary() {
     return this._systemlibrary;
   }
@@ -68,6 +70,7 @@ public class UserLibraryImpl implements UserLibrary {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ArchiveImpl[] getArchives() {
     ArchiveImpl[] result = new ArchiveImpl[this._archives.size()];
     this._archives.toArray(result);
@@ -77,6 +80,7 @@ public class UserLibraryImpl implements UserLibrary {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getArchiveFiles() {
 
     // create new result list

@@ -174,6 +174,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getTargetPlatformId() {
     return this._targetPlatformAwareDelegate.getTargetPlatformId();
   }
@@ -181,6 +182,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isTargetPlatformIdSet() {
     return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
@@ -188,6 +190,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireTargetPlatformIdSet() {
     this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
@@ -195,6 +198,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
@@ -202,6 +206,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlatformConfigurationId() {
     return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
@@ -209,6 +214,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPlatformConfigurationIdSet() {
     return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
@@ -216,6 +222,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPlatformConfigurationId(String platformConfigurationId) {
     this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
@@ -223,6 +230,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) {
     for (Scope scope : Scope.values()) {
       if (scope.name().equalsIgnoreCase(name)) {
@@ -322,6 +330,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
 
         executeMacroInstance(macrodef, new MacroExecutionValuesProvider() {
 
+          @Override
           public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
             // set 'general' properties
@@ -377,6 +386,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
 
       executeMacroInstance(macrodef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // set 'general' properties
@@ -439,6 +449,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     // execute the macro
     executeMacroInstance(macrodef, new MacroExecutionValuesProvider() {
 
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
         // set 'general' properties

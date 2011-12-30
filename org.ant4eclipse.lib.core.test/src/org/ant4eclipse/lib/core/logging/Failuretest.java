@@ -27,6 +27,7 @@ public class Failuretest {
   @Before
   public void configureServiceRegistry() {
     ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
+      @Override
       public void configure(ConfigurationContext context) {
       }
     };

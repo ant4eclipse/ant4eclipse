@@ -73,6 +73,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDebuggingEnabled() {
     return Priority.debug.isEnabled(this._logLevel);
   }
@@ -80,6 +81,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isTraceingEnabled() {
     return Priority.trace.isEnabled(this._logLevel);
   }
@@ -97,6 +99,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setContext(Object context) {
     //
   }
@@ -104,6 +107,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void debug(String msg, Object... args) {
     if (isDebuggingEnabled()) {
       log(Priority.debug, msg, args);
@@ -113,6 +117,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void error(String msg, Object... args) {
     log(Priority.error, msg, args);
   }
@@ -120,6 +125,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void info(String msg, Object... args) {
     log(Priority.info, msg, args);
   }
@@ -127,6 +133,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void trace(String msg, Object... args) {
     if (isTraceingEnabled()) {
       log(Priority.trace, msg, args);
@@ -136,6 +143,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void warn(String msg, Object... args) {
     log(Priority.warn, msg, args);
   }

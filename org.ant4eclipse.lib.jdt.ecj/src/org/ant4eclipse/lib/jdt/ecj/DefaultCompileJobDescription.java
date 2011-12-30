@@ -66,6 +66,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ClassFileLoader getClassFileLoader() {
     return this._classFileLoader;
   }
@@ -73,6 +74,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Map<String, String> getCompilerOptions() {
     return this._compilerOptions;
   }
@@ -80,6 +82,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   /**
    * {@inheritDoc}
    */
+  @Override
   public SourceFile[] getSourceFiles() {
     return this._sourceFiles;
   }

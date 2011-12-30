@@ -26,6 +26,7 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getProjectReferenceTypes() {
     return this._projectReferenceTypes;
   }
@@ -33,6 +34,7 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isProjectReferenceTypesSet() {
     return this._projectReferenceTypes != null;
   }
@@ -40,6 +42,7 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireProjectReferenceTypesSet() {
     if (!isProjectReferenceTypesSet()) {
       // TODO
@@ -50,6 +53,7 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setProjectReferenceTypes(String projectReferenceTypes) {
     //
     if (projectReferenceTypes == null) {

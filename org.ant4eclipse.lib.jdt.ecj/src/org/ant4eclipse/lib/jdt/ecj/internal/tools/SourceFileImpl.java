@@ -89,6 +89,7 @@ public class SourceFileImpl implements SourceFile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getSourceFolder() {
     return this._sourceFolder;
   }
@@ -96,6 +97,7 @@ public class SourceFileImpl implements SourceFile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSourceFileName() {
     return this._sourceFileName;
   }
@@ -103,6 +105,7 @@ public class SourceFileImpl implements SourceFile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getSourceFile() {
     return new File(this._sourceFolder, this._sourceFileName);
   }
@@ -110,6 +113,7 @@ public class SourceFileImpl implements SourceFile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getDestinationFolder() {
     return this._destinationFolder;
   }
@@ -128,6 +132,7 @@ public class SourceFileImpl implements SourceFile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getEncoding() {
     return this._encoding;
   }

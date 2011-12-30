@@ -33,6 +33,7 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canResolve(ClasspathEntry entry) {
     // only suitable for raw class path entries of kind CPE_SOURCE
     return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_SOURCE);
@@ -41,6 +42,7 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
   /**
    * {@inheritDoc}
    */
+  @Override
   public void resolve(ClasspathEntry pathEntry, ClasspathResolverContext context) {
 
     // always exported, there is no need to check for visibility

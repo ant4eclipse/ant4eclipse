@@ -140,6 +140,7 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int compareTo(PythonInterpreter other) {
     return this._name.compareTo(other._name);
   }

@@ -83,6 +83,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return this._properties.get(JavaProfileImpl.PROPERTY_PROFILE_NAME);
   }
@@ -90,6 +91,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isSystemPackage(String packageName) {
     return this._systemPackagesList.contains(packageName);
   }
@@ -97,6 +99,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDelegatedToBootClassLoader(String packageName) {
 
     for (Object element : this._delegatedToBootClassLoaderList) {
@@ -111,6 +114,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<String> getExecutionEnvironmentNames() {
     return Collections.unmodifiableList(this._executionEnvironments);
   }
@@ -118,6 +122,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<String> getSystemPackages() {
     return Collections.unmodifiableList(this._systemPackagesList);
   }
@@ -145,6 +150,7 @@ public class JavaProfileImpl implements JavaProfile {
   /**
    * {@inheritDoc}
    */
+  @Override
   public StringMap getProperties() {
     return this._properties;
   }

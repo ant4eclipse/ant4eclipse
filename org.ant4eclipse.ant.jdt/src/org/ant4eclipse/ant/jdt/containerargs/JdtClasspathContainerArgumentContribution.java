@@ -64,6 +64,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canHandleSubElement(String name, ProjectComponent component) {
     init();
     // TODO? Class? component?
@@ -73,6 +74,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   /**
    * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("deprecation")
   @Deprecated
   public Object createSubElement(String name, ProjectComponent component) throws BuildException {
@@ -84,6 +86,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
    * @see org.ant4eclipse.ant.platform.SubAttributeContribution#canHandleSubAttribute(java.lang.String,
    *      org.apache.tools.ant.ProjectComponent)
    */
+  @Override
   public boolean canHandleSubAttribute(String name, ProjectComponent component) {
     init();
 

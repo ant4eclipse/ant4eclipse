@@ -126,6 +126,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int getEntryKind() {
     return this._entryKind;
   }
@@ -133,6 +134,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPath() {
     return this._path;
   }
@@ -140,6 +142,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getOutputLocation() {
     return this._outputLocation;
   }
@@ -147,6 +150,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasOutputLocation() {
     return this._outputLocation != null;
   }
@@ -154,6 +158,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isExported() {
     return this._exported;
   }
@@ -161,6 +166,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getIncludes() {
     return this._includes;
   }
@@ -168,6 +174,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getExcludes() {
     return this._excludes;
   }

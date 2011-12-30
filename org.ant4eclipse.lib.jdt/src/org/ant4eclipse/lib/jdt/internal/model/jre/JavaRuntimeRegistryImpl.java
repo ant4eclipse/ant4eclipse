@@ -57,6 +57,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault) {
     return registerJavaRuntime(id, location, null, isDefault);
 
@@ -65,6 +66,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaRuntime registerJavaRuntime(String id, File location) {
     return registerJavaRuntime(id, location, null);
 
@@ -76,6 +78,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#registerJavaRuntime(java.lang.String, java.io.File,
    * java.util.List)
    */
+  @Override
   public JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles) {
     return registerJavaRuntime(id, location, jreFiles, false);
   }
@@ -92,6 +95,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDefaultJavaRuntime(String id) {
     Assure.notNull("id", id);
     Assure.assertTrue(hasJavaRuntime(id), "No JavaRuntime with id '" + id + "' registered!");
@@ -102,6 +106,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasJavaRuntime(String path) {
     Assure.nonEmpty("path", path);
 
@@ -122,6 +127,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasJavaProfile(String path) {
     Assure.nonEmpty("path", path);
     return JavaProfileReader.getInstance().hasJavaProfile(path);
@@ -130,6 +136,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaRuntime getJavaRuntime(String path) {
     Assure.nonEmpty("path", path);
 
@@ -157,6 +164,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * 
    * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#getJavaRuntimeForPath(java.lang.String)
    */
+  @Override
   public JavaRuntime getJavaRuntimeForPath(String path) {
     Assure.notNull("path", path);
 
@@ -184,6 +192,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaProfile getJavaProfile(String path) {
     Assure.nonEmpty("path", path);
     return JavaProfileReader.getInstance().getJavaProfile(path);
@@ -192,6 +201,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JavaRuntime getDefaultJavaRuntime() {
 
     // search for default key

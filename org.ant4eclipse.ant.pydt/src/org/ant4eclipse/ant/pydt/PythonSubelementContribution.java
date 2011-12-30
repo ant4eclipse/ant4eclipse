@@ -46,6 +46,7 @@ public class PythonSubelementContribution implements SubElementContribution {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canHandleSubElement(String name, ProjectComponent component) {
     return this.mapping.containsKey(name);
   }
@@ -53,6 +54,7 @@ public class PythonSubelementContribution implements SubElementContribution {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createSubElement(String name, ProjectComponent component) {
     Class<?> clazz = this.mapping.get(name);
     if (clazz != null) {

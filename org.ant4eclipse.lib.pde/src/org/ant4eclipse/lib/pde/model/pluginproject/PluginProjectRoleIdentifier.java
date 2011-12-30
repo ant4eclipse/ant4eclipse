@@ -31,6 +31,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRoleSupported(EclipseProject project) {
     return project.hasNature(PluginProjectRole.PLUGIN_NATURE);
   }
@@ -38,6 +39,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.debug("PluginProjectRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
@@ -62,6 +64,7 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void postProcess(EclipseProject project) {
   }
 

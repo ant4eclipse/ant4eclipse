@@ -59,6 +59,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setPathSeparator(String newpathseparator) {
     Assure.nonEmpty("newpathseparator", newpathseparator);
     this._pathSeparator = newpathseparator;
@@ -67,6 +68,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getPathSeparator() {
     return this._pathSeparator;
   }
@@ -74,6 +76,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isPathSeparatorSet() {
     return this._pathSeparator != null;
   }
@@ -81,6 +84,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setDirSeparator(String newdirseparator) {
     Assure.nonEmpty("newdirseparator", newdirseparator);
     this._dirSeparator = newdirseparator;
@@ -89,6 +93,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getDirSeparator() {
     return this._dirSeparator;
   }
@@ -96,6 +101,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isDirSeparatorSet() {
     return this._dirSeparator != null;
   }
@@ -103,6 +109,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String convertToString(File entry) {
     return convertToString(new File[] { entry });
   }
@@ -110,6 +117,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String convertToString(File[] entries) {
     Assure.notNull("entries", entries);
 
@@ -141,6 +149,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Path convertToPath(File entry) {
     return convertToPath(new File[] { entry });
   }
@@ -148,6 +157,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final Path convertToPath(File[] entries) {
     Assure.notNull("entries", entries);
     Path antPath = new Path(getAntProject());

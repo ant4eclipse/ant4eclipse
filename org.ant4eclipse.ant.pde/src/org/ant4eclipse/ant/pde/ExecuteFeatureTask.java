@@ -101,6 +101,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getTargetPlatformId() {
     return this._targetPlatformAwareDelegate.getTargetPlatformId();
   }
@@ -108,6 +109,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean isTargetPlatformIdSet() {
     return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
@@ -115,6 +117,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void requireTargetPlatformIdSet() {
     this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
@@ -122,6 +125,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public final void setTargetPlatformId(String targetPlatformId) {
     this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
   }
@@ -129,6 +133,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getPlatformConfigurationId() {
     return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
@@ -136,6 +141,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isPlatformConfigurationIdSet() {
     return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
@@ -143,6 +149,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setPlatformConfigurationId(String platformConfigurationId) {
     this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
   }
@@ -210,6 +217,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) {
 
     // create macro definition for SCOPE_ROOT_FEATURE
@@ -327,6 +335,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
       // execute macro
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // TODO: References
@@ -406,6 +415,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     // execute macro
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
         // feature is an eclipse feature project
@@ -492,6 +502,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
       // execute macro definition
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // add the feature id

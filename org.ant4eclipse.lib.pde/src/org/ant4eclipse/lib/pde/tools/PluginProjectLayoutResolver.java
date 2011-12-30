@@ -67,6 +67,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public byte getType() {
     return PROJECT;
   }
@@ -74,6 +75,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Manifest getManifest() {
     return this._manifest;
   }
@@ -81,6 +83,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getLocation() {
     return this._eclipseProject.getFolder();
   }
@@ -88,6 +91,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] resolveBundleClasspathEntries() {
 
     // declare result

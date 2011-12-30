@@ -202,6 +202,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectDescription createEmptyProject(URL script, int projectsettings) {
     return this._projectsuite.createEmptyProject(script, projectsettings);
   }
@@ -209,6 +210,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectDescription createComplexProject(URL script, int projectsettings) {
     return this._projectsuite.createComplexProject(script, projectsettings);
   }
@@ -216,6 +218,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectDescription createCyclicProject(URL script, int projectsettings) {
     return this._projectsuite.createCyclicProject(script, projectsettings);
   }

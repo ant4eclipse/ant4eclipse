@@ -98,6 +98,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSpecifiedName() {
     return this._specifiedName;
   }
@@ -113,6 +114,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getComment() {
     return this._comment;
   }
@@ -128,6 +130,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getFolderName() {
     return this._projectDirectory.getName();
   }
@@ -135,6 +138,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getFolder() {
     return this._projectDirectory;
   }
@@ -142,6 +146,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getFolder(PathStyle pathstyle) {
     Assure.notNull("pathstyle", pathstyle);
     if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
@@ -156,6 +161,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean exists() {
     return this._projectDirectory.isDirectory();
   }
@@ -163,6 +169,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasChild(String path) {
     Assure.notNull("path", path);
     File child = getChild(path);
@@ -172,6 +179,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getChild(String path) {
     return getChild(path, PathStyle.ABSOLUTE);
   }
@@ -179,6 +187,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getChildren(String[] path) {
     return getChildren(path, PathStyle.ABSOLUTE);
   }
@@ -186,6 +195,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getChildren(String[] path, PathStyle relative) {
     Assure.notNull("path", path);
 
@@ -205,6 +215,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasSettingsFile(String settingsFileName) {
     // check if settings folder exists
     if (!hasSettingsFolder()) {
@@ -218,6 +229,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getSettingsFile(String settingsFileName) throws RuntimeException {
     Assure.notNull("settingsFileName", settingsFileName);
     Assure.assertTrue(hasSettingsFolder(), "The project '" + getFolderName() + "' must have a .settings folder");
@@ -239,6 +251,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getChild(String path, PathStyle pathstyle) {
     Assure.notNull("path", path);
 
@@ -326,6 +339,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasNature(String natureName) {
     Assure.notNull("natureName", natureName);
     return hasNature(new ProjectNatureImpl(natureName));
@@ -334,6 +348,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasNature(ProjectNature nature) {
     Assure.notNull("nature", nature);
 
@@ -367,6 +382,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectNature[] getNatures() {
     return this._natures.toArray(new ProjectNature[this._natures.size()]);
   }
@@ -383,6 +399,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getReferencedProjects() {
     return this._referencedProjects.toArray(new String[this._referencedProjects.size()]);
   }
@@ -405,6 +422,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasRole(Class<? extends ProjectRole> projectRoleClass) {
     Assure.notNull("projectRoleClass", projectRoleClass);
     Iterator<ProjectRole> iterator = this._roles.iterator();
@@ -420,6 +438,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends ProjectRole> T getRole(Class<T> projectRoleClass) {
     Assure.notNull("projectRoleClass", projectRoleClass);
@@ -441,6 +460,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public ProjectRole[] getRoles() {
     return this._roles.toArray(new ProjectRole[this._roles.size()]);
   }
@@ -459,6 +479,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasBuildCommand(String commandName) {
     Assure.notNull("commandName", commandName);
     BuildCommand command = new BuildCommandImpl(commandName);
@@ -468,6 +489,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasBuildCommand(BuildCommand command) {
     Assure.notNull("command", command);
     return this._buildCommands.contains(command);
@@ -476,6 +498,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public BuildCommand[] getBuildCommands() {
     return this._buildCommands.toArray(new BuildCommand[0]);
   }
@@ -525,6 +548,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Workspace getWorkspace() {
     return this._workspace;
   }

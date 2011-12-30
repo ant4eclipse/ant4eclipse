@@ -110,6 +110,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) {
 
     if (SCOPE_NAME_SOURCE_DIRECTORY.equalsIgnoreCase(name)) {
@@ -163,7 +164,8 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
       // execute the macro instance
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+       @Override
+       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // get the standard platform values
           getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
@@ -215,6 +217,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
       // execute the macro instance
       executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+        @Override
         public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
           // get the standard platform values
@@ -253,6 +256,7 @@ public class ExecuteLibraryTask extends AbstractExecuteProjectTask {
     // Step 2: Execute the macro instance
     executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
 
+      @Override
       public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
 
         // get the standard platform values

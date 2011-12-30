@@ -85,6 +85,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
   /**
    * {@inheritDoc}
    */
+  @Override
   public BundleDescription getBundleDescription() {
     return this._bundleDescription;
   }
@@ -92,6 +93,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasBuildProperties() {
     return this._buildProperties != null;
   }
@@ -99,6 +101,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
   /**
    * {@inheritDoc}
    */
+  @Override
   public PluginBuildProperties getBuildProperties() {
     return this._buildProperties;
   }
@@ -106,6 +109,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setBuildProperties(PluginBuildProperties buildProperties) {
     this._buildProperties = buildProperties;
   }

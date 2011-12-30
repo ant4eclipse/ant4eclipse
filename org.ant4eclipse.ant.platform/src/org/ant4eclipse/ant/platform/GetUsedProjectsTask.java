@@ -123,6 +123,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementAndAttributesDelegate.createDynamicElement(name);
   }
@@ -130,6 +131,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Object> getSubElements() {
     return this._subElementAndAttributesDelegate.getSubElements();
   }
@@ -137,6 +139,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   /**
    * {@inheritDoc}
    */
+  @Override
   public Map<String, String> getSubAttributes() {
     return this._subElementAndAttributesDelegate.getSubAttributes();
   }
@@ -144,6 +147,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
     this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
   }

@@ -28,6 +28,7 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
   /**
    * {@inheritDoc}
    */
+  @Override
   public final boolean eval() throws BuildException {
     // Validates the Ant4EclipseDataTypes
     AbstractAnt4EclipseDataType.validateAll();

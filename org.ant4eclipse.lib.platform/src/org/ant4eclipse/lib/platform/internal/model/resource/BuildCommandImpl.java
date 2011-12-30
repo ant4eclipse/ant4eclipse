@@ -63,6 +63,7 @@ public class BuildCommandImpl implements BuildCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public final String getName() {
     return this._name;
   }
@@ -70,6 +71,7 @@ public class BuildCommandImpl implements BuildCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getTriggers() {
     return this._triggers;
   }
@@ -77,6 +79,7 @@ public class BuildCommandImpl implements BuildCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasTriggers() {
     return this._triggers != null;
   }

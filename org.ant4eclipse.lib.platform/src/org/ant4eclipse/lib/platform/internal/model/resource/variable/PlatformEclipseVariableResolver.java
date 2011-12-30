@@ -19,6 +19,7 @@ public class PlatformEclipseVariableResolver implements EclipseVariableResolver 
   /**
    * TODO implement
    */
+  @Override
   public void getResolvedVariables(StringMap resolvedVariables, EclipseProject eclipseProject) {
     Assure.notNull("resolvedVariables", resolvedVariables);
     Assure.notNull("eclipseProject", eclipseProject);

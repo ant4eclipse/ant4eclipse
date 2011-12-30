@@ -51,6 +51,7 @@ public class ClassPathVariableImpl implements ClassPathVariable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return this._name;
   }
@@ -58,6 +59,7 @@ public class ClassPathVariableImpl implements ClassPathVariable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File getPath() {
     return this._path;
   }

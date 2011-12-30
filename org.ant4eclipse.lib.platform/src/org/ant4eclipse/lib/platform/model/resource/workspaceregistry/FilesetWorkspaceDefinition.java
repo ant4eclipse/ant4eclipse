@@ -33,6 +33,7 @@ public class FilesetWorkspaceDefinition implements WorkspaceDefinition {
   /**
    * {@inheritDoc}
    */
+  @Override
   public File[] getProjectFolders() {
     return this.directories;
   }

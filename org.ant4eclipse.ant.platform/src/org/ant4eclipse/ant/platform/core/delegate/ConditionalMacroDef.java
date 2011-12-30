@@ -271,6 +271,7 @@ public class ConditionalMacroDef extends MacroDef {
      * @see org.apache.tools.ant.DynamicAttribute#setDynamicAttribute(java.lang.String, java.lang.String)
      * 
      */
+    @Override
     public void setDynamicAttribute(String name, String value) throws BuildException {
       this._attributes.put(name, value);
     }

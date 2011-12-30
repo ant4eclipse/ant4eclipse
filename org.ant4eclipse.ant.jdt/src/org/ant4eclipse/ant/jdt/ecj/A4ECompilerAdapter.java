@@ -108,6 +108,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean execute() throws BuildException {
 
     // Step 1: check preconditions

@@ -36,6 +36,7 @@ public class JavaProfileReader implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void initialize() {
 
     this._javaProfileCache = new HashMap<String, JavaProfile>();
@@ -52,6 +53,7 @@ public class JavaProfileReader implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dispose() {
 
   }
@@ -59,6 +61,7 @@ public class JavaProfileReader implements Lifecycle {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isInitialized() {
     return this._javaProfileCache != null;
   }

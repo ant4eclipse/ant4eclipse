@@ -46,6 +46,7 @@ public class LinkFileFactory {
     }
     A4ELogging.debug("Reading links-directory '%s'", linksDir.getAbsolutePath());
     File[] links = linksDir.listFiles(new FilenameFilter() {
+      @Override
       public boolean accept(File dir, String name) {
         return name.endsWith(".link");
       }

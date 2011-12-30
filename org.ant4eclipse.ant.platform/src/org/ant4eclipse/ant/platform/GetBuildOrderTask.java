@@ -61,6 +61,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setProjectReferenceTypes(String buildOrderReferenceTypes) {
     this._projectReferenceAwareDelegate.setProjectReferenceTypes(buildOrderReferenceTypes);
   }
@@ -68,6 +69,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public String[] getProjectReferenceTypes() {
     return this._projectReferenceAwareDelegate.getProjectReferenceTypes();
   }
@@ -75,6 +77,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isProjectReferenceTypesSet() {
     return this._projectReferenceAwareDelegate.isProjectReferenceTypesSet();
   }
@@ -82,6 +85,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public void requireProjectReferenceTypesSet() {
     this._projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
   }
@@ -89,6 +93,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object createDynamicElement(String name) throws BuildException {
     return this._subElementAndAttributesDelegate.createDynamicElement(name);
   }
@@ -96,6 +101,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<Object> getSubElements() {
     return this._subElementAndAttributesDelegate.getSubElements();
   }
@@ -103,6 +109,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public Map<String, String> getSubAttributes() {
     return this._subElementAndAttributesDelegate.getSubAttributes();
   }
@@ -110,6 +117,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
     this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
   }

@@ -45,6 +45,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public CompileJobResult compile(CompileJobDescription description) {
     Assure.notNull("description", description);
 

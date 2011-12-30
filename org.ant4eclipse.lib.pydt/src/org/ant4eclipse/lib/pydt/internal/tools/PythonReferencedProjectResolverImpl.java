@@ -51,6 +51,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean canHandle(EclipseProject project) {
     return PythonUtilities.isPythonRelatedProject(project);
   }
@@ -58,6 +59,7 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
     this._args = getArgs(additionalElements);
     if (this._args.isExport() && PythonUtilities.isPyDevProject(project)) {
