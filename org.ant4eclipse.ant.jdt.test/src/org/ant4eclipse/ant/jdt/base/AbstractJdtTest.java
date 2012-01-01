@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.jdt.base;
 
 import org.ant4eclipse.platform.test.AbstractWorkspaceBasedBuildFileTest;
 
-import org.ant4eclipse.ant.core.AntConfigurator;
 import org.junit.Assert;
 
 import java.io.File;
@@ -41,7 +40,6 @@ public abstract class AbstractJdtTest extends AbstractWorkspaceBasedBuildFileTes
     super.setupBuildFile(unqualifiedBuildFileName);
     getProject().setProperty("pathSeparator", TEST_PATH_SEPARATOR);
     getProject().setProperty("dirSeparator", TEST_DIR_SEPARATOR);
-    /* KASI */ AntConfigurator.configureAnt4Eclipse(getProject());
   }
 
   protected void assertClasspath(String classpath, File... expectedEntries) {
