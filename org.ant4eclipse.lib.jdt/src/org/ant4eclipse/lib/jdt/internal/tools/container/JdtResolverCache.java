@@ -54,13 +54,4 @@ public class JdtResolverCache {
     return project.getSpecifiedName() + "." + resolveRelative + "." + runtimeClasspath;
   }
 
-  /**
-   * <p>
-   * </p>
-   * 
-   * @return
-   */
-  public static JdtResolverCache getInstance() {
-    return ServiceRegistryAccess.instance().getService(JdtResolverCache.class);
-  }
 }

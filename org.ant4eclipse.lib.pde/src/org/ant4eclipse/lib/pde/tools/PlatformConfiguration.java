@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.pde.tools;
 
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
 import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
@@ -46,7 +47,7 @@ public class PlatformConfiguration {
 
     this._configurationProperties = new HashMap<Object, Object>();
 
-    this._configurationProperties.putAll(JavaProfileReader.getInstance().readDefaultProfile().getProperties());
+    this._configurationProperties.putAll(ServiceRegistryAccess.instance().getService(JavaProfileReader.class).readDefaultProfile().getProperties());
 
     this._configurationProperties.put(Constants.PROP_WS, EclipseEnvironmentInfo.getDefault().getWS());
     this._configurationProperties.put(Constants.PROP_OS, EclipseEnvironmentInfo.getDefault().getOS());
