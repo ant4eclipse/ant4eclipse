@@ -45,6 +45,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
   public WorkspaceRegistryImpl() {
     super();
+    initialize();
   }
 
   /**
@@ -136,8 +137,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
-  @Override
-  public void initialize() {
+  private void initialize() {
     this._registry = new HashMap<String, Workspace>();
     this._projectFactory = new ProjectFactory();
   }

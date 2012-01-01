@@ -48,13 +48,13 @@ public class ClassFileLoaderCache implements Lifecycle {
    */
   public ClassFileLoaderCache() {
     this._classFileLoaderMap = new HashMap<Object, ClassFileLoader>();
+    initialize();
   }
 
   /**
    * {@inheritDoc}
    */
-  @Override
-  public void initialize() {
+  private void initialize() {
   }
 
   /**

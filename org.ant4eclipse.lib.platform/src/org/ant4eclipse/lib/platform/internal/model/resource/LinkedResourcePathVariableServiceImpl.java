@@ -29,6 +29,10 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   /** the variables map */
   private Map<String, String> _variables;
 
+  public LinkedResourcePathVariableServiceImpl() {
+    initialize();
+  }
+  
   /**
    * @see org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService#getLinkedResourcePath(java.lang.String)
    */
@@ -49,8 +53,7 @@ public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePath
   /**
    * @see org.ant4eclipse.lib.core.Lifecycle#initialize()
    */
-  @Override
-  public void initialize() {
+  private void initialize() {
     // initialize the variables map
     this._variables = new HashMap<String, String>();
   }

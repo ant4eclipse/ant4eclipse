@@ -22,7 +22,7 @@ public class ProjectSetFileParserImplTest extends ConfigurableAnt4EclipseTestCas
   @Test
   public void factories() {
     TeamProjectSetFileParserImpl projectSetFileParserImpl = new TeamProjectSetFileParserImpl();
-    projectSetFileParserImpl.initialize();
+    // /* KASI */ projectSetFileParserImpl.initialize();
     TeamProjectSetFactory factoryForProvider = projectSetFileParserImpl
         .getFactoryForProvider("org.eclipse.team.cvs.core.cvsnature");
     Assert.assertTrue(factoryForProvider instanceof CvsTeamProjectSetFactory);

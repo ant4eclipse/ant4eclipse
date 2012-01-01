@@ -144,15 +144,15 @@ public class ServiceRegistry {
 
     while (iterator.hasNext()) {
       Object service = iterator.next();
-
-      if (service instanceof Lifecycle) {
-        try {
-          ((Lifecycle) service).initialize();
-        } catch (Exception e) {
-          throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
-              .getName());
-        }
-      }
+      /* KASI */
+//      if (service instanceof Lifecycle) {
+//        try {
+//          ((Lifecycle) service).initialize();
+//        } catch (Exception e) {
+//          throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
+//              .getName());
+//        }
+//      }
     }
 
     setInitialized(true);

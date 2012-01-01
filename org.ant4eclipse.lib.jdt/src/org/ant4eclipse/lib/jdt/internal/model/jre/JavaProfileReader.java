@@ -32,11 +32,15 @@ public class JavaProfileReader implements Lifecycle {
   /** the java profile cache */
   private Map<String, JavaProfile> _javaProfileCache;
 
+  public JavaProfileReader() {
+    /* KASI */
+    initialize();
+  }
+  
   /**
    * {@inheritDoc}
    */
-  @Override
-  public void initialize() {
+  private void initialize() {
 
     this._javaProfileCache = new HashMap<String, JavaProfile>();
 

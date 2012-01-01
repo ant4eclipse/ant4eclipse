@@ -19,6 +19,6 @@ public interface Lifecycle {
   /**
    * Initializes this service.
    */
-  void initialize();
+//  void initialize();
 
 } /* ENDINTERFACE */
