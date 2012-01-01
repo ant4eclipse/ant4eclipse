@@ -118,7 +118,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
     requireWorkspaceAndProjectNameSet();
     if (this._referencetypes != null) {
       // check if we can use the provided reference type
-      String[] allowed = ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class).getReferenceTypes();
+      String[] allowed = getResolver().getReferenceTypes();
       for (String reftype : this._referencetypes) {
         if (!Utilities.contains(reftype, allowed)) {
           throw new BuildException("The 'referencetypes' value '" + reftype + "' is not supported.");
@@ -133,7 +133,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
   @Override
   protected void doExecute() {
 
-    String[] types = ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class).getReferenceTypes();
+    String[] types = getResolver().getReferenceTypes();
     for (String type : types) {
       System.err.println("type: " + type);
     }
@@ -148,7 +148,7 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
     referenced.add(project);
 
     // load the directly referenced projects
-    referenced.addAll(ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class).resolveReferencedProjects(project, types, getSubElements()));
+    referenced.addAll(getResolver().resolveReferencedProjects(project, types, getSubElements()));
 
     TextBuffer text = new TextBuffer(null, null);
     DependencyEmitter emitter = new DotEmitter(text);
@@ -169,6 +169,19 @@ public class VisualiseDependenciesTask extends AbstractProjectBasedTask implemen
     emitter.end();
     Utilities.writeFile(this._destfile, text.toString(), "UTF-8");
 
+  }
+
+  /**
+   * Returns the currently registered resolver service.
+   * 
+   * @return The currently registered resolver service. Not <code>null</code>.
+   */
+  private ReferencedProjectsResolverService getResolver() {
+    /**
+     * @todo [09-Jul-2009:KASI] The inner convenience classes located in service interfaces should be removed. I'm just
+     *       using this shortcut here in order to support refactoring in future.
+     */
+    return ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class);
   }
 
   /*

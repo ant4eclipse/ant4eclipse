@@ -13,9 +13,11 @@ package org.ant4eclipse.lib.core.service;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +56,9 @@ public class ServiceRegistry {
 
   /** list that contains the ordering of the services **/
   private List<Object>        _serviceOrdering;
+
+  /** indicates whether the registry instance is initialized **/
+  private boolean             _isInitialized = false;
 
   /**
    * <p>
@@ -119,6 +124,58 @@ public class ServiceRegistry {
 
   /**
    * <p>
+   * </p>
+   * 
+   * @return
+   */
+  private final boolean isInitialized() {
+    return this._isInitialized;
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  void initialize() {
+
+    Assure.assertTrue(!isInitialized(), "Service registry already has been initialized!");
+
+    Iterator<Object> iterator = this._serviceOrdering.iterator();
+
+    while (iterator.hasNext()) {
+      Object service = iterator.next();
+
+      if (service instanceof Lifecycle) {
+        try {
+          ((Lifecycle) service).initialize();
+        } catch (Exception e) {
+          throw new Ant4EclipseException(e, CoreExceptionCode.SERVICE_COULD_NOT_BE_INITIALIZED, service.getClass()
+              .getName());
+        }
+      }
+    }
+
+    setInitialized(true);
+  }
+
+  /**
+   * <p>
+   * </p>
+   */
+  void dispose() {
+    Assure.assertTrue(isInitialized(), "Service registry is not initialized.");
+    setInitialized(false);
+  }
+
+  /**
+   * @param b
+   */
+  private void setInitialized(boolean b) {
+    this._isInitialized = b;
+  }
+
+  /**
+   * <p>
    * Creates an instance of type {@link ServiceRegistry}.
    * </p>
    * 
@@ -143,6 +200,7 @@ public class ServiceRegistry {
      */
     @Override
     public void registerService(Object service, String serviceIdentifier) {
+      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       Assure.notNull("service", service);
       Assure.notNull("serviceIdentifier", serviceIdentifier);
 
@@ -159,6 +217,7 @@ public class ServiceRegistry {
      */
     @Override
     public void registerService(Object service, String[] serviceIdentifier) {
+      Assure.assertTrue(!ServiceRegistry.this._isInitialized, "ServiceRegistry.this._isInitialized!");
       Assure.notNull("service", service);
       Assure.notNull("serviceIdentifier", serviceIdentifier);
       Assure.assertTrue(serviceIdentifier.length > 0, "serviceIdentifier.length = 0!");

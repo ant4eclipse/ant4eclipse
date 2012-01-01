@@ -21,7 +21,6 @@ import java.util.Map;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -117,7 +116,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // return if a java profile exists
-    JavaProfile javaProfile = ServiceRegistryAccess.instance().getService(JavaProfileReader.class).getJavaProfile(path);
+    JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
     if (javaProfile != null && getJavaRuntime(javaProfile) != null) {
       return true;
     }
@@ -131,7 +130,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   @Override
   public boolean hasJavaProfile(String path) {
     Assure.nonEmpty("path", path);
-    return ServiceRegistryAccess.instance().getService(JavaProfileReader.class).hasJavaProfile(path);
+    return JavaProfileReader.getInstance().hasJavaProfile(path);
   }
 
   /**
@@ -147,7 +146,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // return if a java profile exists
-    JavaProfile javaProfile = ServiceRegistryAccess.instance().getService(JavaProfileReader.class).getJavaProfile(path);
+    JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
     if (javaProfile != null) {
 
       if (((JavaProfileImpl) javaProfile).getAssociatedJavaRuntimeId() != null) {
@@ -196,7 +195,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   @Override
   public JavaProfile getJavaProfile(String path) {
     Assure.nonEmpty("path", path);
-    return ServiceRegistryAccess.instance().getService(JavaProfileReader.class).getJavaProfile(path);
+    return JavaProfileReader.getInstance().getJavaProfile(path);
   }
 
   /**

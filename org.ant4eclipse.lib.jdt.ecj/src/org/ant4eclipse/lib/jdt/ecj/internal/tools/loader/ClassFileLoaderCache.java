@@ -1,11 +1,13 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
 
 /**
  * <p>
@@ -14,7 +16,7 @@ import java.util.Map;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann
  */
-public class ClassFileLoaderCache {
+public class ClassFileLoaderCache implements Lifecycle {
 
   /**
    * System-Property that enables the ClassFileLoaderCache
@@ -46,6 +48,13 @@ public class ClassFileLoaderCache {
    */
   public ClassFileLoaderCache() {
     this._classFileLoaderMap = new HashMap<Object, ClassFileLoader>();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void initialize() {
   }
 
   /**
@@ -128,4 +137,7 @@ public class ClassFileLoaderCache {
     }
   }
 
+  public static ClassFileLoaderCache getInstance() {
+    return ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class);
+  }
 }

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClassFileLoaderCache;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
@@ -73,13 +72,13 @@ public class ClassFileLoaderFactory {
     ClassFileLoaderCacheKey cacheKey = new ClassFileLoaderCacheKey(source, type, classpathEntries, sourcepathEntries);
 
     // Try to get already initialized ClassFileLoader from cache
-    ClassFileLoader classFileLoader = ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class).getClassFileLoader(cacheKey);
+    ClassFileLoader classFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(cacheKey);
     if (classFileLoader == null) {
       // Create new ClassFileLoader
       classFileLoader = new ClasspathClassFileLoaderImpl(source, type, classpathEntries, sourcepathEntries);
 
       // add ClassFileLoader to Cache
-      ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class).storeClassFileLoader(cacheKey, classFileLoader);
+      ClassFileLoaderCache.getInstance().storeClassFileLoader(cacheKey, classFileLoader);
     }
 
     // Return the ClassFileLoader
@@ -193,13 +192,13 @@ public class ClassFileLoaderFactory {
   public static ClassFileLoader createClasspathClassFileLoader(File entry, byte type) {
     String cacheKey = String.valueOf(entry) + "/" + type;
     // Try to get ClassFileLoader from cache
-    ClassFileLoader classFileLoader = ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class).getClassFileLoader(cacheKey);
+    ClassFileLoader classFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(cacheKey);
     if (classFileLoader == null) {
       // Create new ClassFileLoader
       classFileLoader = new ClasspathClassFileLoaderImpl(entry, type);
 
       // add to cache
-      ServiceRegistryAccess.instance().getService(ClassFileLoaderCache.class).storeClassFileLoader(cacheKey, classFileLoader);
+      ClassFileLoaderCache.getInstance().storeClassFileLoader(cacheKey, classFileLoader);
     }
 
     return classFileLoader;

@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -39,7 +40,7 @@ import java.util.Map;
  * @see #parseTeamProjectSet(File)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
+public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, Lifecycle {
 
   /**
    * The prefix for properties describing a team provider.
@@ -55,14 +56,11 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
    */
   private Map<String, TeamProjectSetFactory> _factories;
 
-  public TeamProjectSetFileParserImpl() {
-    initialize();
-  }
-  
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> teamProviders = config.getAllProperties(TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();

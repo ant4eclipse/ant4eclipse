@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.pydt.internal.model.pyre;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -38,7 +39,7 @@ import java.util.Map;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
+public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecycle {
 
   private static final String        PROP_INTERPRETER         = "interpreter.";
 
@@ -68,10 +69,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
   private PythonInterpreter[]        _interpreters            = null;
 
-  public PythonRuntimeRegistryImpl() {
-    initialize();
-  }
-  
   /**
    * Tries to determine the location of a python interpreter.
    * 
@@ -285,7 +282,8 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
 
     // export the python lister script, so it can be executed in order to access the pythonpath
     this._pythonlister = Utilities.exportResource("/org/ant4eclipse/lib/pydt/lister.py");
