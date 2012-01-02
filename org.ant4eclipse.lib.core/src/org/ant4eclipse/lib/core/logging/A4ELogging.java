@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.A4ECore;
 
 /**
  * <p>
@@ -137,7 +137,7 @@ public class A4ELogging {
    * @return An instance of a logger currently provided by the registry. Not <code>null</code>.
    */
   private static final Ant4EclipseLogger getLogger() {
-    return ServiceRegistryAccess.instance().getService(Ant4EclipseLogger.class);
+    return A4ECore.instance().getRequiredService( Ant4EclipseLogger.class );
   }
 
 } /* ENDCLASS */

@@ -17,6 +17,8 @@ import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.service.DefaultServiceRegistryConfiguration;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.apache.tools.ant.BuildEvent;
+import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.PropertyHelper;
 
@@ -56,7 +58,8 @@ public class AntConfigurator {
       } else {
 
         // this project doesn't use a4e yet, so we need to set it up
-        Ant4EclipseLogger logger = new AntBasedLogger(project);
+        Ant4EclipseLogger logger = new AntBasedLogger();
+        project.addBuildListener(new ProjectBuildListener(logger));
         Ant4EclipseConfiguration configuration = new Ant4EclipseConfigurationImpl();
         ServiceRegistryAccess.configure(new DefaultServiceRegistryConfiguration(logger, configuration));
 
@@ -75,5 +78,70 @@ public class AntConfigurator {
 
     }
   }
+  
+  private static class ProjectBuildListener implements BuildListener {
+    
+    private Ant4EclipseLogger   logger;
+    
+    public ProjectBuildListener( Ant4EclipseLogger antlogger ) {
+      logger = antlogger;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void taskStarted( BuildEvent event ) {
+      logger.setContext( event.getTask() );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void taskFinished( BuildEvent event ) {
+      logger.setContext( null );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void targetStarted( BuildEvent event ) {
+      logger.setContext( event.getTarget() );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void targetFinished( BuildEvent event ) {
+      logger.setContext( null );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void messageLogged( BuildEvent event ) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void buildStarted( BuildEvent event ) {
+      logger.setContext( event.getProject() );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void buildFinished( BuildEvent event ) {
+      logger.setContext( null );
+    }
+
+  } /* ENDCLASS */
 
 } /* ENDCLASS */

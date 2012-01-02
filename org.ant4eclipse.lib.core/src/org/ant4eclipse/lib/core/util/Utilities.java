@@ -600,7 +600,52 @@ public class Utilities {
     }
     return buffer.toString();
   }
+  
+  /**
+   * Returns a list of all classes for all supplied objects.
+   * 
+   * @param objects   The objects used to get the class types for. Maybe <code>null</code>.
+   * 
+   * @return   A list of all classes for all supplied objects. Not <code>null</code>.
+   */
+  public static final Class<?>[] getClasses( Object ... objects ) {
+    if( objects != null ) {
+      Class<?>[] result = new Class<?>[ objects.length ];
+      for( int i = 0; i < objects.length; i++ ) {
+        result[i] = objects[i].getClass();
+      }
+      return result;
+    } else {
+      return new Class<?>[0];
+    }
+  }
 
+  /**
+   * Delivers a <code>String</code> representation of the supplied list of classes.
+   * 
+   * @param delimiter     The delimiter to be used. If <code>null</code> comma will be used.
+   * @param simplename    <code>true</code> <=> Use the class simplename rather than the fully
+   *                      qualified name.
+   * @param classes       The list of classes which shall be turned into a textual presentation.
+   *                      Mabye <code>null</code>.
+   *                      
+   * @return   A textual presentation of the supplied classes. Not <code>null</code>.
+   */
+  public static final String toString( String delimiter, boolean simplename, Class<?> ... classes ) {
+    if( delimiter == null ) {
+      delimiter = ",";
+    }
+    StringBuffer buffer = new StringBuffer();
+    if( (classes != null) && (classes.length > 0) ) {
+      buffer.append( simplename ? classes[0].getSimpleName() : classes[0].getName() );
+      for( int i = 1; i < classes.length; i++ ) {
+        buffer.append( delimiter );
+        buffer.append( simplename ? classes[i].getSimpleName() : classes[i].getName() );
+      }
+    }
+    return buffer.toString();
+  }
+  
   /**
    * Generates a textual representation of the supplied Property map.
    * 
