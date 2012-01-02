@@ -158,12 +158,11 @@ public class ClasspathEntryResolverExecutor {
     this._resolverContext = classpathResolverContext;
 
     // Initialize Entry Resolvers
-    /* KASI */
-//    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
-//      if (entryResolver instanceof Lifecycle) {
-//        ((Lifecycle) entryResolver).initialize();
-//      }
-//    }
+    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
+      if (entryResolver instanceof Lifecycle) {
+        ((Lifecycle) entryResolver).initialize();
+      }
+    }
 
     // resolve the class path
     resolveReferencedProject(rootProject);

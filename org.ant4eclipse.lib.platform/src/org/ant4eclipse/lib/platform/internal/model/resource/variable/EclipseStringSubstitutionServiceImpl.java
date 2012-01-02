@@ -49,7 +49,8 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> entries = config.getAllProperties(PREFIX_VARIABLE_RESOLVER);
 

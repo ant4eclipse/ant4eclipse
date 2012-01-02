@@ -48,4 +48,11 @@ public class PythonToolsImpl implements PythonTools, Lifecycle {
     return this._epydoc;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void initialize() {
+  }
+
 } /* ENDCLASS */

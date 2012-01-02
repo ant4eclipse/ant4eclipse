@@ -69,11 +69,6 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
 
   private PythonInterpreter[]        _interpreters            = null;
 
-  public PythonRuntimeRegistryImpl() {
-    /* KASI */
-    initialize();
-  }
-  
   /**
    * Tries to determine the location of a python interpreter.
    * 
@@ -287,7 +282,8 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
 
     // export the python lister script, so it can be executed in order to access the pythonpath
     this._pythonlister = Utilities.exportResource("/org/ant4eclipse/lib/pydt/lister.py");

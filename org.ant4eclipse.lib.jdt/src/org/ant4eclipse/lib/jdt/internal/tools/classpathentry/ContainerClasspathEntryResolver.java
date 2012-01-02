@@ -119,7 +119,8 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
     this._containerresolver = new LinkedList<ClasspathContainerResolver>();
 
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
@@ -145,14 +146,13 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     this._containerresolver = containerResolvers;
 
     // initialize all registered container resolvers
-    /* KASI */
-//    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
-//    while (iterator.hasNext()) {
-//      ClasspathContainerResolver classpathContainerResolver = iterator.next();
-//      if (classpathContainerResolver instanceof Lifecycle) {
-//        ((Lifecycle) classpathContainerResolver).initialize();
-//      }
-//    }
+    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
+    while (iterator.hasNext()) {
+      ClasspathContainerResolver classpathContainerResolver = iterator.next();
+      if (classpathContainerResolver instanceof Lifecycle) {
+        ((Lifecycle) classpathContainerResolver).initialize();
+      }
+    }
   }
 
 }

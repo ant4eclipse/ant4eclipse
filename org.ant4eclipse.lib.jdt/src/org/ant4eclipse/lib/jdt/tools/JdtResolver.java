@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.tools;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathEntryResolverExecutor;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathResolverContextImpl;
 import org.ant4eclipse.lib.jdt.internal.tools.ResolvedClasspathImpl;
@@ -67,7 +66,7 @@ public class JdtResolver {
       String cacheKey = JdtResolverCache.getCacheKey(project, resolveRelative, isRuntimeClasspath);
 
       // try to get ResolvedClasspath from the cache
-      ResolvedClasspath resolvedClasspath = ServiceRegistryAccess.instance().getService(JdtResolverCache.class).getResolvedClasspath(cacheKey);
+      ResolvedClasspath resolvedClasspath = JdtResolverCache.getInstance().getResolvedClasspath(cacheKey);
 
       if (resolvedClasspath == null) {
 
@@ -76,7 +75,7 @@ public class JdtResolver {
             classpathContainerArguments);
 
         // add the resolved classpath to the cache
-        ServiceRegistryAccess.instance().getService(JdtResolverCache.class).storeResolvedClasspath(cacheKey, resolvedClasspath);
+        JdtResolverCache.getInstance().storeResolvedClasspath(cacheKey, resolvedClasspath);
       }
 
       // return the classpath

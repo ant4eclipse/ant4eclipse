@@ -39,14 +39,11 @@ public class NatureNicknameRegistry implements Lifecycle {
   /** - */
   private boolean                   _initialized           = false;
 
-  public NatureNicknameRegistry() {
-    initialize();
-  }
-  
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
     if (this._initialized) {
       return;
     }

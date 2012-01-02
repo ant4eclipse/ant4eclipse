@@ -56,15 +56,11 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
    */
   private Map<String, TeamProjectSetFactory> _factories;
 
-  public TeamProjectSetFileParserImpl() {
-    /* KASI */
-    initialize();
-  }
-  
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> teamProviders = config.getAllProperties(TEAMPROVIDER_PREFIX);
     Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();

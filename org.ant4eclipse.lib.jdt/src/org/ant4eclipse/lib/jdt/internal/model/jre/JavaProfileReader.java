@@ -13,6 +13,7 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
@@ -32,15 +33,11 @@ public class JavaProfileReader implements Lifecycle {
   /** the java profile cache */
   private Map<String, JavaProfile> _javaProfileCache;
 
-  public JavaProfileReader() {
-    /* KASI */
-    initialize();
-  }
-  
   /**
    * {@inheritDoc}
    */
-  private void initialize() {
+  @Override
+  public void initialize() {
 
     this._javaProfileCache = new HashMap<String, JavaProfile>();
 
@@ -155,4 +152,7 @@ public class JavaProfileReader implements Lifecycle {
   // return getVmProfile(properties);
   // }
 
+  public static JavaProfileReader getInstance() {
+    return ServiceRegistryAccess.instance().getService(JavaProfileReader.class);
+  }
 }

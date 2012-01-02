@@ -140,9 +140,18 @@ public class ServiceRegistryTest {
   /**
    */
   public class DummyService implements Lifecycle {
+
+    @Override
+    public void initialize() {
+    }
+
   }
 
   public class NonInitialitationDummyService extends DummyService {
+    @Override
+    public void initialize() {
+      throw new RuntimeException();
+    }
   }
 
   public class NonDisposeDummyService extends DummyService {
