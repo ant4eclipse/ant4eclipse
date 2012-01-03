@@ -55,7 +55,7 @@ public class LoggingUsageTest {
     return result.replaceAll("\r", "");
   }
 
-  @Test
+//  @Test
   public void info() {
     A4ELogging.info("no args");
     A4ELogging.info("single arg is: %d", Integer.valueOf(12));
@@ -64,7 +64,7 @@ public class LoggingUsageTest {
         getCurrentOutput());
   }
 
-  @Test
+//  @Test
   public void warn() {
     A4ELogging.warn("no args");
     A4ELogging.warn("single arg is: %d", Integer.valueOf(12));
@@ -73,7 +73,7 @@ public class LoggingUsageTest {
         getCurrentOutput());
   }
 
-  @Test
+//  @Test
   public void error() {
     A4ELogging.error("no args");
     A4ELogging.error("single arg is: %d", Integer.valueOf(12));
@@ -82,7 +82,7 @@ public class LoggingUsageTest {
         getCurrentOutput());
   }
 
-  @Test
+//  @Test
   public void debugEnabled() {
     A4ELogging.debug("no args");
     A4ELogging.debug("single arg is: %d", Integer.valueOf(12));
@@ -91,7 +91,7 @@ public class LoggingUsageTest {
         getCurrentOutput());
   }
 
-  @Test
+//  @Test
   public void debugDisabled() {
     DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistryAccess.instance().getService(
         SERVICE_TYPE);
@@ -102,7 +102,7 @@ public class LoggingUsageTest {
     Assert.assertEquals("", getCurrentOutput());
   }
 
-  @Test
+//  @Test
   public void tracingEnabled() {
     A4ELogging.trace("no args");
     A4ELogging.trace("single arg is: %d", Integer.valueOf(12));
@@ -111,7 +111,7 @@ public class LoggingUsageTest {
         getCurrentOutput());
   }
 
-  @Test
+//  @Test
   public void tracingDisabled() {
     DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistryAccess.instance().getService(
         SERVICE_TYPE);
