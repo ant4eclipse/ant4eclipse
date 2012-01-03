@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.core;
 
 import org.ant4eclipse.lib.core.data.VersionTest;
 import org.ant4eclipse.lib.core.dependencygraph.DependencyGraphTest;
-import org.ant4eclipse.lib.core.logging.LoggingUsageTest;
 import org.ant4eclipse.lib.core.nls.NLSTest;
 import org.ant4eclipse.lib.core.service.PropertiesBasedServiceRegistryConfigurationTest;
 import org.ant4eclipse.lib.core.service.ServiceRegistryTest;
