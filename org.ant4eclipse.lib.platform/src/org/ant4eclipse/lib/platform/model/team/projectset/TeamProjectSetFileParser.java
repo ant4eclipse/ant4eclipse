@@ -11,10 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 import java.io.File;
 
-public interface TeamProjectSetFileParser {
+public interface TeamProjectSetFileParser extends A4EService {
 
   TeamProjectSet parseTeamProjectSetFile(File psfFile);
 
-}
+} /* ENDCLASS */

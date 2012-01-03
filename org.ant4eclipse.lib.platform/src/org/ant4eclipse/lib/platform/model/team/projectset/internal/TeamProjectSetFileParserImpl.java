@@ -105,4 +105,12 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
     return this.factorymap.get(providerId);
   }
 
-}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+} /* ENDCLASS */
