@@ -44,7 +44,8 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   private Workspace              _current;
 
   public WorkspaceRegistryImpl() {
-    super();
+    this._registry = new HashMap<String, Workspace>();
+    this._projectFactory = new ProjectFactory();
   }
 
   /**
@@ -133,13 +134,4 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     return workspace;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
-    this._registry = new HashMap<String, Workspace>();
-    this._projectFactory = new ProjectFactory();
-  }
-
-}
+} /* ENDCLASS */

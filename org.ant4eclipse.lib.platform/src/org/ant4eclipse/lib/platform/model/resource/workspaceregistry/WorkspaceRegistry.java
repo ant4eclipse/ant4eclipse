@@ -20,7 +20,7 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
  * The {@link WorkspaceRegistry} is used to maintain workspaces.
  * </p>
  */
-public interface WorkspaceRegistry extends Lifecycle {
+public interface WorkspaceRegistry {
 
   /**
    * <p>
