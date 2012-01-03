@@ -23,6 +23,7 @@ import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFileParser;
 
 import java.io.File;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
    * implementations.
    */
   public TeamProjectSetFileParserImpl() {
+    factorymap = new Hashtable<String, TeamProjectSetFactory>();
     List<TeamProjectSetFactory> factories = A4ECore.instance().getServices( TeamProjectSetFactory.class );
     for( TeamProjectSetFactory factory : factories ) {
       String[] providerids = factory.getProviderIDs();
