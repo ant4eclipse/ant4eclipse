@@ -116,18 +116,22 @@ public class AntBasedLogger implements Ant4EclipseLogger {
   private void log(int msgLevel, String msg, Object... args) {
     // retrieve the context
     Object ctx = this._context.get();
-    if (ctx instanceof Task) {
+    if( ctx instanceof Task ) {
       // log with task context
       Task task = (Task) ctx;
       task.getProject().log(task, String.format(msg, args), msgLevel);
-    } else if (ctx instanceof Target) {
+    } else if( ctx instanceof Target ) {
       // log with target context
       Target target = (Target) ctx;
       target.getProject().log(target, String.format(msg, args), msgLevel);
-    } else {
+    } else if( ctx instanceof Project ) {
       // log without context
       Project project = (Project) ctx;
       project.log(String.format(msg, args), msgLevel);
+    } else {
+      // temporary solution as it's currently possible to "run" initializations before
+      // the execution of a task actually takes place
+      System.out.println(String.format(msg, args));
     }
   }
 
