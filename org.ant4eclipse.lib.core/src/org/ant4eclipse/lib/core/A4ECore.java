@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.lib.core.util.Utilities;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +27,28 @@ public class A4ECore {
 
   private static final A4ECore INSTANCE = new A4ECore();
 
+  private static final Comparator<A4EService> COMPARATOR = new Comparator<A4EService>() {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int compare(A4EService s1, A4EService s2) {
+      Integer o1 = s1.getPriority();
+      Integer o2 = s2.getPriority();
+      if( (o1 != null) && (o2 != null) ) {
+        return o2.compareTo(o1);
+      } else if( (o1 == null) && (o2 == null) ) {
+        return 0;
+      } else if( o1 != null ) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+    
+  };
+  
   private Map<Class<?>,List<?>>   servicecache;
   
   /**
@@ -43,18 +65,13 @@ public class A4ECore {
    * 
    * @return   An instance of the supplied type. Not <code>null</code>.
    */
-  public <T> T getRequiredService( Class<T> servicetype ) {
+  public <T extends A4EService> T getRequiredService( Class<T> servicetype ) {
     List<T> services = loadServices( servicetype );
     if( services.isEmpty() ) {
       /* KASI */
       throw new RuntimeException( String.format( "Missing required service: '%s'", servicetype.getName() ) );
     }
-    if( services.size() != 1 ) {
-      /* KASI */
-      Class<?>[] clazzes = Utilities.getClasses( services.toArray() );
-      throw new RuntimeException( String.format( "Too many services for type '%s' (%s)", servicetype.getName(), Utilities.toString( null, false, clazzes ) ) );
-    }
-    return null;
+    return services.get(0);
   }
 
   /**
@@ -64,13 +81,8 @@ public class A4ECore {
    * 
    * @return   An instance of the supplied type. Not <code>null</code>.
    */
-  public <T> T getOptionalService( Class<T> servicetype ) {
+  public <T extends A4EService> T getOptionalService( Class<T> servicetype ) {
     List<T> services = loadServices( servicetype );
-    if( services.size() > 1 ) {
-      /* KASI */
-      Class<?>[] clazzes = Utilities.getClasses( services.toArray() );
-      throw new RuntimeException( String.format( "Too many services for type '%s' (%s)", servicetype.getName(), Utilities.toString( null, false, clazzes ) ) );
-    }
     if( services.isEmpty() ) {
       return null;
     } else {
@@ -85,7 +97,7 @@ public class A4ECore {
    * 
    * @return   A list of service implementations for the supplied service type. Not <code>null</code>.
    */
-  public <T> List<T> getServices( Class<T> servicetype ) {
+  public <T extends A4EService> List<T> getServices( Class<T> servicetype ) {
     return loadServices( servicetype );
   }
 
@@ -96,7 +108,7 @@ public class A4ECore {
    * 
    * @return   A list of  service implementations associated with the supplied type. Not <code>null</code>.
    */
-  private <T> List<T> loadServices( Class<T> clazz ) {
+  private <T extends A4EService> List<T> loadServices( Class<T> clazz ) {
     List<T> result = (List<T>) servicecache.get( clazz );
     if( result == null ) {
       result = new ArrayList<T>();
@@ -104,6 +116,7 @@ public class A4ECore {
       while( iterator.hasNext() ) {
         result.add( iterator.next() );
       }
+      Collections.sort( result, COMPARATOR );
       servicecache.put( clazz, result );
     }
     return result;

@@ -35,6 +35,14 @@ public class AntBasedLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   @Override
+  public Integer getPriority() {
+    return Integer.valueOf(-1);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public void setContext(Object context) {
     this._context.set(context);
   }

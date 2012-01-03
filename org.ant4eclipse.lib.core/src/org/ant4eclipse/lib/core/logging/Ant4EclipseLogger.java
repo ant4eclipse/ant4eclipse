@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 /**
  * <p>
  * API which provides a project wide logging mechanism.
@@ -21,7 +23,7 @@ package org.ant4eclipse.lib.core.logging;
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public interface Ant4EclipseLogger {
+public interface Ant4EclipseLogger extends A4EService {
 
   /**
    * Applies a contextual object which might provide additional information to some output.
