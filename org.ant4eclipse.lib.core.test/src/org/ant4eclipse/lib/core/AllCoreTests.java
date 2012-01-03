@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ AssureTest.class, ClassNameTest.class, DefaultConfiguratorTest.class, VersionTest.class,
-    DependencyGraphTest.class, LoggingUsageTest.class, NLSTest.class,
+    DependencyGraphTest.class, NLSTest.class,
     PropertiesBasedServiceRegistryConfigurationTest.class, ServiceRegistryTest.class, ManifestHelperTest.class,
     UtilitiesTest.class, XQueryHandlerTest.class })
 public class AllCoreTests {
