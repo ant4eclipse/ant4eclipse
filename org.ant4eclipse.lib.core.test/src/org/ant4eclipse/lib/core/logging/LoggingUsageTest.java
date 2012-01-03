@@ -11,9 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
-import org.ant4eclipse.lib.core.service.ConfigurationContext;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.service.ServiceRegistryConfiguration;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,18 +25,23 @@ public class LoggingUsageTest {
   private static final Class<?> SERVICE_TYPE = Ant4EclipseLogger.class;
 
   private ByteArrayOutputStream byteout      = new ByteArrayOutputStream();
-
+  private PrintStream           oldout;
+  private PrintStream           olderr;
+  
   @Before
   public void configureServiceRegistry() {
     this.byteout.reset();
-    ServiceRegistryConfiguration configuration = new ServiceRegistryConfiguration() {
-      @Override
-      public void configure(ConfigurationContext context) {
-        PrintStream printer = new PrintStream(LoggingUsageTest.this.byteout);
-        context.registerService(new DefaultAnt4EclipseLogger(printer), SERVICE_TYPE.getName());
-      }
-    };
-    ServiceRegistryAccess.configure(configuration);
+    oldout              = System.out;
+    olderr              = System.err;
+    PrintStream printer = new PrintStream(LoggingUsageTest.this.byteout);
+    System.setOut( printer );
+    System.setErr( printer );
+  }
+
+  @After
+  public void disposeServiceRegistry() {
+    System.setOut( oldout );
+    System.setErr( olderr );
   }
 
   /**
@@ -50,11 +53,6 @@ public class LoggingUsageTest {
   private String getCurrentOutput() {
     String result = new String(this.byteout.toByteArray());
     return result.replaceAll("\r", "");
-  }
-
-  @After
-  public void disposeServiceRegistry() {
-    ServiceRegistryAccess.reset();
   }
 
   @Test

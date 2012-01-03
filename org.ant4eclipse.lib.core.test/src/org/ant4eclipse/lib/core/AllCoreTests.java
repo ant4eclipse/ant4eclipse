@@ -13,7 +13,6 @@ package org.ant4eclipse.lib.core;
 
 import org.ant4eclipse.lib.core.data.VersionTest;
 import org.ant4eclipse.lib.core.dependencygraph.DependencyGraphTest;
-import org.ant4eclipse.lib.core.logging.Failuretest;
 import org.ant4eclipse.lib.core.logging.LoggingUsageTest;
 import org.ant4eclipse.lib.core.nls.NLSTest;
 import org.ant4eclipse.lib.core.service.PropertiesBasedServiceRegistryConfigurationTest;
@@ -26,7 +25,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ AssureTest.class, ClassNameTest.class, DefaultConfiguratorTest.class, VersionTest.class,
-    DependencyGraphTest.class, Failuretest.class, LoggingUsageTest.class, NLSTest.class,
+    DependencyGraphTest.class, LoggingUsageTest.class, NLSTest.class,
     PropertiesBasedServiceRegistryConfigurationTest.class, ServiceRegistryTest.class, ManifestHelperTest.class,
     UtilitiesTest.class, XQueryHandlerTest.class })
 public class AllCoreTests {
