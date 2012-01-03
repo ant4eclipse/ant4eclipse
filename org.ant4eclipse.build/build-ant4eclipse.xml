@@ -45,6 +45,90 @@
   <!-- MACRO DEFINITIONS                                                                       -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
+  
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Checks whether an entry is part of a list or not.                                       -->
+  <!--                                                                                         -->
+  <!-- @param candidate      The entry that has to be tested.                                  -->
+  <!-- @param list           The list which contains the allowed values.                       -->
+  <!-- @param property       The property which will be set to the value 'true' or 'false'     -->
+  <!--                       to inform about the result.                                       -->
+  <!-- @param delimiter      The delimiter that is used within the list. (Default: ',')        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="is-in-list">
+    <attribute name="candidate"/>
+    <attribute name="list"/>
+    <attribute name="property"/>
+    <attribute name="delimiter" default=","/>
+    <sequential>
+      <var name="@{property}" value="false"/>
+      <for param="current" list="@{list}" delimiter="@{delimiter}" trim="yes">
+        <sequential>
+          <if>
+            <equals arg1="@{current}" arg2="@{candidate}"/>
+            <then>
+              <var name="@{property}" value="true"/>
+            </then>
+          </if>
+        </sequential>
+      </for>
+    </sequential>
+  </macrodef>
+  
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Creates a list with unique entries (=set). The order is preserved.                      -->
+  <!--                                                                                         -->
+  <!-- @param inputlist      The list which might contain duplicates.                          -->
+  <!-- @param property       The property which will be set to the list without duplicates.    -->
+  <!-- @param delimiter      The delimiter that is used within the list. (Default: ',')        -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="to-set">
+    <attribute name="inputlist"/>
+    <attribute name="property"/>
+    <attribute name="delimiter" default=","/>
+    <sequential>
+      <var name="ts_result"/>
+      <for param="current" list="@{inputlist}" delimiter="@{delimiter}" trim="yes">
+        <sequential>
+          <is-in-list candidate="@{current}" list="${ts_result}" property="ts_isinlist" delimiter="@{delimiter}"/>
+          <if>
+            <isfalse value="${ts_isinlist}"/>
+            <then>
+              <append property="ts_result" value="@{current}" delimiter="@{delimiter}"/>
+            </then>
+          </if>
+          <var unset="true" name="ts_isinlist"/>
+        </sequential>
+      </for>
+      <var name="@{property}" value="${ts_result}"/>
+      <var unset="true" name="ts_result"/>
+    </sequential>
+  </macrodef>
+  
+  <!-- ~~~ PUBLIC ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Creates a list with all identified service types.                                       -->
+  <!--                                                                                         -->
+  <!-- @param property       The property which will be set to the list without duplicates.    -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="list-services">
+    <attribute name="property"/>
+    <sequential>
+      <var name="ls_services" value=""/>
+      <var name="ls_list"     value=""/>
+      <for param="serviceapi">
+        <fileset dir="${basedir}" includes="**/META-INF/services/*"/>
+        <sequential>
+          <basename file="@{serviceapi}" property="ls_name"/>
+          <append property="ls_services" value="${ls_name}"/>
+          <var unset="true" name="ls_name"/>
+        </sequential>
+      </for>
+      <to-set inputlist="${ls_services}" property="@{property}"/>
+      <var unset="true" name="ls_list"/>
+      <var unset="true" name="ls_services"/>
+    </sequential>
+  </macrodef>
+  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Loads the useful part of an 'antlib.xml' description into a property.                   -->
   <!--                                                                                         -->
@@ -161,26 +245,72 @@
       </for>
       <var unset="true" name="mac_destdir" />
       <dirname property="mac_destdir" file="@{dest}" />
-      <echo>destdir: ${mac_destdir}</echo>
       <mkdir dir="${mac_destdir}" />
       <echo file="@{dest}">${mac_content}</echo>
-        <!-- drop services that are declared multiple times through the ant and lib layer. -->
-        <!-- should be configurable in future.                                             -->
-      <!--
-      <var unset="true" name="mac_filecontent"/>
-      <loadfile srcfile="@{dest}" property="mac_filecontent">
-        <filterchain>
-          <linecontains>
-            <contains value="org.ant4eclipse.lib.jdt.internal.tools.classpathelements.ClassPathElementsRegistryImpl" negate="true"/>
-          </linecontains>
-        </filterchain>
-      </loadfile>
-      <echo file="@{dest}">${mac_filecontent}</echo>
-      -->
       <var unset="true" name="mac_content" />
     </sequential>
   </macrodef>
 
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Merges all 'ant4eclipse-configuration.properties' to a single one.                      -->
+  <!--                                                                                         -->
+  <!-- @param dir    The directory which contains multiple property files.                     -->
+  <!-- @param dest   The destination where the resulting configuration shall be stored to.     -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <macrodef name="merge-services">
+    <attribute name="dir" />
+    <attribute name="dest" />
+    <sequential>
+      <mkdir dir="@{dest}/META-INF/services"/>
+      <list-services property="ms_services"/>
+      <for param="service" list="${ms_services}" delimiter="," trim="yes">
+        <sequential>
+          <merge-service servicedir="@{dest}/META-INF/services" servicename="@{service}"/>
+        </sequential>
+      </for>
+      <var unset="true" name="ms_services" />
+    </sequential>
+  </macrodef>
+
+  <macrodef name="merge-service">
+    <attribute name="servicedir"/>
+    <attribute name="servicename"/>
+    <sequential>
+      <var name="ms_content" value="" />
+      <for param="servicedeclarations">
+        <fileset dir="${basedir}" includes="**/META-INF/services/@{servicename}"/>
+        <sequential>
+          <loadfile srcfile="@{servicedeclarations}" property="ms_filecontent"/>
+          <for param="line" list="${ms_filecontent}" delimiter="&#10;" trim="yes">
+            <sequential>
+              <if>
+                <not><equals arg1="" arg2="@{line}"/></not>
+                <then>
+                  <append property="ms_content" value="@{line}"/>
+                </then>
+              </if>
+            </sequential>
+          </for>
+          <var unset="true" name="ms_filecontent" />
+        </sequential>
+      </for>
+      <to-set inputlist="${ms_content}" property="ms_list"/>
+      <delete file="@{servicedir}/@{servicename}"/>
+      <for param="type" list="${ms_list}" delimiter=",">
+        <sequential>
+          <if>
+            <not><equals arg1="@{type}" arg2=""/></not>
+            <then>
+              <echo append="true" file="@{servicedir}/@{servicename}">@{type}&#10;</echo>
+            </then>
+          </if>
+        </sequential>
+      </for>
+      <var unset="true" name="ms_content"/>
+      <var unset="true" name="ms_list"/>
+    </sequential>
+  </macrodef>
+  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Merges all 'antlib.xml' files to a single one.                                          -->
   <!--                                                                                         -->
@@ -242,7 +372,7 @@
     </if>
 
   </target>
-
+  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- Removes potentially existing data.                                                      -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -297,6 +427,8 @@
     <merge-ant4eclipse-configuration dir="${dest.cfg}"
                                      dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties" />
 
+    <merge-services dir="${dest.cfg}" dest="${destination}/library/classes" />
+    
     <!-- bundle the library version of a4e -->
     <zip destfile="${destination}/library/lib-ant4eclipse.jar"
          duplicate="preserve">
@@ -340,6 +472,8 @@
     <merge-ant4eclipse-configuration dir="${dest.cfg}"
                                      dest="${destination}/ant/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties" />
 
+    <merge-services dir="${dest.cfg}" dest="${destination}/library/classes" />
+    
     <!-- create a duplicate to support a smooth migration. -->
     <copy file="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml"
           todir="${destination}/ant/classes/org/ant4eclipse" />
