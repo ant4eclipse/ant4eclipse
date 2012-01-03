@@ -11,14 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -27,7 +23,7 @@ import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFileParser;
 
 import java.io.File;
-import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,42 +34,29 @@ import java.util.Map;
  * For the format of the psf-file used by Eclipse see org.eclipse.team.internal.ccvs.ui.CVSProjectSetSerializer
  * 
  * @see #parseTeamProjectSet(File)
+ * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, Lifecycle {
+public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
+
+  private Map<String, TeamProjectSetFactory>   factorymap;
 
   /**
-   * The prefix for properties describing a team provider.
-   * 
-   * <p>
-   * The property must have the (eclipse) provider id as key (after the suffix) and the implementation class name as
-   * value
+   * Initializes this parser implementation which supports to deal with varioues projectset
+   * implementations.
    */
-  public static final String                 TEAMPROVIDER_PREFIX = "teamprovider";
-
-  /**
-   * A Map containing all registered {@link TeamProjectSetFactory} instances
-   */
-  private Map<String, TeamProjectSetFactory> _factories;
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> teamProviders = config.getAllProperties(TEAMPROVIDER_PREFIX);
-    Map<String, TeamProjectSetFactory> providers = new Hashtable<String, TeamProjectSetFactory>();
-
-    for (Pair<String, String> teamProvider : teamProviders) {
-      TeamProjectSetFactory factory = Utilities.newInstance(teamProvider.getSecond());
-      A4ELogging.trace("Adding TeamProjectSetFactory '%s' for provider '%s'", factory, teamProvider.getFirst());
-      providers.put(teamProvider.getFirst(), factory);
+  public TeamProjectSetFileParserImpl() {
+    List<TeamProjectSetFactory> factories = A4ECore.instance().getServices( TeamProjectSetFactory.class );
+    for( TeamProjectSetFactory factory : factories ) {
+      String[] providerids = factory.getProviderIDs();
+      for( String providerid : providerids ) {
+        A4ELogging.trace( "Adding TeamProjectSetFactory '%s' for provider '%s'", factory, providerid );
+        factorymap.put( providerid, factory );
+      }
     }
-
-    this._factories = providers;
   }
-
+  
   /**
    * {@inheritDoc}
    */
@@ -113,11 +96,11 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser, L
   public TeamProjectSetFactory getFactoryForProvider(String providerId) {
     Assure.notNull("providerId", providerId);
 
-    if (!this._factories.containsKey(providerId)) {
+    if (!this.factorymap.containsKey(providerId)) {
       throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);
     }
 
-    return this._factories.get(providerId);
+    return this.factorymap.get(providerId);
   }
 
 }

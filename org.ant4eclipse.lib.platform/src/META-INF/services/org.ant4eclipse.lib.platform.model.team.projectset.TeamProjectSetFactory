@@ -1,0 +1,2 @@
+org.ant4eclipse.lib.platform.model.team.cvssupport.projectset.CvsTeamProjectSetFactory
+org.ant4eclipse.lib.platform.model.team.svnsupport.projectset.SvnTeamProjectSetFactory

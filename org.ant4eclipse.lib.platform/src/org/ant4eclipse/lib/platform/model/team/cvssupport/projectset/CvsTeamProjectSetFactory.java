@@ -27,6 +27,10 @@ import java.util.StringTokenizer;
  */
 public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
+  private static final String[] PROVIDER_IDS = new String[] {
+    "org.eclipse.team.cvs.core.cvsnature"
+  };
+  
   /** REPOSITORY_LOCATION */
   private static final int REPOSITORY_LOCATION        = 1;
 
@@ -94,4 +98,21 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
     cvsTeamProjectSet.addTeamProjectDescription(cvsTeamProjectDescription);
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String[] getProviderIDs() {
+    return PROVIDER_IDS;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+  
+} /* ENDCLASS */

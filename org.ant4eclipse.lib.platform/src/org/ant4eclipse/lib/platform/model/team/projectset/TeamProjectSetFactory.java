@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 /**
  * Factory-Interface for construction TeamProjectSet- and TeamProjectDescription instances.
  * 
@@ -21,7 +23,7 @@ package org.ant4eclipse.lib.platform.model.team.projectset;
  * Implementations of TeamProjectSetFactories should be stateless, since they are reused.
  * 
  */
-public interface TeamProjectSetFactory {
+public interface TeamProjectSetFactory extends A4EService {
 
   /**
    * Creates a new, provider-specific, TeamProjectSet instance for the team project set with the given name.
@@ -42,4 +44,12 @@ public interface TeamProjectSetFactory {
    */
   void addTeamProjectDescription(TeamProjectSet projectSet, String reference);
 
-}
+  /**
+   * Returns a list of all provider IDs for the implementing TeamProjectSetFactory instance.
+   * 
+   * @return   A list of all provider IDs for the implementing TeamProjectSetFactory instance.
+   *           Neither <code>null</code> nor empty.
+   */
+  String[] getProviderIDs();
+  
+} /* ENDINTERFACE */

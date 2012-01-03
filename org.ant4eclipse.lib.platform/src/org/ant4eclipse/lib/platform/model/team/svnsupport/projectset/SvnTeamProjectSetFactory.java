@@ -29,9 +29,16 @@ import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
  * the org.tigris.subversion.subclipse.core plugin
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
 
+  private static final String[] PROVIDER_IDS = new String[] {
+    "org.polarion.team.svn.core.svnnature",
+    "org.tigris.subversion.subclipse.core.svnnature",
+    "org.eclipse.team.svn.core.svnnature"
+  };
+  
   /**
    * Position of the repository URL in the reference string
    */
@@ -79,4 +86,21 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
         url);
     svnTeamProjectSet.addTeamProjectDescription(svnTeamProjectDescription);
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String[] getProviderIDs() {
+    return PROVIDER_IDS;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+  
+} /* ENDCLASS */
