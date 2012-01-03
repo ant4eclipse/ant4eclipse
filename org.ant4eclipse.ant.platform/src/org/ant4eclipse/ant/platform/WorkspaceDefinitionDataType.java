@@ -1,8 +1,8 @@
 package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.ProjectFileParser;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.FilesetWorkspaceDefinition;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
@@ -106,16 +106,7 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
       }
     }
 
-    // if (A4ELogging.isDebuggingEnabled()) {
-    // A4ELogging.debug("Workspace " + this.workspaceDirectory + " will be registered with " +
-    // projectDirectories.size()
-    // + " projects:");
-    // for (File f : projectDirectories) {
-    // A4ELogging.debug("\t" + f.getAbsolutePath());
-    // }
-    // }
-
-    WorkspaceRegistry registry = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class);
+    WorkspaceRegistry registry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
     registry.registerWorkspace(this._id, new FilesetWorkspaceDefinition(projectDirectories
         .toArray(new File[projectDirectories.size()])));
   }

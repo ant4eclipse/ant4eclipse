@@ -12,7 +12,7 @@
 package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 
 
-import org.ant4eclipse.lib.core.Lifecycle;
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 /**
@@ -20,7 +20,7 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
  * The {@link WorkspaceRegistry} is used to maintain workspaces.
  * </p>
  */
-public interface WorkspaceRegistry {
+public interface WorkspaceRegistry extends A4EService {
 
   /**
    * <p>

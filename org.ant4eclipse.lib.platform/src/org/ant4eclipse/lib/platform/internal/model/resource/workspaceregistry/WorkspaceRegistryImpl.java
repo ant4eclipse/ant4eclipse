@@ -31,6 +31,7 @@ import java.util.Map;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
@@ -132,6 +133,14 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
     // return the workspace
     return workspace;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
   }
 
 } /* ENDCLASS */
