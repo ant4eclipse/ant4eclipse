@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.role;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 /**
@@ -22,7 +23,7 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public interface ProjectRoleIdentifier {
+public interface ProjectRoleIdentifier extends A4EService {
 
   /**
    * <p>

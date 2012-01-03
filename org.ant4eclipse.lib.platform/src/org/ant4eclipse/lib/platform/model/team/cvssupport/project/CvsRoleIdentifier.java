@@ -54,4 +54,12 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
   public void postProcess(final EclipseProject project) {
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+  
 } /* ENDCLASS */

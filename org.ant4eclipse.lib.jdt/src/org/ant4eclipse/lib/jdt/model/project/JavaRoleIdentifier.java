@@ -59,4 +59,12 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
   public void postProcess(EclipseProject project) {
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+  
 } /* ENDCLASS */
