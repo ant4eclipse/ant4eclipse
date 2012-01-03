@@ -11,17 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.role;
 
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
-import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,17 +28,13 @@ import java.util.List;
 public class ProjectRoleIdentifierRegistry {
 
   /**
-   * The prefix of properties that holds a RoleIdentifier class name
-   */
-  public static final String              ROLEIDENTIFIER_PREFIX = "roleidentifier";
-
-  /**
    * All known {@link ProjectRoleIdentifier}
    */
-  private Iterable<ProjectRoleIdentifier> _projectRoleIdentifiers;
+  private List<ProjectRoleIdentifier> roleidentifiers;
 
   public ProjectRoleIdentifierRegistry() {
-    init();
+    roleidentifiers = new ArrayList<ProjectRoleIdentifier>();
+    roleidentifiers.addAll( A4ECore.instance().getServices( ProjectRoleIdentifier.class ) );
   }
 
   /**
@@ -52,11 +43,10 @@ public class ProjectRoleIdentifierRegistry {
    * @param project
    *          The project that shall be modified. Not <code>null</code>.
    */
-  public void applyRoles(EclipseProjectImpl project) {
-    for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
-      if (projectRoleIdentifier.isRoleSupported(project)) {
-        ProjectRole projectRole = projectRoleIdentifier.createRole(project);
-        project.addRole(projectRole);
+  public void applyRoles( EclipseProjectImpl project ) {
+    for( ProjectRoleIdentifier roleidentifier : roleidentifiers ) {
+      if( roleidentifier.isRoleSupported( project ) ) {
+        project.addRole( roleidentifier.createRole( project ) );
       }
     }
   }
@@ -70,36 +60,22 @@ public class ProjectRoleIdentifierRegistry {
    *          The project used for the post processing step. Not <code>null</code>.
    */
   public void postProcessRoles(EclipseProject project) {
-    for (ProjectRoleIdentifier projectRoleIdentifier : this._projectRoleIdentifiers) {
-      if (projectRoleIdentifier.isRoleSupported(project)) {
-        projectRoleIdentifier.postProcess(project);
+    for( ProjectRoleIdentifier roleidentifier : roleidentifiers ) {
+      if( roleidentifier.isRoleSupported( project ) ) {
+        roleidentifier.postProcess( project );
       }
     }
   }
 
-  public Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
-    return this._projectRoleIdentifiers;
-  }
-
   /**
-   * Loads the configured RoleIdentifiers
+   * Provides an {@link Iterable} which can be used to run through all currently registered
+   * {@link ProjectRoleIdentifier} instances.
+   * 
+   * @return   An {@link Iterable} which can be used to run through all currently registered
+   *           {@link ProjectRoleIdentifier} instances. Not <code>null</code>.
    */
-  protected void init() {
-    // get all properties that defines a ProjectRoleIdentifier
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> roleidentifierEntries = config.getAllProperties(ROLEIDENTIFIER_PREFIX);
-
-    List<ProjectRoleIdentifier> roleIdentifiers = new LinkedList<ProjectRoleIdentifier>();
-
-    // Instantiate all ProjectRoleIdentifiers
-    for (Pair<String, String> roleidentifierEntry : roleidentifierEntries) {
-      // we're not interested in the key of a roleidentifier. only the classname (value of the entry) is relevant
-      ProjectRoleIdentifier roleIdentifier = Utilities.newInstance(roleidentifierEntry.getSecond());
-      A4ELogging.trace("Register ProjectRoleIdentifier '%s'", roleIdentifier);
-      roleIdentifiers.add(roleIdentifier);
-    }
-
-    this._projectRoleIdentifiers = roleIdentifiers;
+  public Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
+    return this.roleidentifiers;
   }
 
-}
+} /* ENDCLASS */
