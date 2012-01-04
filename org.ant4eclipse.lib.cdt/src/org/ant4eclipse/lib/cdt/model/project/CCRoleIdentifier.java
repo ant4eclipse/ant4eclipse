@@ -15,11 +15,9 @@ import org.ant4eclipse.lib.cdt.internal.model.project.CCProjectRoleImpl;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
-
-import java.util.Set;
 
 /**
  * <p>
@@ -28,68 +26,22 @@ import java.util.Set;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public final class CCRoleIdentifier implements ProjectRoleIdentifier {
+public class CCRoleIdentifier extends AbstractProjectRoleIdentifier {
 
-  /**
-   * <p>
-   * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.cdt.core.cnature"</code>.
-   * </p>
-   */
-  @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return project.hasNature(CCProjectRole.CC_NATURE);
+  public CCRoleIdentifier() {
+    super( CCProjectRole.CC_NATURE, "cc", "c++", "cpp" );
   }
-
+  
   /**
    * <p>
    * Adds a {@link CProjectRole} to the given project and parses the pathes.
    * </p>
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
+  public ProjectRole createRole( EclipseProject project ) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
-    final CCProjectRoleImpl result = new CCProjectRoleImpl(project);
-    // ClasspathFileParser.parseClasspath(javaProjectRole);
-    return result;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return ProjectNature.createNatures( CCProjectRole.CC_NATURE );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return new String[] { "cc", "c++", "cpp" };
+    return new CCProjectRoleImpl(project);
   }
   
 } /* ENDCLASS */

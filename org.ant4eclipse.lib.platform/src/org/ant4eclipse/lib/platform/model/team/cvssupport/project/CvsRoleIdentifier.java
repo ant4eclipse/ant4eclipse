@@ -14,20 +14,22 @@ package org.ant4eclipse.lib.platform.model.team.cvssupport.project;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
-
-import java.util.Set;
 
 /**
  * Identifier for a CVS role.
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public class CvsRoleIdentifier implements ProjectRoleIdentifier {
+public class CvsRoleIdentifier extends AbstractProjectRoleIdentifier {
 
+  public CvsRoleIdentifier() {
+    super( null );
+  }
+  
   /**
    * {@inheritDoc}
    */
@@ -50,42 +52,4 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
     return cvsProjectRole;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(final EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return null;
-  }
-  
 } /* ENDCLASS */

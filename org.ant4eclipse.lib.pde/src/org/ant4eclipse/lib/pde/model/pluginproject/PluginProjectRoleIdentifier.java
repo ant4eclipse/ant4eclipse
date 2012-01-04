@@ -17,28 +17,24 @@ import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoa
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.PluginProjectRoleImpl;
 import org.ant4eclipse.lib.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 import org.eclipse.osgi.service.resolver.BundleDescription;
-
-import java.util.Set;
 
 /**
  * <p>
  * Identifier for plugin project roles.
  * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
+public class PluginProjectRoleIdentifier extends AbstractProjectRoleIdentifier {
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return project.hasNature(PluginProjectRole.PLUGIN_NATURE);
+  public PluginProjectRoleIdentifier() {
+    super( PluginProjectRole.PLUGIN_NATURE );
   }
-
+  
   /**
    * {@inheritDoc}
    */
@@ -64,42 +60,4 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
     return pluginProjectRole;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return ProjectNature.createNatures( PluginProjectRole.PLUGIN_NATURE );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return null;
-  }
-  
 } /* ENDCLASS */

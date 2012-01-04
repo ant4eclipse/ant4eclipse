@@ -15,11 +15,9 @@ import org.ant4eclipse.lib.cdt.internal.model.project.CProjectRoleImpl;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
-
-import java.util.Set;
 
 /**
  * <p>
@@ -28,18 +26,12 @@ import java.util.Set;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public final class CRoleIdentifier implements ProjectRoleIdentifier {
+public class CRoleIdentifier extends AbstractProjectRoleIdentifier {
 
-  /**
-   * <p>
-   * Returns <code>true</code> is the given project has the nature <code>"org.eclipse.cdt.core.cnature"</code>.
-   * </p>
-   */
-  @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return project.hasNature(CProjectRole.C_NATURE);
+  public CRoleIdentifier() {
+    super( CProjectRole.C_NATURE, "c" );
   }
-
+  
   /**
    * <p>
    * Adds a {@link CProjectRole} to the given project and parses the pathes.
@@ -49,47 +41,7 @@ public final class CRoleIdentifier implements ProjectRoleIdentifier {
   public ProjectRole createRole(EclipseProject project) {
     A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
     Assure.notNull("project", project);
-    final CProjectRoleImpl result = new CProjectRoleImpl(project);
-    // ClasspathFileParser.parseClasspath(javaProjectRole);
-    return result;
+    return new CProjectRoleImpl(project);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return ProjectNature.createNatures( CProjectRole.C_NATURE );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return new String[] { "c" };
-  }
-  
 } /* ENDCLASS */

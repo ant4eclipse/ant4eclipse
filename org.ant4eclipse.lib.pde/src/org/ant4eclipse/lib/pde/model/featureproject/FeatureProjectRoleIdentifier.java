@@ -18,30 +18,27 @@ import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.lib.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
-import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Set;
 
 /**
  * <p>
  * Identifier for the feature project role.
  * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
+public class FeatureProjectRoleIdentifier extends AbstractProjectRoleIdentifier {
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return project.hasNature(FeatureProjectRole.FEATURE_NATURE);
+  public FeatureProjectRoleIdentifier() {
+    super( FeatureProjectRole.FEATURE_NATURE, "pde" );
   }
-
+  
   /**
    * {@inheritDoc}
    */
@@ -69,42 +66,4 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
     return featureProjectRole;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return ProjectNature.createNatures( FeatureProjectRole.FEATURE_NATURE );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return new String[] { "pde" };
-  }
-  
 } /* ENDCLASS */

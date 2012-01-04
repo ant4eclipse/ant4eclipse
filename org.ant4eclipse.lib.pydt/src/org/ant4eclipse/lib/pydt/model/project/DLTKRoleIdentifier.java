@@ -14,13 +14,11 @@ package org.ant4eclipse.lib.pydt.model.project;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 import org.ant4eclipse.lib.pydt.internal.model.project.PythonProjectRoleImpl;
 import org.ant4eclipse.lib.pydt.internal.tools.DLTKParser;
-
-import java.util.Set;
 
 /**
  * <p>
@@ -29,18 +27,12 @@ import java.util.Set;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
+public class DLTKRoleIdentifier extends AbstractProjectRoleIdentifier {
 
-  /**
-   * <p>
-   * Returns <code>true</code> if the given project has the nature of the Python DLTK framework.
-   * </p>
-   */
-  @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return project.hasNature(DLTKProjectRole.NATURE);
+  public DLTKRoleIdentifier() {
+    super( DLTKProjectRole.NATURE, "python" );
   }
-
+  
   /**
    * <p>
    * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
@@ -55,42 +47,4 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return ProjectNature.createNatures( DLTKProjectRole.NATURE );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return new String[] { "python" };
-  }
-  
 } /* ENDCLASS */

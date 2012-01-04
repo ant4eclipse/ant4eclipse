@@ -16,11 +16,9 @@ import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.internal.model.project.ClasspathFileParser;
 import org.ant4eclipse.lib.jdt.internal.model.project.JavaProjectRoleImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
-
-import java.util.Set;
 
 /**
  * <p>
@@ -28,17 +26,14 @@ import java.util.Set;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
+public class JavaRoleIdentifier extends AbstractProjectRoleIdentifier {
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return project.hasNature(JavaProjectRole.JAVA_NATURE);
+  public JavaRoleIdentifier() {
+    super( JavaProjectRole.JAVA_NATURE, "java" );
   }
-
+  
   /**
    * {@inheritDoc}
    * 
@@ -55,42 +50,4 @@ public final class JavaRoleIdentifier implements ProjectRoleIdentifier {
     return javaProjectRole;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void postProcess(EclipseProject project) {
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Integer getPriority() {
-    return null;
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void reset() {
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Set<ProjectNature> getNatures() {
-    return ProjectNature.createNatures( JavaProjectRole.JAVA_NATURE );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String[] getNatureNicknames() {
-    return new String[] { "java" };
-  }
-  
 } /* ENDCLASS */
