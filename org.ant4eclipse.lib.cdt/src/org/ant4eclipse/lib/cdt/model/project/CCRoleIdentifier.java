@@ -19,7 +19,6 @@ import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
