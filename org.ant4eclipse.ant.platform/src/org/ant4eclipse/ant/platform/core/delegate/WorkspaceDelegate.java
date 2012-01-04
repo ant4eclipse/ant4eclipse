@@ -16,7 +16,6 @@ import org.ant4eclipse.ant.platform.core.WorkspaceComponent;
 import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
@@ -151,20 +150,13 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
 
       WorkspaceRegistry registry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
       if (!registry.containsWorkspace(getIdentifier())) {
-
         if (isWorkspaceDirectorySet()) {
-
-          this._workspace = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class).registerWorkspace(
-              getIdentifier(), new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
-
+          this._workspace = registry.registerWorkspace(getIdentifier(), new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
         } else {
           throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_WORKSPACE_ID, getIdentifier());
         }
-
       } else {
-
-        this._workspace = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class).getWorkspace(
-            getIdentifier());
+        this._workspace = registry.getWorkspace(getIdentifier());
       }
     }
 
