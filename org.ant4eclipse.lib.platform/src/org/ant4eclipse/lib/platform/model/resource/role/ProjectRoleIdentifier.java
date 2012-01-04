@@ -13,6 +13,9 @@ package org.ant4eclipse.lib.platform.model.resource.role;
 
 import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
+
+import java.util.Set;
 
 /**
  * <p>
@@ -58,4 +61,20 @@ public interface ProjectRoleIdentifier extends A4EService {
    */
   void postProcess(EclipseProject project);
 
+  /**
+   * Returns a list of natures that are associated with this identifier. Usually the returned list
+   * only contains one entry but it's possible to support multiple at the same time.
+   * 
+   * @return   A list of natures that are associated with this identifier. Maybe <code>null</code>.
+   */
+  Set<ProjectNature> getNatures();
+
+  /**
+   * Returns a list of possible abbreviations for the natures. This function only makes sense if
+   * {@link #getNatures()} delivers some value.
+   * 
+   * @return   The possible abbreviations for the natures. Maybe <code>null</code>.
+   */
+  String[] getNatureNicknames();
+  
 } /* ENDINTERFACE */

@@ -17,9 +17,12 @@ import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoa
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.PluginProjectRoleImpl;
 import org.ant4eclipse.lib.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+
+import java.util.Set;
 
 /**
  * <p>
@@ -81,6 +84,22 @@ public class PluginProjectRoleIdentifier implements ProjectRoleIdentifier {
    */
   @Override
   public void reset() {
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Set<ProjectNature> getNatures() {
+    return ProjectNature.createNatures( PluginProjectRole.PLUGIN_NATURE );
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String[] getNatureNicknames() {
+    return null;
   }
   
 } /* ENDCLASS */

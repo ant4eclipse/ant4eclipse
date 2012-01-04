@@ -13,8 +13,10 @@ package org.ant4eclipse.lib.platform.model.resource;
 
 import org.ant4eclipse.lib.core.Assure;
 
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -99,6 +101,26 @@ public class ProjectNature {
     if( result == null ) {
       result = new ProjectNature( name );
       NATURES.put( name, result );
+    }
+    return result;
+  }
+
+  /**
+   * This function is used to create a set of new instances of <code>ProjectNature</code>. The main
+   * advantage of this helper is the reduction of <code>ProjectNature</code> instances which will
+   * have an impact on comparison operations, too.
+   * 
+   * @param names   A list of nature names. Maybe <code>null</code>.
+   * 
+   * @return   The natures associated with the supplied names. Maybe <code>null</code>.
+   */
+  public static final Set<ProjectNature> createNatures( String ... names ) {
+    Set<ProjectNature> result = null; 
+    if( names != null ) {
+      result = new HashSet<ProjectNature>();
+      for( String name : names ) {
+        result.add( createNature( name ) );
+      }
     }
     return result;
   }

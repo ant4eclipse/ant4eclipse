@@ -15,8 +15,12 @@ import org.ant4eclipse.lib.cdt.internal.model.project.CCProjectRoleImpl;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p>
@@ -71,6 +75,22 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
    */
   @Override
   public void reset() {
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Set<ProjectNature> getNatures() {
+    return ProjectNature.createNatures( CCProjectRole.CC_NATURE );
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String[] getNatureNicknames() {
+    return new String[] { "cc", "c++", "cpp" };
   }
   
 } /* ENDCLASS */

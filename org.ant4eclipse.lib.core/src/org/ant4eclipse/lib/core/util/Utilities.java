@@ -42,12 +42,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -1150,7 +1152,7 @@ public class Utilities {
   public static final void execute(File exe, StringBuffer output, String... args) {
     execute(exe, output, null, args);
   }
-
+  
   /**
    * <p>
    * Expands the specified jar file to the expansion directory.

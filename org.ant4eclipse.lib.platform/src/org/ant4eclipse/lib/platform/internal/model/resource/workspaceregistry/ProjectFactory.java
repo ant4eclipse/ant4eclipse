@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
@@ -33,7 +34,7 @@ public class ProjectFactory {
   private ValidatorRegistry             _validatorRegistry;
 
   public ProjectFactory() {
-    this._projectRoleIdentifierRegistry = new ProjectRoleIdentifierRegistry();
+    this._projectRoleIdentifierRegistry = A4ECore.instance().getRequiredService( ProjectRoleIdentifierRegistry.class );
     this._validatorRegistry = new ValidatorRegistry();
   }
 

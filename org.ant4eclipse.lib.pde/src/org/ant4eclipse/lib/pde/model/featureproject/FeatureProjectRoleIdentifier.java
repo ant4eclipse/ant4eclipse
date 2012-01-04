@@ -18,12 +18,14 @@ import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.lib.pde.model.buildproperties.BuildPropertiesParser;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRoleIdentifier;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Set;
 
 /**
  * <p>
@@ -87,6 +89,22 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
    */
   @Override
   public void reset() {
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Set<ProjectNature> getNatures() {
+    return ProjectNature.createNatures( FeatureProjectRole.FEATURE_NATURE );
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String[] getNatureNicknames() {
+    return new String[] { "pde" };
   }
   
 } /* ENDCLASS */

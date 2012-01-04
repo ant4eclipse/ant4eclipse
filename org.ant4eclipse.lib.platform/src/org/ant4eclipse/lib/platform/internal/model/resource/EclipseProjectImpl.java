@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
-import org.ant4eclipse.lib.platform.internal.model.resource.role.NatureNicknameRegistry;
+import org.ant4eclipse.lib.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
@@ -355,20 +355,21 @@ public final class EclipseProjectImpl implements EclipseProject {
     // nature unknown:
     if (!this._natures.contains(nature)) {
 
-      NatureNicknameRegistry nicknameRegistry = ServiceRegistryAccess.instance().getService(
-          NatureNicknameRegistry.class);
-
+      ProjectRoleIdentifierRegistry registry = 
+        A4ECore.instance().getRequiredService( ProjectRoleIdentifierRegistry.class );
+      
       // try if the user supplied an abbreviation
       String abbreviation = nature.getName().toLowerCase();
-      if (nicknameRegistry.hasNatureForNickname(abbreviation)) {
-        // check the nature with the full id now
-        String[] ids = nicknameRegistry.getNaturesForNickname(abbreviation);
-        for (String id : ids) {
-          if (hasNature(id)) {
+      ProjectNature[] natures = registry.getNaturesForAbbreviation( abbreviation );
+      if( natures != null ) {
+        // check the natures with the full id now
+        for( ProjectNature projectnature : natures ) {
+          if( _natures.contains( projectnature ) ) {
             return true;
           }
         }
       }
+      
       // there's no mapping so we don't have an abbreviation here
       return false;
     }
