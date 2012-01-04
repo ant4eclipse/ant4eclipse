@@ -13,6 +13,9 @@ package org.ant4eclipse.lib.platform.model.resource;
 
 import org.ant4eclipse.lib.core.Assure;
 
+import java.util.Hashtable;
+import java.util.Map;
+
 /**
  * <p>
  * Encapsulates a nature of a project. A project can have multiple natures.
@@ -23,6 +26,8 @@ import org.ant4eclipse.lib.core.Assure;
  */
 public class ProjectNature {
 
+  private static final Map<String,ProjectNature> NATURES = new Hashtable<String,ProjectNature>();
+  
   private String nature;
 
   /**
@@ -30,8 +35,7 @@ public class ProjectNature {
    * 
    * @param name   The full name of the nature. Neither <code>null</code> nor empty.
    */
-  public ProjectNature( String name ) {
-    Assure.nonEmpty( "name", name );
+  private ProjectNature( String name ) {
     nature = name;
   }
 
@@ -79,5 +83,24 @@ public class ProjectNature {
   public String toString() {
     return String.format( "[ProjectNature: nature: %s]", nature );
   }
-  
+
+  /**
+   * This function is used to create a new instance of a <code>ProjectNature</code>. The main
+   * advantage of this helper is the reduction of <code>ProjectNature</code> instances which will
+   * have an impact on comparison operations, too.
+   * 
+   * @param name   The name of the desired nature. Neither <code>null</code> nor empty.
+   * 
+   * @return   The nature associated with the supplied name. Not <code>null</code>.
+   */
+  public static final synchronized ProjectNature createNature( String name ) {
+    Assure.nonEmpty( "name", name );
+    ProjectNature result = NATURES.get( name );
+    if( result == null ) {
+      result = new ProjectNature( name );
+      NATURES.put( name, result );
+    }
+    return result;
+  }
+
 } /* ENDCLASS */

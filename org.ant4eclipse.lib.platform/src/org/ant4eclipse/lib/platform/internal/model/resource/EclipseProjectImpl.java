@@ -342,7 +342,7 @@ public final class EclipseProjectImpl implements EclipseProject {
   @Override
   public boolean hasNature(String natureName) {
     Assure.notNull("natureName", natureName);
-    return hasNature(new ProjectNature(natureName));
+    return hasNature(ProjectNature.createNature(natureName));
   }
 
   /**

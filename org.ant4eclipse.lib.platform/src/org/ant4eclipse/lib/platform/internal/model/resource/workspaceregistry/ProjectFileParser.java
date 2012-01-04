@@ -94,7 +94,7 @@ public class ProjectFileParser {
 
     // set project natures
     for (String nature : natures) {
-      eclipseProject.addNature(new ProjectNature(nature));
+      eclipseProject.addNature(ProjectNature.createNature(nature));
     }
 
     // set build commands
