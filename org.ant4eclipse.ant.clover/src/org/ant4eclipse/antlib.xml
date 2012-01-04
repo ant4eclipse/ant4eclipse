@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<antlib>
-    <typedef name="cloverInstr" classname="org.ant4eclipse.ant.clover.CloverInstrTask"/>
-    <typedef name="cloverCleanUp" classname="org.ant4eclipse.ant.clover.CloverCleanUpTask"/>
-</antlib>
