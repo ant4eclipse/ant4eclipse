@@ -23,7 +23,6 @@ import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.OutputClasspathEntr
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ProjectClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.SourceClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.VariableClasspathEntryResolver;
-import org.ant4eclipse.lib.jdt.internal.tools.container.JdtResolverCache;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
@@ -37,9 +36,6 @@ import java.util.List;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class JdtResolver {
-
-  /** system property that enables the Jdt resolver cache */
-  private static final boolean ENABLE_CACHE = Boolean.getBoolean("ant4eclipse.enableJdtResolverCache");
 
   /**
    * <p>
@@ -59,33 +55,8 @@ public class JdtResolver {
   public static final ResolvedClasspath resolveProjectClasspath(EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
 
-    //
-    if (ENABLE_CACHE) {
-
-      // determine the key for the cached classpath
-      String cacheKey = JdtResolverCache.getCacheKey(project, resolveRelative, isRuntimeClasspath);
-
-      // try to get ResolvedClasspath from the cache
-      ResolvedClasspath resolvedClasspath = JdtResolverCache.getInstance().getResolvedClasspath(cacheKey);
-
-      if (resolvedClasspath == null) {
-
-        // Classpath has not been resolved yet -> resolve it now
-        resolvedClasspath = doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath,
-            classpathContainerArguments);
-
-        // add the resolved classpath to the cache
-        JdtResolverCache.getInstance().storeResolvedClasspath(cacheKey, resolvedClasspath);
-      }
-
-      // return the classpath
-      return resolvedClasspath;
-
-    } else {
-
       // cache is disabled, always re-resolve classpath
       return doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath, classpathContainerArguments);
-    }
   }
 
   /**
