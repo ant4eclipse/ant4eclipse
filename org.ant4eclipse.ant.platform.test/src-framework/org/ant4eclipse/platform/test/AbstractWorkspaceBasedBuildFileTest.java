@@ -77,7 +77,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    * Disposes the test environment and resets the {@link ServiceRegistry}
    */
   @Override
-  protected void tearDown() throws Exception {
+  public void tearDown() throws Exception {
     super.tearDown();
     this._testWorkspace.dispose();
     if (ServiceRegistryAccess.isConfigured()) {
