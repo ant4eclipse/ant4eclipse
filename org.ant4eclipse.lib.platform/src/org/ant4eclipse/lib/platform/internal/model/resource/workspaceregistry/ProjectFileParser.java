@@ -21,9 +21,9 @@ import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.internal.model.resource.BuildCommandImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.LinkedResourceImpl;
-import org.ant4eclipse.lib.platform.internal.model.resource.ProjectNatureImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService;
+import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
 
 import java.io.File;
@@ -94,7 +94,7 @@ public class ProjectFileParser {
 
     // set project natures
     for (String nature : natures) {
-      eclipseProject.addNature(new ProjectNatureImpl(nature));
+      eclipseProject.addNature(new ProjectNature(nature));
     }
 
     // set build commands
