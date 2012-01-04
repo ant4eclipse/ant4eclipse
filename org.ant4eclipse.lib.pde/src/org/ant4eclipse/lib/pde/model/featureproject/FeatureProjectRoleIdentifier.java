@@ -82,4 +82,11 @@ public class FeatureProjectRoleIdentifier implements ProjectRoleIdentifier {
     return null;
   }
   
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

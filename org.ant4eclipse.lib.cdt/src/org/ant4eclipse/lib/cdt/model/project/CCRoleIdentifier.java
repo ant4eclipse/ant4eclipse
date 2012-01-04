@@ -66,4 +66,11 @@ public final class CCRoleIdentifier implements ProjectRoleIdentifier {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

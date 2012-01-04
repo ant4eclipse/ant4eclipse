@@ -62,4 +62,11 @@ public class CvsRoleIdentifier implements ProjectRoleIdentifier {
     return null;
   }
   
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

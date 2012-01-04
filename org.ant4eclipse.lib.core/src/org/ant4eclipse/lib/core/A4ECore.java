@@ -49,13 +49,24 @@ public class A4ECore {
     
   };
   
-  private Map<Class<?>,List<?>>   servicecache;
+  private Map<Class<?>,List<? extends A4EService>>   servicecache;
   
   /**
    * Initializes this management class for A4E related services and data.
    */
   private A4ECore() {
-    servicecache = new Hashtable<Class<?>,List<?>>();
+    servicecache = new Hashtable<Class<?>,List<? extends A4EService>>();
+  }
+  
+  /**
+   * This function can be called to enforce the reset of all loaded service states.
+   */
+  public void reset() {
+    for( List<? extends A4EService> services : servicecache.values() ) {
+      for( A4EService service : services ) {
+        service.reset();
+      }
+    }
   }
   
   /**

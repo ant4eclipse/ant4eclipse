@@ -65,6 +65,13 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+  /**
    * Sets up this logger implementation to make use of a specified printer.
    * 
    * @param printer

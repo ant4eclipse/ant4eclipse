@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.platform.test;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.service.ServiceRegistry;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -82,6 +83,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
     if (ServiceRegistryAccess.isConfigured()) {
       ServiceRegistryAccess.reset();
     }
+    A4ECore.instance().reset();
   }
 
   /**

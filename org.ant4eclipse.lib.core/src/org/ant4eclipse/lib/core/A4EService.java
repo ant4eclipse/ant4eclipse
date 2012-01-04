@@ -23,4 +23,10 @@ public interface A4EService {
    */
   Integer getPriority();
   
+  /**
+   * Will be invoked when a service is requested to drop all it's internal data. This function is
+   * only used in conjunction with tests.
+   */
+  void reset();
+  
 } /* ENDINTERFACE */

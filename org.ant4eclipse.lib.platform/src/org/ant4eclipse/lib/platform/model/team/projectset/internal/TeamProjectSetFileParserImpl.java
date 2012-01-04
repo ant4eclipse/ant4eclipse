@@ -113,4 +113,11 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

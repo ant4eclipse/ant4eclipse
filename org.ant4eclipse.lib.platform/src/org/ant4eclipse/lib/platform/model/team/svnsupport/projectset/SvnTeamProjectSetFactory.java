@@ -103,4 +103,11 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
     return null;
   }
   
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

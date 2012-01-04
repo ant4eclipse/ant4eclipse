@@ -143,4 +143,12 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     return null;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+    _registry.clear();
+  }
+  
 } /* ENDCLASS */

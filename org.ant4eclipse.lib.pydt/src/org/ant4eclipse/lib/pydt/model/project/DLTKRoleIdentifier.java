@@ -67,4 +67,11 @@ public final class DLTKRoleIdentifier implements ProjectRoleIdentifier {
     return null;
   }
   
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

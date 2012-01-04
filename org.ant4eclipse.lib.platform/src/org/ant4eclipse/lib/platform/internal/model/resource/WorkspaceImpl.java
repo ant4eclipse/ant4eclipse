@@ -94,7 +94,7 @@ public final class WorkspaceImpl implements Workspace {
   @Override
   public EclipseProject[] getAllProjects() {
     Collection<EclipseProject> projects = this._projects.values();
-    return projects.toArray(new EclipseProject[0]);
+    return projects.toArray(new EclipseProject[projects.size()]);
   }
 
   /**

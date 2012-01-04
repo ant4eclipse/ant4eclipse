@@ -38,6 +38,13 @@ public class AntBasedLogger implements Ant4EclipseLogger {
   public Integer getPriority() {
     return Integer.valueOf(-1);
   }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
   
   /**
    * {@inheritDoc}

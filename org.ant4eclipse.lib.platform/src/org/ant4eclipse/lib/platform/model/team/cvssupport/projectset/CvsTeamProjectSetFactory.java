@@ -115,4 +115,11 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
     return null;
   }
   
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */
