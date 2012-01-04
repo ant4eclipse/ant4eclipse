@@ -66,7 +66,7 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    * {@inheritDoc}
    */
   @Override
-  protected void tearDown() throws Exception {
+  public void tearDown() throws Exception {
     if (this._echoLogfile != null) {
       this._echoLogfile.dispose();
       this._echoLogfile = null;
