@@ -28,7 +28,6 @@ import org.osgi.framework.Version;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -125,7 +124,7 @@ public class ConfigurationHelper {
    */
   private static String getOsgiBundlesFromFeatures(ProductDefinition productdef, TargetPlatform targetplatform) {
 
-    List<String> pluginIds = new LinkedList<String>();
+    List<String> pluginIds = new ArrayList<String>();
 
     for (FeatureId featureId : productdef.getFeatureIdentifiers()) {
       pluginIds.addAll(getPluginIdsForFeature(featureId.getId(), featureId.getVersion(), targetplatform));
@@ -175,7 +174,7 @@ public class ConfigurationHelper {
   private static List<String> getPluginIdsForFeature(String featureId, Version featureVersion,
       TargetPlatform targetplatform) {
 
-    List<String> result = new LinkedList<String>();
+    List<String> result = new ArrayList<String>();
 
     Version resolvedVersion = PdeBuildHelper.resolveVersion(featureVersion, PdeBuildHelper
         .getResolvedContextQualifier());

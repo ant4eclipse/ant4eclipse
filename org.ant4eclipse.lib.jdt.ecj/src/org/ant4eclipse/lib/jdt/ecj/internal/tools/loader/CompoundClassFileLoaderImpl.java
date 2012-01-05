@@ -181,7 +181,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
             classFileLoaderList.add(classFileLoader);
           }
         } else {
-          List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
+          List<ClassFileLoader> classFileLoaderList = new ArrayList<ClassFileLoader>();
           classFileLoaderList.add(classFileLoader);
           this._allPackages.put(aPackage, classFileLoaderList);
         }

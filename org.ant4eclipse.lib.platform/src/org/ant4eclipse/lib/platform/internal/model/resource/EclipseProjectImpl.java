@@ -23,8 +23,8 @@ import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -84,12 +84,12 @@ public final class EclipseProjectImpl implements EclipseProject {
 
     this._workspace = workspace;
     this._projectDirectory = Utilities.getCanonicalFile(projectDirectory);
-    this._natures = new LinkedList<ProjectNature>();
-    this._roles = new LinkedList<ProjectRole>();
-    this._buildCommands = new LinkedList<BuildCommand>();
-    this._referencedProjects = new LinkedList<String>();
-    this._linkedResources = new LinkedList<LinkedResourceImpl>();
-    this._linkedResourceNames = new LinkedList<String>();
+    this._natures = new ArrayList<ProjectNature>();
+    this._roles = new ArrayList<ProjectRole>();
+    this._buildCommands = new ArrayList<BuildCommand>();
+    this._referencedProjects = new ArrayList<String>();
+    this._linkedResources = new ArrayList<LinkedResourceImpl>();
+    this._linkedResourceNames = new ArrayList<String>();
 
     File settingsFolder = getChild(SETTINGS_FOLDER_NAME);
     this._settingsFolder = (settingsFolder.isDirectory() ? settingsFolder : null);

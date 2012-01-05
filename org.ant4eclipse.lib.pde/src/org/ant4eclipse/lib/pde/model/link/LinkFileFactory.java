@@ -17,7 +17,7 @@ import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,7 +52,7 @@ public class LinkFileFactory {
       }
     });
 
-    List<LinkFile> result = new LinkedList<LinkFile>();
+    List<LinkFile> result = new ArrayList<LinkFile>();
 
     for (File link : links) {
       LinkFile linkFile = parseLinkFile(link);

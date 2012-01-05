@@ -347,7 +347,7 @@ public class JavaExecuter {
 
     // read the ls output
 
-    List<String> sysOut = new LinkedList<String>();
+    List<String> sysOut = new ArrayList<String>();
     String line;
     while ((line = bufferedreader.readLine()) != null) {
       sysOut.add(line);

@@ -15,7 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 
@@ -145,7 +145,7 @@ public class ManifestHelper {
     Assure.nonEmpty("manifestValue", manifestValue);
 
     String[] elements = splitHeader(manifestValue);
-    List<ManifestHeaderElement> result = new LinkedList<ManifestHeaderElement>();
+    List<ManifestHeaderElement> result = new ArrayList<ManifestHeaderElement>();
     for (String element : elements) {
       ManifestHeaderElement manifestHeaderElement = new ManifestHeaderElement();
       result.add(manifestHeaderElement);
@@ -187,7 +187,7 @@ public class ManifestHelper {
     if ((header == null) || (header.trim().length() == 0)) {
       return new String[0];
     }
-    List<String> result = new LinkedList<String>();
+    List<String> result = new ArrayList<String>();
 
     char[] chars = header.toCharArray();
     StringBuilder currentValue = new StringBuilder();
@@ -298,7 +298,7 @@ public class ManifestHelper {
     protected StringMap    _directives;
 
     public ManifestHeaderElement() {
-      this._values = new LinkedList<String>();
+      this._values = new ArrayList<String>();
       this._attributes = new StringMap();
       this._directives = new StringMap();
     }

@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.lib.core.ClassName;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class ClassNameTest {
 
@@ -89,7 +88,7 @@ public class ClassNameTest {
     Assert.assertTrue(className2.equals(className1));
 
     Assert.assertFalse(className1.equals(null));
-    Assert.assertFalse(className1.equals(new LinkedList<Object>()));
+    Assert.assertFalse(className1.equals(new ArrayList<Object>()));
     Assert.assertFalse(className1.equals(ClassName.fromQualifiedClassName("com.wuetherich.Test")));
     Assert.assertFalse(className1.equals(ClassName.fromQualifiedClassName("net.sf.ant4eclipse.ClasspathTaskTest")));
     Assert.assertFalse(className1.equals(ClassName.fromQualifiedClassName("com.wuetherich.ClasspathTask")));

@@ -27,8 +27,8 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -280,7 +280,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   }
 
   class BuildCallable implements Callable<Void> {
-    private final List<EclipseProject>   _projects = new LinkedList<EclipseProject>();
+    private final List<EclipseProject>   _projects = new ArrayList<EclipseProject>();
 
     private ScopedMacroDefinition<Scope> _scopedMacroDefinition;
 

@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.platform.internal.model.launcher;
 
 import org.ant4eclipse.lib.core.Assure;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 class LaunchConfigAttribute {
@@ -60,7 +60,7 @@ class LaunchConfigAttribute {
   }
 
   static class ListAttribute {
-    private List<String> _entries = new LinkedList<String>();
+    private List<String> _entries = new ArrayList<String>();
 
     public List<String> getEntries() {
       return this._entries;

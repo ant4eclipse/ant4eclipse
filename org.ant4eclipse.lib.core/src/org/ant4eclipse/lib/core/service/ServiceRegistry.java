@@ -16,9 +16,9 @@ import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -184,7 +184,7 @@ public class ServiceRegistry {
    */
   ServiceRegistry(ServiceRegistryConfiguration configuration) {
     this._serviceMap = new HashMap<String, Object>();
-    this._serviceOrdering = new LinkedList<Object>();
+    this._serviceOrdering = new ArrayList<Object>();
     configuration.configure(new ConfigurationContextImpl());
   }
 

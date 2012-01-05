@@ -15,8 +15,8 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractTeamProjectSet implements TeamProjectSet {
@@ -35,9 +35,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    */
   public AbstractTeamProjectSet(String name) {
     Assure.notNull("name", name);
-
     this._name = name;
-    this._projectDescriptions = new LinkedList<TeamProjectDescription>();
+    this._projectDescriptions = new ArrayList<TeamProjectDescription>();
   }
 
   /**

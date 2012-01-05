@@ -17,8 +17,8 @@ import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Libra
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class LibraryHelper {
@@ -50,7 +50,7 @@ public class LibraryHelper {
     PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
     // TODO: should we take sourceIncludes for source builds?
     List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
-    List<Library> result = new LinkedList<Library>();
+    List<Library> result = new ArrayList<Library>();
     Library[] libraries = pluginBuildProperties.getOrderedLibraries();
     // only include libraries that are defined in the binary include list
     for (Library library : libraries) {

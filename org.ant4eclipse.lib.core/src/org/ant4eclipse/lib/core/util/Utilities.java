@@ -42,14 +42,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -333,7 +330,7 @@ public class Utilities {
    */
   public static final List<File> getAllChildren(File file) {
     Assure.notNull("file", file);
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
     if (file.isDirectory()) {
       // add the children
       File[] children = file.listFiles();

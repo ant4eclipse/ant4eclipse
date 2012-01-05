@@ -19,8 +19,8 @@ import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -91,7 +91,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
       prefix += ".";
     }
     Set<Map.Entry<String, String>> entries = this._properties.entrySet();
-    List<Pair<String, String>> result = new LinkedList<Pair<String, String>>();
+    List<Pair<String, String>> result = new ArrayList<Pair<String, String>>();
     for (Map.Entry<String, String> entry : entries) {
       String key = entry.getKey();
       String value = entry.getValue();

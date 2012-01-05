@@ -11,17 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.pde.tools.PluginProjectChecker.Issue.IssueLevel;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -84,7 +84,7 @@ public class PluginProjectChecker {
     Assure.notNull("eclipseProject", eclipseProject);
 
     this._eclipseProject = eclipseProject;
-    this._issues = new LinkedList<Issue>();
+    this._issues = new ArrayList<Issue>();
 
     this._projectName = this._eclipseProject.getSpecifiedName();
   }

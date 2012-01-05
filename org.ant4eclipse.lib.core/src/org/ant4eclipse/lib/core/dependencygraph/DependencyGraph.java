@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -71,8 +72,8 @@ public final class DependencyGraph<T> {
    * </p>
    */
   public DependencyGraph() {
-    this._vertices = new LinkedList<T>();
-    this._edges = new LinkedList<Edge<T>>();
+    this._vertices = new ArrayList<T>();
+    this._edges = new ArrayList<Edge<T>>();
   }
 
   /**
@@ -171,7 +172,7 @@ public final class DependencyGraph<T> {
       matrix[fromidx][toidx] = true;
     }
 
-    List<T> list = new LinkedList<T>();
+    List<T> list = new ArrayList<T>();
 
     // iterates across the matrix as long as we didn't found
     // a cycle and there are still edges to be processed
@@ -200,7 +201,7 @@ public final class DependencyGraph<T> {
     int zeros = 0;
     int[] count = countEdges(matrix);
 
-    List<T> removable = new LinkedList<T>();
+    List<T> removable = new ArrayList<T>();
 
     // add currently independent vertices to the list
     // of removable candidates

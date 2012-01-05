@@ -121,13 +121,13 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    */
   @Override
   public void initialize() {
-    this._containerresolver = new LinkedList<ClasspathContainerResolver>();
+    this._containerresolver = new ArrayList<ClasspathContainerResolver>();
 
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
     Iterable<Pair<String, String>> containerResolverEntries = config
         .getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
 
-    List<ClasspathContainerResolver> containerResolvers = new LinkedList<ClasspathContainerResolver>();
+    List<ClasspathContainerResolver> containerResolvers = new ArrayList<ClasspathContainerResolver>();
 
     // Instantiate all Container Resolvers
     for (Pair<String, String> containerResolverEntry : containerResolverEntries) {

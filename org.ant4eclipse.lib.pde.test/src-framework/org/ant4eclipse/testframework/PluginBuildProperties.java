@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PluginBuildProperties {
 
-  private List<Library> _libraries = new LinkedList<Library>();
+  private List<Library> _libraries = new ArrayList<Library>();
 
   public Library withLibrary(String name) {
     Library library = new Library(name);
@@ -66,8 +66,8 @@ public class PluginBuildProperties {
 
     public Library(String name) {
       this._name = name;
-      this._sourceList = new LinkedList<String>();
-      this._outputList = new LinkedList<String>();
+      this._sourceList = new ArrayList<String>();
+      this._outputList = new ArrayList<String>();
     }
 
     /**

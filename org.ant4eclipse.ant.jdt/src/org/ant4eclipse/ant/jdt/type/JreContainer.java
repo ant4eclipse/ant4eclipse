@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -28,6 +24,10 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A datatype used as a container for classpathes.
@@ -120,7 +120,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     if (!runtime.hasFileSets()) {
       return null;
     }
-    List<File> files = new LinkedList<File>();
+    List<File> files = new ArrayList<File>();
     List<FileSet> fileSets = runtime.getFileSets();
     for (FileSet fileSet : fileSets) {
       DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
@@ -159,7 +159,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     public void addFileSet(FileSet fileSet) {
       if (this._fileSets == null) {
-        this._fileSets = new LinkedList<FileSet>();
+        this._fileSets = new ArrayList<FileSet>();
       }
       this._fileSets.add(fileSet);
     }

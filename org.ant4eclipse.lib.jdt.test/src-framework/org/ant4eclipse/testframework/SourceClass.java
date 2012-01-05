@@ -14,8 +14,8 @@ package org.ant4eclipse.testframework;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,7 +53,7 @@ public class SourceClass {
 
   public SourceClass(JdtProjectBuilder eclipseProjectCreator, String className) {
     this._eclipseProjectCreator = eclipseProjectCreator;
-    this._usedClasses = new LinkedList<String>();
+    this._usedClasses = new ArrayList<String>();
     this._className = className;
   }
 

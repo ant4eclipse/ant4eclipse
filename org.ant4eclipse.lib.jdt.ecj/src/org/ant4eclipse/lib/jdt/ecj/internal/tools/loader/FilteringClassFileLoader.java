@@ -66,8 +66,8 @@ public class FilteringClassFileLoader implements ClassFileLoader {
     this._classFileLoader = classFileLoader;
     this._filter = filter;
 
-    this._includes = new LinkedList<String>();
-    this._excludes = new LinkedList<String>();
+    this._includes = new ArrayList<String>();
+    this._excludes = new ArrayList<String>();
 
     init();
   }

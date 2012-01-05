@@ -22,10 +22,10 @@ import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -137,7 +137,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   @Override
   public List<String> getTargetPlatformDefinitionIds() {
-    return Collections.unmodifiableList(new LinkedList<String>(this._targetPlatformDefnitionMap.keySet()));
+    return Collections.unmodifiableList(new ArrayList<String>(this._targetPlatformDefnitionMap.keySet()));
   }
 
   /**
@@ -258,7 +258,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   private BinaryBundleAndFeatureSet[] getBinaryPluginSet(File[] files) {
 
     //
-    List<BinaryBundleAndFeatureSet> result = new LinkedList<BinaryBundleAndFeatureSet>();
+    List<BinaryBundleAndFeatureSet> result = new ArrayList<BinaryBundleAndFeatureSet>();
 
     //
     for (File file : files) {

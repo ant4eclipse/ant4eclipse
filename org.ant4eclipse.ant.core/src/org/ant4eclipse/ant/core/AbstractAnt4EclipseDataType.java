@@ -11,11 +11,11 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Base type for all ant4eclipse types.
@@ -29,7 +29,7 @@ import org.apache.tools.ant.types.DataType;
 public abstract class AbstractAnt4EclipseDataType extends DataType {
 
   /** - */
-  private static List<AbstractAnt4EclipseDataType> instances  = new LinkedList<AbstractAnt4EclipseDataType>();
+  private static List<AbstractAnt4EclipseDataType> instances  = new ArrayList<AbstractAnt4EclipseDataType>();
 
   /** - */
   private boolean                                 _validated = false;

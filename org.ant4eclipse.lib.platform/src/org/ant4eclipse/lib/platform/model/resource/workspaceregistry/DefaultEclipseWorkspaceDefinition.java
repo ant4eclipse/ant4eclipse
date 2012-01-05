@@ -18,8 +18,8 @@ import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.Pr
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -61,7 +61,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
   public File[] getProjectFolders() {
 
     // define the result
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     // read all directories in the workspace directory
     File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {

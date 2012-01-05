@@ -18,8 +18,8 @@ import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +100,7 @@ public class JavaProfileReader implements Lifecycle {
 
     String[] profiles = javaProfiles.split(",");
 
-    List<JavaProfileImpl> result = new LinkedList<JavaProfileImpl>();
+    List<JavaProfileImpl> result = new ArrayList<JavaProfileImpl>();
 
     for (String profile2 : profiles) {
       String profile = profile2.trim();

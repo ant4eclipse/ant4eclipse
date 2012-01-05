@@ -14,7 +14,7 @@ package org.ant4eclipse.lib.pde.tools;
 import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +37,7 @@ public class TargetPlatformDefinition {
    */
   public TargetPlatformDefinition() {
     // create the locations list
-    this._locations = new LinkedList<File>();
+    this._locations = new ArrayList<File>();
   }
 
   /**

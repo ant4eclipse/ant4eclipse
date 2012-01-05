@@ -22,8 +22,8 @@ import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -146,7 +146,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     }
 
     // create the lists of dynamic elements
-    this._subElements = new LinkedList<Object>();
+    this._subElements = new ArrayList<Object>();
 
     // create the lists of dynamic attributes
     this._subAttributes = new HashMap<String, String>();
@@ -161,7 +161,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     Iterable<Pair<String, String>> subElementContributionEntries = config
         .getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
 
-    List<SubElementContribution> subElementContributions = new LinkedList<SubElementContribution>();
+    List<SubElementContribution> subElementContributions = new ArrayList<SubElementContribution>();
 
     // Instantiate the subElementContributions
     for (Pair<String, String> subElementContributionDefinition : subElementContributionEntries) {
@@ -189,7 +189,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     Iterable<Pair<String, String>> subAttributeContributionEntries = config
         .getAllProperties(SUB_ATTRIBUTE_CONTRIBUTOR_PREFIX);
 
-    List<SubAttributeContribution> subAttributeContributions = new LinkedList<SubAttributeContribution>();
+    List<SubAttributeContribution> subAttributeContributions = new ArrayList<SubAttributeContribution>();
 
     // Instantiate the subElementContributions
     for (Pair<String, String> subAttributeContributionDefintion : subAttributeContributionEntries) {

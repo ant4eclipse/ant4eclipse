@@ -21,7 +21,7 @@ import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.UnsupportedAttributeException;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,8 +53,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    */
   public JdtClasspathContainerArgumentDelegate(ProjectComponent component) {
     super(component);
-
-    this._containerArguments = new LinkedList<JdtClasspathContainerArgument>();
+    this._containerArguments = new ArrayList<JdtClasspathContainerArgument>();
   }
 
   /**
@@ -126,7 +125,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     }
 
     // create the lists of dynamic attributes
-    this._knownAttributesList = new LinkedList<String>();
+    this._knownAttributesList = new ArrayList<String>();
 
     // get all properties that defines a SubElementContributor
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);

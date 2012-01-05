@@ -11,14 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-import java.util.StringTokenizer;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -28,6 +20,13 @@ import org.ant4eclipse.lib.jdt.internal.model.jre.support.LibraryDetector;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 public class JavaRuntimeLoader {
   /**  */
@@ -91,10 +90,10 @@ public class JavaRuntimeLoader {
     if (files != null) {
       A4ELogging.debug("Using specified files for JRE '%s': '%s'", id, files);
     } else {
-      files = new LinkedList<File>();
-    addFiles(javaendorseddirs, false, files);
-    addFiles(sunbootclasspath, false, files);
-    addFiles(javaextdirs, true, files);
+      files = new ArrayList<File>();
+      addFiles(javaendorseddirs, false, files);
+      addFiles(sunbootclasspath, false, files);
+      addFiles(javaextdirs, true, files);
     }
 
     File[] libraries = files.toArray(new File[0]);

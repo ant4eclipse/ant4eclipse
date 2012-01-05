@@ -16,7 +16,7 @@ import org.ant4eclipse.lib.core.util.ManifestHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 
@@ -89,7 +89,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
   public File[] resolveBundleClasspathEntries() {
 
     // prepare results
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     // get bundle class path
     String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);

@@ -15,7 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrary;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +48,7 @@ public class UserLibraryImpl implements UserLibrary {
     Assure.notNull("name", name);
     this._name = name;
     this._systemlibrary = syslib;
-    this._archives = new LinkedList<ArchiveImpl>();
+    this._archives = new ArrayList<ArchiveImpl>();
   }
 
   /**
@@ -84,7 +84,7 @@ public class UserLibraryImpl implements UserLibrary {
   public File[] getArchiveFiles() {
 
     // create new result list
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     // add all path entries
     for (ArchiveImpl archive : this._archives) {

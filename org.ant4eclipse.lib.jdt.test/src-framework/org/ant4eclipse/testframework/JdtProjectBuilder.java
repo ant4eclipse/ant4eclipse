@@ -79,7 +79,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     super(projectName);
 
     this._sourceClasses = new Hashtable<String, List<SourceClass>>();
-    this._classpathEntries = new LinkedList<String>();
+    this._classpathEntries = new ArrayList<String>();
 
     // All JDT-Projects have a java builder and a java nature
     withJavaNature();
@@ -99,7 +99,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
     SourceClass sourceClass = new SourceClass(this, className);
     List<SourceClass> sourceClasses = this._sourceClasses.get(sourceFolder);
     if (sourceClasses == null) {
-      sourceClasses = new LinkedList<SourceClass>();
+      sourceClasses = new ArrayList<SourceClass>();
       this._sourceClasses.put(sourceFolder, sourceClasses);
     }
     sourceClasses.add(sourceClass);

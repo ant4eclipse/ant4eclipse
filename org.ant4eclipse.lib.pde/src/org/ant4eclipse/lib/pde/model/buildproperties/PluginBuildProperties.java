@@ -143,7 +143,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
       // no build order specified, hope we don't need one...
       libraries = this._libraries.values();
     } else {
-      libraries = new LinkedList<Library>();
+      libraries = new ArrayList<Library>();
       for (String jar : jars) {
         Library library = getLibrary(jar);
         if (library != null) {

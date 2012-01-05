@@ -1,14 +1,5 @@
 package org.ant4eclipse.ant.pde.analysis;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -22,6 +13,15 @@ import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.objectweb.asm.ClassReader;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * <p>
@@ -51,7 +51,7 @@ public class TestClassAnalyser {
     this._eclipseProject = eclipseProject;
 
     ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath(this._eclipseProject, false, false,
-        new LinkedList<JdtClasspathContainerArgument>());
+        new ArrayList<JdtClasspathContainerArgument>());
 
     this._fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(this._eclipseProject.getFolder(),
         EcjAdapter.PROJECT, classpath.getClasspathFiles(), new File[0]);

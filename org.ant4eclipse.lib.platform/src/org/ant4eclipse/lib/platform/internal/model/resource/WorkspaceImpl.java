@@ -19,9 +19,9 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +63,7 @@ public final class WorkspaceImpl implements Workspace {
     Assure.notNull("names", names);
 
     // the result list with all the eclipse projects...
-    List<EclipseProject> projects = new LinkedList<EclipseProject>();
+    List<EclipseProject> projects = new ArrayList<EclipseProject>();
 
     // iterate over the project names...
     for (String name : names) {
@@ -108,7 +108,7 @@ public final class WorkspaceImpl implements Workspace {
             "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(), ProjectRole.class
                 .getName()));
 
-    List<EclipseProject> result = new LinkedList<EclipseProject>();
+    List<EclipseProject> result = new ArrayList<EclipseProject>();
     Collection<EclipseProject> projects = this._projects.values();
     for (EclipseProject eclipseProject : projects) {
       if (eclipseProject.hasRole(projectRole)) {

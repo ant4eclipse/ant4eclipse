@@ -13,12 +13,12 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
-import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.ManifestHelper.ManifestHeaderElement;
+import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -61,12 +61,12 @@ public class JavaProfileImpl implements JavaProfile {
   private StringMap           _properties;
 
   /** the list of system packages */
-  private List<String>        _systemPackagesList             = new LinkedList<String>();
+  private List<String>        _systemPackagesList             = new ArrayList<String>();
 
   /** the list of packages that are delegated to the boot class loader */
-  private List<PackageFilter> _delegatedToBootClassLoaderList = new LinkedList<PackageFilter>();
+  private List<PackageFilter> _delegatedToBootClassLoaderList = new ArrayList<PackageFilter>();
 
-  private List<String>        _executionEnvironments          = new LinkedList<String>();
+  private List<String>        _executionEnvironments          = new ArrayList<String>();
 
   /** - */
   private String              _associatedJavaRuntimeId;

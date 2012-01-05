@@ -25,7 +25,7 @@ import org.eclipse.jdt.internal.compiler.env.INameEnvironment;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -107,7 +107,7 @@ public final class EcjAdapterImpl implements EcjAdapter {
   private ICompilationUnit[] getCompilationUnits(SourceFile[] sourceFiles) {
 
     // create result list
-    List<ICompilationUnit> result = new LinkedList<ICompilationUnit>();
+    List<ICompilationUnit> result = new ArrayList<ICompilationUnit>();
 
     // iterate over source folders
     for (SourceFile sourceFile : sourceFiles) {

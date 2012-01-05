@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.target;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -630,9 +630,9 @@ public class TargetDefinition {
      * 
      */
     public Content() {
-      this._plugins = new LinkedList<String>();
-      this._features = new LinkedList<String>();
-      this._extraLocations = new LinkedList<String>();
+      this._plugins = new ArrayList<String>();
+      this._features = new ArrayList<String>();
+      this._extraLocations = new ArrayList<String>();
     }
 
     /**

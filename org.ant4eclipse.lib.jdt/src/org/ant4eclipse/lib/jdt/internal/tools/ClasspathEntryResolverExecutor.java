@@ -22,8 +22,8 @@ import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
+import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -71,8 +71,8 @@ public class ClasspathEntryResolverExecutor {
   public ClasspathEntryResolverExecutor(boolean failOnNonHandledEntry) {
 
     // initialize the executor attributes
-    this._resolvedProjects = new LinkedList<EclipseProject>();
-    this._referencedProjects = new LinkedList<EclipseProject>();
+    this._resolvedProjects = new ArrayList<EclipseProject>();
+    this._referencedProjects = new ArrayList<EclipseProject>();
     this._currentProject = new Stack<EclipseProject>();
     this._failOnNonHandledEntry = failOnNonHandledEntry;
   }
@@ -115,7 +115,7 @@ public class ClasspathEntryResolverExecutor {
   public List<EclipseProject> getReferencedProjects() {
 
     // create the result
-    List<EclipseProject> result = new LinkedList<EclipseProject>();
+    List<EclipseProject> result = new ArrayList<EclipseProject>();
 
     // add all resolved projects
     result.addAll(this._resolvedProjects);

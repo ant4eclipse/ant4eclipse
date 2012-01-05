@@ -11,14 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -41,6 +33,14 @@ import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * <p>
@@ -93,7 +93,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     if (binaryBundleSets != null) {
       this._binaryBundleSets = Arrays.asList(binaryBundleSets);
     } else {
-      this._binaryBundleSets = new LinkedList<BundleAndFeatureSet>();
+      this._binaryBundleSets = new ArrayList<BundleAndFeatureSet>();
     }
 
     // set the configuration
@@ -136,7 +136,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   public BundleDescription[] getBundlesWithResolverErrors() {
 
     // create result
-    List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
+    List<BundleDescription> bundleDescriptions = new ArrayList<BundleDescription>();
 
     // iterate over all descriptions
     for (BundleDescription description : this._state.getBundles()) {
@@ -198,7 +198,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private List<BundleDescription> getAllBundleDescriptions(boolean preferProjects) {
 
     // step 1: create the result list
-    List<BundleDescription> result = new LinkedList<BundleDescription>();
+    List<BundleDescription> result = new ArrayList<BundleDescription>();
 
     // step 2: add plug-in projects from the plug-in projects list to the result
     if (this._pluginProjectSet != null) {
@@ -467,7 +467,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private void resolveIncludes(FeatureManifest manifest, ResolvedFeature resolvedFeature) {
 
     // TODO: DependencyGraph!!
-    List<Pair<Includes, FeatureDescription>> result = new LinkedList<Pair<Includes, FeatureDescription>>();
+    List<Pair<Includes, FeatureDescription>> result = new ArrayList<Pair<Includes, FeatureDescription>>();
 
     for (Includes includes : manifest.getIncludes()) {
 
@@ -505,7 +505,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     // 4. Retrieve BundlesDescriptions for feature plug-ins
     Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
-    List<BundleDescription> bundleDescriptions = new LinkedList<BundleDescription>();
+    List<BundleDescription> bundleDescriptions = new ArrayList<BundleDescription>();
 
     for (Plugin plugin : manifest.getPlugins()) {
 
@@ -549,7 +549,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
     }
 
     // 6.1 create result
-    List<Pair<Plugin, BundleDescription>> result = new LinkedList<Pair<Plugin, BundleDescription>>();
+    List<Pair<Plugin, BundleDescription>> result = new ArrayList<Pair<Plugin, BundleDescription>>();
     for (BundleDescription bundleDescription : sortedbundleDescriptions) {
       Pair<Plugin, BundleDescription> pair = new Pair<Plugin, BundleDescription>(map.get(bundleDescription),
           bundleDescription);

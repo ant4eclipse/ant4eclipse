@@ -58,7 +58,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    */
   @Override
   public List<ClassPathContainer> getClasspathContainer() {
-    return new LinkedList<ClassPathContainer>(this._classpathContainer.values());
+    return new ArrayList<ClassPathContainer>(this._classpathContainer.values());
   }
 
   /**
@@ -98,7 +98,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    */
   @Override
   public List<ClassPathVariable> getClasspathVariables() {
-    return new LinkedList<ClassPathVariable>(this._classpathVariables.values());
+    return new ArrayList<ClassPathVariable>(this._classpathVariables.values());
   }
 
   /**

@@ -21,7 +21,7 @@ import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -175,7 +175,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     }
 
     // prepare results
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     // get bundle class path
     String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);

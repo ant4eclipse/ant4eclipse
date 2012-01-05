@@ -21,7 +21,7 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 
@@ -95,7 +95,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   public File[] resolveBundleClasspathEntries() {
 
     // declare result
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     // resolve the bundle class path
     String bundleClasspath[] = ManifestHelper.getBundleClasspath(this._manifest);
@@ -144,7 +144,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
   public File[] getPluginProjectSourceFolders() {
 
     // declare result
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     if (this._eclipseProject.hasRole(JavaProjectRole.class)) {
       JavaProjectRole javaProjectRole = this._eclipseProject.getRole(JavaProjectRole.class);

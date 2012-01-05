@@ -3,11 +3,11 @@ package org.ant4eclipse.lib.pde.model.launcher;
 import static org.ant4eclipse.lib.core.Assure.assertTrue;
 import static org.ant4eclipse.lib.core.Assure.notNull;
 
-import java.util.LinkedList;
+import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 
 /**
  * A wrapper around a Equinox-based {@link LaunchConfiguration}. This class adds several helper methods to access the
@@ -115,7 +115,7 @@ public class EquinoxLaunchConfigurationWrapper {
 
   private SelectedLaunchConfigurationBundle[] createSelectedLaunchConfigurationBundle(String bundles) {
 
-    List<SelectedLaunchConfigurationBundle> result = new LinkedList<SelectedLaunchConfigurationBundle>();
+    List<SelectedLaunchConfigurationBundle> result = new ArrayList<SelectedLaunchConfigurationBundle>();
     StringTokenizer tokenizer = new StringTokenizer(bundles, ",", false);
 
     SelectedLaunchConfigurationBundleParser parser = new SelectedLaunchConfigurationBundleParser();

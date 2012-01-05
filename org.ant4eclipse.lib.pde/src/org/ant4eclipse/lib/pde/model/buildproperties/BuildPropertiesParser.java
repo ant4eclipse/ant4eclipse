@@ -11,12 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.buildproperties;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.pde.internal.model.featureproject.FeatureProjectRoleImpl;
@@ -24,6 +18,12 @@ import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Libra
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * <p>
@@ -197,7 +197,7 @@ public class BuildPropertiesParser {
       return new String[] {};
     }
 
-    List<String> result = new LinkedList<String>();
+    List<String> result = new ArrayList<String>();
 
     StringTokenizer tokenizer = new StringTokenizer(content, delimiter);
     while (tokenizer.hasMoreTokens()) {

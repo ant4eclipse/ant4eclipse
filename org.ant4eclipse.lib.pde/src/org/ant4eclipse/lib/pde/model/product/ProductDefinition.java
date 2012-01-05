@@ -134,7 +134,7 @@ public class ProductDefinition {
   public FeatureId[] getFeatureIdentifiers() {
 
     //
-    List<FeatureId> result = new LinkedList<FeatureId>();
+    List<FeatureId> result = new ArrayList<FeatureId>();
 
     //
     for (Entry<String, Version> featureId : this._features.entrySet()) {
@@ -411,7 +411,7 @@ public class ProductDefinition {
    */
   public List<String> getPluginAndFragmentIds() {
 
-    List<String> result = new LinkedList<String>();
+    List<String> result = new ArrayList<String>();
 
     result.addAll(this._pluginids);
     result.addAll(this._fragmentids);

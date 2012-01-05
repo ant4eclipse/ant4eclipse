@@ -11,11 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-import java.io.StringReader;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.MacroExecutionComponent;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
@@ -32,6 +27,10 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 import org.apache.tools.ant.taskdefs.MacroInstance;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -63,9 +62,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    */
   public MacroExecutionDelegate(Task task, String prefix) {
     super(task);
-
     this._prefix = prefix;
-    this._macroDefs = new LinkedList<ScopedMacroDefinition<E>>();
+    this._macroDefs = new ArrayList<ScopedMacroDefinition<E>>();
   }
 
   /**

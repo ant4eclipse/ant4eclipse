@@ -21,8 +21,8 @@ import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -122,7 +122,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
     Assure.notNull("entries", entries);
 
     // convert Files to String
-    List<String> entriesAsString = new LinkedList<String>();
+    List<String> entriesAsString = new ArrayList<String>();
     for (File entry : entries) {
       String path = entry.getPath();
       if (!entriesAsString.contains(path)) {

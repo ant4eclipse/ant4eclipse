@@ -11,13 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
 import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectPathTask;
@@ -34,6 +27,13 @@ import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -70,7 +70,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   private String                          _bundleVersion;
 
   /** the bundle specifications */
-  private LinkedList<BundleSpecification> _bundleSpecifications;
+  private ArrayList<BundleSpecification>  _bundleSpecifications;
 
   /** */
   private Set<BundleDescription>          _resolvedBundleDescriptions;
@@ -86,7 +86,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     this._getPathComponent = new GetPathDelegate(this);
     this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
 
-    this._bundleSpecifications = new LinkedList<BundleSpecification>();
+    this._bundleSpecifications = new ArrayList<BundleSpecification>();
     this._resolvedBundleDescriptions = new HashSet<BundleDescription>();
   }
 
@@ -390,7 +390,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     }
 
     // step 4: resolve the path
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     for (BundleDescription bundleDescription : this._resolvedBundleDescriptions) {
 

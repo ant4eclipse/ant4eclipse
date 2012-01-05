@@ -240,7 +240,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     //
     // List rejected = null;
     // if (this._unavailableProjects != null) {
-    // rejected = new LinkedList();
+    // rejected = new ArrayList();
     // }
     // if (isReadFromClasspath()) {
     // referencedProjects = ReferencedProjectsResolver.getProjectsReferencedByClasspath(getEclipseProject(),

@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspath;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -40,7 +40,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * </p>
    */
   public ResolvedClasspathImpl() {
-    this._classpath = new LinkedList<ResolvedClasspathEntry>();
+    this._classpath = new ArrayList<ResolvedClasspathEntry>();
   }
 
   /**
@@ -129,7 +129,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
   private File[] resolveClasspathToFiles(List<ResolvedClasspathEntry> classpath) {
 
     // create result
-    List<File> result = new LinkedList<File>();
+    List<File> result = new ArrayList<File>();
 
     // add all files
     for (Object element : classpath) {

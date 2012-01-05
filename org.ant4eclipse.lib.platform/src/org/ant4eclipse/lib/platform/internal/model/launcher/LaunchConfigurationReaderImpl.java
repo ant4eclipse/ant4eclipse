@@ -22,7 +22,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader {
@@ -72,7 +72,7 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
 
     public final static String          LIST_ATTRIBUTE_ELEMENT_NAME       = "listAttribute";
 
-    private List<LaunchConfigAttribute> _attributes                       = new LinkedList<LaunchConfigAttribute>();
+    private List<LaunchConfigAttribute> _attributes                       = new ArrayList<LaunchConfigAttribute>();
 
     private String                      _launchConfigurationType;
 

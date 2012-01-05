@@ -13,7 +13,7 @@ package org.ant4eclipse.lib.jdt.internal.model.project;
 
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntryResolver {
@@ -24,7 +24,7 @@ public class EntryResolver {
    */
   public static <T> List<T> resolveEntries(Condition<T> condition, JavaProjectRoleImpl javaProjectRole) {
 
-    List<T> result = new LinkedList<T>();
+    List<T> result = new ArrayList<T>();
 
     RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
 

@@ -15,7 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.osgi.framework.Version;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -104,9 +104,9 @@ public class FeatureManifestImpl implements FeatureManifest {
   public FeatureManifestImpl() {
 
     // initialize plug-in list
-    this._plugins = new LinkedList<Plugin>();
+    this._plugins = new ArrayList<Plugin>();
 
-    this._includes = new LinkedList<Includes>();
+    this._includes = new ArrayList<Includes>();
   }
 
   /**

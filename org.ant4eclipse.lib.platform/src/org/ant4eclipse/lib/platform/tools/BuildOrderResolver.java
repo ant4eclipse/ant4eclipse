@@ -17,8 +17,8 @@ import org.ant4eclipse.lib.core.dependencygraph.VertexRenderer;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -91,7 +91,7 @@ public class BuildOrderResolver {
     List<EclipseProject> orderProjects = dependencyGraph.calculateOrder();
 
     // filter result - only the requested projects should be listed
-    List<EclipseProject> result = new LinkedList<EclipseProject>();
+    List<EclipseProject> result = new ArrayList<EclipseProject>();
     List<String> names = Arrays.asList(projectNames);
     for (EclipseProject eclipseProject : orderProjects) {
       if (names.contains(eclipseProject.getSpecifiedName())) {

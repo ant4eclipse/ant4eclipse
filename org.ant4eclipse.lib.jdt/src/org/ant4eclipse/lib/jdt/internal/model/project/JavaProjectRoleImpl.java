@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
@@ -28,6 +24,10 @@ import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -54,7 +54,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   public JavaProjectRoleImpl(EclipseProject eclipseProject) {
     super(NAME, eclipseProject);
-    this._eclipseClasspathEntries = new LinkedList<ClasspathEntry>();
+    this._eclipseClasspathEntries = new ArrayList<ClasspathEntry>();
   }
 
   /**
@@ -78,7 +78,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   @Override
   public RawClasspathEntry[] getRawClasspathEntries(int entrykind) {
-    LinkedList<ClasspathEntry> templist = new LinkedList<ClasspathEntry>();
+    ArrayList<ClasspathEntry> templist = new ArrayList<ClasspathEntry>();
     for (ClasspathEntry entry : this._eclipseClasspathEntries) {
       if (entry.getEntryKind() == entrykind) {
         templist.add(entry);

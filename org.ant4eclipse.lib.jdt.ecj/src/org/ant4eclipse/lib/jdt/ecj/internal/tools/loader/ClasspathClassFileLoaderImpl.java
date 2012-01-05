@@ -335,7 +335,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     Assure.isFile("jar", jar);
 
     // prepare result...
-    List<String> result = new LinkedList<String>();
+    List<String> result = new ArrayList<String>();
 
     // create the jarFile wrapper...
     JarFile jarFile = null;
@@ -429,7 +429,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    */
   private String[] getAllPackagesFromDirectory(File directory) {
 
-    List<String> result = new LinkedList<String>();
+    List<String> result = new ArrayList<String>();
 
     File[] children = directory.listFiles(new FileFilter() {
       @Override
@@ -537,8 +537,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * </p>
      */
     public PackageProvider() {
-      this._classpathEntries = new LinkedList<File>();
-      this._sourcepathEntries = new LinkedList<File>();
+      this._classpathEntries = new ArrayList<File>();
+      this._sourcepathEntries = new ArrayList<File>();
     }
 
     /**

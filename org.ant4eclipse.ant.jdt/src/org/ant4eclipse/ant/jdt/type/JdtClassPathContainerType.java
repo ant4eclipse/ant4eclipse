@@ -20,8 +20,8 @@ import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.resources.Union;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -95,7 +95,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
         ClassPathElementsRegistry.class);
 
     // fetch the provided files
-    List<File> files = new LinkedList<File>();
+    List<File> files = new ArrayList<File>();
     @SuppressWarnings("unchecked")
     Iterator<FileResource> iterator = this._resources.iterator();
     while (iterator.hasNext()) {

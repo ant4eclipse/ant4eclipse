@@ -17,8 +17,8 @@ import org.junit.Assert;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -41,10 +41,10 @@ public class EclipseProjectBuilder {
   public EclipseProjectBuilder(String projectName) {
     Assert.assertNotNull(projectName);
     this._projectName = projectName;
-    this._natures = new LinkedList<String>();
-    this._builders = new LinkedList<String>();
-    this._resources = new LinkedList<File>();
-    this._referencedProjects = new LinkedList<String>();
+    this._natures = new ArrayList<String>();
+    this._builders = new ArrayList<String>();
+    this._resources = new ArrayList<File>();
+    this._referencedProjects = new ArrayList<String>();
   }
 
   /**

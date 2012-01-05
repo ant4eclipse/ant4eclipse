@@ -56,7 +56,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    */
   public CompilerRequestorImpl() {
     this._compilationSuccessful = true;
-    this._categorizedProblems = new LinkedList<CategorizedProblem>();
+    this._categorizedProblems = new ArrayList<CategorizedProblem>();
     this._compiledClassFiles = new Hashtable<String, File>();
   }
 

@@ -11,16 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
@@ -36,6 +26,15 @@ import org.eclipse.osgi.internal.resolver.StateHelperImpl;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -76,7 +75,7 @@ public class BundleDependenciesResolver {
     BundleDescription rootDescription = isFragment(description) ? getHost(description) : description;
 
     // step 3: get visible packages that are exported by other bundles
-    List<ExportPackageDescription> allPackageDescriptions = new LinkedList<ExportPackageDescription>();
+    List<ExportPackageDescription> allPackageDescriptions = new ArrayList<ExportPackageDescription>();
 
     // step 4: add the host visible packages
     allPackageDescriptions.addAll(Arrays.asList(StateHelperImpl.getInstance().getVisiblePackages(rootDescription)));
@@ -132,7 +131,7 @@ public class BundleDependenciesResolver {
    */
   private List<ExportPackageDescription> addAdditionalPackages(TargetPlatform targetPlatform, String[] additionalBundles) {
 
-    List<ExportPackageDescription> result = new LinkedList<ExportPackageDescription>();
+    List<ExportPackageDescription> result = new ArrayList<ExportPackageDescription>();
 
     for (String additionalBundle : additionalBundles) {
       A4ELogging.debug("Adding additional bundle '%s'", additionalBundle);
@@ -310,8 +309,8 @@ public class BundleDependenciesResolver {
     public ResolvedClasspathEntry getResolvedClasspathEntry() {
 
       // create the list of all contained files
-      List<File> classfiles = new LinkedList<File>();
-      List<File> sourcefiles = new LinkedList<File>();
+      List<File> classfiles = new ArrayList<File>();
+      List<File> sourcefiles = new ArrayList<File>();
 
       // resolve the host
       BundleLayoutResolver layoutResolver = getBundleLayoutResolver(this._bundleDescription);
@@ -354,7 +353,7 @@ public class BundleDependenciesResolver {
     public List<EclipseProject> getReferencedPluginProjects() {
 
       // create the result list
-      List<EclipseProject> result = new LinkedList<EclipseProject>();
+      List<EclipseProject> result = new ArrayList<EclipseProject>();
 
       // add the host if it is an eclipse project
       BundleSource bundleSource = (BundleSource) this._bundleDescription.getUserObject();

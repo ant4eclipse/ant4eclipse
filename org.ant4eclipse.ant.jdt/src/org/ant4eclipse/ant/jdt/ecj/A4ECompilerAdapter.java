@@ -41,8 +41,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -242,7 +242,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     File defaultDestinationFolder = getJavac().getDestdir();
 
     // get the files to compile
-    List<SourceFile> sourceFiles = new LinkedList<SourceFile>();
+    List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
 
     File[] filelist = getJavac().getFileList();
     for (File file : filelist) {
@@ -253,7 +253,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     if ((compilerArguments != null) && compilerArguments.hasSourceFilteredFilesetPath()) {
 
       // create the result list
-      List<File> files = new LinkedList<File>();
+      List<File> files = new ArrayList<File>();
 
       Path path = compilerArguments.getSourceFilteredFilesetPath();
       Iterator<?> iterator = path.iterator();
@@ -396,7 +396,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
   private ClassFileLoader createClassFileLoader(EcjAdditionalCompilerArguments compilerArguments) {
 
     // Step 1: create class file loader list
-    List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
+    List<ClassFileLoader> classFileLoaderList = new ArrayList<ClassFileLoader>();
 
     // Step 2: add boot class loader
     classFileLoaderList.add(createBootClassLoader(compilerArguments));
@@ -471,7 +471,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // }
 
     // Step 2: create ClassFileLoaders for each entry in the boot class path
-    List<ClassFileLoader> bootClassFileLoaders = new LinkedList<ClassFileLoader>();
+    List<ClassFileLoader> bootClassFileLoaders = new ArrayList<ClassFileLoader>();
 
     // Step 3: iterate over the boot class path entries as specified in the ant path
     for (Iterator<FileResource> iterator = bootclasspath.iterator(); iterator.hasNext();) {

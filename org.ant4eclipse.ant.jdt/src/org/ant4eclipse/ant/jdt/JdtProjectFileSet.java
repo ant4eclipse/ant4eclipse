@@ -1,10 +1,5 @@
 package org.ant4eclipse.ant.jdt;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.StringTokenizer;
-
 import org.ant4eclipse.ant.platform.core.task.AbstractAnt4EclipseFileSet;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -15,6 +10,11 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.FileResource;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * A {@link ResourceCollection} that includes all contents of source and/or output folders of a jdt project
@@ -31,12 +31,12 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
   /**
    * List of all patterns that defines resources to be includes
    */
-  private List<Pattern> _includePatterns      = new LinkedList<Pattern>();
+  private List<Pattern> _includePatterns      = new ArrayList<Pattern>();
 
   /**
    * List of all patterns that defines resources to be excludes
    */
-  private List<Pattern> _excludePatterns      = new LinkedList<Pattern>();
+  private List<Pattern> _excludePatterns      = new ArrayList<Pattern>();
 
   public JdtProjectFileSet(Project project) {
     super(project);
@@ -152,7 +152,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
       return null;
     }
 
-    List<String> allExcludes = new LinkedList<String>();
+    List<String> allExcludes = new ArrayList<String>();
     for (Pattern pattern : this._excludePatterns) {
       if (pattern.isValid()) {
         allExcludes.add(pattern.getName());
@@ -171,14 +171,12 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     if (this._includePatterns.isEmpty()) {
       return null;
     }
-
-    List<String> allIncludes = new LinkedList<String>();
+    List<String> allIncludes = new ArrayList<String>();
     for (Pattern pattern : this._includePatterns) {
       if (pattern.isValid()) {
         allIncludes.add(pattern.getName());
       }
     }
-
     return allIncludes.toArray(new String[allIncludes.size()]);
   }
 

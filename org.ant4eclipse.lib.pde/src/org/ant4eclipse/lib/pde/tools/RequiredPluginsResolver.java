@@ -11,10 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import java.io.File;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
@@ -35,6 +31,10 @@ import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -136,7 +136,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
       if (context.isRuntime()) {
         // add dependent bundles
-        List<BundleDependency> dependencies = new LinkedList<BundleDependenciesResolver.BundleDependency>(
+        List<BundleDependency> dependencies = new ArrayList<BundleDependenciesResolver.BundleDependency>(
             bundleDependencies);
         for (BundleDependency dependency : dependencies) {
           addDependentBundles(dependency, bundleDependencies);

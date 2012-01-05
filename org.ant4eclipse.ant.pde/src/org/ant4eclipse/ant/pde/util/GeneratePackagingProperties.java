@@ -14,9 +14,9 @@ package org.ant4eclipse.ant.pde.util;
 import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -105,7 +105,7 @@ public class GeneratePackagingProperties {
       case 3:
         this.arch = directory.getName();
         if (!this.fileMap.containsKey(this.ws + "." + this.os + "." + this.arch)) {
-          this.fileList = new LinkedList<String>();
+          this.fileList = new ArrayList<String>();
           this.fileMap.put(this.ws + "." + this.os + "." + this.arch, this.fileList);
         }
         break;

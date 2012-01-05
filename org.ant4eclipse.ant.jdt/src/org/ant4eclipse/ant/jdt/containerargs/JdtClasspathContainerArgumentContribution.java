@@ -20,7 +20,7 @@ import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +114,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
     }
 
     // create the lists of dynamic attributes
-    this._attributeList = new LinkedList<String>();
+    this._attributeList = new ArrayList<String>();
 
     // get all properties that defines a SubElementContributor
     Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);

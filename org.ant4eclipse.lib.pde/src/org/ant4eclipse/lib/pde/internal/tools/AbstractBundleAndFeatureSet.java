@@ -59,10 +59,10 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     this._description = description;
 
     // create the bundle description list
-    this._bundleDescriptionList = new LinkedList<BundleDescription>();
+    this._bundleDescriptionList = new ArrayList<BundleDescription>();
 
     // create the feature description list
-    this._featureDescriptionList = new LinkedList<FeatureDescription>();
+    this._featureDescriptionList = new ArrayList<FeatureDescription>();
   }
 
   /**

@@ -13,8 +13,8 @@ import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection,
@@ -53,7 +53,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
     this._eclipseProjectDelegate = new EclipseProjectDelegate(this);
 
     // create the result list
-    this._resourceList = new LinkedList<Resource>();
+    this._resourceList = new ArrayList<Resource>();
   }
 
   /**
