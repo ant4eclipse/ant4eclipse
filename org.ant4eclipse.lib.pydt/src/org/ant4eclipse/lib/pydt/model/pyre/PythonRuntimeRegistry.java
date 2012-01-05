@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model.pyre;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.pydt.model.PythonInterpreter;
 
 import java.io.File;
@@ -21,7 +22,7 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public interface PythonRuntimeRegistry {
+public interface PythonRuntimeRegistry extends A4EService {
 
   /**
    * Registers a Python runtime that is specified using the given location with this registry.

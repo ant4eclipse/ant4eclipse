@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pydt.internal.model.pyre;
 
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -39,7 +38,7 @@ import java.util.Map;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecycle {
+public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
   private static final String        PROP_INTERPRETER         = "interpreter.";
 
@@ -68,6 +67,41 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
   private File                       _currentdir              = null;
 
   private PythonInterpreter[]        _interpreters            = null;
+
+  public PythonRuntimeRegistryImpl() {
+
+    // export the python lister script, so it can be executed in order to access the pythonpath
+    this._pythonlister = Utilities.exportResource("/org/ant4eclipse/lib/pydt/lister.py");
+    if (!this._pythonlister.isAbsolute()) {
+      this._pythonlister = this._pythonlister.getAbsoluteFile();
+    }
+    this._listerdir = this._pythonlister.getParentFile();
+    this._currentdir = new File(".");
+    this._listerdir = Utilities.getCanonicalFile(this._listerdir);
+    this._currentdir = Utilities.getCanonicalFile(this._currentdir);
+
+    // load the python interpreter configurations
+    URL cfgurl = getClass().getResource("/org/ant4eclipse/lib/pydt/python.properties");
+    if (cfgurl == null) {
+      throw new Ant4EclipseException(PydtExceptionCode.MISSINGPYTHONPROPERTIES);
+    }
+    StringMap props = new StringMap(cfgurl);
+    List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
+    for (Map.Entry<String, String> entry : props.entrySet()) {
+      if (entry.getKey().startsWith(PROP_INTERPRETER)) {
+        String name = entry.getKey().substring(PROP_INTERPRETER.length());
+        String[] exes = Utilities.cleanup(entry.getValue().split(","));
+        if (exes == null) {
+          throw new Ant4EclipseException(PydtExceptionCode.MISSINGEXECUTABLES, entry.getKey());
+        }
+        Arrays.sort(exes);
+        interpreters.add(new PythonInterpreter(name, exes));
+      }
+    }
+    this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
+    Arrays.sort(this._interpreters);
+
+  }
 
   /**
    * Tries to determine the location of a python interpreter.
@@ -283,39 +317,15 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry, Lifecyc
    * {@inheritDoc}
    */
   @Override
-  public void initialize() {
+  public Integer getPriority() {
+    return null;
+  }
 
-    // export the python lister script, so it can be executed in order to access the pythonpath
-    this._pythonlister = Utilities.exportResource("/org/ant4eclipse/lib/pydt/lister.py");
-    if (!this._pythonlister.isAbsolute()) {
-      this._pythonlister = this._pythonlister.getAbsoluteFile();
-    }
-    this._listerdir = this._pythonlister.getParentFile();
-    this._currentdir = new File(".");
-    this._listerdir = Utilities.getCanonicalFile(this._listerdir);
-    this._currentdir = Utilities.getCanonicalFile(this._currentdir);
-
-    // load the python interpreter configurations
-    URL cfgurl = getClass().getResource("/org/ant4eclipse/lib/pydt/python.properties");
-    if (cfgurl == null) {
-      throw new Ant4EclipseException(PydtExceptionCode.MISSINGPYTHONPROPERTIES);
-    }
-    StringMap props = new StringMap(cfgurl);
-    List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
-    for (Map.Entry<String, String> entry : props.entrySet()) {
-      if (entry.getKey().startsWith(PROP_INTERPRETER)) {
-        String name = entry.getKey().substring(PROP_INTERPRETER.length());
-        String[] exes = Utilities.cleanup(entry.getValue().split(","));
-        if (exes == null) {
-          throw new Ant4EclipseException(PydtExceptionCode.MISSINGEXECUTABLES, entry.getKey());
-        }
-        Arrays.sort(exes);
-        interpreters.add(new PythonInterpreter(name, exes));
-      }
-    }
-    this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
-    Arrays.sort(this._interpreters);
-
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
   }
 
 } /* ENDCLASS */

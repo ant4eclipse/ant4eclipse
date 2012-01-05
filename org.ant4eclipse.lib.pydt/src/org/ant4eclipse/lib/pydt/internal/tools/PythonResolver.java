@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;
@@ -70,8 +70,8 @@ public class PythonResolver {
    */
   public PythonResolver(Workspace workspace, Mode mode, boolean ignoreruntimes) {
     Assure.notNull("workspace", workspace);
-    this._pathregistry = ServiceRegistryAccess.instance().getService(PathEntryRegistry.class);
-    this._runtimeregistry = ServiceRegistryAccess.instance().getService(PythonRuntimeRegistry.class);
+    this._pathregistry = A4ECore.instance().getRequiredService(PathEntryRegistry.class);
+    this._runtimeregistry = A4ECore.instance().getRequiredService(PythonRuntimeRegistry.class);
     this._workspace = workspace;
     this._ignoreruntimes = ignoreruntimes;
     this._mode = mode;

@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.tools;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.pydt.model.RawPathEntry;
 import org.ant4eclipse.lib.pydt.model.ResolvedPathEntry;
 
@@ -20,7 +21,7 @@ import org.ant4eclipse.lib.pydt.model.ResolvedPathEntry;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public interface PathEntryRegistry {
+public interface PathEntryRegistry extends A4EService {
 
   /**
    * Returns <code>true</code> if the supplied entry already has been resolved.

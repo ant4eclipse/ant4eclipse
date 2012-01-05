@@ -32,7 +32,7 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
    * Initialises this registry for path entries.
    */
   public PathEntryRegistryImpl() {
-    this._resolvedentries = new Hashtable<RawPathEntry, ResolvedPathEntry>();
+    _resolvedentries = new Hashtable<RawPathEntry, ResolvedPathEntry>();
   }
 
   /**
@@ -41,26 +41,42 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
   @Override
   public boolean isResolved(RawPathEntry entry) {
     Assure.notNull("entry", entry);
-    return this._resolvedentries.containsKey(entry);
+    return _resolvedentries.containsKey(entry);
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void registerResolvedPathEntry(RawPathEntry origin, ResolvedPathEntry solution) {
+  public void registerResolvedPathEntry( RawPathEntry origin, ResolvedPathEntry solution ) {
     Assure.notNull("origin", origin);
     Assure.notNull("solution", solution);
-    this._resolvedentries.put(origin, solution);
+    _resolvedentries.put( origin, solution );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ResolvedPathEntry getResolvedPathEntry(RawPathEntry entry) {
+  public ResolvedPathEntry getResolvedPathEntry( RawPathEntry entry ) {
     Assure.notNull("entry", entry);
-    return this._resolvedentries.get(entry);
+    return _resolvedentries.get(entry);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+    _resolvedentries.clear();
   }
 
 } /* ENDCLASS */

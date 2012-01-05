@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.tools;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 import java.io.File;
 
 /**
@@ -18,7 +20,7 @@ import java.io.File;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public interface PythonTools {
+public interface PythonTools extends A4EService {
 
   /**
    * Returns the location of the epydoc installation.

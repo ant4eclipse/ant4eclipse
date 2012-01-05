@@ -12,9 +12,9 @@
 package org.ant4eclipse.ant.pydt;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pydt.PydtExceptionCode;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntime;
@@ -96,7 +96,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
     if (this._runtimeid == null) {
       throw new Ant4EclipseException(PydtExceptionCode.MISSINGATTRIBUTE, "runtime");
     }
-    PythonRuntimeRegistry registry = ServiceRegistryAccess.instance().getService(PythonRuntimeRegistry.class);
+    PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService(PythonRuntimeRegistry.class);
     if (!registry.hasRuntime(this._runtimeid)) {
       throw new Ant4EclipseException(PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, this._runtimeid);
     }
@@ -108,7 +108,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
   @Override
   protected void doExecute() {
 
-    PythonRuntimeRegistry registry = ServiceRegistryAccess.instance().getService(PythonRuntimeRegistry.class);
+    PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService(PythonRuntimeRegistry.class);
     PythonRuntime runtime = registry.getRuntime(this._runtimeid);
 
     if (runtime.getVersion().getMajor() >= 3) {
@@ -117,7 +117,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
       return;
     }
 
-    PythonTools pythontools = ServiceRegistryAccess.instance().getService(PythonTools.class);
+    PythonTools pythontools = A4ECore.instance().getRequiredService(PythonTools.class);
     File install = pythontools.getEpydocInstallation();
     if (install == null) {
       A4ELogging.warn(MSG_DOCS_NOT_AVAILABLE);
