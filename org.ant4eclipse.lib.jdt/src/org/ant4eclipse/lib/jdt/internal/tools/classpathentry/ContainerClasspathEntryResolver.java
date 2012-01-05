@@ -25,8 +25,8 @@ import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

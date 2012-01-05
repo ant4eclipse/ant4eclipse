@@ -18,8 +18,8 @@ import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

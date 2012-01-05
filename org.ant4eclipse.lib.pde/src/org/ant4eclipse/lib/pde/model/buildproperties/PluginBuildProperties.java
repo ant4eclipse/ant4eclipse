@@ -11,15 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.buildproperties;
 
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
-
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)

@@ -27,8 +27,11 @@ public abstract class AbstractProjectRoleIdentifier implements ProjectRoleIdenti
   private Set<ProjectNature>   projectnatures;
 
   public AbstractProjectRoleIdentifier( String nature, String ... nicks ) {
-    nicknames       = nicks; 
-    projectnatures  = ProjectNature.createNatures( nature );
+    nicknames       = nicks;
+    projectnatures  = null;
+    if( nature != null ) {
+      projectnatures  = ProjectNature.createNatures( nature );
+    }
   }
 
   public AbstractProjectRoleIdentifier( String[] natures, String[] nicks ) {

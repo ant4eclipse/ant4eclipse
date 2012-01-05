@@ -18,8 +18,8 @@ import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathVariable;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
