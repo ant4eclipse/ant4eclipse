@@ -6,6 +6,7 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -126,10 +127,9 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
    * @return
    */
   protected MacroExecutionValues provideDefaultMacroExecutionValues(MacroExecutionValues values) {
-    final LaunchConfiguration launchConfiguration = getLaunchConfiguration();
-    final EclipseStringSubstitutionService eclipseVariableResolver = ServiceRegistryAccess.instance().getService(
-        EclipseStringSubstitutionService.class);
-    final Collection<String> attributeNames = launchConfiguration.getAttributeNames();
+    LaunchConfiguration launchConfiguration = getLaunchConfiguration();
+    EclipseStringSubstitutionService eclipseVariableResolver = A4ECore.instance().getRequiredService( EclipseStringSubstitutionService.class ); 
+    Collection<String> attributeNames = launchConfiguration.getAttributeNames();
     for (String attributeName : attributeNames) {
       String rawAttributeValue = launchConfiguration.getAttribute(attributeName);
       String attributeValue = eclipseVariableResolver.substituteEclipseVariables(rawAttributeValue,

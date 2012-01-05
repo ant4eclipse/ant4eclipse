@@ -8,13 +8,9 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
  * TODO
  * 
  * @author nils
- * 
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class PlatformEclipseVariableResolver implements EclipseVariableResolver {
-
-  public PlatformEclipseVariableResolver(String key) {
-    // 
-  }
 
   /**
    * TODO implement
@@ -33,4 +29,19 @@ public class PlatformEclipseVariableResolver implements EclipseVariableResolver 
     resolvedVariables.put("workspace_loc", eclipseProject.getFolder().getParent());
   }
 
-}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
+} /* ENDCLASS */

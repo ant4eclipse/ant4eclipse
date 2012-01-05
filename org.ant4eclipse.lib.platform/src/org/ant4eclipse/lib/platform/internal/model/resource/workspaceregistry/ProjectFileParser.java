@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
@@ -241,9 +242,7 @@ public class ProjectFileParser {
   }
 
   private static EclipseStringSubstitutionService getEclipseVariableResolver() {
-    EclipseStringSubstitutionService resolver = ServiceRegistryAccess.instance().getService(
-        EclipseStringSubstitutionService.class);
-    return resolver;
+    return A4ECore.instance().getRequiredService( EclipseStringSubstitutionService.class );  
   }
 
 } /* ENDCLASS */

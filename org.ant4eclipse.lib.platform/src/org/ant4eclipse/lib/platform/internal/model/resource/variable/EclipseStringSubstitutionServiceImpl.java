@@ -11,18 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.variable;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.core.util.StringMap;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Vector;
@@ -33,46 +28,25 @@ import java.util.Vector;
  * </p>
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubstitutionService {
 
   private EclipseVariableResolver[] _eclipseVariableResolvers;
+  private PropertyParser            _propertyParser;
 
-  /**
-   * The prefix of properties that holds class names of EclipseVariableResolvers
-   */
-  public static final String        PREFIX_VARIABLE_RESOLVER = "eclipseVariableResolver";
-
-  /** Parser used to parse a String with properties */
-  private PropertyParser            _propertyParser          = new PropertyParser();
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> entries = config.getAllProperties(PREFIX_VARIABLE_RESOLVER);
-
-    List<EclipseVariableResolver> resolvers = new ArrayList<EclipseVariableResolver>();
-
-    // Instantiate all ProjectRoleIdentifiers
-    for (Pair<String, String> types : entries) {
-      // we're not interested in the key of a project validator. only the classname (value of the entry) is relevant
-      EclipseVariableResolver eclipseVariableResolver = Utilities.newInstance(types.getSecond(), types.getFirst());
-      A4ELogging.trace("Register EclipseVariableResolver '%s'", eclipseVariableResolver);
-      resolvers.add(eclipseVariableResolver);
-    }
-
-    this._eclipseVariableResolvers = resolvers.toArray(new EclipseVariableResolver[resolvers.size()]);
-    //
+  public EclipseStringSubstitutionServiceImpl() {
+    _propertyParser = new PropertyParser();
+    List<EclipseVariableResolver> resolvers = A4ECore.instance().getServices( EclipseVariableResolver.class );
+    _eclipseVariableResolvers = new EclipseVariableResolver[ resolvers.size() ];
+    resolvers.toArray( _eclipseVariableResolvers );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
+  public String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
     Assure.notNull("string", string);
     // resolve Eclipse variables
     StringMap eclipseVariables = getEclipseVariables(project);
@@ -115,7 +89,7 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
    * @param properties
    * @return
    */
-  private final String resolveProperties(String value, StringMap properties) {
+  private String resolveProperties(String value, StringMap properties) {
 
     Vector<String> fragments = new Vector<String>();
     Vector<String> propertyRefs = new Vector<String>();
@@ -156,4 +130,19 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
     return sb.toString();
   }
 
-}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
+} /* ENDCLASS */
