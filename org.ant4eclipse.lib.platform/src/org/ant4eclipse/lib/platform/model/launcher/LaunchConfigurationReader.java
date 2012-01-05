@@ -11,15 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.launcher;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 import java.io.File;
 
 /**
- * 
  * Reads and parses a Eclipse <tt>.launch</tt> configuration file
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface LaunchConfigurationReader {
+public interface LaunchConfigurationReader extends A4EService {
 
   /**
    * Read the specified launchConfigurationFile.
@@ -30,4 +32,4 @@ public interface LaunchConfigurationReader {
    */
   LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile);
 
-}
+} /* ENDINTERFACE */

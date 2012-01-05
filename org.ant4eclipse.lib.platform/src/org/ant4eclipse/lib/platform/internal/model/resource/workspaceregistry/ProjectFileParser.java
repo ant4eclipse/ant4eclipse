@@ -14,7 +14,6 @@ package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
 import org.ant4eclipse.lib.core.xquery.XQueryHandler;
@@ -146,9 +145,7 @@ public class ProjectFileParser {
       if (!locationAsFile.exists() && location.contains("/")) {
         String variableName = location.substring(0, location.indexOf("/"));
 
-        LinkedResourcePathVariableService variableService = ServiceRegistryAccess.instance().getService(
-            LinkedResourcePathVariableService.class);
-
+        LinkedResourcePathVariableService variableService = A4ECore.instance().getRequiredService(LinkedResourcePathVariableService.class);
         String variable = variableService.getLinkedResourcePath(variableName);
 
         if (variable != null) {

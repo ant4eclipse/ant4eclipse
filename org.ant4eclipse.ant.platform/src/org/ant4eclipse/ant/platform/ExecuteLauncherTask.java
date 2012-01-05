@@ -100,8 +100,7 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
     if (this._launchConfiguration == null) {
 
-      LaunchConfigurationReader launchConfigurationReader = ServiceRegistryAccess.instance().getService(
-          LaunchConfigurationReader.class);
+      LaunchConfigurationReader launchConfigurationReader = A4ECore.instance().getRequiredService(LaunchConfigurationReader.class);
 
       final LaunchConfiguration launchConfiguration = launchConfigurationReader
           .readLaunchConfiguration(getLaunchConfigurationFile());

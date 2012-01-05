@@ -25,6 +25,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nils Hartmann (nils@nilshartmann.net)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
+ */
 public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader {
 
   private SAXParserFactory _saxParserFactory;
@@ -123,5 +127,20 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
     }
 
   }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
 
-}
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
+} /* ENDCLASS */

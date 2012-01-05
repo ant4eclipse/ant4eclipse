@@ -11,14 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 /**
  * <p>
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
- * 
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface LinkedResourcePathVariableService {
+public interface LinkedResourcePathVariableService extends A4EService {
 
   /**
    * <p>

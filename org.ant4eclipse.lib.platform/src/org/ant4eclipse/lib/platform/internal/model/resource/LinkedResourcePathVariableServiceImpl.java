@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService;
 
 import java.util.HashMap;
@@ -23,36 +22,46 @@ import java.util.Map;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePathVariableService, Lifecycle {
+public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePathVariableService {
 
-  /** the variables map */
   private Map<String, String> _variables;
 
+  public LinkedResourcePathVariableServiceImpl() {
+    this._variables = new HashMap<String, String>();
+  }
+  
   /**
-   * @see org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService#getLinkedResourcePath(java.lang.String)
+   * {@inheritDoc}
    */
   @Override
   public String getLinkedResourcePath(String pathVariable) {
-    return this._variables.get(pathVariable);
+    return _variables.get(pathVariable);
   }
 
   /**
-   * @see org.ant4eclipse.lib.platform.model.resource.LinkedResourcePathVariableService#registerLinkedResourcePathVariable(java.lang.String,
-   *      java.lang.String)
+   * {@inheritDoc}
    */
   @Override
   public void registerLinkedResourcePathVariable(String pathVariable, String location) {
-    this._variables.put(pathVariable, location);
+    _variables.put(pathVariable, location);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
   }
 
   /**
-   * @see org.ant4eclipse.lib.core.Lifecycle#initialize()
+   * {@inheritDoc}
    */
   @Override
-  public void initialize() {
-    // initialize the variables map
-    this._variables = new HashMap<String, String>();
+  public void reset() {
+    _variables.clear();
   }
 
-}
+} /* ENDCLASS */
