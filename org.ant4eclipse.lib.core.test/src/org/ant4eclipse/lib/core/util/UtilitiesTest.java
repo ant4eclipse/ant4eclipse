@@ -29,6 +29,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -230,7 +231,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     Assert.assertEquals("Bla", result.get(0));
 
     input.add(new ArrayList<String>());
-    input.add(new ArrayList<String>());
+    input.add(new LinkedList<String>());
     result = Utilities.filter(input, String.class);
     Assert.assertEquals(1, result.size());
     Assert.assertEquals("Bla", result.get(0));
@@ -240,9 +241,9 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     Assert.assertTrue(result.get(0) instanceof List<?>);
     Assert.assertTrue(result.get(1) instanceof List<?>);
 
-    result = Utilities.filter(input, ArrayList.class);
+    result = Utilities.filter(input, LinkedList.class);
     Assert.assertEquals(1, result.size());
-    Assert.assertTrue(result.get(0) instanceof ArrayList<?>);
+    Assert.assertTrue(result.get(0) instanceof LinkedList<?>);
 
   }
 
