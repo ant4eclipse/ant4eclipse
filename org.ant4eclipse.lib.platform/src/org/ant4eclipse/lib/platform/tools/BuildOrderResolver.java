@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.tools;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.dependencygraph.DependencyGraph;
 import org.ant4eclipse.lib.core.dependencygraph.VertexRenderer;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
@@ -68,10 +68,12 @@ public class BuildOrderResolver {
       }
 
       // resolve referenced projects
-      List<EclipseProject> referencedProjects = referenceTypes != null ? ServiceRegistryAccess.instance().getService(
-          ReferencedProjectsResolverService.class).resolveReferencedProjects(eclipseProject, referenceTypes,
-          additionalElements) : ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class)
-          .resolveReferencedProjects(eclipseProject, additionalElements);
+      ReferencedProjectsResolverService resolverservice = A4ECore.instance().getRequiredService( ReferencedProjectsResolverService.class );
+      if( referenceTypes == null ) {
+        referenceTypes = resolverservice.getReferenceTypes();
+      }
+      
+      List<EclipseProject>  referencedProjects = resolverservice.resolveReferencedProjects(eclipseProject, referenceTypes, additionalElements);
 
       // add referenced projects to the dependency graph
       for (EclipseProject referencedProject : referencedProjects) {

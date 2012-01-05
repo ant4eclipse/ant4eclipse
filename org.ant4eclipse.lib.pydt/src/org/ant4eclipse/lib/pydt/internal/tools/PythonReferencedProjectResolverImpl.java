@@ -117,4 +117,27 @@ public class PythonReferencedProjectResolverImpl implements ReferencedProjectsRe
     return UsedProjectsArgumentComponent.DEFAULT;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getReferenceType() {
+    return "pydt";
+  }
+  
 } /* ENDCLASS */

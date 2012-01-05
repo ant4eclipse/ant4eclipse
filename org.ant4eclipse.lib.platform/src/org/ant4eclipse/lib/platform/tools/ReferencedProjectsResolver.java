@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.tools;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;
@@ -30,9 +31,18 @@ import java.util.List;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface ReferencedProjectsResolver {
+public interface ReferencedProjectsResolver extends A4EService {
 
+  /**
+   * Returns the reference type which identifies references to be looked for using this resolver.
+   * 
+   * @return   The reference type which identifies references to be looked for using this resolver.
+   *           Neither <code>null</code> nor empty.
+   */
+  String getReferenceType();
+  
   /**
    * <p>
    * Returns if this {@link ReferencedProjectsResolver} can resolve referenced projects for the given project.

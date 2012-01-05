@@ -20,7 +20,7 @@ import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +28,7 @@ import java.util.List;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
- * 
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResolver {
 
@@ -36,39 +36,66 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    * {@inheritDoc}
    */
   @Override
-  public boolean canHandle(EclipseProject project) {
-    return project.hasRole(JavaProjectRole.class);
+  public boolean canHandle( EclipseProject project ) {
+    return project.hasRole( JavaProjectRole.class );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
+  public List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<Object> additionalElements ) {
     Assure.notNull("project", project);
 
-    List<JdtClasspathContainerArgument> classpathContainerArguments = new LinkedList<JdtClasspathContainerArgument>();
-
-    if (additionalElements != null) {
-      for (Object object : additionalElements) {
-        if (object instanceof JdtClasspathContainerArgument) {
-          JdtClasspathContainerArgument argument = (JdtClasspathContainerArgument) object;
-          classpathContainerArguments.add(argument);
+    List<JdtClasspathContainerArgument> containerargs = new ArrayList<JdtClasspathContainerArgument>();
+    if( additionalElements != null ) {
+      for( Object object : additionalElements ) {
+        if( object instanceof JdtClasspathContainerArgument ) {
+          containerargs.add( (JdtClasspathContainerArgument) object );
         }
       }
     }
     // create a ResolverJob
-    ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, classpathContainerArguments);
+    ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, containerargs );
 
-    ClasspathEntryResolverExecutor classpathEntryResolverExecutor = new ClasspathEntryResolverExecutor(false);
-
-    classpathEntryResolverExecutor.resolve(job.getRootProject(), new ClasspathEntryResolver[] {
-        new ContainerClasspathEntryResolver(), new ProjectClasspathEntryResolver(), },
-        new ClasspathResolverContextImpl(classpathEntryResolverExecutor, job));
+    ClasspathEntryResolverExecutor cpentryresolver = new ClasspathEntryResolverExecutor( false );
+    cpentryresolver.resolve(
+      job.getRootProject(), 
+      new ClasspathEntryResolver[] {
+        new ContainerClasspathEntryResolver(), 
+        new ProjectClasspathEntryResolver(), 
+      },
+      new ClasspathResolverContextImpl( cpentryresolver, job )
+    );
 
     // we need to remove the calling project, since the api states that only referenced projects have to be returned
-    List<EclipseProject> result = classpathEntryResolverExecutor.getReferencedProjects();
-    result.remove(project);
+    List<EclipseProject> result = cpentryresolver.getReferencedProjects();
+    result.remove( project );
     return result;
+    
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getReferenceType() {
+    return "jdt";
+  }
+
+} /* ENDCLASS */

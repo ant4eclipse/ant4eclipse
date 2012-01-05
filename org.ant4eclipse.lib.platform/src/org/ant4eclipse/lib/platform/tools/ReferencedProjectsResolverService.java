@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.tools;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * Resolves all projects that are directly referenced by the specified project.
  * </p>
  */
-public interface ReferencedProjectsResolverService {
+public interface ReferencedProjectsResolverService extends A4EService {
 
   /**
    * <p>

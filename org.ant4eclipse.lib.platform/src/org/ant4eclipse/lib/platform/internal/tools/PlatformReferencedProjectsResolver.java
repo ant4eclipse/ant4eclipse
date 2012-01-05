@@ -14,7 +14,7 @@ package org.ant4eclipse.lib.platform.internal.tools;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
    * {@inheritDoc}
    */
   @Override
-  public boolean canHandle(EclipseProject project) {
+  public boolean canHandle( EclipseProject project ) {
     return true;
   }
 
@@ -34,18 +34,32 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
    * {@inheritDoc}
    */
   @Override
-  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements) {
-
-    // get referenced projects
-    EclipseProject[] eclipseProjects = project.getWorkspace().getProjects(project.getReferencedProjects(), false);
-
-    // copy to result
-    List<EclipseProject> result = new LinkedList<EclipseProject>();
-    for (EclipseProject eclipseProject : eclipseProjects) {
-      result.add(eclipseProject);
-    }
-
-    // return result
-    return result;
+  public List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<Object> additionalElements ) {
+    EclipseProject[] references = project.getWorkspace().getProjects( project.getReferencedProjects(), false );
+    return Arrays.asList( references );
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getReferenceType() {
+    return "platform";
+  }
+  
+} /* ENDCLASS */
