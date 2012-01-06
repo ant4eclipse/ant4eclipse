@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools.classpathelements;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 
 import java.io.File;
@@ -27,8 +28,9 @@ import java.util.Map;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface ClassPathElementsRegistry {
+public interface ClassPathElementsRegistry extends A4EService {
 
   /**
    * <p>

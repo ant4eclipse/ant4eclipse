@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.jdt.type;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.ResourceCollection;
@@ -91,8 +91,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
     // TODO: validate
 
     // fetch the ClassPathElementsRegistry
-    ClassPathElementsRegistry variablesRegistry = ServiceRegistryAccess.instance().getService(
-        ClassPathElementsRegistry.class);
+    ClassPathElementsRegistry variablesRegistry = A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
 
     // fetch the provided files
     List<File> files = new ArrayList<File>();

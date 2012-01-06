@@ -12,9 +12,9 @@
 package org.ant4eclipse.ant.jdt.type;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
@@ -80,7 +80,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     boolean isDefault = runtime.getId().equals(this._defaultJre);
 
-    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
+    JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
 
     // If specified: add files for jre (otherwise required JRE jars are determined automatically)
     List<File> jreFiles = getSelectedJreFiles(runtime);

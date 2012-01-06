@@ -11,12 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.type;
 
-import java.io.File;
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.ant.platform.core.delegate.WorkspaceDelegate;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrariesFileParser;
@@ -26,6 +24,8 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
+
+import java.io.File;
 
 /**
  * Simple path extension that allows to be configured using an eclipse configuration file.
@@ -110,7 +110,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
   private void loadConfigurationFile() {
     try {
 
-      UserLibrariesFileParser parser = ServiceRegistryAccess.instance().getService(UserLibrariesFileParser.class);
+      UserLibrariesFileParser parser = A4ECore.instance().getRequiredService(UserLibrariesFileParser.class);
 
       UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile, getWorkspace());
       String[] libs = userlibs.getAvailableLibraries();
@@ -126,7 +126,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
         getProject().addReference(PREFIX + lib, path);
 
         // add it to the ClassPathElementsRegistry
-        ServiceRegistryAccess.instance().getService(ClassPathElementsRegistry.class)
+        A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class )
             .registerClassPathContainer(PREFIX + library.getName(), library.getArchiveFiles());
       }
     } catch (Exception ex) {

@@ -86,4 +86,12 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return Integer.valueOf(-1);
+  }
+
 } /* ENDCLASS */

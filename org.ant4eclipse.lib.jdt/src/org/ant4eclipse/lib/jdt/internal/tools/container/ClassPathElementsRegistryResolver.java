@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.container;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathContainer;
@@ -52,7 +52,7 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
    * @return
    */
   private ClassPathElementsRegistry getClassPathElementsRegistry() {
-    return ServiceRegistryAccess.instance().getService(ClassPathElementsRegistry.class);
+    return A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
   }
   
   /**

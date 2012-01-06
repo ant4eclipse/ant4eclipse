@@ -1,16 +1,11 @@
 package org.ant4eclipse.ant.pde;
 
-import java.io.File;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.ant4eclipse.ant.pde.analysis.TestClassAnalyser;
 import org.ant4eclipse.ant.platform.ExecuteLauncherTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
@@ -25,6 +20,11 @@ import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.apache.tools.ant.BuildException;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+
+import java.io.File;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -357,7 +357,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   protected JavaRuntime getJavaRuntime() {
 
     // get the java runtime registry
-    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
+    JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
 
     // get the vm path
     String vmPath = getLaunchConfiguration().getAttribute("org.eclipse.jdt.launching.JRE_CONTAINER");

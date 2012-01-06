@@ -44,7 +44,6 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    * </p>
    */
   public ClassPathElementsRegistryImpl() {
-    super();
 
     // create the class path variables map
     this._classpathVariables = new HashMap<String, ClassPathVariable>();
@@ -136,4 +135,23 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
       registerClassPathVariable(var.getKey(), var.getValue());
     }
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+    _classpathVariables.clear();
+    _classpathContainer.clear();
+  }
+  
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return Integer.valueOf(-2);
+  }
+  
+} /* ENDCLASS */

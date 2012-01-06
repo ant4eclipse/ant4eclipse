@@ -11,9 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.userlibrary;
 
-import java.io.File;
-
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
+
+import java.io.File;
 
 /**
  * <p>
@@ -22,7 +23,7 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public interface UserLibrariesFileParser {
+public interface UserLibrariesFileParser extends A4EService {
 
   /**
    * Parses the supplied eclipse user library configuration file.

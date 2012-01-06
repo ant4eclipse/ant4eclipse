@@ -13,11 +13,7 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -26,6 +22,11 @@ import org.ant4eclipse.lib.jdt.model.ContainerTypes;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -116,7 +117,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // return if a java profile exists
-    JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
+    JavaProfile javaProfile = getProfileReader().getJavaProfile(path);
     if (javaProfile != null && getJavaRuntime(javaProfile) != null) {
       return true;
     }
@@ -130,7 +131,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   @Override
   public boolean hasJavaProfile(String path) {
     Assure.nonEmpty("path", path);
-    return JavaProfileReader.getInstance().hasJavaProfile(path);
+    return getProfileReader().hasJavaProfile(path);
   }
 
   /**
@@ -146,7 +147,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     }
 
     // return if a java profile exists
-    JavaProfile javaProfile = JavaProfileReader.getInstance().getJavaProfile(path);
+    JavaProfile javaProfile = getProfileReader().getJavaProfile(path);
     if (javaProfile != null) {
 
       if (((JavaProfileImpl) javaProfile).getAssociatedJavaRuntimeId() != null) {
@@ -189,13 +190,17 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return getDefaultJavaRuntime();
   }
 
+  private JavaProfileReader getProfileReader() {
+    return A4ECore.instance().getRequiredService(JavaProfileReader.class);
+  }
+
   /**
    * {@inheritDoc}
    */
   @Override
   public JavaProfile getJavaProfile(String path) {
     Assure.nonEmpty("path", path);
-    return JavaProfileReader.getInstance().getJavaProfile(path);
+    return getProfileReader().getJavaProfile(path);
   }
 
   /**
@@ -353,4 +358,20 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     A4ELogging.debug("Using JRE defined in system property 'java.home' (%s)", location.getAbsolutePath());
     return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null);
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+} /* ENDCLASS */

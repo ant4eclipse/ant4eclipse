@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.jre;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 import java.io.File;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import java.util.List;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public interface JavaRuntimeRegistry {
+public interface JavaRuntimeRegistry extends A4EService {
 
   /**
    * <p>

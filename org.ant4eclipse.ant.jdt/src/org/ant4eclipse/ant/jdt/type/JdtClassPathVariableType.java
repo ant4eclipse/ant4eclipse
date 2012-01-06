@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.jdt.type;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathElementsRegistry;
@@ -135,9 +135,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
       }
     }
 
-    ClassPathElementsRegistry variablesRegistry = ServiceRegistryAccess.instance().getService(
-        ClassPathElementsRegistry.class);
-
+    ClassPathElementsRegistry variablesRegistry = A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
     variablesRegistry.registerClassPathVariables(classpathvars);
   }
 

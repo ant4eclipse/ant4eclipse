@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.internal.model.jre.support.LibraryDetector;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -104,7 +104,7 @@ public class JavaRuntimeLoader {
     properties.put(JAVA_SPECIFICATION_NAME, values[5]);
 
     String javaProfileName = getVmProfile(properties);
-    JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
+    JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
     JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile(javaProfileName);
 
     JavaRuntime javaRuntime = new JavaRuntimeImpl(id, location, libraries, javaVersion, javaSpecificationVersion,

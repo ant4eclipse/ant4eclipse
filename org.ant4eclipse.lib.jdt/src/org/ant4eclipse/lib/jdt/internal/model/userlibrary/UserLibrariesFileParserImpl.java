@@ -108,4 +108,19 @@ public class UserLibrariesFileParserImpl implements UserLibrariesFileParser {
     return userlibs;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
 } /* ENDCLASS */

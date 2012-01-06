@@ -12,6 +12,7 @@
 package org.ant4eclipse.ant.jdt.type;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
@@ -61,7 +62,7 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
 
     Assure.exists("file", this._file);
 
-    JavaProfileReader.getInstance().registerProfile(this._file, this._jreId);
+    A4ECore.instance().getRequiredService( JavaProfileReader.class ).registerProfile(this._file, this._jreId);
   }
 
   /**

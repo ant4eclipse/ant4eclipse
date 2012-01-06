@@ -11,9 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
@@ -28,16 +27,12 @@ import java.util.Map;
  * Taken from Framework!
  * </p>
  */
-public class JavaProfileReader implements Lifecycle {
+public class JavaProfileReader implements A4EService {
 
   /** the java profile cache */
   private Map<String, JavaProfile> _javaProfileCache;
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
+  public JavaProfileReader() {
 
     this._javaProfileCache = new HashMap<String, JavaProfile>();
 
@@ -113,46 +108,19 @@ public class JavaProfileReader implements Lifecycle {
     return result.toArray(new JavaProfile[result.size()]);
   }
 
-  // /**
-  // * @param profile
-  // * @return
-  // */
-  // public static JavaProfile readProfile(String profile) {
-  // Assert.notNull(profile);
-  // String profileName = profile + ".profile";
-  // A4ELogging.debug("trying to read profile '%s' from classpath", profileName);
-  // StringMap profileProperties = new StringMap("/profiles/" + profileName);
-  // return new JavaProfileImpl(profileProperties);
-  // }
-
-  // public static String getVMProfile(File jreLocation) {
-  //
-  // JavaLauncher javaLauncher = JavaLauncher.createWithA4eClasspath(jreLocation);
-  //
-  // javaLauncher.setMainClass("net.sf.ant4eclipse.model.jdt.jre.internal.support.LegacySystemProperties");
-  // javaLauncher.setArgs(new String[] { JAVA_SPECIFICATION_VERSION, "java.vendor" });
-  // javaLauncher.execute();
-  //
-  // String[] sysout = javaLauncher.getSystemOut();
-  // // for (int i = 0; i < sysout.length; i++) {
-  // // System.err.println(i + " : " + sysout[i]);
-  // // }
-  //
-  // // String[] syserr = javaLauncher.getSystemErr();
-  // // for (int i = 0; i < syserr.length; i++) {
-  // // System.err.println(syserr[i]);
-  // // }
-  //
-  // Properties properties = new Properties();
-  // for (int i = 0; i < sysout.length; i++) {
-  // String[] prop = sysout[i].split("=");
-  // properties.put(prop[0], prop[1]);
-  // }
-  //
-  // return getVmProfile(properties);
-  // }
-
-  public static JavaProfileReader getInstance() {
-    return ServiceRegistryAccess.instance().getService(JavaProfileReader.class);
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+
+} /* ENDCLASS */
