@@ -41,8 +41,8 @@ public class OutputPathValidator extends AbstractProjectValidator {
    * @param key
    *          The key which is used to generate the failure information. Neither <code>null</code> nor empty.
    */
-  public OutputPathValidator(String key) {
-    super(key, PluginProjectRole.class);
+  public OutputPathValidator() {
+    super("output", PluginProjectRole.class);
   }
 
   /**
