@@ -32,4 +32,12 @@ public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjects
     return CdtUtilities.isCRelatedProject(project);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getReferenceType() {
+    return "cdt";
+  }
+  
 } /* ENDCLASS */
