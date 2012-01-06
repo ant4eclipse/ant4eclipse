@@ -20,4 +20,20 @@ public class SystemPropertiesService implements PropertyService {
   public String getProperty(String propertyName) {
     return Utilities.cleanup(System.getProperty(propertyName));
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return Integer.valueOf(-2);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+} /* ENDCLASS */

@@ -11,10 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
+import org.ant4eclipse.lib.core.A4EService;
+
 /**
  * A service to manage properties from various sources.
  */
-public interface PropertyService {
+public interface PropertyService extends A4EService {
 
   /**
    * Returns the property value for the given name, or null if the name if not found.

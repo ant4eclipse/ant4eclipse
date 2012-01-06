@@ -36,4 +36,13 @@ public class AntPropertiesService extends SystemPropertiesService implements Ant
   protected String getAntProperty(String propertyName) {
     return this._project != null ? Utilities.cleanup(this._project.getProperty(propertyName)) : null;
   }
-}
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return Integer.valueOf(-2);
+  }
+  
+} /* ENDCLASS */

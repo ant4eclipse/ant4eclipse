@@ -11,13 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.validator;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.logging.A4ELevel;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.PropertyService;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
@@ -25,6 +20,11 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.validator.AbstractProjectValidator;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * <p>
@@ -53,7 +53,7 @@ public class OutputPathValidator extends AbstractProjectValidator {
 
     PluginProjectRole pluginrole = (PluginProjectRole) role;
     EclipseProject project = pluginrole.getEclipseProject();
-    PropertyService properties = ServiceRegistryAccess.instance().getService(PropertyService.class);
+    PropertyService properties = A4ECore.instance().getRequiredService(PropertyService.class);
 
     // this test currently looks strange but future versions of eclipse will support non-java plugins, so we better
     // check for it
