@@ -18,7 +18,6 @@ import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 

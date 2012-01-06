@@ -15,7 +15,6 @@ import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;

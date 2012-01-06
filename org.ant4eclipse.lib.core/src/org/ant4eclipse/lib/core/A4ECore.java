@@ -50,13 +50,24 @@ public class A4ECore {
   };
   
   private Map<Class<?>,List<? extends A4EService>>   servicecache;
+  private Map<Object,Object>                         runtimecache;
   
   /**
    * Initializes this management class for A4E related services and data.
    */
   private A4ECore() {
-    servicecache = new Hashtable<Class<?>,List<? extends A4EService>>();
+    servicecache  = new Hashtable<Class<?>,List<? extends A4EService>>();
+    runtimecache  = new Hashtable<Object,Object>(); 
   }
+  
+  public void putRuntimeValue( Object key, Object val ) {
+    runtimecache.put( key, val );
+  }
+  
+  public <T> T getRuntimeValue( Object key ) {
+    return (T) runtimecache.get( key );
+  }
+  
   
   /**
    * This function can be called to enforce the reset of all loaded service states.
@@ -67,6 +78,7 @@ public class A4ECore {
         service.reset();
       }
     }
+    runtimecache.clear();
   }
   
   /**

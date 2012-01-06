@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;

@@ -8,7 +8,6 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
