@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools.container;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 
 /**
@@ -20,8 +21,9 @@ import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @auhtor Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface ClasspathContainerResolver {
+public interface ClasspathContainerResolver extends A4EService {
 
   /**
    * <p>

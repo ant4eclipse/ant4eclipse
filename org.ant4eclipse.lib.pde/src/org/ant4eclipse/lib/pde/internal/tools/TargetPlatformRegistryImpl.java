@@ -36,6 +36,7 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
@@ -92,23 +93,12 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * {@inheritDoc}
    */
   @Override
-  public void clear() {
-    this._bundleAndFeatureSetMap.clear();
-    this._targetPlatformDefnitionMap.clear();
-    this._targetPlatformMap.clear();
-  }
-
-  /**
-   * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#addPlatformConfiguration(java.lang.String,
-   *      org.ant4eclipse.lib.pde.tools.PlatformConfiguration)
-   */
-  @Override
   public void addPlatformConfiguration(String identifier, PlatformConfiguration platformConfiguration) {
     this._platformConfigurationMap.put(identifier, platformConfiguration);
   }
 
   /**
-   * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#getPlatformConfiguration(java.lang.String)
+   * {@inheritDoc}
    */
   @Override
   public PlatformConfiguration getPlatformConfiguration(String identifier) {
@@ -116,7 +106,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   }
 
   /**
-   * @see org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry#hasPlatformConfiguration(java.lang.String)
+   * {@inheritDoc}
    */
   @Override
   public boolean hasPlatformConfiguration(String identifier) {
@@ -392,4 +382,23 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       return result;
     }
   }
-}
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+    this._bundleAndFeatureSetMap.clear();
+    this._targetPlatformDefnitionMap.clear();
+    this._targetPlatformMap.clear();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+} /* ENDCLASS */

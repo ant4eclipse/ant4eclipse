@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 import java.util.List;
@@ -23,8 +24,9 @@ import java.util.List;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface TargetPlatformRegistry {
+public interface TargetPlatformRegistry extends A4EService {
 
   /**
    * <p>
@@ -104,11 +106,6 @@ public interface TargetPlatformRegistry {
    */
   TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       PlatformConfiguration targetPlatformConfiguration);
-
-  /**
-   * Removes all target platforms from the factory.
-   */
-  void clear();
 
   /**
    * @param id

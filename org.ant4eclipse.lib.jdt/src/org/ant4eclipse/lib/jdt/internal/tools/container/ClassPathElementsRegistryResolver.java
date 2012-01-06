@@ -24,6 +24,7 @@ import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kaaisoft.net)
  */
 public class ClassPathElementsRegistryResolver implements ClasspathContainerResolver {
 
@@ -53,4 +54,20 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
   private ClassPathElementsRegistry getClassPathElementsRegistry() {
     return ServiceRegistryAccess.instance().getService(ClassPathElementsRegistry.class);
   }
-}
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+} /* ENDCLASS */

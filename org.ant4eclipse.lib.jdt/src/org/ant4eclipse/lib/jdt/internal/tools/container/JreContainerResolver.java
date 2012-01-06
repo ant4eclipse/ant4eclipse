@@ -26,6 +26,13 @@ import java.io.File;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * <p>
+ * </p>
+ * 
+ * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kaaisoft.net)
+ */
 public class JreContainerResolver implements ClasspathContainerResolver {
 
   /**
@@ -92,4 +99,20 @@ public class JreContainerResolver implements ClasspathContainerResolver {
 
     context.setBootClasspathEntry(new ResolvedClasspathEntry(libraries, accessRestrictions));
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+} /* ENDCLASS */

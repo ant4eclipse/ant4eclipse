@@ -11,15 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
-import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,37 +26,11 @@ import java.util.List;
  */
 public class ValidatorRegistry {
 
-  /**
-   * The prefix of properties that holds a Validator class name
-   */
-  public static final String PREFIX_VALIDATOR = "validator";
-
   private ProjectValidator[] _validators;
 
   public ValidatorRegistry() {
-    init();
-  }
-
-  /**
-   * Loads the configured RoleIdentifiers
-   */
-  protected void init() {
-
-    // get all properties that defines a ProjectRoleIdentifier
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> entries = config.getAllProperties(PREFIX_VALIDATOR);
-
-    List<ProjectValidator> validators = new ArrayList<ProjectValidator>();
-
-    // Instantiate all ProjectRoleIdentifiers
-    for (Pair<String, String> types : entries) {
-      // we're not interested in the key of a project validator. only the classname (value of the entry) is relevant
-      ProjectValidator projectvalidator = Utilities.newInstance(types.getSecond(), types.getFirst());
-      A4ELogging.trace("Register ProjectValidator '%s'", projectvalidator);
-      validators.add(projectvalidator);
-    }
-
-    this._validators = validators.toArray(new ProjectValidator[validators.size()]);
+    List<ProjectValidator> validators = A4ECore.instance().getServices( ProjectValidator.class ); 
+    _validators = validators.toArray( new ProjectValidator[ validators.size() ] );
   }
 
   /**

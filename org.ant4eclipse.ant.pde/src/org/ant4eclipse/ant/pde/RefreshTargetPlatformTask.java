@@ -12,7 +12,7 @@
 package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 
 /**
@@ -41,9 +41,8 @@ public class RefreshTargetPlatformTask extends AbstractAnt4EclipseTask {
   protected void doExecute() {
 
     // get the target platform registry
-    TargetPlatformRegistry targetPlatformRegistry = ServiceRegistryAccess.instance().getService(
-        TargetPlatformRegistry.class);
-
+    TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService( TargetPlatformRegistry.class );
+    
     // refresh all target platforms
     targetPlatformRegistry.refreshAll();
 

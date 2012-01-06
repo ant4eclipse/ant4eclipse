@@ -12,8 +12,8 @@
 package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.PlatformConfiguration;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
@@ -73,9 +73,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
     if (this._id == null || "".equals(this._id)) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id");
     }
-
     // add the target platform definition
-    TargetPlatformRegistry targetPlatformRegistry = ServiceRegistryAccess.instance().getService(
+    TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService(
         TargetPlatformRegistry.class);
     targetPlatformRegistry.addPlatformConfiguration(this._id, this._targetPlatformConfiguration);
   }

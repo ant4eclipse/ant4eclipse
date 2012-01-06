@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
@@ -42,6 +42,7 @@ import java.util.List;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
 public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
@@ -267,7 +268,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   private TargetPlatform getTargetPlatform(ClasspathResolverContext context) {
 
     // get the TargetPlatform
-    TargetPlatformRegistry registry = ServiceRegistryAccess.instance().getService(TargetPlatformRegistry.class);
+    TargetPlatformRegistry registry = A4ECore.instance().getRequiredService( TargetPlatformRegistry.class );
 
     // get the container arguments
     JdtClasspathContainerArgument targetPlatformContainerArgument = context
@@ -310,4 +311,20 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       return registry.getInstance(context.getWorkspace(), targetPlatformContainerArgument.getValue(), configuration);
     }
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+} /* ENDCLASS */

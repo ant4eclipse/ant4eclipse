@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
@@ -21,7 +22,7 @@ import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public interface ProjectValidator {
+public interface ProjectValidator extends A4EService {
 
   /**
    * <p>

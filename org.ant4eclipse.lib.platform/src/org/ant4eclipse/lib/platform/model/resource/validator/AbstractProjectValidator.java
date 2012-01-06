@@ -109,5 +109,20 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
   protected void addError(EclipseProject project, String message) {
     A4ELogging.error("Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
   }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
 } /* ENDCLASS */

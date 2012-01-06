@@ -11,21 +11,16 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
+import org.ant4eclipse.lib.core.A4ECore;
 import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.Lifecycle;
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,8 +31,9 @@ import java.util.List;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kaaisoft.net)
  */
-public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResolver implements Lifecycle {
+public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResolver {
 
   /** CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX */
   public static final String               CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX = "containerResolver";
@@ -51,7 +47,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    * </p>
    */
   public ContainerClasspathEntryResolver() {
-    initialize();
+    _containerresolver = A4ECore.instance().getServices( ClasspathContainerResolver.class );
   }
 
   /**
@@ -116,43 +112,4 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void initialize() {
-    this._containerresolver = new ArrayList<ClasspathContainerResolver>();
-
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> containerResolverEntries = config
-        .getAllProperties(CONTAINER_CLASSPATH_ENTRY_RESOLVER_PREFIX);
-
-    List<ClasspathContainerResolver> containerResolvers = new ArrayList<ClasspathContainerResolver>();
-
-    // Instantiate all Container Resolvers
-    for (Pair<String, String> containerResolverEntry : containerResolverEntries) {
-
-      // we're not interested in the key of a container resolver, only the class name (value of the entry) is relevant
-      // to create new instance
-      ClasspathContainerResolver resolver = Utilities.newInstance(containerResolverEntry.getSecond());
-
-      // trace
-      A4ELogging.trace("Register ClasspathContainerResolver '%s'", resolver);
-
-      // add resolver
-      containerResolvers.add(resolver);
-    }
-
-    this._containerresolver = containerResolvers;
-
-    // initialize all registered container resolvers
-    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
-    while (iterator.hasNext()) {
-      ClasspathContainerResolver classpathContainerResolver = iterator.next();
-      if (classpathContainerResolver instanceof Lifecycle) {
-        ((Lifecycle) classpathContainerResolver).initialize();
-      }
-    }
-  }
-
-}
+} /* ENDCLASS */
