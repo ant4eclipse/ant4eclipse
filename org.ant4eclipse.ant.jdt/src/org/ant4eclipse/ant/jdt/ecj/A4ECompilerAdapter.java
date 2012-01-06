@@ -11,11 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
-import org.ant4eclipse.ant.core.AntConfigurator;
+import org.ant4eclipse.ant.core.AntBasedLogger;
+import org.ant4eclipse.ant.core.ProjectBuildListener;
+import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
@@ -28,6 +31,8 @@ import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 import org.ant4eclipse.lib.jdt.ecj.SourceFileFactory;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.taskdefs.compilers.DefaultCompilerAdapter;
 import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.types.Path;
@@ -118,7 +123,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // JdtCompilerTask as it's using the defining classpath. But it's still useful in case someone
     // wants to make use of the original Javac task. Anyway there's no harm in using this function
     // anymore.
-    AntConfigurator.configureAnt4Eclipse(getProject());
+    configureA4E(getProject());
 
     // Step 3: Fetch compiler arguments
     EcjAdditionalCompilerArguments ecjAdditionalCompilerArguments = fetchEcjAdditionalCompilerArguments();
@@ -196,6 +201,21 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
   }
 
+  /**
+   * <p>
+   * Configures Ant4Eclipse in a ant based environment (the standard case).
+   * </p>
+   * 
+   * @param project
+   *          the ant project
+   */
+  private void configureA4E(Project project) {
+    // set ant4eclipse property helper
+    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    Ant4EclipseLogger logger = new AntBasedLogger();
+    project.addBuildListener(new ProjectBuildListener(logger));
+  }
+  
   /**
    * Clones all generated class files while copying them into the user specified directory.
    * 

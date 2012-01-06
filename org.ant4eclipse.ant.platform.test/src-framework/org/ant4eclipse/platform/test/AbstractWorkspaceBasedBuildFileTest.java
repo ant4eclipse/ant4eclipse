@@ -12,8 +12,6 @@
 package org.ant4eclipse.platform.test;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.TestDirectory;
 import org.apache.tools.ant.BuildFileTest;
@@ -80,9 +78,6 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   public void tearDown() throws Exception {
     super.tearDown();
     this._testWorkspace.dispose();
-    if (ServiceRegistryAccess.isConfigured()) {
-      ServiceRegistryAccess.reset();
-    }
     A4ECore.instance().reset();
   }
 

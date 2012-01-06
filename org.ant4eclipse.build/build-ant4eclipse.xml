@@ -227,36 +227,6 @@
   <!-- @param dir    The directory which contains multiple property files.                     -->
   <!-- @param dest   The destination where the resulting configuration shall be stored to.     -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <macrodef name="merge-ant4eclipse-configuration">
-    <attribute name="dir" />
-    <attribute name="dest" />
-    <sequential>
-      <var name="mac_content" value="" />
-      <for param="configurationfile">
-        <fileset dir="@{dir}"
-                 includes="**/ant4eclipse-configuration.properties" />
-        <sequential>
-          <loadfile srcfile="@{configurationfile}" property="mac_filecontent" />
-          <append property="mac_content"
-                  value="${mac_filecontent}"
-                  delimiter="${line.separator}" />
-          <var unset="true" name="mac_filecontent" />
-        </sequential>
-      </for>
-      <var unset="true" name="mac_destdir" />
-      <dirname property="mac_destdir" file="@{dest}" />
-      <mkdir dir="${mac_destdir}" />
-      <echo file="@{dest}">${mac_content}</echo>
-      <var unset="true" name="mac_content" />
-    </sequential>
-  </macrodef>
-
-  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- Merges all 'ant4eclipse-configuration.properties' to a single one.                      -->
-  <!--                                                                                         -->
-  <!-- @param dir    The directory which contains multiple property files.                     -->
-  <!-- @param dest   The destination where the resulting configuration shall be stored to.     -->
-  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <macrodef name="merge-services">
     <attribute name="dir" />
     <attribute name="dest" />
@@ -423,10 +393,6 @@
     <!-- place a stamp about the revision (we could probably add some information) -->
     <echo file="${destination}/library/classes/version.txt">${revision}</echo>
 
-    <!-- generate the configuration file -->
-    <merge-ant4eclipse-configuration dir="${dest.cfg}"
-                                     dest="${destination}/library/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties" />
-
     <merge-services dir="${dest.cfg}" dest="${destination}/library/classes" />
     
     <!-- bundle the library version of a4e -->
@@ -467,10 +433,6 @@
     <!-- generate the ant declaration file -->
     <merge-antlib dir="${dest.cfg}"
                   dest="${destination}/ant/classes/org/ant4eclipse/ant/antlib.xml" />
-
-    <!-- generate the (complete) configuration file -->
-    <merge-ant4eclipse-configuration dir="${dest.cfg}"
-                                     dest="${destination}/ant/classes/org/ant4eclipse/lib/ant4eclipse-configuration.properties" />
 
     <merge-services dir="${dest.cfg}" dest="${destination}/library/classes" />
     

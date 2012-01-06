@@ -28,18 +28,14 @@ public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTe
 
   private TestDirectory _testWorkspace;
 
-  @Override
   @Before
   public void setup() {
-    super.setup();
     this._testWorkspace = new TestDirectory();
   }
 
-  @Override
   @After
   public void dispose() {
     this._testWorkspace.dispose();
-    super.dispose();
     this._testWorkspace = null;
   }
 

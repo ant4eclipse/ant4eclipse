@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
+import org.ant4eclipse.lib.core.A4EService;
 import org.apache.tools.ant.ProjectComponent;
 
 /**
@@ -22,8 +23,9 @@ import org.apache.tools.ant.ProjectComponent;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
+ * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@kasisoft.net)
  */
-public interface SubElementContribution {
+public interface SubElementContribution extends A4EService {
 
   /**
    * <p>

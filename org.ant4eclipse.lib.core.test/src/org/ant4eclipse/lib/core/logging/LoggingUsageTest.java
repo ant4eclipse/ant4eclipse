@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.logging;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,9 +20,8 @@ import java.io.PrintStream;
 
 public class LoggingUsageTest {
 
-  private static final Class<?> SERVICE_TYPE = Ant4EclipseLogger.class;
-
   private ByteArrayOutputStream byteout      = new ByteArrayOutputStream();
+  
   private PrintStream           oldout;
   private PrintStream           olderr;
   
@@ -92,9 +90,6 @@ public class LoggingUsageTest {
 
 //  @Test
   public void debugDisabled() {
-    DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistryAccess.instance().getService(
-        SERVICE_TYPE);
-    loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.debug("no args");
     A4ELogging.debug("single arg is: %d", Integer.valueOf(12));
     A4ELogging.debug("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");
@@ -112,9 +107,6 @@ public class LoggingUsageTest {
 
 //  @Test
   public void tracingDisabled() {
-    DefaultAnt4EclipseLogger loggerimpl = (DefaultAnt4EclipseLogger) ServiceRegistryAccess.instance().getService(
-        SERVICE_TYPE);
-    loggerimpl.setLogLevel(DefaultAnt4EclipseLogger.Priority.info);
     A4ELogging.trace("no args");
     A4ELogging.trace("single arg is: %d", Integer.valueOf(12));
     A4ELogging.trace("multiple args are: %d, '%s'", Integer.valueOf(45), "Fredo");

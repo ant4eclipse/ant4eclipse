@@ -15,8 +15,6 @@ import org.ant4eclipse.ant.pydt.GetPythonPathTask;
 import org.ant4eclipse.ant.pydt.GetPythonSourcePathTask;
 import org.ant4eclipse.ant.pydt.PythonDocumentationTask;
 import org.ant4eclipse.ant.pydt.type.PythonContainer;
-import org.ant4eclipse.lib.core.DefaultConfigurator;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.ProjectDescription;
 import org.ant4eclipse.testframework.ProjectSuite;
@@ -182,7 +180,6 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Before
   public void setup() {
-    DefaultConfigurator.configureAnt4Eclipse();
     this._projectsuite = new ProjectSuite(this, this._dltk);
   }
 
@@ -194,7 +191,6 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
     if (this._disposeonexit) {
       dispose();
     }
-    ServiceRegistryAccess.reset();
     this._dltk = false;
     this._projectsuite = null;
   }

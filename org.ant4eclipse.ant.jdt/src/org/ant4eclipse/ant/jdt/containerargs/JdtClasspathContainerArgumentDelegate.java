@@ -12,9 +12,6 @@
 package org.ant4eclipse.ant.jdt.containerargs;
 
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
@@ -34,13 +31,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     JdtClasspathContainerArgumentComponent {
 
   /** - */
-  public static final String                  CLASSPATH_ATTRIBUTE_PREFIX = "classpathAttributeContributor";
-
-  /** - */
   private boolean                             _initialized               = false;
-
-  /** - */
-  private List<String>                        _knownAttributesList;
 
   /** the container argument list */
   private List<JdtClasspathContainerArgument> _containerArguments        = null;
@@ -124,17 +115,6 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
       return;
     }
 
-    // create the lists of dynamic attributes
-    this._knownAttributesList = new ArrayList<String>();
-
-    // get all properties that defines a SubElementContributor
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> subElementContributionEntries = config.getAllProperties(CLASSPATH_ATTRIBUTE_PREFIX);
-
-    for (Pair<String, String> pair : subElementContributionEntries) {
-      this._knownAttributesList.add(pair.getSecond());
-    }
-
     // set initialized
     this._initialized = true;
   }
@@ -146,15 +126,6 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    */
   protected boolean canHandleSubAttribute(String name) {
     init();
-
-    // 
-    for (String attribute : this._knownAttributesList) {
-      if (attribute.equalsIgnoreCase(name)) {
-        return true;
-      }
-    }
-
-    // 
     return false;
   }
 

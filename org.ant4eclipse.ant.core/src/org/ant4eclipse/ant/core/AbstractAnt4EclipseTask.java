@@ -16,8 +16,10 @@ import java.io.StringWriter;
 
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.Task;
 
 /**
@@ -51,11 +53,25 @@ public abstract class AbstractAnt4EclipseTask extends Task {
   @Override
   public void setProject(Project project) {
     super.setProject(project);
-
     // configure ant4eclipse
-    AntConfigurator.configureAnt4Eclipse(getProject());
+    configureA4E(getProject());
   }
 
+  /**
+   * <p>
+   * Configures Ant4Eclipse in a ant based environment (the standard case).
+   * </p>
+   * 
+   * @param project
+   *          the ant project
+   */
+  private void configureA4E(Project project) {
+    // set ant4eclipse property helper
+    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    Ant4EclipseLogger logger = new AntBasedLogger();
+    project.addBuildListener(new ProjectBuildListener(logger));
+  }
+  
   /**
    * Delegates to the <code>doExecute()</code> method where the actual task logic should be implemented.
    */

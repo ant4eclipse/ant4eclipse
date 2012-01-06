@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildFileTest;
 
@@ -43,7 +41,6 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
   protected void tearDown() throws Exception {
     super.tearDown();
     this._testWorkspace.dispose();
-    ServiceRegistryAccess.reset();
     this._testWorkspace = null;
   }
 

@@ -11,13 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.DefaultConfigurator;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.StringMap;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+
+import javax.imageio.spi.ServiceRegistry;
 
 /**
  * <p>
@@ -28,36 +24,6 @@ import org.junit.Before;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class ConfigurableAnt4EclipseTestCase {
-
-  /**
-   * This setup method sets up the {@link Ant4EclipseConfigurationProperties} and the {@link ServiceRegistry}.
-   * 
-   * <p>
-   * The creation of both objects can be customized for a test by overwriting
-   * {@link #setupAnt4EclipseConfigurationProperties()} resp. {@link #setupServiceRegistry()}
-   */
-  @Before
-  public void setup() {
-    StringMap properties = customAnt4EclipseConfiguration(new StringMap());
-    if (properties == null) {
-      DefaultConfigurator.configureAnt4Eclipse();
-    } else {
-      DefaultConfigurator.configureAnt4Eclipse(properties);
-    }
-  }
-
-  @After
-  public void dispose() {
-    try {
-      if (ServiceRegistryAccess.isConfigured()) {
-        ServiceRegistryAccess.reset();
-      }
-    } catch (Exception ex) {
-      System.err.println("[Ant4EclipseTestCase] Could not reset ServiceRegistry: " + ex);
-      ex.printStackTrace();
-      Assert.fail(ex.getMessage());
-    }
-  }
 
   /**
    * Provides a set of properties used for the configuration. The supplied set is supposed to be altered and returned.

@@ -12,8 +12,11 @@
 package org.ant4eclipse.ant.core;
 
 
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectComponent;
+import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.taskdefs.condition.Condition;
 
 /**
@@ -34,7 +37,7 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
     AbstractAnt4EclipseDataType.validateAll();
 
     // configure ant4eclipse
-    AntConfigurator.configureAnt4Eclipse(getProject());
+    configureA4E(getProject());
 
     // delegate the implementation
     try {
@@ -42,6 +45,21 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
     } catch (Exception ex) {
       throw new BuildException(ex.toString(), ex);
     }
+  }
+
+  /**
+   * <p>
+   * Configures Ant4Eclipse in a ant based environment (the standard case).
+   * </p>
+   * 
+   * @param project
+   *          the ant project
+   */
+  private void configureA4E(Project project) {
+    // set ant4eclipse property helper
+    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    Ant4EclipseLogger logger = new AntBasedLogger();
+    project.addBuildListener(new ProjectBuildListener(logger));
   }
 
   /**

@@ -11,17 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.containerargs;
 
-import org.ant4eclipse.ant.platform.SubAttributeContribution;
 import org.ant4eclipse.ant.platform.SubElementContribution;
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -37,19 +30,13 @@ import java.util.List;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class JdtClasspathContainerArgumentContribution implements SubElementContribution, SubAttributeContribution {
-
-  /** - */
-  public static final String                    CLASSPATH_ATTRIBUTE_PREFIX = "classpathAttributeContributor";
+public class JdtClasspathContainerArgumentContribution implements SubElementContribution {
 
   /** - */
   private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
   /** - */
   private boolean                               _initialized               = false;
-
-  /** - */
-  private List<String>                          _attributeList;
 
   /**
    * <p>
@@ -58,7 +45,6 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
    * 
    */
   public JdtClasspathContainerArgumentContribution(ProjectComponent projectComponent) {
-    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(projectComponent);
   }
 
   /**
@@ -66,7 +52,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
    */
   @Override
   public boolean canHandleSubElement(String name, ProjectComponent component) {
-    init();
+    init(component);
     // TODO? Class? component?
     return "jdtClasspathContainerArgument".equalsIgnoreCase(name);
   }
@@ -78,27 +64,8 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   @SuppressWarnings("deprecation")
   @Deprecated
   public Object createSubElement(String name, ProjectComponent component) throws BuildException {
-    init();
+    init(component);
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
-  }
-
-  /**
-   * @see org.ant4eclipse.ant.platform.SubAttributeContribution#canHandleSubAttribute(java.lang.String,
-   *      org.apache.tools.ant.ProjectComponent)
-   */
-  @Override
-  public boolean canHandleSubAttribute(String name, ProjectComponent component) {
-    init();
-
-    // 
-    for (String attribute : this._attributeList) {
-      if (attribute.equalsIgnoreCase(name)) {
-        return true;
-      }
-    }
-
-    // 
-    return false;
   }
 
   /**
@@ -106,25 +73,32 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
    * Loads the configured subElementContributors.
    * </p>
    */
-  protected void init() {
+  private void init(ProjectComponent component) {
 
     // Return if already initialized
     if (this._initialized) {
       return;
     }
 
-    // create the lists of dynamic attributes
-    this._attributeList = new ArrayList<String>();
-
-    // get all properties that defines a SubElementContributor
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-    Iterable<Pair<String, String>> subElementContributionEntries = config.getAllProperties(CLASSPATH_ATTRIBUTE_PREFIX);
-
-    for (Pair<String, String> pair : subElementContributionEntries) {
-      this._attributeList.add(pair.getSecond());
-    }
+    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(component);
 
     // set initialized
     this._initialized = true;
   }
-}
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Integer getPriority() {
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void reset() {
+  }
+  
+} /* ENDCLASS */

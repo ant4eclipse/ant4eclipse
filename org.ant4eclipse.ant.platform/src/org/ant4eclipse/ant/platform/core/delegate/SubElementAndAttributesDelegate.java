@@ -12,13 +12,9 @@
 package org.ant4eclipse.ant.platform.core.delegate;
 
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
-import org.ant4eclipse.ant.platform.SubAttributeContribution;
 import org.ant4eclipse.ant.platform.SubElementContribution;
 import org.ant4eclipse.ant.platform.core.SubElementAndAttributesComponent;
-import org.ant4eclipse.lib.core.configuration.Ant4EclipseConfiguration;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Pair;
-import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.core.A4ECore;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -44,9 +40,6 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
 
   /** the list of all sub element contributors */
   private List<SubElementContribution>   _subElementContributions;
-
-  /** the list of all sub element contributors */
-  private List<SubAttributeContribution> _subAttributeContributions;
 
   /** list that holds all parsed sub elements */
   private List<Object>                   _subElements;
@@ -118,19 +111,8 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
    */
   @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
-
     // initialize the delegate
     init();
-
-    // iterate over all known SubAttributeContributions
-    for (SubAttributeContribution subAttributeContribution : this._subAttributeContributions) {
-
-      // if the subElementContribution can handle the element -> handle it
-      if (subAttributeContribution.canHandleSubAttribute(name, getProjectComponent())) {
-        this._subAttributes.put(name, value);
-      }
-    }
-
   }
 
   /**
@@ -151,66 +133,13 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     // create the lists of dynamic attributes
     this._subAttributes = new HashMap<String, String>();
 
-    Ant4EclipseConfiguration config = ServiceRegistryAccess.instance().getService(Ant4EclipseConfiguration.class);
-
     // /////
     // Create and set sub-elements...
     // ////
 
-    // get all properties that defines a SubElementContributor
-    Iterable<Pair<String, String>> subElementContributionEntries = config
-        .getAllProperties(SUB_ELEMENT_CONTRIBUTOR_PREFIX);
-
-    List<SubElementContribution> subElementContributions = new ArrayList<SubElementContribution>();
-
-    // Instantiate the subElementContributions
-    for (Pair<String, String> subElementContributionDefinition : subElementContributionEntries) {
-
-      // we're not interested in the key of a DynamicElementContributor, only the class name (value of the entry) is
-      // relevant
-      SubElementContribution subElementContribution;
-      try {
-        subElementContribution = Utilities.newInstance(subElementContributionDefinition.getSecond(),
-            new Class[] { ProjectComponent.class }, new Object[] { getProjectComponent() });
-      } catch (Exception e) {
-        subElementContribution = Utilities.newInstance(subElementContributionDefinition.getSecond());
-      }
-      subElementContributions.add(subElementContribution);
-    }
-
     // assign subElementContributions
-    this._subElementContributions = subElementContributions;
-
-    // /////
-    // Create and set sub-attributes...
-    // ////
-
-    // get all properties that defines a SubElementContributor
-    Iterable<Pair<String, String>> subAttributeContributionEntries = config
-        .getAllProperties(SUB_ATTRIBUTE_CONTRIBUTOR_PREFIX);
-
-    List<SubAttributeContribution> subAttributeContributions = new ArrayList<SubAttributeContribution>();
-
-    // Instantiate the subElementContributions
-    for (Pair<String, String> subAttributeContributionDefintion : subAttributeContributionEntries) {
-
-      // we're not interested in the key of a DynamicElementContributor, only the class name (value of the entry) is
-      // relevant
-      SubElementContribution subAttributeContribution = null;
-
-      try {
-        subAttributeContribution = Utilities.newInstance(subAttributeContributionDefintion.getSecond(),
-            new Class[] { ProjectComponent.class }, new Object[] { getProjectComponent() });
-      } catch (Exception e) {
-        subAttributeContribution = Utilities.newInstance(subAttributeContributionDefintion.getSecond());
-      }
-
-      subElementContributions.add(subAttributeContribution);
-    }
-
-    // assign subElementContributions
-    this._subAttributeContributions = subAttributeContributions;
-
+    this._subElementContributions = A4ECore.instance().getServices(SubElementContribution.class);
+    
     // set initialized
     this._initialized = true;
   }

@@ -11,7 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
+import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.types.DataType;
 
 import java.util.ArrayList;
@@ -49,10 +51,25 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
       instances.add(this);
     }
     // configure ant4eclipse
-    AntConfigurator.configureAnt4Eclipse(project);
+    configureA4E(project);
 
   }
 
+  /**
+   * <p>
+   * Configures Ant4Eclipse in a ant based environment (the standard case).
+   * </p>
+   * 
+   * @param project
+   *          the ant project
+   */
+  private void configureA4E(Project project) {
+    // set ant4eclipse property helper
+    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    Ant4EclipseLogger logger = new AntBasedLogger();
+    project.addBuildListener(new ProjectBuildListener(logger));
+  }
+  
   /**
    * <p>
    * </p>

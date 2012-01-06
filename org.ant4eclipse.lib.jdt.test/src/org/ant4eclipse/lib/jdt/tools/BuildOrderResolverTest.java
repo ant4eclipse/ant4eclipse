@@ -23,6 +23,8 @@ import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.ant4eclipse.testframework.ConfigurableAnt4EclipseTestCase;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 import org.ant4eclipse.testframework.TestDirectory;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -31,9 +33,8 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
 
   private TestDirectory _testWorkspace;
 
-  @Override
+  @Before
   public void setup() {
-    super.setup();
 
     this._testWorkspace = new TestDirectory();
 
@@ -46,11 +47,9 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
         this._testWorkspace.getRootDir());
   }
 
-  @Override
+  @After
   public void dispose() {
     this._testWorkspace.dispose();
-
-    super.dispose();
   }
 
   @Test

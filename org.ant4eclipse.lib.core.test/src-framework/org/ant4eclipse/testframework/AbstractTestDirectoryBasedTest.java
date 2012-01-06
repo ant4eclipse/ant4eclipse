@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.DefaultConfigurator;
-import org.ant4eclipse.lib.core.service.ServiceRegistry;
-import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.junit.After;
 import org.junit.Before;
+
+import javax.imageio.spi.ServiceRegistry;
 
 import java.io.File;
 
@@ -34,7 +33,6 @@ public abstract class AbstractTestDirectoryBasedTest {
    */
   @Before
   public void setUp() {
-    DefaultConfigurator.configureAnt4Eclipse();
     this._testWorkspace = new TestDirectory();
   }
 
@@ -44,7 +42,6 @@ public abstract class AbstractTestDirectoryBasedTest {
   @After
   public void tearDown() {
     this._testWorkspace.dispose();
-    ServiceRegistryAccess.reset();
     this._testWorkspace = null;
   }
 
