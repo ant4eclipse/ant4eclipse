@@ -44,8 +44,8 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    * @param project
    *          the ant project
    */
-  public ExecutionEnvironmentDefinitionDataType(Project project) {
-    super(project);
+  public ExecutionEnvironmentDefinitionDataType( Project project ) {
+    super( project );
   }
 
   /**
@@ -53,16 +53,16 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    */
   @Override
   protected void doValidate() {
-    if (this._file == null || "".equals(this._file)) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "file");
+    if( this._file == null || "".equals( this._file ) ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "file" );
     }
-    if (this._jreId == null || "".equals(this._jreId)) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "jreId");
+    if( this._jreId == null || "".equals( this._jreId ) ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "jreId" );
     }
 
-    Assure.exists("file", this._file);
+    Assure.exists( "file", this._file );
 
-    A4ECore.instance().getRequiredService( JavaProfileReader.class ).registerProfile(this._file, this._jreId);
+    A4ECore.instance().getRequiredService( JavaProfileReader.class ).registerProfile( this._file, this._jreId );
   }
 
   /**
@@ -71,7 +71,7 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    * 
    * @param file
    */
-  public void setFile(File file) {
+  public void setFile( File file ) {
     this._file = file;
   }
 
@@ -81,7 +81,7 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    * 
    * @param jreId
    */
-  public void setJreId(String jreId) {
+  public void setJreId( String jreId ) {
     this._jreId = jreId;
   }
 
@@ -92,4 +92,5 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
   public String toString() {
     return "ExecutionEnvironmentDefinitionDataType [_file=" + this._file + "]";
   }
-}
+
+} /* ENDCLASS */

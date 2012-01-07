@@ -28,6 +28,6 @@ public interface AntService {
    * @param project
    *          The ant project used for this service. Not <code>null</code>.
    */
-  void configure(Project project);
+  void configure( Project project );
 
 } /* ENDINTERFACE */

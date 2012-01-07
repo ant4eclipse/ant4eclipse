@@ -38,23 +38,15 @@ import org.apache.tools.ant.Task;
 public abstract class AbstractAnt4EclipseTask extends Task {
 
   /**
-   * Default Constructor used by Ant to create a new instance of this Task
-   */
-  public AbstractAnt4EclipseTask() {
-    super();
-  }
-
-  /**
    * <p>
    * Overrides the <code>setProject</code> method defined in <code>org.ant4eclipse.ant.Task</code> to configure
    * Ant4Eclipse after the <tt>project</tt> has been set
    * </p>
    */
   @Override
-  public void setProject(Project project) {
-    super.setProject(project);
-    // configure ant4eclipse
-    configureA4E(getProject());
+  public void setProject( Project project ) {
+    super.setProject( project );
+    configureA4E( getProject() );
   }
 
   /**
@@ -65,13 +57,13 @@ public abstract class AbstractAnt4EclipseTask extends Task {
    * @param project
    *          the ant project
    */
-  private void configureA4E(Project project) {
+  private void configureA4E( Project project ) {
     // set ant4eclipse property helper
-    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    PropertyHelper.getPropertyHelper( project ).setNext( new ThreadDispatchingPropertyHelper( project ) );
     Ant4EclipseLogger logger = new AntBasedLogger();
-    project.addBuildListener(new ProjectBuildListener(logger));
+    project.addBuildListener( new ProjectBuildListener( logger ) );
   }
-  
+
   /**
    * Delegates to the <code>doExecute()</code> method where the actual task logic should be implemented.
    */
@@ -82,12 +74,11 @@ public abstract class AbstractAnt4EclipseTask extends Task {
       AbstractAnt4EclipseDataType.validateAll();
       preconditions();
       doExecute();
-    } catch (Exception ex) {
+    } catch( Exception ex ) {
       StringWriter sw = new StringWriter();
-      ex.printStackTrace(new PrintWriter(sw));
-
-      A4ELogging.error("Execute of %s failed: %s%n%s", getClass().getName(), ex, sw);
-      throw new BuildException(ex.toString(), ex);
+      ex.printStackTrace( new PrintWriter( sw ) );
+      A4ELogging.error( "Execute of %s failed: %s%n%s", getClass().getName(), ex, sw );
+      throw new BuildException( ex.toString(), ex );
     }
   }
 
@@ -113,4 +104,5 @@ public abstract class AbstractAnt4EclipseTask extends Task {
    * @see Task#execute()
    */
   protected abstract void doExecute();
-}
+  
+} /* ENDCLASS */

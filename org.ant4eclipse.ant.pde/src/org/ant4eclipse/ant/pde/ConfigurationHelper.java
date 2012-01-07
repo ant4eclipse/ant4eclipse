@@ -62,55 +62,55 @@ public class ConfigurationHelper {
    *          the target platform
    * @return a list of all bundle that should be installed (and started) in the osgi framework.
    */
-  public static String getOsgiBundles(ProductDefinition productdef, TargetPlatform targetplatform) {
+  public static String getOsgiBundles( ProductDefinition productdef, TargetPlatform targetplatform ) {
 
     StringBuilder result = new StringBuilder();
 
     String[] pluginIds = productdef.getPluginIds();
 
-    for (int i = 0; i < pluginIds.length; i++) {
+    for( int i = 0; i < pluginIds.length; i++ ) {
 
       String id = pluginIds[i];
 
-      if (!targetplatform.matchesPlatformFilter(id)) {
+      if( !targetplatform.matchesPlatformFilter( id ) ) {
         continue;
       }
 
-      if ("org.eclipse.osgi".equals(id)) {
+      if( "org.eclipse.osgi".equals( id ) ) {
         continue;
       }
 
-      if (productdef.hasConfigurationRecord(id)) {
-        result.append(productdef.getConfigurationRecord(id).getShortDescription());
+      if( productdef.hasConfigurationRecord( id ) ) {
+        result.append( productdef.getConfigurationRecord( id ).getShortDescription() );
       } else {
-        result.append(id);
+        result.append( id );
       }
 
-      if (i + 1 < pluginIds.length) {
-        result.append(",");
+      if( i + 1 < pluginIds.length ) {
+        result.append( "," );
       }
     }
 
     String[] fragmentIds = productdef.getFragmentIds();
-    for (String fragmentId : fragmentIds) {
+    for( String fragmentId : fragmentIds ) {
 
-      if (!targetplatform.matchesPlatformFilter(fragmentId)) {
+      if( !targetplatform.matchesPlatformFilter( fragmentId ) ) {
         continue;
       }
 
-      result.append(",");
-      result.append(fragmentId);
+      result.append( "," );
+      result.append( fragmentId );
     }
 
-    if (productdef.isBasedOnFeatures()) {
+    if( productdef.isBasedOnFeatures() ) {
 
       //
-      return getOsgiBundlesFromFeatures(productdef, targetplatform);
+      return getOsgiBundlesFromFeatures( productdef, targetplatform );
 
     } else {
 
       //
-      return getOsgiBundlesFromPlugins(productdef, targetplatform);
+      return getOsgiBundlesFromPlugins( productdef, targetplatform );
     }
   }
 
@@ -122,42 +122,42 @@ public class ConfigurationHelper {
    * @param targetplatform
    * @return
    */
-  private static String getOsgiBundlesFromFeatures(ProductDefinition productdef, TargetPlatform targetplatform) {
+  private static String getOsgiBundlesFromFeatures( ProductDefinition productdef, TargetPlatform targetplatform ) {
 
     List<String> pluginIds = new ArrayList<String>();
 
-    for (FeatureId featureId : productdef.getFeatureIdentifiers()) {
-      pluginIds.addAll(getPluginIdsForFeature(featureId.getId(), featureId.getVersion(), targetplatform));
+    for( FeatureId featureId : productdef.getFeatureIdentifiers() ) {
+      pluginIds.addAll( getPluginIdsForFeature( featureId.getId(), featureId.getVersion(), targetplatform ) );
     }
 
     StringBuffer buffer = new StringBuffer();
 
-    for (int i = 0; i < pluginIds.size(); i++) {
+    for( int i = 0; i < pluginIds.size(); i++ ) {
 
-      String id = pluginIds.get(i);
+      String id = pluginIds.get( i );
 
-      if (!targetplatform.matchesPlatformFilter(id)) {
+      if( !targetplatform.matchesPlatformFilter( id ) ) {
         continue;
       }
 
-      if ("org.eclipse.osgi".equals(id)) {
+      if( "org.eclipse.osgi".equals( id ) ) {
         continue;
       }
 
-      if (targetplatform.hasBundleDescription(id) && targetplatform.getBundleDescription(id).getHost() == null
-          && productdef.hasConfigurationRecord(id)) {
-        buffer.append(productdef.getConfigurationRecord(id).getShortDescription());
+      if( targetplatform.hasBundleDescription( id ) && targetplatform.getBundleDescription( id ).getHost() == null
+          && productdef.hasConfigurationRecord( id ) ) {
+        buffer.append( productdef.getConfigurationRecord( id ).getShortDescription() );
       } else {
-        buffer.append(id);
+        buffer.append( id );
       }
 
-      if (i + 1 < pluginIds.size()) {
-        buffer.append(",");
+      if( i + 1 < pluginIds.size() ) {
+        buffer.append( "," );
       }
     }
 
     String result = buffer.toString();
-    result = result.endsWith(",") ? result.substring(0, result.length() - 1) : result;
+    result = result.endsWith( "," ) ? result.substring( 0, result.length() - 1 ) : result;
 
     return result;
   }
@@ -171,31 +171,31 @@ public class ConfigurationHelper {
    * @param targetplatform
    * @return
    */
-  private static List<String> getPluginIdsForFeature(String featureId, Version featureVersion,
-      TargetPlatform targetplatform) {
+  private static List<String> getPluginIdsForFeature( String featureId, Version featureVersion,
+      TargetPlatform targetplatform ) {
 
     List<String> result = new ArrayList<String>();
 
-    Version resolvedVersion = PdeBuildHelper.resolveVersion(featureVersion, PdeBuildHelper
-        .getResolvedContextQualifier());
+    Version resolvedVersion = PdeBuildHelper.resolveVersion( featureVersion,
+        PdeBuildHelper.getResolvedContextQualifier() );
 
-    FeatureDescription featureDescription = targetplatform.getFeatureDescription(featureId, resolvedVersion);
+    FeatureDescription featureDescription = targetplatform.getFeatureDescription( featureId, resolvedVersion );
 
-    for (FeatureManifest.Plugin plugin : featureDescription.getFeatureManifest().getPlugins()) {
-      if (targetplatform.matchesPlatformFilter(plugin.getId())) {
-        result.add(plugin.getId());
+    for( FeatureManifest.Plugin plugin : featureDescription.getFeatureManifest().getPlugins() ) {
+      if( targetplatform.matchesPlatformFilter( plugin.getId() ) ) {
+        result.add( plugin.getId() );
       }
     }
 
-    for (FeatureManifest.Includes includes : featureDescription.getFeatureManifest().getIncludes()) {
+    for( FeatureManifest.Includes includes : featureDescription.getFeatureManifest().getIncludes() ) {
 
       String arch = targetplatform.getTargetPlatformConfiguration().getArchitecture();
       String os = targetplatform.getTargetPlatformConfiguration().getOperatingSystem();
       String ws = targetplatform.getTargetPlatformConfiguration().getWindowingSystem();
 
-      if (matches(includes.getMachineArchitecture(), arch) && matches(includes.getOperatingSystem(), os)
-          && matches(includes.getWindowingSystem(), ws)) {
-        result.addAll(getPluginIdsForFeature(includes.getId(), includes.getVersion(), targetplatform));
+      if( matches( includes.getMachineArchitecture(), arch ) && matches( includes.getOperatingSystem(), os )
+          && matches( includes.getWindowingSystem(), ws ) ) {
+        result.addAll( getPluginIdsForFeature( includes.getId(), includes.getVersion(), targetplatform ) );
       }
     }
 
@@ -210,17 +210,17 @@ public class ConfigurationHelper {
    * @param value
    * @return
    */
-  private static boolean matches(String commaSeparatedList, String value) {
-    Assure.notNull("value", value);
+  private static boolean matches( String commaSeparatedList, String value ) {
+    Assure.notNull( "value", value );
 
-    if (!Utilities.hasText(commaSeparatedList)) {
+    if( !Utilities.hasText( commaSeparatedList ) ) {
       return true;
     }
 
-    String[] values = commaSeparatedList.split(",");
+    String[] values = commaSeparatedList.split( "," );
 
-    for (String listValue : values) {
-      if (value.equals(listValue)) {
+    for( String listValue : values ) {
+      if( value.equals( listValue ) ) {
         return true;
       }
     }
@@ -236,44 +236,44 @@ public class ConfigurationHelper {
    * @param targetplatform
    * @return
    */
-  private static String getOsgiBundlesFromPlugins(ProductDefinition productdef, TargetPlatform targetplatform) {
+  private static String getOsgiBundlesFromPlugins( ProductDefinition productdef, TargetPlatform targetplatform ) {
 
     StringBuilder result = new StringBuilder();
 
     String[] pluginIds = productdef.getPluginIds();
 
-    for (int i = 0; i < pluginIds.length; i++) {
+    for( int i = 0; i < pluginIds.length; i++ ) {
 
       String id = pluginIds[i];
 
-      if (!targetplatform.matchesPlatformFilter(id)) {
+      if( !targetplatform.matchesPlatformFilter( id ) ) {
         continue;
       }
 
-      if ("org.eclipse.osgi".equals(id)) {
+      if( "org.eclipse.osgi".equals( id ) ) {
         continue;
       }
 
-      if (productdef.hasConfigurationRecord(id)) {
-        result.append(productdef.getConfigurationRecord(id).getShortDescription());
+      if( productdef.hasConfigurationRecord( id ) ) {
+        result.append( productdef.getConfigurationRecord( id ).getShortDescription() );
       } else {
-        result.append(id);
+        result.append( id );
       }
 
-      if (i + 1 < pluginIds.length) {
-        result.append(",");
+      if( i + 1 < pluginIds.length ) {
+        result.append( "," );
       }
     }
 
     String[] fragmentIds = productdef.getFragmentIds();
-    for (String fragmentId : fragmentIds) {
+    for( String fragmentId : fragmentIds ) {
 
-      if (!targetplatform.matchesPlatformFilter(fragmentId)) {
+      if( !targetplatform.matchesPlatformFilter( fragmentId ) ) {
         continue;
       }
 
-      result.append(",");
-      result.append(fragmentId);
+      result.append( "," );
+      result.append( fragmentId );
     }
 
     //
@@ -290,51 +290,51 @@ public class ConfigurationHelper {
    * 
    * @return A comma separated list of all osgi bundles. Not <code>null</code>.
    */
-  public static String collectOsgiBundles(File[] targetlocations, BundleStartRecord[] records) {
+  public static String collectOsgiBundles( File[] targetlocations, BundleStartRecord[] records ) {
 
     StringMap properties = new StringMap();
 
     List<BundleStartRecord> startrecords = new ArrayList<BundleStartRecord>();
 
-    for (File targetlocation : targetlocations) {
+    for( File targetlocation : targetlocations ) {
 
-      File configini = new File(targetlocation, "configuration/config.ini");
-      if (configini.isFile()) {
+      File configini = new File( targetlocation, "configuration/config.ini" );
+      if( configini.isFile() ) {
 
-        A4ELogging.debug(MSG_ACCESSING_CONFIGINI, configini);
+        A4ELogging.debug( MSG_ACCESSING_CONFIGINI, configini );
 
         // load the current bundle list of a specific configuration
-        properties.extendProperties(configini);
+        properties.extendProperties( configini );
 
         boolean gotsimpleconfigurator = false;
-        String bundlelist = properties.get("osgi.bundles", null);
-        if (bundlelist != null) {
+        String bundlelist = properties.get( "osgi.bundles", null );
+        if( bundlelist != null ) {
           // separate the bundle parts
-          String[] parts = bundlelist.split(",");
-          for (String bundlepart : parts) {
-            BundleStartRecord record = new BundleStartRecord(bundlepart);
-            startrecords.add(record);
-            if (record.getId().indexOf(SimpleConfiguratorBundles.ID_SIMPLECONFIGURATOR) != -1) {
+          String[] parts = bundlelist.split( "," );
+          for( String bundlepart : parts ) {
+            BundleStartRecord record = new BundleStartRecord( bundlepart );
+            startrecords.add( record );
+            if( record.getId().indexOf( SimpleConfiguratorBundles.ID_SIMPLECONFIGURATOR ) != -1 ) {
               gotsimpleconfigurator = true;
             }
           }
         }
 
-        if (gotsimpleconfigurator) {
-          File bundlesinfo = new File(targetlocation,
-              "configuration/org.eclipse.equinox.simpleconfigurator/bundles.info");
-          if (bundlesinfo.isFile()) {
-            A4ELogging.debug(MSG_ACCESSING_BUNDLESINFO, bundlesinfo);
+        if( gotsimpleconfigurator ) {
+          File bundlesinfo = new File( targetlocation,
+              "configuration/org.eclipse.equinox.simpleconfigurator/bundles.info" );
+          if( bundlesinfo.isFile() ) {
+            A4ELogging.debug( MSG_ACCESSING_BUNDLESINFO, bundlesinfo );
             try {
-              SimpleConfiguratorBundles simpleconfig = new SimpleConfiguratorBundles(bundlesinfo);
+              SimpleConfiguratorBundles simpleconfig = new SimpleConfiguratorBundles( bundlesinfo );
               BundleStartRecord[] screcords = simpleconfig.getBundleStartRecords();
-              for (BundleStartRecord record : screcords) {
-                if (record.isAutoStart()) {
-                  startrecords.add(record);
+              for( BundleStartRecord record : screcords ) {
+                if( record.isAutoStart() ) {
+                  startrecords.add( record );
                 }
               }
-            } catch (RuntimeException ex) {
-              A4ELogging.debug(MSG_FAILED_BUNDLESINFO, bundlesinfo, ex.getMessage());
+            } catch( RuntimeException ex ) {
+              A4ELogging.debug( MSG_FAILED_BUNDLESINFO, bundlesinfo, ex.getMessage() );
             }
           }
         }
@@ -344,41 +344,42 @@ public class ConfigurationHelper {
 
     // if none could be found we're setting up some defaults which are basically
     // a guess (should be probably provided as a resource in future)
-    if (startrecords.isEmpty()) {
-      startrecords.add(new BundleStartRecord("org.eclipse.core.runtime@-1:start"));
-      startrecords.add(new BundleStartRecord("org.eclipse.osgi@2:start"));
-      startrecords.add(new BundleStartRecord("org.eclipse.equinox.common@2:start"));
-      startrecords.add(new BundleStartRecord("org.eclipse.update.configurator@3:start"));
-      A4ELogging.debug(MSG_USING_HARDCODED);
-      for (int i = 0; i < startrecords.size(); i++) {
-        A4ELogging.debug("\t%s", startrecords.get(i).getShortDescription());
+    if( startrecords.isEmpty() ) {
+      startrecords.add( new BundleStartRecord( "org.eclipse.core.runtime@-1:start" ) );
+      startrecords.add( new BundleStartRecord( "org.eclipse.osgi@2:start" ) );
+      startrecords.add( new BundleStartRecord( "org.eclipse.equinox.common@2:start" ) );
+      startrecords.add( new BundleStartRecord( "org.eclipse.update.configurator@3:start" ) );
+      A4ELogging.debug( MSG_USING_HARDCODED );
+      for( int i = 0; i < startrecords.size(); i++ ) {
+        A4ELogging.debug( "\t%s", startrecords.get( i ).getShortDescription() );
       }
     }
 
-    for (BundleStartRecord record : records) {
-      startrecords.add(record);
+    for( BundleStartRecord record : records ) {
+      startrecords.add( record );
     }
 
     // merge records denoting the same plugin id
-    Collections.sort(startrecords);
-    for (int i = startrecords.size() - 1; i > 0; i--) {
-      BundleStartRecord current = startrecords.get(i);
-      BundleStartRecord previous = startrecords.get(i - 1);
-      if (current.getId().equals(previous.getId())) {
-        previous.setAutoStart(previous.isAutoStart() || current.isAutoStart());
-        previous.setStartLevel(Math.min(previous.getStartLevel(), current.getStartLevel()));
-        startrecords.remove(i);
+    Collections.sort( startrecords );
+    for( int i = startrecords.size() - 1; i > 0; i-- ) {
+      BundleStartRecord current = startrecords.get( i );
+      BundleStartRecord previous = startrecords.get( i - 1 );
+      if( current.getId().equals( previous.getId() ) ) {
+        previous.setAutoStart( previous.isAutoStart() || current.isAutoStart() );
+        previous.setStartLevel( Math.min( previous.getStartLevel(), current.getStartLevel() ) );
+        startrecords.remove( i );
       }
     }
 
     // create a textual description for the bundlelist
     StringBuffer buffer = new StringBuffer();
-    buffer.append(startrecords.get(0).getShortDescription());
-    for (int i = 1; i < startrecords.size(); i++) {
-      buffer.append(",");
-      buffer.append(startrecords.get(i).getShortDescription());
+    buffer.append( startrecords.get( 0 ).getShortDescription() );
+    for( int i = 1; i < startrecords.size(); i++ ) {
+      buffer.append( "," );
+      buffer.append( startrecords.get( i ).getShortDescription() );
     }
     return buffer.toString();
 
   }
-}
+  
+} /* ENDCLASS */

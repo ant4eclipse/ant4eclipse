@@ -21,14 +21,14 @@ import org.apache.tools.ant.Task;
  */
 public class AntBasedLogger implements Ant4EclipseLogger {
 
-  /** the (thread local) context */
-  private ThreadLocal<Object> _context = new ThreadLocal<Object>();
+  private ThreadLocal<Object>   context;
 
   /**
    * <p>
    * </p>
    */
   public AntBasedLogger() {
+    context = new ThreadLocal<Object>();
   }
 
   /**
@@ -36,7 +36,7 @@ public class AntBasedLogger implements Ant4EclipseLogger {
    */
   @Override
   public Integer getPriority() {
-    return Integer.valueOf(-1);
+    return Integer.valueOf( -1 );
   }
 
   /**
@@ -45,13 +45,13 @@ public class AntBasedLogger implements Ant4EclipseLogger {
   @Override
   public void reset() {
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setContext(Object context) {
-    this._context.set(context);
+  public void setContext( Object newcontext ) {
+    context.set( newcontext );
   }
 
   /**
@@ -74,40 +74,40 @@ public class AntBasedLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   @Override
-  public void debug(String msg, Object... args) {
-    log(Project.MSG_VERBOSE, msg, args);
+  public void debug( String msg, Object ... args ) {
+    log( Project.MSG_VERBOSE, msg, args );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void trace(String msg, Object... args) {
-    log(Project.MSG_DEBUG, msg, args);
+  public void trace( String msg, Object ... args ) {
+    log( Project.MSG_DEBUG, msg, args );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void info(String msg, Object... args) {
-    log(Project.MSG_INFO, msg, args);
+  public void info( String msg, Object ... args ) {
+    log( Project.MSG_INFO, msg, args );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void warn(String msg, Object... args) {
-    log(Project.MSG_WARN, msg, args);
+  public void warn( String msg, Object ... args ) {
+    log( Project.MSG_WARN, msg, args );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void error(String msg, Object... args) {
-    log(Project.MSG_ERR, msg, args);
+  public void error( String msg, Object ... args ) {
+    log( Project.MSG_ERR, msg, args );
   }
 
   /**
@@ -120,25 +120,25 @@ public class AntBasedLogger implements Ant4EclipseLogger {
    * @param args
    *          The arguments used to format the message.
    */
-  private void log(int msgLevel, String msg, Object... args) {
+  private void log( int msgLevel, String msg, Object ... args ) {
     // retrieve the context
-    Object ctx = this._context.get();
+    Object ctx = context.get();
     if( ctx instanceof Task ) {
       // log with task context
       Task task = (Task) ctx;
-      task.getProject().log(task, String.format(msg, args), msgLevel);
+      task.getProject().log( task, String.format( msg, args ), msgLevel );
     } else if( ctx instanceof Target ) {
       // log with target context
       Target target = (Target) ctx;
-      target.getProject().log(target, String.format(msg, args), msgLevel);
+      target.getProject().log( target, String.format( msg, args ), msgLevel );
     } else if( ctx instanceof Project ) {
       // log without context
       Project project = (Project) ctx;
-      project.log(String.format(msg, args), msgLevel);
+      project.log( String.format( msg, args ), msgLevel );
     } else {
       // temporary solution as it's currently possible to "run" initializations before
       // the execution of a task actually takes place
-      System.out.println(String.format(msg, args));
+      System.out.println( String.format( msg, args ) );
     }
   }
 

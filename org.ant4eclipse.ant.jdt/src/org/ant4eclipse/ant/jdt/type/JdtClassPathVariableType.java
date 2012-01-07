@@ -49,8 +49,8 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public JdtClassPathVariableType(Project project) {
-    super(project);
+  public JdtClassPathVariableType( Project project ) {
+    super( project );
   }
 
   /**
@@ -61,7 +61,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @param varfile
    *          A properties file pointing to a set of class path variables.
    */
-  public void setFile(File varfile) {
+  public void setFile( File varfile ) {
     this._varfile = varfile;
   }
 
@@ -84,8 +84,8 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @param name
    *          the name to set
    */
-  public void setName(String name) {
-    this._name = Utilities.cleanup(name);
+  public void setName( String name ) {
+    this._name = Utilities.cleanup( name );
   }
 
   /**
@@ -107,7 +107,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @param path
    *          the path of the class path variable.
    */
-  public void setPath(File path) {
+  public void setPath( File path ) {
     this._path = path;
   }
 
@@ -117,26 +117,27 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
   @Override
   protected void doValidate() {
 
-    Map<String, File> classpathvars = new Hashtable<String, File>();
+    Map<String,File> classpathvars = new Hashtable<String,File>();
 
-    if ((this._path != null) && (this._name != null)) {
-      classpathvars.put(this._name, this._path);
-    } else if (this._path != null) {
-      throw new BuildException("Missing parameter 'name' on classpathVariable!");
-    } else if (this._name != null) {
-      throw new BuildException("Missing parameter 'path' on classpathVariable!");
+    if( (this._path != null) && (this._name != null) ) {
+      classpathvars.put( this._name, this._path );
+    } else if( this._path != null ) {
+      throw new BuildException( "Missing parameter 'name' on classpathVariable!" );
+    } else if( this._name != null ) {
+      throw new BuildException( "Missing parameter 'path' on classpathVariable!" );
     }
 
     // load the classpath variables from the file
-    if (this._varfile != null) {
-      StringMap map = new StringMap(this._varfile);
-      for (Map.Entry<String, String> pair : map.entrySet()) {
-        classpathvars.put(pair.getKey(), new File(pair.getValue()));
+    if( this._varfile != null ) {
+      StringMap map = new StringMap( this._varfile );
+      for( Map.Entry<String,String> pair : map.entrySet() ) {
+        classpathvars.put( pair.getKey(), new File( pair.getValue() ) );
       }
     }
 
-    ClassPathElementsRegistry variablesRegistry = A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
-    variablesRegistry.registerClassPathVariables(classpathvars);
+    ClassPathElementsRegistry variablesRegistry = A4ECore.instance().getRequiredService(
+        ClassPathElementsRegistry.class );
+    variablesRegistry.registerClassPathVariables( classpathvars );
   }
 
-}
+} /* ENDCLASS */

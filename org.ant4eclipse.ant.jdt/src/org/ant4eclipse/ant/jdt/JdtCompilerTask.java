@@ -56,7 +56,7 @@ public class JdtCompilerTask extends Javac {
    * @param enable
    *          <code>true</code> <=> Generate warn messages.
    */
-  public void setWarnings(boolean enable) {
+  public void setWarnings( boolean enable ) {
     this._warnings = enable;
   }
 
@@ -66,7 +66,7 @@ public class JdtCompilerTask extends Javac {
    * @param enable
    *          <code>true</code> <=> Enables the use of the ecj compiler.
    */
-  public void setUseecj(boolean enable) {
+  public void setUseecj( boolean enable ) {
     this._useecj = enable;
   }
 
@@ -76,7 +76,7 @@ public class JdtCompilerTask extends Javac {
    * {@inheritDoc}
    */
   @Override
-  public void setErrorProperty(String prop) {
+  public void setErrorProperty( String prop ) {
     this._errprop = prop;
   }
 
@@ -86,7 +86,7 @@ public class JdtCompilerTask extends Javac {
    * {@inheritDoc}
    */
   @Override
-  public void setUpdatedProperty(String prop) {
+  public void setUpdatedProperty( String prop ) {
     this._updateprop = prop;
   }
 
@@ -99,13 +99,13 @@ public class JdtCompilerTask extends Javac {
    * @return The CompilerAdapter instance used for the compilation process. Not <code>null</code>.
    */
   protected CompilerAdapter getOrCreateCompilerAdapter() {
-    if (this._a4eCompilerAdapter == null) {
-    if (this._useecj) {
+    if( this._a4eCompilerAdapter == null ) {
+      if( this._useecj ) {
         this._a4eCompilerAdapter = new EcjCompilerAdapter();
-    } else {
+      } else {
         this._a4eCompilerAdapter = new JavacCompilerAdapter();
       }
-      this._a4eCompilerAdapter.setWarnings(this._warnings);
+      this._a4eCompilerAdapter.setWarnings( this._warnings );
     }
     return this._a4eCompilerAdapter;
   }
@@ -118,44 +118,44 @@ public class JdtCompilerTask extends Javac {
 
     File destdir = super.getDestdir();
 
-    if (this.compileList.length > 0) {
+    if( this.compileList.length > 0 ) {
 
-      File current = new File(".");
-      String dest = destdir != null ? String.valueOf(destdir) : String.valueOf(current);
-      if (this.compileList.length == 1) {
-        A4ELogging.info("Compiling 1 source file '%s' to '%s' !", this.compileList[0], dest);
+      File current = new File( "." );
+      String dest = destdir != null ? String.valueOf( destdir ) : String.valueOf( current );
+      if( this.compileList.length == 1 ) {
+        A4ELogging.info( "Compiling 1 source file '%s' to '%s' !", this.compileList[0], dest );
       } else {
-        A4ELogging.info("Compiling %d source files to '%s' !", Integer.valueOf(this.compileList.length), dest);
+        A4ELogging.info( "Compiling %d source files to '%s' !", Integer.valueOf( this.compileList.length ), dest );
       }
 
-      if (this.listFiles) {
-        for (File element : this.compileList) {
-          A4ELogging.info("\t%s", element.getAbsolutePath());
+      if( this.listFiles ) {
+        for( File element : this.compileList ) {
+          A4ELogging.info( "\t%s", element.getAbsolutePath() );
         }
       }
 
       // obtain an adapter used to run the compilation process
       CompilerAdapter adapter = getOrCreateCompilerAdapter();
-      adapter.setJavac(this);
+      adapter.setJavac( this );
 
       // launch the compilation process
-      if (adapter.execute()) {
+      if( adapter.execute() ) {
 
         // everything went fine, so we can mark this using a proeprty if desired
-        if (this._updateprop != null) {
-          getProject().setNewProperty(this._updateprop, "true");
+        if( this._updateprop != null ) {
+          getProject().setNewProperty( this._updateprop, "true" );
         }
 
       } else {
 
         // damn it. we need to mark the error.
-        if (this._errprop != null) {
-          getProject().setNewProperty(this._errprop, "true");
+        if( this._errprop != null ) {
+          getProject().setNewProperty( this._errprop, "true" );
         }
-        if (this.failOnError) {
-          throw new BuildException(MSG_FAILURE, getLocation());
+        if( this.failOnError ) {
+          throw new BuildException( MSG_FAILURE, getLocation() );
         } else {
-          A4ELogging.error(MSG_FAILURE);
+          A4ELogging.error( MSG_FAILURE );
         }
       }
 
@@ -167,8 +167,8 @@ public class JdtCompilerTask extends Javac {
    * {@inheritDoc}
    */
   @Override
-  public void setCompiler(String compiler) {
-    A4ELogging.error(MSG_INVALID_ATTRIBUTE, getTaskName());
+  public void setCompiler( String compiler ) {
+    A4ELogging.error( MSG_INVALID_ATTRIBUTE, getTaskName() );
   }
 
   /**
@@ -176,14 +176,14 @@ public class JdtCompilerTask extends Javac {
    */
   @Override
   public void execute() throws BuildException {
-    super.setCompiler(EcjCompilerAdapter.class.getName());
-    super.setIncludeantruntime(false);
+    super.setCompiler( EcjCompilerAdapter.class.getName() );
+    super.setIncludeantruntime( false );
 
     // Set Compiler Adapter (only if Ant >= 1.8.0);
     try {
-      Method addAdapterMethod = getClass().getMethod("add", CompilerAdapter.class);
-      addAdapterMethod.invoke(this, getOrCreateCompilerAdapter());
-    } catch (Exception ex) {
+      Method addAdapterMethod = getClass().getMethod( "add", CompilerAdapter.class );
+      addAdapterMethod.invoke( this, getOrCreateCompilerAdapter() );
+    } catch( Exception ex ) {
       // ignore
     }
     super.execute();

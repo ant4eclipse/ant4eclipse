@@ -46,8 +46,8 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public JdtClassPathContainerType(Project project) {
-    super(project);
+  public JdtClassPathContainerType( Project project ) {
+    super( project );
 
     this._resources = new Union();
   }
@@ -69,7 +69,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * @param name
    *          the name to set
    */
-  public void setName(String name) {
+  public void setName( String name ) {
     this._name = name;
   }
 
@@ -79,8 +79,8 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * @param rc
    *          resource collection to add.
    */
-  public void add(ResourceCollection rc) {
-    this._resources.add(rc);
+  public void add( ResourceCollection rc ) {
+    this._resources.add( rc );
   }
 
   /**
@@ -91,18 +91,19 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
     // TODO: validate
 
     // fetch the ClassPathElementsRegistry
-    ClassPathElementsRegistry variablesRegistry = A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
+    ClassPathElementsRegistry variablesRegistry = A4ECore.instance().getRequiredService(
+        ClassPathElementsRegistry.class );
 
     // fetch the provided files
     List<File> files = new ArrayList<File>();
-    @SuppressWarnings("unchecked")
-    Iterator<FileResource> iterator = this._resources.iterator();
-    while (iterator.hasNext()) {
+    @SuppressWarnings( "unchecked" ) Iterator<FileResource> iterator = this._resources.iterator();
+    while( iterator.hasNext() ) {
       FileResource fileResource = iterator.next();
-      files.add(fileResource.getFile());
+      files.add( fileResource.getFile() );
     }
 
     // TODO: what to do if classpathContainer already registered?
-    variablesRegistry.registerClassPathContainer(this._name, files.toArray(new File[0]));
+    variablesRegistry.registerClassPathContainer( this._name, files.toArray( new File[0] ) );
   }
-}
+
+} /* ENDCLASS */

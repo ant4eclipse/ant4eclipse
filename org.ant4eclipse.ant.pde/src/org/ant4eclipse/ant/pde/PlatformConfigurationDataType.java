@@ -42,8 +42,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    * @param project
    *          the project
    */
-  public PlatformConfigurationDataType(Project project) {
-    super(project);
+  public PlatformConfigurationDataType( Project project ) {
+    super( project );
 
     // create a new TargetPlatformConfiguration
     this._targetPlatformConfiguration = new PlatformConfiguration();
@@ -57,8 +57,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    * @param id
    *          the id of the target platform location.
    */
-  public void setId(String id) {
-    if (isReference()) {
+  public void setId( String id ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
 
@@ -70,13 +70,13 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    */
   @Override
   protected void doValidate() {
-    if (this._id == null || "".equals(this._id)) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id");
+    if( this._id == null || "".equals( this._id ) ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id" );
     }
     // add the target platform definition
-    TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService(
-        TargetPlatformRegistry.class);
-    targetPlatformRegistry.addPlatformConfiguration(this._id, this._targetPlatformConfiguration);
+    TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance()
+        .getRequiredService( TargetPlatformRegistry.class );
+    targetPlatformRegistry.addPlatformConfiguration( this._id, this._targetPlatformConfiguration );
   }
 
   /**
@@ -86,8 +86,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    * @param value
    *          the architecture
    */
-  public void setArchitecture(String value) {
-    this._targetPlatformConfiguration.setArchitecture(value);
+  public void setArchitecture( String value ) {
+    this._targetPlatformConfiguration.setArchitecture( value );
   }
 
   /**
@@ -97,8 +97,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    * @param value
    *          the platform configuration
    */
-  public void setLanguageSetting(String value) {
-    this._targetPlatformConfiguration.setLanguageSetting(value);
+  public void setLanguageSetting( String value ) {
+    this._targetPlatformConfiguration.setLanguageSetting( value );
   }
 
   /**
@@ -108,8 +108,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    * @param value
    *          the operating system
    */
-  public void setOperatingSystem(String value) {
-    this._targetPlatformConfiguration.setOperatingSystem(value);
+  public void setOperatingSystem( String value ) {
+    this._targetPlatformConfiguration.setOperatingSystem( value );
   }
 
   /**
@@ -119,7 +119,8 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    * @param value
    *          the windowing system
    */
-  public void setWindowingSystem(String value) {
-    this._targetPlatformConfiguration.setWindowingSystem(value);
+  public void setWindowingSystem( String value ) {
+    this._targetPlatformConfiguration.setWindowingSystem( value );
   }
-}
+  
+} /* ENDCLASS */

@@ -20,17 +20,17 @@ public class HasNatureTest extends AbstractWorkspaceBasedBuildFileTest {
   @Override
   public void setUp() throws Exception {
     super.setUp();
-    setupBuildFile("hasNature.xml");
-    JdtProjectBuilder builder = new JdtProjectBuilder("jdtproject");
-    builder.createIn(getTestWorkspaceDirectory());
+    setupBuildFile( "hasNature.xml" );
+    JdtProjectBuilder builder = new JdtProjectBuilder( "jdtproject" );
+    builder.createIn( getTestWorkspaceDirectory() );
   }
 
   public void testJdtNatureLong() {
-    expectLog("testJdtNatureLong", "OK");
+    expectLog( "testJdtNatureLong", "OK" );
   }
 
   public void testJdtNatureShort() {
-    expectLog("testJdtNatureShort", "OK");
+    expectLog( "testJdtNatureShort", "OK" );
   }
 
-}
+} /* ENDCLASS */

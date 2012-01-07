@@ -29,6 +29,14 @@ public class FileListHelper {
 
   /**
    * <p>
+   * Creates a new instance of type FileListHelper.
+   * </p>
+   */
+  private FileListHelper() {
+  }
+  
+  /**
+   * <p>
    * Creates a {@link FileList} that contains all children of the specified file.
    * </p>
    * 
@@ -36,37 +44,28 @@ public class FileListHelper {
    *          the file
    * @return a {@link FileList} that contains all children of the specified file.
    */
-  public static FileList getFileList(File file) {
-    Assure.exists("file", file);
+  public static FileList getFileList( File file ) {
+    
+    Assure.exists( "file", file );
 
-    File parentFile = file.getParentFile();
+    File     parentfile = file.getParentFile();
+    FileList filelist   = new FileList();
+    filelist.setDir( parentfile );
 
-    FileList fileList = new FileList();
-    fileList.setDir(parentFile);
-
-    if (file.isFile()) {
-      FileName fileName = new FileList.FileName();
-      fileName.setName(file.getName());
-      fileList.addConfiguredFile(fileName);
-    }
-
-    else if (file.isDirectory()) {
-      for (File child : Utilities.getAllChildren(file)) {
-        FileName fileName = new FileList.FileName();
-        fileName.setName(child.getAbsolutePath().substring(parentFile.getAbsolutePath().length() + 1));
-        fileList.addConfiguredFile(fileName);
+    if( file.isFile() ) {
+      FileName filename = new FileList.FileName();
+      filename.setName( file.getName() );
+      filelist.addConfiguredFile( filename );
+    } else if( file.isDirectory() ) {
+      for( File child : Utilities.getAllChildren( file ) ) {
+        FileName filename = new FileList.FileName();
+        filename.setName( child.getAbsolutePath().substring( parentfile.getAbsolutePath().length() + 1 ) );
+        filelist.addConfiguredFile( filename );
       }
     }
 
-    return fileList;
+    return filelist;
+    
   }
 
-  /**
-   * <p>
-   * Creates a new instance of type FileListHelper.
-   * </p>
-   */
-  private FileListHelper() {
-    super();
-  }
-}
+} /* ENDCLASS */

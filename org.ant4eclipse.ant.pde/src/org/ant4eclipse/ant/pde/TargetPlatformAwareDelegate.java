@@ -50,7 +50,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    * {@inheritDoc}
    */
   @Override
-  public final void setTargetPlatformId(String targetPlatformId) {
+  public final void setTargetPlatformId( String targetPlatformId ) {
     this._targetPlatformId = targetPlatformId;
   }
 
@@ -75,8 +75,8 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public final void requireTargetPlatformIdSet() {
-    if (!isTargetPlatformIdSet()) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "targetPlatformId");
+    if( !isTargetPlatformIdSet() ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "targetPlatformId" );
     }
   }
 
@@ -100,7 +100,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    * {@inheritDoc}
    */
   @Override
-  public void setPlatformConfigurationId(String platformConfigurationId) {
+  public void setPlatformConfigurationId( String platformConfigurationId ) {
     this._platformConfigurationId = platformConfigurationId;
   }
 
@@ -113,29 +113,31 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    *          the workspace
    * @return the target platform.
    */
-  public TargetPlatform getTargetPlatform(Workspace workspace) {
+  public TargetPlatform getTargetPlatform( Workspace workspace ) {
 
     // create the target platform if necessary
-    if (this._targetPlatform == null) {
+    if( this._targetPlatform == null ) {
 
       // get the target platform registry
-      TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService( TargetPlatformRegistry.class );
+      TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService(
+          TargetPlatformRegistry.class );
 
       // define the platform configuration
       PlatformConfiguration configuration = null;
-      if (isPlatformConfigurationIdSet()
-          && targetPlatformRegistry.hasPlatformConfiguration(getPlatformConfigurationId())) {
-        configuration = targetPlatformRegistry.getPlatformConfiguration(getPlatformConfigurationId());
+      if( isPlatformConfigurationIdSet()
+          && targetPlatformRegistry.hasPlatformConfiguration( getPlatformConfigurationId() ) ) {
+        configuration = targetPlatformRegistry.getPlatformConfiguration( getPlatformConfigurationId() );
       } else {
         configuration = new PlatformConfiguration();
-        configuration.setPreferProjects(true);
+        configuration.setPreferProjects( true );
       }
 
       // return the target platform
-      this._targetPlatform = targetPlatformRegistry.getInstance(workspace, getTargetPlatformId(), configuration);
+      this._targetPlatform = targetPlatformRegistry.getInstance( workspace, getTargetPlatformId(), configuration );
     }
 
     // return the target platform
     return this._targetPlatform;
   }
-}
+  
+} /* ENDCLASS */

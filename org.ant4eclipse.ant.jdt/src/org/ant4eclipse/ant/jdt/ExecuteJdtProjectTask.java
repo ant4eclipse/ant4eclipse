@@ -41,26 +41,26 @@ import org.apache.tools.ant.types.FileSet;
 public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask implements JdtExecutorValues {
 
   /** the constant for SCOPE_PROJECT_ELEMENT_NAME */
-  private static final String SCOPE_PROJECT_ELEMENT_NAME                    = "ForProject";
+  private static final String      SCOPE_PROJECT_ELEMENT_NAME                    = "ForProject";
 
   /** the constant for SCOPE_TARGET_DIRECTORY_ELEMENT_NAME */
-  private static final String SCOPE_TARGET_DIRECTORY_ELEMENT_NAME           = "ForEachOutputDirectory";
+  private static final String      SCOPE_TARGET_DIRECTORY_ELEMENT_NAME           = "ForEachOutputDirectory";
 
   /** the constant for SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME */
-  private static final String SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME           = "ForEachSourceDirectory";
+  private static final String      SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME           = "ForEachSourceDirectory";
 
-  private static final String SCOPE_FOR_EACH_RUNTIME_CLASSPATH_ELEMENT_NAME = "ForEachRuntimeClasspathEntry";
+  private static final String      SCOPE_FOR_EACH_RUNTIME_CLASSPATH_ELEMENT_NAME = "ForEachRuntimeClasspathEntry";
 
   /** the constant for SCOPE_SOURCE_DIRECTORY */
-  public static final String  SCOPE_SOURCE_DIRECTORY                        = "SCOPE_SOURCE_DIRECTORY";
+  public static final String       SCOPE_SOURCE_DIRECTORY                        = "SCOPE_SOURCE_DIRECTORY";
 
   /** the constant for SCOPE_TARGET_DIRECTORY */
-  public static final String  SCOPE_TARGET_DIRECTORY                        = "SCOPE_TARGET_DIRECTORY";
+  public static final String       SCOPE_TARGET_DIRECTORY                        = "SCOPE_TARGET_DIRECTORY";
 
   /** the constant for SCOPE_PROJECT */
-  public static final String  SCOPE_PROJECT                                 = "SCOPE_PROJECT";
+  public static final String       SCOPE_PROJECT                                 = "SCOPE_PROJECT";
 
-  public static final String  SCOPE_FOR_EACH_RUNTIME_CLASSPATH              = "SCOPE_FOR_EACH_RUNTIME_CLASSPATH";
+  public static final String       SCOPE_FOR_EACH_RUNTIME_CLASSPATH              = "SCOPE_FOR_EACH_RUNTIME_CLASSPATH";
 
   /** - */
   public static final String       CLASSPATH_ABSOLUTE_COMPILETIME                = "absolute.compiletime";
@@ -76,13 +76,13 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
 
   /** - */
   private static final Set<String> CLASSPATH_POSSIBLE_VALUES                     = Collections
-                                                                                     .unmodifiableSet(new HashSet<String>(
+                                                                                     .unmodifiableSet( new HashSet<String>(
                                                                                          Arrays
                                                                                              .asList(
                                                                                                  CLASSPATH_ABSOLUTE_COMPILETIME,
                                                                                                  CLASSPATH_ABSOLUTE_RUNTIME,
                                                                                                  CLASSPATH_RELATIVE_COMPILETIME,
-                                                                                                 CLASSPATH_RELATIVE_RUNTIME)));
+                                                                                                 CLASSPATH_RELATIVE_RUNTIME ) ) );
 
   /** - */
   private Set<String>              _resolvedClassPaths                           = CLASSPATH_POSSIBLE_VALUES;
@@ -93,7 +93,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * </p>
    */
   public ExecuteJdtProjectTask() {
-    super("executeJdtProject");
+    super( "executeJdtProject" );
   }
 
   /**
@@ -104,40 +104,40 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * @param prefix
    *          the prefix
    */
-  protected ExecuteJdtProjectTask(String prefix) {
-    super(prefix);
+  protected ExecuteJdtProjectTask( String prefix ) {
+    super( prefix );
   }
 
   /**
    * @param resolvedClassPaths
    */
-  public void setResolvedClassPaths(String resolvedClassPaths) {
+  public void setResolvedClassPaths( String resolvedClassPaths ) {
 
     //
     this._resolvedClassPaths = new HashSet<String>();
 
     //
-    if (resolvedClassPaths == null) {
+    if( resolvedClassPaths == null ) {
       return;
     }
 
     //
-    String[] paths = resolvedClassPaths.split(",");
+    String[] paths = resolvedClassPaths.split( "," );
 
     //
-    for (String path : paths) {
+    for( String path : paths ) {
 
       String trimmedPath = path.trim().toLowerCase();
 
       // Make sure argument is valid
-      if (!CLASSPATH_POSSIBLE_VALUES.contains(trimmedPath)) {
-        throw new BuildException(String.format(
+      if( !CLASSPATH_POSSIBLE_VALUES.contains( trimmedPath ) ) {
+        throw new BuildException( String.format(
             "Invalid value for Parameter 'resolvedClassPaths' specified: '%s'. Allowed values are: '%s'", path,
-            CLASSPATH_POSSIBLE_VALUES));
+            CLASSPATH_POSSIBLE_VALUES ) );
       }
 
       // add value
-      this._resolvedClassPaths.add(trimmedPath);
+      this._resolvedClassPaths.add( trimmedPath );
     }
   }
 
@@ -145,27 +145,27 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * {@inheritDoc}
    */
   @Override
-  public final Object createDynamicElement(String name) throws BuildException {
+  public final Object createDynamicElement( String name ) throws BuildException {
 
     // handle SCOPE_SOURCE_DIRECTORY
-    if (SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_SOURCE_DIRECTORY);
+    if( SCOPE_SOURCE_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_SOURCE_DIRECTORY );
     }
     // handle SCOPE_TARGET_DIRECTORY
-    else if (SCOPE_TARGET_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_TARGET_DIRECTORY);
+    else if( SCOPE_TARGET_DIRECTORY_ELEMENT_NAME.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_TARGET_DIRECTORY );
     }
     // handle SCOPE_PROJECT
-    else if (SCOPE_PROJECT_ELEMENT_NAME.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_PROJECT);
+    else if( SCOPE_PROJECT_ELEMENT_NAME.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_PROJECT );
     }
     // handle SCOPE_FOR_EACH_RUNTIME_CLASSPATH
-    else if (SCOPE_FOR_EACH_RUNTIME_CLASSPATH_ELEMENT_NAME.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_FOR_EACH_RUNTIME_CLASSPATH);
+    else if( SCOPE_FOR_EACH_RUNTIME_CLASSPATH_ELEMENT_NAME.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_FOR_EACH_RUNTIME_CLASSPATH );
     }
 
     // delegate to template method
-    return onCreateDynamicElement(name);
+    return onCreateDynamicElement( name );
   }
 
   /**
@@ -177,7 +177,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    *          the name of the sub element
    * @return
    */
-  protected Object onCreateDynamicElement(String name) {
+  protected Object onCreateDynamicElement( String name ) {
     // default implementation returns null
     return null;
   }
@@ -189,7 +189,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * @param scopedMacroDefinition
    * @return
    */
-  protected boolean onExecuteScopeMacroDefintion(ScopedMacroDefinition<String> scopedMacroDefinition) {
+  protected boolean onExecuteScopeMacroDefintion( ScopedMacroDefinition<String> scopedMacroDefinition ) {
     // default implementation returns false
     return false;
   }
@@ -200,7 +200,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param executionValues
    */
-  protected void addAdditionalExecutionValues(MacroExecutionValues executionValues) {
+  protected void addAdditionalExecutionValues( MacroExecutionValues executionValues ) {
     // adds additional execution values
   }
 
@@ -214,31 +214,31 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
-    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for( ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions() ) {
 
       MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
       // execute SCOPE_SOURCE_DIRECTORY
-      if (SCOPE_SOURCE_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
-        executeSourceDirectoryScopedMacroDef(macroDef);
+      if( SCOPE_SOURCE_DIRECTORY.equals( scopedMacroDefinition.getScope() ) ) {
+        executeSourceDirectoryScopedMacroDef( macroDef );
       }
       // execute SCOPE_TARGET_DIRECTORY
-      else if (SCOPE_TARGET_DIRECTORY.equals(scopedMacroDefinition.getScope())) {
-        executeOutputDirectoryScopedMacroDef(macroDef);
+      else if( SCOPE_TARGET_DIRECTORY.equals( scopedMacroDefinition.getScope() ) ) {
+        executeOutputDirectoryScopedMacroDef( macroDef );
       }
       // execute SCOPE_PROJECT
-      else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
-        executeProjectScopedMacroDef(macroDef);
+      else if( SCOPE_PROJECT.equals( scopedMacroDefinition.getScope() ) ) {
+        executeProjectScopedMacroDef( macroDef );
       }
       // execute SCOPE_PROJECT
-      else if (SCOPE_FOR_EACH_RUNTIME_CLASSPATH.equals(scopedMacroDefinition.getScope())) {
-        executeForEachRuntimeClasspathScopedMacroDef(macroDef);
+      else if( SCOPE_FOR_EACH_RUNTIME_CLASSPATH.equals( scopedMacroDefinition.getScope() ) ) {
+        executeForEachRuntimeClasspathScopedMacroDef( macroDef );
       }
       // delegate to template method
       else {
-        if (!onExecuteScopeMacroDefintion(scopedMacroDefinition)) {
+        if( !onExecuteScopeMacroDefintion( scopedMacroDefinition ) ) {
           // TODO: NLS
-          throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
+          throw new RuntimeException( "Unknown Scope '" + scopedMacroDefinition.getScope() + "'" );
         }
       }
     }
@@ -249,46 +249,48 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * @param javaProjectRole
    * @param classpathes
    */
-  private void executeSourceDirectoryScopedMacroDef(MacroDef macroDef) {
+  private void executeSourceDirectoryScopedMacroDef( MacroDef macroDef ) {
 
-    for (final String sourceFolder : getJavaProjectRole().getSourceFolders()) {
+    for( final String sourceFolder : getJavaProjectRole().getSourceFolders() ) {
 
       // execute macro
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
-          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-              values, ExecuteJdtProjectTask.this._resolvedClassPaths);
+          getExecutorValuesProvider().provideExecutorValues( getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values, ExecuteJdtProjectTask.this._resolvedClassPaths );
 
           // add source and output directory
-          values.getProperties().put(SOURCE_DIRECTORY_NAME, sourceFolder);
-          values.getProperties().put(SOURCE_DIRECTORY, convertToString(getEclipseProject().getChild(sourceFolder)));
-          values.getProperties().put(SOURCE_DIRECTORY_INCLUDES,
-              getJavaProjectRole().getIncludePatternsForSourceFolder(sourceFolder));
-          values.getProperties().put(SOURCE_DIRECTORY_EXCLUDES,
-              getJavaProjectRole().getExcludePatternsForSourceFolder(sourceFolder));
-          values.getProperties().put(OUTPUT_DIRECTORY_NAME, sourceFolder);
+          values.getProperties().put( SOURCE_DIRECTORY_NAME, sourceFolder );
+          values.getProperties()
+              .put( SOURCE_DIRECTORY, convertToString( getEclipseProject().getChild( sourceFolder ) ) );
+          values.getProperties().put( SOURCE_DIRECTORY_INCLUDES,
+              getJavaProjectRole().getIncludePatternsForSourceFolder( sourceFolder ) );
+          values.getProperties().put( SOURCE_DIRECTORY_EXCLUDES,
+              getJavaProjectRole().getExcludePatternsForSourceFolder( sourceFolder ) );
+          values.getProperties().put( OUTPUT_DIRECTORY_NAME, sourceFolder );
           values.getProperties().put(
               OUTPUT_DIRECTORY,
-              convertToString(getEclipseProject().getChild(
-                  getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
+              convertToString( getEclipseProject().getChild(
+                  getJavaProjectRole().getOutputFolderForSourceFolder( sourceFolder ) ) ) );
 
           // refs
-          values.getReferences().put(SOURCE_DIRECTORY_PATH, convertToPath(getEclipseProject().getChild(sourceFolder)));
+          values.getReferences().put( SOURCE_DIRECTORY_PATH,
+              convertToPath( getEclipseProject().getChild( sourceFolder ) ) );
           values.getReferences().put(
               OUTPUT_DIRECTORY_PATH,
-              convertToPath(getEclipseProject().getChild(
-                  getJavaProjectRole().getOutputFolderForSourceFolder(sourceFolder))));
+              convertToPath( getEclipseProject().getChild(
+                  getJavaProjectRole().getOutputFolderForSourceFolder( sourceFolder ) ) ) );
 
           // add additional execution values if necessary
-          addAdditionalExecutionValues(values);
+          addAdditionalExecutionValues( values );
 
           // return the values
           return values;
         }
-      });
+      } );
     }
   }
 
@@ -298,33 +300,34 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param macroDef
    */
-  private void executeOutputDirectoryScopedMacroDef(MacroDef macroDef) {
+  private void executeOutputDirectoryScopedMacroDef( MacroDef macroDef ) {
 
     // iterate over all output folders
-    for (final String outFolder : getJavaProjectRole().getAllOutputFolders()) {
+    for( final String outFolder : getJavaProjectRole().getAllOutputFolders() ) {
 
       // execute macro
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
           // get the default jdt executor values
-          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-              values, ExecuteJdtProjectTask.this._resolvedClassPaths);
+          getExecutorValuesProvider().provideExecutorValues( getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values, ExecuteJdtProjectTask.this._resolvedClassPaths );
 
           // add output directory
-          values.getProperties().put(OUTPUT_DIRECTORY_NAME, outFolder);
-          values.getProperties().put(OUTPUT_DIRECTORY, convertToString(getEclipseProject().getChild(outFolder)));
-          values.getReferences().put(OUTPUT_DIRECTORY_PATH, convertToPath(getEclipseProject().getChild(outFolder)));
+          values.getProperties().put( OUTPUT_DIRECTORY_NAME, outFolder );
+          values.getProperties().put( OUTPUT_DIRECTORY, convertToString( getEclipseProject().getChild( outFolder ) ) );
+          values.getReferences()
+              .put( OUTPUT_DIRECTORY_PATH, convertToPath( getEclipseProject().getChild( outFolder ) ) );
 
           // call template method
-          addAdditionalExecutionValues(values);
+          addAdditionalExecutionValues( values );
 
           // return the values
           return values;
         }
-      });
+      } );
     }
   }
 
@@ -335,22 +338,22 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param macroDef
    */
-  private void executeForEachRuntimeClasspathScopedMacroDef(MacroDef macroDef) {
-    Assure.instanceOf("macroDef", macroDef, ConditionalMacroDef.class);
+  private void executeForEachRuntimeClasspathScopedMacroDef( MacroDef macroDef ) {
+    Assure.instanceOf( "macroDef", macroDef, ConditionalMacroDef.class );
 
     // Get the ConditionalMacroDef to access the macros attributes
     ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
 
     // Read the 'reverse' attribute
-    final boolean reverse = Boolean.parseBoolean(conditionalMacroDef.getAttribute("reverse", "false"));
+    final boolean reverse = Boolean.parseBoolean( conditionalMacroDef.getAttribute( "reverse", "false" ) );
 
     final JavaProjectRole javaProjectRole = getJavaProjectRole();
 
     final EclipseProject project = javaProjectRole.getEclipseProject();
 
     // Resolve the absolute and relative classpaths
-    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(project, false, true,
-        getJdtClasspathContainerArguments());
+    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath( project, false, true,
+        getJdtClasspathContainerArguments() );
     // ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
     // true, true, getJdtClasspathContainerArguments());
 
@@ -364,62 +367,62 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     // }
 
     // reverse the classpath order if requested
-    if (reverse) {
-      Utilities.reverse(absoluteClasspathFiles);
+    if( reverse ) {
+      Utilities.reverse( absoluteClasspathFiles );
       // Utilities.reverse(relativeClasspathFiles);
     }
 
     // invoke callback template for each classpath entry
-    for (int i = 0; i < absoluteClasspathFiles.length; i++) {
+    for( int i = 0; i < absoluteClasspathFiles.length; i++ ) {
       final int index = i;
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
-          getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-              values, ExecuteJdtProjectTask.this._resolvedClassPaths);
+          getExecutorValuesProvider().provideExecutorValues( getJavaProjectRole(), getJdtClasspathContainerArguments(),
+              values, ExecuteJdtProjectTask.this._resolvedClassPaths );
 
           final StringMap properties = values.getProperties();
           // add absolute path
-          properties.put("classpathEntry.absolute", absoluteClasspathFiles[index].getAbsolutePath());
+          properties.put( "classpathEntry.absolute", absoluteClasspathFiles[index].getAbsolutePath() );
 
           // // add relative path
           // properties.put("classpathEntry.relative", relativeClasspathFiles[index].getPath());
 
           // add name (last part of the path)
-          properties.put("classpathEntry.name", absoluteClasspathFiles[index].getName());
+          properties.put( "classpathEntry.name", absoluteClasspathFiles[index].getName() );
 
           // add informations about file system resource
-          properties.put("classpathEntry.isExisting", Boolean.toString(absoluteClasspathFiles[index].exists()));
-          properties.put("classpathEntry.isFile", Boolean.toString(absoluteClasspathFiles[index].isFile()));
-          properties.put("classpathEntry.isFolder", Boolean.toString(absoluteClasspathFiles[index].isDirectory()));
+          properties.put( "classpathEntry.isExisting", Boolean.toString( absoluteClasspathFiles[index].exists() ) );
+          properties.put( "classpathEntry.isFile", Boolean.toString( absoluteClasspathFiles[index].isFile() ) );
+          properties.put( "classpathEntry.isFolder", Boolean.toString( absoluteClasspathFiles[index].isDirectory() ) );
 
-          String relative = Utilities.calcRelative(project.getFolder(), absoluteClasspathFiles[index]);
-          if ((relative == null) || (relative.indexOf("..") != -1)) {
+          String relative = Utilities.calcRelative( project.getFolder(), absoluteClasspathFiles[index] );
+          if( (relative == null) || (relative.indexOf( ".." ) != -1) ) {
             // the calculation of a diff path failed or the relative path "moves" outside of the
             // projects directory
-            properties.put("classpathEntry.isProjectRelative", "false");
+            properties.put( "classpathEntry.isProjectRelative", "false" );
           } else {
             // we've got a project relative classpath entry
-            properties.put("classpathEntry.isProjectRelative", "true");
+            properties.put( "classpathEntry.isProjectRelative", "true" );
           }
 
           // create a FileSet for the entry describing it's content
           FileSet fileSet = new FileSet();
-          fileSet.setProject(getProject());
-          if (absoluteClasspathFiles[index].isFile()) {
-            fileSet.setFile(absoluteClasspathFiles[index]);
-          } else if (absoluteClasspathFiles[index].isDirectory()) {
-            fileSet.setDir(absoluteClasspathFiles[index]);
+          fileSet.setProject( getProject() );
+          if( absoluteClasspathFiles[index].isFile() ) {
+            fileSet.setFile( absoluteClasspathFiles[index] );
+          } else if( absoluteClasspathFiles[index].isDirectory() ) {
+            fileSet.setDir( absoluteClasspathFiles[index] );
           }
 
           // add the FileSet as reference
-          values.getReferences().put("classpathEntry.fileSet", fileSet);
+          values.getReferences().put( "classpathEntry.fileSet", fileSet );
 
           return values;
         }
-      });
+      } );
     }
   }
 
@@ -429,24 +432,25 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param macroDef
    */
-  private void executeProjectScopedMacroDef(MacroDef macroDef) {
+  private void executeProjectScopedMacroDef( MacroDef macroDef ) {
 
     // execute macro
-    executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+    executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
       @Override
-      public MacroExecutionValues provideMacroExecutionValues(final MacroExecutionValues values) {
+      public MacroExecutionValues provideMacroExecutionValues( final MacroExecutionValues values ) {
 
         // get the default jdt executor values
-        getExecutorValuesProvider().provideExecutorValues(getJavaProjectRole(), getJdtClasspathContainerArguments(),
-            values, ExecuteJdtProjectTask.this._resolvedClassPaths);
+        getExecutorValuesProvider().provideExecutorValues( getJavaProjectRole(), getJdtClasspathContainerArguments(),
+            values, ExecuteJdtProjectTask.this._resolvedClassPaths );
 
         // add additional execution values if necessary
-        addAdditionalExecutionValues(values);
+        addAdditionalExecutionValues( values );
 
         // return the values
         return values;
       }
-    });
+    } );
   }
-}
+  
+} /* ENDCLASS */

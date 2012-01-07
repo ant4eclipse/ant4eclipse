@@ -46,29 +46,29 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    * @param prefix
    *          the prefix for all scoped values
    */
-  public AbstractExecuteJdtProjectTask(String prefix) {
-    super(prefix);
+  public AbstractExecuteJdtProjectTask( String prefix ) {
+    super( prefix );
 
     // create the delegates
-    this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(this);
+    this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
 
     // create the JdtExecutorValuesProvider
-    this._executorValuesProvider = new JdtExecutorValuesProvider(this, this);
+    this._executorValuesProvider = new JdtExecutorValuesProvider( this, this );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setDynamicAttribute(String attributeName, String value) throws BuildException {
-    this._jdtClasspathContainerArgumentDelegate.setDynamicAttribute(attributeName, value);
+  public void setDynamicAttribute( String attributeName, String value ) throws BuildException {
+    this._jdtClasspathContainerArgumentDelegate.setDynamicAttribute( attributeName, value );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Deprecated
   public final JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
@@ -90,7 +90,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    * @return the {@link JavaProjectRole} role for the set {@link EclipseProject}.
    */
   protected final JavaProjectRole getJavaProjectRole() {
-    return getEclipseProject().getRole(JavaProjectRole.class);
+    return getEclipseProject().getRole( JavaProjectRole.class );
   }
 
   /**
@@ -103,4 +103,5 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
   protected final JdtExecutorValuesProvider getExecutorValuesProvider() {
     return this._executorValuesProvider;
   }
-}
+  
+} /* ENDCLASS */

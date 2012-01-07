@@ -30,11 +30,10 @@ import java.util.List;
 public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate implements
     JdtClasspathContainerArgumentComponent {
 
-  /** - */
-  private boolean                             _initialized               = false;
+  private boolean                             _initialized        = false;
 
   /** the container argument list */
-  private List<JdtClasspathContainerArgument> _containerArguments        = null;
+  private List<JdtClasspathContainerArgument> _containerArguments = null;
 
   /**
    * <p>
@@ -42,8 +41,8 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    * 
    * @param component
    */
-  public JdtClasspathContainerArgumentDelegate(ProjectComponent component) {
-    super(component);
+  public JdtClasspathContainerArgumentDelegate( ProjectComponent component ) {
+    super( component );
     this._containerArguments = new ArrayList<JdtClasspathContainerArgument>();
   }
 
@@ -51,14 +50,14 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    * {@inheritDoc}
    */
   @Override
-  public void setDynamicAttribute(String attributeName, String value) throws BuildException {
+  public void setDynamicAttribute( String attributeName, String value ) throws BuildException {
     init();
 
-    if (!canHandleSubAttribute(attributeName)) {
+    if( !canHandleSubAttribute( attributeName ) ) {
 
       String msg = ((Task) getProjectComponent()).getTaskName() + " doesn't support the \"" + attributeName
           + "\" attribute.";
-      throw new UnsupportedAttributeException(msg, attributeName);
+      throw new UnsupportedAttributeException( msg, attributeName );
       // ant4eclipse:executeJdtProject doesn't support the "targetPlatformId" attribute
     }
 
@@ -66,18 +65,18 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     JdtClasspathContainerArgument argument = new JdtClasspathContainerArgument();
 
     // set key and value
-    argument.setKey(attributeName);
-    argument.setValue(value);
+    argument.setKey( attributeName );
+    argument.setValue( value );
 
     // add argument to argument list
-    this._containerArguments.add(argument);
+    this._containerArguments.add( argument );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     init();
@@ -86,7 +85,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     JdtClasspathContainerArgument argument = new JdtClasspathContainerArgument();
 
     // add argument to argument list
-    this._containerArguments.add(argument);
+    this._containerArguments.add( argument );
 
     // return result
     return argument;
@@ -111,7 +110,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
   protected void init() {
 
     // Return if already initialized
-    if (this._initialized) {
+    if( this._initialized ) {
       return;
     }
 
@@ -124,9 +123,9 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    * @param component
    * @return
    */
-  protected boolean canHandleSubAttribute(String name) {
+  protected boolean canHandleSubAttribute( String name ) {
     init();
     return false;
   }
 
-}
+} /* ENDCLASS */

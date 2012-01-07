@@ -46,26 +46,26 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    * @param project
    *          The project this type applies to.
    */
-  public UserLibraryPath(Project project) {
-    super(project);
-    this._workspaceDelegate = new WorkspaceDelegate(this);
+  public UserLibraryPath( Project project ) {
+    super( project );
+    this._workspaceDelegate = new WorkspaceDelegate( this );
     this._userlibfile = null;
   }
 
   /**
    * Set the identifier of the workspace
    */
-  public void setWorkspaceId(String identifier) {
-    this._workspaceDelegate.setWorkspaceId(identifier);
+  public void setWorkspaceId( String identifier ) {
+    this._workspaceDelegate.setWorkspaceId( identifier );
   }
 
   /**
    * Sets the directory of the workspace
-   *
+   * 
    * @param workspaceDirectory
    */
-  public void setWorkspaceDirectory(String workspaceDirectory) {
-    this._workspaceDelegate.setWorkspaceDirectory(workspaceDirectory);
+  public void setWorkspaceDirectory( String workspaceDirectory ) {
+    this._workspaceDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
   /**
@@ -74,8 +74,8 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    * @param userlib
    *          The new user library configuration file.
    */
-  public void setUserlibraries(File userlib) {
-      this._userlibfile = userlib;
+  public void setUserlibraries( File userlib ) {
+    this._userlibfile = userlib;
     // if (!userlib.isFile()) {
     // A4ELogging.warn("missing file '%s'", userlib.getPath());
     // } else {
@@ -86,16 +86,16 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
 
   @Override
   protected void doValidate() {
-    if (this._userlibfile == null) {
-      throw new BuildException("Property userlibraries must be set");
+    if( this._userlibfile == null ) {
+      throw new BuildException( "Property userlibraries must be set" );
     }
 
     // if (!_workspaceDelegate.isWorkspaceDirectorySet() && _workspaceDelegate.isWorkspaceIdSet()) {
     // A4ELogging.warn("No workspace directory or id has been set. Will not be able to resolve ")
     // }
 
-    if (!this._userlibfile.isFile()) {
-      A4ELogging.warn("missing file '%s'", this._userlibfile.getPath());
+    if( !this._userlibfile.isFile() ) {
+      A4ELogging.warn( "missing file '%s'", this._userlibfile.getPath() );
       return;
     }
 
@@ -110,28 +110,28 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
   private void loadConfigurationFile() {
     try {
 
-      UserLibrariesFileParser parser = A4ECore.instance().getRequiredService(UserLibrariesFileParser.class);
+      UserLibrariesFileParser parser = A4ECore.instance().getRequiredService( UserLibrariesFileParser.class );
 
-      UserLibraries userlibs = parser.parseUserLibrariesFile(this._userlibfile, getWorkspace());
+      UserLibraries userlibs = parser.parseUserLibrariesFile( this._userlibfile, getWorkspace() );
       String[] libs = userlibs.getAvailableLibraries();
-      for (String lib : libs) {
-        UserLibrary library = userlibs.getLibrary(lib);
+      for( String lib : libs ) {
+        UserLibrary library = userlibs.getLibrary( lib );
         Archive[] archives = library.getArchives();
-        Path path = new Path(getProject());
-        for (Archive archive : archives) {
-          path.createPathElement().setLocation(archive.getPath());
+        Path path = new Path( getProject() );
+        for( Archive archive : archives ) {
+          path.createPathElement().setLocation( archive.getPath() );
         }
 
         // add it as an ant path
-        getProject().addReference(PREFIX + lib, path);
+        getProject().addReference( PREFIX + lib, path );
 
         // add it to the ClassPathElementsRegistry
         A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class )
-            .registerClassPathContainer(PREFIX + library.getName(), library.getArchiveFiles());
+            .registerClassPathContainer( PREFIX + library.getName(), library.getArchiveFiles() );
       }
-    } catch (Exception ex) {
+    } catch( Exception ex ) {
       ex.printStackTrace();
-      A4ELogging.error("Failed to load userlibraries file.\n'%s'.", ex);
+      A4ELogging.error( "Failed to load userlibraries file.\n'%s'.", ex );
     }
   }
 
@@ -139,7 +139,7 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    * @return the workspace specified or null if no workspace has been set
    */
   private Workspace getWorkspace() {
-    if (this._workspaceDelegate.isWorkspaceDirectorySet() || this._workspaceDelegate.isWorkspaceIdSet()) {
+    if( this._workspaceDelegate.isWorkspaceDirectorySet() || this._workspaceDelegate.isWorkspaceIdSet() ) {
       return this._workspaceDelegate.getWorkspace();
     }
     return null;

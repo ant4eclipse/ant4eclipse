@@ -44,8 +44,8 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @param project
    *          The project this type applies to.
    */
-  public JreContainer(Project project) {
-    super(project);
+  public JreContainer( Project project ) {
+    super( project );
     this._defaultJre = null;
   }
 
@@ -58,7 +58,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     return new Runtime();
   }
 
-  public void setDefault(String defaultJre) {
+  public void setDefault( String defaultJre ) {
     this._defaultJre = defaultJre;
   }
 
@@ -68,43 +68,44 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @param runtime
    *          The java runtime environment configuration that shall be added.
    */
-  public void addConfiguredJre(Runtime runtime) {
+  public void addConfiguredJre( Runtime runtime ) {
     File location = runtime.getLocation();
-    if (location == null) {
-      throw new BuildException("Missing parameter 'location' on jre!");
+    if( location == null ) {
+      throw new BuildException( "Missing parameter 'location' on jre!" );
     }
 
-    if (!Utilities.hasText(runtime.getId())) {
-      throw new BuildException("Missing parameter 'id' on jre!");
+    if( !Utilities.hasText( runtime.getId() ) ) {
+      throw new BuildException( "Missing parameter 'id' on jre!" );
     }
 
-    boolean isDefault = runtime.getId().equals(this._defaultJre);
+    boolean isDefault = runtime.getId().equals( this._defaultJre );
 
     JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
 
     // If specified: add files for jre (otherwise required JRE jars are determined automatically)
-    List<File> jreFiles = getSelectedJreFiles(runtime);
+    List<File> jreFiles = getSelectedJreFiles( runtime );
 
-    JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation(), jreFiles);
+    JavaRuntime javaRuntime = javaRuntimeRegistry
+        .registerJavaRuntime( runtime.getId(), runtime.getLocation(), jreFiles );
 
-    Assure.notNull("javaRuntime", javaRuntime);
+    Assure.notNull( "javaRuntime", javaRuntime );
 
-    if (isDefault) {
-      javaRuntimeRegistry.setDefaultJavaRuntime(runtime.getId());
+    if( isDefault ) {
+      javaRuntimeRegistry.setDefaultJavaRuntime( runtime.getId() );
     }
 
-    Path path = new Path(getProject());
+    Path path = new Path( getProject() );
     File[] libraries = javaRuntime.getLibraries();
-    for (File librarie : libraries) {
-      path.createPathElement().setLocation(librarie);
+    for( File librarie : libraries ) {
+      path.createPathElement().setLocation( librarie );
     }
 
-    getProject().addReference(ContainerTypes.VMTYPE_PREFIX + runtime.getId(), path);
+    getProject().addReference( ContainerTypes.VMTYPE_PREFIX + runtime.getId(), path );
 
     // register default JRE as JRE_CONTAINER too
-    if (isDefault) {
-      A4ELogging.debug("Registered default JRE with id '%s'", ContainerTypes.JRE_CONTAINER);
-      getProject().addReference(ContainerTypes.JRE_CONTAINER, path);
+    if( isDefault ) {
+      A4ELogging.debug( "Registered default JRE with id '%s'", ContainerTypes.JRE_CONTAINER );
+      getProject().addReference( ContainerTypes.JRE_CONTAINER, path );
     }
   }
 
@@ -116,18 +117,18 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    * @param runtime
    * @return
    */
-  private List<File> getSelectedJreFiles(Runtime runtime) {
-    if (!runtime.hasFileSets()) {
+  private List<File> getSelectedJreFiles( Runtime runtime ) {
+    if( !runtime.hasFileSets() ) {
       return null;
     }
     List<File> files = new ArrayList<File>();
     List<FileSet> fileSets = runtime.getFileSets();
-    for (FileSet fileSet : fileSets) {
-      DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
+    for( FileSet fileSet : fileSets ) {
+      DirectoryScanner directoryScanner = fileSet.getDirectoryScanner( getProject() );
       File dir = fileSet.getDir();
       String[] includedFiles = directoryScanner.getIncludedFiles();
-      for (String includedFile : includedFiles) {
-        files.add(new File(dir, includedFile));
+      for( String includedFile : includedFiles ) {
+        files.add( new File( dir, includedFile ) );
       }
     }
     return files;
@@ -135,9 +136,9 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
   public static class Runtime {
 
-    private String _id;
+    private String        _id;
 
-    private File   _location;
+    private File          _location;
 
     private List<FileSet> _fileSets;
 
@@ -145,7 +146,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       return this._id;
     }
 
-    public void setId(String id) {
+    public void setId( String id ) {
       this._id = id;
     }
 
@@ -153,15 +154,15 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       return this._location;
     }
 
-    public void setLocation(File location) {
+    public void setLocation( File location ) {
       this._location = location;
     }
 
-    public void addFileSet(FileSet fileSet) {
-      if (this._fileSets == null) {
+    public void addFileSet( FileSet fileSet ) {
+      if( this._fileSets == null ) {
         this._fileSets = new ArrayList<FileSet>();
       }
-      this._fileSets.add(fileSet);
+      this._fileSets.add( fileSet );
     }
 
     /**

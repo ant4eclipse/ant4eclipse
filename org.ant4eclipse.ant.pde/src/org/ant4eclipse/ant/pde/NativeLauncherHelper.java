@@ -54,17 +54,17 @@ public class NativeLauncherHelper {
    * @return the file list that contains all files that belongs to a native launcher for a specific platform (e.g.
    *         eclipse.exe and eclipsec.exe).
    */
-  public static FileList getNativeLauncher(TargetPlatform targetPlatform) {
+  public static FileList getNativeLauncher( TargetPlatform targetPlatform ) {
 
     // 1. step: try to get native launchers from the executable feature (feature 'org.eclipse.equinox.executable')
-    FileList fileList = getNativeLauncherFromExecutableFeature(targetPlatform);
+    FileList fileList = getNativeLauncherFromExecutableFeature( targetPlatform );
 
-    if (fileList != null) {
+    if( fileList != null ) {
       return fileList;
     }
 
     // 2. step: try to load the native launcher form the underlying eclipse installation
-    return getNativeLauncherFromEclipseInstallation(targetPlatform);
+    return getNativeLauncherFromEclipseInstallation( targetPlatform );
   }
 
   /**
@@ -76,14 +76,14 @@ public class NativeLauncherHelper {
    * @return the file list that contains all files that belongs to a native launcher for a specific platform (e.g.
    *         eclipse.exe and eclipsec.exe).
    */
-  private static FileList getNativeLauncherFromExecutableFeature(TargetPlatform targetPlatform) {
+  private static FileList getNativeLauncherFromExecutableFeature( TargetPlatform targetPlatform ) {
 
     // get the executable feature from the target platform
     FeatureDescription featureDescription = targetPlatform
-        .getFeatureDescription(FEATURE_ORG_ECLIPSE_EQUINOX_EXECUTABLE);
+        .getFeatureDescription( FEATURE_ORG_ECLIPSE_EQUINOX_EXECUTABLE );
 
     // return null if feature doesn't exist
-    if (featureDescription == null) {
+    if( featureDescription == null ) {
       return null;
     }
 
@@ -93,58 +93,58 @@ public class NativeLauncherHelper {
     String arch = targetPlatform.getTargetPlatformConfiguration().getArchitecture();
 
     // the feature 'org.eclipse.equinox.executable' must be a jar or a directory
-    if (featureDescription.isFeatureProject()) {
+    if( featureDescription.isFeatureProject() ) {
       // TODO
       throw new RuntimeException(
-          "The feature 'org.eclipse.equinox.executable' has to be a exported feature, not a feature project.");
+          "The feature 'org.eclipse.equinox.executable' has to be a exported feature, not a feature project." );
     }
 
     // case 1: feature 'org.eclipse.equinox.executable' is a directory
-    if (featureDescription.isDirectory()) {
+    if( featureDescription.isDirectory() ) {
 
       // get the platform specific launcher directory
-      File rootDir = new File((File) featureDescription.getSource(), EXECUTABLE_ROOT + File.separatorChar + ws
-          + File.separatorChar + os + File.separatorChar + arch);
+      File rootDir = new File( (File) featureDescription.getSource(), EXECUTABLE_ROOT + File.separatorChar + ws
+          + File.separatorChar + os + File.separatorChar + arch );
 
       // return the file list
-      return getAllChildren(rootDir);
+      return getAllChildren( rootDir );
 
     }
 
     // case 2: feature 'org.eclipse.equinox.executable' is a jar file
-    else if (featureDescription.isJarFile()) {
+    else if( featureDescription.isJarFile() ) {
 
       File expansionDir = ExpansionDirectory.getExpansionDir();
 
       File jaredFeature = (File) featureDescription.getSource();
 
       Expand expand = new Expand();
-      expand.setProject(new Project());
-      expand.setSrc(jaredFeature);
+      expand.setProject( new Project() );
+      expand.setSrc( jaredFeature );
 
-      File tempDir = new File(expansionDir, "org.eclipse.equinox.executable"
-          + featureDescription.getFeatureManifest().getVersion());
-      expand.setDest(tempDir);
+      File tempDir = new File( expansionDir, "org.eclipse.equinox.executable"
+          + featureDescription.getFeatureManifest().getVersion() );
+      expand.setDest( tempDir );
 
       PatternSet patternset = new PatternSet();
       patternset.createInclude().setName(
           EXECUTABLE_ROOT + File.separatorChar + ws + File.separatorChar + os + File.separatorChar + arch
-              + File.separatorChar + "**");
+              + File.separatorChar + "**" );
 
-      expand.addPatternset(patternset);
+      expand.addPatternset( patternset );
 
       expand.execute();
 
       // get the platform specific launcher directory
-      File rootDir = new File(tempDir, EXECUTABLE_ROOT + File.separatorChar + ws + File.separatorChar + os
-          + File.separatorChar + arch);
+      File rootDir = new File( tempDir, EXECUTABLE_ROOT + File.separatorChar + ws + File.separatorChar + os
+          + File.separatorChar + arch );
 
       // return the file list
-      return getAllChildren(rootDir);
+      return getAllChildren( rootDir );
     }
 
     // could not happen
-    throw new RuntimeException("Unknown deployment format for feature 'org.eclipse.equinox.executable'.");
+    throw new RuntimeException( "Unknown deployment format for feature 'org.eclipse.equinox.executable'." );
   }
 
   /**
@@ -155,7 +155,7 @@ public class NativeLauncherHelper {
    * @return the file list that contains all files that belongs to a native launcher for a specific platform (e.g.
    *         eclipse.exe and eclipsec.exe).
    */
-  private static FileList getNativeLauncherFromEclipseInstallation(TargetPlatform targetPlatform) {
+  private static FileList getNativeLauncherFromEclipseInstallation( TargetPlatform targetPlatform ) {
 
     // Properties launcherProperties = null;
     //
@@ -176,7 +176,7 @@ public class NativeLauncherHelper {
     String guiexe = "eclipse";
     String cmdexe = "eclipse";
 
-    if ("win32".equals(targetPlatform.getTargetPlatformConfiguration().getOperatingSystem())) {
+    if( "win32".equals( targetPlatform.getTargetPlatformConfiguration().getOperatingSystem() ) ) {
 
       // for windows we've got two different executables
       guiexe = "eclipse.exe";
@@ -186,30 +186,30 @@ public class NativeLauncherHelper {
     File targetLocation = null;
 
     File[] targetlocations = targetPlatform.getLocations();
-    for (File loc : targetlocations) {
-      File eclipseExe = new File(loc, guiexe);
-      File eclipsecExe = new File(loc, cmdexe);
-      if (eclipseExe.isFile() || eclipsecExe.isFile()) {
+    for( File loc : targetlocations ) {
+      File eclipseExe = new File( loc, guiexe );
+      File eclipsecExe = new File( loc, cmdexe );
+      if( eclipseExe.isFile() || eclipsecExe.isFile() ) {
         targetLocation = loc;
         break;
       }
     }
 
     //
-    if (targetLocation == null) {
-      throw new BuildException(MSG_FAILED_TO_LOOKUP_EXECUTABLES);
+    if( targetLocation == null ) {
+      throw new BuildException( MSG_FAILED_TO_LOOKUP_EXECUTABLES );
     }
 
     FileList fileList = new FileList();
-    fileList.setDir(targetLocation);
+    fileList.setDir( targetLocation );
 
     FileName fileName = new FileList.FileName();
-    fileName.setName(guiexe);
-    fileList.addConfiguredFile(fileName);
+    fileName.setName( guiexe );
+    fileList.addConfiguredFile( fileName );
 
     fileName = new FileList.FileName();
-    fileName.setName(cmdexe);
-    fileList.addConfiguredFile(fileName);
+    fileName.setName( cmdexe );
+    fileList.addConfiguredFile( fileName );
 
     return fileList;
   }
@@ -223,24 +223,24 @@ public class NativeLauncherHelper {
    *          the root directory
    * @return all files contained in the given directory as a file list.
    */
-  private static FileList getAllChildren(File directory) {
+  private static FileList getAllChildren( File directory ) {
 
     // assert that directory is a directory
-    Assure.isDirectory("directory", directory);
+    Assure.isDirectory( "directory", directory );
 
     // create the result file list
     FileList fileList = new FileList();
-    fileList.setDir(directory);
+    fileList.setDir( directory );
 
     // add all children to the file list
-    for (File child : Utilities.getAllChildren(directory)) {
+    for( File child : Utilities.getAllChildren( directory ) ) {
       FileName fileName = new FileList.FileName();
-      fileName.setName(child.getAbsolutePath().substring(directory.getAbsolutePath().length() + 1));
-      fileList.addConfiguredFile(fileName);
+      fileName.setName( child.getAbsolutePath().substring( directory.getAbsolutePath().length() + 1 ) );
+      fileList.addConfiguredFile( fileName );
     }
 
     // return the result
     return fileList;
   }
 
-}
+} /* ENDCLASS */

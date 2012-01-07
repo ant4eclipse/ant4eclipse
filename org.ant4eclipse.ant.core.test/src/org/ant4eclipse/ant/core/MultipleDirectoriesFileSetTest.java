@@ -19,6 +19,7 @@ public class MultipleDirectoriesFileSetTest extends AbstractAnt4EclipseBuildFile
   }
 
   public void testAbstractAnt4EclipseDataType() {
-    expectLog("testMultipleDirectoriesFileSet", "test");
+    expectLog( "testMultipleDirectoriesFileSet", "test" );
   }
-}
+  
+} /* ENDCLASS */

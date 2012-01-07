@@ -26,7 +26,7 @@ import java.io.File;
  */
 public abstract class AbstractAnt4EclipseBuildFileTest extends BuildFileTest {
 
-  private TestDirectory _testDirectory;
+  private TestDirectory   testdirectory;
 
   /**
    * Returns the currently used <code>TestDirectory</code> instance.
@@ -34,20 +34,20 @@ public abstract class AbstractAnt4EclipseBuildFileTest extends BuildFileTest {
    * @return The currently used <code>TestDirectory</code> instance.
    */
   protected TestDirectory getTestDirectory() {
-    return this._testDirectory;
+    return testdirectory;
   }
 
   @Override
   public void setUp() throws Exception {
-    this._testDirectory = new TestDirectory(true);
-    File buildFile = this._testDirectory.createFile(getBuildFileName(), getResource(getBuildFileName()).openStream());
-    configureProject(buildFile.getAbsolutePath());
+    testdirectory = new TestDirectory( true );
+    File buildFile = testdirectory.createFile( getBuildFileName(), getResource( getBuildFileName() ).openStream() );
+    configureProject( buildFile.getAbsolutePath() );
   }
 
   @Override
   protected void tearDown() throws Exception {
     super.tearDown();
-    this._testDirectory.dispose();
+    testdirectory.dispose();
   }
 
   /**
@@ -60,4 +60,4 @@ public abstract class AbstractAnt4EclipseBuildFileTest extends BuildFileTest {
    */
   protected abstract String getBuildFileName();
 
-}
+} /* ENDCLASS */

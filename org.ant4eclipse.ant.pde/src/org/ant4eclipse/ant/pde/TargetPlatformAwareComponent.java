@@ -30,7 +30,7 @@ public interface TargetPlatformAwareComponent {
    * @param targetPlatformId
    *          the id of the target platform against which the workspace plug-ins will be compiled and tested.
    */
-  void setTargetPlatformId(String targetPlatformId);
+  void setTargetPlatformId( String targetPlatformId );
 
   /**
    * <p>
@@ -65,7 +65,7 @@ public interface TargetPlatformAwareComponent {
    * @param platformConfigurationId
    *          the id of the platform configuration and tested.
    */
-  void setPlatformConfigurationId(String platformConfigurationId);
+  void setPlatformConfigurationId( String platformConfigurationId );
 
   /**
    * <p>
@@ -84,4 +84,5 @@ public interface TargetPlatformAwareComponent {
    * @return the platform configuration id or <code>null</code>, if no platform configuration id has been set.
    */
   String getPlatformConfigurationId();
-}
+  
+} /* ENDINTERFACE */

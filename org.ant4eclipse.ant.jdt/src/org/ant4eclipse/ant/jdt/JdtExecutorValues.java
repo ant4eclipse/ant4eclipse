@@ -69,4 +69,4 @@ public interface JdtExecutorValues {
 
   String SOURCE_DIRECTORY_NAME               = "source.directory.name";
 
-}
+} /* ENDINTERFACE */

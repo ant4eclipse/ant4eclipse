@@ -66,10 +66,10 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    */
   public ExecuteProjectSetTask() {
     // create the MacroExecutionDelegate
-    this._macroExecutionDelegate = new MacroExecutionDelegate<Scope>(this, "executeProjectSet");
-    this._subElementAndAttributeDelegate = new SubElementAndAttributesDelegate(this);
+    this._macroExecutionDelegate = new MacroExecutionDelegate<Scope>( this, "executeProjectSet" );
+    this._subElementAndAttributeDelegate = new SubElementAndAttributesDelegate( this );
     this._projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
-    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(getPathDelegate());
+    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider( getPathDelegate() );
   }
 
   /**
@@ -91,7 +91,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * @param resolveBuildOrder
    *          the resolveBuildOrder to set
    */
-  public void setResolveBuildOrder(boolean resolveBuildOrder) {
+  public void setResolveBuildOrder( boolean resolveBuildOrder ) {
     this._resolveBuildOrder = resolveBuildOrder;
   }
 
@@ -123,8 +123,8 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * {@inheritDoc}
    */
   @Override
-  public void setProjectReferenceTypes(String referenceTypes) {
-    this._projectReferenceAwareDelegate.setProjectReferenceTypes(referenceTypes);
+  public void setProjectReferenceTypes( String referenceTypes ) {
+    this._projectReferenceAwareDelegate.setProjectReferenceTypes( referenceTypes );
   }
 
   /**
@@ -139,24 +139,24 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * {@inheritDoc}
    */
   @Override
-  public void setPrefix(String prefix) {
-    this._macroExecutionDelegate.setPrefix(prefix);
+  public void setPrefix( String prefix ) {
+    this._macroExecutionDelegate.setPrefix( prefix );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public NestedSequential createScopedMacroDefinition(Scope scope) {
-    return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
+  public NestedSequential createScopedMacroDefinition( Scope scope ) {
+    return this._macroExecutionDelegate.createScopedMacroDefinition( scope );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
+  public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
+    this._macroExecutionDelegate.executeMacroInstance( macroDef, provider );
   }
 
   /**
@@ -171,7 +171,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     return this._threadCount;
   }
 
-  public void setThreadCount(int threads) {
+  public void setThreadCount( int threads ) {
     this._threadCount = threads;
   }
 
@@ -179,11 +179,11 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
   protected void preconditions() throws BuildException {
     super.preconditions();
 
-    if (this._resolveBuildOrder && this._threadCount > 1) {
-      throw new BuildException("In parallel mode (threadCount>1) build order can not be resolved");
+    if( this._resolveBuildOrder && this._threadCount > 1 ) {
+      throw new BuildException( "In parallel mode (threadCount>1) build order can not be resolved" );
     }
-    if (this._threadCount < 1) {
-      throw new BuildException("ThreadCount must at least be 1");
+    if( this._threadCount < 1 ) {
+      throw new BuildException( "ThreadCount must at least be 1" );
     }
   }
 
@@ -199,78 +199,77 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
 
     // get all eclipse projects and calculate the build order if necessary
     List<EclipseProject> projects = null;
-    if (this._resolveBuildOrder) {
+    if( this._resolveBuildOrder ) {
 
       // resolve the build order
-      projects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
+      projects = BuildOrderResolver.resolveBuildOrder( getWorkspace(), getProjectNames(),
           this._projectReferenceAwareDelegate.getProjectReferenceTypes(),
-          this._subElementAndAttributeDelegate.getSubElements());
+          this._subElementAndAttributeDelegate.getSubElements() );
     } else {
       // only get the specified projects
-      projects = Arrays.asList(getWorkspace().getProjects(getProjectNames(), false));
+      projects = Arrays.asList( getWorkspace().getProjects( getProjectNames(), false ) );
     }
 
     final BuildCallable[] buildCallables = new BuildCallable[this._threadCount];
-    for (int i = 0; i < buildCallables.length; i++) {
+    for( int i = 0; i < buildCallables.length; i++ ) {
       buildCallables[i] = new BuildCallable();
     }
 
     int callableIndex = 0;
-    for (final EclipseProject eclipseProject : projects) {
-      buildCallables[callableIndex].addProject(eclipseProject);
+    for( final EclipseProject eclipseProject : projects ) {
+      buildCallables[callableIndex].addProject( eclipseProject );
       callableIndex++;
-      if (callableIndex >= buildCallables.length) {
+      if( callableIndex >= buildCallables.length ) {
         callableIndex = 0;
       }
     }
 
     // execute the macro definitions
-    for (ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for( ScopedMacroDefinition<Scope> scopedMacroDefinition : getScopedMacroDefinitions() ) {
 
       //
-      for (BuildCallable buildCallable : buildCallables) {
-        buildCallable.setScopedMacroDefinition(scopedMacroDefinition);
+      for( BuildCallable buildCallable : buildCallables ) {
+        buildCallable.setScopedMacroDefinition( scopedMacroDefinition );
       }
 
-      if (buildCallables.length > 1) {
+      if( buildCallables.length > 1 ) {
 
         // create the future tasks
-        @SuppressWarnings("unchecked")
-        FutureTask<Void>[] futureTasks = new FutureTask[this._threadCount];
-        for (int i = 0; i < futureTasks.length; i++) {
-          futureTasks[i] = new FutureTask<Void>(buildCallables[i]);
+        @SuppressWarnings( "unchecked" ) FutureTask<Void>[] futureTasks = new FutureTask[this._threadCount];
+        for( int i = 0; i < futureTasks.length; i++ ) {
+          futureTasks[i] = new FutureTask<Void>( buildCallables[i] );
 
-          Thread thread = new Thread(futureTasks[i]);
-          thread.setName("A4E-" + thread.getName());
+          Thread thread = new Thread( futureTasks[i] );
+          thread.setName( "A4E-" + thread.getName() );
           thread.start();
         }
         // collect the result
-        for (FutureTask<Void> futureTask : futureTasks) {
+        for( FutureTask<Void> futureTask : futureTasks ) {
           try {
             futureTask.get();
-          } catch (Exception e) {
+          } catch( Exception e ) {
             Throwable t = e;
-            if (e instanceof ExecutionException) {
+            if( e instanceof ExecutionException ) {
               t = ((ExecutionException) e).getCause();
             }
-            if (t instanceof BuildException) {
+            if( t instanceof BuildException ) {
               throw (BuildException) t;
             }
-            throw new BuildException(e);
+            throw new BuildException( e );
           }
         }
       } else {
         try {
           buildCallables[0].call();
-        } catch (Exception e) {
+        } catch( Exception e ) {
           Throwable t = e;
-          if (e instanceof ExecutionException) {
+          if( e instanceof ExecutionException ) {
             t = ((ExecutionException) e).getCause();
           }
-          if (t instanceof BuildException) {
+          if( t instanceof BuildException ) {
             throw (BuildException) t;
           }
-          throw new BuildException(e);
+          throw new BuildException( e );
 
         }
       }
@@ -284,12 +283,12 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
 
     private ScopedMacroDefinition<Scope> _scopedMacroDefinition;
 
-    public void addProject(EclipseProject project) {
-      this._projects.add(project);
+    public void addProject( EclipseProject project ) {
+      this._projects.add( project );
 
     }
 
-    public void setScopedMacroDefinition(ScopedMacroDefinition<Scope> scopedMacroDefinition) {
+    public void setScopedMacroDefinition( ScopedMacroDefinition<Scope> scopedMacroDefinition ) {
       this._scopedMacroDefinition = scopedMacroDefinition;
 
     }
@@ -299,7 +298,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
 
       // System.out.println(String.format("ExecuteProjectSetTask[%s] 1: %s", Thread.currentThread(), this._projects));
 
-      for (final EclipseProject eclipseProject : this._projects) {
+      for( final EclipseProject eclipseProject : this._projects ) {
 
         // System.out.println(String.format("ExecuteProjectSetTask[%s] 2: %s", Thread.currentThread(),
         // eclipseProject.getSpecifiedName()));
@@ -309,10 +308,10 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
             this._scopedMacroDefinition.getMacroDef(), new MacroExecutionValuesProvider() {
 
               @Override
-              public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+              public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
                 // set the values
-                ExecuteProjectSetTask.this._platformExecutorValuesProvider
-                    .provideExecutorValues(eclipseProject, values);
+                ExecuteProjectSetTask.this._platformExecutorValuesProvider.provideExecutorValues( eclipseProject,
+                    values );
 
                 // System.out.println(String.format("ExecuteProjectSetTask[%s] 3: %s", Thread.currentThread(),
                 // values.getProperties()));
@@ -320,7 +319,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
                 // return result
                 return values;
               }
-            });
+            } );
 
       }
       return null;
@@ -335,15 +334,15 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * @return the {@link NestedSequential}
    */
   public final Object createForEachProject() {
-    return createScopedMacroDefinition(Scope.PROJECT);
+    return createScopedMacroDefinition( Scope.PROJECT );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementAndAttributeDelegate.createDynamicElement(name);
+  public Object createDynamicElement( String name ) throws BuildException {
+    return this._subElementAndAttributeDelegate.createDynamicElement( name );
   }
 
   /**
@@ -358,7 +357,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * {@inheritDoc}
    */
   @Override
-  public Map<String, String> getSubAttributes() {
+  public Map<String,String> getSubAttributes() {
     return this._subElementAndAttributeDelegate.getSubAttributes();
   }
 
@@ -366,11 +365,11 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * {@inheritDoc}
    */
   @Override
-  public void setDynamicAttribute(String name, String value) throws BuildException {
-    this._subElementAndAttributeDelegate.setDynamicAttribute(name, value);
+  public void setDynamicAttribute( String name, String value ) throws BuildException {
+    this._subElementAndAttributeDelegate.setDynamicAttribute( name, value );
   }
 
-}
+} /* ENDCLASS */
 
 /**
  * <p>

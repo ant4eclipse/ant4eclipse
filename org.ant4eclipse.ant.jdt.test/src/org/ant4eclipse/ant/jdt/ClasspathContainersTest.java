@@ -31,7 +31,7 @@ public class ClasspathContainersTest extends AbstractJdtClassPathTest {
     super.setUp();
 
     // set up the build file
-    setupBuildFile("classpathContainers.xml");
+    setupBuildFile( "classpathContainers.xml" );
   }
 
   /**
@@ -42,14 +42,16 @@ public class ClasspathContainersTest extends AbstractJdtClassPathTest {
    */
   public void testClasspathContainers() throws Exception {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withContainerClasspathEntry("testContainer").createIn(
-        getTestWorkspaceDirectory());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "project" ).withContainerClasspathEntry( "testContainer" )
+        .createIn( getTestWorkspaceDirectory() );
 
     // set the properties
-    getProject().setProperty("projectName", "project");
+    getProject().setProperty( "projectName", "project" );
 
     // execute target
-    String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "project/testFile.txt"));
+    String classpath = executeTestTarget( "project", true, true );
+    assertClasspath( classpath, new File( "project/bin" ), new File( getTestWorkspaceDirectory(),
+        "project/testFile.txt" ) );
   }
-}
+  
+} /* ENDCLASS */

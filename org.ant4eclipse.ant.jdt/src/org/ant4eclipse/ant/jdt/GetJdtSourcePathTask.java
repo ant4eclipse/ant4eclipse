@@ -51,7 +51,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
    * @param allowMultipleFolders
    *          if multiple folders are supported or not.
    */
-  public void setAllowMultipleFolders(boolean allowMultipleFolders) {
+  public void setAllowMultipleFolders( boolean allowMultipleFolders ) {
     this._allowMultipleFolders = allowMultipleFolders;
   }
 
@@ -61,9 +61,9 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (!getEclipseProject().hasRole(JavaProjectRoleImpl.class)) {
-      throw new BuildException(String.format("The project '%s' must have the java project role!", getEclipseProject()
-          .getSpecifiedName()));
+    if( !getEclipseProject().hasRole( JavaProjectRoleImpl.class ) ) {
+      throw new BuildException( String.format( "The project '%s' must have the java project role!", getEclipseProject()
+          .getSpecifiedName() ) );
     }
   }
 
@@ -78,21 +78,22 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
         : EclipseProject.PathStyle.ABSOLUTE;
 
     // resolve the source path
-    JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
+    JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
     String[] paths = javaProjectRole.getSourceFolders();
-    File[] result = getEclipseProject().getChildren(paths, relative);
+    File[] result = getEclipseProject().getChildren( paths, relative );
 
-    if ((result.length > 1) && !isAllowMultipleFolders()) {
+    if( (result.length > 1) && !isAllowMultipleFolders() ) {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("Project '");
-      buffer.append(getEclipseProject().getFolderName());
-      buffer.append("' contains multiple SourceFolders! ");
-      buffer.append("If you want to allow this, you have to");
-      buffer.append(" set allowMultipleFolders='true'!");
+      buffer.append( "Project '" );
+      buffer.append( getEclipseProject().getFolderName() );
+      buffer.append( "' contains multiple SourceFolders! " );
+      buffer.append( "If you want to allow this, you have to" );
+      buffer.append( " set allowMultipleFolders='true'!" );
 
-      throw new RuntimeException(buffer.toString());
+      throw new RuntimeException( buffer.toString() );
     }
 
     return result;
   }
-}
+
+} /* ENDCLASS */

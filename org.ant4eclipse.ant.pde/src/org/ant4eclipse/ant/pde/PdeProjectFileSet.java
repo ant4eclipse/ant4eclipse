@@ -59,8 +59,8 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param project
    *          the ant project
    */
-  public PdeProjectFileSet(Project project) {
-    super(project);
+  public PdeProjectFileSet( Project project ) {
+    super( project );
 
   }
 
@@ -81,7 +81,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param sourceBundle
    *          the sourceBundle to set
    */
-  public void setSourceBundle(boolean sourceBundle) {
+  public void setSourceBundle( boolean sourceBundle ) {
     this._sourceBundle = sourceBundle;
   }
 
@@ -102,7 +102,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param excludeLibraries
    *          the excludeLibraries to set
    */
-  public void setExcludeLibraries(boolean excludeLibraries) {
+  public void setExcludeLibraries( boolean excludeLibraries ) {
     this._excludeLibraries = excludeLibraries;
   }
 
@@ -112,25 +112,26 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    * </p>
    */
   @Override
-  protected void doComputeFileSet(List<Resource> resourceList) {
+  protected void doComputeFileSet( List<Resource> resourceList ) {
 
     // require workspace and project name set
     requireWorkspaceAndProjectNameSet();
 
-    if (!(getEclipseProject().hasRole(PluginProjectRole.class) || getEclipseProject().hasRole(FeatureProjectRole.class))) {
-      throw new BuildException(String.format(
+    if( !(getEclipseProject().hasRole( PluginProjectRole.class ) || getEclipseProject().hasRole(
+        FeatureProjectRole.class )) ) {
+      throw new BuildException( String.format(
           "Project '%s' must have role 'PluginProjectRole' or 'FeatureProjectRole'.", getEclipseProject()
-              .getSpecifiedName()));
+              .getSpecifiedName() ) );
     }
 
-    this._buildProperties = getEclipseProject().hasRole(PluginProjectRole.class) ? getEclipseProject().getRole(
-        PluginProjectRole.class).getBuildProperties() : getEclipseProject().getRole(FeatureProjectRole.class)
+    this._buildProperties = getEclipseProject().hasRole( PluginProjectRole.class ) ? getEclipseProject().getRole(
+        PluginProjectRole.class ).getBuildProperties() : getEclipseProject().getRole( FeatureProjectRole.class )
         .getBuildProperties();
 
     // nothing to do if no inclusion pattern is defined
-    if (this._sourceBundle && (!this._buildProperties.hasSourceIncludes())) {
+    if( this._sourceBundle && (!this._buildProperties.hasSourceIncludes()) ) {
       return;
-    } else if ((!this._sourceBundle) && (!this._buildProperties.hasBinaryIncludes())) {
+    } else if( (!this._sourceBundle) && (!this._buildProperties.hasBinaryIncludes()) ) {
       return;
     }
 
@@ -140,16 +141,16 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
     // iterate over the included pattern set
     String[] includes = this._sourceBundle ? this._buildProperties.getSourceIncludes() : this._buildProperties
         .getBinaryIncludes();
-    for (String token : includes) {
-      processEntry(resourceList, token);
+    for( String token : includes ) {
+      processEntry( resourceList, token );
     }
 
     // debug the resolved entries
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Resolved pde project file set for project '%s'. Entries are:", getEclipseProject()
-          .getSpecifiedName());
-      for (Resource resource : resourceList) {
-        A4ELogging.debug("- '%s'", resource);
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "Resolved pde project file set for project '%s'. Entries are:", getEclipseProject()
+          .getSpecifiedName() );
+      for( Resource resource : resourceList ) {
+        A4ELogging.debug( "- '%s'", resource );
       }
     }
 
@@ -165,36 +166,36 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param token
    *          The token that should be processed
    */
-  private void processEntry(List<Resource> resourceList, String token) {
+  private void processEntry( List<Resource> resourceList, String token ) {
 
     // if token is a library name and _excludeLibraries
-    if (this._excludeLibraries && this._buildProperties instanceof PluginBuildProperties
-        && ((PluginBuildProperties) this._buildProperties).hasLibrary(token)) {
+    if( this._excludeLibraries && this._buildProperties instanceof PluginBuildProperties
+        && ((PluginBuildProperties) this._buildProperties).hasLibrary( token ) ) {
       return;
     }
 
     // 'patch' the dot
-    if (token.equals(SELF)) {
+    if( token.equals( SELF ) ) {
       token = DEFAULT_SELF_DIRECTORY;
     }
 
     // 'process' the token
-    if (getEclipseProject().hasChild(token)) {
+    if( getEclipseProject().hasChild( token ) ) {
 
       // get the project child with the given name
-      File file = getEclipseProject().getChild(token);
+      File file = getEclipseProject().getChild( token );
 
-      if (file.isFile()) {
+      if( file.isFile() ) {
         // if the child is a file, just add it to the list
-        resourceList.add(new FileResource(getEclipseProject().getFolder(), token));
+        resourceList.add( new FileResource( getEclipseProject().getFolder(), token ) );
       } else {
 
         // if the child is a directory, scan the directory
         DirectoryScanner directoryScanner = new DirectoryScanner();
-        directoryScanner.setBasedir(file);
-        directoryScanner.setCaseSensitive(isCaseSensitive());
-        directoryScanner.setIncludes(null);
-        if (getDefaultexcludes()) {
+        directoryScanner.setBasedir( file );
+        directoryScanner.setCaseSensitive( isCaseSensitive() );
+        directoryScanner.setIncludes( null );
+        if( getDefaultexcludes() ) {
           directoryScanner.addDefaultExcludes();
         }
 
@@ -204,16 +205,16 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
         // get the included files and add it to the resource list
         String[] files = directoryScanner.getIncludedFiles();
 
-        for (String fileName : files) {
-          if (token.equals(DEFAULT_SELF_DIRECTORY)) {
-            if (!matchExcludePattern(fileName)) {
-              resourceList.add(new FileResource(file, fileName));
+        for( String fileName : files ) {
+          if( token.equals( DEFAULT_SELF_DIRECTORY ) ) {
+            if( !matchExcludePattern( fileName ) ) {
+              resourceList.add( new FileResource( file, fileName ) );
             }
           } else {
-            if (!matchExcludePattern(token + File.separatorChar + fileName)) {
-              String filePath = normalize(file.getPath());
-              String rootPath = normalize(filePath).substring(0, filePath.lastIndexOf(normalize(token)));
-              resourceList.add(new FileResource(new File(rootPath), token + File.separatorChar + fileName));
+            if( !matchExcludePattern( token + File.separatorChar + fileName ) ) {
+              String filePath = normalize( file.getPath() );
+              String rootPath = normalize( filePath ).substring( 0, filePath.lastIndexOf( normalize( token ) ) );
+              resourceList.add( new FileResource( new File( rootPath ), token + File.separatorChar + fileName ) );
             }
           }
         }
@@ -230,14 +231,14 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    *          the path to normalize
    * @return the normalized path
    */
-  private String normalize(String path) {
+  private String normalize( String path ) {
 
     // replace '/' and '\' with File.separatorChar
-    String result = path.replace('/', File.separatorChar).replace('\\', File.separatorChar);
+    String result = path.replace( '/', File.separatorChar ).replace( '\\', File.separatorChar );
 
     // remove trailing '/' and '\'
-    if (result.endsWith("/") || result.endsWith("\\")) {
-      result = result.substring(0, result.length() - 1);
+    if( result.endsWith( "/" ) || result.endsWith( "\\" ) ) {
+      result = result.substring( 0, result.length() - 1 );
     }
 
     // return result
@@ -253,16 +254,16 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    *          the path
    * @return <code>true</code> if the given path matches an exclusion pattern.
    */
-  private boolean matchExcludePattern(String path) {
+  private boolean matchExcludePattern( String path ) {
 
     String[] excludes = this._sourceBundle ? this._buildProperties.getSourceExcludes() : this._buildProperties
         .getBinaryExcludes();
 
     // iterate over all excluded pattern
-    for (String pattern : excludes) {
+    for( String pattern : excludes ) {
 
       // if the given path matches an exclusion pattern, return true
-      if (SelectorUtils.matchPath(normalize(pattern), normalize(path), isCaseSensitive())) {
+      if( SelectorUtils.matchPath( normalize( pattern ), normalize( path ), isCaseSensitive() ) ) {
         return true;
       }
     }
@@ -270,4 +271,5 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
     // return false
     return false;
   }
-}
+  
+} /* ENDCLASS */

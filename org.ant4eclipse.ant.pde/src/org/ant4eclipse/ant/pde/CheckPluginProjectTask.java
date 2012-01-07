@@ -53,7 +53,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
    * @param failOnError
    *          the value
    */
-  public void setFailOnError(boolean failOnError) {
+  public void setFailOnError( boolean failOnError ) {
     this._failOnError = failOnError;
   }
 
@@ -64,28 +64,28 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
   protected void doExecute() {
 
     // create new PluginProjectChecker
-    PluginProjectChecker pluginProjectChecker = new PluginProjectChecker(getEclipseProject());
+    PluginProjectChecker pluginProjectChecker = new PluginProjectChecker( getEclipseProject() );
 
     // check project
     List<Issue> issues = pluginProjectChecker.checkPluginProject();
 
     // if there are any issues, log them
-    if (!issues.isEmpty()) {
+    if( !issues.isEmpty() ) {
 
       // iterate over the issue list
-      for (Issue issue : issues) {
-        if (this._failOnError) {
-          A4ELogging.error(issue.getMessage());
+      for( Issue issue : issues ) {
+        if( this._failOnError ) {
+          A4ELogging.error( issue.getMessage() );
         } else {
-          A4ELogging.warn(issue.getMessage());
+          A4ELogging.warn( issue.getMessage() );
         }
       }
 
       // fail if specified
-      if (this._failOnError) {
-        throw new BuildException(String.format(
+      if( this._failOnError ) {
+        throw new BuildException( String.format(
             "Inconsistent or erroneous plug-in project definition for project '%s'. See above for details.",
-            getEclipseProject().getSpecifiedName()));
+            getEclipseProject().getSpecifiedName() ) );
       }
     }
   }
@@ -97,4 +97,5 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
   protected void preconditions() throws BuildException {
     requireWorkspaceAndProjectNameSet();
   }
-}
+  
+} /* ENDCLASS */

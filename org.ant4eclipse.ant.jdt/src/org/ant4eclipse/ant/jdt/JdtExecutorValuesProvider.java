@@ -48,9 +48,9 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * 
    * @param pathComponent
    */
-  public JdtExecutorValuesProvider(PathComponent pathComponent, ProjectComponent projectComponent) {
-    Assure.notNull("pathComponent", pathComponent);
-    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(pathComponent);
+  public JdtExecutorValuesProvider( PathComponent pathComponent, ProjectComponent projectComponent ) {
+    Assure.notNull( "pathComponent", pathComponent );
+    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider( pathComponent );
     this._pathComponent = pathComponent;
     this._projectComponent = projectComponent;
   }
@@ -63,162 +63,162 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    * @param jdtClasspathContainerArguments
    * @param executionValues
    */
-  public EcjAdditionalCompilerArguments provideExecutorValues(JavaProjectRole javaProjectRole,
+  public EcjAdditionalCompilerArguments provideExecutorValues( JavaProjectRole javaProjectRole,
       List<JdtClasspathContainerArgument> jdtClasspathContainerArguments, MacroExecutionValues executionValues,
-      Set<String> requestedPaths) {
+      Set<String> requestedPaths ) {
 
     // provide the executor values from the platform component
-    this._platformExecutorValuesProvider.provideExecutorValues(javaProjectRole.getEclipseProject(), executionValues);
+    this._platformExecutorValuesProvider.provideExecutorValues( javaProjectRole.getEclipseProject(), executionValues );
 
     // create compiler arguments
     EcjAdditionalCompilerArguments compilerArguments = new EcjAdditionalCompilerArguments();
-    executionValues.getReferences().put(COMPILER_ARGS, compilerArguments);
+    executionValues.getReferences().put( COMPILER_ARGS, compilerArguments );
 
     // resolve (boot) class path
     ResolvedClasspath cpAbsoluteCompiletime = null;
-    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_ABSOLUTE_COMPILETIME)) {
-      cpAbsoluteCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), false, false,
-          jdtClasspathContainerArguments);
+    if( requestedPaths.contains( ExecuteJdtProjectTask.CLASSPATH_ABSOLUTE_COMPILETIME ) ) {
+      cpAbsoluteCompiletime = JdtResolver.resolveProjectClasspath( javaProjectRole.getEclipseProject(), false, false,
+          jdtClasspathContainerArguments );
     }
 
     ResolvedClasspath cpRelativeCompiletime = null;
-    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_RELATIVE_COMPILETIME)) {
-      cpRelativeCompiletime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), true, false,
-          jdtClasspathContainerArguments);
+    if( requestedPaths.contains( ExecuteJdtProjectTask.CLASSPATH_RELATIVE_COMPILETIME ) ) {
+      cpRelativeCompiletime = JdtResolver.resolveProjectClasspath( javaProjectRole.getEclipseProject(), true, false,
+          jdtClasspathContainerArguments );
     }
 
     ResolvedClasspath cpAbsoluteRuntime = null;
-    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_ABSOLUTE_RUNTIME)) {
-      cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), false, true,
-          jdtClasspathContainerArguments);
+    if( requestedPaths.contains( ExecuteJdtProjectTask.CLASSPATH_ABSOLUTE_RUNTIME ) ) {
+      cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath( javaProjectRole.getEclipseProject(), false, true,
+          jdtClasspathContainerArguments );
     }
 
     ResolvedClasspath cpRelativeRuntime = null;
-    if (requestedPaths.contains(ExecuteJdtProjectTask.CLASSPATH_RELATIVE_RUNTIME)) {
-      cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(), true, true,
-          jdtClasspathContainerArguments);
+    if( requestedPaths.contains( ExecuteJdtProjectTask.CLASSPATH_RELATIVE_RUNTIME ) ) {
+      cpRelativeRuntime = JdtResolver.resolveProjectClasspath( javaProjectRole.getEclipseProject(), true, true,
+          jdtClasspathContainerArguments );
     }
 
-    if (cpAbsoluteCompiletime != null) {
+    if( cpAbsoluteCompiletime != null ) {
 
-      if (cpAbsoluteCompiletime.hasBootClasspath()) {
-        if (cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions()) {
+      if( cpAbsoluteCompiletime.hasBootClasspath() ) {
+        if( cpAbsoluteCompiletime.getBootClasspath().hasAccessRestrictions() ) {
           // TODO
-          compilerArguments.setBootClassPathAccessRestrictions(cpAbsoluteCompiletime.getBootClasspath()
-              .getAccessRestrictions().asFormattedString());
+          compilerArguments.setBootClassPathAccessRestrictions( cpAbsoluteCompiletime.getBootClasspath()
+              .getAccessRestrictions().asFormattedString() );
         }
       }
 
       ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
-      for (ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries) {
+      for( ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries ) {
 
         // set source folder for output folder
-        if (resolvedClasspathEntry.hasSourcePathEntries()) {
+        if( resolvedClasspathEntry.hasSourcePathEntries() ) {
           File[] sourcePathEntries = resolvedClasspathEntry.getSourcePathEntries();
-          for (File file : resolvedClasspathEntry.getClassPathEntries()) {
-            compilerArguments.addSourceFolderForOutputFolder(file, sourcePathEntries);
+          for( File file : resolvedClasspathEntry.getClassPathEntries() ) {
+            compilerArguments.addSourceFolderForOutputFolder( file, sourcePathEntries );
           }
         }
 
-        if (A4ELogging.isDebuggingEnabled()) {
-          A4ELogging.debug("Resolved cp entry: %s", resolvedClasspathEntry.toString());
+        if( A4ELogging.isDebuggingEnabled() ) {
+          A4ELogging.debug( "Resolved cp entry: %s", resolvedClasspathEntry.toString() );
         }
 
         // set access restrictions
-        if (resolvedClasspathEntry.hasAccessRestrictions()) {
+        if( resolvedClasspathEntry.hasAccessRestrictions() ) {
           AccessRestrictions accessRestrictions = resolvedClasspathEntry.getAccessRestrictions();
-          for (File file : resolvedClasspathEntry.getClassPathEntries()) {
-            compilerArguments.addAccessRestrictions(file, accessRestrictions.asFormattedString());
+          for( File file : resolvedClasspathEntry.getClassPathEntries() ) {
+            compilerArguments.addAccessRestrictions( file, accessRestrictions.asFormattedString() );
           }
         }
       }
 
-      if (cpAbsoluteCompiletime.hasBootClasspath()) {
-        executionValues.getProperties().put(BOOT_CLASSPATH,
-            this._pathComponent.convertToString(cpAbsoluteCompiletime.getBootClasspathFiles()));
+      if( cpAbsoluteCompiletime.hasBootClasspath() ) {
+        executionValues.getProperties().put( BOOT_CLASSPATH,
+            this._pathComponent.convertToString( cpAbsoluteCompiletime.getBootClasspathFiles() ) );
       }
 
-      executionValues.getProperties().put(CLASSPATH_ABSOLUTE_COMPILETIME,
-          this._pathComponent.convertToString(cpAbsoluteCompiletime.getClasspathFiles()));
+      executionValues.getProperties().put( CLASSPATH_ABSOLUTE_COMPILETIME,
+          this._pathComponent.convertToString( cpAbsoluteCompiletime.getClasspathFiles() ) );
 
-      if (cpAbsoluteCompiletime.hasBootClasspath()) {
-        executionValues.getReferences().put(BOOT_CLASSPATH_PATH,
-            this._pathComponent.convertToPath(cpAbsoluteCompiletime.getBootClasspathFiles()));
+      if( cpAbsoluteCompiletime.hasBootClasspath() ) {
+        executionValues.getReferences().put( BOOT_CLASSPATH_PATH,
+            this._pathComponent.convertToPath( cpAbsoluteCompiletime.getBootClasspathFiles() ) );
       }
-      executionValues.getReferences().put(CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
-          this._pathComponent.convertToPath(cpAbsoluteCompiletime.getClasspathFiles()));
+      executionValues.getReferences().put( CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
+          this._pathComponent.convertToPath( cpAbsoluteCompiletime.getClasspathFiles() ) );
     }
 
-    if (cpRelativeCompiletime != null) {
-      executionValues.getProperties().put(CLASSPATH_RELATIVE_COMPILETIME,
-          this._pathComponent.convertToString(cpRelativeCompiletime.getClasspathFiles()));
-      executionValues.getReferences().put(CLASSPATH_RELATIVE_COMPILETIME_PATH,
-          this._pathComponent.convertToPath(cpRelativeCompiletime.getClasspathFiles()));
+    if( cpRelativeCompiletime != null ) {
+      executionValues.getProperties().put( CLASSPATH_RELATIVE_COMPILETIME,
+          this._pathComponent.convertToString( cpRelativeCompiletime.getClasspathFiles() ) );
+      executionValues.getReferences().put( CLASSPATH_RELATIVE_COMPILETIME_PATH,
+          this._pathComponent.convertToPath( cpRelativeCompiletime.getClasspathFiles() ) );
     }
 
-    if (cpAbsoluteRuntime != null) {
-      executionValues.getProperties().put(CLASSPATH_ABSOLUTE_RUNTIME,
-          this._pathComponent.convertToString(cpAbsoluteRuntime.getClasspathFiles()));
-      executionValues.getReferences().put(CLASSPATH_ABSOLUTE_RUNTIME_PATH,
-          this._pathComponent.convertToPath(cpAbsoluteRuntime.getClasspathFiles()));
+    if( cpAbsoluteRuntime != null ) {
+      executionValues.getProperties().put( CLASSPATH_ABSOLUTE_RUNTIME,
+          this._pathComponent.convertToString( cpAbsoluteRuntime.getClasspathFiles() ) );
+      executionValues.getReferences().put( CLASSPATH_ABSOLUTE_RUNTIME_PATH,
+          this._pathComponent.convertToPath( cpAbsoluteRuntime.getClasspathFiles() ) );
     }
 
-    if (cpRelativeRuntime != null) {
-      executionValues.getProperties().put(CLASSPATH_RELATIVE_RUNTIME,
-          this._pathComponent.convertToString(cpRelativeRuntime.getClasspathFiles()));
-      executionValues.getReferences().put(CLASSPATH_RELATIVE_RUNTIME_PATH,
-          this._pathComponent.convertToPath(cpRelativeRuntime.getClasspathFiles()));
+    if( cpRelativeRuntime != null ) {
+      executionValues.getProperties().put( CLASSPATH_RELATIVE_RUNTIME,
+          this._pathComponent.convertToString( cpRelativeRuntime.getClasspathFiles() ) );
+      executionValues.getReferences().put( CLASSPATH_RELATIVE_RUNTIME_PATH,
+          this._pathComponent.convertToPath( cpRelativeRuntime.getClasspathFiles() ) );
     }
 
     // resolve default output folder
     String defaultOutputFolderName = javaProjectRole.getDefaultOutputFolder();
-    if (defaultOutputFolderName == null) {
-      A4ELogging.info("Project '%s' has no output folder", javaProjectRole.getEclipseProject().getSpecifiedName());
+    if( defaultOutputFolderName == null ) {
+      A4ELogging.info( "Project '%s' has no output folder", javaProjectRole.getEclipseProject().getSpecifiedName() );
     } else {
-      File defaultOutputFolder = javaProjectRole.getEclipseProject().getChild(defaultOutputFolderName);
-      executionValues.getProperties().put(DEFAULT_OUTPUT_DIRECTORY_NAME, defaultOutputFolderName);
-      executionValues.getProperties().put(DEFAULT_OUTPUT_DIRECTORY,
-          this._pathComponent.convertToString(defaultOutputFolder));
-      executionValues.getReferences().put(DEFAULT_OUTPUT_DIRECTORY_PATH,
-          this._pathComponent.convertToPath(defaultOutputFolder));
+      File defaultOutputFolder = javaProjectRole.getEclipseProject().getChild( defaultOutputFolderName );
+      executionValues.getProperties().put( DEFAULT_OUTPUT_DIRECTORY_NAME, defaultOutputFolderName );
+      executionValues.getProperties().put( DEFAULT_OUTPUT_DIRECTORY,
+          this._pathComponent.convertToString( defaultOutputFolder ) );
+      executionValues.getReferences().put( DEFAULT_OUTPUT_DIRECTORY_PATH,
+          this._pathComponent.convertToPath( defaultOutputFolder ) );
     }
 
-    if (javaProjectRole.getSourceFolders().length > 0) {
+    if( javaProjectRole.getSourceFolders().length > 0 ) {
 
       executionValues.getProperties().put(
           SOURCE_DIRECTORIES,
-          this._pathComponent.convertToString(javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getSourceFolders())));
+          this._pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getSourceFolders() ) ) );
 
       executionValues.getReferences().put(
           SOURCE_DIRECTORIES_PATH,
-          this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getSourceFolders())));
+          this._pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getSourceFolders() ) ) );
 
       // Support for filtered java source directory:
       // in this case we create a path that contains a file set with
       // all included java source files...
-      if (javaProjectRole.hasExcludeOrIncludeFiltersForSourceFolders()) {
-        Path sourceFilteredFileSetPath = createFilteredSourceFilePath(javaProjectRole);
-        compilerArguments.setSourceFilteredFilesetPath(sourceFilteredFileSetPath);
-        executionValues.getReferences().put(SOURCE_FILTERED_FILESET_PATH, sourceFilteredFileSetPath);
+      if( javaProjectRole.hasExcludeOrIncludeFiltersForSourceFolders() ) {
+        Path sourceFilteredFileSetPath = createFilteredSourceFilePath( javaProjectRole );
+        compilerArguments.setSourceFilteredFilesetPath( sourceFilteredFileSetPath );
+        executionValues.getReferences().put( SOURCE_FILTERED_FILESET_PATH, sourceFilteredFileSetPath );
       }
 
       executionValues.getProperties().put(
           OUTPUT_DIRECTORIES,
-          this._pathComponent.convertToString(javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getAllOutputFolders())));
+          this._pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getAllOutputFolders() ) ) );
 
       executionValues.getReferences().put(
           OUTPUT_DIRECTORIES_PATH,
-          this._pathComponent.convertToPath(javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getAllOutputFolders())));
+          this._pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
+              javaProjectRole.getAllOutputFolders() ) ) );
 
-      for (String sourceFolderName : javaProjectRole.getSourceFolders()) {
-        String outputFolderName = javaProjectRole.getOutputFolderForSourceFolder(sourceFolderName);
-        File sourceFolder = javaProjectRole.getEclipseProject().getChild(sourceFolderName);
-        File outputFolder = javaProjectRole.getEclipseProject().getChild(outputFolderName);
-        compilerArguments.addOutputFolderForSourceFolder(sourceFolder, outputFolder);
+      for( String sourceFolderName : javaProjectRole.getSourceFolders() ) {
+        String outputFolderName = javaProjectRole.getOutputFolderForSourceFolder( sourceFolderName );
+        File sourceFolder = javaProjectRole.getEclipseProject().getChild( sourceFolderName );
+        File outputFolder = javaProjectRole.getEclipseProject().getChild( outputFolderName );
+        compilerArguments.addOutputFolderForSourceFolder( sourceFolder, outputFolder );
       }
     }
 
@@ -235,27 +235,28 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    *          the java project role
    * @return the ant {@link Path}
    */
-  public final Path createFilteredSourceFilePath(JavaProjectRole javaProjectRole) {
+  public final Path createFilteredSourceFilePath( JavaProjectRole javaProjectRole ) {
 
     // the ant path
-    Path antPath = new Path(this._projectComponent.getProject());
+    Path antPath = new Path( this._projectComponent.getProject() );
 
     // the source folder
-    for (String sourceFolder : javaProjectRole.getSourceFolders()) {
+    for( String sourceFolder : javaProjectRole.getSourceFolders() ) {
 
-      File folder = javaProjectRole.getEclipseProject().getChild(sourceFolder);
-      String includePattern = javaProjectRole.getIncludePatternsForSourceFolder(sourceFolder);
-      String excludePattern = javaProjectRole.getExcludePatternsForSourceFolder(sourceFolder);
+      File folder = javaProjectRole.getEclipseProject().getChild( sourceFolder );
+      String includePattern = javaProjectRole.getIncludePatternsForSourceFolder( sourceFolder );
+      String excludePattern = javaProjectRole.getExcludePatternsForSourceFolder( sourceFolder );
 
       FileSet fileSet = new FileSet();
-      fileSet.setDir(folder);
-      fileSet.setIncludes(includePattern);
-      fileSet.setExcludes(excludePattern);
+      fileSet.setDir( folder );
+      fileSet.setIncludes( includePattern );
+      fileSet.setExcludes( excludePattern );
 
-      antPath.addFileset(fileSet);
+      antPath.addFileset( fileSet );
     }
 
     // return the ant path
     return antPath;
   }
-}
+  
+} /* ENDCLASS */

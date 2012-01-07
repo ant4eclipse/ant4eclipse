@@ -16,13 +16,13 @@ import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 
 public class ProjectBuildListener implements BuildListener {
-  
-  private Ant4EclipseLogger   logger;
-  
+
+  private Ant4EclipseLogger logger;
+
   public ProjectBuildListener( Ant4EclipseLogger antlogger ) {
     logger = antlogger;
   }
-  
+
   /**
    * {@inheritDoc}
    */

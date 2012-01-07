@@ -30,19 +30,19 @@ import java.util.Map.Entry;
 public class GeneratePackagingProperties {
 
   /** - */
-  private String                    ws;
+  private String                   ws;
 
   /** - */
-  private String                    os;
+  private String                   os;
 
   /** - */
-  private String                    arch;
+  private String                   arch;
 
   /** - */
-  private Map<String, List<String>> fileMap;
+  private Map<String,List<String>> fileMap;
 
   /** - */
-  private List<String>              fileList;
+  private List<String>             fileList;
 
   /**
    * <p>
@@ -50,12 +50,12 @@ public class GeneratePackagingProperties {
    * 
    * @param args
    */
-  public static void main(String[] args) {
+  public static void main( String[] args ) {
 
     File binDirectory = new File(
-        "R:/software/ide/eclipse-3.5.2-delta-pack/eclipse/features/org.eclipse.equinox.executable_3.3.201.R35x_v20091211-7M-FngFELSU3Pqlv3JdZn/bin");
+        "R:/software/ide/eclipse-3.5.2-delta-pack/eclipse/features/org.eclipse.equinox.executable_3.3.201.R35x_v20091211-7M-FngFELSU3Pqlv3JdZn/bin" );
 
-    new GeneratePackagingProperties(binDirectory);
+    new GeneratePackagingProperties( binDirectory );
   }
 
   /**
@@ -66,20 +66,20 @@ public class GeneratePackagingProperties {
    * @param binDirectory
    *          as
    */
-  public GeneratePackagingProperties(File binDirectory) {
-    this.fileMap = new HashMap<String, List<String>>();
-    dumpChildren(binDirectory, binDirectory, 0);
-    for (Entry<String, List<String>> entries : this.fileMap.entrySet()) {
+  public GeneratePackagingProperties( File binDirectory ) {
+    this.fileMap = new HashMap<String,List<String>>();
+    dumpChildren( binDirectory, binDirectory, 0 );
+    for( Entry<String,List<String>> entries : this.fileMap.entrySet() ) {
 
       StringBuffer buffer = new StringBuffer();
-      for (Iterator iterator = entries.getValue().iterator(); iterator.hasNext();) {
+      for( Iterator iterator = entries.getValue().iterator(); iterator.hasNext(); ) {
         String value = (String) iterator.next();
-        buffer.append(value);
-        if (iterator.hasNext()) {
-          buffer.append(",");
+        buffer.append( value );
+        if( iterator.hasNext() ) {
+          buffer.append( "," );
         }
       }
-      System.out.println(entries.getKey() + "=" + buffer.toString());
+      System.out.println( entries.getKey() + "=" + buffer.toString() );
     }
   }
 
@@ -91,11 +91,11 @@ public class GeneratePackagingProperties {
    * @param parentDirectory
    * @param level
    */
-  private void dumpChildren(File directory, File parentDirectory, int level) {
+  private void dumpChildren( File directory, File parentDirectory, int level ) {
 
-    for (File child : directory.listFiles()) {
+    for( File child : directory.listFiles() ) {
 
-      switch (level) {
+      switch( level ) {
       case 1:
         this.ws = directory.getName();
         break;
@@ -104,24 +104,25 @@ public class GeneratePackagingProperties {
         break;
       case 3:
         this.arch = directory.getName();
-        if (!this.fileMap.containsKey(this.ws + "." + this.os + "." + this.arch)) {
+        if( !this.fileMap.containsKey( this.ws + "." + this.os + "." + this.arch ) ) {
           this.fileList = new ArrayList<String>();
-          this.fileMap.put(this.ws + "." + this.os + "." + this.arch, this.fileList);
+          this.fileMap.put( this.ws + "." + this.os + "." + this.arch, this.fileList );
         }
         break;
       default:
         break;
       }
 
-      if (child.isFile()) {
-        this.fileList.add(Utilities.calcRelative(parentDirectory, child).replace('\\', '/'));
-      } else if (child.isDirectory()) {
-        if (level >= 3) {
-          dumpChildren(child, parentDirectory, level + 1);
+      if( child.isFile() ) {
+        this.fileList.add( Utilities.calcRelative( parentDirectory, child ).replace( '\\', '/' ) );
+      } else if( child.isDirectory() ) {
+        if( level >= 3 ) {
+          dumpChildren( child, parentDirectory, level + 1 );
         } else {
-          dumpChildren(child, child, level + 1);
+          dumpChildren( child, child, level + 1 );
         }
       }
     }
   }
-}
+  
+} /* ENDCLASS */

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.cdt;
 
-
-
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.lib.cdt.internal.tools.CdtUtilities;
 import org.apache.tools.ant.BuildException;
@@ -20,7 +18,6 @@ import org.apache.tools.ant.BuildException;
 import java.io.File;
 
 /**
- * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
@@ -31,9 +28,8 @@ public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (!CdtUtilities.isCRelatedProject(getEclipseProject())) {
-      throw new BuildException(String.format("The project '%s' must have the c or c++ project role!",
-          getEclipseProject().getSpecifiedName()));
+    if( !CdtUtilities.isCRelatedProject( getEclipseProject() ) ) {
+      throw new BuildException( String.format( "The project '%s' must have the c or c++ project role!", getEclipseProject().getSpecifiedName() ) );
     }
   }
 

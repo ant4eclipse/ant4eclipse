@@ -31,7 +31,7 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     super.setUp();
 
     // set up the build file
-    setupBuildFile("userLibraries.xml");
+    setupBuildFile( "userLibraries.xml" );
   }
 
   /**
@@ -42,37 +42,39 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
    */
   public void testClasspathVariables() throws Exception {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withContainerClasspathEntry(
-        "org.eclipse.jdt.USER_LIBRARY/testLibrary").createIn(getTestWorkspaceDirectory());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "project" )
+        .withContainerClasspathEntry( "org.eclipse.jdt.USER_LIBRARY/testLibrary" )
+        .createIn( getTestWorkspaceDirectory() );
 
     //
-    getTestWorkspace().createFile("myUserLibraries.xml", getContent());
+    getTestWorkspace().createFile( "myUserLibraries.xml", getContent() );
 
     // set the properties
-    getProject().setProperty("projectName", "project");
+    getProject().setProperty( "projectName", "project" );
 
     // execute target
-    String classpath = executeTestTarget("project", true, true);
-    System.err.println(classpath);
-    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "haensel"));
+    String classpath = executeTestTarget( "project", true, true );
+    System.err.println( classpath );
+    assertClasspath( classpath, new File( "project/bin" ), new File( getTestWorkspaceDirectory(), "haensel" ) );
   }
 
   private String getContent() {
 
     String pathDir = getTestWorkspaceDirectory().getAbsolutePath() + File.separatorChar + "haensel";
 
-    getTestWorkspace().createSubDirectory("haensel");
+    getTestWorkspace().createSubDirectory( "haensel" );
 
     StringBuffer buffer = new StringBuffer();
-    buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
-    buffer.append("<eclipse-userlibraries version=\"2\">");
-    buffer.append("<library name=\"testLibrary\" systemlibrary=\"true\">");
-    buffer.append("<archive path=\"");
-    buffer.append(pathDir);
-    buffer.append("\"/>");
-    buffer.append("</library>");
-    buffer.append("</eclipse-userlibraries>");
+    buffer.append( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" );
+    buffer.append( "<eclipse-userlibraries version=\"2\">" );
+    buffer.append( "<library name=\"testLibrary\" systemlibrary=\"true\">" );
+    buffer.append( "<archive path=\"" );
+    buffer.append( pathDir );
+    buffer.append( "\"/>" );
+    buffer.append( "</library>" );
+    buffer.append( "</eclipse-userlibraries>" );
 
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

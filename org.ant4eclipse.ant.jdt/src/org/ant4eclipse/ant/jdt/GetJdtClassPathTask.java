@@ -46,7 +46,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
     super();
 
     // create the JdtClasspathContainerArgumentDelegate
-    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(this);
+    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
   }
 
   /**
@@ -57,8 +57,8 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * @param id
    *          the class path id
    */
-  public void setClasspathId(String id) {
-    super.setPathId(id);
+  public void setClasspathId( String id ) {
+    super.setPathId( id );
   }
 
   /**
@@ -80,7 +80,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * @param runtime
    *          if a runtime path should be resolved or not.
    */
-  public void setRuntime(boolean runtime) {
+  public void setRuntime( boolean runtime ) {
     this._runtime = runtime;
   }
 
@@ -88,7 +88,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
@@ -106,8 +106,8 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * {@inheritDoc}
    */
   @Override
-  public void setDynamicAttribute(String name, String value) throws BuildException {
-    this._classpathContainerArgumentDelegate.setDynamicAttribute(name, value);
+  public void setDynamicAttribute( String name, String value ) throws BuildException {
+    this._classpathContainerArgumentDelegate.setDynamicAttribute( name, value );
   }
 
   /**
@@ -117,10 +117,11 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   protected File[] resolvePath() {
 
     // resolve the path
-    ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath(getEclipseProject(), isRelative(),
-        isRuntime(), this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments());
+    ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath( getEclipseProject(), isRelative(),
+        isRuntime(), this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments() );
 
     // return the path files
     return resolvedClasspath.getClasspathFiles();
   }
-}
+  
+} /* ENDCLASS */

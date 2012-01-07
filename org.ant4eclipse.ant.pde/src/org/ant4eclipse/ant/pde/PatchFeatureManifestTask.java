@@ -71,7 +71,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    * @param featureXmlFile
    *          the featureXmlFile to set
    */
-  public void setFeatureXmlFile(File featureXmlFile) {
+  public void setFeatureXmlFile( File featureXmlFile ) {
     this._featureXmlFile = featureXmlFile;
   }
 
@@ -92,7 +92,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    * @param qualifier
    *          the qualifier to set
    */
-  public void setQualifier(String qualifier) {
+  public void setQualifier( String qualifier ) {
     this._qualifier = qualifier;
   }
 
@@ -113,7 +113,7 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    * @param pluginVersions
    *          the pluginVersions to set
    */
-  public void setPluginVersions(String pluginVersions) {
+  public void setPluginVersions( String pluginVersions ) {
     this._pluginVersions = pluginVersions;
   }
 
@@ -125,24 +125,24 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
 
     StringMap versions = new StringMap();
 
-    if (Utilities.hasText(this._pluginVersions)) {
+    if( Utilities.hasText( this._pluginVersions ) ) {
 
-      StringTokenizer tokenizer = new StringTokenizer(this._pluginVersions, ";");
+      StringTokenizer tokenizer = new StringTokenizer( this._pluginVersions, ";" );
 
-      while (tokenizer.hasMoreTokens()) {
+      while( tokenizer.hasMoreTokens() ) {
         String token = tokenizer.nextToken();
 
-        String[] elements = token.split("=");
+        String[] elements = token.split( "=" );
 
-        if (elements.length == 2) {
-          versions.put(elements[0], elements[1]);
+        if( elements.length == 2 ) {
+          versions.put( elements[0], elements[1] );
         }
       }
     }
 
     try {
-      replaceVersions(this._featureXmlFile, this._qualifier, versions);
-    } catch (Exception e) {
+      replaceVersions( this._featureXmlFile, this._qualifier, versions );
+    } catch( Exception e ) {
       e.printStackTrace();
     }
   }
@@ -153,14 +153,14 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
   @Override
   protected void preconditions() {
 
-    if (this._featureXmlFile == null) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "featureXmlFile");
+    if( this._featureXmlFile == null ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "featureXmlFile" );
     }
-    if (!this._featureXmlFile.exists()) {
+    if( !this._featureXmlFile.exists() ) {
       // TODO
       throw new RuntimeException();
     }
-    if (!this._featureXmlFile.isFile()) {
+    if( !this._featureXmlFile.isFile() ) {
       // TODO
       throw new RuntimeException();
     }
@@ -178,35 +178,36 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    *          A map containing plugin-id (String) - version (String) associations
    * @throws Exception
    */
-  protected void replaceVersions(File featureXml, String qualifier, StringMap newBundleVersions) throws Exception {
-    Assure.notNull("featureXml", featureXml);
-    Assure.assertTrue(featureXml.isFile(), "featureXml (" + featureXml + ") must point to an existing file");
+  protected void replaceVersions( File featureXml, String qualifier, StringMap newBundleVersions ) throws Exception {
+    Assure.notNull( "featureXml", featureXml );
+    Assure.assertTrue( featureXml.isFile(), "featureXml (" + featureXml + ") must point to an existing file" );
 
     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    Document featureDom = builder.parse(featureXml);
+    Document featureDom = builder.parse( featureXml );
 
-    if (qualifier != null) {
+    if( qualifier != null ) {
       Element featureElement = featureDom.getDocumentElement();
-      String featureVersion = featureElement.getAttribute("version");
-      if (featureVersion != null && featureVersion.endsWith(".qualifier")) {
-        featureElement.setAttribute("version", PdeBuildHelper.resolveVersion(new Version(featureVersion), qualifier)
-            .toString());
+      String featureVersion = featureElement.getAttribute( "version" );
+      if( featureVersion != null && featureVersion.endsWith( ".qualifier" ) ) {
+        featureElement.setAttribute( "version", PdeBuildHelper
+            .resolveVersion( new Version( featureVersion ), qualifier ).toString() );
       }
     }
 
-    NodeList pluginNodes = featureDom.getDocumentElement().getElementsByTagName("plugin");
-    for (int i = 0; i < pluginNodes.getLength(); i++) {
-      Element element = (Element) pluginNodes.item(i);
-      String id = element.getAttribute("id");
-      if (newBundleVersions.containsKey(id)) {
-        String version = newBundleVersions.get(id);
-        element.setAttribute("version", version);
+    NodeList pluginNodes = featureDom.getDocumentElement().getElementsByTagName( "plugin" );
+    for( int i = 0; i < pluginNodes.getLength(); i++ ) {
+      Element element = (Element) pluginNodes.item( i );
+      String id = element.getAttribute( "id" );
+      if( newBundleVersions.containsKey( id ) ) {
+        String version = newBundleVersions.get( id );
+        element.setAttribute( "version", version );
       }
     }
 
-    DOMSource domSource = new DOMSource(featureDom);
+    DOMSource domSource = new DOMSource( featureDom );
     Transformer transformer = TransformerFactory.newInstance().newTransformer();
-    StreamResult result = new StreamResult(featureXml);
-    transformer.transform(domSource, result);
+    StreamResult result = new StreamResult( featureXml );
+    transformer.transform( domSource, result );
   }
-}
+  
+} /* ENDCLASS */

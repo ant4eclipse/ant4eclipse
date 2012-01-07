@@ -31,8 +31,8 @@ public class EcjCompilerAdapter extends A4ECompilerAdapter {
    * {@inheritDoc}
    */
   @Override
-  protected CompileJobResult compile(CompileJobDescription description) {
-    return EcjAdapter.Factory.create().compile(description);
+  protected CompileJobResult compile( CompileJobDescription description ) {
+    return EcjAdapter.Factory.create().compile( description );
   }
 
 } /* ENDCALSS */

@@ -30,11 +30,9 @@ import java.util.List;
  */
 public abstract class AbstractAnt4EclipseDataType extends DataType {
 
-  /** - */
   private static List<AbstractAnt4EclipseDataType> instances  = new ArrayList<AbstractAnt4EclipseDataType>();
 
-  /** - */
-  private boolean                                 _validated = false;
+  private boolean validated;
 
   /**
    * <p>
@@ -43,15 +41,18 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
    * 
    * @param project
    */
-  public AbstractAnt4EclipseDataType(Project project) {
-    setProject(project);
+  public AbstractAnt4EclipseDataType( Project project ) {
+
+    validated = false;
+    
+    setProject( project );
 
     // add instance
-    synchronized (instances) {
-      instances.add(this);
+    synchronized( instances ) {
+      instances.add( this );
     }
     // configure ant4eclipse
-    configureA4E(project);
+    configureA4E( project );
 
   }
 
@@ -63,13 +64,13 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
    * @param project
    *          the ant project
    */
-  private void configureA4E(Project project) {
+  private void configureA4E( Project project ) {
     // set ant4eclipse property helper
-    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    PropertyHelper.getPropertyHelper( project ).setNext( new ThreadDispatchingPropertyHelper( project ) );
     Ant4EclipseLogger logger = new AntBasedLogger();
-    project.addBuildListener(new ProjectBuildListener(logger));
+    project.addBuildListener( new ProjectBuildListener( logger ) );
   }
-  
+
   /**
    * <p>
    * </p>
@@ -77,7 +78,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
    * @return the validated
    */
   public boolean isValidated() {
-    return this._validated;
+    return validated;
   }
 
   /**
@@ -85,13 +86,10 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
    * </p>
    */
   public final void validate() {
-    if (this._validated) {
-      return;
+    if( ! validated ) {
+      doValidate();
+      validated = true;
     }
-
-    doValidate();
-
-    this._validated = true;
   }
 
   /**
@@ -99,7 +97,6 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
    * </p>
    */
   protected void doValidate() {
-    //
   }
 
   /**
@@ -110,12 +107,13 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
   static void validateAll() {
 
     // add to instances map
-    synchronized (instances) {
+    synchronized( instances ) {
 
       // iterate over the registered AbstractAnt4EclipseDataTypes
-      for (AbstractAnt4EclipseDataType dataType : instances) {
+      for( AbstractAnt4EclipseDataType dataType : instances ) {
         dataType.validate();
       }
     }
   }
-}
+  
+} /* ENDCLASS */

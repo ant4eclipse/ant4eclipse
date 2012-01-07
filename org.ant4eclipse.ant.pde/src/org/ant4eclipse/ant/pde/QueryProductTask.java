@@ -113,7 +113,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    */
   public QueryProductTask() {
     super();
-    this._workspacedelegate = new WorkspaceDelegate(this);
+    this._workspacedelegate = new WorkspaceDelegate( this );
     this._queries = new ArrayList<Query>();
     this._delimiter = ",";
     this._product = null;
@@ -126,7 +126,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param newdefaultisempty
    *          <code>true</code> <=> Enables the property setting (empty value).
    */
-  public void setDefaultIsEmpty(boolean newdefaultisempty) {
+  public void setDefaultIsEmpty( boolean newdefaultisempty ) {
     this._defaultisempty = newdefaultisempty;
   }
 
@@ -136,8 +136,8 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param workspace
    *          The workspace directory. Not <code>null</code>.
    */
-  public void setWorkspaceDirectory(String workspace) {
-    this._workspacedelegate.setWorkspaceDirectory(workspace);
+  public void setWorkspaceDirectory( String workspace ) {
+    this._workspacedelegate.setWorkspaceDirectory( workspace );
   }
 
   /**
@@ -146,7 +146,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param newproduct
    *          The new location of the product file. Not <code>null</code>.
    */
-  public void setProduct(File newproduct) {
+  public void setProduct( File newproduct ) {
     this._product = newproduct;
   }
 
@@ -156,8 +156,8 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param newdelimiter
    *          The delimiter to be used for list values.
    */
-  public void setDelimiter(String newdelimiter) {
-    this._delimiter = Utilities.cleanup(newdelimiter);
+  public void setDelimiter( String newdelimiter ) {
+    this._delimiter = Utilities.cleanup( newdelimiter );
   }
 
   /**
@@ -166,8 +166,8 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * @param newquery
    *          The new query which has to be added.
    */
-  public void addConfiguredQuery(Query newquery) {
-    this._queries.add(newquery);
+  public void addConfiguredQuery( Query newquery ) {
+    this._queries.add( newquery );
   }
 
   /**
@@ -176,26 +176,26 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (this._product == null) {
-      throw new BuildException("The attribute 'product' has to be set.");
+    if( this._product == null ) {
+      throw new BuildException( "The attribute 'product' has to be set." );
     }
-    if (!this._product.isFile()) {
-      throw new BuildException(String.format("The product configuration '%s' is not a regular file.", this._product));
+    if( !this._product.isFile() ) {
+      throw new BuildException( String.format( "The product configuration '%s' is not a regular file.", this._product ) );
     }
-    if (this._queries.isEmpty()) {
-      throw new BuildException("There must be at least one <query> element.");
+    if( this._queries.isEmpty() ) {
+      throw new BuildException( "There must be at least one <query> element." );
     }
-    for (Query query : this._queries) {
-      if (query._property == null) {
-        throw new BuildException("The attribute 'property' has to be set on a query.");
+    for( Query query : this._queries ) {
+      if( query._property == null ) {
+        throw new BuildException( "The attribute 'property' has to be set on a query." );
       }
-      if (query._type == null) {
-        throw new BuildException(String.format(
-            "The attribute 'query' has to be set to one of the following values: %s", Utilities.listToString(QueryType
-                .values(), null)));
+      if( query._type == null ) {
+        throw new BuildException( String.format(
+            "The attribute 'query' has to be set to one of the following values: %s",
+            Utilities.listToString( QueryType.values(), null ) ) );
       }
-      if ((query._type == QueryType.configini) || (query._type == QueryType.wsplugins)
-          || (query._type == QueryType.wsfragments) || (query._type == QueryType.wsfeatures)) {
+      if( (query._type == QueryType.configini) || (query._type == QueryType.wsplugins)
+          || (query._type == QueryType.wsfragments) || (query._type == QueryType.wsfeatures) ) {
         this._workspacedelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
       }
     }
@@ -209,18 +209,18 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   private ProductDefinition loadProductDefinition() {
     InputStream instream = null;
     try {
-      instream = new FileInputStream(this._product);
-      return ProductDefinitionParser.parseProductDefinition(instream);
-    } catch (Ant4EclipseException ex) {
-      if (ex.getExceptionCode() == PdeExceptionCode.INVALID_CONFIGURATION_VALUE) {
-        throw new Ant4EclipseException(PdeExceptionCode.INVALID_PRODUCT_DEFINITION, this._product, ex.getMessage());
+      instream = new FileInputStream( this._product );
+      return ProductDefinitionParser.parseProductDefinition( instream );
+    } catch( Ant4EclipseException ex ) {
+      if( ex.getExceptionCode() == PdeExceptionCode.INVALID_CONFIGURATION_VALUE ) {
+        throw new Ant4EclipseException( PdeExceptionCode.INVALID_PRODUCT_DEFINITION, this._product, ex.getMessage() );
       } else {
         throw ex;
       }
-    } catch (IOException ex) {
-      throw new BuildException(ex);
+    } catch( IOException ex ) {
+      throw new BuildException( ex );
     } finally {
-      Utilities.close((Closeable)instream);
+      Utilities.close( (Closeable) instream );
     }
   }
 
@@ -230,13 +230,13 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
   @Override
   protected void doExecute() {
     ProductDefinition productdef = loadProductDefinition();
-    for (Query query : this._queries) {
-      String value = runQuery(query, productdef);
-      if (value != null) {
-        getProject().setProperty(query._property, value);
+    for( Query query : this._queries ) {
+      String value = runQuery( query, productdef );
+      if( value != null ) {
+        getProject().setProperty( query._property, value );
       } else {
-        if (this._defaultisempty) {
-          getProject().setProperty(query._property, "");
+        if( this._defaultisempty ) {
+          getProject().setProperty( query._property, "" );
         }
       }
     }
@@ -252,54 +252,54 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * 
    * @return The value of this query. Maybe <code>null</code>.
    */
-  private String runQuery(Query query, ProductDefinition productdef) {
-    switch (query._type) {
+  private String runQuery( Query query, ProductDefinition productdef ) {
+    switch( query._type ) {
     case plugins:
-      return Utilities.listToString(productdef.getPluginIds(), this._delimiter);
+      return Utilities.listToString( productdef.getPluginIds(), this._delimiter );
     case fragments:
-      return Utilities.listToString(productdef.getFragmentIds(), this._delimiter);
+      return Utilities.listToString( productdef.getFragmentIds(), this._delimiter );
     case features:
-      return Utilities.listToString(productdef.getFeatureIds(), this._delimiter);
+      return Utilities.listToString( productdef.getFeatureIds(), this._delimiter );
     case wsplugins:
-      return getWorkspaceContained(productdef.getPluginIds());
+      return getWorkspaceContained( productdef.getPluginIds() );
     case wsfragments:
-      return getWorkspaceContained(productdef.getFragmentIds());
+      return getWorkspaceContained( productdef.getFragmentIds() );
     case wsfeatures:
-      return getWorkspaceContained(productdef.getFeatureIds());
+      return getWorkspaceContained( productdef.getFeatureIds() );
     case launchername:
       return productdef.getLaunchername();
     case application:
       return productdef.getApplication();
     case programargs:
-      return getArgs(productdef.getProgramArgs(query._os));
+      return getArgs( productdef.getProgramArgs( query._os ) );
     case vmargs:
-      return getArgs(productdef.getVmArgs(query._os));
+      return getArgs( productdef.getVmArgs( query._os ) );
     case basedonfeatures:
-      return String.valueOf(productdef.isBasedOnFeatures());
+      return String.valueOf( productdef.isBasedOnFeatures() );
     case id:
       return productdef.getId();
     case name:
       return productdef.getName();
     case version:
       Version version = productdef.getVersion();
-      if (version != null) {
+      if( version != null ) {
         return version.toString();
       } else {
         return null;
       }
     case configini:
-      String configini = productdef.getConfigIni(query._os);
-      if (configini != null) {
-        int idx = configini.indexOf('/', 1);
-        String projectname = configini.substring(1, idx);
-        String path = configini.substring(idx + 1);
-        EclipseProject project = this._workspacedelegate.getWorkspace().getProject(projectname);
-        return project.getChild(path, PathStyle.ABSOLUTE).getAbsolutePath();
+      String configini = productdef.getConfigIni( query._os );
+      if( configini != null ) {
+        int idx = configini.indexOf( '/', 1 );
+        String projectname = configini.substring( 1, idx );
+        String path = configini.substring( idx + 1 );
+        EclipseProject project = this._workspacedelegate.getWorkspace().getProject( projectname );
+        return project.getChild( path, PathStyle.ABSOLUTE ).getAbsolutePath();
       } else {
         return null;
       }
     default:
-      throw new BuildException(String.format("The query type '%s' is currently not implemented.", query._type));
+      throw new BuildException( String.format( "The query type '%s' is currently not implemented.", query._type ) );
     }
   }
 
@@ -311,17 +311,17 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * 
    * @return The value providing the list of ids available within the workspace. Not <code>null</code>.
    */
-  private String getWorkspaceContained(String[] ids) {
+  private String getWorkspaceContained( String[] ids ) {
     List<String> list = new ArrayList<String>();
-    for (String id : ids) {
-      if (this._workspacedelegate.getWorkspace().getProject(id) != null) {
-        list.add(id);
+    for( String id : ids ) {
+      if( this._workspacedelegate.getWorkspace().getProject( id ) != null ) {
+        list.add( id );
       }
     }
-    if (list.isEmpty()) {
+    if( list.isEmpty() ) {
       return null;
     }
-    return Utilities.listToString(list.toArray(), this._delimiter);
+    return Utilities.listToString( list.toArray(), this._delimiter );
   }
 
   /**
@@ -332,20 +332,20 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * 
    * @return The resulting argumentlist. Maybe <code>null</code>.
    */
-  private String getArgs(String... args) {
-    if (args == null) {
+  private String getArgs( String ... args ) {
+    if( args == null ) {
       return null;
     }
     StringBuffer buffer = new StringBuffer();
-    for (String arg : args) {
-      if (arg != null) {
-        if (buffer.length() > 0) {
-          buffer.append(' ');
+    for( String arg : args ) {
+      if( arg != null ) {
+        if( buffer.length() > 0 ) {
+          buffer.append( ' ' );
         }
-        buffer.append(arg);
+        buffer.append( arg );
       }
     }
-    return Utilities.cleanup(buffer.toString());
+    return Utilities.cleanup( buffer.toString() );
   }
 
   /**
@@ -377,7 +377,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
      * @param newos
      *          The new os used for the querying of the product configuration. Not <code>null</code>.
      */
-    public void setOs(ProductOs newos) {
+    public void setOs( ProductOs newos ) {
       this._os = newos;
     }
 
@@ -387,7 +387,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
      * @param newquery
      *          The new query used to access product information. Not <code>null</code>.
      */
-    public void setType(QueryType newquery) {
+    public void setType( QueryType newquery ) {
       this._type = newquery;
     }
 
@@ -397,8 +397,8 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
      * @param newproperty
      *          The new property name. Neither <code>null</code> nor empty.
      */
-    public void setProperty(String newproperty) {
-      this._property = Utilities.cleanup(newproperty);
+    public void setProperty( String newproperty ) {
+      this._property = Utilities.cleanup( newproperty );
     }
 
   } /* ENDCLASS */

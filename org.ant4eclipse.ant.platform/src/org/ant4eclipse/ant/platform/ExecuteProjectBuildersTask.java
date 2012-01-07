@@ -37,15 +37,15 @@ public class ExecuteProjectBuildersTask extends AbstractExecuteProjectTask {
    * </p>
    */
   public ExecuteProjectBuildersTask() {
-    super("executeBuildCommands");
+    super( "executeBuildCommands" );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Object createDynamicElement(String name) {
-    NestedSequential sequential = createScopedMacroDefinition(name);
+  public Object createDynamicElement( String name ) {
+    NestedSequential sequential = createScopedMacroDefinition( name );
     return sequential;
   }
 
@@ -61,18 +61,18 @@ public class ExecuteProjectBuildersTask extends AbstractExecuteProjectTask {
     // get all build commands
     BuildCommand[] buildCommands = getEclipseProject().getBuildCommands();
 
-    for (BuildCommand buildCommand : buildCommands) {
+    for( BuildCommand buildCommand : buildCommands ) {
 
-      ScopedMacroDefinition<String> macroDefinition = getScopedMacroDefinition(buildCommand.getName());
+      ScopedMacroDefinition<String> macroDefinition = getScopedMacroDefinition( buildCommand.getName() );
 
-      if (macroDefinition != null) {
-        executeMacroInstance(macroDefinition.getMacroDef(), new MacroExecutionValuesProvider() {
+      if( macroDefinition != null ) {
+        executeMacroInstance( macroDefinition.getMacroDef(), new MacroExecutionValuesProvider() {
           @Override
-          public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+          public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
             // values.getProperties().put("", buildCommand.getName());
             return values;
           }
-        });
+        } );
       } else {
         throw new BuildException();
       }
@@ -83,15 +83,16 @@ public class ExecuteProjectBuildersTask extends AbstractExecuteProjectTask {
    * @param name
    * @return
    */
-  protected ScopedMacroDefinition<String> getScopedMacroDefinition(String name) {
+  protected ScopedMacroDefinition<String> getScopedMacroDefinition( String name ) {
     //
     List<ScopedMacroDefinition<String>> list = getScopedMacroDefinitions();
 
-    for (ScopedMacroDefinition<String> scopedMacroDefinition : list) {
-      if (name.equalsIgnoreCase(scopedMacroDefinition.getScope())) {
+    for( ScopedMacroDefinition<String> scopedMacroDefinition : list ) {
+      if( name.equalsIgnoreCase( scopedMacroDefinition.getScope() ) ) {
         return scopedMacroDefinition;
       }
     }
     return null;
   }
-}
+  
+} /* ENDCLASS */

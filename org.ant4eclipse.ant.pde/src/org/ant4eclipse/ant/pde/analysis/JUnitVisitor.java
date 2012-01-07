@@ -13,7 +13,7 @@ import org.objectweb.asm.commons.EmptyVisitor;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-final class JUnitVisitor extends EmptyVisitor {
+public class JUnitVisitor extends EmptyVisitor {
 
   /** indicates whether the class has test annotations or not */
   private boolean _hasTestAnnotations;
@@ -31,10 +31,10 @@ final class JUnitVisitor extends EmptyVisitor {
    * {@inheritDoc}
    */
   @Override
-  public MethodVisitor visitMethod(int arg0, String arg1, String arg2, String arg3, String[] arg4) {
+  public MethodVisitor visitMethod( int arg0, String arg1, String arg2, String arg3, String[] arg4 ) {
 
     //
-    if (!this._hasTestAnnotations) {
+    if( !this._hasTestAnnotations ) {
       return this;
     }
 
@@ -46,19 +46,19 @@ final class JUnitVisitor extends EmptyVisitor {
    * {@inheritDoc}
    */
   @Override
-  public void visit(int arg0, int arg1, String arg2, String arg3, String arg4, String[] arg5) {
+  public void visit( int arg0, int arg1, String arg2, String arg3, String arg4, String[] arg5 ) {
     this._isAbstract = ((arg1 & Opcodes.ACC_ABSTRACT) != 0);
-    this._className = arg2.replace('/', '.');
-    this._superClassName = arg4.replace('/', '.');
+    this._className = arg2.replace( '/', '.' );
+    this._superClassName = arg4.replace( '/', '.' );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public AnnotationVisitor visitAnnotation(String arg0, boolean arg1) {
-    Type t = Type.getType(arg0);
-    if (t.getClassName().startsWith("org.junit")) {
+  public AnnotationVisitor visitAnnotation( String arg0, boolean arg1 ) {
+    Type t = Type.getType( arg0 );
+    if( t.getClassName().startsWith( "org.junit" ) ) {
       this._hasTestAnnotations = true;
     }
     return null;
@@ -105,4 +105,6 @@ final class JUnitVisitor extends EmptyVisitor {
   public String getSuperClassName() {
     return this._superClassName;
   }
-}
+  
+} /* ENDCLASS */
+

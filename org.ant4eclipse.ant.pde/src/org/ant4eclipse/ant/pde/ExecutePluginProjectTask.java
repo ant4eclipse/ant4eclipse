@@ -58,22 +58,22 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
    * 
    */
   public ExecutePluginProjectTask() {
-    super("executePluginProject");
+    super( "executePluginProject" );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Object createDynamicElement(String name) {
+  public Object createDynamicElement( String name ) {
 
     // handle 'forEachPluginLibrary' element
-    if (SCOPE_NAME_LIBRARY.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_LIBRARY);
+    if( SCOPE_NAME_LIBRARY.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_LIBRARY );
     }
     // handle 'forProject' element
-    else if (SCOPE_NAME_PROJECT.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_PROJECT);
+    else if( SCOPE_NAME_PROJECT.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_PROJECT );
     }
 
     // default: not handled
@@ -90,21 +90,21 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     requireWorkspaceAndProjectNameSet();
 
     // execute scoped macro definitions
-    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for( ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions() ) {
 
       MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
       // execute SCOPE_LIBRARY
-      if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
-        executeLibraryScopedMacroDef(macroDef);
+      if( SCOPE_LIBRARY.equals( scopedMacroDefinition.getScope() ) ) {
+        executeLibraryScopedMacroDef( macroDef );
       }
       // execute SCOPE_PROJECT
-      else if (SCOPE_PROJECT.equals(scopedMacroDefinition.getScope())) {
-        executeProjectScopedMacroDef(macroDef);
+      else if( SCOPE_PROJECT.equals( scopedMacroDefinition.getScope() ) ) {
+        executeProjectScopedMacroDef( macroDef );
       }
       // scope unknown
       else {
-        throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope());
+        throw new Ant4EclipseException( PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope() );
       }
     }
   }
@@ -117,24 +117,24 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
    * @param macroDef
    *          the project scoped macro definition
    */
-  private void executeProjectScopedMacroDef(MacroDef macroDef) {
+  private void executeProjectScopedMacroDef( MacroDef macroDef ) {
 
     // execute the macro instance
-    executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+    executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
       @Override
-      public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+      public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
         // set the platform execution values
-        getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
+        getPlatformExecutorValuesProvider().provideExecutorValues( getEclipseProject(), values );
 
         // add plug-in project specific values
-        addPluginProjectMacroExecutionValues(values);
+        addPluginProjectMacroExecutionValues( values );
 
         // return the values
         return values;
       }
-    });
+    } );
   }
 
   /**
@@ -145,47 +145,47 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
    * @param macroDef
    *          the macro definition
    */
-  private void executeLibraryScopedMacroDef(MacroDef macroDef) {
+  private void executeLibraryScopedMacroDef( MacroDef macroDef ) {
 
     // get the libraries
-    Library[] libraries = LibraryHelper.getLibraries(getEclipseProject());
+    Library[] libraries = LibraryHelper.getLibraries( getEclipseProject() );
 
     // Iterate over all the libraries
-    for (final Library library : libraries) {
+    for( final Library library : libraries ) {
 
       // execute the macro instance
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
           // add the library name
-          values.getProperties().put(LIBRARY_NAME, library.getName());
-          values.getProperties().put(LIBRARY_SOURCE_NAME, LibraryHelper.getSourceNameForLibrary(library.getName()));
+          values.getProperties().put( LIBRARY_NAME, library.getName() );
+          values.getProperties().put( LIBRARY_SOURCE_NAME, LibraryHelper.getSourceNameForLibrary( library.getName() ) );
 
           // add boolean for 'self' library
-          values.getProperties().put(LIBRARY_IS_SELF, String.valueOf(library.isSelf()));
+          values.getProperties().put( LIBRARY_IS_SELF, String.valueOf( library.isSelf() ) );
 
           // add the platform specific values
-          getPlatformExecutorValuesProvider().provideExecutorValues(getEclipseProject(), values);
+          getPlatformExecutorValuesProvider().provideExecutorValues( getEclipseProject(), values );
 
           // get source and output directories
-          File[] sourceFiles = getEclipseProject().getChildren(library.getSource());
-          File[] outputFiles = getEclipseProject().getChildren(library.getOutput());
+          File[] sourceFiles = getEclipseProject().getChildren( library.getSource() );
+          File[] outputFiles = getEclipseProject().getChildren( library.getOutput() );
 
           // add source and output directories
-          values.getProperties().put(SOURCE_DIRECTORIES, convertToString(sourceFiles));
-          values.getProperties().put(OUTPUT_DIRECTORIES, convertToString(outputFiles));
-          values.getReferences().put(SOURCE_DIRECTORIES_PATH, convertToPath(sourceFiles));
-          values.getReferences().put(OUTPUT_DIRECTORIES_PATH, convertToPath(outputFiles));
+          values.getProperties().put( SOURCE_DIRECTORIES, convertToString( sourceFiles ) );
+          values.getProperties().put( OUTPUT_DIRECTORIES, convertToString( outputFiles ) );
+          values.getReferences().put( SOURCE_DIRECTORIES_PATH, convertToPath( sourceFiles ) );
+          values.getReferences().put( OUTPUT_DIRECTORIES_PATH, convertToPath( outputFiles ) );
 
           // add the plug-in project specific execution values
-          addPluginProjectMacroExecutionValues(values);
+          addPluginProjectMacroExecutionValues( values );
 
           // return the values
           return values;
         }
-      });
+      } );
     }
   }
 
@@ -197,10 +197,10 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
    * @param values
    *          the macro execution values
    */
-  private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) {
+  private void addPluginProjectMacroExecutionValues( MacroExecutionValues values ) {
 
     // get the plug-in project role
-    PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = getEclipseProject().getRole( PluginProjectRole.class );
 
     // get the bundle source
     BundleSource bundleSource = (BundleSource) pluginProjectRole.getBundleDescription().getUserObject();
@@ -209,20 +209,21 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     Manifest manifest = bundleSource.getBundleManifest();
 
     // set the bundle symbolic name
-    values.getProperties().put(BUNDLE_SYMBOLIC_NAME, ManifestHelper.getBundleSymbolicName(manifest));
+    values.getProperties().put( BUNDLE_SYMBOLIC_NAME, ManifestHelper.getBundleSymbolicName( manifest ) );
 
     // "calculate" effective version, that is the version with replaced qualifier
-    Version effectiveVersion = PdeBuildHelper.resolveVersion(pluginProjectRole.getBundleDescription().getVersion(),
-        pluginProjectRole.getBuildProperties().getQualifier());
+    Version effectiveVersion = PdeBuildHelper.resolveVersion( pluginProjectRole.getBundleDescription().getVersion(),
+        pluginProjectRole.getBuildProperties().getQualifier() );
 
     // add the bundle version
-    values.getProperties().put(BUNDLE_RESOLVED_VERSION, effectiveVersion.toString());
-    values.getProperties().put(BUNDLE_VERSION, pluginProjectRole.getBundleDescription().getVersion().toString());
+    values.getProperties().put( BUNDLE_RESOLVED_VERSION, effectiveVersion.toString() );
+    values.getProperties().put( BUNDLE_VERSION, pluginProjectRole.getBundleDescription().getVersion().toString() );
 
     PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
     // values.getProperties().put(BUILD_PROPERTIES_BINARY_INCLUDES, buildProperties.getBinaryIncludesAsString());
     // values.getProperties().put(BUILD_PROPERTIES_BINARY_EXCLUDES, buildProperties.getBinaryExcludesAsString());
 
-    values.getProperties().put(BUILD_LIBRARYSOURCEROOTS, buildProperties.getLibrariesSourceRoots(".src"));
+    values.getProperties().put( BUILD_LIBRARYSOURCEROOTS, buildProperties.getLibrariesSourceRoots( ".src" ) );
   }
-}
+  
+} /* ENDCLASS */

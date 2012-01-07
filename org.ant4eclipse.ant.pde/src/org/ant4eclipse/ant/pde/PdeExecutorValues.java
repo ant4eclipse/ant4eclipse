@@ -149,4 +149,5 @@ public interface PdeExecutorValues extends JdtExecutorValues {
 
   /** - */
   String LIBRARY_SOURCE_NAME               = "library.source.name";
-}
+  
+} /* ENDINTERFACE */

@@ -92,7 +92,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * </p>
    */
   public ExecuteFeatureTask() {
-    super("executeFeature");
+    super( "executeFeature" );
 
     // create the target platform delegate
     this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
@@ -126,8 +126,8 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * {@inheritDoc}
    */
   @Override
-  public final void setTargetPlatformId(String targetPlatformId) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  public final void setTargetPlatformId( String targetPlatformId ) {
+    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -150,8 +150,8 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * {@inheritDoc}
    */
   @Override
-  public void setPlatformConfigurationId(String platformConfigurationId) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
+  public void setPlatformConfigurationId( String platformConfigurationId ) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
@@ -173,8 +173,8 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * @param featureId
    *          the featureId to set
    */
-  public void setFeatureId(String featureId) {
-    if (Utilities.hasText(featureId)) {
+  public void setFeatureId( String featureId ) {
+    if( Utilities.hasText( featureId ) ) {
       this._featureId = featureId;
     }
   }
@@ -198,9 +198,9 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * @param version
    *          the version to set
    */
-  public void setFeatureVersion(String version) {
-    if (Utilities.hasText(version)) {
-      this._featureVersion = new Version(version);
+  public void setFeatureVersion( String version ) {
+    if( Utilities.hasText( version ) ) {
+      this._featureVersion = new Version( version );
     }
   }
 
@@ -208,9 +208,9 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * {@inheritDoc}
    */
   @Override
-  public void setProjectName(String projectName) {
-    if (Utilities.hasText(projectName)) {
-      super.setProjectName(projectName);
+  public void setProjectName( String projectName ) {
+    if( Utilities.hasText( projectName ) ) {
+      super.setProjectName( projectName );
     }
   }
 
@@ -218,19 +218,19 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * {@inheritDoc}
    */
   @Override
-  public Object createDynamicElement(String name) {
+  public Object createDynamicElement( String name ) {
 
     // create macro definition for SCOPE_ROOT_FEATURE
-    if (SCOPE_NAME_ROOT_FEATURE.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_ROOT_FEATURE);
+    if( SCOPE_NAME_ROOT_FEATURE.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_ROOT_FEATURE );
     }
     // create macro definition for SCOPE_NAME_INCLUDED_FEATURE
-    else if (SCOPE_NAME_INCLUDED_FEATURE.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_INCLUDED_FEATURE);
+    else if( SCOPE_NAME_INCLUDED_FEATURE.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_INCLUDED_FEATURE );
     }
     // create macro definition for SCOPE_NAME_PLUGIN
-    else if (SCOPE_NAME_PLUGIN.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_PLUGIN);
+    else if( SCOPE_NAME_PLUGIN.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_PLUGIN );
     }
 
     // return null otherwise
@@ -243,52 +243,52 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
   @Override
   public void doExecute() {
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Executing feature");
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "Executing feature" );
     }
 
     // set a default version if feature version is not set
-    if (this._featureId != null && this._featureVersion == null) {
+    if( this._featureId != null && this._featureVersion == null ) {
       this._featureVersion = Version.emptyVersion;
     }
 
     // resolve the feature
     this._resolvedFeature = resolveFeature();
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Resolved feature is...");
-      List<Pair<Plugin, BundleDescription>> list = this._resolvedFeature.getPluginToBundleDescptionList();
-      for (Pair<Plugin, BundleDescription> pair : list) {
-        A4ELogging.debug("Resolved plug-in '%s (%s)' to bundle '%s (%s)'.", pair.getFirst().getId(), pair.getFirst()
-            .getVersion(), pair.getSecond().getSymbolicName(), pair.getSecond().getVersion());
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "Resolved feature is..." );
+      List<Pair<Plugin,BundleDescription>> list = this._resolvedFeature.getPluginToBundleDescptionList();
+      for( Pair<Plugin,BundleDescription> pair : list ) {
+        A4ELogging.debug( "Resolved plug-in '%s (%s)' to bundle '%s (%s)'.", pair.getFirst().getId(), pair.getFirst()
+            .getVersion(), pair.getSecond().getSymbolicName(), pair.getSecond().getVersion() );
       }
     }
 
     // extract the resolved bundle versions
     this._resolvedBundleVersions = extractBundleVersions();
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("Resolved bundle versions: '%s'", this._resolvedBundleVersions);
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "Resolved bundle versions: '%s'", this._resolvedBundleVersions );
     }
 
     // execute scoped macro definitions
-    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for( ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions() ) {
 
       // execute macro definition for SCOPE_ROOT_FEATURE
-      if (SCOPE_ROOT_FEATURE.equals(scopedMacroDefinition.getScope())) {
-        executeRootFeatureScopedMacroDef(scopedMacroDefinition.getMacroDef());
+      if( SCOPE_ROOT_FEATURE.equals( scopedMacroDefinition.getScope() ) ) {
+        executeRootFeatureScopedMacroDef( scopedMacroDefinition.getMacroDef() );
       }
       // execute macro definition for SCOPE_INCLUDED_FEATURE
-      else if (SCOPE_INCLUDED_FEATURE.equals(scopedMacroDefinition.getScope())) {
-        executeIncludedFeatureScopedMacroDef(scopedMacroDefinition.getMacroDef());
+      else if( SCOPE_INCLUDED_FEATURE.equals( scopedMacroDefinition.getScope() ) ) {
+        executeIncludedFeatureScopedMacroDef( scopedMacroDefinition.getMacroDef() );
       }
       // execute macro definition for SCOPE_PLUGIN
-      else if (SCOPE_PLUGIN.equals(scopedMacroDefinition.getScope())) {
-        executePluginScopedMacroDef(scopedMacroDefinition.getMacroDef());
+      else if( SCOPE_PLUGIN.equals( scopedMacroDefinition.getScope() ) ) {
+        executePluginScopedMacroDef( scopedMacroDefinition.getMacroDef() );
       }
       // unknown execution scope
       else {
-        throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope());
+        throw new Ant4EclipseException( PlatformExceptionCode.UNKNOWN_EXECUTION_SCOPE, scopedMacroDefinition.getScope() );
       }
     }
   }
@@ -306,13 +306,13 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     requireTargetPlatformIdSet();
 
     // require project name *or* featureId (and version) set...
-    if ((isProjectNameSet() && (this._featureId != null || this._featureVersion != null))) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_X_OR_Y, "projectName",
-          "featureId' and 'featureVersion");
+    if( (isProjectNameSet() && (this._featureId != null || this._featureVersion != null)) ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_X_OR_Y, "projectName",
+          "featureId' and 'featureVersion" );
     }
-    if ((!isProjectNameSet() && (this._featureId == null || this._featureVersion == null))) {
-      throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_X_OR_Y, "projectName",
-          "featureId' and 'featureVersion");
+    if( (!isProjectNameSet() && (this._featureId == null || this._featureVersion == null)) ) {
+      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_X_OR_Y, "projectName",
+          "featureId' and 'featureVersion" );
     }
   }
 
@@ -323,80 +323,80 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * 
    * @param macroDef
    */
-  private void executePluginScopedMacroDef(MacroDef macroDef) {
+  private void executePluginScopedMacroDef( MacroDef macroDef ) {
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("executePluginScopedMacroDef");
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "executePluginScopedMacroDef" );
     }
 
-    for (final Pair<Plugin, BundleDescription> pluginAndBundleDescription : this._resolvedFeature
-        .getPluginToBundleDescptionList()) {
+    for( final Pair<Plugin,BundleDescription> pluginAndBundleDescription : this._resolvedFeature
+        .getPluginToBundleDescptionList() ) {
 
       // execute macro
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
           // TODO: References
           Plugin plugin = pluginAndBundleDescription.getFirst();
           BundleDescription bundleDescription = pluginAndBundleDescription.getSecond();
 
           // add plug-in id
-          if (plugin.hasId()) {
-            values.getProperties().put(PLUGIN_ID, plugin.getId());
+          if( plugin.hasId() ) {
+            values.getProperties().put( PLUGIN_ID, plugin.getId() );
           }
 
           // the location of the bundle (either location of eclipse project or location in target platform)
           BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
-          if (bundleSource.isEclipseProject()) {
+          if( bundleSource.isEclipseProject() ) {
             File bundleLocation = bundleSource.getAsEclipseProject().getFolder();
-            values.getProperties().put(PLUGIN_IS_SOURCE, "true");
-            values.getProperties().put(PLUGIN_FILE, bundleLocation.getAbsolutePath());
-            values.getProperties().put(PLUGIN_FILENAME, bundleLocation.getName());
+            values.getProperties().put( PLUGIN_IS_SOURCE, "true" );
+            values.getProperties().put( PLUGIN_FILE, bundleLocation.getAbsolutePath() );
+            values.getProperties().put( PLUGIN_FILENAME, bundleLocation.getName() );
           } else {
             File bundleLocation = bundleSource.getAsFile();
-            values.getProperties().put(PLUGIN_IS_SOURCE, "false");
-            values.getProperties().put(PLUGIN_FILE, bundleLocation.getAbsolutePath());
-            values.getProperties().put(PLUGIN_FILENAME, bundleLocation.getName());
-            values.getReferences().put(PLUGIN_FILELIST, FileListHelper.getFileList(bundleLocation));
+            values.getProperties().put( PLUGIN_IS_SOURCE, "false" );
+            values.getProperties().put( PLUGIN_FILE, bundleLocation.getAbsolutePath() );
+            values.getProperties().put( PLUGIN_FILENAME, bundleLocation.getName() );
+            values.getReferences().put( PLUGIN_FILELIST, FileListHelper.getFileList( bundleLocation ) );
           }
 
-          if (plugin.hasVersion()) {
+          if( plugin.hasVersion() ) {
             // plugin.version contains the version from plugin.xml
-            values.getProperties().put(PLUGIN_VERSION, plugin.getVersion().toString());
+            values.getProperties().put( PLUGIN_VERSION, plugin.getVersion().toString() );
 
             // PLUGIN_RESOLVED_VERSION contains the "resolved" version
             // that is - if plugin version is 0.0.0 - the actual version
             // of the bundle that has been found for this plug-in entry
-            values.getProperties().put(PLUGIN_RESOLVED_VERSION, bundleDescription.getVersion().toString());
+            values.getProperties().put( PLUGIN_RESOLVED_VERSION, bundleDescription.getVersion().toString() );
           }
 
-          if (plugin.hasDownloadSize()) {
-            values.getProperties().put(PLUGIN_DOWNLOADSIZE, plugin.getDownloadSize());
+          if( plugin.hasDownloadSize() ) {
+            values.getProperties().put( PLUGIN_DOWNLOADSIZE, plugin.getDownloadSize() );
           }
-          if (plugin.hasInstallSize()) {
-            values.getProperties().put(PLUGIN_INSTALLSIZE, plugin.getInstallSize());
+          if( plugin.hasInstallSize() ) {
+            values.getProperties().put( PLUGIN_INSTALLSIZE, plugin.getInstallSize() );
           }
-          if (plugin.hasWindowingSystem()) {
-            values.getProperties().put(PLUGIN_WINDOWINGSYSTEM, plugin.getWindowingSystem());
+          if( plugin.hasWindowingSystem() ) {
+            values.getProperties().put( PLUGIN_WINDOWINGSYSTEM, plugin.getWindowingSystem() );
           }
-          if (plugin.hasMachineArchitecture()) {
-            values.getProperties().put(PLUGIN_MACHINEARCHITECTURE, plugin.getMachineArchitecture());
+          if( plugin.hasMachineArchitecture() ) {
+            values.getProperties().put( PLUGIN_MACHINEARCHITECTURE, plugin.getMachineArchitecture() );
           }
-          if (plugin.hasOperatingSystem()) {
-            values.getProperties().put(PLUGIN_OPERATINGSYSTEM, plugin.getOperatingSystem());
+          if( plugin.hasOperatingSystem() ) {
+            values.getProperties().put( PLUGIN_OPERATINGSYSTEM, plugin.getOperatingSystem() );
           }
-          if (plugin.hasLocale()) {
-            values.getProperties().put(PLUGIN_LOCALE, plugin.getLocale());
+          if( plugin.hasLocale() ) {
+            values.getProperties().put( PLUGIN_LOCALE, plugin.getLocale() );
           }
-          values.getProperties().put(PLUGIN_FRAGMENT, Boolean.toString(plugin.isFragment()));
-          values.getProperties().put(PLUGIN_UNPACK, Boolean.toString(plugin.isUnpack()));
+          values.getProperties().put( PLUGIN_FRAGMENT, Boolean.toString( plugin.isFragment() ) );
+          values.getProperties().put( PLUGIN_UNPACK, Boolean.toString( plugin.isUnpack() ) );
 
           // return the values
           return values;
         }
-      });
+      } );
     }
   }
 
@@ -406,28 +406,28 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * 
    * @param macroDef
    */
-  private void executeRootFeatureScopedMacroDef(MacroDef macroDef) {
+  private void executeRootFeatureScopedMacroDef( MacroDef macroDef ) {
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("executeRootFeatureScopedMacroDef");
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "executeRootFeatureScopedMacroDef" );
     }
 
     // execute macro
-    executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+    executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
       @Override
-      public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+      public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
         // feature is an eclipse feature project
-        if (ExecuteFeatureTask.this._resolvedFeature.getSource() instanceof EclipseProject) {
+        if( ExecuteFeatureTask.this._resolvedFeature.getSource() instanceof EclipseProject ) {
 
           // get the eclipse project
           EclipseProject eclipseProject = (EclipseProject) ExecuteFeatureTask.this._resolvedFeature.getSource();
 
           // set the properties
-          values.getProperties().put(FEATURE_IS_SOURCE, "true");
-          values.getProperties().put(FEATURE_FILE, eclipseProject.getFolder().getAbsolutePath());
-          values.getProperties().put(FEATURE_FILE_NAME, eclipseProject.getSpecifiedName());
+          values.getProperties().put( FEATURE_IS_SOURCE, "true" );
+          values.getProperties().put( FEATURE_FILE, eclipseProject.getFolder().getAbsolutePath() );
+          values.getProperties().put( FEATURE_FILE_NAME, eclipseProject.getSpecifiedName() );
 
           // FeatureProjectRole featureProjectRole = FeatureProjectRole.Helper.getFeatureProjectRole(eclipseProject);
 
@@ -438,48 +438,48 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
           // }
 
           // set references
-          values.getReferences().put(FEATURE_FILE_PATH, convertToPath(eclipseProject.getFolder()));
+          values.getReferences().put( FEATURE_FILE_PATH, convertToPath( eclipseProject.getFolder() ) );
         }
 
         // feature is a archive or a directory
-        else if (ExecuteFeatureTask.this._resolvedFeature.getSource() instanceof File) {
-          values.getProperties().put(FEATURE_IS_SOURCE, "false");
+        else if( ExecuteFeatureTask.this._resolvedFeature.getSource() instanceof File ) {
+          values.getProperties().put( FEATURE_IS_SOURCE, "false" );
           // get the source file
           File file = (File) ExecuteFeatureTask.this._resolvedFeature.getSource();
 
           // set properties
-          values.getProperties().put(FEATURE_FILE, file.getAbsolutePath());
-          values.getProperties().put(FEATURE_FILE_NAME, file.getName());
+          values.getProperties().put( FEATURE_FILE, file.getAbsolutePath() );
+          values.getProperties().put( FEATURE_FILE_NAME, file.getName() );
 
           // set references
-          values.getReferences().put(FEATURE_FILE_PATH, convertToPath(file));
-          values.getReferences().put(FEATURE_FILELIST, FileListHelper.getFileList(file));
+          values.getReferences().put( FEATURE_FILE_PATH, convertToPath( file ) );
+          values.getReferences().put( FEATURE_FILELIST, FileListHelper.getFileList( file ) );
         }
 
         // get the feature manifest
         FeatureManifest manifest = ExecuteFeatureTask.this._resolvedFeature.getFeatureManifest();
 
         // set the properties
-        values.getProperties().put(FEATURE_ID, manifest.getId());
-        values.getProperties().put(FEATURE_VERSION, manifest.getVersion().toString());
-        Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(manifest.getVersion(), PdeBuildHelper
-            .getResolvedContextQualifier());
-        values.getProperties().put(FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString());
+        values.getProperties().put( FEATURE_ID, manifest.getId() );
+        values.getProperties().put( FEATURE_VERSION, manifest.getVersion().toString() );
+        Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion( manifest.getVersion(),
+            PdeBuildHelper.getResolvedContextQualifier() );
+        values.getProperties().put( FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString() );
 
-        if (Utilities.hasText(manifest.getLabel())) {
-          values.getProperties().put(FEATURE_LABEL, manifest.getLabel());
+        if( Utilities.hasText( manifest.getLabel() ) ) {
+          values.getProperties().put( FEATURE_LABEL, manifest.getLabel() );
         }
 
-        if (Utilities.hasText(manifest.getProviderName())) {
-          values.getProperties().put(FEATURE_PROVIDERNAME, manifest.getProviderName());
+        if( Utilities.hasText( manifest.getProviderName() ) ) {
+          values.getProperties().put( FEATURE_PROVIDERNAME, manifest.getProviderName() );
         }
 
-        values.getProperties().put(FEATURE_PLUGINS_RESOLVED_VERSIONS, ExecuteFeatureTask.this._resolvedBundleVersions);
+        values.getProperties().put( FEATURE_PLUGINS_RESOLVED_VERSIONS, ExecuteFeatureTask.this._resolvedBundleVersions );
 
         // return the values
         return values;
       }
-    });
+    } );
   }
 
   /**
@@ -490,69 +490,69 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * @param macroDef
    *          the macro definition to execute
    */
-  private void executeIncludedFeatureScopedMacroDef(MacroDef macroDef) {
+  private void executeIncludedFeatureScopedMacroDef( MacroDef macroDef ) {
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("executeIncludedFeatureScopedMacroDef");
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "executeIncludedFeatureScopedMacroDef" );
     }
 
     // iterate over the includes>
-    for (final Pair<Includes, FeatureDescription> pair : this._resolvedFeature.getIncludesToFeatureDescriptionList()) {
+    for( final Pair<Includes,FeatureDescription> pair : this._resolvedFeature.getIncludesToFeatureDescriptionList() ) {
 
       // execute macro definition
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
 
           // add the feature id
-          values.getProperties().put(FEATURE_ID, pair.getFirst().getId());
+          values.getProperties().put( FEATURE_ID, pair.getFirst().getId() );
 
           // add the feature version
-          values.getProperties().put(FEATURE_VERSION, pair.getFirst().getVersion().toString());
+          values.getProperties().put( FEATURE_VERSION, pair.getFirst().getVersion().toString() );
 
           // add the resolved version
-          Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion(pair.getSecond().getFeatureManifest()
-              .getVersion(), PdeBuildHelper.getResolvedContextQualifier());
-          values.getProperties().put(FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString());
+          Version resolvedFeatureVersion = PdeBuildHelper.resolveVersion( pair.getSecond().getFeatureManifest()
+              .getVersion(), PdeBuildHelper.getResolvedContextQualifier() );
+          values.getProperties().put( FEATURE_RESOLVED_VERSION, resolvedFeatureVersion.toString() );
 
           // add the name
-          if (Utilities.hasText(pair.getFirst().getName())) {
-            values.getProperties().put(FEATURE_NAME, pair.getFirst().getName());
+          if( Utilities.hasText( pair.getFirst().getName() ) ) {
+            values.getProperties().put( FEATURE_NAME, pair.getFirst().getName() );
           }
 
           // add the optional value
-          values.getProperties().put(FEATURE_OPTIONAL, Boolean.toString(pair.getFirst().isOptional()));
+          values.getProperties().put( FEATURE_OPTIONAL, Boolean.toString( pair.getFirst().isOptional() ) );
 
           // add the searchLocation
-          if (Utilities.hasText(pair.getFirst().getSearchLocation())) {
-            values.getProperties().put(FEATURE_SEARCH_LOCATION, pair.getFirst().getSearchLocation());
+          if( Utilities.hasText( pair.getFirst().getSearchLocation() ) ) {
+            values.getProperties().put( FEATURE_SEARCH_LOCATION, pair.getFirst().getSearchLocation() );
           }
 
           // add the operatingSystem
-          if (Utilities.hasText(pair.getFirst().getOperatingSystem())) {
-            values.getProperties().put(FEATURE_OS, pair.getFirst().getOperatingSystem());
+          if( Utilities.hasText( pair.getFirst().getOperatingSystem() ) ) {
+            values.getProperties().put( FEATURE_OS, pair.getFirst().getOperatingSystem() );
           }
 
           // add the machineArchitecture
-          if (Utilities.hasText(pair.getFirst().getMachineArchitecture())) {
-            values.getProperties().put(FEATURE_ARCH, pair.getFirst().getMachineArchitecture());
+          if( Utilities.hasText( pair.getFirst().getMachineArchitecture() ) ) {
+            values.getProperties().put( FEATURE_ARCH, pair.getFirst().getMachineArchitecture() );
           }
 
           // add the windowingSystem
-          if (Utilities.hasText(pair.getFirst().getWindowingSystem())) {
-            values.getProperties().put(FEATURE_WS, pair.getFirst().getWindowingSystem());
+          if( Utilities.hasText( pair.getFirst().getWindowingSystem() ) ) {
+            values.getProperties().put( FEATURE_WS, pair.getFirst().getWindowingSystem() );
           }
 
           // add the locale
-          if (Utilities.hasText(pair.getFirst().getLocale())) {
-            values.getProperties().put(FEATURE_NL, pair.getFirst().getLocale());
+          if( Utilities.hasText( pair.getFirst().getLocale() ) ) {
+            values.getProperties().put( FEATURE_NL, pair.getFirst().getLocale() );
           }
 
           // return the values
           return values;
         }
-      });
+      } );
     }
   }
 
@@ -568,29 +568,29 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
 
     // create a new target platform configuration
     PlatformConfiguration configuration = new PlatformConfiguration();
-    configuration.setPreferProjects(true);
+    configuration.setPreferProjects( true );
 
     // fetch the target platform
-    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace());
+    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
 
     // let the target platform resolve the feature
     // case 1: pde feature project
-    if (isProjectNameSet()) {
-      FeatureManifest featureManifest = getEclipseProject().getRole(FeatureProjectRole.class).getFeatureManifest();
-      return targetPlatform.resolveFeature(getEclipseProject(), featureManifest);
+    if( isProjectNameSet() ) {
+      FeatureManifest featureManifest = getEclipseProject().getRole( FeatureProjectRole.class ).getFeatureManifest();
+      return targetPlatform.resolveFeature( getEclipseProject(), featureManifest );
     }
     // case 2: feature taken from the target platform
     else {
-      if (A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug("Trying to get feature '%s_%s' from target platform.", this._featureId, this._featureVersion);
+      if( A4ELogging.isDebuggingEnabled() ) {
+        A4ELogging.debug( "Trying to get feature '%s_%s' from target platform.", this._featureId, this._featureVersion );
       }
 
-      Version resolvedVersion = PdeBuildHelper.resolveVersion(this._featureVersion, PdeBuildHelper
-          .getResolvedContextQualifier());
+      Version resolvedVersion = PdeBuildHelper.resolveVersion( this._featureVersion,
+          PdeBuildHelper.getResolvedContextQualifier() );
 
-      FeatureDescription featureDescription = targetPlatform.getFeatureDescription(this._featureId, resolvedVersion);
+      FeatureDescription featureDescription = targetPlatform.getFeatureDescription( this._featureId, resolvedVersion );
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
-      return targetPlatform.resolveFeature(featureDescription.getSource(), featureManifest);
+      return targetPlatform.resolveFeature( featureDescription.getSource(), featureManifest );
     }
   }
 
@@ -614,24 +614,25 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     StringBuilder result = new StringBuilder();
 
     // iterate over all the resolved bundles and add them to the result...
-    for (Iterator<Pair<Plugin, BundleDescription>> iterator = this._resolvedFeature.getPluginToBundleDescptionList()
-        .iterator(); iterator.hasNext();) {
+    for( Iterator<Pair<Plugin,BundleDescription>> iterator = this._resolvedFeature.getPluginToBundleDescptionList()
+        .iterator(); iterator.hasNext(); ) {
 
-      Pair<Plugin, BundleDescription> pair = iterator.next();
+      Pair<Plugin,BundleDescription> pair = iterator.next();
 
       // add id and resolved version
-      result.append(pair.getFirst().getId());
-      result.append("=");
-      result.append(PdeBuildHelper.resolveVersion(pair.getSecond().getVersion(), PdeBuildHelper
-          .getResolvedContextQualifier()));
+      result.append( pair.getFirst().getId() );
+      result.append( "=" );
+      result.append( PdeBuildHelper.resolveVersion( pair.getSecond().getVersion(),
+          PdeBuildHelper.getResolvedContextQualifier() ) );
 
       // append ';' if necessary
-      if (iterator.hasNext()) {
-        result.append(";");
+      if( iterator.hasNext() ) {
+        result.append( ";" );
       }
     }
 
     // return the result
     return result.toString();
   }
-}
+  
+} /* ENDCLASS */

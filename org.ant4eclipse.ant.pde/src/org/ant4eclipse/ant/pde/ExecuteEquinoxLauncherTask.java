@@ -44,7 +44,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * Create new instance
    */
   public ExecuteEquinoxLauncherTask() {
-    super("executeEquinoxLauncher");
+    super( "executeEquinoxLauncher" );
 
     this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
@@ -85,16 +85,16 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * {@inheritDoc}
    */
   @Override
-  public void setPlatformConfigurationId(String platformConfigurationId) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
+  public void setPlatformConfigurationId( String platformConfigurationId ) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setTargetPlatformId(String targetPlatformId) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  public final void setTargetPlatformId( String targetPlatformId ) {
+    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -109,23 +109,23 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * Makes sure the selected launch configuration is a PDE-Launch Configuration
    */
   @Override
-  protected void ensureSupportedLaunchConfiguration(LaunchConfiguration launchConfiguration) {
-    super.ensureSupportedLaunchConfiguration(launchConfiguration);
+  protected void ensureSupportedLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
+    super.ensureSupportedLaunchConfiguration( launchConfiguration );
 
-    if (!EquinoxLaunchConfigurationWrapper.isEquinoxLaunchConfiguration(launchConfiguration)) {
-      throw new BuildException("The launch configuration you've specified must be a Equinox launch configuration");
+    if( !EquinoxLaunchConfigurationWrapper.isEquinoxLaunchConfiguration( launchConfiguration ) ) {
+      throw new BuildException( "The launch configuration you've specified must be a Equinox launch configuration" );
     }
   }
 
   @Override
-  public Object createDynamicElement(String name) throws BuildException {
+  public Object createDynamicElement( String name ) throws BuildException {
     // handle 'forEachSelectedBundle' element
-    if (SCOPE_FOR_EACH_SELECTED_BUNDLE.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_FOR_EACH_SELECTED_BUNDLE);
+    if( SCOPE_FOR_EACH_SELECTED_BUNDLE.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_FOR_EACH_SELECTED_BUNDLE );
     }
 
     // all other scopes: not handled here, try super class
-    return super.createDynamicElement(name);
+    return super.createDynamicElement( name );
   }
 
   /**
@@ -142,11 +142,11 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * Execute the scoped macro definitions
    */
   @Override
-  protected void doExecute(String scope, MacroDef macroDef) {
-    if (SCOPE_FOR_EACH_SELECTED_BUNDLE.equals(scope)) {
-      executeForEachSelectedBundleScopedMacroDef(macroDef);
+  protected void doExecute( String scope, MacroDef macroDef ) {
+    if( SCOPE_FOR_EACH_SELECTED_BUNDLE.equals( scope ) ) {
+      executeForEachSelectedBundleScopedMacroDef( macroDef );
     } else {
-      super.doExecute(scope, macroDef);
+      super.doExecute( scope, macroDef );
     }
   }
 
@@ -155,28 +155,28 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * 
    * @param macroDef
    */
-  private void executeForEachSelectedBundleScopedMacroDef(MacroDef macroDef) {
+  private void executeForEachSelectedBundleScopedMacroDef( MacroDef macroDef ) {
 
     // Step 1: read the launchconfiguration file
     final LaunchConfiguration launchConfiguration = getLaunchConfiguration();
 
     // Step 2: Create a EquinoxLaunchConfigurationWrapper to access Equinox-specific settings in launch config
-    EquinoxLaunchConfigurationWrapper wrapper = new EquinoxLaunchConfigurationWrapper(launchConfiguration);
+    EquinoxLaunchConfigurationWrapper wrapper = new EquinoxLaunchConfigurationWrapper( launchConfiguration );
 
     // Step 3: Get all selected workspace bundles
     final SelectedLaunchConfigurationBundle[] selectedWorkspaceBundles = wrapper.getSelectedWorkspaceBundles();
 
     // Step 3a: run the macro for each workspace bundle
-    for (SelectedLaunchConfigurationBundle selectedWorkspaceBundle : selectedWorkspaceBundles) {
-      executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(wrapper, selectedWorkspaceBundle, true));
+    for( SelectedLaunchConfigurationBundle selectedWorkspaceBundle : selectedWorkspaceBundles ) {
+      executeMacroInstance( macroDef, createBundleMacroExecuteValuesProvider( wrapper, selectedWorkspaceBundle, true ) );
     }
 
     // Step 4: Get all selected bundles from target platform
     final SelectedLaunchConfigurationBundle[] selectedTargetBundles = wrapper.getSelectedTargetBundles();
 
     // Step 4a: Run the macro for each selected target platform bundle
-    for (SelectedLaunchConfigurationBundle selectedTargetBundle : selectedTargetBundles) {
-      executeMacroInstance(macroDef, createBundleMacroExecuteValuesProvider(wrapper, selectedTargetBundle, false));
+    for( SelectedLaunchConfigurationBundle selectedTargetBundle : selectedTargetBundles ) {
+      executeMacroInstance( macroDef, createBundleMacroExecuteValuesProvider( wrapper, selectedTargetBundle, false ) );
     }
 
   }
@@ -194,65 +194,65 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   protected MacroExecutionValuesProvider createBundleMacroExecuteValuesProvider(
       final EquinoxLaunchConfigurationWrapper wrapper, final SelectedLaunchConfigurationBundle selectedBundle,
-      final boolean workspaceBundle) {
-    notNull("wrapper", wrapper);
-    notNull("launchConfigurationBundleInfo", selectedBundle);
+      final boolean workspaceBundle ) {
+    notNull( "wrapper", wrapper );
+    notNull( "launchConfigurationBundleInfo", selectedBundle );
 
-    final BundleDescription bundleDescription = getResolvedBundle(selectedBundle);
+    final BundleDescription bundleDescription = getResolvedBundle( selectedBundle );
 
     return new MacroExecutionValuesProvider() {
       @Override
-      public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
-        values = provideDefaultMacroExecutionValues(values);
+      public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
+        values = provideDefaultMacroExecutionValues( values );
 
         final StringMap properties = values.getProperties();
-        properties.put("selectedBundle.symbolicName", selectedBundle.getBundleSymbolicName());
+        properties.put( "selectedBundle.symbolicName", selectedBundle.getBundleSymbolicName() );
         String version = selectedBundle.hasVersion() ? selectedBundle.getVersion() : "";
-        properties.put("selectedBundle.version", version);
-        properties.put("selectedBundle.startLevel", selectedBundle.getStartLevel());
-        properties.put("selectedBundle.autoStart", selectedBundle.getAutoStart());
-        properties.put("selectedBundle.workspaceBundle", Boolean.toString(workspaceBundle));
-        properties.put("selectedBundle.targetBundle", Boolean.toString(!workspaceBundle));
-        final String resolvedStartLevel = wrapper.getResolvedStartLevel(selectedBundle);
-        properties.put("selectedBundle.resolvedStartLevel", resolvedStartLevel);
-        final String resolvedAutoStart = wrapper.getResolvedAutoStart(selectedBundle);
-        properties.put("selectedBundle.resolvedAutoStart", resolvedAutoStart);
+        properties.put( "selectedBundle.version", version );
+        properties.put( "selectedBundle.startLevel", selectedBundle.getStartLevel() );
+        properties.put( "selectedBundle.autoStart", selectedBundle.getAutoStart() );
+        properties.put( "selectedBundle.workspaceBundle", Boolean.toString( workspaceBundle ) );
+        properties.put( "selectedBundle.targetBundle", Boolean.toString( !workspaceBundle ) );
+        final String resolvedStartLevel = wrapper.getResolvedStartLevel( selectedBundle );
+        properties.put( "selectedBundle.resolvedStartLevel", resolvedStartLevel );
+        final String resolvedAutoStart = wrapper.getResolvedAutoStart( selectedBundle );
+        properties.put( "selectedBundle.resolvedAutoStart", resolvedAutoStart );
 
         // set the "bundle start parameter" as expected in osgi.bundles property
         String bundleStart = "";
-        if (Utilities.hasText(resolvedStartLevel)) {
+        if( Utilities.hasText( resolvedStartLevel ) ) {
           bundleStart = "@" + resolvedStartLevel;
         }
-        if (Utilities.hasText(resolvedAutoStart)) {
-          if (Utilities.hasText(bundleStart)) {
+        if( Utilities.hasText( resolvedAutoStart ) ) {
+          if( Utilities.hasText( bundleStart ) ) {
             bundleStart += ":" + resolvedAutoStart;
           } else {
             bundleStart = "@" + resolvedAutoStart;
           }
         }
 
-        properties.put("selectedBundle.startParameter", bundleStart);
+        properties.put( "selectedBundle.startParameter", bundleStart );
 
-        if (bundleDescription != null) {
+        if( bundleDescription != null ) {
           BundleSource bundlesource = (BundleSource) bundleDescription.getUserObject();
 
-          properties.put("resolvedBundle.version", bundleDescription.getVersion().toString());
-          properties.put("resolvedBundle.isSystemBundle", Boolean.toString(bundleDescription.getBundleId() == 0));
-          if (bundlesource.isEclipseProject()) {
+          properties.put( "resolvedBundle.version", bundleDescription.getVersion().toString() );
+          properties.put( "resolvedBundle.isSystemBundle", Boolean.toString( bundleDescription.getBundleId() == 0 ) );
+          if( bundlesource.isEclipseProject() ) {
             // Plug-in is a source project contained in the workspace
             EclipseProject project = bundlesource.getAsEclipseProject();
             File location = project.getFolder();
-            properties.put("resolvedBundle.isSource", "true");
-            properties.put("resolvedBundle.file", location.getAbsolutePath());
-            properties.put("resolvedBundle.fileName", location.getName());
-            properties.put("resolvedBundle.projectName", project.getSpecifiedName());
+            properties.put( "resolvedBundle.isSource", "true" );
+            properties.put( "resolvedBundle.file", location.getAbsolutePath() );
+            properties.put( "resolvedBundle.fileName", location.getName() );
+            properties.put( "resolvedBundle.projectName", project.getSpecifiedName() );
           } else {
             // Bundle comes from the target platform
             File location = bundlesource.getAsFile();
-            properties.put("resolvedBundle.isSource", "false");
-            properties.put("resolvedBundle.file", location.getAbsolutePath());
-            properties.put("resolvedBundle.fileName", location.getName());
-            values.getReferences().put("resolvedBundle.fileList", FileListHelper.getFileList(location));
+            properties.put( "resolvedBundle.isSource", "false" );
+            properties.put( "resolvedBundle.file", location.getAbsolutePath() );
+            properties.put( "resolvedBundle.fileName", location.getName() );
+            values.getReferences().put( "resolvedBundle.fileList", FileListHelper.getFileList( location ) );
           }
         }
         return values;
@@ -266,28 +266,28 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * @param launchConfigurationBundleInfo
    * @return the {@link BundleDescription} for the selected bundle or null if the bundle could not be resolved
    */
-  protected BundleDescription getResolvedBundle(SelectedLaunchConfigurationBundle launchConfigurationBundleInfo) {
+  protected BundleDescription getResolvedBundle( SelectedLaunchConfigurationBundle launchConfigurationBundleInfo ) {
     String bundleSymbolicName = launchConfigurationBundleInfo.getBundleSymbolicName();
-    Version osgiVersion = (launchConfigurationBundleInfo.hasVersion() ? new Version(launchConfigurationBundleInfo
-        .getVersion()) : null);
+    Version osgiVersion = (launchConfigurationBundleInfo.hasVersion() ? new Version(
+        launchConfigurationBundleInfo.getVersion() ) : null);
 
-    BundleDescription bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace())
-        .getResolvedBundle(bundleSymbolicName, osgiVersion);
+    BundleDescription bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
+        .getResolvedBundle( bundleSymbolicName, osgiVersion );
 
-    if (bundleDescription == null) {
-      warn("Bundle '%s' with version '%s' not found in target platform", bundleSymbolicName, osgiVersion);
+    if( bundleDescription == null ) {
+      warn( "Bundle '%s' with version '%s' not found in target platform", bundleSymbolicName, osgiVersion );
     }
 
     return bundleDescription;
   }
 
   @Override
-  protected MacroExecutionValues provideDefaultMacroExecutionValues(MacroExecutionValues values) {
-    final MacroExecutionValues defaultValues = super.provideDefaultMacroExecutionValues(values);
+  protected MacroExecutionValues provideDefaultMacroExecutionValues( MacroExecutionValues values ) {
+    final MacroExecutionValues defaultValues = super.provideDefaultMacroExecutionValues( values );
 
     // Add JRE-Location to scoped properties
     JavaRuntime javaRuntime = getJavaRuntime();
-    defaultValues.getProperties().put("jre.location", javaRuntime.getLocation().getAbsolutePath());
+    defaultValues.getProperties().put( "jre.location", javaRuntime.getLocation().getAbsolutePath() );
 
     return defaultValues;
   }
@@ -301,14 +301,14 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
     LaunchConfiguration launchConfiguration = getLaunchConfiguration();
     JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
 
-    String vmPath = launchConfiguration.getAttribute("org.eclipse.jdt.launching.JRE_CONTAINER");
-    if (vmPath == null) {
+    String vmPath = launchConfiguration.getAttribute( "org.eclipse.jdt.launching.JRE_CONTAINER" );
+    if( vmPath == null ) {
       return javaRuntimeRegistry.getDefaultJavaRuntime();
     }
 
-    JavaRuntime javaRuntime = javaRuntimeRegistry.getJavaRuntimeForPath(vmPath);
+    JavaRuntime javaRuntime = javaRuntimeRegistry.getJavaRuntimeForPath( vmPath );
     return javaRuntime;
 
   }
 
-}
+} /* ENDCLASS */

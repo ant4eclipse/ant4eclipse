@@ -23,7 +23,6 @@ import java.io.File;
  */
 public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileTest {
 
-  /** - */
   private TestDirectory _testWorkspace;
 
   /**
@@ -54,18 +53,18 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    *          The name of the build file without folders
    * @return The name of the build file
    */
-  protected String getProjectBuildFile(String unqualifiedName) {
-    return getClass().getPackage().getName().replace('.', '/') + "/" + unqualifiedName;
+  protected String getProjectBuildFile( String unqualifiedName ) {
+    return getClass().getPackage().getName().replace( '.', '/' ) + "/" + unqualifiedName;
   }
 
   @Override
   protected void runTest() throws Throwable {
     try {
       super.runTest();
-    } catch (Throwable t) {
-      System.err.println(getName() + " throws exception (" + t + "). Output:");
+    } catch( Throwable t ) {
+      System.err.println( getName() + " throws exception (" + t + "). Output:" );
       t.printStackTrace();
-      System.err.println(getError());
+      System.err.println( getError() );
       throw t;
     }
   }
@@ -82,13 +81,13 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    * @throws Exception
    * @see {@link #configureProject(String)}
    */
-  protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
-    String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
-    StringBuffer buffer = Utilities.readTextContent("/" + qualifiedBuildFileName, Utilities.ENCODING, true);
+  protected void setupBuildFile( String unqualifiedBuildFileName ) throws Exception {
+    String qualifiedBuildFileName = getProjectBuildFile( unqualifiedBuildFileName );
+    StringBuffer buffer = Utilities.readTextContent( "/" + qualifiedBuildFileName, Utilities.ENCODING, true );
     String buildFileContent = buffer.toString();
-    File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
-    configureProject(buildFile.getAbsolutePath());
-    getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
+    File buildFile = this._testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
+    configureProject( buildFile.getAbsolutePath() );
+    getProject().setProperty( "workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath() );
   }
 
   /**
@@ -117,8 +116,8 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    * @param string
    * @return
    */
-  public String normalize(String string) {
-    return string.replace('/', File.separatorChar).replace('\\', File.separatorChar);
+  public String normalize( String string ) {
+    return string.replace( '/', File.separatorChar ).replace( '\\', File.separatorChar );
   }
 
 } /* ENDCLASS */

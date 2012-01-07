@@ -24,20 +24,19 @@ import org.apache.tools.ant.ProjectComponent;
  */
 public abstract class AbstractAntDelegate {
 
-  /** the project component */
-  private ProjectComponent _component;
+  private ProjectComponent component;
 
   /**
    * <p>
    * Creates a new instance of type {@link AbstractAntDelegate}.
    * </p>
    * 
-   * @param component
+   * @param newcomponent
    *          the project component
    */
-  public AbstractAntDelegate(ProjectComponent component) {
-    Assure.notNull("component", component);
-    this._component = component;
+  public AbstractAntDelegate( ProjectComponent newcomponent ) {
+    Assure.notNull( "component", newcomponent );
+    component = newcomponent;
   }
 
   /**
@@ -48,7 +47,7 @@ public abstract class AbstractAntDelegate {
    * @return the project component.
    */
   protected ProjectComponent getProjectComponent() {
-    return this._component;
+    return component;
   }
 
   /**
@@ -59,6 +58,7 @@ public abstract class AbstractAntDelegate {
    * @return the Ant {@link Project}.
    */
   protected Project getAntProject() {
-    return this._component.getProject();
+    return component.getProject();
   }
-}
+  
+} /* ENDCLASS */

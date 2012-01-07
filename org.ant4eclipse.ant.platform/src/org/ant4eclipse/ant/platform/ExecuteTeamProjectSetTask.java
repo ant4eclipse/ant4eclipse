@@ -34,7 +34,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
   public ExecuteTeamProjectSetTask() {
-    this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "executeTeamProjectSet");
+    this._macroExecutionDelegate = new MacroExecutionDelegate<String>( this, "executeTeamProjectSet" );
 
   }
 
@@ -46,8 +46,8 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#createScopedMacroDefinition(java.lang.Object)
    */
   @Override
-  public NestedSequential createScopedMacroDefinition(String scope) {
-    return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
+  public NestedSequential createScopedMacroDefinition( String scope ) {
+    return this._macroExecutionDelegate.createScopedMacroDefinition( scope );
   }
 
   /*
@@ -58,8 +58,8 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * , org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider)
    */
   @Override
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
+  public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
+    this._macroExecutionDelegate.executeMacroInstance( macroDef, provider );
 
   }
 
@@ -89,8 +89,8 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#setPrefix(java.lang.String)
    */
   @Override
-  public void setPrefix(String prefix) {
-    this._macroExecutionDelegate.setPrefix(prefix);
+  public void setPrefix( String prefix ) {
+    this._macroExecutionDelegate.setPrefix( prefix );
 
   }
 
@@ -100,11 +100,11 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
    */
   @Override
-  public final Object createDynamicElement(String name) throws BuildException {
+  public final Object createDynamicElement( String name ) throws BuildException {
 
     // handle SCOPE_FOR_EACH_PROJECT
-    if (SCOPE_FOR_EACH_PROJECT.equalsIgnoreCase(name)) {
-      return createScopedMacroDefinition(SCOPE_FOR_EACH_PROJECT);
+    if( SCOPE_FOR_EACH_PROJECT.equalsIgnoreCase( name ) ) {
+      return createScopedMacroDefinition( SCOPE_FOR_EACH_PROJECT );
     }
 
     return null;
@@ -121,15 +121,15 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
     requireProjectSetSet();
 
     // execute scoped macro definitions
-    for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
+    for( ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions() ) {
 
       MacroDef macroDef = scopedMacroDefinition.getMacroDef();
 
       // execute SCOPE_FOR_EACH_PROJECT
-      if (SCOPE_FOR_EACH_PROJECT.equals(scopedMacroDefinition.getScope())) {
-        executeForEachProjectScopedMacroDef(macroDef);
+      if( SCOPE_FOR_EACH_PROJECT.equals( scopedMacroDefinition.getScope() ) ) {
+        executeForEachProjectScopedMacroDef( macroDef );
       } else {
-        throw new RuntimeException("Unknown Scope '" + scopedMacroDefinition.getScope() + "'");
+        throw new RuntimeException( "Unknown Scope '" + scopedMacroDefinition.getScope() + "'" );
       }
     }
 
@@ -144,7 +144,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    * 
    * @param macroDef
    */
-  private void executeForEachProjectScopedMacroDef(MacroDef macroDef) {
+  private void executeForEachProjectScopedMacroDef( MacroDef macroDef ) {
     // Get the TeamProjectSet
     TeamProjectSet teamProjectSet = getTeamProjectSet();
 
@@ -152,20 +152,21 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
     final TeamProjectDescription[] teamProjectDescriptions = teamProjectSet.getTeamProjectDescriptions();
 
     // execute the macroDef for each project description
-    for (final TeamProjectDescription teamProjectDescription : teamProjectDescriptions) {
-      executeMacroInstance(macroDef, new MacroExecutionValuesProvider() {
+    for( final TeamProjectDescription teamProjectDescription : teamProjectDescriptions ) {
+      executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
         @Override
-        public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
+        public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
           // Get Properties from teamProjectDescription...
           final StringMap teamProjectDescriptionProperties = teamProjectDescription.getAsProperties();
 
           // ...add teamProjectDescription-properties as scoped properties to macro invocation
-          values.getProperties().putAll(teamProjectDescriptionProperties);
+          values.getProperties().putAll( teamProjectDescriptionProperties );
 
           return values;
         }
-      });
+      } );
     }
   }
-}
+  
+} /* ENDCLASS */

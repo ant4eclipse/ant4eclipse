@@ -22,19 +22,19 @@ public class AbstractAnt4EclipseTaskTest extends AbstractAnt4EclipseBuildFileTes
   }
 
   public void testAbstractAnt4EclipseTask() {
-    expectLog("testAbstractAnt4EclipseTask", "doExecute");
+    expectLog( "testAbstractAnt4EclipseTask", "doExecute" );
   }
 
   public void testAbstractAnt4EclipseFailureTask() {
-    expectSpecificBuildException("testAbstractAnt4EclipseFailureTask", "Ant4EclipseException",
-        "org.ant4eclipse.lib.core.exception.Ant4EclipseException: Directory 'Bla' could not be created for an unkown reason");
+    expectSpecificBuildException( "testAbstractAnt4EclipseFailureTask", "Ant4EclipseException",
+        "org.ant4eclipse.lib.core.exception.Ant4EclipseException: Directory 'Bla' could not be created for an unkown reason" );
   }
 
   public static class Ant4EclipseTask extends AbstractAnt4EclipseTask {
 
     @Override
     protected void doExecute() throws Ant4EclipseException {
-      getProject().log("doExecute");
+      getProject().log( "doExecute" );
     }
   }
 
@@ -42,7 +42,8 @@ public class AbstractAnt4EclipseTaskTest extends AbstractAnt4EclipseBuildFileTes
 
     @Override
     protected void doExecute() throws Ant4EclipseException {
-      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, "Bla");
+      throw new Ant4EclipseException( CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, "Bla" );
     }
   }
-}
+  
+} /* ENDCLASS */

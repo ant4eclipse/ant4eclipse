@@ -22,13 +22,13 @@ public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFil
   }
 
   public void testAbstractAnt4EclipseDataType() {
-    expectLog("testAbstractAnt4EclipseDataType", "setAttribute(myAttribute)");
+    expectLog( "testAbstractAnt4EclipseDataType", "setAttribute(myAttribute)" );
   }
 
   public static class Ant4EclipseDataType extends AbstractAnt4EclipseDataType {
 
-    public Ant4EclipseDataType(Project project) {
-      super(project);
+    public Ant4EclipseDataType( Project project ) {
+      super( project );
     }
 
     /**
@@ -37,8 +37,9 @@ public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFil
      * @param userlib
      *          The new user library configuration file.
      */
-    public void setAttribute(String attribute) {
-      getProject().log("setAttribute(" + attribute + ")");
+    public void setAttribute( String attribute ) {
+      getProject().log( "setAttribute(" + attribute + ")" );
     }
   }
-}
+  
+} /* ENDCLASS */

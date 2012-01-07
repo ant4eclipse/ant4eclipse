@@ -22,28 +22,28 @@ public class AbstractAnt4EclipseConditionTest extends AbstractAnt4EclipseBuildFi
   }
 
   public void testAbstractAnt4EclipseTrueCondition() {
-    assertPropertyUnset("test");
-    expectLog("testAbstractAnt4EclipseTrueCondition", "doEval");
-    assertPropertySet("test");
+    assertPropertyUnset( "test" );
+    expectLog( "testAbstractAnt4EclipseTrueCondition", "doEval" );
+    assertPropertySet( "test" );
   }
 
   public void testAbstractAnt4EclipseFalseCondition() {
-    assertPropertyUnset("test");
-    expectLog("testAbstractAnt4EclipseFalseCondition", "doEval");
-    assertPropertyUnset("test");
+    assertPropertyUnset( "test" );
+    expectLog( "testAbstractAnt4EclipseFalseCondition", "doEval" );
+    assertPropertyUnset( "test" );
   }
 
   public void testAbstractAnt4EclipseFailureCondition() {
-    assertPropertyUnset("test");
-    expectSpecificBuildException("testAbstractAnt4EclipseFailureCondition", "Ant4EclipseException",
-        "org.ant4eclipse.lib.core.exception.Ant4EclipseException: Directory 'Bla' could not be created for an unkown reason");
-    assertPropertyUnset("test");
+    assertPropertyUnset( "test" );
+    expectSpecificBuildException( "testAbstractAnt4EclipseFailureCondition", "Ant4EclipseException",
+        "org.ant4eclipse.lib.core.exception.Ant4EclipseException: Directory 'Bla' could not be created for an unkown reason" );
+    assertPropertyUnset( "test" );
   }
 
   public static class Ant4EclipseFalseCondition extends AbstractAnt4EclipseCondition {
     @Override
     protected boolean doEval() {
-      getProject().log("doEval");
+      getProject().log( "doEval" );
       return false;
     }
   }
@@ -51,7 +51,7 @@ public class AbstractAnt4EclipseConditionTest extends AbstractAnt4EclipseBuildFi
   public static class Ant4EclipseTrueCondition extends AbstractAnt4EclipseCondition {
     @Override
     protected boolean doEval() {
-      getProject().log("doEval");
+      getProject().log( "doEval" );
       return true;
     }
   }
@@ -60,7 +60,8 @@ public class AbstractAnt4EclipseConditionTest extends AbstractAnt4EclipseBuildFi
 
     @Override
     protected boolean doEval() {
-      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, "Bla");
+      throw new Ant4EclipseException( CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, "Bla" );
     }
   }
-}
+  
+} /* ENDCLASS */

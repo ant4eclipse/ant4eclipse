@@ -16,8 +16,7 @@ import org.apache.tools.ant.PropertyHelper;
  */
 public class ThreadDispatchingPropertyHelper extends PropertyHelper {
 
-  /** the property helper */
-  private Map<Thread, Properties> _propertiesMap;
+  private Map<Thread,Properties> propertiesmap;
 
   /**
    * <p>
@@ -26,18 +25,15 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param project
    * @return the {@link ThreadDispatchingPropertyHelper}
    */
-  public static ThreadDispatchingPropertyHelper getInstance(Project project) {
-    Assure.notNull("project", project);
+  public static ThreadDispatchingPropertyHelper getInstance( Project project ) {
+    Assure.notNull( "project", project );
 
-    //
-    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(project).getNext();
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( project ).getNext();
 
-    //
-    if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
+    if( propertyHelper instanceof ThreadDispatchingPropertyHelper ) {
       return (ThreadDispatchingPropertyHelper) propertyHelper;
     }
 
-    //
     return null;
   }
 
@@ -48,8 +44,8 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param project
    * @return
    */
-  public static boolean hasInstance(Project project) {
-    return getInstance(project) != null;
+  public static boolean hasInstance( Project project ) {
+    return getInstance( project ) != null;
   }
 
   /**
@@ -59,14 +55,11 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * 
    * @param project
    */
-  public ThreadDispatchingPropertyHelper(Project project) {
+  public ThreadDispatchingPropertyHelper( Project project ) {
     super();
-
-    Assure.notNull("project", project);
-    setProject(project);
-
-    //
-    this._propertiesMap = new HashMap<Thread, Properties>();
+    Assure.notNull( "project", project );
+    setProject( project );
+    propertiesmap = new HashMap<Thread,Properties>();
   }
 
   /**
@@ -76,10 +69,8 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param thread
    * @return <code>true</code>, if the given thread is registered.
    */
-  public boolean isThreadRegistered(Thread thread) {
-
-    //
-    return this._propertiesMap.containsKey(thread);
+  public boolean isThreadRegistered( Thread thread ) {
+    return propertiesmap.containsKey( thread );
   }
 
   /**
@@ -89,14 +80,12 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param name
    * @return true, if the property has been removed
    */
-  public boolean removeProperty(String name) {
+  public boolean removeProperty( String name ) {
 
-    //
-    if (isThreadRegistered(Thread.currentThread())) {
-      return this._propertiesMap.get(Thread.currentThread()).remove(name) != null;
+    if( isThreadRegistered( Thread.currentThread() ) ) {
+      return propertiesmap.get( Thread.currentThread() ).remove( name ) != null;
     }
 
-    // return false
     return false;
   }
 
@@ -106,17 +95,14 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * 
    * @param thread
    */
-  public void registerThread(Thread thread) {
-    Assure.notNull("thread", thread);
-
-    //
-    if (!isAnt4EclipseThread(thread)) {
+  public void registerThread( Thread thread ) {
+    Assure.notNull( "thread", thread );
+    if( !isAnt4EclipseThread( thread ) ) {
       return;
     }
 
-    //
-    if (!this._propertiesMap.containsKey(thread)) {
-      this._propertiesMap.put(thread, new Properties());
+    if( ! propertiesmap.containsKey( thread ) ) {
+      propertiesmap.put( thread, new Properties() );
     }
   }
 
@@ -127,87 +113,44 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param thread
    * @return
    */
-  private boolean isAnt4EclipseThread(Thread thread) {
-    return thread.getName().startsWith("A4E-");
+  private boolean isAnt4EclipseThread( Thread thread ) {
+    return thread.getName().startsWith( "A4E-" );
   }
-
-  // /**
-  // * <p>
-  // * </p>
-  // *
-  // * @param thread
-  // */
-  // public void unregisterThread(Thread thread) {
-  //
-  // //
-  // this._propertiesMap.remove(thread);
-  // }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean setPropertyHook(String ns, String name, Object value, boolean inherited, boolean user, boolean isNew) {
+  public boolean setPropertyHook( String ns, String name, Object value, boolean inherited, boolean user, boolean isNew ) {
 
-    // if (name.startsWith("buildPlugin.newBundleVersion")) {
-    // System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // }
-
-    //
-    if (!this._propertiesMap.containsKey(Thread.currentThread())) {
+    if( ! propertiesmap.containsKey( Thread.currentThread() ) ) {
       return false;
     }
 
-    //
-    Properties properties = this._propertiesMap.get(Thread.currentThread());
-    properties.put(name, value);
+    Properties properties = propertiesmap.get( Thread.currentThread() );
+    properties.put( name, value );
 
-    if (name.startsWith("buildPlugin.newBundleVersion")) {
-      System.out.println(String.format("[%s] setPropertyHook(%s ,%s ) - %s", Thread.currentThread(), name, value,
-          properties));
+    if( name.startsWith( "buildPlugin.newBundleVersion" ) ) {
+      System.out.println( String.format( "[%s] setPropertyHook(%s ,%s ) - %s", Thread.currentThread(), name, value, properties ) );
     }
-
-    //
-    // if (!inherited && user && !isNew) {
-    // System.out.println(String.format("[%s] 1a - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // propertyHelper.setUserProperty(ns, name, value);
-    // } else if (!inherited && !user && isNew) {
-    // System.out.println(String.format("[%s] 1b - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // propertyHelper.setNewProperty(ns, name, value);
-    // } else if (inherited && !user && !isNew) {
-    // System.out.println(String.format("[%s] 1c - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // propertyHelper.setInheritedProperty(ns, name, value);
-    // } else if (!inherited && !user && !isNew) {
-    // System.out.println(String.format("[%s] 1d - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // propertyHelper.setProperty(ns, name, value, false);
-    // }
-
-    //
+    
     return true;
+    
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Object getPropertyHook(String ns, String name, boolean user) {
+  public Object getPropertyHook( String ns, String name, boolean user ) {
 
-    //
-    if (!this._propertiesMap.containsKey(Thread.currentThread())) {
+    if( ! propertiesmap.containsKey( Thread.currentThread() ) ) {
       return null;
     }
 
-    //
-    Properties properties = this._propertiesMap.get(Thread.currentThread());
-    Object value = properties.get(name);
-
-    // if (name.startsWith("executeProjectSet")) {
-    // System.out.println(String.format("[%s] %s getPropertyHook(%s)", Thread.currentThread().hashCode(), value, name));
-    // System.out.println(String.format("[%s] %s", Thread.currentThread().hashCode(), properties));
-    // }
-
-    //
-    return value;
+    Properties properties = propertiesmap.get( Thread.currentThread() );
+    return  properties.get( name );
+    
   }
 
   /**
@@ -215,8 +158,8 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * </p>
    */
   public void dump() {
-    Properties properties = this._propertiesMap.get(Thread.currentThread());
-    System.out.println(String.format("[%s] %s", Thread.currentThread().hashCode(), properties));
+    Properties properties = propertiesmap.get( Thread.currentThread() );
+    System.out.println( String.format( "[%s] %s", Thread.currentThread().hashCode(), properties ) );
   }
 
   /**
@@ -226,7 +169,7 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @return
    */
   public Properties getThreadProperties() {
-    // System.out.println(hashCode() + " :::: " + this._propertiesMap);
-    return this._propertiesMap.get(Thread.currentThread());
+    return propertiesmap.get( Thread.currentThread() );
   }
-}
+  
+} /* ENDCLASS */

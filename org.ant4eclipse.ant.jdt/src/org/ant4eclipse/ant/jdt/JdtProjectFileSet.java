@@ -38,8 +38,8 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    */
   private List<Pattern> _excludePatterns      = new ArrayList<Pattern>();
 
-  public JdtProjectFileSet(Project project) {
-    super(project);
+  public JdtProjectFileSet( Project project ) {
+    super( project );
   }
 
   /**
@@ -47,8 +47,8 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * 
    * @param includeSourceFolders
    */
-  public void setIncludeSourceFolders(boolean includeSourceFolders) {
-    if (isReference()) {
+  public void setIncludeSourceFolders( boolean includeSourceFolders ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
     this._includeSourceFolders = includeSourceFolders;
@@ -63,8 +63,8 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * 
    * @param includeSourceFolders
    */
-  public void setIncludeOutputFolders(boolean includeOutputFolders) {
-    if (isReference()) {
+  public void setIncludeOutputFolders( boolean includeOutputFolders ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
     this._includeOutputFolders = includeOutputFolders;
@@ -81,15 +81,15 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param includes
    *          the string containing the include patterns
    */
-  public void setIncludes(String includes) {
-    if (isReference()) {
+  public void setIncludes( String includes ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
-    if (Utilities.hasText(includes)) {
-      StringTokenizer stringTokenizer = new StringTokenizer(includes, " ,", false);
-      while (stringTokenizer.hasMoreElements()) {
+    if( Utilities.hasText( includes ) ) {
+      StringTokenizer stringTokenizer = new StringTokenizer( includes, " ,", false );
+      while( stringTokenizer.hasMoreElements() ) {
         String include = stringTokenizer.nextToken();
-        createInclude().setName(include);
+        createInclude().setName( include );
       }
     }
   }
@@ -100,11 +100,11 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return
    */
   public Pattern createInclude() {
-    if (isReference()) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
     Pattern pattern = new Pattern();
-    this._includePatterns.add(pattern);
+    this._includePatterns.add( pattern );
     return pattern;
   }
 
@@ -114,11 +114,11 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return
    */
   public Pattern createExclude() {
-    if (isReference()) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
     Pattern pattern = new Pattern();
-    this._excludePatterns.add(pattern);
+    this._excludePatterns.add( pattern );
     return pattern;
   }
 
@@ -129,15 +129,15 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param excludes
    *          the string containing the exclude patterns
    */
-  public void setExcludes(String excludes) {
-    if (isReference()) {
+  public void setExcludes( String excludes ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
-    if (Utilities.hasText(excludes)) {
-      StringTokenizer stringTokenizer = new StringTokenizer(excludes, " ,", false);
-      while (stringTokenizer.hasMoreElements()) {
+    if( Utilities.hasText( excludes ) ) {
+      StringTokenizer stringTokenizer = new StringTokenizer( excludes, " ,", false );
+      while( stringTokenizer.hasMoreElements() ) {
         String exclude = stringTokenizer.nextToken();
-        createExclude().setName(exclude);
+        createExclude().setName( exclude );
       }
     }
   }
@@ -148,18 +148,18 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return
    */
   public String[] getAllExcludes() {
-    if (this._excludePatterns.isEmpty()) {
+    if( this._excludePatterns.isEmpty() ) {
       return null;
     }
 
     List<String> allExcludes = new ArrayList<String>();
-    for (Pattern pattern : this._excludePatterns) {
-      if (pattern.isValid()) {
-        allExcludes.add(pattern.getName());
+    for( Pattern pattern : this._excludePatterns ) {
+      if( pattern.isValid() ) {
+        allExcludes.add( pattern.getName() );
       }
     }
 
-    return allExcludes.toArray(new String[allExcludes.size()]);
+    return allExcludes.toArray( new String[allExcludes.size()] );
   }
 
   /**
@@ -168,43 +168,43 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return
    */
   public String[] getAllIncludes() {
-    if (this._includePatterns.isEmpty()) {
+    if( this._includePatterns.isEmpty() ) {
       return null;
     }
     List<String> allIncludes = new ArrayList<String>();
-    for (Pattern pattern : this._includePatterns) {
-      if (pattern.isValid()) {
-        allIncludes.add(pattern.getName());
+    for( Pattern pattern : this._includePatterns ) {
+      if( pattern.isValid() ) {
+        allIncludes.add( pattern.getName() );
       }
     }
-    return allIncludes.toArray(new String[allIncludes.size()]);
+    return allIncludes.toArray( new String[allIncludes.size()] );
   }
 
   @Override
-  protected void doComputeFileSet(List<Resource> resourceList) {
+  protected void doComputeFileSet( List<Resource> resourceList ) {
 
-    if (!(isIncludeSourceFolders() || isIncludeOutputFolders())) {
-      A4ELogging.warn("Neither output nor source folders are included in the fileset. FileSet will be empty");
+    if( !(isIncludeSourceFolders() || isIncludeOutputFolders()) ) {
+      A4ELogging.warn( "Neither output nor source folders are included in the fileset. FileSet will be empty" );
       return;
     }
 
-    JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
+    JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
 
     // include output folder contents
-    if (isIncludeOutputFolders()) {
-      A4ELogging.trace("Adding output folders to file set");
+    if( isIncludeOutputFolders() ) {
+      A4ELogging.trace( "Adding output folders to file set" );
       final String[] allOutputFolders = javaProjectRole.getAllOutputFolders();
-      for (String outputFolder : allOutputFolders) {
-        addFolderContent(resourceList, outputFolder);
+      for( String outputFolder : allOutputFolders ) {
+        addFolderContent( resourceList, outputFolder );
       }
     }
 
     // include source folder contents
-    if (isIncludeSourceFolders()) {
-      A4ELogging.trace("Adding source folders to file set");
+    if( isIncludeSourceFolders() ) {
+      A4ELogging.trace( "Adding source folders to file set" );
       final String[] sourceFolders = javaProjectRole.getSourceFolders();
-      for (String sourceFolder : sourceFolders) {
-        addFolderContent(resourceList, sourceFolder);
+      for( String sourceFolder : sourceFolders ) {
+        addFolderContent( resourceList, sourceFolder );
       }
     }
 
@@ -216,29 +216,29 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @param resourceList
    * @param folder
    */
-  protected void addFolderContent(List<Resource> resourceList, String folder) {
-    A4ELogging.trace("adding folder '%s' to resourceList", folder);
+  protected void addFolderContent( List<Resource> resourceList, String folder ) {
+    A4ELogging.trace( "adding folder '%s' to resourceList", folder );
 
-    if (!getEclipseProject().hasChild(folder)) {
-      A4ELogging.warn("Folder '%s' does not exists in project '%s' - ignored", folder, getEclipseProject()
-          .getSpecifiedName());
+    if( !getEclipseProject().hasChild( folder ) ) {
+      A4ELogging.warn( "Folder '%s' does not exists in project '%s' - ignored", folder, getEclipseProject()
+          .getSpecifiedName() );
       return;
     }
 
     // get the project child with the given name
-    File directory = getEclipseProject().getChild(folder);
-    if (!directory.isDirectory()) {
-      A4ELogging.warn("Folder '%s' in project '%s' is not a directory - ignored", directory, getEclipseProject()
-          .getSpecifiedName());
+    File directory = getEclipseProject().getChild( folder );
+    if( !directory.isDirectory() ) {
+      A4ELogging.warn( "Folder '%s' in project '%s' is not a directory - ignored", directory, getEclipseProject()
+          .getSpecifiedName() );
       return;
     }
 
     DirectoryScanner directoryScanner = new DirectoryScanner();
-    directoryScanner.setBasedir(directory);
-    directoryScanner.setCaseSensitive(isCaseSensitive());
-    directoryScanner.setIncludes(getAllIncludes());
-    directoryScanner.setExcludes(getAllExcludes());
-    if (getDefaultexcludes()) {
+    directoryScanner.setBasedir( directory );
+    directoryScanner.setCaseSensitive( isCaseSensitive() );
+    directoryScanner.setIncludes( getAllIncludes() );
+    directoryScanner.setExcludes( getAllExcludes() );
+    if( getDefaultexcludes() ) {
       directoryScanner.addDefaultExcludes();
     }
 
@@ -249,8 +249,8 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     String[] files = directoryScanner.getIncludedFiles();
 
     // add files to result resourceList
-    for (String fileName : files) {
-      resourceList.add(new FileResource(directory, fileName));
+    for( String fileName : files ) {
+      resourceList.add( new FileResource( directory, fileName ) );
     }
   }
 
@@ -272,8 +272,8 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
      * 
      * @param pattern
      */
-    public void setName(String pattern) {
-      Assure.notNull("pattern", pattern);
+    public void setName( String pattern ) {
+      Assure.notNull( "pattern", pattern );
       this._name = pattern;
     }
 
@@ -283,8 +283,9 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
      * @return
      */
     public boolean isValid() {
-      return Utilities.hasText(this._name);
+      return Utilities.hasText( this._name );
     }
 
   }
-}
+  
+} /* ENDCLASS */

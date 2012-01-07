@@ -40,4 +40,5 @@ public interface JdtClasspathContainerArgumentComponent extends DynamicAttribute
    * @return
    */
   List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
-}
+  
+} /* ENDINTERFACE */

@@ -41,10 +41,12 @@ public class RefreshTargetPlatformTask extends AbstractAnt4EclipseTask {
   protected void doExecute() {
 
     // get the target platform registry
-    TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService( TargetPlatformRegistry.class );
-    
+    TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance()
+        .getRequiredService( TargetPlatformRegistry.class );
+
     // refresh all target platforms
     targetPlatformRegistry.refreshAll();
 
   }
-}
+  
+} /* ENDCLASS */

@@ -34,7 +34,7 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    * {@inheritDoc}
    */
   @Override
-  public void configure(Project project) {
+  public void configure( Project project ) {
     this._project = project;
   }
 
@@ -42,13 +42,13 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    * {@inheritDoc}
    */
   @Override
-  public ClassPathVariable getClassPathVariable(String name) {
-    ClassPathVariable result = super.getClassPathVariable(name);
-    if ((result == null) && (this._project != null)) {
+  public ClassPathVariable getClassPathVariable( String name ) {
+    ClassPathVariable result = super.getClassPathVariable( name );
+    if( (result == null) && (this._project != null) ) {
       // fallback to ant
-      checkForVariable(name);
+      checkForVariable( name );
       // if it has not been registered, the variable wasn't available
-      result = super.getClassPathVariable(name);
+      result = super.getClassPathVariable( name );
     }
     return result;
   }
@@ -57,12 +57,12 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    * {@inheritDoc}
    */
   @Override
-  public boolean hasClassPathVariable(String name) {
-    boolean result = super.hasClassPathVariable(name);
-    if ((!result) && (this._project != null)) {
+  public boolean hasClassPathVariable( String name ) {
+    boolean result = super.hasClassPathVariable( name );
+    if( (!result) && (this._project != null) ) {
       // fallback to ant
-      checkForVariable(name);
-      result = Utilities.cleanup(this._project.getProperty(name)) != null;
+      checkForVariable( name );
+      result = Utilities.cleanup( this._project.getProperty( name ) ) != null;
     }
     return result;
   }
@@ -74,13 +74,13 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    * @param name
    *          The name of the potential variable.
    */
-  private void checkForVariable(String name) {
-    if (this._project != null) {
-      String value = Utilities.cleanup(this._project.getProperty(name));
-      if (value != null) {
-        File file = new File(value);
-        if (file.exists()) {
-          super.registerClassPathVariable(name, file);
+  private void checkForVariable( String name ) {
+    if( this._project != null ) {
+      String value = Utilities.cleanup( this._project.getProperty( name ) );
+      if( value != null ) {
+        File file = new File( value );
+        if( file.exists() ) {
+          super.registerClassPathVariable( name, file );
         }
       }
     }
@@ -91,7 +91,7 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    */
   @Override
   public Integer getPriority() {
-    return Integer.valueOf(-1);
+    return Integer.valueOf( -1 );
   }
 
 } /* ENDCLASS */

@@ -31,7 +31,7 @@ public class ExecuteJdtProjectTest extends AbstractJdtTest {
     super.setUp();
 
     // set up the build file
-    setupBuildFile("executeJdtProject.xml");
+    setupBuildFile( "executeJdtProject.xml" );
   }
 
   /**
@@ -40,45 +40,46 @@ public class ExecuteJdtProjectTest extends AbstractJdtTest {
    */
   public void testExecuteJdtProject() {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").createIn(getTestWorkspaceDirectory());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "project" ).createIn( getTestWorkspaceDirectory() );
 
     // set the properties
-    getProject().setProperty("projectName", "project");
+    getProject().setProperty( "projectName", "project" );
 
     // execute target
-    executeTarget("executeJdtProject_forEachSourceDirectory");
+    executeTarget( "executeJdtProject_forEachSourceDirectory" );
 
     // equals
-    String[] logEntries = getLog().split("!");
+    String[] logEntries = getLog().split( "!" );
 
-    assertEquals(9, logEntries.length);
+    assertEquals( 9, logEntries.length );
 
     // ${executeJdtProject.classpath.relative.runtime}
-    assertClasspath(logEntries[0], new File("project/bin"));
+    assertClasspath( logEntries[0], new File( "project/bin" ) );
 
     // ${executeJdtProject.classpath.absolute.runtime}
-    assertClasspath(logEntries[1], new File(getTestWorkspaceDirectory(), "project/bin"));
+    assertClasspath( logEntries[1], new File( getTestWorkspaceDirectory(), "project/bin" ) );
 
     // ${executeJdtProject.classpath.relative.compiletime}
-    assertClasspath(logEntries[2], new File("project/bin"));
+    assertClasspath( logEntries[2], new File( "project/bin" ) );
 
     // ${executeJdtProject.classpath.absolute.compiletime}
-    assertClasspath(logEntries[3], new File(getTestWorkspaceDirectory(), "project/bin"));
+    assertClasspath( logEntries[3], new File( getTestWorkspaceDirectory(), "project/bin" ) );
 
     // ${executeJdtProject.default.output.directory}
-    assertClasspath(logEntries[4], new File(getTestWorkspaceDirectory(), "project/bin"));
+    assertClasspath( logEntries[4], new File( getTestWorkspaceDirectory(), "project/bin" ) );
 
     // ${executeJdtProject.default.output.directory.name}
-    assertClasspath(logEntries[5], new File("bin"));
+    assertClasspath( logEntries[5], new File( "bin" ) );
 
     // ${executeJdtProject.source.directory}
-    assertClasspath(logEntries[6], new File(getTestWorkspaceDirectory(), "project/src"));
+    assertClasspath( logEntries[6], new File( getTestWorkspaceDirectory(), "project/src" ) );
 
     // ${executeJdtProject.output.directory}
-    assertClasspath(logEntries[7], new File(getTestWorkspaceDirectory(), "project/bin"));
+    assertClasspath( logEntries[7], new File( getTestWorkspaceDirectory(), "project/bin" ) );
 
     // ${executeJdtProject.boot.classpath}
     // How should we test this?
     // assertClasspath(logEntries[8], new File(getTestWorkspaceDirectory(), "project/bin"));
   }
-}
+  
+} /* ENDCLASS */

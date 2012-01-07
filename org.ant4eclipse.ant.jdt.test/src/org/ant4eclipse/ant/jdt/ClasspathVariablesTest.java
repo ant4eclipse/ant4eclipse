@@ -31,7 +31,7 @@ public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
     super.setUp();
 
     // set up the build file
-    setupBuildFile("classpathVariables.xml");
+    setupBuildFile( "classpathVariables.xml" );
   }
 
   /**
@@ -42,16 +42,16 @@ public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
    */
   public void testClasspathVariables() throws Exception {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("project").withVarClasspathEntry("BRUNO_WALTER")
-        .withVarClasspathEntry("VAR2/test").createIn(getTestWorkspaceDirectory());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "project" ).withVarClasspathEntry( "BRUNO_WALTER" )
+        .withVarClasspathEntry( "VAR2/test" ).createIn( getTestWorkspaceDirectory() );
 
     // set the properties
-    getProject().setProperty("projectName", "project");
+    getProject().setProperty( "projectName", "project" );
 
     // execute target
-    String classpath = executeTestTarget("project", true, true);
-    assertClasspath(classpath, new File("project/bin"), new File(getTestWorkspaceDirectory(), "bruno_walter"),
-        new File(getTestWorkspaceDirectory(), "var2/test"));
+    String classpath = executeTestTarget( "project", true, true );
+    assertClasspath( classpath, new File( "project/bin" ), new File( getTestWorkspaceDirectory(), "bruno_walter" ),
+        new File( getTestWorkspaceDirectory(), "var2/test" ) );
   }
 
-}
+} /* ENDCLASS */

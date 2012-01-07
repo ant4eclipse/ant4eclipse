@@ -62,7 +62,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * </p>
    */
   public ExecutePdeJunitLauncherTask() {
-    super("executePdeJunitLauncher");
+    super( "executePdeJunitLauncher" );
 
     // create the delegate
     this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
@@ -104,16 +104,16 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * {@inheritDoc}
    */
   @Override
-  public void setPlatformConfigurationId(String platformConfigurationId) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId(platformConfigurationId);
+  public void setPlatformConfigurationId( String platformConfigurationId ) {
+    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setTargetPlatformId(String targetPlatformId) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId(targetPlatformId);
+  public final void setTargetPlatformId( String targetPlatformId ) {
+    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -128,12 +128,12 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * {@inheritDoc}
    */
   @Override
-  protected void ensureSupportedLaunchConfiguration(LaunchConfiguration launchConfiguration) {
-    super.ensureSupportedLaunchConfiguration(launchConfiguration);
+  protected void ensureSupportedLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
+    super.ensureSupportedLaunchConfiguration( launchConfiguration );
 
     // makes sure the selected launch configuration is a PDE-Launch Configuration
-    if (!EquinoxLaunchConfigurationWrapper.isPdeJunitLaunchConfiguration(launchConfiguration)) {
-      throw new BuildException("The launch configuration you've specified must be a Equinox launch configuration");
+    if( !EquinoxLaunchConfigurationWrapper.isPdeJunitLaunchConfiguration( launchConfiguration ) ) {
+      throw new BuildException( "The launch configuration you've specified must be a Equinox launch configuration" );
     }
   }
 
@@ -152,61 +152,61 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * {@inheritDoc}
    */
   @Override
-  protected MacroExecutionValues provideDefaultMacroExecutionValues(MacroExecutionValues values) {
-    final MacroExecutionValues defaultValues = super.provideDefaultMacroExecutionValues(values);
+  protected MacroExecutionValues provideDefaultMacroExecutionValues( MacroExecutionValues values ) {
+    final MacroExecutionValues defaultValues = super.provideDefaultMacroExecutionValues( values );
 
     // add JRE-Location to scoped properties
     JavaRuntime javaRuntime = getJavaRuntime();
-    defaultValues.getProperties().put("jre.location", javaRuntime.getLocation().getAbsolutePath());
+    defaultValues.getProperties().put( "jre.location", javaRuntime.getLocation().getAbsolutePath() );
 
     StringMap jrtProperties = javaRuntime.getJavaProfile().getProperties();
-    defaultValues.getProperties().put("org.osgi.framework.system.packages",
-        jrtProperties.get("org.osgi.framework.system.packages"));
-    defaultValues.getProperties().put("org.osgi.framework.bootdelegation",
-        jrtProperties.get("org.osgi.framework.bootdelegation"));
-    defaultValues.getProperties().put("org.osgi.framework.executionenvironment",
-        jrtProperties.get("org.osgi.framework.executionenvironment"));
+    defaultValues.getProperties().put( "org.osgi.framework.system.packages",
+        jrtProperties.get( "org.osgi.framework.system.packages" ) );
+    defaultValues.getProperties().put( "org.osgi.framework.bootdelegation",
+        jrtProperties.get( "org.osgi.framework.bootdelegation" ) );
+    defaultValues.getProperties().put( "org.osgi.framework.executionenvironment",
+        jrtProperties.get( "org.osgi.framework.executionenvironment" ) );
 
     // compute the bundle information
     computeBundlesInfo();
-    defaultValues.getProperties().put("bundles.info", this._bundlesInfo.toString());
-    defaultValues.getProperties().put("osgi.bundles", this._osgiBundles.toString());
-    defaultValues.getProperties().put("dev.properties", this._devProperties.toString());
+    defaultValues.getProperties().put( "bundles.info", this._bundlesInfo.toString() );
+    defaultValues.getProperties().put( "osgi.bundles", this._osgiBundles.toString() );
+    defaultValues.getProperties().put( "dev.properties", this._devProperties.toString() );
 
     // set the osgi framework
-    BundleDescription osgiFramework = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace())
-        .getResolvedBundle("org.eclipse.osgi", null);
-    if (osgiFramework == null) {
-      throw new RuntimeException("Bundle 'org.eclipse.osgi' is missing.");
+    BundleDescription osgiFramework = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
+        .getResolvedBundle( "org.eclipse.osgi", null );
+    if( osgiFramework == null ) {
+      throw new RuntimeException( "Bundle 'org.eclipse.osgi' is missing." );
     }
-    defaultValues.getProperties().put("osgi.framework", osgiFramework.getLocation());
+    defaultValues.getProperties().put( "osgi.framework", osgiFramework.getLocation() );
 
     // set the test plug-in name and location
-    PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = getEclipseProject().getRole( PluginProjectRole.class );
     BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
-    bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace()).getResolvedBundle(
-        bundleDescription.getSymbolicName(), bundleDescription.getVersion());
-    BundleDescription bundleHost = BundleDependenciesResolver.getHost(bundleDescription);
+    bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+        bundleDescription.getSymbolicName(), bundleDescription.getVersion() );
+    BundleDescription bundleHost = BundleDependenciesResolver.getHost( bundleDescription );
 
-    defaultValues.getProperties().put("testplugin.bundlehost.name", bundleHost.getSymbolicName());
-    defaultValues.getProperties().put("testplugin.name", bundleDescription.getSymbolicName());
-    defaultValues.getProperties().put("testplugin.location", bundleDescription.getLocation());
+    defaultValues.getProperties().put( "testplugin.bundlehost.name", bundleHost.getSymbolicName() );
+    defaultValues.getProperties().put( "testplugin.name", bundleDescription.getSymbolicName() );
+    defaultValues.getProperties().put( "testplugin.location", bundleDescription.getLocation() );
 
     // find contained test classes
-    defaultValues.getProperties().put("test.classes",
-        new TestClassAnalyser(getEclipseProject()).getTestClassesAsString());
+    defaultValues.getProperties().put( "test.classes",
+        new TestClassAnalyser( getEclipseProject() ).getTestClassesAsString() );
 
     // compute the 'pde.test.utils' class path
     try {
-      BundleDescription b = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace()).getResolvedBundle(
-          "pde.test.utils", null);
+      BundleDescription b = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+          "pde.test.utils", null );
       StringBuilder collectorClassPath = new StringBuilder();
-      for (BundleDependency dependency : new BundleDependenciesResolver().resolveBundleClasspath(b)) {
-        buildClassPath(dependency.getHost(), collectorClassPath);
+      for( BundleDependency dependency : new BundleDependenciesResolver().resolveBundleClasspath( b ) ) {
+        buildClassPath( dependency.getHost(), collectorClassPath );
       }
-      buildClassPath(b, collectorClassPath);
-      defaultValues.getProperties().put("collectorCP", collectorClassPath.toString());
-    } catch (UnresolvedBundleException e) {
+      buildClassPath( b, collectorClassPath );
+      defaultValues.getProperties().put( "collectorCP", collectorClassPath.toString() );
+    } catch( UnresolvedBundleException e ) {
       e.printStackTrace();
     }
 
@@ -221,16 +221,16 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * @param bundleDescription
    * @param classpath
    */
-  private void buildClassPath(BundleDescription bundleDescription, StringBuilder classpath) {
+  private void buildClassPath( BundleDescription bundleDescription, StringBuilder classpath ) {
 
     // get the layout resolver
-    BundleLayoutResolver resolver = BundleDependenciesResolver.getBundleLayoutResolver(bundleDescription);
+    BundleLayoutResolver resolver = BundleDependenciesResolver.getBundleLayoutResolver( bundleDescription );
 
     // add all entries
     File[] entries = resolver.resolveBundleClasspathEntries();
-    for (File file : entries) {
-      classpath.append(file.getAbsolutePath());
-      classpath.append(File.pathSeparatorChar);
+    for( File file : entries ) {
+      classpath.append( file.getAbsolutePath() );
+      classpath.append( File.pathSeparatorChar );
     }
   }
 
@@ -244,26 +244,26 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     this._bundlesInfo = new StringBuilder();
     this._osgiBundles = new StringBuilder();
     this._devProperties = new StringBuilder();
-    this._devProperties.append("@ignoredot@=true\n");
+    this._devProperties.append( "@ignoredot@=true\n" );
 
     // compute contained bundles
-    computeBundles(getLaunchConfiguration().getAttribute("selected_workspace_plugins"), true);
-    computeBundles(getLaunchConfiguration().getAttribute("selected_target_plugins"), false);
+    computeBundles( getLaunchConfiguration().getAttribute( "selected_workspace_plugins" ), true );
+    computeBundles( getLaunchConfiguration().getAttribute( "selected_target_plugins" ), false );
 
     // add additional bundles
-    BundleDescription b = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace()).getResolvedBundle(
-        "org.eclipse.pde.junit.runtime", null);
-    handle(b.getSymbolicName(), "4", "false", false);
-    b = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace()).getResolvedBundle(
-        "org.eclipse.jdt.junit4.runtime", null);
-    handle(b.getSymbolicName(), "4", "false", false);
+    BundleDescription b = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+        "org.eclipse.pde.junit.runtime", null );
+    handle( b.getSymbolicName(), "4", "false", false );
+    b = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+        "org.eclipse.jdt.junit4.runtime", null );
+    handle( b.getSymbolicName(), "4", "false", false );
     try {
-      List<BundleDependency> dependencies = new BundleDependenciesResolver().resolveBundleClasspath(b);
-      for (BundleDependency bundleDependency : dependencies) {
+      List<BundleDependency> dependencies = new BundleDependenciesResolver().resolveBundleClasspath( b );
+      for( BundleDependency bundleDependency : dependencies ) {
         // TODO: fragments
-        handle(bundleDependency.getHost().getSymbolicName(), "4", "false", false);
+        handle( bundleDependency.getHost().getSymbolicName(), "4", "false", false );
       }
-    } catch (UnresolvedBundleException e) {
+    } catch( UnresolvedBundleException e ) {
       e.printStackTrace();
     }
   }
@@ -275,16 +275,16 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * @param bundleList
    * @param takeBundlesFromWorkspace
    */
-  private void computeBundles(String bundleList, boolean takeBundlesFromWorkspace) {
+  private void computeBundles( String bundleList, boolean takeBundlesFromWorkspace ) {
 
-    String[] workspacePlugins = bundleList.split(",");
+    String[] workspacePlugins = bundleList.split( "," );
 
-    for (String workspacePlugin : workspacePlugins) {
-      Pattern pattern = Pattern.compile("(.*)@(.*):(.*)");
-      Matcher matcher = pattern.matcher(workspacePlugin);
+    for( String workspacePlugin : workspacePlugins ) {
+      Pattern pattern = Pattern.compile( "(.*)@(.*):(.*)" );
+      Matcher matcher = pattern.matcher( workspacePlugin );
       matcher.matches();
 
-      handle(matcher.group(1), matcher.group(2), matcher.group(3), takeBundlesFromWorkspace);
+      handle( matcher.group( 1 ), matcher.group( 2 ), matcher.group( 3 ), takeBundlesFromWorkspace );
     }
   }
 
@@ -297,53 +297,54 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * @param autoStart
    * @param workspaceBundles
    */
-  private void handle(String symName, String startLevel, String autoStart, boolean workspaceBundles) {
+  private void handle( String symName, String startLevel, String autoStart, boolean workspaceBundles ) {
 
     //
-    if (symName.indexOf('*') != -1) {
-      symName = symName.split("\\*")[0];
+    if( symName.indexOf( '*' ) != -1 ) {
+      symName = symName.split( "\\*" )[0];
     }
 
     //
-    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace());
-    BundleDescription description = workspaceBundles ? targetPlatform.getBundleDescriptionFromWorkspace(symName)
-        : targetPlatform.getBundleDescriptionFromBinaryBundles(symName);
+    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
+    BundleDescription description = workspaceBundles ? targetPlatform.getBundleDescriptionFromWorkspace( symName )
+        : targetPlatform.getBundleDescriptionFromBinaryBundles( symName );
 
     //
-    if (description == null) {
-      A4ELogging.warn("Bundle '%s' does not exist!", symName);
+    if( description == null ) {
+      A4ELogging.warn( "Bundle '%s' does not exist!", symName );
       return;
     }
 
     //
-    if (description.getBundleId() != 0) {
+    if( description.getBundleId() != 0 ) {
 
       //
       BundleSource bundleSource = (BundleSource) description.getUserObject();
 
       //
-      if (bundleSource.isEclipseProject()) {
+      if( bundleSource.isEclipseProject() ) {
 
         //
-        JavaProjectRole javaProjectRole = bundleSource.getAsEclipseProject().getRole(JavaProjectRole.class);
-        PluginProjectRole pluginProjectRole = bundleSource.getAsEclipseProject().getRole(PluginProjectRole.class);
+        JavaProjectRole javaProjectRole = bundleSource.getAsEclipseProject().getRole( JavaProjectRole.class );
+        PluginProjectRole pluginProjectRole = bundleSource.getAsEclipseProject().getRole( PluginProjectRole.class );
 
         //
-        this._devProperties.append(pluginProjectRole.getBundleDescription().getSymbolicName());
-        this._devProperties.append("=");
-        this._devProperties.append(javaProjectRole.getDefaultOutputFolder());
-        this._devProperties.append("\n");
+        this._devProperties.append( pluginProjectRole.getBundleDescription().getSymbolicName() );
+        this._devProperties.append( "=" );
+        this._devProperties.append( javaProjectRole.getDefaultOutputFolder() );
+        this._devProperties.append( "\n" );
       }
 
-      this._bundlesInfo.append(String.format("%s,%s,file:/%s,4,%s\n", description.getSymbolicName(),
-          description.getVersion(), description.getLocation(), autoStart.equals("true")));
+      this._bundlesInfo.append( String.format( "%s,%s,file:/%s,4,%s\n", description.getSymbolicName(),
+          description.getVersion(), description.getLocation(), autoStart.equals( "true" ) ) );
 
-      this._osgiBundles.append(String.format("reference\\:file\\:%s", description.getLocation().replace("\\", "/")));
-      if (autoStart.equals("true")) {
-        this._osgiBundles.append("@start");
+      this._osgiBundles
+          .append( String.format( "reference\\:file\\:%s", description.getLocation().replace( "\\", "/" ) ) );
+      if( autoStart.equals( "true" ) ) {
+        this._osgiBundles.append( "@start" );
       }
 
-      this._osgiBundles.append(",");
+      this._osgiBundles.append( "," );
     }
   }
 
@@ -360,13 +361,13 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
 
     // get the vm path
-    String vmPath = getLaunchConfiguration().getAttribute("org.eclipse.jdt.launching.JRE_CONTAINER");
-    if (vmPath == null) {
+    String vmPath = getLaunchConfiguration().getAttribute( "org.eclipse.jdt.launching.JRE_CONTAINER" );
+    if( vmPath == null ) {
       return javaRuntimeRegistry.getDefaultJavaRuntime();
     }
 
     // return the runtime
-    return javaRuntimeRegistry.getJavaRuntimeForPath(vmPath);
+    return javaRuntimeRegistry.getJavaRuntimeForPath( vmPath );
   }
 
-}
+} /* ENDCLASS */

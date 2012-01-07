@@ -67,7 +67,7 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    */
   @Override
   public void tearDown() throws Exception {
-    if (this._echoLogfile != null) {
+    if( this._echoLogfile != null ) {
       this._echoLogfile.dispose();
       this._echoLogfile = null;
     }
@@ -85,14 +85,14 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    */
   protected void setupDefaultBuildFile() throws Exception {
     // set up the build file
-    setupBuildFile("buildWorkspace.xml");
+    setupBuildFile( "buildWorkspace.xml" );
   }
 
   protected EchoLogfile getEchoLogfile() throws Exception {
     // echo log points to a file that is used to echo all messages into that are compared
     // after test execution with expected values (instead of parsing the *whole* log output)
-    if (this._echoLogfile == null) {
-      this._echoLogfile = new EchoLogfile(this._echoLogfileName);
+    if( this._echoLogfile == null ) {
+      this._echoLogfile = new EchoLogfile( this._echoLogfileName );
     }
     return this._echoLogfile;
   }
@@ -104,11 +104,11 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    * @throws Exception
    */
   protected void setupDefaultProperties() throws Exception {
-    this._echoLogfileName = new File(getTestWorkspaceDirectory(), "echo.log").getAbsolutePath();
-    getProject().setProperty("echolog", this._echoLogfileName);
-    getProject().setProperty("workspace", getTestWorkspaceDirectory().getAbsolutePath());
-    getProject().setProperty("targetplatform.1", getTargetPlatformDirectory().getAbsolutePath());
-    getProject().setProperty("targetplatform.2", getAdditionalTargetPlatformPath());
+    this._echoLogfileName = new File( getTestWorkspaceDirectory(), "echo.log" ).getAbsolutePath();
+    getProject().setProperty( "echolog", this._echoLogfileName );
+    getProject().setProperty( "workspace", getTestWorkspaceDirectory().getAbsolutePath() );
+    getProject().setProperty( "targetplatform.1", getTargetPlatformDirectory().getAbsolutePath() );
+    getProject().setProperty( "targetplatform.2", getAdditionalTargetPlatformPath() );
   }
 
   /**
@@ -117,23 +117,23 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    * 
    * @return
    */
-  protected String getTargetPlatformPath(String environmentVariable) {
+  protected String getTargetPlatformPath( String environmentVariable ) {
 
     // get the environment variable
-    String targetPlatformPath = System.getenv(environmentVariable);
+    String targetPlatformPath = System.getenv( environmentVariable );
 
     // get the system variable
-    if (!Utilities.hasText(targetPlatformPath)) {
-      targetPlatformPath = System.getProperty(environmentVariable);
+    if( !Utilities.hasText( targetPlatformPath ) ) {
+      targetPlatformPath = System.getProperty( environmentVariable );
     }
 
     // throw exception
-    if (!Utilities.hasText(targetPlatformPath)) {
+    if( !Utilities.hasText( targetPlatformPath ) ) {
       throw new RuntimeException(
           String
               .format(
                   "To execute a PDE build file test, you have to specify an environment or a system variable '%s' that points to an Eclipse IDE for Java Developers 3.5.0 Windows (http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/galileo/R/eclipse-java-galileo-win32.zip).",
-                  environmentVariable));
+                  environmentVariable ) );
     }
 
     // return the path
@@ -141,11 +141,11 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   }
 
   protected File getTargetPlatformDirectory() {
-    return new File(getTargetPlatformPath(ECLIPSE_SDK_35_WIN32));
+    return new File( getTargetPlatformPath( ECLIPSE_SDK_35_WIN32 ) );
   }
 
   protected String getAdditionalTargetPlatformPath() {
-    String tmpDir = System.getProperty("java.io.tmpdir");
+    String tmpDir = System.getProperty( "java.io.tmpdir" );
     return tmpDir + File.separator + "ant4eclipse.second.targetplatform";
   }
 
@@ -158,8 +158,8 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   }
 
   protected void createAdditionalTargetPlatformDirectory() {
-    this._additionalTargetPlatformDirectory = new File(getAdditionalTargetPlatformPath());
-    if (!this._additionalTargetPlatformDirectory.exists()) {
+    this._additionalTargetPlatformDirectory = new File( getAdditionalTargetPlatformPath() );
+    if( !this._additionalTargetPlatformDirectory.exists() ) {
       this._additionalTargetPlatformDirectory.mkdirs();
     }
   }
@@ -167,17 +167,18 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   protected void disposeAdditionalTargetPlatformDirectory() {
     File dir = getAdditionalTargetPlatformDirectory();
     try {
-      if (dir != null) {
-        System.out.println("Remove second.targetplatform directory: " + dir);
+      if( dir != null ) {
+        System.out.println( "Remove second.targetplatform directory: " + dir );
 
-        if (!Utilities.delete(dir)) {
-          throw new RuntimeException(String.format("Failed to delete directory '%s'.", dir));
+        if( !Utilities.delete( dir ) ) {
+          throw new RuntimeException( String.format( "Failed to delete directory '%s'.", dir ) );
         }
         dir = null;
       }
-    } catch (Exception ex) {
-      System.err.println("WARN! Could not remove second.targetplatform directory " + dir + ": " + ex);
+    } catch( Exception ex ) {
+      System.err.println( "WARN! Could not remove second.targetplatform directory " + dir + ": " + ex );
       ex.printStackTrace();
     }
   }
-}
+  
+} /* ENDCLASS */

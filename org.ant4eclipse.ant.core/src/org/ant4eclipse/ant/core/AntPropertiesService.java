@@ -20,29 +20,35 @@ import org.apache.tools.ant.Project;
  */
 public class AntPropertiesService extends SystemPropertiesService implements AntService {
 
-  private Project _project;
+  private Project   project;
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void configure(Project project) {
-    this._project = project;
+  public void configure( Project newproject ) {
+    project = newproject;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public String getProperty(String propertyName) {
-    String value = getAntProperty(propertyName);
-    return value != null ? value : super.getProperty(propertyName);
+  public String getProperty( String propertyname ) {
+    String value = getAntProperty( propertyname );
+    return value != null ? value : super.getProperty( propertyname );
   }
 
-  protected String getAntProperty(String propertyName) {
-    return this._project != null ? Utilities.cleanup(this._project.getProperty(propertyName)) : null;
+  protected String getAntProperty( String propertyname ) {
+    return project != null ? Utilities.cleanup( project.getProperty( propertyname ) ) : null;
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
   public Integer getPriority() {
-    return Integer.valueOf(-2);
+    return Integer.valueOf( -2 );
   }
-  
+
 } /* ENDCLASS */

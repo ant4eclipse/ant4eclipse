@@ -44,17 +44,17 @@ public class TestClassAnalyser {
    * @param eclipseProject
    *          the eclipse project to test.
    */
-  public TestClassAnalyser(EclipseProject eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
+  public TestClassAnalyser( EclipseProject eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
 
     //
     this._eclipseProject = eclipseProject;
 
-    ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath(this._eclipseProject, false, false,
-        new ArrayList<JdtClasspathContainerArgument>());
+    ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath( this._eclipseProject, false, false,
+        new ArrayList<JdtClasspathContainerArgument>() );
 
-    this._fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(this._eclipseProject.getFolder(),
-        EcjAdapter.PROJECT, classpath.getClasspathFiles(), new File[0]);
+    this._fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( this._eclipseProject.getFolder(),
+        EcjAdapter.PROJECT, classpath.getClasspathFiles(), new File[0] );
   }
 
   /**
@@ -73,16 +73,16 @@ public class TestClassAnalyser {
     Set<String> testClasses = getTestClasses();
 
     //
-    if (testClasses.isEmpty()) {
-      throw new RuntimeException(String.format("Project '%s' does not contain any test classes!",
-          this._eclipseProject.getSpecifiedName()));
+    if( testClasses.isEmpty() ) {
+      throw new RuntimeException( String.format( "Project '%s' does not contain any test classes!",
+          this._eclipseProject.getSpecifiedName() ) );
     }
 
     // iterate over all the
-    for (Iterator<String> iterator = testClasses.iterator(); iterator.hasNext();) {
-      builder.append(iterator.next());
-      if (iterator.hasNext()) {
-        builder.append("\n");
+    for( Iterator<String> iterator = testClasses.iterator(); iterator.hasNext(); ) {
+      builder.append( iterator.next() );
+      if( iterator.hasNext() ) {
+        builder.append( "\n" );
       }
     }
 
@@ -103,24 +103,24 @@ public class TestClassAnalyser {
     Set<String> result = new HashSet<String>();
 
     // get the java projetc role
-    JavaProjectRole javaProjectRole = this._eclipseProject.getRole(JavaProjectRole.class);
+    JavaProjectRole javaProjectRole = this._eclipseProject.getRole( JavaProjectRole.class );
 
     // iterate over all the output folder names
-    for (String outputFolderName : javaProjectRole.getAllOutputFolders()) {
+    for( String outputFolderName : javaProjectRole.getAllOutputFolders() ) {
 
       // get the output folder
-      File outputFolder = this._eclipseProject.getChild(outputFolderName);
+      File outputFolder = this._eclipseProject.getChild( outputFolderName );
 
       // iterate over all contained children
-      for (File file : Utilities.getAllChildren(outputFolder)) {
+      for( File file : Utilities.getAllChildren( outputFolder ) ) {
 
         // scan the class files
         try {
-          String className = scanClass(file);
-          if (className != null) {
-            result.add(className);
+          String className = scanClass( file );
+          if( className != null ) {
+            result.add( className );
           }
-        } catch (Exception e) {
+        } catch( Exception e ) {
           e.printStackTrace();
         }
       }
@@ -140,27 +140,27 @@ public class TestClassAnalyser {
    * @throws FileNotFoundException
    * @throws IOException
    */
-  private String scanClass(File classFile) throws FileNotFoundException, IOException {
+  private String scanClass( File classFile ) throws FileNotFoundException, IOException {
 
     // return if file is no class file
-    if (!classFile.getName().endsWith(".class")) {
+    if( !classFile.getName().endsWith( ".class" ) ) {
       return null;
     }
 
     // return if file is an inner type
-    if (classFile.getName().contains("$")) {
+    if( classFile.getName().contains( "$" ) ) {
       return null;
     }
 
     // scan the file
     JUnitVisitor classVisitor = new JUnitVisitor();
-    new ClassReader(new FileInputStream(classFile)).accept(classVisitor, 0);
+    new ClassReader( new FileInputStream( classFile ) ).accept( classVisitor, 0 );
 
     boolean isTestClass = classVisitor.isTestClass();
 
-    if (!isTestClass) {
+    if( !isTestClass ) {
       String superClass = classVisitor.getSuperClassName();
-      isTestClass = scanSuperClasses(superClass);
+      isTestClass = scanSuperClasses( superClass );
     }
 
     // return the result
@@ -174,24 +174,25 @@ public class TestClassAnalyser {
    * @param className
    * @return
    */
-  private boolean scanSuperClasses(String className) {
+  private boolean scanSuperClasses( String className ) {
 
-    if (className == null || className.equals("java.lang.Object")) {
+    if( className == null || className.equals( "java.lang.Object" ) ) {
       return false;
     }
 
-    ClassFile superClassFile = this._fileLoader.loadClass(ClassName.fromQualifiedClassName(className));
+    ClassFile superClassFile = this._fileLoader.loadClass( ClassName.fromQualifiedClassName( className ) );
 
     JUnitVisitor classVisitor = new JUnitVisitor();
-    new ClassReader(superClassFile.getBytes()).accept(classVisitor, 0);
+    new ClassReader( superClassFile.getBytes() ).accept( classVisitor, 0 );
 
     boolean isTestClass = classVisitor.hasTestAnnotations();
 
-    if (!isTestClass) {
+    if( !isTestClass ) {
       String superClass = classVisitor.getSuperClassName();
-      isTestClass = scanSuperClasses(superClass);
+      isTestClass = scanSuperClasses( superClass );
     }
 
     return isTestClass;
   }
-}
+  
+} /* ENDCLASS */

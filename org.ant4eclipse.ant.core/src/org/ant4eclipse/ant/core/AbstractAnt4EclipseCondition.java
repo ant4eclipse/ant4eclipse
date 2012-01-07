@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -33,17 +32,18 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
    */
   @Override
   public final boolean eval() throws BuildException {
+    
     // Validates the Ant4EclipseDataTypes
     AbstractAnt4EclipseDataType.validateAll();
 
     // configure ant4eclipse
-    configureA4E(getProject());
+    configureA4E( getProject() );
 
     // delegate the implementation
     try {
       return doEval();
-    } catch (Exception ex) {
-      throw new BuildException(ex.toString(), ex);
+    } catch( Exception ex ) {
+      throw new BuildException( ex.toString(), ex );
     }
   }
 
@@ -55,11 +55,11 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
    * @param project
    *          the ant project
    */
-  private void configureA4E(Project project) {
+  private void configureA4E( Project project ) {
     // set ant4eclipse property helper
-    PropertyHelper.getPropertyHelper(project).setNext(new ThreadDispatchingPropertyHelper(project));
+    PropertyHelper.getPropertyHelper( project ).setNext( new ThreadDispatchingPropertyHelper( project ) );
     Ant4EclipseLogger logger = new AntBasedLogger();
-    project.addBuildListener(new ProjectBuildListener(logger));
+    project.addBuildListener( new ProjectBuildListener( logger ) );
   }
 
   /**
@@ -72,4 +72,5 @@ public abstract class AbstractAnt4EclipseCondition extends ProjectComponent impl
    * @see Task#execute()
    */
   protected abstract boolean doEval();
-}
+  
+} /* ENDCLASS */

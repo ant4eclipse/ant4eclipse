@@ -36,7 +36,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
 
   /** - */
-  private boolean                               _initialized               = false;
+  private boolean                               _initialized = false;
 
   /**
    * <p>
@@ -44,27 +44,27 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
    * </p>
    * 
    */
-  public JdtClasspathContainerArgumentContribution(ProjectComponent projectComponent) {
+  public JdtClasspathContainerArgumentContribution( ProjectComponent projectComponent ) {
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean canHandleSubElement(String name, ProjectComponent component) {
-    init(component);
+  public boolean canHandleSubElement( String name, ProjectComponent component ) {
+    init( component );
     // TODO? Class? component?
-    return "jdtClasspathContainerArgument".equalsIgnoreCase(name);
+    return "jdtClasspathContainerArgument".equalsIgnoreCase( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Deprecated
-  public Object createSubElement(String name, ProjectComponent component) throws BuildException {
-    init(component);
+  public Object createSubElement( String name, ProjectComponent component ) throws BuildException {
+    init( component );
     return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
@@ -73,14 +73,14 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
    * Loads the configured subElementContributors.
    * </p>
    */
-  private void init(ProjectComponent component) {
+  private void init( ProjectComponent component ) {
 
     // Return if already initialized
-    if (this._initialized) {
+    if( this._initialized ) {
       return;
     }
 
-    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate(component);
+    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( component );
 
     // set initialized
     this._initialized = true;
@@ -100,5 +100,5 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */
