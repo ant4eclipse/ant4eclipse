@@ -22,8 +22,6 @@ public abstract class AbstractJdtClassPathTest extends AbstractJdtTest {
   @Override
   public void setUp() throws Exception {
     super.setUp();
-
-    // set up the build file
     setupBuildFile("getJdtClassPath.xml");
   }
 
