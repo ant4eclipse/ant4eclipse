@@ -14,7 +14,7 @@ package org.ant4eclipse.lib.pydt.model.project;
 import org.ant4eclipse.lib.pydt.internal.model.project.PythonProjectRole;
 
 /**
- * DLTKProjectRole -- Python project role for the eclipse dltk framework.
+ * Python project role for the eclipse dltk framework.
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
