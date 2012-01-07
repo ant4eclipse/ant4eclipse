@@ -230,9 +230,9 @@ public class PythonResolver {
    * @return A list of raw path entries. Not <code>null</code>.
    */
   private List<RawPathEntry> loadEntries( EclipseProject project ) {
-    List<RawPathEntry> result = new ArrayList<RawPathEntry>();
-    PythonProjectRole role = project.getRole( PythonProjectRole.class );
-    RawPathEntry[] entries = role.getRawPathEntries();
+    List<RawPathEntry>  result  = new ArrayList<RawPathEntry>();
+    PythonProjectRole   role    = project.getRole( PythonProjectRole.class );
+    List<RawPathEntry>  entries = role.getRawPathEntries();
     for( RawPathEntry entry : entries ) {
       if( entry.getKind() == ReferenceKind.Runtime ) {
         if( _ignoreruntimes ) {

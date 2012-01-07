@@ -16,6 +16,8 @@ import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.ant4eclipse.lib.pydt.model.RawPathEntry;
 import org.ant4eclipse.lib.pydt.model.ReferenceKind;
 
+import java.util.List;
+
 /**
  * Declaration of functionalities used to access python related information of a project.
  * 
@@ -28,7 +30,7 @@ public interface PythonProjectRole extends ProjectRole {
    * 
    * @return A list of all raw path entries. Not <code>null</code>.
    */
-  RawPathEntry[] getRawPathEntries();
+  List<RawPathEntry> getRawPathEntries();
 
   /**
    * Returns a list of all raw path entries associated with the current project.
@@ -38,7 +40,7 @@ public interface PythonProjectRole extends ProjectRole {
    * 
    * @return A list of all raw path entries. Not <code>null</code>.
    */
-  RawPathEntry[] getRawPathEntries( ReferenceKind kind );
+  List<RawPathEntry> getRawPathEntries( ReferenceKind kind );
 
   /**
    * Returns <code>true</code> if the Python DLTK framework for python has been used. This is just a small if it's

@@ -32,9 +32,8 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
 
   public static final String NAME = "PythonProjectRole";
 
-  private List<RawPathEntry> _rawpathentries;
-
-  private boolean            _isdltk;
+  private List<RawPathEntry>  rawpathentries;
+  private boolean             isdltk;
 
   /**
    * <p>
@@ -46,8 +45,8 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    */
   public PythonProjectRoleImpl( EclipseProject eclipseProject, boolean dltk ) {
     super( NAME, eclipseProject );
-    _rawpathentries = new ArrayList<RawPathEntry>();
-    _isdltk = dltk;
+    rawpathentries  = new ArrayList<RawPathEntry>();
+    isdltk          = dltk;
   }
 
   /**
@@ -55,7 +54,7 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    */
   @Override
   public boolean isDLTK() {
-    return _isdltk;
+    return isdltk;
   }
 
   /**
@@ -65,38 +64,29 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    *          The raw path information associated with the current eclipse project.
    */
   public void addRawPathEntry( RawPathEntry rawpathentry ) {
-    _rawpathentries.add( rawpathentry );
-  }
-
-  /**
-   * Removes the supplied raw (unresolved) path entry from this role implementation.
-   * 
-   * @param entry
-   */
-  public void removeRawPathEntry( RawPathEntry entry ) {
-    _rawpathentries.remove( entry );
+    rawpathentries.add( rawpathentry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public RawPathEntry[] getRawPathEntries() {
-    return _rawpathentries.toArray( new RawPathEntry[_rawpathentries.size()] );
+  public List<RawPathEntry> getRawPathEntries() {
+    return rawpathentries;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public RawPathEntry[] getRawPathEntries( ReferenceKind kind ) {
+  public List<RawPathEntry> getRawPathEntries( ReferenceKind kind ) {
     List<RawPathEntry> result = new ArrayList<RawPathEntry>();
-    for( RawPathEntry entry : _rawpathentries ) {
+    for( RawPathEntry entry : rawpathentries ) {
       if( kind == entry.getKind() ) {
         result.add( entry );
       }
     }
-    return result.toArray( new RawPathEntry[result.size()] );
+    return result;
   }
 
   /**
@@ -109,13 +99,13 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
     buffer.append( " NAME: " );
     buffer.append( NAME );
     buffer.append( ", _isdltk: " );
-    buffer.append( _isdltk );
+    buffer.append( isdltk );
     buffer.append( ", _rawpathentries; {" );
-    if( !_rawpathentries.isEmpty() ) {
-      buffer.append( _rawpathentries.get( 0 ) );
-      for( int i = 1; i < _rawpathentries.size(); i++ ) {
+    if( !rawpathentries.isEmpty() ) {
+      buffer.append( rawpathentries.get( 0 ) );
+      for( int i = 1; i < rawpathentries.size(); i++ ) {
         buffer.append( "," );
-        buffer.append( _rawpathentries.get( i ) );
+        buffer.append( rawpathentries.get( i ) );
       }
     }
     buffer.append( "}" );
@@ -129,10 +119,10 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    for( int i = 0; i < _rawpathentries.size(); i++ ) {
-      result = result * 31 + _rawpathentries.get( i ).hashCode();
+    for( int i = 0; i < rawpathentries.size(); i++ ) {
+      result = result * 31 + rawpathentries.get( i ).hashCode();
     }
-    result = result * 31 + (_isdltk ? 1 : 0);
+    result = result * 31 + (isdltk ? 1 : 0);
     return result;
   }
 
@@ -154,14 +144,14 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
       return false;
     }
     PythonProjectRoleImpl other = (PythonProjectRoleImpl) object;
-    if( _isdltk != other._isdltk ) {
+    if( isdltk != other.isdltk ) {
       return false;
     }
-    if( _rawpathentries.size() != other._rawpathentries.size() ) {
+    if( rawpathentries.size() != other.rawpathentries.size() ) {
       return false;
     }
-    for( int i = 0; i < _rawpathentries.size(); i++ ) {
-      if( !_rawpathentries.get( i ).equals( other._rawpathentries.get( i ) ) ) {
+    for( int i = 0; i < rawpathentries.size(); i++ ) {
+      if( !rawpathentries.get( i ).equals( other.rawpathentries.get( i ) ) ) {
         return false;
       }
     }
