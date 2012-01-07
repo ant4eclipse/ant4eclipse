@@ -81,8 +81,8 @@ public class ConditionalMacroDef extends MacroDef {
    *          The default value that is returned when the attribute is not set
    * @return The attribute value or defaultValue
    */
-  public String getAttribute(String name, String defaultValue) {
-    return this._conditionalNestedSequential.getAttribute(name, defaultValue);
+  public String getAttribute( String name, String defaultValue ) {
+    return this._conditionalNestedSequential.getAttribute( name, defaultValue );
   }
 
   /**
@@ -93,24 +93,24 @@ public class ConditionalMacroDef extends MacroDef {
     try {
 
       // object rape - access the nestedSequential field...
-      Field field = MacroDef.class.getDeclaredField("nestedSequential");
-      field.setAccessible(true);
+      Field field = MacroDef.class.getDeclaredField( "nestedSequential" );
+      field.setAccessible( true );
 
       // copied from the original createSequential method
-      if (field.get(this) != null) {
-        throw new BuildException("Only one sequential allowed");
+      if( field.get( this ) != null ) {
+        throw new BuildException( "Only one sequential allowed" );
       }
 
       // set the conditional nested sequential
-      this._conditionalNestedSequential = new ConditionalNestedSequential(this);
-      field.set(this, this._conditionalNestedSequential);
+      this._conditionalNestedSequential = new ConditionalNestedSequential( this );
+      field.set( this, this._conditionalNestedSequential );
 
       // return the result
       return this._conditionalNestedSequential;
-    } catch (Throwable e) {
+    } catch( Throwable e ) {
       // what should be do now!?
       e.printStackTrace();
-      throw new BuildException("Internal Ant4Eclipse error...");
+      throw new BuildException( "Internal Ant4Eclipse error..." );
     }
   }
 
@@ -144,8 +144,8 @@ public class ConditionalMacroDef extends MacroDef {
      * 
      * @param conditionalMacroDef
      */
-    public ConditionalNestedSequential(ConditionalMacroDef conditionalMacroDef) {
-      Assure.notNull("conditionalMacroDef", conditionalMacroDef);
+    public ConditionalNestedSequential( ConditionalMacroDef conditionalMacroDef ) {
+      Assure.notNull( "conditionalMacroDef", conditionalMacroDef );
 
       this._conditionalMacroDef = conditionalMacroDef;
     }
@@ -169,49 +169,49 @@ public class ConditionalMacroDef extends MacroDef {
      * @param filter
      *          the filter expression.
      */
-    @SuppressWarnings("unchecked")
-    public void setFilter(String filter) {
+    @SuppressWarnings( "unchecked" )
+    public void setFilter( String filter ) {
 
       // try to parse the filter
       try {
-        new LdapFilter(new HashMap<String, String>(), new StringReader(filter)).validate();
+        new LdapFilter( new HashMap<String,String>(), new StringReader( filter ) ).validate();
       }
       // in case of an exception we have create an useful BuildException
-      catch (ParseException e) {
+      catch( ParseException e ) {
         try {
 
-          if (A4ELogging.isDebuggingEnabled()) {
-            A4ELogging.debug("Exception while parsing filter string '%s'.", filter);
+          if( A4ELogging.isDebuggingEnabled() ) {
+            A4ELogging.debug( "Exception while parsing filter string '%s'.", filter );
           }
 
           // get the current UnknownElement
           UnknownElement element = (UnknownElement) this._conditionalMacroDef.getProject().getThreadTask(
-              Thread.currentThread());
+              Thread.currentThread() );
 
-          if (A4ELogging.isDebuggingEnabled()) {
-            A4ELogging.debug("Current UnknownElement is '%s'.", element);
+          if( A4ELogging.isDebuggingEnabled() ) {
+            A4ELogging.debug( "Current UnknownElement is '%s'.", element );
           }
 
           // search for the unknown element that causes the problem
-          for (UnknownElement unknownElement : (List<UnknownElement>) element.getChildren()) {
-            if (equals(unknownElement.getWrapper().getProxy())) {
-              throw new BuildException("Invalid filter '" + filter + "'.", unknownElement.getLocation());
+          for( UnknownElement unknownElement : (List<UnknownElement>) element.getChildren() ) {
+            if( equals( unknownElement.getWrapper().getProxy() ) ) {
+              throw new BuildException( "Invalid filter '" + filter + "'.", unknownElement.getLocation() );
             }
           }
 
           // no element found -> throw simple BuildException
-          throw new BuildException("Invalid filter '" + filter + "'.");
-        } catch (BuildException exception) {
+          throw new BuildException( "Invalid filter '" + filter + "'." );
+        } catch( BuildException exception ) {
           throw exception;
-        } catch (Exception exception) {
-          // 
-          if (A4ELogging.isDebuggingEnabled()) {
-            A4ELogging
-                .debug("Exception while computing the line number for an exception: '%s'", exception.getMessage());
+        } catch( Exception exception ) {
+          //
+          if( A4ELogging.isDebuggingEnabled() ) {
+            A4ELogging.debug( "Exception while computing the line number for an exception: '%s'",
+                exception.getMessage() );
           }
 
           // no element found -> throw simple BuildException
-          throw new BuildException("Invalid filter '" + filter + "'.");
+          throw new BuildException( "Invalid filter '" + filter + "'." );
         }
       }
 
@@ -238,7 +238,7 @@ public class ConditionalMacroDef extends MacroDef {
      * @param aIf
      *          the 'if' condition.
      */
-    public void setIf(boolean aIf) {
+    public void setIf( boolean aIf ) {
       this._if = aIf;
     }
 
@@ -261,7 +261,7 @@ public class ConditionalMacroDef extends MacroDef {
      * @param the
      *          'unless' condition.
      */
-    public void setUnless(boolean unless) {
+    public void setUnless( boolean unless ) {
       this._unless = unless;
     }
 
@@ -272,8 +272,8 @@ public class ConditionalMacroDef extends MacroDef {
      * 
      */
     @Override
-    public void setDynamicAttribute(String name, String value) throws BuildException {
-      this._attributes.put(name, value);
+    public void setDynamicAttribute( String name, String value ) throws BuildException {
+      this._attributes.put( name, value );
     }
 
     /**
@@ -285,8 +285,10 @@ public class ConditionalMacroDef extends MacroDef {
      *          the default value
      * @return the attribute value or defaultValie
      */
-    public String getAttribute(String name, String defaultValue) {
-      return this._attributes.get(name, defaultValue);
+    public String getAttribute( String name, String defaultValue ) {
+      return this._attributes.get( name, defaultValue );
     }
-  }
-}
+    
+  } /* ENDCLASS */
+  
+} /* ENDCLASS */

@@ -22,7 +22,7 @@ public class PythonPathPyDevTest extends AbstractPythonPathTest {
    * Initialises this set of tests.
    */
   public PythonPathPyDevTest() {
-    super(false);
+    super( false );
   }
 
 } /* ENDCLASS */

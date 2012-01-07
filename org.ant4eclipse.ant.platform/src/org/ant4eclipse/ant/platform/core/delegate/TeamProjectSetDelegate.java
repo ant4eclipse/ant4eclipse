@@ -43,8 +43,8 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    * 
    * @param component
    */
-  public TeamProjectSetDelegate(ProjectComponent component) {
-    super(component);
+  public TeamProjectSetDelegate( ProjectComponent component ) {
+    super( component );
   }
 
   /**
@@ -52,7 +52,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    */
   @Override
   public final TeamProjectSet getTeamProjectSet() {
-    if (this._teamProjectSet == null) {
+    if( this._teamProjectSet == null ) {
       this._teamProjectSet = readTeamProjectSet();
     }
 
@@ -63,7 +63,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    * {@inheritDoc}
    */
   @Override
-  public final void setTeamProjectSet(File projectSet) {
+  public final void setTeamProjectSet( File projectSet ) {
     this._teamProjectSetFile = projectSet;
   }
 
@@ -80,8 +80,8 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    */
   @Override
   public final void requireTeamProjectSetSet() {
-    if (!isTeamProjectSetSet()) {
-      throw new BuildException("projectSet has to be set!");
+    if( !isTeamProjectSetSet() ) {
+      throw new BuildException( "projectSet has to be set!" );
     }
   }
 
@@ -100,4 +100,5 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
     TeamProjectSetFileParser parser = A4ECore.instance().getRequiredService( TeamProjectSetFileParser.class );
     return parser.parseTeamProjectSetFile( _teamProjectSetFile );
   }
-}
+  
+} /* ENDCLASS */

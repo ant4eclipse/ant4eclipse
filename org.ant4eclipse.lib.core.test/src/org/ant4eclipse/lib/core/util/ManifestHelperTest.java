@@ -22,13 +22,13 @@ public class ManifestHelperTest {
   @Test
   public void testManifestHelper() {
     Manifest manifest = new Manifest();
-    manifest.getMainAttributes().putValue(ManifestHelper.BUNDLE_SYMBOLICNAME, "org.bruni;singleton:=true");
-    ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
-        ManifestHelper.BUNDLE_SYMBOLICNAME);
-    Assert.assertNotNull(elements);
-    Assert.assertEquals(elements.length, 1);
-    Assert.assertEquals(elements[0].getValues().length, 1);
-    Assert.assertEquals(elements[0].getValues()[0], "org.bruni");
+    manifest.getMainAttributes().putValue( ManifestHelper.BUNDLE_SYMBOLICNAME, "org.bruni;singleton:=true" );
+    ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements( manifest,
+        ManifestHelper.BUNDLE_SYMBOLICNAME );
+    Assert.assertNotNull( elements );
+    Assert.assertEquals( elements.length, 1 );
+    Assert.assertEquals( elements[0].getValues().length, 1 );
+    Assert.assertEquals( elements[0].getValues()[0], "org.bruni" );
   }
 
 } /* ENDCLASS */

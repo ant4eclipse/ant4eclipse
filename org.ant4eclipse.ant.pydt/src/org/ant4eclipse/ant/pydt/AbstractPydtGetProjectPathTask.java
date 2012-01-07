@@ -32,8 +32,8 @@ abstract class AbstractPydtGetProjectPathTask extends AbstractGetProjectPathTask
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (!PythonUtilities.isPythonRelatedProject(getEclipseProject())) {
-      throw new Ant4EclipseException(PydtExceptionCode.MISSING_PYTHON_ROLE, getEclipseProject().getSpecifiedName());
+    if( !PythonUtilities.isPythonRelatedProject( getEclipseProject() ) ) {
+      throw new Ant4EclipseException( PydtExceptionCode.MISSING_PYTHON_ROLE, getEclipseProject().getSpecifiedName() );
     }
   }
 
@@ -43,7 +43,7 @@ abstract class AbstractPydtGetProjectPathTask extends AbstractGetProjectPathTask
    * @return The PathStyle to be used for the path calculations.
    */
   protected EclipseProject.PathStyle getPathStyle() {
-    if (isRelative()) {
+    if( isRelative() ) {
       return EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME;
     } else {
       return EclipseProject.PathStyle.ABSOLUTE;

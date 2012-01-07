@@ -39,7 +39,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   public String getError() {
     try {
       return super.getError();
-    } catch (NullPointerException ex) {
+    } catch( NullPointerException ex ) {
       /** @see #getOutput() */
       return "";
     }
@@ -58,7 +58,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
     // would cover other errors.
     try {
       return super.getOutput();
-    } catch (NullPointerException ex) {
+    } catch( NullPointerException ex ) {
       return "";
     }
   }
@@ -91,8 +91,8 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    *          The name of the build file without folders
    * @return The name of the build file
    */
-  private String getProjectBuildFile(String unqualifiedName) {
-    return getClass().getPackage().getName().replace('.', '/') + "/" + unqualifiedName;
+  private String getProjectBuildFile( String unqualifiedName ) {
+    return getClass().getPackage().getName().replace( '.', '/' ) + "/" + unqualifiedName;
   }
 
   /**
@@ -102,11 +102,11 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   protected void runTest() throws Throwable {
     try {
       super.runTest();
-    } catch (ComparisonFailure f) {
+    } catch( ComparisonFailure f ) {
       throw f;
-    } catch (Throwable t) {
-      System.err.println(getName() + " throws exception (" + t + "). Output:");
-      System.err.println(getError());
+    } catch( Throwable t ) {
+      System.err.println( getName() + " throws exception (" + t + "). Output:" );
+      System.err.println( getError() );
       throw t;
     }
   }
@@ -123,8 +123,8 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    * @throws Exception
    * @see {@link #configureProject(String)}
    */
-  protected void setupBuildFile(String unqualifiedBuildFileName) throws Exception {
-    setupBuildFile(unqualifiedBuildFileName, Project.MSG_DEBUG);
+  protected void setupBuildFile( String unqualifiedBuildFileName ) throws Exception {
+    setupBuildFile( unqualifiedBuildFileName, Project.MSG_DEBUG );
   }
 
   /**
@@ -141,13 +141,13 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    * @throws Exception
    * @see {@link #configureProject(String)}
    */
-  protected void setupBuildFile(String unqualifiedBuildFileName, int priority) throws Exception {
-    String qualifiedBuildFileName = getProjectBuildFile(unqualifiedBuildFileName);
-    StringBuffer buffer = Utilities.readTextContent("/" + qualifiedBuildFileName, Utilities.ENCODING, true);
+  protected void setupBuildFile( String unqualifiedBuildFileName, int priority ) throws Exception {
+    String qualifiedBuildFileName = getProjectBuildFile( unqualifiedBuildFileName );
+    StringBuffer buffer = Utilities.readTextContent( "/" + qualifiedBuildFileName, Utilities.ENCODING, true );
     String buildFileContent = buffer.toString();
-    File buildFile = this._testWorkspace.createFile(unqualifiedBuildFileName, buildFileContent);
-    configureProject(buildFile.getAbsolutePath(), priority);
-    getProject().setProperty("workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath());
+    File buildFile = this._testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
+    configureProject( buildFile.getAbsolutePath(), priority );
+    getProject().setProperty( "workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath() );
   }
 
   /**
@@ -163,16 +163,16 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
     return this._testWorkspace.getRootDir();
   }
 
-  public void expectLogMatches(String target, String regExp) {
+  public void expectLogMatches( String target, String regExp ) {
 
-    executeTarget(target);
+    executeTarget( target );
 
     String realLog = getLog();
 
-    Pattern patter = Pattern.compile(regExp);
-    Matcher matcher = patter.matcher(target);
+    Pattern patter = Pattern.compile( regExp );
+    Matcher matcher = patter.matcher( target );
 
-    assertTrue("expecting log to match \"" + regExp + "\" log was \"" + realLog + "\"", matcher.matches());
+    assertTrue( "expecting log to match \"" + regExp + "\" log was \"" + realLog + "\"", matcher.matches() );
   }
 
-}
+} /* ENDCLASS */

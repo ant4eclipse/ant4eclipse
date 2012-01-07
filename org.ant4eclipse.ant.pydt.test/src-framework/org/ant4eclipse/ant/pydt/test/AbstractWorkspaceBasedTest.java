@@ -53,12 +53,12 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @param dltk
    *          <code>true</code> <=> Use the python dltk implementation.
    */
-  public AbstractWorkspaceBasedTest(boolean dltk) {
+  public AbstractWorkspaceBasedTest( boolean dltk ) {
     this._dltk = dltk;
     this._disposeonexit = true;
-    String val = Utilities.cleanup(System.getProperty(PROP_DISPOSEONEXIT));
-    if (val != null) {
-      this._disposeonexit = !"false".equals(val);
+    String val = Utilities.cleanup( System.getProperty( PROP_DISPOSEONEXIT ) );
+    if( val != null ) {
+      this._disposeonexit = !"false".equals( val );
     }
   }
 
@@ -70,9 +70,9 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return The location of the ant buildfile. Not <code>null</code>.
    */
-  private File getBuildFile(String projectname) {
-    File projectdir = getProjectFolder(projectname);
-    return new File(projectdir, NAME_BUILDXML);
+  private File getBuildFile( String projectname ) {
+    File projectdir = getProjectFolder( projectname );
+    return new File( projectdir, NAME_BUILDXML );
   }
 
   /**
@@ -85,8 +85,8 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return A result containing the generated information from the target. Not <code>null</code>.
    */
-  public BuildResult execute(String projectname, String target) {
-    return execute(projectname, target, null);
+  public BuildResult execute( String projectname, String target ) {
+    return execute( projectname, target, null );
   }
 
   /**
@@ -102,30 +102,30 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return A result containing the generated information from the target. Not <code>null</code>.
    */
-  public BuildResult execute(String projectname, String target, String dirsep) {
+  public BuildResult execute( String projectname, String target, String dirsep ) {
 
-    Assert.assertNotNull(projectname);
-    Assert.assertNotNull(target);
+    Assert.assertNotNull( projectname );
+    Assert.assertNotNull( target );
 
-    if (dirsep == null) {
+    if( dirsep == null ) {
       dirsep = File.separator;
     }
 
-    File buildfile = getBuildFile(projectname);
+    File buildfile = getBuildFile( projectname );
 
     Project project = new Project();
     project.init();
 
-    project.setUserProperty(AntProperties.PROP_ANTFILE, buildfile.getAbsolutePath());
-    setupProperties(project, projectname);
-    extendDefinitions(project);
+    project.setUserProperty( AntProperties.PROP_ANTFILE, buildfile.getAbsolutePath() );
+    setupProperties( project, projectname );
+    extendDefinitions( project );
 
-    BuildResult result = new BuildResult(getWorkspaceFolder(), dirsep);
-    result.assign(project);
+    BuildResult result = new BuildResult( getWorkspaceFolder(), dirsep );
+    result.assign( project );
 
-    ProjectHelper.configureProject(project, buildfile);
+    ProjectHelper.configureProject( project, buildfile );
 
-    project.executeTarget(target);
+    project.executeTarget( target );
 
     return result;
 
@@ -139,9 +139,9 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @param projectname
    *          The name of the eclipse project used for the testing. Not <code>null</code>.
    */
-  protected void setupProperties(Project project, String projectname) {
-    project.setUserProperty(AntProperties.PROP_PROJECTNAME, projectname);
-    project.setUserProperty(AntProperties.PROP_WORKSPACEDIR, getWorkspaceFolder().getAbsolutePath());
+  protected void setupProperties( Project project, String projectname ) {
+    project.setUserProperty( AntProperties.PROP_PROJECTNAME, projectname );
+    project.setUserProperty( AntProperties.PROP_WORKSPACEDIR, getWorkspaceFolder().getAbsolutePath() );
   }
 
   /**
@@ -150,11 +150,11 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * @param project
    *          The project used to configure. Not <code>null</code>.
    */
-  protected void extendDefinitions(Project project) {
-    project.addTaskDefinition("getPythonSourcePath", GetPythonSourcePathTask.class);
-    project.addTaskDefinition("getPythonPath", GetPythonPathTask.class);
-    project.addTaskDefinition("pythonDoc", PythonDocumentationTask.class);
-    project.addDataTypeDefinition("pythonContainer", PythonContainer.class);
+  protected void extendDefinitions( Project project ) {
+    project.addTaskDefinition( "getPythonSourcePath", GetPythonSourcePathTask.class );
+    project.addTaskDefinition( "getPythonPath", GetPythonPathTask.class );
+    project.addTaskDefinition( "pythonDoc", PythonDocumentationTask.class );
+    project.addDataTypeDefinition( "pythonContainer", PythonContainer.class );
   }
 
   /**
@@ -166,11 +166,11 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * 
    * @return The URL pointing to that resource. Not <code>null</code>.
    */
-  protected URL getResource(String path) {
-    Assert.assertNotNull(path);
-    URL result = getClass().getResource(path);
-    if (result == null) {
-      Assert.fail(String.format("The resource '%s' is not located on the classpath !", path));
+  protected URL getResource( String path ) {
+    Assert.assertNotNull( path );
+    URL result = getClass().getResource( path );
+    if( result == null ) {
+      Assert.fail( String.format( "The resource '%s' is not located on the classpath !", path ) );
     }
     return result;
   }
@@ -180,7 +180,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Before
   public void setup() {
-    this._projectsuite = new ProjectSuite(this, this._dltk);
+    this._projectsuite = new ProjectSuite( this, this._dltk );
   }
 
   /**
@@ -188,7 +188,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @After
   public void teardown() {
-    if (this._disposeonexit) {
+    if( this._disposeonexit ) {
       dispose();
     }
     this._dltk = false;
@@ -199,24 +199,24 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    * {@inheritDoc}
    */
   @Override
-  public ProjectDescription createEmptyProject(URL script, int projectsettings) {
-    return this._projectsuite.createEmptyProject(script, projectsettings);
+  public ProjectDescription createEmptyProject( URL script, int projectsettings ) {
+    return this._projectsuite.createEmptyProject( script, projectsettings );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ProjectDescription createComplexProject(URL script, int projectsettings) {
-    return this._projectsuite.createComplexProject(script, projectsettings);
+  public ProjectDescription createComplexProject( URL script, int projectsettings ) {
+    return this._projectsuite.createComplexProject( script, projectsettings );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ProjectDescription createCyclicProject(URL script, int projectsettings) {
-    return this._projectsuite.createCyclicProject(script, projectsettings);
+  public ProjectDescription createCyclicProject( URL script, int projectsettings ) {
+    return this._projectsuite.createCyclicProject( script, projectsettings );
   }
 
 } /* ENDCLASS */

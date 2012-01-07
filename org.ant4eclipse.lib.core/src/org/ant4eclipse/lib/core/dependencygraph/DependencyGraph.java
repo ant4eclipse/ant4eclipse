@@ -84,9 +84,9 @@ public final class DependencyGraph<T> {
    *          the provided renderer is used to create a custom string representation of a vertex for further usage in an
    *          exception message.
    */
-  public DependencyGraph(VertexRenderer<T> renderer) {
+  public DependencyGraph( VertexRenderer<T> renderer ) {
     this();
-    Assure.notNull("renderer", renderer);
+    Assure.notNull( "renderer", renderer );
     this._renderer = renderer;
   }
 
@@ -98,10 +98,10 @@ public final class DependencyGraph<T> {
    * @param vertex
    *          the vertex that will be added.
    */
-  public void addVertex(T vertex) {
-    Assure.notNull("vertex", vertex);
-    if (!this._vertices.contains(vertex)) {
-      this._vertices.add(vertex);
+  public void addVertex( T vertex ) {
+    Assure.notNull( "vertex", vertex );
+    if( !this._vertices.contains( vertex ) ) {
+      this._vertices.add( vertex );
     }
   }
 
@@ -115,9 +115,9 @@ public final class DependencyGraph<T> {
    * @return <code>true</code>, if the given vertex has already been added to the {@link DependencyGraph}, otherwise
    *         <code>false</code>.
    */
-  public boolean containsVertex(T vertex) {
-    Assure.notNull("vertex", vertex);
-    return this._vertices.contains(vertex);
+  public boolean containsVertex( T vertex ) {
+    Assure.notNull( "vertex", vertex );
+    return this._vertices.contains( vertex );
   }
 
   /**
@@ -130,12 +130,12 @@ public final class DependencyGraph<T> {
    * @param child
    *          the child node
    */
-  public void addEdge(T parent, T child) {
-    Assure.notNull("parent", parent);
-    Assure.notNull("child", child);
-    addVertex(parent);
-    addVertex(child);
-    this._edges.add(new Edge<T>(parent, child));
+  public void addEdge( T parent, T child ) {
+    Assure.notNull( "parent", parent );
+    Assure.notNull( "child", child );
+    addVertex( parent );
+    addVertex( child );
+    this._edges.add( new Edge<T>( parent, child ) );
   }
 
   /**
@@ -151,17 +151,17 @@ public final class DependencyGraph<T> {
     boolean[][] matrix = new boolean[this._vertices.size()][this._vertices.size()];
 
     // fill the diagonale
-    for (boolean[] element : matrix) {
-      Arrays.fill(element, false);
+    for( boolean[] element : matrix ) {
+      Arrays.fill( element, false );
     }
 
     // set each value to true iff there is a relationship form first to second...
-    for (int i = 0; i < this._edges.size(); i++) {
-      Edge<T> edge = this._edges.get(i);
-      int fromidx = this._vertices.indexOf(edge.getParent());
-      int toidx = this._vertices.indexOf(edge.getChild());
+    for( int i = 0; i < this._edges.size(); i++ ) {
+      Edge<T> edge = this._edges.get( i );
+      int fromidx = this._vertices.indexOf( edge.getParent() );
+      int toidx = this._vertices.indexOf( edge.getChild() );
 
-      if ((fromidx == -1) || (toidx == -1)) {
+      if( (fromidx == -1) || (toidx == -1) ) {
         // one of the edge's vertices has not been
         // added to this graph (f.e. if it's a dependency
         // on the outside of a specific context)
@@ -175,7 +175,7 @@ public final class DependencyGraph<T> {
 
     // iterates across the matrix as long as we didn't found
     // a cycle and there are still edges to be processed
-    while (reduce(list, matrix)) {
+    while( reduce( list, matrix ) ) {
       // nothing to do...
     }
 
@@ -196,52 +196,52 @@ public final class DependencyGraph<T> {
    * 
    * @return true <=> There are still edges within the matrix so a succeeding iteration is required.
    */
-  private boolean reduce(List<T> result, boolean[][] matrix) {
+  private boolean reduce( List<T> result, boolean[][] matrix ) {
     int zeros = 0;
-    int[] count = countEdges(matrix);
+    int[] count = countEdges( matrix );
 
     List<T> removable = new ArrayList<T>();
 
     // add currently independent vertices to the list
     // of removable candidates
-    for (int i = 0; i < count.length; i++) {
-      if (count[i] == 0) {
-        T vertex = this._vertices.get(i);
+    for( int i = 0; i < count.length; i++ ) {
+      if( count[i] == 0 ) {
+        T vertex = this._vertices.get( i );
 
-        if (!result.contains(vertex)) {
-          removable.add(vertex);
+        if( !result.contains( vertex ) ) {
+          removable.add( vertex );
         }
 
         zeros++;
       }
     }
 
-    if (removable.isEmpty()) {
-      if (zeros < matrix.length) {
+    if( removable.isEmpty() ) {
+      if( zeros < matrix.length ) {
         // get the first cycle and create an apropriate textual representation
         StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < count.length; i++) {
-          if (count[i] > 0) {
-            cycleString(buffer, new HashSet<T>(), i, matrix);
+        for( int i = 0; i < count.length; i++ ) {
+          if( count[i] > 0 ) {
+            cycleString( buffer, new HashSet<T>(), i, matrix );
             break;
           }
         }
-        throw new Ant4EclipseException(CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, buffer.toString());
+        throw new Ant4EclipseException( CoreExceptionCode.CYCLIC_DEPENDENCIES_EXCEPTION, buffer.toString() );
       }
     } else {
       // we need to clear the removable vertices, so they won't
       // be processed within the next iteration
-      for (int i = 0; i < matrix.length; i++) {
-        for (int j = 0; j < matrix.length; j++) {
-          if (matrix[i][j]) {
-            if (removable.contains(this._vertices.get(j))) {
+      for( int i = 0; i < matrix.length; i++ ) {
+        for( int j = 0; j < matrix.length; j++ ) {
+          if( matrix[i][j] ) {
+            if( removable.contains( this._vertices.get( j ) ) ) {
               matrix[i][j] = false;
             }
           }
         }
       }
 
-      result.addAll(removable);
+      result.addAll( removable );
     }
 
     return zeros < matrix.length;
@@ -261,21 +261,21 @@ public final class DependencyGraph<T> {
    * @param matrix
    *          The current state of the matrix.
    */
-  private void cycleString(StringBuffer buffer, Set<T> processed, int idx, boolean[][] matrix) {
-    T vertex = this._vertices.get(idx);
-    if (this._renderer == null) {
-      buffer.append(String.valueOf(vertex));
+  private void cycleString( StringBuffer buffer, Set<T> processed, int idx, boolean[][] matrix ) {
+    T vertex = this._vertices.get( idx );
+    if( this._renderer == null ) {
+      buffer.append( String.valueOf( vertex ) );
     } else {
-      buffer.append(this._renderer.renderVertex(vertex));
+      buffer.append( this._renderer.renderVertex( vertex ) );
     }
-    if (processed.contains(vertex)) {
+    if( processed.contains( vertex ) ) {
       return;
     }
-    buffer.append(" -> ");
-    processed.add(vertex);
-    for (int i = 0; i < matrix.length; i++) {
-      if (matrix[idx][i]) {
-        cycleString(buffer, processed, i, matrix);
+    buffer.append( " -> " );
+    processed.add( vertex );
+    for( int i = 0; i < matrix.length; i++ ) {
+      if( matrix[idx][i] ) {
+        cycleString( buffer, processed, i, matrix );
         break;
       }
     }
@@ -291,11 +291,11 @@ public final class DependencyGraph<T> {
    * 
    * @return A list with the length of the matrix where each element holds the number of edges of the related row.
    */
-  private int[] countEdges(boolean[][] matrix) {
+  private int[] countEdges( boolean[][] matrix ) {
     int[] result = new int[matrix.length];
     // count the number of edges for each row
-    for (int i = 0; i < matrix.length; i++) {
-      result[i] = sum(matrix[i]);
+    for( int i = 0; i < matrix.length; i++ ) {
+      result[i] = sum( matrix[i] );
     }
     return result;
   }
@@ -309,11 +309,11 @@ public final class DependencyGraph<T> {
    *          the array of boolean
    * @return the number of 'true'-values in the given array.
    */
-  private int sum(boolean[] row) {
+  private int sum( boolean[] row ) {
     int result = 0;
 
-    for (boolean element : row) {
-      if (element) {
+    for( boolean element : row ) {
+      if( element ) {
         result++;
       }
     }

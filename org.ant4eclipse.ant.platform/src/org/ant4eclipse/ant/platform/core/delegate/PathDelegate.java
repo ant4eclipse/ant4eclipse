@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-
-
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.lib.core.Assure;
@@ -48,8 +46,8 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * @param component
    *          the ProjectComponent
    */
-  public PathDelegate(ProjectComponent component) {
-    super(component);
+  public PathDelegate( ProjectComponent component ) {
+    super( component );
 
     // set default separators
     this._pathSeparator = File.pathSeparator;
@@ -60,8 +58,8 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setPathSeparator(String newpathseparator) {
-    Assure.nonEmpty("newpathseparator", newpathseparator);
+  public final void setPathSeparator( String newpathseparator ) {
+    Assure.nonEmpty( "newpathseparator", newpathseparator );
     this._pathSeparator = newpathseparator;
   }
 
@@ -85,8 +83,8 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setDirSeparator(String newdirseparator) {
-    Assure.nonEmpty("newdirseparator", newdirseparator);
+  public final void setDirSeparator( String newdirseparator ) {
+    Assure.nonEmpty( "newdirseparator", newdirseparator );
     this._dirSeparator = newdirseparator;
   }
 
@@ -110,35 +108,35 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File entry) {
-    return convertToString(new File[] { entry });
+  public final String convertToString( File entry ) {
+    return convertToString( new File[] { entry } );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File[] entries) {
-    Assure.notNull("entries", entries);
+  public final String convertToString( File[] entries ) {
+    Assure.notNull( "entries", entries );
 
     // convert Files to String
     List<String> entriesAsString = new ArrayList<String>();
-    for (File entry : entries) {
+    for( File entry : entries ) {
       String path = entry.getPath();
-      if (!entriesAsString.contains(path)) {
-        entriesAsString.add(path);
+      if( !entriesAsString.contains( path ) ) {
+        entriesAsString.add( path );
       }
     }
 
     // replace path and directory separator
     StringBuilder buffer = new StringBuilder();
     Iterator<String> iterator = entriesAsString.iterator();
-    while (iterator.hasNext()) {
-      String path = iterator.next().replace('\\', '/');
-      path = Utilities.replace(path, '/', this._dirSeparator);
-      buffer.append(path);
-      if (iterator.hasNext()) {
-        buffer.append(this._pathSeparator);
+    while( iterator.hasNext() ) {
+      String path = iterator.next().replace( '\\', '/' );
+      path = Utilities.replace( path, '/', this._dirSeparator );
+      buffer.append( path );
+      if( iterator.hasNext() ) {
+        buffer.append( this._pathSeparator );
       }
     }
 
@@ -150,21 +148,22 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File entry) {
-    return convertToPath(new File[] { entry });
+  public final Path convertToPath( File entry ) {
+    return convertToPath( new File[] { entry } );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File[] entries) {
-    Assure.notNull("entries", entries);
-    Path antPath = new Path(getAntProject());
-    for (File entry : entries) {
+  public final Path convertToPath( File[] entries ) {
+    Assure.notNull( "entries", entries );
+    Path antPath = new Path( getAntProject() );
+    for( File entry : entries ) {
       // TODO getPath() vs. getAbsolutePath()
-      antPath.append(new Path(getAntProject(), entry.getPath()));
+      antPath.append( new Path( getAntProject(), entry.getPath() ) );
     }
     return antPath;
   }
-}
+  
+} /* ENDCLASS */

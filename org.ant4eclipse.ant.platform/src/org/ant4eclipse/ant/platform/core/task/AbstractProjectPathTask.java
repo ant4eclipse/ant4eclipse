@@ -39,7 +39,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
     super();
 
     // create the delegate
-    this._pathDelegate = new PathDelegate(this);
+    this._pathDelegate = new PathDelegate( this );
   }
 
   /**
@@ -78,47 +78,48 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final void setDirSeparator(String newdirseparator) {
-    this._pathDelegate.setDirSeparator(newdirseparator);
+  public final void setDirSeparator( String newdirseparator ) {
+    this._pathDelegate.setDirSeparator( newdirseparator );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setPathSeparator(String newpathseparator) {
-    this._pathDelegate.setPathSeparator(newpathseparator);
+  public final void setPathSeparator( String newpathseparator ) {
+    this._pathDelegate.setPathSeparator( newpathseparator );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File[] entries) {
-    return this._pathDelegate.convertToPath(entries);
+  public final Path convertToPath( File[] entries ) {
+    return this._pathDelegate.convertToPath( entries );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File[] entries) {
-    return this._pathDelegate.convertToString(entries);
+  public final String convertToString( File[] entries ) {
+    return this._pathDelegate.convertToString( entries );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File entry) {
-    return this._pathDelegate.convertToPath(entry);
+  public final Path convertToPath( File entry ) {
+    return this._pathDelegate.convertToPath( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File entry) {
-    return this._pathDelegate.convertToString(entry);
+  public final String convertToString( File entry ) {
+    return this._pathDelegate.convertToString( entry );
   }
-}
+  
+} /* ENDCLASS */

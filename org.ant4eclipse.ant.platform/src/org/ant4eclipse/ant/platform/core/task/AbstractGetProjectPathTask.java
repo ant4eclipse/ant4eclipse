@@ -49,8 +49,8 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
     super();
 
     // create the delegates
-    this._projectDelegate = new EclipseProjectDelegate(this);
-    this._getPathDelegate = new GetPathDelegate(this);
+    this._projectDelegate = new EclipseProjectDelegate( this );
+    this._getPathDelegate = new GetPathDelegate( this );
   }
 
   /**
@@ -81,15 +81,15 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
 
     // resolve path
     File[] resolvedPath = resolvePath();
-    setResolvedPath(resolvedPath);
+    setResolvedPath( resolvedPath );
 
     // set path
-    if (isPathIdSet()) {
+    if( isPathIdSet() ) {
       populatePathId();
     }
 
     // set property
-    if (isPropertySet()) {
+    if( isPropertySet() ) {
       populateProperty();
     }
   }
@@ -245,7 +245,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   public final void requireWorkspaceAndProjectNameSet() {
     this._projectDelegate.requireWorkspaceAndProjectNameSet();
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -253,7 +253,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   public String getWorkspaceId() {
     return this._projectDelegate.getWorkspaceId();
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -261,7 +261,7 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   public boolean isWorkspaceIdSet() {
     return this._projectDelegate.isWorkspaceIdSet();
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -269,135 +269,136 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     this._projectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceId(String identifier) {
-    this._projectDelegate.setWorkspaceId(identifier);
+  public void setWorkspaceId( String identifier ) {
+    this._projectDelegate.setWorkspaceId( identifier );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setDirSeparator(String newdirseparator) {
-    this._getPathDelegate.setDirSeparator(newdirseparator);
+  public final void setDirSeparator( String newdirseparator ) {
+    this._getPathDelegate.setDirSeparator( newdirseparator );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setPathId(String id) {
-    this._getPathDelegate.setPathId(id);
+  public final void setPathId( String id ) {
+    this._getPathDelegate.setPathId( id );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setPathSeparator(String newpathseparator) {
-    this._getPathDelegate.setPathSeparator(newpathseparator);
+  public final void setPathSeparator( String newpathseparator ) {
+    this._getPathDelegate.setPathSeparator( newpathseparator );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setProjectName(String projectName) {
-    this._projectDelegate.setProjectName(projectName);
+  public final void setProjectName( String projectName ) {
+    this._projectDelegate.setProjectName( projectName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Deprecated
-  public void setProject(File projectPath) {
-    this._projectDelegate.setProject(projectPath);
+  public void setProject( File projectPath ) {
+    this._projectDelegate.setProject( projectPath );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setProperty(String property) {
-    this._getPathDelegate.setProperty(property);
+  public final void setProperty( String property ) {
+    this._getPathDelegate.setProperty( property );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setRelative(boolean relative) {
-    this._getPathDelegate.setRelative(relative);
+  public final void setRelative( boolean relative ) {
+    this._getPathDelegate.setRelative( relative );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setResolvedPath(File[] resolvedPath) {
-    this._getPathDelegate.setResolvedPath(resolvedPath);
+  public final void setResolvedPath( File[] resolvedPath ) {
+    this._getPathDelegate.setResolvedPath( resolvedPath );
   }
 
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("deprecation")
-            @Override
-  public final void setWorkspace(String workspace) {
-    this._projectDelegate.setWorkspace(workspace);
+  @SuppressWarnings( "deprecation" )
+  @Override
+  public final void setWorkspace( String workspace ) {
+    this._projectDelegate.setWorkspace( workspace );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setWorkspaceDirectory(String workspaceDirectory) {
-    this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
+  public final void setWorkspaceDirectory( String workspaceDirectory ) {
+    this._projectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File entry) {
-    return this._getPathDelegate.convertToPath(entry);
+  public final Path convertToPath( File entry ) {
+    return this._getPathDelegate.convertToPath( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File entry) {
-    return this._getPathDelegate.convertToString(entry);
+  public final String convertToString( File entry ) {
+    return this._getPathDelegate.convertToString( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File[] entries) {
-    return this._getPathDelegate.convertToPath(entries);
+  public final Path convertToPath( File[] entries ) {
+    return this._getPathDelegate.convertToPath( entries );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File[] entries) {
-    return this._getPathDelegate.convertToString(entries);
+  public final String convertToString( File[] entries ) {
+    return this._getPathDelegate.convertToString( entries );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    this._projectDelegate.ensureRole(projectRoleClass);
+  public final void ensureRole( Class<? extends ProjectRole> projectRoleClass ) {
+    this._projectDelegate.ensureRole( projectRoleClass );
   }
-}
+  
+} /* ENDCLASS */

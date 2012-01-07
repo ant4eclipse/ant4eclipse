@@ -15,13 +15,10 @@ import org.ant4eclipse.lib.core.util.Utilities;
 
 public class TextEmitter {
 
-  /** - */
   private static final String INDENTION = "  ";
 
-  /** - */
   private StringBuffer        _buffer;
 
-  /** - */
   private StringBuffer        _indention;
 
   /**
@@ -36,7 +33,7 @@ public class TextEmitter {
    * Indents the current emitting process.
    */
   public void indent() {
-    this._indention.append(INDENTION);
+    this._indention.append( INDENTION );
   }
 
   /**
@@ -44,8 +41,8 @@ public class TextEmitter {
    */
   public void dedent() {
     int newlength = this._indention.length() - INDENTION.length();
-    if (newlength >= 0) {
-      this._indention.setLength(newlength);
+    if( newlength >= 0 ) {
+      this._indention.setLength( newlength );
     }
   }
 
@@ -53,16 +50,16 @@ public class TextEmitter {
    * Inserts a newline.
    */
   public void newline() {
-    this._buffer.append(Utilities.NL);
+    this._buffer.append( Utilities.NL );
   }
 
-  public void append(String format, Object... args) {
-    this._buffer.append(String.format(format, args));
+  public void append( String format, Object ... args ) {
+    this._buffer.append( String.format( format, args ) );
   }
 
-  public void appendln(String format, Object... args) {
-    this._buffer.append(this._indention);
-    this._buffer.append(String.format(format, args));
+  public void appendln( String format, Object ... args ) {
+    this._buffer.append( this._indention );
+    this._buffer.append( String.format( format, args ) );
     newline();
   }
 

@@ -58,15 +58,15 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * @param javaSpecificationVersion
    * @param javaProfile
    */
-  JavaRuntimeImpl(String id, File location, File[] libraries, Version javaVersion, Version javaSpecificationVersion,
-      JavaProfile javaProfile) {
+  JavaRuntimeImpl( String id, File location, File[] libraries, Version javaVersion, Version javaSpecificationVersion,
+      JavaProfile javaProfile ) {
 
-    Assure.nonEmpty("id", id);
-    Assure.isDirectory("location", location);
-    Assure.notNull("libraries", libraries);
-    Assure.notNull("javaVersion", javaVersion);
-    Assure.notNull("javaSpecificationVersion", javaSpecificationVersion);
-    Assure.notNull("javaProfile", javaProfile);
+    Assure.nonEmpty( "id", id );
+    Assure.isDirectory( "location", location );
+    Assure.notNull( "libraries", libraries );
+    Assure.notNull( "javaVersion", javaVersion );
+    Assure.notNull( "javaSpecificationVersion", javaSpecificationVersion );
+    Assure.notNull( "javaProfile", javaProfile );
 
     this._id = id;
     this._location = location;
@@ -104,7 +104,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntime#isJavaVersion(net.sf.ant4eclipse.model.jdt.jre.JavaRuntimeImpl.Version
    *      )
    */
-  public boolean isJavaVersion(Version version) {
+  public boolean isJavaVersion( Version version ) {
     return (version.getMajor() == this._javaVersion.getMajor()) && (version.getMinor() == this._javaVersion.getMinor());
   }
 
@@ -138,24 +138,24 @@ public class JavaRuntimeImpl implements JavaRuntime {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[JavaRuntime:");
-    buffer.append(" id: ");
-    buffer.append(this._id);
-    buffer.append(" javaVersion: ");
-    buffer.append(this._javaVersion);
-    buffer.append(" javaSpecificationVersion: ");
-    buffer.append(this._javaSpecificationVersion);
-    buffer.append(" javaProfile: ");
-    buffer.append(this._javaProfile);
-    buffer.append(" location: ");
-    buffer.append(this._location);
-    buffer.append(" { ");
-    for (int i0 = 0; (this._libraries != null) && (i0 < this._libraries.length); i0++) {
-      buffer.append(" libraries[" + i0 + "]: ");
-      buffer.append(this._libraries[i0]);
+    buffer.append( "[JavaRuntime:" );
+    buffer.append( " id: " );
+    buffer.append( this._id );
+    buffer.append( " javaVersion: " );
+    buffer.append( this._javaVersion );
+    buffer.append( " javaSpecificationVersion: " );
+    buffer.append( this._javaSpecificationVersion );
+    buffer.append( " javaProfile: " );
+    buffer.append( this._javaProfile );
+    buffer.append( " location: " );
+    buffer.append( this._location );
+    buffer.append( " { " );
+    for( int i0 = 0; (this._libraries != null) && (i0 < this._libraries.length); i0++ ) {
+      buffer.append( " libraries[" + i0 + "]: " );
+      buffer.append( this._libraries[i0] );
     }
-    buffer.append(" } ");
-    buffer.append("]");
+    buffer.append( " } " );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -175,29 +175,29 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
     JavaRuntimeImpl other = (JavaRuntimeImpl) obj;
-    if (this._id == null) {
-      if (other._id != null) {
+    if( this._id == null ) {
+      if( other._id != null ) {
         return false;
       }
-    } else if (!this._id.equals(other._id)) {
+    } else if( !this._id.equals( other._id ) ) {
       return false;
     }
-    if (this._location == null) {
-      if (other._location != null) {
+    if( this._location == null ) {
+      if( other._location != null ) {
         return false;
       }
-    } else if (!this._location.equals(other._location)) {
+    } else if( !this._location.equals( other._location ) ) {
       return false;
     }
     return true;

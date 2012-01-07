@@ -1,17 +1,13 @@
 /**********************************************************************
  * Copyright (c) 2005-2009 ant4eclipse project team.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ * 
+ * Contributors: Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
 package org.ant4eclipse.ant.platform.delegate;
-
-
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseBuildFileTest;
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
@@ -33,12 +29,12 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
   @Override
   public void setUp() throws Exception {
     super.setUp();
-    getProject().setProperty("hurz.test", "initial");
+    getProject().setProperty( "hurz.test", "initial" );
   }
 
   public void testMacroExecute() {
     MacroExecuteTask.counter = 0;
-    expectLog("testMacroExecute", "initial!0.test!1.test!0.test!initial!2.test!initial");
+    expectLog( "testMacroExecute", "initial!0.test!1.test!0.test!initial!2.test!initial" );
   }
 
   /**
@@ -51,37 +47,39 @@ public class MacroExecutionDelegateTest extends AbstractAnt4EclipseBuildFileTest
     private MacroExecutionDelegate<String> _macroExecutionDelegate;
 
     public MacroExecuteTask() {
-      this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, "hurz");
+      this._macroExecutionDelegate = new MacroExecutionDelegate<String>( this, "hurz" );
     }
 
     /**
      * @param prefix
      */
-    public void setPrefix(String prefix) {
-      this._macroExecutionDelegate.setPrefix(prefix);
+    public void setPrefix( String prefix ) {
+      this._macroExecutionDelegate.setPrefix( prefix );
     }
 
     @Override
     protected void doExecute() {
-      for (ScopedMacroDefinition<String> scopedMacroDefinition : this._macroExecutionDelegate
-          .getScopedMacroDefinitions()) {
+      for( ScopedMacroDefinition<String> scopedMacroDefinition : this._macroExecutionDelegate
+          .getScopedMacroDefinitions() ) {
 
-        this._macroExecutionDelegate.executeMacroInstance(scopedMacroDefinition.getMacroDef(),
+        this._macroExecutionDelegate.executeMacroInstance( scopedMacroDefinition.getMacroDef(),
             new MacroExecutionValuesProvider() {
 
-          @Override
-              public MacroExecutionValues provideMacroExecutionValues(MacroExecutionValues values) {
-                values.getProperties().put("test", counter + ".test");
+              @Override
+              public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
+                values.getProperties().put( "test", counter + ".test" );
                 counter++;
                 return values;
               }
-            });
+            } );
       }
     }
 
     @Override
-    public NestedSequential createDynamicElement(String name) throws BuildException {
-      return this._macroExecutionDelegate.createScopedMacroDefinition(name);
+    public NestedSequential createDynamicElement( String name ) throws BuildException {
+      return this._macroExecutionDelegate.createScopedMacroDefinition( name );
     }
-  }
-}
+    
+  } /* ENDCLASS */
+  
+} /* ENDCLASS */

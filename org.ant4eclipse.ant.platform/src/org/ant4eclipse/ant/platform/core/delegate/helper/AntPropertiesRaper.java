@@ -38,13 +38,13 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * @param antProject
    *          the ant project
    */
-  public AntPropertiesRaper(Project antProject, Thread thread) {
-    super(antProject, thread);
+  public AntPropertiesRaper( Project antProject, Thread thread ) {
+    super( antProject, thread );
 
     registerThread();
 
     // set the value accessor
-    setValueAccessor(new AntProjectValueAccessor<String>() {
+    setValueAccessor( new AntProjectValueAccessor<String>() {
 
       /**
        * <p>
@@ -55,8 +55,8 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
        *          the key
        */
       @Override
-      public String getValue(String key) {
-        return getAntProject().getProperty(key);
+      public String getValue( String key ) {
+        return getAntProject().getProperty( key );
       }
 
       /**
@@ -70,8 +70,8 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
        *          the value to set
        */
       @Override
-      public void setValue(String key, String value) {
-        getAntProject().setProperty(key, value);
+      public void setValue( String key, String value ) {
+        getAntProject().setProperty( key, value );
       }
 
       /**
@@ -83,10 +83,10 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
        *          the key
        */
       @Override
-      public void unsetValue(String key) {
-        removeProperty(key);
+      public void unsetValue( String key ) {
+        removeProperty( key );
       }
-    });
+    } );
   }
 
   /**
@@ -96,11 +96,11 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
   private void registerThread() {
 
     //
-    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getAntProject()).getNext();
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( getAntProject() ).getNext();
 
     //
-    if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
-      ((ThreadDispatchingPropertyHelper) propertyHelper).registerThread(Thread.currentThread());
+    if( propertyHelper instanceof ThreadDispatchingPropertyHelper ) {
+      ((ThreadDispatchingPropertyHelper) propertyHelper).registerThread( Thread.currentThread() );
     }
   }
 
@@ -110,19 +110,19 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * 
    * @param name
    */
-  private void removeProperty(String name) {
+  private void removeProperty( String name ) {
     //
-    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getAntProject()).getNext();
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( getAntProject() ).getNext();
 
     //
-    if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
+    if( propertyHelper instanceof ThreadDispatchingPropertyHelper ) {
       // System.out.println(String.format(" - - - removeProperty(%s)", name));
       ThreadDispatchingPropertyHelper threadDispatchingPropertyHelper = (ThreadDispatchingPropertyHelper) propertyHelper;
       Properties threadProperties = threadDispatchingPropertyHelper.getThreadProperties();
-      if (threadProperties != null) {
-        threadProperties.remove(name);
+      if( threadProperties != null ) {
+        threadProperties.remove( name );
       } else {
-        _removeProperty(name);
+        _removeProperty( name );
       }
     }
   }
@@ -135,24 +135,24 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * @param key
    *          the key
    */
-  @SuppressWarnings("rawtypes")
-  private void _removeProperty(String name) {
+  @SuppressWarnings( "rawtypes" )
+  private void _removeProperty( String name ) {
     Hashtable properties = null;
     // Ant 1.5 stores properties in Project
     try {
-      properties = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "properties");
-      if (properties != null) {
-        properties.remove(name);
+      properties = (Hashtable) AbstractAntProjectRaper.getValue( getAntProject(), "properties" );
+      if( properties != null ) {
+        properties.remove( name );
       }
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // ignore, could be Ant 1.6
     }
     try {
-      properties = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "userProperties");
-      if (properties != null) {
-        properties.remove(name);
+      properties = (Hashtable) AbstractAntProjectRaper.getValue( getAntProject(), "userProperties" );
+      if( properties != null ) {
+        properties.remove( name );
       }
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // ignore, could be Ant 1.6
     }
 
@@ -161,31 +161,32 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
     try {
 
       // MULTITHREADING!!
-      Object property_helper = getAntProject().getReference("ant.PropertyHelper");
-      if (property_helper != null) {
+      Object property_helper = getAntProject().getReference( "ant.PropertyHelper" );
+      if( property_helper != null ) {
         try {
 
           // MULTITHREADING!!
-          properties = (Hashtable) AbstractAntProjectRaper.getValue(property_helper, "properties");
-          if (properties != null) {
-            properties.remove(name);
+          properties = (Hashtable) AbstractAntProjectRaper.getValue( property_helper, "properties" );
+          if( properties != null ) {
+            properties.remove( name );
           }
-        } catch (Exception e) {
+        } catch( Exception e ) {
           // ignore
         }
         try {
 
           // MULTITHREADING!!
-          properties = (Hashtable) AbstractAntProjectRaper.getValue(property_helper, "userProperties");
-          if (properties != null) {
-            properties.remove(name);
+          properties = (Hashtable) AbstractAntProjectRaper.getValue( property_helper, "userProperties" );
+          if( properties != null ) {
+            properties.remove( name );
           }
-        } catch (Exception e) {
+        } catch( Exception e ) {
           // ignore
         }
       }
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // ignore, could be Ant 1.5
     }
   }
-}
+  
+} /* ENDCLASS */

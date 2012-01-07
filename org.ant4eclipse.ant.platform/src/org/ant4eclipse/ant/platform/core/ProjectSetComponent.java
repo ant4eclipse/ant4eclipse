@@ -31,7 +31,7 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
    * @param projectNames
    *          a comma separated list of project names.
    */
-  void setProjectNames(String projectNames);
+  void setProjectNames( String projectNames );
 
   /**
    * <p>
@@ -64,4 +64,5 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
    * </p>
    */
   void requireTeamProjectSetOrProjectNamesSet();
-}
+  
+} /* ENDINTERFACE */

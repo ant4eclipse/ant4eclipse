@@ -29,8 +29,8 @@ public abstract class VcsAdapter {
   /** the ant project in which the cvs tasks will be executed */
   private Project _antProject;
 
-  public VcsAdapter(Project antProject) {
-    Assure.notNull("antProject", antProject);
+  public VcsAdapter( Project antProject ) {
+    Assure.notNull( "antProject", antProject );
     this._antProject = antProject;
   }
 
@@ -49,17 +49,17 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  public final void checkoutProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
+  public final void checkoutProject( File destination, TeamProjectDescription projectDescription, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.notNull("projectDescription", projectDescription);
+    Assure.notNull( "projectDescription", projectDescription );
 
     String projectName = projectDescription.getProjectName();
 
-    if (deleteExisting && Utilities.hasChild(destination, projectName)) {
-      Utilities.delete(Utilities.getChild(destination, projectName));
+    if( deleteExisting && Utilities.hasChild( destination, projectName ) ) {
+      Utilities.delete( Utilities.getChild( destination, projectName ) );
     }
 
-    checkout(destination, projectDescription);
+    checkout( destination, projectDescription );
   }
 
   /**
@@ -75,10 +75,10 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
-  public final void updateProject(File destination, TeamProjectDescription projectDescription)
+  public final void updateProject( File destination, TeamProjectDescription projectDescription )
       throws Ant4EclipseException {
-    Assure.notNull("projectDescription", projectDescription);
-    update(destination, projectDescription);
+    Assure.notNull( "projectDescription", projectDescription );
+    update( destination, projectDescription );
   }
 
   /**
@@ -94,39 +94,39 @@ public abstract class VcsAdapter {
    *          indicates if existing projects should be deleted.
    * @throws VcsException
    */
-  public final void exportProject(File destination, TeamProjectDescription projectDescription, boolean deleteExisting)
+  public final void exportProject( File destination, TeamProjectDescription projectDescription, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.notNull("projectDescription", projectDescription);
+    Assure.notNull( "projectDescription", projectDescription );
 
     String projectName = projectDescription.getProjectName();
 
-    if (deleteExisting && Utilities.hasChild(destination, projectName)) {
-      Utilities.delete(Utilities.getChild(destination, projectName));
+    if( deleteExisting && Utilities.hasChild( destination, projectName ) ) {
+      Utilities.delete( Utilities.getChild( destination, projectName ) );
     }
 
-    export(destination, projectDescription);
+    export( destination, projectDescription );
   }
 
   /**
    * Does the actual export operation. Must be implemented by subclasses to provide VCS-specific actions.
    */
-  protected abstract void export(File destination, TeamProjectDescription projectDescription)
+  protected abstract void export( File destination, TeamProjectDescription projectDescription )
       throws Ant4EclipseException;
 
   /**
    * Does the update export operation. Must be implemented by subclasses to provide VCS-specific actions.
    */
-  protected abstract void update(File destination, TeamProjectDescription projectDescription)
+  protected abstract void update( File destination, TeamProjectDescription projectDescription )
       throws Ant4EclipseException;
 
   /**
    * Does the actual checkout operation. Must be implemented by subclasses to provide VCS-specific actions.
    */
-  protected abstract void checkout(File destination, TeamProjectDescription projectDescription)
+  protected abstract void checkout( File destination, TeamProjectDescription projectDescription )
       throws Ant4EclipseException;
 
   protected Project getAntProject() {
     return this._antProject;
   }
 
-}
+} /* ENDCLASS */

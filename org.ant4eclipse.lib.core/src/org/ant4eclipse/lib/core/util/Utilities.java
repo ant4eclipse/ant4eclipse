@@ -68,26 +68,26 @@ public class Utilities {
   /** - */
   private static final String CLOSE           = "}";
 
-  @NLSMessage("Exporting a resource is only supported for root based pathes !")
+  @NLSMessage( "Exporting a resource is only supported for root based pathes !" )
   public static String        MSG_INVALIDRESOURCEPATH;
 
-  @NLSMessage("Failed to delete '%s' !")
+  @NLSMessage( "Failed to delete '%s' !" )
   public static String        MSG_FAILEDTODELETE;
 
   /** - */
   public static final String  PROP_A4ETEMPDIR = "ant4eclipse.temp";
 
   /** - */
-  public static final String  NL              = System.getProperty("line.separator");
+  public static final String  NL              = System.getProperty( "line.separator" );
 
   /** - */
-  public static final String  ENCODING        = System.getProperty("file.encoding");
+  public static final String  ENCODING        = System.getProperty( "file.encoding" );
 
   /** - */
-  private static final String OS              = System.getProperty("os.name");
+  private static final String OS              = System.getProperty( "os.name" );
 
   static {
-    NLS.initialize(Utilities.class);
+    NLS.initialize( Utilities.class );
   }
 
   /**
@@ -98,12 +98,12 @@ public class Utilities {
    * 
    * @return The canonical file. Not <code>null</code>.
    */
-  public static final File getCanonicalFile(File file) {
-    Assure.notNull("file", file);
+  public static final File getCanonicalFile( File file ) {
+    Assure.notNull( "file", file );
     try {
       return file.getCanonicalFile();
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.CANONICAL_FILE, file);
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.CANONICAL_FILE, file );
     }
   }
 
@@ -120,12 +120,12 @@ public class Utilities {
    * 
    * @return The buffer containing the file content. Not <code>null</code>.
    */
-  public static final StringBuffer readTextContent(String resource, String encoding, boolean includenewlines) {
-    URL url = Utilities.class.getResource(resource);
-    if (url == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
+  public static final StringBuffer readTextContent( String resource, String encoding, boolean includenewlines ) {
+    URL url = Utilities.class.getResource( resource );
+    if( url == null ) {
+      throw new Ant4EclipseException( CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource );
     }
-    return readTextContent(url, encoding, includenewlines);
+    return readTextContent( url, encoding, includenewlines );
   }
 
   /**
@@ -141,17 +141,17 @@ public class Utilities {
    * 
    * @return The buffer containing the file content. Not <code>null</code>.
    */
-  public static final StringBuffer readTextContent(File input, String encoding, boolean includenewlines) {
+  public static final StringBuffer readTextContent( File input, String encoding, boolean includenewlines ) {
     InputStream instream = null;
     try {
-      instream = new FileInputStream(input);
-      return readTextContent(instream, encoding, includenewlines);
-    } catch (Ant4EclipseException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, input);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, input);
+      instream = new FileInputStream( input );
+      return readTextContent( instream, encoding, includenewlines );
+    } catch( Ant4EclipseException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.FILEIO_FAILURE, input );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.FILEIO_FAILURE, input );
     } finally {
-      close(instream);
+      close( instream );
     }
   }
 
@@ -168,17 +168,17 @@ public class Utilities {
    * 
    * @return The buffer containing the file content. Not <code>null</code>.
    */
-  public static final StringBuffer readTextContent(URL input, String encoding, boolean includenewlines) {
+  public static final StringBuffer readTextContent( URL input, String encoding, boolean includenewlines ) {
     InputStream instream = null;
     try {
       instream = input.openStream();
-      return readTextContent(instream, encoding, includenewlines);
-    } catch (Ant4EclipseException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, input.toExternalForm());
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, input.toExternalForm());
+      return readTextContent( instream, encoding, includenewlines );
+    } catch( Ant4EclipseException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.RESOURCEIO_FAILURE, input.toExternalForm() );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.RESOURCEIO_FAILURE, input.toExternalForm() );
     } finally {
-      close(instream);
+      close( instream );
     }
   }
 
@@ -195,24 +195,24 @@ public class Utilities {
    * 
    * @return The buffer containing the file content. Not <code>null</code>.
    */
-  public static final StringBuffer readTextContent(InputStream input, String encoding, boolean includenewlines) {
+  public static final StringBuffer readTextContent( InputStream input, String encoding, boolean includenewlines ) {
     try {
       StringBuffer result = new StringBuffer();
-      OutputCopier copier = new OutputCopier(input, result, encoding);
+      OutputCopier copier = new OutputCopier( input, result, encoding );
       copier.start();
       copier.join();
-      if (!includenewlines) {
-        int pos = result.indexOf(NL);
-        while (pos != -1) {
-          result.delete(pos, pos + NL.length());
-          pos = result.indexOf(NL);
+      if( !includenewlines ) {
+        int pos = result.indexOf( NL );
+        while( pos != -1 ) {
+          result.delete( pos, pos + NL.length() );
+          pos = result.indexOf( NL );
         }
       }
       return result;
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
-    } catch (InterruptedException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, input);
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
+    } catch( InterruptedException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.FILEIO_FAILURE, input );
     }
   }
 
@@ -222,13 +222,13 @@ public class Utilities {
    * @param closeable
    *          The closeable that has to be closed. Maybe <code>null</code>.
    */
-  public static final void close(Closeable closeable) {
-    if (closeable != null) {
+  public static final void close( Closeable closeable ) {
+    if( closeable != null ) {
       try {
         closeable.close();
-      } catch (IOException ex) {
+      } catch( IOException ex ) {
         // generally not interesting so a warning is apropriate here
-        A4ELogging.warn(ex.getMessage());
+        A4ELogging.warn( ex.getMessage() );
       }
     }
   }
@@ -237,41 +237,41 @@ public class Utilities {
    * @see #close(Closeable)
    */
   @Deprecated
-  public static final void close(InputStream instream) {
-    close((Closeable) instream);
+  public static final void close( InputStream instream ) {
+    close( (Closeable) instream );
   }
 
   /**
    * @see #close(Closeable)
    */
   @Deprecated
-  public static final void close(OutputStream outstream) {
-    close((Closeable) outstream);
+  public static final void close( OutputStream outstream ) {
+    close( (Closeable) outstream );
   }
 
   /**
    * @see #close(Closeable)
    */
   @Deprecated
-  public static final void close(Reader reader) {
-    close((Closeable) reader);
+  public static final void close( Reader reader ) {
+    close( (Closeable) reader );
   }
 
   /**
    * @see #close(Closeable)
    */
   @Deprecated
-  public static final void close(Writer writer) {
-    close((Closeable) writer);
+  public static final void close( Writer writer ) {
+    close( (Closeable) writer );
   }
 
-  public static final URL toURL(File file) {
-    Assure.notNull("file", file);
+  public static final URL toURL( File file ) {
+    Assure.notNull( "file", file );
     URI uri = file.toURI();
     try {
       return uri.toURL();
-    } catch (MalformedURLException ex) {
-      throw new RuntimeException(ex);
+    } catch( MalformedURLException ex ) {
+      throw new RuntimeException( ex );
     }
   }
 
@@ -284,18 +284,18 @@ public class Utilities {
    * 
    * @return true <=> The path could be deleted with success.
    */
-  public static final boolean delete(File file) {
-    Assure.notNull("file", file);
-    if (!file.exists()) {
+  public static final boolean delete( File file ) {
+    Assure.notNull( "file", file );
+    if( !file.exists() ) {
       return true;
     }
     boolean result = true;
-    if (file.isDirectory()) {
+    if( file.isDirectory() ) {
       // delete the children
       File[] children = file.listFiles();
-      if (children != null) {
-        for (File element : children) {
-          result = delete(element) && result;
+      if( children != null ) {
+        for( File element : children ) {
+          result = delete( element ) && result;
         }
       }
     }
@@ -303,18 +303,18 @@ public class Utilities {
     // since the deletion query may fail (f.e.
     // if another process locked the file)
     int tries = 5;
-    while ((!file.delete()) && (tries > 0)) {
+    while( (!file.delete()) && (tries > 0) ) {
       try {
         System.gc();
-        Thread.sleep(10);
+        Thread.sleep( 10 );
         System.gc();
-      } catch (InterruptedException ex) {
+      } catch( InterruptedException ex ) {
         // do nothing here
       }
       tries--;
     }
-    if (file.exists()) {
-      A4ELogging.warn(MSG_FAILEDTODELETE, file.getPath());
+    if( file.exists() ) {
+      A4ELogging.warn( MSG_FAILEDTODELETE, file.getPath() );
       result = false;
     }
     return result;
@@ -328,39 +328,39 @@ public class Utilities {
    * 
    * @return The list containing all children. Not <code>null</code>.
    */
-  public static final List<File> getAllChildren(File file) {
-    Assure.notNull("file", file);
+  public static final List<File> getAllChildren( File file ) {
+    Assure.notNull( "file", file );
     List<File> result = new ArrayList<File>();
-    if (file.isDirectory()) {
+    if( file.isDirectory() ) {
       // add the children
       File[] children = file.listFiles();
-      if (children != null) {
-        for (File element : children) {
-          if (element.isFile()) {
-            result.add(element);
+      if( children != null ) {
+        for( File element : children ) {
+          if( element.isFile() ) {
+            result.add( element );
           } else {
-            result.addAll(getAllChildren(element));
+            result.addAll( getAllChildren( element ) );
           }
         }
       }
     } else {
-      result.add(file);
+      result.add( file );
     }
     return result;
   }
 
-  public static final boolean hasChild(File directory, final String childName) {
-    return getChild(directory, childName) != null;
+  public static final boolean hasChild( File directory, final String childName ) {
+    return getChild( directory, childName ) != null;
   }
 
-  public static final File getChild(File directory, final String childName) {
-    File[] children = directory.listFiles(new FilenameFilter() {
+  public static final File getChild( File directory, final String childName ) {
+    File[] children = directory.listFiles( new FilenameFilter() {
       @Override
-      public boolean accept(File dir, String name) {
-        return name.equals(childName);
+      public boolean accept( File dir, String name ) {
+        return name.equals( childName );
       }
-    });
-    if (children.length < 1) {
+    } );
+    if( children.length < 1 ) {
       return null;
     }
     return children[0];
@@ -378,19 +378,19 @@ public class Utilities {
    * 
    * @return The modified text. Not <code>null</code>.
    */
-  public static final String replace(String input, String search, String replacement) {
-    Assure.notNull("input", input);
-    Assure.notNull("search", search);
-    Assure.notNull("replacement", replacement);
-    int idx = input.indexOf(search);
-    if (idx == -1) {
+  public static final String replace( String input, String search, String replacement ) {
+    Assure.notNull( "input", input );
+    Assure.notNull( "search", search );
+    Assure.notNull( "replacement", replacement );
+    int idx = input.indexOf( search );
+    if( idx == -1 ) {
       return input;
     }
-    StringBuffer buffer = new StringBuffer(input);
-    while (idx != -1) {
-      buffer.delete(idx, idx + search.length());
-      buffer.insert(idx, replacement);
-      idx = buffer.indexOf(search, idx + replacement.length());
+    StringBuffer buffer = new StringBuffer( input );
+    while( idx != -1 ) {
+      buffer.delete( idx, idx + search.length() );
+      buffer.insert( idx, replacement );
+      idx = buffer.indexOf( search, idx + replacement.length() );
     }
     return buffer.toString();
   }
@@ -407,8 +407,8 @@ public class Utilities {
    * 
    * @return A string with replaced characters. Not <code>null</code>.
    */
-  public static final String replace(String input, char ch, String replacement) {
-    return replace(input, String.valueOf(ch), replacement);
+  public static final String replace( String input, char ch, String replacement ) {
+    return replace( input, String.valueOf( ch ), replacement );
   }
 
   /**
@@ -421,33 +421,33 @@ public class Utilities {
    * 
    * @return The file which indicates the relative path. null in case the relative path could not be calculated.
    */
-  public static final String calcRelative(File fromfile, File tofile) {
-    Assure.notNull("fromfile", fromfile);
-    Assure.notNull("tofile", tofile);
+  public static final String calcRelative( File fromfile, File tofile ) {
+    Assure.notNull( "fromfile", fromfile );
+    Assure.notNull( "tofile", tofile );
     String frompath = null;
     String topath = null;
     try {
-      frompath = fromfile.getCanonicalPath().replace('\\', '/');
-    } catch (IOException ex) {
+      frompath = fromfile.getCanonicalPath().replace( '\\', '/' );
+    } catch( IOException ex ) {
       return null;
     }
     try {
-      topath = tofile.getCanonicalPath().replace('\\', '/');
-    } catch (IOException ex) {
+      topath = tofile.getCanonicalPath().replace( '\\', '/' );
+    } catch( IOException ex ) {
       return null;
     }
-    if (frompath.equals("/")) {
+    if( frompath.equals( "/" ) ) {
       // special treatment for unix filesystems since split would result in an empty list
-      if (topath.startsWith("/")) {
-        return replace(topath.substring(1), "/", File.separator);
+      if( topath.startsWith( "/" ) ) {
+        return replace( topath.substring( 1 ), "/", File.separator );
       } else {
         // the other path is invalid
         return null;
       }
     }
-    String[] fromstr = frompath.split("/");
-    String[] tostr = topath.split("/");
-    if (!fromstr[0].equals(tostr[0])) {
+    String[] fromstr = frompath.split( "/" );
+    String[] tostr = topath.split( "/" );
+    if( !fromstr[0].equals( tostr[0] ) ) {
       // we're not working on the same device
       /**
        * @todo [26-Feb-2006:KASI] Can this be omitted under UNIX ?
@@ -455,22 +455,22 @@ public class Utilities {
       return null;
     }
     int same = 1;
-    for (; same < Math.min(fromstr.length, tostr.length); same++) {
-      if (!fromstr[same].equals(tostr[same])) {
+    for( ; same < Math.min( fromstr.length, tostr.length ); same++ ) {
+      if( !fromstr[same].equals( tostr[same] ) ) {
         break;
       }
     }
     StringBuffer buffer = new StringBuffer();
-    for (int i = same; i < fromstr.length; i++) {
-      buffer.append(File.separator);
-      buffer.append("..");
+    for( int i = same; i < fromstr.length; i++ ) {
+      buffer.append( File.separator );
+      buffer.append( ".." );
     }
-    for (int i = same; i < tostr.length; i++) {
-      buffer.append(File.separator);
-      buffer.append(tostr[i]);
+    for( int i = same; i < tostr.length; i++ ) {
+      buffer.append( File.separator );
+      buffer.append( tostr[i] );
     }
-    if (buffer.length() > 0) {
-      buffer.delete(0, File.separator.length());
+    if( buffer.length() > 0 ) {
+      buffer.delete( 0, File.separator.length() );
     }
     return buffer.toString();
   }
@@ -481,12 +481,12 @@ public class Utilities {
    * @param path
    * @return the path without a trailing path separator
    */
-  public static final String removeTrailingPathSeparator(String path) {
-    if ((path == null) || (path.length() < 2)) {
+  public static final String removeTrailingPathSeparator( String path ) {
+    if( (path == null) || (path.length() < 2) ) {
       return path;
     }
-    if (path.endsWith("/") || path.endsWith("\\")) {
-      return path.substring(0, path.length() - 1);
+    if( path.endsWith( "/" ) || path.endsWith( "\\" ) ) {
+      return path.substring( 0, path.length() - 1 );
     }
     return path;
   }
@@ -497,10 +497,10 @@ public class Utilities {
    * @param array
    *          the array whose elements are to be reversed.
    */
-  public static <T> void reverse(T[] array) {
-    if (array != null) {
-      final List<T> list = Arrays.asList(array);
-      Collections.reverse(list);
+  public static <T> void reverse( T[] array ) {
+    if( array != null ) {
+      final List<T> list = Arrays.asList( array );
+      Collections.reverse( list );
     }
   }
 
@@ -526,8 +526,8 @@ public class Utilities {
    * @return <code>true</code> if the String is not null, length > 0, and not whitespace only
    * @see java.lang.Character#isWhitespace
    */
-  public static final boolean hasText(String str) {
-    return cleanup(str) != null;
+  public static final boolean hasText( String str ) {
+    return cleanup( str ) != null;
   }
 
   /**
@@ -538,11 +538,11 @@ public class Utilities {
    * 
    * @return <code>null</code> in case there's no value or a String which contains at least one valuable character.
    */
-  public static final String cleanup(String input) {
+  public static final String cleanup( String input ) {
     String result = input;
-    if (result != null) {
+    if( result != null ) {
       result = result.trim();
-      if (result.length() == 0) {
+      if( result.length() == 0 ) {
         result = null;
       }
     }
@@ -558,20 +558,20 @@ public class Utilities {
    * 
    * @return A list of the input values which is either <code>null</code> or contains at least one non empty value.
    */
-  public static final String[] cleanup(String[] input) {
+  public static final String[] cleanup( String[] input ) {
     List<String> result = new ArrayList<String>();
-    if (input != null) {
-      for (String element2 : input) {
-        String element = cleanup(element2);
-        if (element != null) {
-          result.add(element);
+    if( input != null ) {
+      for( String element2 : input ) {
+        String element = cleanup( element2 );
+        if( element != null ) {
+          result.add( element );
         }
       }
-      if (result.isEmpty()) {
+      if( result.isEmpty() ) {
         return null;
       }
     }
-    return result.toArray(new String[result.size()]);
+    return result.toArray( new String[result.size()] );
   }
 
   /**
@@ -584,32 +584,33 @@ public class Utilities {
    * 
    * @return A textual representation for the supplied list of values. Not <code>null</code>.
    */
-  public static final String listToString(Object[] objects, String delimiter) {
-    Assure.notNull("objects", objects);
-    if (delimiter == null) {
+  public static final String listToString( Object[] objects, String delimiter ) {
+    Assure.notNull( "objects", objects );
+    if( delimiter == null ) {
       delimiter = ",";
     }
     StringBuffer buffer = new StringBuffer();
-    if (objects.length > 0) {
-      buffer.append(String.valueOf(objects[0]));
-      for (int i = 1; i < objects.length; i++) {
-        buffer.append(delimiter);
-        buffer.append(String.valueOf(objects[i]));
+    if( objects.length > 0 ) {
+      buffer.append( String.valueOf( objects[0] ) );
+      for( int i = 1; i < objects.length; i++ ) {
+        buffer.append( delimiter );
+        buffer.append( String.valueOf( objects[i] ) );
       }
     }
     return buffer.toString();
   }
-  
+
   /**
    * Returns a list of all classes for all supplied objects.
    * 
-   * @param objects   The objects used to get the class types for. Maybe <code>null</code>.
+   * @param objects
+   *          The objects used to get the class types for. Maybe <code>null</code>.
    * 
-   * @return   A list of all classes for all supplied objects. Not <code>null</code>.
+   * @return A list of all classes for all supplied objects. Not <code>null</code>.
    */
   public static final Class<?>[] getClasses( Object ... objects ) {
     if( objects != null ) {
-      Class<?>[] result = new Class<?>[ objects.length ];
+      Class<?>[] result = new Class<?>[objects.length];
       for( int i = 0; i < objects.length; i++ ) {
         result[i] = objects[i].getClass();
       }
@@ -622,13 +623,14 @@ public class Utilities {
   /**
    * Delivers a <code>String</code> representation of the supplied list of classes.
    * 
-   * @param delimiter     The delimiter to be used. If <code>null</code> comma will be used.
-   * @param simplename    <code>true</code> <=> Use the class simplename rather than the fully
-   *                      qualified name.
-   * @param classes       The list of classes which shall be turned into a textual presentation.
-   *                      Mabye <code>null</code>.
-   *                      
-   * @return   A textual presentation of the supplied classes. Not <code>null</code>.
+   * @param delimiter
+   *          The delimiter to be used. If <code>null</code> comma will be used.
+   * @param simplename
+   *          <code>true</code> <=> Use the class simplename rather than the fully qualified name.
+   * @param classes
+   *          The list of classes which shall be turned into a textual presentation. Mabye <code>null</code>.
+   * 
+   * @return A textual presentation of the supplied classes. Not <code>null</code>.
    */
   public static final String toString( String delimiter, boolean simplename, Class<?> ... classes ) {
     if( delimiter == null ) {
@@ -644,7 +646,7 @@ public class Utilities {
     }
     return buffer.toString();
   }
-  
+
   /**
    * Generates a textual representation of the supplied Property map.
    * 
@@ -653,8 +655,8 @@ public class Utilities {
    * 
    * @return The text representing the content of the supplied map.
    */
-  public static final String toString(Properties properties) {
-    return toString(null, properties);
+  public static final String toString( Properties properties ) {
+    return toString( null, properties );
   }
 
   /**
@@ -667,21 +669,21 @@ public class Utilities {
    * 
    * @return The text representing the content of the supplied map.
    */
-  public static final String toString(String title, Properties properties) {
-    Assure.notNull("properties", properties);
+  public static final String toString( String title, Properties properties ) {
+    Assure.notNull( "properties", properties );
     StringBuilder buffer = new StringBuilder();
-    if (title != null) {
-      buffer.append(title);
-      buffer.append(NL);
+    if( title != null ) {
+      buffer.append( title );
+      buffer.append( NL );
     }
-    Iterator<Entry<Object, Object>> it = properties.entrySet().iterator();
-    while (it.hasNext()) {
-      Entry<Object, Object> entry = it.next();
-      buffer.append("'").append(entry.getKey());
-      buffer.append("' -> '");
-      buffer.append(entry.getValue());
-      buffer.append("'");
-      buffer.append(NL);
+    Iterator<Entry<Object,Object>> it = properties.entrySet().iterator();
+    while( it.hasNext() ) {
+      Entry<Object,Object> entry = it.next();
+      buffer.append( "'" ).append( entry.getKey() );
+      buffer.append( "' -> '" );
+      buffer.append( entry.getValue() );
+      buffer.append( "'" );
+      buffer.append( NL );
     }
     return buffer.toString();
   }
@@ -691,16 +693,16 @@ public class Utilities {
    * 
    * @param directory
    */
-  public static final void mkdirs(File directory) {
-    Assure.notNull("directory", directory);
-    if (directory.isDirectory()) {
+  public static final void mkdirs( File directory ) {
+    Assure.notNull( "directory", directory );
+    if( directory.isDirectory() ) {
       return;
     }
-    if (directory.isFile()) {
-      throw new Ant4EclipseException(CoreExceptionCode.PATH_MUST_NOT_BE_A_FILE, directory);
+    if( directory.isFile() ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PATH_MUST_NOT_BE_A_FILE, directory );
     }
-    if (!directory.mkdirs()) {
-      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
+    if( !directory.mkdirs() ) {
+      throw new Ant4EclipseException( CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory );
     }
   }
 
@@ -713,44 +715,44 @@ public class Utilities {
    * @param className
    * @return
    */
-  @SuppressWarnings("unchecked")
-  public static final <T> T newInstance(String className) {
-    Assure.notNull("className", className);
+  @SuppressWarnings( "unchecked" )
+  public static final <T> T newInstance( String className ) {
+    Assure.notNull( "className", className );
     Class<?> clazz = null;
     try {
-      clazz = Class.forName(className);
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
+      clazz = Class.forName( className );
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString() );
     }
     // try to instantiate using default cstr...
     T object = null;
     try {
       object = (T) clazz.newInstance();
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString() );
     }
     // return the constructed object
     return object;
   }
 
-  @SuppressWarnings("unchecked")
-  public static final <T> T newInstance(String className, Class<?>[] types, Object[] args) {
-    Assure.notNull("className", className);
+  @SuppressWarnings( "unchecked" )
+  public static final <T> T newInstance( String className, Class<?>[] types, Object[] args ) {
+    Assure.notNull( "className", className );
     Class<?> clazz = null;
     try {
-      clazz = Class.forName(className);
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
+      clazz = Class.forName( className );
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString() );
     }
     // try to instantiate...
     T object = null;
     try {
-      Constructor<?> constructor = clazz.getDeclaredConstructor(types);
-      constructor.setAccessible(true);
-      constructor.newInstance(args);
-      object = (T) constructor.newInstance(args);
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+      Constructor<?> constructor = clazz.getDeclaredConstructor( types );
+      constructor.setAccessible( true );
+      constructor.newInstance( args );
+      object = (T) constructor.newInstance( args );
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString() );
     }
     // return the constructed object
     return object;
@@ -768,28 +770,28 @@ public class Utilities {
    * 
    * @return The newly instantiated type. Not <code>null</code>.
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  public static final <T> T newInstance(String className, String arg) {
-    Assure.notNull("className", className);
+  @SuppressWarnings( { "unchecked", "rawtypes" } )
+  public static final <T> T newInstance( String className, String arg ) {
+    Assure.notNull( "className", className );
     Class<?> clazz = null;
     // Try to load class...
     try {
-      clazz = Class.forName(className);
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString());
+      clazz = Class.forName( className );
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_LOAD_CLASS, className, ex.toString() );
     }
     Constructor constructor = null;
     try {
-      constructor = clazz.getConstructor(String.class);
-    } catch (NoSuchMethodException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+      constructor = clazz.getConstructor( String.class );
+    } catch( NoSuchMethodException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString() );
     }
     // try to instantiate using default cstr...
     T object = null;
     try {
-      object = (T) constructor.newInstance(arg);
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString());
+      object = (T) constructor.newInstance( arg );
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString() );
     }
 
     // return the constructed object
@@ -806,11 +808,11 @@ public class Utilities {
    * 
    * @return <code>true</code> <=> The supplied literal is part of the allowed values.
    */
-  public static final boolean contains(String candidate, String... allowed) {
-    Assure.notNull("candidate", candidate);
-    Assure.notNull("allowed", allowed);
-    for (String part : allowed) {
-      if (candidate.equals(part)) {
+  public static final boolean contains( String candidate, String ... allowed ) {
+    Assure.notNull( "candidate", candidate );
+    Assure.notNull( "allowed", allowed );
+    for( String part : allowed ) {
+      if( candidate.equals( part ) ) {
         return true;
       }
     }
@@ -827,13 +829,13 @@ public class Utilities {
    * 
    * @return A list with the input elements that do match the specified type. Not <code>null</code>.
    */
-  public static final List<Object> filter(List<Object> input, Class<?> clazz) {
-    Assure.notNull("input", input);
-    Assure.notNull("clazz", clazz);
+  public static final List<Object> filter( List<Object> input, Class<?> clazz ) {
+    Assure.notNull( "input", input );
+    Assure.notNull( "clazz", clazz );
     List<Object> result = new ArrayList<Object>();
-    for (int i = 0; i < input.size(); i++) {
-      if (clazz.isAssignableFrom(input.get(i).getClass())) {
-        result.add(input.get(i));
+    for( int i = 0; i < input.size(); i++ ) {
+      if( clazz.isAssignableFrom( input.get( i ).getClass() ) ) {
+        result.add( input.get( i ) );
       }
     }
     return result;
@@ -848,18 +850,18 @@ public class Utilities {
    * @param dest
    *          The destination file where the copy shall be created. Not <code>null</code>.
    */
-  public static final void copy(URL source, File dest) {
-    Assure.notNull("source", source);
-    Assure.notNull("dest", dest);
+  public static final void copy( URL source, File dest ) {
+    Assure.notNull( "source", source );
+    Assure.notNull( "dest", dest );
     InputStream instream = null;
     OutputStream outstream = null;
     try {
       instream = source.openStream();
-      outstream = new FileOutputStream(dest);
+      outstream = new FileOutputStream( dest );
       byte[] buffer = new byte[16384];
-      copy(instream, outstream, buffer);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, source.toExternalForm(), dest);
+      copy( instream, outstream, buffer );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_EXPORT_RESOURCE, source.toExternalForm(), dest );
     }
   }
 
@@ -873,28 +875,28 @@ public class Utilities {
    * @param destdir
    *          The directory where the content shall be written to. Not <code>null</code>.
    */
-  public static final void unpack(File zipfile, File destdir) {
-    Assure.notNull("zipfile", zipfile);
-    Assure.notNull("destdir", destdir);
+  public static final void unpack( File zipfile, File destdir ) {
+    Assure.notNull( "zipfile", zipfile );
+    Assure.notNull( "destdir", destdir );
     byte[] buffer = new byte[16384];
     try {
-      if (!destdir.isAbsolute()) {
+      if( !destdir.isAbsolute() ) {
         destdir = destdir.getAbsoluteFile();
       }
-      ZipFile zip = new ZipFile(zipfile);
+      ZipFile zip = new ZipFile( zipfile );
       Enumeration<? extends ZipEntry> entries = zip.entries();
-      while (entries.hasMoreElements()) {
+      while( entries.hasMoreElements() ) {
         ZipEntry zentry = entries.nextElement();
-        if (zentry.isDirectory()) {
-          mkdirs(new File(destdir, zentry.getName()));
+        if( zentry.isDirectory() ) {
+          mkdirs( new File( destdir, zentry.getName() ) );
         } else {
-          File destfile = new File(destdir, zentry.getName());
-          mkdirs(destfile.getParentFile());
-          copy(zip.getInputStream(zentry), new FileOutputStream(destfile), buffer);
+          File destfile = new File( destdir, zentry.getName() );
+          mkdirs( destfile.getParentFile() );
+          copy( zip.getInputStream( zentry ), new FileOutputStream( destfile ), buffer );
         }
       }
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.UNPACKING_FAILED, zipfile);
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.UNPACKING_FAILED, zipfile );
     }
   }
 
@@ -906,26 +908,27 @@ public class Utilities {
    * @param to
    *          The destination File which has to be written. Not <code>null</code>.
    */
-  public static final void copy(File source, File to) {
-    Assure.isFile("source", source);
-    Assure.notNull("to", to);
+  public static final void copy( File source, File to ) {
+    Assure.isFile( "source", source );
+    Assure.notNull( "to", to );
     FileInputStream instream = null;
     FileOutputStream outstream = null;
     FileChannel readchannel = null;
     FileChannel writechannel = null;
     try {
-      instream = new FileInputStream(source);
-      outstream = new FileOutputStream(to);
+      instream = new FileInputStream( source );
+      outstream = new FileOutputStream( to );
       readchannel = instream.getChannel();
       writechannel = outstream.getChannel();
-      readchannel.transferTo(0, readchannel.size(), writechannel);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COPY_FAILURE, source.getAbsolutePath(), to.getAbsolutePath());
+      readchannel.transferTo( 0, readchannel.size(), writechannel );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.COPY_FAILURE, source.getAbsolutePath(),
+          to.getAbsolutePath() );
     } finally {
-      close(readchannel);
-      close(writechannel);
-      close(instream);
-      close(outstream);
+      close( readchannel );
+      close( writechannel );
+      close( instream );
+      close( outstream );
     }
   }
 
@@ -943,21 +946,21 @@ public class Utilities {
    * @throws IOException
    *           Copying failed for some reason.
    */
-  public static final void copy(InputStream instream, OutputStream outstream, byte[] buffer) throws IOException {
-    Assure.notNull("instream", instream);
-    Assure.notNull("outstream", outstream);
-    Assure.nonEmpty("buffer", buffer);
+  public static final void copy( InputStream instream, OutputStream outstream, byte[] buffer ) throws IOException {
+    Assure.notNull( "instream", instream );
+    Assure.notNull( "outstream", outstream );
+    Assure.nonEmpty( "buffer", buffer );
     try {
-      int read = instream.read(buffer);
-      while (read != -1) {
-        if (read > 0) {
-          outstream.write(buffer, 0, read);
+      int read = instream.read( buffer );
+      while( read != -1 ) {
+        if( read > 0 ) {
+          outstream.write( buffer, 0, read );
         }
-        read = instream.read(buffer);
+        read = instream.read( buffer );
       }
     } finally {
-      close(outstream);
-      close(instream);
+      close( outstream );
+      close( instream );
     }
   }
 
@@ -973,15 +976,15 @@ public class Utilities {
    * 
    * @return The file keeping the exported content.
    */
-  public static final File exportResource(String resource) {
-    Assure.nonEmpty("resource", resource);
-    Assure.assertTrue(resource.startsWith("/"), MSG_INVALIDRESOURCEPATH);
+  public static final File exportResource( String resource ) {
+    Assure.nonEmpty( "resource", resource );
+    Assure.assertTrue( resource.startsWith( "/" ), MSG_INVALIDRESOURCEPATH );
     String suffix = ".tmp";
-    int lidx = resource.lastIndexOf('.');
-    if (lidx != -1) {
-      suffix = resource.substring(lidx);
+    int lidx = resource.lastIndexOf( '.' );
+    if( lidx != -1 ) {
+      suffix = resource.substring( lidx );
     }
-    return exportResource(resource, suffix);
+    return exportResource( resource, suffix );
   }
 
   /**
@@ -997,19 +1000,19 @@ public class Utilities {
    * 
    * @return The file keeping the exported content.
    */
-  public static final File exportResource(String resource, String suffix) {
-    Assure.nonEmpty("resource", resource);
-    Assure.assertTrue(resource.startsWith("/"), MSG_INVALIDRESOURCEPATH);
-    URL url = Utilities.class.getResource(resource);
-    if (url == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource);
+  public static final File exportResource( String resource, String suffix ) {
+    Assure.nonEmpty( "resource", resource );
+    Assure.assertTrue( resource.startsWith( "/" ), MSG_INVALIDRESOURCEPATH );
+    URL url = Utilities.class.getResource( resource );
+    if( url == null ) {
+      throw new Ant4EclipseException( CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource );
     }
     try {
-      File result = createTempFile("", suffix, ENCODING);
-      copy(url, result);
+      File result = createTempFile( "", suffix, ENCODING );
+      copy( url, result );
       return result.getCanonicalFile();
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
     }
   }
 
@@ -1021,23 +1024,23 @@ public class Utilities {
   public static final File createTempDir() {
     try {
       File result = null;
-      String tempdir = cleanup(System.getProperty(PROP_A4ETEMPDIR));
-      if (tempdir != null) {
-        File dir = new File(tempdir);
-        mkdirs(dir);
-        result = File.createTempFile("a4e", "dir", dir);
+      String tempdir = cleanup( System.getProperty( PROP_A4ETEMPDIR ) );
+      if( tempdir != null ) {
+        File dir = new File( tempdir );
+        mkdirs( dir );
+        result = File.createTempFile( "a4e", "dir", dir );
       } else {
-        result = File.createTempFile("a4e", "dir");
+        result = File.createTempFile( "a4e", "dir" );
       }
-      if (!delete(result)) {
-        throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      if( !delete( result ) ) {
+        throw new Ant4EclipseException( CoreExceptionCode.IO_FAILURE );
       }
-      if (!result.mkdirs()) {
-        throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      if( !result.mkdirs() ) {
+        throw new Ant4EclipseException( CoreExceptionCode.IO_FAILURE );
       }
       return result;
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
     }
   }
 
@@ -1053,17 +1056,17 @@ public class Utilities {
    * 
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
-  public static final File createTempFile(String content, String suffix, String encoding) {
-    Assure.notNull("content", content);
-    Assure.nonEmpty("encoding", encoding);
+  public static final File createTempFile( String content, String suffix, String encoding ) {
+    Assure.notNull( "content", content );
+    Assure.nonEmpty( "encoding", encoding );
     try {
-      File result = File.createTempFile("a4e", suffix);
-      writeFile(result, content, encoding);
+      File result = File.createTempFile( "a4e", suffix );
+      writeFile( result, content, encoding );
       return result.getCanonicalFile();
-    } catch (IOException ex) {
-      A4ELogging.debug("Temp dir: %s", System.getProperty("java.io.tmpdir"));
-      A4ELogging.debug("CanWrite: %s", new File(System.getProperty("java.io.tmpdir")).canWrite());
-      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+    } catch( IOException ex ) {
+      A4ELogging.debug( "Temp dir: %s", System.getProperty( "java.io.tmpdir" ) );
+      A4ELogging.debug( "CanWrite: %s", new File( System.getProperty( "java.io.tmpdir" ) ).canWrite() );
+      throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
     }
   }
 
@@ -1077,21 +1080,21 @@ public class Utilities {
    * @param encoding
    *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    */
-  public static final void writeFile(File destination, String content, String encoding) {
-    Assure.notNull("destination", destination);
-    Assure.notNull("content", content);
-    Assure.nonEmpty("encoding", encoding);
+  public static final void writeFile( File destination, String content, String encoding ) {
+    Assure.notNull( "destination", destination );
+    Assure.notNull( "content", content );
+    Assure.nonEmpty( "encoding", encoding );
     OutputStream output = null;
     Writer writer = null;
     try {
-      output = new FileOutputStream(destination);
-      writer = new OutputStreamWriter(output, encoding);
-      writer.write(content);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+      output = new FileOutputStream( destination );
+      writer = new OutputStreamWriter( output, encoding );
+      writer.write( content );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
     } finally {
-      close(writer);
-      close(output);
+      close( writer );
+      close( output );
     }
   }
 
@@ -1103,17 +1106,17 @@ public class Utilities {
    * @param content
    *          The content that has to be written. Not <code>null</code>.
    */
-  public static final void writeFile(File destination, byte[] content) {
-    Assure.notNull("destination", destination);
-    Assure.notNull("content", content);
+  public static final void writeFile( File destination, byte[] content ) {
+    Assure.notNull( "destination", destination );
+    Assure.notNull( "content", content );
     OutputStream output = null;
     try {
-      output = new FileOutputStream(destination);
-      output.write(content);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, destination);
+      output = new FileOutputStream( destination );
+      output.write( content );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.FILEIO_FAILURE, destination );
     } finally {
-      close(output);
+      close( output );
     }
   }
 
@@ -1125,11 +1128,11 @@ public class Utilities {
    * 
    * @return The name without the suffix.
    */
-  public static final String stripSuffix(String name) {
-    Assure.notNull("name", name);
-    int lidx = name.lastIndexOf('.');
-    if (lidx != -1) {
-      return name.substring(0, lidx);
+  public static final String stripSuffix( String name ) {
+    Assure.notNull( "name", name );
+    int lidx = name.lastIndexOf( '.' );
+    if( lidx != -1 ) {
+      return name.substring( 0, lidx );
     } else {
       return name;
     }
@@ -1146,10 +1149,10 @@ public class Utilities {
    * @param args
    *          The arguments for the execution. Maybe <code>null</code>.
    */
-  public static final void execute(File exe, StringBuffer output, String... args) {
-    execute(exe, output, null, args);
+  public static final void execute( File exe, StringBuffer output, String ... args ) {
+    execute( exe, output, null, args );
   }
-  
+
   /**
    * <p>
    * Expands the specified jar file to the expansion directory.
@@ -1161,46 +1164,46 @@ public class Utilities {
    *          the expansion directory
    * @throws IOException
    */
-  public static synchronized final void expandJarFile(JarFile jarFile, File expansionDirectory) {
+  public static synchronized final void expandJarFile( JarFile jarFile, File expansionDirectory ) {
 
-    Assure.notNull("jarFile", jarFile);
-    Assure.notNull("expansionDirectory", expansionDirectory);
+    Assure.notNull( "jarFile", jarFile );
+    Assure.notNull( "expansionDirectory", expansionDirectory );
 
-    if (expansionDirectory.exists()) {
-      A4ELogging.info("%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
+    if( expansionDirectory.exists() ) {
+      A4ELogging.info( "%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory );
       return;
     }
 
-    A4ELogging.info("%s|Expanding '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
+    A4ELogging.info( "%s|Expanding '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory );
 
-    mkdirs(expansionDirectory);
+    mkdirs( expansionDirectory );
 
     // this way we make sure that calls to File#getParentFile always return non-null values
     expansionDirectory = expansionDirectory.getAbsoluteFile();
 
     Enumeration<JarEntry> entries = jarFile.entries();
-    while (entries.hasMoreElements()) {
+    while( entries.hasMoreElements() ) {
 
       ZipEntry zipEntry = entries.nextElement();
 
-      File destFile = new File(expansionDirectory, zipEntry.getName());
-      if (destFile.exists()) {
+      File destFile = new File( expansionDirectory, zipEntry.getName() );
+      if( destFile.exists() ) {
         // a directory might already have been created
         continue;
       }
 
-      if (zipEntry.isDirectory()) {
-        mkdirs(destFile);
+      if( zipEntry.isDirectory() ) {
+        mkdirs( destFile );
       } else {
-        mkdirs(destFile.getParentFile());
+        mkdirs( destFile.getParentFile() );
         InputStream inputStream = null;
         try {
-          inputStream = jarFile.getInputStream(zipEntry);
-          writeFile(inputStream, destFile);
-        } catch (IOException ex) {
-          throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+          inputStream = jarFile.getInputStream( zipEntry );
+          writeFile( inputStream, destFile );
+        } catch( IOException ex ) {
+          throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
         } finally {
-          close(inputStream);
+          close( inputStream );
         }
       }
 
@@ -1208,19 +1211,19 @@ public class Utilities {
 
   }
 
-  private static void writeFile(InputStream inputStream, File file) {
-    Assure.notNull("inputStream", inputStream);
+  private static void writeFile( InputStream inputStream, File file ) {
+    Assure.notNull( "inputStream", inputStream );
 
     FileOutputStream fos = null;
     try {
-      fos = new FileOutputStream(file);
+      fos = new FileOutputStream( file );
 
       byte buffer[] = new byte[1024];
       int count;
-      while ((count = inputStream.read(buffer, 0, buffer.length)) > 0) {
-        fos.write(buffer, 0, count);
+      while( (count = inputStream.read( buffer, 0, buffer.length )) > 0 ) {
+        fos.write( buffer, 0, count );
       }
-    } catch (IOException e) {
+    } catch( IOException e ) {
       /**
        * @todo [28-Jun-2009:KASI] The original code didn't take care of this, since it only closed the streams (now done
        *       within the finally sequence). Nevertheless the resource might not have been copied completely, so there's
@@ -1228,8 +1231,8 @@ public class Utilities {
        */
     } finally {
       // close open streams
-      close(fos);
-      close(inputStream);
+      close( fos );
+      close( inputStream );
     }
   }
 
@@ -1246,40 +1249,42 @@ public class Utilities {
    * @param args
    *          The arguments for the execution. Maybe <code>null</code>.
    */
-  public static final void execute(File exe, StringBuffer output, StringBuffer error, String... args) {
+  public static final void execute( File exe, StringBuffer output, StringBuffer error, String ... args ) {
 
     try {
 
-      if (output == null) {
+      if( output == null ) {
         output = new StringBuffer();
       }
 
-      if (error == null) {
+      if( error == null ) {
         error = new StringBuffer();
       }
 
       String[] cmdarray = null;
-      if (args == null) {
+      if( args == null ) {
         cmdarray = new String[] { exe.getAbsolutePath() };
       } else {
         cmdarray = new String[args.length + 1];
         cmdarray[0] = exe.getAbsolutePath();
-        System.arraycopy(args, 0, cmdarray, 1, args.length);
+        System.arraycopy( args, 0, cmdarray, 1, args.length );
       }
 
-      Process process = Runtime.getRuntime().exec(cmdarray);
-      OutputCopier outcopier = new OutputCopier(process.getInputStream(), output, ENCODING);
-      OutputCopier errcopier = new OutputCopier(process.getErrorStream(), error, ENCODING);
+      Process process = Runtime.getRuntime().exec( cmdarray );
+      OutputCopier outcopier = new OutputCopier( process.getInputStream(), output, ENCODING );
+      OutputCopier errcopier = new OutputCopier( process.getErrorStream(), error, ENCODING );
       outcopier.start();
       errcopier.start();
       int result = process.waitFor();
-      if (result != 0) {
-        A4ELogging.error(CoreExceptionCode.LAUNCHING_FAILURE.getMessage(), exe, Integer.valueOf(result), output, error);
-        throw new Ant4EclipseException(CoreExceptionCode.LAUNCHING_FAILURE, exe, Integer.valueOf(result), output, error);
+      if( result != 0 ) {
+        A4ELogging.error( CoreExceptionCode.LAUNCHING_FAILURE.getMessage(), exe, Integer.valueOf( result ), output,
+            error );
+        throw new Ant4EclipseException( CoreExceptionCode.LAUNCHING_FAILURE, exe, Integer.valueOf( result ), output,
+            error );
       }
 
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.EXECUTION_FAILURE, exe);
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.EXECUTION_FAILURE, exe );
     }
 
   }
@@ -1297,14 +1302,14 @@ public class Utilities {
    * 
    * @return <code>true</code> <=> Both objects are equal.
    */
-  public static final <T> boolean equals(T o1, T o2) {
-    if (o1 == null) {
+  public static final <T> boolean equals( T o1, T o2 ) {
+    if( o1 == null ) {
       return o2 == null;
-    } else if (o1 == o2) {
+    } else if( o1 == o2 ) {
       // not necessary but efficient
       return true;
     } else {
-      return o1.equals(o2);
+      return o1.equals( o2 );
     }
   }
 
@@ -1320,8 +1325,8 @@ public class Utilities {
    * 
    * @return The evaluated result. Not <code>null</code>.
    */
-  public static final String replaceTokens(String template, Map<String, String> replacements) {
-    return replaceTokens(template, replacements, OPEN, CLOSE);
+  public static final String replaceTokens( String template, Map<String,String> replacements ) {
+    return replaceTokens( template, replacements, OPEN, CLOSE );
   }
 
   /**
@@ -1340,39 +1345,39 @@ public class Utilities {
    * 
    * @return The evaluated result. Not <code>null</code>.
    */
-  public static final String replaceTokens(String template, Map<String, String> replacements, String openlit,
-      String closelit) {
-    Assure.notNull("template", template);
-    Assure.notNull("replacements", replacements);
-    Assure.notNull("openlit", openlit);
-    Assure.notNull("closelit", closelit);
-    StringBuffer buffer = new StringBuffer(template);
-    int index = buffer.indexOf(openlit);
-    while (index != -1) {
-      int next = buffer.indexOf(openlit, index + openlit.length());
-      int close = buffer.indexOf(closelit, index + openlit.length());
-      if (close == -1) {
+  public static final String replaceTokens( String template, Map<String,String> replacements, String openlit,
+      String closelit ) {
+    Assure.notNull( "template", template );
+    Assure.notNull( "replacements", replacements );
+    Assure.notNull( "openlit", openlit );
+    Assure.notNull( "closelit", closelit );
+    StringBuffer buffer = new StringBuffer( template );
+    int index = buffer.indexOf( openlit );
+    while( index != -1 ) {
+      int next = buffer.indexOf( openlit, index + openlit.length() );
+      int close = buffer.indexOf( closelit, index + openlit.length() );
+      if( close == -1 ) {
         // no closing anymore available, so there's no replacement operation to be done anymore
         break;
       }
-      if ((next != -1) && (next < close)) {
+      if( (next != -1) && (next < close) ) {
         // no close for the current literal, so continue with the next candidate
         index = next;
         continue;
       }
-      String key = buffer.substring(index + openlit.length(), close);
-      String value = replacements.get(key);
-      if (value != null) {
+      String key = buffer.substring( index + openlit.length(), close );
+      String value = replacements.get( key );
+      if( value != null ) {
         // remove the existing content
-        buffer.delete(index, close + closelit.length());
-        buffer.insert(index, value);
+        buffer.delete( index, close + closelit.length() );
+        buffer.insert( index, value );
         // this is advisable as the value might contain the key, so we're preventing a loop here
         index += value.length();
       } else {
         // no replacement value found, so go on with the next candidate
         index = close + closelit.length();
       }
-      index = buffer.indexOf(openlit, index);
+      index = buffer.indexOf( openlit, index );
     }
     return buffer.toString();
   }
@@ -1383,7 +1388,7 @@ public class Utilities {
    * @return <code>true</code> <=> We're currently running under windows.
    */
   public static final boolean isWindows() {
-    return OS.toLowerCase().startsWith("windows");
+    return OS.toLowerCase().startsWith( "windows" );
   }
 
   /**
@@ -1395,8 +1400,8 @@ public class Utilities {
    * 
    * @return The list of lines provided by the supplied text.
    */
-  public static final List<String> splitText(String text) {
-    return splitText(text, false);
+  public static final List<String> splitText( String text ) {
+    return splitText( text, false );
   }
 
   /**
@@ -1410,20 +1415,20 @@ public class Utilities {
    * 
    * @return The list of lines provided by the supplied text.
    */
-  public static final List<String> splitText(String text, boolean incall) {
+  public static final List<String> splitText( String text, boolean incall ) {
     List<String> result = new ArrayList<String>();
-    BufferedReader reader = new BufferedReader(new StringReader(text));
+    BufferedReader reader = new BufferedReader( new StringReader( text ) );
     try {
       String line = reader.readLine();
-      while (line != null) {
-        if (incall || (Utilities.cleanup(line) != null)) {
-          result.add(line);
+      while( line != null ) {
+        if( incall || (Utilities.cleanup( line ) != null) ) {
+          result.add( line );
         }
         line = reader.readLine();
       }
-    } catch (IOException ex) {
+    } catch( IOException ex ) {
       // as we're only working within memory this shouldn't happen
-      throw new Ant4EclipseException(CoreExceptionCode.IO_FAILURE);
+      throw new Ant4EclipseException( CoreExceptionCode.IO_FAILURE );
     }
     return result;
   }
@@ -1449,11 +1454,11 @@ public class Utilities {
      * @param encoding
      *          The encoding to be used while accessing the strem. Not <code>null</code>.
      */
-    public OutputCopier(InputStream instream, StringBuffer dest, String encoding) throws UnsupportedEncodingException {
-      if (encoding == null) {
+    public OutputCopier( InputStream instream, StringBuffer dest, String encoding ) throws UnsupportedEncodingException {
+      if( encoding == null ) {
         encoding = ENCODING;
       }
-      this._source = new BufferedReader(new InputStreamReader(instream, encoding));
+      this._source = new BufferedReader( new InputStreamReader( instream, encoding ) );
       this._receiver = dest;
     }
 
@@ -1464,14 +1469,14 @@ public class Utilities {
     public void run() {
       try {
         String line = this._source.readLine();
-        while (line != null) {
-          this._receiver.append(line);
-          this._receiver.append(NL);
+        while( line != null ) {
+          this._receiver.append( line );
+          this._receiver.append( NL );
           line = this._source.readLine();
         }
-      } catch (IOException ex) {
+      } catch( IOException ex ) {
         /** @todo [06-Aug-2009:KASI] We might need something more precise here. */
-        throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+        throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
       }
     }
 

@@ -40,7 +40,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public AbstractProjectSetBasedTask() {
 
     // create the delegates
-    this._workspaceProjectSetDelegate = new WorkspaceProjectSetDelegate(this);
+    this._workspaceProjectSetDelegate = new WorkspaceProjectSetDelegate( this );
   }
 
   /**
@@ -138,7 +138,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public void requireTeamProjectSetSet() {
     this._workspaceProjectSetDelegate.requireTeamProjectSetSet();
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -146,7 +146,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public String getWorkspaceId() {
     return this._workspaceProjectSetDelegate.getWorkspaceId();
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -154,7 +154,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public boolean isWorkspaceIdSet() {
     return this._workspaceProjectSetDelegate.isWorkspaceIdSet();
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -162,37 +162,37 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
     this._workspaceProjectSetDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceId(String identifier) {
-    this._workspaceProjectSetDelegate.setWorkspaceId(identifier);
+  public void setWorkspaceId( String identifier ) {
+    this._workspaceProjectSetDelegate.setWorkspaceId( identifier );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setAllWorkspaceProjects(boolean allprojects) {
-    this._workspaceProjectSetDelegate.setAllWorkspaceProjects(allprojects);
+  public void setAllWorkspaceProjects( boolean allprojects ) {
+    this._workspaceProjectSetDelegate.setAllWorkspaceProjects( allprojects );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setProjectNames(String projectNames) {
-    this._workspaceProjectSetDelegate.setProjectNames(projectNames);
+  public void setProjectNames( String projectNames ) {
+    this._workspaceProjectSetDelegate.setProjectNames( projectNames );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setTeamProjectSet(File projectSetFile) {
-    this._workspaceProjectSetDelegate.setTeamProjectSet(projectSetFile);
+  public void setTeamProjectSet( File projectSetFile ) {
+    this._workspaceProjectSetDelegate.setTeamProjectSet( projectSetFile );
   }
 
   /**
@@ -200,16 +200,16 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    */
   @Override
   @Deprecated
-  public void setWorkspace(String workspace) {
-    this._workspaceProjectSetDelegate.setWorkspace(workspace);
+  public void setWorkspace( String workspace ) {
+    this._workspaceProjectSetDelegate.setWorkspace( workspace );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceDirectory(String workspaceDirectory) {
-    this._workspaceProjectSetDelegate.setWorkspaceDirectory(workspaceDirectory);
+  public void setWorkspaceDirectory( String workspaceDirectory ) {
+    this._workspaceProjectSetDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
-}
+} /* ENDCLASS */

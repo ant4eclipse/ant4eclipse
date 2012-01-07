@@ -41,15 +41,15 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
     super();
 
     // create delegate
-    this._eclipseProjectDelegate = new EclipseProjectDelegate(this);
+    this._eclipseProjectDelegate = new EclipseProjectDelegate( this );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    this._eclipseProjectDelegate.ensureRole(projectRoleClass);
+  public void ensureRole( Class<? extends ProjectRole> projectRoleClass ) {
+    this._eclipseProjectDelegate.ensureRole( projectRoleClass );
   }
 
   /**
@@ -128,33 +128,33 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceId(String identifier) {
-    this._eclipseProjectDelegate.setWorkspaceId(identifier);
+  public void setWorkspaceId( String identifier ) {
+    this._eclipseProjectDelegate.setWorkspaceId( identifier );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setProjectName(String projectName) {
-    this._eclipseProjectDelegate.setProjectName(projectName);
+  public void setProjectName( String projectName ) {
+    this._eclipseProjectDelegate.setProjectName( projectName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
-  public void setWorkspace(String workspace) {
-    this._eclipseProjectDelegate.setWorkspace(workspace);
+  @SuppressWarnings( "deprecation" )
+  public void setWorkspace( String workspace ) {
+    this._eclipseProjectDelegate.setWorkspace( workspace );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceDirectory(String workspaceDirectory) {
-    this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
+  public void setWorkspaceDirectory( String workspaceDirectory ) {
+    this._eclipseProjectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
   /**
@@ -162,7 +162,8 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    */
   @Override
   @Deprecated
-  public void setProject(File projectPath) {
-    this._eclipseProjectDelegate.setProject(projectPath);
+  public void setProject( File projectPath ) {
+    this._eclipseProjectDelegate.setProject( projectPath );
   }
-}
+  
+} /* ENDCLASS */

@@ -43,5 +43,6 @@ public interface SubElementAndAttributesComponent extends DynamicElement, Dynami
    * 
    * @return a map with all known sub attributes.
    */
-  Map<String, String> getSubAttributes();
-}
+  Map<String,String> getSubAttributes();
+  
+} /* ENDCLASS */

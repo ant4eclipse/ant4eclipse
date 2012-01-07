@@ -22,10 +22,8 @@ public class Ant4EclipseException extends RuntimeException {
 
   private static final Object[] NO_ARGS = new Object[0];
 
-  /** - */
   private ExceptionCode         _exceptionCode;
 
-  /** - */
   private Object[]              _args;
 
   /**
@@ -40,8 +38,8 @@ public class Ant4EclipseException extends RuntimeException {
    * @param args
    *          The arguments to be passed to the exception message.
    */
-  public Ant4EclipseException(Throwable cause, ExceptionCode exceptionCode, Object... args) {
-    super(cause);
+  public Ant4EclipseException( Throwable cause, ExceptionCode exceptionCode, Object ... args ) {
+    super( cause );
     this._exceptionCode = exceptionCode;
     this._args = args != null ? args : NO_ARGS;
   }
@@ -56,7 +54,7 @@ public class Ant4EclipseException extends RuntimeException {
    * @param args
    *          The arguments to be passed to the exception message.
    */
-  public Ant4EclipseException(ExceptionCode exceptionCode, Object... args) {
+  public Ant4EclipseException( ExceptionCode exceptionCode, Object ... args ) {
     super();
     this._exceptionCode = exceptionCode;
     this._args = args != null ? args : NO_ARGS;
@@ -90,23 +88,23 @@ public class Ant4EclipseException extends RuntimeException {
   @Override
   public String getMessage() {
     try {
-      return String.format(this._exceptionCode.getMessage(), this._args);
-    } catch (Exception ex) {
+      return String.format( this._exceptionCode.getMessage(), this._args );
+    } catch( Exception ex ) {
       // this really shouldn't happen but it's possible that it could because a user might alter the formatting
       // string in a way not capable to handle the arguments. so the only thing we can do here is to make sure
       // that the crippled message will be brought to the developer.
       StringBuffer buffer = new StringBuffer();
-      buffer.append("internal error: formatting message was '");
-      buffer.append(this._exceptionCode.getMessage());
-      buffer.append("', arguments were: ");
-      if (this._args.length > 0) {
-        buffer.append(String.valueOf(this._args[0]));
-        for (int i = 1; i < this._args.length; i++) {
-          buffer.append(",");
-          buffer.append(String.valueOf(this._args[i]));
+      buffer.append( "internal error: formatting message was '" );
+      buffer.append( this._exceptionCode.getMessage() );
+      buffer.append( "', arguments were: " );
+      if( this._args.length > 0 ) {
+        buffer.append( String.valueOf( this._args[0] ) );
+        for( int i = 1; i < this._args.length; i++ ) {
+          buffer.append( "," );
+          buffer.append( String.valueOf( this._args[i] ) );
         }
       } else {
-        buffer.append("<none>");
+        buffer.append( "<none>" );
       }
       return buffer.toString();
     }

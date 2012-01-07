@@ -35,7 +35,7 @@ public interface ProjectReferenceAwareComponent {
    * @param referenceTypes
    *          a comma separated list of reference type (e.g. 'jdt, platform').
    */
-  void setProjectReferenceTypes(String referenceTypes);
+  void setProjectReferenceTypes( String referenceTypes );
 
   /**
    * <p>
@@ -61,4 +61,5 @@ public interface ProjectReferenceAwareComponent {
    * </p>
    */
   void requireProjectReferenceTypesSet();
-}
+  
+} /* ENDINTERFACE */

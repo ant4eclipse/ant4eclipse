@@ -68,8 +68,8 @@ public class SvnAdapter extends VcsAdapter {
    * @param dateTimeZone
    *          might be null
    */
-  public SvnAdapter(Project antProject, boolean javahl, boolean svnkit, String dateFormatter, String dateTimeZone) {
-    super(antProject);
+  public SvnAdapter( Project antProject, boolean javahl, boolean svnkit, String dateFormatter, String dateTimeZone ) {
+    super( antProject );
     this._javahl = javahl;
     this._svnkit = svnkit;
     this._dateFormatter = dateFormatter;
@@ -80,36 +80,36 @@ public class SvnAdapter extends VcsAdapter {
    * {@inheritDoc}
    */
   @Override
-  protected void checkout(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory("destination", destination);
-    Assure.notNull("projectDescription", projectDescription);
-    Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
-        "ProjectDescription must be a SvnTeamProjectDescription");
+  protected void checkout( File destination, TeamProjectDescription projectDescription ) throws Ant4EclipseException {
+    Assure.isDirectory( "destination", destination );
+    Assure.notNull( "projectDescription", projectDescription );
+    Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription,
+        "ProjectDescription must be a SvnTeamProjectDescription" );
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
-    SvnTask task = createSvnTask(svnTeamProjectDescription);
+    SvnTask task = createSvnTask( svnTeamProjectDescription );
     Checkout checkout = new Checkout();
-    checkout.setProject(getAntProject());
-    checkout.setTask(task);
-    File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
-    A4ELogging
-        .debug("Setting dest path for project '%s' to '%s'", svnTeamProjectDescription.getProjectName(), destPath);
-    checkout.setDestpath(destPath);
-    checkout.setRevision(svnTeamProjectDescription.getRevision());
+    checkout.setProject( getAntProject() );
+    checkout.setTask( task );
+    File destPath = new File( destination, svnTeamProjectDescription.getProjectName() );
+    A4ELogging.debug( "Setting dest path for project '%s' to '%s'", svnTeamProjectDescription.getProjectName(),
+        destPath );
+    checkout.setDestpath( destPath );
+    checkout.setRevision( svnTeamProjectDescription.getRevision() );
     try {
-      checkout.setUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
-    } catch (MalformedURLException e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT,
-          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString());
+      checkout.setUrl( new SVNUrl( svnTeamProjectDescription.getUrl() ) );
+    } catch( MalformedURLException e ) {
+      throw new Ant4EclipseException( PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT,
+          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() );
     }
-    task.addCheckout(checkout);
+    task.addCheckout( checkout );
 
     try {
       task.execute();
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "checkout",
-          ex.toString());
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "checkout",
+          ex.toString() );
     }
 
   }
@@ -118,38 +118,38 @@ public class SvnAdapter extends VcsAdapter {
    * {@inheritDoc}
    */
   @Override
-  protected void export(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory("destination", destination);
-    Assure.notNull("projectDescription", projectDescription);
-    Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
-        "ProjectDescription must be a SvnTeamProjectDescription");
+  protected void export( File destination, TeamProjectDescription projectDescription ) throws Ant4EclipseException {
+    Assure.isDirectory( "destination", destination );
+    Assure.notNull( "projectDescription", projectDescription );
+    Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription,
+        "ProjectDescription must be a SvnTeamProjectDescription" );
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
-    SvnTask task = createSvnTask(svnTeamProjectDescription);
+    SvnTask task = createSvnTask( svnTeamProjectDescription );
 
     Export export = new Export();
-    export.setProject(getAntProject());
-    export.setTask(task);
+    export.setProject( getAntProject() );
+    export.setTask( task );
 
-    File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
-    A4ELogging
-        .debug("Setting dest path for project '%s' to '%s'", svnTeamProjectDescription.getProjectName(), destPath);
-    export.setDestPath(destPath);
-    export.setRevision(svnTeamProjectDescription.getRevision());
+    File destPath = new File( destination, svnTeamProjectDescription.getProjectName() );
+    A4ELogging.debug( "Setting dest path for project '%s' to '%s'", svnTeamProjectDescription.getProjectName(),
+        destPath );
+    export.setDestPath( destPath );
+    export.setRevision( svnTeamProjectDescription.getRevision() );
     try {
-      export.setSrcUrl(new SVNUrl(svnTeamProjectDescription.getUrl()));
-    } catch (MalformedURLException e) {
-      throw new Ant4EclipseException(PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT,
-          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString());
+      export.setSrcUrl( new SVNUrl( svnTeamProjectDescription.getUrl() ) );
+    } catch( MalformedURLException e ) {
+      throw new Ant4EclipseException( PlatformExceptionCode.COULD_NOT_BUILD_SVNURL_FOR_PROJECT,
+          svnTeamProjectDescription.getUrl(), svnTeamProjectDescription.getProjectName(), e.toString() );
     }
-    task.addExport(export);
+    task.addExport( export );
 
     try {
       task.execute();
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "export",
-          ex.toString());
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "export",
+          ex.toString() );
     }
   }
 
@@ -157,31 +157,31 @@ public class SvnAdapter extends VcsAdapter {
    * {@inheritDoc}
    */
   @Override
-  protected void update(File destination, TeamProjectDescription projectDescription) throws Ant4EclipseException {
-    Assure.isDirectory("destination", destination);
-    Assure.notNull("projectDescription", projectDescription);
-    Assure.assertTrue(projectDescription instanceof SvnTeamProjectDescription,
-        "ProjectDescription must be a SvnTeamProjectDescription");
+  protected void update( File destination, TeamProjectDescription projectDescription ) throws Ant4EclipseException {
+    Assure.isDirectory( "destination", destination );
+    Assure.notNull( "projectDescription", projectDescription );
+    Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription,
+        "ProjectDescription must be a SvnTeamProjectDescription" );
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
-    SvnTask task = createSvnTask(svnTeamProjectDescription);
+    SvnTask task = createSvnTask( svnTeamProjectDescription );
 
     Update update = new Update();
-    update.setProject(getAntProject());
-    update.setTask(task);
-    File destPath = new File(destination, svnTeamProjectDescription.getProjectName());
-    A4ELogging
-        .debug("Setting dest path for project '%s' to '%s'", svnTeamProjectDescription.getProjectName(), destPath);
-    update.setDir(destPath);
-    update.setRevision(svnTeamProjectDescription.getRevision());
-    task.addUpdate(update);
+    update.setProject( getAntProject() );
+    update.setTask( task );
+    File destPath = new File( destination, svnTeamProjectDescription.getProjectName() );
+    A4ELogging.debug( "Setting dest path for project '%s' to '%s'", svnTeamProjectDescription.getProjectName(),
+        destPath );
+    update.setDir( destPath );
+    update.setRevision( svnTeamProjectDescription.getRevision() );
+    task.addUpdate( update );
 
     try {
       task.execute();
-    } catch (Exception ex) {
-      throw new Ant4EclipseException(ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "update",
-          ex.toString());
+    } catch( Exception ex ) {
+      throw new Ant4EclipseException( ex, PlatformExceptionCode.ERROR_WHILE_EXECUTING_SVN_COMMAND, "update",
+          ex.toString() );
     }
   }
 
@@ -195,34 +195,34 @@ public class SvnAdapter extends VcsAdapter {
    * 
    * @return the task used to run a svn command.
    */
-  private SvnTask createSvnTask(SvnTeamProjectDescription projectDescription) {
+  private SvnTask createSvnTask( SvnTeamProjectDescription projectDescription ) {
 
-    SvnTask svnTask = (SvnTask) getAntProject().createTask("svn");
-    svnTask.setJavahl(this._javahl);
-    svnTask.setJavasvn(this._svnkit);
-    if (this._dateFormatter != null) {
-      svnTask.setDateFormatter(this._dateFormatter);
+    SvnTask svnTask = (SvnTask) getAntProject().createTask( "svn" );
+    svnTask.setJavahl( this._javahl );
+    svnTask.setJavasvn( this._svnkit );
+    if( this._dateFormatter != null ) {
+      svnTask.setDateFormatter( this._dateFormatter );
     }
 
-    if (this._dateTimeZone != null) {
-      svnTask.setDateTimezone(this._dateTimeZone);
+    if( this._dateTimeZone != null ) {
+      svnTask.setDateTimezone( this._dateTimeZone );
     }
 
-    A4ELogging.debug("Created svnTask %s", svnTask);
+    A4ELogging.debug( "Created svnTask %s", svnTask );
 
     SvnTeamProjectSet teamProjectSet = projectDescription.getTeamProjectSet();
 
-    if (teamProjectSet.hasUser()) {
-      A4ELogging.debug("Setting SVN user '%s'", teamProjectSet.getUser());
-      svnTask.setUsername(teamProjectSet.getUser());
+    if( teamProjectSet.hasUser() ) {
+      A4ELogging.debug( "Setting SVN user '%s'", teamProjectSet.getUser() );
+      svnTask.setUsername( teamProjectSet.getUser() );
     }
 
-    if (teamProjectSet.hasPassword()) {
-      A4ELogging.debug("Setting SVN password '%s'", teamProjectSet.getPassword());
-      svnTask.setPassword(teamProjectSet.getPassword());
+    if( teamProjectSet.hasPassword() ) {
+      A4ELogging.debug( "Setting SVN password '%s'", teamProjectSet.getPassword() );
+      svnTask.setPassword( teamProjectSet.getPassword() );
     }
 
     return svnTask;
   }
 
-}
+} /* ENDCLASS */

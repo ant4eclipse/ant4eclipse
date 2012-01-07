@@ -84,33 +84,34 @@ public class JavaExecuter {
    * 
    * @return a new {@link JavaExecuter}
    */
-  public static JavaExecuter createWithA4eClasspath(File jreLocation) {
-    Assure.isDirectory("jreLocation", jreLocation);
+  public static JavaExecuter createWithA4eClasspath( File jreLocation ) {
+    Assure.isDirectory( "jreLocation", jreLocation );
 
     // check if the location points to a JDK (instead a JRE)...
-    File jreDirectory = new File(jreLocation, "jre");
-    if (!jreDirectory.isDirectory()) {
+    File jreDirectory = new File( jreLocation, "jre" );
+    if( !jreDirectory.isDirectory() ) {
       jreDirectory = jreLocation;
     }
 
     // create new java launcher
-    JavaExecuter javaExecuter = new JavaExecuter(jreDirectory);
+    JavaExecuter javaExecuter = new JavaExecuter( jreDirectory );
 
     // resolve the class path entries
-    String[] classpathentries = ClassLoadingHelper.getClasspathEntriesFor(JavaRuntimeImpl.class);
+    String[] classpathentries = ClassLoadingHelper.getClasspathEntriesFor( JavaRuntimeImpl.class );
 
     // TODO
     // patch for the usage with clover instrumented classes...
-    String ant4eclipseCloverPath = System.getProperty("clover.path");
-    if (ant4eclipseCloverPath != null) {
-      String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split(File.pathSeparator);
+    String ant4eclipseCloverPath = System.getProperty( "clover.path" );
+    if( ant4eclipseCloverPath != null ) {
+      String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split( File.pathSeparator );
       String[] finalEntries = new String[ant4eclipseCloverPathEntries.length + classpathentries.length];
-      System.arraycopy(ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length);
-      System.arraycopy(classpathentries, 0, finalEntries, ant4eclipseCloverPathEntries.length, classpathentries.length);
+      System.arraycopy( ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length );
+      System
+          .arraycopy( classpathentries, 0, finalEntries, ant4eclipseCloverPathEntries.length, classpathentries.length );
       classpathentries = finalEntries;
     }
-    
-    javaExecuter.setClasspathEntries(classpathentries);
+
+    javaExecuter.setClasspathEntries( classpathentries );
 
     // return result
     return javaExecuter;
@@ -124,8 +125,8 @@ public class JavaExecuter {
    * @param jreDirectory
    *          the directory of the java runtime.
    */
-  public JavaExecuter(File jreDirectory) {
-    Assure.isDirectory("jreDirectory", jreDirectory);
+  public JavaExecuter( File jreDirectory ) {
+    Assure.isDirectory( "jreDirectory", jreDirectory );
     this._jreDirectory = jreDirectory;
   }
 
@@ -137,17 +138,17 @@ public class JavaExecuter {
    * @param classpathEntries
    *          the class path entries
    */
-  public void setClasspathEntries(String[] classpathEntries) {
-    Assure.notNull("classpathEntries", classpathEntries);
+  public void setClasspathEntries( String[] classpathEntries ) {
+    Assure.notNull( "classpathEntries", classpathEntries );
 
     // create file array
     File[] files = new File[classpathEntries.length];
-    for (int i = 0; i < classpathEntries.length; i++) {
-      files[i] = new File(classpathEntries[i]);
+    for( int i = 0; i < classpathEntries.length; i++ ) {
+      files[i] = new File( classpathEntries[i] );
     }
 
     // sets the class path entries
-    setClasspathEntries(files);
+    setClasspathEntries( files );
   }
 
   /**
@@ -158,9 +159,9 @@ public class JavaExecuter {
    * @param classpathEntry
    *          the class path entry
    */
-  public void setClasspathEntries(File classpathEntry) {
-    Assure.notNull("classpathEntry", classpathEntry);
-    setClasspathEntries(new File[] { classpathEntry });
+  public void setClasspathEntries( File classpathEntry ) {
+    Assure.notNull( "classpathEntry", classpathEntry );
+    setClasspathEntries( new File[] { classpathEntry } );
   }
 
   /**
@@ -171,8 +172,8 @@ public class JavaExecuter {
    * @param classpathEntries
    *          the class path entries
    */
-  public void setClasspathEntries(File[] classpathEntries) {
-    Assure.notNull("classpathEntries", classpathEntries);
+  public void setClasspathEntries( File[] classpathEntries ) {
+    Assure.notNull( "classpathEntries", classpathEntries );
     this._classpathEntries = classpathEntries;
   }
 
@@ -184,8 +185,8 @@ public class JavaExecuter {
    * @param mainClass
    *          the main class
    */
-  public void setMainClass(String mainClass) {
-    Assure.notNull("mainClass", mainClass);
+  public void setMainClass( String mainClass ) {
+    Assure.notNull( "mainClass", mainClass );
     this._mainClass = mainClass;
   }
 
@@ -197,8 +198,8 @@ public class JavaExecuter {
    * @param args
    *          the program arguments.
    */
-  public void setArgs(String[] args) {
-    Assure.notNull("args", args);
+  public void setArgs( String[] args ) {
+    Assure.notNull( "args", args );
 
     this._args = args;
   }
@@ -213,64 +214,64 @@ public class JavaExecuter {
 
     // create class path
     StringBuffer classpathBuffer = new StringBuffer();
-    for (int i = 0; i < this._classpathEntries.length; i++) {
+    for( int i = 0; i < this._classpathEntries.length; i++ ) {
       File file = this._classpathEntries[i];
-      classpathBuffer.append(file.getAbsolutePath());
-      if (i + 1 < this._classpathEntries.length) {
-        classpathBuffer.append(File.pathSeparatorChar);
+      classpathBuffer.append( file.getAbsolutePath() );
+      if( i + 1 < this._classpathEntries.length ) {
+        classpathBuffer.append( File.pathSeparatorChar );
       }
     }
     String classPath = classpathBuffer.toString();
-    boolean classPathContainsBlanks = classPath.contains(" ");
+    boolean classPathContainsBlanks = classPath.contains( " " );
 
     // create java command
     StringBuffer cmd = new StringBuffer();
-    cmd.append(getJavaExecutable().getAbsolutePath());
-    cmd.append(" -cp ");
-    if (classPathContainsBlanks) {
-      cmd.append("\"");
+    cmd.append( getJavaExecutable().getAbsolutePath() );
+    cmd.append( " -cp " );
+    if( classPathContainsBlanks ) {
+      cmd.append( "\"" );
     }
-    cmd.append(classPath);
-    if (classPathContainsBlanks) {
-      cmd.append("\"");
+    cmd.append( classPath );
+    if( classPathContainsBlanks ) {
+      cmd.append( "\"" );
     }
-    cmd.append(" ");
-    cmd.append(this._mainClass);
-    for (String _arg : this._args) {
-      cmd.append(" ");
-      cmd.append(_arg);
+    cmd.append( " " );
+    cmd.append( this._mainClass );
+    for( String _arg : this._args ) {
+      cmd.append( " " );
+      cmd.append( _arg );
     }
 
     // execute
     try {
       // debug
-      A4ELogging.debug("JavaExecuter.execute(): Executing '%s'.", cmd.toString());
+      A4ELogging.debug( "JavaExecuter.execute(): Executing '%s'.", cmd.toString() );
 
-      Process proc = runtime.exec(cmd.toString(), new String[] { "JavaHome=" });
+      Process proc = runtime.exec( cmd.toString(), new String[] { "JavaHome=" } );
 
       // wait for result
       proc.waitFor();
 
       // read out and err stream
-      this._systemOut = extractFromInputStream(proc.getInputStream());
-      this._systemErr = extractFromInputStream(proc.getErrorStream());
+      this._systemOut = extractFromInputStream( proc.getInputStream() );
+      this._systemErr = extractFromInputStream( proc.getErrorStream() );
 
       // log error...
-      if (this._systemErr != null && this._systemErr.length > 0) {
+      if( this._systemErr != null && this._systemErr.length > 0 ) {
         // TODO
-        throw new RuntimeException("ERROR: " + Arrays.asList(this._systemErr));
+        throw new RuntimeException( "ERROR: " + Arrays.asList( this._systemErr ) );
       }
 
       // debug
-      A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList(this._systemOut));
-      A4ELogging.debug("JavaExecuter.execute(): System.err -> '%s'.", Arrays.asList(this._systemErr));
+      A4ELogging.debug( "JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList( this._systemOut ) );
+      A4ELogging.debug( "JavaExecuter.execute(): System.err -> '%s'.", Arrays.asList( this._systemErr ) );
 
-    } catch (IOException e) {
+    } catch( IOException e ) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString());
-    } catch (InterruptedException e) {
+      throw new Ant4EclipseException( e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString() );
+    } catch( InterruptedException e ) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString());
+      throw new Ant4EclipseException( e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString() );
     }
   }
 
@@ -306,26 +307,26 @@ public class JavaExecuter {
    */
   private File getJavaExecutable() {
     // try 'bin/java'
-    File result = new File(this._jreDirectory, "bin/java");
+    File result = new File( this._jreDirectory, "bin/java" );
 
     // try 'bin/java.exe'
-    if (!result.exists()) {
-      result = new File(this._jreDirectory, "bin/java.exe");
+    if( !result.exists() ) {
+      result = new File( this._jreDirectory, "bin/java.exe" );
     }
 
     // try 'bin/j9'
-    if (!result.exists()) {
-      result = new File(this._jreDirectory, "bin/j9");
+    if( !result.exists() ) {
+      result = new File( this._jreDirectory, "bin/j9" );
     }
 
     // try 'bin/j9.exe'
-    if (!result.exists()) {
-      result = new File(this._jreDirectory, "bin/j9.exe");
+    if( !result.exists() ) {
+      result = new File( this._jreDirectory, "bin/j9.exe" );
     }
 
     // throw Ant4EclipseException
-    if (!result.exists()) {
-      throw new Ant4EclipseException(JdtExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath());
+    if( !result.exists() ) {
+      throw new Ant4EclipseException( JdtExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath() );
     }
 
     // return result
@@ -341,17 +342,18 @@ public class JavaExecuter {
    * @return
    * @throws IOException
    */
-  private String[] extractFromInputStream(InputStream inputstream) throws IOException {
-    InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-    BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
+  private String[] extractFromInputStream( InputStream inputstream ) throws IOException {
+    InputStreamReader inputstreamreader = new InputStreamReader( inputstream );
+    BufferedReader bufferedreader = new BufferedReader( inputstreamreader );
 
     // read the ls output
 
     List<String> sysOut = new ArrayList<String>();
     String line;
-    while ((line = bufferedreader.readLine()) != null) {
-      sysOut.add(line);
+    while( (line = bufferedreader.readLine()) != null ) {
+      sysOut.add( line );
     }
-    return sysOut.toArray(new String[0]);
+    return sysOut.toArray( new String[0] );
   }
-}
+  
+} /* ENDCLASS */

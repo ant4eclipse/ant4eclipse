@@ -31,7 +31,7 @@ public interface Ant4EclipseConfiguration {
    *          The name of the property
    * @return The property or <code>null</code> if there is no such property
    */
-  String getProperty(String propertyName);
+  String getProperty( String propertyName );
 
   /**
    * <p>
@@ -42,7 +42,7 @@ public interface Ant4EclipseConfiguration {
    *          The name of the property to check
    * @return <code>true</code> if there is a property with the given name otherwise <code>false</code>
    */
-  boolean hasProperty(String propertyName);
+  boolean hasProperty( String propertyName );
 
   /**
    * <p>
@@ -57,6 +57,6 @@ public interface Ant4EclipseConfiguration {
    *          The prefix that selected the properties. If it doesn't end with a "." a "." is added
    * @return see above
    */
-  Iterable<Pair<String, String>> getAllProperties(String prefix);
+  Iterable<Pair<String,String>> getAllProperties( String prefix );
 
 } /* ENDINTERFACE */

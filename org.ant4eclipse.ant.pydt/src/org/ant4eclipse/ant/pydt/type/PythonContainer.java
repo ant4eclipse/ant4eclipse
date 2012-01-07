@@ -37,8 +37,8 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    * @param project
    *          The ant project used for the initialisation. Not <code>null</code>.
    */
-  public PythonContainer(Project project) {
-    super(project);
+  public PythonContainer( Project project ) {
+    super( project );
     this._defaultid = null;
     this._sitepackages = true;
   }
@@ -49,7 +49,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    * @param defaultid
    *          The new id of the default runtime. Neither <code>null</code> nor empty.
    */
-  public void setDefault(String defaultid) {
+  public void setDefault( String defaultid ) {
     this._defaultid = defaultid;
   }
 
@@ -59,7 +59,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    * @param enable
    *          <code>true</code> <=> Site packages are enabled.
    */
-  public void setSitePackages(boolean enable) {
+  public void setSitePackages( boolean enable ) {
     this._sitepackages = enable;
   }
 
@@ -78,22 +78,22 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    * @param runtime
    *          The python runtime environment configuration that shall be added. Not <code>null</code>.
    */
-  public void addConfiguredPyre(Runtime runtime) {
+  public void addConfiguredPyre( Runtime runtime ) {
 
-    if (runtime._location == null) {
-      throw new BuildException("Missing parameter 'location' on jre!");
+    if( runtime._location == null ) {
+      throw new BuildException( "Missing parameter 'location' on jre!" );
     }
 
-    if (!Utilities.hasText(runtime._id)) {
-      throw new BuildException("Missing parameter 'id' on jre!");
+    if( !Utilities.hasText( runtime._id ) ) {
+      throw new BuildException( "Missing parameter 'id' on jre!" );
     }
 
-    PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService(PythonRuntimeRegistry.class);
+    PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
 
-    registry.registerRuntime(runtime._id, runtime._location, this._sitepackages);
+    registry.registerRuntime( runtime._id, runtime._location, this._sitepackages );
 
-    if (runtime._id.equals(this._defaultid)) {
-      registry.setDefaultRuntime(this._defaultid);
+    if( runtime._id.equals( this._defaultid ) ) {
+      registry.setDefaultRuntime( this._defaultid );
     }
 
   }
@@ -113,7 +113,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
      * @param id
      *          The id of the python runtime.
      */
-    public void setId(String id) {
+    public void setId( String id ) {
       this._id = id;
     }
 
@@ -123,7 +123,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
      * @param location
      *          The location of the python installation.
      */
-    public void setLocation(File location) {
+    public void setLocation( File location ) {
       this._location = location;
     }
 

@@ -49,11 +49,11 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    * @param prefix
    *          the prefix for all scoped values
    */
-  public AbstractExecuteProjectTask(String prefix) {
-    Assure.notNull("prefix", prefix);
-    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider(this);
+  public AbstractExecuteProjectTask( String prefix ) {
+    Assure.notNull( "prefix", prefix );
+    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider( this );
     // create the delegates
-    this._macroExecutionDelegate = new MacroExecutionDelegate<String>(this, prefix);
+    this._macroExecutionDelegate = new MacroExecutionDelegate<String>( this, prefix );
   }
 
   /**
@@ -70,16 +70,16 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    * {@inheritDoc}
    */
   @Override
-  public final NestedSequential createScopedMacroDefinition(String scope) {
-    return this._macroExecutionDelegate.createScopedMacroDefinition(scope);
+  public final NestedSequential createScopedMacroDefinition( String scope ) {
+    return this._macroExecutionDelegate.createScopedMacroDefinition( scope );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    this._macroExecutionDelegate.executeMacroInstance(macroDef, provider);
+  public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
+    this._macroExecutionDelegate.executeMacroInstance( macroDef, provider );
   }
 
   /**
@@ -102,7 +102,8 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    * {@inheritDoc}
    */
   @Override
-  public final void setPrefix(String prefix) {
-    this._macroExecutionDelegate.setPrefix(prefix);
+  public final void setPrefix( String prefix ) {
+    this._macroExecutionDelegate.setPrefix( prefix );
   }
-}
+  
+} /* ENDCLASS */

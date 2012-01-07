@@ -26,10 +26,8 @@ import org.apache.tools.ant.Project;
  */
 public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
 
-  /** - */
   private String _name;
 
-  /** - */
   private String _location;
 
   /**
@@ -39,8 +37,8 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public LinkedResourcePathVariable(Project project) {
-    super(project);
+  public LinkedResourcePathVariable( Project project ) {
+    super( project );
   }
 
   /**
@@ -59,7 +57,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * 
    * @param name
    */
-  public void setName(String name) {
+  public void setName( String name ) {
     this._name = name;
   }
 
@@ -79,7 +77,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * 
    * @param location
    */
-  public void setLocation(String location) {
+  public void setLocation( String location ) {
     this._location = location;
   }
 
@@ -91,20 +89,21 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
 
     // fetch the ClassPathElementsRegistry
     LinkedResourcePathVariableService variableService = A4ECore.instance().getRequiredService(
-        LinkedResourcePathVariableService.class);
+        LinkedResourcePathVariableService.class );
 
-    // 
-    if (!Utilities.hasText(this._name)) {
+    //
+    if( !Utilities.hasText( this._name ) ) {
       // TODO: Ant4EclipseException
-      throw new RuntimeException("Missing attribute 'name'.");
+      throw new RuntimeException( "Missing attribute 'name'." );
     }
 
-    if (!Utilities.hasText(this._location)) {
+    if( !Utilities.hasText( this._location ) ) {
       // TODO: Ant4EclipseException
-      throw new RuntimeException("Missing attribute 'location'.");
+      throw new RuntimeException( "Missing attribute 'location'." );
     }
 
     // register the variable
-    variableService.registerLinkedResourcePathVariable(this._name, this._location);
+    variableService.registerLinkedResourcePathVariable( this._name, this._location );
   }
-}
+
+} /* ENDCLASS */

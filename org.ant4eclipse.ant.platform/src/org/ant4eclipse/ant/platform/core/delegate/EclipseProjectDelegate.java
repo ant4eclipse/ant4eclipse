@@ -44,8 +44,8 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    * @param component
    *          the ProjectComponent
    */
-  public EclipseProjectDelegate(ProjectComponent component) {
-    super(component);
+  public EclipseProjectDelegate( ProjectComponent component ) {
+    super( component );
   }
 
   /**
@@ -53,15 +53,15 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    */
   @Override
   @Deprecated
-  public void setProject(File projectPath) {
-    throw new Ant4EclipseException(PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT);
+  public void setProject( File projectPath ) {
+    throw new Ant4EclipseException( PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setProjectName(String projectName) {
+  public final void setProjectName( String projectName ) {
     this._projectName = projectName;
   }
 
@@ -79,8 +79,8 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   @Override
   public final void requireWorkspaceAndProjectNameSet() {
 
-    if (!(isWorkspaceDirectorySet() || isWorkspaceIdSet()) || !isProjectNameSet()) {
-      throw new Ant4EclipseException(PlatformExceptionCode.MISSING_WORKSPACE_AND_PROJECT_NAME);
+    if( !(isWorkspaceDirectorySet() || isWorkspaceIdSet()) || !isProjectNameSet() ) {
+      throw new Ant4EclipseException( PlatformExceptionCode.MISSING_WORKSPACE_AND_PROJECT_NAME );
     }
   }
 
@@ -91,11 +91,11 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   public EclipseProject getEclipseProject() throws BuildException {
 
     // get eclipse project if it is not already set
-    if (this._eclipseProject == null) {
-      if (getWorkspace().hasProject(this._projectName)) {
-        this._eclipseProject = getWorkspace().getProject(this._projectName);
+    if( this._eclipseProject == null ) {
+      if( getWorkspace().hasProject( this._projectName ) ) {
+        this._eclipseProject = getWorkspace().getProject( this._projectName );
       } else {
-        throw new Ant4EclipseException(PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, this._projectName);
+        throw new Ant4EclipseException( PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, this._projectName );
       }
     }
 
@@ -107,14 +107,15 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    * {@inheritDoc}
    */
   @Override
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
+  public void ensureRole( Class<? extends ProjectRole> projectRoleClass ) {
 
-    // 
-    if (!getEclipseProject().hasRole(projectRoleClass)) {
+    //
+    if( !getEclipseProject().hasRole( projectRoleClass ) ) {
 
       // throw exception
-      throw new Ant4EclipseException(PlatformExceptionCode.MISSING_PROJECT_ROLE, this._projectName, projectRoleClass
-          .getName());
+      throw new Ant4EclipseException( PlatformExceptionCode.MISSING_PROJECT_ROLE, this._projectName,
+          projectRoleClass.getName() );
     }
   }
-}
+  
+} /* ENDCLASS */

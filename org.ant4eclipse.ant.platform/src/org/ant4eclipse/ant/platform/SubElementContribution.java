@@ -38,7 +38,7 @@ public interface SubElementContribution extends A4EService {
    * @param component
    * @return
    */
-  boolean canHandleSubElement(String name, ProjectComponent component);
+  boolean canHandleSubElement( String name, ProjectComponent component );
 
   /**
    * <p>
@@ -49,5 +49,6 @@ public interface SubElementContribution extends A4EService {
    *          The name of the subelement. Will always be lowercase. Neither <code>null</code> nor empty.
    * @return the element created
    */
-  Object createSubElement(String name, ProjectComponent component);
-}
+  Object createSubElement( String name, ProjectComponent component );
+  
+} /* ENDINTERFACE */

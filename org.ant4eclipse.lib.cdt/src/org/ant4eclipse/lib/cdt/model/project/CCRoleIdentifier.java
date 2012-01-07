@@ -31,7 +31,7 @@ public class CCRoleIdentifier extends AbstractProjectRoleIdentifier {
   public CCRoleIdentifier() {
     super( CCProjectRole.CC_NATURE, "cc", "c++", "cpp" );
   }
-  
+
   /**
    * <p>
    * Adds a {@link CProjectRole} to the given project and parses the pathes.
@@ -39,9 +39,9 @@ public class CCRoleIdentifier extends AbstractProjectRoleIdentifier {
    */
   @Override
   public ProjectRole createRole( EclipseProject project ) {
-    A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
-    return new CCProjectRoleImpl(project);
+    A4ELogging.trace( "CRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
+    return new CCProjectRoleImpl( project );
   }
-  
+
 } /* ENDCLASS */

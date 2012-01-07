@@ -43,18 +43,18 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    * @param location
    *          the root directory of the exploded bundle.
    */
-  public ExplodedBundleLayoutResolver(File location) {
-    Assure.isDirectory("location", location);
+  public ExplodedBundleLayoutResolver( File location ) {
+    Assure.isDirectory( "location", location );
 
     // set the location
     this._location = location;
 
     // Get manifest for exploded bundle
-    File manifestFile = new File(location, "META-INF/MANIFEST.MF");
+    File manifestFile = new File( location, "META-INF/MANIFEST.MF" );
     try {
-      this._manifest = new Manifest(new FileInputStream(manifestFile));
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+      this._manifest = new Manifest( new FileInputStream( manifestFile ) );
+    } catch( Exception e ) {
+      throw new RuntimeException( e );
     }
   }
 
@@ -92,25 +92,26 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
     List<File> result = new ArrayList<File>();
 
     // get bundle class path
-    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath(this._manifest);
+    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath( this._manifest );
 
     // add class path entries to the result
-    for (String bundleClasspathEntrie : bundleClasspathEntries) {
+    for( String bundleClasspathEntrie : bundleClasspathEntries ) {
 
       // add 'self'
-      if (".".equals(bundleClasspathEntrie)) {
-        result.add(this._location);
+      if( ".".equals( bundleClasspathEntrie ) ) {
+        result.add( this._location );
       }
       // add entry
       else {
-        File classpathEntry = new File(this._location, bundleClasspathEntrie);
-        if (classpathEntry.exists()) {
-          result.add(classpathEntry);
+        File classpathEntry = new File( this._location, bundleClasspathEntrie );
+        if( classpathEntry.exists() ) {
+          result.add( classpathEntry );
         }
       }
     }
 
     // return result
-    return result.toArray(new File[0]);
+    return result.toArray( new File[0] );
   }
-}
+  
+} /* ENDCLASS */

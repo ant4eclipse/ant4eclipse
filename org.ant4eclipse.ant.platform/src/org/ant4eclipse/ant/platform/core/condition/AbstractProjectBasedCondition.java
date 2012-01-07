@@ -40,15 +40,15 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
    * </p>
    */
   public AbstractProjectBasedCondition() {
-    this._projectDelegate = new EclipseProjectDelegate(this);
+    this._projectDelegate = new EclipseProjectDelegate( this );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setProjectName(String project) {
-    this._projectDelegate.setProjectName(project);
+  public void setProjectName( String project ) {
+    this._projectDelegate.setProjectName( project );
   }
 
   /**
@@ -56,24 +56,24 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
    */
   @Override
   @Deprecated
-  public void setWorkspace(String workspace) {
-    this._projectDelegate.setWorkspaceDirectory(workspace);
+  public void setWorkspace( String workspace ) {
+    this._projectDelegate.setWorkspaceDirectory( workspace );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setWorkspaceDirectory(String workspaceDirectory) {
-    this._projectDelegate.setWorkspaceDirectory(workspaceDirectory);
+  public final void setWorkspaceDirectory( String workspaceDirectory ) {
+    this._projectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    this._projectDelegate.ensureRole(projectRoleClass);
+  public void ensureRole( Class<? extends ProjectRole> projectRoleClass ) {
+    this._projectDelegate.ensureRole( projectRoleClass );
   }
 
   /**
@@ -144,8 +144,8 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceId(String identifier) {
-    this._projectDelegate.setWorkspaceId(identifier);
+  public void setWorkspaceId( String identifier ) {
+    this._projectDelegate.setWorkspaceId( identifier );
   }
 
   /**
@@ -160,8 +160,9 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("deprecation")
-  public void setProject(File projectPath) {
-    this._projectDelegate.setProject(projectPath);
+  @SuppressWarnings( "deprecation" )
+  public void setProject( File projectPath ) {
+    this._projectDelegate.setProject( projectPath );
   }
-}
+  
+} /* ENDCLASS */

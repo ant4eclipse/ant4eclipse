@@ -20,9 +20,8 @@ import org.ant4eclipse.lib.core.exception.ExceptionCode;
  */
 public class OsgiToolsExceptionCodes extends ExceptionCode {
 
-  /** -- */
-  public static OsgiToolsExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND = new OsgiToolsExceptionCodes(
-                                                                               "The file with global compiler settings '%s' could not be found");
+  public static OsgiToolsExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND = 
+    new OsgiToolsExceptionCodes("The file with global compiler settings '%s' could not be found" );
 
   /**
    * <p>
@@ -32,8 +31,8 @@ public class OsgiToolsExceptionCodes extends ExceptionCode {
    * @param message
    *          The message used for the user presentation. Not <code>null</code>.
    */
-  public OsgiToolsExceptionCodes(String message) {
-    super(message);
+  public OsgiToolsExceptionCodes( String message ) {
+    super( message );
 
   }
 

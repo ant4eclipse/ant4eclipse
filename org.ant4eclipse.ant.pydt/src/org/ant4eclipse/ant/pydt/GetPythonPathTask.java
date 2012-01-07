@@ -32,7 +32,7 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
    * @param ignoreruntime
    *          <code>true</code> <=> The python runtime shall be ignored.
    */
-  public void setIgnoreruntime(boolean ignoreruntime) {
+  public void setIgnoreruntime( boolean ignoreruntime ) {
     this._ignoreruntime = ignoreruntime;
   }
 
@@ -41,10 +41,10 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
    */
   @Override
   protected File[] resolvePath() {
-    PythonResolver resolver = new PythonResolver(getWorkspace(), PythonResolver.Mode.all, this._ignoreruntime);
-    PathExpander expander = new PathExpander(getEclipseProject());
-    ResolvedPathEntry[] resolved = resolver.resolve(getEclipseProject().getSpecifiedName());
-    File[] result = expander.expand(resolved, getPathStyle());
+    PythonResolver resolver = new PythonResolver( getWorkspace(), PythonResolver.Mode.all, this._ignoreruntime );
+    PathExpander expander = new PathExpander( getEclipseProject() );
+    ResolvedPathEntry[] resolved = resolver.resolve( getEclipseProject().getSpecifiedName() );
+    File[] result = expander.expand( resolved, getPathStyle() );
     return result;
   }
 

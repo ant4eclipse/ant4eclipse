@@ -53,7 +53,7 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @deprecated use setWorkspaceDirectory() and setProjectName() instead!
    */
   @Deprecated
-  void setProject(File projectPath);
+  void setProject( File projectPath );
 
   /**
    * <p>
@@ -63,7 +63,7 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @param projectName
    *          the project name.
    */
-  void setProjectName(String projectName);
+  void setProjectName( String projectName );
 
   /**
    * <p>
@@ -101,5 +101,6 @@ public interface EclipseProjectComponent extends WorkspaceComponent {
    * @param projectRoleClass
    *          the project role class
    */
-  void ensureRole(Class<? extends ProjectRole> projectRoleClass);
-}
+  void ensureRole( Class<? extends ProjectRole> projectRoleClass );
+  
+} /* ENDINTERFACE */

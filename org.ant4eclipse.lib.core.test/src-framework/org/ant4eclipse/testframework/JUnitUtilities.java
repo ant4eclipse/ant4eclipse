@@ -35,22 +35,22 @@ public class JUnitUtilities {
    * 
    * @return The data from the file.
    */
-  public static final byte[] loadFile(File file) {
+  public static final byte[] loadFile( File file ) {
     byte[] buffer = new byte[1024];
     ByteArrayOutputStream byteout = new ByteArrayOutputStream();
     FileInputStream filein = null;
     try {
-      filein = new FileInputStream(file);
-      int read = filein.read(buffer);
-      while (read != -1) {
-        if (read > 0) {
-          byteout.write(buffer, 0, read);
+      filein = new FileInputStream( file );
+      int read = filein.read( buffer );
+      while( read != -1 ) {
+        if( read > 0 ) {
+          byteout.write( buffer, 0, read );
         }
-        read = filein.read(buffer);
+        read = filein.read( buffer );
       }
       filein.close();
-    } catch (IOException ex) {
-      Assert.fail(ex.getMessage());
+    } catch( IOException ex ) {
+      Assert.fail( ex.getMessage() );
     }
     return byteout.toByteArray();
   }
@@ -63,7 +63,7 @@ public class JUnitUtilities {
    * @return A temporary directory. Not <code>null</code>.
    */
   public static final File createTempDir() {
-    return createTempDir(true);
+    return createTempDir( true );
   }
 
   /**
@@ -76,33 +76,33 @@ public class JUnitUtilities {
    * 
    * @return A temporary directory. Not <code>null</code>.
    */
-  public static final File createTempDir(boolean create) {
+  public static final File createTempDir( boolean create ) {
     try {
-      File tempfile = File.createTempFile("a4e.", ".dir");
+      File tempfile = File.createTempFile( "a4e.", ".dir" );
       int tries = 10;
-      while (tempfile.isFile() && (tries > 0)) {
-        if (tempfile.delete()) {
+      while( tempfile.isFile() && (tries > 0) ) {
+        if( tempfile.delete() ) {
           break;
         } else {
           try {
-            Thread.sleep(3000);
-          } catch (InterruptedException ex) {
+            Thread.sleep( 3000 );
+          } catch( InterruptedException ex ) {
           }
         }
         tries--;
       }
-      if (tempfile.isFile()) {
+      if( tempfile.isFile() ) {
         Assert.fail();
       }
-      if (create) {
-        if (!tempfile.mkdir()) {
+      if( create ) {
+        if( !tempfile.mkdir() ) {
           Assert.fail();
         }
       }
-      Runtime.getRuntime().addShutdownHook(new Cleaner(tempfile));
+      Runtime.getRuntime().addShutdownHook( new Cleaner( tempfile ) );
       return tempfile;
-    } catch (IOException ex) {
-      Assert.fail(ex.getMessage());
+    } catch( IOException ex ) {
+      Assert.fail( ex.getMessage() );
       return null;
     }
   }
@@ -116,11 +116,11 @@ public class JUnitUtilities {
    */
   public static final File createTempFile() {
     try {
-      File result = File.createTempFile("a4e.", ".file");
-      Runtime.getRuntime().addShutdownHook(new Cleaner(result));
+      File result = File.createTempFile( "a4e.", ".file" );
+      Runtime.getRuntime().addShutdownHook( new Cleaner( result ) );
       return result;
-    } catch (IOException ex) {
-      Assert.fail(ex.getMessage());
+    } catch( IOException ex ) {
+      Assert.fail( ex.getMessage() );
       return null;
     }
   }
@@ -129,21 +129,21 @@ public class JUnitUtilities {
 
     private File file;
 
-    public Cleaner(File resource) {
+    public Cleaner( File resource ) {
       this.file = resource;
     }
 
     @Override
     public void run() {
-      delete(this.file);
+      delete( this.file );
     }
 
-    public void delete(File resource) {
-      if (resource.exists()) {
-        if (resource.isDirectory()) {
+    public void delete( File resource ) {
+      if( resource.exists() ) {
+        if( resource.isDirectory() ) {
           File[] children = resource.listFiles();
-          for (File child : children) {
-            delete(child);
+          for( File child : children ) {
+            delete( child );
           }
         }
         resource.delete();

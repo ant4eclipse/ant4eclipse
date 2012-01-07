@@ -43,7 +43,7 @@ public interface TeamProjectSetComponent {
    * @param projectSet
    *          the team project set file.
    */
-  void setTeamProjectSet(File projectSetFile);
+  void setTeamProjectSet( File projectSetFile );
 
   /**
    * <p>
@@ -60,4 +60,5 @@ public interface TeamProjectSetComponent {
    * </p>
    */
   void requireTeamProjectSetSet();
-}
+  
+} /* ENDINTERFACE */

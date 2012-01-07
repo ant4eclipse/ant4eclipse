@@ -22,7 +22,7 @@ public class PythonPathDLTKTest extends AbstractPythonPathTest {
    * Initialises this set of tests.
    */
   public PythonPathDLTKTest() {
-    super(true);
+    super( true );
   }
 
 } /* ENDCLASS */

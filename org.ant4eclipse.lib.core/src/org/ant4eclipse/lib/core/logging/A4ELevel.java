@@ -27,11 +27,12 @@ public enum A4ELevel {
    *          The default level to return if the text does not match any level.
    * @return The logging level.
    */
-  public static A4ELevel parse(String text, A4ELevel defaultLevel) {
+  public static A4ELevel parse( String text, A4ELevel defaultLevel ) {
     A4ELevel result = null;
-    if (text != null) {
-      result = valueOf(text.trim().toUpperCase());
+    if( text != null ) {
+      result = valueOf( text.trim().toUpperCase() );
     }
     return result != null ? result : defaultLevel;
   }
-}
+  
+} /* ENDENUM */

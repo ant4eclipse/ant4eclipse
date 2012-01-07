@@ -18,7 +18,7 @@ package org.ant4eclipse.lib.core;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public final class ClassName {
+public class ClassName {
 
   /** the package name */
   private String _packageName;
@@ -38,16 +38,16 @@ public final class ClassName {
    * @param className
    *          the class name.
    */
-  private ClassName(String qualifiedClassName) {
+  private ClassName( String qualifiedClassName ) {
 
     this._qualifiedName = qualifiedClassName;
     this._packageName = "";
     this._className = qualifiedClassName;
 
-    int v = qualifiedClassName.lastIndexOf('.');
-    if (v != -1) {
-      this._packageName = qualifiedClassName.substring(0, v);
-      this._className = qualifiedClassName.substring(v + 1);
+    int v = qualifiedClassName.lastIndexOf( '.' );
+    if( v != -1 ) {
+      this._packageName = qualifiedClassName.substring( 0, v );
+      this._className = qualifiedClassName.substring( v + 1 );
     }
 
   }
@@ -93,7 +93,7 @@ public final class ClassName {
    * @return this package as a directory name. Never null.
    */
   public String getPackageAsDirectoryName() {
-    return getPackageName().replace('.', '/');
+    return getPackageName().replace( '.', '/' );
   }
 
   /**
@@ -105,7 +105,7 @@ public final class ClassName {
    * @return this class name as a file name
    */
   public String asClassFileName() {
-    String fileName = getQualifiedClassName().replace('.', '/');
+    String fileName = getQualifiedClassName().replace( '.', '/' );
     return fileName + ".class";
   }
 
@@ -118,7 +118,7 @@ public final class ClassName {
    * @return this class name as a file name
    */
   public String asSourceFileName() {
-    String fileName = getQualifiedClassName().replace('.', '/');
+    String fileName = getQualifiedClassName().replace( '.', '/' );
     return fileName + ".java";
   }
 
@@ -142,18 +142,18 @@ public final class ClassName {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
     ClassName other = (ClassName) obj;
-    return this._qualifiedName.equals(other._qualifiedName);
+    return this._qualifiedName.equals( other._qualifiedName );
   }
 
   /**
@@ -168,9 +168,9 @@ public final class ClassName {
    *          The qualified class name
    * @return a ClassName instance representing this qualified class name
    */
-  public static final ClassName fromQualifiedClassName(String qualifiedClassName) {
-    Assure.nonEmpty("qualifiedClassName", qualifiedClassName);
-    return new ClassName(qualifiedClassName);
+  public static final ClassName fromQualifiedClassName( String qualifiedClassName ) {
+    Assure.nonEmpty( "qualifiedClassName", qualifiedClassName );
+    return new ClassName( qualifiedClassName );
   }
 
 } /* ENDCLASS */

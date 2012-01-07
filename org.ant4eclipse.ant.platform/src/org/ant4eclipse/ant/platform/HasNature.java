@@ -25,7 +25,6 @@ import org.apache.tools.ant.BuildException;
  */
 public class HasNature extends AbstractProjectBasedCondition {
 
-  /** - */
   private String _nature;
 
   /**
@@ -38,11 +37,11 @@ public class HasNature extends AbstractProjectBasedCondition {
 
     try {
       EclipseProject project = getEclipseProject();
-      return project.hasNature(this._nature);
-    } catch (BuildException e) {
+      return project.hasNature( this._nature );
+    } catch( BuildException e ) {
       throw e;
-    } catch (Exception e) {
-      throw new BuildException(e.getMessage(), e);
+    } catch( Exception e ) {
+      throw new BuildException( e.getMessage(), e );
     }
   }
 
@@ -54,7 +53,7 @@ public class HasNature extends AbstractProjectBasedCondition {
    * @param nature
    *          the nature to set.
    */
-  public void setNature(String nature) {
+  public void setNature( String nature ) {
     this._nature = nature;
   }
 
@@ -75,8 +74,10 @@ public class HasNature extends AbstractProjectBasedCondition {
    * </p>
    */
   public final void requireNatureSet() {
-    if (!isNatureSet()) {
-      throw new BuildException("Attribute 'nature' has to be set!");
+    if( !isNatureSet() ) {
+      throw new BuildException( "Attribute 'nature' has to be set!" );
     }
   }
-}
+  
+} /* ENDCLASS */
+

@@ -49,8 +49,8 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * @param properties
    *          The backing properties
    */
-  public Ant4EclipseConfigurationImpl(StringMap properties) {
-    Assure.notNull("properties", properties);
+  public Ant4EclipseConfigurationImpl( StringMap properties ) {
+    Assure.notNull( "properties", properties );
     this._properties = properties;
   }
 
@@ -67,37 +67,37 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * {@inheritDoc}
    */
   @Override
-  public String getProperty(String propertyName) {
-    Assure.notNull("propertyName", propertyName);
-    return this._properties.get(propertyName);
+  public String getProperty( String propertyName ) {
+    Assure.notNull( "propertyName", propertyName );
+    return this._properties.get( propertyName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasProperty(String propertyName) {
-    Assure.notNull("propertyName", propertyName);
-    return this._properties.containsKey(propertyName);
+  public boolean hasProperty( String propertyName ) {
+    Assure.notNull( "propertyName", propertyName );
+    return this._properties.containsKey( propertyName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Iterable<Pair<String, String>> getAllProperties(String prefix) {
-    Assure.notNull("prefix", prefix);
-    if (!prefix.endsWith(".")) {
+  public Iterable<Pair<String,String>> getAllProperties( String prefix ) {
+    Assure.notNull( "prefix", prefix );
+    if( !prefix.endsWith( "." ) ) {
       prefix += ".";
     }
-    Set<Map.Entry<String, String>> entries = this._properties.entrySet();
-    List<Pair<String, String>> result = new ArrayList<Pair<String, String>>();
-    for (Map.Entry<String, String> entry : entries) {
+    Set<Map.Entry<String,String>> entries = this._properties.entrySet();
+    List<Pair<String,String>> result = new ArrayList<Pair<String,String>>();
+    for( Map.Entry<String,String> entry : entries ) {
       String key = entry.getKey();
       String value = entry.getValue();
-      if (key.startsWith(prefix)) {
-        key = key.substring(prefix.length());
-        result.add(new Pair<String, String>(key, value));
+      if( key.startsWith( prefix ) ) {
+        key = key.substring( prefix.length() );
+        result.add( new Pair<String,String>( key, value ) );
       }
     }
     return result;
@@ -112,9 +112,9 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    */
   private Enumeration<URL> getPropertyFiles() {
     try {
-      return getClass().getClassLoader().getResources(A4E_CONFIGURATION_PROPERTIES);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, A4E_CONFIGURATION_PROPERTIES);
+      return getClass().getClassLoader().getResources( A4E_CONFIGURATION_PROPERTIES );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, A4E_CONFIGURATION_PROPERTIES );
     }
   }
 
@@ -131,9 +131,9 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   private StringMap loadConfigurationProperties() {
     Enumeration<URL> propertyFiles = getPropertyFiles();
     StringMap allProperties = new StringMap();
-    while (propertyFiles.hasMoreElements()) {
+    while( propertyFiles.hasMoreElements() ) {
       URL url = propertyFiles.nextElement();
-      allProperties.extendProperties(url);
+      allProperties.extendProperties( url );
     }
     return allProperties;
   }

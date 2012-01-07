@@ -28,8 +28,8 @@ public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjects
    * {@inheritDoc}
    */
   @Override
-  public boolean canHandle(EclipseProject project) {
-    return CdtUtilities.isCRelatedProject(project);
+  public boolean canHandle( EclipseProject project ) {
+    return CdtUtilities.isCRelatedProject( project );
   }
 
   /**
@@ -39,5 +39,5 @@ public class CdtReferencedProjectResolverImpl extends PlatformReferencedProjects
   public String getReferenceType() {
     return "cdt";
   }
-  
+
 } /* ENDCLASS */

@@ -22,7 +22,7 @@ public class SourcePathPyDevTest extends AbstractSourcePathTest {
    * Initialises this set of tests.
    */
   public SourcePathPyDevTest() {
-    super(false);
+    super( false );
   }
 
 } /* ENDCLASS */

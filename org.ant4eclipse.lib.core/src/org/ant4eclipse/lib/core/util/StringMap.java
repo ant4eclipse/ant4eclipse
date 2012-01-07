@@ -33,7 +33,7 @@ import java.util.Properties;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class StringMap extends Hashtable<String, String> {
+public class StringMap extends Hashtable<String,String> {
 
   /**
    * Simply sets up this datastructure with no content.
@@ -50,8 +50,8 @@ public class StringMap extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with {@link CoreExceptionCode#IO_FAILURE} in case there was an io error on the stream.
    */
-  public StringMap(InputStream instream) {
-    extendProperties(instream);
+  public StringMap( InputStream instream ) {
+    extendProperties( instream );
   }
 
   /**
@@ -65,8 +65,8 @@ public class StringMap extends Hashtable<String, String> {
    *           {@link CoreExceptionCode#RESOURCE_NOT_ON_THE_CLASSPATH} if the resource is not located within the
    *           classpath in the first place.
    */
-  public StringMap(String classpath) {
-    extendProperties(classpath);
+  public StringMap( String classpath ) {
+    extendProperties( classpath );
   }
 
   /**
@@ -78,8 +78,8 @@ public class StringMap extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public StringMap(URL resource) {
-    extendProperties(resource);
+  public StringMap( URL resource ) {
+    extendProperties( resource );
   }
 
   /**
@@ -91,8 +91,8 @@ public class StringMap extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#FILEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public StringMap(File propertiesFile) {
-    extendProperties(propertiesFile);
+  public StringMap( File propertiesFile ) {
+    extendProperties( propertiesFile );
   }
 
   /**
@@ -104,21 +104,21 @@ public class StringMap extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#RESOURCEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public void extendProperties(URL resource) {
+  public void extendProperties( URL resource ) {
     InputStream instream = null;
     try {
       instream = resource.openStream();
-      extendProperties(instream);
-    } catch (Ant4EclipseException ex) {
-      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
-        throw new Ant4EclipseException(ex.getCause(), CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm());
+      extendProperties( instream );
+    } catch( Ant4EclipseException ex ) {
+      if( ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE ) {
+        throw new Ant4EclipseException( ex.getCause(), CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm() );
       } else {
         throw ex;
       }
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm());
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm() );
     } finally {
-      Utilities.close((Closeable) instream);
+      Utilities.close( (Closeable) instream );
     }
   }
 
@@ -131,22 +131,22 @@ public class StringMap extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with code {@link CoreExceptionCode#FILEIO_FAILURE} if accessing the file failed for some reason.
    */
-  public void extendProperties(File propertiesFile) {
+  public void extendProperties( File propertiesFile ) {
     FileInputStream fis = null;
     try {
-      fis = new FileInputStream(propertiesFile);
-      extendProperties(fis);
-      A4ELogging.debug("Read settings from '%s'", propertiesFile.getAbsolutePath());
-    } catch (Ant4EclipseException ex) {
-      if (ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE) {
-        throw new Ant4EclipseException(ex.getCause(), CoreExceptionCode.FILEIO_FAILURE, propertiesFile);
+      fis = new FileInputStream( propertiesFile );
+      extendProperties( fis );
+      A4ELogging.debug( "Read settings from '%s'", propertiesFile.getAbsolutePath() );
+    } catch( Ant4EclipseException ex ) {
+      if( ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE ) {
+        throw new Ant4EclipseException( ex.getCause(), CoreExceptionCode.FILEIO_FAILURE, propertiesFile );
       } else {
         throw ex;
       }
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, propertiesFile);
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.FILEIO_FAILURE, propertiesFile );
     } finally {
-      Utilities.close((Closeable) fis);
+      Utilities.close( (Closeable) fis );
     }
   }
 
@@ -159,16 +159,16 @@ public class StringMap extends Hashtable<String, String> {
    * @throws Ant4EclipseException
    *           with {@link CoreExceptionCode#IO_FAILURE} in case there was an io error on the stream.
    */
-  public void extendProperties(InputStream instream) {
-    if (instream != null) {
+  public void extendProperties( InputStream instream ) {
+    if( instream != null ) {
       Properties properties = new Properties();
       try {
-        properties.load(instream);
-      } catch (IOException ex) {
-        throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+        properties.load( instream );
+      } catch( IOException ex ) {
+        throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
       }
-      for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-        put((String) entry.getKey(), (String) entry.getValue());
+      for( Map.Entry<Object,Object> entry : properties.entrySet() ) {
+        put( (String) entry.getKey(), (String) entry.getValue() );
       }
     }
   }
@@ -184,12 +184,12 @@ public class StringMap extends Hashtable<String, String> {
    *           {@link CoreExceptionCode#RESOURCE_NOT_ON_THE_CLASSPATH} if the resource is not located within the
    *           classpath in the first place.
    */
-  public void extendProperties(String classpath) {
-    URL resource = Utilities.class.getResource(classpath);
-    if (resource == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, classpath);
+  public void extendProperties( String classpath ) {
+    URL resource = Utilities.class.getResource( classpath );
+    if( resource == null ) {
+      throw new Ant4EclipseException( CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, classpath );
     }
-    extendProperties(resource);
+    extendProperties( resource );
   }
 
   /**
@@ -204,9 +204,9 @@ public class StringMap extends Hashtable<String, String> {
    * 
    * @return The value from the map or the default value.
    */
-  public String get(String key, String defvalue) {
-    if (containsKey(key)) {
-      return get(key);
+  public String get( String key, String defvalue ) {
+    if( containsKey( key ) ) {
+      return get( key );
     } else {
       return defvalue;
     }
@@ -218,17 +218,17 @@ public class StringMap extends Hashtable<String, String> {
    * @param destination
    *          The destination file used to receive the properties. Not <code>null</code>.
    */
-  public void save(File destination) {
+  public void save( File destination ) {
     Properties properties = new Properties();
-    properties.putAll(this);
+    properties.putAll( this );
     OutputStream outstream = null;
     try {
-      outstream = new FileOutputStream(destination);
-      properties.store(outstream, null);
-    } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.IO_FAILURE);
+      outstream = new FileOutputStream( destination );
+      properties.store( outstream, null );
+    } catch( IOException ex ) {
+      throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
     } finally {
-      Utilities.close((Closeable) outstream);
+      Utilities.close( (Closeable) outstream );
     }
   }
 

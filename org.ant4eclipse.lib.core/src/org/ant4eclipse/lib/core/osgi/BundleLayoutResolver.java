@@ -76,4 +76,4 @@ public interface BundleLayoutResolver {
    */
   File[] resolveBundleClasspathEntries();
 
-}
+} /* ENDINTERFACE */

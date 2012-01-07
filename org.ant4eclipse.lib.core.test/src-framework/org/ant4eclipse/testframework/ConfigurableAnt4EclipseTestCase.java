@@ -34,7 +34,7 @@ public class ConfigurableAnt4EclipseTestCase {
    * 
    * @return The altered properties or <code>null</code>.
    */
-  protected StringMap customAnt4EclipseConfiguration(StringMap properties) {
+  protected StringMap customAnt4EclipseConfiguration( StringMap properties ) {
     return null;
   }
 

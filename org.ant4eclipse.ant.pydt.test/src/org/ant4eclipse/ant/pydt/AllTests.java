@@ -19,8 +19,8 @@ import org.junit.runners.Suite;
  * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-@RunWith(Suite.class)
+@RunWith( Suite.class )
 @Suite.SuiteClasses( { SourcePathDLTKTest.class, SourcePathPyDevTest.class, PythonPathDLTKTest.class,
-    PythonPathPyDevTest.class })
+    PythonPathPyDevTest.class } )
 public class AllTests {
 } /* ENDCLASS */

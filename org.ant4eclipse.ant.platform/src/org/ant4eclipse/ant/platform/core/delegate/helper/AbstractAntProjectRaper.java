@@ -29,8 +29,6 @@ import org.apache.tools.ant.Project;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
- * 
- * @param <V>
  */
 public abstract class AbstractAntProjectRaper<V> {
 
@@ -41,10 +39,10 @@ public abstract class AbstractAntProjectRaper<V> {
   private String                     _prefix;
 
   /** the scoped values */
-  private Map<String, V>             _scopedValues;
+  private Map<String,V>              _scopedValues;
 
   /** the overridden values */
-  private Map<String, V>             _overriddenValues;
+  private Map<String,V>              _overriddenValues;
 
   /** the value accessor */
   private AntProjectValueAccessor<V> _valueAccessor;
@@ -60,7 +58,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * @param antProject
    *          the ant project
    */
-  public AbstractAntProjectRaper(Project antProject, Thread thread) {
+  public AbstractAntProjectRaper( Project antProject, Thread thread ) {
     this._antProject = antProject;
     this._currentThread = thread;
   }
@@ -96,32 +94,32 @@ public abstract class AbstractAntProjectRaper<V> {
    * @param prefix
    *          the prefix used for the scoped values.
    */
-  public final void setScopedValues(Map<String, V> scopedValues, String prefix) {
-    Assure.assertTrue(this._scopedValues == null, "Scoped values are already set!");
-    Assure.notNull("scopedValues", scopedValues);
+  public final void setScopedValues( Map<String,V> scopedValues, String prefix ) {
+    Assure.assertTrue( this._scopedValues == null, "Scoped values are already set!" );
+    Assure.notNull( "scopedValues", scopedValues );
 
     // set the scoped values
     this._scopedValues = scopedValues;
-    this._overriddenValues = new HashMap<String, V>();
+    this._overriddenValues = new HashMap<String,V>();
 
     // set the prefix
     this._prefix = (prefix != null && prefix.trim().length() > 0) ? prefix + "." : "";
 
     // iterate over all scoped properties
-    Iterator<Entry<String, V>> iterator = this._scopedValues.entrySet().iterator();
-    while (iterator.hasNext()) {
+    Iterator<Entry<String,V>> iterator = this._scopedValues.entrySet().iterator();
+    while( iterator.hasNext() ) {
 
-      Map.Entry<String, V> entry = iterator.next();
+      Map.Entry<String,V> entry = iterator.next();
       String key = (this._prefix + entry.getKey());
 
       // store the property if it already exists
-      V existingValue = this._valueAccessor.getValue(key);
-      if (existingValue != null) {
-        this._overriddenValues.put(key, existingValue);
+      V existingValue = this._valueAccessor.getValue( key );
+      if( existingValue != null ) {
+        this._overriddenValues.put( key, existingValue );
       }
 
       V newValue = entry.getValue();
-      this._valueAccessor.setValue(key, newValue);
+      this._valueAccessor.setValue( key, newValue );
     }
   }
 
@@ -131,17 +129,17 @@ public abstract class AbstractAntProjectRaper<V> {
    * </p>
    */
   public final void unsetScopedValues() {
-    Assure.assertTrue(this._scopedValues != null, "Scoped values must be set!");
+    Assure.assertTrue( this._scopedValues != null, "Scoped values must be set!" );
 
     // unset scopes value
     Iterator<String> keyIterator = this._scopedValues.keySet().iterator();
-    while (keyIterator.hasNext()) {
+    while( keyIterator.hasNext() ) {
       String key = (this._prefix + keyIterator.next());
-      this._valueAccessor.unsetValue(key);
+      this._valueAccessor.unsetValue( key );
 
       // reset the property if it existed before executing the macro
-      if (this._overriddenValues.containsKey(key)) {
-        this._valueAccessor.setValue(key, this._overriddenValues.get(key));
+      if( this._overriddenValues.containsKey( key ) ) {
+        this._valueAccessor.setValue( key, this._overriddenValues.get( key ) );
       }
     }
 
@@ -161,10 +159,11 @@ public abstract class AbstractAntProjectRaper<V> {
    * @exception NoSuchFieldException
    *              Darn, nothing to fondle
    */
-  public static Object getValue(Object instance, String fieldName) throws IllegalAccessException, NoSuchFieldException {
-    Field field = getField(instance.getClass(), fieldName);
-    field.setAccessible(true);
-    return field.get(instance);
+  public static Object getValue( Object instance, String fieldName ) throws IllegalAccessException,
+      NoSuchFieldException {
+    Field field = getField( instance.getClass(), fieldName );
+    field.setAccessible( true );
+    return field.get( instance );
   }
 
   /**
@@ -178,18 +177,18 @@ public abstract class AbstractAntProjectRaper<V> {
    * @exception NoSuchFieldException
    *              Darn, nothing to fondle.
    */
-  public static Field getField(Class<?> thisClass, String fieldName) throws NoSuchFieldException {
-    if (thisClass == null) {
-      throw new NoSuchFieldException("Invalid field : " + fieldName);
+  public static Field getField( Class<?> thisClass, String fieldName ) throws NoSuchFieldException {
+    if( thisClass == null ) {
+      throw new NoSuchFieldException( "Invalid field : " + fieldName );
     }
     try {
-      return thisClass.getDeclaredField(fieldName);
-    } catch (NoSuchFieldException e) {
-      return getField(thisClass.getSuperclass(), fieldName);
+      return thisClass.getDeclaredField( fieldName );
+    } catch( NoSuchFieldException e ) {
+      return getField( thisClass.getSuperclass(), fieldName );
     }
   }
 
-  public void setValueAccessor(AntProjectValueAccessor<V> valueAccessor) {
+  public void setValueAccessor( AntProjectValueAccessor<V> valueAccessor ) {
     this._valueAccessor = valueAccessor;
   }
 
@@ -204,17 +203,18 @@ public abstract class AbstractAntProjectRaper<V> {
      * @param key
      * @return
      */
-    V getValue(String key);
+    V getValue( String key );
 
     /**
      * @param key
      * @param value
      */
-    void setValue(String key, V value);
+    void setValue( String key, V value );
 
     /**
      * @param key
      */
-    void unsetValue(String key);
+    void unsetValue( String key );
   }
-}
+  
+} /* ENDCLASS */

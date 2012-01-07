@@ -38,8 +38,8 @@ public class VcsException extends RuntimeException {
    * @param message
    *          the detail message. The detail message is saved for later retrieval by the {@link #getMessage()} method.
    */
-  public VcsException(String message) {
-    super(message);
+  public VcsException( String message ) {
+    super( message );
   }
 
   /**
@@ -49,8 +49,8 @@ public class VcsException extends RuntimeException {
    *          the cause (which is saved for later retrieval by the {@link #getCause()} method). (A <tt>null</tt> value
    *          is permitted, and indicates that the cause is nonexistent or unknown.)
    */
-  public VcsException(Throwable cause) {
-    super(cause);
+  public VcsException( Throwable cause ) {
+    super( cause );
   }
 
   /**
@@ -62,8 +62,8 @@ public class VcsException extends RuntimeException {
    *          the cause (which is saved for later retrieval by the {@link #getCause()} method). (A <tt>null</tt> value
    *          is permitted, and indicates that the cause is nonexistent or unknown.)
    */
-  public VcsException(String message, Throwable cause) {
-    super(message, cause);
+  public VcsException( String message, Throwable cause ) {
+    super( message, cause );
   }
 
-}
+} /* ENDCLASS */

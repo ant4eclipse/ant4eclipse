@@ -17,11 +17,8 @@ package org.ant4eclipse.lib.core.util;
  * </p>
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
- * 
- * @param <T>
- * @param <U>
  */
-public class Pair<T, U> {
+public class Pair<T,U> {
 
   /** the first thing of this pair */
   private T _first;
@@ -39,7 +36,7 @@ public class Pair<T, U> {
    * @param second
    *          the second thing of this pair
    */
-  public Pair(T first, U second) {
+  public Pair( T first, U second ) {
     this._first = first;
     this._second = second;
   }
@@ -80,17 +77,17 @@ public class Pair<T, U> {
   /**
    * {@inheritDoc}
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings( "unchecked" )
   @Override
-  public boolean equals(Object other) {
-    if (this == other) {
+  public boolean equals( Object other ) {
+    if( this == other ) {
       return true;
     }
-    if (other == null || !(getClass().isInstance(other))) {
+    if( other == null || !(getClass().isInstance( other )) ) {
       return false;
     }
-    Pair<T, U> otherPair = getClass().cast(other);
-    return Utilities.equals(this._first, otherPair._first) && Utilities.equals(this._second, otherPair._second);
+    Pair<T,U> otherPair = getClass().cast( other );
+    return Utilities.equals( this._first, otherPair._first ) && Utilities.equals( this._second, otherPair._second );
   }
 
 } /* ENDCLASS */

@@ -33,22 +33,22 @@ import java.util.Map;
 public class SubElementAndAttributesDelegate extends AbstractAntDelegate implements SubElementAndAttributesComponent {
 
   /** The prefix of properties that holds a DynamicElementContributor class name */
-  public static final String             SUB_ELEMENT_CONTRIBUTOR_PREFIX   = "subElementContributor";
+  public static final String           SUB_ELEMENT_CONTRIBUTOR_PREFIX   = "subElementContributor";
 
   /** The prefix of properties that holds a DynamicElementContributor class name */
-  public static final String             SUB_ATTRIBUTE_CONTRIBUTOR_PREFIX = "subAttributeContributor";
+  public static final String           SUB_ATTRIBUTE_CONTRIBUTOR_PREFIX = "subAttributeContributor";
 
   /** the list of all sub element contributors */
-  private List<SubElementContribution>   _subElementContributions;
+  private List<SubElementContribution> _subElementContributions;
 
   /** list that holds all parsed sub elements */
-  private List<Object>                   _subElements;
+  private List<Object>                 _subElements;
 
   /** map that holds all parsed sub attributes */
-  private Map<String, String>            _subAttributes;
+  private Map<String,String>           _subAttributes;
 
   /** indicates if this instance has been initialized or not */
-  private boolean                        _initialized                     = false;
+  private boolean                      _initialized                     = false;
 
   /**
    * <p>
@@ -58,8 +58,8 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
    * @param component
    *          the project component
    */
-  public SubElementAndAttributesDelegate(ProjectComponent component) {
-    super(component);
+  public SubElementAndAttributesDelegate( ProjectComponent component ) {
+    super( component );
   }
 
   /**
@@ -76,7 +76,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
    * {@inheritDoc}
    */
   @Override
-  public Map<String, String> getSubAttributes() {
+  public Map<String,String> getSubAttributes() {
     init();
 
     return this._subAttributes;
@@ -86,18 +86,18 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
    * {@inheritDoc}
    */
   @Override
-  public Object createDynamicElement(String name) throws BuildException {
+  public Object createDynamicElement( String name ) throws BuildException {
 
     // initialize the delegate
     init();
 
     // iterate over all known SubElementContributions
-    for (SubElementContribution subElementContribution : this._subElementContributions) {
+    for( SubElementContribution subElementContribution : this._subElementContributions ) {
 
       // if the subElementContribution can handle the element -> handle it
-      if (subElementContribution.canHandleSubElement(name, getProjectComponent())) {
-        Object subElement = subElementContribution.createSubElement(name, getProjectComponent());
-        this._subElements.add(subElement);
+      if( subElementContribution.canHandleSubElement( name, getProjectComponent() ) ) {
+        Object subElement = subElementContribution.createSubElement( name, getProjectComponent() );
+        this._subElements.add( subElement );
         return subElement;
       }
     }
@@ -110,7 +110,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
    * {@inheritDoc}
    */
   @Override
-  public void setDynamicAttribute(String name, String value) throws BuildException {
+  public void setDynamicAttribute( String name, String value ) throws BuildException {
     // initialize the delegate
     init();
   }
@@ -123,7 +123,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
   protected void init() {
 
     // Return if already initialized
-    if (this._initialized) {
+    if( this._initialized ) {
       return;
     }
 
@@ -131,16 +131,17 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     this._subElements = new ArrayList<Object>();
 
     // create the lists of dynamic attributes
-    this._subAttributes = new HashMap<String, String>();
+    this._subAttributes = new HashMap<String,String>();
 
     // /////
     // Create and set sub-elements...
     // ////
 
     // assign subElementContributions
-    this._subElementContributions = A4ECore.instance().getServices(SubElementContribution.class);
-    
+    this._subElementContributions = A4ECore.instance().getServices( SubElementContribution.class );
+
     // set initialized
     this._initialized = true;
   }
-}
+  
+} /* ENDCLASS */

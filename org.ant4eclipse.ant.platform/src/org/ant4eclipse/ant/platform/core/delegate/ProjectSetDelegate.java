@@ -34,26 +34,26 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    * @param component
    *          the project component
    */
-  public ProjectSetDelegate(ProjectComponent component) {
-    super(component);
+  public ProjectSetDelegate( ProjectComponent component ) {
+    super( component );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setProjectNames(String projectNames) {
+  public final void setProjectNames( String projectNames ) {
 
     //
-    if (projectNames == null) {
+    if( projectNames == null ) {
       this._projectNames = new String[] {};
     } else {
-      String[] names = projectNames.split(",");
+      String[] names = projectNames.split( "," );
 
       //
       this._projectNames = new String[names.length];
 
-      for (int i = 0; i < names.length; i++) {
+      for( int i = 0; i < names.length; i++ ) {
         this._projectNames[i] = names[i].trim();
       }
     }
@@ -80,9 +80,9 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    */
   @Override
   public final void requireProjectNamesSet() {
-    if (!isProjectNamesSet()) {
+    if( !isProjectNamesSet() ) {
       // TODO
-      throw new BuildException("projectNames has to be set!");
+      throw new BuildException( "projectNames has to be set!" );
     }
   }
 
@@ -91,9 +91,10 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    */
   @Override
   public final void requireTeamProjectSetOrProjectNamesSet() {
-    if (!isProjectNamesSet() && !isTeamProjectSetSet()) {
+    if( !isProjectNamesSet() && !isTeamProjectSetSet() ) {
       // TODO
-      throw new BuildException("projectNames or teamProjectSet has to be set!");
+      throw new BuildException( "projectNames or teamProjectSet has to be set!" );
     }
   }
-}
+  
+} /* ENDCLASS */

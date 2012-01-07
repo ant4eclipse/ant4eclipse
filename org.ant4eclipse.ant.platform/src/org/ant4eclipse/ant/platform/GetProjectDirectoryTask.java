@@ -31,4 +31,5 @@ public class GetProjectDirectoryTask extends AbstractGetProjectPathTask {
   protected File[] resolvePath() {
     return new File[] { getEclipseProject().getFolder() };
   }
-}
+  
+} /* ENDCLASS */

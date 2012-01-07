@@ -37,7 +37,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   /**
    * Comment for <code>_command</code>
    */
-  private VcsCommand          _command                = new VcsCommand(CHECKOUT);
+  private VcsCommand          _command                = new VcsCommand( CHECKOUT );
 
   private VcsAdapter          _vcsAdapter;
 
@@ -62,11 +62,11 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * 
    * @param destination
    */
-  public void setDestination(File destination) {
+  public void setDestination( File destination ) {
     this._destination = destination;
   }
 
-  public void setPassword(String password) {
+  public void setPassword( String password ) {
     this._password = password;
   }
 
@@ -74,7 +74,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     return this._username;
   }
 
-  public void setUsername(String username) {
+  public void setUsername( String username ) {
     this._username = username;
   }
 
@@ -82,7 +82,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     return this._deleteExistingProjects;
   }
 
-  public void setDeleteExistingProjects(boolean deleteExistingProjects) {
+  public void setDeleteExistingProjects( boolean deleteExistingProjects ) {
     this._deleteExistingProjects = deleteExistingProjects;
   }
 
@@ -97,8 +97,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param command
    *          The command to set.
    */
-  public void setCommand(VcsCommand command) {
-    Assure.notNull("command", command);
+  public void setCommand( VcsCommand command ) {
+    Assure.notNull( "command", command );
     this._command = command;
   }
 
@@ -120,18 +120,18 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     checkPrereqs();
 
     this._vcsAdapter = createVcsAdapter();
-    A4ELogging.debug("using version control adapter = ", this._vcsAdapter);
+    A4ELogging.debug( "using version control adapter = ", this._vcsAdapter );
 
     // set user and password
-    getProjectSet().setUserAndPassword(getUsername(), getPassword());
+    getProjectSet().setUserAndPassword( getUsername(), getPassword() );
 
-    if (getCommand().getValue().equals(CHECKOUT)) {
-      checkoutProjectSet(getDestination(), getProjectSet(), isDeleteExistingProjects());
-    } else if (getCommand().getValue().equals(UPDATE)) {
-      updateProjectSet(getDestination(), getProjectSet());
+    if( getCommand().getValue().equals( CHECKOUT ) ) {
+      checkoutProjectSet( getDestination(), getProjectSet(), isDeleteExistingProjects() );
+    } else if( getCommand().getValue().equals( UPDATE ) ) {
+      updateProjectSet( getDestination(), getProjectSet() );
     }
-    if (getCommand().getValue().equals(EXPORT)) {
-      exportProjectSet(getDestination(), getProjectSet(), isDeleteExistingProjects());
+    if( getCommand().getValue().equals( EXPORT ) ) {
+      exportProjectSet( getDestination(), getProjectSet(), isDeleteExistingProjects() );
     }
   }
 
@@ -141,8 +141,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * Ensures that the destination-Parameter has been set correctly
    */
   private void requireDestinationSet() {
-    if (getDestination() == null || !getDestination().isDirectory()) {
-      throw new BuildException("Parameter 'destination' must be set to an existing directory");
+    if( getDestination() == null || !getDestination().isDirectory() ) {
+      throw new BuildException( "Parameter 'destination' must be set to an existing directory" );
     }
   }
 
@@ -151,8 +151,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   private void requireCommandSet() {
     // check that command is set..
-    if (getCommand() == null) {
-      throw new BuildException("command has to be set!");
+    if( getCommand() == null ) {
+      throw new BuildException( "command has to be set!" );
     }
   }
 
@@ -161,17 +161,17 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    * @param deleteExisting
    */
-  public void checkoutProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
+  public void checkoutProjectSet( File destination, TeamProjectSet projectSet, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.isDirectory("destination", destination);
-    Assure.notNull("projectSet", projectSet);
+    Assure.isDirectory( "destination", destination );
+    Assure.notNull( "projectSet", projectSet );
 
-    A4ELogging.debug("checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf(deleteExisting));
+    A4ELogging.debug( "checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf( deleteExisting ) );
 
     TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
 
-    for (TeamProjectDescription teamProjectDescription : _teamProjectDescription) {
-      this._vcsAdapter.checkoutProject(destination, teamProjectDescription, deleteExisting);
+    for( TeamProjectDescription teamProjectDescription : _teamProjectDescription ) {
+      this._vcsAdapter.checkoutProject( destination, teamProjectDescription, deleteExisting );
     }
   }
 
@@ -180,15 +180,15 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    * @param deleteExisting
    */
-  public void exportProjectSet(File destination, TeamProjectSet projectSet, boolean deleteExisting)
+  public void exportProjectSet( File destination, TeamProjectSet projectSet, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.isDirectory("destination", destination);
-    Assure.notNull("projectSet", projectSet);
+    Assure.isDirectory( "destination", destination );
+    Assure.notNull( "projectSet", projectSet );
 
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
-    for (TeamProjectDescription description : descriptions) {
-      this._vcsAdapter.exportProject(destination, description, deleteExisting);
+    for( TeamProjectDescription description : descriptions ) {
+      this._vcsAdapter.exportProject( destination, description, deleteExisting );
     }
   }
 
@@ -196,12 +196,12 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param workspace
    * @param projectSet
    */
-  public void updateProjectSet(File destination, TeamProjectSet projectSet) throws Ant4EclipseException {
-    Assure.isDirectory("destination", destination);
-    Assure.notNull("projectSet", projectSet);
+  public void updateProjectSet( File destination, TeamProjectSet projectSet ) throws Ant4EclipseException {
+    Assure.isDirectory( "destination", destination );
+    Assure.notNull( "projectSet", projectSet );
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
-    for (TeamProjectDescription description : descriptions) {
-      this._vcsAdapter.updateProject(destination, description);
+    for( TeamProjectDescription description : descriptions ) {
+      this._vcsAdapter.updateProject( destination, description );
     }
   }
 
@@ -217,9 +217,9 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
       // needed by Ant to instantiate
     }
 
-    public VcsCommand(String value) {
+    public VcsCommand( String value ) {
       super();
-      setValue(value);
+      setValue( value );
     }
 
     /**
@@ -230,4 +230,5 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
       return new String[] { CHECKOUT, UPDATE, EXPORT };
     }
   }
-}
+  
+} /* ENDCLASS */

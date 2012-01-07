@@ -17,16 +17,16 @@ package org.ant4eclipse.lib.core;
 public interface A4EService {
 
   /**
-   * Returns the priority associated with this service. Negative values are reserved for 
+   * Returns the priority associated with this service. Negative values are reserved for
    * 
-   * @return   The priority associated with this service. Maybe <code>null</code>.
+   * @return The priority associated with this service. Maybe <code>null</code>.
    */
   Integer getPriority();
-  
+
   /**
-   * Will be invoked when a service is requested to drop all it's internal data. This function is
-   * only used in conjunction with tests.
+   * Will be invoked when a service is requested to drop all it's internal data. This function is only used in
+   * conjunction with tests.
    */
   void reset();
-  
+
 } /* ENDINTERFACE */

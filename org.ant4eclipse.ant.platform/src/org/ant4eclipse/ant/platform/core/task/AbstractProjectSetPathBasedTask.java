@@ -39,7 +39,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
     super();
 
     // create the path delegate
-    this._pathDelegate = new PathDelegate(this);
+    this._pathDelegate = new PathDelegate( this );
   }
 
   /**
@@ -78,48 +78,48 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    * {@inheritDoc}
    */
   @Override
-  public final void setDirSeparator(String newdirseparator) {
-    this._pathDelegate.setDirSeparator(newdirseparator);
+  public final void setDirSeparator( String newdirseparator ) {
+    this._pathDelegate.setDirSeparator( newdirseparator );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setPathSeparator(String newpathseparator) {
-    this._pathDelegate.setPathSeparator(newpathseparator);
+  public final void setPathSeparator( String newpathseparator ) {
+    this._pathDelegate.setPathSeparator( newpathseparator );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File[] entries) {
-    return this._pathDelegate.convertToPath(entries);
+  public final Path convertToPath( File[] entries ) {
+    return this._pathDelegate.convertToPath( entries );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File[] entries) {
-    return this._pathDelegate.convertToString(entries);
+  public final String convertToString( File[] entries ) {
+    return this._pathDelegate.convertToString( entries );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath(File entry) {
-    return this._pathDelegate.convertToPath(entry);
+  public final Path convertToPath( File entry ) {
+    return this._pathDelegate.convertToPath( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString(File entry) {
-    return this._pathDelegate.convertToString(entry);
+  public final String convertToString( File entry ) {
+    return this._pathDelegate.convertToString( entry );
   }
 
   /**
@@ -128,4 +128,5 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
   public PathDelegate getPathDelegate() {
     return this._pathDelegate;
   }
-}
+  
+} /* ENDCLASS */

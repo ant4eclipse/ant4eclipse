@@ -41,9 +41,9 @@ public class Edge<T> {
    * @param aChild
    *          the child object
    */
-  public Edge(T aParent, T aChild) {
-    Assure.notNull("aParent", aParent);
-    Assure.notNull("aChild", aChild);
+  public Edge( T aParent, T aChild ) {
+    Assure.notNull( "aParent", aParent );
+    Assure.notNull( "aChild", aChild );
     this.parent = aParent;
     this.child = aChild;
   }
@@ -86,22 +86,21 @@ public class Edge<T> {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
-    @SuppressWarnings("unchecked")
-    Edge<T> other = (Edge<T>) obj;
-    if (!this.parent.equals(other.parent)) {
+    @SuppressWarnings( "unchecked" ) Edge<T> other = (Edge<T>) obj;
+    if( !this.parent.equals( other.parent ) ) {
       return false;
     }
-    if (!this.child.equals(other.child)) {
+    if( !this.child.equals( other.child ) ) {
       return false;
     }
     return true;
@@ -113,12 +112,12 @@ public class Edge<T> {
   @Override
   public String toString() {
     StringBuffer result = new StringBuffer();
-    result.append("[Edge");
-    result.append(" parent:");
-    result.append(this.parent);
-    result.append(" child:");
-    result.append(this.child);
-    result.append("]");
+    result.append( "[Edge" );
+    result.append( " parent:" );
+    result.append( this.parent );
+    result.append( " child:" );
+    result.append( this.child );
+    result.append( "]" );
     return result.toString();
   }
 

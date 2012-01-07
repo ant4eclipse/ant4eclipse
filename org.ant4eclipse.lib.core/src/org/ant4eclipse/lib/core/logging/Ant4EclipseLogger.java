@@ -31,7 +31,7 @@ public interface Ant4EclipseLogger extends A4EService {
    * @param context
    *          A contextual object providing additional information. Maybe <code>null</code>.
    */
-  void setContext(Object context);
+  void setContext( Object context );
 
   /**
    * Returns <code>true</code> if the debugging is enabled.
@@ -55,7 +55,7 @@ public interface Ant4EclipseLogger extends A4EService {
    * @param args
    *          The arguments used for the formatted message.
    */
-  void trace(String msg, Object... args);
+  void trace( String msg, Object ... args );
 
   /**
    * Dumps debugging information.
@@ -65,7 +65,7 @@ public interface Ant4EclipseLogger extends A4EService {
    * @param args
    *          The arguments used for the formatted message.
    */
-  void debug(String msg, Object... args);
+  void debug( String msg, Object ... args );
 
   /**
    * Dumps informational text.
@@ -75,7 +75,7 @@ public interface Ant4EclipseLogger extends A4EService {
    * @param args
    *          The arguments used for the formatted message.
    */
-  void info(String msg, Object... args);
+  void info( String msg, Object ... args );
 
   /**
    * Dumps warning information.
@@ -85,7 +85,7 @@ public interface Ant4EclipseLogger extends A4EService {
    * @param args
    *          The arguments used for the formatted message.
    */
-  void warn(String msg, Object... args);
+  void warn( String msg, Object ... args );
 
   /**
    * Dumps error information.
@@ -95,6 +95,6 @@ public interface Ant4EclipseLogger extends A4EService {
    * @param args
    *          The arguments used for the formatted message.
    */
-  void error(String msg, Object... args);
+  void error( String msg, Object ... args );
 
-} /* ENDCLASS */
+} /* ENDINTERFACE */

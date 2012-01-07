@@ -30,40 +30,40 @@ import java.util.Map;
  */
 public class PythonSubelementContribution implements SubElementContribution {
 
-  private static final String   ELEMENTNAME = "pydtReferencedProject";
+  private static final String  ELEMENTNAME = "pydtReferencedProject";
 
-  private Map<String, Class<?>> mapping;
+  private Map<String,Class<?>> mapping;
 
   /**
    * Initialises this contributor to handle subelements known within the python support layer.
    */
   public PythonSubelementContribution() {
-    this.mapping = new Hashtable<String, Class<?>>();
+    this.mapping = new Hashtable<String,Class<?>>();
     /** @todo [02-Aug-2009:KASI] Why do we only get lowercase names ? */
-    this.mapping.put(ELEMENTNAME.toLowerCase(), UsedProjectsArgumentComponent.class);
+    this.mapping.put( ELEMENTNAME.toLowerCase(), UsedProjectsArgumentComponent.class );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean canHandleSubElement(String name, ProjectComponent component) {
-    return this.mapping.containsKey(name);
+  public boolean canHandleSubElement( String name, ProjectComponent component ) {
+    return this.mapping.containsKey( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Object createSubElement(String name, ProjectComponent component) {
-    Class<?> clazz = this.mapping.get(name);
-    if (clazz != null) {
+  public Object createSubElement( String name, ProjectComponent component ) {
+    Class<?> clazz = this.mapping.get( name );
+    if( clazz != null ) {
       try {
         return clazz.newInstance();
-      } catch (InstantiationException ex) {
-        throw new BuildException(ex);
-      } catch (IllegalAccessException ex) {
-        throw new BuildException(ex);
+      } catch( InstantiationException ex ) {
+        throw new BuildException( ex );
+      } catch( IllegalAccessException ex ) {
+        throw new BuildException( ex );
       }
     } else {
       return null;
@@ -84,5 +84,5 @@ public class PythonSubelementContribution implements SubElementContribution {
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

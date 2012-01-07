@@ -23,13 +23,13 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class MacroExecutionValues {
+public class MacroExecutionValues {
 
   /** the properties */
-  private StringMap           properties;
+  private StringMap          properties;
 
   /** the references */
-  private Map<String, Object> references;
+  private Map<String,Object> references;
 
   /**
    * <p>
@@ -40,7 +40,7 @@ public final class MacroExecutionValues {
     // create properties map
     this.properties = new StringMap();
     // create references map
-    this.references = new HashMap<String, Object>();
+    this.references = new HashMap<String,Object>();
   }
 
   /**
@@ -53,10 +53,10 @@ public final class MacroExecutionValues {
    * 
    * @return the map with all properties.
    */
-  public StringMap getProperties(String prefix) {
+  public StringMap getProperties( String prefix ) {
     StringMap result = new StringMap();
-    for (Map.Entry<String, String> pair : this.properties.entrySet()) {
-      result.put(String.format("%s.%s", prefix, pair.getKey()), pair.getValue());
+    for( Map.Entry<String,String> pair : this.properties.entrySet() ) {
+      result.put( String.format( "%s.%s", prefix, pair.getKey() ), pair.getValue() );
     }
     return result;
   }
@@ -79,7 +79,8 @@ public final class MacroExecutionValues {
    * 
    * @return the map with all references.
    */
-  public Map<String, Object> getReferences() {
+  public Map<String,Object> getReferences() {
     return this.references;
   }
-}
+  
+} /* ENDCLASS */

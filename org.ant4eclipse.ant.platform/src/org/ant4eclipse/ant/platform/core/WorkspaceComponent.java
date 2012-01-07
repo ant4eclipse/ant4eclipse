@@ -47,7 +47,7 @@ public interface WorkspaceComponent {
    *             compatibility only.
    */
   @Deprecated
-  void setWorkspace(String workspace);
+  void setWorkspace( String workspace );
 
   /**
    * <p>
@@ -57,7 +57,7 @@ public interface WorkspaceComponent {
    * @param workspace
    *          the workspace directory
    */
-  void setWorkspaceDirectory(String workspaceDirectory);
+  void setWorkspaceDirectory( String workspaceDirectory );
 
   /**
    * <p>
@@ -84,7 +84,7 @@ public interface WorkspaceComponent {
    * 
    * @param identifier
    */
-  void setWorkspaceId(String identifier);
+  void setWorkspaceId( String identifier );
 
   String getWorkspaceId();
 
@@ -105,4 +105,5 @@ public interface WorkspaceComponent {
    * @return the {@link Workspace} instance.
    */
   Workspace getWorkspace();
-}
+  
+} /* ENDINTERFACE */

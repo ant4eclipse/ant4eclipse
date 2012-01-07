@@ -28,7 +28,7 @@ public class ExceptionCode {
    * @param message
    *          The message used for the user presentation. Not <code>null</code>.
    */
-  protected ExceptionCode(String message) {
+  protected ExceptionCode( String message ) {
     this._message = message;
   }
 
@@ -49,10 +49,10 @@ public class ExceptionCode {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ExceptionCode:");
-    buffer.append(" _message: ");
-    buffer.append(this._message);
-    buffer.append("]");
+    buffer.append( "[ExceptionCode:" );
+    buffer.append( " _message: " );
+    buffer.append( this._message );
+    buffer.append( "]" );
     return buffer.toString();
   }
 

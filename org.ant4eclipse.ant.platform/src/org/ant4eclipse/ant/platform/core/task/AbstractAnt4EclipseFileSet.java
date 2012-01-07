@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection,
-    EclipseProjectComponent {
-  /** 'ant-provided' attributes **/
+public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection, EclipseProjectComponent {
 
   /** the ant attribute 'useDefaultExcludes' */
   private boolean                _useDefaultExcludes = true;
@@ -46,11 +44,11 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @param project
    *          the ant project
    */
-  public AbstractAnt4EclipseFileSet(Project project) {
-    super(project);
+  public AbstractAnt4EclipseFileSet( Project project ) {
+    super( project );
 
     // create the project delegate
-    this._eclipseProjectDelegate = new EclipseProjectDelegate(this);
+    this._eclipseProjectDelegate = new EclipseProjectDelegate( this );
 
     // create the result list
     this._resourceList = new ArrayList<Resource>();
@@ -60,12 +58,12 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * {@inheritDoc}
    */
   @Override
-  public void setRefid(Reference ref) {
-    if (isWorkspaceDirectorySet() || isProjectNameSet()) {
+  public void setRefid( Reference ref ) {
+    if( isWorkspaceDirectorySet() || isProjectNameSet() ) {
       throw tooManyAttributes();
     }
 
-    super.setRefid(ref);
+    super.setRefid( ref );
   }
 
   /**
@@ -76,8 +74,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @param useDefaultExcludes
    *          <code>boolean</code>.
    */
-  public synchronized void setDefaultexcludes(boolean useDefaultExcludes) {
-    if (isReference()) {
+  public synchronized void setDefaultexcludes( boolean useDefaultExcludes ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
 
@@ -92,7 +90,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @return the default exclusions value.
    */
   public synchronized boolean getDefaultexcludes() {
-    return isReference() ? getRef(getProject()).getDefaultexcludes() : this._useDefaultExcludes;
+    return isReference() ? getRef( getProject() ).getDefaultexcludes() : this._useDefaultExcludes;
   }
 
   /**
@@ -103,8 +101,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @param caseSensitive
    *          <code>boolean</code>.
    */
-  public synchronized void setCaseSensitive(boolean caseSensitive) {
-    if (isReference()) {
+  public synchronized void setCaseSensitive( boolean caseSensitive ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
     this._caseSensitive = caseSensitive;
@@ -118,15 +116,15 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @return <code>boolean</code> indicating whether the file set is case sensitive.
    */
   public synchronized boolean isCaseSensitive() {
-    return isReference() ? getRef(getProject()).isCaseSensitive() : this._caseSensitive;
+    return isReference() ? getRef( getProject() ).isCaseSensitive() : this._caseSensitive;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void ensureRole(Class<? extends ProjectRole> projectRoleClass) {
-    this._eclipseProjectDelegate.ensureRole(projectRoleClass);
+  public void ensureRole( Class<? extends ProjectRole> projectRoleClass ) {
+    this._eclipseProjectDelegate.ensureRole( projectRoleClass );
   }
 
   /**
@@ -205,8 +203,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * {@inheritDoc}
    */
   @Override
-  public void setWorkspaceId(String identifier) {
-    this._eclipseProjectDelegate.setWorkspaceId(identifier);
+  public void setWorkspaceId( String identifier ) {
+    this._eclipseProjectDelegate.setWorkspaceId( identifier );
   }
 
   /**
@@ -214,16 +212,16 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   @Deprecated
-  public void setProject(File projectPath) {
-    this._eclipseProjectDelegate.setProject(projectPath);
+  public void setProject( File projectPath ) {
+    this._eclipseProjectDelegate.setProject( projectPath );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setProjectName(String projectName) {
-    this._eclipseProjectDelegate.setProjectName(projectName);
+  public final void setProjectName( String projectName ) {
+    this._eclipseProjectDelegate.setProjectName( projectName );
   }
 
   /**
@@ -231,16 +229,16 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   @Deprecated
-  public final void setWorkspace(String workspace) {
-    this._eclipseProjectDelegate.setWorkspace(workspace);
+  public final void setWorkspace( String workspace ) {
+    this._eclipseProjectDelegate.setWorkspace( workspace );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setWorkspaceDirectory(String workspaceDirectory) {
-    this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
+  public final void setWorkspaceDirectory( String workspaceDirectory ) {
+    this._eclipseProjectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
   /**
@@ -260,8 +258,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    *          the current project
    * @return the referenced {@link PdeProjectFileSet}
    */
-  protected AbstractAnt4EclipseFileSet getRef(Project p) {
-    return (AbstractAnt4EclipseFileSet) getCheckedRef(p);
+  protected AbstractAnt4EclipseFileSet getRef( Project p ) {
+    return (AbstractAnt4EclipseFileSet) getCheckedRef( p );
   }
 
   /**
@@ -304,7 +302,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   protected void computeFileSet() {
     // return if file list already is computed
-    if (this._fileListComputed) {
+    if( this._fileListComputed ) {
       return;
     }
 
@@ -312,7 +310,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
     this._resourceList.clear();
 
     // do the work
-    doComputeFileSet(this._resourceList);
+    doComputeFileSet( this._resourceList );
 
     // set _fileListComputed
     this._fileListComputed = true;
@@ -329,6 +327,6 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @param resourceList
    *          The result list all resources should be added to
    */
-  protected abstract void doComputeFileSet(List<Resource> resourceList);
+  protected abstract void doComputeFileSet( List<Resource> resourceList );
 
-}
+} /* ENDCLASS */

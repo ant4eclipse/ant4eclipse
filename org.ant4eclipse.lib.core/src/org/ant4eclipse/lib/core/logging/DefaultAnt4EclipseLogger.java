@@ -23,18 +23,18 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
 
   public static enum Priority {
 
-    error(0, "ERROR"), warn(1, "WARN"), info(2, "INFO"), debug(3, "DEBUG"), trace(4, "TRACE");
+    error( 0, "ERROR" ), warn( 1, "WARN" ), info( 2, "INFO" ), debug( 3, "DEBUG" ), trace( 4, "TRACE" );
 
     private int    level;
 
     private String description;
 
-    Priority(int lev, String desc) {
+    Priority( int lev, String desc ) {
       this.level = lev;
       this.description = desc;
     }
 
-    public boolean isEnabled(Priority value) {
+    public boolean isEnabled( Priority value ) {
       return value.level >= this.level;
     }
 
@@ -53,7 +53,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * Sets up this logger implementation to make use of standard output.
    */
   public DefaultAnt4EclipseLogger() {
-    this(null);
+    this( null );
   }
 
   /**
@@ -61,7 +61,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   @Override
   public Integer getPriority() {
-    return Integer.valueOf(-2);
+    return Integer.valueOf( -2 );
   }
 
   /**
@@ -70,17 +70,17 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
   @Override
   public void reset() {
   }
-  
+
   /**
    * Sets up this logger implementation to make use of a specified printer.
    * 
    * @param printer
    *          The printer that will be used for the output. If <code>null</code> the standard output is used.
    */
-  public DefaultAnt4EclipseLogger(PrintStream printer) {
+  public DefaultAnt4EclipseLogger( PrintStream printer ) {
     this._logLevel = Priority.trace;
     this._printer = printer;
-    if (this._printer == null) {
+    if( this._printer == null ) {
       this._printer = System.out;
     }
   }
@@ -90,7 +90,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   @Override
   public boolean isDebuggingEnabled() {
-    return Priority.debug.isEnabled(this._logLevel);
+    return Priority.debug.isEnabled( this._logLevel );
   }
 
   /**
@@ -98,7 +98,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   @Override
   public boolean isTraceingEnabled() {
-    return Priority.trace.isEnabled(this._logLevel);
+    return Priority.trace.isEnabled( this._logLevel );
   }
 
   /**
@@ -107,7 +107,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param loglevel
    *          The new log level to be used for this logger.
    */
-  public void setLogLevel(Priority loglevel) {
+  public void setLogLevel( Priority loglevel ) {
     this._logLevel = loglevel;
   }
 
@@ -115,7 +115,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   @Override
-  public void setContext(Object context) {
+  public void setContext( Object context ) {
     //
   }
 
@@ -123,9 +123,9 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   @Override
-  public void debug(String msg, Object... args) {
-    if (isDebuggingEnabled()) {
-      log(Priority.debug, msg, args);
+  public void debug( String msg, Object ... args ) {
+    if( isDebuggingEnabled() ) {
+      log( Priority.debug, msg, args );
     }
   }
 
@@ -133,25 +133,25 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   @Override
-  public void error(String msg, Object... args) {
-    log(Priority.error, msg, args);
+  public void error( String msg, Object ... args ) {
+    log( Priority.error, msg, args );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void info(String msg, Object... args) {
-    log(Priority.info, msg, args);
+  public void info( String msg, Object ... args ) {
+    log( Priority.info, msg, args );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void trace(String msg, Object... args) {
-    if (isTraceingEnabled()) {
-      log(Priority.trace, msg, args);
+  public void trace( String msg, Object ... args ) {
+    if( isTraceingEnabled() ) {
+      log( Priority.trace, msg, args );
     }
   }
 
@@ -159,8 +159,8 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * {@inheritDoc}
    */
   @Override
-  public void warn(String msg, Object... args) {
-    log(Priority.warn, msg, args);
+  public void warn( String msg, Object ... args ) {
+    log( Priority.warn, msg, args );
   }
 
   /**
@@ -173,8 +173,8 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    * @param args
    *          The arguments to be used for the formatting message.
    */
-  private void log(Priority level, String msg, Object... args) {
-    this._printer.println("[" + level + "] " + String.format(msg, args));
+  private void log( Priority level, String msg, Object ... args ) {
+    this._printer.println( "[" + level + "] " + String.format( msg, args ) );
   }
 
 } /* ENDCLASS */

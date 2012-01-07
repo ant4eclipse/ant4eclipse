@@ -25,5 +25,6 @@ public interface PropertyService extends A4EService {
    *          The property name to lookup.
    * @return The property value or null.
    */
-  String getProperty(String propertyName);
-}
+  String getProperty( String propertyName );
+  
+} /* ENDINTERFACE */

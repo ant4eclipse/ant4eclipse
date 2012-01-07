@@ -48,33 +48,33 @@ public class TestDirectory {
     init();
   }
 
-  public TestDirectory(boolean removeOnDispose) {
+  public TestDirectory( boolean removeOnDispose ) {
     this._removeOnDispose = removeOnDispose;
     init();
   }
 
   protected void init() {
-    this._rootDir = new File(System.getProperty("java.io.tmpdir"), "a4etest");
-    if (this._rootDir.exists()) {
-      if (!Utilities.delete(this._rootDir)) {
-        throw new RuntimeException(String.format("Failed to delete directory '%s'.", this._rootDir));
+    this._rootDir = new File( System.getProperty( "java.io.tmpdir" ), "a4etest" );
+    if( this._rootDir.exists() ) {
+      if( !Utilities.delete( this._rootDir ) ) {
+        throw new RuntimeException( String.format( "Failed to delete directory '%s'.", this._rootDir ) );
       }
     }
-    System.out.println("Create test dir: " + this._rootDir);
-    Utilities.mkdirs(this._rootDir);
+    System.out.println( "Create test dir: " + this._rootDir );
+    Utilities.mkdirs( this._rootDir );
   }
 
   public void dispose() {
     try {
-      if (this._rootDir != null && this._removeOnDispose) {
-        System.out.println("Remove test dir: " + this._rootDir);
-        if (!Utilities.delete(this._rootDir)) {
-          throw new RuntimeException(String.format("Failed to delete directory '%s'.", this._rootDir));
+      if( this._rootDir != null && this._removeOnDispose ) {
+        System.out.println( "Remove test dir: " + this._rootDir );
+        if( !Utilities.delete( this._rootDir ) ) {
+          throw new RuntimeException( String.format( "Failed to delete directory '%s'.", this._rootDir ) );
         }
         this._rootDir = null;
       }
-    } catch (Exception ex) {
-      System.err.println("WARN! Could not remove test directory " + this._rootDir + ": " + ex);
+    } catch( Exception ex ) {
+      System.err.println( "WARN! Could not remove test directory " + this._rootDir + ": " + ex );
       ex.printStackTrace();
     }
   }
@@ -86,9 +86,9 @@ public class TestDirectory {
    * @param content
    * @throws IOException
    */
-  public File createFile(String fileName, String content) {
-    File outFile = new File(this._rootDir, fileName);
-    Utilities.writeFile(outFile, content, Utilities.ENCODING);
+  public File createFile( String fileName, String content ) {
+    File outFile = new File( this._rootDir, fileName );
+    Utilities.writeFile( outFile, content, Utilities.ENCODING );
     return outFile;
   }
 
@@ -105,22 +105,22 @@ public class TestDirectory {
    * @return The file that has been createad
    * @throws IOException
    */
-  public File createFile(String fileName, InputStream inputStream) throws IOException {
+  public File createFile( String fileName, InputStream inputStream ) throws IOException {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     byte[] buffer = new byte[1024];
     int bytesRead = -1;
-    while ((bytesRead = inputStream.read(buffer, 0, buffer.length)) != -1) {
-      output.write(buffer, 0, bytesRead);
+    while( (bytesRead = inputStream.read( buffer, 0, buffer.length )) != -1 ) {
+      output.write( buffer, 0, bytesRead );
     }
-    Utilities.close((Closeable)inputStream);
-    return createFile(fileName, output.toString());
+    Utilities.close( (Closeable) inputStream );
+    return createFile( fileName, output.toString() );
   }
 
-  public File createSubDirectory(String name) {
-    Assert.assertNotNull(name);
+  public File createSubDirectory( String name ) {
+    Assert.assertNotNull( name );
 
-    File subdir = new File(this._rootDir, name);
-    Utilities.mkdirs(subdir);
+    File subdir = new File( this._rootDir, name );
+    Utilities.mkdirs( subdir );
     return subdir;
   }
 

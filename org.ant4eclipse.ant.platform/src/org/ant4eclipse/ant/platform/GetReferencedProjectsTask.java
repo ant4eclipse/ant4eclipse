@@ -89,7 +89,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param property
    *          the name of an ant property that will hold the list of referenced projects.
    */
-  public void setProperty(String property) {
+  public void setProperty( String property ) {
     this._property = property;
   }
 
@@ -136,8 +136,8 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param separator
    *          an (optional) separator that is used to separate the project names.
    */
-  public void setSeparator(String separator) {
-    Assure.notNull("separator", separator);
+  public void setSeparator( String separator ) {
+    Assure.notNull( "separator", separator );
     this._separator = separator;
   }
 
@@ -160,7 +160,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param source
    *          where to read the referenced projects from.
    */
-  public void setSource(String source) {
+  public void setSource( String source ) {
     this._source = source;
   }
 
@@ -184,7 +184,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param recursive
    *          <code>true</code> if required projects should be resolve recursive.
    */
-  public void setRecursive(boolean recursive) {
+  public void setRecursive( boolean recursive ) {
     this._recursive = recursive;
   }
 
@@ -192,36 +192,36 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     return this._exportedOnly;
   }
 
-  public void setExportedOnly(boolean exportedOnly) {
+  public void setExportedOnly( boolean exportedOnly ) {
     this._exportedOnly = exportedOnly;
   }
 
   public boolean isPropertySet() {
-    return Utilities.hasText(this._property);
+    return Utilities.hasText( this._property );
   }
 
   public void requirePropertySet() {
-    if (!isPropertySet()) {
-      throw new BuildException("Missing parameter: 'property'");
+    if( !isPropertySet() ) {
+      throw new BuildException( "Missing parameter: 'property'" );
     }
   }
 
   protected void requireSourceSet() {
-    if (!Utilities.hasText(getSource())) {
-      throw new BuildException("Missing parameter: 'source'");
+    if( !Utilities.hasText( getSource() ) ) {
+      throw new BuildException( "Missing parameter: 'source'" );
     }
-    if (!SOURCE_CLASSPATH.equals(getSource()) && !SOURCE_PROJECT.equals(getSource())) {
-      throw new BuildException("Invalid 'source' parameter value. Must be '" + SOURCE_CLASSPATH + "' or '"
-          + SOURCE_PROJECT + "'");
+    if( !SOURCE_CLASSPATH.equals( getSource() ) && !SOURCE_PROJECT.equals( getSource() ) ) {
+      throw new BuildException( "Invalid 'source' parameter value. Must be '" + SOURCE_CLASSPATH + "' or '"
+          + SOURCE_PROJECT + "'" );
     }
   }
 
   public boolean isReadFromProject() {
-    return SOURCE_PROJECT.equals(getSource());
+    return SOURCE_PROJECT.equals( getSource() );
   }
 
   public boolean isReadFromClasspath() {
-    return SOURCE_CLASSPATH.equals(getSource());
+    return SOURCE_CLASSPATH.equals( getSource() );
   }
 
   /**
@@ -233,7 +233,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     requireSourceSet();
     requireWorkspaceAndProjectNameSet();
 
-    throw new UnsupportedOperationException("Not implemented yet");
+    throw new UnsupportedOperationException( "Not implemented yet" );
 
     // EclipseProject[] referencedProjects;
     // try {
@@ -308,9 +308,9 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
      * @param value
      *          the yalue to be set.
      */
-    public NonJavaProjectHandling(String value) {
+    public NonJavaProjectHandling( String value ) {
       super();
-      setValue(value);
+      setValue( value );
     }
 
     /**
@@ -328,4 +328,6 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
       return getIndex() + 1;
     }
   } /* ENDCLASS */
-}
+  
+} /* ENDCLASS */
+

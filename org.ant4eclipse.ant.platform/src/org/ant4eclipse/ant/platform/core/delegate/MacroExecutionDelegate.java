@@ -60,8 +60,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * @param prefix
    *          the prefix for all scoped properties and references
    */
-  public MacroExecutionDelegate(Task task, String prefix) {
-    super(task);
+  public MacroExecutionDelegate( Task task, String prefix ) {
+    super( task );
     this._prefix = prefix;
     this._macroDefs = new ArrayList<ScopedMacroDefinition<E>>();
   }
@@ -74,8 +74,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * @param task
    *          the task
    */
-  public MacroExecutionDelegate(Task task) {
-    this(task, null);
+  public MacroExecutionDelegate( Task task ) {
+    this( task, null );
   }
 
   /**
@@ -90,7 +90,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   @Override
-  public void setPrefix(String prefix) {
+  public void setPrefix( String prefix ) {
     this._prefix = prefix;
   }
 
@@ -106,10 +106,10 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   @Override
-  public NestedSequential createScopedMacroDefinition(E scope) {
+  public NestedSequential createScopedMacroDefinition( E scope ) {
     MacroDef macroDef = new ConditionalMacroDef();
-    macroDef.setProject(getAntProject());
-    this._macroDefs.add(new ScopedMacroDefinition<E>(macroDef, scope));
+    macroDef.setProject( getAntProject() );
+    this._macroDefs.add( new ScopedMacroDefinition<E>( macroDef, scope ) );
     return macroDef.createSequential();
   }
 
@@ -117,63 +117,64 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    * {@inheritDoc}
    */
   @Override
-  public void executeMacroInstance(MacroDef macroDef, MacroExecutionValuesProvider provider) {
-    Assure.notNull("macroDef", macroDef);
-    Assure.notNull("provider", provider);
+  public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
+    Assure.notNull( "macroDef", macroDef );
+    Assure.notNull( "provider", provider );
 
-    if (macroDef instanceof ConditionalMacroDef) {
+    if( macroDef instanceof ConditionalMacroDef ) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
 
-      if (!conditionalMacroDef.isIf() || conditionalMacroDef.isUnless()) {
+      if( !conditionalMacroDef.isIf() || conditionalMacroDef.isUnless() ) {
         return;
       }
     }
 
     MacroExecutionValues values = new MacroExecutionValues();
 
-    executeMacroInstance(macroDef, provider.provideMacroExecutionValues(values));
+    executeMacroInstance( macroDef, provider.provideMacroExecutionValues( values ) );
   }
 
   /**
    * {@inheritDoc}
    */
-  private void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues) {
-    Assure.notNull("macroDef", macroDef);
-    Assure.notNull("macroExecutionValues", macroExecutionValues);
+  private void executeMacroInstance( MacroDef macroDef, MacroExecutionValues macroExecutionValues ) {
+    Assure.notNull( "macroDef", macroDef );
+    Assure.notNull( "macroExecutionValues", macroExecutionValues );
 
-    if (macroDef instanceof ConditionalMacroDef) {
+    if( macroDef instanceof ConditionalMacroDef ) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
 
       String filter = conditionalMacroDef.getFilter();
-      if (filter != null) {
-        StringMap properties = macroExecutionValues.getProperties(getPrefix());
+      if( filter != null ) {
+        StringMap properties = macroExecutionValues.getProperties( getPrefix() );
         try {
-          if (!(new LdapFilter(properties, new StringReader(filter)).validate())) {
+          if( !(new LdapFilter( properties, new StringReader( filter ) ).validate()) ) {
             return;
           }
-        } catch (ParseException e) {
-          throw new BuildException(e.getMessage(), e);
+        } catch( ParseException e ) {
+          throw new BuildException( e.getMessage(), e );
         }
       }
     }
 
     // create MacroInstance
     MacroInstance instance = new MacroInstance();
-    instance.setProject(getAntProject());
-    instance.setOwningTarget(((Task) getProjectComponent()).getOwningTarget());
-    instance.setMacroDef(macroDef);
+    instance.setProject( getAntProject() );
+    instance.setOwningTarget( ((Task) getProjectComponent()).getOwningTarget() );
+    instance.setMacroDef( macroDef );
 
     // create raper
-    AntPropertiesRaper antPropertiesRaper = new AntPropertiesRaper(getAntProject(), Thread.currentThread());
-    AntReferencesRaper antReferencesRaper = new AntReferencesRaper(getAntProject(), Thread.currentThread());
+    AntPropertiesRaper antPropertiesRaper = new AntPropertiesRaper( getAntProject(), Thread.currentThread() );
+    AntReferencesRaper antReferencesRaper = new AntReferencesRaper( getAntProject(), Thread.currentThread() );
 
     // set scoped values
-    antPropertiesRaper.setScopedValues(macroExecutionValues.getProperties(), this._prefix);
-    antReferencesRaper.setScopedValues(macroExecutionValues.getReferences(), this._prefix);
+    antPropertiesRaper.setScopedValues( macroExecutionValues.getProperties(), this._prefix );
+    antReferencesRaper.setScopedValues( macroExecutionValues.getReferences(), this._prefix );
 
     // ******
-    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getAntProject());
-    // System.out.println("*-*-* " + ((ThreadDispatchingPropertyHelper) propertyHelper.getNext()).getThreadProperties());
+    PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( getAntProject() );
+    // System.out.println("*-*-* " + ((ThreadDispatchingPropertyHelper)
+    // propertyHelper.getNext()).getThreadProperties());
     // System.out.println(macroExecutionValues);
     // ******
 
@@ -184,4 +185,5 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     antPropertiesRaper.unsetScopedValues();
     antReferencesRaper.unsetScopedValues();
   }
-}
+  
+} /* ENDCLASS */

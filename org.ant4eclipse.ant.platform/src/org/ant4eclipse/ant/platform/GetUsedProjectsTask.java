@@ -65,7 +65,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   private SubElementAndAttributesDelegate _subElementAndAttributesDelegate;
 
   public GetUsedProjectsTask() {
-    this._subElementAndAttributesDelegate = new SubElementAndAttributesDelegate(this);
+    this._subElementAndAttributesDelegate = new SubElementAndAttributesDelegate( this );
     this._referencetypes = null;
     this._selfinclude = false;
   }
@@ -76,12 +76,12 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param newreferencetype
    *          A reference type which depends on the current configuration of a4e.
    */
-  public void setReferencetypes(String newreferencetypes) {
+  public void setReferencetypes( String newreferencetypes ) {
     String[] elements = null;
-    if (newreferencetypes != null) {
-      elements = newreferencetypes.split(",");
+    if( newreferencetypes != null ) {
+      elements = newreferencetypes.split( "," );
     }
-    this._referencetypes = Utilities.cleanup(elements);
+    this._referencetypes = Utilities.cleanup( elements );
   }
 
   /**
@@ -92,8 +92,8 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param property
    *          the name of an ant property that will hold the list of referenced projects.
    */
-  public void setProperty(String property) {
-    this._property = Utilities.cleanup(property);
+  public void setProperty( String property ) {
+    this._property = Utilities.cleanup( property );
   }
 
   /**
@@ -104,8 +104,8 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param separator
    *          an (optional) separator that is used to separate the project names.
    */
-  public void setSeparator(String separator) {
-    this._separator = Utilities.cleanup(separator);
+  public void setSeparator( String separator ) {
+    this._separator = Utilities.cleanup( separator );
   }
 
   /**
@@ -116,7 +116,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * @param selfinclude
    *          <code>true</code> <=> Enable self inclusion.
    */
-  public void setSelfinclude(boolean selfinclude) {
+  public void setSelfinclude( boolean selfinclude ) {
     this._selfinclude = selfinclude;
   }
 
@@ -124,8 +124,8 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * {@inheritDoc}
    */
   @Override
-  public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementAndAttributesDelegate.createDynamicElement(name);
+  public Object createDynamicElement( String name ) throws BuildException {
+    return this._subElementAndAttributesDelegate.createDynamicElement( name );
   }
 
   /**
@@ -140,7 +140,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * {@inheritDoc}
    */
   @Override
-  public Map<String, String> getSubAttributes() {
+  public Map<String,String> getSubAttributes() {
     return this._subElementAndAttributesDelegate.getSubAttributes();
   }
 
@@ -148,8 +148,8 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * {@inheritDoc}
    */
   @Override
-  public void setDynamicAttribute(String name, String value) throws BuildException {
-    this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
+  public void setDynamicAttribute( String name, String value ) throws BuildException {
+    this._subElementAndAttributesDelegate.setDynamicAttribute( name, value );
   }
 
   /**
@@ -158,8 +158,8 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if (this._property == null) {
-      throw new BuildException("The attribute 'property' has not been set or is empty.");
+    if( this._property == null ) {
+      throw new BuildException( "The attribute 'property' has not been set or is empty." );
     }
     /**
      * @todo [09-Jul-2009:KASI] Checking of parental classes should not be splitted up into multiple methods. This
@@ -168,12 +168,12 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
      *       themselves don't need to behave the same way.
      */
     requireWorkspaceAndProjectNameSet();
-    if (this._referencetypes != null) {
+    if( this._referencetypes != null ) {
       // check if we can use the provided reference type
       String[] allowed = getResolver().getReferenceTypes();
-      for (String reftype : this._referencetypes) {
-        if (!Utilities.contains(reftype, allowed)) {
-          throw new BuildException("The 'referencetypes' value '" + reftype + "' is not supported.");
+      for( String reftype : this._referencetypes ) {
+        if( !Utilities.contains( reftype, allowed ) ) {
+          throw new BuildException( "The 'referencetypes' value '" + reftype + "' is not supported." );
         }
       }
     }
@@ -185,12 +185,12 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   @Override
   protected void doExecute() {
 
-    if (this._separator == null) {
+    if( this._separator == null ) {
       this._separator = DEFAULT_SEPARATOR;
     }
 
     String[] types = getResolver().getReferenceTypes();
-    if (this._referencetypes != null) {
+    if( this._referencetypes != null ) {
       // there's a restriction provided by the user
       types = this._referencetypes;
     }
@@ -199,24 +199,24 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     List<EclipseProject> referenced = new ArrayList<EclipseProject>();
 
     // load the directly referenced projects
-    referenced.addAll(getResolver().resolveReferencedProjects(project, types, getSubElements()));
+    referenced.addAll( getResolver().resolveReferencedProjects( project, types, getSubElements() ) );
 
-    if (this._selfinclude) {
+    if( this._selfinclude ) {
       // include ourselves as requested
-      referenced.add(0, project);
+      referenced.add( 0, project );
     }
 
     // generate the result value
     StringBuffer buffer = new StringBuffer();
-    if (!referenced.isEmpty()) {
-      buffer.append(referenced.get(0).getSpecifiedName());
-      for (int i = 1; i < referenced.size(); i++) {
-        buffer.append(this._separator);
-        buffer.append(referenced.get(i).getSpecifiedName());
+    if( !referenced.isEmpty() ) {
+      buffer.append( referenced.get( 0 ).getSpecifiedName() );
+      for( int i = 1; i < referenced.size(); i++ ) {
+        buffer.append( this._separator );
+        buffer.append( referenced.get( i ).getSpecifiedName() );
       }
     }
 
-    getProject().setProperty(this._property, buffer.toString());
+    getProject().setProperty( this._property, buffer.toString() );
 
   }
 

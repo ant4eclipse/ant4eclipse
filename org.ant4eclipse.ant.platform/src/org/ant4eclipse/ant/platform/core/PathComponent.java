@@ -30,7 +30,7 @@ public interface PathComponent {
    * @param newpathseparator
    *          The new path separator.
    */
-  void setPathSeparator(String newpathseparator);
+  void setPathSeparator( String newpathseparator );
 
   /**
    * Returns the currently used path separator.
@@ -56,7 +56,7 @@ public interface PathComponent {
    * @param newdirseparator
    *          The new directory separator.
    */
-  void setDirSeparator(String newdirseparator);
+  void setDirSeparator( String newdirseparator );
 
   /**
    * <p>
@@ -88,7 +88,7 @@ public interface PathComponent {
    *          the file
    * @return a string
    */
-  String convertToString(File entry);
+  String convertToString( File entry );
 
   /**
    * <p>
@@ -102,7 +102,7 @@ public interface PathComponent {
    *          the file array
    * @return a string
    */
-  String convertToString(File[] entries);
+  String convertToString( File[] entries );
 
   /**
    * <p>
@@ -113,7 +113,7 @@ public interface PathComponent {
    *          the file
    * @return a ant path
    */
-  Path convertToPath(File entry);
+  Path convertToPath( File entry );
 
   /**
    * <p>
@@ -124,5 +124,6 @@ public interface PathComponent {
    *          the file array
    * @return a ant path
    */
-  Path convertToPath(File[] entries);
-}
+  Path convertToPath( File[] entries );
+  
+} /* ENDINTERFACE */

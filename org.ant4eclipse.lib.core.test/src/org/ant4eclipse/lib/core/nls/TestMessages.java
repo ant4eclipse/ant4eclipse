@@ -19,25 +19,25 @@ public class TestMessages {
 
   public static final String      A_CONSTANT = "A constant";
 
-  @NLSMessage("A message with default")
+  @NLSMessage( "A message with default" )
   public static String            A_MESSAGE_WITH_DEFAULT;
 
-  @NLSMessage("A message with default and property")
+  @NLSMessage( "A message with default and property" )
   public static String            A_MESSAGE_WITH_DEFAULT_AND_PROPERTY;
 
   public static CoreExceptionCode AN_EXCEPTION_CODE;
 
-  @NLSMessage("An exception with default")
+  @NLSMessage( "An exception with default" )
   public static CoreExceptionCode AN_EXCEPTION_CODE_WITH_DEFAULT;
 
   @NLSMessage
   public static Exception         A_JAVA_EXCEPTION;
 
-  @NLSMessage("A java exception with default")
+  @NLSMessage( "A java exception with default" )
   public static Exception         A_JAVA_EXCEPTION_WITH_DEFAULT;
 
   static {
-    NLS.initialize(TestMessages.class);
+    NLS.initialize( TestMessages.class );
   }
 
 } /* ENDCLASS */

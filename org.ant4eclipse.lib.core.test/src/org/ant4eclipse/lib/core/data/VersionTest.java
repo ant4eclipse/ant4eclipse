@@ -21,28 +21,28 @@ public class VersionTest {
   @Test
   public void illegalFormat() {
     try {
-      Version.newBundleVersion("a");
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode());
+      Version.newBundleVersion( "a" );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode() );
     }
     try {
-      Version.newBundleVersion("1.2.3.4");
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode());
+      Version.newBundleVersion( "1.2.3.4" );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode() );
     }
     try {
-      Version.newBundleVersion(" ");
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode());
+      Version.newBundleVersion( " " );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.ILLEGAL_FORMAT, ex.getExceptionCode() );
     }
   }
 
   @Test
   public void validFormat() {
-    Assert.assertEquals("1.0.0", String.valueOf(Version.newBundleVersion("1")));
-    Assert.assertEquals("1.2.0", String.valueOf(Version.newBundleVersion("1.2")));
-    Assert.assertEquals("1.2.3", String.valueOf(Version.newBundleVersion("1.2.3")));
-    Assert.assertEquals("1.2.3_a", String.valueOf(Version.newBundleVersion("1.2.3_a")));
+    Assert.assertEquals( "1.0.0", String.valueOf( Version.newBundleVersion( "1" ) ) );
+    Assert.assertEquals( "1.2.0", String.valueOf( Version.newBundleVersion( "1.2" ) ) );
+    Assert.assertEquals( "1.2.3", String.valueOf( Version.newBundleVersion( "1.2.3" ) ) );
+    Assert.assertEquals( "1.2.3_a", String.valueOf( Version.newBundleVersion( "1.2.3_a" ) ) );
   }
 
 } /* ENDCLASS */

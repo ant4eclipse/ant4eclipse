@@ -20,9 +20,8 @@ import org.ant4eclipse.lib.core.xquery.XQueryHandlerTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ AssureTest.class, ClassNameTest.class, VersionTest.class,
-    DependencyGraphTest.class, NLSTest.class, ManifestHelperTest.class,
-    UtilitiesTest.class, XQueryHandlerTest.class })
+@RunWith( Suite.class )
+@Suite.SuiteClasses( { AssureTest.class, ClassNameTest.class, VersionTest.class, DependencyGraphTest.class,
+    NLSTest.class, ManifestHelperTest.class, UtilitiesTest.class, XQueryHandlerTest.class } )
 public class AllCoreTests {
 } /* ENDCLASS */

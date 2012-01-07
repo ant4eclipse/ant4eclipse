@@ -1,13 +1,11 @@
 /**********************************************************************
  * Copyright (c) 2005-2009 ant4eclipse project team.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ * 
+ * Contributors: Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
@@ -24,15 +22,15 @@ public class ExecuteProjectBuildersTaskTest extends AbstractWorkspaceBasedBuildF
   @Override
   public void setUp() throws Exception {
     super.setUp();
-    EclipseProjectBuilder builder = new EclipseProjectBuilder("simpleproject");
-    builder.withBuilder(BUILDER_JAVA);
-    builder.withBuilder(BUILDER_ANOTHER);
-    builder.createIn(getTestWorkspaceDirectory());
-    setupBuildFile("executeProjectBuilders.xml");
+    EclipseProjectBuilder builder = new EclipseProjectBuilder( "simpleproject" );
+    builder.withBuilder( BUILDER_JAVA );
+    builder.withBuilder( BUILDER_ANOTHER );
+    builder.createIn( getTestWorkspaceDirectory() );
+    setupBuildFile( "executeProjectBuilders.xml" );
   }
 
   public void testExecuteBuildCommands() {
-    expectLog("executeProjectBuilders", String.format("%s~%s~", BUILDER_JAVA, BUILDER_ANOTHER));
+    expectLog( "executeProjectBuilders", String.format( "%s~%s~", BUILDER_JAVA, BUILDER_ANOTHER ) );
   }
 
-}
+} /* ENDCLASS */

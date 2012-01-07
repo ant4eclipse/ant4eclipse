@@ -42,8 +42,8 @@ public class PlatformExecutorValuesProvider {
    * 
    * @param pathComponent
    */
-  public PlatformExecutorValuesProvider(PathComponent pathComponent) {
-    Assure.notNull("pathComponent", pathComponent);
+  public PlatformExecutorValuesProvider( PathComponent pathComponent ) {
+    Assure.notNull( "pathComponent", pathComponent );
     this._pathComponent = pathComponent;
   }
 
@@ -54,19 +54,21 @@ public class PlatformExecutorValuesProvider {
    * @param eclipseProject
    * @param executionValues
    */
-  public void provideExecutorValues(EclipseProject eclipseProject, MacroExecutionValues executionValues) {
-    Assure.notNull("eclipseProject", eclipseProject);
-    Assure.notNull("executionValues", executionValues);
+  public void provideExecutorValues( EclipseProject eclipseProject, MacroExecutionValues executionValues ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
+    Assure.notNull( "executionValues", executionValues );
 
     // create scoped properties
-    executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName());
-    executionValues.getProperties().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY,
-        this._pathComponent.convertToString(eclipseProject.getFolder()));
-    for (ProjectNature projectNature : eclipseProject.getNatures()) {
-      executionValues.getProperties().put(projectNature.getName(), Boolean.TRUE.toString());
+    executionValues.getProperties()
+        .put( PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName() );
+    executionValues.getProperties().put( PlatformExecutorValuesProvider.PROJECT_DIRECTORY,
+        this._pathComponent.convertToString( eclipseProject.getFolder() ) );
+    for( ProjectNature projectNature : eclipseProject.getNatures() ) {
+      executionValues.getProperties().put( projectNature.getName(), Boolean.TRUE.toString() );
     }
     // create scoped references
-    executionValues.getReferences().put(PlatformExecutorValuesProvider.PROJECT_DIRECTORY_PATH,
-        this._pathComponent.convertToPath(eclipseProject.getFolder()));
+    executionValues.getReferences().put( PlatformExecutorValuesProvider.PROJECT_DIRECTORY_PATH,
+        this._pathComponent.convertToPath( eclipseProject.getFolder() ) );
   }
-}
+  
+} /* ENDCLASS */

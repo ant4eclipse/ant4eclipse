@@ -49,8 +49,8 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void trace(String msg, Object... args) {
-    getLogger().trace(msg, args);
+  public static final void trace( String msg, Object ... args ) {
+    getLogger().trace( msg, args );
   }
 
   /**
@@ -61,8 +61,8 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void debug(String msg, Object... args) {
-    getLogger().debug(msg, args);
+  public static final void debug( String msg, Object ... args ) {
+    getLogger().debug( msg, args );
   }
 
   /**
@@ -73,8 +73,8 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void info(String msg, Object... args) {
-    getLogger().info(msg, args);
+  public static final void info( String msg, Object ... args ) {
+    getLogger().info( msg, args );
   }
 
   /**
@@ -85,8 +85,8 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void warn(String msg, Object... args) {
-    getLogger().warn(msg, args);
+  public static final void warn( String msg, Object ... args ) {
+    getLogger().warn( msg, args );
   }
 
   /**
@@ -97,8 +97,8 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void error(String msg, Object... args) {
-    getLogger().error(msg, args);
+  public static final void error( String msg, Object ... args ) {
+    getLogger().error( msg, args );
   }
 
   /**
@@ -111,22 +111,22 @@ public class A4ELogging {
    * @param args
    *          The arguments used for the formatted message.
    */
-  public static final void log(A4ELevel level, String msg, Object... args) {
-    switch (level) {
+  public static final void log( A4ELevel level, String msg, Object ... args ) {
+    switch( level ) {
     case TRACE:
-      trace(msg, args);
+      trace( msg, args );
       break;
     case DEBUG:
-      debug(msg, args);
+      debug( msg, args );
       break;
     case INFO:
-      info(msg, args);
+      info( msg, args );
       break;
     case WARN:
-      warn(msg, args);
+      warn( msg, args );
       break;
     case ERROR:
-      error(msg, args);
+      error( msg, args );
       break;
     }
   }

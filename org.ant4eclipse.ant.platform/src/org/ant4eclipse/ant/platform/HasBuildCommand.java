@@ -50,7 +50,7 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
     requireWorkspaceAndProjectNameSet();
     requireBuildCommandSet();
     EclipseProject project = getEclipseProject();
-    return project.hasBuildCommand(this._buildCommand);
+    return project.hasBuildCommand( this._buildCommand );
   }
 
   /**
@@ -61,7 +61,7 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
    * @param command
    *          name of the build command.
    */
-  public void setBuildCommand(String command) {
+  public void setBuildCommand( String command ) {
     this._buildCommand = command;
   }
 
@@ -82,8 +82,10 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
    * </p>
    */
   public final void requireBuildCommandSet() {
-    if (!isBuildCommandSet()) {
-      throw new BuildException("Attribute 'buildCommand' has to be set!");
+    if( !isBuildCommandSet() ) {
+      throw new BuildException( "Attribute 'buildCommand' has to be set!" );
     }
   }
-}
+  
+} /* ENDCLASS */
+

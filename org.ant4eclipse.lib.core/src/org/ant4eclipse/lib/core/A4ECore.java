@@ -25,50 +25,50 @@ import java.util.ServiceLoader;
  */
 public class A4ECore {
 
-  private static final A4ECore INSTANCE = new A4ECore();
+  private static final A4ECore                     INSTANCE   = new A4ECore();
 
-  private static final Comparator<A4EService> COMPARATOR = new Comparator<A4EService>() {
+  private static final Comparator<A4EService>      COMPARATOR = new Comparator<A4EService>() {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int compare(A4EService s1, A4EService s2) {
-      Integer o1 = s1.getPriority();
-      Integer o2 = s2.getPriority();
-      if( (o1 != null) && (o2 != null) ) {
-        return o2.compareTo(o1);
-      } else if( (o1 == null) && (o2 == null) ) {
-        return 0;
-      } else if( o1 != null ) {
-        return -1;
-      } else {
-        return 1;
-      }
-    }
-    
-  };
-  
-  private Map<Class<?>,List<? extends A4EService>>   servicecache;
-  private Map<Object,Object>                         runtimecache;
-  
+                                                                /**
+                                                                 * {@inheritDoc}
+                                                                 */
+                                                                @Override
+                                                                public int compare( A4EService s1, A4EService s2 ) {
+                                                                  Integer o1 = s1.getPriority();
+                                                                  Integer o2 = s2.getPriority();
+                                                                  if( (o1 != null) && (o2 != null) ) {
+                                                                    return o2.compareTo( o1 );
+                                                                  } else if( (o1 == null) && (o2 == null) ) {
+                                                                    return 0;
+                                                                  } else if( o1 != null ) {
+                                                                    return -1;
+                                                                  } else {
+                                                                    return 1;
+                                                                  }
+                                                                }
+
+                                                              };
+
+  private Map<Class<?>,List<? extends A4EService>> servicecache;
+
+  private Map<Object,Object>                       runtimecache;
+
   /**
    * Initializes this management class for A4E related services and data.
    */
   private A4ECore() {
-    servicecache  = new Hashtable<Class<?>,List<? extends A4EService>>();
-    runtimecache  = new Hashtable<Object,Object>(); 
+    servicecache = new Hashtable<Class<?>,List<? extends A4EService>>();
+    runtimecache = new Hashtable<Object,Object>();
   }
-  
+
   public void putRuntimeValue( Object key, Object val ) {
     runtimecache.put( key, val );
   }
-  
+
   public <T> T getRuntimeValue( Object key ) {
     return (T) runtimecache.get( key );
   }
-  
-  
+
   /**
    * This function can be called to enforce the reset of all loaded service states.
    */
@@ -80,13 +80,14 @@ public class A4ECore {
     }
     runtimecache.clear();
   }
-  
+
   /**
-   * Returns a required service type. 
+   * Returns a required service type.
    * 
-   * @param servicetype   The required service type. Not <code>null</code>.
+   * @param servicetype
+   *          The required service type. Not <code>null</code>.
    * 
-   * @return   An instance of the supplied type. Not <code>null</code>.
+   * @return An instance of the supplied type. Not <code>null</code>.
    */
   public <T extends A4EService> T getRequiredService( Class<T> servicetype ) {
     List<T> services = loadServices( servicetype );
@@ -94,42 +95,45 @@ public class A4ECore {
       /* KASI */
       throw new RuntimeException( String.format( "Missing required service: '%s'", servicetype.getName() ) );
     }
-    return services.get(0);
+    return services.get( 0 );
   }
 
   /**
-   * Returns an optional service type. 
+   * Returns an optional service type.
    * 
-   * @param servicetype   The optional service type. Not <code>null</code>.
+   * @param servicetype
+   *          The optional service type. Not <code>null</code>.
    * 
-   * @return   An instance of the supplied type. Not <code>null</code>.
+   * @return An instance of the supplied type. Not <code>null</code>.
    */
   public <T extends A4EService> T getOptionalService( Class<T> servicetype ) {
     List<T> services = loadServices( servicetype );
     if( services.isEmpty() ) {
       return null;
     } else {
-      return services.get(0);
+      return services.get( 0 );
     }
   }
 
   /**
    * Returns a list of service implementations for the supplied service type.
    * 
-   * @param servicetype   The service type used to identify the implementations. Not <code>null</code>.
+   * @param servicetype
+   *          The service type used to identify the implementations. Not <code>null</code>.
    * 
-   * @return   A list of service implementations for the supplied service type. Not <code>null</code>.
+   * @return A list of service implementations for the supplied service type. Not <code>null</code>.
    */
   public <T extends A4EService> List<T> getServices( Class<T> servicetype ) {
     return loadServices( servicetype );
   }
 
   /**
-   * Loads all service implementations for the supplied interface unless they're already cached.  
+   * Loads all service implementations for the supplied interface unless they're already cached.
    * 
-   * @param clazz   The service type used to identify the implementations. Not <code>null</code>.
+   * @param clazz
+   *          The service type used to identify the implementations. Not <code>null</code>.
    * 
-   * @return   A list of  service implementations associated with the supplied type. Not <code>null</code>.
+   * @return A list of service implementations associated with the supplied type. Not <code>null</code>.
    */
   private <T extends A4EService> List<T> loadServices( Class<T> clazz ) {
     List<T> result = (List<T>) servicecache.get( clazz );
@@ -144,15 +148,14 @@ public class A4ECore {
     }
     return result;
   }
-  
+
   /**
    * Delivers the basic functionality used to manage A4E related services and data.
    * 
-   * @return   The basic functionality used to manage A4E related services and data. 
-   *           Not <code>null</code>.
+   * @return The basic functionality used to manage A4E related services and data. Not <code>null</code>.
    */
   public static final A4ECore instance() {
     return INSTANCE;
   }
-  
+
 } /* ENDCLASS */

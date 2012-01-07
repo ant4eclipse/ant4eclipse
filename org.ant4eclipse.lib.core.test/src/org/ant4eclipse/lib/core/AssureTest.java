@@ -27,97 +27,97 @@ public class AssureTest {
 
   @Test
   public void assertNotNull() {
-    Assure.notNull("dummy", new Object());
+    Assure.notNull( "dummy", new Object() );
     try {
-      Assure.notNull("dummy", null);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.notNull( "dummy", null );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
   }
 
   @Test
   public void instanceOf() {
-    Assure.instanceOf("parameter", "", String.class);
+    Assure.instanceOf( "parameter", "", String.class );
     try {
-      Assure.instanceOf("parameter", new Object(), String.class);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.instanceOf( "parameter", new Object(), String.class );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.instanceOf("parameter", null, JFrame.class);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.instanceOf( "parameter", null, JFrame.class );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
   }
 
   @Test
   public void assertNonEmpty() {
-    Assure.nonEmpty("dummy", "test");
-    Assure.nonEmpty("param", new boolean[] { false });
-    Assure.nonEmpty("param", new byte[] { (byte) 0 });
-    Assure.nonEmpty("param", new short[] { (short) 0 });
-    Assure.nonEmpty("param", new char[] { (char) 0 });
-    Assure.nonEmpty("param", new int[] { 0 });
-    Assure.nonEmpty("param", new long[] { 0 });
+    Assure.nonEmpty( "dummy", "test" );
+    Assure.nonEmpty( "param", new boolean[] { false } );
+    Assure.nonEmpty( "param", new byte[] { (byte) 0 } );
+    Assure.nonEmpty( "param", new short[] { (short) 0 } );
+    Assure.nonEmpty( "param", new char[] { (char) 0 } );
+    Assure.nonEmpty( "param", new int[] { 0 } );
+    Assure.nonEmpty( "param", new long[] { 0 } );
     try {
-      Assure.nonEmpty("dummy", "");
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "dummy", "" );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("dummy", (String) null);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "dummy", (String) null );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("param", new boolean[0]);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "param", new boolean[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("param", new byte[0]);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "param", new byte[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("param", new char[0]);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "param", new char[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("param", new short[0]);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "param", new short[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("param", new int[0]);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "param", new int[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
     try {
-      Assure.nonEmpty("param", new long[0]);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.nonEmpty( "param", new long[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
   }
 
   @Test
   public void resourceExist() throws IOException {
 
-    File testFile = File.createTempFile("a4e-testExists", null);
-    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
+    File testFile = File.createTempFile( "a4e-testExists", null );
+    System.out.println( "Using temp. testfile: " + testFile.getAbsolutePath() );
     testFile.deleteOnExit();
 
     // positive check for a file
-    Assure.exists("testFile", testFile);
+    Assure.exists( "testFile", testFile );
 
     // positive check for a directory
-    Assure.exists("testFile.getParentFile()", testFile.getParentFile());
+    Assure.exists( "testFile.getParentFile()", testFile.getParentFile() );
 
     try {
-      Assure.exists("NICHT_DA", new File("NICHT_DA"));
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.exists( "NICHT_DA", new File( "NICHT_DA" ) );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
   }
@@ -125,29 +125,29 @@ public class AssureTest {
   @Test
   public void isFile() throws IOException {
 
-    File testFile = File.createTempFile("a4e-testIsFile", null);
-    File nonexistingDir = new File(testFile.getParentFile(), testFile.getName() + ".dir");
-    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
+    File testFile = File.createTempFile( "a4e-testIsFile", null );
+    File nonexistingDir = new File( testFile.getParentFile(), testFile.getName() + ".dir" );
+    System.out.println( "Using temp. testfile: " + testFile.getAbsolutePath() );
     testFile.deleteOnExit();
 
-    Assure.isFile("bibo", testFile);
+    Assure.isFile( "bibo", testFile );
 
     try {
-      Assure.isFile("bibo", testFile.getParentFile());
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.isFile( "bibo", testFile.getParentFile() );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
     try {
-      Assure.isFile("bibo", nonexistingDir);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.isFile( "bibo", nonexistingDir );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
     try {
-      Assure.isFile("bibo", new File("NICHT_DA"));
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.isFile( "bibo", new File( "NICHT_DA" ) );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
   }
@@ -159,33 +159,33 @@ public class AssureTest {
   @Test
   public void isDirectory() throws IOException {
 
-    File testFile = File.createTempFile("a4e-testIsDirectory", null);
+    File testFile = File.createTempFile( "a4e-testIsDirectory", null );
     testFile.deleteOnExit();
-    System.out.println("Using temp. testfile: " + testFile.getAbsolutePath());
+    System.out.println( "Using temp. testfile: " + testFile.getAbsolutePath() );
 
-    Assure.isDirectory("dodo", testFile.getParentFile());
+    Assure.isDirectory( "dodo", testFile.getParentFile() );
 
     try {
-      Assure.isDirectory("dodo", testFile);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.isDirectory( "dodo", testFile );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
     try {
-      Assure.isDirectory("dodo", new File("NICHT_DA"));
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.isDirectory( "dodo", new File( "NICHT_DA" ) );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
   }
 
   @Test
   public void assertTrue() {
-    Assure.assertTrue(true, "true");
+    Assure.assertTrue( true, "true" );
     try {
-      Assure.assertTrue(false, "false");
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.assertTrue( false, "false" );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
   }
 
@@ -195,20 +195,20 @@ public class AssureTest {
   @Test
   public void inRange() {
 
-    Assure.inRange(5, 1, 10);
-    Assure.inRange(1, 1, 10);
-    Assure.inRange(10, 1, 10);
+    Assure.inRange( 5, 1, 10 );
+    Assure.inRange( 1, 1, 10 );
+    Assure.inRange( 10, 1, 10 );
 
     try {
-      Assure.inRange(0, 1, 10);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.inRange( 0, 1, 10 );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
 
     try {
-      Assure.inRange(11, 1, 10);
-    } catch (Ant4EclipseException ex) {
-      Assert.assertEquals(CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode());
+      Assure.inRange( 11, 1, 10 );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     }
   }
 

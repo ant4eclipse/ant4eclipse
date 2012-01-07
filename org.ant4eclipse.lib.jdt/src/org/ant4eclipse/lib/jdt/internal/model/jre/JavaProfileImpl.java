@@ -40,42 +40,32 @@ import java.util.List;
  * <li><b>osgi.java.profile.name:</b></li>
  * </ul>
  * </p>
- * 
- * @author admin
  */
 public class JavaProfileImpl implements JavaProfile {
 
-  /** - */
   private static final String PROPERTY_SYSTEM_PACKAGES        = "org.osgi.framework.system.packages";
 
-  /** - */
   private static final String PROPERTY_BOOTDELEGATION         = "org.osgi.framework.bootdelegation";
 
-  /** - */
   private static final String PROPERTY_EXECUTIONENVIRONMENT   = "org.osgi.framework.executionenvironment";
 
-  /** - */
   private static final String PROPERTY_PROFILE_NAME           = "osgi.java.profile.name";
 
-  /** the java profile properties */
   private StringMap           _properties;
 
-  /** the list of system packages */
   private List<String>        _systemPackagesList             = new ArrayList<String>();
 
-  /** the list of packages that are delegated to the boot class loader */
   private List<PackageFilter> _delegatedToBootClassLoaderList = new ArrayList<PackageFilter>();
 
   private List<String>        _executionEnvironments          = new ArrayList<String>();
 
-  /** - */
   private String              _associatedJavaRuntimeId;
 
   /**
    * @param properties
    */
-  public JavaProfileImpl(StringMap properties) {
-    Assure.notNull("properties", properties);
+  public JavaProfileImpl( StringMap properties ) {
+    Assure.notNull( "properties", properties );
     this._properties = properties;
     initialise();
   }
@@ -85,26 +75,26 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public String getName() {
-    return this._properties.get(JavaProfileImpl.PROPERTY_PROFILE_NAME);
+    return this._properties.get( JavaProfileImpl.PROPERTY_PROFILE_NAME );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean isSystemPackage(String packageName) {
-    return this._systemPackagesList.contains(packageName);
+  public boolean isSystemPackage( String packageName ) {
+    return this._systemPackagesList.contains( packageName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean isDelegatedToBootClassLoader(String packageName) {
+  public boolean isDelegatedToBootClassLoader( String packageName ) {
 
-    for (Object element : this._delegatedToBootClassLoaderList) {
+    for( Object element : this._delegatedToBootClassLoaderList ) {
       PackageFilter packageFilter = (PackageFilter) element;
-      if (packageFilter.containsPackage(packageName)) {
+      if( packageFilter.containsPackage( packageName ) ) {
         return true;
       }
     }
@@ -116,7 +106,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public List<String> getExecutionEnvironmentNames() {
-    return Collections.unmodifiableList(this._executionEnvironments);
+    return Collections.unmodifiableList( this._executionEnvironments );
   }
 
   /**
@@ -124,7 +114,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public List<String> getSystemPackages() {
-    return Collections.unmodifiableList(this._systemPackagesList);
+    return Collections.unmodifiableList( this._systemPackagesList );
   }
 
   /**
@@ -143,7 +133,7 @@ public class JavaProfileImpl implements JavaProfile {
    * 
    * @param associatedJavaRuntimeId
    */
-  public void setAssociatedJavaRuntimeId(String associatedJavaRuntimeId) {
+  public void setAssociatedJavaRuntimeId( String associatedJavaRuntimeId ) {
     this._associatedJavaRuntimeId = associatedJavaRuntimeId;
   }
 
@@ -161,41 +151,41 @@ public class JavaProfileImpl implements JavaProfile {
   private void initialise() {
 
     // set up system packages list...
-    if (isNotEmpty(this._properties.get(PROPERTY_SYSTEM_PACKAGES))) {
+    if( isNotEmpty( this._properties.get( PROPERTY_SYSTEM_PACKAGES ) ) ) {
 
       // get HeaderElements
-      ManifestHelper.ManifestHeaderElement[] headerElements = ManifestHelper.getManifestHeaderElements(this._properties
-          .get(PROPERTY_SYSTEM_PACKAGES));
+      ManifestHelper.ManifestHeaderElement[] headerElements = ManifestHelper
+          .getManifestHeaderElements( this._properties.get( PROPERTY_SYSTEM_PACKAGES ) );
 
       // iterate over result
-      for (ManifestHeaderElement headerElement : headerElements) {
+      for( ManifestHeaderElement headerElement : headerElements ) {
         // get values (package names)
         String[] packageNames = headerElement.getValues();
 
         // add package names to string
-        for (String packageName : packageNames) {
-          this._systemPackagesList.add(packageName);
+        for( String packageName : packageNames ) {
+          this._systemPackagesList.add( packageName );
         }
       }
     }
 
-    if (isNotEmpty(this._properties.get(PROPERTY_BOOTDELEGATION))) {
-      String[] packageDescriptions = this._properties.get(PROPERTY_BOOTDELEGATION).split(",");
-      for (String packageDescription : packageDescriptions) {
-        this._delegatedToBootClassLoaderList.add(new PackageFilter(packageDescription));
+    if( isNotEmpty( this._properties.get( PROPERTY_BOOTDELEGATION ) ) ) {
+      String[] packageDescriptions = this._properties.get( PROPERTY_BOOTDELEGATION ).split( "," );
+      for( String packageDescription : packageDescriptions ) {
+        this._delegatedToBootClassLoaderList.add( new PackageFilter( packageDescription ) );
       }
     }
 
-    if (isNotEmpty(this._properties.get(PROPERTY_EXECUTIONENVIRONMENT))) {
-      String[] executionEnvironments = this._properties.get(PROPERTY_EXECUTIONENVIRONMENT).split(",");
-      for (String executionEnvironment : executionEnvironments) {
-        this._executionEnvironments.add(executionEnvironment);
+    if( isNotEmpty( this._properties.get( PROPERTY_EXECUTIONENVIRONMENT ) ) ) {
+      String[] executionEnvironments = this._properties.get( PROPERTY_EXECUTIONENVIRONMENT ).split( "," );
+      for( String executionEnvironment : executionEnvironments ) {
+        this._executionEnvironments.add( executionEnvironment );
       }
     }
   }
 
-  private boolean isNotEmpty(String string) {
-    return (string != null) && !"".equals(string.trim());
+  private boolean isNotEmpty( String string ) {
+    return (string != null) && !"".equals( string.trim() );
   }
 
   /**
@@ -211,19 +201,19 @@ public class JavaProfileImpl implements JavaProfile {
     /**
      * @param includedPackages
      */
-    public PackageFilter(String includedPackages) {
+    public PackageFilter( String includedPackages ) {
 
       // set default value
-      this._includedPackages = includedPackages == null ? new String[] {} : includedPackages.split(",");
+      this._includedPackages = includedPackages == null ? new String[] {} : includedPackages.split( "," );
 
       //
-      for (int i = 0; i < this._includedPackages.length; i++) {
+      for( int i = 0; i < this._includedPackages.length; i++ ) {
 
         // replace OSGi wild cards (*) with regular expressions (.+)
         // NOTE: we're interpreting a * as "one or more characters here"
         // otherwise we have to use the regex ".*" which means "zero or more
         // characters here"
-        this._includedPackages[i] = this._includedPackages[i].replaceAll("\\*", ".+");
+        this._includedPackages[i] = this._includedPackages[i].replaceAll( "\\*", ".+" );
       }
     }
 
@@ -234,12 +224,12 @@ public class JavaProfileImpl implements JavaProfile {
      * @param packageName
      * @return
      */
-    public boolean containsPackage(String packageName) {
-      Assure.notNull("packageName", packageName);
+    public boolean containsPackage( String packageName ) {
+      Assure.notNull( "packageName", packageName );
 
       //
-      for (String package1 : this._includedPackages) {
-        if (matches(package1.trim(), packageName)) {
+      for( String package1 : this._includedPackages ) {
+        if( matches( package1.trim(), packageName ) ) {
           return true;
         }
       }
@@ -257,10 +247,10 @@ public class JavaProfileImpl implements JavaProfile {
      * 
      * @return
      */
-    private boolean matches(String osgiPattern, String string) {
-      Assure.notNull("osgiPattern", osgiPattern);
-      Assure.notNull("string", string);
-      return string.matches(osgiPattern);
+    private boolean matches( String osgiPattern, String string ) {
+      Assure.notNull( "osgiPattern", osgiPattern );
+      Assure.notNull( "string", string );
+      return string.matches( osgiPattern );
     }
   }
 
@@ -270,10 +260,11 @@ public class JavaProfileImpl implements JavaProfile {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[JavaProfile:");
-    buffer.append(" _properties: ");
-    buffer.append(this._properties);
-    buffer.append("]");
+    buffer.append( "[JavaProfile:" );
+    buffer.append( " _properties: " );
+    buffer.append( this._properties );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+
+} /* ENDCLASS */

@@ -35,17 +35,17 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    * @param antProject
    *          the ant project
    */
-  public AntReferencesRaper(Project antProject, Thread currentThread) {
-    super(antProject, currentThread);
+  public AntReferencesRaper( Project antProject, Thread currentThread ) {
+    super( antProject, currentThread );
 
     //
-    final String threadPrefix = Long.toString(currentThread.getId());
+    final String threadPrefix = Long.toString( currentThread.getId() );
 
     //
-    antProject.setProperty("currentThreadId", threadPrefix);
+    antProject.setProperty( "currentThreadId", threadPrefix );
 
     // set the value accessor
-    setValueAccessor(new AntProjectValueAccessor<Object>() {
+    setValueAccessor( new AntProjectValueAccessor<Object>() {
 
       /**
        * <p>
@@ -56,8 +56,8 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        *          the key
        */
       @Override
-      public Object getValue(String key) {
-        return getAntProject().getReference(key);
+      public Object getValue( String key ) {
+        return getAntProject().getReference( key );
       }
 
       /**
@@ -71,13 +71,13 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        *          the value to set
        */
       @Override
-      public void setValue(String key, Object value) {
+      public void setValue( String key, Object value ) {
 
         //
-        setReference(threadPrefix + "." + key, value);
+        setReference( threadPrefix + "." + key, value );
 
         // unsafe! Only for backward compatibility
-        setReference(key, value);
+        setReference( key, value );
       }
 
       /**
@@ -89,13 +89,13 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
        *          the key
        */
       @Override
-      public void unsetValue(String key) {
-        removeReference(threadPrefix + "." + key);
+      public void unsetValue( String key ) {
+        removeReference( threadPrefix + "." + key );
 
         // unsafe! Only for backward compatibility
-        removeReference(key);
+        removeReference( key );
       }
-    });
+    } );
   }
 
   /**
@@ -106,14 +106,14 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    * @param key
    *          the key
    */
-  @SuppressWarnings("rawtypes")
-  private void removeReference(String key) {
+  @SuppressWarnings( "rawtypes" )
+  private void removeReference( String key ) {
     try {
-      Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "references");
-      if (references != null) {
-        references.remove(key);
+      Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue( getAntProject(), "references" );
+      if( references != null ) {
+        references.remove( key );
       }
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // ignore
     }
   }
@@ -128,15 +128,16 @@ public class AntReferencesRaper extends AbstractAntProjectRaper<Object> {
    * @param value
    *          the value
    */
-  @SuppressWarnings({ "unchecked", "rawtypes" })
-  private void setReference(String key, Object value) {
+  @SuppressWarnings( { "unchecked", "rawtypes" } )
+  private void setReference( String key, Object value ) {
     try {
-      Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue(getAntProject(), "references");
-      if (references != null) {
-        references.put(key, value);
+      Hashtable references = (Hashtable) AbstractAntProjectRaper.getValue( getAntProject(), "references" );
+      if( references != null ) {
+        references.put( key, value );
       }
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // ignore
     }
   }
-}
+  
+} /* ENDCLASS */

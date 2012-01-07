@@ -17,8 +17,8 @@ package org.ant4eclipse.lib.core.util;
 public class SystemPropertiesService implements PropertyService {
 
   @Override
-  public String getProperty(String propertyName) {
-    return Utilities.cleanup(System.getProperty(propertyName));
+  public String getProperty( String propertyName ) {
+    return Utilities.cleanup( System.getProperty( propertyName ) );
   }
 
   /**
@@ -26,7 +26,7 @@ public class SystemPropertiesService implements PropertyService {
    */
   @Override
   public Integer getPriority() {
-    return Integer.valueOf(-2);
+    return Integer.valueOf( -2 );
   }
 
   /**
@@ -35,5 +35,5 @@ public class SystemPropertiesService implements PropertyService {
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

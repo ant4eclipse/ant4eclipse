@@ -28,32 +28,32 @@ import java.io.File;
  */
 public class Assure {
 
-  @NLSMessage("Parameter '%s' should be of type '%s' but is a '%s'")
+  @NLSMessage( "Parameter '%s' should be of type '%s' but is a '%s'" )
   public static String MSG_INVALIDTYPE;
 
-  @NLSMessage("The parameter '%s' is not supposed to be null.")
+  @NLSMessage( "The parameter '%s' is not supposed to be null." )
   public static String MSG_NOTNULL;
 
-  @NLSMessage("The parameter '%s' is not supposed to be empty.")
+  @NLSMessage( "The parameter '%s' is not supposed to be empty." )
   public static String MSG_NOTEMPTY;
 
-  @NLSMessage("The supplied string is not allowed to be empty.")
+  @NLSMessage( "The supplied string is not allowed to be empty." )
   public static String MSG_STRINGMUSTBENONEMPTY;
 
-  @NLSMessage("The resource '%s' does not exist !")
+  @NLSMessage( "The resource '%s' does not exist !" )
   public static String MSG_RESOURCEDOESNOTEXIST;
 
-  @NLSMessage("The resource '%s' is not a regular file !")
+  @NLSMessage( "The resource '%s' is not a regular file !" )
   public static String MSG_RESOURCEISNOTAREGULARFILE;
 
-  @NLSMessage("The resource '%s' is not a directory !")
+  @NLSMessage( "The resource '%s' is not a directory !" )
   public static String MSG_RESOURCEISNOTADIRECTORY;
 
-  @NLSMessage("The value %d is supposed to be in the range [%d..%d] !")
+  @NLSMessage( "The value %d is supposed to be in the range [%d..%d] !" )
   public static String MSG_VALUEOUTOFRANGE;
 
   static {
-    NLS.initialize(Assure.class);
+    NLS.initialize( Assure.class );
   }
 
   /**
@@ -66,10 +66,10 @@ public class Assure {
    * @param object
    *          the object that must be set.
    */
-  public static final void notNull(String parametername, Object object) {
-    if (object == null) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION,
-          String.format(MSG_NOTNULL, parametername));
+  public static final void notNull( String parametername, Object object ) {
+    if( object == null ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTNULL,
+          parametername ) );
     }
   }
 
@@ -81,11 +81,11 @@ public class Assure {
    * @param object
    *          The object that has to be tested.
    */
-  public static final void nonEmpty(String parametername, byte[] object) {
-    notNull(parametername, object);
-    if (object.length == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
-          parametername));
+  public static final void nonEmpty( String parametername, byte[] object ) {
+    notNull( parametername, object );
+    if( object.length == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+          parametername ) );
     }
   }
 
@@ -97,11 +97,11 @@ public class Assure {
    * @param object
    *          The object that has to be tested.
    */
-  public static final void nonEmpty(String parametername, boolean[] object) {
-    notNull(parametername, object);
-    if (object.length == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
-          parametername));
+  public static final void nonEmpty( String parametername, boolean[] object ) {
+    notNull( parametername, object );
+    if( object.length == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+          parametername ) );
     }
   }
 
@@ -113,11 +113,11 @@ public class Assure {
    * @param object
    *          The object that has to be tested.
    */
-  public static final void nonEmpty(String parametername, char[] object) {
-    notNull(parametername, object);
-    if (object.length == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
-          parametername));
+  public static final void nonEmpty( String parametername, char[] object ) {
+    notNull( parametername, object );
+    if( object.length == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+          parametername ) );
     }
   }
 
@@ -129,11 +129,11 @@ public class Assure {
    * @param object
    *          The object that has to be tested.
    */
-  public static final void nonEmpty(String parametername, short[] object) {
-    notNull(parametername, object);
-    if (object.length == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
-          parametername));
+  public static final void nonEmpty( String parametername, short[] object ) {
+    notNull( parametername, object );
+    if( object.length == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+          parametername ) );
     }
   }
 
@@ -145,11 +145,11 @@ public class Assure {
    * @param object
    *          The object that has to be tested.
    */
-  public static final void nonEmpty(String parametername, int[] object) {
-    notNull(parametername, object);
-    if (object.length == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
-          parametername));
+  public static final void nonEmpty( String parametername, int[] object ) {
+    notNull( parametername, object );
+    if( object.length == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+          parametername ) );
     }
   }
 
@@ -161,11 +161,11 @@ public class Assure {
    * @param object
    *          The object that has to be tested.
    */
-  public static final void nonEmpty(String parametername, long[] object) {
-    notNull(parametername, object);
-    if (object.length == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_NOTEMPTY,
-          parametername));
+  public static final void nonEmpty( String parametername, long[] object ) {
+    notNull( parametername, object );
+    if( object.length == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+          parametername ) );
     }
   }
 
@@ -179,11 +179,11 @@ public class Assure {
    * @param expectedType
    *          The type the parameter should be an instance of
    */
-  public static final void instanceOf(String parameterName, Object parameter, Class<?> expectedType) {
-    notNull(parameterName, parameter);
-    if (!expectedType.isInstance(parameter)) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_INVALIDTYPE,
-          parameterName, expectedType.getName(), parameter.getClass().getName()));
+  public static final void instanceOf( String parameterName, Object parameter, Class<?> expectedType ) {
+    notNull( parameterName, parameter );
+    if( !expectedType.isInstance( parameter ) ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_INVALIDTYPE,
+          parameterName, expectedType.getName(), parameter.getClass().getName() ) );
     }
   }
 
@@ -195,10 +195,10 @@ public class Assure {
    * @param string
    *          the string that must provide a value.
    */
-  public static final void nonEmpty(String param, String string) {
-    notNull(param, string);
-    if (string.length() == 0) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, MSG_STRINGMUSTBENONEMPTY);
+  public static final void nonEmpty( String param, String string ) {
+    notNull( param, string );
+    if( string.length() == 0 ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, MSG_STRINGMUSTBENONEMPTY );
     }
   }
 
@@ -210,11 +210,11 @@ public class Assure {
    * @param file
    *          the file that must exist.
    */
-  public static final void exists(String param, File file) {
-    notNull(param, file);
-    if (!file.exists()) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_RESOURCEDOESNOTEXIST,
-          file.getAbsolutePath()));
+  public static final void exists( String param, File file ) {
+    notNull( param, file );
+    if( !file.exists() ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+          MSG_RESOURCEDOESNOTEXIST, file.getAbsolutePath() ) );
     }
   }
 
@@ -226,11 +226,11 @@ public class Assure {
    * @param file
    *          the file that must be a file.
    */
-  public static final void isFile(String param, File file) {
-    Assure.exists(param, file);
-    if (!file.isFile()) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
-          MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath()));
+  public static final void isFile( String param, File file ) {
+    Assure.exists( param, file );
+    if( !file.isFile() ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+          MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath() ) );
     }
   }
 
@@ -242,11 +242,11 @@ public class Assure {
    * @param file
    *          the file that must be a directory.
    */
-  public static final void isDirectory(String param, File file) {
-    Assure.exists(param, file);
-    if (!file.isDirectory()) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
-          MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath()));
+  public static final void isDirectory( String param, File file ) {
+    Assure.exists( param, file );
+    if( !file.isDirectory() ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+          MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath() ) );
     }
   }
 
@@ -260,9 +260,9 @@ public class Assure {
    * @param msg
    *          the message
    */
-  public static final void assertTrue(boolean condition, String msg) {
-    if (!condition) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, msg);
+  public static final void assertTrue( boolean condition, String msg ) {
+    if( !condition ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, msg );
     }
   }
 
@@ -278,10 +278,10 @@ public class Assure {
    * @param to
    *          the upper bound inclusive.
    */
-  public static final void inRange(int value, int from, int to) {
-    if ((value < from) || (value > to)) {
-      throw new Ant4EclipseException(CoreExceptionCode.PRECONDITION_VIOLATION, String.format(MSG_VALUEOUTOFRANGE,
-          Integer.valueOf(value), Integer.valueOf(from), Integer.valueOf(to)));
+  public static final void inRange( int value, int from, int to ) {
+    if( (value < from) || (value > to) ) {
+      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_VALUEOUTOFRANGE,
+          Integer.valueOf( value ), Integer.valueOf( from ), Integer.valueOf( to ) ) );
     }
   }
 

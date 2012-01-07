@@ -18,7 +18,7 @@ package org.ant4eclipse.lib.cdt.model;
  */
 public enum PathEntryKind {
 
-  Source("sourcePath"), Library("libraryPath"), Include("includePath");
+  Source( "sourcePath" ), Library( "libraryPath" ), Include( "includePath" );
 
   private String _key;
 
@@ -28,7 +28,7 @@ public enum PathEntryKind {
    * @param key
    *          The key used to identify the kind of the path.
    */
-  PathEntryKind(String key) {
+  PathEntryKind( String key ) {
     this._key = key;
   }
 
@@ -49,9 +49,9 @@ public enum PathEntryKind {
    * 
    * @return An identified kind or <code>null</code> if the key could not be recognized.
    */
-  public static final PathEntryKind valueByKey(String key) {
-    for (PathEntryKind kind : PathEntryKind.values()) {
-      if (key.equals(kind.getKey())) {
+  public static final PathEntryKind valueByKey( String key ) {
+    for( PathEntryKind kind : PathEntryKind.values() ) {
+      if( key.equals( kind.getKey() ) ) {
         return kind;
       }
     }

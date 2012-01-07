@@ -31,7 +31,7 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._cvsQuiet;
   }
 
-  public void setCvsQuiet(boolean cvsQuiet) {
+  public void setCvsQuiet( boolean cvsQuiet ) {
     this._cvsQuiet = cvsQuiet;
   }
 
@@ -39,7 +39,7 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._cvsReallyQuiet;
   }
 
-  public void setCvsReallyQuiet(boolean cvsReallyQuiet) {
+  public void setCvsReallyQuiet( boolean cvsReallyQuiet ) {
     this._cvsReallyQuiet = cvsReallyQuiet;
   }
 
@@ -54,8 +54,8 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
    * @param cvsPwd
    *          The cvsPwd to set.
    */
-  public void setCvsPwd(String cvsPwd) {
-    setPassword(cvsPwd);
+  public void setCvsPwd( String cvsPwd ) {
+    setPassword( cvsPwd );
   }
 
   /**
@@ -69,7 +69,7 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._tag;
   }
 
-  public void setTag(String tag) {
+  public void setTag( String tag ) {
     this._tag = tag;
   }
 
@@ -77,8 +77,8 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
    * @param cvsUser
    *          The cvsUser to set.
    */
-  public void setCvsUser(String cvsUser) {
-    setUsername(cvsUser);
+  public void setCvsUser( String cvsUser ) {
+    setUsername( cvsUser );
   }
 
   /**
@@ -87,8 +87,8 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   @Override
   protected VcsAdapter createVcsAdapter() {
     // set property
-    System.setProperty("javacvs.multiple_commands_warning", "false");
-    return new CvsAdapter(getProject(), isCvsQuiet(), isCvsReallyQuiet(), getTag());
+    System.setProperty( "javacvs.multiple_commands_warning", "false" );
+    return new CvsAdapter( getProject(), isCvsQuiet(), isCvsReallyQuiet(), getTag() );
   }
 
   /**
@@ -101,9 +101,9 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
 
   private void requiresCvsUserSet() {
     // check that cvsuser is set..
-    if (getUsername() == null) {
-      throw new BuildException("cvsuser has to be set!");
+    if( getUsername() == null ) {
+      throw new BuildException( "cvsuser has to be set!" );
     }
   }
 
-}
+} /* ENDCLASS */

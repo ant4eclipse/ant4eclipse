@@ -78,19 +78,19 @@ public class ManifestHelper {
    * @throws Ant4EclipseException
    *           if the symbolic name could not be found.
    */
-  public static String getBundleSymbolicName(Manifest manifest) {
-    Assure.notNull("manifest", manifest);
+  public static String getBundleSymbolicName( Manifest manifest ) {
+    Assure.notNull( "manifest", manifest );
 
     // get the manifest header elements
-    ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements(manifest,
-        ManifestHelper.BUNDLE_SYMBOLICNAME);
+    ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements( manifest,
+        ManifestHelper.BUNDLE_SYMBOLICNAME );
 
     // assert that entry exists
-    if (elements == null || elements.length == 0 || elements[0].getValues() == null
-        || elements[0].getValues().length == 0) {
+    if( elements == null || elements.length == 0 || elements[0].getValues() == null
+        || elements[0].getValues().length == 0 ) {
 
-      throw new Ant4EclipseException(CoreExceptionCode.MANIFEST_HEADER_DOES_NOT_EXIST,
-          ManifestHelper.BUNDLE_SYMBOLICNAME);
+      throw new Ant4EclipseException( CoreExceptionCode.MANIFEST_HEADER_DOES_NOT_EXIST,
+          ManifestHelper.BUNDLE_SYMBOLICNAME );
     }
 
     // return the symbolic name
@@ -108,13 +108,13 @@ public class ManifestHelper {
    * 
    * @return the 'Bundle-Classpath' entries or <code>.</code> if no 'Bundle-Classpath' has been specified.
    */
-  public static String[] getBundleClasspath(Manifest manifest) {
+  public static String[] getBundleClasspath( Manifest manifest ) {
 
     // parse the 'Bundle-Classpath' manifest entry
-    String[] bundleClasspath = splitHeader(manifest.getMainAttributes().getValue(BUNDLE_CLASSPATH));
+    String[] bundleClasspath = splitHeader( manifest.getMainAttributes().getValue( BUNDLE_CLASSPATH ) );
 
     // set default if necessary
-    if ((bundleClasspath == null) || (bundleClasspath.length < 1)) {
+    if( (bundleClasspath == null) || (bundleClasspath.length < 1) ) {
       bundleClasspath = new String[] { "." };
     }
 
@@ -122,60 +122,60 @@ public class ManifestHelper {
     return bundleClasspath;
   }
 
-  public static String getManifestHeader(Manifest manifest, String header) {
-    Assure.notNull("manifest", manifest);
-    Assure.nonEmpty("header", header);
-    return manifest.getMainAttributes().getValue(header);
+  public static String getManifestHeader( Manifest manifest, String header ) {
+    Assure.notNull( "manifest", manifest );
+    Assure.nonEmpty( "header", header );
+    return manifest.getMainAttributes().getValue( header );
   }
 
-  public static ManifestHeaderElement[] getManifestHeaderElements(Manifest manifest, String header) {
-    Assure.notNull("manifest", manifest);
-    Assure.nonEmpty("header", header);
+  public static ManifestHeaderElement[] getManifestHeaderElements( Manifest manifest, String header ) {
+    Assure.notNull( "manifest", manifest );
+    Assure.nonEmpty( "header", header );
 
-    String manifestValue = manifest.getMainAttributes().getValue(header);
+    String manifestValue = manifest.getMainAttributes().getValue( header );
 
-    if ((manifestValue == null) || "".equals(manifestValue.trim())) {
+    if( (manifestValue == null) || "".equals( manifestValue.trim() ) ) {
       return new ManifestHeaderElement[0];
     }
 
-    return getManifestHeaderElements(manifestValue);
+    return getManifestHeaderElements( manifestValue );
   }
 
-  public static ManifestHeaderElement[] getManifestHeaderElements(String manifestValue) {
-    Assure.nonEmpty("manifestValue", manifestValue);
+  public static ManifestHeaderElement[] getManifestHeaderElements( String manifestValue ) {
+    Assure.nonEmpty( "manifestValue", manifestValue );
 
-    String[] elements = splitHeader(manifestValue);
+    String[] elements = splitHeader( manifestValue );
     List<ManifestHeaderElement> result = new ArrayList<ManifestHeaderElement>();
-    for (String element : elements) {
+    for( String element : elements ) {
       ManifestHeaderElement manifestHeaderElement = new ManifestHeaderElement();
-      result.add(manifestHeaderElement);
-      String[] elementParts = splitHeader(element, ";");
+      result.add( manifestHeaderElement );
+      String[] elementParts = splitHeader( element, ";" );
 
-      for (String elementPart : elementParts) {
-        String[] splitted = splitHeader(elementPart, ":=");
+      for( String elementPart : elementParts ) {
+        String[] splitted = splitHeader( elementPart, ":=" );
         // Directive found...
-        if (splitted.length > 1) {
-          manifestHeaderElement.addDirective(splitted[0], removeQuotes(splitted[1]));
+        if( splitted.length > 1 ) {
+          manifestHeaderElement.addDirective( splitted[0], removeQuotes( splitted[1] ) );
         } else {
-          splitted = splitHeader(elementPart, "=");
-          if (splitted.length > 1) {
-            manifestHeaderElement.addAttribute(splitted[0], removeQuotes(splitted[1]));
+          splitted = splitHeader( elementPart, "=" );
+          if( splitted.length > 1 ) {
+            manifestHeaderElement.addAttribute( splitted[0], removeQuotes( splitted[1] ) );
           } else {
-            manifestHeaderElement.addValue(elementPart);
+            manifestHeaderElement.addValue( elementPart );
           }
         }
       }
     }
 
-    return result.toArray(new ManifestHeaderElement[0]);
+    return result.toArray( new ManifestHeaderElement[0] );
   }
 
   /**
    * @param header
    * @return
    */
-  public static String[] splitHeader(String header) {
-    return splitHeader(header, ",");
+  public static String[] splitHeader( String header ) {
+    return splitHeader( header, "," );
   }
 
   /**
@@ -183,8 +183,8 @@ public class ManifestHelper {
    * @param separator
    * @return
    */
-  public static String[] splitHeader(String header, String separator) {
-    if ((header == null) || (header.trim().length() == 0)) {
+  public static String[] splitHeader( String header, String separator ) {
+    if( (header == null) || (header.trim().length() == 0) ) {
       return new String[0];
     }
     List<String> result = new ArrayList<String>();
@@ -192,26 +192,26 @@ public class ManifestHelper {
     char[] chars = header.toCharArray();
     StringBuilder currentValue = new StringBuilder();
     boolean inQuotedString = false;
-    for (int i = 0; i < chars.length; i++) {
+    for( int i = 0; i < chars.length; i++ ) {
 
       // separator string is not found:
       // - append char to current value
       // - check for the beginning or ending of quoted strings
-      if (!lookup(chars, i, separator)) {
+      if( !lookup( chars, i, separator ) ) {
 
         // single '"' found: quoted string begins or ends
-        if (lookup(chars, i, "\"")) {
+        if( lookup( chars, i, "\"" ) ) {
           inQuotedString = !inQuotedString;
         }
 
         // filter for '\"'
-        else if (lookup(chars, i, "\\\"")) {
-          currentValue.append(chars[i]);
+        else if( lookup( chars, i, "\\\"" ) ) {
+          currentValue.append( chars[i] );
           i++;
         }
 
         // append char to current value
-        currentValue.append(chars[i]);
+        currentValue.append( chars[i] );
       }
 
       // separator char found:
@@ -220,23 +220,23 @@ public class ManifestHelper {
       else {
 
         // - split if we are not in a quoted string
-        if (!inQuotedString) {
-          result.add(currentValue.toString());
+        if( !inQuotedString ) {
+          result.add( currentValue.toString() );
           currentValue = new StringBuilder();
           i = i + (separator.length() - 1);
         }
 
         // - no split if we are in a quoted string
         else {
-          currentValue.append(chars[i]);
+          currentValue.append( chars[i] );
         }
       }
     }
 
     // add the current value
-    result.add(currentValue.toString());
+    result.add( currentValue.toString() );
 
-    return result.toArray(new String[0]);
+    return result.toArray( new String[0] );
   }
 
   /**
@@ -245,17 +245,17 @@ public class ManifestHelper {
    * @param pattern
    * @return
    */
-  private static boolean lookup(char[] array, int index, String pattern) {
-    Assure.nonEmpty("pattern", pattern);
+  private static boolean lookup( char[] array, int index, String pattern ) {
+    Assure.nonEmpty( "pattern", pattern );
 
-    if (index + pattern.length() > array.length) {
+    if( index + pattern.length() > array.length ) {
       return false;
     }
 
     char[] patternChars = pattern.toCharArray();
 
-    for (int i = 0; i < patternChars.length; i++) {
-      if (array[index + i] != patternChars[i]) {
+    for( int i = 0; i < patternChars.length; i++ ) {
+      if( array[index + i] != patternChars[i] ) {
         return false;
       }
     }
@@ -263,19 +263,19 @@ public class ManifestHelper {
     return true;
   }
 
-  private static String removeQuotes(String value) {
-    if (value == null) {
+  private static String removeQuotes( String value ) {
+    if( value == null ) {
       return null;
     }
 
     String result = value;
 
-    if (result.startsWith("\"")) {
-      result = result.substring(1);
+    if( result.startsWith( "\"" ) ) {
+      result = result.substring( 1 );
     }
 
-    if (result.endsWith("\"")) {
-      result = result.substring(0, result.length() - 1);
+    if( result.endsWith( "\"" ) ) {
+      result = result.substring( 0, result.length() - 1 );
     }
 
     return result;
@@ -303,23 +303,23 @@ public class ManifestHelper {
       this._directives = new StringMap();
     }
 
-    void addAttribute(String key, String value) {
-      this._attributes.put(key, value);
+    void addAttribute( String key, String value ) {
+      this._attributes.put( key, value );
     }
 
-    void addDirective(String key, String value) {
-      this._directives.put(key, value);
+    void addDirective( String key, String value ) {
+      this._directives.put( key, value );
     }
 
-    public boolean addValue(String o) {
-      return this._values.add(o);
+    public boolean addValue( String o ) {
+      return this._values.add( o );
     }
 
     /**
      * @return
      */
     public String[] getValues() {
-      return this._values.toArray(new String[0]);
+      return this._values.toArray( new String[0] );
     }
 
     /**
@@ -342,16 +342,17 @@ public class ManifestHelper {
     @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("[ManifestHeaderElement:");
-      buffer.append(" _values: ");
-      buffer.append(this._values);
-      buffer.append(" _attributes: ");
-      buffer.append(this._attributes);
-      buffer.append(" _directives: ");
-      buffer.append(this._directives);
-      buffer.append("]");
+      buffer.append( "[ManifestHeaderElement:" );
+      buffer.append( " _values: " );
+      buffer.append( this._values );
+      buffer.append( " _attributes: " );
+      buffer.append( this._attributes );
+      buffer.append( " _directives: " );
+      buffer.append( this._directives );
+      buffer.append( "]" );
       return buffer.toString();
     }
 
-  }
-}
+  } /* ENDCLASS */
+  
+} /* ENCLASS */

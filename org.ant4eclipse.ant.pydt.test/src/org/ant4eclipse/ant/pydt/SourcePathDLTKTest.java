@@ -22,7 +22,7 @@ public class SourcePathDLTKTest extends AbstractSourcePathTest {
    * Initialises this set of tests.
    */
   public SourcePathDLTKTest() {
-    super(true);
+    super( true );
   }
 
 } /* ENDCLASS */

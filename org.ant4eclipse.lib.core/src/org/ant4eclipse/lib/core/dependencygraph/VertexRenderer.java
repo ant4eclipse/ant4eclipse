@@ -33,6 +33,6 @@ public interface VertexRenderer<T> {
    *          the vertex to render.
    * @return must return an not-null string that represents the given vertex.
    */
-  String renderVertex(T vertex);
+  String renderVertex( T vertex );
 
 } /* ENDINTERFACE */

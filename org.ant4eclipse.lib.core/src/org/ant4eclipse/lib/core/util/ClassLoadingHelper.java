@@ -42,8 +42,8 @@ public class ClassLoadingHelper {
    *          the class
    * @return the class path entries for the specified class.
    */
-  public static String[] getClasspathEntriesFor(Class<?> clazz) {
-    Assure.notNull("clazz", clazz);
+  public static String[] getClasspathEntriesFor( Class<?> clazz ) {
+    Assure.notNull( "clazz", clazz );
 
     // get class loader
     ClassLoader classLoader = clazz.getClassLoader();
@@ -51,21 +51,21 @@ public class ClassLoadingHelper {
 
     // AntClassLoader: we have to call 'getClasspath()', because the code
     // source always is the 'ant.jar'
-    if (classLoaderClass.getName().equals(CLASS_ORG_APACHE_TOOLS_ANT_ANTCLASSLOADER)) {
+    if( classLoaderClass.getName().equals( CLASS_ORG_APACHE_TOOLS_ANT_ANTCLASSLOADER ) ) {
 
       try {
-        Method method = classLoaderClass.getDeclaredMethod(METHOD_GET_CLASSPATH, new Class[0]);
-        Object result = method.invoke(classLoader, new Object[0]);
-        String[] fileNames = result.toString().split(File.pathSeparator);
+        Method method = classLoaderClass.getDeclaredMethod( METHOD_GET_CLASSPATH, new Class[0] );
+        Object result = method.invoke( classLoader, new Object[0] );
+        String[] fileNames = result.toString().split( File.pathSeparator );
 
         // patch the file names
-        for (int i = 0; i < fileNames.length; i++) {
-          fileNames[i] = patchFileName(fileNames[i]);
+        for( int i = 0; i < fileNames.length; i++ ) {
+          fileNames[i] = patchFileName( fileNames[i] );
         }
 
         // return the file names
         return fileNames;
-      } catch (Exception e) {
+      } catch( Exception e ) {
         e.printStackTrace();
         return new String[0];
       }
@@ -75,14 +75,14 @@ public class ClassLoadingHelper {
       CodeSource codeSource = clazz.getProtectionDomain().getCodeSource();
 
       String fileName = codeSource.getLocation().getFile();
-      String patchedfileName = patchFileName(fileName);
+      String patchedfileName = patchFileName( fileName );
 
-      if (A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug("Class path for class '%s' is '%s' (patched: '%s').", clazz, fileName, patchedfileName);
+      if( A4ELogging.isDebuggingEnabled() ) {
+        A4ELogging.debug( "Class path for class '%s' is '%s' (patched: '%s').", clazz, fileName, patchedfileName );
       }
 
       // patch and return the file name
-      return new String[] { patchFileName(codeSource.getLocation().getFile()) };
+      return new String[] { patchFileName( codeSource.getLocation().getFile() ) };
     }
   }
 
@@ -95,7 +95,8 @@ public class ClassLoadingHelper {
    *          the file name
    * @return the patched file name
    */
-  private static String patchFileName(String fileName) {
-    return fileName.replaceAll("\\%20", " ");
+  private static String patchFileName( String fileName ) {
+    return fileName.replaceAll( "\\%20", " " );
   }
-}
+  
+} /* ENDCLASS */

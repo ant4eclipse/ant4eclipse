@@ -21,8 +21,8 @@ import java.lang.annotation.Target;
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Retention( RetentionPolicy.RUNTIME )
+@Target( ElementType.FIELD )
 public @interface NLSMessage {
 
   /**
@@ -33,4 +33,4 @@ public @interface NLSMessage {
    */
   String value() default "";
 
-}
+} /* ENDANNOTATION */

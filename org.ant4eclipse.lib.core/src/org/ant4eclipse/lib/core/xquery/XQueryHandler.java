@@ -37,18 +37,14 @@ import java.util.Vector;
  */
 public class XQueryHandler extends DefaultHandler {
 
-  /** - */
   private StringBuffer            _buffer;
 
-  /** - */
   private int                     _depth;
 
-  /** - */
   private Vector<XQuery>          _queries;
 
   private String                  _fileName;
 
-  /** - */
   private static SAXParserFactory factory;
 
   /**
@@ -57,7 +53,7 @@ public class XQueryHandler extends DefaultHandler {
    * @param fileName
    *          The name of the file that has to be parsed.
    */
-  public XQueryHandler(String fileName) {
+  public XQueryHandler( String fileName ) {
     super();
     this._buffer = new StringBuffer();
     this._queries = new Vector<XQuery>();
@@ -69,7 +65,7 @@ public class XQueryHandler extends DefaultHandler {
    * Initialises this handler.
    */
   public XQueryHandler() {
-    this("unknown");
+    this( "unknown" );
   }
 
   /**
@@ -80,9 +76,9 @@ public class XQueryHandler extends DefaultHandler {
    * 
    * @return A query instance allowing to retrieve the results.
    */
-  public XQuery createQuery(String query) {
-    XQuery result = new XQuery(this._fileName, query);
-    this._queries.add(result);
+  public XQuery createQuery( String query ) {
+    XQuery result = new XQuery( this._fileName, query );
+    this._queries.add( result );
     return result;
   }
 
@@ -92,12 +88,12 @@ public class XQueryHandler extends DefaultHandler {
   @Override
   public void startDocument() throws SAXException {
     this._depth = 0;
-    for (int i = 0; i < this._queries.size(); i++) {
-      XQuery query = this._queries.get(i);
+    for( int i = 0; i < this._queries.size(); i++ ) {
+      XQuery query = this._queries.get( i );
       query.reset();
     }
-    if (this._buffer.length() > 0) {
-      this._buffer.delete(0, this._buffer.length());
+    if( this._buffer.length() > 0 ) {
+      this._buffer.delete( 0, this._buffer.length() );
     }
   }
 
@@ -105,11 +101,11 @@ public class XQueryHandler extends DefaultHandler {
    * {@inheritDoc}
    */
   @Override
-  public void startElement(String uri, String localname, String qname, Attributes attributes) throws SAXException {
+  public void startElement( String uri, String localname, String qname, Attributes attributes ) throws SAXException {
 
-    for (int i = 0; i < this._queries.size(); i++) {
-      XQuery query = this._queries.get(i);
-      query.visit(this._depth, qname, attributes);
+    for( int i = 0; i < this._queries.size(); i++ ) {
+      XQuery query = this._queries.get( i );
+      query.visit( this._depth, qname, attributes );
     }
 
     this._depth++;
@@ -120,18 +116,18 @@ public class XQueryHandler extends DefaultHandler {
    * {@inheritDoc}
    */
   @Override
-  public void endElement(String uri, String localname, String qname) throws SAXException {
+  public void endElement( String uri, String localname, String qname ) throws SAXException {
 
     this._depth--;
 
     String str = this._buffer.toString().trim();
-    for (int i = 0; i < this._queries.size(); i++) {
-      XQuery query = this._queries.get(i);
-      query.endVisit(this._depth, str);
+    for( int i = 0; i < this._queries.size(); i++ ) {
+      XQuery query = this._queries.get( i );
+      query.endVisit( this._depth, str );
     }
 
-    if (this._buffer.length() > 0) {
-      this._buffer.delete(0, this._buffer.length());
+    if( this._buffer.length() > 0 ) {
+      this._buffer.delete( 0, this._buffer.length() );
     }
 
   }
@@ -140,8 +136,8 @@ public class XQueryHandler extends DefaultHandler {
    * {@inheritDoc}
    */
   @Override
-  public void characters(char[] ch, int start, int length) throws SAXException {
-    this._buffer.append(ch, start, length);
+  public void characters( char[] ch, int start, int length ) throws SAXException {
+    this._buffer.append( ch, start, length );
   }
 
   /**
@@ -152,15 +148,15 @@ public class XQueryHandler extends DefaultHandler {
    * @param handler
    *          The handler which provides all queries.
    */
-  public static void queryFile(File xmlfile, XQueryHandler handler) {
-    Assure.isFile("xmlfile", xmlfile);
-    Assure.notNull("handler", handler);
+  public static void queryFile( File xmlfile, XQueryHandler handler ) {
+    Assure.isFile( "xmlfile", xmlfile );
+    Assure.notNull( "handler", handler );
     try {
       SAXParserFactory factory = getSAXParserFactory();
-      factory.newSAXParser().parse(new FileInputStream(xmlfile), handler);
-    } catch (Exception ex) {
-      A4ELogging.error(ex.getMessage());
-      throw (new Ant4EclipseException(ex, CoreExceptionCode.X_QUERY_PARSE_EXCEPTION));
+      factory.newSAXParser().parse( new FileInputStream( xmlfile ), handler );
+    } catch( Exception ex ) {
+      A4ELogging.error( ex.getMessage() );
+      throw(new Ant4EclipseException( ex, CoreExceptionCode.X_QUERY_PARSE_EXCEPTION ));
     }
   }
 
@@ -172,24 +168,24 @@ public class XQueryHandler extends DefaultHandler {
    * @param handler
    *          The handler which provides all queries.
    */
-  public static void queryInputStream(InputStream inputStream, XQueryHandler handler) {
-    Assure.notNull("inputStream", inputStream);
-    Assure.notNull("handler", handler);
+  public static void queryInputStream( InputStream inputStream, XQueryHandler handler ) {
+    Assure.notNull( "inputStream", inputStream );
+    Assure.notNull( "handler", handler );
     try {
       SAXParserFactory factory = getSAXParserFactory();
-      factory.newSAXParser().parse(inputStream, handler);
-    } catch (Exception ex) {
-      A4ELogging.error(ex.getMessage());
-      throw (new Ant4EclipseException(ex, CoreExceptionCode.X_QUERY_PARSE_EXCEPTION));
+      factory.newSAXParser().parse( inputStream, handler );
+    } catch( Exception ex ) {
+      A4ELogging.error( ex.getMessage() );
+      throw(new Ant4EclipseException( ex, CoreExceptionCode.X_QUERY_PARSE_EXCEPTION ));
     }
   }
 
   private static SAXParserFactory getSAXParserFactory() throws FactoryConfigurationError {
 
-    if (factory == null) {
+    if( factory == null ) {
       factory = SAXParserFactory.newInstance();
       // factory.setFeature("http://xml.org/sax/features/string-interning", true);
-      factory.setValidating(false);
+      factory.setValidating( false );
     }
     return factory;
   }

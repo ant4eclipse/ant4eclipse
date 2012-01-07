@@ -18,9 +18,9 @@ package org.ant4eclipse.lib.cdt.model;
  */
 public enum BuildArtefactType {
 
-  SharedLibrary("org.eclipse.cdt.build.core.buildArtefactType.sharedLib"), StaticLibrary(
-      "org.eclipse.cdt.build.core.buildArtefactType.staticLib"), Executable(
-      "org.eclipse.cdt.build.core.buildArtefactType.exe"), Unmanaged(null);
+  SharedLibrary( "org.eclipse.cdt.build.core.buildArtefactType.sharedLib" ), StaticLibrary(
+      "org.eclipse.cdt.build.core.buildArtefactType.staticLib" ), Executable(
+      "org.eclipse.cdt.build.core.buildArtefactType.exe" ), Unmanaged( null );
 
   private String _value;
 
@@ -30,7 +30,7 @@ public enum BuildArtefactType {
    * @param value
    *          The identifying value used within the xml representation. Maybe <code>null</code>.
    */
-  BuildArtefactType(String value) {
+  BuildArtefactType( String value ) {
     this._value = value;
   }
 
@@ -44,9 +44,9 @@ public enum BuildArtefactType {
    * @return The artifact type or <code>null</code> if it could not be identified (in that case it might be an unmanaged
    *         project).
    */
-  public static final BuildArtefactType valueByID(String id) {
-    for (BuildArtefactType type : BuildArtefactType.values()) {
-      if (type._value.equals(id)) {
+  public static final BuildArtefactType valueByID( String id ) {
+    for( BuildArtefactType type : BuildArtefactType.values() ) {
+      if( type._value.equals( id ) ) {
         return type;
       }
     }

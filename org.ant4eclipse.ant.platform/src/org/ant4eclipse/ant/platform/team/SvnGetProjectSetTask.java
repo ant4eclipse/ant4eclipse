@@ -48,7 +48,7 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._dateFormatter;
   }
 
-  public void setDateFormatter(String dateFormatter) {
+  public void setDateFormatter( String dateFormatter ) {
     this._dateFormatter = dateFormatter;
   }
 
@@ -56,7 +56,7 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._dateTimeZone;
   }
 
-  public void setDateTimeZone(String dateTimeZone) {
+  public void setDateTimeZone( String dateTimeZone ) {
     this._dateTimeZone = dateTimeZone;
   }
 
@@ -64,7 +64,7 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._javahl;
   }
 
-  public void setJavahl(boolean javahl) {
+  public void setJavahl( boolean javahl ) {
     this._javahl = javahl;
   }
 
@@ -72,7 +72,7 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
     return this._javasvn;
   }
 
-  public void setJavasvn(boolean javasvn) {
+  public void setJavasvn( boolean javasvn ) {
     this._javasvn = javasvn;
   }
 
@@ -81,7 +81,7 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
    */
   @Override
   protected VcsAdapter createVcsAdapter() {
-    return new SvnAdapter(getProject(), isJavahl(), isJavasvn(), getDateFormatter(), getDateTimeZone());
+    return new SvnAdapter( getProject(), isJavahl(), isJavasvn(), getDateFormatter(), getDateTimeZone() );
   }
 
   /**
@@ -91,4 +91,6 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
   protected void checkPrereqs() {
     // no additional pre-reqs
   }
-}
+  
+} /* ENDCLASS */
+

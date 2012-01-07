@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
 
-  /** - */
   private String       _id;
 
   /**
@@ -39,15 +38,15 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
    * 
    * @param project
    */
-  public WorkspaceDefinitionDataType(Project project) {
-    super(project);
+  public WorkspaceDefinitionDataType( Project project ) {
+    super( project );
 
     //
     this._dirSet = new ArrayList<DirSet>();
   }
 
-  public void setId(String id) {
-    if (isReference()) {
+  public void setId( String id ) {
+    if( isReference() ) {
       throw tooManyAttributes();
     }
 
@@ -60,8 +59,8 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
    * 
    * @param dirSet
    */
-  public void addDirSet(DirSet dirSet) {
-    this._dirSet.add(dirSet);
+  public void addDirSet( DirSet dirSet ) {
+    this._dirSet.add( dirSet );
   }
 
   /**
@@ -69,45 +68,47 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
    */
   @Override
   protected void doValidate() {
-    if (this._dirSet.isEmpty()) {
-      throw new BuildException("Workspace registration requires at least one fileset!");
+    if( this._dirSet.isEmpty() ) {
+      throw new BuildException( "Workspace registration requires at least one fileset!" );
     }
 
-    if (this._id == null) {
-      throw new BuildException("Workspace registration requires the identifier property to be set!");
+    if( this._id == null ) {
+      throw new BuildException( "Workspace registration requires the identifier property to be set!" );
     }
 
     // create a workspace from the filesets
     List<File> projectDirectories = new ArrayList<File>();
-    for (DirSet fs : this._dirSet) {
+    for( DirSet fs : this._dirSet ) {
       File fsBase = fs.getDirectoryScanner().getBasedir();
-      for (String d : fs.getDirectoryScanner().getIncludedDirectories()) {
-        File file = new File(fsBase, d);
+      for( String d : fs.getDirectoryScanner().getIncludedDirectories() ) {
+        File file = new File( fsBase, d );
 
         // make sure it exists
-        if (!file.exists()) {
-          A4ELogging.debug("File " + file + " does not exist and will be ignored.");
+        if( !file.exists() ) {
+          A4ELogging.debug( "File " + file + " does not exist and will be ignored." );
           continue;
         }
 
         // make sure its a directory
-        if (!file.isDirectory()) {
-          A4ELogging.debug("File " + file + " is not a directory and will be ignored.");
+        if( !file.isDirectory() ) {
+          A4ELogging.debug( "File " + file + " is not a directory and will be ignored." );
           continue;
         }
 
         // and it should have a .project file
-        if (!ProjectFileParser.isProjectDirectory(file)) {
-          A4ELogging.debug("File " + file + " is not an eclipse project directory and will be ignored.");
+        if( !ProjectFileParser.isProjectDirectory( file ) ) {
+          A4ELogging.debug( "File " + file + " is not an eclipse project directory and will be ignored." );
           continue;
         }
 
-        projectDirectories.add(file);
+        projectDirectories.add( file );
       }
     }
 
     WorkspaceRegistry registry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
-    registry.registerWorkspace(this._id, new FilesetWorkspaceDefinition(projectDirectories
-        .toArray(new File[projectDirectories.size()])));
+    registry.registerWorkspace( this._id,
+        new FilesetWorkspaceDefinition( projectDirectories.toArray( new File[projectDirectories.size()] ) ) );
   }
-}
+  
+} /* ENDCLASS */
+

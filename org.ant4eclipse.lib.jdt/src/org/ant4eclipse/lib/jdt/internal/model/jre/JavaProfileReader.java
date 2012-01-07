@@ -30,18 +30,18 @@ import java.util.Map;
 public class JavaProfileReader implements A4EService {
 
   /** the java profile cache */
-  private Map<String, JavaProfile> _javaProfileCache;
+  private Map<String,JavaProfile> _javaProfileCache;
 
   public JavaProfileReader() {
 
-    this._javaProfileCache = new HashMap<String, JavaProfile>();
+    this._javaProfileCache = new HashMap<String,JavaProfile>();
 
     // read all known profiles
     JavaProfile[] javaProfiles = readAllProfiles();
 
     // add profiles to profile cache
-    for (JavaProfile javaProfile : javaProfiles) {
-      this._javaProfileCache.put(javaProfile.getName(), javaProfile);
+    for( JavaProfile javaProfile : javaProfiles ) {
+      this._javaProfileCache.put( javaProfile.getName(), javaProfile );
     }
   }
 
@@ -49,20 +49,20 @@ public class JavaProfileReader implements A4EService {
    * @return
    */
   public JavaProfile readDefaultProfile() {
-    return this._javaProfileCache.get("JavaSE-1.6");
+    return this._javaProfileCache.get( "JavaSE-1.6" );
   }
 
   /**
    * {@inheritDoc}
    */
-  public JavaProfile getJavaProfile(String path) {
-    Assure.nonEmpty("path", path);
-    return this._javaProfileCache.get(path);
+  public JavaProfile getJavaProfile( String path ) {
+    Assure.nonEmpty( "path", path );
+    return this._javaProfileCache.get( path );
   }
 
-  public boolean hasJavaProfile(String path) {
-    Assure.nonEmpty("path", path);
-    return this._javaProfileCache.containsKey(path);
+  public boolean hasJavaProfile( String path ) {
+    Assure.nonEmpty( "path", path );
+    return this._javaProfileCache.containsKey( path );
   }
 
   /**
@@ -72,15 +72,15 @@ public class JavaProfileReader implements A4EService {
    * @param profileFile
    * @return
    */
-  public void registerProfile(File profileFile, String jreId) {
-    Assure.exists("profileFile", profileFile);
-    Assure.nonEmpty("jreId", jreId);
+  public void registerProfile( File profileFile, String jreId ) {
+    Assure.exists( "profileFile", profileFile );
+    Assure.nonEmpty( "jreId", jreId );
 
-    StringMap props = new StringMap(profileFile);
-    JavaProfileImpl javaProfile = new JavaProfileImpl(props);
-    javaProfile.setAssociatedJavaRuntimeId(jreId);
+    StringMap props = new StringMap( profileFile );
+    JavaProfileImpl javaProfile = new JavaProfileImpl( props );
+    javaProfile.setAssociatedJavaRuntimeId( jreId );
 
-    this._javaProfileCache.put(javaProfile.getName(), javaProfile);
+    this._javaProfileCache.put( javaProfile.getName(), javaProfile );
   }
 
   /**
@@ -89,23 +89,23 @@ public class JavaProfileReader implements A4EService {
   private JavaProfile[] readAllProfiles() {
 
     // load the profile listing first
-    StringMap properties = new StringMap("/profiles/profile.list");
+    StringMap properties = new StringMap( "/profiles/profile.list" );
 
-    String javaProfiles = properties.get("java.profiles");
+    String javaProfiles = properties.get( "java.profiles" );
 
-    String[] profiles = javaProfiles.split(",");
+    String[] profiles = javaProfiles.split( "," );
 
     List<JavaProfileImpl> result = new ArrayList<JavaProfileImpl>();
 
-    for (String profile2 : profiles) {
+    for( String profile2 : profiles ) {
       String profile = profile2.trim();
-      if ((profile != null) && !"".equals(profile)) {
-        StringMap props = new StringMap("/profiles/" + profile);
-        result.add(new JavaProfileImpl(props));
+      if( (profile != null) && !"".equals( profile ) ) {
+        StringMap props = new StringMap( "/profiles/" + profile );
+        result.add( new JavaProfileImpl( props ) );
       }
     }
 
-    return result.toArray(new JavaProfile[result.size()]);
+    return result.toArray( new JavaProfile[result.size()] );
   }
 
   /**

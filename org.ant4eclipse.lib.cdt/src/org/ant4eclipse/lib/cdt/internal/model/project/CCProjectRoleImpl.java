@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.cdt.internal.model.project;
 
-
-
 import org.ant4eclipse.lib.cdt.model.project.CProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
@@ -36,8 +34,8 @@ public class CCProjectRoleImpl extends AbstractProjectRole implements CProjectRo
    * @param eclipseProject
    *          the eclipse project
    */
-  public CCProjectRoleImpl(EclipseProject eclipseProject) {
-    super(NAME, eclipseProject);
+  public CCProjectRoleImpl( EclipseProject eclipseProject ) {
+    super( NAME, eclipseProject );
   }
 
   /**
@@ -46,10 +44,10 @@ public class CCProjectRoleImpl extends AbstractProjectRole implements CProjectRo
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[CCProjectRole:");
-    buffer.append(" NAME: ");
-    buffer.append(NAME);
-    buffer.append("]");
+    buffer.append( "[CCProjectRole:" );
+    buffer.append( " NAME: " );
+    buffer.append( NAME );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -66,17 +64,17 @@ public class CCProjectRoleImpl extends AbstractProjectRole implements CProjectRo
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (!super.equals(o)) {
+    if( !super.equals( o ) ) {
       return false;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     // CCProjectRoleImpl other = (CCProjectRoleImpl) o;

@@ -40,9 +40,9 @@ public class ScopedMacroDefinition<E> {
    * @param macroDefinition
    * @param scope
    */
-  public ScopedMacroDefinition(MacroDef macroDefinition, E scope) {
-    Assure.notNull("macroDefinition", macroDefinition);
-    Assure.notNull("scope", scope);
+  public ScopedMacroDefinition( MacroDef macroDefinition, E scope ) {
+    Assure.notNull( "macroDefinition", macroDefinition );
+    Assure.notNull( "scope", scope );
     this._macroDef = macroDefinition;
     this._scope = scope;
   }
@@ -68,4 +68,5 @@ public class ScopedMacroDefinition<E> {
   public E getScope() {
     return this._scope;
   }
-}
+  
+} /* ENDCLASS */

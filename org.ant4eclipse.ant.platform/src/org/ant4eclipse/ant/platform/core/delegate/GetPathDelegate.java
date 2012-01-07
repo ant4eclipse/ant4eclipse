@@ -43,16 +43,16 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
   /**
    * @param component
    */
-  public GetPathDelegate(ProjectComponent component) {
-    super(component);
+  public GetPathDelegate( ProjectComponent component ) {
+    super( component );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setPathId(String id) {
-    if (this._pathId == null) {
+  public final void setPathId( String id ) {
+    if( this._pathId == null ) {
       this._pathId = id;
     }
   }
@@ -85,7 +85,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setRelative(boolean relative) {
+  public final void setRelative( boolean relative ) {
     this._relative = relative;
   }
 
@@ -93,7 +93,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setProperty(String property) {
+  public final void setProperty( String property ) {
     this._property = property;
   }
 
@@ -118,8 +118,8 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void requirePathIdOrPropertySet() {
-    if (!isPathIdSet() && !isPropertySet()) {
-      throw new BuildException("At least one of 'pathId' or 'property' has to be set!");
+    if( !isPathIdSet() && !isPropertySet() ) {
+      throw new BuildException( "At least one of 'pathId' or 'property' has to be set!" );
     }
   }
 
@@ -135,7 +135,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setResolvedPath(File[] resolvedPath) {
+  public final void setResolvedPath( File[] resolvedPath ) {
     this._resolvedPath = resolvedPath;
   }
 
@@ -144,9 +144,9 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void populateProperty() {
-    if (isPropertySet()) {
-      String resolvedpath = convertToString(getResolvedPath());
-      getAntProject().setProperty(getProperty(), resolvedpath);
+    if( isPropertySet() ) {
+      String resolvedpath = convertToString( getResolvedPath() );
+      getAntProject().setProperty( getProperty(), resolvedpath );
     }
   }
 
@@ -155,9 +155,10 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void populatePathId() {
-    if (isPathIdSet()) {
-      Path resolvedPath = convertToPath(getResolvedPath());
-      getAntProject().addReference(getPathId(), resolvedPath);
+    if( isPathIdSet() ) {
+      Path resolvedPath = convertToPath( getResolvedPath() );
+      getAntProject().addReference( getPathId(), resolvedPath );
     }
   }
-}
+  
+} /* ENDCLASS */

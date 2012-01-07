@@ -44,9 +44,9 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
    */
   @Override
   public void requireProjectReferenceTypesSet() {
-    if (!isProjectReferenceTypesSet()) {
+    if( !isProjectReferenceTypesSet() ) {
       // TODO
-      throw new BuildException("referenceTypes has to be set!");
+      throw new BuildException( "referenceTypes has to be set!" );
     }
   }
 
@@ -54,19 +54,20 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
    * {@inheritDoc}
    */
   @Override
-  public void setProjectReferenceTypes(String projectReferenceTypes) {
+  public void setProjectReferenceTypes( String projectReferenceTypes ) {
     //
-    if (projectReferenceTypes == null) {
+    if( projectReferenceTypes == null ) {
       this._projectReferenceTypes = new String[] {};
     } else {
-      String[] names = projectReferenceTypes.split(",");
+      String[] names = projectReferenceTypes.split( "," );
 
       //
       this._projectReferenceTypes = new String[names.length];
 
-      for (int i = 0; i < names.length; i++) {
+      for( int i = 0; i < names.length; i++ ) {
         this._projectReferenceTypes[i] = names[i].trim();
       }
     }
   }
-}
+  
+} /* ENDCLASS */

@@ -31,17 +31,17 @@ public class CRoleIdentifier extends AbstractProjectRoleIdentifier {
   public CRoleIdentifier() {
     super( CProjectRole.C_NATURE, "c" );
   }
-  
+
   /**
    * <p>
    * Adds a {@link CProjectRole} to the given project and parses the pathes.
    * </p>
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.trace("CRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
-    return new CProjectRoleImpl(project);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.trace( "CRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
+    return new CProjectRoleImpl( project );
   }
 
 } /* ENDCLASS */

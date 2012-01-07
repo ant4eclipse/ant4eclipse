@@ -20,10 +20,8 @@ import org.ant4eclipse.lib.core.util.Utilities;
  */
 public class StringTemplate {
 
-  /** - */
   private StringBuilder _stringTemplate;
 
-  /** - */
   private StringMap     _stringsToReplace;
 
   /**
@@ -37,18 +35,18 @@ public class StringTemplate {
   /**
    * 
    */
-  public StringTemplate(String content) {
+  public StringTemplate( String content ) {
     this();
-    Assure.notNull("content", content);
-    this._stringTemplate.append(content);
+    Assure.notNull( "content", content );
+    this._stringTemplate.append( content );
   }
 
   /**
    * @param content
    */
-  public StringTemplate append(String content) {
-    Assure.notNull("content", content);
-    this._stringTemplate.append(content);
+  public StringTemplate append( String content ) {
+    Assure.notNull( "content", content );
+    this._stringTemplate.append( content );
     return this;
   }
 
@@ -58,7 +56,7 @@ public class StringTemplate {
    * @return
    */
   public StringTemplate nl() {
-    this._stringTemplate.append(Utilities.NL);
+    this._stringTemplate.append( Utilities.NL );
     return this;
   }
 
@@ -66,10 +64,10 @@ public class StringTemplate {
    * @param name
    * @param value
    */
-  public void replace(String name, String value) {
-    Assure.notNull("name", name);
-    Assure.notNull("value", value);
-    this._stringsToReplace.put(name, value);
+  public void replace( String name, String value ) {
+    Assure.notNull( "name", name );
+    Assure.notNull( "value", value );
+    this._stringsToReplace.put( name, value );
   }
 
   /**
@@ -77,7 +75,7 @@ public class StringTemplate {
    */
   @Override
   public String toString() {
-    return Utilities.replaceTokens(this._stringTemplate.toString(), this._stringsToReplace);
+    return Utilities.replaceTokens( this._stringTemplate.toString(), this._stringsToReplace );
   }
 
 } /* ENDCLASS */

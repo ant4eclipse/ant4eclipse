@@ -30,7 +30,7 @@ public interface GetPathComponent extends PathComponent {
    * @param id
    *          the path ID
    */
-  void setPathId(String id);
+  void setPathId( String id );
 
   /**
    * <p>
@@ -67,7 +67,7 @@ public interface GetPathComponent extends PathComponent {
    * @param relative
    *          whether the path should be resolved relative to the workspace.
    */
-  void setRelative(boolean relative);
+  void setRelative( boolean relative );
 
   /**
    * <p>
@@ -77,7 +77,7 @@ public interface GetPathComponent extends PathComponent {
    * @param property
    *          the name of the property that should hold the resolved path.
    */
-  void setProperty(String property);
+  void setProperty( String property );
 
   /**
    * <p>
@@ -122,7 +122,7 @@ public interface GetPathComponent extends PathComponent {
    * @param resolvedPath
    *          the resolved path entries.
    */
-  void setResolvedPath(File[] resolvedPath);
+  void setResolvedPath( File[] resolvedPath );
 
   /**
    * <p>
@@ -137,4 +137,5 @@ public interface GetPathComponent extends PathComponent {
    * </p>
    */
   void populatePathId();
-}
+  
+} /* ENDINTERFACE */

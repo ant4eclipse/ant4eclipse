@@ -45,16 +45,16 @@ public class EclipsePathUtil {
    *          the workspace against the path is resolved. Might be null, in that case always ABSOLUTE_PATH is returned
    * @return one of the constants ABSOLUTE_PATH, WORKSPACE_RELATIVE_PATH, PROJECT_RELATIVE_PATH
    */
-  public static int getPathType(String entrypath, Workspace workspace) {
+  public static int getPathType( String entrypath, Workspace workspace ) {
 
-    if (workspace == null) {
+    if( workspace == null ) {
       // no chance to determine the path
       return ABSOLUTE_PATH;
     }
 
     // dos file system
-    if (DOS_STYLE) {
-      if (new File(entrypath).isAbsolute()) {
+    if( DOS_STYLE ) {
+      if( new File( entrypath ).isAbsolute() ) {
         // if ant4eclipse runs on a dos-based filesystem, an absolute
         // path is always a "real" absolute path on the filesystem
         return ABSOLUTE_PATH;
@@ -62,7 +62,7 @@ public class EclipsePathUtil {
         // if it's not a "real" dos-absolute path, it can either start with a
         // "/" which means the path is "workspace relative" or it starts without
         // leading "/" which means the path is project relative
-        if (entrypath.startsWith("/")) {
+        if( entrypath.startsWith( "/" ) ) {
           // workspace relative
           return WORKSPACE_RELATIVE_PATH;
         } else {
@@ -75,7 +75,7 @@ public class EclipsePathUtil {
     // unix file system
     else {
 
-      if (entrypath.startsWith("/")) {
+      if( entrypath.startsWith( "/" ) ) {
         // on unix a path starting with "/" has two meanings:
         // - it can be a "real" absolute path pointing to a location
         // outside of the workspace
@@ -83,12 +83,12 @@ public class EclipsePathUtil {
         // We consider a path to be a "workspace relative path" if the
         // path exist inside the workspace
 
-        String[] splitted = splitHeadAndTail(entrypath);
+        String[] splitted = splitHeadAndTail( entrypath );
 
         // AE-225: Classpath resolution fails if a project is added as a library
-        if (splitted.length == 1) {
+        if( splitted.length == 1 ) {
 
-          if (workspace.hasProject(splitted[0])) {
+          if( workspace.hasProject( splitted[0] ) ) {
             // path exists in the workspace; treat as "workspace relative path"
             return WORKSPACE_RELATIVE_PATH;
           } else {
@@ -96,7 +96,7 @@ public class EclipsePathUtil {
             return ABSOLUTE_PATH;
           }
 
-        } else if (workspace.hasProject(splitted[0]) && workspace.getProject(splitted[0]).hasChild(splitted[1])) {
+        } else if( workspace.hasProject( splitted[0] ) && workspace.getProject( splitted[0] ).hasChild( splitted[1] ) ) {
           // path exists in the workspace; treat as "workspace relative path"
           return WORKSPACE_RELATIVE_PATH;
         } else {
@@ -118,21 +118,21 @@ public class EclipsePathUtil {
    * @param entryPath
    * @return
    */
-  public static String[] splitHeadAndTail(String entryPath) {
+  public static String[] splitHeadAndTail( String entryPath ) {
 
     String path = entryPath;
 
-    if (path.startsWith("/")) {
-      path = path.substring(1);
+    if( path.startsWith( "/" ) ) {
+      path = path.substring( 1 );
     }
 
     String[] result;
 
     // AE-225: Classpath resolution fails if a project is added as a library
-    if (path.indexOf("/") != -1) {
+    if( path.indexOf( "/" ) != -1 ) {
       result = new String[2];
-      result[0] = path.substring(0, path.indexOf("/"));
-      result[1] = path.substring(path.indexOf("/") + 1);
+      result[0] = path.substring( 0, path.indexOf( "/" ) );
+      result[1] = path.substring( path.indexOf( "/" ) + 1 );
     } else {
       return new String[] { path };
     }
@@ -140,4 +140,4 @@ public class EclipsePathUtil {
     return result;
   }
 
-}
+} /* ENDCLASS */

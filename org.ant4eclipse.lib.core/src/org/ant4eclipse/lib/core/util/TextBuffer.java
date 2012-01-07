@@ -42,15 +42,15 @@ public class TextBuffer {
    * @param newline
    *          The line separator to be used. If <code>null</code> the linefeed is used.
    */
-  public TextBuffer(String indent, String newline) {
+  public TextBuffer( String indent, String newline ) {
     this._nl = newline;
     this._buffer = new StringBuffer();
     this._indention = new StringBuffer();
     this._indent = indent;
-    if (this._indent == null) {
+    if( this._indent == null ) {
       this._indent = DEFAULT_INDENT;
     }
-    if (this._nl == null) {
+    if( this._nl == null ) {
       this._nl = "\n";
     }
   }
@@ -59,15 +59,15 @@ public class TextBuffer {
    * Increases the current indention.
    */
   public void indent() {
-    this._indention.append(this._indent);
+    this._indention.append( this._indent );
   }
 
   /**
    * Decreases the current indention.
    */
   public void dedent() {
-    if (this._indention.length() >= this._indent.length()) {
-      this._indention.setLength(this._indention.length() - this._indent.length());
+    if( this._indention.length() >= this._indent.length() ) {
+      this._indention.setLength( this._indention.length() - this._indent.length() );
     }
   }
 
@@ -77,10 +77,10 @@ public class TextBuffer {
    * @param line
    *          The text which needs to be dumped. Not <code>null</code>.
    */
-  public void writeLine(String line) {
-    this._buffer.append(this._indention);
-    this._buffer.append(line);
-    this._buffer.append(this._nl);
+  public void writeLine( String line ) {
+    this._buffer.append( this._indention );
+    this._buffer.append( line );
+    this._buffer.append( this._nl );
   }
 
   /**
@@ -91,10 +91,10 @@ public class TextBuffer {
    * @param args
    *          The arguments used for the formatting string.
    */
-  public void writeLineF(String fmt, Object... args) {
-    this._buffer.append(this._indention);
-    this._buffer.append(String.format(fmt, args));
-    this._buffer.append(this._nl);
+  public void writeLineF( String fmt, Object ... args ) {
+    this._buffer.append( this._indention );
+    this._buffer.append( String.format( fmt, args ) );
+    this._buffer.append( this._nl );
   }
 
   /**

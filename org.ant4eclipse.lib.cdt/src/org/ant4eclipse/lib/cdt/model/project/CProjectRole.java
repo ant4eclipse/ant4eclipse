@@ -14,8 +14,6 @@ package org.ant4eclipse.lib.cdt.model.project;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 /**
- * CProjectRole --
- * 
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public interface CProjectRole extends ProjectRole {
