@@ -139,8 +139,7 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
     resourceList.clear();
 
     // iterate over the included pattern set
-    String[] includes = _sourceBundle ? _buildProperties.getSourceIncludes() : _buildProperties
-        .getBinaryIncludes();
+    List<String> includes = _sourceBundle ? _buildProperties.getSourceIncludes() : _buildProperties.getBinaryIncludes();
     for( String token : includes ) {
       processEntry( resourceList, token );
     }
@@ -255,19 +254,13 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return <code>true</code> if the given path matches an exclusion pattern.
    */
   private boolean matchExcludePattern( String path ) {
-
-    String[] excludes = _sourceBundle ? _buildProperties.getSourceExcludes() : _buildProperties
-        .getBinaryExcludes();
-
-    // iterate over all excluded pattern
+    List<String> excludes = _sourceBundle ? _buildProperties.getSourceExcludes() : _buildProperties.getBinaryExcludes();
     for( String pattern : excludes ) {
       // if the given path matches an exclusion pattern, return true
       if( SelectorUtils.matchPath( normalize( pattern ), normalize( path ), isCaseSensitive() ) ) {
         return true;
       }
     }
-
-    // return false
     return false;
   }
   

@@ -15,19 +15,21 @@ package org.ant4eclipse.ant.platform.core.delegate;
 import org.ant4eclipse.ant.platform.core.ProjectReferenceAwareComponent;
 import org.apache.tools.ant.BuildException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareComponent {
 
-  /** project reference types */
-  private String[] _projectReferenceTypes;
+  private List<String>   _projectReferenceTypes;
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String[] getProjectReferenceTypes() {
+  public List<String> getProjectReferenceTypes() {
     return _projectReferenceTypes;
   }
 
@@ -55,17 +57,11 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
    */
   @Override
   public void setProjectReferenceTypes( String projectReferenceTypes ) {
-    //
-    if( projectReferenceTypes == null ) {
-      _projectReferenceTypes = new String[] {};
-    } else {
+    _projectReferenceTypes = new ArrayList<String>();
+    if( projectReferenceTypes != null ) {
       String[] names = projectReferenceTypes.split( "," );
-
-      //
-      _projectReferenceTypes = new String[names.length];
-
       for( int i = 0; i < names.length; i++ ) {
-        _projectReferenceTypes[i] = names[i].trim();
+        _projectReferenceTypes.add( names[i].trim() );
       }
     }
   }

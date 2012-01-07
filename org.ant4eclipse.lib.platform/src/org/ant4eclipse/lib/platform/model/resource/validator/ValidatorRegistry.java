@@ -37,7 +37,7 @@ public class ValidatorRegistry {
    * @param project
    */
   public void validate( EclipseProject project ) {
-    ProjectRole[] roles = project.getRoles();
+    List<ProjectRole> roles = project.getRoles();
     for( ProjectRole role : roles ) {
       for( ProjectValidator validator : _validators ) {
         if( validator.canValidate( role ) ) {

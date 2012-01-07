@@ -80,7 +80,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    * {@inheritDoc}
    */
   @Override
-  public void registerClassPathContainer( String name, File[] pathEntries ) {
+  public void registerClassPathContainer( String name, List<File> pathEntries ) {
     _classpathContainer.put( name, new ClassPathContainerImpl( name, pathEntries ) );
   }
 

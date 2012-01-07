@@ -143,10 +143,10 @@ public class BuildPropertiesParser {
 
         Library library = new Library( libraryName );
 
-        String[] source = getAsList( properties.get( "source." + libraryName ), ",", true );
+        List<String> source = getAsList( properties.get( "source." + libraryName ), ",", true );
         library.setSource( source );
 
-        String[] output = getAsList( properties.get( "output." + libraryName ), ",", true );
+        List<String> output = getAsList( properties.get( "output." + libraryName ), ",", true );
         library.setOutput( output );
 
         String manifest = properties.get( "manifest." + libraryName );
@@ -189,15 +189,12 @@ public class BuildPropertiesParser {
    * @param delimiter
    * @return
    */
-  private static String[] getAsList( String content, String delimiter, boolean removePathSeparator ) {
+  private static List<String> getAsList( String content, String delimiter, boolean removePathSeparator ) {
     Assure.notNull( "delimiter", delimiter );
-
     if( content == null ) {
-      return new String[] {};
+      return new ArrayList<String>();
     }
-
     List<String> result = new ArrayList<String>();
-
     StringTokenizer tokenizer = new StringTokenizer( content, delimiter );
     while( tokenizer.hasMoreTokens() ) {
       String token = tokenizer.nextToken().trim();
@@ -206,8 +203,7 @@ public class BuildPropertiesParser {
       }
       result.add( token );
     }
-
-    return result.toArray( new String[0] );
+    return result;
   }
   
 } /* ENDCLASS */

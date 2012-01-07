@@ -17,6 +17,8 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
+import java.util.List;
+
 /**
  * <p>
  * A {@link BundleAndFeatureSet} implementation that represent the plug-ins and features that are contained in the
@@ -50,19 +52,13 @@ public class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSet {
    */
   @Override
   protected void readBundlesAndFeatures() {
-
-    // get all projects...
-    EclipseProject[] eclipseProjects = _workspace.getAllProjects();
-
-    // add all plug-in projects
+    List<EclipseProject> eclipseProjects = _workspace.getAllProjects();
     for( EclipseProject eclipseProject : eclipseProjects ) {
-
       // add plug-in projects
       if( eclipseProject.hasRole( PluginProjectRole.class ) ) {
         addBundleDescription( eclipseProject.getRole( PluginProjectRole.class ).getBundleDescription() );
-      }
-      // add feature projects
-      else if( eclipseProject.hasRole( FeatureProjectRole.class ) ) {
+      } else if( eclipseProject.hasRole( FeatureProjectRole.class ) ) {
+        // add feature projects
         FeatureProjectRole featureProjectRole = eclipseProject.getRole( FeatureProjectRole.class );
         addFeaturesDescription( new FeatureDescription( eclipseProject, featureProjectRole.getFeatureManifest() ) );
       }

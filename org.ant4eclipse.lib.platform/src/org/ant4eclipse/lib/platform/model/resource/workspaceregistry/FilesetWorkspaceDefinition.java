@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 import org.ant4eclipse.lib.core.Assure;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -26,7 +27,7 @@ import java.io.File;
 public class FilesetWorkspaceDefinition implements WorkspaceDefinition {
 
   /** the set of project directories */
-  private final File[] directories;
+  private List<File>   directories;
 
   /**
    * <p>
@@ -35,7 +36,7 @@ public class FilesetWorkspaceDefinition implements WorkspaceDefinition {
    * 
    * @param directories
    */
-  public FilesetWorkspaceDefinition( File[] newdirectories ) {
+  public FilesetWorkspaceDefinition( List<File> newdirectories ) {
     Assure.notNull( "newdirectories", newdirectories );
     directories = newdirectories;
   }
@@ -44,7 +45,7 @@ public class FilesetWorkspaceDefinition implements WorkspaceDefinition {
    * {@inheritDoc}
    */
   @Override
-  public File[] getProjectFolders() {
+  public List<File> getProjectFolders() {
     return directories;
   }
   

@@ -13,6 +13,8 @@ package org.ant4eclipse.ant.platform.core;
 
 import org.apache.tools.ant.BuildException;
 
+import java.util.List;
+
 /**
  * <p>
  * Extends the interface {@link TeamProjectSetComponent} and allows to set a list of project names to define a project
@@ -40,7 +42,7 @@ public interface ProjectSetComponent extends TeamProjectSetComponent {
    * 
    * @return the list of project names.
    */
-  String[] getProjectNames();
+  List<String> getProjectNames();
 
   /**
    * <p>

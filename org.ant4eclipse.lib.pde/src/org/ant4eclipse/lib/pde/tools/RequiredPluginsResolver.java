@@ -102,7 +102,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       // path
       // entries to the class path
       BundleLayoutResolver hostLayoutResolver = BundleDependenciesResolver.getBundleLayoutResolver( hostDescription );
-      File[] hostClasspathEntries = hostLayoutResolver.resolveBundleClasspathEntries();
+      List<File> hostClasspathEntries = hostLayoutResolver.resolveBundleClasspathEntries();
       context.addClasspathEntry( new ResolvedClasspathEntry( hostClasspathEntries ) );
     }
   }
@@ -124,16 +124,14 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
     try {
 
-      String[] additionalBundles = null;
-
+      List<String> additionalBundles = null;
       if( !context.isRuntime() && context.hasCurrentProject() ) {
         EclipseProject eclipseProject = context.getCurrentProject();
         PluginProjectRole role = eclipseProject.getRole( PluginProjectRole.class );
         additionalBundles = role.getBuildProperties().getAdditionalBundles();
       }
 
-      bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath( resolvedBundleDescription,
-          targetPlatform, additionalBundles );
+      bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath( resolvedBundleDescription, targetPlatform, additionalBundles );
 
       if( context.isRuntime() ) {
         // add dependent bundles

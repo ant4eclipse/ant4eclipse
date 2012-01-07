@@ -18,6 +18,8 @@ import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -27,7 +29,7 @@ import java.util.StringTokenizer;
  */
 public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
-  private static final String[] PROVIDER_IDS               = new String[] { "org.eclipse.team.cvs.core.cvsnature" };
+  private static final List<String> PROVIDER_IDS = Arrays.asList( "org.eclipse.team.cvs.core.cvsnature" );
 
   /** REPOSITORY_LOCATION */
   private static final int      REPOSITORY_LOCATION        = 1;
@@ -101,7 +103,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   @Override
-  public String[] getProviderIDs() {
+  public List<String> getProviderIDs() {
     return PROVIDER_IDS;
   }
 

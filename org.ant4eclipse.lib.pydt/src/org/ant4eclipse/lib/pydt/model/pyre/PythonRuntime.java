@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.pydt.model.PythonInterpreter;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Each runtime is a combination of a predefined set of types as provided with a python release.
@@ -49,7 +50,7 @@ public interface PythonRuntime {
    * 
    * @return A list of all libraries. Not <code>null</code>.
    */
-  File[] getLibraries();
+  List<File> getLibraries();
 
   /**
    * Returns a datastructure representing the associated python interpreter.

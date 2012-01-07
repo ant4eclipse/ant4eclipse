@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.jdt.ecj;
 import org.ant4eclipse.lib.core.ClassName;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -34,7 +35,7 @@ public interface ClassFileLoader {
    * 
    * @return all packages that can be loaded from this {@link ClassFileLoader}.
    */
-  String[] getAllPackages();
+  List<String> getAllPackages();
 
   /**
    * <p>
@@ -79,6 +80,6 @@ public interface ClassFileLoader {
    * 
    * @return A list of File entries constituting the classpath. Not <code>null</code>
    */
-  File[] getClasspath();
+  List<File> getClasspath();
 
 } /* ENDINTERFACE */

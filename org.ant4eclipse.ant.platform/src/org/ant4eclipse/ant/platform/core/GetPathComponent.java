@@ -12,6 +12,7 @@
 package org.ant4eclipse.ant.platform.core;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -112,7 +113,7 @@ public interface GetPathComponent extends PathComponent {
    * 
    * @return A list of resolved pathes.
    */
-  File[] getResolvedPath();
+  List<File> getResolvedPath();
 
   /**
    * <p>
@@ -122,7 +123,7 @@ public interface GetPathComponent extends PathComponent {
    * @param resolvedPath
    *          the resolved path entries.
    */
-  void setResolvedPath( File[] resolvedPath );
+  void setResolvedPath( List<File> resolvedPath );
 
   /**
    * <p>

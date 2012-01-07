@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.jdt.tools.classpathelements.ClassPathContainer;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -25,11 +26,8 @@ import java.util.Arrays;
  */
 public class ClassPathContainerImpl implements ClassPathContainer {
 
-  /** the name of the class path container */
-  private String _name;
-
-  /** the path entries of this class path container */
-  private File[] _pathEntries;
+  private String      _name;
+  private List<File>  _pathEntries;
 
   /**
    * <p>
@@ -41,11 +39,9 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    * @param pathEntries
    *          the path entries
    */
-  public ClassPathContainerImpl( String name, File[] pathEntries ) {
-    super();
-
-    _name = name;
-    _pathEntries = pathEntries;
+  public ClassPathContainerImpl( String name, List<File> pathEntries ) {
+    _name         = name;
+    _pathEntries  = pathEntries;
   }
 
   /**
@@ -60,7 +56,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    * {@inheritDoc}
    */
   @Override
-  public File[] getPathEntries() {
+  public List<File> getPathEntries() {
     return _pathEntries;
   }
 
@@ -88,7 +84,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
         return false;
       }
     }
-    return Arrays.equals( _pathEntries, other._pathEntries );
+    return Arrays.equals( _pathEntries.toArray(), other._pathEntries.toArray() );
   }
 
   /**
@@ -98,8 +94,8 @@ public class ClassPathContainerImpl implements ClassPathContainer {
   public int hashCode() {
     int hashCode = 1;
     hashCode = 31 * hashCode + (_name == null ? 0 : _name.hashCode());
-    for( int i0 = 0; _pathEntries != null && i0 < _pathEntries.length; i0++ ) {
-      hashCode = 31 * hashCode + (_pathEntries == null ? 0 : _pathEntries[i0].hashCode());
+    for( int i0 = 0; _pathEntries != null && i0 < _pathEntries.size(); i0++ ) {
+      hashCode = 31 * hashCode + (_pathEntries == null ? 0 : _pathEntries.get(i0).hashCode());
     }
     return hashCode;
   }
@@ -114,9 +110,9 @@ public class ClassPathContainerImpl implements ClassPathContainer {
     buffer.append( " _name: " );
     buffer.append( _name );
     buffer.append( " { " );
-    for( int i0 = 0; _pathEntries != null && i0 < _pathEntries.length; i0++ ) {
+    for( int i0 = 0; _pathEntries != null && i0 < _pathEntries.size(); i0++ ) {
       buffer.append( " _pathEntries[" + i0 + "]: " );
-      buffer.append( _pathEntries[i0] );
+      buffer.append( _pathEntries.get(i0) );
     }
     buffer.append( " } " );
     buffer.append( "]" );

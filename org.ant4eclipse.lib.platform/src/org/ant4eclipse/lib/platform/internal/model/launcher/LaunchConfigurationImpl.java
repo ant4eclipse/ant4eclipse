@@ -61,7 +61,7 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
   }
 
   @Override
-  public String[] getListAttribute( String attributeName ) {
+  public List<String> getListAttribute( String attributeName ) {
     LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute( attributeName );
     if( launchConfigAttribute == null ) {
       return null;
@@ -71,9 +71,8 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
       // TODO : Exception ?
       return null;
     }
-
     ListAttribute listAttributeValue = launchConfigAttribute.getListAttributeValue();
-    return listAttributeValue.getEntries().toArray( new String[0] );
+    return listAttributeValue.getEntries();
   }
 
   protected LaunchConfigAttribute getLaunchConfigAttribute( String attributeName ) {

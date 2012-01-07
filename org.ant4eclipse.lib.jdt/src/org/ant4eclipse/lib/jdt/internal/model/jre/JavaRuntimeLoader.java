@@ -49,11 +49,11 @@ public class JavaRuntimeLoader {
   /**
    * @param id
    * @param location
-   * @param files
+   * @param libraries
    *          the list of (jar-)files defining this java runtime or null if the file should be determined from the
    *          JavaRuntime's location
    */
-  public static JavaRuntime loadJavaRuntime( String id, File location, List<File> files ) {
+  public static JavaRuntime loadJavaRuntime( String id, File location, List<File> libraries ) {
     Assure.nonEmpty( "id", id );
     Assure.isDirectory( "location", location );
 
@@ -86,18 +86,15 @@ public class JavaRuntimeLoader {
     String javaendorseddirs = values[3];
     Version javaSpecificationVersion = Version.newBundleVersion( values[4] );
 
-    if( files != null ) {
-      A4ELogging.debug( "Using specified files for JRE '%s': '%s'", id, files );
+    if( libraries != null ) {
+      A4ELogging.debug( "Using specified files for JRE '%s': '%s'", id, libraries );
     } else {
-      files = new ArrayList<File>();
-      addFiles( javaendorseddirs, false, files );
-      addFiles( sunbootclasspath, false, files );
-      addFiles( javaextdirs, true, files );
+      libraries = new ArrayList<File>();
+      addFiles( javaendorseddirs, false, libraries );
+      addFiles( sunbootclasspath, false, libraries );
+      addFiles( javaextdirs, true, libraries );
     }
 
-    File[] libraries = files.toArray( new File[0] );
-
-    //
     Properties properties = new Properties();
     properties.put( JAVA_SPECIFICATION_VERSION, values[4] );
     properties.put( JAVA_SPECIFICATION_NAME, values[5] );
@@ -106,10 +103,16 @@ public class JavaRuntimeLoader {
     JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
     JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile( javaProfileName );
 
-    JavaRuntime javaRuntime = new JavaRuntimeImpl( id, location, libraries, javaVersion, javaSpecificationVersion,
-        javaProfile );
-
+    JavaRuntime javaRuntime = new JavaRuntimeImpl( 
+      id, 
+      location, 
+      libraries, 
+      javaVersion, 
+      javaSpecificationVersion, 
+      javaProfile 
+    );
     return javaRuntime;
+    
   }
 
   private static void addFiles( String path, boolean addChildrenIfDirectory, List<File> list ) {

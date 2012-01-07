@@ -22,6 +22,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
 import java.io.File;
+import java.util.List;
 
 public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBasedTask {
 
@@ -161,18 +162,18 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    * @param deleteExisting
    */
-  public void checkoutProjectSet( File destination, TeamProjectSet projectSet, boolean deleteExisting )
-      throws Ant4EclipseException {
+  public void checkoutProjectSet( File destination, TeamProjectSet projectSet, boolean deleteExisting ) throws Ant4EclipseException {
+    
     Assure.isDirectory( "destination", destination );
     Assure.notNull( "projectSet", projectSet );
 
     A4ELogging.debug( "checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf( deleteExisting ) );
 
-    TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
-
+    List<TeamProjectDescription> _teamProjectDescription = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription teamProjectDescription : _teamProjectDescription ) {
       _vcsAdapter.checkoutProject( destination, teamProjectDescription, deleteExisting );
     }
+    
   }
 
   /**
@@ -184,9 +185,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
       throws Ant4EclipseException {
     Assure.isDirectory( "destination", destination );
     Assure.notNull( "projectSet", projectSet );
-
-    TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
-
+    List<TeamProjectDescription> descriptions = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription description : descriptions ) {
       _vcsAdapter.exportProject( destination, description, deleteExisting );
     }
@@ -199,7 +198,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   public void updateProjectSet( File destination, TeamProjectSet projectSet ) throws Ant4EclipseException {
     Assure.isDirectory( "destination", destination );
     Assure.notNull( "projectSet", projectSet );
-    TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
+    List<TeamProjectDescription> descriptions = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription description : descriptions ) {
       _vcsAdapter.updateProject( destination, description );
     }

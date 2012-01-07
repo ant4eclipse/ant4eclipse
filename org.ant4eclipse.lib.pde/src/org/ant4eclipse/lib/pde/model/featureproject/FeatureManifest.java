@@ -291,7 +291,8 @@ public interface FeatureManifest {
      * @param effectiveVersion
      */
     void setEffectiveVersion( String effectiveVersion );
-  }
+    
+  } /* ENDINTERFACE */
 
   /**
    * <p>
@@ -300,6 +301,7 @@ public interface FeatureManifest {
    * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
    */
   interface Includes {
+    
     /**
      * <p>
      * </p>

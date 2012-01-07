@@ -19,6 +19,7 @@ import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -65,8 +66,8 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
         outputPath, EclipseProject.PathStyle.ABSOLUTE );
 
     // TODO: ACCESS RESTRICTIONS
-    context.addClasspathEntry( new ResolvedClasspathEntry( new File[] { outputFolder }, null,
-        new File[] { sourceFolder } ) );
+    context.addClasspathEntry( new ResolvedClasspathEntry( Arrays.asList( outputFolder ), null,
+        Arrays.asList( sourceFolder ) ) );
   }
   
 } /* ENDCLASS */

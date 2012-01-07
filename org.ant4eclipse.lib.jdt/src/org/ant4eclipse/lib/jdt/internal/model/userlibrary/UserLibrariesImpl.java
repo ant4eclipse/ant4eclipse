@@ -14,7 +14,9 @@ package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,10 +68,8 @@ public class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   @Override
-  public String[] getAvailableLibraries() {
-    String[] result = new String[_libraries.size()];
-    _libraries.keySet().toArray( result );
-    return result;
+  public List<String> getAvailableLibraries() {
+    return new ArrayList<String>( _libraries.keySet() );
   }
 
 } /* ENDCLASS */

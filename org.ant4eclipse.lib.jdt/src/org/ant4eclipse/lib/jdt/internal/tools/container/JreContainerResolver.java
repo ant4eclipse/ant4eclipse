@@ -24,6 +24,7 @@ import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 
 import java.io.File;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -85,7 +86,7 @@ public class JreContainerResolver implements ClasspathContainerResolver {
 
     // TODO
     AccessRestrictions accessRestrictions = null;
-    File[] libraries = javaRuntime.getLibraries();
+    List<File> libraries = javaRuntime.getLibraries();
 
     if( !path.equals( ContainerTypes.JRE_CONTAINER ) ) {
       String profileKey = path.substring( ContainerTypes.VMTYPE_PREFIX.length() );

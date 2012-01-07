@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.userlibrary;
 
+import java.util.List;
+
 /**
  * This class provides the content of a user library configuration.
  * 
@@ -43,6 +45,6 @@ public interface UserLibraries {
    * 
    * @return A list with the names of the available libraries.
    */
-  String[] getAvailableLibraries();
+  List<String> getAvailableLibraries();
 
 } /* ENDCLASS */

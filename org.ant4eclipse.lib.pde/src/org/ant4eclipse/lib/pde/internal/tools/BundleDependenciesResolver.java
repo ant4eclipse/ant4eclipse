@@ -62,8 +62,7 @@ public class BundleDependenciesResolver {
    * @return
    * @throws UnresolvedBundleException
    */
-  public List<BundleDependency> resolveBundleClasspath( final BundleDescription description,
-      TargetPlatform targetPlatform, String[] additionalBundles ) throws UnresolvedBundleException {
+  public List<BundleDependency> resolveBundleClasspath( final BundleDescription description, TargetPlatform targetPlatform, List<String> additionalBundles ) throws UnresolvedBundleException {
 
     Assure.notNull( "description", description );
 
@@ -131,17 +130,13 @@ public class BundleDependenciesResolver {
    * @param additionalBundles
    * @return
    */
-  private List<ExportPackageDescription> addAdditionalPackages( TargetPlatform targetPlatform,
-      String[] additionalBundles ) {
-
+  private List<ExportPackageDescription> addAdditionalPackages( TargetPlatform targetPlatform, List<String> additionalBundles ) {
     List<ExportPackageDescription> result = new ArrayList<ExportPackageDescription>();
-
     for( String additionalBundle : additionalBundles ) {
       A4ELogging.debug( "Adding additional bundle '%s'", additionalBundle );
       BundleDescription resolvedBundle = targetPlatform.getResolvedBundle( additionalBundle, null );
       addAdditionalPackages( result, targetPlatform, resolvedBundle );
     }
-
     return result;
   }
 
@@ -317,20 +312,18 @@ public class BundleDependenciesResolver {
 
       // resolve the host
       BundleLayoutResolver layoutResolver = getBundleLayoutResolver( _bundleDescription );
-      classfiles.addAll( Arrays.asList( layoutResolver.resolveBundleClasspathEntries() ) );
+      classfiles.addAll( layoutResolver.resolveBundleClasspathEntries() );
       if( layoutResolver instanceof PluginProjectLayoutResolver ) {
-        sourcefiles.addAll( Arrays.asList( ((PluginProjectLayoutResolver) layoutResolver)
-            .getPluginProjectSourceFolders() ) );
+        sourcefiles.addAll( ((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders() );
       }
 
       // resolve the fragments
       BundleDescription[] fragments = _bundleDescription.getFragments();
       for( BundleDescription fragmentDescription : fragments ) {
         layoutResolver = getBundleLayoutResolver( fragmentDescription );
-        classfiles.addAll( Arrays.asList( layoutResolver.resolveBundleClasspathEntries() ) );
+        classfiles.addAll( layoutResolver.resolveBundleClasspathEntries() );
         if( layoutResolver instanceof PluginProjectLayoutResolver ) {
-          sourcefiles.addAll( Arrays.asList( ((PluginProjectLayoutResolver) layoutResolver)
-              .getPluginProjectSourceFolders() ) );
+          sourcefiles.addAll( ((PluginProjectLayoutResolver) layoutResolver).getPluginProjectSourceFolders() );
         }
       }
 
@@ -341,8 +334,7 @@ public class BundleDependenciesResolver {
       }
 
       // return the result
-      return new ResolvedClasspathEntry( classfiles.toArray( new File[0] ), accessRestrictions,
-          sourcefiles.toArray( new File[0] ) );
+      return new ResolvedClasspathEntry( classfiles, accessRestrictions, sourcefiles );
     }
 
     /**

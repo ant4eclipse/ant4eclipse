@@ -113,13 +113,9 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() {
-
-    // resolve the path
+  protected List<File> resolvePath() {
     ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath( getEclipseProject(), isRelative(),
         isRuntime(), _classpathContainerArgumentDelegate.getJdtClasspathContainerArguments() );
-
-    // return the path files
     return resolvedClasspath.getClasspathFiles();
   }
   

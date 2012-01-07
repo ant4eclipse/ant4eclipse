@@ -76,7 +76,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public File[] getClasspath() {
+  public List<File> getClasspath() {
     return _classFileLoader.getClasspath();
   }
 
@@ -84,7 +84,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public String[] getAllPackages() {
+  public List<String> getAllPackages() {
     return _classFileLoader.getAllPackages();
   }
 

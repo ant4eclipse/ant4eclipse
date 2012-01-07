@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +39,7 @@ public interface CompileJobDescription {
    * 
    * @return an array of directories that contains the source files that should be compiled.
    */
-  SourceFile[] getSourceFiles();
+  List<SourceFile> getSourceFiles();
 
   /**
    * <p>

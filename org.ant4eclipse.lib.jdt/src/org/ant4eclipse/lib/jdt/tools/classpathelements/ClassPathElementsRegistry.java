@@ -45,7 +45,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    * @param name
    * @param pathEntries
    */
-  void registerClassPathContainer( String name, File[] pathEntries );
+  void registerClassPathContainer( String name, List<File> pathEntries );
 
   /**
    * <p>

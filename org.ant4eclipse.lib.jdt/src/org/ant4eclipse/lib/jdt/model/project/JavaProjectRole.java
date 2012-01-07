@@ -16,6 +16,8 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
+import java.util.List;
+
 /**
  * <p>
  * Implements the java project role.
@@ -44,7 +46,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return returns the eclipse class path entries.
    */
-  RawClasspathEntry[] getRawClasspathEntries();
+  List<RawClasspathEntry> getRawClasspathEntries();
 
   /**
    * <p>
@@ -56,7 +58,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return A list of entries providing entries of the desired type.
    */
-  RawClasspathEntry[] getRawClasspathEntries( int entrykind );
+  List<RawClasspathEntry> getRawClasspathEntries( int entrykind );
 
   /**
    * <p>
@@ -94,7 +96,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return the source folders for this project.
    */
-  String[] getSourceFolders();
+  List<String> getSourceFolders();
 
   /**
    * <p>
@@ -129,7 +131,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return the output folders for this project.
    */
-  String[] getAllOutputFolders();
+  List<String> getAllOutputFolders();
 
   /**
    * <p>

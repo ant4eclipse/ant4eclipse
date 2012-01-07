@@ -17,6 +17,8 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -44,7 +46,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   private JavaProfile _javaProfile;
 
   /** the libraries */
-  private File[]      _libraries                = new File[0];
+  private List<File>  _libraries                = new ArrayList<File>();
 
   /**
    * <p>
@@ -58,8 +60,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * @param javaSpecificationVersion
    * @param javaProfile
    */
-  JavaRuntimeImpl( String id, File location, File[] libraries, Version javaVersion, Version javaSpecificationVersion,
-      JavaProfile javaProfile ) {
+  JavaRuntimeImpl( String id, File location, List<File> libraries, Version javaVersion, Version javaSpecificationVersion, JavaProfile javaProfile ) {
 
     Assure.nonEmpty( "id", id );
     Assure.isDirectory( "location", location );
@@ -96,7 +97,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    * {@inheritDoc}
    */
   @Override
-  public File[] getLibraries() {
+  public List<File> getLibraries() {
     return _libraries;
   }
 
@@ -150,9 +151,9 @@ public class JavaRuntimeImpl implements JavaRuntime {
     buffer.append( " location: " );
     buffer.append( _location );
     buffer.append( " { " );
-    for( int i0 = 0; (_libraries != null) && (i0 < _libraries.length); i0++ ) {
+    for( int i0 = 0; (_libraries != null) && (i0 < _libraries.size()); i0++ ) {
       buffer.append( " libraries[" + i0 + "]: " );
-      buffer.append( _libraries[i0] );
+      buffer.append( _libraries.get(i0) );
     }
     buffer.append( " } " );
     buffer.append( "]" );

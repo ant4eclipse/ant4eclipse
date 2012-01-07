@@ -53,7 +53,7 @@ public class ProjectRoleIdentifierRegistry implements A4EService {
         continue;
       }
 
-      String[] abbreviations = identifier.getNatureNicknames();
+      List<String> abbreviations = identifier.getNatureNicknames();
       if( abbreviations == null ) {
         // no abbreviations so there's no possible mapping
         continue;

@@ -109,12 +109,12 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
         }
       }
 
-      ResolvedClasspathEntry[] classpathEntries = cpAbsoluteCompiletime.getClasspath();
+      List<ResolvedClasspathEntry> classpathEntries = cpAbsoluteCompiletime.getClasspath();
       for( ResolvedClasspathEntry resolvedClasspathEntry : classpathEntries ) {
 
         // set source folder for output folder
         if( resolvedClasspathEntry.hasSourcePathEntries() ) {
-          File[] sourcePathEntries = resolvedClasspathEntry.getSourcePathEntries();
+          List<File> sourcePathEntries = resolvedClasspathEntry.getSourcePathEntries();
           for( File file : resolvedClasspathEntry.getClassPathEntries() ) {
             compilerArguments.addSourceFolderForOutputFolder( file, sourcePathEntries );
           }
@@ -183,17 +183,15 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
           _pathComponent.convertToPath( defaultOutputFolder ) );
     }
 
-    if( javaProjectRole.getSourceFolders().length > 0 ) {
+    if( javaProjectRole.getSourceFolders().size() > 0 ) {
 
       executionValues.getProperties().put(
           SOURCE_DIRECTORIES,
-          _pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getSourceFolders() ) ) );
+          _pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren( javaProjectRole.getSourceFolders() ) ) );
 
       executionValues.getReferences().put(
           SOURCE_DIRECTORIES_PATH,
-          _pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
-              javaProjectRole.getSourceFolders() ) ) );
+          _pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren( javaProjectRole.getSourceFolders() ) ) );
 
       // Support for filtered java source directory:
       // in this case we create a path that contains a file set with

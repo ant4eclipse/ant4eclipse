@@ -14,6 +14,8 @@ package org.ant4eclipse.lib.platform.model.resource.role;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,20 +25,25 @@ import java.util.Set;
  */
 public abstract class AbstractProjectRoleIdentifier implements ProjectRoleIdentifier {
 
-  private String[]           nicknames;
-
-  private Set<ProjectNature> projectnatures;
+  private List<String>          nicknames;
+  private Set<ProjectNature>    projectnatures;
 
   public AbstractProjectRoleIdentifier( String nature, String ... nicks ) {
-    nicknames = nicks;
+    nicknames = new ArrayList<String>();
+    for( String nick : nicks ) {
+      nicknames.add( nick );
+    }
     projectnatures = null;
     if( nature != null ) {
       projectnatures = ProjectNature.createNatures( nature );
     }
   }
 
-  public AbstractProjectRoleIdentifier( String[] natures, String[] nicks ) {
-    nicknames = nicks;
+  public AbstractProjectRoleIdentifier( String[] natures, String ... nicks ) {
+    nicknames = new ArrayList<String>();
+    for( String nick : nicks ) {
+      nicknames.add( nick );
+    }
     projectnatures = ProjectNature.createNatures( natures );
   }
 
@@ -74,7 +81,7 @@ public abstract class AbstractProjectRoleIdentifier implements ProjectRoleIdenti
    * {@inheritDoc}
    */
   @Override
-  public String[] getNatureNicknames() {
+  public List<String> getNatureNicknames() {
     return nicknames;
   }
 

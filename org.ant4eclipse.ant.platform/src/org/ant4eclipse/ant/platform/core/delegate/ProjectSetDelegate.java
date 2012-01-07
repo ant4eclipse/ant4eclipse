@@ -15,6 +15,9 @@ import org.ant4eclipse.ant.platform.core.ProjectSetComponent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * Delegate class for all tasks, types and conditions that deal with pathes.
@@ -24,8 +27,7 @@ import org.apache.tools.ant.ProjectComponent;
  */
 public class ProjectSetDelegate extends TeamProjectSetDelegate implements ProjectSetComponent {
 
-  /** the name of alle projects that belong to a project set */
-  private String[] _projectNames;
+  private List<String>   _projectNames;
 
   /**
    * Creates a new instance of type {@link ProjectSetDelegate}.
@@ -42,18 +44,13 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    */
   @Override
   public final void setProjectNames( String projectNames ) {
-
-    //
     if( projectNames == null ) {
-      _projectNames = new String[] {};
+      _projectNames = new ArrayList<String>();
     } else {
       String[] names = projectNames.split( "," );
-
-      //
-      _projectNames = new String[names.length];
-
+      _projectNames = new ArrayList<String>();
       for( int i = 0; i < names.length; i++ ) {
-        _projectNames[i] = names[i].trim();
+        _projectNames.add( names[i].trim() );
       }
     }
   }
@@ -62,8 +59,12 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    * {@inheritDoc}
    */
   @Override
-  public final String[] getProjectNames() {
-    return isTeamProjectSetSet() ? getTeamProjectSet().getProjectNames() : _projectNames;
+  public List<String> getProjectNames() {
+    if( isTeamProjectSetSet() ) {
+      return getTeamProjectSet().getProjectNames();
+    } else {
+      return _projectNames;
+    }
   }
 
   /**

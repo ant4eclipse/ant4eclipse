@@ -15,6 +15,8 @@ package org.ant4eclipse.ant.platform.core;
 import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 import org.apache.tools.ant.BuildException;
 
+import java.util.List;
+
 /**
  * <p>
  * Interface for all tasks, conditions and types that have to deal with project references. In ant4eclipse, types of
@@ -44,7 +46,7 @@ public interface ProjectReferenceAwareComponent {
    * 
    * @return the set reference types.
    */
-  String[] getProjectReferenceTypes();
+  List<String> getProjectReferenceTypes();
 
   /**
    * <p>

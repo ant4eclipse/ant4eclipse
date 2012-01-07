@@ -21,6 +21,8 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -83,23 +85,17 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
    * {@inheritDoc}
    */
   @Override
-  public String[] getProjectNames() {
-
+  public List<String> getProjectNames() {
     // if 'allProjects' return all workspace projects
     if( _allWorkspaceProjects ) {
       // get workspace projects
-      EclipseProject[] projects = getWorkspace().getAllProjects();
-      // create project names array
-      String[] projectNames = new String[projects.length];
-      // set project names
-      for( int i = 0; i < projects.length; i++ ) {
-        EclipseProject project = projects[i];
-        projectNames[i] = project.getSpecifiedName();
+      List<EclipseProject> projects = getWorkspace().getAllProjects();
+      List<String>         projectNames = new ArrayList<String>();
+      for( int i = 0; i < projects.size(); i++ ) {
+        projectNames.add( projects.get(i).getSpecifiedName() );
       }
       return projectNames;
-    }
-    // return project set projects
-    else {
+    } else {
       return _projectSetComponent.getProjectNames();
     }
   }

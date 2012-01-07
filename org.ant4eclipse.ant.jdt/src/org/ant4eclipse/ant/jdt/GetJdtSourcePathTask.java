@@ -19,6 +19,7 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -71,7 +72,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() {
+  protected List<File> resolvePath() {
 
     // set relative flag
     EclipseProject.PathStyle relative = isRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
@@ -79,10 +80,9 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
 
     // resolve the source path
     JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
-    String[] paths = javaProjectRole.getSourceFolders();
-    File[] result = getEclipseProject().getChildren( paths, relative );
-
-    if( (result.length > 1) && !isAllowMultipleFolders() ) {
+    List<String> paths = javaProjectRole.getSourceFolders();
+    List<File> result = getEclipseProject().getChildren( paths, relative );
+    if( (result.size() > 1) && !isAllowMultipleFolders() ) {
       StringBuffer buffer = new StringBuffer();
       buffer.append( "Project '" );
       buffer.append( getEclipseProject().getFolderName() );

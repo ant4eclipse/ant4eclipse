@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset;
 
+import java.util.List;
+
 /**
  * Encapsultes a set of team project descriptions. A TeamProjectSet is used to share a set of projects within a team.
  * The TeamProjectSet is read form an eclipse .psf-file.
@@ -30,7 +32,7 @@ public interface TeamProjectSet {
    * 
    * @return Returns the TeamProjectDescriptions.
    */
-  TeamProjectDescription[] getTeamProjectDescriptions();
+  List<TeamProjectDescription> getTeamProjectDescriptions();
 
   /**
    * Returns a TeamProjectDescription by the given name.
@@ -46,7 +48,7 @@ public interface TeamProjectSet {
    * 
    * @return A list of project names.
    */
-  String[] getProjectNames();
+  List<String> getProjectNames();
 
   /**
    * Sets the user and password that should be used when this Team Project Set will be checked out.

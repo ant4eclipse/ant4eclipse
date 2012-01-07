@@ -36,14 +36,6 @@ public interface MacroExecutionComponent<E> {
 
   List<ScopedMacroDefinition<E>> getScopedMacroDefinitions();
 
-  // /**
-  // * @param macroDef
-  // * @param prefix
-  // * @param scopedProperties
-  // * @param scopedReferences
-  // */
-  // void executeMacroInstance(MacroDef macroDef, MacroExecutionValues macroExecutionValues);
-
   void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider );
   
 } /* ENDINTERFACE */

@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.jdt.tools;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -29,7 +30,7 @@ public interface ResolvedClasspath {
    * 
    * @return the class path entries.
    */
-  ResolvedClasspathEntry[] getClasspath();
+  List<ResolvedClasspathEntry> getClasspath();
 
   /**
    * <p>
@@ -38,7 +39,7 @@ public interface ResolvedClasspath {
    * 
    * @return all files contained in the resolved class path entries as a single array.
    */
-  File[] getClasspathFiles();
+  List<File> getClasspathFiles();
 
   /**
    * <p>
@@ -59,7 +60,7 @@ public interface ResolvedClasspath {
    *         boot class path has been set
    * @see #hasBootClasspath()
    */
-  File[] getBootClasspathFiles();
+  List<File> getBootClasspathFiles();
 
   /**
    * Returns whether a boot class path has been set or not

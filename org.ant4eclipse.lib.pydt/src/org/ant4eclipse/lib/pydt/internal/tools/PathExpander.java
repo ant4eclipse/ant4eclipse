@@ -62,7 +62,7 @@ public class PathExpander {
    * 
    * @return A list of resolved filesystem locations. Not <code>null</code>.
    */
-  public File[] expand( ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle ) {
+  public List<File> expand( ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle ) {
     Assure.notNull( "entries", entries );
     Assure.notNull( "pathstyle", pathstyle );
     List<File> list = new ArrayList<File>();
@@ -74,7 +74,7 @@ public class PathExpander {
         list.set( i, getRelative( list.get( i ), pathstyle ) );
       }
     }
-    return list.toArray( new File[list.size()] );
+    return list;
   }
 
   /**
@@ -147,7 +147,7 @@ public class PathExpander {
    * @see #expand(ResolvedPathEntry[])
    */
   private void expandRuntime( List<File> receiver, ResolvedRuntimeEntry entry ) {
-    File[] libraries = entry.getLibraries();
+    List<File> libraries = entry.getLibraries();
     for( File lib : libraries ) {
       receiver.add( lib );
     }

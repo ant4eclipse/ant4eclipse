@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.jdt.model.userlibrary;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Description of an user library.
@@ -39,13 +40,13 @@ public interface UserLibrary {
    * 
    * @return A list of archives that are registered with this library entry.
    */
-  Archive[] getArchives();
+  List<Archive> getArchives();
 
   /**
    * Returns a list of archive files that are registered with this library entry.
    * 
    * @return A list of archive files that are registered with this library entry.
    */
-  File[] getArchiveFiles();
+  List<File> getArchiveFiles();
 
 } /* ENDCLASS */

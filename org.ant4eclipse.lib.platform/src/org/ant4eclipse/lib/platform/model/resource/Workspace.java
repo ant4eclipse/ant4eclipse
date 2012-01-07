@@ -13,6 +13,8 @@ package org.ant4eclipse.lib.platform.model.resource;
 
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
+import java.util.List;
+
 /**
  * <p>
  * The central hub for your user's data files is called a workspace. The workspace contains a collection of resources.
@@ -64,7 +66,7 @@ public interface Workspace {
    *          the {@link Workspace}.
    * @return an array of {@link EclipseProject EclipseProjects} with the specified project names.
    */
-  EclipseProject[] getProjects( String[] projectNames, boolean failOnMissingProjects );
+  List<EclipseProject> getProjects( List<String> projectNames, boolean failOnMissingProjects );
 
   /**
    * <p>
@@ -73,7 +75,7 @@ public interface Workspace {
    * 
    * @return all the {@link EclipseProject EclipseProjects} that are contained in the {@link Workspace}.
    */
-  EclipseProject[] getAllProjects();
+  List<EclipseProject> getAllProjects();
 
   /**
    * <p>
@@ -86,6 +88,6 @@ public interface Workspace {
    *          the class of the project role. Has to be assignable from class {@link ProjectRole}.
    * @return all the @link EclipseProject EclipseProjects} with the specified project role.
    */
-  EclipseProject[] getAllProjects( Class<? extends ProjectRole> projectRole );
+  List<EclipseProject> getAllProjects( Class<? extends ProjectRole> projectRole );
 
-} /* ENDCLASS */
+} /* ENDINTERFACE */

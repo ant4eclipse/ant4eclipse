@@ -24,12 +24,12 @@ public interface Constants {
 
   String SYSTEM_BUNDLE_SYMBOLICNAME = "system.bundle";
 
-  String PROP_OS                    = "osgi.os";             //$NON-NLS-1$
+  String PROP_OS                    = "osgi.os";
 
-  String PROP_WS                    = "osgi.ws";             //$NON-NLS-1$
+  String PROP_WS                    = "osgi.ws";
 
-  String PROP_NL                    = "osgi.nl";             //$NON-NLS-1$
+  String PROP_NL                    = "osgi.nl";
 
-  String PROP_ARCH                  = "osgi.arch";           //$NON-NLS-1$
+  String PROP_ARCH                  = "osgi.arch";
 
 } /* ENDINTERFACE */

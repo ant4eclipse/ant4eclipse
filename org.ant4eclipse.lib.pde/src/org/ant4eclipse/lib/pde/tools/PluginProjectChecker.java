@@ -20,7 +20,6 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -133,8 +132,8 @@ public class PluginProjectChecker {
     errorAssert( _eclipseProject.hasChild( "META-INF/MANIFEST.MF" ), MISSING_MANIFEST_FILE_MSG, _projectName,
         _eclipseProject.getFolder() );
 
-    final List<String> binaryIncludesList = Arrays.asList( buildProperties.getBinaryIncludes() );
-    final List<String> binaryExcludesList = Arrays.asList( buildProperties.getBinaryExcludes() );
+    List<String> binaryIncludesList = buildProperties.getBinaryIncludes();
+    List<String> binaryExcludesList = buildProperties.getBinaryExcludes();
 
     // does the build property file contain an entry for the META-INF directory?
     errorAssert( binaryIncludesList.contains( "META-INF" ), MISSING_BIN_INCLUDE_ENTRY_FOR_MANIFEST_FILE_MSG,

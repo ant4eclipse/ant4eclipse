@@ -30,7 +30,6 @@ import org.osgi.framework.Version;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,8 +41,7 @@ import java.util.Set;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class GetRequiredBundlesTask extends AbstractProjectPathTask implements TargetPlatformAwareComponent,
-    GetPathComponent {
+public class GetRequiredBundlesTask extends AbstractProjectPathTask implements TargetPlatformAwareComponent, GetPathComponent {
 
   /** the target platform delegate */
   private TargetPlatformAwareDelegate    _targetPlatformAwareDelegate;
@@ -166,7 +164,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public File[] getResolvedPath() {
+  public List<File> getResolvedPath() {
     return _getPathComponent.getResolvedPath();
   }
 
@@ -246,7 +244,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public void setResolvedPath( File[] resolvedPath ) {
+  public void setResolvedPath( List<File> resolvedPath ) {
     _getPathComponent.setResolvedPath( resolvedPath );
   }
 
@@ -404,8 +402,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
 
         // add the files
         if( _resolveBundleClasspath ) {
-          File[] files = layoutResolver.resolveBundleClasspathEntries();
-          result.addAll( Arrays.asList( files ) );
+          result.addAll( layoutResolver.resolveBundleClasspathEntries() );
         } else {
           result.add( layoutResolver.getLocation() );
         }
@@ -413,7 +410,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     }
 
     // set the resolved path
-    setResolvedPath( result.toArray( new File[0] ) );
+    setResolvedPath( result );
 
     // set the path
     if( isPathIdSet() ) {

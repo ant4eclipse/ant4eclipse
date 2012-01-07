@@ -27,6 +27,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
@@ -58,11 +59,7 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
     Workspace workspace = workspaceRegistry.registerWorkspace( _testWorkspace.getRootDir().getAbsolutePath(),
         new DefaultEclipseWorkspaceDefinition( _testWorkspace.getRootDir() ) );
 
-    // List<EclipseProject> projects = ReferencedProjectsResolver.resolveReferencedProjects(workspace
-    // .getProject("simpleproject3"), null);
-
-    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder( workspace, new String[] { "simpleproject3",
-        "simpleproject2" }, null, null );
+    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder( workspace, Arrays.asList( "simpleproject3", "simpleproject2" ), null, null );
 
     assertEquals( 2, projects.size() );
     assertSame( workspace.getProject( "simpleproject2" ), projects.get( 0 ) );

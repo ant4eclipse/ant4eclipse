@@ -47,6 +47,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -130,7 +131,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
     // Step 4: create CompileJobDescription
     DefaultCompileJobDescription compileJobDescription = new DefaultCompileJobDescription();
-    SourceFile[] sourceFiles = getSourceFilesToCompile( ecjAdditionalCompilerArguments );
+    List<SourceFile> sourceFiles = getSourceFilesToCompile( ecjAdditionalCompilerArguments );
     compileJobDescription.setSourceFiles( sourceFiles );
     compileJobDescription.setClassFileLoader( createClassFileLoader( ecjAdditionalCompilerArguments ) );
 
@@ -149,10 +150,9 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     CompileJobResult compileJobResult = compile( compileJobDescription );
 
     // Step 7: dump result
-    CategorizedProblem[] categorizedProblems = compileJobResult.getCategorizedProblems();
-
-    for( int i = 0; i < categorizedProblems.length; i++ ) {
-      CategorizedProblem categorizedProblem = categorizedProblems[i];
+    List<CategorizedProblem> categorizedProblems = compileJobResult.getCategorizedProblems();
+    for( int i = 0; i < categorizedProblems.size(); i++ ) {
+      CategorizedProblem categorizedProblem = categorizedProblems.get(i);
       if( categorizedProblem.isError() || (categorizedProblem.isWarning() && !getJavac().getNowarn()) ) {
         String fileName = String.valueOf( categorizedProblem.getOriginatingFileName() );
         for( SourceFile sourceFile : sourceFiles ) {
@@ -172,7 +172,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
             args[5] = problematicLine[1];
             args[6] = categorizedProblem.getMessage();
             A4ELogging.error( COMPILE_PROBLEM_MESSAGE, args );
-            if( i + 1 == categorizedProblems.length ) {
+            if( i + 1 == categorizedProblems.size() ) {
               A4ELogging.error( "----------" );
             }
           }
@@ -256,7 +256,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
    *          can be null
    * @return the source files to compile
    */
-  private SourceFile[] getSourceFilesToCompile( EcjAdditionalCompilerArguments compilerArguments ) {
+  private List<SourceFile> getSourceFilesToCompile( EcjAdditionalCompilerArguments compilerArguments ) {
 
     // get default destination folder
     File defaultDestinationFolder = getJavac().getDestdir();
@@ -344,7 +344,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     }
 
     // return the result
-    return sourceFiles.toArray( new SourceFile[sourceFiles.size()] );
+    return sourceFiles;
   }
 
   /**
@@ -434,38 +434,36 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
       // jar files
       if( classesFile.isFile() ) {
 
-        // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
-        // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
-        // } else {
-        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( classesFile, EcjAdapter.LIBRARY,
-            new File[] { classesFile }, new File[] {} );
-        // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
-        // }
+        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( 
+            classesFile, 
+            EcjAdapter.LIBRARY,
+            Arrays.asList( classesFile ), 
+            new ArrayList<File>()
+        );
 
       } else {
 
         // get source folders if available
-        File[] sourceFolders = new File[] {};
-
+        List<File> sourceFolders = new ArrayList<File>();
         if( (compilerArguments != null) && compilerArguments.hasSourceFoldersForOutputFolder( classesFile ) ) {
           sourceFolders = compilerArguments.getSourceFoldersForOutputFolder( classesFile );
         }
 
         // create class file loader for file resource
         // TODO: LIBRARY AND PROJECT
-        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( classesFile, EcjAdapter.LIBRARY,
-            new File[] { classesFile }, sourceFolders );
+        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( classesFile, EcjAdapter.LIBRARY, Arrays.asList( classesFile ), sourceFolders );
+        
       }
 
       // create and add FilteringClassFileLoader is necessary
       if( compilerArguments != null && compilerArguments.hasAccessRestrictions( fileResource.getFile() ) ) {
         classFileLoaderList.add( ClassFileLoaderFactory.createFilteringClassFileLoader( myclassFileLoader,
             compilerArguments.getAccessRestrictions( fileResource.getFile() ) ) );
-      }
-      // else add class file loader
-      else {
+      } else {
+        // else add class file loader
         classFileLoaderList.add( myclassFileLoader );
       }
+      
     }
 
     // Step 4: return the compound class file loader

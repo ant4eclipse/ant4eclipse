@@ -15,16 +15,18 @@ import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class CompileJobResultImpl implements CompileJobResult {
 
-  private boolean              _succeeded;
+  private boolean                   _succeeded;
 
-  private CategorizedProblem[] _categorizedProblems;
+  private List<CategorizedProblem>  _categorizedProblems;
 
-  private Map<String,File>     _compiledclassfiles;
+  private Map<String,File>          _compiledclassfiles;
 
   /**
    * {@inheritDoc}
@@ -38,15 +40,19 @@ public class CompileJobResultImpl implements CompileJobResult {
    * {@inheritDoc}
    */
   @Override
-  public CategorizedProblem[] getCategorizedProblems() {
-    return _categorizedProblems == null ? new CategorizedProblem[0] : _categorizedProblems;
+  public List<CategorizedProblem> getCategorizedProblems() {
+    if( _categorizedProblems == null ) {
+      return new ArrayList<CategorizedProblem>();
+    } else {
+      return _categorizedProblems;
+    }
   }
 
   public void setSucceeded( boolean succeeded ) {
     _succeeded = succeeded;
   }
 
-  public void setCategorizedProblems( CategorizedProblem[] categorizedProblems ) {
+  public void setCategorizedProblems( List<CategorizedProblem> categorizedProblems ) {
     _categorizedProblems = categorizedProblems;
   }
 

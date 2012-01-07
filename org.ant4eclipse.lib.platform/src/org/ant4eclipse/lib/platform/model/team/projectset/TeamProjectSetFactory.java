@@ -13,6 +13,8 @@ package org.ant4eclipse.lib.platform.model.team.projectset;
 
 import org.ant4eclipse.lib.core.A4EService;
 
+import java.util.List;
+
 /**
  * Factory-Interface for construction TeamProjectSet- and TeamProjectDescription instances.
  * 
@@ -50,6 +52,6 @@ public interface TeamProjectSetFactory extends A4EService {
    * @return A list of all provider IDs for the implementing TeamProjectSetFactory instance. Neither <code>null</code>
    *         nor empty.
    */
-  String[] getProviderIDs();
+  List<String> getProviderIDs();
 
 } /* ENDINTERFACE */

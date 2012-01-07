@@ -16,6 +16,7 @@ import org.ant4eclipse.lib.core.Assure;
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,13 +31,13 @@ import java.util.Set;
 public class ResolvedClasspathEntry {
 
   /** the file array */
-  private File[]             _classPathEntries;
+  private List<File>          _classPathEntries;
 
   /** the file array */
-  private File[]             _sourcePathEntries;
+  private List<File>          _sourcePathEntries;
 
   /** the visibility rules */
-  private AccessRestrictions _accessRestrictions;
+  private AccessRestrictions  _accessRestrictions;
 
   /**
    * <p>
@@ -50,7 +51,7 @@ public class ResolvedClasspathEntry {
    * @param sourcePathEntries
    *          the source path entries
    */
-  public ResolvedClasspathEntry( File[] classPathEntries, File[] sourcePathEntries ) {
+  public ResolvedClasspathEntry( List<File> classPathEntries, List<File> sourcePathEntries ) {
     this( classPathEntries, null, sourcePathEntries );
   }
 
@@ -66,8 +67,7 @@ public class ResolvedClasspathEntry {
    * @param sourcePathEntries
    *          the source path entries
    */
-  public ResolvedClasspathEntry( File[] classPathEntries, AccessRestrictions accessRestrictions,
-      File[] sourcePathEntries ) {
+  public ResolvedClasspathEntry( List<File> classPathEntries, AccessRestrictions accessRestrictions, List<File> sourcePathEntries ) {
     Assure.notNull( "classPathEntries", classPathEntries );
 
     _classPathEntries = classPathEntries;
@@ -83,7 +83,7 @@ public class ResolvedClasspathEntry {
    * @param entries
    * @param accessRestrictions
    */
-  public ResolvedClasspathEntry( File[] entries, AccessRestrictions accessRestrictions ) {
+  public ResolvedClasspathEntry( List<File> entries, AccessRestrictions accessRestrictions ) {
     this( entries, accessRestrictions, null );
   }
 
@@ -96,7 +96,7 @@ public class ResolvedClasspathEntry {
    * @param accessRestrictions
    */
   public ResolvedClasspathEntry( File entry, AccessRestrictions accessRestrictions ) {
-    this( new File[] { entry }, accessRestrictions );
+    this( Arrays.asList( entry ), accessRestrictions );
   }
 
   /**
@@ -107,7 +107,7 @@ public class ResolvedClasspathEntry {
    * @param classPathEntries
    *          the file entries
    */
-  public ResolvedClasspathEntry( File[] classPathEntries ) {
+  public ResolvedClasspathEntry( List<File> classPathEntries ) {
     this( classPathEntries, (AccessRestrictions) null );
   }
 
@@ -120,7 +120,7 @@ public class ResolvedClasspathEntry {
    *          the class path entry
    */
   public ResolvedClasspathEntry( File classPathEntry ) {
-    this( new File[] { classPathEntry }, (AccessRestrictions) null );
+    this( Arrays.asList( classPathEntry ), (AccessRestrictions) null );
   }
 
   /**
@@ -130,7 +130,7 @@ public class ResolvedClasspathEntry {
    * 
    * @return all file entries for this class path entry.
    */
-  public File[] getClassPathEntries() {
+  public List<File> getClassPathEntries() {
     return _classPathEntries;
   }
 
@@ -143,7 +143,7 @@ public class ResolvedClasspathEntry {
    * @return all the source path entries for this class path entry. If no source path entries exist, <code>null</code>
    *         will be returned instead.
    */
-  public File[] getSourcePathEntries() {
+  public List<File> getSourcePathEntries() {
     return _sourcePathEntries;
   }
 
@@ -155,7 +155,7 @@ public class ResolvedClasspathEntry {
    * @return <code>true</code> if this entry has source path entries attached.
    */
   public boolean hasSourcePathEntries() {
-    return _sourcePathEntries != null && _sourcePathEntries.length > 0;
+    return (_sourcePathEntries != null) && (_sourcePathEntries.size() > 0);
   }
 
   /**
@@ -188,8 +188,8 @@ public class ResolvedClasspathEntry {
     int prime = 31;
     int result = 1;
     result = prime * result + ((_accessRestrictions == null) ? 0 : _accessRestrictions.hashCode());
-    result = prime * result + ResolvedClasspathEntry.hashCode( _classPathEntries );
-    result = prime * result + ResolvedClasspathEntry.hashCode( _sourcePathEntries );
+    result = prime * result + hashCode( _classPathEntries );
+    result = prime * result + hashCode( _sourcePathEntries );
     return result;
   }
 
@@ -215,10 +215,10 @@ public class ResolvedClasspathEntry {
     } else if( !_accessRestrictions.equals( other._accessRestrictions ) ) {
       return false;
     }
-    if( !Arrays.equals( _classPathEntries, other._classPathEntries ) ) {
+    if( !Arrays.equals( _classPathEntries.toArray(), other._classPathEntries.toArray() ) ) {
       return false;
     }
-    if( !Arrays.equals( _sourcePathEntries, other._sourcePathEntries ) ) {
+    if( !Arrays.equals( _sourcePathEntries.toArray(), other._sourcePathEntries.toArray() ) ) {
       return false;
     }
     return true;
@@ -233,7 +233,7 @@ public class ResolvedClasspathEntry {
    *          the array.
    * @return the hash code of an array of objects.
    */
-  private static int hashCode( Object[] array ) {
+  private static int hashCode( List<File> array ) {
     int prime = 31;
     if( array == null ) {
       return 0;
@@ -253,15 +253,15 @@ public class ResolvedClasspathEntry {
     StringBuffer buffer = new StringBuffer();
     buffer.append( "[ResolvedClasspathEntry:" );
     buffer.append( " { " );
-    for( int i0 = 0; (_classPathEntries != null) && (i0 < _classPathEntries.length); i0++ ) {
+    for( int i0 = 0; (_classPathEntries != null) && (i0 < _classPathEntries.size()); i0++ ) {
       buffer.append( " _classPathEntries[" + i0 + "]: " );
-      buffer.append( _classPathEntries[i0] );
+      buffer.append( _classPathEntries.get(i0) );
     }
     buffer.append( " } " );
     buffer.append( " { " );
-    for( int i0 = 0; (_sourcePathEntries != null) && (i0 < _sourcePathEntries.length); i0++ ) {
+    for( int i0 = 0; (_sourcePathEntries != null) && (i0 < _sourcePathEntries.size()); i0++ ) {
       buffer.append( " _sourcePathEntries[" + i0 + "]: " );
-      buffer.append( _sourcePathEntries[i0] );
+      buffer.append( _sourcePathEntries.get(i0) );
     }
     buffer.append( " } " );
     buffer.append( " _accessRestrictions: " );

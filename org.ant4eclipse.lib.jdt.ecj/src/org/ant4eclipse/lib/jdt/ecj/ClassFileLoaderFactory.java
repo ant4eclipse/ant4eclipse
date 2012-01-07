@@ -12,12 +12,14 @@
 package org.ant4eclipse.lib.jdt.ecj;
 
 import org.ant4eclipse.lib.core.A4ECore;
+import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.ClasspathClassFileLoaderImpl;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.CompoundClassFileLoaderImpl;
 import org.ant4eclipse.lib.jdt.ecj.internal.tools.loader.FilteringClassFileLoader;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -67,8 +69,7 @@ public class ClassFileLoaderFactory {
    * @param sourcepathEntries
    * @return
    */
-  public static ClassFileLoader createClasspathClassFileLoader( File source, byte type, File[] classpathEntries,
-      File[] sourcepathEntries ) {
+  public static ClassFileLoader createClasspathClassFileLoader( File source, byte type, List<File> classpathEntries, List<File> sourcepathEntries ) {
     ClassFileLoaderCacheKey cacheKey = new ClassFileLoaderCacheKey( source, type, classpathEntries, sourcepathEntries );
 
     // Try to get already initialized ClassFileLoader from cache
@@ -86,15 +87,13 @@ public class ClassFileLoaderFactory {
   }
 
   private static class ClassFileLoaderCacheKey {
-    private final File   _source;
+    
+    private File          _source;
+    private byte          _type;
+    private List<File>    _classpathEntries;
+    private List<File>    _sourcepathEntries;
 
-    private final byte   _type;
-
-    private final File[] _classpathEntries;
-
-    private final File[] _sourcepathEntries;
-
-    public ClassFileLoaderCacheKey( File source, byte type, File[] classpathEntries, File[] sourcepathEntries ) {
+    public ClassFileLoaderCacheKey( File source, byte type, List<File> classpathEntries, List<File> sourcepathEntries ) {
       super();
       _source = source;
       _type = type;
@@ -106,9 +105,9 @@ public class ClassFileLoaderFactory {
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + Arrays.hashCode( _classpathEntries );
+      result = prime * result + Arrays.hashCode( _classpathEntries.toArray() );
       result = prime * result + ((_source == null) ? 0 : _source.hashCode());
-      result = prime * result + Arrays.hashCode( _sourcepathEntries );
+      result = prime * result + Arrays.hashCode( _sourcepathEntries.toArray() );
       result = prime * result + _type;
       return result;
     }
@@ -125,7 +124,7 @@ public class ClassFileLoaderFactory {
         return false;
       }
       ClassFileLoaderCacheKey other = (ClassFileLoaderCacheKey) obj;
-      if( !Arrays.equals( _classpathEntries, other._classpathEntries ) ) {
+      if( !Arrays.equals( _classpathEntries.toArray(), other._classpathEntries.toArray() ) ) {
         return false;
       }
       if( _source == null ) {
@@ -135,7 +134,7 @@ public class ClassFileLoaderFactory {
       } else if( !_source.equals( other._source ) ) {
         return false;
       }
-      if( !Arrays.equals( _sourcepathEntries, other._sourcepathEntries ) ) {
+      if( !Arrays.equals( _sourcepathEntries.toArray(), other._sourcepathEntries.toArray() ) ) {
         return false;
       }
       if( _type != other._type ) {
@@ -147,8 +146,8 @@ public class ClassFileLoaderFactory {
     @Override
     public String toString() {
       return "ClassFileLoaderCacheKey [_source=" + _source + ", _type=" + _type + ", _classpathEntries="
-          + Arrays.toString( _classpathEntries ) + ", _sourcepathEntries="
-          + Arrays.toString( _sourcepathEntries ) + "]";
+          + Utilities.toString( _classpathEntries ) + ", _sourcepathEntries="
+          + Utilities.toString( _sourcepathEntries ) + "]";
     }
 
   }

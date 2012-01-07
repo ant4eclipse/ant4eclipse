@@ -30,7 +30,7 @@ public interface ReferencedProjectsResolverService extends A4EService {
    * 
    * @return A list of all currently supported reference types. Not <code>null</code>.
    */
-  String[] getReferenceTypes();
+  List<String> getReferenceTypes();
 
   /**
    * <p>
@@ -49,8 +49,7 @@ public interface ReferencedProjectsResolverService extends A4EService {
    * 
    * @return A list of all directly referenced projects. Not <code>null</code>.
    */
-  List<EclipseProject> resolveReferencedProjects( EclipseProject project, String[] referenceTypes,
-      List<Object> additionalElements );
+  List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<String> referenceTypes, List<Object> additionalElements );
 
   /**
    * <p>

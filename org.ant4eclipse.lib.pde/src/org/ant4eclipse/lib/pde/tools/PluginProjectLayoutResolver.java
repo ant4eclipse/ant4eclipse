@@ -92,7 +92,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * {@inheritDoc}
    */
   @Override
-  public File[] resolveBundleClasspathEntries() {
+  public List<File> resolveBundleClasspathEntries() {
 
     // declare result
     List<File> result = new ArrayList<File>();
@@ -107,7 +107,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
 
     for( String element : bundleClasspath ) {
       if( (buildProperties != null) && buildProperties.hasLibrary( element ) ) {
-        String[] libaries = buildProperties.getLibrary( element ).getOutput();
+        List<String> libaries = buildProperties.getLibrary( element ).getOutput();
         for( String libarie : libaries ) {
           File file = new File( baseDir, libarie );
           if( !result.contains( file ) ) {
@@ -121,7 +121,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     }
 
     if( buildProperties != null && buildProperties.hasLibrary( "." ) ) {
-      String[] libaries = buildProperties.getLibrary( "." ).getOutput();
+      List<String> libaries = buildProperties.getLibrary( "." ).getOutput();
       for( String libary : libaries ) {
         File file = new File( baseDir, libary );
         if( !result.contains( file ) ) {
@@ -130,8 +130,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
       }
     }
 
-    // return result
-    return result.toArray( new File[result.size()] );
+    return result;
   }
 
   /**
@@ -141,22 +140,16 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * 
    * @return
    */
-  public File[] getPluginProjectSourceFolders() {
-
-    // declare result
+  public List<File> getPluginProjectSourceFolders() {
     List<File> result = new ArrayList<File>();
-
     if( _eclipseProject.hasRole( JavaProjectRole.class ) ) {
       JavaProjectRole javaProjectRole = _eclipseProject.getRole( JavaProjectRole.class );
-
-      String[] sourcefolders = javaProjectRole.getSourceFolders();
+      List<String> sourcefolders = javaProjectRole.getSourceFolders();
       for( String sourcefolder : sourcefolders ) {
-        File file = _eclipseProject.getChild( sourcefolder );
-        result.add( file );
+        result.add( _eclipseProject.getChild( sourcefolder ) );
       }
     }
-
-    return result.toArray( new File[0] );
+    return result;
   }
   
 } /* ENDCLASS */

@@ -45,11 +45,11 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public File[] getClasspath() {
-    List<File> files = new ArrayList<File>();
-    List<String> set = new ArrayList<String>();
+  public List<File> getClasspath() {
+    List<File>    files = new ArrayList<File>();
+    List<String>  set   = new ArrayList<String>();
     for( ClassFileLoader loader : _classFileLoaders ) {
-      File[] entries = loader.getClasspath();
+      List<File> entries = loader.getClasspath();
       for( File entry : entries ) {
         entry = Utilities.getCanonicalFile( entry );
         String path = entry.getAbsolutePath();
@@ -63,15 +63,15 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
         }
       }
     }
-    return files.toArray( new File[files.size()] );
+    return files;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String[] getAllPackages() {
-    return _allPackages.keySet().toArray( new String[0] );
+  public List<String> getAllPackages() {
+    return new ArrayList<String>( _allPackages.keySet() );
   }
 
   /**
@@ -171,8 +171,7 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   private void initialise() {
 
     for( ClassFileLoader classFileLoader : _classFileLoaders ) {
-      String[] packages = classFileLoader.getAllPackages();
-
+      List<String> packages = classFileLoader.getAllPackages();
       for( String aPackage : packages ) {
         if( _allPackages.containsKey( aPackage ) ) {
           List<ClassFileLoader> classFileLoaderList = _allPackages.get( aPackage );

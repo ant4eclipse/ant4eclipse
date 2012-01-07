@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrary;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class UserLibraryImpl implements UserLibrary {
   private boolean           _systemlibrary;
 
   /** The content of this library */
-  private List<ArchiveImpl> _archives;
+  private List<Archive>     _archives;
 
   /**
    * Creates a new user library entry with a specific name.
@@ -48,7 +49,7 @@ public class UserLibraryImpl implements UserLibrary {
     Assure.notNull( "name", name );
     _name = name;
     _systemlibrary = syslib;
-    _archives = new ArrayList<ArchiveImpl>();
+    _archives = new ArrayList<Archive>();
   }
 
   /**
@@ -71,28 +72,20 @@ public class UserLibraryImpl implements UserLibrary {
    * {@inheritDoc}
    */
   @Override
-  public ArchiveImpl[] getArchives() {
-    ArchiveImpl[] result = new ArchiveImpl[_archives.size()];
-    _archives.toArray( result );
-    return result;
+  public List<Archive> getArchives() {
+    return _archives;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public File[] getArchiveFiles() {
-
-    // create new result list
+  public List<File> getArchiveFiles() {
     List<File> result = new ArrayList<File>();
-
-    // add all path entries
-    for( ArchiveImpl archive : _archives ) {
+    for( Archive archive : _archives ) {
       result.add( archive.getPath() );
     }
-
-    // return result
-    return result.toArray( new File[0] );
+    return result;
   }
 
   /**

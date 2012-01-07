@@ -95,7 +95,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     }
 
     Path path = new Path( getProject() );
-    File[] libraries = javaRuntime.getLibraries();
+    List<File> libraries = javaRuntime.getLibraries();
     for( File librarie : libraries ) {
       path.createPathElement().setLocation( librarie );
     }

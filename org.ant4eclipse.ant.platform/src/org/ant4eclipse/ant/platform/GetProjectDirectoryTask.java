@@ -14,6 +14,8 @@ package org.ant4eclipse.ant.platform;
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -28,8 +30,8 @@ public class GetProjectDirectoryTask extends AbstractGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() {
-    return new File[] { getEclipseProject().getFolder() };
+  protected List<File> resolvePath() {
+    return Arrays.asList( getEclipseProject().getFolder() );
   }
   
 } /* ENDCLASS */

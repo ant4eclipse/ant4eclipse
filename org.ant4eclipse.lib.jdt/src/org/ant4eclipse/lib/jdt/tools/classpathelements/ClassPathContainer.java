@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.jdt.tools.classpathelements;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathContainerResolver;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -41,6 +42,6 @@ public interface ClassPathContainer extends ClassPathElement {
    * 
    * @return the files that belongs to the class path container.
    */
-  File[] getPathEntries();
+  List<File> getPathEntries();
   
 } /* ENDINTERFACE */

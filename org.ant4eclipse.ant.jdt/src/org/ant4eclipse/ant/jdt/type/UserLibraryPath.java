@@ -26,6 +26,7 @@ import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Simple path extension that allows to be configured using an eclipse configuration file.
@@ -113,10 +114,10 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
       UserLibrariesFileParser parser = A4ECore.instance().getRequiredService( UserLibrariesFileParser.class );
 
       UserLibraries userlibs = parser.parseUserLibrariesFile( _userlibfile, getWorkspace() );
-      String[] libs = userlibs.getAvailableLibraries();
+      List<String> libs = userlibs.getAvailableLibraries();
       for( String lib : libs ) {
         UserLibrary library = userlibs.getLibrary( lib );
-        Archive[] archives = library.getArchives();
+        List<Archive> archives = library.getArchives();
         Path path = new Path( getProject() );
         for( Archive archive : archives ) {
           path.createPathElement().setLocation( archive.getPath() );

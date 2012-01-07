@@ -204,7 +204,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     // include output folder contents
     if( isIncludeOutputFolders() ) {
       A4ELogging.trace( "Adding output folders to file set" );
-      final String[] allOutputFolders = javaProjectRole.getAllOutputFolders();
+      List<String> allOutputFolders = javaProjectRole.getAllOutputFolders();
       for( String outputFolder : allOutputFolders ) {
         addFolderContent( resourceList, outputFolder );
       }
@@ -213,7 +213,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     // include source folder contents
     if( isIncludeSourceFolders() ) {
       A4ELogging.trace( "Adding source folders to file set" );
-      final String[] sourceFolders = javaProjectRole.getSourceFolders();
+      List<String> sourceFolders = javaProjectRole.getSourceFolders();
       for( String sourceFolder : sourceFolders ) {
         addFolderContent( resourceList, sourceFolder );
       }

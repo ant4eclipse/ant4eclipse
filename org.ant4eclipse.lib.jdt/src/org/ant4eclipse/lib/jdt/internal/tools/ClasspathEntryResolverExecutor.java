@@ -18,6 +18,7 @@ import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.internal.tools.classpathentry.ClasspathEntryResolver;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
+import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.container.ClasspathResolverContext;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
@@ -230,17 +231,14 @@ public class ClasspathEntryResolverExecutor {
    * @param classpathEntries
    *          the class path entries to resolve
    */
-  private void resolveClasspathEntries( ClasspathEntry[] classpathEntries ) {
-
-    // iterate over all entries
-    for( ClasspathEntry classpathEntry : classpathEntries ) {
+  private void resolveClasspathEntries( List<RawClasspathEntry> classpathEntries ) {
+    for( RawClasspathEntry classpathEntry : classpathEntries ) {
       try {
         resolveClasspathEntry( classpathEntry );
       } catch( Ant4EclipseException e ) {
         throw e;
       } catch( Exception e ) {
-        throw new Ant4EclipseException( e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry,
-            (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage() );
+        throw new Ant4EclipseException( e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry, (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage() );
       }
     }
   }

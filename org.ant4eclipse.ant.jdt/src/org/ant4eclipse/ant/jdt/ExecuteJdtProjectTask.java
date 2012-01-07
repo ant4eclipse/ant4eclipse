@@ -11,12 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.ConditionalMacroDef;
@@ -31,6 +25,13 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.types.FileSet;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -340,35 +341,25 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
     ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
 
     // Read the 'reverse' attribute
-    final boolean reverse = Boolean.parseBoolean( conditionalMacroDef.getAttribute( "reverse", "false" ) );
+    boolean reverse = Boolean.parseBoolean( conditionalMacroDef.getAttribute( "reverse", "false" ) );
 
-    final JavaProjectRole javaProjectRole = getJavaProjectRole();
+    JavaProjectRole javaProjectRole = getJavaProjectRole();
 
     final EclipseProject project = javaProjectRole.getEclipseProject();
 
     // Resolve the absolute and relative classpaths
-    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath( project, false, true,
-        getJdtClasspathContainerArguments() );
-    // ResolvedClasspath cpRelativeRuntime = JdtResolver.resolveProjectClasspath(javaProjectRole.getEclipseProject(),
-    // true, true, getJdtClasspathContainerArguments());
-
+    ResolvedClasspath cpAbsoluteRuntime = JdtResolver.resolveProjectClasspath( project, false, true, getJdtClasspathContainerArguments() );
+    
     // get the entries
-    final File[] absoluteClasspathFiles = cpAbsoluteRuntime.getClasspathFiles();
-    // final File[] relativeClasspathFiles = cpRelativeRuntime.getClasspathFiles();
-
-    // // TODO NLS
-    // throw new RuntimeException("number of absolute classpath entries (" + absoluteClasspathFiles.length + ")"
-    // + "must match number of relative classpath entries (" + relativeClasspathFiles.length + ")");
-    // }
+    final List<File> absoluteClasspathFiles = cpAbsoluteRuntime.getClasspathFiles();
 
     // reverse the classpath order if requested
     if( reverse ) {
-      Utilities.reverse( absoluteClasspathFiles );
-      // Utilities.reverse(relativeClasspathFiles);
+      Collections.reverse( absoluteClasspathFiles );
     }
 
     // invoke callback template for each classpath entry
-    for( int i = 0; i < absoluteClasspathFiles.length; i++ ) {
+    for( int i = 0; i < absoluteClasspathFiles.size(); i++ ) {
       final int index = i;
       executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
 
@@ -380,20 +371,20 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
 
           final StringMap properties = values.getProperties();
           // add absolute path
-          properties.put( "classpathEntry.absolute", absoluteClasspathFiles[index].getAbsolutePath() );
+          properties.put( "classpathEntry.absolute", absoluteClasspathFiles.get( index ).getAbsolutePath() );
 
           // // add relative path
           // properties.put("classpathEntry.relative", relativeClasspathFiles[index].getPath());
 
           // add name (last part of the path)
-          properties.put( "classpathEntry.name", absoluteClasspathFiles[index].getName() );
+          properties.put( "classpathEntry.name", absoluteClasspathFiles.get( index ).getName() );
 
           // add informations about file system resource
-          properties.put( "classpathEntry.isExisting", Boolean.toString( absoluteClasspathFiles[index].exists() ) );
-          properties.put( "classpathEntry.isFile", Boolean.toString( absoluteClasspathFiles[index].isFile() ) );
-          properties.put( "classpathEntry.isFolder", Boolean.toString( absoluteClasspathFiles[index].isDirectory() ) );
+          properties.put( "classpathEntry.isExisting", Boolean.toString( absoluteClasspathFiles.get( index ).exists() ) );
+          properties.put( "classpathEntry.isFile", Boolean.toString( absoluteClasspathFiles.get( index ).isFile() ) );
+          properties.put( "classpathEntry.isFolder", Boolean.toString( absoluteClasspathFiles.get( index ).isDirectory() ) );
 
-          String relative = Utilities.calcRelative( project.getFolder(), absoluteClasspathFiles[index] );
+          String relative = Utilities.calcRelative( project.getFolder(), absoluteClasspathFiles.get( index ) );
           if( (relative == null) || (relative.indexOf( ".." ) != -1) ) {
             // the calculation of a diff path failed or the relative path "moves" outside of the
             // projects directory
@@ -406,10 +397,10 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
           // create a FileSet for the entry describing it's content
           FileSet fileSet = new FileSet();
           fileSet.setProject( getProject() );
-          if( absoluteClasspathFiles[index].isFile() ) {
-            fileSet.setFile( absoluteClasspathFiles[index] );
-          } else if( absoluteClasspathFiles[index].isDirectory() ) {
-            fileSet.setDir( absoluteClasspathFiles[index] );
+          if( absoluteClasspathFiles.get( index ).isFile() ) {
+            fileSet.setFile( absoluteClasspathFiles.get( index ) );
+          } else if( absoluteClasspathFiles.get( index ).isDirectory() ) {
+            fileSet.setDir( absoluteClasspathFiles.get( index ) );
           }
 
           // add the FileSet as reference

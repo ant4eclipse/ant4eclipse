@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +34,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   private Map<String,String> _compilerOptions;
 
   /** the source files */
-  private SourceFile[]       _sourceFiles;
+  private List<SourceFile>   _sourceFiles;
 
   /**
    * <p>
@@ -41,7 +42,6 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * </p>
    */
   public DefaultCompileJobDescription() {
-    super();
   }
 
   /**
@@ -53,14 +53,13 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    * @param sourceFiles
    */
-  public DefaultCompileJobDescription( ClassFileLoader classFileLoader, StringMap compilerOptions,
-      SourceFile[] sourceFiles ) {
+  public DefaultCompileJobDescription( ClassFileLoader classFileLoader, StringMap compilerOptions, List<SourceFile> sourceFiles ) {
     Assure.notNull( "classFileLoader", classFileLoader );
     Assure.notNull( "compilerOptions", compilerOptions );
     Assure.notNull( "sourceFiles", sourceFiles );
-    _classFileLoader = classFileLoader;
-    _compilerOptions = compilerOptions;
-    _sourceFiles = sourceFiles;
+    _classFileLoader  = classFileLoader;
+    _compilerOptions  = compilerOptions;
+    _sourceFiles      = sourceFiles;
   }
 
   /**
@@ -83,7 +82,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * {@inheritDoc}
    */
   @Override
-  public SourceFile[] getSourceFiles() {
+  public List<SourceFile> getSourceFiles() {
     return _sourceFiles;
   }
 
@@ -121,7 +120,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param sourceFiles
    *          the source files.
    */
-  public void setSourceFiles( SourceFile[] sourceFiles ) {
+  public void setSourceFiles( List<SourceFile> sourceFiles ) {
     Assure.notNull( "sourceFiles", sourceFiles );
     _sourceFiles = sourceFiles;
   }
@@ -157,11 +156,11 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
     buffer.append( _compilerOptions );
     buffer.append( "}" );
     buffer.append( ", _sourceFiles: {" );
-    if( (_sourceFiles != null) && (_sourceFiles.length > 0) ) {
-      buffer.append( _sourceFiles[0] );
-      for( int i = 1; i < _sourceFiles.length; i++ ) {
+    if( (_sourceFiles != null) && (_sourceFiles.size() > 0) ) {
+      buffer.append( _sourceFiles.get(0) );
+      for( int i = 1; i < _sourceFiles.size(); i++ ) {
         buffer.append( ", " );
-        buffer.append( _sourceFiles[i] );
+        buffer.append( _sourceFiles.get(i) );
       }
     }
     buffer.append( _sourceFiles );

@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.pydt.model.PythonInterpreter;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Registry used to manage all runtimes used for python. The registry explicitly allows to register a specific runtime
@@ -78,6 +79,6 @@ public interface PythonRuntimeRegistry extends A4EService {
    * 
    * @return A list of supported python interpreters. Not <code>null</code>.
    */
-  PythonInterpreter[] getSupportedInterpreters();
+  List<PythonInterpreter> getSupportedInterpreters();
 
 } /* ENDINTERFACE */

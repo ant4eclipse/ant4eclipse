@@ -59,7 +59,7 @@ public class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   @Override
-  public EclipseProject[] getProjects( String[] names, boolean failOnMissingProjects ) {
+  public List<EclipseProject> getProjects( List<String> names, boolean failOnMissingProjects ) {
     Assure.notNull( "names", names );
 
     // the result list with all the eclipse projects...
@@ -85,23 +85,22 @@ public class WorkspaceImpl implements Workspace {
     }
 
     // return the result
-    return projects.toArray( new EclipseProject[0] );
+    return projects;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public EclipseProject[] getAllProjects() {
-    Collection<EclipseProject> projects = _projects.values();
-    return projects.toArray( new EclipseProject[projects.size()] );
+  public List<EclipseProject> getAllProjects() {
+    return new ArrayList<EclipseProject>( _projects.values() );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public EclipseProject[] getAllProjects( Class<? extends ProjectRole> projectRole ) {
+  public List<EclipseProject> getAllProjects( Class<? extends ProjectRole> projectRole ) {
     Assure.notNull( "projectRole", projectRole );
     Assure
         .assertTrue( ProjectRole.class.isAssignableFrom( projectRole ), String.format(
@@ -115,8 +114,7 @@ public class WorkspaceImpl implements Workspace {
         result.add( eclipseProject );
       }
     }
-
-    return result.toArray( new EclipseProject[0] );
+    return result;
   }
 
   /**

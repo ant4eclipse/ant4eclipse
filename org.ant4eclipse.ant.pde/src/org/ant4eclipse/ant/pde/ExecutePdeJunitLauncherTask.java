@@ -222,12 +222,9 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    * @param classpath
    */
   private void buildClassPath( BundleDescription bundleDescription, StringBuilder classpath ) {
-
     // get the layout resolver
     BundleLayoutResolver resolver = BundleDependenciesResolver.getBundleLayoutResolver( bundleDescription );
-
-    // add all entries
-    File[] entries = resolver.resolveBundleClasspathEntries();
+    List<File> entries = resolver.resolveBundleClasspathEntries();
     for( File file : entries ) {
       classpath.append( file.getAbsolutePath() );
       classpath.append( File.pathSeparatorChar );

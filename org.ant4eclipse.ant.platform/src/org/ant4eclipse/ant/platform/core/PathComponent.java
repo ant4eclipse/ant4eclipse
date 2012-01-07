@@ -14,6 +14,7 @@ package org.ant4eclipse.ant.platform.core;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -102,7 +103,7 @@ public interface PathComponent {
    *          the file array
    * @return a string
    */
-  String convertToString( File[] entries );
+  String convertToString( List<File> entries );
 
   /**
    * <p>
@@ -124,6 +125,6 @@ public interface PathComponent {
    *          the file array
    * @return a ant path
    */
-  Path convertToPath( File[] entries );
+  Path convertToPath( List<File> entries );
   
 } /* ENDINTERFACE */

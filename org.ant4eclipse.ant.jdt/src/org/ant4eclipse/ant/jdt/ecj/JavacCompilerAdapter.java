@@ -98,12 +98,12 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    */
   private String getClasspath( CompileJobDescription description ) {
     _buffer.setLength( 0 );
-    File[] classpath = description.getClassFileLoader().getClasspath();
-    if( classpath.length > 0 ) {
-      _buffer.append( classpath[0].getAbsolutePath() );
-      for( int i = 1; i < classpath.length; i++ ) {
+    List<File> classpath = description.getClassFileLoader().getClasspath();
+    if( classpath.size() > 0 ) {
+      _buffer.append( classpath.get(0).getAbsolutePath() );
+      for( int i = 1; i < classpath.size(); i++ ) {
         _buffer.append( PATH_SEPARATOR );
-        _buffer.append( classpath[i].getAbsolutePath() );
+        _buffer.append( classpath.get(i).getAbsolutePath() );
       }
     }
     return _buffer.toString();
@@ -310,7 +310,7 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
 
       CompileJobResultImpl result = new CompileJobResultImpl();
       result.setSucceeded( succeeded );
-      result.setCategorizedProblems( problems.toArray( new CategorizedProblem[problems.size()] ) );
+      result.setCategorizedProblems( problems );
       return result;
 
     } catch( IllegalArgumentException ex ) {

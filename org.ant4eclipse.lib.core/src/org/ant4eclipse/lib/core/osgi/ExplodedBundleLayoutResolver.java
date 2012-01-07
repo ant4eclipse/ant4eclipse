@@ -86,7 +86,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    * {@inheritDoc}
    */
   @Override
-  public File[] resolveBundleClasspathEntries() {
+  public List<File> resolveBundleClasspathEntries() {
 
     // prepare results
     List<File> result = new ArrayList<File>();
@@ -110,8 +110,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
       }
     }
 
-    // return result
-    return result.toArray( new File[0] );
+    return result;
   }
   
 } /* ENDCLASS */

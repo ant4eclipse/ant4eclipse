@@ -70,7 +70,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * {@inheritDoc}
    */
   @Override
-  public String[] getProjectReferenceTypes() {
+  public List<String> getProjectReferenceTypes() {
     return _projectReferenceAwareDelegate.getProjectReferenceTypes();
   }
 
@@ -171,17 +171,21 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   protected void doExecute() {
+    
     requireWorkspaceDirectoryOrWorkspaceIdSet();
     requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet();
     requireBuildorderPropertySet();
 
     // calculate build order
-    List<EclipseProject> orderedProjects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
-        _projectReferenceAwareDelegate.getProjectReferenceTypes(), _subElementAndAttributesDelegate
-            .getSubElements());
+    List<EclipseProject> orderedProjects = BuildOrderResolver.resolveBuildOrder(
+        getWorkspace(), 
+        getProjectNames(), 
+        _projectReferenceAwareDelegate.getProjectReferenceTypes(), 
+        _subElementAndAttributesDelegate.getSubElements()
+    );
 
-    // set property
     getProject().setProperty(_buildorderProperty, convertToString(orderedProjects, ','));
+    
   }
 
   /**

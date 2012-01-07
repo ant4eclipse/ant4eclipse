@@ -17,6 +17,7 @@ import org.ant4eclipse.ant.platform.core.delegate.PathDelegate;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -94,7 +95,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath( File[] entries ) {
+  public final Path convertToPath( List<File> entries ) {
     return _pathDelegate.convertToPath( entries );
   }
 
@@ -102,7 +103,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString( File[] entries ) {
+  public final String convertToString( List<File> entries ) {
     return _pathDelegate.convertToString( entries );
   }
 

@@ -50,7 +50,7 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
     factorymap = new Hashtable<String,TeamProjectSetFactory>();
     List<TeamProjectSetFactory> factories = A4ECore.instance().getServices( TeamProjectSetFactory.class );
     for( TeamProjectSetFactory factory : factories ) {
-      String[] providerids = factory.getProviderIDs();
+      List<String> providerids = factory.getProviderIDs();
       for( String providerid : providerids ) {
         A4ELogging.trace( "Adding TeamProjectSetFactory '%s' for provider '%s'", factory, providerid );
         factorymap.put( providerid, factory );

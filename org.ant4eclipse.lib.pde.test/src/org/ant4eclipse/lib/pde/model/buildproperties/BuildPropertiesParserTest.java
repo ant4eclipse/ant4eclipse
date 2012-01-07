@@ -16,11 +16,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import java.io.InputStream;
-
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
@@ -37,15 +38,14 @@ public class BuildPropertiesParserTest {
 
     PluginBuildProperties buildProperties = BuildPropertiesParser.initializePluginBuildProperties( stringMap );
 
-    assertThat( buildProperties.getAdditionalBundles(), is( equalTo( new String[] { "org.eclipse.osgi",
-        "org.apache.ant" } ) ) );
+    assertThat( buildProperties.getAdditionalBundles(), is( equalTo( Arrays.asList( "org.eclipse.osgi", "org.apache.ant" ) ) ) );
 
     Library library = buildProperties.getLibrary( "." );
     assertThat( library, is( notNullValue() ) );
 
-    assertThat( library.getSource(), is( equalTo( new String[] { "src" } ) ) );
-    assertThat( library.getOutput(), is( equalTo( new String[] { "bin" } ) ) );
-    assertThat( buildProperties.getBinaryIncludes(), is( equalTo( new String[] { "META-INF", "." } ) ) );
+    assertThat( library.getSource(), is( equalTo( Arrays.asList( "src" ) ) ) );
+    assertThat( library.getOutput(), is( equalTo( Arrays.asList( "bin" ) ) ) );
+    assertThat( buildProperties.getBinaryIncludes(), is( equalTo( Arrays.asList( "META-INF", "." ) ) ) );
   }
   
 } /* ENDCLASS */

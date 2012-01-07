@@ -11,12 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import java.io.File;
-
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -60,7 +61,7 @@ public interface TargetPlatform {
    * 
    * @return all the unresolved bundles
    */
-  BundleDescription[] getBundlesWithResolverErrors();
+  List<BundleDescription> getBundlesWithResolverErrors();
 
   /**
    * <p>

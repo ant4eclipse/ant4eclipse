@@ -58,7 +58,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * {@inheritDoc}
    */
   @Override
-  public File[] getProjectFolders() {
+  public List<File> getProjectFolders() {
 
     // define the result
     List<File> result = new ArrayList<File>();
@@ -107,7 +107,7 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
     }
 
     // return the result
-    return result.toArray( new File[0] );
+    return result;
   }
 
   /**

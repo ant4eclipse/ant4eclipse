@@ -133,7 +133,7 @@ public class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public BundleDescription[] getBundlesWithResolverErrors() {
+  public List<BundleDescription> getBundlesWithResolverErrors() {
 
     // create result
     List<BundleDescription> bundleDescriptions = new ArrayList<BundleDescription>();
@@ -146,7 +146,8 @@ public class TargetPlatformImpl implements TargetPlatform {
       }
     }
 
-    return bundleDescriptions.toArray( new BundleDescription[0] );
+    return bundleDescriptions;
+    
   }
 
   /**

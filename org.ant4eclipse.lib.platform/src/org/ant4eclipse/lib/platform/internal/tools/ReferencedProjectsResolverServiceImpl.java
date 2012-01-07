@@ -19,7 +19,6 @@ import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolverService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -37,9 +36,8 @@ import java.util.Set;
  */
 public class ReferencedProjectsResolverServiceImpl implements ReferencedProjectsResolverService {
 
-  private Map<String,ReferencedProjectsResolver> referencedProjectsResolvers;
-
-  private String[]                               reftypes;
+  private Map<String,ReferencedProjectsResolver>  referencedProjectsResolvers;
+  private List<String>                            reftypes;
 
   public ReferencedProjectsResolverServiceImpl() {
     List<ReferencedProjectsResolver> resolvers = A4ECore.instance().getServices( ReferencedProjectsResolver.class );
@@ -47,16 +45,16 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
     for( ReferencedProjectsResolver resolver : resolvers ) {
       referencedProjectsResolvers.put( resolver.getReferenceType(), resolver );
     }
-    reftypes = new String[referencedProjectsResolvers.size()];
-    referencedProjectsResolvers.keySet().toArray( reftypes );
-    Arrays.sort( reftypes );
+    reftypes = new ArrayList<String>( referencedProjectsResolvers.keySet() );
+    Collections.sort( reftypes );
+    
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String[] getReferenceTypes() {
+  public List<String> getReferenceTypes() {
     return reftypes;
   }
 
@@ -64,8 +62,7 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
    * {@inheritDoc}
    */
   @Override
-  public List<EclipseProject> resolveReferencedProjects( EclipseProject project, String[] referencetypes,
-      List<Object> additionalElements ) {
+  public List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<String> referencetypes, List<Object> additionalElements ) {
 
     referencetypes = Utilities.cleanup( referencetypes );
     if( referencetypes == null ) {

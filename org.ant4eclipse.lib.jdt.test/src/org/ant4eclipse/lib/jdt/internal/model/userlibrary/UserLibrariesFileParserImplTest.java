@@ -18,22 +18,22 @@ public class UserLibrariesFileParserImplTest extends AbstractTestDirectoryBasedT
   @Test
   public void parseFile() throws IOException {
 
-    final File testFile = getTestDirectory().createFile( "myUserLibraries.xml",
+    File testFile = getTestDirectory().createFile( "myUserLibraries.xml",
         getClass().getResourceAsStream( "myUserLibraries.xml" ) );
 
     UserLibrariesFileParserImpl fileParserImpl = new UserLibrariesFileParserImpl();
-    final UserLibraries userLibraries = fileParserImpl.parseUserLibrariesFile( testFile, null );
+    UserLibraries userLibraries = fileParserImpl.parseUserLibrariesFile( testFile, null );
     assertNotNull( userLibraries );
-    assertEquals( 1, userLibraries.getAvailableLibraries().length );
+    assertEquals( 1, userLibraries.getAvailableLibraries().size() );
     assertTrue( userLibraries.hasLibrary( "J2EE Library" ) );
-    final UserLibrary library = userLibraries.getLibrary( "J2EE Library" );
+    UserLibrary library = userLibraries.getLibrary( "J2EE Library" );
     assertNotNull( library );
     assertNotNull( library.getArchives() );
-    assertEquals( 4, library.getArchives().length );
+    assertEquals( 4, library.getArchives().size() );
     File expectedPath = new File( "src/org/ant4eclipse/lib/jdt/internal/model/userlibrary/library1.jar" );
-    final Archive firstLibrary = library.getArchives()[0];
+    Archive firstLibrary = library.getArchives().get( 0 );
     assertNotNull( firstLibrary );
     assertEquals( expectedPath, firstLibrary.getPath() );
   }
-  
+
 } /* ENDCLASS */

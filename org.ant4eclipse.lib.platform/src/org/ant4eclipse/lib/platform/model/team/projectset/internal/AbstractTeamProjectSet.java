@@ -51,8 +51,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * {@inheritDoc}
    */
   @Override
-  public TeamProjectDescription[] getTeamProjectDescriptions() {
-    return _projectDescriptions.toArray( new TeamProjectDescription[0] );
+  public List<TeamProjectDescription> getTeamProjectDescriptions() {
+    return _projectDescriptions;
   }
 
   /**
@@ -61,13 +61,11 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   @Override
   public TeamProjectDescription getTeamProjectDescriptionByName( String name ) {
     Assure.notNull( "name", name );
-
     for( TeamProjectDescription description : _projectDescriptions ) {
       if( name.equals( description.getProjectName() ) ) {
         return description;
       }
     }
-
     throw new RuntimeException( "EclipseProject " + name + " does not exist!" );
   }
 
@@ -75,16 +73,11 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * {@inheritDoc}
    */
   @Override
-  public String[] getProjectNames() {
-
-    String[] result = new String[_projectDescriptions.size()];
-    int i = 0;
+  public List<String> getProjectNames() {
+    List<String> result = new ArrayList<String>();
     for( TeamProjectDescription description : _projectDescriptions ) {
-      String projectName = description.getProjectName();
-      result[i] = projectName;
-      i++;
+      result.add( description.getProjectName() );
     }
-
     return result;
   }
 

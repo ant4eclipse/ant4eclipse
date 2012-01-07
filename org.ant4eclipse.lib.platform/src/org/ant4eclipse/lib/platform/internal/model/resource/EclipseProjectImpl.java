@@ -188,23 +188,20 @@ public class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public File[] getChildren( String[] path ) {
-    return getChildren( path, PathStyle.ABSOLUTE );
+  public List<File> getChildren( List<String> pathes ) {
+    return getChildren( pathes, PathStyle.ABSOLUTE );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public File[] getChildren( String[] path, PathStyle relative ) {
+  public List<File> getChildren( List<String> path, PathStyle relative ) {
     Assure.notNull( "path", path );
-
-    File[] result = new File[path.length];
-
-    for( int i = 0; i < result.length; i++ ) {
-      result[i] = getChild( path[i], relative );
+    List<File> result = new ArrayList<File>();
+    for( int i = 0; i < path.size(); i++ ) {
+      result.add( getChild( path.get(i), relative ) );
     }
-
     return result;
   }
 
@@ -384,8 +381,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public ProjectNature[] getNatures() {
-    return _natures.toArray( new ProjectNature[_natures.size()] );
+  public List<ProjectNature> getNatures() {
+    return _natures;
   }
 
   /**
@@ -401,8 +398,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public String[] getReferencedProjects() {
-    return _referencedProjects.toArray( new String[_referencedProjects.size()] );
+  public List<String> getReferencedProjects() {
+    return _referencedProjects;
   }
 
   /**
@@ -462,8 +459,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public ProjectRole[] getRoles() {
-    return _roles.toArray( new ProjectRole[_roles.size()] );
+  public List<ProjectRole> getRoles() {
+    return _roles;
   }
 
   /**
@@ -500,8 +497,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public BuildCommand[] getBuildCommands() {
-    return _buildCommands.toArray( new BuildCommand[0] );
+  public List<BuildCommand> getBuildCommands() {
+    return _buildCommands;
   }
 
   /**
@@ -512,7 +509,6 @@ public class EclipseProjectImpl implements EclipseProject {
    */
   public void addLinkedResource( LinkedResourceImpl linkedResource ) {
     Assure.notNull( "linkedResource", linkedResource );
-
     if( !_linkedResources.contains( linkedResource ) ) {
       _linkedResources.add( linkedResource );
       _linkedResourceNames.add( linkedResource.getName() );

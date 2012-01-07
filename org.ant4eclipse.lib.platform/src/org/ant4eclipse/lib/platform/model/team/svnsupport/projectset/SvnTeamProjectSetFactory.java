@@ -17,6 +17,9 @@ import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Parses a Project Set-File provided by the Subversive Eclipse Plugin and the Subclipse Eclipse Plugin
  * 
@@ -33,8 +36,11 @@ import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
  */
 public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
 
-  private static final String[] PROVIDER_IDS = new String[] { "org.polarion.team.svn.core.svnnature",
-      "org.tigris.subversion.subclipse.core.svnnature", "org.eclipse.team.svn.core.svnnature" };
+  private static final List<String> PROVIDER_IDS = Arrays.asList(
+    "org.polarion.team.svn.core.svnnature",
+    "org.tigris.subversion.subclipse.core.svnnature", 
+    "org.eclipse.team.svn.core.svnnature" 
+  );
 
   /**
    * Position of the repository URL in the reference string
@@ -88,7 +94,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   @Override
-  public String[] getProviderIDs() {
+  public List<String> getProviderIDs() {
     return PROVIDER_IDS;
   }
 

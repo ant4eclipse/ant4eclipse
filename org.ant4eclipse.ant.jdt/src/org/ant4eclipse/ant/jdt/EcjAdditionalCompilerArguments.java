@@ -15,9 +15,10 @@ import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -131,9 +132,12 @@ public class EcjAdditionalCompilerArguments {
    * @param outputFolder
    * @return
    */
-  public File[] getSourceFoldersForOutputFolder( File outputFolder ) {
-    return hasSourceFoldersForOutputFolder( outputFolder ) ? _sourceFolderMap.get( outputFolder ).toArray(
-        new File[0] ) : new File[0];
+  public List<File> getSourceFoldersForOutputFolder( File outputFolder ) {
+    if( hasSourceFoldersForOutputFolder( outputFolder ) ) {
+      return new ArrayList<File>( _sourceFolderMap.get( outputFolder ) );
+    } else {
+      return new ArrayList<File>();
+    }
   }
 
   /**
@@ -198,7 +202,7 @@ public class EcjAdditionalCompilerArguments {
    * @param sourceFolders
    * @param outputFolder
    */
-  public void addSourceFolderForOutputFolder( File outputFolder, File[] sourceFolders ) {
+  public void addSourceFolderForOutputFolder( File outputFolder, List<File> sourceFolders ) {
     Assure.notNull( "outputFolder", outputFolder );
     Assure.notNull( "sourceFolders", sourceFolders );
 
@@ -212,7 +216,7 @@ public class EcjAdditionalCompilerArguments {
     }
 
     // add the source folder
-    sourceFolderSet.addAll( Arrays.asList( sourceFolders ) );
+    sourceFolderSet.addAll( sourceFolders );
   }
 
   /**

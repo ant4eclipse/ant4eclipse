@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.jdt.model.jre;
 import org.ant4eclipse.lib.core.data.Version;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -84,7 +85,7 @@ public interface JavaRuntime {
    * 
    * @return all libraries that are available on the boot class path.
    */
-  File[] getLibraries();
+  List<File> getLibraries();
 
   /**
    * <p>

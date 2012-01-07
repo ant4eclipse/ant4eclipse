@@ -20,6 +20,8 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>
@@ -139,7 +141,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  public File[] resolvePath() {
+  public List<File> resolvePath() {
     EclipseProject.PathStyle relative = isRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME
         : EclipseProject.PathStyle.ABSOLUTE;
 
@@ -151,16 +153,15 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
 
       String pathName = javaProjectRole.getOutputFolderForSourceFolder( getSourceFolder() );
       File resolvedPathEntry = getEclipseProject().getChild( pathName, relative );
-      return new File[] { resolvedPathEntry };
+      return Arrays.asList( resolvedPathEntry );
 
-    }
-    // resolve all output folder
-    else if( ALL.equals( _resolve ) ) {
+    } else if( ALL.equals( _resolve ) ) {
+      // resolve all output folder
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
-      String[] pathNames = javaProjectRole.getAllOutputFolders();
+      List<String> pathNames = javaProjectRole.getAllOutputFolders();
 
       // TODO: NLS
-      if( pathNames.length > 1 && !isAllowMultipleFolders() ) {
+      if( (pathNames.size() > 1) && (! isAllowMultipleFolders()) ) {
         StringBuffer buffer = new StringBuffer();
         buffer.append( "Project '" );
         buffer.append( getEclipseProject().getSpecifiedName() );
@@ -171,15 +172,15 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
       }
 
       return getEclipseProject().getChildren( pathNames, relative );
-    } else
-    // resolve default folder
-    {
+      
+    } else {
+      // resolve default folder
       Assure.assertTrue( DEFAULT_FOLDER.equals( _resolve ), "Illegal value for attribute resolve!" );
 
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
       String path = javaProjectRole.getDefaultOutputFolder();
       File resolvedPathEntry = getEclipseProject().getChild( path, relative );
-      return new File[] { resolvedPathEntry };
+      return Arrays.asList( resolvedPathEntry );
     }
   }
   

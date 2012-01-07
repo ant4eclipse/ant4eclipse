@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Resolved record used to identify a python runtime.
@@ -23,11 +24,9 @@ import java.io.File;
  */
 public class ResolvedRuntimeEntry implements ResolvedPathEntry {
 
-  private Version _version;
-
-  private File[]  _libs;
-
-  private String  _owningproject;
+  private Version      _version;
+  private List<File>   _libs;
+  private String       _owningproject;
 
   /**
    * Initialises this entry used to describe a runtime.
@@ -39,7 +38,7 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    * @param libs
    *          The bundled libraries representing the runtime. Not <code>null</code>.
    */
-  public ResolvedRuntimeEntry( String owningproject, Version version, File[] libs ) {
+  public ResolvedRuntimeEntry( String owningproject, Version version, List<File> libs ) {
     Assure.notNull( "version", version );
     Assure.notNull( "libs", libs );
     Assure.nonEmpty( "owningproject", owningproject );
@@ -78,7 +77,7 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    * 
    * @return The libraries for this runtime. Not <code>null</code>.
    */
-  public File[] getLibraries() {
+  public List<File> getLibraries() {
     return _libs;
   }
 
@@ -100,14 +99,14 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
     if( !_owningproject.equals( other._owningproject ) ) {
       return false;
     }
-    if( _libs.length != other._libs.length ) {
+    if( _libs.size() != other._libs.size() ) {
       return false;
     }
     if( !_version.equals( other._version ) ) {
       return false;
     }
-    for( int i = 0; i < _libs.length; i++ ) {
-      if( !_libs[i].equals( other._libs[i] ) ) {
+    for( int i = 0; i < _libs.size(); i++ ) {
+      if( !_libs.get(i).equals( other._libs.get(i) ) ) {
         return false;
       }
     }
@@ -139,10 +138,10 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
     buffer.append( ", _version: " );
     buffer.append( _version );
     buffer.append( ", _libs: {" );
-    buffer.append( _libs[0] );
-    for( int i = 1; i < _libs.length; i++ ) {
+    buffer.append( _libs.get(0) );
+    for( int i = 1; i < _libs.size(); i++ ) {
       buffer.append( ", " );
-      buffer.append( _libs[i] );
+      buffer.append( _libs.get(i) );
     }
     buffer.append( "}]" );
     return buffer.toString();

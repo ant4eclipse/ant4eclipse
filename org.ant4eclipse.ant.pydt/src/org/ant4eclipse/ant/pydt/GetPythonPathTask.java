@@ -16,6 +16,7 @@ import org.ant4eclipse.lib.pydt.internal.tools.PythonResolver;
 import org.ant4eclipse.lib.pydt.model.ResolvedPathEntry;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Basic task used to access the source path of a python project.
@@ -40,12 +41,11 @@ public class GetPythonPathTask extends AbstractPydtGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() {
+  protected List<File> resolvePath() {
     PythonResolver resolver = new PythonResolver( getWorkspace(), PythonResolver.Mode.all, _ignoreruntime );
     PathExpander expander = new PathExpander( getEclipseProject() );
     ResolvedPathEntry[] resolved = resolver.resolve( getEclipseProject().getSpecifiedName() );
-    File[] result = expander.expand( resolved, getPathStyle() );
-    return result;
+    return expander.expand( resolved, getPathStyle() );
   }
 
 } /* ENDCLASS */

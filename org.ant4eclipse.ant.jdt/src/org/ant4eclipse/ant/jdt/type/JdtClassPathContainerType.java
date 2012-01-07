@@ -98,12 +98,12 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
     List<File> files = new ArrayList<File>();
     @SuppressWarnings( "unchecked" ) Iterator<FileResource> iterator = _resources.iterator();
     while( iterator.hasNext() ) {
-      FileResource fileResource = iterator.next();
-      files.add( fileResource.getFile() );
+      files.add( iterator.next().getFile() );
     }
 
     // TODO: what to do if classpathContainer already registered?
-    variablesRegistry.registerClassPathContainer( _name, files.toArray( new File[0] ) );
+    variablesRegistry.registerClassPathContainer( _name, files );
+    
   }
 
 } /* ENDCLASS */

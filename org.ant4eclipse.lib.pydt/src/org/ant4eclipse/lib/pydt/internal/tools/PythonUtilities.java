@@ -20,6 +20,8 @@ import org.ant4eclipse.lib.pydt.model.project.DLTKProjectRole;
 import org.ant4eclipse.lib.pydt.model.project.PyDevProjectRole;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntimeRegistry;
 
+import java.util.List;
+
 /**
  * <p>
  * Collection of python related helper functions.
@@ -91,7 +93,7 @@ public class PythonUtilities {
    * 
    * @return A list of all known python interpreters. Not <code>null</code>.
    */
-  public static final PythonInterpreter[] getPythonInterpreters() {
+  public static final List<PythonInterpreter> getPythonInterpreters() {
     PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
     return registry.getSupportedInterpreters();
   }

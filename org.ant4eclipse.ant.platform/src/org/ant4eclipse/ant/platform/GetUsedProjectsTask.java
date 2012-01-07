@@ -21,6 +21,7 @@ import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolverService;
 import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    * The reference type that is used for the resolving process of projects. A value of <code>null</code> means that all
    * reference types are being tried.
    */
-  private String[]                        _referencetypes;
+  private List<String>                    _referencetypes;
 
   /**
    *
@@ -77,9 +78,9 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    *          A reference type which depends on the current configuration of a4e.
    */
   public void setReferencetypes( String newreferencetypes ) {
-    String[] elements = null;
+    List<String> elements = null;
     if( newreferencetypes != null ) {
-      elements = newreferencetypes.split( "," );
+      elements = Arrays.asList( newreferencetypes.split( "," ) );
     }
     _referencetypes = Utilities.cleanup( elements );
   }
@@ -170,9 +171,9 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     requireWorkspaceAndProjectNameSet();
     if( _referencetypes != null ) {
       // check if we can use the provided reference type
-      String[] allowed = getResolver().getReferenceTypes();
+      List<String> allowed = getResolver().getReferenceTypes();
       for( String reftype : _referencetypes ) {
-        if( !Utilities.contains( reftype, allowed ) ) {
+        if( ! allowed.contains( reftype ) ) {
           throw new BuildException( "The 'referencetypes' value '" + reftype + "' is not supported." );
         }
       }
@@ -189,7 +190,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
       _separator = DEFAULT_SEPARATOR;
     }
 
-    String[] types = getResolver().getReferenceTypes();
+    List<String> types = getResolver().getReferenceTypes();
     if( _referencetypes != null ) {
       // there's a restriction provided by the user
       types = _referencetypes;

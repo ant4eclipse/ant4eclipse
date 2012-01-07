@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import java.io.File;
-import java.util.jar.Manifest;
-
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
@@ -29,6 +26,10 @@ import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.osgi.framework.Version;
+
+import java.io.File;
+import java.util.List;
+import java.util.jar.Manifest;
 
 /**
  * <p>
@@ -170,8 +171,8 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
           getPlatformExecutorValuesProvider().provideExecutorValues( getEclipseProject(), values );
 
           // get source and output directories
-          File[] sourceFiles = getEclipseProject().getChildren( library.getSource() );
-          File[] outputFiles = getEclipseProject().getChildren( library.getOutput() );
+          List<File> sourceFiles = getEclipseProject().getChildren( library.getSource() );
+          List<File> outputFiles = getEclipseProject().getChildren( library.getOutput() );
 
           // add source and output directories
           values.getProperties().put( SOURCE_DIRECTORIES, convertToString( sourceFiles ) );

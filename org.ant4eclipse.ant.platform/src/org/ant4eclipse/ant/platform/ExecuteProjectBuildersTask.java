@@ -59,8 +59,7 @@ public class ExecuteProjectBuildersTask extends AbstractExecuteProjectTask {
     requireWorkspaceAndProjectNameSet();
 
     // get all build commands
-    BuildCommand[] buildCommands = getEclipseProject().getBuildCommands();
-
+    List<BuildCommand> buildCommands = getEclipseProject().getBuildCommands();
     for( BuildCommand buildCommand : buildCommands ) {
 
       ScopedMacroDefinition<String> macroDefinition = getScopedMacroDefinition( buildCommand.getName() );

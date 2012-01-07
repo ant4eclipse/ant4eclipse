@@ -20,6 +20,7 @@ import org.apache.tools.ant.types.Path;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setPathSeparator( String newpathseparator ) {
+  public void setPathSeparator( String newpathseparator ) {
     Assure.nonEmpty( "newpathseparator", newpathseparator );
     _pathSeparator = newpathseparator;
   }
@@ -67,7 +68,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final String getPathSeparator() {
+  public String getPathSeparator() {
     return _pathSeparator;
   }
 
@@ -75,7 +76,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final boolean isPathSeparatorSet() {
+  public boolean isPathSeparatorSet() {
     return _pathSeparator != null;
   }
 
@@ -83,7 +84,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setDirSeparator( String newdirseparator ) {
+  public void setDirSeparator( String newdirseparator ) {
     Assure.nonEmpty( "newdirseparator", newdirseparator );
     _dirSeparator = newdirseparator;
   }
@@ -92,7 +93,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final String getDirSeparator() {
+  public String getDirSeparator() {
     return _dirSeparator;
   }
 
@@ -100,7 +101,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final boolean isDirSeparatorSet() {
+  public boolean isDirSeparatorSet() {
     return _dirSeparator != null;
   }
 
@@ -108,17 +109,16 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString( File entry ) {
-    return convertToString( new File[] { entry } );
+  public String convertToString( File entry ) {
+    return convertToString( Arrays.asList( entry ) );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString( File[] entries ) {
+  public String convertToString( List<File> entries ) {
     Assure.notNull( "entries", entries );
-
     // convert Files to String
     List<String> entriesAsString = new ArrayList<String>();
     for( File entry : entries ) {
@@ -148,15 +148,15 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath( File entry ) {
-    return convertToPath( new File[] { entry } );
+  public Path convertToPath( File entry ) {
+    return convertToPath( Arrays.asList( entry ) );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath( File[] entries ) {
+  public Path convertToPath( List<File> entries ) {
     Assure.notNull( "entries", entries );
     Path antPath = new Path( getAntProject() );
     for( File entry : entries ) {

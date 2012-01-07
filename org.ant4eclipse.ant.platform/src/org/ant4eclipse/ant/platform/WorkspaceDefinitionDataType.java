@@ -117,8 +117,7 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
     }
 
     WorkspaceRegistry registry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
-    registry.registerWorkspace( _id,
-        new FilesetWorkspaceDefinition( projectDirectories.toArray( new File[projectDirectories.size()] ) ) );
+    registry.registerWorkspace( _id, new FilesetWorkspaceDefinition( projectDirectories ) );
   }
   
 } /* ENDCLASS */

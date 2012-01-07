@@ -16,6 +16,8 @@ import org.ant4eclipse.lib.cdt.internal.tools.CdtUtilities;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
@@ -37,8 +39,8 @@ public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() {
-    return new File[0];
+  protected List<File> resolvePath() {
+    return new ArrayList<File>();
   }
 
 } /* ENDCLASS */

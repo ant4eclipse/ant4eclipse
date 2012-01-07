@@ -13,6 +13,9 @@ package org.ant4eclipse.lib.pde.model.buildproperties;
 
 import org.ant4eclipse.lib.core.Assure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * {@link AbstractBuildProperties} represent the "common properties" that are used within plug-in projects and features
@@ -25,28 +28,28 @@ import org.ant4eclipse.lib.core.Assure;
 public class AbstractBuildProperties {
 
   /** SELF */
-  public static String  SELF              = ".";
+  public static String  SELF                  = ".";
 
   /** CONTEXT_QUALIFIER */
-  private static String CONTEXT_QUALIFIER = "context";
+  private static String CONTEXT_QUALIFIER     = "context";
 
   /** NONE_QUALIFIER */
-  private static String NONE_QUALIFIER    = "none";
+  private static String NONE_QUALIFIER        = "none";
 
   /** indicates that the build script is hand-crafted as opposed to automatically generated */
   protected boolean     _custom;
 
   /** lists files that will included in the binary version of the plug-in being built */
-  protected String[]    _binIncludes      = new String[0];
+  protected List<String>    _binIncludes      = new ArrayList<String>();
 
   /** lists files to exclude from the binary build */
-  protected String[]    _binExcludes      = new String[0];
+  protected List<String>    _binExcludes      = new ArrayList<String>();
 
   /** lists files to include in the source build */
-  private String[]      _srcIncludes      = new String[0];
+  private List<String>      _srcIncludes      = new ArrayList<String>();
 
   /** lists files to exclude from the source build */
-  private String[]      _srcExcludes      = new String[0];
+  private List<String>      _srcExcludes      = new ArrayList<String>();
 
   /**
    * When the element version number ends with .qualifier this indicates by which value ".qualifier" must be replaced.
@@ -84,7 +87,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has source excludes.
    */
   public boolean hasSourceExcludes() {
-    return _srcExcludes != null && _srcExcludes.length > 0;
+    return (_srcExcludes != null) && (_srcExcludes.size() > 0);
   }
 
   /**
@@ -95,7 +98,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has source includes.
    */
   public boolean hasSourceIncludes() {
-    return _srcIncludes != null && _srcIncludes.length > 0;
+    return (_srcIncludes != null) && (_srcIncludes.size() > 0);
   }
 
   /**
@@ -106,7 +109,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has binary excludes.
    */
   public boolean hasBinaryExcludes() {
-    return _binExcludes != null && _binExcludes.length > 0;
+    return (_binExcludes != null) && (_binExcludes.size() > 0);
   }
 
   /**
@@ -117,7 +120,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has binary includes.
    */
   public boolean hasBinaryIncludes() {
-    return _binIncludes != null && _binIncludes.length > 0;
+    return (_binIncludes != null) && (_binIncludes.size() > 0);
   }
 
   /**
@@ -127,7 +130,7 @@ public class AbstractBuildProperties {
    * 
    * @return the binary excludes.
    */
-  public String[] getBinaryExcludes() {
+  public List<String> getBinaryExcludes() {
     return _binExcludes;
   }
 
@@ -138,7 +141,7 @@ public class AbstractBuildProperties {
    * 
    * @return the binary includes.
    */
-  public String[] getBinaryIncludes() {
+  public List<String> getBinaryIncludes() {
     return _binIncludes;
   }
 
@@ -148,7 +151,7 @@ public class AbstractBuildProperties {
    * 
    * @return the srcIncludes
    */
-  public String[] getSourceIncludes() {
+  public List<String> getSourceIncludes() {
     return _srcIncludes;
   }
 
@@ -158,7 +161,7 @@ public class AbstractBuildProperties {
    * 
    * @return the srcExcludes
    */
-  public String[] getSourceExcludes() {
+  public List<String> getSourceExcludes() {
     return _srcExcludes;
   }
 
@@ -239,7 +242,7 @@ public class AbstractBuildProperties {
    * 
    * @param excludes
    */
-  void setBinaryExcludes( String[] excludes ) {
+  void setBinaryExcludes( List<String> excludes ) {
     Assure.notNull( "excludes", excludes );
     _binExcludes = excludes;
   }
@@ -251,7 +254,7 @@ public class AbstractBuildProperties {
    * 
    * @param includes
    */
-  void setBinaryIncludes( String[] includes ) {
+  void setBinaryIncludes( List<String> includes ) {
     Assure.notNull( "includes", includes );
     _binIncludes = includes;
   }
@@ -263,7 +266,7 @@ public class AbstractBuildProperties {
    * @param srcIncludes
    *          the srcIncludes to set
    */
-  void setSourceIncludes( String[] srcIncludes ) {
+  void setSourceIncludes( List<String> srcIncludes ) {
     Assure.notNull( "srcIncludes", srcIncludes );
     _srcIncludes = srcIncludes;
   }
@@ -275,7 +278,7 @@ public class AbstractBuildProperties {
    * @param srcExcludes
    *          the srcExcludes to set
    */
-  void setSourceExcludes( String[] srcExcludes ) {
+  void setSourceExcludes( List<String> srcExcludes ) {
     Assure.notNull( "srcExcludes", srcExcludes );
     _srcExcludes = srcExcludes;
   }

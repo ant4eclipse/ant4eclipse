@@ -24,6 +24,7 @@ import org.ant4eclipse.lib.platform.model.resource.validator.AbstractProjectVali
 import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -62,8 +63,7 @@ public class OutputPathValidator extends AbstractProjectValidator {
       JavaProjectRole javarole = project.getRole( JavaProjectRole.class );
 
       // get the output folders from the normal java nature
-      File[] outputfolders = project.getChildren( javarole.getAllOutputFolders(),
-          EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME );
+      List<File> outputfolders = project.getChildren( javarole.getAllOutputFolders(), EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME );
       Set<String> jdtoutputpathes = new HashSet<String>();
       for( File outputfolder : outputfolders ) {
         jdtoutputpathes.add( outputfolder.getPath().replace( '\\', '/' ) );

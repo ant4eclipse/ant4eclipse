@@ -20,6 +20,7 @@ import org.ant4eclipse.lib.pydt.model.RawPathEntry;
 import org.ant4eclipse.lib.pydt.model.ReferenceKind;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * This parser is used to contribute the necessary configuration information to the associated project role. This
@@ -106,7 +107,7 @@ public class PyDevParser {
     // PyDev uses the platform mechanism for referenced projects. this is somewhat unlikely
     // so we need to convert this information into corresponding entries while sorting out
     // the ones with the wrong natures
-    String[] projects = pythonrole.getEclipseProject().getReferencedProjects();
+    List<String> projects = pythonrole.getEclipseProject().getReferencedProjects();
     for( String project : projects ) {
       pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Project, "/" + project, true, false ) );
     }

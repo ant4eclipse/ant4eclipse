@@ -15,6 +15,7 @@ import org.ant4eclipse.lib.core.A4EService;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,6 +76,6 @@ public interface ProjectRoleIdentifier extends A4EService {
    * 
    * @return The possible abbreviations for the natures. Maybe <code>null</code>.
    */
-  String[] getNatureNicknames();
+  List<String> getNatureNicknames();
 
 } /* ENDINTERFACE */

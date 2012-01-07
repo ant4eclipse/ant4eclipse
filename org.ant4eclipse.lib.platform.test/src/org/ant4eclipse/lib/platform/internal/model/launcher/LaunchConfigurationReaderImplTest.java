@@ -23,6 +23,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTestCase {
 
@@ -54,11 +55,11 @@ public class LaunchConfigurationReaderImplTest extends ConfigurableAnt4EclipseTe
     Assert.assertFalse( launchConfiguration.getBooleanAttribute( "org.eclipse.jdt.launching.DEFAULT_CLASSPATH" ) );
     Assert.assertEquals( "/c/src/main/Main.java,/c/src/main/MainHelper.java",
         launchConfiguration.getAttribute( "org.eclipse.debug.core.MAPPED_RESOURCE_PATHS" ) );
-    String[] elements = launchConfiguration.getListAttribute( "org.eclipse.debug.core.MAPPED_RESOURCE_PATHS" );
+    List<String> elements = launchConfiguration.getListAttribute( "org.eclipse.debug.core.MAPPED_RESOURCE_PATHS" );
     Assert.assertNotNull( elements );
-    Assert.assertEquals( 2, elements.length );
-    Assert.assertEquals( "/c/src/main/Main.java", elements[0] );
-    Assert.assertEquals( "/c/src/main/MainHelper.java", elements[1] );
+    Assert.assertEquals( 2, elements.size() );
+    Assert.assertEquals( "/c/src/main/Main.java", elements.get(0) );
+    Assert.assertEquals( "/c/src/main/MainHelper.java", elements.get(1) );
   }
 
 } /* ENDCLASS */

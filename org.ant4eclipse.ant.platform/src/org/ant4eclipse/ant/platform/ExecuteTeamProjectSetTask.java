@@ -160,7 +160,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
     TeamProjectSet teamProjectSet = getTeamProjectSet();
 
     // Pull out the project descriptions
-    final TeamProjectDescription[] teamProjectDescriptions = teamProjectSet.getTeamProjectDescriptions();
+    List<TeamProjectDescription> teamProjectDescriptions = teamProjectSet.getTeamProjectDescriptions();
 
     // execute the macroDef for each project description
     for( final TeamProjectDescription teamProjectDescription : teamProjectDescriptions ) {

@@ -56,7 +56,7 @@ public class EcjAdapterImpl implements EcjAdapter {
     Map<String,String> compilerOptions = description.getCompilerOptions();
 
     // retrieve the compilation units
-    ICompilationUnit[] sources = getCompilationUnits( description.getSourceFiles() );
+    List<ICompilationUnit> sources = getCompilationUnits( description.getSourceFiles() );
 
     // create the error handling policy
     IErrorHandlingPolicy policy = DefaultErrorHandlingPolicies.proceedWithAllProblems();
@@ -75,7 +75,7 @@ public class EcjAdapterImpl implements EcjAdapter {
     setupAnnotationProcessor( compiler );
 
     // compile
-    compiler.compile( sources );
+    compiler.compile( sources.toArray( new ICompilationUnit[ sources.size() ] ) );
 
     // create the compile job result
     CompileJobResultImpl result = new CompileJobResultImpl();
@@ -104,23 +104,15 @@ public class EcjAdapterImpl implements EcjAdapter {
    *          the source files
    * @return the compilation units for the given source files.
    */
-  private ICompilationUnit[] getCompilationUnits( SourceFile[] sourceFiles ) {
-
-    // create result list
+  private List<ICompilationUnit> getCompilationUnits( List<SourceFile> sourceFiles ) {
     List<ICompilationUnit> result = new ArrayList<ICompilationUnit>();
-
-    // iterate over source folders
     for( SourceFile sourceFile : sourceFiles ) {
-
       CompilationUnitImpl compilationUnitImpl = new CompilationUnitImpl( sourceFile );
-
-      if( !result.contains( compilationUnitImpl ) ) {
+      if( ! result.contains( compilationUnitImpl ) ) {
         result.add( compilationUnitImpl );
       }
     }
-
-    // return the result
-    return result.toArray( new ICompilationUnit[result.size()] );
+    return result;
   }
   
 } /* ENDCLASS */

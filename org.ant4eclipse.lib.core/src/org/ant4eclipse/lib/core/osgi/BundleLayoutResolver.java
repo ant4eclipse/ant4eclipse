@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.core.osgi;
 
 import java.io.File;
+import java.util.List;
 import java.util.jar.Manifest;
 
 /**
@@ -74,6 +75,6 @@ public interface BundleLayoutResolver {
    * 
    * @return the resolved bundle class path.
    */
-  File[] resolveBundleClasspathEntries();
+  List<File> resolveBundleClasspathEntries();
 
 } /* ENDINTERFACE */

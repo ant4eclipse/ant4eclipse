@@ -16,7 +16,8 @@ import org.ant4eclipse.lib.pydt.model.PythonInterpreter;
 import org.ant4eclipse.lib.pydt.model.pyre.PythonRuntime;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Each runtime is a combination of a predefined set of types as provided with a python release.
@@ -26,15 +27,10 @@ import java.util.Arrays;
 class PythonRuntimeImpl implements PythonRuntime {
 
   private String            _id;
-
   private File              _location;
-
   private Version           _version;
-
-  private File[]            _libs;
-
+  private List<File>        _libs;
   private PythonInterpreter _interpreter;
-
   private File              _executable;
 
   /**
@@ -51,14 +47,14 @@ class PythonRuntimeImpl implements PythonRuntime {
    * @param interpreter
    *          The interpreter associated with this runtime. Not <code>null</code>.
    */
-  public PythonRuntimeImpl( String id, File location, Version version, File[] libs, PythonInterpreter interpreter ) {
-    _id = id;
-    _location = location;
-    _version = version;
-    _interpreter = interpreter;
-    _executable = _interpreter.lookup( _location );
-    _libs = libs;
-    Arrays.sort( _libs );
+  public PythonRuntimeImpl( String id, File location, Version version, List<File> libs, PythonInterpreter interpreter ) {
+    _id           = id;
+    _location     = location;
+    _version      = version;
+    _interpreter  = interpreter;
+    _executable   = _interpreter.lookup( _location );
+    _libs         = libs;
+    Collections.sort( _libs );
   }
 
   /**
@@ -89,7 +85,7 @@ class PythonRuntimeImpl implements PythonRuntime {
    * {@inheritDoc}
    */
   @Override
-  public File[] getLibraries() {
+  public List<File> getLibraries() {
     return _libs;
   }
 
@@ -133,14 +129,14 @@ class PythonRuntimeImpl implements PythonRuntime {
     if( !_version.equals( other._version ) ) {
       return false;
     }
-    if( _libs.length != other._libs.length ) {
+    if( _libs.size() != other._libs.size() ) {
       return false;
     }
     if( !_interpreter.equals( other._interpreter ) ) {
       return false;
     }
-    for( int i = 0; i < _libs.length; i++ ) {
-      if( !_libs[i].equals( other._libs[i] ) ) {
+    for( int i = 0; i < _libs.size(); i++ ) {
+      if( !_libs.get(i).equals( other._libs.get(i) ) ) {
         return false;
       }
     }
@@ -178,10 +174,10 @@ class PythonRuntimeImpl implements PythonRuntime {
     buffer.append( ", _interpreter: " );
     buffer.append( _interpreter );
     buffer.append( ", _libs: {" );
-    buffer.append( _libs[0] );
-    for( int i = 1; i < _libs.length; i++ ) {
+    buffer.append( _libs.get(0) );
+    for( int i = 1; i < _libs.size(); i++ ) {
       buffer.append( "," );
-      buffer.append( _libs[i] );
+      buffer.append( _libs.get(i) );
     }
     buffer.append( "}" );
     buffer.append( "]" );

@@ -28,7 +28,6 @@ import org.apache.tools.ant.taskdefs.MacroDef;
 import org.apache.tools.ant.taskdefs.MacroDef.NestedSequential;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -99,7 +98,7 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
    * {@inheritDoc}
    */
   @Override
-  public String[] getProjectReferenceTypes() {
+  public List<String> getProjectReferenceTypes() {
     return _projectReferenceAwareDelegate.getProjectReferenceTypes();
   }
 
@@ -202,12 +201,15 @@ public class ExecuteProjectSetTask extends AbstractProjectSetPathBasedTask imple
     if( _resolveBuildOrder ) {
 
       // resolve the build order
-      projects = BuildOrderResolver.resolveBuildOrder( getWorkspace(), getProjectNames(),
+      projects = BuildOrderResolver.resolveBuildOrder( 
+          getWorkspace(), 
+          getProjectNames(),
           _projectReferenceAwareDelegate.getProjectReferenceTypes(),
-          _subElementAndAttributeDelegate.getSubElements() );
+          _subElementAndAttributeDelegate.getSubElements() 
+      );
     } else {
       // only get the specified projects
-      projects = Arrays.asList( getWorkspace().getProjects( getProjectNames(), false ) );
+      projects = getWorkspace().getProjects( getProjectNames(), false );
     }
 
     final BuildCallable[] buildCallables = new BuildCallable[_threadCount];

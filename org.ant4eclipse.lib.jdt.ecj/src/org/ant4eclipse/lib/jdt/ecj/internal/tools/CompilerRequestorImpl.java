@@ -153,8 +153,8 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    * 
    * @return the categorized problems.
    */
-  public CategorizedProblem[] getCategorizedProblems() {
-    return _categorizedProblems.toArray( new CategorizedProblem[0] );
+  public List<CategorizedProblem> getCategorizedProblems() {
+    return _categorizedProblems;
   }
   
 } /* ENDCLASS */

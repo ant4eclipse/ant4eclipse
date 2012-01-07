@@ -27,7 +27,7 @@ import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
 public class CvsRoleIdentifier extends AbstractProjectRoleIdentifier {
 
   public CvsRoleIdentifier() {
-    super( null );
+    super( (String) null );
   }
 
   /**

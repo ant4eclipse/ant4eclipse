@@ -62,7 +62,7 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
    * {@inheritDoc}
    */
   @Override
-  protected File[] resolvePath() {
+  protected List<File> resolvePath() {
     PythonProjectRole   role      = getEclipseProject().getRole( PythonProjectRole.class );
     PythonResolver      resolver  = new PythonResolver( getWorkspace(), PythonResolver.Mode.all, true );
     PathExpander        expander  = new PathExpander( getEclipseProject() );

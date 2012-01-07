@@ -18,6 +18,7 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -47,7 +48,7 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    * {@inheritDoc}
    */
   @Override
-  public String[] getProjectNames() {
+  public List<String> getProjectNames() {
     return _workspaceProjectSetDelegate.getProjectNames();
   }
 

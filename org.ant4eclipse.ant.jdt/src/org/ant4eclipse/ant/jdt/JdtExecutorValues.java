@@ -13,10 +13,8 @@ package org.ant4eclipse.ant.jdt;
 
 public interface JdtExecutorValues {
 
-  /** reference id for the CompilerArgument */
   String COMPILER_ARGS                       = "compiler.args";
 
-  /** */
   String CLASSPATH_RELATIVE_RUNTIME_PATH     = "classpath.relative.runtime.path";
 
   String CLASSPATH_ABSOLUTE_RUNTIME_PATH     = "classpath.absolute.runtime.path";

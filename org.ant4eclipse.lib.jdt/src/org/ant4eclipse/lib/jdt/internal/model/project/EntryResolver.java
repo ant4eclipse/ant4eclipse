@@ -23,15 +23,10 @@ public class EntryResolver {
    * @return A list of resolved paths.
    */
   public static <T> List<T> resolveEntries( Condition<T> condition, JavaProjectRoleImpl javaProjectRole ) {
-
-    List<T> result = new ArrayList<T>();
-
-    RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
-
+    List<T>                 result              = new ArrayList<T>();
+    List<RawClasspathEntry> rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
     for( RawClasspathEntry rawClasspathEntrie : rawClasspathEntries ) {
-
       T path = condition.resolve( rawClasspathEntrie );
-
       if( path != null ) {
         result.add( path );
       }

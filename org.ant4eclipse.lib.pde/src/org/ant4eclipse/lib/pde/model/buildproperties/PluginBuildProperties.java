@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +34,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   // private List _jarsExtraClasspath;
 
   /** defines the order in which jars should be compiled (in case there are multiple libraries) */
-  private String[]            _jarsCompileOrder;
+  private List<String>        _jarsCompileOrder;
 
   /** Returns the javac source level for this plugin (If not set, 1.3 is the default value) */
   private String              _javacSource = "1.3";
@@ -47,7 +48,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * <p>
    * This property can be set using the "Automated Management of Dependencies" section in the Manifest editor
    */
-  private String[]            _additionalBundles;
+  private List<String>         _additionalBundles;
 
   /**
    *
@@ -125,7 +126,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   /**
    * @return Returns the jarsCompileOrder.
    */
-  public String[] getJarsCompileOrder() {
+  public List<String> getJarsCompileOrder() {
     return _jarsCompileOrder;
   }
 
@@ -137,9 +138,9 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    */
   public Library[] getOrderedLibraries() {
     // build libraries
-    String[] jars = getJarsCompileOrder();
+    List<String> jars = getJarsCompileOrder();
     Collection<Library> libraries = null;
-    if( jars == null || jars.length < 1 ) {
+    if( (jars == null) || jars.isEmpty() ) {
       // no build order specified, hope we don't need one...
       libraries = _libraries.values();
     } else {
@@ -161,7 +162,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @param compileOrder
    *          The compileOrder to set.
    */
-  void setJarsCompileOrder( String[] compileOrder ) {
+  void setJarsCompileOrder( List<String> compileOrder ) {
     Assure.notNull( "compileOrder", compileOrder );
     _jarsCompileOrder = compileOrder;
   }
@@ -169,7 +170,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   /**
    * @return the additionalBundles
    */
-  public String[] getAdditionalBundles() {
+  public List<String> getAdditionalBundles() {
     return _additionalBundles;
   }
 
@@ -177,7 +178,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @param additionalBundles
    *          the additionalBundles to set
    */
-  public void setAdditionalBundles( String[] additionalBundles ) {
+  public void setAdditionalBundles( List<String> additionalBundles ) {
     Assure.notNull( "additionalBundles", additionalBundles );
     _additionalBundles = additionalBundles;
   }
@@ -203,25 +204,25 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     /**
      * The name of the library.
      */
-    private String   _name;
+    private String          _name;
 
     /**
      * Indicate the file that will be used as a manifest for the library. The file must be located in one of the source
      * folder being used as input of the jar.
      */
-    private String   _manifest;
+    private String          _manifest;
 
     /**
      * Array of source folders that will be compiled (e.g. source.xyz.jar=src/, src-ant/). If the library is specified
      * in your plugin.xml or manifest.mf, the value should match it.
      */
-    private String[] _source;
+    private List<String>    _source;
 
     /** Array of output folders receiving the result of the compilation */
-    private String[] _output;
+    private List<String>    _output;
 
     /** List the files that should not be copied into the library by the compiler */
-    private String   _exclude;
+    private String          _exclude;
 
     // /**
     // * extra classpaths used to perform automated build. Classpath can either be relative paths, or // platform urls
@@ -259,7 +260,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * 
      * @return Returns the output.
      */
-    public String[] getOutput() {
+    public List<String> getOutput() {
       return _output;
     }
 
@@ -270,13 +271,13 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @return
      */
     public boolean hasOutput() {
-      return _output != null && _output.length > 0;
+      return (_output != null) && (_output.size() > 0);
     }
 
     /**
      * @return Returns the source.
      */
-    public String[] getSource() {
+    public List<String> getSource() {
       return _source;
     }
 
@@ -284,7 +285,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @return
      */
     public boolean hasSource() {
-      return _source != null && _source.length > 0;
+      return (_source != null) && (_source.size() > 0);
     }
 
     /**
@@ -360,16 +361,16 @@ public class PluginBuildProperties extends AbstractBuildProperties {
       } else if( !_name.equals( other._name ) ) {
         return false;
       }
-      if( !Arrays.equals( _output, other._output ) ) {
+      if( !Arrays.equals( _output.toArray(), other._output.toArray() ) ) {
         return false;
       }
-      if( !Arrays.equals( _source, other._source ) ) {
+      if( !Arrays.equals( _source.toArray(), other._source.toArray() ) ) {
         return false;
       }
       return true;
     }
 
-    private static int hashCode( Object[] array ) {
+    private static int hashCode( List<?> array ) {
       int PRIME = 31;
       if( array == null ) {
         return 0;
@@ -397,7 +398,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @param output
      *          The output to set.
      */
-    void setOutput( String[] output ) {
+    void setOutput( List<String> output ) {
       _output = output;
     }
 
@@ -405,7 +406,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @param source
      *          The source to set.
      */
-    void setSource( String[] source ) {
+    void setSource( List<String> source ) {
       _source = source;
     }
 

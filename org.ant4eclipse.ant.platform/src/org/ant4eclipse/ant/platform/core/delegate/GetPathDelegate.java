@@ -18,6 +18,7 @@ import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -28,17 +29,10 @@ import java.io.File;
  */
 public class GetPathDelegate extends PathDelegate implements GetPathComponent {
 
-  /** the id of the path */
-  private String  _pathId   = null;
-
-  /** the property */
-  private String  _property = null;
-
-  /** indicates whether the class path should be resolved relative or not */
-  private boolean _relative = false;
-
-  /** the resolved path entries */
-  private File[]  _resolvedPath;
+  private String       _pathId   = null;
+  private String       _property = null;
+  private boolean      _relative = false;
+  private List<File>   _resolvedPath;
 
   /**
    * @param component
@@ -51,7 +45,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setPathId( String id ) {
+  public void setPathId( String id ) {
     if( _pathId == null ) {
       _pathId = id;
     }
@@ -61,7 +55,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final String getPathId() {
+  public String getPathId() {
     return _pathId;
   }
 
@@ -69,7 +63,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final boolean isPathIdSet() {
+  public boolean isPathIdSet() {
     return _pathId != null;
   }
 
@@ -77,7 +71,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final boolean isRelative() {
+  public boolean isRelative() {
     return _relative;
   }
 
@@ -85,7 +79,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setRelative( boolean relative ) {
+  public void setRelative( boolean relative ) {
     _relative = relative;
   }
 
@@ -93,7 +87,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setProperty( String property ) {
+  public void setProperty( String property ) {
     _property = property;
   }
 
@@ -101,7 +95,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final String getProperty() {
+  public String getProperty() {
     return _property;
   }
 
@@ -109,7 +103,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final boolean isPropertySet() {
+  public boolean isPropertySet() {
     return _property != null;
   }
 
@@ -117,7 +111,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void requirePathIdOrPropertySet() {
+  public void requirePathIdOrPropertySet() {
     if( !isPathIdSet() && !isPropertySet() ) {
       throw new BuildException( "At least one of 'pathId' or 'property' has to be set!" );
     }
@@ -127,7 +121,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final File[] getResolvedPath() {
+  public List<File> getResolvedPath() {
     return _resolvedPath;
   }
 
@@ -135,7 +129,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void setResolvedPath( File[] resolvedPath ) {
+  public void setResolvedPath( List<File> resolvedPath ) {
     _resolvedPath = resolvedPath;
   }
 
@@ -143,7 +137,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void populateProperty() {
+  public void populateProperty() {
     if( isPropertySet() ) {
       String resolvedpath = convertToString( getResolvedPath() );
       getAntProject().setProperty( getProperty(), resolvedpath );
@@ -154,7 +148,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    * {@inheritDoc}
    */
   @Override
-  public final void populatePathId() {
+  public void populatePathId() {
     if( isPathIdSet() ) {
       Path resolvedPath = convertToPath( getResolvedPath() );
       getAntProject().addReference( getPathId(), resolvedPath );

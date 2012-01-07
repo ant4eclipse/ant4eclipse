@@ -109,11 +109,10 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     WorkspaceImpl workspace = new WorkspaceImpl();
 
     // retrieve all project folders from the workspace definition
-    File[] projectFolders = workspaceDefinition.getProjectFolders();
+    List<File> projectFolders = workspaceDefinition.getProjectFolders();
 
     if( A4ELogging.isDebuggingEnabled() ) {
-      A4ELogging.debug( "WorkspaceRegistry.registerWorkspace: project directory count=%d.",
-          Integer.valueOf( projectFolders.length ) );
+      A4ELogging.debug( "WorkspaceRegistry.registerWorkspace: project directory count=%d.", Integer.valueOf( projectFolders.size() ) );
     }
 
     // read the projects and add them to the workspace
@@ -131,8 +130,8 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     // add the workspace to the registry
     _registry.put( id, workspace );
 
-    // return the workspace
     return workspace;
+    
   }
 
   /**

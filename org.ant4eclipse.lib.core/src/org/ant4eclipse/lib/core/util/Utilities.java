@@ -571,7 +571,31 @@ public class Utilities {
         return null;
       }
     }
-    return result.toArray( new String[result.size()] );
+    return result.toArray( new String[ result.size() ] );
+  }
+
+  /**
+   * Similar to {@link #cleanup(String)} the input is altered if necessary, so the returned list only consists of
+   * non-empty Strings. There's at least one String or the result is <code>null</code>.
+   * 
+   * @param input
+   *          The input array which might be altered. Maybe <code>null</code>.
+   * 
+   * @return A list of the input values which is either <code>null</code> or contains at least one non empty value.
+   */
+  public static final List<String> cleanup( List<String> input ) {
+    if( input != null ) {
+      for( int i = input.size() - 1; i >= 0; i-- ) {
+        String element = cleanup( input.get(i) );
+        if( element == null ) {
+          input.remove(i);
+        }
+      }
+      if( input.isEmpty() ) {
+        input = null;
+      }
+    }
+    return input;
   }
 
   /**
@@ -1431,6 +1455,25 @@ public class Utilities {
       throw new Ant4EclipseException( CoreExceptionCode.IO_FAILURE );
     }
     return result;
+  }
+
+  public static final String toString( List<?> objects ) {
+    return toString( null, objects );
+  }
+  
+  public static final String toString( String delimiter, List<?> objects ) {
+    if( delimiter == null ) {
+      delimiter = ",";
+    }
+    StringBuffer buffer = new StringBuffer();
+    if( (objects != null) && (objects.size() > 0) ) {
+      buffer.append( String.valueOf( objects.get(0) ) );
+      for( int i = 1; i < objects.size(); i++ ) {
+        buffer.append( delimiter );
+        buffer.append( String.valueOf( objects.get(i) ) );
+      }
+    }
+    return buffer.toString();
   }
 
   /**

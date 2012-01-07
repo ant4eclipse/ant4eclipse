@@ -46,15 +46,9 @@ public class TestClassAnalyser {
    */
   public TestClassAnalyser( EclipseProject eclipseProject ) {
     Assure.notNull( "eclipseProject", eclipseProject );
-
-    //
     _eclipseProject = eclipseProject;
-
-    ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath( _eclipseProject, false, false,
-        new ArrayList<JdtClasspathContainerArgument>() );
-
-    _fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( _eclipseProject.getFolder(),
-        EcjAdapter.PROJECT, classpath.getClasspathFiles(), new File[0] );
+    ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath( _eclipseProject, false, false, new ArrayList<JdtClasspathContainerArgument>() );
+    _fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( _eclipseProject.getFolder(), EcjAdapter.PROJECT, classpath.getClasspathFiles(), new ArrayList<File>() );
   }
 
   /**

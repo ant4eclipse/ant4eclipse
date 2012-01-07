@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.platform.model.launcher;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Represents the content of a Launch Configuration file
@@ -65,6 +66,6 @@ public interface LaunchConfiguration {
    *          attribute.
    * @return
    */
-  String[] getListAttribute( String attributeName );
+  List<String> getListAttribute( String attributeName );
 
 } /* ENDINTERFACE */

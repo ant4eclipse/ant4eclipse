@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.platform.model.resource;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -131,10 +132,10 @@ public interface EclipseProject {
    * <p>
    * </p>
    * 
-   * @param path
+   * @param pathes
    * @return
    */
-  File[] getChildren( String[] path );
+  List<File> getChildren( List<String> pathes );
 
   /**
    * <p>
@@ -154,11 +155,11 @@ public interface EclipseProject {
    * <p>
    * </p>
    * 
-   * @param path
+   * @param pathes
    * @param relative
    * @return
    */
-  File[] getChildren( String[] path, PathStyle relative );
+  List<File> getChildren( List<String> pathes, PathStyle relative );
 
   /**
    * <p>
@@ -179,10 +180,8 @@ public interface EclipseProject {
    * @param settingsFileName
    *          the name of the file inside the <tt>.settings</tt> file
    * @return the file - never null
-   * 
-   * @throws RuntimeException
    */
-  File getSettingsFile( String settingsFileName ) throws RuntimeException;
+  File getSettingsFile( String settingsFileName );
 
   /**
    * <p>
@@ -211,7 +210,7 @@ public interface EclipseProject {
    * 
    * @return Returns the project natures of the project.
    */
-  ProjectNature[] getNatures();
+  List<ProjectNature> getNatures();
 
   /**
    * <p>
@@ -241,7 +240,7 @@ public interface EclipseProject {
    * 
    * @return Returns the roles of this project.
    */
-  ProjectRole[] getRoles();
+  List<ProjectRole> getRoles();
 
   /**
    * <p>
@@ -272,7 +271,7 @@ public interface EclipseProject {
    * 
    * @return Returns the build commands of this project.
    */
-  BuildCommand[] getBuildCommands();
+  List<BuildCommand> getBuildCommands();
 
   /**
    * <p>
@@ -281,6 +280,6 @@ public interface EclipseProject {
    * 
    * @return A list of all reference project names. Not <code>null</code>.
    */
-  String[] getReferencedProjects();
+  List<String> getReferencedProjects();
 
 } /* ENDCLASS */

@@ -14,7 +14,6 @@ package org.ant4eclipse.lib.platform.internal.tools;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolver;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,8 +34,7 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
    */
   @Override
   public List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<Object> additionalElements ) {
-    EclipseProject[] references = project.getWorkspace().getProjects( project.getReferencedProjects(), false );
-    return Arrays.asList( references );
+    return project.getWorkspace().getProjects( project.getReferencedProjects(), false );
   }
 
   /**

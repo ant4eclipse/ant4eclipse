@@ -29,6 +29,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -57,16 +58,11 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
   private static final String       NAME_SITEPACKAGES        = "site-packages";
 
   private Map<String,PythonRuntime> _runtimes                = new Hashtable<String,PythonRuntime>();
-
   private String                    _defaultid               = null;
-
   private File                      _pythonlister            = null;
-
   private File                      _listerdir               = null;
-
   private File                      _currentdir              = null;
-
-  private PythonInterpreter[]       _interpreters            = null;
+  private List<PythonInterpreter>   _interpreters            = null;
 
   public PythonRuntimeRegistryImpl() {
 
@@ -98,8 +94,8 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
         interpreters.add( new PythonInterpreter( name, exes ) );
       }
     }
-    _interpreters = interpreters.toArray( new PythonInterpreter[interpreters.size()] );
-    Arrays.sort( _interpreters );
+    _interpreters = interpreters;
+    Collections.sort( _interpreters );
 
   }
 
@@ -178,9 +174,9 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
     // load version number and library records
     Version version = Version.newStandardVersion( extraction[0] );
-    File[] libs = new File[extraction.length - 1];
-    for( int i = 0; i < libs.length; i++ ) {
-      libs[i] = new File( extraction[i + 1] );
+    List<File> libs = new ArrayList<File>();
+    for( int i = 1; i < extraction.length; i++ ) {
+      libs.add( new File( extraction[i] ) );
     }
 
     PythonRuntime newruntime = new PythonRuntimeImpl( id, location, version, libs, python );
@@ -309,7 +305,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * {@inheritDoc}
    */
   @Override
-  public PythonInterpreter[] getSupportedInterpreters() {
+  public List<PythonInterpreter> getSupportedInterpreters() {
     return _interpreters;
   }
 

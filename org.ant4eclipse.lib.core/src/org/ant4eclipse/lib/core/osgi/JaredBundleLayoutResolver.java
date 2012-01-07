@@ -22,6 +22,7 @@ import org.ant4eclipse.lib.core.util.Utilities;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -100,15 +101,13 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * {@inheritDoc}
    */
   @Override
-  public File[] resolveBundleClasspathEntries() {
-
-    // expand if necessary
+  public List<File> resolveBundleClasspathEntries() {
     if( needExpansion() ) {
       return expand();
+    } else {
+      // return 'self'
+      return Arrays.asList( _location );
     }
-
-    // return 'self'
-    return new File[] { _location };
   }
 
   /**
@@ -143,7 +142,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * 
    * @return all files that belongs to the bundle class path.
    */
-  private File[] expand() {
+  private List<File> expand() {
 
     // compute destination
     ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements( _manifest,
@@ -168,7 +167,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
         // log error
         A4ELogging.error( "Could not expand jar file '%s'. Reason: '%s'", _location, ex.getMessage() );
         // return 'self'
-        return new File[] { _location };
+        return Arrays.asList( _location );
       } else {
         throw ex;
       }
@@ -197,7 +196,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     }
 
     // return result
-    return result.toArray( new File[0] );
+    return result;
   }
   
 } /* ENDCLASS */

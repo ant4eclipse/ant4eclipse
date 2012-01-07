@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <p>
@@ -30,6 +31,6 @@ public interface WorkspaceDefinition {
    * 
    * @return an array of folders that should be treated as eclipse projects for a workspace.
    */
-  File[] getProjectFolders();
+  List<File> getProjectFolders();
 
 } /* ENDINTERFACE */

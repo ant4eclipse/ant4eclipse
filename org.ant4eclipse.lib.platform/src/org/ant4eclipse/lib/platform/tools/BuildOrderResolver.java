@@ -18,7 +18,6 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,11 +42,10 @@ public class BuildOrderResolver {
    * @param additionalElements
    * @return
    */
-  public static final List<EclipseProject> resolveBuildOrder( Workspace workspace, String[] projectNames,
-      String[] referenceTypes, List<Object> additionalElements ) {
+  public static final List<EclipseProject> resolveBuildOrder( Workspace workspace, List<String> projectNames, List<String> referenceTypes, List<Object> additionalElements ) {
 
     // retrieve all eclipse projects from the workspace
-    EclipseProject[] eclipseProjects = workspace.getProjects( projectNames, true );
+    List<EclipseProject> eclipseProjects = workspace.getProjects( projectNames, true );
 
     // create a dependency graph
     DependencyGraph<EclipseProject> dependencyGraph = new DependencyGraph<EclipseProject>(
@@ -61,21 +59,17 @@ public class BuildOrderResolver {
     // iterate over the eclipse projects
     for( EclipseProject eclipseProject : eclipseProjects ) {
 
-      // System.err.println("TEST: Project " + eclipseProject.getSpecifiedName());
-
       if( !dependencyGraph.containsVertex( eclipseProject ) ) {
         dependencyGraph.addVertex( eclipseProject );
       }
 
       // resolve referenced projects
-      ReferencedProjectsResolverService resolverservice = A4ECore.instance().getRequiredService(
-          ReferencedProjectsResolverService.class );
+      ReferencedProjectsResolverService resolverservice = A4ECore.instance().getRequiredService( ReferencedProjectsResolverService.class );
       if( referenceTypes == null ) {
         referenceTypes = resolverservice.getReferenceTypes();
       }
 
-      List<EclipseProject> referencedProjects = resolverservice.resolveReferencedProjects( eclipseProject,
-          referenceTypes, additionalElements );
+      List<EclipseProject> referencedProjects = resolverservice.resolveReferencedProjects( eclipseProject, referenceTypes, additionalElements );
 
       // add referenced projects to the dependency graph
       for( EclipseProject referencedProject : referencedProjects ) {
@@ -94,15 +88,13 @@ public class BuildOrderResolver {
 
     // filter result - only the requested projects should be listed
     List<EclipseProject> result = new ArrayList<EclipseProject>();
-    List<String> names = Arrays.asList( projectNames );
     for( EclipseProject eclipseProject : orderProjects ) {
-      if( names.contains( eclipseProject.getSpecifiedName() ) ) {
+      if( projectNames.contains( eclipseProject.getSpecifiedName() ) ) {
         result.add( eclipseProject );
       }
     }
-
-    // return the result
     return result;
+    
   }
   
 } /* ENDCLASS */
