@@ -40,24 +40,24 @@ public class SimpleConfiguratorBundles {
    * @param location
    *          The location of the file providing the simple configuration setup.
    */
-  public SimpleConfiguratorBundles(File location) {
+  public SimpleConfiguratorBundles( File location ) {
 
-    this._records = new ArrayList<BundleStartRecord>();
+    _records = new ArrayList<BundleStartRecord>();
 
-    StringBuffer textcontent = Utilities.readTextContent(location, "UTF-8", true);
-    String[] list = textcontent.toString().split("\n");
-    for (String line : list) {
+    StringBuffer textcontent = Utilities.readTextContent( location, "UTF-8", true );
+    String[] list = textcontent.toString().split( "\n" );
+    for( String line : list ) {
       line = line.trim();
-      if (!line.startsWith("#")) {
-        String[] splitted = line.split(",");
-        if (splitted.length != 5) {
-          A4ELogging.debug(MSG_INVALID_LINE, line);
+      if( !line.startsWith( "#" ) ) {
+        String[] splitted = line.split( "," );
+        if( splitted.length != 5 ) {
+          A4ELogging.debug( MSG_INVALID_LINE, line );
         } else {
           BundleStartRecord record = new BundleStartRecord();
-          record.setId(splitted[0]);
-          record.setStartLevel(Integer.parseInt(splitted[3]));
-          record.setAutoStart(Boolean.parseBoolean(splitted[4]));
-          this._records.add(record);
+          record.setId( splitted[0] );
+          record.setStartLevel( Integer.parseInt( splitted[3] ) );
+          record.setAutoStart( Boolean.parseBoolean( splitted[4] ) );
+          _records.add( record );
         }
       }
     }
@@ -70,9 +70,9 @@ public class SimpleConfiguratorBundles {
    * @return A list of all BundleStartRecords. Not <code>null</code>.
    */
   public BundleStartRecord[] getBundleStartRecords() {
-    BundleStartRecord[] result = new BundleStartRecord[this._records.size()];
-    this._records.toArray(result);
-    Arrays.sort(result);
+    BundleStartRecord[] result = new BundleStartRecord[_records.size()];
+    _records.toArray( result );
+    Arrays.sort( result );
     return result;
   }
 
@@ -82,13 +82,13 @@ public class SimpleConfiguratorBundles {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[SimpleConfiguratorBundles:");
-    buffer.append(" _records {");
-    for (int i = 0; i < this._records.size(); i++) {
-      buffer.append(" ");
-      buffer.append(this._records.get(i));
+    buffer.append( "[SimpleConfiguratorBundles:" );
+    buffer.append( " _records {" );
+    for( int i = 0; i < _records.size(); i++ ) {
+      buffer.append( " " );
+      buffer.append( _records.get( i ) );
     }
-    buffer.append("}]");
+    buffer.append( "}]" );
     return buffer.toString();
   }
 
@@ -98,8 +98,8 @@ public class SimpleConfiguratorBundles {
   @Override
   public int hashCode() {
     int result = 1;
-    for (int i = 0; i < this._records.size(); i++) {
-      result = 31 * result + this._records.get(i).hashCode();
+    for( int i = 0; i < _records.size(); i++ ) {
+      result = 31 * result + _records.get( i ).hashCode();
     }
     return result;
   }

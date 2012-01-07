@@ -26,28 +26,28 @@ import java.util.Map;
  */
 public class LinkedResourcePathVariableServiceImpl implements LinkedResourcePathVariableService {
 
-  private Map<String, String> _variables;
+  private Map<String,String> _variables;
 
   public LinkedResourcePathVariableServiceImpl() {
-    this._variables = new HashMap<String, String>();
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getLinkedResourcePath(String pathVariable) {
-    return _variables.get(pathVariable);
+    _variables = new HashMap<String,String>();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void registerLinkedResourcePathVariable(String pathVariable, String location) {
-    _variables.put(pathVariable, location);
+  public String getLinkedResourcePath( String pathVariable ) {
+    return _variables.get( pathVariable );
   }
-  
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void registerLinkedResourcePathVariable( String pathVariable, String location ) {
+    _variables.put( pathVariable, location );
+  }
+
   /**
    * {@inheritDoc}
    */

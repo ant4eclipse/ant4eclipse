@@ -50,9 +50,9 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
    */
   public JdtExecutorValuesProvider( PathComponent pathComponent, ProjectComponent projectComponent ) {
     Assure.notNull( "pathComponent", pathComponent );
-    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider( pathComponent );
-    this._pathComponent = pathComponent;
-    this._projectComponent = projectComponent;
+    _platformExecutorValuesProvider = new PlatformExecutorValuesProvider( pathComponent );
+    _pathComponent = pathComponent;
+    _projectComponent = projectComponent;
   }
 
   /**
@@ -68,7 +68,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
       Set<String> requestedPaths ) {
 
     // provide the executor values from the platform component
-    this._platformExecutorValuesProvider.provideExecutorValues( javaProjectRole.getEclipseProject(), executionValues );
+    _platformExecutorValuesProvider.provideExecutorValues( javaProjectRole.getEclipseProject(), executionValues );
 
     // create compiler arguments
     EcjAdditionalCompilerArguments compilerArguments = new EcjAdditionalCompilerArguments();
@@ -135,39 +135,39 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
       if( cpAbsoluteCompiletime.hasBootClasspath() ) {
         executionValues.getProperties().put( BOOT_CLASSPATH,
-            this._pathComponent.convertToString( cpAbsoluteCompiletime.getBootClasspathFiles() ) );
+            _pathComponent.convertToString( cpAbsoluteCompiletime.getBootClasspathFiles() ) );
       }
 
       executionValues.getProperties().put( CLASSPATH_ABSOLUTE_COMPILETIME,
-          this._pathComponent.convertToString( cpAbsoluteCompiletime.getClasspathFiles() ) );
+          _pathComponent.convertToString( cpAbsoluteCompiletime.getClasspathFiles() ) );
 
       if( cpAbsoluteCompiletime.hasBootClasspath() ) {
         executionValues.getReferences().put( BOOT_CLASSPATH_PATH,
-            this._pathComponent.convertToPath( cpAbsoluteCompiletime.getBootClasspathFiles() ) );
+            _pathComponent.convertToPath( cpAbsoluteCompiletime.getBootClasspathFiles() ) );
       }
       executionValues.getReferences().put( CLASSPATH_ABSOLUTE_COMPILETIME_PATH,
-          this._pathComponent.convertToPath( cpAbsoluteCompiletime.getClasspathFiles() ) );
+          _pathComponent.convertToPath( cpAbsoluteCompiletime.getClasspathFiles() ) );
     }
 
     if( cpRelativeCompiletime != null ) {
       executionValues.getProperties().put( CLASSPATH_RELATIVE_COMPILETIME,
-          this._pathComponent.convertToString( cpRelativeCompiletime.getClasspathFiles() ) );
+          _pathComponent.convertToString( cpRelativeCompiletime.getClasspathFiles() ) );
       executionValues.getReferences().put( CLASSPATH_RELATIVE_COMPILETIME_PATH,
-          this._pathComponent.convertToPath( cpRelativeCompiletime.getClasspathFiles() ) );
+          _pathComponent.convertToPath( cpRelativeCompiletime.getClasspathFiles() ) );
     }
 
     if( cpAbsoluteRuntime != null ) {
       executionValues.getProperties().put( CLASSPATH_ABSOLUTE_RUNTIME,
-          this._pathComponent.convertToString( cpAbsoluteRuntime.getClasspathFiles() ) );
+          _pathComponent.convertToString( cpAbsoluteRuntime.getClasspathFiles() ) );
       executionValues.getReferences().put( CLASSPATH_ABSOLUTE_RUNTIME_PATH,
-          this._pathComponent.convertToPath( cpAbsoluteRuntime.getClasspathFiles() ) );
+          _pathComponent.convertToPath( cpAbsoluteRuntime.getClasspathFiles() ) );
     }
 
     if( cpRelativeRuntime != null ) {
       executionValues.getProperties().put( CLASSPATH_RELATIVE_RUNTIME,
-          this._pathComponent.convertToString( cpRelativeRuntime.getClasspathFiles() ) );
+          _pathComponent.convertToString( cpRelativeRuntime.getClasspathFiles() ) );
       executionValues.getReferences().put( CLASSPATH_RELATIVE_RUNTIME_PATH,
-          this._pathComponent.convertToPath( cpRelativeRuntime.getClasspathFiles() ) );
+          _pathComponent.convertToPath( cpRelativeRuntime.getClasspathFiles() ) );
     }
 
     // resolve default output folder
@@ -178,21 +178,21 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
       File defaultOutputFolder = javaProjectRole.getEclipseProject().getChild( defaultOutputFolderName );
       executionValues.getProperties().put( DEFAULT_OUTPUT_DIRECTORY_NAME, defaultOutputFolderName );
       executionValues.getProperties().put( DEFAULT_OUTPUT_DIRECTORY,
-          this._pathComponent.convertToString( defaultOutputFolder ) );
+          _pathComponent.convertToString( defaultOutputFolder ) );
       executionValues.getReferences().put( DEFAULT_OUTPUT_DIRECTORY_PATH,
-          this._pathComponent.convertToPath( defaultOutputFolder ) );
+          _pathComponent.convertToPath( defaultOutputFolder ) );
     }
 
     if( javaProjectRole.getSourceFolders().length > 0 ) {
 
       executionValues.getProperties().put(
           SOURCE_DIRECTORIES,
-          this._pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
+          _pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
               javaProjectRole.getSourceFolders() ) ) );
 
       executionValues.getReferences().put(
           SOURCE_DIRECTORIES_PATH,
-          this._pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
+          _pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
               javaProjectRole.getSourceFolders() ) ) );
 
       // Support for filtered java source directory:
@@ -206,12 +206,12 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
       executionValues.getProperties().put(
           OUTPUT_DIRECTORIES,
-          this._pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
+          _pathComponent.convertToString( javaProjectRole.getEclipseProject().getChildren(
               javaProjectRole.getAllOutputFolders() ) ) );
 
       executionValues.getReferences().put(
           OUTPUT_DIRECTORIES_PATH,
-          this._pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
+          _pathComponent.convertToPath( javaProjectRole.getEclipseProject().getChildren(
               javaProjectRole.getAllOutputFolders() ) ) );
 
       for( String sourceFolderName : javaProjectRole.getSourceFolders() ) {
@@ -238,7 +238,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
   public final Path createFilteredSourceFilePath( JavaProjectRole javaProjectRole ) {
 
     // the ant path
-    Path antPath = new Path( this._projectComponent.getProject() );
+    Path antPath = new Path( _projectComponent.getProject() );
 
     // the source folder
     for( String sourceFolder : javaProjectRole.getSourceFolders() ) {

@@ -32,4 +32,4 @@ public interface Constants {
 
   String PROP_ARCH                  = "osgi.arch";           //$NON-NLS-1$
 
-}
+} /* ENDINTERFACE */

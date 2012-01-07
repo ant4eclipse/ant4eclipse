@@ -24,14 +24,14 @@ public class CompileJobResultImpl implements CompileJobResult {
 
   private CategorizedProblem[] _categorizedProblems;
 
-  private Map<String, File>    _compiledclassfiles;
+  private Map<String,File>     _compiledclassfiles;
 
   /**
    * {@inheritDoc}
    */
   @Override
   public boolean succeeded() {
-    return this._succeeded;
+    return _succeeded;
   }
 
   /**
@@ -39,26 +39,26 @@ public class CompileJobResultImpl implements CompileJobResult {
    */
   @Override
   public CategorizedProblem[] getCategorizedProblems() {
-    return this._categorizedProblems == null ? new CategorizedProblem[0] : this._categorizedProblems;
+    return _categorizedProblems == null ? new CategorizedProblem[0] : _categorizedProblems;
   }
 
-  public void setSucceeded(boolean succeeded) {
-    this._succeeded = succeeded;
+  public void setSucceeded( boolean succeeded ) {
+    _succeeded = succeeded;
   }
 
-  public void setCategorizedProblems(CategorizedProblem[] categorizedProblems) {
-    this._categorizedProblems = categorizedProblems;
+  public void setCategorizedProblems( CategorizedProblem[] categorizedProblems ) {
+    _categorizedProblems = categorizedProblems;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Map<String, File> getCompiledClassFiles() {
-    if (this._compiledclassfiles == null) {
+  public Map<String,File> getCompiledClassFiles() {
+    if( _compiledclassfiles == null ) {
       return Collections.EMPTY_MAP;
     } else {
-      return this._compiledclassfiles;
+      return _compiledclassfiles;
     }
   }
 
@@ -68,8 +68,8 @@ public class CompileJobResultImpl implements CompileJobResult {
    * @param compiledclasses
    *          A map for the class files. Maybe <code>null</code>.
    */
-  public void setCompiledClassFiles(Map<String, File> compiledclasses) {
-    this._compiledclassfiles = compiledclasses;
+  public void setCompiledClassFiles( Map<String,File> compiledclasses ) {
+    _compiledclassfiles = compiledclasses;
   }
 
-}
+} /* ENDCLASS */

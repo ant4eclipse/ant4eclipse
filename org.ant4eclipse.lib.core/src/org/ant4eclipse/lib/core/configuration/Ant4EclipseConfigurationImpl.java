@@ -51,7 +51,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    */
   public Ant4EclipseConfigurationImpl( StringMap properties ) {
     Assure.notNull( "properties", properties );
-    this._properties = properties;
+    _properties = properties;
   }
 
   /**
@@ -60,7 +60,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * </p>
    */
   public Ant4EclipseConfigurationImpl() {
-    this._properties = loadConfigurationProperties();
+    _properties = loadConfigurationProperties();
   }
 
   /**
@@ -69,7 +69,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   @Override
   public String getProperty( String propertyName ) {
     Assure.notNull( "propertyName", propertyName );
-    return this._properties.get( propertyName );
+    return _properties.get( propertyName );
   }
 
   /**
@@ -78,7 +78,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   @Override
   public boolean hasProperty( String propertyName ) {
     Assure.notNull( "propertyName", propertyName );
-    return this._properties.containsKey( propertyName );
+    return _properties.containsKey( propertyName );
   }
 
   /**
@@ -90,7 +90,7 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
     if( !prefix.endsWith( "." ) ) {
       prefix += ".";
     }
-    Set<Map.Entry<String,String>> entries = this._properties.entrySet();
+    Set<Map.Entry<String,String>> entries = _properties.entrySet();
     List<Pair<String,String>> result = new ArrayList<Pair<String,String>>();
     for( Map.Entry<String,String> entry : entries ) {
       String key = entry.getKey();

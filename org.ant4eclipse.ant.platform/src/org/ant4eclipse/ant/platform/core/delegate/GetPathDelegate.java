@@ -52,8 +52,8 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void setPathId( String id ) {
-    if( this._pathId == null ) {
-      this._pathId = id;
+    if( _pathId == null ) {
+      _pathId = id;
     }
   }
 
@@ -62,7 +62,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final String getPathId() {
-    return this._pathId;
+    return _pathId;
   }
 
   /**
@@ -70,7 +70,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final boolean isPathIdSet() {
-    return this._pathId != null;
+    return _pathId != null;
   }
 
   /**
@@ -78,7 +78,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final boolean isRelative() {
-    return this._relative;
+    return _relative;
   }
 
   /**
@@ -86,7 +86,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void setRelative( boolean relative ) {
-    this._relative = relative;
+    _relative = relative;
   }
 
   /**
@@ -94,7 +94,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void setProperty( String property ) {
-    this._property = property;
+    _property = property;
   }
 
   /**
@@ -102,7 +102,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final String getProperty() {
-    return this._property;
+    return _property;
   }
 
   /**
@@ -110,7 +110,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final boolean isPropertySet() {
-    return this._property != null;
+    return _property != null;
   }
 
   /**
@@ -128,7 +128,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final File[] getResolvedPath() {
-    return this._resolvedPath;
+    return _resolvedPath;
   }
 
   /**
@@ -136,7 +136,7 @@ public class GetPathDelegate extends PathDelegate implements GetPathComponent {
    */
   @Override
   public final void setResolvedPath( File[] resolvedPath ) {
-    this._resolvedPath = resolvedPath;
+    _resolvedPath = resolvedPath;
   }
 
   /**

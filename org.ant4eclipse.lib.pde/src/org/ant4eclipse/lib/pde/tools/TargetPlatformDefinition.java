@@ -37,7 +37,7 @@ public class TargetPlatformDefinition {
    */
   public TargetPlatformDefinition() {
     // create the locations list
-    this._locations = new ArrayList<File>();
+    _locations = new ArrayList<File>();
   }
 
   /**
@@ -48,10 +48,10 @@ public class TargetPlatformDefinition {
    * @param location
    *          the location to add
    */
-  public void addLocation(File location) {
-    Assure.isDirectory("location", location);
-    if (!this._locations.contains(location)) {
-      this._locations.add(location);
+  public void addLocation( File location ) {
+    Assure.isDirectory( "location", location );
+    if( !_locations.contains( location ) ) {
+      _locations.add( location );
     }
   }
 
@@ -63,7 +63,7 @@ public class TargetPlatformDefinition {
    * @return all the locations defined in this target platform location.
    */
   public final File[] getLocations() {
-    return this._locations.toArray(new File[this._locations.size()]);
+    return _locations.toArray( new File[_locations.size()] );
   }
 
   /**
@@ -72,18 +72,18 @@ public class TargetPlatformDefinition {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[");
-    buffer.append(getClass().getSimpleName());
-    buffer.append(": _locations={");
-    if (!this._locations.isEmpty()) {
-      buffer.append(this._locations.get(0).getAbsolutePath());
-      for (int i = 1; i < this._locations.size(); i++) {
-        buffer.append(",");
-        buffer.append(this._locations.get(i).getAbsolutePath());
+    buffer.append( "[" );
+    buffer.append( getClass().getSimpleName() );
+    buffer.append( ": _locations={" );
+    if( !_locations.isEmpty() ) {
+      buffer.append( _locations.get( 0 ).getAbsolutePath() );
+      for( int i = 1; i < _locations.size(); i++ ) {
+        buffer.append( "," );
+        buffer.append( _locations.get( i ).getAbsolutePath() );
       }
     }
-    buffer.append("}]");
+    buffer.append( "}]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */

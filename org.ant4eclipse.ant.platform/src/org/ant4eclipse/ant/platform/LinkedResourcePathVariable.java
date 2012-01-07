@@ -48,7 +48,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * @return
    */
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -58,7 +58,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * @param name
    */
   public void setName( String name ) {
-    this._name = name;
+    _name = name;
   }
 
   /**
@@ -68,7 +68,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * @return
    */
   public String getLinkedResourceLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -78,7 +78,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
    * @param location
    */
   public void setLocation( String location ) {
-    this._location = location;
+    _location = location;
   }
 
   /**
@@ -92,18 +92,18 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
         LinkedResourcePathVariableService.class );
 
     //
-    if( !Utilities.hasText( this._name ) ) {
+    if( !Utilities.hasText( _name ) ) {
       // TODO: Ant4EclipseException
       throw new RuntimeException( "Missing attribute 'name'." );
     }
 
-    if( !Utilities.hasText( this._location ) ) {
+    if( !Utilities.hasText( _location ) ) {
       // TODO: Ant4EclipseException
       throw new RuntimeException( "Missing attribute 'location'." );
     }
 
     // register the variable
-    variableService.registerLinkedResourcePathVariable( this._name, this._location );
+    variableService.registerLinkedResourcePathVariable( _name, _location );
   }
 
 } /* ENDCLASS */

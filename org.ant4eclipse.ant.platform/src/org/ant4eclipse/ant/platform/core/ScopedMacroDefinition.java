@@ -43,8 +43,8 @@ public class ScopedMacroDefinition<E> {
   public ScopedMacroDefinition( MacroDef macroDefinition, E scope ) {
     Assure.notNull( "macroDefinition", macroDefinition );
     Assure.notNull( "scope", scope );
-    this._macroDef = macroDefinition;
-    this._scope = scope;
+    _macroDef = macroDefinition;
+    _scope = scope;
   }
 
   /**
@@ -55,7 +55,7 @@ public class ScopedMacroDefinition<E> {
    * @return the macro definition.
    */
   public MacroDef getMacroDef() {
-    return this._macroDef;
+    return _macroDef;
   }
 
   /**
@@ -66,7 +66,7 @@ public class ScopedMacroDefinition<E> {
    * @return the scope.
    */
   public E getScope() {
-    return this._scope;
+    return _scope;
   }
   
 } /* ENDCLASS */

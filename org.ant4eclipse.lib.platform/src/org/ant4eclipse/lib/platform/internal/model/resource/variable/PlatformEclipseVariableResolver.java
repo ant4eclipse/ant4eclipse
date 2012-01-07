@@ -16,17 +16,17 @@ public class PlatformEclipseVariableResolver implements EclipseVariableResolver 
    * TODO implement
    */
   @Override
-  public void getResolvedVariables(StringMap resolvedVariables, EclipseProject eclipseProject) {
-    Assure.notNull("resolvedVariables", resolvedVariables);
-    Assure.notNull("eclipseProject", eclipseProject);
+  public void getResolvedVariables( StringMap resolvedVariables, EclipseProject eclipseProject ) {
+    Assure.notNull( "resolvedVariables", resolvedVariables );
+    Assure.notNull( "eclipseProject", eclipseProject );
 
-    resolvedVariables.put("build_project", eclipseProject.getFolder().getAbsolutePath());
-    resolvedVariables.put("build_type", "full");
-    resolvedVariables.put("project_loc", eclipseProject.getFolder().getAbsolutePath());
-    resolvedVariables.put("project_name", eclipseProject.getSpecifiedName());
-    resolvedVariables.put("project_path", eclipseProject.getFolderName());
+    resolvedVariables.put( "build_project", eclipseProject.getFolder().getAbsolutePath() );
+    resolvedVariables.put( "build_type", "full" );
+    resolvedVariables.put( "project_loc", eclipseProject.getFolder().getAbsolutePath() );
+    resolvedVariables.put( "project_name", eclipseProject.getSpecifiedName() );
+    resolvedVariables.put( "project_path", eclipseProject.getFolderName() );
     // TODO !!
-    resolvedVariables.put("workspace_loc", eclipseProject.getFolder().getParent());
+    resolvedVariables.put( "workspace_loc", eclipseProject.getFolder().getParent() );
   }
 
   /**

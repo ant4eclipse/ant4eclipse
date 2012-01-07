@@ -113,18 +113,13 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    */
   public void setResolvedClassPaths( String resolvedClassPaths ) {
 
-    //
-    this._resolvedClassPaths = new HashSet<String>();
-
-    //
+    _resolvedClassPaths = new HashSet<String>();
+    
     if( resolvedClassPaths == null ) {
       return;
     }
 
-    //
     String[] paths = resolvedClassPaths.split( "," );
-
-    //
     for( String path : paths ) {
 
       String trimmedPath = path.trim().toLowerCase();
@@ -137,7 +132,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       }
 
       // add value
-      this._resolvedClassPaths.add( trimmedPath );
+      _resolvedClassPaths.add( trimmedPath );
     }
   }
 

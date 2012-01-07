@@ -16,6 +16,7 @@ import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 
 public abstract class AbstractTeamProjectDescription implements TeamProjectDescription {
+
   /** the name of the project */
   private String _projectname;
 
@@ -24,12 +25,12 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
    */
   @Override
   public String getProjectName() {
-    return this._projectname;
+    return _projectname;
   }
 
-  public AbstractTeamProjectDescription(String projectname) {
-    Assure.notNull("projectname", projectname);
-    this._projectname = projectname;
+  public AbstractTeamProjectDescription( String projectname ) {
+    Assure.notNull( "projectname", projectname );
+    _projectname = projectname;
   }
 
   @Override
@@ -38,10 +39,10 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
     StringMap properties = new StringMap();
 
     // add project name
-    properties.put("projectName", this._projectname);
+    properties.put( "projectName", _projectname );
 
     // add provider-specific properties
-    addSpecificProperties(properties);
+    addSpecificProperties( properties );
 
     // return properties
     return properties;
@@ -52,7 +53,7 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
    * 
    * @param properties
    */
-  protected abstract void addSpecificProperties(StringMap properties);
+  protected abstract void addSpecificProperties( StringMap properties );
 
   /**
    * {@inheritDoc}
@@ -60,7 +61,7 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._projectname == null ? 0 : this._projectname.hashCode());
+    hashCode = 31 * hashCode + (_projectname == null ? 0 : _projectname.hashCode());
     return hashCode;
   }
 
@@ -68,18 +69,19 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     AbstractTeamProjectDescription castedObj = (AbstractTeamProjectDescription) o;
-    return ((this._projectname == null ? castedObj._projectname == null : this._projectname
-        .equals(castedObj._projectname)));
+    return((_projectname == null ? castedObj._projectname == null : _projectname
+        .equals( castedObj._projectname )));
   }
-}
+  
+} /* ENDCLASS */

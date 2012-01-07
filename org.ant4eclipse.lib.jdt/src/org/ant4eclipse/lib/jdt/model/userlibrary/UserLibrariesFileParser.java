@@ -33,6 +33,6 @@ public interface UserLibrariesFileParser extends A4EService {
    * @param workspace
    *          The workspace definition that is used to resolve relative paths or null
    */
-  UserLibraries parseUserLibrariesFile(File configuration, Workspace workspace);
+  UserLibraries parseUserLibrariesFile( File configuration, Workspace workspace );
 
 } /* ENDCLASS */

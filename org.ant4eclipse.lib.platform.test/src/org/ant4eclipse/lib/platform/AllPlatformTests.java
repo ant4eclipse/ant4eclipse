@@ -18,8 +18,8 @@ import org.ant4eclipse.lib.platform.model.team.projectset.internal.ProjectSetFil
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses( { LaunchConfigurationReaderImplTest.class,
-    CvsRootTest.class, ProjectSetFileParserImplTest.class, PropertyParserTest.class })
+@RunWith( Suite.class )
+@Suite.SuiteClasses( { LaunchConfigurationReaderImplTest.class, CvsRootTest.class, ProjectSetFileParserImplTest.class,
+    PropertyParserTest.class } )
 public class AllPlatformTests {
 } /* ENDCLASS */

@@ -26,17 +26,17 @@ import java.util.Map;
 
 public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 
-  private ClassFileLoader[]                  _classFileLoaders;
+  private ClassFileLoader[]                 _classFileLoaders;
 
   /** maps packages to a package provider that contains a list of one or more class path entries */
-  private Map<String, List<ClassFileLoader>> _allPackages;
+  private Map<String,List<ClassFileLoader>> _allPackages;
 
-  public CompoundClassFileLoaderImpl(ClassFileLoader[] classFileLoaders) {
-    Assure.notNull("classFileLoaders", classFileLoaders);
+  public CompoundClassFileLoaderImpl( ClassFileLoader[] classFileLoaders ) {
+    Assure.notNull( "classFileLoaders", classFileLoaders );
 
-    this._classFileLoaders = classFileLoaders;
+    _classFileLoaders = classFileLoaders;
 
-    this._allPackages = new HashMap<String, List<ClassFileLoader>>();
+    _allPackages = new HashMap<String,List<ClassFileLoader>>();
 
     initialise();
   }
@@ -48,22 +48,22 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   public File[] getClasspath() {
     List<File> files = new ArrayList<File>();
     List<String> set = new ArrayList<String>();
-    for (ClassFileLoader loader : this._classFileLoaders) {
+    for( ClassFileLoader loader : _classFileLoaders ) {
       File[] entries = loader.getClasspath();
-      for (File entry : entries) {
-        entry = Utilities.getCanonicalFile(entry);
+      for( File entry : entries ) {
+        entry = Utilities.getCanonicalFile( entry );
         String path = entry.getAbsolutePath();
-        if (Utilities.isWindows()) {
+        if( Utilities.isWindows() ) {
           // for windows the case makes no difference
           path = path.toLowerCase();
         }
-        if (!set.contains(path)) {
-          set.add(path);
-          files.add(entry);
+        if( !set.contains( path ) ) {
+          set.add( path );
+          files.add( entry );
         }
       }
     }
-    return files.toArray(new File[files.size()]);
+    return files.toArray( new File[files.size()] );
   }
 
   /**
@@ -71,28 +71,28 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
    */
   @Override
   public String[] getAllPackages() {
-    return this._allPackages.keySet().toArray(new String[0]);
+    return _allPackages.keySet().toArray( new String[0] );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasPackage(String packageName) {
-    return this._allPackages.containsKey(packageName);
+  public boolean hasPackage( String packageName ) {
+    return _allPackages.containsKey( packageName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ClassFile loadClass(ClassName className) {
+  public ClassFile loadClass( ClassName className ) {
 
     // get the class file loader list
-    List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
+    List<ClassFileLoader> classFileLoaderList = _allPackages.get( className.getPackageName() );
 
     // return if class file loader list is null
-    if (classFileLoaderList == null) {
+    if( classFileLoaderList == null ) {
       return null;
     }
 
@@ -100,20 +100,20 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
     ClassFile result = null;
 
     // try to find the class file...
-    for (ClassFileLoader classFileLoader : classFileLoaderList) {
+    for( ClassFileLoader classFileLoader : classFileLoaderList ) {
 
       // try to load class file...
-      ClassFile classFile = classFileLoader.loadClass(className);
+      ClassFile classFile = classFileLoader.loadClass( className );
 
       // class file was found...
-      if (classFile != null) {
+      if( classFile != null ) {
 
         // if the class file has no access restrictions, return the class file...
-        if (!classFile.hasAccessRestriction()) {
+        if( !classFile.hasAccessRestriction() ) {
           return classFile;
         }
         // else set the class file a result, if result is null
-        else if (result == null) {
+        else if( result == null ) {
           result = classFile;
         }
       }
@@ -127,20 +127,20 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public ReferableSourceFile loadSource(ClassName className) {
+  public ReferableSourceFile loadSource( ClassName className ) {
 
     // TODO: Access restrictions for source files!!
 
     // if the package name is not in the map of all packages, return immediately
-    List<ClassFileLoader> classFileLoaderList = this._allPackages.get(className.getPackageName());
-    if (classFileLoaderList == null) {
+    List<ClassFileLoader> classFileLoaderList = _allPackages.get( className.getPackageName() );
+    if( classFileLoaderList == null ) {
       return null;
     }
 
     // search for the source file
-    for (ClassFileLoader classFileLoader : classFileLoaderList) {
-      ReferableSourceFile sourceFile = classFileLoader.loadSource(className);
-      if (sourceFile != null) {
+    for( ClassFileLoader classFileLoader : classFileLoaderList ) {
+      ReferableSourceFile sourceFile = classFileLoader.loadSource( className );
+      if( sourceFile != null ) {
         return sourceFile;
       }
     }
@@ -155,36 +155,37 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[CompoundClassFileLoader:");
-    buffer.append(" { ");
-    for (int i0 = 0; (this._classFileLoaders != null) && (i0 < this._classFileLoaders.length); i0++) {
-      buffer.append(" _classFileLoaders[" + i0 + "]: ");
-      buffer.append(this._classFileLoaders[i0]);
+    buffer.append( "[CompoundClassFileLoader:" );
+    buffer.append( " { " );
+    for( int i0 = 0; (_classFileLoaders != null) && (i0 < _classFileLoaders.length); i0++ ) {
+      buffer.append( " _classFileLoaders[" + i0 + "]: " );
+      buffer.append( _classFileLoaders[i0] );
     }
-    buffer.append(" } ");
+    buffer.append( " } " );
     // buffer.append(" _allPackages: ");
-    // buffer.append(this._allPackages);
-    buffer.append("]");
+    // buffer.append(_allPackages);
+    buffer.append( "]" );
     return buffer.toString();
   }
 
   private void initialise() {
 
-    for (ClassFileLoader classFileLoader : this._classFileLoaders) {
+    for( ClassFileLoader classFileLoader : _classFileLoaders ) {
       String[] packages = classFileLoader.getAllPackages();
 
-      for (String aPackage : packages) {
-        if (this._allPackages.containsKey(aPackage)) {
-          List<ClassFileLoader> classFileLoaderList = this._allPackages.get(aPackage);
-          if (!classFileLoaderList.contains(classFileLoader)) {
-            classFileLoaderList.add(classFileLoader);
+      for( String aPackage : packages ) {
+        if( _allPackages.containsKey( aPackage ) ) {
+          List<ClassFileLoader> classFileLoaderList = _allPackages.get( aPackage );
+          if( !classFileLoaderList.contains( classFileLoader ) ) {
+            classFileLoaderList.add( classFileLoader );
           }
         } else {
           List<ClassFileLoader> classFileLoaderList = new ArrayList<ClassFileLoader>();
-          classFileLoaderList.add(classFileLoader);
-          this._allPackages.put(aPackage, classFileLoaderList);
+          classFileLoaderList.add( classFileLoader );
+          _allPackages.put( aPackage, classFileLoaderList );
         }
       }
     }
   }
-}
+  
+} /* ENDCLASS */

@@ -51,14 +51,14 @@ class PythonRuntimeImpl implements PythonRuntime {
    * @param interpreter
    *          The interpreter associated with this runtime. Not <code>null</code>.
    */
-  public PythonRuntimeImpl(String id, File location, Version version, File[] libs, PythonInterpreter interpreter) {
-    this._id = id;
-    this._location = location;
-    this._version = version;
-    this._interpreter = interpreter;
-    this._executable = this._interpreter.lookup(this._location);
-    this._libs = libs;
-    Arrays.sort(this._libs);
+  public PythonRuntimeImpl( String id, File location, Version version, File[] libs, PythonInterpreter interpreter ) {
+    _id = id;
+    _location = location;
+    _version = version;
+    _interpreter = interpreter;
+    _executable = _interpreter.lookup( _location );
+    _libs = libs;
+    Arrays.sort( _libs );
   }
 
   /**
@@ -66,7 +66,7 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public String getId() {
-    return this._id;
+    return _id;
   }
 
   /**
@@ -74,7 +74,7 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public File getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -82,7 +82,7 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public Version getVersion() {
-    return this._version;
+    return _version;
   }
 
   /**
@@ -90,7 +90,7 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public File[] getLibraries() {
-    return this._libs;
+    return _libs;
   }
 
   /**
@@ -98,7 +98,7 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public PythonInterpreter getInterpreter() {
-    return this._interpreter;
+    return _interpreter;
   }
 
   /**
@@ -106,41 +106,41 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public File getExecutable() {
-    return this._executable;
+    return _executable;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object object) {
-    if (this == object) {
+  public boolean equals( Object object ) {
+    if( this == object ) {
       return true;
     }
-    if (object == null) {
+    if( object == null ) {
       return false;
     }
-    if (object.getClass() != getClass()) {
+    if( object.getClass() != getClass() ) {
       return false;
     }
     PythonRuntimeImpl other = (PythonRuntimeImpl) object;
-    if (!this._id.equals(other._id)) {
+    if( !_id.equals( other._id ) ) {
       return false;
     }
-    if (!this._location.equals(other._location)) {
+    if( !_location.equals( other._location ) ) {
       return false;
     }
-    if (!this._version.equals(other._version)) {
+    if( !_version.equals( other._version ) ) {
       return false;
     }
-    if (this._libs.length != other._libs.length) {
+    if( _libs.length != other._libs.length ) {
       return false;
     }
-    if (!this._interpreter.equals(other._interpreter)) {
+    if( !_interpreter.equals( other._interpreter ) ) {
       return false;
     }
-    for (int i = 0; i < this._libs.length; i++) {
-      if (!this._libs[i].equals(other._libs[i])) {
+    for( int i = 0; i < _libs.length; i++ ) {
+      if( !_libs[i].equals( other._libs[i] ) ) {
         return false;
       }
     }
@@ -152,11 +152,11 @@ class PythonRuntimeImpl implements PythonRuntime {
    */
   @Override
   public int hashCode() {
-    int result = this._id.hashCode();
-    result = 31 * result + this._location.hashCode();
-    result = 31 * result + this._version.hashCode();
-    result = 31 * result + this._interpreter.hashCode();
-    for (File lib : this._libs) {
+    int result = _id.hashCode();
+    result = 31 * result + _location.hashCode();
+    result = 31 * result + _version.hashCode();
+    result = 31 * result + _interpreter.hashCode();
+    for( File lib : _libs ) {
       result = 31 * result + lib.hashCode();
     }
     return result;
@@ -168,23 +168,23 @@ class PythonRuntimeImpl implements PythonRuntime {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[PythonRuntimeImpl:");
-    buffer.append(" _id: ");
-    buffer.append(this._id);
-    buffer.append(", _location: ");
-    buffer.append(this._location);
-    buffer.append(", _version: ");
-    buffer.append(this._version);
-    buffer.append(", _interpreter: ");
-    buffer.append(this._interpreter);
-    buffer.append(", _libs: {");
-    buffer.append(this._libs[0]);
-    for (int i = 1; i < this._libs.length; i++) {
-      buffer.append(",");
-      buffer.append(this._libs[i]);
+    buffer.append( "[PythonRuntimeImpl:" );
+    buffer.append( " _id: " );
+    buffer.append( _id );
+    buffer.append( ", _location: " );
+    buffer.append( _location );
+    buffer.append( ", _version: " );
+    buffer.append( _version );
+    buffer.append( ", _interpreter: " );
+    buffer.append( _interpreter );
+    buffer.append( ", _libs: {" );
+    buffer.append( _libs[0] );
+    for( int i = 1; i < _libs.length; i++ ) {
+      buffer.append( "," );
+      buffer.append( _libs[i] );
     }
-    buffer.append("}");
-    buffer.append("]");
+    buffer.append( "}" );
+    buffer.append( "]" );
     return buffer.toString();
   }
 

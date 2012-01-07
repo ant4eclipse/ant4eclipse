@@ -96,28 +96,28 @@ public class Version {
   private Version( String version, boolean bundleversion ) {
     Assure.nonEmpty( "version", version );
 
-    this._major = Integer.valueOf( 0 );
-    this._minor = Integer.valueOf( 0 );
-    this._micro = Integer.valueOf( 0 );
-    this._qualifier = null;
+    _major = Integer.valueOf( 0 );
+    _minor = Integer.valueOf( 0 );
+    _micro = Integer.valueOf( 0 );
+    _qualifier = null;
 
     try {
       StringTokenizer st = new StringTokenizer( version, ".", false );
-      this._major = Integer.valueOf( st.nextToken() );
+      _major = Integer.valueOf( st.nextToken() );
       if( st.hasMoreTokens() ) {
-        this._minor = Integer.valueOf( st.nextToken() );
+        _minor = Integer.valueOf( st.nextToken() );
         if( st.hasMoreTokens() ) {
 
           String microWithQualifier = st.nextToken();
           int firstpos = indexOf( microWithQualifier, bundleversion ? '_' : '_', '-' );
           if( firstpos == -1 ) {
             // no delimiter
-            this._micro = Integer.valueOf( microWithQualifier );
+            _micro = Integer.valueOf( microWithQualifier );
           } else {
             // with delimiter separating the qualifier
-            this._micro = Integer.valueOf( microWithQualifier.substring( 0, firstpos ) );
+            _micro = Integer.valueOf( microWithQualifier.substring( 0, firstpos ) );
             if( firstpos < microWithQualifier.length() - 1 ) {
-              this._qualifier = microWithQualifier.substring( firstpos + 1 );
+              _qualifier = microWithQualifier.substring( firstpos + 1 );
             }
           }
 
@@ -134,16 +134,16 @@ public class Version {
 
     // create a textual representation
     StringBuffer buffer = new StringBuffer();
-    buffer.append( this._major );
+    buffer.append( _major );
     buffer.append( "." );
-    buffer.append( this._minor );
+    buffer.append( _minor );
     buffer.append( "." );
-    buffer.append( this._micro );
-    if( this._qualifier != null ) {
+    buffer.append( _micro );
+    if( _qualifier != null ) {
       buffer.append( "_" );
-      buffer.append( this._qualifier );
+      buffer.append( _qualifier );
     }
-    this._str = buffer.toString();
+    _str = buffer.toString();
 
   }
 
@@ -177,7 +177,7 @@ public class Version {
    * @return The major version.
    */
   public int getMajor() {
-    return this._major.intValue();
+    return _major.intValue();
   }
 
   /**
@@ -186,7 +186,7 @@ public class Version {
    * @return The minor version.
    */
   public int getMinor() {
-    return this._minor.intValue();
+    return _minor.intValue();
   }
 
   /**
@@ -195,7 +195,7 @@ public class Version {
    * @return The micro version.
    */
   public int getMicro() {
-    return this._micro.intValue();
+    return _micro.intValue();
   }
 
   /**
@@ -204,7 +204,7 @@ public class Version {
    * @return The qualifier for this version. Maybe <code>null</code>.
    */
   public String getQualifier() {
-    return this._qualifier;
+    return _qualifier;
   }
 
   /**
@@ -212,7 +212,7 @@ public class Version {
    */
   @Override
   public int hashCode() {
-    return this._str.hashCode();
+    return _str.hashCode();
   }
 
   /**
@@ -230,7 +230,7 @@ public class Version {
       return false;
     }
     Version other = (Version) obj;
-    return this._str.equals( other._str );
+    return _str.equals( other._str );
   }
 
   /**
@@ -238,7 +238,7 @@ public class Version {
    */
   @Override
   public String toString() {
-    return this._str;
+    return _str;
   }
 
 } /* ENDCLASS */

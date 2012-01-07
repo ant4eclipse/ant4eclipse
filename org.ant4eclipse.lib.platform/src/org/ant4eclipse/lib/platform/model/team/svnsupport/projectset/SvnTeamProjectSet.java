@@ -35,8 +35,8 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
    */
   private String _password;
 
-  public SvnTeamProjectSet(String name) {
-    super(name);
+  public SvnTeamProjectSet( String name ) {
+    super( name );
   }
 
   /**
@@ -45,9 +45,9 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
    * @param description
    *          the description to add.
    */
-  public void addTeamProjectDescription(SvnTeamProjectDescription description) {
-    Assure.notNull("description", description);
-    super.addTeamProjectDescription(description);
+  public void addTeamProjectDescription( SvnTeamProjectDescription description ) {
+    Assure.notNull( "description", description );
+    super.addTeamProjectDescription( description );
   }
 
   public boolean isCvsProjectSet() {
@@ -59,28 +59,28 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
   }
 
   public boolean hasUser() {
-    return this._user != null;
+    return _user != null;
   }
 
   public boolean hasPassword() {
-    return this._password != null;
+    return _password != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setUserAndPassword(String user, String pwd) {
-    this._user = user;
-    this._password = pwd;
+  public void setUserAndPassword( String user, String pwd ) {
+    _user = user;
+    _password = pwd;
   }
 
   public String getPassword() {
-    return this._password;
+    return _password;
   }
 
   public String getUser() {
-    return this._user;
+    return _user;
   }
 
   /**
@@ -89,14 +89,15 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[SvnTeamProjectSet:");/* Inaccessible getter for private field _name */
-    buffer.append(" _name: " + getName());
-    buffer.append(" _projectDescriptions: " + getProjectDescriptions());
-    buffer.append(" _user: ");
-    buffer.append(this._user);
-    buffer.append(" _password: ");
-    buffer.append(this._password);
-    buffer.append("]");
+    buffer.append( "[SvnTeamProjectSet:" );/* Inaccessible getter for private field _name */
+    buffer.append( " _name: " + getName() );
+    buffer.append( " _projectDescriptions: " + getProjectDescriptions() );
+    buffer.append( " _user: " );
+    buffer.append( _user );
+    buffer.append( " _password: " );
+    buffer.append( _password );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

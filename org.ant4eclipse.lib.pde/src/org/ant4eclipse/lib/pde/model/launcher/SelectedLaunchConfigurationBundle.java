@@ -35,36 +35,36 @@ public class SelectedLaunchConfigurationBundle {
    */
   private final String _autoStart;
 
-  public SelectedLaunchConfigurationBundle(String bundleSymbolicName, String version, String startLevel,
-      String autoStart) {
-    notNull("bundleSymbolicName", bundleSymbolicName);
-    notNull("startLevel", startLevel);
-    notNull("autoStart", autoStart);
+  public SelectedLaunchConfigurationBundle( String bundleSymbolicName, String version, String startLevel,
+      String autoStart ) {
+    notNull( "bundleSymbolicName", bundleSymbolicName );
+    notNull( "startLevel", startLevel );
+    notNull( "autoStart", autoStart );
 
-    this._bundleSymbolicName = bundleSymbolicName;
-    this._version = version;
-    this._startLevel = startLevel;
-    this._autoStart = autoStart;
+    _bundleSymbolicName = bundleSymbolicName;
+    _version = version;
+    _startLevel = startLevel;
+    _autoStart = autoStart;
   }
 
   public String getBundleSymbolicName() {
-    return this._bundleSymbolicName;
+    return _bundleSymbolicName;
   }
 
   public String getVersion() {
-    return this._version;
+    return _version;
   }
 
   public String getStartLevel() {
-    return this._startLevel;
+    return _startLevel;
   }
 
   public String getAutoStart() {
-    return this._autoStart;
+    return _autoStart;
   }
 
   public boolean hasVersion() {
-    return (this._version != null);
+    return(_version != null);
   }
 
-}
+} /* ENDCLASS */

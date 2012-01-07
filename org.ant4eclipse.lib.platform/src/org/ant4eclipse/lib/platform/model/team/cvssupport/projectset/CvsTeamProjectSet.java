@@ -20,29 +20,29 @@ import java.util.Iterator;
 
 public class CvsTeamProjectSet extends AbstractTeamProjectSet {
 
-  public CvsTeamProjectSet(String name) {
-    super(name);
+  public CvsTeamProjectSet( String name ) {
+    super( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setUserAndPassword(String cvsUser, String cvsPwd) {
-    Assure.notNull("cvsUser", cvsUser);
-    A4ELogging.debug("setUserAndPassword(%s, %s)", cvsUser, cvsPwd);
-    for (TeamProjectDescription teamProjectDescription : getProjectDescriptions()) {
+  public void setUserAndPassword( String cvsUser, String cvsPwd ) {
+    Assure.notNull( "cvsUser", cvsUser );
+    A4ELogging.debug( "setUserAndPassword(%s, %s)", cvsUser, cvsPwd );
+    for( TeamProjectDescription teamProjectDescription : getProjectDescriptions() ) {
       CvsTeamProjectDescription description = (CvsTeamProjectDescription) teamProjectDescription;
-      description.setCvsUserAndPassword(cvsUser, cvsPwd);
+      description.setCvsUserAndPassword( cvsUser, cvsPwd );
     }
   }
 
   /**
    * Overwritten method to make sure that the given TeamProjectDescription is an instance of a CvsTeamProjectDescription
    */
-  public void addTeamProjectDescription(CvsTeamProjectDescription description) {
-    Assure.notNull("description", description);
-    super.addTeamProjectDescription(description);
+  public void addTeamProjectDescription( CvsTeamProjectDescription description ) {
+    Assure.notNull( "description", description );
+    super.addTeamProjectDescription( description );
   }
 
   /**
@@ -51,21 +51,21 @@ public class CvsTeamProjectSet extends AbstractTeamProjectSet {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[CvsTeamProjectSet:");
-    buffer.append(" name: ");
-    buffer.append(getName());
-    buffer.append(" { ");
-    for (Iterator<TeamProjectDescription> iterator = getProjectDescriptions().iterator(); iterator.hasNext();) {
+    buffer.append( "[CvsTeamProjectSet:" );
+    buffer.append( " name: " );
+    buffer.append( getName() );
+    buffer.append( " { " );
+    for( Iterator<TeamProjectDescription> iterator = getProjectDescriptions().iterator(); iterator.hasNext(); ) {
       TeamProjectDescription description = iterator.next();
-      buffer.append(description);
+      buffer.append( description );
 
-      if (iterator.hasNext()) {
-        buffer.append(",");
+      if( iterator.hasNext() ) {
+        buffer.append( "," );
       }
     }
-    buffer.append(" } ");
-    buffer.append("]");
+    buffer.append( " } " );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */

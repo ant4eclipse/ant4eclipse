@@ -84,4 +84,5 @@ public interface RawClasspathEntry extends ClasspathEntry {
    * @return the exclude patterns.
    */
   String getExcludes();
-}
+  
+} /* ENDINTERFACE */

@@ -37,8 +37,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
   private static boolean  DEBUG_TYPE_NOT_FOUND = false;
 
   static {
-    DEBUG_ALL = "true".equals(System.getProperty("ant4eclipse.debug.nameenv"));
-    DEBUG_TYPE_NOT_FOUND = "true".equals(System.getProperty("ant4eclipse.debug.nameenv.missingtypes"));
+    DEBUG_ALL = "true".equals( System.getProperty( "ant4eclipse.debug.nameenv" ) );
+    DEBUG_TYPE_NOT_FOUND = "true".equals( System.getProperty( "ant4eclipse.debug.nameenv.missingtypes" ) );
   }
 
   /** used to find binary type as requested by the compiler */
@@ -52,12 +52,12 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param classFileLoader
    *          the class file loader to use.
    */
-  public NameEnvironmentImpl(ClassFileLoader classFileLoader) {
-    Assure.notNull("classFileLoader", classFileLoader);
-    this._classFileLoader = classFileLoader;
+  public NameEnvironmentImpl( ClassFileLoader classFileLoader ) {
+    Assure.notNull( "classFileLoader", classFileLoader );
+    _classFileLoader = classFileLoader;
 
-    if (DEBUG_ALL || DEBUG_TYPE_NOT_FOUND) {
-      A4ELogging.info("NameEnvironment tracing enabled.");
+    if( DEBUG_ALL || DEBUG_TYPE_NOT_FOUND ) {
+      A4ELogging.info( "NameEnvironment tracing enabled." );
     }
 
   }
@@ -74,19 +74,19 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * {@inheritDoc}
    */
   @Override
-  public NameEnvironmentAnswer findType(char[][] compoundTypeName) {
+  public NameEnvironmentAnswer findType( char[][] compoundTypeName ) {
 
     // convert char array to string(buffer)
     StringBuffer buffer = new StringBuffer();
-    for (int i = 0; i < compoundTypeName.length; i++) {
-      buffer.append(new String(compoundTypeName[i]));
-      if (i < compoundTypeName.length - 1) {
-        buffer.append(".");
+    for( int i = 0; i < compoundTypeName.length; i++ ) {
+      buffer.append( new String( compoundTypeName[i] ) );
+      if( i < compoundTypeName.length - 1 ) {
+        buffer.append( "." );
       }
     }
 
     // find class
-    NameEnvironmentAnswer answer = findClass(buffer.toString());
+    NameEnvironmentAnswer answer = findClass( buffer.toString() );
     return answer;
 
   }
@@ -95,17 +95,17 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * {@inheritDoc}
    */
   @Override
-  public NameEnvironmentAnswer findType(char[] typeName, char[][] packageName) {
+  public NameEnvironmentAnswer findType( char[] typeName, char[][] packageName ) {
 
     StringBuffer result = new StringBuffer();
-    if (packageName != null) {
-      for (char[] element : packageName) {
-        result.append(new String(element)).append(".");
+    if( packageName != null ) {
+      for( char[] element : packageName ) {
+        result.append( new String( element ) ).append( "." );
       }
     }
-    result.append(new String(typeName));
+    result.append( new String( typeName ) );
 
-    return findClass(result.toString());
+    return findClass( result.toString() );
   }
 
   /**
@@ -119,22 +119,22 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * This method also returns true for top level packages
    */
   @Override
-  public boolean isPackage(char[][] parentPackageName, char[] packageName) {
+  public boolean isPackage( char[][] parentPackageName, char[] packageName ) {
 
-    String qualifiedPackageName = toJavaName(parentPackageName);
-    if (qualifiedPackageName.length() > 0) {
-      qualifiedPackageName += "." + new String(packageName);
+    String qualifiedPackageName = toJavaName( parentPackageName );
+    if( qualifiedPackageName.length() > 0 ) {
+      qualifiedPackageName += "." + new String( packageName );
     } else {
-      qualifiedPackageName = new String(packageName);
+      qualifiedPackageName = new String( packageName );
     }
 
-    boolean packageFound = this._classFileLoader.hasPackage(qualifiedPackageName);
+    boolean packageFound = _classFileLoader.hasPackage( qualifiedPackageName );
 
-    if (DEBUG_ALL) {
-      if (packageFound) {
-        A4ELogging.info("Package '%s' found...", qualifiedPackageName);
+    if( DEBUG_ALL ) {
+      if( packageFound ) {
+        A4ELogging.info( "Package '%s' found...", qualifiedPackageName );
       } else {
-        A4ELogging.info("Package '%s' not found...", qualifiedPackageName);
+        A4ELogging.info( "Package '%s' not found...", qualifiedPackageName );
       }
     }
 
@@ -145,9 +145,9 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param className
    * @return
    */
-  protected NameEnvironmentAnswer findClass(String className) {
-    Assure.notNull("className", className);
-    return findClass(ClassName.fromQualifiedClassName(className));
+  protected NameEnvironmentAnswer findClass( String className ) {
+    Assure.notNull( "className", className );
+    return findClass( ClassName.fromQualifiedClassName( className ) );
   }
 
   /**
@@ -159,42 +159,42 @@ public class NameEnvironmentImpl implements INameEnvironment {
    *          represents the class name
    * @return a {@link NameEnvironmentAnswer}
    */
-  protected NameEnvironmentAnswer findClass(ClassName className) {
+  protected NameEnvironmentAnswer findClass( ClassName className ) {
 
     // load class file from class file loader
-    ClassFile classFile = this._classFileLoader.loadClass(className);
+    ClassFile classFile = _classFileLoader.loadClass( className );
 
     // return new NameEnvironmentAnswer if classFile was found
-    if (classFile != null) {
+    if( classFile != null ) {
 
-      if (DEBUG_ALL) {
-        A4ELogging.info("Loading class '%s' from '%s'.", className.getQualifiedClassName(), classFile
-            .getLibraryLocation());
+      if( DEBUG_ALL ) {
+        A4ELogging.info( "Loading class '%s' from '%s'.", className.getQualifiedClassName(),
+            classFile.getLibraryLocation() );
       }
 
-      return new NameEnvironmentAnswer(classFile.getBinaryType(), (classFile.hasAccessRestriction() ? classFile
-          .getAccessRestriction() : null));
+      return new NameEnvironmentAnswer( classFile.getBinaryType(),
+          (classFile.hasAccessRestriction() ? classFile.getAccessRestriction() : null) );
     }
 
     // load source file from class file loader
     // TODO: AccessRestictions for source files!!
-    SourceFile sourceFile = this._classFileLoader.loadSource(className);
+    SourceFile sourceFile = _classFileLoader.loadSource( className );
 
     // load source file from class file loader
-    if (sourceFile != null) {
+    if( sourceFile != null ) {
 
-      if (DEBUG_ALL) {
-        A4ELogging.info("Loading class '%s' as source from '%s'.", className.getQualifiedClassName(), sourceFile
-            .getSourceFile().getAbsolutePath());
+      if( DEBUG_ALL ) {
+        A4ELogging.info( "Loading class '%s' as source from '%s'.", className.getQualifiedClassName(), sourceFile
+            .getSourceFile().getAbsolutePath() );
       }
 
       // TODO: AccessRestictions for source files!!
-      return new NameEnvironmentAnswer(new CompilationUnitImpl(sourceFile), null);
+      return new NameEnvironmentAnswer( new CompilationUnitImpl( sourceFile ), null );
     }
 
     // else return null
-    if (DEBUG_TYPE_NOT_FOUND) {
-      A4ELogging.info("Could not load class '%s'.", className.getQualifiedClassName());
+    if( DEBUG_TYPE_NOT_FOUND ) {
+      A4ELogging.info( "Could not load class '%s'.", className.getQualifiedClassName() );
     }
     return null;
   }
@@ -208,17 +208,18 @@ public class NameEnvironmentImpl implements INameEnvironment {
    *          the array to convert.
    * @return the
    */
-  private static String toJavaName(char[][] array) {
+  private static String toJavaName( char[][] array ) {
     StringBuffer result = new StringBuffer();
 
-    if (array != null) {
-      for (int i = 0; i < array.length; i++) {
-        result.append(new String(array[i]));
-        if (i < array.length - 1) {
-          result.append(".");
+    if( array != null ) {
+      for( int i = 0; i < array.length; i++ ) {
+        result.append( new String( array[i] ) );
+        if( i < array.length - 1 ) {
+          result.append( "." );
         }
       }
     }
     return result.toString();
   }
-}
+  
+} /* ENDCLASS */

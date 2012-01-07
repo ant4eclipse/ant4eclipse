@@ -43,7 +43,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    */
   public JdtClasspathContainerArgumentDelegate( ProjectComponent component ) {
     super( component );
-    this._containerArguments = new ArrayList<JdtClasspathContainerArgument>();
+    _containerArguments = new ArrayList<JdtClasspathContainerArgument>();
   }
 
   /**
@@ -69,7 +69,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     argument.setValue( value );
 
     // add argument to argument list
-    this._containerArguments.add( argument );
+    _containerArguments.add( argument );
   }
 
   /**
@@ -85,7 +85,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     JdtClasspathContainerArgument argument = new JdtClasspathContainerArgument();
 
     // add argument to argument list
-    this._containerArguments.add( argument );
+    _containerArguments.add( argument );
 
     // return result
     return argument;
@@ -99,7 +99,7 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     init();
 
     // return result
-    return this._containerArguments;
+    return _containerArguments;
   }
 
   /**
@@ -110,12 +110,12 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
   protected void init() {
 
     // Return if already initialized
-    if( this._initialized ) {
+    if( _initialized ) {
       return;
     }
 
     // set initialized
-    this._initialized = true;
+    _initialized = true;
   }
 
   /**

@@ -28,7 +28,7 @@ public class LoggingUsageTest {
 
   @Before
   public void configureServiceRegistry() {
-    this.byteout.reset();
+    byteout.reset();
     oldout = System.out;
     olderr = System.err;
     PrintStream printer = new PrintStream( LoggingUsageTest.this.byteout );
@@ -49,7 +49,7 @@ public class LoggingUsageTest {
    * @return The current output without cr characters. Not <code>null</code>.
    */
   private String getCurrentOutput() {
-    String result = new String( this.byteout.toByteArray() );
+    String result = new String( byteout.toByteArray() );
     return result.replaceAll( "\r", "" );
   }
 

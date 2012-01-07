@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
 import java.util.List;
@@ -34,7 +45,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
   private final MacroExecutionDelegate<String> _macroExecutionDelegate;
 
   public ExecuteTeamProjectSetTask() {
-    this._macroExecutionDelegate = new MacroExecutionDelegate<String>( this, "executeTeamProjectSet" );
+    _macroExecutionDelegate = new MacroExecutionDelegate<String>( this, "executeTeamProjectSet" );
 
   }
 
@@ -47,7 +58,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    */
   @Override
   public NestedSequential createScopedMacroDefinition( String scope ) {
-    return this._macroExecutionDelegate.createScopedMacroDefinition( scope );
+    return _macroExecutionDelegate.createScopedMacroDefinition( scope );
   }
 
   /*
@@ -59,7 +70,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    */
   @Override
   public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
-    this._macroExecutionDelegate.executeMacroInstance( macroDef, provider );
+    _macroExecutionDelegate.executeMacroInstance( macroDef, provider );
 
   }
 
@@ -70,7 +81,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    */
   @Override
   public String getPrefix() {
-    return this._macroExecutionDelegate.getPrefix();
+    return _macroExecutionDelegate.getPrefix();
   }
 
   /*
@@ -80,7 +91,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    */
   @Override
   public List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
-    return this._macroExecutionDelegate.getScopedMacroDefinitions();
+    return _macroExecutionDelegate.getScopedMacroDefinitions();
   }
 
   /*
@@ -90,7 +101,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
    */
   @Override
   public void setPrefix( String prefix ) {
-    this._macroExecutionDelegate.setPrefix( prefix );
+    _macroExecutionDelegate.setPrefix( prefix );
 
   }
 

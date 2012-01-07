@@ -50,15 +50,15 @@ public class ProjectSuite implements ProjectSuiteApi {
    * @param dltk
    *          <code>true</code> <=> Use a DLTK based python nature, PyDev otherwise.
    */
-  public ProjectSuite(WorkspaceBuilder wsbuilder, boolean dltk) {
-    Assert.assertNotNull(wsbuilder);
-    this._workspacebuilder = wsbuilder;
-    this._dltk = dltk;
-    this._count = 1;
-    this._formatter = new DecimalFormat("000");
-    this._sampleegg = getResource("/org/ant4eclipse/testframework/sample.egg");
-    this._samplejar = getResource("/org/ant4eclipse/testframework/sample.jar");
-    this._samplezip = getResource("/org/ant4eclipse/testframework/sample.zip");
+  public ProjectSuite( WorkspaceBuilder wsbuilder, boolean dltk ) {
+    Assert.assertNotNull( wsbuilder );
+    _workspacebuilder = wsbuilder;
+    _dltk = dltk;
+    _count = 1;
+    _formatter = new DecimalFormat( "000" );
+    _sampleegg = getResource( "/org/ant4eclipse/testframework/sample.egg" );
+    _samplejar = getResource( "/org/ant4eclipse/testframework/sample.jar" );
+    _samplezip = getResource( "/org/ant4eclipse/testframework/sample.zip" );
   }
 
   /**
@@ -70,11 +70,11 @@ public class ProjectSuite implements ProjectSuiteApi {
    * 
    * @return The URL pointing to that resource. Not <code>null</code>.
    */
-  private URL getResource(String path) {
-    Assert.assertNotNull(path);
-    URL result = getClass().getResource(path);
-    if (result == null) {
-      Assert.fail(String.format("The resource '%s' is not located on the classpath !", path));
+  private URL getResource( String path ) {
+    Assert.assertNotNull( path );
+    URL result = getClass().getResource( path );
+    if( result == null ) {
+      Assert.fail( String.format( "The resource '%s' is not located on the classpath !", path ) );
     }
     return result;
   }
@@ -83,22 +83,22 @@ public class ProjectSuite implements ProjectSuiteApi {
    * {@inheritDoc}
    */
   @Override
-  public ProjectDescription createEmptyProject(URL script, int projectsettings) {
+  public ProjectDescription createEmptyProject( URL script, int projectsettings ) {
     ProjectDescription result = new ProjectDescription();
-    result.setPrimaryProjectname(newName());
-    PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
-    primarybuilder.setBuildScript(script);
-    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
-      primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
-      result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
+    result.setPrimaryProjectname( newName() );
+    PythonProjectBuilder primarybuilder = newProjectBuilder( result.getPrimaryProjectname() );
+    primarybuilder.setBuildScript( script );
+    if( (projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0 ) {
+      primarybuilder.addSourceFolder( NAME_GENERATEDSOURCE );
+      result.addSourceFolder( "/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE );
     }
-    if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
+    if( (projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0 ) {
       String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplezip), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._sampleegg), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplejar), true);
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _samplezip ), true );
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _sampleegg ), true );
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _samplejar ), true );
     }
-    primarybuilder.populate(this._workspacebuilder);
+    primarybuilder.populate( _workspacebuilder );
     return result;
   }
 
@@ -106,36 +106,36 @@ public class ProjectSuite implements ProjectSuiteApi {
    * {@inheritDoc}
    */
   @Override
-  public ProjectDescription createComplexProject(URL script, int projectsettings) {
+  public ProjectDescription createComplexProject( URL script, int projectsettings ) {
     ProjectDescription result = new ProjectDescription();
-    result.setPrimaryProjectname(newName());
-    result.setSecondaryProjectname(newName());
-    PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
-    primarybuilder.setBuildScript(script);
-    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
-      primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
-      result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
+    result.setPrimaryProjectname( newName() );
+    result.setSecondaryProjectname( newName() );
+    PythonProjectBuilder primarybuilder = newProjectBuilder( result.getPrimaryProjectname() );
+    primarybuilder.setBuildScript( script );
+    if( (projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0 ) {
+      primarybuilder.addSourceFolder( NAME_GENERATEDSOURCE );
+      result.addSourceFolder( "/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE );
     }
-    PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
-    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
-      secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
-      result.addSourceFolder("/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
+    PythonProjectBuilder secondarybuilder = newProjectBuilder( result.getSecondaryProjectname() );
+    if( (projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0 ) {
+      secondarybuilder.addSourceFolder( NAME_GENERATEDSOURCE );
+      result.addSourceFolder( "/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE );
     }
-    if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
+    if( (projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0 ) {
       String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplezip), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._sampleegg), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplejar), true);
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _samplezip ), true );
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _sampleegg ), true );
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _samplejar ), true );
     }
-    if ((projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0) {
+    if( (projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0 ) {
       String prefix = "/" + result.getSecondaryProjectname() + "/";
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplezip), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._sampleegg), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplejar), false);
+      result.addInternalLibrary( prefix + secondarybuilder.importInternalLibrary( _samplezip ), false );
+      result.addInternalLibrary( prefix + secondarybuilder.importInternalLibrary( _sampleegg ), false );
+      result.addInternalLibrary( prefix + secondarybuilder.importInternalLibrary( _samplejar ), false );
     }
-    primarybuilder.useProject(result.getSecondaryProjectname(), true);
-    primarybuilder.populate(this._workspacebuilder);
-    secondarybuilder.populate(this._workspacebuilder);
+    primarybuilder.useProject( result.getSecondaryProjectname(), true );
+    primarybuilder.populate( _workspacebuilder );
+    secondarybuilder.populate( _workspacebuilder );
     return result;
   }
 
@@ -143,37 +143,37 @@ public class ProjectSuite implements ProjectSuiteApi {
    * {@inheritDoc}
    */
   @Override
-  public ProjectDescription createCyclicProject(URL script, int projectsettings) {
+  public ProjectDescription createCyclicProject( URL script, int projectsettings ) {
     ProjectDescription result = new ProjectDescription();
-    result.setPrimaryProjectname(newName());
-    result.setSecondaryProjectname(newName());
-    PythonProjectBuilder primarybuilder = newProjectBuilder(result.getPrimaryProjectname());
-    primarybuilder.setBuildScript(script);
-    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0) {
-      primarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
-      result.addSourceFolder("/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
+    result.setPrimaryProjectname( newName() );
+    result.setSecondaryProjectname( newName() );
+    PythonProjectBuilder primarybuilder = newProjectBuilder( result.getPrimaryProjectname() );
+    primarybuilder.setBuildScript( script );
+    if( (projectsettings & KIND_MULTIPLESOURCEFOLDERSPRIMARY) != 0 ) {
+      primarybuilder.addSourceFolder( NAME_GENERATEDSOURCE );
+      result.addSourceFolder( "/" + primarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE );
     }
-    PythonProjectBuilder secondarybuilder = newProjectBuilder(result.getSecondaryProjectname());
-    if ((projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0) {
-      secondarybuilder.addSourceFolder(NAME_GENERATEDSOURCE);
-      result.addSourceFolder("/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE);
+    PythonProjectBuilder secondarybuilder = newProjectBuilder( result.getSecondaryProjectname() );
+    if( (projectsettings & KIND_MULTIPLESOURCEFOLDERSSECONDARY) != 0 ) {
+      secondarybuilder.addSourceFolder( NAME_GENERATEDSOURCE );
+      result.addSourceFolder( "/" + secondarybuilder.getProjectName() + "/" + NAME_GENERATEDSOURCE );
     }
-    if ((projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0) {
+    if( (projectsettings & KIND_INTERNALLIBRARYPRIMARY) != 0 ) {
       String prefix = "/" + result.getPrimaryProjectname() + "/";
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplezip), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._sampleegg), true);
-      result.addInternalLibrary(prefix + primarybuilder.importInternalLibrary(this._samplejar), true);
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _samplezip ), true );
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _sampleegg ), true );
+      result.addInternalLibrary( prefix + primarybuilder.importInternalLibrary( _samplejar ), true );
     }
-    if ((projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0) {
+    if( (projectsettings & KIND_INTERNALLIBRARYSECONDARY) != 0 ) {
       String prefix = "/" + result.getSecondaryProjectname() + "/";
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplezip), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._sampleegg), false);
-      result.addInternalLibrary(prefix + secondarybuilder.importInternalLibrary(this._samplejar), false);
+      result.addInternalLibrary( prefix + secondarybuilder.importInternalLibrary( _samplezip ), false );
+      result.addInternalLibrary( prefix + secondarybuilder.importInternalLibrary( _sampleegg ), false );
+      result.addInternalLibrary( prefix + secondarybuilder.importInternalLibrary( _samplejar ), false );
     }
-    primarybuilder.useProject(result.getSecondaryProjectname(), true);
-    secondarybuilder.useProject(result.getPrimaryProjectname(), true);
-    primarybuilder.populate(this._workspacebuilder);
-    secondarybuilder.populate(this._workspacebuilder);
+    primarybuilder.useProject( result.getSecondaryProjectname(), true );
+    secondarybuilder.useProject( result.getPrimaryProjectname(), true );
+    primarybuilder.populate( _workspacebuilder );
+    secondarybuilder.populate( _workspacebuilder );
     return result;
   }
 
@@ -185,11 +185,11 @@ public class ProjectSuite implements ProjectSuiteApi {
    * 
    * @return The builder used to create the projects. Not <code>null</code>.
    */
-  private PythonProjectBuilder newProjectBuilder(String projectname) {
-    if (this._dltk) {
-      return new DLTKProjectBuilder(projectname);
+  private PythonProjectBuilder newProjectBuilder( String projectname ) {
+    if( _dltk ) {
+      return new DLTKProjectBuilder( projectname );
     } else {
-      return new PyDevProjectBuilder(projectname);
+      return new PyDevProjectBuilder( projectname );
     }
   }
 
@@ -199,7 +199,7 @@ public class ProjectSuite implements ProjectSuiteApi {
    * @return A newly generated name. Neither <code>null</code> nor empty.
    */
   private String newName() {
-    return String.format(NAME_PREFIX, this._formatter.format(this._count++));
+    return String.format( NAME_PREFIX, _formatter.format( _count++ ) );
   }
 
 } /* ENDCLASS */

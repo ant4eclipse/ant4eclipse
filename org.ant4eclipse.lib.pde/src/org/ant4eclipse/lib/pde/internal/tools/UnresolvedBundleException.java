@@ -27,11 +27,11 @@ public class UnresolvedBundleException extends Exception {
    * @param bundleDescription
    *          the bundle description
    */
-  public UnresolvedBundleException(BundleDescription bundleDescription) {
-    Assure.notNull("bundleDescription", bundleDescription);
+  public UnresolvedBundleException( BundleDescription bundleDescription ) {
+    Assure.notNull( "bundleDescription", bundleDescription );
 
     // the bundle description
-    this._bundleDescription = bundleDescription;
+    _bundleDescription = bundleDescription;
   }
 
   /**
@@ -42,7 +42,7 @@ public class UnresolvedBundleException extends Exception {
    * @return the bundleDescription
    */
   public BundleDescription getBundleDescription() {
-    return this._bundleDescription;
+    return _bundleDescription;
   }
 
   /**
@@ -50,7 +50,9 @@ public class UnresolvedBundleException extends Exception {
    */
   @Override
   public String getMessage() {
-    return String.format("Bundle '%s' is not resolved. Reason:\n%s", TargetPlatformImpl
-        .getBundleInfo(this._bundleDescription), TargetPlatformImpl.dumpResolverErrors(this._bundleDescription, false));
+    return String.format( "Bundle '%s' is not resolved. Reason:\n%s",
+        TargetPlatformImpl.getBundleInfo( _bundleDescription ),
+        TargetPlatformImpl.dumpResolverErrors( _bundleDescription, false ) );
   }
-}
+
+} /* ENDCLASS */

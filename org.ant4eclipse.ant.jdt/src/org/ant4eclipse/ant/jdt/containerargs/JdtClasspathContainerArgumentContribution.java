@@ -65,7 +65,7 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   @Deprecated
   public Object createSubElement( String name, ProjectComponent component ) throws BuildException {
     init( component );
-    return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
+    return _classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
   /**
@@ -76,14 +76,14 @@ public class JdtClasspathContainerArgumentContribution implements SubElementCont
   private void init( ProjectComponent component ) {
 
     // Return if already initialized
-    if( this._initialized ) {
+    if( _initialized ) {
       return;
     }
 
-    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( component );
+    _classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( component );
 
     // set initialized
-    this._initialized = true;
+    _initialized = true;
   }
 
   /**

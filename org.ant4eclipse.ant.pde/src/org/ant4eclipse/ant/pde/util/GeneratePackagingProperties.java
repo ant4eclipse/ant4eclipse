@@ -67,9 +67,9 @@ public class GeneratePackagingProperties {
    *          as
    */
   public GeneratePackagingProperties( File binDirectory ) {
-    this.fileMap = new HashMap<String,List<String>>();
+    fileMap = new HashMap<String,List<String>>();
     dumpChildren( binDirectory, binDirectory, 0 );
-    for( Entry<String,List<String>> entries : this.fileMap.entrySet() ) {
+    for( Entry<String,List<String>> entries : fileMap.entrySet() ) {
 
       StringBuffer buffer = new StringBuffer();
       for( Iterator iterator = entries.getValue().iterator(); iterator.hasNext(); ) {
@@ -97,16 +97,16 @@ public class GeneratePackagingProperties {
 
       switch( level ) {
       case 1:
-        this.ws = directory.getName();
+        ws = directory.getName();
         break;
       case 2:
-        this.os = directory.getName();
+        os = directory.getName();
         break;
       case 3:
-        this.arch = directory.getName();
-        if( !this.fileMap.containsKey( this.ws + "." + this.os + "." + this.arch ) ) {
-          this.fileList = new ArrayList<String>();
-          this.fileMap.put( this.ws + "." + this.os + "." + this.arch, this.fileList );
+        arch = directory.getName();
+        if( !fileMap.containsKey( ws + "." + os + "." + arch ) ) {
+          fileList = new ArrayList<String>();
+          fileMap.put( ws + "." + os + "." + arch, fileList );
         }
         break;
       default:
@@ -114,7 +114,7 @@ public class GeneratePackagingProperties {
       }
 
       if( child.isFile() ) {
-        this.fileList.add( Utilities.calcRelative( parentDirectory, child ).replace( '\\', '/' ) );
+        fileList.add( Utilities.calcRelative( parentDirectory, child ).replace( '\\', '/' ) );
       } else if( child.isDirectory() ) {
         if( level >= 3 ) {
           dumpChildren( child, parentDirectory, level + 1 );

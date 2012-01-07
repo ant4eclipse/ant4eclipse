@@ -42,23 +42,23 @@ public class PyDevParser {
    * @param pythonrole
    *          The role instance which will be filled with the corresponding information. Not <code>null</code>.
    */
-  public static final void contributePathes(PythonProjectRoleImpl pythonrole) {
+  public static final void contributePathes( PythonProjectRoleImpl pythonrole ) {
 
     String projectname = pythonrole.getEclipseProject().getSpecifiedName();
-    File pydevproject = pythonrole.getEclipseProject().getChild(NAME_PYDEVPROJECT);
+    File pydevproject = pythonrole.getEclipseProject().getChild( NAME_PYDEVPROJECT );
 
     XQueryHandler queryhandler = new XQueryHandler();
 
     // prepare the access for the pathes
     XQuery pathquery = queryhandler
-        .createQuery("/pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_SOURCE_PATH']/path");
+        .createQuery( "/pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_SOURCE_PATH']/path" );
     XQuery externalquery = queryhandler
-        .createQuery("/pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH']/path");
+        .createQuery( "/pydev_project/pydev_pathproperty[@name='org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH']/path" );
     XQuery runtimequery = queryhandler
-        .createQuery("/pydev_project/pydev_property[@name='org.python.pydev.PYTHON_PROJECT_INTERPRETER']");
+        .createQuery( "/pydev_project/pydev_property[@name='org.python.pydev.PYTHON_PROJECT_INTERPRETER']" );
 
     // now fetch the necessary data
-    XQueryHandler.queryFile(pydevproject, queryhandler);
+    XQueryHandler.queryFile( pydevproject, queryhandler );
 
     String[] internalsourcepathes = pathquery.getResult();
     String[] externalsourcepathes = externalquery.getResult();
@@ -69,46 +69,46 @@ public class PyDevParser {
     String prefix = "/" + pythonrole.getEclipseProject().getSpecifiedName();
 
     // a path can be a library or a source directory
-    for (String internalsourcepathe : internalsourcepathes) {
+    for( String internalsourcepathe : internalsourcepathes ) {
       String path = internalsourcepathe;
-      if (!path.startsWith(prefix)) {
+      if( !path.startsWith( prefix ) ) {
         A4ELogging.error(
             "The internal path '%s' does not start with the expected prefix '%s' and is therefore being skipped.",
-            path, prefix);
+            path, prefix );
         continue;
       }
-      String internalpath = Utilities.cleanup(path.substring(prefix.length()));
-      if ((internalpath != null) && internalpath.startsWith("/")) {
-        internalpath = Utilities.cleanup(internalpath.substring(1));
+      String internalpath = Utilities.cleanup( path.substring( prefix.length() ) );
+      if( (internalpath != null) && internalpath.startsWith( "/" ) ) {
+        internalpath = Utilities.cleanup( internalpath.substring( 1 ) );
       }
-      if ((internalpath != null) && isLibrary(internalpath)) {
-        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Library, internalpath, true, false));
+      if( (internalpath != null) && isLibrary( internalpath ) ) {
+        pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Library, internalpath, true, false ) );
       } else {
-        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Source, internalpath, true, false));
+        pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Source, internalpath, true, false ) );
       }
     }
 
-    for (String path : externalsourcepathes) {
-      if (isLibrary(path)) {
-        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Library, path, true, true));
+    for( String path : externalsourcepathes ) {
+      if( isLibrary( path ) ) {
+        pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Library, path, true, true ) );
       } else {
-        pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Source, path, true, true));
+        pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Source, path, true, true ) );
       }
     }
 
-    if ((runtime != null) && (runtime.length() > 0)) {
-      if (KEY_DEFAULT.equals(runtime)) {
+    if( (runtime != null) && (runtime.length() > 0) ) {
+      if( KEY_DEFAULT.equals( runtime ) ) {
         runtime = "";
       }
-      pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Runtime, runtime, true, false));
+      pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Runtime, runtime, true, false ) );
     }
 
     // PyDev uses the platform mechanism for referenced projects. this is somewhat unlikely
     // so we need to convert this information into corresponding entries while sorting out
     // the ones with the wrong natures
     String[] projects = pythonrole.getEclipseProject().getReferencedProjects();
-    for (String project : projects) {
-      pythonrole.addRawPathEntry(new RawPathEntry(projectname, ReferenceKind.Project, "/" + project, true, false));
+    for( String project : projects ) {
+      pythonrole.addRawPathEntry( new RawPathEntry( projectname, ReferenceKind.Project, "/" + project, true, false ) );
     }
 
   }
@@ -122,13 +122,13 @@ public class PyDevParser {
    * 
    * @return <code>true</code> <=> Interprete the supplied path as a library.
    */
-  private static final boolean isLibrary(String path) {
-    int lidx = path.lastIndexOf('.');
-    if (lidx == -1) {
+  private static final boolean isLibrary( String path ) {
+    int lidx = path.lastIndexOf( '.' );
+    if( lidx == -1 ) {
       return false;
     }
-    String suffix = path.substring(lidx + 1).toLowerCase();
-    return Utilities.contains(suffix, LIBSUFFICES);
+    String suffix = path.substring( lidx + 1 ).toLowerCase();
+    return Utilities.contains( suffix, LIBSUFFICES );
   }
 
 } /* ENDCLASS */

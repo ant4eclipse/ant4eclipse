@@ -42,11 +42,11 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * 
    * @return Returns the feature project role.
    */
-  public static FeatureProjectRoleImpl getFeatureProjectRole(EclipseProject eclipseProject) {
-    Assure.assertTrue(hasFeatureProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have FeatureProjectRole!");
+  public static FeatureProjectRoleImpl getFeatureProjectRole( EclipseProject eclipseProject ) {
+    Assure.assertTrue( hasFeatureProjectRole( eclipseProject ), "Project \"" + eclipseProject.getFolderName()
+        + "\" must have FeatureProjectRole!" );
 
-    return eclipseProject.getRole(FeatureProjectRoleImpl.class);
+    return eclipseProject.getRole( FeatureProjectRoleImpl.class );
   }
 
   /**
@@ -54,9 +54,9 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * 
    * @return Returns whether a feature project role is set or not.
    */
-  public static boolean hasFeatureProjectRole(EclipseProject eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
-    return eclipseProject.hasRole(FeatureProjectRoleImpl.class);
+  public static boolean hasFeatureProjectRole( EclipseProject eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
+    return eclipseProject.hasRole( FeatureProjectRoleImpl.class );
   }
 
   /**
@@ -67,10 +67,10 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @param eclipseProject
    *          the plugin project.
    */
-  public FeatureProjectRoleImpl(EclipseProject eclipseProject) {
-    super(FEATURE_PROJECT_ROLE_NAME, eclipseProject);
-    Assure.notNull("eclipseProject", eclipseProject);
-    this._project = eclipseProject;
+  public FeatureProjectRoleImpl( EclipseProject eclipseProject ) {
+    super( FEATURE_PROJECT_ROLE_NAME, eclipseProject );
+    Assure.notNull( "eclipseProject", eclipseProject );
+    _project = eclipseProject;
   }
 
   /**
@@ -78,7 +78,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    */
   @Override
   public FeatureManifest getFeatureManifest() {
-    return this._feature;
+    return _feature;
   }
 
   /**
@@ -89,9 +89,9 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @param featuremanifest
    *          the feature manifest to set.
    */
-  public void setFeature(FeatureManifest featuremanifest) {
-    Assure.notNull("featuremanifest", featuremanifest);
-    this._feature = featuremanifest;
+  public void setFeature( FeatureManifest featuremanifest ) {
+    Assure.notNull( "featuremanifest", featuremanifest );
+    _feature = featuremanifest;
   }
 
   /**
@@ -99,7 +99,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    */
   @Override
   public boolean hasBuildProperties() {
-    return this._buildProperties != null;
+    return _buildProperties != null;
   }
 
   /**
@@ -107,7 +107,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    */
   @Override
   public FeatureBuildProperties getBuildProperties() {
-    return this._buildProperties;
+    return _buildProperties;
   }
 
   /**
@@ -116,12 +116,12 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * </p>
    */
   // TODO: should not be public to the rest of ant4eclipse!
-  public void setBuildProperties(FeatureBuildProperties buildProperties) {
-    this._buildProperties = buildProperties;
+  public void setBuildProperties( FeatureBuildProperties buildProperties ) {
+    _buildProperties = buildProperties;
   }
 
   public File getFeatureXml() {
-    return this._project.getChild("feature.xml");
+    return _project.getChild( "feature.xml" );
   }
 
-}
+} /* ENDCLASS */

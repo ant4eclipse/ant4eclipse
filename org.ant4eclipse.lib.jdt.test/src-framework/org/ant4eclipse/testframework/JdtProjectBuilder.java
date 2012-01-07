@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class JdtProjectBuilder extends EclipseProjectBuilder {
 
-  private List<String>                   _classpathEntries;
+  private List<String>                  _classpathEntries;
 
   /**
    * Holds all SourceClasses (grouped by their source folders) that should be added to this project.
@@ -39,7 +39,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * <li>Value: {@link SourceClasses} the SourceClasses in the source folder
    * </ul>
    */
-  private Map<String, List<SourceClass>> _sourceClasses;
+  private Map<String,List<SourceClass>> _sourceClasses;
 
   /**
    * Returns a "pre-configured" {@link JdtProjectBuilder}, that already has set:
@@ -58,11 +58,11 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    *          The name of the project
    * @return the pre-configured JdtEclipseProjectBuilder
    */
-  public static JdtProjectBuilder getPreConfiguredJdtBuilder(String projectName) {
-    JdtProjectBuilder result = new JdtProjectBuilder(projectName);
+  public static JdtProjectBuilder getPreConfiguredJdtBuilder( String projectName ) {
+    JdtProjectBuilder result = new JdtProjectBuilder( projectName );
     result.withJreContainerClasspathEntry();
-    result.withSrcClasspathEntry("src", false);
-    result.withOutputClasspathEntry("bin");
+    result.withSrcClasspathEntry( "src", false );
+    result.withOutputClasspathEntry( "bin" );
     return result;
   }
 
@@ -75,11 +75,11 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * 
    * @param projectName
    */
-  public JdtProjectBuilder(String projectName) {
-    super(projectName);
+  public JdtProjectBuilder( String projectName ) {
+    super( projectName );
 
-    this._sourceClasses = new Hashtable<String, List<SourceClass>>();
-    this._classpathEntries = new ArrayList<String>();
+    _sourceClasses = new Hashtable<String,List<SourceClass>>();
+    _classpathEntries = new ArrayList<String>();
 
     // All JDT-Projects have a java builder and a java nature
     withJavaNature();
@@ -95,19 +95,19 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    *          The full qualified classname for this class
    * @return the {@link SourceClass} instance
    */
-  public SourceClass withSourceClass(String sourceFolder, String className) {
-    SourceClass sourceClass = new SourceClass(this, className);
-    List<SourceClass> sourceClasses = this._sourceClasses.get(sourceFolder);
-    if (sourceClasses == null) {
+  public SourceClass withSourceClass( String sourceFolder, String className ) {
+    SourceClass sourceClass = new SourceClass( this, className );
+    List<SourceClass> sourceClasses = _sourceClasses.get( sourceFolder );
+    if( sourceClasses == null ) {
       sourceClasses = new ArrayList<SourceClass>();
-      this._sourceClasses.put(sourceFolder, sourceClasses);
+      _sourceClasses.put( sourceFolder, sourceClasses );
     }
-    sourceClasses.add(sourceClass);
+    sourceClasses.add( sourceClass );
     return sourceClass;
   }
 
   protected JdtProjectBuilder withJavaBuilder() {
-    return (JdtProjectBuilder) withBuilder("org.eclipse.jdt.core.javabuilder");
+    return (JdtProjectBuilder) withBuilder( "org.eclipse.jdt.core.javabuilder" );
   }
 
   /**
@@ -120,41 +120,41 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    *          The xml-entry
    * @return this
    */
-  public JdtProjectBuilder withClasspathEntry(String entry) {
-    Assert.assertNotNull(entry);
-    this._classpathEntries.add(entry);
+  public JdtProjectBuilder withClasspathEntry( String entry ) {
+    Assert.assertNotNull( entry );
+    _classpathEntries.add( entry );
     return this;
   }
 
   protected JdtProjectBuilder withJavaNature() {
-    return (JdtProjectBuilder) withNature(JavaProjectRole.JAVA_NATURE);
+    return (JdtProjectBuilder) withNature( JavaProjectRole.JAVA_NATURE );
   }
 
-  public JdtProjectBuilder withSrcClasspathEntry(String path, boolean exported) {
-    String line = String
-        .format("<classpathentry kind='src' path='%s' exported='%s'/>", path, Boolean.valueOf(exported));
-    return withClasspathEntry(line);
+  public JdtProjectBuilder withSrcClasspathEntry( String path, boolean exported ) {
+    String line = String.format( "<classpathentry kind='src' path='%s' exported='%s'/>", path,
+        Boolean.valueOf( exported ) );
+    return withClasspathEntry( line );
   }
 
-  public JdtProjectBuilder withSrcClasspathEntry(String path, String output, boolean exported) {
-    String line = String.format("<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output,
-        Boolean.valueOf(exported));
-    return withClasspathEntry(line);
+  public JdtProjectBuilder withSrcClasspathEntry( String path, String output, boolean exported ) {
+    String line = String.format( "<classpathentry kind='src' path='%s' output='%s' exported='%s'/>", path, output,
+        Boolean.valueOf( exported ) );
+    return withClasspathEntry( line );
   }
 
-  public JdtProjectBuilder withContainerClasspathEntry(String path) {
-    String line = String.format("<classpathentry kind='con' path='%s'/>", path);
-    return withClasspathEntry(line);
+  public JdtProjectBuilder withContainerClasspathEntry( String path ) {
+    String line = String.format( "<classpathentry kind='con' path='%s'/>", path );
+    return withClasspathEntry( line );
   }
 
-  public JdtProjectBuilder withVarClasspathEntry(String path) {
-    String line = String.format("<classpathentry kind='var' path='%s'/>", path);
-    return withClasspathEntry(line);
+  public JdtProjectBuilder withVarClasspathEntry( String path ) {
+    String line = String.format( "<classpathentry kind='var' path='%s'/>", path );
+    return withClasspathEntry( line );
   }
 
-  public JdtProjectBuilder withOutputClasspathEntry(String path) {
-    String line = String.format(" <classpathentry kind='output' path='%s'/>", path);
-    return withClasspathEntry(line);
+  public JdtProjectBuilder withOutputClasspathEntry( String path ) {
+    String line = String.format( " <classpathentry kind='output' path='%s'/>", path );
+    return withClasspathEntry( line );
   }
 
   /**
@@ -163,7 +163,7 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * @return
    */
   public JdtProjectBuilder withJreContainerClasspathEntry() {
-    return withClasspathEntry("<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER'/>");
+    return withClasspathEntry( "<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER'/>" );
   }
 
   /**
@@ -171,69 +171,69 @@ public class JdtProjectBuilder extends EclipseProjectBuilder {
    * 
    * @return
    */
-  public JdtProjectBuilder withJreContainerClasspathEntry(String containerName) {
-    return withClasspathEntry(String.format(
-        "<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>", containerName));
+  public JdtProjectBuilder withJreContainerClasspathEntry( String containerName ) {
+    return withClasspathEntry( String.format(
+        "<classpathentry kind='con' path='org.eclipse.jdt.launching.JRE_CONTAINER/%s'/>", containerName ) );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  protected void createArtefacts(File projectDir) {
-    super.createArtefacts(projectDir);
+  protected void createArtefacts( File projectDir ) {
+    super.createArtefacts( projectDir );
 
-    createClasspathFile(projectDir);
+    createClasspathFile( projectDir );
 
-    for (Map.Entry<String, List<SourceClass>> entry : this._sourceClasses.entrySet()) {
+    for( Map.Entry<String,List<SourceClass>> entry : _sourceClasses.entrySet() ) {
       String sourceFolder = entry.getKey();
       List<SourceClass> sourceClasses = entry.getValue();
-      for (SourceClass sourceClass : sourceClasses) {
-        createSourceClass(projectDir, sourceFolder, sourceClass);
+      for( SourceClass sourceClass : sourceClasses ) {
+        createSourceClass( projectDir, sourceFolder, sourceClass );
       }
     }
   }
 
-  protected void createSourceClass(File projectDir, String sourceFolder, SourceClass sourceClass) {
-    File sourceDir = new File(projectDir, sourceFolder);
-    if (!sourceDir.exists()) {
+  protected void createSourceClass( File projectDir, String sourceFolder, SourceClass sourceClass ) {
+    File sourceDir = new File( projectDir, sourceFolder );
+    if( !sourceDir.exists() ) {
       sourceDir.mkdirs();
     }
-    Assert.assertTrue(sourceDir.isDirectory());
+    Assert.assertTrue( sourceDir.isDirectory() );
 
-    ClassName className = ClassName.fromQualifiedClassName(sourceClass.getClassName());
-    File packageDir = new File(sourceDir, className.getPackageAsDirectoryName());
-    if (!packageDir.exists()) {
+    ClassName className = ClassName.fromQualifiedClassName( sourceClass.getClassName() );
+    File packageDir = new File( sourceDir, className.getPackageAsDirectoryName() );
+    if( !packageDir.exists() ) {
       packageDir.mkdirs();
     }
-    Assert.assertTrue(packageDir.isDirectory());
+    Assert.assertTrue( packageDir.isDirectory() );
 
-    File sourcefile = new File(sourceDir, className.asSourceFileName());
+    File sourcefile = new File( sourceDir, className.asSourceFileName() );
 
     StringTemplate classTemplate = new StringTemplate();
-    classTemplate.append("package ${packageName};").nl();
-    classTemplate.append("public class ${className} {").nl();
-    classTemplate.append(sourceClass.generateUsageCode()).nl();
-    classTemplate.append("} // end of class").nl();
+    classTemplate.append( "package ${packageName};" ).nl();
+    classTemplate.append( "public class ${className} {" ).nl();
+    classTemplate.append( sourceClass.generateUsageCode() ).nl();
+    classTemplate.append( "} // end of class" ).nl();
 
-    classTemplate.replace("packageName", className.getPackageName());
-    classTemplate.replace("className", className.getClassName());
+    classTemplate.replace( "packageName", className.getPackageName() );
+    classTemplate.replace( "className", className.getClassName() );
 
-    Utilities.writeFile(sourcefile, classTemplate.toString(), Utilities.ENCODING);
+    Utilities.writeFile( sourcefile, classTemplate.toString(), Utilities.ENCODING );
   }
 
-  protected void createClasspathFile(File projectDir) {
+  protected void createClasspathFile( File projectDir ) {
     StringBuilder dotClasspath = new StringBuilder();
-    dotClasspath.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>").append(Utilities.NL).append("<classpath>")
-        .append(Utilities.NL);
+    dotClasspath.append( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" ).append( Utilities.NL ).append( "<classpath>" )
+        .append( Utilities.NL );
 
-    for (String entry : this._classpathEntries) {
-      dotClasspath.append(entry).append(Utilities.NL);
+    for( String entry : _classpathEntries ) {
+      dotClasspath.append( entry ).append( Utilities.NL );
     }
-    dotClasspath.append("</classpath>").append(Utilities.NL);
+    dotClasspath.append( "</classpath>" ).append( Utilities.NL );
 
-    File dotClasspathFile = new File(projectDir, ".classpath");
-    Utilities.writeFile(dotClasspathFile, dotClasspath.toString(), "UTF-8");
+    File dotClasspathFile = new File( projectDir, ".classpath" );
+    Utilities.writeFile( dotClasspathFile, dotClasspath.toString(), "UTF-8" );
   }
 
-}
+} /* ENDCLASS */

@@ -24,28 +24,28 @@ import org.junit.Test;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
- * 
  */
 public class BuildPropertiesParserTest {
 
   @Test
   public void test_BuildPropertiesParser() throws Exception {
-    String resourceName = getClass().getPackage().getName().replace('.', '/')
+    String resourceName = getClass().getPackage().getName().replace( '.', '/' )
         + "/buildproperties-parser-test.properties";
-    InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourceName);
-    assertThat(inputStream, is(notNullValue()));
-    StringMap stringMap = new StringMap(inputStream);
+    InputStream inputStream = getClass().getClassLoader().getResourceAsStream( resourceName );
+    assertThat( inputStream, is( notNullValue() ) );
+    StringMap stringMap = new StringMap( inputStream );
 
-    PluginBuildProperties buildProperties = BuildPropertiesParser.initializePluginBuildProperties(stringMap);
+    PluginBuildProperties buildProperties = BuildPropertiesParser.initializePluginBuildProperties( stringMap );
 
-    assertThat(buildProperties.getAdditionalBundles(),
-        is(equalTo(new String[] { "org.eclipse.osgi", "org.apache.ant" })));
+    assertThat( buildProperties.getAdditionalBundles(), is( equalTo( new String[] { "org.eclipse.osgi",
+        "org.apache.ant" } ) ) );
 
-    Library library = buildProperties.getLibrary(".");
-    assertThat(library, is(notNullValue()));
+    Library library = buildProperties.getLibrary( "." );
+    assertThat( library, is( notNullValue() ) );
 
-    assertThat(library.getSource(), is(equalTo(new String[] { "src" })));
-    assertThat(library.getOutput(), is(equalTo(new String[] { "bin" })));
-    assertThat(buildProperties.getBinaryIncludes(), is(equalTo(new String[] { "META-INF", "." })));
+    assertThat( library.getSource(), is( equalTo( new String[] { "src" } ) ) );
+    assertThat( library.getOutput(), is( equalTo( new String[] { "bin" } ) ) );
+    assertThat( buildProperties.getBinaryIncludes(), is( equalTo( new String[] { "META-INF", "." } ) ) );
   }
-}
+  
+} /* ENDCLASS */

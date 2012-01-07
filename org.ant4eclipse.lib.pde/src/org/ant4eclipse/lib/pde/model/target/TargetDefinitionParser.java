@@ -35,74 +35,75 @@ public class TargetDefinitionParser {
    * 
    * @return a target definition instance.
    */
-  public static TargetDefinition parseTargetDefinition(InputStream inputStream) {
-    Assure.notNull("inputStream", inputStream);
+  public static TargetDefinition parseTargetDefinition( InputStream inputStream ) {
+    Assure.notNull( "inputStream", inputStream );
 
     // create query handler
     XQueryHandler queryhandler = new XQueryHandler();
 
     // create queries
-    XQuery nameQuery = queryhandler.createQuery("/target/@name");
+    XQuery nameQuery = queryhandler.createQuery( "/target/@name" );
 
-    XQuery pathQuery = queryhandler.createQuery("/target/location/@path");
-    XQuery useDefaultQuery = queryhandler.createQuery("/target/location/@useDefault");
+    XQuery pathQuery = queryhandler.createQuery( "/target/location/@path" );
+    XQuery useDefaultQuery = queryhandler.createQuery( "/target/location/@useDefault" );
 
-    XQuery environmentOsQuery = queryhandler.createQuery("/target/environment/os");
-    XQuery environmentWsQuery = queryhandler.createQuery("/target/environment/ws");
-    XQuery environmentArchQuery = queryhandler.createQuery("/target/environment/arch");
-    XQuery environmentNlQuery = queryhandler.createQuery("/target/environment/nl");
+    XQuery environmentOsQuery = queryhandler.createQuery( "/target/environment/os" );
+    XQuery environmentWsQuery = queryhandler.createQuery( "/target/environment/ws" );
+    XQuery environmentArchQuery = queryhandler.createQuery( "/target/environment/arch" );
+    XQuery environmentNlQuery = queryhandler.createQuery( "/target/environment/nl" );
 
-    XQuery pluginIdQuery = queryhandler.createQuery("/target/content/plugins/{plugin}/@id");
-    XQuery featureIdQuery = queryhandler.createQuery("/target/content/features/{feature}/@id");
-    XQuery extraLocationPathQuery = queryhandler.createQuery("/target/content/extraLocations/{location}/@path");
+    XQuery pluginIdQuery = queryhandler.createQuery( "/target/content/plugins/{plugin}/@id" );
+    XQuery featureIdQuery = queryhandler.createQuery( "/target/content/features/{feature}/@id" );
+    XQuery extraLocationPathQuery = queryhandler.createQuery( "/target/content/extraLocations/{location}/@path" );
 
-    XQuery targetJreNameQuery = queryhandler.createQuery("/target/targetJRE/jreName");
-    XQuery targetJreExecutionEnvironmentQuery = queryhandler.createQuery("/target/targetJRE/execEnv");
+    XQuery targetJreNameQuery = queryhandler.createQuery( "/target/targetJRE/jreName" );
+    XQuery targetJreExecutionEnvironmentQuery = queryhandler.createQuery( "/target/targetJRE/execEnv" );
 
     // parse the file
-    XQueryHandler.queryInputStream(inputStream, queryhandler);
+    XQueryHandler.queryInputStream( inputStream, queryhandler );
 
     // create the target definition
     TargetDefinition targetDefinition = new TargetDefinition();
-    targetDefinition.setName(nameQuery.getSingleResult());
+    targetDefinition.setName( nameQuery.getSingleResult() );
 
     // create the environment
     TargetDefinition.Environment environment = new TargetDefinition.Environment();
-    targetDefinition.setEnvironment(environment);
-    environment.setOs(environmentOsQuery.getSingleResult());
-    environment.setWs(environmentWsQuery.getSingleResult());
-    environment.setArch(environmentArchQuery.getSingleResult());
-    environment.setNl(environmentNlQuery.getSingleResult());
+    targetDefinition.setEnvironment( environment );
+    environment.setOs( environmentOsQuery.getSingleResult() );
+    environment.setWs( environmentWsQuery.getSingleResult() );
+    environment.setArch( environmentArchQuery.getSingleResult() );
+    environment.setNl( environmentNlQuery.getSingleResult() );
 
     // create the location
     TargetDefinition.Location location = new TargetDefinition.Location();
-    targetDefinition.setLocation(location);
-    location.setPath(pathQuery.getSingleResult());
-    location.setUseDefault(Boolean.getBoolean(useDefaultQuery.getSingleResult()));
+    targetDefinition.setLocation( location );
+    location.setPath( pathQuery.getSingleResult() );
+    location.setUseDefault( Boolean.getBoolean( useDefaultQuery.getSingleResult() ) );
 
     // create the content
     TargetDefinition.Content content = new TargetDefinition.Content();
-    targetDefinition.setContent(content);
+    targetDefinition.setContent( content );
     String[] pluginIds = pluginIdQuery.getResult();
-    for (String pluginId : pluginIds) {
-      content.addPlugin(pluginId);
+    for( String pluginId : pluginIds ) {
+      content.addPlugin( pluginId );
     }
     String[] featureIds = featureIdQuery.getResult();
-    for (String featureId : featureIds) {
-      content.addFeature(featureId);
+    for( String featureId : featureIds ) {
+      content.addFeature( featureId );
     }
     String[] extraLocationPaths = extraLocationPathQuery.getResult();
-    for (String extraLocationPath : extraLocationPaths) {
-      content.addExtraLocation(extraLocationPath);
+    for( String extraLocationPath : extraLocationPaths ) {
+      content.addExtraLocation( extraLocationPath );
     }
 
     // create the target jre
     TargetDefinition.TargetJRE targetJRE = new TargetDefinition.TargetJRE();
-    targetDefinition.setTargetJRE(targetJRE);
-    targetJRE.setJreName(targetJreNameQuery.getSingleResult());
-    targetJRE.setExecutionEnvironment(targetJreExecutionEnvironmentQuery.getSingleResult());
+    targetDefinition.setTargetJRE( targetJRE );
+    targetJRE.setJreName( targetJreNameQuery.getSingleResult() );
+    targetJRE.setExecutionEnvironment( targetJreExecutionEnvironmentQuery.getSingleResult() );
 
     // return the result
     return targetDefinition;
   }
-}
+  
+} /* ENDCLASS */

@@ -56,7 +56,7 @@ public interface JavaProjectRole extends ProjectRole {
    * 
    * @return A list of entries providing entries of the desired type.
    */
-  RawClasspathEntry[] getRawClasspathEntries(int entrykind);
+  RawClasspathEntry[] getRawClasspathEntries( int entrykind );
 
   /**
    * <p>
@@ -103,7 +103,7 @@ public interface JavaProjectRole extends ProjectRole {
    * @param sourceFolder
    * @return
    */
-  String getIncludePatternsForSourceFolder(String sourceFolder);
+  String getIncludePatternsForSourceFolder( String sourceFolder );
 
   /**
    * <p>
@@ -112,7 +112,7 @@ public interface JavaProjectRole extends ProjectRole {
    * @param sourceFolder
    * @return
    */
-  String getExcludePatternsForSourceFolder(String sourceFolder);
+  String getExcludePatternsForSourceFolder( String sourceFolder );
 
   /**
    * <p>
@@ -140,7 +140,7 @@ public interface JavaProjectRole extends ProjectRole {
    *          the source folder
    * @return the output folder for a specific source folder.
    */
-  String getOutputFolderForSourceFolder(String sourceFolder);
+  String getOutputFolderForSourceFolder( String sourceFolder );
 
   /**
    * <p>
@@ -151,4 +151,4 @@ public interface JavaProjectRole extends ProjectRole {
    */
   String getDefaultOutputFolder();
 
-}
+} /* ENDINTERFACE */

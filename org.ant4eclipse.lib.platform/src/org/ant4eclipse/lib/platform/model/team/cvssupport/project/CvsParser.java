@@ -37,9 +37,9 @@ public class CvsParser {
    * 
    * @return true <=> The CVS project has been set.
    */
-  public static boolean isCvsProject(EclipseProject project) {
-    Assure.notNull("project", project);
-    return project.hasChild("CVS" + File.separator + "Root");
+  public static boolean isCvsProject( EclipseProject project ) {
+    Assure.notNull( "project", project );
+    return project.hasChild( "CVS" + File.separator + "Root" );
   }
 
   /**
@@ -53,10 +53,10 @@ public class CvsParser {
    * @throws Ant4EclipseException
    *           Loading the content failed for some reason.
    */
-  public static String readCvsRepositoryName(EclipseProject project) throws Ant4EclipseException {
-    Assure.notNull("project", project);
-    File cvsRepositoryFile = project.getChild("CVS" + File.separator + "Repository");
-    return readFile(cvsRepositoryFile);
+  public static String readCvsRepositoryName( EclipseProject project ) throws Ant4EclipseException {
+    Assure.notNull( "project", project );
+    File cvsRepositoryFile = project.getChild( "CVS" + File.separator + "Repository" );
+    return readFile( cvsRepositoryFile );
   }
 
   /**
@@ -70,29 +70,29 @@ public class CvsParser {
    * @throws Ant4EclipseException
    *           Loading the root file failed.
    */
-  public static CvsRoot readCvsRoot(EclipseProject project) throws Ant4EclipseException {
-    Assure.notNull("project", project);
+  public static CvsRoot readCvsRoot( EclipseProject project ) throws Ant4EclipseException {
+    Assure.notNull( "project", project );
 
-    File cvsRootFile = project.getChild("CVS" + File.separator + "Root");
+    File cvsRootFile = project.getChild( "CVS" + File.separator + "Root" );
 
-    String cvsRoot = readFile(cvsRootFile);
-    return new CvsRoot(cvsRoot);
+    String cvsRoot = readFile( cvsRootFile );
+    return new CvsRoot( cvsRoot );
   }
 
-  public static String readTag(EclipseProject project) throws Ant4EclipseException {
-    Assure.notNull("project", project);
+  public static String readTag( EclipseProject project ) throws Ant4EclipseException {
+    Assure.notNull( "project", project );
 
-    if (!project.hasChild("CVS" + File.separator + "Tag")) {
+    if( !project.hasChild( "CVS" + File.separator + "Tag" ) ) {
       return null;
     }
 
-    File tagFile = project.getChild("CVS" + File.separator + "Tag");
+    File tagFile = project.getChild( "CVS" + File.separator + "Tag" );
 
-    String tag = readFile(tagFile);
-    if (tag.length() <= 1) {
+    String tag = readFile( tagFile );
+    if( tag.length() <= 1 ) {
       return null;
     }
-    return tag.substring(1);
+    return tag.substring( 1 );
   }
 
   /**
@@ -104,13 +104,13 @@ public class CvsParser {
    * @throws Ant4EclipseException
    *           When reading the file fails for some reason
    */
-  private static String readFile(File file) throws Ant4EclipseException {
+  private static String readFile( File file ) throws Ant4EclipseException {
     StringBuffer buffy = new StringBuffer();
     try {
-      buffy = Utilities.readTextContent(file, Utilities.ENCODING, false);
-    } catch (Ant4EclipseException e) {
-      throw new Ant4EclipseException(e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file, e
-          .toString());
+      buffy = Utilities.readTextContent( file, Utilities.ENCODING, false );
+    } catch( Ant4EclipseException e ) {
+      throw new Ant4EclipseException( e.getCause(), PlatformExceptionCode.ERROR_WHILE_READING_CVS_FILE, file,
+          e.toString() );
     }
     return buffy.toString();
   }
@@ -121,4 +121,5 @@ public class CvsParser {
   private CvsParser() {
     // avoid creating instances
   }
-}
+  
+} /* ENDCLASS */

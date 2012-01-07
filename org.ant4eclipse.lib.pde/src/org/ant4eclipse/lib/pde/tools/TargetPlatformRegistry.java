@@ -35,7 +35,7 @@ public interface TargetPlatformRegistry extends A4EService {
    * @param identifier
    * @param targetPlatformDefinition
    */
-  void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition);
+  void addTargetPlatformDefinition( String identifier, TargetPlatformDefinition targetPlatformDefinition );
 
   /**
    * <p>
@@ -44,7 +44,7 @@ public interface TargetPlatformRegistry extends A4EService {
    * @param identifier
    * @return
    */
-  boolean hasTargetPlatformDefinition(String identifier);
+  boolean hasTargetPlatformDefinition( String identifier );
 
   /**
    * <p>
@@ -53,7 +53,7 @@ public interface TargetPlatformRegistry extends A4EService {
    * 
    * @return
    */
-  TargetPlatformDefinition getTargetPlatformDefinition(String identifier);
+  TargetPlatformDefinition getTargetPlatformDefinition( String identifier );
 
   /**
    * <p>
@@ -62,7 +62,7 @@ public interface TargetPlatformRegistry extends A4EService {
    * @param identifier
    * @param platformConfiguration
    */
-  void addPlatformConfiguration(String identifier, PlatformConfiguration platformConfiguration);
+  void addPlatformConfiguration( String identifier, PlatformConfiguration platformConfiguration );
 
   /**
    * <p>
@@ -71,7 +71,7 @@ public interface TargetPlatformRegistry extends A4EService {
    * @param identifier
    * @return
    */
-  boolean hasPlatformConfiguration(String identifier);
+  boolean hasPlatformConfiguration( String identifier );
 
   /**
    * <p>
@@ -80,7 +80,7 @@ public interface TargetPlatformRegistry extends A4EService {
    * @param identifier
    * @return
    */
-  PlatformConfiguration getPlatformConfiguration(String identifier);
+  PlatformConfiguration getPlatformConfiguration( String identifier );
 
   /**
    * <p>
@@ -104,13 +104,13 @@ public interface TargetPlatformRegistry extends A4EService {
    * 
    * @return the TargetPlatform
    */
-  TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
-      PlatformConfiguration targetPlatformConfiguration);
+  TargetPlatform getInstance( Workspace workspace, String targetPlatformDefinitionIdentifier,
+      PlatformConfiguration targetPlatformConfiguration );
 
   /**
    * @param id
    */
-  void setCurrent(TargetPlatform targetPlatform);
+  void setCurrent( TargetPlatform targetPlatform );
 
   /**
    * <p>
@@ -138,4 +138,4 @@ public interface TargetPlatformRegistry extends A4EService {
    */
   void refreshAll();
 
-}
+} /* ENDINTERFACE */

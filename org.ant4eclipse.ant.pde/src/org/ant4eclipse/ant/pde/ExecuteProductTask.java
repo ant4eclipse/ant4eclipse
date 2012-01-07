@@ -148,7 +148,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   public ExecuteProductTask() {
     super( "executeProduct" );
-    this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
+    _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
   /**
@@ -158,7 +158,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    *          The new location of the product file. Not <code>null</code>.
    */
   public void setProduct( File newproduct ) {
-    this._product = newproduct;
+    _product = newproduct;
   }
 
   /**
@@ -168,7 +168,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    *          The os to be used for the execution process. Not <code>null</code>.
    */
   public void setOs( ProductOs newos ) {
-    this._os = newos;
+    _os = newos;
   }
 
   /**
@@ -176,7 +176,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public String getTargetPlatformId() {
-    return this._targetPlatformAwareDelegate.getTargetPlatformId();
+    return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
   /**
@@ -184,7 +184,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public boolean isTargetPlatformIdSet() {
-    return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
   /**
@@ -192,7 +192,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public void requireTargetPlatformIdSet() {
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -200,7 +200,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public void setTargetPlatformId( String targetPlatformId ) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
+    _targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -208,7 +208,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public String getPlatformConfigurationId() {
-    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+    return _targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
 
   /**
@@ -216,7 +216,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public boolean isPlatformConfigurationIdSet() {
-    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+    return _targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
 
   /**
@@ -224,7 +224,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public void setPlatformConfigurationId( String platformConfigurationId ) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
+    _targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
@@ -248,11 +248,11 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
   private ProductDefinition loadProductDefinition() {
     InputStream instream = null;
     try {
-      instream = new FileInputStream( this._product );
+      instream = new FileInputStream( _product );
       return ProductDefinitionParser.parseProductDefinition( instream );
     } catch( Ant4EclipseException ex ) {
       if( ex.getExceptionCode() == PdeExceptionCode.INVALID_CONFIGURATION_VALUE ) {
-        throw new Ant4EclipseException( PdeExceptionCode.INVALID_PRODUCT_DEFINITION, this._product, ex.getMessage() );
+        throw new Ant4EclipseException( PdeExceptionCode.INVALID_PRODUCT_DEFINITION, _product, ex.getMessage() );
       } else {
         throw ex;
       }
@@ -276,7 +276,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     configuration.setPreferProjects( true );
 
     // fetch the target platform
-    TargetPlatform targetplatform = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
+    TargetPlatform targetplatform = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
 
     // StringMap properties = new StringMap();
     // contributeForAll(properties, null, productdef, targetplatform);
@@ -472,15 +472,15 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     requireWorkspaceDirectoryOrWorkspaceIdSet();
     requireTargetPlatformIdSet();
 
-    if( this._product == null ) {
+    if( _product == null ) {
       throw new BuildException( "The attribute 'product' has to be set." );
     }
 
-    if( !this._product.isFile() ) {
-      throw new BuildException( String.format( "The product configuration '%s' is not a regular file.", this._product ) );
+    if( !_product.isFile() ) {
+      throw new BuildException( String.format( "The product configuration '%s' is not a regular file.", _product ) );
     }
 
-    if( this._os == null ) {
+    if( _os == null ) {
       throw new BuildException( "The attribute 'os' has to be set." );
     }
 
@@ -525,11 +525,11 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
         productdef.hasLaunchername() ? productdef.getLaunchername() : "eclipse" );
 
     values.getProperties().put( PROP_VERSION, String.valueOf( productdef.getVersion() ) );
-    values.getProperties().put( PROP_VMARGS, productdef.getVmArgs( this._os ) );
-    values.getProperties().put( PROP_PROGRAMARGS, productdef.getProgramArgs( this._os ) );
+    values.getProperties().put( PROP_VMARGS, productdef.getVmArgs( _os ) );
+    values.getProperties().put( PROP_PROGRAMARGS, productdef.getProgramArgs( _os ) );
     values.getProperties().put( PROP_OSGIBUNDLES, ConfigurationHelper.getOsgiBundles( productdef, targetplatform ) );
 
-    String configini = productdef.getConfigIni( this._os );
+    String configini = productdef.getConfigIni( _os );
     if( configini == null ) {
       values.getProperties().put( PROP_CONFIGINI, "" );
     } else {

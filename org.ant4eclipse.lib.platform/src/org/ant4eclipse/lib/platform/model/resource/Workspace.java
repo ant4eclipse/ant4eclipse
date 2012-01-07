@@ -38,7 +38,7 @@ public interface Workspace {
    *          the name of the {@link EclipseProject}
    * @return <code>true</code>, if the workspace contains a project with the given name.
    */
-  boolean hasProject(String projectName);
+  boolean hasProject( String projectName );
 
   /**
    * <p>
@@ -50,7 +50,7 @@ public interface Workspace {
    * 
    * @return the {@link EclipseProject} associated with the specified name.
    */
-  EclipseProject getProject(String projectName);
+  EclipseProject getProject( String projectName );
 
   /**
    * <p>
@@ -64,7 +64,7 @@ public interface Workspace {
    *          the {@link Workspace}.
    * @return an array of {@link EclipseProject EclipseProjects} with the specified project names.
    */
-  EclipseProject[] getProjects(String[] projectNames, boolean failOnMissingProjects);
+  EclipseProject[] getProjects( String[] projectNames, boolean failOnMissingProjects );
 
   /**
    * <p>
@@ -86,6 +86,6 @@ public interface Workspace {
    *          the class of the project role. Has to be assignable from class {@link ProjectRole}.
    * @return all the @link EclipseProject EclipseProjects} with the specified project role.
    */
-  EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole);
+  EclipseProject[] getAllProjects( Class<? extends ProjectRole> projectRole );
 
 } /* ENDCLASS */

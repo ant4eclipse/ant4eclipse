@@ -29,19 +29,19 @@ public class ValidatorRegistry {
   private ProjectValidator[] _validators;
 
   public ValidatorRegistry() {
-    List<ProjectValidator> validators = A4ECore.instance().getServices( ProjectValidator.class ); 
-    _validators = validators.toArray( new ProjectValidator[ validators.size() ] );
+    List<ProjectValidator> validators = A4ECore.instance().getServices( ProjectValidator.class );
+    _validators = validators.toArray( new ProjectValidator[validators.size()] );
   }
 
   /**
    * @param project
    */
-  public void validate(EclipseProject project) {
+  public void validate( EclipseProject project ) {
     ProjectRole[] roles = project.getRoles();
-    for (ProjectRole role : roles) {
-      for (ProjectValidator validator : this._validators) {
-        if (validator.canValidate(role)) {
-          validator.validate(role);
+    for( ProjectRole role : roles ) {
+      for( ProjectValidator validator : _validators ) {
+        if( validator.canValidate( role ) ) {
+          validator.validate( role );
         }
       }
     }

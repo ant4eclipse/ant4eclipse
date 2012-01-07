@@ -28,7 +28,7 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
    */
   @Override
   public String[] getProjectReferenceTypes() {
-    return this._projectReferenceTypes;
+    return _projectReferenceTypes;
   }
 
   /**
@@ -36,7 +36,7 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
    */
   @Override
   public boolean isProjectReferenceTypesSet() {
-    return this._projectReferenceTypes != null;
+    return _projectReferenceTypes != null;
   }
 
   /**
@@ -57,15 +57,15 @@ public class ProjectReferenceAwareDelegate implements ProjectReferenceAwareCompo
   public void setProjectReferenceTypes( String projectReferenceTypes ) {
     //
     if( projectReferenceTypes == null ) {
-      this._projectReferenceTypes = new String[] {};
+      _projectReferenceTypes = new String[] {};
     } else {
       String[] names = projectReferenceTypes.split( "," );
 
       //
-      this._projectReferenceTypes = new String[names.length];
+      _projectReferenceTypes = new String[names.length];
 
       for( int i = 0; i < names.length; i++ ) {
-        this._projectReferenceTypes[i] = names[i].trim();
+        _projectReferenceTypes[i] = names[i].trim();
       }
     }
   }

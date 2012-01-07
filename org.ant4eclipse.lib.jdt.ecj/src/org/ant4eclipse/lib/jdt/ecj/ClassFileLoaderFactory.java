@@ -67,18 +67,18 @@ public class ClassFileLoaderFactory {
    * @param sourcepathEntries
    * @return
    */
-  public static ClassFileLoader createClasspathClassFileLoader(File source, byte type, File[] classpathEntries,
-      File[] sourcepathEntries) {
-    ClassFileLoaderCacheKey cacheKey = new ClassFileLoaderCacheKey(source, type, classpathEntries, sourcepathEntries);
+  public static ClassFileLoader createClasspathClassFileLoader( File source, byte type, File[] classpathEntries,
+      File[] sourcepathEntries ) {
+    ClassFileLoaderCacheKey cacheKey = new ClassFileLoaderCacheKey( source, type, classpathEntries, sourcepathEntries );
 
     // Try to get already initialized ClassFileLoader from cache
-    ClassFileLoader classFileLoader = A4ECore.instance().getRuntimeValue(cacheKey);
-    if (classFileLoader == null) {
+    ClassFileLoader classFileLoader = A4ECore.instance().getRuntimeValue( cacheKey );
+    if( classFileLoader == null ) {
       // Create new ClassFileLoader
-      classFileLoader = new ClasspathClassFileLoaderImpl(source, type, classpathEntries, sourcepathEntries);
+      classFileLoader = new ClasspathClassFileLoaderImpl( source, type, classpathEntries, sourcepathEntries );
 
       // add ClassFileLoader to Cache
-      A4ECore.instance().instance().putRuntimeValue(cacheKey, classFileLoader);
+      A4ECore.instance().instance().putRuntimeValue( cacheKey, classFileLoader );
     }
 
     // Return the ClassFileLoader
@@ -94,51 +94,51 @@ public class ClassFileLoaderFactory {
 
     private final File[] _sourcepathEntries;
 
-    public ClassFileLoaderCacheKey(File source, byte type, File[] classpathEntries, File[] sourcepathEntries) {
+    public ClassFileLoaderCacheKey( File source, byte type, File[] classpathEntries, File[] sourcepathEntries ) {
       super();
-      this._source = source;
-      this._type = type;
-      this._classpathEntries = classpathEntries;
-      this._sourcepathEntries = sourcepathEntries;
+      _source = source;
+      _type = type;
+      _classpathEntries = classpathEntries;
+      _sourcepathEntries = sourcepathEntries;
     }
 
     @Override
     public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + Arrays.hashCode(this._classpathEntries);
-      result = prime * result + ((this._source == null) ? 0 : this._source.hashCode());
-      result = prime * result + Arrays.hashCode(this._sourcepathEntries);
-      result = prime * result + this._type;
+      result = prime * result + Arrays.hashCode( _classpathEntries );
+      result = prime * result + ((_source == null) ? 0 : _source.hashCode());
+      result = prime * result + Arrays.hashCode( _sourcepathEntries );
+      result = prime * result + _type;
       return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       ClassFileLoaderCacheKey other = (ClassFileLoaderCacheKey) obj;
-      if (!Arrays.equals(this._classpathEntries, other._classpathEntries)) {
+      if( !Arrays.equals( _classpathEntries, other._classpathEntries ) ) {
         return false;
       }
-      if (this._source == null) {
-        if (other._source != null) {
+      if( _source == null ) {
+        if( other._source != null ) {
           return false;
         }
-      } else if (!this._source.equals(other._source)) {
+      } else if( !_source.equals( other._source ) ) {
         return false;
       }
-      if (!Arrays.equals(this._sourcepathEntries, other._sourcepathEntries)) {
+      if( !Arrays.equals( _sourcepathEntries, other._sourcepathEntries ) ) {
         return false;
       }
-      if (this._type != other._type) {
+      if( _type != other._type ) {
         return false;
       }
       return true;
@@ -146,9 +146,9 @@ public class ClassFileLoaderFactory {
 
     @Override
     public String toString() {
-      return "ClassFileLoaderCacheKey [_source=" + this._source + ", _type=" + this._type + ", _classpathEntries="
-          + Arrays.toString(this._classpathEntries) + ", _sourcepathEntries="
-          + Arrays.toString(this._sourcepathEntries) + "]";
+      return "ClassFileLoaderCacheKey [_source=" + _source + ", _type=" + _type + ", _classpathEntries="
+          + Arrays.toString( _classpathEntries ) + ", _sourcepathEntries="
+          + Arrays.toString( _sourcepathEntries ) + "]";
     }
 
   }
@@ -189,16 +189,16 @@ public class ClassFileLoaderFactory {
    * 
    * @return a new instance of type {@link ClassFileLoader}.
    */
-  public static ClassFileLoader createClasspathClassFileLoader(File entry, byte type) {
-    String cacheKey = String.valueOf(entry) + "/" + type;
+  public static ClassFileLoader createClasspathClassFileLoader( File entry, byte type ) {
+    String cacheKey = String.valueOf( entry ) + "/" + type;
     // Try to get ClassFileLoader from cache
-    ClassFileLoader classFileLoader = A4ECore.instance().getRuntimeValue(cacheKey);
-    if (classFileLoader == null) {
+    ClassFileLoader classFileLoader = A4ECore.instance().getRuntimeValue( cacheKey );
+    if( classFileLoader == null ) {
       // Create new ClassFileLoader
-      classFileLoader = new ClasspathClassFileLoaderImpl(entry, type);
+      classFileLoader = new ClasspathClassFileLoaderImpl( entry, type );
 
       // add to cache
-      A4ECore.instance().putRuntimeValue(cacheKey, classFileLoader);
+      A4ECore.instance().putRuntimeValue( cacheKey, classFileLoader );
     }
 
     return classFileLoader;
@@ -215,8 +215,8 @@ public class ClassFileLoaderFactory {
    * @return an new instance of type {@link ClassFileLoader}, that can load classes from multiple underlying class file
    *         loaders.
    */
-  public static ClassFileLoader createCompoundClassFileLoader(ClassFileLoader[] classFileLoaders) {
-    return new CompoundClassFileLoaderImpl(classFileLoaders);
+  public static ClassFileLoader createCompoundClassFileLoader( ClassFileLoader[] classFileLoaders ) {
+    return new CompoundClassFileLoaderImpl( classFileLoaders );
   }
 
   /**
@@ -231,8 +231,8 @@ public class ClassFileLoaderFactory {
    *          the filter
    * @return the class file loader
    */
-  public static ClassFileLoader createFilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
-    return new FilteringClassFileLoader(classFileLoader, filter);
+  public static ClassFileLoader createFilteringClassFileLoader( ClassFileLoader classFileLoader, String filter ) {
+    return new FilteringClassFileLoader( classFileLoader, filter );
   }
 
-}
+} /* ENDCLASS */

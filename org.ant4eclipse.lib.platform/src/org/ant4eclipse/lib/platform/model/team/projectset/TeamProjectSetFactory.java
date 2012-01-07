@@ -32,7 +32,7 @@ public interface TeamProjectSetFactory extends A4EService {
    *          The name of the team project set
    * @return The new TeamProjectSet-instance without any TeamProjectDescription
    */
-  TeamProjectSet createTeamProjectSet(String projectSetName);
+  TeamProjectSet createTeamProjectSet( String projectSetName );
 
   /**
    * Creates a TeamProjectDescription for the given reference-String and adds it to the team project set
@@ -42,14 +42,14 @@ public interface TeamProjectSetFactory extends A4EService {
    * @param reference
    *          The reference string read out of the Project Set-File
    */
-  void addTeamProjectDescription(TeamProjectSet projectSet, String reference);
+  void addTeamProjectDescription( TeamProjectSet projectSet, String reference );
 
   /**
    * Returns a list of all provider IDs for the implementing TeamProjectSetFactory instance.
    * 
-   * @return   A list of all provider IDs for the implementing TeamProjectSetFactory instance.
-   *           Neither <code>null</code> nor empty.
+   * @return A list of all provider IDs for the implementing TeamProjectSetFactory instance. Neither <code>null</code>
+   *         nor empty.
    */
   String[] getProviderIDs();
-  
+
 } /* ENDINTERFACE */

@@ -22,65 +22,66 @@ public class PlatformExceptionCode extends ExceptionCode {
 
   public static String                MISSING_REPOSITORY      = "Missing repository";
 
-  @NLSMessage("No workspace with id '%s' registered.")
+  @NLSMessage( "No workspace with id '%s' registered." )
   public static ExceptionCode         UNKNOWN_WORKSPACE_ID;
 
-  @NLSMessage("Either workspace directory or workspace id has to be set. You can't specify both.")
+  @NLSMessage( "Either workspace directory or workspace id has to be set. You can't specify both." )
   public static ExceptionCode         WORKSPACE_DIRECTORY_AND_WORKSPACE_ID_SET;
 
-  @NLSMessage("Workspace directory '%s' does not exist.")
+  @NLSMessage( "Workspace directory '%s' does not exist." )
   public static ExceptionCode         WORKSPACE_DIRECTORY_DOES_NOT_EXIST;
 
-  @NLSMessage("You have to specify the 'workspaceDirectory' or 'workspaceId' attribute.")
+  @NLSMessage( "You have to specify the 'workspaceDirectory' or 'workspaceId' attribute." )
   public static ExceptionCode         MISSING_WORKSPACE_DIRECTORY_OR_WORKSPACE_ID;
 
-  @NLSMessage("You have to specify the 'workspaceDirectory' (or 'workspaceId') and 'projectName' attributes.")
+  @NLSMessage( "You have to specify the 'workspaceDirectory' (or 'workspaceId') and 'projectName' attributes." )
   public static ExceptionCode         MISSING_WORKSPACE_AND_PROJECT_NAME;
 
-  @NLSMessage("Project '%s' must have role '%s'.")
+  @NLSMessage( "Project '%s' must have role '%s'." )
   public static ExceptionCode         MISSING_PROJECT_ROLE;
 
-  @NLSMessage("The linked resource '%s' in project '%s' does not exist.")
+  @NLSMessage( "The linked resource '%s' in project '%s' does not exist." )
   public static ExceptionCode         LINKED_RESOURCE_DOES_NOT_EXIST;
 
-  @NLSMessage("Specified project '%s' does not exist.")
+  @NLSMessage( "Specified project '%s' does not exist." )
   public static ExceptionCode         SPECIFIED_PROJECT_DOES_NOT_EXIST;
 
-  @NLSMessage("The usage of the 'project' attribute is not supported anymore. Please use the 'workspaceDirectory' and 'projectName' attributes instead.")
+  @NLSMessage( "The usage of the 'project' attribute is not supported anymore. Please use the 'workspaceDirectory' and 'projectName' attributes instead." )
   public static PlatformExceptionCode DEPRECATED_USAGE_OF_SET_PROJECT;
 
-  @NLSMessage("There are two projects with the same specified name: '%s', '%s' ")
+  @NLSMessage( "There are two projects with the same specified name: '%s', '%s' " )
   public static PlatformExceptionCode PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS;
 
-  @NLSMessage("Unknown execution scope '%s'")
+  @NLSMessage( "Unknown execution scope '%s'" )
   public static PlatformExceptionCode UNKNOWN_EXECUTION_SCOPE;
 
-  @NLSMessage("Error while executing CVS '%s' command: '%s' ")
+  @NLSMessage( "Error while executing CVS '%s' command: '%s' " )
   public static TeamExceptionCode     ERROR_WHILE_EXECUTING_CVS_COMMAND;
 
-  @NLSMessage("Error while executing SVN '%s' command: '%s' ")
+  @NLSMessage( "Error while executing SVN '%s' command: '%s' " )
   public static TeamExceptionCode     ERROR_WHILE_EXECUTING_SVN_COMMAND;
 
-  @NLSMessage("Could not create an SVNUrl from URL '%s' of team project description '%s': '%s'")
+  @NLSMessage( "Could not create an SVNUrl from URL '%s' of team project description '%s': '%s'" )
   public static TeamExceptionCode     COULD_NOT_BUILD_SVNURL_FOR_PROJECT;
 
-  @NLSMessage("The team project set provider with id '%s' is unkown")
+  @NLSMessage( "The team project set provider with id '%s' is unkown" )
   public static TeamExceptionCode     UNKNOWN_TEAM_PROJECT_SET_PROVIDER;
 
-  @NLSMessage("Error while trying to read CVS file '%s': '%s'")
+  @NLSMessage( "Error while trying to read CVS file '%s': '%s'" )
   public static TeamExceptionCode     ERROR_WHILE_READING_CVS_FILE;
 
-  @NLSMessage("Invalid PSF-reference. Expected to have '%s' tokens, but have %s tokens in reference '%s'")
+  @NLSMessage( "Invalid PSF-reference. Expected to have '%s' tokens, but have %s tokens in reference '%s'" )
   public static TeamExceptionCode     INVALID_PSF_REFERENCE;
 
-  @NLSMessage("The cvsroot '%s' is invalid: %s")
+  @NLSMessage( "The cvsroot '%s' is invalid: %s" )
   public static TeamExceptionCode     INVALID_CVS_ROOT;
 
   static {
-    NLS.initialize(PlatformExceptionCode.class);
+    NLS.initialize( PlatformExceptionCode.class );
   }
 
-  private PlatformExceptionCode(String message) {
-    super(message);
+  private PlatformExceptionCode( String message ) {
+    super( message );
   }
-}
+  
+} /* ENDCLASS */

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
-
 import org.ant4eclipse.ant.platform.core.ProjectSetComponent;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
@@ -46,15 +45,15 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
 
     //
     if( projectNames == null ) {
-      this._projectNames = new String[] {};
+      _projectNames = new String[] {};
     } else {
       String[] names = projectNames.split( "," );
 
       //
-      this._projectNames = new String[names.length];
+      _projectNames = new String[names.length];
 
       for( int i = 0; i < names.length; i++ ) {
-        this._projectNames[i] = names[i].trim();
+        _projectNames[i] = names[i].trim();
       }
     }
   }
@@ -64,7 +63,7 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    */
   @Override
   public final String[] getProjectNames() {
-    return isTeamProjectSetSet() ? getTeamProjectSet().getProjectNames() : this._projectNames;
+    return isTeamProjectSetSet() ? getTeamProjectSet().getProjectNames() : _projectNames;
   }
 
   /**
@@ -72,7 +71,7 @@ public class ProjectSetDelegate extends TeamProjectSetDelegate implements Projec
    */
   @Override
   public final boolean isProjectNamesSet() {
-    return this._projectNames != null;
+    return _projectNames != null;
   }
 
   /**

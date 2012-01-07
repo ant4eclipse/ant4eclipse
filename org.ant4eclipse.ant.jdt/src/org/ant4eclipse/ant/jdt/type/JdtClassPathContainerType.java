@@ -49,7 +49,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
   public JdtClassPathContainerType( Project project ) {
     super( project );
 
-    this._resources = new Union();
+    _resources = new Union();
   }
 
   /**
@@ -59,7 +59,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * @return the name
    */
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -70,7 +70,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    *          the name to set
    */
   public void setName( String name ) {
-    this._name = name;
+    _name = name;
   }
 
   /**
@@ -80,7 +80,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    *          resource collection to add.
    */
   public void add( ResourceCollection rc ) {
-    this._resources.add( rc );
+    _resources.add( rc );
   }
 
   /**
@@ -96,14 +96,14 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
 
     // fetch the provided files
     List<File> files = new ArrayList<File>();
-    @SuppressWarnings( "unchecked" ) Iterator<FileResource> iterator = this._resources.iterator();
+    @SuppressWarnings( "unchecked" ) Iterator<FileResource> iterator = _resources.iterator();
     while( iterator.hasNext() ) {
       FileResource fileResource = iterator.next();
       files.add( fileResource.getFile() );
     }
 
     // TODO: what to do if classpathContainer already registered?
-    variablesRegistry.registerClassPathContainer( this._name, files.toArray( new File[0] ) );
+    variablesRegistry.registerClassPathContainer( _name, files.toArray( new File[0] ) );
   }
 
 } /* ENDCLASS */

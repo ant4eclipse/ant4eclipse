@@ -26,7 +26,7 @@ public interface UserLibraries {
    * 
    * @return true <=> A library with the supplied name is available.
    */
-  boolean hasLibrary(String name);
+  boolean hasLibrary( String name );
 
   /**
    * Returns a user library entry associated with the supplied name.
@@ -36,7 +36,7 @@ public interface UserLibraries {
    * 
    * @return The associated user library entry.
    */
-  UserLibrary getLibrary(String name);
+  UserLibrary getLibrary( String name );
 
   /**
    * Returns a list with the names of the available libraries.

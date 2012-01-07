@@ -48,12 +48,12 @@ public class TestClassAnalyser {
     Assure.notNull( "eclipseProject", eclipseProject );
 
     //
-    this._eclipseProject = eclipseProject;
+    _eclipseProject = eclipseProject;
 
-    ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath( this._eclipseProject, false, false,
+    ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath( _eclipseProject, false, false,
         new ArrayList<JdtClasspathContainerArgument>() );
 
-    this._fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( this._eclipseProject.getFolder(),
+    _fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( _eclipseProject.getFolder(),
         EcjAdapter.PROJECT, classpath.getClasspathFiles(), new File[0] );
   }
 
@@ -75,7 +75,7 @@ public class TestClassAnalyser {
     //
     if( testClasses.isEmpty() ) {
       throw new RuntimeException( String.format( "Project '%s' does not contain any test classes!",
-          this._eclipseProject.getSpecifiedName() ) );
+          _eclipseProject.getSpecifiedName() ) );
     }
 
     // iterate over all the
@@ -103,13 +103,13 @@ public class TestClassAnalyser {
     Set<String> result = new HashSet<String>();
 
     // get the java projetc role
-    JavaProjectRole javaProjectRole = this._eclipseProject.getRole( JavaProjectRole.class );
+    JavaProjectRole javaProjectRole = _eclipseProject.getRole( JavaProjectRole.class );
 
     // iterate over all the output folder names
     for( String outputFolderName : javaProjectRole.getAllOutputFolders() ) {
 
       // get the output folder
-      File outputFolder = this._eclipseProject.getChild( outputFolderName );
+      File outputFolder = _eclipseProject.getChild( outputFolderName );
 
       // iterate over all contained children
       for( File file : Utilities.getAllChildren( outputFolder ) ) {
@@ -180,7 +180,7 @@ public class TestClassAnalyser {
       return false;
     }
 
-    ClassFile superClassFile = this._fileLoader.loadClass( ClassName.fromQualifiedClassName( className ) );
+    ClassFile superClassFile = _fileLoader.loadClass( ClassName.fromQualifiedClassName( className ) );
 
     JUnitVisitor classVisitor = new JUnitVisitor();
     new ClassReader( superClassFile.getBytes() ).accept( classVisitor, 0 );

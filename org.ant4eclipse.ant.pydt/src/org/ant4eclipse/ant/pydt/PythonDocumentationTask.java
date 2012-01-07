@@ -52,7 +52,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    *          The id of the runtime used to access the python interpreter.
    */
   public void setRuntime( String runtimeid ) {
-    this._runtimeid = Utilities.cleanup( runtimeid );
+    _runtimeid = Utilities.cleanup( runtimeid );
   }
 
   /**
@@ -62,7 +62,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    *          The destination directory where the documentation shall be written to.
    */
   public void setDestdir( File destdir ) {
-    this._destdir = destdir;
+    _destdir = destdir;
   }
 
   /**
@@ -72,7 +72,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    *          The sources directory used to create the documentation from.
    */
   public void setSourcedir( File sourcedir ) {
-    this._sourcedir = sourcedir;
+    _sourcedir = sourcedir;
   }
 
   /**
@@ -81,24 +81,24 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if( this._destdir == null ) {
+    if( _destdir == null ) {
       throw new Ant4EclipseException( PydtExceptionCode.MISSINGATTRIBUTE, "destdir" );
     }
-    if( this._sourcedir == null ) {
+    if( _sourcedir == null ) {
       throw new Ant4EclipseException( PydtExceptionCode.MISSINGATTRIBUTE, "sourcedir" );
     }
-    if( this._destdir.exists() && (!this._destdir.isDirectory()) ) {
-      throw new Ant4EclipseException( PydtExceptionCode.NOTADIRECTORY, this._destdir );
+    if( _destdir.exists() && (!_destdir.isDirectory()) ) {
+      throw new Ant4EclipseException( PydtExceptionCode.NOTADIRECTORY, _destdir );
     }
-    if( !this._sourcedir.isDirectory() ) {
-      throw new Ant4EclipseException( PydtExceptionCode.NOTADIRECTORY, this._sourcedir );
+    if( !_sourcedir.isDirectory() ) {
+      throw new Ant4EclipseException( PydtExceptionCode.NOTADIRECTORY, _sourcedir );
     }
-    if( this._runtimeid == null ) {
+    if( _runtimeid == null ) {
       throw new Ant4EclipseException( PydtExceptionCode.MISSINGATTRIBUTE, "runtime" );
     }
     PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
-    if( !registry.hasRuntime( this._runtimeid ) ) {
-      throw new Ant4EclipseException( PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, this._runtimeid );
+    if( !registry.hasRuntime( _runtimeid ) ) {
+      throw new Ant4EclipseException( PydtExceptionCode.UNKNOWN_PYTHON_RUNTIME, _runtimeid );
     }
   }
 
@@ -109,7 +109,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
   protected void doExecute() {
 
     PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
-    PythonRuntime runtime = registry.getRuntime( this._runtimeid );
+    PythonRuntime runtime = registry.getRuntime( _runtimeid );
 
     if( runtime.getVersion().getMajor() >= 3 ) {
       // unfortunately the syntax has changed, so we can't use epydoc with it
@@ -126,13 +126,13 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
 
     File executable = runtime.getExecutable();
 
-    Utilities.mkdirs( this._destdir );
+    Utilities.mkdirs( _destdir );
 
     // setup some options for the commandline
     StringBuffer options = new StringBuffer();
     appendOption( options, "--html" );
     appendOption( options, "-o" );
-    appendOption( options, pythonEscape( this._destdir.getAbsolutePath() ) );
+    appendOption( options, pythonEscape( _destdir.getAbsolutePath() ) );
     collectModules( options );
 
     // generate the python script used to generate the documentation
@@ -180,7 +180,7 @@ public class PythonDocumentationTask extends AbstractAnt4EclipseTask {
    */
   private void collectModules( StringBuffer options ) {
     List<File> result = new ArrayList<File>();
-    collectPackages( result, this._sourcedir );
+    collectPackages( result, _sourcedir );
     if( result.size() > 0 ) {
       appendOption( options, pythonEscape( result.get( 0 ).getAbsolutePath() ) );
       for( int i = 1; i < result.size(); i++ ) {

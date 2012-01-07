@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
@@ -59,28 +58,28 @@ public class CompilationUnitImpl implements ICompilationUnit {
    * @param sourceFile
    *          the source file
    */
-  public CompilationUnitImpl(SourceFile sourceFile) {
-    Assure.notNull("sourceFile", sourceFile);
+  public CompilationUnitImpl( SourceFile sourceFile ) {
+    Assure.notNull( "sourceFile", sourceFile );
 
-    this._sourceFile = sourceFile;
+    _sourceFile = sourceFile;
 
-    this._fileName = this._sourceFile.getSourceFileName().toCharArray();
+    _fileName = _sourceFile.getSourceFileName().toCharArray();
 
     // compute qualified name
-    String qualifiedTypeName = getQualifiedTypeName(this._sourceFile.getSourceFileName());
+    String qualifiedTypeName = getQualifiedTypeName( _sourceFile.getSourceFileName() );
 
     // compute package and main type name
-    int v = qualifiedTypeName.lastIndexOf('.');
-    this._mainTypeName = qualifiedTypeName.substring(v + 1).toCharArray();
-    if ((v > 0) && (v < qualifiedTypeName.length())) {
-      String packageName = qualifiedTypeName.substring(0, v);
-      StringTokenizer packages = new StringTokenizer(packageName, ".");
-      this._packageName = new char[packages.countTokens()][];
-      for (int i = 0; i < this._packageName.length; i++) {
-        this._packageName[i] = packages.nextToken().toCharArray();
+    int v = qualifiedTypeName.lastIndexOf( '.' );
+    _mainTypeName = qualifiedTypeName.substring( v + 1 ).toCharArray();
+    if( (v > 0) && (v < qualifiedTypeName.length()) ) {
+      String packageName = qualifiedTypeName.substring( 0, v );
+      StringTokenizer packages = new StringTokenizer( packageName, "." );
+      _packageName = new char[packages.countTokens()][];
+      for( int i = 0; i < _packageName.length; i++ ) {
+        _packageName[i] = packages.nextToken().toCharArray();
       }
     } else {
-      this._packageName = new char[0][];
+      _packageName = new char[0][];
     }
   }
 
@@ -89,7 +88,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    */
   @Override
   public final char[] getMainTypeName() {
-    return this._mainTypeName;
+    return _mainTypeName;
 
   }
 
@@ -98,7 +97,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    */
   @Override
   public final char[][] getPackageName() {
-    return this._packageName;
+    return _packageName;
   }
 
   /**
@@ -106,7 +105,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    */
   @Override
   public final char[] getFileName() {
-    return this._fileName;
+    return _fileName;
   }
 
   /**
@@ -114,26 +113,26 @@ public class CompilationUnitImpl implements ICompilationUnit {
    */
   @Override
   public final char[] getContents() {
-    String filename = new String(this._fileName);
-    File sourceFile = new File(this._sourceFile.getSourceFolder(), filename);
+    String filename = new String( _fileName );
+    File sourceFile = new File( _sourceFile.getSourceFolder(), filename );
 
     StringBuffer result = new StringBuffer();
 
     try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(sourceFile), this._sourceFile
-          .getEncoding()));
+      BufferedReader in = new BufferedReader( new InputStreamReader( new FileInputStream( sourceFile ),
+          _sourceFile.getEncoding() ) );
 
       String str;
-      while ((str = in.readLine()) != null) {
-        result.append(str);
-        result.append("\n");
+      while( (str = in.readLine()) != null ) {
+        result.append( str );
+        result.append( "\n" );
       }
-    } catch (UnsupportedEncodingException e) {
-      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, filename,
-          this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
-    } catch (IOException e) {
-      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, filename,
-          this._sourceFile.getSourceFolder(), this._sourceFile.getEncoding());
+    } catch( UnsupportedEncodingException e ) {
+      throw new Ant4EclipseException( e, EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, filename,
+          _sourceFile.getSourceFolder(), _sourceFile.getEncoding() );
+    } catch( IOException e ) {
+      throw new Ant4EclipseException( e, EcjExceptionCodes.UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION, filename,
+          _sourceFile.getSourceFolder(), _sourceFile.getEncoding() );
     }
     return result.toString().toCharArray();
   }
@@ -145,7 +144,7 @@ public class CompilationUnitImpl implements ICompilationUnit {
    * @return
    */
   public SourceFile getSourceFile() {
-    return this._sourceFile;
+    return _sourceFile;
   }
 
   /**
@@ -157,11 +156,12 @@ public class CompilationUnitImpl implements ICompilationUnit {
    *          the file name to resolve
    * @return the qualified type name for the given type name.
    */
-  private String getQualifiedTypeName(String fileName) {
-    if (fileName.toLowerCase().endsWith(JAVA_FILE_POSTFIX)) {
-      return fileName.substring(0, fileName.length() - 5).replace(File.separatorChar, '.');
+  private String getQualifiedTypeName( String fileName ) {
+    if( fileName.toLowerCase().endsWith( JAVA_FILE_POSTFIX ) ) {
+      return fileName.substring( 0, fileName.length() - 5 ).replace( File.separatorChar, '.' );
     } else {
-      return fileName.replace(File.separatorChar, '.');
+      return fileName.replace( File.separatorChar, '.' );
     }
   }
-}
+  
+} /* ENDCLASS */

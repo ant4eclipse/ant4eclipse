@@ -30,17 +30,17 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
     private String description;
 
     Priority( int lev, String desc ) {
-      this.level = lev;
-      this.description = desc;
+      level = lev;
+      description = desc;
     }
 
     public boolean isEnabled( Priority value ) {
-      return value.level >= this.level;
+      return value.level >= level;
     }
 
     @Override
     public String toString() {
-      return this.description;
+      return description;
     }
 
   } /* ENDENUM */
@@ -78,10 +78,10 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    *          The printer that will be used for the output. If <code>null</code> the standard output is used.
    */
   public DefaultAnt4EclipseLogger( PrintStream printer ) {
-    this._logLevel = Priority.trace;
-    this._printer = printer;
-    if( this._printer == null ) {
-      this._printer = System.out;
+    _logLevel = Priority.trace;
+    _printer = printer;
+    if( _printer == null ) {
+      _printer = System.out;
     }
   }
 
@@ -90,7 +90,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   @Override
   public boolean isDebuggingEnabled() {
-    return Priority.debug.isEnabled( this._logLevel );
+    return Priority.debug.isEnabled( _logLevel );
   }
 
   /**
@@ -98,7 +98,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    */
   @Override
   public boolean isTraceingEnabled() {
-    return Priority.trace.isEnabled( this._logLevel );
+    return Priority.trace.isEnabled( _logLevel );
   }
 
   /**
@@ -108,7 +108,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    *          The new log level to be used for this logger.
    */
   public void setLogLevel( Priority loglevel ) {
-    this._logLevel = loglevel;
+    _logLevel = loglevel;
   }
 
   /**
@@ -174,7 +174,7 @@ public class DefaultAnt4EclipseLogger implements Ant4EclipseLogger {
    *          The arguments to be used for the formatting message.
    */
   private void log( Priority level, String msg, Object ... args ) {
-    this._printer.println( "[" + level + "] " + String.format( msg, args ) );
+    _printer.println( "[" + level + "] " + String.format( msg, args ) );
   }
 
 } /* ENDCLASS */

@@ -68,12 +68,12 @@ public class JavaRuntimeImpl implements JavaRuntime {
     Assure.notNull( "javaSpecificationVersion", javaSpecificationVersion );
     Assure.notNull( "javaProfile", javaProfile );
 
-    this._id = id;
-    this._location = location;
-    this._libraries = libraries;
-    this._javaVersion = javaVersion;
-    this._javaSpecificationVersion = javaSpecificationVersion;
-    this._javaProfile = javaProfile;
+    _id = id;
+    _location = location;
+    _libraries = libraries;
+    _javaVersion = javaVersion;
+    _javaSpecificationVersion = javaSpecificationVersion;
+    _javaProfile = javaProfile;
   }
 
   /**
@@ -81,7 +81,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public String getId() {
-    return this._id;
+    return _id;
   }
 
   /**
@@ -89,7 +89,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public File getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -97,7 +97,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public File[] getLibraries() {
-    return this._libraries;
+    return _libraries;
   }
 
   /**
@@ -105,7 +105,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    *      )
    */
   public boolean isJavaVersion( Version version ) {
-    return (version.getMajor() == this._javaVersion.getMajor()) && (version.getMinor() == this._javaVersion.getMinor());
+    return (version.getMajor() == _javaVersion.getMajor()) && (version.getMinor() == _javaVersion.getMinor());
   }
 
   /**
@@ -113,7 +113,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public Version getJavaVersion() {
-    return this._javaVersion;
+    return _javaVersion;
   }
 
   /**
@@ -121,7 +121,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public Version getSpecificationVersion() {
-    return this._javaSpecificationVersion;
+    return _javaSpecificationVersion;
   }
 
   /**
@@ -129,7 +129,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
    */
   @Override
   public JavaProfile getJavaProfile() {
-    return this._javaProfile;
+    return _javaProfile;
   }
 
   /**
@@ -140,19 +140,19 @@ public class JavaRuntimeImpl implements JavaRuntime {
     StringBuffer buffer = new StringBuffer();
     buffer.append( "[JavaRuntime:" );
     buffer.append( " id: " );
-    buffer.append( this._id );
+    buffer.append( _id );
     buffer.append( " javaVersion: " );
-    buffer.append( this._javaVersion );
+    buffer.append( _javaVersion );
     buffer.append( " javaSpecificationVersion: " );
-    buffer.append( this._javaSpecificationVersion );
+    buffer.append( _javaSpecificationVersion );
     buffer.append( " javaProfile: " );
-    buffer.append( this._javaProfile );
+    buffer.append( _javaProfile );
     buffer.append( " location: " );
-    buffer.append( this._location );
+    buffer.append( _location );
     buffer.append( " { " );
-    for( int i0 = 0; (this._libraries != null) && (i0 < this._libraries.length); i0++ ) {
+    for( int i0 = 0; (_libraries != null) && (i0 < _libraries.length); i0++ ) {
       buffer.append( " libraries[" + i0 + "]: " );
-      buffer.append( this._libraries[i0] );
+      buffer.append( _libraries[i0] );
     }
     buffer.append( " } " );
     buffer.append( "]" );
@@ -166,8 +166,8 @@ public class JavaRuntimeImpl implements JavaRuntime {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((this._id == null) ? 0 : this._id.hashCode());
-    result = prime * result + ((this._location == null) ? 0 : this._location.hashCode());
+    result = prime * result + ((_id == null) ? 0 : _id.hashCode());
+    result = prime * result + ((_location == null) ? 0 : _location.hashCode());
     return result;
   }
 
@@ -186,18 +186,18 @@ public class JavaRuntimeImpl implements JavaRuntime {
       return false;
     }
     JavaRuntimeImpl other = (JavaRuntimeImpl) obj;
-    if( this._id == null ) {
+    if( _id == null ) {
       if( other._id != null ) {
         return false;
       }
-    } else if( !this._id.equals( other._id ) ) {
+    } else if( !_id.equals( other._id ) ) {
       return false;
     }
-    if( this._location == null ) {
+    if( _location == null ) {
       if( other._location != null ) {
         return false;
       }
-    } else if( !this._location.equals( other._location ) ) {
+    } else if( !_location.equals( other._location ) ) {
       return false;
     }
     return true;

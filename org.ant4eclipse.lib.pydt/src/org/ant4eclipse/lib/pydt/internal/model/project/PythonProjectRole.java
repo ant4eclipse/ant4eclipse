@@ -38,7 +38,7 @@ public interface PythonProjectRole extends ProjectRole {
    * 
    * @return A list of all raw path entries. Not <code>null</code>.
    */
-  RawPathEntry[] getRawPathEntries(ReferenceKind kind);
+  RawPathEntry[] getRawPathEntries( ReferenceKind kind );
 
   /**
    * Returns <code>true</code> if the Python DLTK framework for python has been used. This is just a small if it's

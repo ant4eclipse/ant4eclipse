@@ -39,8 +39,8 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    */
   public PythonContainer( Project project ) {
     super( project );
-    this._defaultid = null;
-    this._sitepackages = true;
+    _defaultid = null;
+    _sitepackages = true;
   }
 
   /**
@@ -50,7 +50,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    *          The new id of the default runtime. Neither <code>null</code> nor empty.
    */
   public void setDefault( String defaultid ) {
-    this._defaultid = defaultid;
+    _defaultid = defaultid;
   }
 
   /**
@@ -60,7 +60,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
    *          <code>true</code> <=> Site packages are enabled.
    */
   public void setSitePackages( boolean enable ) {
-    this._sitepackages = enable;
+    _sitepackages = enable;
   }
 
   /**
@@ -90,10 +90,10 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
 
     PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
 
-    registry.registerRuntime( runtime._id, runtime._location, this._sitepackages );
+    registry.registerRuntime( runtime._id, runtime._location, _sitepackages );
 
-    if( runtime._id.equals( this._defaultid ) ) {
-      registry.setDefaultRuntime( this._defaultid );
+    if( runtime._id.equals( _defaultid ) ) {
+      registry.setDefaultRuntime( _defaultid );
     }
 
   }
@@ -114,7 +114,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
      *          The id of the python runtime.
      */
     public void setId( String id ) {
-      this._id = id;
+      _id = id;
     }
 
     /**
@@ -124,7 +124,7 @@ public class PythonContainer extends AbstractAnt4EclipseDataType {
      *          The location of the python installation.
      */
     public void setLocation( File location ) {
-      this._location = location;
+      _location = location;
     }
 
   } /* ENDCLASSS */

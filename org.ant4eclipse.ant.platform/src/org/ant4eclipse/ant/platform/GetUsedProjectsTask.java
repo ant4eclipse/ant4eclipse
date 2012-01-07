@@ -65,9 +65,9 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   private SubElementAndAttributesDelegate _subElementAndAttributesDelegate;
 
   public GetUsedProjectsTask() {
-    this._subElementAndAttributesDelegate = new SubElementAndAttributesDelegate( this );
-    this._referencetypes = null;
-    this._selfinclude = false;
+    _subElementAndAttributesDelegate = new SubElementAndAttributesDelegate( this );
+    _referencetypes = null;
+    _selfinclude = false;
   }
 
   /**
@@ -81,7 +81,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     if( newreferencetypes != null ) {
       elements = newreferencetypes.split( "," );
     }
-    this._referencetypes = Utilities.cleanup( elements );
+    _referencetypes = Utilities.cleanup( elements );
   }
 
   /**
@@ -93,7 +93,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    *          the name of an ant property that will hold the list of referenced projects.
    */
   public void setProperty( String property ) {
-    this._property = Utilities.cleanup( property );
+    _property = Utilities.cleanup( property );
   }
 
   /**
@@ -105,7 +105,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    *          an (optional) separator that is used to separate the project names.
    */
   public void setSeparator( String separator ) {
-    this._separator = Utilities.cleanup( separator );
+    _separator = Utilities.cleanup( separator );
   }
 
   /**
@@ -117,7 +117,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    *          <code>true</code> <=> Enable self inclusion.
    */
   public void setSelfinclude( boolean selfinclude ) {
-    this._selfinclude = selfinclude;
+    _selfinclude = selfinclude;
   }
 
   /**
@@ -125,7 +125,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    */
   @Override
   public Object createDynamicElement( String name ) throws BuildException {
-    return this._subElementAndAttributesDelegate.createDynamicElement( name );
+    return _subElementAndAttributesDelegate.createDynamicElement( name );
   }
 
   /**
@@ -133,7 +133,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    */
   @Override
   public List<Object> getSubElements() {
-    return this._subElementAndAttributesDelegate.getSubElements();
+    return _subElementAndAttributesDelegate.getSubElements();
   }
 
   /**
@@ -141,7 +141,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    */
   @Override
   public Map<String,String> getSubAttributes() {
-    return this._subElementAndAttributesDelegate.getSubAttributes();
+    return _subElementAndAttributesDelegate.getSubAttributes();
   }
 
   /**
@@ -149,7 +149,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
    */
   @Override
   public void setDynamicAttribute( String name, String value ) throws BuildException {
-    this._subElementAndAttributesDelegate.setDynamicAttribute( name, value );
+    _subElementAndAttributesDelegate.setDynamicAttribute( name, value );
   }
 
   /**
@@ -158,7 +158,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if( this._property == null ) {
+    if( _property == null ) {
       throw new BuildException( "The attribute 'property' has not been set or is empty." );
     }
     /**
@@ -168,10 +168,10 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
      *       themselves don't need to behave the same way.
      */
     requireWorkspaceAndProjectNameSet();
-    if( this._referencetypes != null ) {
+    if( _referencetypes != null ) {
       // check if we can use the provided reference type
       String[] allowed = getResolver().getReferenceTypes();
-      for( String reftype : this._referencetypes ) {
+      for( String reftype : _referencetypes ) {
         if( !Utilities.contains( reftype, allowed ) ) {
           throw new BuildException( "The 'referencetypes' value '" + reftype + "' is not supported." );
         }
@@ -185,14 +185,14 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
   @Override
   protected void doExecute() {
 
-    if( this._separator == null ) {
-      this._separator = DEFAULT_SEPARATOR;
+    if( _separator == null ) {
+      _separator = DEFAULT_SEPARATOR;
     }
 
     String[] types = getResolver().getReferenceTypes();
-    if( this._referencetypes != null ) {
+    if( _referencetypes != null ) {
       // there's a restriction provided by the user
-      types = this._referencetypes;
+      types = _referencetypes;
     }
 
     EclipseProject project = getEclipseProject();
@@ -201,7 +201,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     // load the directly referenced projects
     referenced.addAll( getResolver().resolveReferencedProjects( project, types, getSubElements() ) );
 
-    if( this._selfinclude ) {
+    if( _selfinclude ) {
       // include ourselves as requested
       referenced.add( 0, project );
     }
@@ -211,12 +211,12 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
     if( !referenced.isEmpty() ) {
       buffer.append( referenced.get( 0 ).getSpecifiedName() );
       for( int i = 1; i < referenced.size(); i++ ) {
-        buffer.append( this._separator );
+        buffer.append( _separator );
         buffer.append( referenced.get( i ).getSpecifiedName() );
       }
     }
 
-    getProject().setProperty( this._property, buffer.toString() );
+    getProject().setProperty( _property, buffer.toString() );
 
   }
 

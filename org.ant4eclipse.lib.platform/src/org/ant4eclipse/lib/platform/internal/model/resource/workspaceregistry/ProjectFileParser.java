@@ -48,28 +48,28 @@ public class ProjectFileParser {
    * 
    * @return the supplied {@link EclipseProject} instance.
    */
-  public static EclipseProjectImpl parseProject(EclipseProjectImpl eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
+  public static EclipseProjectImpl parseProject( EclipseProjectImpl eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
 
     // retrieve the '.project' file
-    File projectFile = eclipseProject.getChild(".project");
+    File projectFile = eclipseProject.getChild( ".project" );
 
-    XQueryHandler queryhandler2 = new XQueryHandler(projectFile.getAbsolutePath());
+    XQueryHandler queryhandler2 = new XQueryHandler( projectFile.getAbsolutePath() );
 
     // create Queries
-    XQuery projectNameQuery = queryhandler2.createQuery("/projectDescription/name");
-    XQuery commentQuery = queryhandler2.createQuery("/projectDescription/comment");
-    XQuery referencedProjectQuery = queryhandler2.createQuery("/projectDescription/projects/project");
-    XQuery natureQuery = queryhandler2.createQuery("/projectDescription/natures/nature");
-    XQuery buildCommandNameQuery = queryhandler2.createQuery("/projectDescription/buildSpec/{buildCommand}/name");
-    XQuery linkedResourceNameQuery = queryhandler2.createQuery("/projectDescription/linkedResources/{link}/name");
-    XQuery linkedResourceTypeQuery = queryhandler2.createQuery("/projectDescription/linkedResources/{link}/type");
+    XQuery projectNameQuery = queryhandler2.createQuery( "/projectDescription/name" );
+    XQuery commentQuery = queryhandler2.createQuery( "/projectDescription/comment" );
+    XQuery referencedProjectQuery = queryhandler2.createQuery( "/projectDescription/projects/project" );
+    XQuery natureQuery = queryhandler2.createQuery( "/projectDescription/natures/nature" );
+    XQuery buildCommandNameQuery = queryhandler2.createQuery( "/projectDescription/buildSpec/{buildCommand}/name" );
+    XQuery linkedResourceNameQuery = queryhandler2.createQuery( "/projectDescription/linkedResources/{link}/name" );
+    XQuery linkedResourceTypeQuery = queryhandler2.createQuery( "/projectDescription/linkedResources/{link}/type" );
     XQuery linkedResourceLocationQuery = queryhandler2
-        .createQuery("/projectDescription/linkedResources/{link}/location");
+        .createQuery( "/projectDescription/linkedResources/{link}/location" );
     XQuery linkedResourceLocationURIQuery = queryhandler2
-        .createQuery("/projectDescription/linkedResources/{link}/locationURI");
+        .createQuery( "/projectDescription/linkedResources/{link}/locationURI" );
 
-    XQueryHandler.queryFile(projectFile, queryhandler2);
+    XQueryHandler.queryFile( projectFile, queryhandler2 );
 
     String projectName = projectNameQuery.getSingleResult();
     String comment = commentQuery.getSingleResult();
@@ -82,57 +82,57 @@ public class ProjectFileParser {
     String[] linkedResourceLocationURIs = linkedResourceLocationURIQuery.getResult();
 
     // set specified name
-    eclipseProject.setSpecifiedName(projectName);
+    eclipseProject.setSpecifiedName( projectName );
 
     // set comment
-    eclipseProject.setComment(comment);
+    eclipseProject.setComment( comment );
 
     // set referenced projects
-    for (String referencedProject : referencedProjects) {
-      eclipseProject.addReferencedProject(referencedProject);
+    for( String referencedProject : referencedProjects ) {
+      eclipseProject.addReferencedProject( referencedProject );
     }
 
     // set project natures
-    for (String nature : natures) {
-      eclipseProject.addNature(ProjectNature.createNature(nature));
+    for( String nature : natures ) {
+      eclipseProject.addNature( ProjectNature.createNature( nature ) );
     }
 
     // set build commands
-    for (String buildCommandName : buildCommandNames) {
-      eclipseProject.addBuildCommand(new BuildCommandImpl(buildCommandName));
+    for( String buildCommandName : buildCommandNames ) {
+      eclipseProject.addBuildCommand( new BuildCommandImpl( buildCommandName ) );
     }
 
     // set linked resources
-    for (int i = 0; i < linkedResourceNames.length; i++) {
+    for( int i = 0; i < linkedResourceNames.length; i++ ) {
 
       // retrieve location and locationURI
       String locationuri = linkedResourceLocationURIs[i];
       String location = linkedResourceLocations[i];
 
-      // 
-      if (locationuri != null) {
-        location = resolveLocation(eclipseProject, locationuri);
-        if (location == null) {
+      //
+      if( locationuri != null ) {
+        location = resolveLocation( eclipseProject, locationuri );
+        if( location == null ) {
           // resolving the variable failed for some reason
           // TODO!!
-          throw (new RuntimeException("couldn't resolve variable '" + locationuri + "'"));
+          throw(new RuntimeException( "couldn't resolve variable '" + locationuri + "'" ));
         }
       } else {
         // this is needed since variable names are stored under the <location> element
         // in eclipse versions before 3.2. this is some sort of guessing since
         String newlocation = location;
-        int first = newlocation.indexOf('/');
-        if (first != -1) {
+        int first = newlocation.indexOf( '/' );
+        if( first != -1 ) {
           // only the part until the first slash can refer to a variable name
-          newlocation = newlocation.substring(0, first);
+          newlocation = newlocation.substring( 0, first );
         }
-        newlocation = resolveLocation(eclipseProject, newlocation);
-        if (newlocation != null) {
-          File test = new File(newlocation);
-          if (test.exists()) {
-            if (first != -1) {
+        newlocation = resolveLocation( eclipseProject, newlocation );
+        if( newlocation != null ) {
+          File test = new File( newlocation );
+          if( test.exists() ) {
+            if( first != -1 ) {
               // the content has been cut down, so we need to add the relative path here
-              location = newlocation + location.substring(first);
+              location = newlocation + location.substring( first );
             } else {
               location = newlocation;
             }
@@ -140,30 +140,31 @@ public class ProjectFileParser {
         }
       }
 
-      // 
-      File locationAsFile = new File(location);
-      if (!locationAsFile.exists() && location.contains("/")) {
-        String variableName = location.substring(0, location.indexOf("/"));
+      //
+      File locationAsFile = new File( location );
+      if( !locationAsFile.exists() && location.contains( "/" ) ) {
+        String variableName = location.substring( 0, location.indexOf( "/" ) );
 
-        LinkedResourcePathVariableService variableService = A4ECore.instance().getRequiredService(LinkedResourcePathVariableService.class);
-        String variable = variableService.getLinkedResourcePath(variableName);
+        LinkedResourcePathVariableService variableService = A4ECore.instance().getRequiredService(
+            LinkedResourcePathVariableService.class );
+        String variable = variableService.getLinkedResourcePath( variableName );
 
-        if (variable != null) {
-          location = variable + location.substring(location.indexOf("/"));
-          locationAsFile = new File(location);
+        if( variable != null ) {
+          location = variable + location.substring( location.indexOf( "/" ) );
+          locationAsFile = new File( location );
         }
       }
 
       // throw exception if file does not exist
-      if (!locationAsFile.exists()) {
-        throw new Ant4EclipseException(PlatformExceptionCode.LINKED_RESOURCE_DOES_NOT_EXIST, locationAsFile
-            .getAbsolutePath(), projectName);
+      if( !locationAsFile.exists() ) {
+        throw new Ant4EclipseException( PlatformExceptionCode.LINKED_RESOURCE_DOES_NOT_EXIST,
+            locationAsFile.getAbsolutePath(), projectName );
       }
 
-      String relative = Utilities.calcRelative(eclipseProject.getFolder(), locationAsFile);
-      int typeAsInt = Integer.parseInt(linkedResourceTypes[i]);
-      LinkedResourceImpl linkedResource = new LinkedResourceImpl(linkedResourceNames[i], location, relative, typeAsInt);
-      eclipseProject.addLinkedResource(linkedResource);
+      String relative = Utilities.calcRelative( eclipseProject.getFolder(), locationAsFile );
+      int typeAsInt = Integer.parseInt( linkedResourceTypes[i] );
+      LinkedResourceImpl linkedResource = new LinkedResourceImpl( linkedResourceNames[i], location, relative, typeAsInt );
+      eclipseProject.addLinkedResource( linkedResource );
     }
 
     return eclipseProject;
@@ -176,9 +177,9 @@ public class ProjectFileParser {
    *          the directory to test
    * @return true, if the directory is an eclipse project directory
    */
-  public static boolean isProjectDirectory(File directory) {
+  public static boolean isProjectDirectory( File directory ) {
     return directory != null && directory.exists() && directory.isDirectory()
-        && new File(directory, ".project").exists();
+        && new File( directory, ".project" ).exists();
   }
 
   /*
@@ -187,26 +188,26 @@ public class ProjectFileParser {
    * Mostly unlikely, some weird path may be presented, so checking for extraneous separators may be worthwhile in the
    * long run.
    */
-  private static final String resolveLocation(EclipseProjectImpl p, String path) {
-    if (path == null) {
+  private static final String resolveLocation( EclipseProjectImpl p, String path ) {
+    if( path == null ) {
       return null;
     }
     String S = "/";
-    StringTokenizer t = new StringTokenizer(path, S);
-    StringBuffer b = new StringBuffer(path.length() * 3);
-    while (t.hasMoreElements()) {
+    StringTokenizer t = new StringTokenizer( path, S );
+    StringBuffer b = new StringBuffer( path.length() * 3 );
+    while( t.hasMoreElements() ) {
       String segment = (String) t.nextElement();
-      if (segment == null) {
+      if( segment == null ) {
         return null;
       }
-      String resolved = getLocation(p, segment);
-      if (resolved != null) {
-        b.append(resolved);
+      String resolved = getLocation( p, segment );
+      if( resolved != null ) {
+        b.append( resolved );
       } else {
-        b.append(segment);
+        b.append( segment );
       }
-      if (t.hasMoreElements()) {
-        b.append(S);
+      if( t.hasMoreElements() ) {
+        b.append( S );
       }
     }
     return b.toString();
@@ -222,15 +223,15 @@ public class ProjectFileParser {
    * 
    * @return The expanded variable or null in case no expansion happened.
    */
-  private static final String getLocation(EclipseProjectImpl eclipseProject, String variable) {
+  private static final String getLocation( EclipseProjectImpl eclipseProject, String variable ) {
     String key = "${" + variable + "}";
 
-    String location = getEclipseVariableResolver().substituteEclipseVariables(key, eclipseProject, null);
-    if (key.equals(location)) {
+    String location = getEclipseVariableResolver().substituteEclipseVariables( key, eclipseProject, null );
+    if( key.equals( location ) ) {
       // fallback for the internal prefs of an eclipse .metadata dir
       key = "${pathvariable." + variable + "}";
-      location = getEclipseVariableResolver().substituteEclipseVariables(key, eclipseProject, null);
-      if (key.equals(location)) {
+      location = getEclipseVariableResolver().substituteEclipseVariables( key, eclipseProject, null );
+      if( key.equals( location ) ) {
         // the result is the key itself, so resolving failed
         location = null;
       }
@@ -239,7 +240,7 @@ public class ProjectFileParser {
   }
 
   private static EclipseStringSubstitutionService getEclipseVariableResolver() {
-    return A4ECore.instance().getRequiredService( EclipseStringSubstitutionService.class );  
+    return A4ECore.instance().getRequiredService( EclipseStringSubstitutionService.class );
   }
 
 } /* ENDCLASS */

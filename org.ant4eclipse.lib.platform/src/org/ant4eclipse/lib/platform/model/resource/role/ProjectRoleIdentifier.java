@@ -38,7 +38,7 @@ public interface ProjectRoleIdentifier extends A4EService {
    * 
    * @return <code>true</code> if the role is applicable for the eclipse project.
    */
-  boolean isRoleSupported(EclipseProject project);
+  boolean isRoleSupported( EclipseProject project );
 
   /**
    * <p>
@@ -50,7 +50,7 @@ public interface ProjectRoleIdentifier extends A4EService {
    * @param project
    *          the eclipse project.
    */
-  ProjectRole createRole(EclipseProject project);
+  ProjectRole createRole( EclipseProject project );
 
   /**
    * This function will be invoked after each project within a workspace has been setup. Therefore each action that
@@ -59,22 +59,22 @@ public interface ProjectRoleIdentifier extends A4EService {
    * @param project
    *          The project which role has to be modified if necessary. Not <code>null</code>.
    */
-  void postProcess(EclipseProject project);
+  void postProcess( EclipseProject project );
 
   /**
-   * Returns a list of natures that are associated with this identifier. Usually the returned list
-   * only contains one entry but it's possible to support multiple at the same time.
+   * Returns a list of natures that are associated with this identifier. Usually the returned list only contains one
+   * entry but it's possible to support multiple at the same time.
    * 
-   * @return   A list of natures that are associated with this identifier. Maybe <code>null</code>.
+   * @return A list of natures that are associated with this identifier. Maybe <code>null</code>.
    */
   Set<ProjectNature> getNatures();
 
   /**
-   * Returns a list of possible abbreviations for the natures. This function only makes sense if
-   * {@link #getNatures()} delivers some value.
+   * Returns a list of possible abbreviations for the natures. This function only makes sense if {@link #getNatures()}
+   * delivers some value.
    * 
-   * @return   The possible abbreviations for the natures. Maybe <code>null</code>.
+   * @return The possible abbreviations for the natures. Maybe <code>null</code>.
    */
   String[] getNatureNicknames();
-  
+
 } /* ENDINTERFACE */

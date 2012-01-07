@@ -17,70 +17,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 class LaunchConfigAttribute {
+
   private String _name;
 
   private Object _value;
 
-  public LaunchConfigAttribute(String name) {
-    Assure.notNull("name", name);
-    this._name = name;
+  public LaunchConfigAttribute( String name ) {
+    Assure.notNull( "name", name );
+    _name = name;
   }
 
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   public Object getValue() {
-    return this._value;
+    return _value;
   }
 
   public boolean isStringBasedAttribute() {
-    return this._value instanceof String;
+    return _value instanceof String;
   }
 
   public boolean isListAttribute() {
-    return this._value instanceof ListAttribute;
+    return _value instanceof ListAttribute;
   }
 
   public ListAttribute getListAttributeValue() {
-    Assure.assertTrue(isListAttribute(), "LauchConfigAttribute '" + this._name + "' must be a list-based attribute");
+    Assure.assertTrue( isListAttribute(), "LauchConfigAttribute '" + _name + "' must be a list-based attribute" );
 
-    return (ListAttribute) this._value;
+    return (ListAttribute) _value;
   }
 
   public String getStringValue() {
-    Assure.assertTrue(isStringBasedAttribute(), "LauchConfigAttribute '" + this._name
-        + "' must be a string-based attribute");
+    Assure.assertTrue( isStringBasedAttribute(), "LauchConfigAttribute '" + _name
+        + "' must be a string-based attribute" );
 
-    return (String) this._value;
+    return (String) _value;
   }
 
-  public void setValue(Object value) {
-    this._value = value;
+  public void setValue( Object value ) {
+    _value = value;
   }
 
   static class ListAttribute {
     private List<String> _entries = new ArrayList<String>();
 
     public List<String> getEntries() {
-      return this._entries;
+      return _entries;
     }
 
-    void addEntry(String entry) {
-      this._entries.add(entry);
+    void addEntry( String entry ) {
+      _entries.add( entry );
     }
 
     @Override
     public String toString() {
       StringBuilder builder = new StringBuilder();
-      for (int i = 0; i < this._entries.size(); i++) {
-        builder.append(this._entries.get(i));
-        if (i < this._entries.size() - 1) {
-          builder.append(",");
+      for( int i = 0; i < _entries.size(); i++ ) {
+        builder.append( _entries.get( i ) );
+        if( i < _entries.size() - 1 ) {
+          builder.append( "," );
         }
       }
       return builder.toString();
     }
   }
 
-}
+} /* ENDCLASS */

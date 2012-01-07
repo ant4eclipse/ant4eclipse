@@ -37,7 +37,7 @@ public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTes
     JdtProjectBuilder builder = JdtProjectBuilder.getPreConfiguredJdtBuilder( "simpleproject" )
         .withContainerClasspathEntry( "UnkownContainer" );
 
-    this._simpleProjectBinDir = new File( builder.createIn( getTestWorkspaceDirectory() ), "bin" );
+    _simpleProjectBinDir = new File( builder.createIn( getTestWorkspaceDirectory() ), "bin" );
   }
 
   /**
@@ -49,7 +49,7 @@ public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTes
   public void testSimple() throws Exception {
     try {
       String classpath = executeTestTarget( "simpleproject", false, false );
-      assertClasspath( classpath, this._simpleProjectBinDir );
+      assertClasspath( classpath, _simpleProjectBinDir );
     } catch( Exception e ) {
       return;
     }

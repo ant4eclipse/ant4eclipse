@@ -44,8 +44,8 @@ public class Edge<T> {
   public Edge( T aParent, T aChild ) {
     Assure.notNull( "aParent", aParent );
     Assure.notNull( "aChild", aChild );
-    this.parent = aParent;
-    this.child = aChild;
+    parent = aParent;
+    child = aChild;
   }
 
   /**
@@ -56,7 +56,7 @@ public class Edge<T> {
    * @return the child object.
    */
   public T getChild() {
-    return this.child;
+    return child;
   }
 
   /**
@@ -67,7 +67,7 @@ public class Edge<T> {
    * @return the parent object.
    */
   public T getParent() {
-    return this.parent;
+    return parent;
   }
 
   /**
@@ -77,8 +77,8 @@ public class Edge<T> {
   public int hashCode() {
     int PRIME = 31;
     int result = 1;
-    result = PRIME * result + this.parent.hashCode();
-    result = PRIME * result + this.child.hashCode();
+    result = PRIME * result + parent.hashCode();
+    result = PRIME * result + child.hashCode();
     return result;
   }
 
@@ -97,10 +97,10 @@ public class Edge<T> {
       return false;
     }
     @SuppressWarnings( "unchecked" ) Edge<T> other = (Edge<T>) obj;
-    if( !this.parent.equals( other.parent ) ) {
+    if( !parent.equals( other.parent ) ) {
       return false;
     }
-    if( !this.child.equals( other.child ) ) {
+    if( !child.equals( other.child ) ) {
       return false;
     }
     return true;
@@ -114,9 +114,9 @@ public class Edge<T> {
     StringBuffer result = new StringBuffer();
     result.append( "[Edge" );
     result.append( " parent:" );
-    result.append( this.parent );
+    result.append( parent );
     result.append( " child:" );
-    result.append( this.child );
+    result.append( child );
     result.append( "]" );
     return result.toString();
   }

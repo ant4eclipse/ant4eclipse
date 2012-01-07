@@ -40,8 +40,8 @@ public class Ant4EclipseException extends RuntimeException {
    */
   public Ant4EclipseException( Throwable cause, ExceptionCode exceptionCode, Object ... args ) {
     super( cause );
-    this._exceptionCode = exceptionCode;
-    this._args = args != null ? args : NO_ARGS;
+    _exceptionCode = exceptionCode;
+    _args = args != null ? args : NO_ARGS;
   }
 
   /**
@@ -56,8 +56,8 @@ public class Ant4EclipseException extends RuntimeException {
    */
   public Ant4EclipseException( ExceptionCode exceptionCode, Object ... args ) {
     super();
-    this._exceptionCode = exceptionCode;
-    this._args = args != null ? args : NO_ARGS;
+    _exceptionCode = exceptionCode;
+    _args = args != null ? args : NO_ARGS;
   }
 
   /**
@@ -68,7 +68,7 @@ public class Ant4EclipseException extends RuntimeException {
    * @return The code that indicates the type of error. Not <code>null</code>.
    */
   public ExceptionCode getExceptionCode() {
-    return this._exceptionCode;
+    return _exceptionCode;
   }
 
   /**
@@ -79,7 +79,7 @@ public class Ant4EclipseException extends RuntimeException {
    * @return The arguments used for the formatted message in order to provide additional information.
    */
   public Object[] getArgs() {
-    return this._args;
+    return _args;
   }
 
   /**
@@ -88,20 +88,20 @@ public class Ant4EclipseException extends RuntimeException {
   @Override
   public String getMessage() {
     try {
-      return String.format( this._exceptionCode.getMessage(), this._args );
+      return String.format( _exceptionCode.getMessage(), _args );
     } catch( Exception ex ) {
       // this really shouldn't happen but it's possible that it could because a user might alter the formatting
       // string in a way not capable to handle the arguments. so the only thing we can do here is to make sure
       // that the crippled message will be brought to the developer.
       StringBuffer buffer = new StringBuffer();
       buffer.append( "internal error: formatting message was '" );
-      buffer.append( this._exceptionCode.getMessage() );
+      buffer.append( _exceptionCode.getMessage() );
       buffer.append( "', arguments were: " );
-      if( this._args.length > 0 ) {
-        buffer.append( String.valueOf( this._args[0] ) );
-        for( int i = 1; i < this._args.length; i++ ) {
+      if( _args.length > 0 ) {
+        buffer.append( String.valueOf( _args[0] ) );
+        for( int i = 1; i < _args.length; i++ ) {
           buffer.append( "," );
-          buffer.append( String.valueOf( this._args[i] ) );
+          buffer.append( String.valueOf( _args[i] ) );
         }
       } else {
         buffer.append( "<none>" );

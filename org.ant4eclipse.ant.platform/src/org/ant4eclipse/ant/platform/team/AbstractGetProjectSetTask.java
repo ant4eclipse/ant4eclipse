@@ -50,11 +50,11 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
   private boolean             _deleteExistingProjects = true;
 
   public String getPassword() {
-    return this._password;
+    return _password;
   }
 
   public File getDestination() {
-    return this._destination;
+    return _destination;
   }
 
   /**
@@ -63,34 +63,34 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param destination
    */
   public void setDestination( File destination ) {
-    this._destination = destination;
+    _destination = destination;
   }
 
   public void setPassword( String password ) {
-    this._password = password;
+    _password = password;
   }
 
   public String getUsername() {
-    return this._username;
+    return _username;
   }
 
   public void setUsername( String username ) {
-    this._username = username;
+    _username = username;
   }
 
   public boolean isDeleteExistingProjects() {
-    return this._deleteExistingProjects;
+    return _deleteExistingProjects;
   }
 
   public void setDeleteExistingProjects( boolean deleteExistingProjects ) {
-    this._deleteExistingProjects = deleteExistingProjects;
+    _deleteExistingProjects = deleteExistingProjects;
   }
 
   /**
    * @return Returns the command.
    */
   public VcsCommand getCommand() {
-    return this._command;
+    return _command;
   }
 
   /**
@@ -99,7 +99,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    */
   public void setCommand( VcsCommand command ) {
     Assure.notNull( "command", command );
-    this._command = command;
+    _command = command;
   }
 
   /**
@@ -119,8 +119,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     requireCommandSet();
     checkPrereqs();
 
-    this._vcsAdapter = createVcsAdapter();
-    A4ELogging.debug( "using version control adapter = ", this._vcsAdapter );
+    _vcsAdapter = createVcsAdapter();
+    A4ELogging.debug( "using version control adapter = ", _vcsAdapter );
 
     // set user and password
     getProjectSet().setUserAndPassword( getUsername(), getPassword() );
@@ -171,7 +171,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     TeamProjectDescription[] _teamProjectDescription = projectSet.getTeamProjectDescriptions();
 
     for( TeamProjectDescription teamProjectDescription : _teamProjectDescription ) {
-      this._vcsAdapter.checkoutProject( destination, teamProjectDescription, deleteExisting );
+      _vcsAdapter.checkoutProject( destination, teamProjectDescription, deleteExisting );
     }
   }
 
@@ -188,7 +188,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
 
     for( TeamProjectDescription description : descriptions ) {
-      this._vcsAdapter.exportProject( destination, description, deleteExisting );
+      _vcsAdapter.exportProject( destination, description, deleteExisting );
     }
   }
 
@@ -201,7 +201,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     Assure.notNull( "projectSet", projectSet );
     TeamProjectDescription[] descriptions = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription description : descriptions ) {
-      this._vcsAdapter.updateProject( destination, description );
+      _vcsAdapter.updateProject( destination, description );
     }
   }
 

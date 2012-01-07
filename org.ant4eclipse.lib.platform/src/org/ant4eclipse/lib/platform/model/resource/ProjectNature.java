@@ -29,13 +29,16 @@ import java.util.Set;
 public class ProjectNature {
 
   private static final Map<String,ProjectNature> NATURES = new Hashtable<String,ProjectNature>();
-  
-  private String nature;
+
+  private String                                 nature;
 
   /**
-   * <p>Creates a new instance of this nature.</p>
+   * <p>
+   * Creates a new instance of this nature.
+   * </p>
    * 
-   * @param name   The full name of the nature. Neither <code>null</code> nor empty.
+   * @param name
+   *          The full name of the nature. Neither <code>null</code> nor empty.
    */
   private ProjectNature( String name ) {
     nature = name;
@@ -46,7 +49,7 @@ public class ProjectNature {
    * Returns the name of this nature.
    * </p>
    * 
-   * @return  The name of this nature. Neither <code>null</code> nor empty.
+   * @return The name of this nature. Neither <code>null</code> nor empty.
    */
   public String getName() {
     return nature;
@@ -87,13 +90,13 @@ public class ProjectNature {
   }
 
   /**
-   * This function is used to create a new instance of a <code>ProjectNature</code>. The main
-   * advantage of this helper is the reduction of <code>ProjectNature</code> instances which will
-   * have an impact on comparison operations, too.
+   * This function is used to create a new instance of a <code>ProjectNature</code>. The main advantage of this helper
+   * is the reduction of <code>ProjectNature</code> instances which will have an impact on comparison operations, too.
    * 
-   * @param name   The name of the desired nature. Neither <code>null</code> nor empty.
+   * @param name
+   *          The name of the desired nature. Neither <code>null</code> nor empty.
    * 
-   * @return   The nature associated with the supplied name. Not <code>null</code>.
+   * @return The nature associated with the supplied name. Not <code>null</code>.
    */
   public static final synchronized ProjectNature createNature( String name ) {
     Assure.nonEmpty( "name", name );
@@ -106,16 +109,17 @@ public class ProjectNature {
   }
 
   /**
-   * This function is used to create a set of new instances of <code>ProjectNature</code>. The main
-   * advantage of this helper is the reduction of <code>ProjectNature</code> instances which will
-   * have an impact on comparison operations, too.
+   * This function is used to create a set of new instances of <code>ProjectNature</code>. The main advantage of this
+   * helper is the reduction of <code>ProjectNature</code> instances which will have an impact on comparison operations,
+   * too.
    * 
-   * @param names   A list of nature names. Maybe <code>null</code>.
+   * @param names
+   *          A list of nature names. Maybe <code>null</code>.
    * 
-   * @return   The natures associated with the supplied names. Maybe <code>null</code>.
+   * @return The natures associated with the supplied names. Maybe <code>null</code>.
    */
   public static final Set<ProjectNature> createNatures( String ... names ) {
-    Set<ProjectNature> result = null; 
+    Set<ProjectNature> result = null;
     if( names != null ) {
       result = new HashSet<ProjectNature>();
       for( String name : names ) {

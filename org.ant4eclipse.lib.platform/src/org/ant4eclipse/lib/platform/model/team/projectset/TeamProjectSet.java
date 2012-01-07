@@ -39,7 +39,7 @@ public interface TeamProjectSet {
    *          the name of the TeamProjectDescription to return.
    * @return Returns a TeamProjectDescription by the given name.
    */
-  TeamProjectDescription getTeamProjectDescriptionByName(String name);
+  TeamProjectDescription getTeamProjectDescriptionByName( String name );
 
   /**
    * Returns a list of project names.
@@ -56,6 +56,6 @@ public interface TeamProjectSet {
    * @param pwd
    *          the password might be null
    */
-  void setUserAndPassword(String user, String pwd);
+  void setUserAndPassword( String user, String pwd );
 
-}
+} /* ENDINTERFACE */

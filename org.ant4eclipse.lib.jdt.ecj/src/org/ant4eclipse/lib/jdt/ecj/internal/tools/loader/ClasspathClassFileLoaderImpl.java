@@ -44,19 +44,19 @@ import java.util.jar.JarFile;
 public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
 
   /** the class path entries */
-  private File[]                       _classpathEntries;
+  private File[]                      _classpathEntries;
 
   /** the class path entries */
-  private File[]                       _sourcepathEntries;
+  private File[]                      _sourcepathEntries;
 
   /** the source */
-  private File                         _location;
+  private File                        _location;
 
   /** the type of the associated bundle (PROJECT or LIBRARY) */
-  private byte                         _type;
+  private byte                        _type;
 
   /** maps packages to package providers */
-  private Map<String, PackageProvider> _allPackages;
+  private Map<String,PackageProvider> _allPackages;
 
   /**
    * <p>
@@ -68,25 +68,25 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param type
    *          type
    */
-  public ClasspathClassFileLoaderImpl(File entry, byte type) {
-    Assure.notNull("entry", entry);
+  public ClasspathClassFileLoaderImpl( File entry, byte type ) {
+    Assure.notNull( "entry", entry );
 
-    this._location = entry;
-    this._type = type;
+    _location = entry;
+    _type = type;
 
     // initialize
-    initialize(new File[] { entry }, new File[] {});
+    initialize( new File[] { entry }, new File[] {} );
   }
 
-  public ClasspathClassFileLoaderImpl(File classPathEntry, byte type, File sourcePathEntry) {
-    Assure.notNull("classPathEntry", classPathEntry);
-    Assure.notNull("sourcePathEntry", sourcePathEntry);
+  public ClasspathClassFileLoaderImpl( File classPathEntry, byte type, File sourcePathEntry ) {
+    Assure.notNull( "classPathEntry", classPathEntry );
+    Assure.notNull( "sourcePathEntry", sourcePathEntry );
 
-    this._location = classPathEntry;
-    this._type = type;
+    _location = classPathEntry;
+    _type = type;
 
     // initialize
-    initialize(new File[] { classPathEntry }, new File[] { sourcePathEntry });
+    initialize( new File[] { classPathEntry }, new File[] { sourcePathEntry } );
   }
 
   /**
@@ -98,24 +98,24 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param type
    * @param classpathEntries
    */
-  public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries) {
-    Assure.notNull("location", location);
+  public ClasspathClassFileLoaderImpl( File location, byte type, File[] classpathEntries ) {
+    Assure.notNull( "location", location );
 
-    this._location = location;
-    this._type = type;
+    _location = location;
+    _type = type;
 
     // initialize
-    initialize(classpathEntries, new File[] {});
+    initialize( classpathEntries, new File[] {} );
   }
 
-  public ClasspathClassFileLoaderImpl(File location, byte type, File[] classpathEntries, File[] sourcePathEntries) {
-    Assure.notNull("location", location);
+  public ClasspathClassFileLoaderImpl( File location, byte type, File[] classpathEntries, File[] sourcePathEntries ) {
+    Assure.notNull( "location", location );
 
-    this._location = location;
-    this._type = type;
+    _location = location;
+    _type = type;
 
     // initialize
-    initialize(classpathEntries, sourcePathEntries);
+    initialize( classpathEntries, sourcePathEntries );
   }
 
   /**
@@ -131,8 +131,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public boolean hasPackage(String packageName) {
-    return this._allPackages.containsKey(packageName);
+  public boolean hasPackage( String packageName ) {
+    return _allPackages.containsKey( packageName );
   }
 
   /**
@@ -140,8 +140,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    */
   @Override
   public String[] getAllPackages() {
-    Set<String> keys = this._allPackages.keySet();
-    return keys.toArray(new String[0]);
+    Set<String> keys = _allPackages.keySet();
+    return keys.toArray( new String[0] );
   }
 
   /**
@@ -151,8 +151,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * 
    * @param location
    */
-  protected void setLocation(File location) {
-    this._location = location;
+  protected void setLocation( File location ) {
+    _location = location;
   }
 
   /**
@@ -162,8 +162,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * 
    * @param type
    */
-  protected void setType(byte type) {
-    this._type = type;
+  protected void setType( byte type ) {
+    _type = type;
   }
 
   /**
@@ -173,7 +173,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @return
    */
   protected File getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -183,7 +183,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @return
    */
   protected byte getType() {
-    return this._type;
+    return _type;
   }
 
   /**
@@ -194,7 +194,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @return all class path entries of this {@link ClassFileLoader}.
    */
   protected File[] getClasspathEntries() {
-    return this._classpathEntries;
+    return _classpathEntries;
   }
 
   /**
@@ -213,43 +213,43 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param classpathEntries
    *          the class path entries.
    */
-  protected void initialize(File[] classpathEntries, File[] sourcepathEntries) {
+  protected void initialize( File[] classpathEntries, File[] sourcepathEntries ) {
 
     // assert not null
-    Assure.notNull("classpathEntries", classpathEntries);
-    Assure.notNull("sourcepathEntries", sourcepathEntries);
+    Assure.notNull( "classpathEntries", classpathEntries );
+    Assure.notNull( "sourcepathEntries", sourcepathEntries );
 
     // assert that each entry is not null
-    for (File classpathEntrie : classpathEntries) {
-      Assure.notNull("classpathEntrie", classpathEntrie);
+    for( File classpathEntrie : classpathEntries ) {
+      Assure.notNull( "classpathEntrie", classpathEntrie );
     }
-    for (File sourcepathEntry : sourcepathEntries) {
-      Assure.notNull("sourcepathEntry", sourcepathEntry);
+    for( File sourcepathEntry : sourcepathEntries ) {
+      Assure.notNull( "sourcepathEntry", sourcepathEntry );
     }
 
     // assign path entries
-    this._classpathEntries = classpathEntries;
-    this._sourcepathEntries = sourcepathEntries;
+    _classpathEntries = classpathEntries;
+    _sourcepathEntries = sourcepathEntries;
 
     // create allPackages hash map
-    this._allPackages = new HashMap<String, PackageProvider>();
+    _allPackages = new HashMap<String,PackageProvider>();
 
     // add all existing packages to the hash map
-    for (File file : this._classpathEntries) {
-      if (file.isDirectory()) {
-        String[] allPackages = getAllPackagesFromDirectory(file);
-        addAllPackagesFromClassPathEntry(allPackages, file);
-      } else if (file.isFile()) {
-        String[] allPackages = getAllPackagesFromJar(file);
-        addAllPackagesFromClassPathEntry(allPackages, file);
+    for( File file : _classpathEntries ) {
+      if( file.isDirectory() ) {
+        String[] allPackages = getAllPackagesFromDirectory( file );
+        addAllPackagesFromClassPathEntry( allPackages, file );
+      } else if( file.isFile() ) {
+        String[] allPackages = getAllPackagesFromJar( file );
+        addAllPackagesFromClassPathEntry( allPackages, file );
       }
     }
 
     // add all existing packages to the hash map
-    for (File file : this._sourcepathEntries) {
-      if (file.isDirectory()) {
-        String[] allPackages = getAllPackagesFromDirectory(file);
-        addAllPackagesFromSourcePathEntry(allPackages, file);
+    for( File file : _sourcepathEntries ) {
+      if( file.isDirectory() ) {
+        String[] allPackages = getAllPackagesFromDirectory( file );
+        addAllPackagesFromSourcePathEntry( allPackages, file );
       }
       // we do not support source in jars or zips
     }
@@ -278,24 +278,24 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param packageName
    * @return
    */
-  protected final PackageProvider getPackageProvider(String packageName) {
-    return this._allPackages.get(packageName);
+  protected final PackageProvider getPackageProvider( String packageName ) {
+    return _allPackages.get( packageName );
   }
 
   /**
    * @param allPackages
    * @param classPathEntry
    */
-  private void addAllPackagesFromClassPathEntry(String[] allPackages, File classPathEntry) {
+  private void addAllPackagesFromClassPathEntry( String[] allPackages, File classPathEntry ) {
 
-    for (String aPackage : allPackages) {
-      if (this._allPackages.containsKey(aPackage)) {
-        PackageProvider provider = this._allPackages.get(aPackage);
-        provider.addClasspathEntry(classPathEntry);
+    for( String aPackage : allPackages ) {
+      if( _allPackages.containsKey( aPackage ) ) {
+        PackageProvider provider = _allPackages.get( aPackage );
+        provider.addClasspathEntry( classPathEntry );
       } else {
         PackageProvider provider = newPackageProvider();
-        provider.addClasspathEntry(classPathEntry);
-        this._allPackages.put(aPackage, provider);
+        provider.addClasspathEntry( classPathEntry );
+        _allPackages.put( aPackage, provider );
       }
     }
   }
@@ -307,16 +307,16 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param allPackages
    * @param sourcePathEntry
    */
-  private void addAllPackagesFromSourcePathEntry(String[] allPackages, File sourcePathEntry) {
+  private void addAllPackagesFromSourcePathEntry( String[] allPackages, File sourcePathEntry ) {
 
-    for (String aPackage : allPackages) {
-      if (this._allPackages.containsKey(aPackage)) {
-        PackageProvider provider = this._allPackages.get(aPackage);
-        provider.addSourcepathEntry(sourcePathEntry);
+    for( String aPackage : allPackages ) {
+      if( _allPackages.containsKey( aPackage ) ) {
+        PackageProvider provider = _allPackages.get( aPackage );
+        provider.addSourcepathEntry( sourcePathEntry );
       } else {
         PackageProvider provider = newPackageProvider();
-        provider.addSourcepathEntry(sourcePathEntry);
-        this._allPackages.put(aPackage, provider);
+        provider.addSourcepathEntry( sourcePathEntry );
+        _allPackages.put( aPackage, provider );
       }
     }
   }
@@ -331,8 +331,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @return
    * @throws IOException
    */
-  private String[] getAllPackagesFromJar(File jar) {
-    Assure.isFile("jar", jar);
+  private String[] getAllPackagesFromJar( File jar ) {
+    Assure.isFile( "jar", jar );
 
     // prepare result...
     List<String> result = new ArrayList<String>();
@@ -341,50 +341,50 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
     JarFile jarFile = null;
 
     try {
-      jarFile = new JarFile(jar);
-    } catch (IOException e) {
-      throw new Ant4EclipseException(EcjExceptionCodes.COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION,
-          jar.getAbsolutePath());
+      jarFile = new JarFile( jar );
+    } catch( IOException e ) {
+      throw new Ant4EclipseException( EcjExceptionCodes.COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION,
+          jar.getAbsolutePath() );
     }
 
     // Iterate over entries...
     Enumeration<?> enumeration = jarFile.entries();
-    while (enumeration.hasMoreElements()) {
+    while( enumeration.hasMoreElements() ) {
       JarEntry jarEntry = (JarEntry) enumeration.nextElement();
 
       // add package for each found directory...
       String directoryName = null;
 
       // if the jar entry is a directory, the directory name is the name of the jar entry...
-      if (jarEntry.isDirectory()) {
+      if( jarEntry.isDirectory() ) {
         directoryName = jarEntry.getName();
       }
       // otherwise the directory name has to be computed
       else {
-        int splitIndex = jarEntry.getName().lastIndexOf('/');
-        if (splitIndex != -1) {
-          directoryName = jarEntry.getName().substring(0, splitIndex);
+        int splitIndex = jarEntry.getName().lastIndexOf( '/' );
+        if( splitIndex != -1 ) {
+          directoryName = jarEntry.getName().substring( 0, splitIndex );
         }
       }
 
       // directoryName can be null if a top level entry is processed
-      if (directoryName != null) {
+      if( directoryName != null ) {
         // convert path to package name
-        String packageName = directoryName.replace('/', '.');
-        packageName = packageName.endsWith(".") ? packageName.substring(0, packageName.length() - 1) : packageName;
+        String packageName = directoryName.replace( '/', '.' );
+        packageName = packageName.endsWith( "." ) ? packageName.substring( 0, packageName.length() - 1 ) : packageName;
 
         // at package with all the parent packages (!) to the result list
-        String[] packages = allPackages(packageName);
-        for (int i = 0; i < packages.length; i++) {
-          if (!result.contains(packages[i])) {
-            result.add(packages[i]);
+        String[] packages = allPackages( packageName );
+        for( int i = 0; i < packages.length; i++ ) {
+          if( !result.contains( packages[i] ) ) {
+            result.add( packages[i] );
           }
         }
       }
     }
 
     // return result...
-    return result.toArray(new String[0]);
+    return result.toArray( new String[0] );
 
   }
 
@@ -402,17 +402,17 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    *          the name of the package.
    * @return all package names (including parent package names) for the specified package.
    */
-  private String[] allPackages(String packageName) {
+  private String[] allPackages( String packageName ) {
 
     // split the package name
-    StringTokenizer tokenizer = new StringTokenizer(packageName, ".");
+    StringTokenizer tokenizer = new StringTokenizer( packageName, "." );
 
     // declare result
     String[] result = new String[tokenizer.countTokens()];
 
     // compute result
-    for (int i = 0; i < result.length; i++) {
-      if (i == 0) {
+    for( int i = 0; i < result.length; i++ ) {
+      if( i == 0 ) {
         result[i] = tokenizer.nextToken();
       } else {
         result[i] = result[i - 1] + "." + tokenizer.nextToken();
@@ -427,22 +427,22 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param directory
    * @return
    */
-  private String[] getAllPackagesFromDirectory(File directory) {
+  private String[] getAllPackagesFromDirectory( File directory ) {
 
     List<String> result = new ArrayList<String>();
 
-    File[] children = directory.listFiles(new FileFilter() {
+    File[] children = directory.listFiles( new FileFilter() {
       @Override
-      public boolean accept(File pathname) {
+      public boolean accept( File pathname ) {
         return pathname.isDirectory();
       }
-    });
+    } );
 
-    for (File element : children) {
-      getAllPackagesFromDirectory(null, element, result);
+    for( File element : children ) {
+      getAllPackagesFromDirectory( null, element, result );
     }
 
-    return result.toArray(new String[0]);
+    return result.toArray( new String[0] );
   }
 
   /**
@@ -450,21 +450,21 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param directory
    * @param result
    */
-  private void getAllPackagesFromDirectory(String prefix, File directory, List<String> result) {
+  private void getAllPackagesFromDirectory( String prefix, File directory, List<String> result ) {
 
     String newPrefix = prefix == null ? "" : prefix + ".";
 
-    result.add(newPrefix + directory.getName());
+    result.add( newPrefix + directory.getName() );
 
-    File[] children = directory.listFiles(new FileFilter() {
+    File[] children = directory.listFiles( new FileFilter() {
       @Override
-      public boolean accept(File pathname) {
+      public boolean accept( File pathname ) {
         return pathname.isDirectory();
       }
-    });
+    } );
 
-    for (File element : children) {
-      getAllPackagesFromDirectory(newPrefix + directory.getName(), element, result);
+    for( File element : children ) {
+      getAllPackagesFromDirectory( newPrefix + directory.getName(), element, result );
     }
   }
 
@@ -472,25 +472,25 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public ClassFile loadClass(ClassName className) {
+  public ClassFile loadClass( ClassName className ) {
 
-    if (!hasPackage(className.getPackageName())) {
+    if( !hasPackage( className.getPackageName() ) ) {
       return null;
     }
 
-    return getPackageProvider(className.getPackageName()).loadClassFile(className);
+    return getPackageProvider( className.getPackageName() ).loadClassFile( className );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ReferableSourceFile loadSource(ClassName className) {
-    if (!hasPackage(className.getPackageName())) {
+  public ReferableSourceFile loadSource( ClassName className ) {
+    if( !hasPackage( className.getPackageName() ) ) {
       return null;
     }
 
-    return getPackageProvider(className.getPackageName()).loadSourceFile(className);
+    return getPackageProvider( className.getPackageName() ).loadSourceFile( className );
   }
 
   /**
@@ -499,20 +499,20 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ClasspathClassFileLoader:");
-    buffer.append(" { ");
-    for (int i0 = 0; (this._classpathEntries != null) && (i0 < this._classpathEntries.length); i0++) {
-      buffer.append(" _classpathEntries[" + i0 + "]: ");
-      buffer.append(this._classpathEntries[i0]);
+    buffer.append( "[ClasspathClassFileLoader:" );
+    buffer.append( " { " );
+    for( int i0 = 0; (_classpathEntries != null) && (i0 < _classpathEntries.length); i0++ ) {
+      buffer.append( " _classpathEntries[" + i0 + "]: " );
+      buffer.append( _classpathEntries[i0] );
     }
-    buffer.append(" } ");
-    buffer.append(" _location: ");
-    buffer.append(this._location);
+    buffer.append( " } " );
+    buffer.append( " _location: " );
+    buffer.append( _location );
     // buffer.append(" _type: ");
-    // buffer.append(this._type);
+    // buffer.append(_type);
     // buffer.append(" _allPackages: ");
-    // buffer.append(this._allPackages);
-    buffer.append("]");
+    // buffer.append(_allPackages);
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -537,8 +537,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * </p>
      */
     public PackageProvider() {
-      this._classpathEntries = new ArrayList<File>();
-      this._sourcepathEntries = new ArrayList<File>();
+      _classpathEntries = new ArrayList<File>();
+      _sourcepathEntries = new ArrayList<File>();
     }
 
     /**
@@ -549,9 +549,9 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * @param classpathEntry
      *          the class path entry to add.
      */
-    public void addClasspathEntry(File classpathEntry) {
-      Assure.exists("classpathEntry", classpathEntry);
-      this._classpathEntries.add(classpathEntry);
+    public void addClasspathEntry( File classpathEntry ) {
+      Assure.exists( "classpathEntry", classpathEntry );
+      _classpathEntries.add( classpathEntry );
     }
 
     /**
@@ -562,9 +562,9 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * @param sourcepathEntry
      *          the source path entry to add.
      */
-    public void addSourcepathEntry(File sourcepathEntry) {
-      Assure.isDirectory("sourcepathEntry", sourcepathEntry);
-      this._sourcepathEntries.add(sourcepathEntry);
+    public void addSourcepathEntry( File sourcepathEntry ) {
+      Assure.isDirectory( "sourcepathEntry", sourcepathEntry );
+      _sourcepathEntries.add( sourcepathEntry );
     }
 
     /**
@@ -574,36 +574,36 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * @param className
      * @return
      */
-    public ClassFile loadClassFile(ClassName className) {
+    public ClassFile loadClassFile( ClassName className ) {
 
-      for (File file : this._classpathEntries) {
+      for( File file : _classpathEntries ) {
         File classpathEntry = file;
 
-        if (classpathEntry.isDirectory()) {
-          File result = new File(classpathEntry, className.asClassFileName());
+        if( classpathEntry.isDirectory() ) {
+          File result = new File( classpathEntry, className.asClassFileName() );
 
-          if (result.exists()) {
+          if( result.exists() ) {
 
             try {
-              if (result.getName().equals(result.getCanonicalFile().getName())) {
-                return new FileClassFileImpl(result, classpathEntry.getAbsolutePath(),
-                    ClasspathClassFileLoaderImpl.this._type);
+              if( result.getName().equals( result.getCanonicalFile().getName() ) ) {
+                return new FileClassFileImpl( result, classpathEntry.getAbsolutePath(),
+                    ClasspathClassFileLoaderImpl.this._type );
               }
-            } catch (IOException e) {
+            } catch( IOException e ) {
               // do nothing
             }
           }
         } else {
           try {
-            JarFile jarFile = new JarFile(classpathEntry);
+            JarFile jarFile = new JarFile( classpathEntry );
 
-            JarEntry entry = jarFile.getJarEntry(className.asClassFileName());
+            JarEntry entry = jarFile.getJarEntry( className.asClassFileName() );
 
-            if ((entry != null)) {
-              return new JarClassFileImpl(className.asClassFileName(), jarFile, classpathEntry.getAbsolutePath(),
-                  ClasspathClassFileLoaderImpl.this._type);
+            if( (entry != null) ) {
+              return new JarClassFileImpl( className.asClassFileName(), jarFile, classpathEntry.getAbsolutePath(),
+                  ClasspathClassFileLoaderImpl.this._type );
             }
-          } catch (IOException e) {
+          } catch( IOException e ) {
             // nothing to do here...
           }
         }
@@ -618,22 +618,22 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * @param className
      * @return
      */
-    public ReferableSourceFile loadSourceFile(ClassName className) {
+    public ReferableSourceFile loadSourceFile( ClassName className ) {
 
       String javaFileName = className.getClassName() + ".java";
 
-      for (File classpathEntry : this._sourcepathEntries) {
+      for( File classpathEntry : _sourcepathEntries ) {
 
-        if (classpathEntry.isDirectory()) {
-          File packageDir = new File(classpathEntry, className.getPackageAsDirectoryName());
-          if (packageDir.isDirectory()) {
-            for (String name : packageDir.list()) {
-              if (javaFileName.equals(name)
-                  && new File(classpathEntry, className.asSourceFileName().replace('/', File.separatorChar)
-                      .replace('\\', File.separatorChar)).exists()) {
-                return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName()
-                    .replace('/', File.separatorChar).replace('\\', File.separatorChar),
-                    classpathEntry.getAbsolutePath(), ClasspathClassFileLoaderImpl.this._type);
+        if( classpathEntry.isDirectory() ) {
+          File packageDir = new File( classpathEntry, className.getPackageAsDirectoryName() );
+          if( packageDir.isDirectory() ) {
+            for( String name : packageDir.list() ) {
+              if( javaFileName.equals( name )
+                  && new File( classpathEntry, className.asSourceFileName().replace( '/', File.separatorChar )
+                      .replace( '\\', File.separatorChar ) ).exists() ) {
+                return new ReferableSourceFileImpl( classpathEntry, className.asSourceFileName()
+                    .replace( '/', File.separatorChar ).replace( '\\', File.separatorChar ),
+                    classpathEntry.getAbsolutePath(), ClasspathClassFileLoaderImpl.this._type );
               }
             }
           }
@@ -648,7 +648,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
         //
         // if ((entry != null)) {
         // return new JarClassFileImpl(className.asClassFileName(), jarFile, classpathEntry.getAbsolutePath(),
-        // ClasspathClassFileLoaderImpl.this._type);
+        // ClasspathClassFileLoaderImpl._type);
         // }
         // } catch (IOException e) {
         // // nothing to do here...
@@ -659,4 +659,5 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
       return null;
     }
   }
-}
+  
+} /* ENDCLASS */

@@ -30,7 +30,7 @@ public class WorkspaceBuilder {
    * Initialises this workspace.
    */
   public WorkspaceBuilder() {
-    this._workspacedir = Utilities.createTempDir();
+    _workspacedir = Utilities.createTempDir();
   }
 
   /**
@@ -39,7 +39,7 @@ public class WorkspaceBuilder {
    * @return The location of the workspace directory. Not <code>null</code>.
    */
   public File getWorkspaceFolder() {
-    return this._workspacedir;
+    return _workspacedir;
   }
 
   /**
@@ -50,8 +50,8 @@ public class WorkspaceBuilder {
    * 
    * @return The folder containing the projects content. Not <code>null</code>.
    */
-  public File getProjectFolder(String projectname) {
-    return new File(this._workspacedir, projectname);
+  public File getProjectFolder( String projectname ) {
+    return new File( _workspacedir, projectname );
   }
 
   /**
@@ -62,8 +62,8 @@ public class WorkspaceBuilder {
    * 
    * @return The location of the project. Not <code>null</code>.
    */
-  public File addProject(EclipseProjectBuilder projectbuilder) {
-    return projectbuilder.createIn(this._workspacedir);
+  public File addProject( EclipseProjectBuilder projectbuilder ) {
+    return projectbuilder.createIn( _workspacedir );
   }
 
   /**
@@ -72,11 +72,11 @@ public class WorkspaceBuilder {
    * @param projectbuilder
    *          The project builder used to remove a project. Not <code>null</code>.
    */
-  public void removeProject(EclipseProjectBuilder projectbuilder) {
-    File dir = new File(this._workspacedir, projectbuilder.getProjectName());
-    if (dir.isDirectory()) {
-      if (!Utilities.delete(dir)) {
-        throw new RuntimeException(String.format("Failed to remove project '%s'.", projectbuilder.getProjectName()));
+  public void removeProject( EclipseProjectBuilder projectbuilder ) {
+    File dir = new File( _workspacedir, projectbuilder.getProjectName() );
+    if( dir.isDirectory() ) {
+      if( !Utilities.delete( dir ) ) {
+        throw new RuntimeException( String.format( "Failed to remove project '%s'.", projectbuilder.getProjectName() ) );
       }
     }
   }
@@ -85,8 +85,8 @@ public class WorkspaceBuilder {
    * Causes the disposal of the complete workspace.
    */
   public void dispose() {
-    if (!Utilities.delete(this._workspacedir)) {
-      throw new RuntimeException(String.format("Failed to remove the workspace (%s).", this._workspacedir.getPath()));
+    if( !Utilities.delete( _workspacedir ) ) {
+      throw new RuntimeException( String.format( "Failed to remove the workspace (%s).", _workspacedir.getPath() ) );
     }
   }
 

@@ -47,12 +47,12 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
     Assure.isDirectory( "location", location );
 
     // set the location
-    this._location = location;
+    _location = location;
 
     // Get manifest for exploded bundle
     File manifestFile = new File( location, "META-INF/MANIFEST.MF" );
     try {
-      this._manifest = new Manifest( new FileInputStream( manifestFile ) );
+      _manifest = new Manifest( new FileInputStream( manifestFile ) );
     } catch( Exception e ) {
       throw new RuntimeException( e );
     }
@@ -71,7 +71,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    */
   @Override
   public File getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -79,7 +79,7 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    */
   @Override
   public Manifest getManifest() {
-    return this._manifest;
+    return _manifest;
   }
 
   /**
@@ -92,18 +92,18 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
     List<File> result = new ArrayList<File>();
 
     // get bundle class path
-    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath( this._manifest );
+    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath( _manifest );
 
     // add class path entries to the result
     for( String bundleClasspathEntrie : bundleClasspathEntries ) {
 
       // add 'self'
       if( ".".equals( bundleClasspathEntrie ) ) {
-        result.add( this._location );
+        result.add( _location );
       }
       // add entry
       else {
-        File classpathEntry = new File( this._location, bundleClasspathEntrie );
+        File classpathEntry = new File( _location, bundleClasspathEntrie );
         if( classpathEntry.exists() ) {
           result.add( classpathEntry );
         }

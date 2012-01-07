@@ -32,35 +32,36 @@ public class LibraryDetector {
    * 
    * @param args
    */
-  public static void main(String[] args) {
+  public static void main( String[] args ) {
 
     // create property string
     StringBuffer buffer = new StringBuffer();
-    buffer.append(System.getProperty("java.version"));
-    buffer.append("|");
-    buffer.append(System.getProperty("sun.boot.class.path"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.ext.dirs"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.endorsed.dirs"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.specification.version"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.specification.name"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.vendor"));
+    buffer.append( System.getProperty( "java.version" ) );
+    buffer.append( "|" );
+    buffer.append( System.getProperty( "sun.boot.class.path" ) );
+    buffer.append( "|" );
+    buffer.append( System.getProperty( "java.ext.dirs" ) );
+    buffer.append( "|" );
+    buffer.append( System.getProperty( "java.endorsed.dirs" ) );
+    buffer.append( "|" );
+    buffer.append( System.getProperty( "java.specification.version" ) );
+    buffer.append( "|" );
+    buffer.append( System.getProperty( "java.specification.name" ) );
+    buffer.append( "|" );
+    buffer.append( System.getProperty( "java.vendor" ) );
 
     // write to file
     try {
-      File outfile = new File(args[0]);
-      BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
-      out.write(buffer.toString());
+      File outfile = new File( args[0] );
+      BufferedWriter out = new BufferedWriter( new FileWriter( outfile ) );
+      out.write( buffer.toString() );
       out.close();
-    } catch (IOException e) {
+    } catch( IOException e ) {
       e.printStackTrace();
     }
     //
     // // exit
     // System.exit(0);
   }
-}
+  
+} /* ENDCLASS */

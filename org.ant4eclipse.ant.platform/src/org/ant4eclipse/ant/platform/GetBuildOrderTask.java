@@ -54,8 +54,8 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
     super();
 
     // create delegates
-    this._subElementAndAttributesDelegate = new SubElementAndAttributesDelegate(this);
-    this._projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
+    _subElementAndAttributesDelegate = new SubElementAndAttributesDelegate(this);
+    _projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
   }
 
   /**
@@ -63,7 +63,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public void setProjectReferenceTypes(String buildOrderReferenceTypes) {
-    this._projectReferenceAwareDelegate.setProjectReferenceTypes(buildOrderReferenceTypes);
+    _projectReferenceAwareDelegate.setProjectReferenceTypes(buildOrderReferenceTypes);
   }
 
   /**
@@ -71,7 +71,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public String[] getProjectReferenceTypes() {
-    return this._projectReferenceAwareDelegate.getProjectReferenceTypes();
+    return _projectReferenceAwareDelegate.getProjectReferenceTypes();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public boolean isProjectReferenceTypesSet() {
-    return this._projectReferenceAwareDelegate.isProjectReferenceTypesSet();
+    return _projectReferenceAwareDelegate.isProjectReferenceTypesSet();
   }
 
   /**
@@ -87,7 +87,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public void requireProjectReferenceTypesSet() {
-    this._projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
+    _projectReferenceAwareDelegate.requireProjectReferenceTypesSet();
   }
 
   /**
@@ -95,7 +95,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public Object createDynamicElement(String name) throws BuildException {
-    return this._subElementAndAttributesDelegate.createDynamicElement(name);
+    return _subElementAndAttributesDelegate.createDynamicElement(name);
   }
 
   /**
@@ -103,7 +103,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public List<Object> getSubElements() {
-    return this._subElementAndAttributesDelegate.getSubElements();
+    return _subElementAndAttributesDelegate.getSubElements();
   }
 
   /**
@@ -111,7 +111,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public Map<String, String> getSubAttributes() {
-    return this._subElementAndAttributesDelegate.getSubAttributes();
+    return _subElementAndAttributesDelegate.getSubAttributes();
   }
 
   /**
@@ -119,7 +119,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    */
   @Override
   public void setDynamicAttribute(String name, String value) throws BuildException {
-    this._subElementAndAttributesDelegate.setDynamicAttribute(name, value);
+    _subElementAndAttributesDelegate.setDynamicAttribute(name, value);
   }
 
   /**
@@ -130,7 +130,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * @param buildorderProperty
    */
   public final void setBuildorderProperty(String buildorderProperty) {
-    this._buildorderProperty = buildorderProperty;
+    _buildorderProperty = buildorderProperty;
   }
 
   /**
@@ -141,7 +141,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * @return The name of the build order property.
    */
   public final String getBuildorderProperty() {
-    return this._buildorderProperty;
+    return _buildorderProperty;
   }
 
   /**
@@ -152,7 +152,7 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * @return <code>true</code> if the build order property has been set.
    */
   public final boolean isBuildorderPropertySet() {
-    return ((this._buildorderProperty != null) && (this._buildorderProperty.length() > 0));
+    return ((_buildorderProperty != null) && (_buildorderProperty.length() > 0));
   }
 
   /**
@@ -177,11 +177,11 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
 
     // calculate build order
     List<EclipseProject> orderedProjects = BuildOrderResolver.resolveBuildOrder(getWorkspace(), getProjectNames(),
-        this._projectReferenceAwareDelegate.getProjectReferenceTypes(), this._subElementAndAttributesDelegate
+        _projectReferenceAwareDelegate.getProjectReferenceTypes(), _subElementAndAttributesDelegate
             .getSubElements());
 
     // set property
-    getProject().setProperty(this._buildorderProperty, convertToString(orderedProjects, ','));
+    getProject().setProperty(_buildorderProperty, convertToString(orderedProjects, ','));
   }
 
   /**

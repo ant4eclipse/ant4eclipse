@@ -44,7 +44,7 @@ public class PlatformExecutorValuesProvider {
    */
   public PlatformExecutorValuesProvider( PathComponent pathComponent ) {
     Assure.notNull( "pathComponent", pathComponent );
-    this._pathComponent = pathComponent;
+    _pathComponent = pathComponent;
   }
 
   /**
@@ -62,13 +62,13 @@ public class PlatformExecutorValuesProvider {
     executionValues.getProperties()
         .put( PlatformExecutorValuesProvider.PROJECT_NAME, eclipseProject.getSpecifiedName() );
     executionValues.getProperties().put( PlatformExecutorValuesProvider.PROJECT_DIRECTORY,
-        this._pathComponent.convertToString( eclipseProject.getFolder() ) );
+        _pathComponent.convertToString( eclipseProject.getFolder() ) );
     for( ProjectNature projectNature : eclipseProject.getNatures() ) {
       executionValues.getProperties().put( projectNature.getName(), Boolean.TRUE.toString() );
     }
     // create scoped references
     executionValues.getReferences().put( PlatformExecutorValuesProvider.PROJECT_DIRECTORY_PATH,
-        this._pathComponent.convertToPath( eclipseProject.getFolder() ) );
+        _pathComponent.convertToPath( eclipseProject.getFolder() ) );
   }
   
 } /* ENDCLASS */

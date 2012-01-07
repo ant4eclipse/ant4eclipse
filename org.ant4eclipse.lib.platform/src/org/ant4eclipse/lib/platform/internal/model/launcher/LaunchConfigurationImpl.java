@@ -22,68 +22,68 @@ import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 
 public class LaunchConfigurationImpl implements LaunchConfiguration {
 
-  private String                             _type;
+  private String                            _type;
 
-  private Map<String, LaunchConfigAttribute> _attributes;
+  private Map<String,LaunchConfigAttribute> _attributes;
 
-  public LaunchConfigurationImpl(String type, List<LaunchConfigAttribute> attributes) {
+  public LaunchConfigurationImpl( String type, List<LaunchConfigAttribute> attributes ) {
     super();
-    this._type = type;
-    this._attributes = new Hashtable<String, LaunchConfigAttribute>();
-    for (LaunchConfigAttribute attribute : attributes) {
-      this._attributes.put(attribute.getName(), attribute);
+    _type = type;
+    _attributes = new Hashtable<String,LaunchConfigAttribute>();
+    for( LaunchConfigAttribute attribute : attributes ) {
+      _attributes.put( attribute.getName(), attribute );
     }
   }
 
   @Override
   public Collection<String> getAttributeNames() {
-    return this._attributes.keySet();
+    return _attributes.keySet();
   }
 
   @Override
-  public boolean getBooleanAttribute(String attributeName) {
-    LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
-    if (launchConfigAttribute == null) {
+  public boolean getBooleanAttribute( String attributeName ) {
+    LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute( attributeName );
+    if( launchConfigAttribute == null ) {
       return false;
     }
-    return Boolean.parseBoolean(launchConfigAttribute.getStringValue());
+    return Boolean.parseBoolean( launchConfigAttribute.getStringValue() );
   }
 
   @Override
-  public String getAttribute(String attributeName) {
+  public String getAttribute( String attributeName ) {
 
-    LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
-    if (launchConfigAttribute == null) {
+    LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute( attributeName );
+    if( launchConfigAttribute == null ) {
       return null;
     }
 
-    return String.valueOf(launchConfigAttribute.getValue());
+    return String.valueOf( launchConfigAttribute.getValue() );
   }
 
   @Override
-  public String[] getListAttribute(String attributeName) {
-    LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute(attributeName);
-    if (launchConfigAttribute == null) {
+  public String[] getListAttribute( String attributeName ) {
+    LaunchConfigAttribute launchConfigAttribute = getLaunchConfigAttribute( attributeName );
+    if( launchConfigAttribute == null ) {
       return null;
     }
 
-    if (!launchConfigAttribute.isListAttribute()) {
+    if( !launchConfigAttribute.isListAttribute() ) {
       // TODO : Exception ?
       return null;
     }
 
     ListAttribute listAttributeValue = launchConfigAttribute.getListAttributeValue();
-    return listAttributeValue.getEntries().toArray(new String[0]);
+    return listAttributeValue.getEntries().toArray( new String[0] );
   }
 
-  protected LaunchConfigAttribute getLaunchConfigAttribute(String attributeName) {
-    Assure.notNull("attributeName", attributeName);
-    return this._attributes.get(attributeName);
+  protected LaunchConfigAttribute getLaunchConfigAttribute( String attributeName ) {
+    Assure.notNull( "attributeName", attributeName );
+    return _attributes.get( attributeName );
   }
 
   @Override
   public String getType() {
-    return this._type;
+    return _type;
   }
 
   /**
@@ -96,11 +96,11 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
 
     String retValue = "LaunchConfigurationImpl ( " // prefix
         + super.toString() // add super attributes
-        + ", _type = '" + this._type + "'" // _type
-        + ", _attributes = '" + this._attributes + "'" // _attributes
+        + ", _type = '" + _type + "'" // _type
+        + ", _attributes = '" + _attributes + "'" // _attributes
         + " )";
 
     return retValue;
   }
 
-}
+} /* ENDCLASS */

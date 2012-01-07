@@ -53,7 +53,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
   @Before
   public void setup() {
     super.setup();
-    this._pythonpathxml = getResource( "/org/ant4eclipse/ant/pydt/pythonpath.xml" );
+    _pythonpathxml = getResource( "/org/ant4eclipse/ant/pydt/pythonpath.xml" );
   }
 
   /**
@@ -63,12 +63,12 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
   @After
   public void teardown() {
     super.teardown();
-    this._pythonpathxml = null;
+    _pythonpathxml = null;
   }
 
   @Test
   public void emptyProject() {
-    ProjectDescription projectdescription = createEmptyProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createEmptyProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path" );
     String[] content = buildresult.getTargetOutput( "get-python-path" );
     Assert.assertEquals( 1, content.length );
@@ -77,7 +77,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectRelative() {
-    ProjectDescription projectdescription = createEmptyProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createEmptyProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-relative" );
     String[] content = buildresult.getTargetOutput( "get-python-path-relative" );
     Assert.assertEquals( 1, content.length );
@@ -86,7 +86,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectDirseparator() {
-    ProjectDescription projectdescription = createEmptyProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createEmptyProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator", "@" );
     String[] content = buildresult.getTargetOutput( "get-python-path-dirseparator" );
     Assert.assertEquals( 1, content.length );
@@ -95,7 +95,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectInternalLibs() {
-    ProjectDescription projectdescription = createEmptyProject( this._pythonpathxml, KIND_INTERNALLIBRARYPRIMARY );
+    ProjectDescription projectdescription = createEmptyProject( _pythonpathxml, KIND_INTERNALLIBRARYPRIMARY );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path" );
     String[] content = buildresult.getTargetOutput( "get-python-path" );
     Assert.assertEquals( 1, content.length );
@@ -131,7 +131,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectRelativeInternalLibs() {
-    ProjectDescription projectdescription = createEmptyProject( this._pythonpathxml, KIND_INTERNALLIBRARYPRIMARY );
+    ProjectDescription projectdescription = createEmptyProject( _pythonpathxml, KIND_INTERNALLIBRARYPRIMARY );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-relative" );
     String[] content = buildresult.getTargetOutput( "get-python-path-relative" );
     Assert.assertEquals( 1, content.length );
@@ -141,7 +141,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void emptyProjectDirseparatorInternalLibs() {
-    ProjectDescription projectdescription = createEmptyProject( this._pythonpathxml, KIND_INTERNALLIBRARYPRIMARY );
+    ProjectDescription projectdescription = createEmptyProject( _pythonpathxml, KIND_INTERNALLIBRARYPRIMARY );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator", "@" );
     String[] content = buildresult.getTargetOutput( "get-python-path-dirseparator" );
     Assert.assertEquals( 1, content.length );
@@ -151,7 +151,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProject() {
-    ProjectDescription projectdescription = createComplexProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createComplexProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path" );
     String[] content = buildresult.getTargetOutput( "get-python-path" );
     Assert.assertEquals( 1, content.length );
@@ -162,7 +162,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectRelative() {
-    ProjectDescription projectdescription = createComplexProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createComplexProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-relative" );
     String[] content = buildresult.getTargetOutput( "get-python-path-relative" );
     Assert.assertEquals( 1, content.length );
@@ -172,7 +172,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectDirseparator() {
-    ProjectDescription projectdescription = createComplexProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createComplexProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator", "@" );
     String[] content = buildresult.getTargetOutput( "get-python-path-dirseparator" );
     Assert.assertEquals( 1, content.length );
@@ -182,7 +182,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectInternalLibs() {
-    ProjectDescription projectdescription = createComplexProject( this._pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
+    ProjectDescription projectdescription = createComplexProject( _pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
         | KIND_INTERNALLIBRARYSECONDARY );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path" );
     String[] content = buildresult.getTargetOutput( "get-python-path" );
@@ -196,7 +196,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectRelativeInternalLibs() {
-    ProjectDescription projectdescription = createComplexProject( this._pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
+    ProjectDescription projectdescription = createComplexProject( _pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
         | KIND_INTERNALLIBRARYSECONDARY );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-relative" );
     String[] content = buildresult.getTargetOutput( "get-python-path-relative" );
@@ -208,7 +208,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void complexProjectDirseparatorInternalLibs() {
-    ProjectDescription projectdescription = createComplexProject( this._pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
+    ProjectDescription projectdescription = createComplexProject( _pythonpathxml, KIND_INTERNALLIBRARYPRIMARY
         | KIND_INTERNALLIBRARYSECONDARY );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator", "@" );
     String[] content = buildresult.getTargetOutput( "get-python-path-dirseparator" );
@@ -222,7 +222,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void cyclicProject() {
-    ProjectDescription projectdescription = createCyclicProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createCyclicProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path" );
     String[] content = buildresult.getTargetOutput( "get-python-path" );
     Assert.assertEquals( 1, content.length );
@@ -233,7 +233,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void cyclicProjectRelative() {
-    ProjectDescription projectdescription = createCyclicProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createCyclicProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-relative" );
     String[] content = buildresult.getTargetOutput( "get-python-path-relative" );
     Assert.assertEquals( 1, content.length );
@@ -243,7 +243,7 @@ public class AbstractPythonPathTest extends AbstractWorkspaceBasedTest {
 
   @Test
   public void cyclicProjectDirseparator() {
-    ProjectDescription projectdescription = createCyclicProject( this._pythonpathxml, 0 );
+    ProjectDescription projectdescription = createCyclicProject( _pythonpathxml, 0 );
     BuildResult buildresult = execute( projectdescription.getPrimaryProjectname(), "get-python-path-dirseparator", "@" );
     String[] content = buildresult.getTargetOutput( "get-python-path-dirseparator" );
     Assert.assertEquals( 1, content.length );

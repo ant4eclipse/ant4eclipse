@@ -42,7 +42,6 @@ import java.util.StringTokenizer;
  */
 public class BuildPropertiesParser {
 
-  /** -- */
   public static final String BUILD_PROPERTIES = "build.properties";
 
   /**
@@ -58,11 +57,11 @@ public class BuildPropertiesParser {
    * @throws FileParserException
    * @see PluginProjectRole#getBuildProperties()
    */
-  public static void parsePluginBuildProperties(PluginProjectRole pluginProjectRole) {
-    Assure.notNull("pluginProjectRole", pluginProjectRole);
-    StringMap properties = loadBuildProperties(pluginProjectRole.getEclipseProject());
-    PluginBuildProperties buildProperties = initializePluginBuildProperties(properties);
-    pluginProjectRole.setBuildProperties(buildProperties);
+  public static void parsePluginBuildProperties( PluginProjectRole pluginProjectRole ) {
+    Assure.notNull( "pluginProjectRole", pluginProjectRole );
+    StringMap properties = loadBuildProperties( pluginProjectRole.getEclipseProject() );
+    PluginBuildProperties buildProperties = initializePluginBuildProperties( properties );
+    pluginProjectRole.setBuildProperties( buildProperties );
   }
 
   /**
@@ -77,20 +76,20 @@ public class BuildPropertiesParser {
    *          the featureProjectRole
    * @see PluginProjectRole#getBuildProperties()
    */
-  public static void parseFeatureBuildProperties(FeatureProjectRole featureProjectRole) {
-    Assure.notNull("featureProjectRole", featureProjectRole);
+  public static void parseFeatureBuildProperties( FeatureProjectRole featureProjectRole ) {
+    Assure.notNull( "featureProjectRole", featureProjectRole );
 
-    StringMap buildProperties = loadBuildProperties(featureProjectRole.getEclipseProject());
+    StringMap buildProperties = loadBuildProperties( featureProjectRole.getEclipseProject() );
     FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
-    initializeAbstractBuildProperties(buildProperties, featureBuildProperties);
+    initializeAbstractBuildProperties( buildProperties, featureBuildProperties );
     // TODO
-    ((FeatureProjectRoleImpl) featureProjectRole).setBuildProperties(featureBuildProperties);
+    ((FeatureProjectRoleImpl) featureProjectRole).setBuildProperties( featureBuildProperties );
   }
 
-  private static StringMap loadBuildProperties(EclipseProject eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
-    File file = eclipseProject.getChild(BUILD_PROPERTIES);
-    return new StringMap(file);
+  private static StringMap loadBuildProperties( EclipseProject eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
+    File file = eclipseProject.getChild( BUILD_PROPERTIES );
+    return new StringMap( file );
   }
 
   /**
@@ -102,87 +101,87 @@ public class BuildPropertiesParser {
    * This method is mainly public to make it accessible from tests (?)
    * </p>
    */
-  public static PluginBuildProperties initializePluginBuildProperties(StringMap properties) {
-    Assure.notNull("properties", properties);
+  public static PluginBuildProperties initializePluginBuildProperties( StringMap properties ) {
+    Assure.notNull( "properties", properties );
 
     PluginBuildProperties buildProperties = new PluginBuildProperties();
-    initializeAbstractBuildProperties(properties, buildProperties);
+    initializeAbstractBuildProperties( properties, buildProperties );
 
     // set src.includes
-    String includes = properties.get("src.includes", "");
-    buildProperties.setSourceIncludes(getAsList(includes, ",", true));
+    String includes = properties.get( "src.includes", "" );
+    buildProperties.setSourceIncludes( getAsList( includes, ",", true ) );
 
     // set src.excludes
-    String excludes = properties.get("src.excludes", "");
-    buildProperties.setSourceExcludes(getAsList(excludes, ",", true));
+    String excludes = properties.get( "src.excludes", "" );
+    buildProperties.setSourceExcludes( getAsList( excludes, ",", true ) );
 
     // set jars.compile.order
-    String jarsCompileOrder = properties.get("jars.compile.order");
-    if (jarsCompileOrder != null) {
-      buildProperties.setJarsCompileOrder(getAsList(jarsCompileOrder, ",", true));
+    String jarsCompileOrder = properties.get( "jars.compile.order" );
+    if( jarsCompileOrder != null ) {
+      buildProperties.setJarsCompileOrder( getAsList( jarsCompileOrder, ",", true ) );
     }
 
     // set source and target compatibility level
-    String javacSource = properties.get("javacSource", "1.3");
-    buildProperties.setJavacSource(javacSource);
-    String javacTarget = properties.get("javacTarget", "1.2");
-    buildProperties.setJavacTarget(javacTarget);
+    String javacSource = properties.get( "javacSource", "1.3" );
+    buildProperties.setJavacSource( javacSource );
+    String javacTarget = properties.get( "javacTarget", "1.2" );
+    buildProperties.setJavacTarget( javacTarget );
 
     // Set additional Bundles property
-    String additionalBundles = properties.get("additional.bundles");
-    if (additionalBundles != null) {
-      buildProperties.setAdditionalBundles(getAsList(additionalBundles, ",", false));
+    String additionalBundles = properties.get( "additional.bundles" );
+    if( additionalBundles != null ) {
+      buildProperties.setAdditionalBundles( getAsList( additionalBundles, ",", false ) );
     }
 
     // set libraries
     Iterator<?> iterator = properties.keySet().iterator();
-    while (iterator.hasNext()) {
+    while( iterator.hasNext() ) {
       String key = (String) iterator.next();
 
-      if (key.startsWith("source.")) {
-        String libraryName = key.substring("source.".length());
+      if( key.startsWith( "source." ) ) {
+        String libraryName = key.substring( "source.".length() );
 
-        Library library = new Library(libraryName);
+        Library library = new Library( libraryName );
 
-        String[] source = getAsList(properties.get("source." + libraryName), ",", true);
-        library.setSource(source);
+        String[] source = getAsList( properties.get( "source." + libraryName ), ",", true );
+        library.setSource( source );
 
-        String[] output = getAsList(properties.get("output." + libraryName), ",", true);
-        library.setOutput(output);
+        String[] output = getAsList( properties.get( "output." + libraryName ), ",", true );
+        library.setOutput( output );
 
-        String manifest = properties.get("manifest." + libraryName);
-        library.setManifest(manifest);
+        String manifest = properties.get( "manifest." + libraryName );
+        library.setManifest( manifest );
 
-        String exclude = properties.get("exclude." + libraryName);
-        library.setExclude(exclude);
+        String exclude = properties.get( "exclude." + libraryName );
+        library.setExclude( exclude );
 
-        buildProperties.addLibrary(library);
+        buildProperties.addLibrary( library );
 
         String extraKey = "extra." + libraryName;
-        properties.get(extraKey);
+        properties.get( extraKey );
       }
     }
     return buildProperties;
   }
 
-  private static void initializeAbstractBuildProperties(StringMap allProperties,
-      AbstractBuildProperties abstractBuildProperties) {
-    Assure.notNull("allProperties", allProperties);
-    Assure.notNull("abstractBuildProperties", abstractBuildProperties);
+  private static void initializeAbstractBuildProperties( StringMap allProperties,
+      AbstractBuildProperties abstractBuildProperties ) {
+    Assure.notNull( "allProperties", allProperties );
+    Assure.notNull( "abstractBuildProperties", abstractBuildProperties );
 
     // set qualifier
-    abstractBuildProperties.setQualifier(allProperties.get("qualifier"));
+    abstractBuildProperties.setQualifier( allProperties.get( "qualifier" ) );
 
     // set custom
-    abstractBuildProperties.setCustom(Boolean.valueOf(allProperties.get("custom", "false")).booleanValue());
+    abstractBuildProperties.setCustom( Boolean.valueOf( allProperties.get( "custom", "false" ) ).booleanValue() );
 
     // set bin.includes
-    String includes = allProperties.get("bin.includes", "");
-    abstractBuildProperties.setBinaryIncludes(getAsList(includes, ",", true));
+    String includes = allProperties.get( "bin.includes", "" );
+    abstractBuildProperties.setBinaryIncludes( getAsList( includes, ",", true ) );
 
     // set bin.excludes
-    String excludes = allProperties.get("bin.excludes", "");
-    abstractBuildProperties.setBinaryExcludes(getAsList(excludes, ",", true));
+    String excludes = allProperties.get( "bin.excludes", "" );
+    abstractBuildProperties.setBinaryExcludes( getAsList( excludes, ",", true ) );
   }
 
   /**
@@ -190,24 +189,25 @@ public class BuildPropertiesParser {
    * @param delimiter
    * @return
    */
-  private static String[] getAsList(String content, String delimiter, boolean removePathSeparator) {
-    Assure.notNull("delimiter", delimiter);
+  private static String[] getAsList( String content, String delimiter, boolean removePathSeparator ) {
+    Assure.notNull( "delimiter", delimiter );
 
-    if (content == null) {
+    if( content == null ) {
       return new String[] {};
     }
 
     List<String> result = new ArrayList<String>();
 
-    StringTokenizer tokenizer = new StringTokenizer(content, delimiter);
-    while (tokenizer.hasMoreTokens()) {
+    StringTokenizer tokenizer = new StringTokenizer( content, delimiter );
+    while( tokenizer.hasMoreTokens() ) {
       String token = tokenizer.nextToken().trim();
-      if (removePathSeparator && (token.length() > 1) && token.endsWith("/")) {
-        token = token.substring(0, token.length() - 1);
+      if( removePathSeparator && (token.length() > 1) && token.endsWith( "/" ) ) {
+        token = token.substring( 0, token.length() - 1 );
       }
-      result.add(token);
+      result.add( token );
     }
 
-    return result.toArray(new String[0]);
+    return result.toArray( new String[0] );
   }
-}
+  
+} /* ENDCLASS */

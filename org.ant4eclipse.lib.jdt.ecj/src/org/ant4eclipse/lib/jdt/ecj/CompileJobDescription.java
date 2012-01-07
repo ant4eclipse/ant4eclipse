@@ -29,7 +29,7 @@ public interface CompileJobDescription {
    * 
    * @return the compiler options for the compile job.
    */
-  Map<String, String> getCompilerOptions();
+  Map<String,String> getCompilerOptions();
 
   /**
    * <p>
@@ -50,4 +50,5 @@ public interface CompileJobDescription {
    *         compilation process.
    */
   ClassFileLoader getClassFileLoader();
-}
+  
+} /* ENDINTERFACE */

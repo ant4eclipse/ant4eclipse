@@ -23,6 +23,7 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 
 public class JarBundleBuilder {
+
   public static int      BUFFER_SIZE = 10240;
 
   /** - */
@@ -40,14 +41,14 @@ public class JarBundleBuilder {
    * 
    * @param name
    */
-  public JarBundleBuilder(String name) {
-    Assure.nonEmpty("name", name);
+  public JarBundleBuilder( String name ) {
+    Assure.nonEmpty( "name", name );
 
     // set the name
-    this._name = name;
+    _name = name;
 
     // default manifest
-    this._manifest = new BundleManifest(this._name);
+    _manifest = new BundleManifest( _name );
   }
 
   /**
@@ -57,12 +58,12 @@ public class JarBundleBuilder {
    * @return
    */
   public BundleManifest withBundleManifest() {
-    return this._manifest;
+    return _manifest;
   }
 
-  public JarBundleBuilder withEmbeddedJar(String name) {
-    this._embeddedJarName = name;
-    this._manifest.withClassPath(".," + name + ".jar");
+  public JarBundleBuilder withEmbeddedJar( String name ) {
+    _embeddedJarName = name;
+    _manifest.withClassPath( ".," + name + ".jar" );
     return this;
   }
 
@@ -73,19 +74,19 @@ public class JarBundleBuilder {
    * @param destinationDirectory
    * @return
    */
-  public File createIn(File destinationDirectory) {
+  public File createIn( File destinationDirectory ) {
 
-    if (!destinationDirectory.isDirectory()) {
-      throw new RuntimeException("Directory '" + destinationDirectory + "' must be a directory.");
+    if( !destinationDirectory.isDirectory() ) {
+      throw new RuntimeException( "Directory '" + destinationDirectory + "' must be a directory." );
     }
 
-    File jarFile = new File(destinationDirectory, this._name + ".jar");
+    File jarFile = new File( destinationDirectory, _name + ".jar" );
 
-    if (this._embeddedJarName == null) {
-      createJarArchive(jarFile, this._manifest.getManifest());
+    if( _embeddedJarName == null ) {
+      createJarArchive( jarFile, _manifest.getManifest() );
     } else {
-      File jarFile2 = new File(destinationDirectory, this._embeddedJarName + ".jar");
-      createJarArchive(jarFile, this._manifest.getManifest(), new File[] { jarFile2 });
+      File jarFile2 = new File( destinationDirectory, _embeddedJarName + ".jar" );
+      createJarArchive( jarFile, _manifest.getManifest(), new File[] { jarFile2 } );
       jarFile2.delete();
     }
     return jarFile;
@@ -97,8 +98,8 @@ public class JarBundleBuilder {
    * 
    * @param archiveFile
    */
-  private void createJarArchive(File archiveFile, Manifest manifest) {
-    createJarArchive(archiveFile, manifest, new File[0]);
+  private void createJarArchive( File archiveFile, Manifest manifest ) {
+    createJarArchive( archiveFile, manifest, new File[0] );
   }
 
   /**
@@ -108,35 +109,36 @@ public class JarBundleBuilder {
    * @param archiveFile
    * @param tobeJared
    */
-  private void createJarArchive(File archiveFile, Manifest manifest, File[] tobeJared) {
+  private void createJarArchive( File archiveFile, Manifest manifest, File[] tobeJared ) {
     try {
       byte buffer[] = new byte[BUFFER_SIZE];
       // Open archive file
-      FileOutputStream stream = new FileOutputStream(archiveFile);
-      JarOutputStream out = new JarOutputStream(stream, manifest);
+      FileOutputStream stream = new FileOutputStream( archiveFile );
+      JarOutputStream out = new JarOutputStream( stream, manifest );
 
-      for (int i = 0; i < tobeJared.length; i++) {
-        if (tobeJared[i] == null || !tobeJared[i].exists() || tobeJared[i].isDirectory()) {
+      for( int i = 0; i < tobeJared.length; i++ ) {
+        if( tobeJared[i] == null || !tobeJared[i].exists() || tobeJared[i].isDirectory() ) {
           continue; // Just in case...
         }
-        System.out.println("Adding " + tobeJared[i].getName());
+        System.out.println( "Adding " + tobeJared[i].getName() );
 
         // Add archive entry
-        JarEntry jarAdd = new JarEntry(tobeJared[i].getName());
-        jarAdd.setTime(tobeJared[i].lastModified());
-        out.putNextEntry(jarAdd);
+        JarEntry jarAdd = new JarEntry( tobeJared[i].getName() );
+        jarAdd.setTime( tobeJared[i].lastModified() );
+        out.putNextEntry( jarAdd );
 
         // Write file to archive
-        FileInputStream in = new FileInputStream(tobeJared[i]);
-        Utilities.copy(in, out, buffer);
-        Utilities.close((Closeable)in);
+        FileInputStream in = new FileInputStream( tobeJared[i] );
+        Utilities.copy( in, out, buffer );
+        Utilities.close( (Closeable) in );
       }
-      Utilities.close((Closeable)out);
-      Utilities.close((Closeable)stream);
-      System.out.println("Adding completed OK");
-    } catch (Exception ex) {
+      Utilities.close( (Closeable) out );
+      Utilities.close( (Closeable) stream );
+      System.out.println( "Adding completed OK" );
+    } catch( Exception ex ) {
       ex.printStackTrace();
-      System.out.println("Error: " + ex.getMessage());
+      System.out.println( "Error: " + ex.getMessage() );
     }
   }
-}
+  
+} /* ENDCLASS */

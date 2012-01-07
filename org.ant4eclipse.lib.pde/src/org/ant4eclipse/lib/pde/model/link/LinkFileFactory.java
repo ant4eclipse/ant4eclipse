@@ -35,33 +35,33 @@ public class LinkFileFactory {
    *          The directory that contains the "links" subdirectory
    * @return An array of LinkFile objects representing all .link-files found in the directory.
    */
-  public static LinkFile[] getLinkFiles(File directory) {
-    Assure.notNull("directory", directory);
+  public static LinkFile[] getLinkFiles( File directory ) {
+    Assure.notNull( "directory", directory );
 
-    File linksDir = new File(directory, "links");
+    File linksDir = new File( directory, "links" );
 
-    if (!linksDir.isDirectory()) {
-      A4ELogging.debug("Links-directory '%s' does not exist", linksDir.getAbsolutePath());
+    if( !linksDir.isDirectory() ) {
+      A4ELogging.debug( "Links-directory '%s' does not exist", linksDir.getAbsolutePath() );
       return new LinkFile[0];
     }
-    A4ELogging.debug("Reading links-directory '%s'", linksDir.getAbsolutePath());
-    File[] links = linksDir.listFiles(new FilenameFilter() {
+    A4ELogging.debug( "Reading links-directory '%s'", linksDir.getAbsolutePath() );
+    File[] links = linksDir.listFiles( new FilenameFilter() {
       @Override
-      public boolean accept(File dir, String name) {
-        return name.endsWith(".link");
+      public boolean accept( File dir, String name ) {
+        return name.endsWith( ".link" );
       }
-    });
+    } );
 
     List<LinkFile> result = new ArrayList<LinkFile>();
 
-    for (File link : links) {
-      LinkFile linkFile = parseLinkFile(link);
-      if (linkFile != null) {
-        result.add(linkFile);
+    for( File link : links ) {
+      LinkFile linkFile = parseLinkFile( link );
+      if( linkFile != null ) {
+        result.add( linkFile );
       }
     }
 
-    return result.toArray(new LinkFile[result.size()]);
+    return result.toArray( new LinkFile[result.size()] );
 
   }
 
@@ -82,16 +82,17 @@ public class LinkFileFactory {
    *         contain a path.
    * 
    */
-  public static LinkFile parseLinkFile(File linkFile) {
-    Assure.isFile("linkFile", linkFile);
-    A4ELogging.debug("Parsing link file '%s'", linkFile.getAbsolutePath());
-    StringMap p = new StringMap(linkFile);
-    String path = p.get("path");
-    if (path == null) {
+  public static LinkFile parseLinkFile( File linkFile ) {
+    Assure.isFile( "linkFile", linkFile );
+    A4ELogging.debug( "Parsing link file '%s'", linkFile.getAbsolutePath() );
+    StringMap p = new StringMap( linkFile );
+    String path = p.get( "path" );
+    if( path == null ) {
       return null;
     }
 
-    File destination = new File(path);
-    return new LinkFile(destination);
+    File destination = new File( path );
+    return new LinkFile( destination );
   }
-}
+  
+} /* ENDCLASS */

@@ -48,10 +48,10 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
    * @param targetPlatformLocation
    *          the target platform location.
    */
-  public BinaryBundleAndFeatureSet(File targetPlatformLocation) {
-    super("target platform location '" + targetPlatformLocation.getAbsolutePath() + "'");
-    Assure.isDirectory("targetPlatformLocation", targetPlatformLocation);
-    this._targetPlatformLocation = targetPlatformLocation;
+  public BinaryBundleAndFeatureSet( File targetPlatformLocation ) {
+    super( "target platform location '" + targetPlatformLocation.getAbsolutePath() + "'" );
+    Assure.isDirectory( "targetPlatformLocation", targetPlatformLocation );
+    _targetPlatformLocation = targetPlatformLocation;
   }
 
   /**
@@ -62,32 +62,32 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
 
     // 1. read plugin from target location
     // TODO: ERROR-HANDLING...
-    File pluginsDirectory = new File(this._targetPlatformLocation, DEFAULT_PLUGIN_DIRECTORY);
-    if (!pluginsDirectory.exists()) {
-      pluginsDirectory = this._targetPlatformLocation;
+    File pluginsDirectory = new File( _targetPlatformLocation, DEFAULT_PLUGIN_DIRECTORY );
+    if( !pluginsDirectory.exists() ) {
+      pluginsDirectory = _targetPlatformLocation;
     }
-    if ((pluginsDirectory != null) && pluginsDirectory.exists()) {
+    if( (pluginsDirectory != null) && pluginsDirectory.exists() ) {
       File[] plugins = pluginsDirectory.listFiles();
-      for (File plugin : plugins) {
-        BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin(plugin);
-        if (bundleDescription != null) {
-          addBundleDescription(bundleDescription);
+      for( File plugin : plugins ) {
+        BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin( plugin );
+        if( bundleDescription != null ) {
+          addBundleDescription( bundleDescription );
         }
       }
     }
 
     // 2. read plugins from linked directories in target location
-    if (this._targetPlatformLocation != null) {
-      LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
-      for (LinkFile file : linkFiles) {
-        if (file.isValidDestination()) {
+    if( _targetPlatformLocation != null ) {
+      LinkFile[] linkFiles = LinkFileFactory.getLinkFiles( _targetPlatformLocation );
+      for( LinkFile file : linkFiles ) {
+        if( file.isValidDestination() ) {
           File pluginsDirectory1 = file.getPluginsDirectory();
-          if ((pluginsDirectory1 != null) && pluginsDirectory1.exists()) {
+          if( (pluginsDirectory1 != null) && pluginsDirectory1.exists() ) {
             File[] plugins = pluginsDirectory1.listFiles();
-            for (File plugin : plugins) {
-              BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin(plugin);
-              if (bundleDescription != null) {
-                addBundleDescription(bundleDescription);
+            for( File plugin : plugins ) {
+              BundleDescription bundleDescription = BundleDescriptionLoader.parsePlugin( plugin );
+              if( bundleDescription != null ) {
+                addBundleDescription( bundleDescription );
               }
             }
           }
@@ -99,25 +99,25 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
     // TODO: ERROR-HANDLING...
 
     // try to search features in the 'features' directory
-    File featuresDirectory = new File(this._targetPlatformLocation, DEFAULT_FEATURE_DIRECTORY);
+    File featuresDirectory = new File( _targetPlatformLocation, DEFAULT_FEATURE_DIRECTORY );
 
     // if the 'features' directory doesn't exist, use the target platform location
-    if (!featuresDirectory.exists()) {
-      featuresDirectory = this._targetPlatformLocation;
+    if( !featuresDirectory.exists() ) {
+      featuresDirectory = _targetPlatformLocation;
     }
 
     //
-    readFeature(featuresDirectory);
+    readFeature( featuresDirectory );
 
     // 2. read plugins from linked directories in target location
-    if (this._targetPlatformLocation != null) {
+    if( _targetPlatformLocation != null ) {
 
-      LinkFile[] linkFiles = LinkFileFactory.getLinkFiles(this._targetPlatformLocation);
+      LinkFile[] linkFiles = LinkFileFactory.getLinkFiles( _targetPlatformLocation );
 
-      for (LinkFile linkFile : linkFiles) {
+      for( LinkFile linkFile : linkFiles ) {
 
-        if (linkFile.isValidDestination()) {
-          readFeature(linkFile.getFeaturesDirectory());
+        if( linkFile.isValidDestination() ) {
+          readFeature( linkFile.getFeaturesDirectory() );
         }
       }
     }
@@ -129,18 +129,19 @@ public class BinaryBundleAndFeatureSet extends AbstractBundleAndFeatureSet {
    * 
    * @param directory
    */
-  private void readFeature(File directory) {
+  private void readFeature( File directory ) {
 
-    if (directory == null || !directory.exists()) {
+    if( directory == null || !directory.exists() ) {
       return;
     }
 
-    for (File feature : directory.listFiles()) {
-      FeatureDescription featureDescription = FeatureDescriptionLoader.parseFeature(feature);
+    for( File feature : directory.listFiles() ) {
+      FeatureDescription featureDescription = FeatureDescriptionLoader.parseFeature( feature );
 
-      if (featureDescription != null) {
-        addFeaturesDescription(featureDescription);
+      if( featureDescription != null ) {
+        addFeaturesDescription( featureDescription );
       }
     }
   }
-}
+  
+} /* ENDCLASS */

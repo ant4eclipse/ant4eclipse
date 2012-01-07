@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractAnt4EclipseFileSet;
@@ -51,11 +62,11 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     if( isReference() ) {
       throw tooManyAttributes();
     }
-    this._includeSourceFolders = includeSourceFolders;
+    _includeSourceFolders = includeSourceFolders;
   }
 
   public boolean isIncludeSourceFolders() {
-    return this._includeSourceFolders;
+    return _includeSourceFolders;
   }
 
   /**
@@ -67,11 +78,11 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     if( isReference() ) {
       throw tooManyAttributes();
     }
-    this._includeOutputFolders = includeOutputFolders;
+    _includeOutputFolders = includeOutputFolders;
   }
 
   public boolean isIncludeOutputFolders() {
-    return this._includeOutputFolders;
+    return _includeOutputFolders;
   }
 
   /**
@@ -104,7 +115,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
       throw tooManyAttributes();
     }
     Pattern pattern = new Pattern();
-    this._includePatterns.add( pattern );
+    _includePatterns.add( pattern );
     return pattern;
   }
 
@@ -118,7 +129,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
       throw tooManyAttributes();
     }
     Pattern pattern = new Pattern();
-    this._excludePatterns.add( pattern );
+    _excludePatterns.add( pattern );
     return pattern;
   }
 
@@ -148,12 +159,12 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return
    */
   public String[] getAllExcludes() {
-    if( this._excludePatterns.isEmpty() ) {
+    if( _excludePatterns.isEmpty() ) {
       return null;
     }
 
     List<String> allExcludes = new ArrayList<String>();
-    for( Pattern pattern : this._excludePatterns ) {
+    for( Pattern pattern : _excludePatterns ) {
       if( pattern.isValid() ) {
         allExcludes.add( pattern.getName() );
       }
@@ -168,11 +179,11 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
    * @return
    */
   public String[] getAllIncludes() {
-    if( this._includePatterns.isEmpty() ) {
+    if( _includePatterns.isEmpty() ) {
       return null;
     }
     List<String> allIncludes = new ArrayList<String>();
-    for( Pattern pattern : this._includePatterns ) {
+    for( Pattern pattern : _includePatterns ) {
       if( pattern.isValid() ) {
         allIncludes.add( pattern.getName() );
       }
@@ -264,7 +275,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
     private String _name;
 
     public String getName() {
-      return this._name;
+      return _name;
     }
 
     /**
@@ -274,7 +285,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
      */
     public void setName( String pattern ) {
       Assure.notNull( "pattern", pattern );
-      this._name = pattern;
+      _name = pattern;
     }
 
     /**
@@ -283,7 +294,7 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
      * @return
      */
     public boolean isValid() {
-      return Utilities.hasText( this._name );
+      return Utilities.hasText( _name );
     }
 
   }

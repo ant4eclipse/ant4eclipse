@@ -50,8 +50,8 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
     super( component );
 
     // set default separators
-    this._pathSeparator = File.pathSeparator;
-    this._dirSeparator = File.separator;
+    _pathSeparator = File.pathSeparator;
+    _dirSeparator = File.separator;
   }
 
   /**
@@ -60,7 +60,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   @Override
   public final void setPathSeparator( String newpathseparator ) {
     Assure.nonEmpty( "newpathseparator", newpathseparator );
-    this._pathSeparator = newpathseparator;
+    _pathSeparator = newpathseparator;
   }
 
   /**
@@ -68,7 +68,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    */
   @Override
   public final String getPathSeparator() {
-    return this._pathSeparator;
+    return _pathSeparator;
   }
 
   /**
@@ -76,7 +76,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    */
   @Override
   public final boolean isPathSeparatorSet() {
-    return this._pathSeparator != null;
+    return _pathSeparator != null;
   }
 
   /**
@@ -85,7 +85,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   @Override
   public final void setDirSeparator( String newdirseparator ) {
     Assure.nonEmpty( "newdirseparator", newdirseparator );
-    this._dirSeparator = newdirseparator;
+    _dirSeparator = newdirseparator;
   }
 
   /**
@@ -93,7 +93,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    */
   @Override
   public final String getDirSeparator() {
-    return this._dirSeparator;
+    return _dirSeparator;
   }
 
   /**
@@ -101,7 +101,7 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    */
   @Override
   public final boolean isDirSeparatorSet() {
-    return this._dirSeparator != null;
+    return _dirSeparator != null;
   }
 
   /**
@@ -133,10 +133,10 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
     Iterator<String> iterator = entriesAsString.iterator();
     while( iterator.hasNext() ) {
       String path = iterator.next().replace( '\\', '/' );
-      path = Utilities.replace( path, '/', this._dirSeparator );
+      path = Utilities.replace( path, '/', _dirSeparator );
       buffer.append( path );
       if( iterator.hasNext() ) {
-        buffer.append( this._pathSeparator );
+        buffer.append( _pathSeparator );
       }
     }
 

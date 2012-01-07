@@ -21,7 +21,7 @@ import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class CvsProjectRole extends AbstractProjectRole {
+public class CvsProjectRole extends AbstractProjectRole {
 
   /** the name for this role */
   public static final String NAME = "CvsProjectRole";
@@ -40,11 +40,11 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * 
    * @return Returns the cvs project role.
    */
-  public static CvsProjectRole getCvsProjectRole(EclipseProject eclipseProject) {
-    Assure.assertTrue(hasCvsProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have CvsProjectRole!");
+  public static CvsProjectRole getCvsProjectRole( EclipseProject eclipseProject ) {
+    Assure.assertTrue( hasCvsProjectRole( eclipseProject ), "Project \"" + eclipseProject.getFolderName()
+        + "\" must have CvsProjectRole!" );
 
-    return eclipseProject.getRole(CvsProjectRole.class);
+    return eclipseProject.getRole( CvsProjectRole.class );
   }
 
   /**
@@ -52,8 +52,8 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * 
    * @return Returns whether a cvs project role is set or not.
    */
-  public static boolean hasCvsProjectRole(EclipseProject eclipseProject) {
-    return eclipseProject.hasRole(CvsProjectRole.class);
+  public static boolean hasCvsProjectRole( EclipseProject eclipseProject ) {
+    return eclipseProject.hasRole( CvsProjectRole.class );
   }
 
   /**
@@ -66,16 +66,16 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @param branchOrVersionTag
    *          the name of the branch or version
    */
-  public CvsProjectRole(EclipseProject eclipseProject, String projectNameInRepository, String cvsRoot,
-      String branchOrVersionTag) {
-    super(NAME, eclipseProject);
+  public CvsProjectRole( EclipseProject eclipseProject, String projectNameInRepository, String cvsRoot,
+      String branchOrVersionTag ) {
+    super( NAME, eclipseProject );
 
-    Assure.notNull("projectNameInRepository", projectNameInRepository);
-    Assure.notNull("cvsRoot", cvsRoot);
+    Assure.notNull( "projectNameInRepository", projectNameInRepository );
+    Assure.notNull( "cvsRoot", cvsRoot );
 
-    this._cvsRoot = new CvsRoot(cvsRoot);
-    this._projectNameInRepository = projectNameInRepository;
-    this._branchOrVersionTag = branchOrVersionTag;
+    _cvsRoot = new CvsRoot( cvsRoot );
+    _projectNameInRepository = projectNameInRepository;
+    _branchOrVersionTag = branchOrVersionTag;
   }
 
   /**
@@ -88,16 +88,16 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @param branchOrVersionTag
    *          the name of the branch or version
    */
-  public CvsProjectRole(EclipseProject eclipseProject, String projectNameInRepository, CvsRoot cvsRoot,
-      String branchOrVersionTag) {
-    super(NAME, eclipseProject);
+  public CvsProjectRole( EclipseProject eclipseProject, String projectNameInRepository, CvsRoot cvsRoot,
+      String branchOrVersionTag ) {
+    super( NAME, eclipseProject );
 
-    Assure.notNull("projectNameInRepository", projectNameInRepository);
-    Assure.notNull("cvsRoot", cvsRoot);
+    Assure.notNull( "projectNameInRepository", projectNameInRepository );
+    Assure.notNull( "cvsRoot", cvsRoot );
 
-    this._cvsRoot = cvsRoot;
-    this._projectNameInRepository = projectNameInRepository;
-    this._branchOrVersionTag = branchOrVersionTag;
+    _cvsRoot = cvsRoot;
+    _projectNameInRepository = projectNameInRepository;
+    _branchOrVersionTag = branchOrVersionTag;
   }
 
   /**
@@ -115,7 +115,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @return Returns whether the project has a branch or version tag.
    */
   public boolean hasBranchOrVersionTag() {
-    return this._branchOrVersionTag != null;
+    return _branchOrVersionTag != null;
   }
 
   /**
@@ -124,7 +124,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @return Returns the branch or version tag, or null if no tag exists.
    */
   public String getBranchOrVersionTag() {
-    return this._branchOrVersionTag;
+    return _branchOrVersionTag;
   }
 
   /**
@@ -133,7 +133,7 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @return Returns the name of the project in the repository.
    */
   public String getProjectNameInRepository() {
-    return this._projectNameInRepository;
+    return _projectNameInRepository;
   }
 
   /**
@@ -142,31 +142,31 @@ public final class CvsProjectRole extends AbstractProjectRole {
    * @return Returns the cvs root.
    */
   public CvsRoot getCvsRoot() {
-    return this._cvsRoot;
+    return _cvsRoot;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (!super.equals(o)) {
+    if( !super.equals( o ) ) {
       return false;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     CvsProjectRole castedObj = (CvsProjectRole) o;
-    return ((this._cvsRoot == null ? castedObj._cvsRoot == null : this._cvsRoot.equals(castedObj._cvsRoot))
-        && (this._projectNameInRepository == null ? castedObj._projectNameInRepository == null
-            : this._projectNameInRepository.equals(castedObj._projectNameInRepository)) && (this._branchOrVersionTag == null ? castedObj._branchOrVersionTag == null
-        : this._branchOrVersionTag.equals(castedObj._branchOrVersionTag)));
+    return((_cvsRoot == null ? castedObj._cvsRoot == null : _cvsRoot.equals( castedObj._cvsRoot ))
+        && (_projectNameInRepository == null ? castedObj._projectNameInRepository == null
+            : _projectNameInRepository.equals( castedObj._projectNameInRepository )) && (_branchOrVersionTag == null ? castedObj._branchOrVersionTag == null
+        : _branchOrVersionTag.equals( castedObj._branchOrVersionTag )));
   }
 
   /**
@@ -175,17 +175,17 @@ public final class CvsProjectRole extends AbstractProjectRole {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[CvsProjectRole:");
-    buffer.append(" NAME: ");
-    buffer.append(NAME);
-    buffer.append(" cvsRoot: ");
-    buffer.append(this._cvsRoot);
-    buffer.append(" projectNameInRepository: ");
-    buffer.append(this._projectNameInRepository);
-    buffer.append(" branchOrVersionTag: ");
-    buffer.append(this._branchOrVersionTag);
-    buffer.append("]");
+    buffer.append( "[CvsProjectRole:" );
+    buffer.append( " NAME: " );
+    buffer.append( NAME );
+    buffer.append( " cvsRoot: " );
+    buffer.append( _cvsRoot );
+    buffer.append( " projectNameInRepository: " );
+    buffer.append( _projectNameInRepository );
+    buffer.append( " branchOrVersionTag: " );
+    buffer.append( _branchOrVersionTag );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */

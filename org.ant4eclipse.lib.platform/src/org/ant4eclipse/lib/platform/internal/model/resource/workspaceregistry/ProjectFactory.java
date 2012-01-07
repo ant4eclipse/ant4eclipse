@@ -34,8 +34,8 @@ public class ProjectFactory {
   private ValidatorRegistry             _validatorRegistry;
 
   public ProjectFactory() {
-    this._projectRoleIdentifierRegistry = A4ECore.instance().getRequiredService( ProjectRoleIdentifierRegistry.class );
-    this._validatorRegistry = new ValidatorRegistry();
+    _projectRoleIdentifierRegistry = A4ECore.instance().getRequiredService( ProjectRoleIdentifierRegistry.class );
+    _validatorRegistry = new ValidatorRegistry();
   }
 
   /**
@@ -47,22 +47,23 @@ public class ProjectFactory {
    *          The root directory of the project
    * @return a configured EclipseProject instance
    */
-  public EclipseProject readProjectFromWorkspace(WorkspaceImpl workspace, File projectDirectory) {
+  public EclipseProject readProjectFromWorkspace( WorkspaceImpl workspace, File projectDirectory ) {
 
-    A4ELogging.trace("ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath());
+    A4ELogging
+        .trace( "ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath() );
 
-    Assure.notNull("workspace", workspace);
-    Assure.isDirectory("projectDirectory", projectDirectory);
+    Assure.notNull( "workspace", workspace );
+    Assure.isDirectory( "projectDirectory", projectDirectory );
 
-    EclipseProjectImpl project = new EclipseProjectImpl(workspace, projectDirectory);
+    EclipseProjectImpl project = new EclipseProjectImpl( workspace, projectDirectory );
 
     // parses the project description
-    ProjectFileParser.parseProject(project);
+    ProjectFileParser.parseProject( project );
 
     // apply role specific information
-    this._projectRoleIdentifierRegistry.applyRoles(project);
+    _projectRoleIdentifierRegistry.applyRoles( project );
 
-    A4ELogging.trace("ProjectFactory: return '%s'", project);
+    A4ELogging.trace( "ProjectFactory: return '%s'", project );
     return project;
 
   }
@@ -74,10 +75,10 @@ public class ProjectFactory {
    * @param project
    *          The project which roles should be postprocessed. Not <code>null</code>.
    */
-  public void postProcessRoleSetup(EclipseProject project) {
-    A4ELogging.trace("ProjectFactory: postProcessRoleSetup(%s)", project.getSpecifiedName());
-    this._projectRoleIdentifierRegistry.postProcessRoles(project);
-    this._validatorRegistry.validate(project);
+  public void postProcessRoleSetup( EclipseProject project ) {
+    A4ELogging.trace( "ProjectFactory: postProcessRoleSetup(%s)", project.getSpecifiedName() );
+    _projectRoleIdentifierRegistry.postProcessRoles( project );
+    _validatorRegistry.validate( project );
   }
 
-}
+} /* ENDCLASS */

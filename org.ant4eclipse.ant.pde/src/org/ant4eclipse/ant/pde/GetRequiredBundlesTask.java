@@ -83,11 +83,11 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   public GetRequiredBundlesTask() {
 
     // // create the delegates
-    this._getPathComponent = new GetPathDelegate( this );
-    this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
+    _getPathComponent = new GetPathDelegate( this );
+    _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
 
-    this._bundleSpecifications = new ArrayList<BundleSpecification>();
-    this._resolvedBundleDescriptions = new HashSet<BundleDescription>();
+    _bundleSpecifications = new ArrayList<BundleSpecification>();
+    _resolvedBundleDescriptions = new HashSet<BundleDescription>();
   }
 
   /**
@@ -95,7 +95,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public final String getTargetPlatformId() {
-    return this._targetPlatformAwareDelegate.getTargetPlatformId();
+    return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
   /**
@@ -103,7 +103,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public final boolean isTargetPlatformIdSet() {
-    return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
   /**
@@ -111,7 +111,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public final void requireTargetPlatformIdSet() {
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -119,7 +119,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public final void setTargetPlatformId( String targetPlatformId ) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
+    _targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -127,7 +127,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public String getPlatformConfigurationId() {
-    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+    return _targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
 
   /**
@@ -135,7 +135,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public boolean isPlatformConfigurationIdSet() {
-    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+    return _targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
 
   /**
@@ -143,7 +143,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void setPlatformConfigurationId( String platformConfigurationId ) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
+    _targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
@@ -151,7 +151,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public String getPathId() {
-    return this._getPathComponent.getPathId();
+    return _getPathComponent.getPathId();
   }
 
   /**
@@ -159,7 +159,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public String getProperty() {
-    return this._getPathComponent.getProperty();
+    return _getPathComponent.getProperty();
   }
 
   /**
@@ -167,7 +167,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public File[] getResolvedPath() {
-    return this._getPathComponent.getResolvedPath();
+    return _getPathComponent.getResolvedPath();
   }
 
   /**
@@ -175,7 +175,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public boolean isPathIdSet() {
-    return this._getPathComponent.isPathIdSet();
+    return _getPathComponent.isPathIdSet();
   }
 
   /**
@@ -183,7 +183,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public boolean isPropertySet() {
-    return this._getPathComponent.isPropertySet();
+    return _getPathComponent.isPropertySet();
   }
 
   /**
@@ -191,7 +191,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public boolean isRelative() {
-    return this._getPathComponent.isRelative();
+    return _getPathComponent.isRelative();
   }
 
   /**
@@ -199,7 +199,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void populatePathId() {
-    this._getPathComponent.populatePathId();
+    _getPathComponent.populatePathId();
   }
 
   /**
@@ -207,7 +207,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void populateProperty() {
-    this._getPathComponent.populateProperty();
+    _getPathComponent.populateProperty();
   }
 
   /**
@@ -215,7 +215,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void requirePathIdOrPropertySet() {
-    this._getPathComponent.requirePathIdOrPropertySet();
+    _getPathComponent.requirePathIdOrPropertySet();
   }
 
   /**
@@ -223,7 +223,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void setPathId( String id ) {
-    this._getPathComponent.setPathId( id );
+    _getPathComponent.setPathId( id );
   }
 
   /**
@@ -231,7 +231,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void setProperty( String property ) {
-    this._getPathComponent.setProperty( property );
+    _getPathComponent.setProperty( property );
   }
 
   /**
@@ -239,7 +239,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void setRelative( boolean relative ) {
-    this._getPathComponent.setRelative( relative );
+    _getPathComponent.setRelative( relative );
   }
 
   /**
@@ -247,7 +247,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    */
   @Override
   public void setResolvedPath( File[] resolvedPath ) {
-    this._getPathComponent.setResolvedPath( resolvedPath );
+    _getPathComponent.setResolvedPath( resolvedPath );
   }
 
   /**
@@ -257,7 +257,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * @return the includeWorkspaceBundles
    */
   public boolean isIncludeWorkspaceBundles() {
-    return this._includeWorkspaceBundles;
+    return _includeWorkspaceBundles;
   }
 
   /**
@@ -268,7 +268,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    *          the includeWorkspaceBundles to set
    */
   public void setIncludeWorkspaceBundles( boolean includeWorkspaceBundles ) {
-    this._includeWorkspaceBundles = includeWorkspaceBundles;
+    _includeWorkspaceBundles = includeWorkspaceBundles;
   }
 
   /**
@@ -279,7 +279,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * @return the bundle symbolic name
    */
   public String getBundleSymbolicName() {
-    return this._bundleSymbolicName;
+    return _bundleSymbolicName;
   }
 
   /**
@@ -291,7 +291,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    *          the bundleSymbolicName to set
    */
   public void setBundleSymbolicName( String bundleSymbolicName ) {
-    this._bundleSymbolicName = bundleSymbolicName;
+    _bundleSymbolicName = bundleSymbolicName;
   }
 
   /**
@@ -302,7 +302,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * @return the bundleVersion
    */
   public String getBundleVersion() {
-    return this._bundleVersion;
+    return _bundleVersion;
   }
 
   /**
@@ -314,7 +314,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    *          the bundleVersion to set
    */
   public void setBundleVersion( String bundleVersion ) {
-    this._bundleVersion = bundleVersion;
+    _bundleVersion = bundleVersion;
   }
 
   /**
@@ -343,7 +343,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     }
 
     // add specification
-    this._bundleSpecifications.add( specification );
+    _bundleSpecifications.add( specification );
   }
 
   /**
@@ -364,19 +364,19 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
   protected void doExecute() {
 
     // step 1: clear the result list
-    this._resolvedBundleDescriptions.clear();
+    _resolvedBundleDescriptions.clear();
 
     // step 2: add the bundle specification attribute to the the list of
     // (root) bundle specifications
-    if( Utilities.hasText( this._bundleSymbolicName ) ) {
-      this._bundleSpecifications.add( new BundleSpecification( this._bundleSymbolicName, this._bundleVersion ) );
+    if( Utilities.hasText( _bundleSymbolicName ) ) {
+      _bundleSpecifications.add( new BundleSpecification( _bundleSymbolicName, _bundleVersion ) );
     }
 
     // step 3: resolve required bundles for all bundle specifications
-    for( BundleSpecification bundleSpecification : this._bundleSpecifications ) {
+    for( BundleSpecification bundleSpecification : _bundleSpecifications ) {
 
       // get the resolved bundle description from the target platform
-      BundleDescription bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
+      BundleDescription bundleDescription = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
           .getResolvedBundle( bundleSpecification.getSymbolicName(), bundleSpecification.getVersion() );
 
       // if not resolved bundle description is found, throw an exception
@@ -392,18 +392,18 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     // step 4: resolve the path
     List<File> result = new ArrayList<File>();
 
-    for( BundleDescription bundleDescription : this._resolvedBundleDescriptions ) {
+    for( BundleDescription bundleDescription : _resolvedBundleDescriptions ) {
 
       // don't add the bundle if bundle source is an eclipse project and
       // _includeWorkspaceBundles == false
       BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
-      if( this._includeWorkspaceBundles || !(bundleSource.isEclipseProject()) ) {
+      if( _includeWorkspaceBundles || !(bundleSource.isEclipseProject()) ) {
 
         // get the layout resolver
         BundleLayoutResolver layoutResolver = BundleDependenciesResolver.getBundleLayoutResolver( bundleDescription );
 
         // add the files
-        if( this._resolveBundleClasspath ) {
+        if( _resolveBundleClasspath ) {
           File[] files = layoutResolver.resolveBundleClasspathEntries();
           result.addAll( Arrays.asList( files ) );
         } else {
@@ -440,13 +440,13 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
     // return if the description already has been resolved
     // TODO: maybe we have to check if the bundle description has attached fragments (in case it is indirectly
     // referenced?)
-    if( this._resolvedBundleDescriptions.contains( bundleDescription ) /*
+    if( _resolvedBundleDescriptions.contains( bundleDescription ) /*
                                                                         * ||
                                                                         * _excludedBundles.contains(bundleDescription)
                                                                         */) {
       return;
     } else {
-      this._resolvedBundleDescriptions.add( bundleDescription );
+      _resolvedBundleDescriptions.add( bundleDescription );
     }
 
     // step 2: resolve bundle dependencies
@@ -485,13 +485,13 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
 
     // if attribute 'bundleSymbolicName' is set, no 'bundle' element is
     // allowed
-    if( Utilities.hasText( this._bundleSymbolicName ) && !this._bundleSpecifications.isEmpty() ) {
+    if( Utilities.hasText( _bundleSymbolicName ) && !_bundleSpecifications.isEmpty() ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_X_OR_ELEMENT_Y, "bundleSymbolicName", "bundle" );
     }
 
     // if attribute 'bundleVersion' is set, 'bundleSymbolicName' must be
     // specified
-    if( !Utilities.hasText( this._bundleSymbolicName ) && Utilities.hasText( this._bundleVersion ) ) {
+    if( !Utilities.hasText( _bundleSymbolicName ) && Utilities.hasText( _bundleVersion ) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_X_WITHOUT_ATTRIBUTE_Y, "bundleVersion",
           "bundleSymbolicName" );
     }
@@ -532,8 +532,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
      *          the version
      */
     public BundleSpecification( String symbolicName, String version ) {
-      this._symbolicName = symbolicName;
-      this._version = version;
+      _symbolicName = symbolicName;
+      _version = version;
     }
 
     /**
@@ -544,7 +544,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
      * @return the symbolicName
      */
     public String getSymbolicName() {
-      return this._symbolicName;
+      return _symbolicName;
     }
 
     /**
@@ -556,7 +556,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
      *          the symbolicName to set
      */
     public void setSymbolicName( String symbolicName ) {
-      this._symbolicName = symbolicName;
+      _symbolicName = symbolicName;
     }
 
     /**
@@ -567,7 +567,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
      * @return the version
      */
     public Version getVersion() {
-      return this._version != null ? new Version( this._version ) : null;
+      return _version != null ? new Version( _version ) : null;
     }
 
     /**
@@ -579,7 +579,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
      *          the version to set
      */
     public void setVersion( String version ) {
-      this._version = version;
+      _version = version;
     }
 
     /**
@@ -590,7 +590,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
      * @return <code>true</code> if the bundle version is set, <code>false</code> otherwise.
      */
     public boolean hasBundleVersion() {
-      return this._version != null;
+      return _version != null;
     }
   }
   

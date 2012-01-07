@@ -37,7 +37,7 @@ public class HasNature extends AbstractProjectBasedCondition {
 
     try {
       EclipseProject project = getEclipseProject();
-      return project.hasNature( this._nature );
+      return project.hasNature( _nature );
     } catch( BuildException e ) {
       throw e;
     } catch( Exception e ) {
@@ -54,7 +54,7 @@ public class HasNature extends AbstractProjectBasedCondition {
    *          the nature to set.
    */
   public void setNature( String nature ) {
-    this._nature = nature;
+    _nature = nature;
   }
 
   /**
@@ -65,7 +65,7 @@ public class HasNature extends AbstractProjectBasedCondition {
    * @return <code>true</code> if the nature has been set.
    */
   public boolean isNatureSet() {
-    return this._nature != null;
+    return _nature != null;
   }
 
   /**

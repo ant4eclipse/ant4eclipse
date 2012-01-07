@@ -54,11 +54,11 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    *          <code>true</code> <=> Use the python dltk implementation.
    */
   public AbstractWorkspaceBasedTest( boolean dltk ) {
-    this._dltk = dltk;
-    this._disposeonexit = true;
+    _dltk = dltk;
+    _disposeonexit = true;
     String val = Utilities.cleanup( System.getProperty( PROP_DISPOSEONEXIT ) );
     if( val != null ) {
-      this._disposeonexit = !"false".equals( val );
+      _disposeonexit = !"false".equals( val );
     }
   }
 
@@ -180,7 +180,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Before
   public void setup() {
-    this._projectsuite = new ProjectSuite( this, this._dltk );
+    _projectsuite = new ProjectSuite( this, _dltk );
   }
 
   /**
@@ -188,11 +188,11 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @After
   public void teardown() {
-    if( this._disposeonexit ) {
+    if( _disposeonexit ) {
       dispose();
     }
-    this._dltk = false;
-    this._projectsuite = null;
+    _dltk = false;
+    _projectsuite = null;
   }
 
   /**
@@ -200,7 +200,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Override
   public ProjectDescription createEmptyProject( URL script, int projectsettings ) {
-    return this._projectsuite.createEmptyProject( script, projectsettings );
+    return _projectsuite.createEmptyProject( script, projectsettings );
   }
 
   /**
@@ -208,7 +208,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Override
   public ProjectDescription createComplexProject( URL script, int projectsettings ) {
-    return this._projectsuite.createComplexProject( script, projectsettings );
+    return _projectsuite.createComplexProject( script, projectsettings );
   }
 
   /**
@@ -216,7 +216,7 @@ public abstract class AbstractWorkspaceBasedTest extends WorkspaceBuilder implem
    */
   @Override
   public ProjectDescription createCyclicProject( URL script, int projectsettings ) {
-    return this._projectsuite.createCyclicProject( script, projectsettings );
+    return _projectsuite.createCyclicProject( script, projectsettings );
   }
 
 } /* ENDCLASS */

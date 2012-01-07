@@ -26,7 +26,7 @@ import java.io.File;
 public class ExpansionDirectory {
 
   /** the default expansion directory **/
-  public static final String DEFAULT_EXPANSION_DIRECTORY       = System.getProperty("java.io.tmpdir")
+  public static final String DEFAULT_EXPANSION_DIRECTORY       = System.getProperty( "java.io.tmpdir" )
                                                                    + File.separatorChar + "a4e_expand_dir";
 
   /** the name of the expansion directory property **/
@@ -45,26 +45,26 @@ public class ExpansionDirectory {
   public static synchronized File getExpansionDir() {
 
     // if the expansion directory is not set, create it...
-    if (expansionDir == null) {
+    if( expansionDir == null ) {
 
       // get the directory name
-      String expansionDirectory = System.getProperty(ExpansionDirectory.EXPANSION_DIRECTORY_PROPERTY_NAME,
-          ExpansionDirectory.DEFAULT_EXPANSION_DIRECTORY);
+      String expansionDirectory = System.getProperty( ExpansionDirectory.EXPANSION_DIRECTORY_PROPERTY_NAME,
+          ExpansionDirectory.DEFAULT_EXPANSION_DIRECTORY );
 
       // create the directory
-      expansionDir = new File(expansionDirectory);
+      expansionDir = new File( expansionDirectory );
 
       // delete expansion directory if is exists. This is necessary to prevent invalid bundle content if
       // the same version number is used in several builds
-      if (expansionDir.exists()) {
-        Utilities.delete(expansionDir);
+      if( expansionDir.exists() ) {
+        Utilities.delete( expansionDir );
       }
 
       // set delete on exit
       expansionDir.deleteOnExit();
 
       // create if not exists
-      if (!expansionDir.exists()) {
+      if( !expansionDir.exists() ) {
         expansionDir.mkdirs();
       }
     }
@@ -72,4 +72,5 @@ public class ExpansionDirectory {
     // return the expansion directory
     return expansionDir;
   }
-}
+  
+} /* ENDCLASS */

@@ -12,5 +12,4 @@
 package org.ant4eclipse.testframework;
 
 public class ExplodedBundleBuilder {
-
-}
+} /* ENDCLASS */

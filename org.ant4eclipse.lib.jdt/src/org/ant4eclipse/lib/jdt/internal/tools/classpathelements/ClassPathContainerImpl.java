@@ -41,11 +41,11 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    * @param pathEntries
    *          the path entries
    */
-  public ClassPathContainerImpl(String name, File[] pathEntries) {
+  public ClassPathContainerImpl( String name, File[] pathEntries ) {
     super();
 
-    this._name = name;
-    this._pathEntries = pathEntries;
+    _name = name;
+    _pathEntries = pathEntries;
   }
 
   /**
@@ -53,7 +53,7 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    */
   @Override
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -61,34 +61,34 @@ public class ClassPathContainerImpl implements ClassPathContainer {
    */
   @Override
   public File[] getPathEntries() {
-    return this._pathEntries;
+    return _pathEntries;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     ClassPathContainerImpl other = (ClassPathContainerImpl) o;
-    if (this._name == null) {
-      if (other._name != null) {
+    if( _name == null ) {
+      if( other._name != null ) {
         return false;
       }
     } else {
-      if (!this._name.equals(other._name)) {
+      if( !_name.equals( other._name ) ) {
         return false;
       }
     }
-    return Arrays.equals(this._pathEntries, other._pathEntries);
+    return Arrays.equals( _pathEntries, other._pathEntries );
   }
 
   /**
@@ -97,9 +97,9 @@ public class ClassPathContainerImpl implements ClassPathContainer {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._name == null ? 0 : this._name.hashCode());
-    for (int i0 = 0; this._pathEntries != null && i0 < this._pathEntries.length; i0++) {
-      hashCode = 31 * hashCode + (this._pathEntries == null ? 0 : this._pathEntries[i0].hashCode());
+    hashCode = 31 * hashCode + (_name == null ? 0 : _name.hashCode());
+    for( int i0 = 0; _pathEntries != null && i0 < _pathEntries.length; i0++ ) {
+      hashCode = 31 * hashCode + (_pathEntries == null ? 0 : _pathEntries[i0].hashCode());
     }
     return hashCode;
   }
@@ -110,16 +110,17 @@ public class ClassPathContainerImpl implements ClassPathContainer {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ClassPathContainerImpl:");
-    buffer.append(" _name: ");
-    buffer.append(this._name);
-    buffer.append(" { ");
-    for (int i0 = 0; this._pathEntries != null && i0 < this._pathEntries.length; i0++) {
-      buffer.append(" _pathEntries[" + i0 + "]: ");
-      buffer.append(this._pathEntries[i0]);
+    buffer.append( "[ClassPathContainerImpl:" );
+    buffer.append( " _name: " );
+    buffer.append( _name );
+    buffer.append( " { " );
+    for( int i0 = 0; _pathEntries != null && i0 < _pathEntries.length; i0++ ) {
+      buffer.append( " _pathEntries[" + i0 + "]: " );
+      buffer.append( _pathEntries[i0] );
     }
-    buffer.append(" } ");
-    buffer.append("]");
+    buffer.append( " } " );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

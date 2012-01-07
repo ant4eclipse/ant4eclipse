@@ -40,21 +40,21 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    * @param roleclasses
    *          The types of role supported by this validator. Not <code>null</code>.
    */
-  public AbstractProjectValidator(String ident, Class<?>... roleclasses) {
-    Assure.nonEmpty("ident", ident);
-    Assure.notNull("roleclasses", roleclasses);
+  public AbstractProjectValidator( String ident, Class<?> ... roleclasses ) {
+    Assure.nonEmpty( "ident", ident );
+    Assure.notNull( "roleclasses", roleclasses );
 
-    this._types = roleclasses;
-    this._key = ident;
+    _types = roleclasses;
+    _key = ident;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean canValidate(ProjectRole role) {
-    for (Class<?> type : this._types) {
-      if (type.isAssignableFrom(role.getClass())) {
+  public boolean canValidate( ProjectRole role ) {
+    for( Class<?> type : _types ) {
+      if( type.isAssignableFrom( role.getClass() ) ) {
         return true;
       }
     }
@@ -78,8 +78,8 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    * @param message
    *          A validation message. Neither <code>null</code> nor empty.
    */
-  protected void addMessage(EclipseProject project, A4ELevel level, String message) {
-    A4ELogging.log(level, "Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
+  protected void addMessage( EclipseProject project, A4ELevel level, String message ) {
+    A4ELogging.log( level, "Project '%s': %s > %s", project.getSpecifiedName(), _key, message );
   }
 
   /**
@@ -92,8 +92,8 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    * @param message
    *          A warning message. Neither <code>null</code> nor empty.
    */
-  protected void addWarning(EclipseProject project, String message) {
-    A4ELogging.warn("Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
+  protected void addWarning( EclipseProject project, String message ) {
+    A4ELogging.warn( "Project '%s': %s > %s", project.getSpecifiedName(), _key, message );
   }
 
   /**
@@ -106,10 +106,10 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    * @param message
    *          An error message. Neither <code>null</code> nor empty.
    */
-  protected void addError(EclipseProject project, String message) {
-    A4ELogging.error("Project '%s': %s > %s", project.getSpecifiedName(), this._key, message);
+  protected void addError( EclipseProject project, String message ) {
+    A4ELogging.error( "Project '%s': %s > %s", project.getSpecifiedName(), _key, message );
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -124,5 +124,5 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

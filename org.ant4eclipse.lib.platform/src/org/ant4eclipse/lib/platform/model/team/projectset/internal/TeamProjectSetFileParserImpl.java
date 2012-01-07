@@ -41,14 +41,13 @@ import java.util.Map;
  */
 public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
 
-  private Map<String, TeamProjectSetFactory>   factorymap;
+  private Map<String,TeamProjectSetFactory> factorymap;
 
   /**
-   * Initializes this parser implementation which supports to deal with varioues projectset
-   * implementations.
+   * Initializes this parser implementation which supports to deal with varioues projectset implementations.
    */
   public TeamProjectSetFileParserImpl() {
-    factorymap = new Hashtable<String, TeamProjectSetFactory>();
+    factorymap = new Hashtable<String,TeamProjectSetFactory>();
     List<TeamProjectSetFactory> factories = A4ECore.instance().getServices( TeamProjectSetFactory.class );
     for( TeamProjectSetFactory factory : factories ) {
       String[] providerids = factory.getProviderIDs();
@@ -58,51 +57,51 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
       }
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public TeamProjectSet parseTeamProjectSetFile(File projectSetFile) {
-    Assure.isFile("projectSetFile", projectSetFile);
+  public TeamProjectSet parseTeamProjectSetFile( File projectSetFile ) {
+    Assure.isFile( "projectSetFile", projectSetFile );
 
     XQueryHandler queryhandler2 = new XQueryHandler();
 
     // queries for the 'provider-id' attribute
-    XQuery providerIdQuery = queryhandler2.createQuery("/psf/provider/@id");
+    XQuery providerIdQuery = queryhandler2.createQuery( "/psf/provider/@id" );
     // query for the 'reference' elements
-    XQuery referenceQuery = queryhandler2.createQuery("/psf/provider/project/@reference");
+    XQuery referenceQuery = queryhandler2.createQuery( "/psf/provider/project/@reference" );
 
     // parse the file
-    XQueryHandler.queryFile(projectSetFile, queryhandler2);
+    XQueryHandler.queryFile( projectSetFile, queryhandler2 );
 
     // determine team project set-provider
     String providerId = providerIdQuery.getSingleResult();
 
     // get the factory for this provider
-    TeamProjectSetFactory projectSetFactory = getFactoryForProvider(providerId);
-    TeamProjectSet projectSet = projectSetFactory.createTeamProjectSet(projectSetFile.getName());
+    TeamProjectSetFactory projectSetFactory = getFactoryForProvider( providerId );
+    TeamProjectSet projectSet = projectSetFactory.createTeamProjectSet( projectSetFile.getName() );
 
     // retrieve the result
     String[] projects = referenceQuery.getResult();
 
     // create TeamProjectDescriptions for each project
-    for (String project : projects) {
-      projectSetFactory.addTeamProjectDescription(projectSet, project);
+    for( String project : projects ) {
+      projectSetFactory.addTeamProjectDescription( projectSet, project );
     }
 
     return projectSet;
 
   }
 
-  public TeamProjectSetFactory getFactoryForProvider(String providerId) {
-    Assure.notNull("providerId", providerId);
+  public TeamProjectSetFactory getFactoryForProvider( String providerId ) {
+    Assure.notNull( "providerId", providerId );
 
-    if (!this.factorymap.containsKey(providerId)) {
-      throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId);
+    if( !factorymap.containsKey( providerId ) ) {
+      throw new Ant4EclipseException( PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId );
     }
 
-    return this.factorymap.get(providerId);
+    return factorymap.get( providerId );
   }
 
   /**
@@ -119,5 +118,5 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

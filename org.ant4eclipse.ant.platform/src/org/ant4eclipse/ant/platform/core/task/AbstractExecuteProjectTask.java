@@ -51,9 +51,9 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    */
   public AbstractExecuteProjectTask( String prefix ) {
     Assure.notNull( "prefix", prefix );
-    this._platformExecutorValuesProvider = new PlatformExecutorValuesProvider( this );
+    _platformExecutorValuesProvider = new PlatformExecutorValuesProvider( this );
     // create the delegates
-    this._macroExecutionDelegate = new MacroExecutionDelegate<String>( this, prefix );
+    _macroExecutionDelegate = new MacroExecutionDelegate<String>( this, prefix );
   }
 
   /**
@@ -63,7 +63,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    * @return the platformExecutorValuesProvider
    */
   public PlatformExecutorValuesProvider getPlatformExecutorValuesProvider() {
-    return this._platformExecutorValuesProvider;
+    return _platformExecutorValuesProvider;
   }
 
   /**
@@ -71,7 +71,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    */
   @Override
   public final NestedSequential createScopedMacroDefinition( String scope ) {
-    return this._macroExecutionDelegate.createScopedMacroDefinition( scope );
+    return _macroExecutionDelegate.createScopedMacroDefinition( scope );
   }
 
   /**
@@ -79,7 +79,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    */
   @Override
   public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
-    this._macroExecutionDelegate.executeMacroInstance( macroDef, provider );
+    _macroExecutionDelegate.executeMacroInstance( macroDef, provider );
   }
 
   /**
@@ -87,7 +87,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    */
   @Override
   public final List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
-    return this._macroExecutionDelegate.getScopedMacroDefinitions();
+    return _macroExecutionDelegate.getScopedMacroDefinitions();
   }
 
   /**
@@ -95,7 +95,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    */
   @Override
   public final String getPrefix() {
-    return this._macroExecutionDelegate.getPrefix();
+    return _macroExecutionDelegate.getPrefix();
   }
 
   /**
@@ -103,7 +103,7 @@ public abstract class AbstractExecuteProjectTask extends AbstractProjectPathTask
    */
   @Override
   public final void setPrefix( String prefix ) {
-    this._macroExecutionDelegate.setPrefix( prefix );
+    _macroExecutionDelegate.setPrefix( prefix );
   }
   
 } /* ENDCLASS */

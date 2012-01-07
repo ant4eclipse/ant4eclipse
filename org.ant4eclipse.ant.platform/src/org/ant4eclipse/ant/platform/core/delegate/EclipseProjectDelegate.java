@@ -62,7 +62,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    */
   @Override
   public final void setProjectName( String projectName ) {
-    this._projectName = projectName;
+    _projectName = projectName;
   }
 
   /**
@@ -70,7 +70,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    */
   @Override
   public final boolean isProjectNameSet() {
-    return this._projectName != null;
+    return _projectName != null;
   }
 
   /**
@@ -91,16 +91,16 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
   public EclipseProject getEclipseProject() throws BuildException {
 
     // get eclipse project if it is not already set
-    if( this._eclipseProject == null ) {
-      if( getWorkspace().hasProject( this._projectName ) ) {
-        this._eclipseProject = getWorkspace().getProject( this._projectName );
+    if( _eclipseProject == null ) {
+      if( getWorkspace().hasProject( _projectName ) ) {
+        _eclipseProject = getWorkspace().getProject( _projectName );
       } else {
-        throw new Ant4EclipseException( PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, this._projectName );
+        throw new Ant4EclipseException( PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, _projectName );
       }
     }
 
     // return the eclipse project
-    return this._eclipseProject;
+    return _eclipseProject;
   }
 
   /**
@@ -113,7 +113,7 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
     if( !getEclipseProject().hasRole( projectRoleClass ) ) {
 
       // throw exception
-      throw new Ant4EclipseException( PlatformExceptionCode.MISSING_PROJECT_ROLE, this._projectName,
+      throw new Ant4EclipseException( PlatformExceptionCode.MISSING_PROJECT_ROLE, _projectName,
           projectRoleClass.getName() );
     }
   }

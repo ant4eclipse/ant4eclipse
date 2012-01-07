@@ -30,7 +30,7 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    */
   @Override
   public void setUp() {
-    this._testWorkspace = new TestDirectory();
+    _testWorkspace = new TestDirectory();
   }
 
   /**
@@ -39,8 +39,8 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
   @Override
   protected void tearDown() throws Exception {
     super.tearDown();
-    this._testWorkspace.dispose();
-    this._testWorkspace = null;
+    _testWorkspace.dispose();
+    _testWorkspace = null;
   }
 
   /**
@@ -85,9 +85,9 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
     String qualifiedBuildFileName = getProjectBuildFile( unqualifiedBuildFileName );
     StringBuffer buffer = Utilities.readTextContent( "/" + qualifiedBuildFileName, Utilities.ENCODING, true );
     String buildFileContent = buffer.toString();
-    File buildFile = this._testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
+    File buildFile = _testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
     configureProject( buildFile.getAbsolutePath() );
-    getProject().setProperty( "workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath() );
+    getProject().setProperty( "workspaceDir", _testWorkspace.getRootDir().getAbsolutePath() );
   }
 
   /**
@@ -96,7 +96,7 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    * @return
    */
   protected TestDirectory getTestDirectory() {
-    return this._testWorkspace;
+    return _testWorkspace;
   }
 
   /**
@@ -106,7 +106,7 @@ public abstract class AbstractTestDirectoryBasedBuildFileTest extends BuildFileT
    * @return
    */
   protected File getTestDirectoryRootDir() {
-    return this._testWorkspace.getRootDir();
+    return _testWorkspace.getRootDir();
   }
 
   /**

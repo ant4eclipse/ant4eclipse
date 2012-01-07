@@ -40,12 +40,12 @@ public class ClassPathVariableImpl implements ClassPathVariable {
    * @param name
    * @param path
    */
-  public ClassPathVariableImpl(String name, File path) {
-    Assure.nonEmpty("name", name);
-    Assure.notNull("path", path);
+  public ClassPathVariableImpl( String name, File path ) {
+    Assure.nonEmpty( "name", name );
+    Assure.notNull( "path", path );
 
-    this._name = name;
-    this._path = Utilities.getCanonicalFile(path);
+    _name = name;
+    _path = Utilities.getCanonicalFile( path );
   }
 
   /**
@@ -53,7 +53,7 @@ public class ClassPathVariableImpl implements ClassPathVariable {
    */
   @Override
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -61,37 +61,37 @@ public class ClassPathVariableImpl implements ClassPathVariable {
    */
   @Override
   public File getPath() {
-    return this._path;
+    return _path;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     ClassPathVariableImpl castedObj = (ClassPathVariableImpl) o;
-    if (this._name == null) {
-      if (castedObj._name != null) {
+    if( _name == null ) {
+      if( castedObj._name != null ) {
         return false;
       }
     } else {
-      if (!this._name.equals(castedObj._name)) {
+      if( !_name.equals( castedObj._name ) ) {
         return false;
       }
     }
-    if (this._path == null) {
+    if( _path == null ) {
       return castedObj._path == null;
     } else {
-      return this._path.equals(castedObj._path);
+      return _path.equals( castedObj._path );
     }
   }
 
@@ -101,8 +101,8 @@ public class ClassPathVariableImpl implements ClassPathVariable {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._name == null ? 0 : this._name.hashCode());
-    hashCode = 31 * hashCode + (this._path == null ? 0 : this._path.hashCode());
+    hashCode = 31 * hashCode + (_name == null ? 0 : _name.hashCode());
+    hashCode = 31 * hashCode + (_path == null ? 0 : _path.hashCode());
     return hashCode;
   }
 
@@ -112,13 +112,13 @@ public class ClassPathVariableImpl implements ClassPathVariable {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ClasspathVariableImpl:");
-    buffer.append(" _name: ");
-    buffer.append(this._name);
-    buffer.append(" _path: ");
-    buffer.append(this._path);
-    buffer.append("]");
+    buffer.append( "[ClasspathVariableImpl:" );
+    buffer.append( " _name: " );
+    buffer.append( _name );
+    buffer.append( " _path: " );
+    buffer.append( _path );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */

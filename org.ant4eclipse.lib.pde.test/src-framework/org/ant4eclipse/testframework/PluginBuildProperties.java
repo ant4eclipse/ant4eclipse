@@ -19,9 +19,9 @@ public class PluginBuildProperties {
 
   private List<Library> _libraries = new ArrayList<Library>();
 
-  public Library withLibrary(String name) {
-    Library library = new Library(name);
-    this._libraries.add(library);
+  public Library withLibrary( String name ) {
+    Library library = new Library( name );
+    _libraries.add( library );
     return library;
   }
 
@@ -32,23 +32,23 @@ public class PluginBuildProperties {
   public String toString() {
     StringBuffer result = new StringBuffer();
 
-    for (Library library : this._libraries) {
-      result.append(library);
+    for( Library library : _libraries ) {
+      result.append( library );
     }
     // bin.includes = META-INF/,\
     // .,\
 
-    result.append("bin.includes = ");
-    result.append("META-INF/");
-    if (!this._libraries.isEmpty()) {
-      result.append(",\\\n");
+    result.append( "bin.includes = " );
+    result.append( "META-INF/" );
+    if( !_libraries.isEmpty() ) {
+      result.append( ",\\\n" );
     }
 
-    for (Iterator<Library> iterator = this._libraries.iterator(); iterator.hasNext();) {
+    for( Iterator<Library> iterator = _libraries.iterator(); iterator.hasNext(); ) {
       Library library = iterator.next();
-      result.append(library.getName());
-      if (iterator.hasNext()) {
-        result.append(",\\\n");
+      result.append( library.getName() );
+      if( iterator.hasNext() ) {
+        result.append( ",\\\n" );
       }
     }
 
@@ -64,10 +64,10 @@ public class PluginBuildProperties {
 
     private List<String> _outputList;
 
-    public Library(String name) {
-      this._name = name;
-      this._sourceList = new ArrayList<String>();
-      this._outputList = new ArrayList<String>();
+    public Library( String name ) {
+      _name = name;
+      _sourceList = new ArrayList<String>();
+      _outputList = new ArrayList<String>();
     }
 
     /**
@@ -77,7 +77,7 @@ public class PluginBuildProperties {
      * @return the name
      */
     public String getName() {
-      return this._name;
+      return _name;
     }
 
     /**
@@ -87,13 +87,13 @@ public class PluginBuildProperties {
      * @param string
      * @return
      */
-    public Library withSource(String source) {
-      this._sourceList.add(source);
+    public Library withSource( String source ) {
+      _sourceList.add( source );
       return this;
     }
 
-    public Library withOutput(String source) {
-      this._outputList.add(source);
+    public Library withOutput( String source ) {
+      _outputList.add( source );
       return this;
     }
 
@@ -113,36 +113,37 @@ public class PluginBuildProperties {
 
       StringBuffer result = new StringBuffer();
 
-      if (!this._sourceList.isEmpty()) {
-        result.append("source.");
-        result.append(this._name);
-        result.append(" = ");
-        for (Iterator<String> iterator = this._sourceList.iterator(); iterator.hasNext();) {
+      if( !_sourceList.isEmpty() ) {
+        result.append( "source." );
+        result.append( _name );
+        result.append( " = " );
+        for( Iterator<String> iterator = _sourceList.iterator(); iterator.hasNext(); ) {
           String source = iterator.next();
-          result.append(source);
-          result.append("/");
-          if (iterator.hasNext()) {
-            result.append(",\\");
+          result.append( source );
+          result.append( "/" );
+          if( iterator.hasNext() ) {
+            result.append( ",\\" );
           }
-          result.append("\n");
+          result.append( "\n" );
         }
       }
 
-      if (!this._outputList.isEmpty()) {
-        result.append("output.");
-        result.append(this._name);
-        result.append(" = ");
-        for (Iterator<String> iterator = this._outputList.iterator(); iterator.hasNext();) {
+      if( !_outputList.isEmpty() ) {
+        result.append( "output." );
+        result.append( _name );
+        result.append( " = " );
+        for( Iterator<String> iterator = _outputList.iterator(); iterator.hasNext(); ) {
           String source = iterator.next();
-          result.append(source);
-          result.append("/");
-          if (iterator.hasNext()) {
-            result.append(",\\");
+          result.append( source );
+          result.append( "/" );
+          if( iterator.hasNext() ) {
+            result.append( ",\\" );
           }
-          result.append("\n");
+          result.append( "\n" );
         }
       }
       return result.toString();
     }
   }
-}
+  
+} /* ENDCLASS */

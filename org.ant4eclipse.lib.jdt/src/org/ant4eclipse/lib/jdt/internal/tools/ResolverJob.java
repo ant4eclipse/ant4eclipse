@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class ResolverJob {
+public class ResolverJob {
 
   /** the root eclipse project */
   private EclipseProject                      _rootProject;
@@ -44,48 +44,49 @@ public final class ResolverJob {
    * @param relative
    * @param runtime
    */
-  public ResolverJob(EclipseProject rootProject, Workspace workspace, boolean relative, boolean runtime,
-      List<JdtClasspathContainerArgument> classpathContainerArguments) {
+  public ResolverJob( EclipseProject rootProject, Workspace workspace, boolean relative, boolean runtime,
+      List<JdtClasspathContainerArgument> classpathContainerArguments ) {
 
-    this._rootProject = rootProject;
-    this._workspace = workspace;
-    this._relative = relative;
-    this._runtimeClasspath = runtime;
-    this._classpathContainerArguments = classpathContainerArguments;
+    _rootProject = rootProject;
+    _workspace = workspace;
+    _relative = relative;
+    _runtimeClasspath = runtime;
+    _classpathContainerArguments = classpathContainerArguments;
   }
 
   /**
    * @return the rootProject
    */
   public final EclipseProject getRootProject() {
-    return this._rootProject;
+    return _rootProject;
   }
 
   /**
    * @return the workspace
    */
   public final Workspace getWorkspace() {
-    return this._workspace;
+    return _workspace;
   }
 
   /**
    * @return the relative
    */
   public final boolean isRelative() {
-    return this._relative;
+    return _relative;
   }
 
   /**
    * @return the runtimeClasspath
    */
   public final boolean isRuntimeClasspath() {
-    return this._runtimeClasspath;
+    return _runtimeClasspath;
   }
 
   /**
    * @return the properties
    */
   public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
-    return this._classpathContainerArguments;
+    return _classpathContainerArguments;
   }
-}
+  
+} /* ENDCLASS */

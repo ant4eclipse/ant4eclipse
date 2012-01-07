@@ -21,7 +21,8 @@ import java.io.File;
  */
 public class ResourcesPreferences {
 
-  public String getEncoding(File file) {
+  public String getEncoding( File file ) {
     return null;
   }
-}
+  
+} /* ENDCLASS */

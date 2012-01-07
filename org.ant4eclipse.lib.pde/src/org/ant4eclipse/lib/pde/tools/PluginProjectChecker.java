@@ -59,7 +59,7 @@ public class PluginProjectChecker {
                                                                                   + "- The build properties contains a library '%3$s' that doesn't contain a source directory. To fix this issue, please add a source directory to the library's source list 'source.%3$s'.\n";
 
   /** the LIBRARY_WITHOUT_OUTPUT_DIRECTORY */
-  @SuppressWarnings("unused")
+  @SuppressWarnings( "unused" )
   private static final String LIBRARY_WITHOUT_OUTPUT_DIRECTORY                = ERRONEOUS_PROJECT_DEFINITION_MSG
                                                                                   + "- Inconsistent build properties file '%2$s'.\n"
                                                                                   + "- The build properties contains a library '%3$s' that doesn't contain a output directory. To fix this issue, please add a output directory to the library's output list 'output.%3$s'.\n";
@@ -80,13 +80,13 @@ public class PluginProjectChecker {
    * @param eclipseProject
    *          the eclipse project to check.
    */
-  public PluginProjectChecker(EclipseProject eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
+  public PluginProjectChecker( EclipseProject eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
 
-    this._eclipseProject = eclipseProject;
-    this._issues = new ArrayList<Issue>();
+    _eclipseProject = eclipseProject;
+    _issues = new ArrayList<Issue>();
 
-    this._projectName = this._eclipseProject.getSpecifiedName();
+    _projectName = _eclipseProject.getSpecifiedName();
   }
 
   /**
@@ -99,65 +99,65 @@ public class PluginProjectChecker {
   public List<Issue> checkPluginProject() {
 
     // does the project has the PluginProjectRole?
-    final boolean hasPluginProjectRole = this._eclipseProject.hasRole(PluginProjectRole.class);
-    errorAssert(hasPluginProjectRole, "Project '%s' must have role 'PluginProjectRole'.", this._projectName);
+    final boolean hasPluginProjectRole = _eclipseProject.hasRole( PluginProjectRole.class );
+    errorAssert( hasPluginProjectRole, "Project '%s' must have role 'PluginProjectRole'.", _projectName );
 
-    if (hasPluginProjectRole) {
+    if( hasPluginProjectRole ) {
       // it only makes sense to validate more, if the current project is a plug-in project
 
-      PluginProjectRole pluginProjectRole = this._eclipseProject.getRole(PluginProjectRole.class);
+      PluginProjectRole pluginProjectRole = _eclipseProject.getRole( PluginProjectRole.class );
 
       // make sure we have a build.properties-file
       final boolean hasBuildProperties = pluginProjectRole.hasBuildProperties();
-      errorAssert(hasBuildProperties, "Project '%s' must have a 'build.properties' file in it's root folder",
-          this._projectName);
-      if (hasBuildProperties) {
+      errorAssert( hasBuildProperties, "Project '%s' must have a 'build.properties' file in it's root folder",
+          _projectName );
+      if( hasBuildProperties ) {
 
         final PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
 
-        validateManifestRelatedEntries(buildProperties);
-        validateLibrariesRelatedEntries(buildProperties);
+        validateManifestRelatedEntries( buildProperties );
+        validateLibrariesRelatedEntries( buildProperties );
       }
     }
 
     // return the issue list
-    return this._issues;
+    return _issues;
   }
 
   /**
    * 
    */
-  private void validateManifestRelatedEntries(PluginBuildProperties buildProperties) {
+  private void validateManifestRelatedEntries( PluginBuildProperties buildProperties ) {
 
     // does the project contain a manifest?
-    errorAssert(this._eclipseProject.hasChild("META-INF/MANIFEST.MF"), MISSING_MANIFEST_FILE_MSG, this._projectName,
-        this._eclipseProject.getFolder());
+    errorAssert( _eclipseProject.hasChild( "META-INF/MANIFEST.MF" ), MISSING_MANIFEST_FILE_MSG, _projectName,
+        _eclipseProject.getFolder() );
 
-    final List<String> binaryIncludesList = Arrays.asList(buildProperties.getBinaryIncludes());
-    final List<String> binaryExcludesList = Arrays.asList(buildProperties.getBinaryExcludes());
+    final List<String> binaryIncludesList = Arrays.asList( buildProperties.getBinaryIncludes() );
+    final List<String> binaryExcludesList = Arrays.asList( buildProperties.getBinaryExcludes() );
 
     // does the build property file contain an entry for the META-INF directory?
-    errorAssert(binaryIncludesList.contains("META-INF"), MISSING_BIN_INCLUDE_ENTRY_FOR_MANIFEST_FILE_MSG,
-        this._projectName, this._eclipseProject.getChild("build.properties").getAbsolutePath());
+    errorAssert( binaryIncludesList.contains( "META-INF" ), MISSING_BIN_INCLUDE_ENTRY_FOR_MANIFEST_FILE_MSG,
+        _projectName, _eclipseProject.getChild( "build.properties" ).getAbsolutePath() );
 
     // doesn't the binary excludes list contain an entry for the META-INF/MANIFEST.MF directory?
-    errorAssert(!binaryExcludesList.contains("META-INF/MANIFEST.MF"), BIN_EXCLUDE_ENTRY_FOR_MANIFEST_FILE_MSG,
-        this._projectName, this._eclipseProject.getChild("build.properties").getAbsolutePath());
+    errorAssert( !binaryExcludesList.contains( "META-INF/MANIFEST.MF" ), BIN_EXCLUDE_ENTRY_FOR_MANIFEST_FILE_MSG,
+        _projectName, _eclipseProject.getChild( "build.properties" ).getAbsolutePath() );
   }
 
   /**
    * <p>
    * </p>
    */
-  private void validateLibrariesRelatedEntries(PluginBuildProperties buildProperties) {
+  private void validateLibrariesRelatedEntries( PluginBuildProperties buildProperties ) {
 
     // get all libraries
     Library[] libraries = buildProperties.getLibraries();
 
     // iterate over the libraries
-    for (Library library : libraries) {
-      warningAssert(library.hasSource(), LIBRARY_WITHOUT_SOURCE_DIRECTORY, this._projectName, this._eclipseProject
-          .getChild("build.properties").getAbsolutePath(), library.getName());
+    for( Library library : libraries ) {
+      warningAssert( library.hasSource(), LIBRARY_WITHOUT_SOURCE_DIRECTORY, _projectName, _eclipseProject
+          .getChild( "build.properties" ).getAbsolutePath(), library.getName() );
 
       // warningAssert(library.hasOutput(), LIBRARY_WITHOUT_OUTPUT_DIRECTORY, _projectName, _eclipseProject.getChild(
       // "build.properties").getAbsolutePath(), library.getName());
@@ -169,8 +169,8 @@ public class PluginProjectChecker {
    * @param msg
    * @param args
    */
-  private void errorAssert(boolean condition, String msg, Object... args) {
-    validate(IssueLevel.ERROR, condition, msg, args);
+  private void errorAssert( boolean condition, String msg, Object ... args ) {
+    validate( IssueLevel.ERROR, condition, msg, args );
   }
 
   /**
@@ -185,8 +185,8 @@ public class PluginProjectChecker {
    * @param args
    *          the args
    */
-  private void warningAssert(boolean condition, String msg, Object... args) {
-    validate(IssueLevel.WARNING, condition, msg, args);
+  private void warningAssert( boolean condition, String msg, Object ... args ) {
+    validate( IssueLevel.WARNING, condition, msg, args );
   }
 
   /**
@@ -195,9 +195,9 @@ public class PluginProjectChecker {
    * @param msg
    * @param args
    */
-  private void validate(IssueLevel level, boolean condition, String msg, Object... args) {
-    if (!condition) {
-      this._issues.add(new Issue(level, String.format(msg, args)));
+  private void validate( IssueLevel level, boolean condition, String msg, Object ... args ) {
+    if( !condition ) {
+      _issues.add( new Issue( level, String.format( msg, args ) ) );
     }
   }
 
@@ -221,7 +221,7 @@ public class PluginProjectChecker {
     private String     _message;
 
     /** the level */
-    @SuppressWarnings("unused")
+    @SuppressWarnings( "unused" )
     private IssueLevel _level;
 
     /**
@@ -232,9 +232,9 @@ public class PluginProjectChecker {
      * @param message
      *          the message.
      */
-    public Issue(IssueLevel issueLevel, String message) {
-      this._level = issueLevel;
-      this._message = message;
+    public Issue( IssueLevel issueLevel, String message ) {
+      _level = issueLevel;
+      _message = message;
     }
 
     /**
@@ -245,7 +245,9 @@ public class PluginProjectChecker {
      * @return the message.
      */
     public String getMessage() {
-      return this._message;
+      return _message;
     }
+  
   }
-}
+  
+} /* ENDCLASS */

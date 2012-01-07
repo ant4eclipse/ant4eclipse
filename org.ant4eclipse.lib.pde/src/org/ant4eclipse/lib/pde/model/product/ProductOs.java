@@ -19,13 +19,10 @@ package org.ant4eclipse.lib.pde.model.product;
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
 public enum ProductOs {
-  /** - */
+  
   win32,
-  /** - */
   solaris,
-  /** - */
   linux,
-  /** - */
   macosx
 
 } /* ENDENUM */

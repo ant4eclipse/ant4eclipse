@@ -53,26 +53,26 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    */
   @Override
   protected void doValidate() {
-    if( this._file == null || "".equals( this._file ) ) {
+    if( _file == null || "".equals( _file ) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "file" );
     }
-    if( this._jreId == null || "".equals( this._jreId ) ) {
+    if( _jreId == null || "".equals( _jreId ) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "jreId" );
     }
 
-    Assure.exists( "file", this._file );
+    Assure.exists( "file", _file );
 
-    A4ECore.instance().getRequiredService( JavaProfileReader.class ).registerProfile( this._file, this._jreId );
+    A4ECore.instance().getRequiredService( JavaProfileReader.class ).registerProfile( _file, _jreId );
   }
 
   /**
    * <p>
    * </p>
    * 
-   * @param file
+   * @param newfile
    */
-  public void setFile( File file ) {
-    this._file = file;
+  public void setFile( File newfile ) {
+    _file = newfile;
   }
 
   /**
@@ -82,7 +82,7 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    * @param jreId
    */
   public void setJreId( String jreId ) {
-    this._jreId = jreId;
+    _jreId = jreId;
   }
 
   /**
@@ -90,7 +90,7 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    */
   @Override
   public String toString() {
-    return "ExecutionEnvironmentDefinitionDataType [_file=" + this._file + "]";
+    return "ExecutionEnvironmentDefinitionDataType [_file=" + _file + "]";
   }
 
 } /* ENDCLASS */

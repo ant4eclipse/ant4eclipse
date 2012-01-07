@@ -24,43 +24,43 @@ import org.ant4eclipse.lib.core.nls.NLSMessage;
  */
 public class EcjExceptionCodes extends ExceptionCode {
 
-  @NLSMessage("Could not create jar file from file '%s'.")
+  @NLSMessage( "Could not create jar file from file '%s'." )
   public static ExceptionCode     COULD_NOT_CREATE_JAR_FILE_FROM_FILE_EXCEPTION = null;
 
-  @NLSMessage("Unknown target option '%s' in javac task.")
+  @NLSMessage( "Unknown target option '%s' in javac task." )
   public static ExceptionCode     UNKNOWN_JAVA_TARGET_OPTION_EXCEPTION;
 
-  @NLSMessage("Unknown source option '%s' in javac task.")
+  @NLSMessage( "Unknown source option '%s' in javac task." )
   public static ExceptionCode     UNKNOWN_JAVA_SOURCE_OPTION_EXCEPTION;
 
-  @NLSMessage("Unable to read binary type '%s' from jar file '%s'.")
+  @NLSMessage( "Unable to read binary type '%s' from jar file '%s'." )
   public static ExceptionCode     UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION;
 
-  @NLSMessage("The ant reference id '%s' doesn't point to an EcjAdditionalCompilerArguments object.")
+  @NLSMessage( "The ant reference id '%s' doesn't point to an EcjAdditionalCompilerArguments object." )
   public static EcjExceptionCodes NO_ECJ_ADDITIONAL_COMPILER_ARGUMENTS_OBJECT;
 
-  @NLSMessage("The file '%s' with global compiler settings could not be found.")
+  @NLSMessage( "The file '%s' with global compiler settings could not be found." )
   public static EcjExceptionCodes GLOBAL_COMPILER_SETTINGS_NOT_FOUND_EXCEPTION;
 
-  @NLSMessage("Unable to read content of compilation unit '%s' in source folder '%s' with encoding '%s'.")
+  @NLSMessage( "Unable to read content of compilation unit '%s' in source folder '%s' with encoding '%s'." )
   public static EcjExceptionCodes UNABLE_TO_READ_COMPILATION_CONTENT_EXCEPTION;
 
-  @NLSMessage("Compilation was not successful.")
+  @NLSMessage( "Compilation was not successful." )
   public static EcjExceptionCodes COMPILATION_WAS_NOT_SUCCESFUL;
 
-  @NLSMessage("Source folder for source file '%s' does not exist.")
+  @NLSMessage( "Source folder for source file '%s' does not exist." )
   public static ExceptionCode     SOURCE_FOLDER_FOR_SOURCE_FILE_DOES_NOT_EXIST;
 
-  @NLSMessage("The javac source path attibute is not supported by the EcjCompilerAdapter.")
+  @NLSMessage( "The javac source path attibute is not supported by the EcjCompilerAdapter." )
   public static ExceptionCode     JAVAC_SOURCE_PATH_NOT_SUPPORTED_EXCEPTION;
 
-  @NLSMessage("No destination path has been set. You must either set a destination path using the"
+  @NLSMessage( "No destination path has been set. You must either set a destination path using the"
       + "'destdir' attribute of the 'javac' task or you must reference a 'EcjAdditionalCompilerArguments' object"
-      + "(e.g. from executeJdtProject)")
+      + "(e.g. from executeJdtProject)" )
   public static ExceptionCode     NO_DEST_PATH_SET;
 
   static {
-    NLS.initialize(EcjExceptionCodes.class);
+    NLS.initialize( EcjExceptionCodes.class );
   }
 
   /**
@@ -71,7 +71,8 @@ public class EcjExceptionCodes extends ExceptionCode {
    * @param message
    *          the message
    */
-  private EcjExceptionCodes(String message) {
-    super(message);
+  private EcjExceptionCodes( String message ) {
+    super( message );
   }
-}
+  
+} /* ENDCLASS */

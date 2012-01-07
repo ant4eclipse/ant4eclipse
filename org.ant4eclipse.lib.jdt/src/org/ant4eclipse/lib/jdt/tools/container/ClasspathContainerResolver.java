@@ -34,7 +34,7 @@ public interface ClasspathContainerResolver extends A4EService {
    *          the {@link ClasspathEntry} that should be resolved
    * @return <code>true</code>, if this {@link ClasspathContainerResolver} can resolve the given {@link ClasspathEntry}.
    */
-  boolean canResolveContainer(ClasspathEntry classpathEntry);
+  boolean canResolveContainer( ClasspathEntry classpathEntry );
 
   /**
    * <p>
@@ -47,5 +47,6 @@ public interface ClasspathContainerResolver extends A4EService {
    * @param context
    *          the {@link ClasspathResolverContext}
    */
-  void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context);
-}
+  void resolveContainer( ClasspathEntry classpathEntry, ClasspathResolverContext context );
+  
+} /* ENDINTERFACE */

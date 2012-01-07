@@ -35,8 +35,8 @@ public class BuildCommandImpl implements BuildCommand {
    * @param name
    *          the name of the build command.
    */
-  public BuildCommandImpl(String name) {
-    this(name, null);
+  public BuildCommandImpl( String name ) {
+    this( name, null );
   }
 
   /**
@@ -47,17 +47,17 @@ public class BuildCommandImpl implements BuildCommand {
    * @param the
    *          triggers that would cause this builder to run in eclipse (might be null)
    */
-  public BuildCommandImpl(String name, String triggers) {
-    Assure.notNull("name", name);
-    this._name = name;
-    if ((triggers != null) && triggers.endsWith(",")) {
-      if (triggers.length() > 1) { // remove trailing ,
-        triggers = triggers.substring(0, triggers.length() - 1);
+  public BuildCommandImpl( String name, String triggers ) {
+    Assure.notNull( "name", name );
+    _name = name;
+    if( (triggers != null) && triggers.endsWith( "," ) ) {
+      if( triggers.length() > 1 ) { // remove trailing ,
+        triggers = triggers.substring( 0, triggers.length() - 1 );
       } else {
         triggers = null;
       }
     }
-    this._triggers = triggers;
+    _triggers = triggers;
   }
 
   /**
@@ -65,7 +65,7 @@ public class BuildCommandImpl implements BuildCommand {
    */
   @Override
   public final String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -73,7 +73,7 @@ public class BuildCommandImpl implements BuildCommand {
    */
   @Override
   public String getTriggers() {
-    return this._triggers;
+    return _triggers;
   }
 
   /**
@@ -81,28 +81,28 @@ public class BuildCommandImpl implements BuildCommand {
    */
   @Override
   public boolean hasTriggers() {
-    return this._triggers != null;
+    return _triggers != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     BuildCommandImpl other = (BuildCommandImpl) o;
-    if (this._name == null) {
+    if( _name == null ) {
       return other._name == null;
     } else {
-      return this._name.equals(other._name);
+      return _name.equals( other._name );
     }
   }
 
@@ -112,12 +112,13 @@ public class BuildCommandImpl implements BuildCommand {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[BuildCommand:");
-    buffer.append(" name: ");
-    buffer.append(this._name);
-    buffer.append(" triggers: ");
-    buffer.append(this._triggers);
-    buffer.append("]");
+    buffer.append( "[BuildCommand:" );
+    buffer.append( " name: " );
+    buffer.append( _name );
+    buffer.append( " triggers: " );
+    buffer.append( _triggers );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

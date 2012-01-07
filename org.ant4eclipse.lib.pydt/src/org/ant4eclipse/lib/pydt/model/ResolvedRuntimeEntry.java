@@ -39,13 +39,13 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    * @param libs
    *          The bundled libraries representing the runtime. Not <code>null</code>.
    */
-  public ResolvedRuntimeEntry(String owningproject, Version version, File[] libs) {
-    Assure.notNull("version", version);
-    Assure.notNull("libs", libs);
-    Assure.nonEmpty("owningproject", owningproject);
-    this._owningproject = owningproject;
-    this._version = version;
-    this._libs = libs;
+  public ResolvedRuntimeEntry( String owningproject, Version version, File[] libs ) {
+    Assure.notNull( "version", version );
+    Assure.notNull( "libs", libs );
+    Assure.nonEmpty( "owningproject", owningproject );
+    _owningproject = owningproject;
+    _version = version;
+    _libs = libs;
   }
 
   /**
@@ -53,7 +53,7 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    */
   @Override
   public String getOwningProjectname() {
-    return this._owningproject;
+    return _owningproject;
   }
 
   /**
@@ -70,7 +70,7 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    * @return The version of the runtime. Not <code>null</code>.
    */
   public Version getVersion() {
-    return this._version;
+    return _version;
   }
 
   /**
@@ -79,35 +79,35 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    * @return The libraries for this runtime. Not <code>null</code>.
    */
   public File[] getLibraries() {
-    return this._libs;
+    return _libs;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object object) {
-    if (this == object) {
+  public boolean equals( Object object ) {
+    if( this == object ) {
       return true;
     }
-    if (object == null) {
+    if( object == null ) {
       return false;
     }
-    if (object.getClass() != getClass()) {
+    if( object.getClass() != getClass() ) {
       return false;
     }
     ResolvedRuntimeEntry other = (ResolvedRuntimeEntry) object;
-    if (!this._owningproject.equals(other._owningproject)) {
+    if( !_owningproject.equals( other._owningproject ) ) {
       return false;
     }
-    if (this._libs.length != other._libs.length) {
+    if( _libs.length != other._libs.length ) {
       return false;
     }
-    if (!this._version.equals(other._version)) {
+    if( !_version.equals( other._version ) ) {
       return false;
     }
-    for (int i = 0; i < this._libs.length; i++) {
-      if (!this._libs[i].equals(other._libs[i])) {
+    for( int i = 0; i < _libs.length; i++ ) {
+      if( !_libs[i].equals( other._libs[i] ) ) {
         return false;
       }
     }
@@ -119,9 +119,9 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = this._owningproject.hashCode();
-    result = 31 * result + this._version.hashCode();
-    for (File lib : this._libs) {
+    int result = _owningproject.hashCode();
+    result = 31 * result + _version.hashCode();
+    for( File lib : _libs ) {
       result = 31 * result + lib.hashCode();
     }
     return result;
@@ -133,18 +133,18 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ResolvedRuntimeEntry:");
-    buffer.append(" _owningproject: ");
-    buffer.append(this._owningproject);
-    buffer.append(", _version: ");
-    buffer.append(this._version);
-    buffer.append(", _libs: {");
-    buffer.append(this._libs[0]);
-    for (int i = 1; i < this._libs.length; i++) {
-      buffer.append(", ");
-      buffer.append(this._libs[i]);
+    buffer.append( "[ResolvedRuntimeEntry:" );
+    buffer.append( " _owningproject: " );
+    buffer.append( _owningproject );
+    buffer.append( ", _version: " );
+    buffer.append( _version );
+    buffer.append( ", _libs: {" );
+    buffer.append( _libs[0] );
+    for( int i = 1; i < _libs.length; i++ ) {
+      buffer.append( ", " );
+      buffer.append( _libs[i] );
     }
-    buffer.append("}]");
+    buffer.append( "}]" );
     return buffer.toString();
   }
 

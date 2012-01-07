@@ -35,14 +35,14 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param revision
    *          The revision of the project (might be null which means HEAD)
    */
-  public SvnTeamProjectDescription(SvnTeamProjectSet teamProjectSet, String projectname, String url, String revision) {
-    super(projectname);
-    Assure.notNull("teamProjectSet", teamProjectSet);
-    Assure.notNull("url", url);
+  public SvnTeamProjectDescription( SvnTeamProjectSet teamProjectSet, String projectname, String url, String revision ) {
+    super( projectname );
+    Assure.notNull( "teamProjectSet", teamProjectSet );
+    Assure.notNull( "url", url );
 
-    this._teamProjectSet = teamProjectSet;
-    this._url = url;
-    this._revision = (revision != null ? revision : "HEAD");
+    _teamProjectSet = teamProjectSet;
+    _url = url;
+    _revision = (revision != null ? revision : "HEAD");
   }
 
   /**
@@ -53,16 +53,16 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param url
    *          The url of the project in the SVN repository
    */
-  public SvnTeamProjectDescription(SvnTeamProjectSet teamProjectSet, String projectname, String url) {
-    this(teamProjectSet, projectname, url, null);
+  public SvnTeamProjectDescription( SvnTeamProjectSet teamProjectSet, String projectname, String url ) {
+    this( teamProjectSet, projectname, url, null );
   }
 
   public String getRevision() {
-    return this._revision;
+    return _revision;
   }
 
   public String getUrl() {
-    return this._url;
+    return _url;
   }
 
   /**
@@ -71,13 +71,13 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return
    */
   public SvnTeamProjectSet getTeamProjectSet() {
-    return this._teamProjectSet;
+    return _teamProjectSet;
   }
 
   @Override
-  protected void addSpecificProperties(StringMap properties) {
-    properties.put("svn.revision", getRevision());
-    properties.put("svn.url", getUrl());
+  protected void addSpecificProperties( StringMap properties ) {
+    properties.put( "svn.revision", getRevision() );
+    properties.put( "svn.url", getUrl() );
   }
 
   /**
@@ -86,13 +86,13 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[SvnTeamProjectDescription:");/* Inaccessible getter for private field _projectname */
-    buffer.append(" projectname: " + getProjectName());
-    buffer.append(" _url: ");
-    buffer.append(this._url);
-    buffer.append(" _revision: ");
-    buffer.append(this._revision);
-    buffer.append("]");
+    buffer.append( "[SvnTeamProjectDescription:" );/* Inaccessible getter for private field _projectname */
+    buffer.append( " projectname: " + getProjectName() );
+    buffer.append( " _url: " );
+    buffer.append( _url );
+    buffer.append( " _revision: " );
+    buffer.append( _revision );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -100,21 +100,22 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (!super.equals(o)) {
+    if( !super.equals( o ) ) {
       return false;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     SvnTeamProjectDescription castedObj = (SvnTeamProjectDescription) o;
-    return ((this._url == null ? castedObj._url == null : this._url.equals(castedObj._url)) && (this._revision == null ? castedObj._revision == null
-        : this._revision.equals(castedObj._revision)));
+    return((_url == null ? castedObj._url == null : _url.equals( castedObj._url )) && (_revision == null ? castedObj._revision == null
+        : _revision.equals( castedObj._revision )));
   }
-}
+  
+} /* ENDCLASS */

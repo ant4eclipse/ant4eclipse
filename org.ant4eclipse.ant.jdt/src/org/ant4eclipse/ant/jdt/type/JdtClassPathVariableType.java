@@ -62,7 +62,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    *          A properties file pointing to a set of class path variables.
    */
   public void setFile( File varfile ) {
-    this._varfile = varfile;
+    _varfile = varfile;
   }
 
   /**
@@ -73,7 +73,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @return the name the name of the class path variable
    */
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -85,7 +85,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    *          the name to set
    */
   public void setName( String name ) {
-    this._name = Utilities.cleanup( name );
+    _name = Utilities.cleanup( name );
   }
 
   /**
@@ -96,7 +96,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    * @return the path of the class path variable.
    */
   public File getPath() {
-    return this._path;
+    return _path;
   }
 
   /**
@@ -108,7 +108,7 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
    *          the path of the class path variable.
    */
   public void setPath( File path ) {
-    this._path = path;
+    _path = path;
   }
 
   /**
@@ -119,17 +119,17 @@ public class JdtClassPathVariableType extends AbstractAnt4EclipseDataType {
 
     Map<String,File> classpathvars = new Hashtable<String,File>();
 
-    if( (this._path != null) && (this._name != null) ) {
-      classpathvars.put( this._name, this._path );
-    } else if( this._path != null ) {
+    if( (_path != null) && (_name != null) ) {
+      classpathvars.put( _name, _path );
+    } else if( _path != null ) {
       throw new BuildException( "Missing parameter 'name' on classpathVariable!" );
-    } else if( this._name != null ) {
+    } else if( _name != null ) {
       throw new BuildException( "Missing parameter 'path' on classpathVariable!" );
     }
 
     // load the classpath variables from the file
-    if( this._varfile != null ) {
-      StringMap map = new StringMap( this._varfile );
+    if( _varfile != null ) {
+      StringMap map = new StringMap( _varfile );
       for( Map.Entry<String,String> pair : map.entrySet() ) {
         classpathvars.put( pair.getKey(), new File( pair.getValue() ) );
       }

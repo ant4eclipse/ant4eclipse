@@ -47,17 +47,17 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param tag
    *          the tag
    */
-  public CvsTeamProjectDescription(String projectname, CvsRoot cvsroot, String nameInRepository, String tag) {
-    super(projectname);
-    Assure.notNull("cvsroot", cvsroot);
-    Assure.notNull("nameInRepository", nameInRepository);
+  public CvsTeamProjectDescription( String projectname, CvsRoot cvsroot, String nameInRepository, String tag ) {
+    super( projectname );
+    Assure.notNull( "cvsroot", cvsroot );
+    Assure.notNull( "nameInRepository", nameInRepository );
 
-    this._cvsRoot = cvsroot;
-    this._nameInRepository = nameInRepository;
-    this._branchOrVersionTag = tag;
+    _cvsRoot = cvsroot;
+    _nameInRepository = nameInRepository;
+    _branchOrVersionTag = tag;
 
-    if ("".equals(this._branchOrVersionTag)) {
-      this._branchOrVersionTag = null;
+    if( "".equals( _branchOrVersionTag ) ) {
+      _branchOrVersionTag = null;
     }
   }
 
@@ -73,8 +73,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param tag
    *          the tag
    */
-  public CvsTeamProjectDescription(String projectname, String cvsroot, String nameInRepository, String tag) {
-    this(projectname, new CvsRoot(cvsroot), nameInRepository, tag);
+  public CvsTeamProjectDescription( String projectname, String cvsroot, String nameInRepository, String tag ) {
+    this( projectname, new CvsRoot( cvsroot ), nameInRepository, tag );
   }
 
   /**
@@ -83,7 +83,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the tag of the branch or version.
    */
   public String getBranchOrVersionTag() {
-    return this._branchOrVersionTag;
+    return _branchOrVersionTag;
   }
 
   /**
@@ -92,7 +92,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the cvsRoot.
    */
   public CvsRoot getCvsRoot() {
-    return this._cvsRoot;
+    return _cvsRoot;
   }
 
   /**
@@ -103,9 +103,9 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the resolved CvsRoot.
    */
   public CvsRoot getResolvedCvsRoot() {
-    Assure.assertTrue(isCvsUserSet(), "CvsUser and CvsPwd have to be set!");
+    Assure.assertTrue( isCvsUserSet(), "CvsUser and CvsPwd have to be set!" );
 
-    return this._cvsRoot.getResolvedRoot(this._cvsUser, this._cvsPwd);
+    return _cvsRoot.getResolvedRoot( _cvsUser, _cvsPwd );
   }
 
   private String _cvsPwd = null;
@@ -116,7 +116,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns the name of the project in the repository.
    */
   public String getNameInRepository() {
-    return this._nameInRepository;
+    return _nameInRepository;
   }
 
   /**
@@ -134,7 +134,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns whether the project has a branch or version tag.
    */
   public boolean hasBranchOrVersionTag() {
-    return this._branchOrVersionTag != null;
+    return _branchOrVersionTag != null;
   }
 
   /**
@@ -143,7 +143,7 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @return Returns whether the cvs user and the cvs password is set.
    */
   public boolean isCvsUserSet() {
-    return this._cvsUser != null;
+    return _cvsUser != null;
   }
 
   /**
@@ -154,35 +154,35 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param cvsPwd
    *          the cvs password might be null
    */
-  public void setCvsUserAndPassword(String cvsUser, String cvsPwd) {
-    Assure.notNull("cvsUser", cvsUser);
-    A4ELogging.debug("setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd);
-    this._cvsUser = cvsUser;
-    this._cvsPwd = cvsPwd;
+  public void setCvsUserAndPassword( String cvsUser, String cvsPwd ) {
+    Assure.notNull( "cvsUser", cvsUser );
+    A4ELogging.debug( "setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd );
+    _cvsUser = cvsUser;
+    _cvsPwd = cvsPwd;
   }
 
   @Override
-  protected void addSpecificProperties(StringMap properties) {
-    notNull("properties", properties);
+  protected void addSpecificProperties( StringMap properties ) {
+    notNull( "properties", properties );
 
     // add basic properties
-    properties.put("cvs.nameInRepository", this._nameInRepository);
-    properties.put("cvs.isHead", Boolean.toString(isHead()));
-    properties.put("cvs.hasBranchOrVersionTag", Boolean.toString(hasBranchOrVersionTag()));
-    if (hasBranchOrVersionTag()) {
-      properties.put("cvs.branchOrTag", getBranchOrVersionTag());
+    properties.put( "cvs.nameInRepository", _nameInRepository );
+    properties.put( "cvs.isHead", Boolean.toString( isHead() ) );
+    properties.put( "cvs.hasBranchOrVersionTag", Boolean.toString( hasBranchOrVersionTag() ) );
+    if( hasBranchOrVersionTag() ) {
+      properties.put( "cvs.branchOrTag", getBranchOrVersionTag() );
     }
 
     // add cvsRoot as properties
     CvsRoot cvsRoot = getCvsRoot();
-    properties.put("cvs.cvsRoot", cvsRoot.toString());
-    properties.put("cvs.cvsRoot.connectionType", cvsRoot.getConnectionType());
-    properties.put("cvs.cvsRoot.host", cvsRoot.getHost());
-    properties.put("cvs.cvsRoot.repository", cvsRoot.getRepository());
+    properties.put( "cvs.cvsRoot", cvsRoot.toString() );
+    properties.put( "cvs.cvsRoot.connectionType", cvsRoot.getConnectionType() );
+    properties.put( "cvs.cvsRoot.host", cvsRoot.getHost() );
+    properties.put( "cvs.cvsRoot.repository", cvsRoot.getRepository() );
     final boolean hasUser = cvsRoot.hasUser();
-    properties.put("cvs.cvsRoot.hasUser", Boolean.toString(hasUser));
-    if (hasUser) {
-      properties.put("cvs.cvsRoot.user", cvsRoot.getUser());
+    properties.put( "cvs.cvsRoot.hasUser", Boolean.toString( hasUser ) );
+    if( hasUser ) {
+      properties.put( "cvs.cvsRoot.user", cvsRoot.getUser() );
     }
   }
 
@@ -192,20 +192,20 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[CvsTeamProjectDescription:");
-    buffer.append(" projectname: ");
-    buffer.append(getProjectName());
-    buffer.append(" cvsRoot: ");
-    buffer.append(this._cvsRoot);
-    buffer.append(" nameInRepository: ");
-    buffer.append(this._nameInRepository);
-    buffer.append(" branchOrVersionTag: ");
-    buffer.append(this._branchOrVersionTag);
-    buffer.append(" cvsUser: ");
-    buffer.append(this._cvsUser);
-    buffer.append(" cvsPwd: ");
-    buffer.append(this._cvsPwd);
-    buffer.append("]");
+    buffer.append( "[CvsTeamProjectDescription:" );
+    buffer.append( " projectname: " );
+    buffer.append( getProjectName() );
+    buffer.append( " cvsRoot: " );
+    buffer.append( _cvsRoot );
+    buffer.append( " nameInRepository: " );
+    buffer.append( _nameInRepository );
+    buffer.append( " branchOrVersionTag: " );
+    buffer.append( _branchOrVersionTag );
+    buffer.append( " cvsUser: " );
+    buffer.append( _cvsUser );
+    buffer.append( " cvsPwd: " );
+    buffer.append( _cvsPwd );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -213,27 +213,27 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (!super.equals(o)) {
+    if( !super.equals( o ) ) {
       return false;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     CvsTeamProjectDescription castedObj = (CvsTeamProjectDescription) o;
-    return ((this._cvsRoot == null ? castedObj._cvsRoot == null : this._cvsRoot.equals(castedObj._cvsRoot))
-        && (this._nameInRepository == null ? castedObj._nameInRepository == null : this._nameInRepository
-            .equals(castedObj._nameInRepository))
-        && (this._branchOrVersionTag == null ? castedObj._branchOrVersionTag == null : this._branchOrVersionTag
-            .equals(castedObj._branchOrVersionTag))
-        && (this._cvsUser == null ? castedObj._cvsUser == null : this._cvsUser.equals(castedObj._cvsUser)) && (this._cvsPwd == null ? castedObj._cvsPwd == null
-        : this._cvsPwd.equals(castedObj._cvsPwd)));
+    return((_cvsRoot == null ? castedObj._cvsRoot == null : _cvsRoot.equals( castedObj._cvsRoot ))
+        && (_nameInRepository == null ? castedObj._nameInRepository == null : _nameInRepository
+            .equals( castedObj._nameInRepository ))
+        && (_branchOrVersionTag == null ? castedObj._branchOrVersionTag == null : _branchOrVersionTag
+            .equals( castedObj._branchOrVersionTag ))
+        && (_cvsUser == null ? castedObj._cvsUser == null : _cvsUser.equals( castedObj._cvsUser )) && (_cvsPwd == null ? castedObj._cvsPwd == null
+        : _cvsPwd.equals( castedObj._cvsPwd )));
   }
 
   /**
@@ -242,12 +242,12 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
   @Override
   public int hashCode() {
     int hashCode = super.hashCode();
-    hashCode = 31 * hashCode + (this._cvsRoot == null ? 0 : this._cvsRoot.hashCode());
-    hashCode = 31 * hashCode + (this._nameInRepository == null ? 0 : this._nameInRepository.hashCode());
-    hashCode = 31 * hashCode + (this._branchOrVersionTag == null ? 0 : this._branchOrVersionTag.hashCode());
-    hashCode = 31 * hashCode + (this._cvsUser == null ? 0 : this._cvsUser.hashCode());
-    hashCode = 31 * hashCode + (this._cvsPwd == null ? 0 : this._cvsPwd.hashCode());
+    hashCode = 31 * hashCode + (_cvsRoot == null ? 0 : _cvsRoot.hashCode());
+    hashCode = 31 * hashCode + (_nameInRepository == null ? 0 : _nameInRepository.hashCode());
+    hashCode = 31 * hashCode + (_branchOrVersionTag == null ? 0 : _branchOrVersionTag.hashCode());
+    hashCode = 31 * hashCode + (_cvsUser == null ? 0 : _cvsUser.hashCode());
+    hashCode = 31 * hashCode + (_cvsPwd == null ? 0 : _cvsPwd.hashCode());
     return hashCode;
   }
 
-}
+} /* ENDCLASS */

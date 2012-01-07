@@ -68,7 +68,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    */
   @Override
   public void setUp() throws Exception {
-    this._testWorkspace = new TestDirectory();
+    _testWorkspace = new TestDirectory();
   }
 
   /**
@@ -77,7 +77,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
   @Override
   public void tearDown() throws Exception {
     super.tearDown();
-    this._testWorkspace.dispose();
+    _testWorkspace.dispose();
     A4ECore.instance().reset();
   }
 
@@ -145,9 +145,9 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
     String qualifiedBuildFileName = getProjectBuildFile( unqualifiedBuildFileName );
     StringBuffer buffer = Utilities.readTextContent( "/" + qualifiedBuildFileName, Utilities.ENCODING, true );
     String buildFileContent = buffer.toString();
-    File buildFile = this._testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
+    File buildFile = _testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
     configureProject( buildFile.getAbsolutePath(), priority );
-    getProject().setProperty( "workspaceDir", this._testWorkspace.getRootDir().getAbsolutePath() );
+    getProject().setProperty( "workspaceDir", _testWorkspace.getRootDir().getAbsolutePath() );
   }
 
   /**
@@ -156,11 +156,11 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
    * @return
    */
   protected TestDirectory getTestWorkspace() {
-    return this._testWorkspace;
+    return _testWorkspace;
   }
 
   public File getTestWorkspaceDirectory() {
-    return this._testWorkspace.getRootDir();
+    return _testWorkspace.getRootDir();
   }
 
   public void expectLogMatches( String target, String regExp ) {

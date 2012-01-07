@@ -28,11 +28,8 @@ public class SourceFileFactory {
    *          the file encoding
    * @return
    */
-  public static SourceFile createSourceFile(File sourceFolder, String sourceFileName, File destinationFolder,
-      String encoding) {
-
-    // return new SourceFileImpl
-    return new SourceFileImpl(sourceFolder, sourceFileName, destinationFolder, encoding);
+  public static SourceFile createSourceFile( File sourceFolder, String sourceFileName, File destinationFolder, String encoding ) {
+    return new SourceFileImpl( sourceFolder, sourceFileName, destinationFolder, encoding );
   }
 
   /**
@@ -48,9 +45,8 @@ public class SourceFileFactory {
    *          the destination folder
    * @return
    */
-  public static SourceFile createSourceFile(File sourceFolder, String sourceFileName, File destinationFolder) {
-
-    // return new SourceFileImpl
-    return new SourceFileImpl(sourceFolder, sourceFileName, destinationFolder);
+  public static SourceFile createSourceFile( File sourceFolder, String sourceFileName, File destinationFolder ) {
+    return new SourceFileImpl( sourceFolder, sourceFileName, destinationFolder );
   }
-}
+  
+} /* ENDCLASS */

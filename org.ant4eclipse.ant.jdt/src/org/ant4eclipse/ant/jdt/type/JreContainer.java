@@ -46,7 +46,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    */
   public JreContainer( Project project ) {
     super( project );
-    this._defaultJre = null;
+    _defaultJre = null;
   }
 
   /**
@@ -59,7 +59,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
   }
 
   public void setDefault( String defaultJre ) {
-    this._defaultJre = defaultJre;
+    _defaultJre = defaultJre;
   }
 
   /**
@@ -78,7 +78,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       throw new BuildException( "Missing parameter 'id' on jre!" );
     }
 
-    boolean isDefault = runtime.getId().equals( this._defaultJre );
+    boolean isDefault = runtime.getId().equals( _defaultJre );
 
     JavaRuntimeRegistry javaRuntimeRegistry = A4ECore.instance().getRequiredService( JavaRuntimeRegistry.class );
 
@@ -143,26 +143,26 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     private List<FileSet> _fileSets;
 
     public String getId() {
-      return this._id;
+      return _id;
     }
 
-    public void setId( String id ) {
-      this._id = id;
+    public void setId( String newid ) {
+      _id = newid;
     }
 
     public File getLocation() {
-      return this._location;
+      return _location;
     }
 
-    public void setLocation( File location ) {
-      this._location = location;
+    public void setLocation( File newlocation ) {
+      _location = newlocation;
     }
 
-    public void addFileSet( FileSet fileSet ) {
-      if( this._fileSets == null ) {
-        this._fileSets = new ArrayList<FileSet>();
+    public void addFileSet( FileSet newfileset ) {
+      if( _fileSets == null ) {
+        _fileSets = new ArrayList<FileSet>();
       }
-      this._fileSets.add( fileSet );
+      _fileSets.add( newfileset );
     }
 
     /**
@@ -171,11 +171,11 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
      * @return
      */
     public List<FileSet> getFileSets() {
-      return this._fileSets;
+      return _fileSets;
     }
 
     public boolean hasFileSets() {
-      return this._fileSets != null;
+      return _fileSets != null;
     }
   }
 } /* ENDCLASS */

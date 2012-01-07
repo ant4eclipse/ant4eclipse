@@ -31,8 +31,8 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
    * {@inheritDoc}
    */
   @Override
-  public boolean canResolve(ClasspathEntry entry) {
-    return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_PROJECT)
+  public boolean canResolve( ClasspathEntry entry ) {
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_PROJECT )
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_PROJECT) */;
   }
 
@@ -40,10 +40,10 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
    * {@inheritDoc}
    */
   @Override
-  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
+  public void resolve( ClasspathEntry entry, ClasspathResolverContext context ) {
 
     // return immediately if the class path entry is not visible
-    if (!isClasspathEntryVisible(entry, context)) {
+    if( !isClasspathEntryVisible( entry, context ) ) {
       return;
     }
 
@@ -51,20 +51,21 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
     String projectname = entry.getPath();
 
     // normalize
-    if (projectname.startsWith("/")) {
-      projectname = projectname.substring(1);
+    if( projectname.startsWith( "/" ) ) {
+      projectname = projectname.substring( 1 );
     }
 
     // get the project
 
-    if (!context.getWorkspace().hasProject(projectname)) {
-      throw new Ant4EclipseException(JdtExceptionCode.REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION, context
-          .getCurrentProject(), projectname);
+    if( !context.getWorkspace().hasProject( projectname ) ) {
+      throw new Ant4EclipseException( JdtExceptionCode.REFERENCE_TO_UNKNOWN_PROJECT_EXCEPTION,
+          context.getCurrentProject(), projectname );
     }
 
-    EclipseProject referencedProject = context.getWorkspace().getProject(projectname);
+    EclipseProject referencedProject = context.getWorkspace().getProject( projectname );
 
     // resolve the class path for the referenced project.
-    context.resolveProjectClasspath(referencedProject);
+    context.resolveProjectClasspath( referencedProject );
   }
-}
+  
+} /* ENDCLASS */

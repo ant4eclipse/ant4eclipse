@@ -59,8 +59,8 @@ public abstract class AbstractAntProjectRaper<V> {
    *          the ant project
    */
   public AbstractAntProjectRaper( Project antProject, Thread thread ) {
-    this._antProject = antProject;
-    this._currentThread = thread;
+    _antProject = antProject;
+    _currentThread = thread;
   }
 
   /**
@@ -70,7 +70,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * @return
    */
   public Thread getCurrentThread() {
-    return this._currentThread;
+    return _currentThread;
   }
 
   /**
@@ -81,7 +81,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * @return the ant project.
    */
   public final Project getAntProject() {
-    return this._antProject;
+    return _antProject;
   }
 
   /**
@@ -95,31 +95,31 @@ public abstract class AbstractAntProjectRaper<V> {
    *          the prefix used for the scoped values.
    */
   public final void setScopedValues( Map<String,V> scopedValues, String prefix ) {
-    Assure.assertTrue( this._scopedValues == null, "Scoped values are already set!" );
+    Assure.assertTrue( _scopedValues == null, "Scoped values are already set!" );
     Assure.notNull( "scopedValues", scopedValues );
 
     // set the scoped values
-    this._scopedValues = scopedValues;
-    this._overriddenValues = new HashMap<String,V>();
+    _scopedValues = scopedValues;
+    _overriddenValues = new HashMap<String,V>();
 
     // set the prefix
-    this._prefix = (prefix != null && prefix.trim().length() > 0) ? prefix + "." : "";
+    _prefix = (prefix != null && prefix.trim().length() > 0) ? prefix + "." : "";
 
     // iterate over all scoped properties
-    Iterator<Entry<String,V>> iterator = this._scopedValues.entrySet().iterator();
+    Iterator<Entry<String,V>> iterator = _scopedValues.entrySet().iterator();
     while( iterator.hasNext() ) {
 
       Map.Entry<String,V> entry = iterator.next();
-      String key = (this._prefix + entry.getKey());
+      String key = (_prefix + entry.getKey());
 
       // store the property if it already exists
-      V existingValue = this._valueAccessor.getValue( key );
+      V existingValue = _valueAccessor.getValue( key );
       if( existingValue != null ) {
-        this._overriddenValues.put( key, existingValue );
+        _overriddenValues.put( key, existingValue );
       }
 
       V newValue = entry.getValue();
-      this._valueAccessor.setValue( key, newValue );
+      _valueAccessor.setValue( key, newValue );
     }
   }
 
@@ -129,21 +129,21 @@ public abstract class AbstractAntProjectRaper<V> {
    * </p>
    */
   public final void unsetScopedValues() {
-    Assure.assertTrue( this._scopedValues != null, "Scoped values must be set!" );
+    Assure.assertTrue( _scopedValues != null, "Scoped values must be set!" );
 
     // unset scopes value
-    Iterator<String> keyIterator = this._scopedValues.keySet().iterator();
+    Iterator<String> keyIterator = _scopedValues.keySet().iterator();
     while( keyIterator.hasNext() ) {
-      String key = (this._prefix + keyIterator.next());
-      this._valueAccessor.unsetValue( key );
+      String key = (_prefix + keyIterator.next());
+      _valueAccessor.unsetValue( key );
 
       // reset the property if it existed before executing the macro
-      if( this._overriddenValues.containsKey( key ) ) {
-        this._valueAccessor.setValue( key, this._overriddenValues.get( key ) );
+      if( _overriddenValues.containsKey( key ) ) {
+        _valueAccessor.setValue( key, _overriddenValues.get( key ) );
       }
     }
 
-    this._scopedValues = null;
+    _scopedValues = null;
   }
 
   /**
@@ -189,7 +189,7 @@ public abstract class AbstractAntProjectRaper<V> {
   }
 
   public void setValueAccessor( AntProjectValueAccessor<V> valueAccessor ) {
-    this._valueAccessor = valueAccessor;
+    _valueAccessor = valueAccessor;
   }
 
   /**

@@ -40,6 +40,6 @@ public interface EclipseStringSubstitutionService extends A4EService {
    * @param otherProperties
    *          Table with variable names as keys and their values as values. Might be null.
    */
-  String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties);
+  String substituteEclipseVariables( String string, EclipseProject project, StringMap otherProperties );
 
 } /* ENDINTERFACE */

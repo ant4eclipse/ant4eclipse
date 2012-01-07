@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtTest;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.testframework.EchoLogfile;
@@ -67,9 +65,9 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    */
   @Override
   public void tearDown() throws Exception {
-    if( this._echoLogfile != null ) {
-      this._echoLogfile.dispose();
-      this._echoLogfile = null;
+    if( _echoLogfile != null ) {
+      _echoLogfile.dispose();
+      _echoLogfile = null;
     }
     disposeAdditionalTargetPlatformDirectory();
     super.tearDown();
@@ -91,10 +89,10 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   protected EchoLogfile getEchoLogfile() throws Exception {
     // echo log points to a file that is used to echo all messages into that are compared
     // after test execution with expected values (instead of parsing the *whole* log output)
-    if( this._echoLogfile == null ) {
-      this._echoLogfile = new EchoLogfile( this._echoLogfileName );
+    if( _echoLogfile == null ) {
+      _echoLogfile = new EchoLogfile( _echoLogfileName );
     }
-    return this._echoLogfile;
+    return _echoLogfile;
   }
 
   /**
@@ -104,8 +102,8 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
    * @throws Exception
    */
   protected void setupDefaultProperties() throws Exception {
-    this._echoLogfileName = new File( getTestWorkspaceDirectory(), "echo.log" ).getAbsolutePath();
-    getProject().setProperty( "echolog", this._echoLogfileName );
+    _echoLogfileName = new File( getTestWorkspaceDirectory(), "echo.log" ).getAbsolutePath();
+    getProject().setProperty( "echolog", _echoLogfileName );
     getProject().setProperty( "workspace", getTestWorkspaceDirectory().getAbsolutePath() );
     getProject().setProperty( "targetplatform.1", getTargetPlatformDirectory().getAbsolutePath() );
     getProject().setProperty( "targetplatform.2", getAdditionalTargetPlatformPath() );
@@ -150,7 +148,7 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   }
 
   protected File getAdditionalTargetPlatformDirectory() {
-    return this._additionalTargetPlatformDirectory;
+    return _additionalTargetPlatformDirectory;
   }
 
   protected String getExpectedTargetPlatformLog() {
@@ -158,9 +156,9 @@ public class AbstractPdeBuildFileTest extends AbstractJdtTest {
   }
 
   protected void createAdditionalTargetPlatformDirectory() {
-    this._additionalTargetPlatformDirectory = new File( getAdditionalTargetPlatformPath() );
-    if( !this._additionalTargetPlatformDirectory.exists() ) {
-      this._additionalTargetPlatformDirectory.mkdirs();
+    _additionalTargetPlatformDirectory = new File( getAdditionalTargetPlatformPath() );
+    if( !_additionalTargetPlatformDirectory.exists() ) {
+      _additionalTargetPlatformDirectory.mkdirs();
     }
   }
 

@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 import org.ant4eclipse.lib.core.Assure;
@@ -43,15 +54,15 @@ public class SourceFileImpl implements SourceFile {
    * @param encoding
    *          the file encoding
    */
-  public SourceFileImpl(File sourceFolder, String sourceFileName, File destinationFolder, String encoding) {
-    Assure.isDirectory("sourceFolder", sourceFolder);
-    Assure.nonEmpty("sourceFileName", sourceFileName);
-    Assure.isDirectory("destinationFolder", destinationFolder);
-    Assure.nonEmpty("encoding", encoding);
-    this._destinationFolder = destinationFolder;
-    this._encoding = encoding;
-    this._sourceFileName = sourceFileName;
-    this._sourceFolder = sourceFolder;
+  public SourceFileImpl( File sourceFolder, String sourceFileName, File destinationFolder, String encoding ) {
+    Assure.isDirectory( "sourceFolder", sourceFolder );
+    Assure.nonEmpty( "sourceFileName", sourceFileName );
+    Assure.isDirectory( "destinationFolder", destinationFolder );
+    Assure.nonEmpty( "encoding", encoding );
+    _destinationFolder = destinationFolder;
+    _encoding = encoding;
+    _sourceFileName = sourceFileName;
+    _sourceFolder = sourceFolder;
   }
 
   /**
@@ -66,8 +77,8 @@ public class SourceFileImpl implements SourceFile {
    * @param destinationFolder
    *          the destination folder
    */
-  public SourceFileImpl(File sourceFolder, String sourceFileName, File destinationFolder) {
-    this(sourceFolder, sourceFileName, destinationFolder, System.getProperty(FILE_ENCODING_SYSTEM_PROPERTY));
+  public SourceFileImpl( File sourceFolder, String sourceFileName, File destinationFolder ) {
+    this( sourceFolder, sourceFileName, destinationFolder, System.getProperty( FILE_ENCODING_SYSTEM_PROPERTY ) );
   }
 
   /**
@@ -78,12 +89,12 @@ public class SourceFileImpl implements SourceFile {
    * @param sourceFolder
    * @param sourceFileName
    */
-  protected SourceFileImpl(File sourceFolder, String sourceFileName) {
-    Assure.isDirectory("sourceFolder", sourceFolder);
-    Assure.nonEmpty("sourceFileName", sourceFileName);
-    this._sourceFileName = sourceFileName;
-    this._sourceFolder = sourceFolder;
-    this._encoding = System.getProperty(FILE_ENCODING_SYSTEM_PROPERTY);
+  protected SourceFileImpl( File sourceFolder, String sourceFileName ) {
+    Assure.isDirectory( "sourceFolder", sourceFolder );
+    Assure.nonEmpty( "sourceFileName", sourceFileName );
+    _sourceFileName = sourceFileName;
+    _sourceFolder = sourceFolder;
+    _encoding = System.getProperty( FILE_ENCODING_SYSTEM_PROPERTY );
   }
 
   /**
@@ -91,7 +102,7 @@ public class SourceFileImpl implements SourceFile {
    */
   @Override
   public File getSourceFolder() {
-    return this._sourceFolder;
+    return _sourceFolder;
   }
 
   /**
@@ -99,7 +110,7 @@ public class SourceFileImpl implements SourceFile {
    */
   @Override
   public String getSourceFileName() {
-    return this._sourceFileName;
+    return _sourceFileName;
   }
 
   /**
@@ -107,7 +118,7 @@ public class SourceFileImpl implements SourceFile {
    */
   @Override
   public File getSourceFile() {
-    return new File(this._sourceFolder, this._sourceFileName);
+    return new File( _sourceFolder, _sourceFileName );
   }
 
   /**
@@ -115,7 +126,7 @@ public class SourceFileImpl implements SourceFile {
    */
   @Override
   public File getDestinationFolder() {
-    return this._destinationFolder;
+    return _destinationFolder;
   }
 
   /**
@@ -126,7 +137,7 @@ public class SourceFileImpl implements SourceFile {
    * @return <code>true</code> if a destination folder is set, <code>false</code> otherwise.
    */
   public boolean hasDestinationFolder() {
-    return this._destinationFolder != null;
+    return _destinationFolder != null;
   }
 
   /**
@@ -134,7 +145,7 @@ public class SourceFileImpl implements SourceFile {
    */
   @Override
   public String getEncoding() {
-    return this._encoding;
+    return _encoding;
   }
 
   /**
@@ -143,17 +154,17 @@ public class SourceFileImpl implements SourceFile {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[SourceFile:");
-    buffer.append(" _sourceFolder: ");
-    buffer.append(this._sourceFolder);
-    buffer.append(" _sourceFileName: ");
-    buffer.append(this._sourceFileName);
-    buffer.append(" _destinationFolder: ");
-    buffer.append(this._destinationFolder);
-    buffer.append(" _encoding: ");
-    buffer.append(this._encoding);
-    buffer.append("]");
+    buffer.append( "[SourceFile:" );
+    buffer.append( " _sourceFolder: " );
+    buffer.append( _sourceFolder );
+    buffer.append( " _sourceFileName: " );
+    buffer.append( _sourceFileName );
+    buffer.append( " _destinationFolder: " );
+    buffer.append( _destinationFolder );
+    buffer.append( " _encoding: " );
+    buffer.append( _encoding );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */

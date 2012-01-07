@@ -36,36 +36,37 @@ public class BuildOrderResolverTest extends ConfigurableAnt4EclipseTestCase {
   @Before
   public void setup() {
 
-    this._testWorkspace = new TestDirectory();
+    _testWorkspace = new TestDirectory();
 
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject1").createIn(this._testWorkspace.getRootDir());
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject2").withClasspathEntry(
-        "<classpathentry combineaccessrules=\"false\" kind=\"src\" path=\"/simpleproject1\"/>").createIn(
-        this._testWorkspace.getRootDir());
-    JdtProjectBuilder.getPreConfiguredJdtBuilder("simpleproject3").withClasspathEntry(
-        "<classpathentry combineaccessrules=\"false\" kind=\"src\" path=\"/simpleproject2\"/>").createIn(
-        this._testWorkspace.getRootDir());
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "simpleproject1" ).createIn( _testWorkspace.getRootDir() );
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "simpleproject2" )
+        .withClasspathEntry( "<classpathentry combineaccessrules=\"false\" kind=\"src\" path=\"/simpleproject1\"/>" )
+        .createIn( _testWorkspace.getRootDir() );
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "simpleproject3" )
+        .withClasspathEntry( "<classpathentry combineaccessrules=\"false\" kind=\"src\" path=\"/simpleproject2\"/>" )
+        .createIn( _testWorkspace.getRootDir() );
   }
 
   @After
   public void dispose() {
-    this._testWorkspace.dispose();
+    _testWorkspace.dispose();
   }
 
   @Test
   public void buildOrder() {
-    WorkspaceRegistry workspaceRegistry = A4ECore.instance().getRequiredService(WorkspaceRegistry.class);
-    Workspace workspace = workspaceRegistry.registerWorkspace(this._testWorkspace.getRootDir().getAbsolutePath(),
-        new DefaultEclipseWorkspaceDefinition(this._testWorkspace.getRootDir()));
+    WorkspaceRegistry workspaceRegistry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
+    Workspace workspace = workspaceRegistry.registerWorkspace( _testWorkspace.getRootDir().getAbsolutePath(),
+        new DefaultEclipseWorkspaceDefinition( _testWorkspace.getRootDir() ) );
 
     // List<EclipseProject> projects = ReferencedProjectsResolver.resolveReferencedProjects(workspace
     // .getProject("simpleproject3"), null);
 
-    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder(workspace, new String[] { "simpleproject3",
-        "simpleproject2" }, null, null);
+    List<EclipseProject> projects = BuildOrderResolver.resolveBuildOrder( workspace, new String[] { "simpleproject3",
+        "simpleproject2" }, null, null );
 
-    assertEquals(2, projects.size());
-    assertSame(workspace.getProject("simpleproject2"), projects.get(0));
-    assertSame(workspace.getProject("simpleproject3"), projects.get(1));
+    assertEquals( 2, projects.size() );
+    assertSame( workspace.getProject( "simpleproject2" ), projects.get( 0 ) );
+    assertSame( workspace.getProject( "simpleproject3" ), projects.get( 1 ) );
   }
-}
+  
+} /* ENDCLASS */

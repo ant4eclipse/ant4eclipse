@@ -32,60 +32,60 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class WorkspaceImpl implements Workspace {
+public class WorkspaceImpl implements Workspace {
 
   /** map with all the eclipse projects */
-  private Map<String, EclipseProject> _projects;
+  private Map<String,EclipseProject> _projects;
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasProject(String name) {
-    Assure.nonEmpty("name", name);
-    return this._projects.containsKey(name);
+  public boolean hasProject( String name ) {
+    Assure.nonEmpty( "name", name );
+    return _projects.containsKey( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public EclipseProject getProject(String name) {
-    Assure.nonEmpty("name", name);
-    return this._projects.get(name);
+  public EclipseProject getProject( String name ) {
+    Assure.nonEmpty( "name", name );
+    return _projects.get( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public EclipseProject[] getProjects(String[] names, boolean failOnMissingProjects) {
-    Assure.notNull("names", names);
+  public EclipseProject[] getProjects( String[] names, boolean failOnMissingProjects ) {
+    Assure.notNull( "names", names );
 
     // the result list with all the eclipse projects...
     List<EclipseProject> projects = new ArrayList<EclipseProject>();
 
     // iterate over the project names...
-    for (String name : names) {
+    for( String name : names ) {
       // get the eclipse project
-      EclipseProject project = getProject(name);
+      EclipseProject project = getProject( name );
 
       // handle project is null
-      if (project == null) {
-        if (failOnMissingProjects) {
-          throw new Ant4EclipseException(PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, name);
+      if( project == null ) {
+        if( failOnMissingProjects ) {
+          throw new Ant4EclipseException( PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, name );
         } else {
-          A4ELogging.debug("Specified project '%s' does not exist.", name);
+          A4ELogging.debug( "Specified project '%s' does not exist.", name );
         }
       }
       // add the project to the result list...
       else {
-        projects.add(project);
+        projects.add( project );
       }
     }
 
     // return the result
-    return projects.toArray(new EclipseProject[0]);
+    return projects.toArray( new EclipseProject[0] );
   }
 
   /**
@@ -93,30 +93,30 @@ public final class WorkspaceImpl implements Workspace {
    */
   @Override
   public EclipseProject[] getAllProjects() {
-    Collection<EclipseProject> projects = this._projects.values();
-    return projects.toArray(new EclipseProject[projects.size()]);
+    Collection<EclipseProject> projects = _projects.values();
+    return projects.toArray( new EclipseProject[projects.size()] );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public EclipseProject[] getAllProjects(Class<? extends ProjectRole> projectRole) {
-    Assure.notNull("projectRole", projectRole);
+  public EclipseProject[] getAllProjects( Class<? extends ProjectRole> projectRole ) {
+    Assure.notNull( "projectRole", projectRole );
     Assure
-        .assertTrue(ProjectRole.class.isAssignableFrom(projectRole), String.format(
-            "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(), ProjectRole.class
-                .getName()));
+        .assertTrue( ProjectRole.class.isAssignableFrom( projectRole ), String.format(
+            "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(),
+            ProjectRole.class.getName() ) );
 
     List<EclipseProject> result = new ArrayList<EclipseProject>();
-    Collection<EclipseProject> projects = this._projects.values();
-    for (EclipseProject eclipseProject : projects) {
-      if (eclipseProject.hasRole(projectRole)) {
-        result.add(eclipseProject);
+    Collection<EclipseProject> projects = _projects.values();
+    for( EclipseProject eclipseProject : projects ) {
+      if( eclipseProject.hasRole( projectRole ) ) {
+        result.add( eclipseProject );
       }
     }
 
-    return result.toArray(new EclipseProject[0]);
+    return result.toArray( new EclipseProject[0] );
   }
 
   /**
@@ -125,22 +125,22 @@ public final class WorkspaceImpl implements Workspace {
    * </p>
    */
   public WorkspaceImpl() {
-    this._projects = new Hashtable<String, EclipseProject>();
+    _projects = new Hashtable<String,EclipseProject>();
   }
 
-  public void registerEclipseProject(EclipseProject eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
+  public void registerEclipseProject( EclipseProject eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
 
     // we have to use the specified name here instead of the directory name
     String key = eclipseProject.getSpecifiedName();
 
-    if (this._projects.containsKey(key) && !eclipseProject.equals(this._projects.get(key))) {
+    if( _projects.containsKey( key ) && !eclipseProject.equals( _projects.get( key ) ) ) {
 
-      throw new Ant4EclipseException(PlatformExceptionCode.PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS,
-          this._projects.get(key), eclipseProject);
+      throw new Ant4EclipseException( PlatformExceptionCode.PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS,
+          _projects.get( key ), eclipseProject );
     }
 
-    this._projects.put(key, eclipseProject);
+    _projects.put( key, eclipseProject );
   }
 
   /**
@@ -150,7 +150,7 @@ public final class WorkspaceImpl implements Workspace {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((this._projects == null) ? 0 : this._projects.hashCode());
+    result = prime * result + ((_projects == null) ? 0 : _projects.hashCode());
     return result;
   }
 
@@ -158,24 +158,25 @@ public final class WorkspaceImpl implements Workspace {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
     WorkspaceImpl other = (WorkspaceImpl) obj;
-    if (this._projects == null) {
-      if (other._projects != null) {
+    if( _projects == null ) {
+      if( other._projects != null ) {
         return false;
       }
-    } else if (!this._projects.equals(other._projects)) {
+    } else if( !_projects.equals( other._projects ) ) {
       return false;
     }
     return true;
   }
+  
 } /* ENDCLASS */

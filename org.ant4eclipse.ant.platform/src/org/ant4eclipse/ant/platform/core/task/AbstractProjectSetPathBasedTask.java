@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.task;
 
-
 import org.ant4eclipse.ant.platform.core.PathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.PathDelegate;
 import org.apache.tools.ant.types.Path;
@@ -39,7 +38,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
     super();
 
     // create the path delegate
-    this._pathDelegate = new PathDelegate( this );
+    _pathDelegate = new PathDelegate( this );
   }
 
   /**
@@ -47,7 +46,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final String getDirSeparator() {
-    return this._pathDelegate.getDirSeparator();
+    return _pathDelegate.getDirSeparator();
   }
 
   /**
@@ -55,7 +54,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final String getPathSeparator() {
-    return this._pathDelegate.getPathSeparator();
+    return _pathDelegate.getPathSeparator();
   }
 
   /**
@@ -63,7 +62,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final boolean isDirSeparatorSet() {
-    return this._pathDelegate.isDirSeparatorSet();
+    return _pathDelegate.isDirSeparatorSet();
   }
 
   /**
@@ -71,7 +70,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final boolean isPathSeparatorSet() {
-    return this._pathDelegate.isPathSeparatorSet();
+    return _pathDelegate.isPathSeparatorSet();
   }
 
   /**
@@ -79,7 +78,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final void setDirSeparator( String newdirseparator ) {
-    this._pathDelegate.setDirSeparator( newdirseparator );
+    _pathDelegate.setDirSeparator( newdirseparator );
   }
 
   /**
@@ -87,7 +86,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final void setPathSeparator( String newpathseparator ) {
-    this._pathDelegate.setPathSeparator( newpathseparator );
+    _pathDelegate.setPathSeparator( newpathseparator );
   }
 
   /**
@@ -95,7 +94,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final Path convertToPath( File[] entries ) {
-    return this._pathDelegate.convertToPath( entries );
+    return _pathDelegate.convertToPath( entries );
   }
 
   /**
@@ -103,7 +102,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final String convertToString( File[] entries ) {
-    return this._pathDelegate.convertToString( entries );
+    return _pathDelegate.convertToString( entries );
   }
 
   /**
@@ -111,7 +110,7 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final Path convertToPath( File entry ) {
-    return this._pathDelegate.convertToPath( entry );
+    return _pathDelegate.convertToPath( entry );
   }
 
   /**
@@ -119,14 +118,14 @@ public abstract class AbstractProjectSetPathBasedTask extends AbstractProjectSet
    */
   @Override
   public final String convertToString( File entry ) {
-    return this._pathDelegate.convertToString( entry );
+    return _pathDelegate.convertToString( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   public PathDelegate getPathDelegate() {
-    return this._pathDelegate;
+    return _pathDelegate;
   }
   
 } /* ENDCLASS */

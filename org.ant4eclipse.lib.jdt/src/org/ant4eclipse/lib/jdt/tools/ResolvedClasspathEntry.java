@@ -50,8 +50,8 @@ public class ResolvedClasspathEntry {
    * @param sourcePathEntries
    *          the source path entries
    */
-  public ResolvedClasspathEntry(File[] classPathEntries, File[] sourcePathEntries) {
-    this(classPathEntries, null, sourcePathEntries);
+  public ResolvedClasspathEntry( File[] classPathEntries, File[] sourcePathEntries ) {
+    this( classPathEntries, null, sourcePathEntries );
   }
 
   /**
@@ -66,12 +66,13 @@ public class ResolvedClasspathEntry {
    * @param sourcePathEntries
    *          the source path entries
    */
-  public ResolvedClasspathEntry(File[] classPathEntries, AccessRestrictions accessRestrictions, File[] sourcePathEntries) {
-    Assure.notNull("classPathEntries", classPathEntries);
+  public ResolvedClasspathEntry( File[] classPathEntries, AccessRestrictions accessRestrictions,
+      File[] sourcePathEntries ) {
+    Assure.notNull( "classPathEntries", classPathEntries );
 
-    this._classPathEntries = classPathEntries;
-    this._accessRestrictions = accessRestrictions;
-    this._sourcePathEntries = sourcePathEntries;
+    _classPathEntries = classPathEntries;
+    _accessRestrictions = accessRestrictions;
+    _sourcePathEntries = sourcePathEntries;
   }
 
   /**
@@ -82,8 +83,8 @@ public class ResolvedClasspathEntry {
    * @param entries
    * @param accessRestrictions
    */
-  public ResolvedClasspathEntry(File[] entries, AccessRestrictions accessRestrictions) {
-    this(entries, accessRestrictions, null);
+  public ResolvedClasspathEntry( File[] entries, AccessRestrictions accessRestrictions ) {
+    this( entries, accessRestrictions, null );
   }
 
   /**
@@ -94,8 +95,8 @@ public class ResolvedClasspathEntry {
    * @param entry
    * @param accessRestrictions
    */
-  public ResolvedClasspathEntry(File entry, AccessRestrictions accessRestrictions) {
-    this(new File[] { entry }, accessRestrictions);
+  public ResolvedClasspathEntry( File entry, AccessRestrictions accessRestrictions ) {
+    this( new File[] { entry }, accessRestrictions );
   }
 
   /**
@@ -106,8 +107,8 @@ public class ResolvedClasspathEntry {
    * @param classPathEntries
    *          the file entries
    */
-  public ResolvedClasspathEntry(File[] classPathEntries) {
-    this(classPathEntries, (AccessRestrictions) null);
+  public ResolvedClasspathEntry( File[] classPathEntries ) {
+    this( classPathEntries, (AccessRestrictions) null );
   }
 
   /**
@@ -118,8 +119,8 @@ public class ResolvedClasspathEntry {
    * @param classPathEntry
    *          the class path entry
    */
-  public ResolvedClasspathEntry(File classPathEntry) {
-    this(new File[] { classPathEntry }, (AccessRestrictions) null);
+  public ResolvedClasspathEntry( File classPathEntry ) {
+    this( new File[] { classPathEntry }, (AccessRestrictions) null );
   }
 
   /**
@@ -130,7 +131,7 @@ public class ResolvedClasspathEntry {
    * @return all file entries for this class path entry.
    */
   public File[] getClassPathEntries() {
-    return this._classPathEntries;
+    return _classPathEntries;
   }
 
   /**
@@ -143,7 +144,7 @@ public class ResolvedClasspathEntry {
    *         will be returned instead.
    */
   public File[] getSourcePathEntries() {
-    return this._sourcePathEntries;
+    return _sourcePathEntries;
   }
 
   /**
@@ -154,7 +155,7 @@ public class ResolvedClasspathEntry {
    * @return <code>true</code> if this entry has source path entries attached.
    */
   public boolean hasSourcePathEntries() {
-    return this._sourcePathEntries != null && this._sourcePathEntries.length > 0;
+    return _sourcePathEntries != null && _sourcePathEntries.length > 0;
   }
 
   /**
@@ -165,7 +166,7 @@ public class ResolvedClasspathEntry {
    * @return the {@link AccessRestrictions}.
    */
   public AccessRestrictions getAccessRestrictions() {
-    return this._accessRestrictions;
+    return _accessRestrictions;
   }
 
   /**
@@ -176,7 +177,7 @@ public class ResolvedClasspathEntry {
    * @return <code>true</code>, if the class path entry contains {@link AccessRestrictions}.
    */
   public boolean hasAccessRestrictions() {
-    return this._accessRestrictions != null;
+    return _accessRestrictions != null;
   }
 
   /**
@@ -186,9 +187,9 @@ public class ResolvedClasspathEntry {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((this._accessRestrictions == null) ? 0 : this._accessRestrictions.hashCode());
-    result = prime * result + ResolvedClasspathEntry.hashCode(this._classPathEntries);
-    result = prime * result + ResolvedClasspathEntry.hashCode(this._sourcePathEntries);
+    result = prime * result + ((_accessRestrictions == null) ? 0 : _accessRestrictions.hashCode());
+    result = prime * result + ResolvedClasspathEntry.hashCode( _classPathEntries );
+    result = prime * result + ResolvedClasspathEntry.hashCode( _sourcePathEntries );
     return result;
   }
 
@@ -196,28 +197,28 @@ public class ResolvedClasspathEntry {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
     ResolvedClasspathEntry other = (ResolvedClasspathEntry) obj;
-    if (this._accessRestrictions == null) {
-      if (other._accessRestrictions != null) {
+    if( _accessRestrictions == null ) {
+      if( other._accessRestrictions != null ) {
         return false;
       }
-    } else if (!this._accessRestrictions.equals(other._accessRestrictions)) {
+    } else if( !_accessRestrictions.equals( other._accessRestrictions ) ) {
       return false;
     }
-    if (!Arrays.equals(this._classPathEntries, other._classPathEntries)) {
+    if( !Arrays.equals( _classPathEntries, other._classPathEntries ) ) {
       return false;
     }
-    if (!Arrays.equals(this._sourcePathEntries, other._sourcePathEntries)) {
+    if( !Arrays.equals( _sourcePathEntries, other._sourcePathEntries ) ) {
       return false;
     }
     return true;
@@ -232,13 +233,13 @@ public class ResolvedClasspathEntry {
    *          the array.
    * @return the hash code of an array of objects.
    */
-  private static int hashCode(Object[] array) {
+  private static int hashCode( Object[] array ) {
     int prime = 31;
-    if (array == null) {
+    if( array == null ) {
       return 0;
     }
     int result = 1;
-    for (Object element : array) {
+    for( Object element : array ) {
       result = prime * result + (element == null ? 0 : element.hashCode());
     }
     return result;
@@ -250,22 +251,22 @@ public class ResolvedClasspathEntry {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ResolvedClasspathEntry:");
-    buffer.append(" { ");
-    for (int i0 = 0; (this._classPathEntries != null) && (i0 < this._classPathEntries.length); i0++) {
-      buffer.append(" _classPathEntries[" + i0 + "]: ");
-      buffer.append(this._classPathEntries[i0]);
+    buffer.append( "[ResolvedClasspathEntry:" );
+    buffer.append( " { " );
+    for( int i0 = 0; (_classPathEntries != null) && (i0 < _classPathEntries.length); i0++ ) {
+      buffer.append( " _classPathEntries[" + i0 + "]: " );
+      buffer.append( _classPathEntries[i0] );
     }
-    buffer.append(" } ");
-    buffer.append(" { ");
-    for (int i0 = 0; (this._sourcePathEntries != null) && (i0 < this._sourcePathEntries.length); i0++) {
-      buffer.append(" _sourcePathEntries[" + i0 + "]: ");
-      buffer.append(this._sourcePathEntries[i0]);
+    buffer.append( " } " );
+    buffer.append( " { " );
+    for( int i0 = 0; (_sourcePathEntries != null) && (i0 < _sourcePathEntries.length); i0++ ) {
+      buffer.append( " _sourcePathEntries[" + i0 + "]: " );
+      buffer.append( _sourcePathEntries[i0] );
     }
-    buffer.append(" } ");
-    buffer.append(" _accessRestrictions: ");
-    buffer.append(this._accessRestrictions);
-    buffer.append("]");
+    buffer.append( " } " );
+    buffer.append( " _accessRestrictions: " );
+    buffer.append( _accessRestrictions );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -294,8 +295,8 @@ public class ResolvedClasspathEntry {
      * 
      */
     public AccessRestrictions() {
-      this._publicPackages = new LinkedHashSet<String>();
-      this._privatePackages = new LinkedHashSet<String>();
+      _publicPackages = new LinkedHashSet<String>();
+      _privatePackages = new LinkedHashSet<String>();
     }
 
     /**
@@ -310,14 +311,14 @@ public class ResolvedClasspathEntry {
      * @param excludeAll
      *          indicates if everything should be excluded by default
      */
-    public AccessRestrictions(Set<String> publicPackages, Set<String> privatePackages, boolean excludeAll) {
+    public AccessRestrictions( Set<String> publicPackages, Set<String> privatePackages, boolean excludeAll ) {
 
       // TODO
       // AE-67: Support for types (exclusion/inclusion of classes/interfaces)
 
-      this._publicPackages = publicPackages;
-      this._privatePackages = privatePackages;
-      this._excludeAll = excludeAll;
+      _publicPackages = publicPackages;
+      _privatePackages = privatePackages;
+      _excludeAll = excludeAll;
     }
 
     /**
@@ -328,7 +329,7 @@ public class ResolvedClasspathEntry {
      * @return <code>true</code> if every packages is excluded by default.
      */
     public boolean isExcludeAll() {
-      return this._excludeAll;
+      return _excludeAll;
     }
 
     /**
@@ -339,8 +340,8 @@ public class ResolvedClasspathEntry {
      * @param name
      *          the name of the public package.
      */
-    public void addPublicPackage(String name) {
-      this._publicPackages.add(name);
+    public void addPublicPackage( String name ) {
+      _publicPackages.add( name );
     }
 
     /**
@@ -351,8 +352,8 @@ public class ResolvedClasspathEntry {
      * @param name
      *          the name of the private package.
      */
-    public void addPrivatePackage(String name) {
-      this._privatePackages.add(name);
+    public void addPrivatePackage( String name ) {
+      _privatePackages.add( name );
     }
 
     /**
@@ -363,7 +364,7 @@ public class ResolvedClasspathEntry {
      * @return all public packages.
      */
     public Set<String> getPublicPackages() {
-      return this._publicPackages;
+      return _publicPackages;
     }
 
     /**
@@ -374,7 +375,7 @@ public class ResolvedClasspathEntry {
      * @return all private packages.
      */
     public Set<String> getPrivatePackages() {
-      return this._privatePackages;
+      return _privatePackages;
     }
 
     /**
@@ -388,24 +389,24 @@ public class ResolvedClasspathEntry {
       StringBuffer result = new StringBuffer();
 
       // format public packages
-      for (String publicPackage : this._publicPackages) {
-        result.append("+");
-        result.append(publicPackage.replace('.', '/'));
-        result.append("/*;");
+      for( String publicPackage : _publicPackages ) {
+        result.append( "+" );
+        result.append( publicPackage.replace( '.', '/' ) );
+        result.append( "/*;" );
       }
 
       // format private packages
-      for (String privatePackage : this._privatePackages) {
-        result.append("-");
-        result.append(privatePackage.replace('.', '/'));
-        result.append("/*;");
+      for( String privatePackage : _privatePackages ) {
+        result.append( "-" );
+        result.append( privatePackage.replace( '.', '/' ) );
+        result.append( "/*;" );
       }
 
       // exclude/include all
-      if (this._excludeAll) {
-        result.append("-**/*");
+      if( _excludeAll ) {
+        result.append( "-**/*" );
       } else {
-        result.append("+**/*");
+        result.append( "+**/*" );
       }
 
       // return result
@@ -418,16 +419,17 @@ public class ResolvedClasspathEntry {
     @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("[AccessRestrictions:");
-      buffer.append(" _excludeAll: ");
-      buffer.append(this._excludeAll);
-      buffer.append(" _publicPackages: ");
-      buffer.append(this._publicPackages);
-      buffer.append(" _privatePackages: ");
-      buffer.append(this._privatePackages);
-      buffer.append("]");
+      buffer.append( "[AccessRestrictions:" );
+      buffer.append( " _excludeAll: " );
+      buffer.append( _excludeAll );
+      buffer.append( " _publicPackages: " );
+      buffer.append( _publicPackages );
+      buffer.append( " _privatePackages: " );
+      buffer.append( _privatePackages );
+      buffer.append( "]" );
       return buffer.toString();
     }
 
   }
-}
+
+} /* ENDCLASS */

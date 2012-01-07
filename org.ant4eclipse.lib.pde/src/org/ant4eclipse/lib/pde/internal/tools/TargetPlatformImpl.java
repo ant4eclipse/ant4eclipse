@@ -51,7 +51,7 @@ import java.util.Properties;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public final class TargetPlatformImpl implements TargetPlatform {
+public class TargetPlatformImpl implements TargetPlatform {
 
   /** the bundle set that contains the plug-in projects */
   private BundleAndFeatureSet       _pluginProjectSet;
@@ -82,24 +82,24 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param targetlocations
    *          a list of all targetplatform locations providing the bundles. Neither <code>null</code> nor empty.
    */
-  public TargetPlatformImpl(BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
-      PlatformConfiguration configuration, File[] targetlocations) {
-    Assure.notNull("configuration", configuration);
+  public TargetPlatformImpl( BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
+      PlatformConfiguration configuration, File[] targetlocations ) {
+    Assure.notNull( "configuration", configuration );
 
     // set the plug-in project set
-    this._pluginProjectSet = pluginProjectSet;
+    _pluginProjectSet = pluginProjectSet;
 
     // set the binary bundle sets
-    if (binaryBundleSets != null) {
-      this._binaryBundleSets = Arrays.asList(binaryBundleSets);
+    if( binaryBundleSets != null ) {
+      _binaryBundleSets = Arrays.asList( binaryBundleSets );
     } else {
-      this._binaryBundleSets = new ArrayList<BundleAndFeatureSet>();
+      _binaryBundleSets = new ArrayList<BundleAndFeatureSet>();
     }
 
     // set the configuration
-    this._configuration = configuration;
+    _configuration = configuration;
 
-    this._targetplatformLocations = targetlocations;
+    _targetplatformLocations = targetlocations;
 
     // initialize
     initialize();
@@ -110,7 +110,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   @Override
   public File[] getLocations() {
-    return this._targetplatformLocations;
+    return _targetplatformLocations;
   }
 
   /**
@@ -118,15 +118,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   @Override
   public PlatformConfiguration getTargetPlatformConfiguration() {
-    return this._configuration;
+    return _configuration;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public BundleDescription getResolvedBundle(String symbolicName, Version version) {
-    return this._state.getBundle(symbolicName, version);
+  public BundleDescription getResolvedBundle( String symbolicName, Version version ) {
+    return _state.getBundle( symbolicName, version );
   }
 
   /**
@@ -139,31 +139,31 @@ public final class TargetPlatformImpl implements TargetPlatform {
     List<BundleDescription> bundleDescriptions = new ArrayList<BundleDescription>();
 
     // iterate over all descriptions
-    for (BundleDescription description : this._state.getBundles()) {
-      ResolverError[] errors = this._state.getResolverErrors(description);
-      if (errors != null && errors.length > 0) {
-        bundleDescriptions.add(description);
+    for( BundleDescription description : _state.getBundles() ) {
+      ResolverError[] errors = _state.getResolverErrors( description );
+      if( errors != null && errors.length > 0 ) {
+        bundleDescriptions.add( description );
       }
     }
 
-    return bundleDescriptions.toArray(new BundleDescription[0]);
+    return bundleDescriptions.toArray( new BundleDescription[0] );
   }
 
   /**
    * {@inheritDoc}
    */
   private void initialize() {
-    if (this._state == null) {
+    if( _state == null ) {
 
-      if (this._pluginProjectSet != null) {
-        this._pluginProjectSet.initialize();
+      if( _pluginProjectSet != null ) {
+        _pluginProjectSet.initialize();
       }
 
-      for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+      for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
         bundleSet.initialize();
       }
 
-      this._state = resolve();
+      _state = resolve();
     }
   }
 
@@ -173,15 +173,15 @@ public final class TargetPlatformImpl implements TargetPlatform {
   @Override
   public void refresh() {
 
-    if (this._pluginProjectSet != null) {
-      this._pluginProjectSet.refresh();
+    if( _pluginProjectSet != null ) {
+      _pluginProjectSet.refresh();
     }
 
-    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+    for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
       bundleSet.refresh();
     }
 
-    this._state = resolve();
+    _state = resolve();
   }
 
   /**
@@ -195,25 +195,25 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @return a list with a {@link BundleDescription BundleDescriptions} of each bundle that is contained in the plug-in
    *         project set or the binary bundle sets.
    */
-  private List<BundleDescription> getAllBundleDescriptions(boolean preferProjects) {
+  private List<BundleDescription> getAllBundleDescriptions( boolean preferProjects ) {
 
     // step 1: create the result list
     List<BundleDescription> result = new ArrayList<BundleDescription>();
 
     // step 2: add plug-in projects from the plug-in projects list to the result
-    if (this._pluginProjectSet != null) {
-      result.addAll(this._pluginProjectSet.getAllBundleDescriptions());
+    if( _pluginProjectSet != null ) {
+      result.addAll( _pluginProjectSet.getAllBundleDescriptions() );
     }
 
     // step 3: add bundles from binary bundle sets to the result
-    for (BundleAndFeatureSet binaryBundleSet : this._binaryBundleSets) {
+    for( BundleAndFeatureSet binaryBundleSet : _binaryBundleSets ) {
 
-      for (BundleDescription bundleDescription : binaryBundleSet.getAllBundleDescriptions()) {
-        if ((this._pluginProjectSet != null) && preferProjects
-            && this._pluginProjectSet.containsBundle(bundleDescription.getSymbolicName())) {
+      for( BundleDescription bundleDescription : binaryBundleSet.getAllBundleDescriptions() ) {
+        if( (_pluginProjectSet != null) && preferProjects
+            && _pluginProjectSet.containsBundle( bundleDescription.getSymbolicName() ) ) {
           // TODO: WARNING AUSGEBEN?
         } else {
-          result.add(bundleDescription);
+          result.add( bundleDescription );
         }
       }
     }
@@ -226,33 +226,33 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public FeatureDescription getFeatureDescription(String id, Version version) {
-    Assure.nonEmpty("id", id);
+  public FeatureDescription getFeatureDescription( String id, Version version ) {
+    Assure.nonEmpty( "id", id );
 
-    if (version == null) {
-      return getFeatureDescription(id);
+    if( version == null ) {
+      return getFeatureDescription( id );
     }
 
-    if (version.equals(Version.emptyVersion)) {
-      return getFeatureDescription(id);
+    if( version.equals( Version.emptyVersion ) ) {
+      return getFeatureDescription( id );
     }
 
     //
-    FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id, version);
+    FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription( id, version );
 
     //
-    if (featureDescription != null) {
+    if( featureDescription != null ) {
       return featureDescription;
     }
 
-    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
-      featureDescription = bundleSet.getFeatureDescription(id, version);
-      if (featureDescription != null) {
+    for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
+      featureDescription = bundleSet.getFeatureDescription( id, version );
+      if( featureDescription != null ) {
         return featureDescription;
       }
     }
     // TODO
-    A4ELogging.error("Could not resolve feature '%s' in version '%s'.", id, version);
+    A4ELogging.error( "Could not resolve feature '%s' in version '%s'.", id, version );
     //
     return null;
   }
@@ -261,22 +261,22 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public boolean hasFeatureDescription(String id, Version version) {
-    return getFeatureDescription(id, version) != null;
+  public boolean hasFeatureDescription( String id, Version version ) {
+    return getFeatureDescription( id, version ) != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public FeatureDescription getFeatureDescription(String id) {
-    Assure.nonEmpty("id", id);
+  public FeatureDescription getFeatureDescription( String id ) {
+    Assure.nonEmpty( "id", id );
 
     //
-    FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
+    FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription( id );
 
     //
-    if (featureDescription != null) {
+    if( featureDescription != null ) {
       return featureDescription;
     }
 
@@ -284,18 +284,18 @@ public final class TargetPlatformImpl implements TargetPlatform {
     FeatureDescription result = null;
 
     // iterate over feature descriptions
-    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+    for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
 
       // get the feature manifest
-      featureDescription = bundleSet.getFeatureDescription(id);
+      featureDescription = bundleSet.getFeatureDescription( id );
 
       // if match -> set as result
-      if (featureDescription != null && featureDescription.getFeatureManifest().getId().equals(id)) {
-        if (result == null) {
+      if( featureDescription != null && featureDescription.getFeatureManifest().getId().equals( id ) ) {
+        if( result == null ) {
           result = featureDescription;
         } else {
           // the current feature description has a higher version, so use this one
-          if (result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+          if( result.getFeatureManifest().getVersion().compareTo( featureDescription.getFeatureManifest().getVersion() ) < 0 ) {
             result = featureDescription;
           }
         }
@@ -310,23 +310,23 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public boolean hasFeatureDescription(String id) {
-    return getFeatureDescription(id) != null;
+  public boolean hasFeatureDescription( String id ) {
+    return getFeatureDescription( id ) != null;
   }
 
   @Override
-  public boolean matchesPlatformFilter(String id) {
+  public boolean matchesPlatformFilter( String id ) {
     try {
 
       //
-      BundleDescription bundleDescription = getBundleDescription(id);
-      if (bundleDescription == null) {
+      BundleDescription bundleDescription = getBundleDescription( id );
+      if( bundleDescription == null ) {
         return true;
       }
 
       //
       String platformFilter = bundleDescription.getPlatformFilter();
-      if (platformFilter == null) {
+      if( platformFilter == null ) {
         return true;
       }
 
@@ -335,13 +335,13 @@ public final class TargetPlatformImpl implements TargetPlatform {
       String ws = getTargetPlatformConfiguration().getWindowingSystem();
 
       Properties dictionary = new Properties();
-      dictionary.put("osgi.ws", ws);
-      dictionary.put("osgi.os", os);
-      dictionary.put("osgi.arch", arch);
+      dictionary.put( "osgi.ws", ws );
+      dictionary.put( "osgi.os", os );
+      dictionary.put( "osgi.arch", arch );
 
-      Filter filter = FrameworkUtil.createFilter(platformFilter);
-      return filter.match(dictionary);
-    } catch (InvalidSyntaxException e) {
+      Filter filter = FrameworkUtil.createFilter( platformFilter );
+      return filter.match( dictionary );
+    } catch( InvalidSyntaxException e ) {
       e.printStackTrace();
       return false;
     }
@@ -351,14 +351,14 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public BundleDescription getBundleDescription(String id) {
-    Assure.nonEmpty("id", id);
+  public BundleDescription getBundleDescription( String id ) {
+    Assure.nonEmpty( "id", id );
 
     //
-    BundleDescription bundleDescription = this._pluginProjectSet.getBundleDescription(id);
+    BundleDescription bundleDescription = _pluginProjectSet.getBundleDescription( id );
 
     //
-    if (bundleDescription != null) {
+    if( bundleDescription != null ) {
       return bundleDescription;
     }
 
@@ -366,18 +366,18 @@ public final class TargetPlatformImpl implements TargetPlatform {
     BundleDescription result = null;
 
     // iterate over feature descriptions
-    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+    for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
 
       // get the feature manifest
-      bundleDescription = bundleSet.getBundleDescription(id);
+      bundleDescription = bundleSet.getBundleDescription( id );
 
       // if match -> set as result
-      if (bundleDescription != null) {
-        if (result == null) {
+      if( bundleDescription != null ) {
+        if( result == null ) {
           result = bundleDescription;
         } else {
           // the current bundle description has a higher version, so use this one
-          if (result.getVersion().compareTo(bundleDescription.getVersion()) < 0) {
+          if( result.getVersion().compareTo( bundleDescription.getVersion() ) < 0 ) {
             result = bundleDescription;
           }
         }
@@ -391,37 +391,37 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public BundleDescription getBundleDescriptionFromWorkspace(String symbolicName) {
-    Assure.nonEmpty("symbolicName", symbolicName);
+  public BundleDescription getBundleDescriptionFromWorkspace( String symbolicName ) {
+    Assure.nonEmpty( "symbolicName", symbolicName );
 
     //
-    return this._pluginProjectSet.getBundleDescription(symbolicName);
+    return _pluginProjectSet.getBundleDescription( symbolicName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public BundleDescription getBundleDescriptionFromBinaryBundles(String symbolicName) {
-    Assure.nonEmpty("symbolicName", symbolicName);
+  public BundleDescription getBundleDescriptionFromBinaryBundles( String symbolicName ) {
+    Assure.nonEmpty( "symbolicName", symbolicName );
 
     //
     BundleDescription bundleDescription = null;
     BundleDescription result = null;
 
     // iterate over feature descriptions
-    for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
+    for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
 
       // get the feature manifest
-      bundleDescription = bundleSet.getBundleDescription(symbolicName);
+      bundleDescription = bundleSet.getBundleDescription( symbolicName );
 
       // if match -> set as result
-      if (bundleDescription != null) {
-        if (result == null) {
+      if( bundleDescription != null ) {
+        if( result == null ) {
           result = bundleDescription;
         } else {
           // the current bundle description has a higher version, so use this one
-          if (result.getVersion().compareTo(bundleDescription.getVersion()) < 0) {
+          if( result.getVersion().compareTo( bundleDescription.getVersion() ) < 0 ) {
             result = bundleDescription;
           }
         }
@@ -435,23 +435,23 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   @Override
-  public boolean hasBundleDescription(String id) {
-    return getBundleDescription(id) != null;
+  public boolean hasBundleDescription( String id ) {
+    return getBundleDescription( id ) != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ResolvedFeature resolveFeature(Object source, FeatureManifest manifest) {
-    Assure.notNull("source", source);
-    Assure.notNull("manifest", manifest);
+  public ResolvedFeature resolveFeature( Object source, FeatureManifest manifest ) {
+    Assure.notNull( "source", source );
+    Assure.notNull( "manifest", manifest );
 
-    ResolvedFeature resolvedFeature = new ResolvedFeature(source, manifest);
+    ResolvedFeature resolvedFeature = new ResolvedFeature( source, manifest );
 
-    resolvePlugins(manifest, resolvedFeature);
+    resolvePlugins( manifest, resolvedFeature );
 
-    resolveIncludes(manifest, resolvedFeature);
+    resolveIncludes( manifest, resolvedFeature );
 
     // 6.3 return result
     return resolvedFeature;
@@ -464,33 +464,33 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param manifest
    * @param resolvedFeature
    */
-  private void resolveIncludes(FeatureManifest manifest, ResolvedFeature resolvedFeature) {
+  private void resolveIncludes( FeatureManifest manifest, ResolvedFeature resolvedFeature ) {
 
     // TODO: DependencyGraph!!
-    List<Pair<Includes, FeatureDescription>> result = new ArrayList<Pair<Includes, FeatureDescription>>();
+    List<Pair<Includes,FeatureDescription>> result = new ArrayList<Pair<Includes,FeatureDescription>>();
 
-    for (Includes includes : manifest.getIncludes()) {
+    for( Includes includes : manifest.getIncludes() ) {
 
-      if (matches(includes.getOperatingSystem(), includes.getMachineArchitecture(), includes.getWindowingSystem(),
-          includes.getLocale())) {
+      if( matches( includes.getOperatingSystem(), includes.getMachineArchitecture(), includes.getWindowingSystem(),
+          includes.getLocale() ) ) {
 
         FeatureDescription featureDescription = null;
-        if (includes.getVersion().equals(Version.emptyVersion)) {
-          featureDescription = getFeatureDescription(includes.getId());
+        if( includes.getVersion().equals( Version.emptyVersion ) ) {
+          featureDescription = getFeatureDescription( includes.getId() );
         } else {
-          featureDescription = getFeatureDescription(includes.getId(), includes.getVersion());
+          featureDescription = getFeatureDescription( includes.getId(), includes.getVersion() );
         }
-        if (featureDescription == null) {
+        if( featureDescription == null ) {
           // TODO: NLS
-          throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_"
-              + includes.getVersion() + "'.");
+          throw new RuntimeException( "No Feature found for included feature '" + includes.getId() + "_"
+              + includes.getVersion() + "'." );
         } else {
-          result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
+          result.add( new Pair<Includes,FeatureDescription>( includes, featureDescription ) );
         }
       }
     }
 
-    resolvedFeature.setIncludesToFeatureDescriptionList(result);
+    resolvedFeature.setIncludesToFeatureDescriptionList( result );
   }
 
   /**
@@ -501,62 +501,62 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param resolvedFeature
    * @throws BuildException
    */
-  private void resolvePlugins(FeatureManifest manifest, ResolvedFeature resolvedFeature) {
+  private void resolvePlugins( FeatureManifest manifest, ResolvedFeature resolvedFeature ) {
 
     // 4. Retrieve BundlesDescriptions for feature plug-ins
-    Map<BundleDescription, Plugin> map = new HashMap<BundleDescription, Plugin>();
+    Map<BundleDescription,Plugin> map = new HashMap<BundleDescription,Plugin>();
     List<BundleDescription> bundleDescriptions = new ArrayList<BundleDescription>();
 
-    for (Plugin plugin : manifest.getPlugins()) {
+    for( Plugin plugin : manifest.getPlugins() ) {
 
-      if (matches(plugin.getOperatingSystem(), plugin.getMachineArchitecture(), plugin.getWindowingSystem(),
-          plugin.getLocale())) {
+      if( matches( plugin.getOperatingSystem(), plugin.getMachineArchitecture(), plugin.getWindowingSystem(),
+          plugin.getLocale() ) ) {
 
         // if a plug-in reference uses a version, the exact version must be found in the workspace
         // if a plug-in reference specifies "0.0.0" as version, the newest plug-in found will be used
-        BundleDescription bundleDescription = this._state.getBundle(plugin.getId(),
-            plugin.getVersion().equals(Version.emptyVersion) ? null : plugin.getVersion());
+        BundleDescription bundleDescription = _state.getBundle( plugin.getId(),
+            plugin.getVersion().equals( Version.emptyVersion ) ? null : plugin.getVersion() );
         // TODO: NLS
-        if (bundleDescription == null) {
-          throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, plugin.getId(),
-              plugin.getVersion());
+        if( bundleDescription == null ) {
+          throw new Ant4EclipseException( PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, plugin.getId(),
+              plugin.getVersion() );
         }
         // TODO: NLS
-        if (!bundleDescription.isResolved()) {
-          if (!TargetPlatformImpl.platformFilterDoesNotMatch(bundleDescription)) {
-            String resolverErrors = TargetPlatformImpl.dumpResolverErrors(bundleDescription, true);
-            String bundleInfo = TargetPlatformImpl.getBundleInfo(bundleDescription);
-            throw new RuntimeException(String.format("Bundle '%s' is not resolved. Reason:\n%s", bundleInfo,
-                resolverErrors));
+        if( !bundleDescription.isResolved() ) {
+          if( !TargetPlatformImpl.platformFilterDoesNotMatch( bundleDescription ) ) {
+            String resolverErrors = TargetPlatformImpl.dumpResolverErrors( bundleDescription, true );
+            String bundleInfo = TargetPlatformImpl.getBundleInfo( bundleDescription );
+            throw new RuntimeException( String.format( "Bundle '%s' is not resolved. Reason:\n%s", bundleInfo,
+                resolverErrors ) );
           }
         } else {
-          bundleDescriptions.add(bundleDescription);
-          map.put(bundleDescription, plugin);
+          bundleDescriptions.add( bundleDescription );
+          map.put( bundleDescription, plugin );
         }
       }
     }
 
     // 5. Sort the bundles
-    BundleDescription[] sortedbundleDescriptions = bundleDescriptions.toArray(new BundleDescription[0]);
-    Object[][] cycles = this._state.getStateHelper().sortBundles(sortedbundleDescriptions);
+    BundleDescription[] sortedbundleDescriptions = bundleDescriptions.toArray( new BundleDescription[0] );
+    Object[][] cycles = _state.getStateHelper().sortBundles( sortedbundleDescriptions );
     // warn on circular dependencies
-    if ((cycles != null) && (cycles.length > 0)) {
+    if( (cycles != null) && (cycles.length > 0) ) {
       // TODO: better error messages
-      A4ELogging.warn("Detected circular dependencies:");
-      for (Object[] cycle : cycles) {
-        A4ELogging.warn(Arrays.asList(cycle).toString());
+      A4ELogging.warn( "Detected circular dependencies:" );
+      for( Object[] cycle : cycles ) {
+        A4ELogging.warn( Arrays.asList( cycle ).toString() );
       }
     }
 
     // 6.1 create result
-    List<Pair<Plugin, BundleDescription>> result = new ArrayList<Pair<Plugin, BundleDescription>>();
-    for (BundleDescription bundleDescription : sortedbundleDescriptions) {
-      Pair<Plugin, BundleDescription> pair = new Pair<Plugin, BundleDescription>(map.get(bundleDescription),
-          bundleDescription);
-      result.add(pair);
+    List<Pair<Plugin,BundleDescription>> result = new ArrayList<Pair<Plugin,BundleDescription>>();
+    for( BundleDescription bundleDescription : sortedbundleDescriptions ) {
+      Pair<Plugin,BundleDescription> pair = new Pair<Plugin,BundleDescription>( map.get( bundleDescription ),
+          bundleDescription );
+      result.add( pair );
     }
 
-    resolvedFeature.setPluginToBundleDescptionList(result);
+    resolvedFeature.setPluginToBundleDescptionList( result );
   }
 
   /**
@@ -568,29 +568,29 @@ public final class TargetPlatformImpl implements TargetPlatform {
   private State resolve() {
 
     // TODO
-    FrameworkProperties.setProperty("osgi.resolver.usesMode", "ignore");
+    FrameworkProperties.setProperty( "osgi.resolver.usesMode", "ignore" );
 
     // step 1: create new state
-    State state = StateObjectFactory.defaultFactory.createState(true);
+    State state = StateObjectFactory.defaultFactory.createState( true );
 
-    for (BundleDescription bundleDescription : getAllBundleDescriptions(this._configuration.isPreferProjects())) {
-      BundleDescription copy = StateObjectFactory.defaultFactory.createBundleDescription(bundleDescription);
-      copy.setUserObject(bundleDescription.getUserObject());
-      if (!state.addBundle(copy)) {
+    for( BundleDescription bundleDescription : getAllBundleDescriptions( _configuration.isPreferProjects() ) ) {
+      BundleDescription copy = StateObjectFactory.defaultFactory.createBundleDescription( bundleDescription );
+      copy.setUserObject( bundleDescription.getUserObject() );
+      if( !state.addBundle( copy ) ) {
         // TODO: NLS
-        throw new RuntimeException("Could not add bundle '" + bundleDescription + "' to state!");
+        throw new RuntimeException( "Could not add bundle '" + bundleDescription + "' to state!" );
       }
-      if (A4ELogging.isTraceingEnabled()) {
-        A4ELogging.trace("Copied bundle to state: '%s'", getBundleInfo(bundleDescription));
+      if( A4ELogging.isTraceingEnabled() ) {
+        A4ELogging.trace( "Copied bundle to state: '%s'", getBundleInfo( bundleDescription ) );
       }
     }
 
     // set the platform properties
-    Properties platformProperties = this._configuration.getConfigurationProperties();
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug(Utilities.toString("Initializing TargetPlatform with properties: ", platformProperties));
+    Properties platformProperties = _configuration.getConfigurationProperties();
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( Utilities.toString( "Initializing TargetPlatform with properties: ", platformProperties ) );
     }
-    state.setPlatformProperties(platformProperties);
+    state.setPlatformProperties( platformProperties );
 
     // resolve the state
     state.resolve();
@@ -599,11 +599,11 @@ public final class TargetPlatformImpl implements TargetPlatform {
     BundleDescription[] bundleDescriptions = state.getBundles();
     // boolean allStatesResolved = true;
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      for (BundleDescription description : bundleDescriptions) {
-        String resolverErrors = dumpResolverErrors(description, true);
-        if (resolverErrors != null && !resolverErrors.trim().equals("")) {
-          A4ELogging.debug(resolverErrors);
+    if( A4ELogging.isDebuggingEnabled() ) {
+      for( BundleDescription description : bundleDescriptions ) {
+        String resolverErrors = dumpResolverErrors( description, true );
+        if( resolverErrors != null && !resolverErrors.trim().equals( "" ) ) {
+          A4ELogging.debug( resolverErrors );
         }
       }
     }
@@ -625,11 +625,11 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * 
    * @return <code>true</code> <=> The configuration matches the given system specification.
    */
-  private boolean matches(String os, String arch, String ws, String nl) {
-    return contains(this._configuration.getOperatingSystem(), os)
-        && contains(this._configuration.getArchitecture(), arch)
-        && contains(this._configuration.getWindowingSystem(), ws)
-        && contains(this._configuration.getLanguageSetting(), nl);
+  private boolean matches( String os, String arch, String ws, String nl ) {
+    return contains( _configuration.getOperatingSystem(), os )
+        && contains( _configuration.getArchitecture(), arch )
+        && contains( _configuration.getWindowingSystem(), ws )
+        && contains( _configuration.getLanguageSetting(), nl );
   }
 
   /**
@@ -640,26 +640,26 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * @param commaSeparatedList
    * @return
    */
-  private static boolean contains(String element, String commaSeparatedList) {
+  private static boolean contains( String element, String commaSeparatedList ) {
 
     //
-    if (element == null || element.trim().equals("")) {
+    if( element == null || element.trim().equals( "" ) ) {
       return true;
     }
 
     //
-    if (commaSeparatedList == null || commaSeparatedList.trim().equals("")) {
+    if( commaSeparatedList == null || commaSeparatedList.trim().equals( "" ) ) {
       return true;
     }
 
     // split the elements
-    String[] elements = commaSeparatedList.split(",");
+    String[] elements = commaSeparatedList.split( "," );
 
     // iterate over all the list elements
-    for (String listElement : elements) {
+    for( String listElement : elements ) {
 
       //
-      if (element.trim().equalsIgnoreCase(listElement)) {
+      if( element.trim().equalsIgnoreCase( listElement ) ) {
         return true;
       }
     }
@@ -668,11 +668,11 @@ public final class TargetPlatformImpl implements TargetPlatform {
     return false;
   }
 
-  public static boolean platformFilterDoesNotMatch(BundleDescription description) {
-    Assure.notNull("description", description);
+  public static boolean platformFilterDoesNotMatch( BundleDescription description ) {
+    Assure.notNull( "description", description );
 
     State state = description.getContainingState();
-    ResolverError[] errors = state.getResolverErrors(description);
+    ResolverError[] errors = state.getResolverErrors( description );
 
     return errors != null && errors.length == 1 && errors[0].getType() == ResolverError.PLATFORM_FILTER;
   }
@@ -688,35 +688,35 @@ public final class TargetPlatformImpl implements TargetPlatform {
    *          indicates if the header should be dumped or not
    * @return the resolver errors as a string.
    */
-  public static String dumpResolverErrors(BundleDescription description, boolean dumpHeader) {
-    Assure.notNull("description", description);
+  public static String dumpResolverErrors( BundleDescription description, boolean dumpHeader ) {
+    Assure.notNull( "description", description );
 
     StringBuffer stringBuffer = new StringBuffer();
     State state = description.getContainingState();
-    ResolverError[] errors = state.getResolverErrors(description);
-    if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
-      if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
-        stringBuffer.append("Not using '");
-        stringBuffer.append(getBundleInfo(description));
-        stringBuffer.append("' -- another version resolved\n");
+    ResolverError[] errors = state.getResolverErrors( description );
+    if( !description.isResolved() || ((errors != null) && (errors.length != 0)) ) {
+      if( (errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION) ) {
+        stringBuffer.append( "Not using '" );
+        stringBuffer.append( getBundleInfo( description ) );
+        stringBuffer.append( "' -- another version resolved\n" );
       } else {
-        if (dumpHeader) {
-          stringBuffer.append("Could not resolve '");
+        if( dumpHeader ) {
+          stringBuffer.append( "Could not resolve '" );
           // stringBuffer.append(getBundleInfo(description));
-          stringBuffer.append(description.getSymbolicName());
-          stringBuffer.append("_");
-          stringBuffer.append(description.getVersion());
-          stringBuffer.append("' (Location: ");
-          stringBuffer.append(description.getLocation());
-          stringBuffer.append("):\n");
+          stringBuffer.append( description.getSymbolicName() );
+          stringBuffer.append( "_" );
+          stringBuffer.append( description.getVersion() );
+          stringBuffer.append( "' (Location: " );
+          stringBuffer.append( description.getLocation() );
+          stringBuffer.append( "):\n" );
         }
-        if (errors != null) {
-          if (errors.length > 0) {
-            for (int i = 0; i < errors.length; i++) {
-              stringBuffer.append("  ");
-              stringBuffer.append(errors[i]);
-              if (i + 1 < errors.length) {
-                stringBuffer.append("\n");
+        if( errors != null ) {
+          if( errors.length > 0 ) {
+            for( int i = 0; i < errors.length; i++ ) {
+              stringBuffer.append( "  " );
+              stringBuffer.append( errors[i] );
+              if( i + 1 < errors.length ) {
+                stringBuffer.append( "\n" );
               }
             }
           }
@@ -735,18 +735,20 @@ public final class TargetPlatformImpl implements TargetPlatform {
    *          the bundle description.
    * @return the bundle info of the given bundle description.
    */
-  static String getBundleInfo(BundleDescription description) {
-    Assure.notNull("description", description);
+  static String getBundleInfo( BundleDescription description ) {
+    Assure.notNull( "description", description );
 
-    BundleSource bundleSource = BundleSource.getBundleSource(description);
+    BundleSource bundleSource = BundleSource.getBundleSource( description );
 
     StringBuffer buffer = new StringBuffer();
-    buffer.append(description.getSymbolicName()).append("_").append(description.getVersion().toString()).append("@");
-    if (bundleSource.isEclipseProject()) {
-      buffer.append("<P>").append(bundleSource.getAsEclipseProject().getFolder());
+    buffer.append( description.getSymbolicName() ).append( "_" ).append( description.getVersion().toString() )
+        .append( "@" );
+    if( bundleSource.isEclipseProject() ) {
+      buffer.append( "<P>" ).append( bundleSource.getAsEclipseProject().getFolder() );
     } else {
-      buffer.append(bundleSource.getAsFile().getAbsolutePath());
+      buffer.append( bundleSource.getAsFile().getAbsolutePath() );
     }
     return buffer.toString();
   }
-}
+
+} /* ENDCLASS */

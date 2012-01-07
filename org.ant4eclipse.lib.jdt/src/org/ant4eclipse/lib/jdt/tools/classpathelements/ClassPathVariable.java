@@ -35,4 +35,4 @@ public interface ClassPathVariable extends ClassPathElement {
    */
   File getPath();
 
-}
+} /* ENDINTERFACE */

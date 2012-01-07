@@ -40,7 +40,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
    * @return <code>true</code> if multiple folders are supported.
    */
   public boolean isAllowMultipleFolders() {
-    return this._allowMultipleFolders;
+    return _allowMultipleFolders;
   }
 
   /**
@@ -48,11 +48,11 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
    * Specifies if multiple folders are supported or not.
    * </p>
    * 
-   * @param allowMultipleFolders
+   * @param newallowmultiple
    *          if multiple folders are supported or not.
    */
-  public void setAllowMultipleFolders( boolean allowMultipleFolders ) {
-    this._allowMultipleFolders = allowMultipleFolders;
+  public void setAllowMultipleFolders( boolean newallowmultiple ) {
+    _allowMultipleFolders = newallowmultiple;
   }
 
   /**

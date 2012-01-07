@@ -36,7 +36,7 @@ public interface EcjAdapter {
    * @param description
    *          the {@link CompileJobDescription} that describes the compile job.
    */
-  CompileJobResult compile(CompileJobDescription description);
+  CompileJobResult compile( CompileJobDescription description );
 
   /**
    * <p>
@@ -57,5 +57,7 @@ public interface EcjAdapter {
     public static EcjAdapter create() {
       return new EcjAdapterImpl();
     }
-  }
-}
+    
+  } /* ENDCLASS */
+  
+} /* ENDINTERFACE */

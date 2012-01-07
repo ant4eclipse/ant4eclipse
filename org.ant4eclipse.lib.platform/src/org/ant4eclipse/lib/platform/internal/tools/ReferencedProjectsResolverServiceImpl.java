@@ -37,20 +37,21 @@ import java.util.Set;
  */
 public class ReferencedProjectsResolverServiceImpl implements ReferencedProjectsResolverService {
 
-  private Map<String, ReferencedProjectsResolver>   referencedProjectsResolvers;
-  private String[]                                  reftypes;
-  
+  private Map<String,ReferencedProjectsResolver> referencedProjectsResolvers;
+
+  private String[]                               reftypes;
+
   public ReferencedProjectsResolverServiceImpl() {
     List<ReferencedProjectsResolver> resolvers = A4ECore.instance().getServices( ReferencedProjectsResolver.class );
     referencedProjectsResolvers = new Hashtable<String,ReferencedProjectsResolver>();
     for( ReferencedProjectsResolver resolver : resolvers ) {
       referencedProjectsResolvers.put( resolver.getReferenceType(), resolver );
     }
-    reftypes = new String[ referencedProjectsResolvers.size() ];
+    reftypes = new String[referencedProjectsResolvers.size()];
     referencedProjectsResolvers.keySet().toArray( reftypes );
     Arrays.sort( reftypes );
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -63,15 +64,15 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
    * {@inheritDoc}
    */
   @Override
-  public List<EclipseProject> resolveReferencedProjects(EclipseProject project, String[] referencetypes,
-      List<Object> additionalElements) {
+  public List<EclipseProject> resolveReferencedProjects( EclipseProject project, String[] referencetypes,
+      List<Object> additionalElements ) {
 
     referencetypes = Utilities.cleanup( referencetypes );
     if( referencetypes == null ) {
       A4ELogging.warn( "The resolving process didn't come with at least one reference type." );
       return Collections.emptyList();
     }
-    
+
     Set<EclipseProject> result = new HashSet<EclipseProject>();
     for( String reftype : referencetypes ) {
       if( referencedProjectsResolvers.containsKey( reftype ) ) {
@@ -79,19 +80,15 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
         if( resolver.canHandle( project ) ) {
           result.addAll( resolver.resolveReferencedProjects( project, additionalElements ) );
         } else {
-          A4ELogging.debug(
-            "The reference type '%s' can't handle project '%s'.", 
-            reftype, 
-            project.getSpecifiedName()
-          );
+          A4ELogging.debug( "The reference type '%s' can't handle project '%s'.", reftype, project.getSpecifiedName() );
         }
       } else {
         A4ELogging.warn( "The reference type '%s' is not supported.", reftype );
       }
     }
-    
+
     return new ArrayList<EclipseProject>( result );
-    
+
   }
 
   /**

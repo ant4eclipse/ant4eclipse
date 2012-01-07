@@ -40,14 +40,14 @@ public class ClassName {
    */
   private ClassName( String qualifiedClassName ) {
 
-    this._qualifiedName = qualifiedClassName;
-    this._packageName = "";
-    this._className = qualifiedClassName;
+    _qualifiedName = qualifiedClassName;
+    _packageName = "";
+    _className = qualifiedClassName;
 
     int v = qualifiedClassName.lastIndexOf( '.' );
     if( v != -1 ) {
-      this._packageName = qualifiedClassName.substring( 0, v );
-      this._className = qualifiedClassName.substring( v + 1 );
+      _packageName = qualifiedClassName.substring( 0, v );
+      _className = qualifiedClassName.substring( v + 1 );
     }
 
   }
@@ -60,7 +60,7 @@ public class ClassName {
    * @return the qualified class name. Neither <code>null</code> nor empty.
    */
   public String getQualifiedClassName() {
-    return this._qualifiedName;
+    return _qualifiedName;
   }
 
   /**
@@ -71,7 +71,7 @@ public class ClassName {
    * @return Name of this class. Never null.
    */
   public String getClassName() {
-    return this._className;
+    return _className;
   }
 
   /**
@@ -82,7 +82,7 @@ public class ClassName {
    * @return Package name of this class. Never null.
    */
   public String getPackageName() {
-    return this._packageName;
+    return _packageName;
   }
 
   /**
@@ -127,7 +127,7 @@ public class ClassName {
    */
   @Override
   public String toString() {
-    return this._qualifiedName;
+    return _qualifiedName;
   }
 
   /**
@@ -135,7 +135,7 @@ public class ClassName {
    */
   @Override
   public int hashCode() {
-    return this._qualifiedName.hashCode();
+    return _qualifiedName.hashCode();
   }
 
   /**
@@ -153,7 +153,7 @@ public class ClassName {
       return false;
     }
     ClassName other = (ClassName) obj;
-    return this._qualifiedName.equals( other._qualifiedName );
+    return _qualifiedName.equals( other._qualifiedName );
   }
 
   /**

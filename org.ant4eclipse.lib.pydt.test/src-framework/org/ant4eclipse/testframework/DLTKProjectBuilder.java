@@ -50,45 +50,45 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
    * @param projectname
    *          The name of the project used to be created. Neither <code>null</code> nor empty.
    */
-  public DLTKProjectBuilder(String projectname) {
-    super(projectname);
-    withNature(DLTKProjectRole.NATURE);
-    withBuilder(DLTKProjectRole.BUILDCOMMAND);
-    this._internallibs = new ArrayList<BuildPathEntry>();
-    this._buildpathentries = new ArrayList<BuildPathEntry>();
-    this._sourceentry = new BuildPathEntry();
-    this._sourceentry._combine = true;
-    this._sourceentry._exported = true;
-    this._sourceentry._kind = Kind.src;
-    this._sourceentry._path = "";
-    this._runtime = new BuildPathEntry();
-    this._runtime._combine = true;
-    this._runtime._exported = false;
-    this._runtime._kind = Kind.con;
-    this._runtime._path = "org.eclipse.dltk.launching.INTERPRETER_CONTAINER";
+  public DLTKProjectBuilder( String projectname ) {
+    super( projectname );
+    withNature( DLTKProjectRole.NATURE );
+    withBuilder( DLTKProjectRole.BUILDCOMMAND );
+    _internallibs = new ArrayList<BuildPathEntry>();
+    _buildpathentries = new ArrayList<BuildPathEntry>();
+    _sourceentry = new BuildPathEntry();
+    _sourceentry._combine = true;
+    _sourceentry._exported = true;
+    _sourceentry._kind = Kind.src;
+    _sourceentry._path = "";
+    _runtime = new BuildPathEntry();
+    _runtime._combine = true;
+    _runtime._exported = false;
+    _runtime._kind = Kind.con;
+    _runtime._path = "org.eclipse.dltk.launching.INTERPRETER_CONTAINER";
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void useProject(String projectname, boolean export) {
+  public void useProject( String projectname, boolean export ) {
     BuildPathEntry entry = new BuildPathEntry();
     entry._exported = export;
     entry._kind = Kind.prj;
     entry._path = "/" + projectname;
     entry._combine = false;
-    this._buildpathentries.add(entry);
+    _buildpathentries.add( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  protected void createArtefacts(File projectdir) {
-    super.createArtefacts(projectdir);
-    writeBuildpath(new File(projectdir, NAME_BUILDPATH));
-    writeInternalLibraries(projectdir);
+  protected void createArtefacts( File projectdir ) {
+    super.createArtefacts( projectdir );
+    writeBuildpath( new File( projectdir, NAME_BUILDPATH ) );
+    writeInternalLibraries( projectdir );
   }
 
   /**
@@ -97,39 +97,39 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
    * @param destination
    *          The destination where the file has to be written to.
    */
-  private void writeBuildpath(File destination) {
+  private void writeBuildpath( File destination ) {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("<?xml version=\"1.0\" encoding=\"" + ENC_UTF8 + "\"?>");
-    buffer.append(Utilities.NL);
-    buffer.append("<buildpath>");
-    buffer.append(Utilities.NL);
-    buffer.append(INDENT);
-    buffer.append(this._sourceentry);
-    buffer.append(Utilities.NL);
-    for (int i = 0; i < this._buildpathentries.size(); i++) {
-      if (this._buildpathentries.get(i)._kind != Kind.prj) {
-        buffer.append(INDENT);
-        buffer.append(this._buildpathentries.get(i));
-        buffer.append(Utilities.NL);
+    buffer.append( "<?xml version=\"1.0\" encoding=\"" + ENC_UTF8 + "\"?>" );
+    buffer.append( Utilities.NL );
+    buffer.append( "<buildpath>" );
+    buffer.append( Utilities.NL );
+    buffer.append( INDENT );
+    buffer.append( _sourceentry );
+    buffer.append( Utilities.NL );
+    for( int i = 0; i < _buildpathentries.size(); i++ ) {
+      if( _buildpathentries.get( i )._kind != Kind.prj ) {
+        buffer.append( INDENT );
+        buffer.append( _buildpathentries.get( i ) );
+        buffer.append( Utilities.NL );
       }
     }
-    for (int i = 0; i < this._internallibs.size(); i++) {
-      buffer.append(INDENT);
-      buffer.append(this._internallibs.get(i));
-      buffer.append(Utilities.NL);
+    for( int i = 0; i < _internallibs.size(); i++ ) {
+      buffer.append( INDENT );
+      buffer.append( _internallibs.get( i ) );
+      buffer.append( Utilities.NL );
     }
-    buffer.append(INDENT);
-    buffer.append(this._runtime);
-    buffer.append(Utilities.NL);
-    for (int i = 0; i < this._buildpathentries.size(); i++) {
-      if (this._buildpathentries.get(i)._kind == Kind.prj) {
-        buffer.append(INDENT);
-        buffer.append(this._buildpathentries.get(i));
-        buffer.append(Utilities.NL);
+    buffer.append( INDENT );
+    buffer.append( _runtime );
+    buffer.append( Utilities.NL );
+    for( int i = 0; i < _buildpathentries.size(); i++ ) {
+      if( _buildpathentries.get( i )._kind == Kind.prj ) {
+        buffer.append( INDENT );
+        buffer.append( _buildpathentries.get( i ) );
+        buffer.append( Utilities.NL );
       }
     }
-    buffer.append("</buildpath>");
-    Utilities.writeFile(destination, buffer.toString(), ENC_UTF8);
+    buffer.append( "</buildpath>" );
+    Utilities.writeFile( destination, buffer.toString(), ENC_UTF8 );
   }
 
   /**
@@ -138,12 +138,12 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
    * @param destination
    *          The destination directory of the project. Not <code>null</code> and must be a valid directory.
    */
-  private void writeInternalLibraries(File destination) {
-    for (int i = 0; i < this._internallibs.size(); i++) {
-      BuildPathEntry entry = this._internallibs.get(i);
-      File destfile = new File(destination, entry._path);
-      Utilities.mkdirs(destfile.getParentFile());
-      Utilities.copy(entry._source, destfile);
+  private void writeInternalLibraries( File destination ) {
+    for( int i = 0; i < _internallibs.size(); i++ ) {
+      BuildPathEntry entry = _internallibs.get( i );
+      File destfile = new File( destination, entry._path );
+      Utilities.mkdirs( destfile.getParentFile() );
+      Utilities.copy( entry._source, destfile );
     }
   }
 
@@ -151,37 +151,37 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
    * {@inheritDoc}
    */
   @Override
-  public void setSourceFolder(String sourcename) {
-    this._sourceentry._path = sourcename;
+  public void setSourceFolder( String sourcename ) {
+    _sourceentry._path = sourcename;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void addSourceFolder(String additionalfolder) {
+  public void addSourceFolder( String additionalfolder ) {
     BuildPathEntry entry = new BuildPathEntry();
     entry._combine = true;
     entry._exported = true;
     entry._kind = Kind.src;
     entry._path = additionalfolder;
-    this._buildpathentries.add(entry);
+    _buildpathentries.add( entry );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String importInternalLibrary(URL location) {
+  public String importInternalLibrary( URL location ) {
     BuildPathEntry entry = new BuildPathEntry();
     entry._combine = true;
     entry._exported = true;
     entry._kind = Kind.lib;
     String file = location.getFile();
-    int lidx = file.lastIndexOf('/');
-    entry._path = "lib/" + (lidx == -1 ? file : file.substring(lidx + 1));
+    int lidx = file.lastIndexOf( '/' );
+    entry._path = "lib/" + (lidx == -1 ? file : file.substring( lidx + 1 ));
     entry._source = location;
-    this._internallibs.add(entry);
+    _internallibs.add( entry );
     return entry._path;
   }
 
@@ -205,9 +205,10 @@ public class DLTKProjectBuilder extends AbstractPythonProjectBuilder {
      */
     @Override
     public String toString() {
-      return "<buildpathentry exported=\"" + this._exported + "\" kind=\"" + this._kind.name() + "\" path=\""
-          + this._path + "\" combineaccessrules=\"" + this._combine + "\"/>";
+      return "<buildpathentry exported=\"" + _exported + "\" kind=\"" + _kind.name() + "\" path=\""
+          + _path + "\" combineaccessrules=\"" + _combine + "\"/>";
     }
+    
   } /* ENDCLASS */
 
 } /* ENDCLASS */

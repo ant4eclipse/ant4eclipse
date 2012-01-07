@@ -48,6 +48,6 @@ public interface CompileJobResult {
    * 
    * @return A map for the class files that have been compiled. Not <code>null</code>.
    */
-  Map<String, File> getCompiledClassFiles();
+  Map<String,File> getCompiledClassFiles();
 
-}
+} /* ENDINTERFACE */

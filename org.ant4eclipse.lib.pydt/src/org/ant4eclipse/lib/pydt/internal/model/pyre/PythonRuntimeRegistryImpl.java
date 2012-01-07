@@ -40,66 +40,66 @@ import java.util.Map;
  */
 public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
 
-  private static final String        PROP_INTERPRETER         = "interpreter.";
+  private static final String       PROP_INTERPRETER         = "interpreter.";
 
-  private static final String        MSG_FAILEDTOREADOUTPUT   = "Failed to read the output. Cause: %s";
+  private static final String       MSG_FAILEDTOREADOUTPUT   = "Failed to read the output. Cause: %s";
 
-  private static final String        MSG_INVALIDOUTPUT        = "The executable '%s' produced invalid output.\nOutput:\n%sError:\n%s";
+  private static final String       MSG_INVALIDOUTPUT        = "The executable '%s' produced invalid output.\nOutput:\n%sError:\n%s";
 
-  private static final String        MSG_REGISTEREDRUNTIME    = "Registered runtime with id '%s' for the location '%s'.";
+  private static final String       MSG_REGISTEREDRUNTIME    = "Registered runtime with id '%s' for the location '%s'.";
 
-  private static final String        MSG_REPEATEDREGISTRATION = "A python runtime with the id '%s' and the location '%s' has been registered multiple times !";
+  private static final String       MSG_REPEATEDREGISTRATION = "A python runtime with the id '%s' and the location '%s' has been registered multiple times !";
 
-  private static final String        MARKER_BEGIN             = "ANT4ECLIPSE-BEGIN";
+  private static final String       MARKER_BEGIN             = "ANT4ECLIPSE-BEGIN";
 
-  private static final String        MARKER_END               = "ANT4ECLIPSE-END";
+  private static final String       MARKER_END               = "ANT4ECLIPSE-END";
 
-  private static final String        NAME_SITEPACKAGES        = "site-packages";
+  private static final String       NAME_SITEPACKAGES        = "site-packages";
 
-  private Map<String, PythonRuntime> _runtimes                = new Hashtable<String, PythonRuntime>();
+  private Map<String,PythonRuntime> _runtimes                = new Hashtable<String,PythonRuntime>();
 
-  private String                     _defaultid               = null;
+  private String                    _defaultid               = null;
 
-  private File                       _pythonlister            = null;
+  private File                      _pythonlister            = null;
 
-  private File                       _listerdir               = null;
+  private File                      _listerdir               = null;
 
-  private File                       _currentdir              = null;
+  private File                      _currentdir              = null;
 
-  private PythonInterpreter[]        _interpreters            = null;
+  private PythonInterpreter[]       _interpreters            = null;
 
   public PythonRuntimeRegistryImpl() {
 
     // export the python lister script, so it can be executed in order to access the pythonpath
-    this._pythonlister = Utilities.exportResource("/org/ant4eclipse/lib/pydt/lister.py");
-    if (!this._pythonlister.isAbsolute()) {
-      this._pythonlister = this._pythonlister.getAbsoluteFile();
+    _pythonlister = Utilities.exportResource( "/org/ant4eclipse/lib/pydt/lister.py" );
+    if( !_pythonlister.isAbsolute() ) {
+      _pythonlister = _pythonlister.getAbsoluteFile();
     }
-    this._listerdir = this._pythonlister.getParentFile();
-    this._currentdir = new File(".");
-    this._listerdir = Utilities.getCanonicalFile(this._listerdir);
-    this._currentdir = Utilities.getCanonicalFile(this._currentdir);
+    _listerdir = _pythonlister.getParentFile();
+    _currentdir = new File( "." );
+    _listerdir = Utilities.getCanonicalFile( _listerdir );
+    _currentdir = Utilities.getCanonicalFile( _currentdir );
 
     // load the python interpreter configurations
-    URL cfgurl = getClass().getResource("/org/ant4eclipse/lib/pydt/python.properties");
-    if (cfgurl == null) {
-      throw new Ant4EclipseException(PydtExceptionCode.MISSINGPYTHONPROPERTIES);
+    URL cfgurl = getClass().getResource( "/org/ant4eclipse/lib/pydt/python.properties" );
+    if( cfgurl == null ) {
+      throw new Ant4EclipseException( PydtExceptionCode.MISSINGPYTHONPROPERTIES );
     }
-    StringMap props = new StringMap(cfgurl);
+    StringMap props = new StringMap( cfgurl );
     List<PythonInterpreter> interpreters = new ArrayList<PythonInterpreter>();
-    for (Map.Entry<String, String> entry : props.entrySet()) {
-      if (entry.getKey().startsWith(PROP_INTERPRETER)) {
-        String name = entry.getKey().substring(PROP_INTERPRETER.length());
-        String[] exes = Utilities.cleanup(entry.getValue().split(","));
-        if (exes == null) {
-          throw new Ant4EclipseException(PydtExceptionCode.MISSINGEXECUTABLES, entry.getKey());
+    for( Map.Entry<String,String> entry : props.entrySet() ) {
+      if( entry.getKey().startsWith( PROP_INTERPRETER ) ) {
+        String name = entry.getKey().substring( PROP_INTERPRETER.length() );
+        String[] exes = Utilities.cleanup( entry.getValue().split( "," ) );
+        if( exes == null ) {
+          throw new Ant4EclipseException( PydtExceptionCode.MISSINGEXECUTABLES, entry.getKey() );
         }
-        Arrays.sort(exes);
-        interpreters.add(new PythonInterpreter(name, exes));
+        Arrays.sort( exes );
+        interpreters.add( new PythonInterpreter( name, exes ) );
       }
     }
-    this._interpreters = interpreters.toArray(new PythonInterpreter[interpreters.size()]);
-    Arrays.sort(this._interpreters);
+    _interpreters = interpreters.toArray( new PythonInterpreter[interpreters.size()] );
+    Arrays.sort( _interpreters );
 
   }
 
@@ -111,10 +111,10 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * 
    * @return The interpreter or <code>null</code> if none could be found.
    */
-  private PythonInterpreter lookupInterpreter(File location) {
-    for (PythonInterpreter interpreter : this._interpreters) {
-      File result = interpreter.lookup(location);
-      if (result != null) {
+  private PythonInterpreter lookupInterpreter( File location ) {
+    for( PythonInterpreter interpreter : _interpreters ) {
+      File result = interpreter.lookup( location );
+      if( result != null ) {
         return interpreter;
       }
     }
@@ -125,67 +125,67 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * {@inheritDoc}
    */
   @Override
-  public boolean hasRuntime(String id) {
-    Assure.nonEmpty("id", id);
-    return this._runtimes.containsKey(id);
+  public boolean hasRuntime( String id ) {
+    Assure.nonEmpty( "id", id );
+    return _runtimes.containsKey( id );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void registerRuntime(String id, File location, boolean sitepackages) {
+  public void registerRuntime( String id, File location, boolean sitepackages ) {
 
-    Assure.nonEmpty("id", id);
-    Assure.notNull("location", location);
+    Assure.nonEmpty( "id", id );
+    Assure.notNull( "location", location );
 
-    location = Utilities.getCanonicalFile(location);
+    location = Utilities.getCanonicalFile( location );
 
-    PythonRuntime existing = getRuntime(id);
-    if (existing != null) {
+    PythonRuntime existing = getRuntime( id );
+    if( existing != null ) {
 
       // check the current setting
 
-      if (!location.equals(existing.getLocation())) {
+      if( !location.equals( existing.getLocation() ) ) {
         // same id for different locations is not allowed
-        throw new Ant4EclipseException(PydtExceptionCode.DUPLICATERUNTIME, id, existing.getLocation(), location);
+        throw new Ant4EclipseException( PydtExceptionCode.DUPLICATERUNTIME, id, existing.getLocation(), location );
       } else {
         // same record, so skip this registration while creating a message only
-        A4ELogging.debug(MSG_REPEATEDREGISTRATION, id, location);
+        A4ELogging.debug( MSG_REPEATEDREGISTRATION, id, location );
         return;
       }
 
     }
 
     // register the new runtime but we need to identify the corresponding libraries
-    PythonInterpreter python = lookupInterpreter(location);
-    if (python == null) {
-      throw new Ant4EclipseException(PydtExceptionCode.UNSUPPORTEDRUNTIME, id, location);
+    PythonInterpreter python = lookupInterpreter( location );
+    if( python == null ) {
+      throw new Ant4EclipseException( PydtExceptionCode.UNSUPPORTEDRUNTIME, id, location );
     }
-    File interpreter = python.lookup(location);
+    File interpreter = python.lookup( location );
 
     // launch the python lister script to access the python path
     StringBuffer output = new StringBuffer();
     StringBuffer error = new StringBuffer();
-    Utilities.execute(interpreter, output, error, this._pythonlister.getAbsolutePath());
+    Utilities.execute( interpreter, output, error, _pythonlister.getAbsolutePath() );
 
-    String[] extraction = extractOutput(output.toString(), sitepackages);
-    if (extraction == null) {
+    String[] extraction = extractOutput( output.toString(), sitepackages );
+    if( extraction == null ) {
       // returncode is 0
-      A4ELogging.debug(MSG_INVALIDOUTPUT, interpreter, output, error);
-      throw new Ant4EclipseException(PydtExceptionCode.UNSUPPORTEDRUNTIME, id, location);
+      A4ELogging.debug( MSG_INVALIDOUTPUT, interpreter, output, error );
+      throw new Ant4EclipseException( PydtExceptionCode.UNSUPPORTEDRUNTIME, id, location );
     }
 
     // load version number and library records
-    Version version = Version.newStandardVersion(extraction[0]);
+    Version version = Version.newStandardVersion( extraction[0] );
     File[] libs = new File[extraction.length - 1];
-    for (int i = 0; i < libs.length; i++) {
-      libs[i] = new File(extraction[i + 1]);
+    for( int i = 0; i < libs.length; i++ ) {
+      libs[i] = new File( extraction[i + 1] );
     }
 
-    PythonRuntime newruntime = new PythonRuntimeImpl(id, location, version, libs, python);
-    A4ELogging.debug(MSG_REGISTEREDRUNTIME, id, location);
-    this._runtimes.put(id, newruntime);
+    PythonRuntime newruntime = new PythonRuntimeImpl( id, location, version, libs, python );
+    A4ELogging.debug( MSG_REGISTEREDRUNTIME, id, location );
+    _runtimes.put( id, newruntime );
 
   }
 
@@ -199,45 +199,45 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * 
    * @return A list of strings containing the runtime information or <code>null</code> in case of a failure.
    */
-  private String[] extractOutput(String content, boolean sitepackages) {
+  private String[] extractOutput( String content, boolean sitepackages ) {
     List<String> list = new ArrayList<String>();
     boolean collect = false;
     boolean first = true;
-    BufferedReader reader = new BufferedReader(new StringReader(content));
+    BufferedReader reader = new BufferedReader( new StringReader( content ) );
     try {
       String line = reader.readLine();
-      while (line != null) {
+      while( line != null ) {
         line = line.trim();
-        if (MARKER_BEGIN.equals(line)) {
+        if( MARKER_BEGIN.equals( line ) ) {
           collect = true;
-        } else if (MARKER_END.equals(line)) {
+        } else if( MARKER_END.equals( line ) ) {
           collect = true;
-        } else if (collect) {
-          if (first) {
+        } else if( collect ) {
+          if( first ) {
             // the first line provides the versioning information
-            list.add(line);
+            list.add( line );
             first = false;
           } else {
             // the brackets are just a security precaution just for the case that a path
             // starts or ends with whitespace characters
-            int open = line.indexOf('[');
-            int close = line.lastIndexOf(']');
-            line = line.substring(open + 1, close);
-            if (!isHiddenDir(line, sitepackages)) {
-              list.add(line);
+            int open = line.indexOf( '[' );
+            int close = line.lastIndexOf( ']' );
+            line = line.substring( open + 1, close );
+            if( !isHiddenDir( line, sitepackages ) ) {
+              list.add( line );
             }
           }
         }
         line = reader.readLine();
       }
-      if (list.size() < 2) {
+      if( list.size() < 2 ) {
         // there must be at least the version information and one directory
         return null;
       } else {
-        return list.toArray(new String[list.size()]);
+        return list.toArray( new String[list.size()] );
       }
-    } catch (IOException ex) {
-      A4ELogging.debug(MSG_FAILEDTOREADOUTPUT, ex.getMessage());
+    } catch( IOException ex ) {
+      A4ELogging.debug( MSG_FAILEDTOREADOUTPUT, ex.getMessage() );
       return null;
     }
   }
@@ -258,29 +258,29 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    * @throws IOException
    *           Path calculation failed for some reason.
    */
-  private boolean isHiddenDir(String dir, boolean sitepackages) throws IOException {
-    File file = new File(dir);
-    if (!file.exists()) {
+  private boolean isHiddenDir( String dir, boolean sitepackages ) throws IOException {
+    File file = new File( dir );
+    if( !file.exists() ) {
       // this directory does not exist (f.e. __classpath__ symbols provided by jython)
       return true;
     }
-    if ((!sitepackages) && NAME_SITEPACKAGES.equals(file.getName())) {
+    if( (!sitepackages) && NAME_SITEPACKAGES.equals( file.getName() ) ) {
       return true;
     }
     file = file.getCanonicalFile();
-    return this._listerdir.equals(file) || this._currentdir.equals(file);
+    return _listerdir.equals( file ) || _currentdir.equals( file );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setDefaultRuntime(String id) {
-    Assure.nonEmpty("id", id);
-    if (!hasRuntime(id)) {
-      throw new Ant4EclipseException(PydtExceptionCode.INVALIDDEFAULTID, id);
+  public void setDefaultRuntime( String id ) {
+    Assure.nonEmpty( "id", id );
+    if( !hasRuntime( id ) ) {
+      throw new Ant4EclipseException( PydtExceptionCode.INVALIDDEFAULTID, id );
     }
-    this._defaultid = id;
+    _defaultid = id;
   }
 
   /**
@@ -288,21 +288,21 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    */
   @Override
   public PythonRuntime getRuntime() {
-    if (this._defaultid != null) {
-      return this._runtimes.get(this._defaultid);
-    } else if (this._runtimes.size() == 1) {
-      return this._runtimes.values().iterator().next();
+    if( _defaultid != null ) {
+      return _runtimes.get( _defaultid );
+    } else if( _runtimes.size() == 1 ) {
+      return _runtimes.values().iterator().next();
     }
-    throw new Ant4EclipseException(PydtExceptionCode.NODEFAULTRUNTIME);
+    throw new Ant4EclipseException( PydtExceptionCode.NODEFAULTRUNTIME );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public PythonRuntime getRuntime(String id) {
-    Assure.nonEmpty("id", id);
-    return this._runtimes.get(id);
+  public PythonRuntime getRuntime( String id ) {
+    Assure.nonEmpty( "id", id );
+    return _runtimes.get( id );
   }
 
   /**
@@ -310,7 +310,7 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
    */
   @Override
   public PythonInterpreter[] getSupportedInterpreters() {
-    return this._interpreters;
+    return _interpreters;
   }
 
   /**

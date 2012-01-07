@@ -34,16 +34,16 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
    * {@inheritDoc}
    */
   @Override
-  public boolean canResolve(ClasspathEntry entry) {
+  public boolean canResolve( ClasspathEntry entry ) {
     // only suitable for raw class path entries of kind CPE_SOURCE
-    return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_SOURCE);
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_SOURCE );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void resolve(ClasspathEntry pathEntry, ClasspathResolverContext context) {
+  public void resolve( ClasspathEntry pathEntry, ClasspathResolverContext context ) {
 
     // always exported, there is no need to check for visibility
     RawClasspathEntry entry = (RawClasspathEntry) pathEntry;
@@ -52,20 +52,21 @@ public class SourceClasspathEntryResolver extends AbstractClasspathEntryResolver
     String sourcePath = entry.getPath();
 
     // get the source folder
-    File sourceFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(sourcePath,
-        EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(
-        sourcePath, EclipseProject.PathStyle.ABSOLUTE);
+    File sourceFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild( sourcePath,
+        EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ) : context.getCurrentProject().getChild(
+        sourcePath, EclipseProject.PathStyle.ABSOLUTE );
 
     // get the output path
-    String outputPath = getCurrentJavaProjectRole(context).getOutputFolderForSourceFolder(sourcePath);
+    String outputPath = getCurrentJavaProjectRole( context ).getOutputFolderForSourceFolder( sourcePath );
 
     // get the output folder
-    File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild(outputPath,
-        EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) : context.getCurrentProject().getChild(
-        outputPath, EclipseProject.PathStyle.ABSOLUTE);
+    File outputFolder = context.isWorkspaceRelative() ? context.getCurrentProject().getChild( outputPath,
+        EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ) : context.getCurrentProject().getChild(
+        outputPath, EclipseProject.PathStyle.ABSOLUTE );
 
     // TODO: ACCESS RESTRICTIONS
-    context
-        .addClasspathEntry(new ResolvedClasspathEntry(new File[] { outputFolder }, null, new File[] { sourceFolder }));
+    context.addClasspathEntry( new ResolvedClasspathEntry( new File[] { outputFolder }, null,
+        new File[] { sourceFolder } ) );
   }
-}
+  
+} /* ENDCLASS */

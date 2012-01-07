@@ -71,13 +71,13 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    */
   public JavacCompilerAdapter() {
 
-    this._buffer = new StringBuffer();
-    this._byteout = new ByteArrayOutputStream();
+    _buffer = new StringBuffer();
+    _byteout = new ByteArrayOutputStream();
 
     // use reflection to access the compiler
     try {
-      this._javac = Utilities.newInstance( "com.sun.tools.javac.Main" );
-      this._compile = this._javac.getClass().getMethod( "compile", new Class[] { String[].class } );
+      _javac = Utilities.newInstance( "com.sun.tools.javac.Main" );
+      _compile = _javac.getClass().getMethod( "compile", new Class[] { String[].class } );
     } catch( SecurityException ex ) {
       failedCompile( ex );
     } catch( NoSuchMethodException ex ) {
@@ -85,7 +85,7 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
     }
 
     // create the problem factory
-    this._problemfactory = new DefaultProblemFactory( Locale.getDefault() );
+    _problemfactory = new DefaultProblemFactory( Locale.getDefault() );
   }
 
   /**
@@ -97,16 +97,16 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    * @return The classpath which has been setup for the compile job. Not <code>null</code>.
    */
   private String getClasspath( CompileJobDescription description ) {
-    this._buffer.setLength( 0 );
+    _buffer.setLength( 0 );
     File[] classpath = description.getClassFileLoader().getClasspath();
     if( classpath.length > 0 ) {
-      this._buffer.append( classpath[0].getAbsolutePath() );
+      _buffer.append( classpath[0].getAbsolutePath() );
       for( int i = 1; i < classpath.length; i++ ) {
-        this._buffer.append( PATH_SEPARATOR );
-        this._buffer.append( classpath[i].getAbsolutePath() );
+        _buffer.append( PATH_SEPARATOR );
+        _buffer.append( classpath[i].getAbsolutePath() );
       }
     }
-    return this._buffer.toString();
+    return _buffer.toString();
   }
 
   /**
@@ -118,15 +118,15 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    * @return The concatenated path list. Not <code>null</code>.
    */
   private String getConcatenatedPath( String[] list ) {
-    this._buffer.setLength( 0 );
+    _buffer.setLength( 0 );
     if( list.length > 0 ) {
-      this._buffer.append( list[0] );
+      _buffer.append( list[0] );
       for( int i = 1; i < list.length; i++ ) {
-        this._buffer.append( PATH_SEPARATOR );
-        this._buffer.append( list[i] );
+        _buffer.append( PATH_SEPARATOR );
+        _buffer.append( list[i] );
       }
     }
-    return this._buffer.toString();
+    return _buffer.toString();
   }
 
   /**
@@ -138,27 +138,27 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    * @return The compile options used for the generation of byte code. Not <code>null</code>.
    */
   private String getDebugOptions( CompileJobDescription description ) {
-    this._buffer.setLength( 0 );
+    _buffer.setLength( 0 );
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_LineNumberAttribute ) ) {
-      this._buffer.append( "lines" );
+      _buffer.append( "lines" );
     }
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_LocalVariableAttribute ) ) {
-      if( this._buffer.length() > 0 ) {
-        this._buffer.append( "," );
+      if( _buffer.length() > 0 ) {
+        _buffer.append( "," );
       }
-      this._buffer.append( "vars" );
+      _buffer.append( "vars" );
     }
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_SourceFileAttribute ) ) {
-      if( this._buffer.length() > 0 ) {
-        this._buffer.append( "," );
+      if( _buffer.length() > 0 ) {
+        _buffer.append( "," );
       }
-      this._buffer.append( "source" );
+      _buffer.append( "source" );
     }
-    if( this._buffer.length() == 0 ) {
+    if( _buffer.length() == 0 ) {
       // nothing has been specified
-      this._buffer.append( "none" );
+      _buffer.append( "none" );
     }
-    return this._buffer.toString();
+    return _buffer.toString();
   }
 
   /**
@@ -170,36 +170,36 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    * @return The options used to control the compilation process. Not <code>null</code>.
    */
   private String getCompileOptions( CompileJobDescription description ) {
-    this._buffer.setLength( 0 );
+    _buffer.setLength( 0 );
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_ReportMissingSerialVersion ) ) {
-      this._buffer.append( "serial" );
+      _buffer.append( "serial" );
     } else {
-      this._buffer.append( "-serial" );
+      _buffer.append( "-serial" );
     }
-    this._buffer.append( "," );
+    _buffer.append( "," );
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_ReportFallthroughCase ) ) {
-      this._buffer.append( "fallthrough" );
+      _buffer.append( "fallthrough" );
     } else {
-      this._buffer.append( "-fallthrough" );
+      _buffer.append( "-fallthrough" );
     }
-    this._buffer.append( "," );
+    _buffer.append( "," );
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_ReportUncheckedTypeOperation ) ) {
-      this._buffer.append( "unchecked" );
+      _buffer.append( "unchecked" );
     } else {
-      this._buffer.append( "-unchecked" );
+      _buffer.append( "-unchecked" );
     }
-    this._buffer.append( "," );
+    _buffer.append( "," );
     if( description.getCompilerOptions().containsKey( CompilerOptions.OPTION_ReportFinallyBlockNotCompletingNormally ) ) {
-      this._buffer.append( "finally" );
+      _buffer.append( "finally" );
     } else {
-      this._buffer.append( "-finally" );
+      _buffer.append( "-finally" );
     }
-    if( this._buffer.length() == 0 ) {
+    if( _buffer.length() == 0 ) {
       // the recommended options
       return "-Xlint";
     } else {
       // the specified options
-      return String.format( "-Xlint:%s", this._buffer );
+      return String.format( "-Xlint:%s", _buffer );
     }
   }
 
@@ -291,7 +291,7 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
         String[] arglist = arguments.toArray( new String[arguments.size()] );
         startCapturing();
         try {
-          Integer returncode = (Integer) this._compile.invoke( this._javac, new Object[] { arglist } );
+          Integer returncode = (Integer) _compile.invoke( _javac, new Object[] { arglist } );
           if( returncode.intValue() != 0 ) {
             singlesuccess = false;
           }
@@ -303,7 +303,7 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
           succeeded = false;
           // we're using the platform encoding as this is the encoding used for the out/err stream
           // from the console
-          createProblems( problems, sourcefile.getSourceFileName(), new String( this._byteout.toByteArray() ) );
+          createProblems( problems, sourcefile.getSourceFileName(), new String( _byteout.toByteArray() ) );
         }
 
       }
@@ -353,7 +353,7 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
           if( colon != -1 ) {
             int lineno = Integer.parseInt( line.substring( 0, colon ) );
             String error = line.substring( colon + 1 ).trim();
-            problems.add( this._problemfactory.createProblem( sourcefilename.toCharArray(), IProblem.Unclassified,
+            problems.add( _problemfactory.createProblem( sourcefilename.toCharArray(), IProblem.Unclassified,
                 new String[] { error }, new String[] { error }, ProblemSeverities.Error, -1, -1, lineno,
                 problems.size() ) );
           }
@@ -366,19 +366,19 @@ public class JavacCompilerAdapter extends A4ECompilerAdapter {
    * Enables the capturing so we can analyze the outcome of the java compiler.
    */
   private void startCapturing() {
-    this._stdout = System.out;
-    this._stderr = System.err;
-    this._byteout.reset();
-    System.setErr( new PrintStream( this._byteout ) );
-    System.setOut( new PrintStream( this._byteout ) );
+    _stdout = System.out;
+    _stderr = System.err;
+    _byteout.reset();
+    System.setErr( new PrintStream( _byteout ) );
+    System.setOut( new PrintStream( _byteout ) );
   }
 
   /**
    * Disables the capturing so the collected outcome can be processed.
    */
   private void stopCapturing() {
-    System.setOut( this._stdout );
-    System.setErr( this._stderr );
+    System.setOut( _stdout );
+    System.setErr( _stderr );
   }
 
   private Ant4EclipseException failedCompile( Exception ex ) {

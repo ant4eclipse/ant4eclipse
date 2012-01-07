@@ -31,7 +31,7 @@ public abstract class VcsAdapter {
 
   public VcsAdapter( Project antProject ) {
     Assure.notNull( "antProject", antProject );
-    this._antProject = antProject;
+    _antProject = antProject;
   }
 
   /**
@@ -126,7 +126,7 @@ public abstract class VcsAdapter {
       throws Ant4EclipseException;
 
   protected Project getAntProject() {
-    return this._antProject;
+    return _antProject;
   }
 
 } /* ENDCLASS */

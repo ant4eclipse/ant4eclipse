@@ -31,74 +31,58 @@ import java.util.Map.Entry;
  */
 public class ProductDefinition {
 
-  /** - */
-  private String                         _name;
+  private String                        _name;
 
-  /** - */
-  private String                         _uid;
+  private String                        _uid;
 
-  /** - */
-  private String                         _id;
+  private String                        _id;
 
-  /** - */
-  private String                         _application;
+  private String                        _application;
 
-  /** - */
-  private Version                        _version;
+  private Version                       _version;
 
-  /** - */
-  private boolean                        _basedonfeatures;
+  private boolean                       _basedonfeatures;
 
-  /** - */
-  private Map<String, BundleStartRecord> _configrecords;
+  private Map<String,BundleStartRecord> _configrecords;
 
-  /** - */
-  private List<String>                   _pluginids;
+  private List<String>                  _pluginids;
 
-  /** - */
-  private List<String>                   _fragmentids;
+  private List<String>                  _fragmentids;
 
-  /** - */
-  private Map<ProductOs, String>         _configini;
+  private Map<ProductOs,String>         _configini;
 
-  /** - */
-  private Map<ProductOs, String>         _programargs;
+  private Map<ProductOs,String>         _programargs;
 
-  /** - */
-  private Map<ProductOs, String>         _vmargs;
+  private Map<ProductOs,String>         _vmargs;
 
-  /** - */
-  private String                         _launchername;
+  private String                        _launchername;
 
-  /** - */
-  private Map<ProductOs, String>         _vm;
+  private Map<ProductOs,String>         _vm;
 
-  /** - */
-  private String                         _splashplugin;
+  private String                        _splashplugin;
 
-  /** - */
-  private Map<String, Version>           _features;
+  private Map<String,Version>           _features;
 
   /**
    * Initialises this data structure.
    */
   public ProductDefinition() {
-    this._configrecords = new HashMap<String, BundleStartRecord>();
-    this._pluginids = new ArrayList<String>();
-    this._fragmentids = new ArrayList<String>();
-    this._name = null;
-    this._uid = null;
-    this._id = null;
-    this._application = null;
-    this._version = Version.emptyVersion;
-    this._basedonfeatures = false;
-    this._configini = new Hashtable<ProductOs, String>();
-    this._programargs = new Hashtable<ProductOs, String>();
-    this._vmargs = new Hashtable<ProductOs, String>();
-    this._launchername = null;
-    this._vm = new Hashtable<ProductOs, String>();
-    this._splashplugin = null;
-    this._features = new Hashtable<String, Version>();
+    _configrecords = new HashMap<String,BundleStartRecord>();
+    _pluginids = new ArrayList<String>();
+    _fragmentids = new ArrayList<String>();
+    _name = null;
+    _uid = null;
+    _id = null;
+    _application = null;
+    _version = Version.emptyVersion;
+    _basedonfeatures = false;
+    _configini = new Hashtable<ProductOs,String>();
+    _programargs = new Hashtable<ProductOs,String>();
+    _vmargs = new Hashtable<ProductOs,String>();
+    _launchername = null;
+    _vm = new Hashtable<ProductOs,String>();
+    _splashplugin = null;
+    _features = new Hashtable<String,Version>();
   }
 
   /**
@@ -109,8 +93,8 @@ public class ProductDefinition {
    * @param version
    *          The version of the associated feature. Not <code>null</code>.
    */
-  void addFeature(String featureid, Version version) {
-    this._features.put(featureid, version);
+  void addFeature( String featureid, Version version ) {
+    _features.put( featureid, version );
   }
 
   /**
@@ -119,8 +103,8 @@ public class ProductDefinition {
    * @return A list of all currently registered feature ids. Not <code>null</code>.
    */
   public String[] getFeatureIds() {
-    String[] result = this._features.keySet().toArray(new String[this._features.size()]);
-    Arrays.sort(result);
+    String[] result = _features.keySet().toArray( new String[_features.size()] );
+    Arrays.sort( result );
     return result;
   }
 
@@ -136,12 +120,12 @@ public class ProductDefinition {
     List<FeatureId> result = new ArrayList<FeatureId>();
 
     //
-    for (Entry<String, Version> featureId : this._features.entrySet()) {
-      result.add(new FeatureId(featureId.getKey(), featureId.getValue()));
+    for( Entry<String,Version> featureId : _features.entrySet() ) {
+      result.add( new FeatureId( featureId.getKey(), featureId.getValue() ) );
     }
 
     //
-    return result.toArray(new FeatureId[0]);
+    return result.toArray( new FeatureId[0] );
   }
 
   /**
@@ -150,9 +134,9 @@ public class ProductDefinition {
    * @return A list of all ConfigurationRecord instances. Not <code>null</code>.
    */
   public BundleStartRecord[] getConfigurationRecords() {
-    BundleStartRecord[] result = new BundleStartRecord[this._configrecords.size()];
-    this._configrecords.values().toArray(result);
-    Arrays.sort(result);
+    BundleStartRecord[] result = new BundleStartRecord[_configrecords.size()];
+    _configrecords.values().toArray( result );
+    Arrays.sort( result );
     return result;
   }
 
@@ -163,8 +147,8 @@ public class ProductDefinition {
    * @param id
    * @return
    */
-  public boolean hasConfigurationRecord(String id) {
-    return this._configrecords.containsKey(id);
+  public boolean hasConfigurationRecord( String id ) {
+    return _configrecords.containsKey( id );
   }
 
   /**
@@ -174,8 +158,8 @@ public class ProductDefinition {
    * @param id
    * @return
    */
-  public BundleStartRecord getConfigurationRecord(String id) {
-    return this._configrecords.get(id);
+  public BundleStartRecord getConfigurationRecord( String id ) {
+    return _configrecords.get( id );
   }
 
   /**
@@ -186,8 +170,8 @@ public class ProductDefinition {
    * 
    * @return The version of the supplied version. <code>null</code> if the feature is not valid.
    */
-  public Version getFeatureVersion(String feature) {
-    return this._features.get(feature);
+  public Version getFeatureVersion( String feature ) {
+    return _features.get( feature );
   }
 
   /**
@@ -196,8 +180,8 @@ public class ProductDefinition {
    * @param pluginid
    *          The id of the plugin providing the splash screen.
    */
-  void setSplashplugin(String pluginid) {
-    this._splashplugin = pluginid;
+  void setSplashplugin( String pluginid ) {
+    _splashplugin = pluginid;
   }
 
   /**
@@ -206,11 +190,11 @@ public class ProductDefinition {
    * @return The id of the plugin providing the splash screen. Maybe <code>null</code>.
    */
   public String getSplashplugin() {
-    return this._splashplugin;
+    return _splashplugin;
   }
 
   public boolean hasSplashplugin() {
-    return this._splashplugin != null;
+    return _splashplugin != null;
   }
 
   /**
@@ -219,8 +203,8 @@ public class ProductDefinition {
    * @param newlaunchername
    *          The new name of the launcher. Neither <code>null</code> nor empty.
    */
-  void setLaunchername(String newlaunchername) {
-    this._launchername = newlaunchername;
+  void setLaunchername( String newlaunchername ) {
+    _launchername = newlaunchername;
   }
 
   /**
@@ -229,11 +213,11 @@ public class ProductDefinition {
    * @return The current name of the launcher.
    */
   public String getLaunchername() {
-    return this._launchername;
+    return _launchername;
   }
 
   public boolean hasLaunchername() {
-    return this._launchername != null;
+    return _launchername != null;
   }
 
   /**
@@ -244,9 +228,9 @@ public class ProductDefinition {
    * @param vm
    *          The required vm for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addVm(ProductOs os, String vm) {
-    if (vm != null) {
-      this._vm.put(os, vm.trim());
+  void addVm( ProductOs os, String vm ) {
+    if( vm != null ) {
+      _vm.put( os, vm.trim() );
     }
   }
 
@@ -258,8 +242,8 @@ public class ProductDefinition {
    * 
    * @return The required vm or <code>null</code> if none has been specified.
    */
-  public String getVm(ProductOs os) {
-    return this._vm.get(os);
+  public String getVm( ProductOs os ) {
+    return _vm.get( os );
   }
 
   /**
@@ -270,13 +254,13 @@ public class ProductDefinition {
    * @param args
    *          The vm arguments for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addVmArgs(ProductOs os, String args) {
-    if (args != null) {
+  void addVmArgs( ProductOs os, String args ) {
+    if( args != null ) {
       String oldargs = "";
-      if (this._vmargs.containsKey(os)) {
-        oldargs = this._vmargs.get(os) + " ";
+      if( _vmargs.containsKey( os ) ) {
+        oldargs = _vmargs.get( os ) + " ";
       }
-      this._vmargs.put(os, oldargs + args.replace('\n', ' ').trim());
+      _vmargs.put( os, oldargs + args.replace( '\n', ' ' ).trim() );
     }
   }
 
@@ -288,9 +272,9 @@ public class ProductDefinition {
    * 
    * @return The vm arguments. Not <code>null</code>.
    */
-  public String getVmArgs(ProductOs os) {
-    if (this._vmargs.containsKey(os)) {
-      return this._vmargs.get(os);
+  public String getVmArgs( ProductOs os ) {
+    if( _vmargs.containsKey( os ) ) {
+      return _vmargs.get( os );
     } else {
       return "";
     }
@@ -304,13 +288,13 @@ public class ProductDefinition {
    * @param args
    *          The program arguments for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addProgramArgs(ProductOs os, String args) {
-    if (args != null) {
+  void addProgramArgs( ProductOs os, String args ) {
+    if( args != null ) {
       String oldargs = "";
-      if (this._programargs.containsKey(os)) {
-        oldargs = this._programargs.get(os) + " ";
+      if( _programargs.containsKey( os ) ) {
+        oldargs = _programargs.get( os ) + " ";
       }
-      this._programargs.put(os, oldargs + args.replace('\n', ' ').trim());
+      _programargs.put( os, oldargs + args.replace( '\n', ' ' ).trim() );
     }
   }
 
@@ -322,9 +306,9 @@ public class ProductDefinition {
    * 
    * @return The program arguments. Not <code>null</code>.
    */
-  public String getProgramArgs(ProductOs os) {
-    if (this._programargs.containsKey(os)) {
-      return this._programargs.get(os);
+  public String getProgramArgs( ProductOs os ) {
+    if( _programargs.containsKey( os ) ) {
+      return _programargs.get( os );
     } else {
       return "";
     }
@@ -339,9 +323,9 @@ public class ProductDefinition {
    * @param path
    *          The path to be used for this operating system. If not <code>null</code> it must be non empty.
    */
-  void addConfigIni(ProductOs os, String path) {
-    if (path != null) {
-      this._configini.put(os, path.trim());
+  void addConfigIni( ProductOs os, String path ) {
+    if( path != null ) {
+      _configini.put( os, path.trim() );
     }
   }
 
@@ -351,8 +335,8 @@ public class ProductDefinition {
    * @param record
    *          The ConfigurationRecord which has to be added. Not <code>null</code>.
    */
-  void addConfigurationRecord(BundleStartRecord record) {
-    this._configrecords.put(record.getId(), record);
+  void addConfigurationRecord( BundleStartRecord record ) {
+    _configrecords.put( record.getId(), record );
   }
 
   /**
@@ -364,8 +348,8 @@ public class ProductDefinition {
    * 
    * @return The config.ini path or <code>null</code> if none has been specified.
    */
-  public String getConfigIni(ProductOs os) {
-    return this._configini.get(os);
+  public String getConfigIni( ProductOs os ) {
+    return _configini.get( os );
   }
 
   /**
@@ -376,11 +360,11 @@ public class ProductDefinition {
    * @param isfragment
    *          <code>true</code> <=> The plugin is a framgent.
    */
-  void addPlugin(String pluginid, boolean isfragment) {
-    if (isfragment) {
-      this._fragmentids.add(pluginid);
+  void addPlugin( String pluginid, boolean isfragment ) {
+    if( isfragment ) {
+      _fragmentids.add( pluginid );
     } else {
-      this._pluginids.add(pluginid);
+      _pluginids.add( pluginid );
     }
   }
 
@@ -390,7 +374,7 @@ public class ProductDefinition {
    * @return A list of all currently registered plugin ids. Not <code>null</code>.
    */
   public String[] getPluginIds() {
-    return this._pluginids.toArray(new String[this._pluginids.size()]);
+    return _pluginids.toArray( new String[_pluginids.size()] );
   }
 
   /**
@@ -399,7 +383,7 @@ public class ProductDefinition {
    * @return A list of all currently registered fragment ids. Not <code>null</code>.
    */
   public String[] getFragmentIds() {
-    return this._fragmentids.toArray(new String[this._fragmentids.size()]);
+    return _fragmentids.toArray( new String[_fragmentids.size()] );
   }
 
   /**
@@ -412,8 +396,8 @@ public class ProductDefinition {
 
     List<String> result = new ArrayList<String>();
 
-    result.addAll(this._pluginids);
-    result.addAll(this._fragmentids);
+    result.addAll( _pluginids );
+    result.addAll( _fragmentids );
 
     return result;
   }
@@ -424,8 +408,8 @@ public class ProductDefinition {
    * @param newname
    *          The new name for this product. Neither <code>null</code> nor empty.
    */
-  void setName(String newname) {
-    this._name = newname;
+  void setName( String newname ) {
+    _name = newname;
   }
 
   /**
@@ -434,11 +418,11 @@ public class ProductDefinition {
    * @return The name for this product. Neither <code>null</code> nor empty.
    */
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   public boolean hasName() {
-    return this._name != null;
+    return _name != null;
   }
 
   /**
@@ -449,7 +433,7 @@ public class ProductDefinition {
    * @return the
    */
   public String getUid() {
-    return this._uid;
+    return _uid;
   }
 
   /**
@@ -459,8 +443,8 @@ public class ProductDefinition {
    * 
    * @param uid
    */
-  public void setUid(String uid) {
-    this._uid = uid;
+  public void setUid( String uid ) {
+    _uid = uid;
   }
 
   /**
@@ -469,8 +453,8 @@ public class ProductDefinition {
    * @param newid
    *          The new id for this product. Neither <code>null</code> nor empty.
    */
-  void setId(String newid) {
-    this._id = newid;
+  void setId( String newid ) {
+    _id = newid;
   }
 
   /**
@@ -479,11 +463,11 @@ public class ProductDefinition {
    * @return The id for this product. Neither <code>null</code> nor empty.
    */
   public String getId() {
-    return this._id;
+    return _id;
   }
 
   public boolean hasId() {
-    return this._id != null;
+    return _id != null;
   }
 
   /**
@@ -492,8 +476,8 @@ public class ProductDefinition {
    * @param newapplication
    *          The new application id. Neither <code>null</code> nor empty.
    */
-  void setApplication(String newapplication) {
-    this._application = newapplication;
+  void setApplication( String newapplication ) {
+    _application = newapplication;
   }
 
   /**
@@ -502,11 +486,11 @@ public class ProductDefinition {
    * @return The id of the product application. Neither <code>null</code> nor empty.
    */
   public String getApplication() {
-    return this._application;
+    return _application;
   }
 
   public boolean hasApplication() {
-    return this._application != null;
+    return _application != null;
   }
 
   /**
@@ -515,8 +499,8 @@ public class ProductDefinition {
    * @param newversion
    *          The new version for this product. Not <code>null</code>.
    */
-  void setVersion(Version newversion) {
-    this._version = newversion;
+  void setVersion( Version newversion ) {
+    _version = newversion;
   }
 
   /**
@@ -525,11 +509,11 @@ public class ProductDefinition {
    * @return The version of the product. Not <code>null</code>.
    */
   public Version getVersion() {
-    return this._version;
+    return _version;
   }
 
   public boolean hasVersion() {
-    return this._version != null;
+    return _version != null;
   }
 
   /**
@@ -538,8 +522,8 @@ public class ProductDefinition {
    * @param newbasedonfeatures
    *          <code>true</code> <=> This product is based on features.
    */
-  void setBasedOnFeatures(boolean newbasedonfeatures) {
-    this._basedonfeatures = newbasedonfeatures;
+  void setBasedOnFeatures( boolean newbasedonfeatures ) {
+    _basedonfeatures = newbasedonfeatures;
   }
 
   /**
@@ -548,7 +532,7 @@ public class ProductDefinition {
    * @return <code>true</code> <=> This product is based on features.
    */
   public boolean isBasedOnFeatures() {
-    return this._basedonfeatures;
+    return _basedonfeatures;
   }
 
   /**
@@ -557,117 +541,117 @@ public class ProductDefinition {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ProductDefinition:");
-    buffer.append(" _name: ");
-    buffer.append(this._name);
-    buffer.append(", _id: ");
-    buffer.append(this._id);
-    buffer.append(", _application: ");
-    buffer.append(this._application);
-    buffer.append(", _version: ");
-    buffer.append(this._version);
-    buffer.append(", _launchername: ");
-    buffer.append(this._launchername);
-    buffer.append(", _splashplugin: ");
-    buffer.append(this._splashplugin);
-    buffer.append(", _basedonfeatures: ");
-    buffer.append(this._basedonfeatures);
-    if (this._basedonfeatures) {
+    buffer.append( "[ProductDefinition:" );
+    buffer.append( " _name: " );
+    buffer.append( _name );
+    buffer.append( ", _id: " );
+    buffer.append( _id );
+    buffer.append( ", _application: " );
+    buffer.append( _application );
+    buffer.append( ", _version: " );
+    buffer.append( _version );
+    buffer.append( ", _launchername: " );
+    buffer.append( _launchername );
+    buffer.append( ", _splashplugin: " );
+    buffer.append( _splashplugin );
+    buffer.append( ", _basedonfeatures: " );
+    buffer.append( _basedonfeatures );
+    if( _basedonfeatures ) {
       String[] featureids = getFeatureIds();
-      buffer.append(", _features: {");
-      if (featureids.length > 0) {
-        buffer.append(featureids[0]);
-        buffer.append("=");
-        buffer.append(getFeatureVersion(featureids[0]));
-        for (int i = 1; i < featureids.length; i++) {
-          buffer.append(",");
-          buffer.append(featureids[i]);
-          buffer.append("=");
-          buffer.append(getFeatureVersion(featureids[i]));
+      buffer.append( ", _features: {" );
+      if( featureids.length > 0 ) {
+        buffer.append( featureids[0] );
+        buffer.append( "=" );
+        buffer.append( getFeatureVersion( featureids[0] ) );
+        for( int i = 1; i < featureids.length; i++ ) {
+          buffer.append( "," );
+          buffer.append( featureids[i] );
+          buffer.append( "=" );
+          buffer.append( getFeatureVersion( featureids[i] ) );
         }
       }
-      buffer.append("}");
+      buffer.append( "}" );
     } else {
-      buffer.append(", _pluginids: {");
-      if (!this._pluginids.isEmpty()) {
-        buffer.append(this._pluginids.get(0));
-        for (int i = 1; i < this._pluginids.size(); i++) {
-          buffer.append(",");
-          buffer.append(this._pluginids.get(i));
+      buffer.append( ", _pluginids: {" );
+      if( !_pluginids.isEmpty() ) {
+        buffer.append( _pluginids.get( 0 ) );
+        for( int i = 1; i < _pluginids.size(); i++ ) {
+          buffer.append( "," );
+          buffer.append( _pluginids.get( i ) );
         }
       }
-      buffer.append("}");
-      buffer.append(", _fragmentids: {");
-      if (!this._fragmentids.isEmpty()) {
-        buffer.append(this._fragmentids.get(0));
-        for (int i = 1; i < this._fragmentids.size(); i++) {
-          buffer.append(",");
-          buffer.append(this._fragmentids.get(i));
+      buffer.append( "}" );
+      buffer.append( ", _fragmentids: {" );
+      if( !_fragmentids.isEmpty() ) {
+        buffer.append( _fragmentids.get( 0 ) );
+        for( int i = 1; i < _fragmentids.size(); i++ ) {
+          buffer.append( "," );
+          buffer.append( _fragmentids.get( i ) );
         }
       }
-      buffer.append("}");
+      buffer.append( "}" );
     }
-    buffer.append(", _configini: {");
+    buffer.append( ", _configini: {" );
     boolean first = true;
-    for (ProductOs os : ProductOs.values()) {
-      String configini = getConfigIni(os);
-      if (configini != null) {
-        if (!first) {
-          buffer.append(", ");
+    for( ProductOs os : ProductOs.values() ) {
+      String configini = getConfigIni( os );
+      if( configini != null ) {
+        if( !first ) {
+          buffer.append( ", " );
         }
-        buffer.append(os);
-        buffer.append("=");
-        buffer.append(configini);
+        buffer.append( os );
+        buffer.append( "=" );
+        buffer.append( configini );
         first = false;
       }
     }
-    buffer.append("}");
-    buffer.append(", _programargs: {");
+    buffer.append( "}" );
+    buffer.append( ", _programargs: {" );
     first = true;
-    for (ProductOs os : ProductOs.values()) {
-      String programargs = getProgramArgs(os);
-      if (programargs != null) {
-        if (!first) {
-          buffer.append(", ");
+    for( ProductOs os : ProductOs.values() ) {
+      String programargs = getProgramArgs( os );
+      if( programargs != null ) {
+        if( !first ) {
+          buffer.append( ", " );
         }
-        buffer.append(os);
-        buffer.append("=");
-        buffer.append(programargs);
+        buffer.append( os );
+        buffer.append( "=" );
+        buffer.append( programargs );
         first = false;
       }
     }
-    buffer.append("}");
-    buffer.append(", _vmargs: {");
+    buffer.append( "}" );
+    buffer.append( ", _vmargs: {" );
     first = true;
-    for (ProductOs os : ProductOs.values()) {
-      String vmargs = getVmArgs(os);
-      if (vmargs != null) {
-        if (!first) {
-          buffer.append(", ");
+    for( ProductOs os : ProductOs.values() ) {
+      String vmargs = getVmArgs( os );
+      if( vmargs != null ) {
+        if( !first ) {
+          buffer.append( ", " );
         }
-        buffer.append(os);
-        buffer.append("=");
-        buffer.append(vmargs);
+        buffer.append( os );
+        buffer.append( "=" );
+        buffer.append( vmargs );
         first = false;
       }
     }
-    buffer.append("}");
-    buffer.append(", _vm: {");
+    buffer.append( "}" );
+    buffer.append( ", _vm: {" );
     first = true;
-    for (ProductOs os : ProductOs.values()) {
-      String vm = getVm(os);
-      if (vm != null) {
-        if (!first) {
-          buffer.append(", ");
+    for( ProductOs os : ProductOs.values() ) {
+      String vm = getVm( os );
+      if( vm != null ) {
+        if( !first ) {
+          buffer.append( ", " );
         }
-        buffer.append(os);
-        buffer.append("=");
-        buffer.append(vm);
+        buffer.append( os );
+        buffer.append( "=" );
+        buffer.append( vm );
         first = false;
       }
     }
-    buffer.append("}");
-    buffer.append("]");
+    buffer.append( "}" );
+    buffer.append( "]" );
     return buffer.toString();
 
   }
@@ -678,39 +662,39 @@ public class ProductDefinition {
   @Override
   public int hashCode() {
     int result = 1;
-    result = 31 * result + ((this._name == null) ? 0 : this._name.hashCode());
-    result = 31 * result + ((this._id == null) ? 0 : this._id.hashCode());
-    result = 31 * result + ((this._application == null) ? 0 : this._application.hashCode());
-    result = 31 * result + ((this._version == null) ? 0 : this._version.hashCode());
-    result = 31 * result + ((this._launchername == null) ? 0 : this._launchername.hashCode());
-    result = 31 * result + ((this._splashplugin == null) ? 0 : this._splashplugin.hashCode());
-    result = 31 * result + (this._basedonfeatures ? 1 : 0);
+    result = 31 * result + ((_name == null) ? 0 : _name.hashCode());
+    result = 31 * result + ((_id == null) ? 0 : _id.hashCode());
+    result = 31 * result + ((_application == null) ? 0 : _application.hashCode());
+    result = 31 * result + ((_version == null) ? 0 : _version.hashCode());
+    result = 31 * result + ((_launchername == null) ? 0 : _launchername.hashCode());
+    result = 31 * result + ((_splashplugin == null) ? 0 : _splashplugin.hashCode());
+    result = 31 * result + (_basedonfeatures ? 1 : 0);
     String[] featureids = getFeatureIds();
-    for (String featureid : featureids) {
+    for( String featureid : featureids ) {
       result = 31 * result + featureid.hashCode();
-      Version version = getFeatureVersion(featureid);
+      Version version = getFeatureVersion( featureid );
       result = 31 * result + version.hashCode();
     }
-    for (int i = 0; i < this._pluginids.size(); i++) {
-      result = 31 * result + this._pluginids.get(i).hashCode();
+    for( int i = 0; i < _pluginids.size(); i++ ) {
+      result = 31 * result + _pluginids.get( i ).hashCode();
     }
-    for (int i = 0; i < this._fragmentids.size(); i++) {
-      result = 31 * result + this._fragmentids.get(i).hashCode();
+    for( int i = 0; i < _fragmentids.size(); i++ ) {
+      result = 31 * result + _fragmentids.get( i ).hashCode();
     }
-    for (ProductOs os : ProductOs.values()) {
-      String configini = getConfigIni(os);
+    for( ProductOs os : ProductOs.values() ) {
+      String configini = getConfigIni( os );
       result = 31 * result + (configini == null ? 0 : configini.hashCode());
     }
-    for (ProductOs os : ProductOs.values()) {
-      String programargs = getProgramArgs(os);
+    for( ProductOs os : ProductOs.values() ) {
+      String programargs = getProgramArgs( os );
       result = 31 * result + (programargs == null ? 0 : programargs.hashCode());
     }
-    for (ProductOs os : ProductOs.values()) {
-      String vmargs = getVmArgs(os);
+    for( ProductOs os : ProductOs.values() ) {
+      String vmargs = getVmArgs( os );
       result = 31 * result + (vmargs == null ? 0 : vmargs.hashCode());
     }
-    for (ProductOs os : ProductOs.values()) {
-      String vm = getVm(os);
+    for( ProductOs os : ProductOs.values() ) {
+      String vm = getVm( os );
       result = 31 * result + (vm == null ? 0 : vm.hashCode());
     }
     return result;
@@ -728,18 +712,18 @@ public class ProductDefinition {
 
     private Version _version;
 
-    public FeatureId(String id, Version version) {
+    public FeatureId( String id, Version version ) {
       super();
-      this._id = id;
-      this._version = version;
+      _id = id;
+      _version = version;
     }
 
     public String getId() {
-      return this._id;
+      return _id;
     }
 
     public Version getVersion() {
-      return this._version;
+      return _version;
     }
   }
 

@@ -30,6 +30,6 @@ public interface LaunchConfigurationReader extends A4EService {
    *          The launch configuration file to parse
    * @return The {@link LaunchConfiguration}-instance
    */
-  LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile);
+  LaunchConfiguration readLaunchConfiguration( File launchConfigurationFile );
 
 } /* ENDINTERFACE */

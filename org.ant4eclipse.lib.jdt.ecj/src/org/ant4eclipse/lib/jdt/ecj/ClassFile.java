@@ -41,4 +41,5 @@ public interface ClassFile extends ReferableType {
    * @return
    */
   byte[] getBytes();
-}
+  
+} /* ENDINTERFACE */

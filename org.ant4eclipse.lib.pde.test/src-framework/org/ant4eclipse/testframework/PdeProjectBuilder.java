@@ -21,28 +21,26 @@ import java.io.File;
  */
 public class PdeProjectBuilder extends JdtProjectBuilder {
 
-  /** - */
   private BundleManifest        _manifest;
 
-  /** - */
   private PluginBuildProperties _pluginBuildProperties;
 
   /**
    * @param projectName
    */
-  public PdeProjectBuilder(String projectName) {
-    super(projectName);
+  public PdeProjectBuilder( String projectName ) {
+    super( projectName );
 
     withDefaultBundleManifest();
     withPdeNature();
   }
 
-  public static PdeProjectBuilder getPreConfiguredPdeProjectBuilder(String projectName) {
-    PdeProjectBuilder result = new PdeProjectBuilder(projectName);
+  public static PdeProjectBuilder getPreConfiguredPdeProjectBuilder( String projectName ) {
+    PdeProjectBuilder result = new PdeProjectBuilder( projectName );
     result.withDefaultBundleManifest();
     result.withJreContainerClasspathEntry();
-    result.withSrcClasspathEntry("src", false);
-    result.withOutputClasspathEntry("bin");
+    result.withSrcClasspathEntry( "src", false );
+    result.withOutputClasspathEntry( "bin" );
     return result;
   }
 
@@ -50,49 +48,50 @@ public class PdeProjectBuilder extends JdtProjectBuilder {
    * {@inheritDoc}
    */
   @Override
-  protected void createArtefacts(File projectDir) {
-    super.createArtefacts(projectDir);
-    createBundleManifestFile(projectDir);
-    createPluginBuildPropertiesFile(projectDir);
+  protected void createArtefacts( File projectDir ) {
+    super.createArtefacts( projectDir );
+    createBundleManifestFile( projectDir );
+    createPluginBuildPropertiesFile( projectDir );
   }
 
   protected PdeProjectBuilder withPdeNature() {
-    withContainerClasspathEntry("org.eclipse.pde.core.requiredPlugins");
-    withNature(PluginProjectRole.PLUGIN_NATURE);
+    withContainerClasspathEntry( "org.eclipse.pde.core.requiredPlugins" );
+    withNature( PluginProjectRole.PLUGIN_NATURE );
     return this;
   }
 
   protected PdeProjectBuilder withDefaultBundleManifest() {
-    this._manifest = new BundleManifest(getProjectName());
+    _manifest = new BundleManifest( getProjectName() );
     return this;
   }
 
   public BundleManifest withBundleManifest() {
-    this._manifest = new BundleManifest(getProjectName());
-    return this._manifest;
+    _manifest = new BundleManifest( getProjectName() );
+    return _manifest;
   }
 
-  protected void createBundleManifestFile(File projectDir) {
-    Utilities.mkdirs(new File(projectDir, "META-INF"));
-    File manifestFile = new File(new File(projectDir, "META-INF"), "MANIFEST.MF");
-    this._manifest.write(manifestFile);
+  protected void createBundleManifestFile( File projectDir ) {
+    Utilities.mkdirs( new File( projectDir, "META-INF" ) );
+    File manifestFile = new File( new File( projectDir, "META-INF" ), "MANIFEST.MF" );
+    _manifest.write( manifestFile );
   }
 
   public PluginBuildProperties withDefaultBuildProperties() {
-    this._pluginBuildProperties = new PluginBuildProperties();
-    this._pluginBuildProperties.withLibrary(".").withSource("src").withOutput("bin");
-    return this._pluginBuildProperties;
+    _pluginBuildProperties = new PluginBuildProperties();
+    _pluginBuildProperties.withLibrary( "." ).withSource( "src" ).withOutput( "bin" );
+    return _pluginBuildProperties;
   }
 
   public PluginBuildProperties withBuildProperties() {
-    this._pluginBuildProperties = new PluginBuildProperties();
-    return this._pluginBuildProperties;
+    _pluginBuildProperties = new PluginBuildProperties();
+    return _pluginBuildProperties;
   }
 
-  protected void createPluginBuildPropertiesFile(File projectDir) {
-    if (this._pluginBuildProperties != null) {
-      File buildPropertiesFile = new File(projectDir, "build.properties");
-      Utilities.writeFile(buildPropertiesFile, this._pluginBuildProperties.toString(), Utilities.ENCODING);
+  protected void createPluginBuildPropertiesFile( File projectDir ) {
+    if( _pluginBuildProperties != null ) {
+      File buildPropertiesFile = new File( projectDir, "build.properties" );
+      Utilities.writeFile( buildPropertiesFile, _pluginBuildProperties.toString(), Utilities.ENCODING );
     }
   }
-}
+  
+} /* ENDCLASS */

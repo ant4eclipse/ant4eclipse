@@ -33,7 +33,7 @@ import java.util.List;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class EclipseProjectImpl implements EclipseProject {
+public class EclipseProjectImpl implements EclipseProject {
 
   /** The name of the projects <tt>.settings</tt> folder */
   public static final String       SETTINGS_FOLDER_NAME = ".settings";
@@ -79,20 +79,20 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param projectName
    *          the name of the project
    */
-  public EclipseProjectImpl(Workspace workspace, File projectDirectory) {
-    Assure.isDirectory("projectDirectory", projectDirectory);
+  public EclipseProjectImpl( Workspace workspace, File projectDirectory ) {
+    Assure.isDirectory( "projectDirectory", projectDirectory );
 
-    this._workspace = workspace;
-    this._projectDirectory = Utilities.getCanonicalFile(projectDirectory);
-    this._natures = new ArrayList<ProjectNature>();
-    this._roles = new ArrayList<ProjectRole>();
-    this._buildCommands = new ArrayList<BuildCommand>();
-    this._referencedProjects = new ArrayList<String>();
-    this._linkedResources = new ArrayList<LinkedResourceImpl>();
-    this._linkedResourceNames = new ArrayList<String>();
+    _workspace = workspace;
+    _projectDirectory = Utilities.getCanonicalFile( projectDirectory );
+    _natures = new ArrayList<ProjectNature>();
+    _roles = new ArrayList<ProjectRole>();
+    _buildCommands = new ArrayList<BuildCommand>();
+    _referencedProjects = new ArrayList<String>();
+    _linkedResources = new ArrayList<LinkedResourceImpl>();
+    _linkedResourceNames = new ArrayList<String>();
 
-    File settingsFolder = getChild(SETTINGS_FOLDER_NAME);
-    this._settingsFolder = (settingsFolder.isDirectory() ? settingsFolder : null);
+    File settingsFolder = getChild( SETTINGS_FOLDER_NAME );
+    _settingsFolder = (settingsFolder.isDirectory() ? settingsFolder : null);
   }
 
   /**
@@ -100,15 +100,15 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public String getSpecifiedName() {
-    return this._specifiedName;
+    return _specifiedName;
   }
 
   /**
    * @param specifiedName
    *          The specifiedName to set.
    */
-  public void setSpecifiedName(String specifiedName) {
-    this._specifiedName = specifiedName;
+  public void setSpecifiedName( String specifiedName ) {
+    _specifiedName = specifiedName;
   }
 
   /**
@@ -116,15 +116,15 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public String getComment() {
-    return this._comment;
+    return _comment;
   }
 
   /**
    * @param comment
    *          The comment to set.
    */
-  public void setComment(String comment) {
-    this._comment = comment;
+  public void setComment( String comment ) {
+    _comment = comment;
   }
 
   /**
@@ -132,7 +132,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public String getFolderName() {
-    return this._projectDirectory.getName();
+    return _projectDirectory.getName();
   }
 
   /**
@@ -140,21 +140,21 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public File getFolder() {
-    return this._projectDirectory;
+    return _projectDirectory;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public File getFolder(PathStyle pathstyle) {
-    Assure.notNull("pathstyle", pathstyle);
-    if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
-      return new File(".");
-    } else if (pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
-      return new File(this._projectDirectory.getName());
+  public File getFolder( PathStyle pathstyle ) {
+    Assure.notNull( "pathstyle", pathstyle );
+    if( pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME ) {
+      return new File( "." );
+    } else if( pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ) {
+      return new File( _projectDirectory.getName() );
     } else /* if (pathstyle == PathStyle.ABSOLUTE) */{
-      return this._projectDirectory.getAbsoluteFile();
+      return _projectDirectory.getAbsoluteFile();
     }
   }
 
@@ -163,16 +163,16 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public boolean exists() {
-    return this._projectDirectory.isDirectory();
+    return _projectDirectory.isDirectory();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasChild(String path) {
-    Assure.notNull("path", path);
-    File child = getChild(path);
+  public boolean hasChild( String path ) {
+    Assure.notNull( "path", path );
+    File child = getChild( path );
     return child.exists();
   }
 
@@ -180,48 +180,48 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public File getChild(String path) {
-    return getChild(path, PathStyle.ABSOLUTE);
+  public File getChild( String path ) {
+    return getChild( path, PathStyle.ABSOLUTE );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public File[] getChildren(String[] path) {
-    return getChildren(path, PathStyle.ABSOLUTE);
+  public File[] getChildren( String[] path ) {
+    return getChildren( path, PathStyle.ABSOLUTE );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public File[] getChildren(String[] path, PathStyle relative) {
-    Assure.notNull("path", path);
+  public File[] getChildren( String[] path, PathStyle relative ) {
+    Assure.notNull( "path", path );
 
     File[] result = new File[path.length];
 
-    for (int i = 0; i < result.length; i++) {
-      result[i] = getChild(path[i], relative);
+    for( int i = 0; i < result.length; i++ ) {
+      result[i] = getChild( path[i], relative );
     }
 
     return result;
   }
 
   protected boolean hasSettingsFolder() {
-    return this._settingsFolder != null;
+    return _settingsFolder != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasSettingsFile(String settingsFileName) {
+  public boolean hasSettingsFile( String settingsFileName ) {
     // check if settings folder exists
-    if (!hasSettingsFolder()) {
+    if( !hasSettingsFolder() ) {
       return false;
     }
-    File settingsFile = new File(this._settingsFolder, settingsFileName);
+    File settingsFile = new File( _settingsFolder, settingsFileName );
     // is it an existing file?
     return settingsFile.isFile();
   }
@@ -230,19 +230,19 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public File getSettingsFile(String settingsFileName) throws RuntimeException {
-    Assure.notNull("settingsFileName", settingsFileName);
-    Assure.assertTrue(hasSettingsFolder(), "The project '" + getFolderName() + "' must have a .settings folder");
+  public File getSettingsFile( String settingsFileName ) throws RuntimeException {
+    Assure.notNull( "settingsFileName", settingsFileName );
+    Assure.assertTrue( hasSettingsFolder(), "The project '" + getFolderName() + "' must have a .settings folder" );
 
-    File settingsFile = new File(this._settingsFolder, settingsFileName);
-    if (!settingsFile.exists()) {
-      throw new RuntimeException("Settings File '" + settingsFileName + "' not found in project '" + getFolderName()
-          + "'");
+    File settingsFile = new File( _settingsFolder, settingsFileName );
+    if( !settingsFile.exists() ) {
+      throw new RuntimeException( "Settings File '" + settingsFileName + "' not found in project '" + getFolderName()
+          + "'" );
     }
 
-    if (!settingsFile.isFile()) {
-      throw new RuntimeException("Settings File '" + settingsFile + "' in project '" + getFolderName()
-          + "' is not a file");
+    if( !settingsFile.isFile() ) {
+      throw new RuntimeException( "Settings File '" + settingsFile + "' in project '" + getFolderName()
+          + "' is not a file" );
     }
 
     return settingsFile;
@@ -252,37 +252,37 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public File getChild(String path, PathStyle pathstyle) {
-    Assure.notNull("path", path);
+  public File getChild( String path, PathStyle pathstyle ) {
+    Assure.notNull( "path", path );
 
     String name = path;
     String rest = null;
-    int idx = firstFileSeparator(path);
-    if (idx != -1) {
-      name = path.substring(0, idx);
-      rest = path.substring(idx + 1);
+    int idx = firstFileSeparator( path );
+    if( idx != -1 ) {
+      name = path.substring( 0, idx );
+      rest = path.substring( idx + 1 );
     }
 
     // handle linked resource
-    if (isLinkedResource(name)) {
-      LinkedResourceImpl resource = getLinkedResource(name);
-      if ((pathstyle != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null)) {
-        return (new File(resource.getLocation()));
+    if( isLinkedResource( name ) ) {
+      LinkedResourceImpl resource = getLinkedResource( name );
+      if( (pathstyle != PathStyle.ABSOLUTE) && (resource.getRelativeLocation() == null) ) {
+        return(new File( resource.getLocation() ));
       }
 
-      File result = pathstyle != PathStyle.ABSOLUTE ? new File(getFolder(), resource.getRelativeLocation()) : new File(
-          resource.getLocation());
+      File result = pathstyle != PathStyle.ABSOLUTE ? new File( getFolder(), resource.getRelativeLocation() )
+          : new File( resource.getLocation() );
 
-      if (rest != null) {
-        result = new File(result, rest);
+      if( rest != null ) {
+        result = new File( result, rest );
       }
-      if ((pathstyle == PathStyle.ABSOLUTE) && (!result.isAbsolute())) {
-        result = new File(this._projectDirectory, result.getPath());
+      if( (pathstyle == PathStyle.ABSOLUTE) && (!result.isAbsolute()) ) {
+        result = new File( _projectDirectory, result.getPath() );
       }
 
       // TODO: remove
-      if (!result.exists()) {
-        throw new RuntimeException(result.getAbsolutePath());
+      if( !result.exists() ) {
+        throw new RuntimeException( result.getAbsolutePath() );
       }
 
       //
@@ -290,17 +290,17 @@ public final class EclipseProjectImpl implements EclipseProject {
     }
 
     //
-    if (pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) {
-      if (path.length() == 0) {
+    if( pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME ) {
+      if( path.length() == 0 ) {
         path = ".";
       }
-      return new File(path);
-    } else if (pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
-      return new File(this._projectDirectory.getName(), path);
+      return new File( path );
+    } else if( pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ) {
+      return new File( _projectDirectory.getName(), path );
     }
 
     // handle ABSOLUTE
-    return new File(this._projectDirectory, path);
+    return new File( _projectDirectory, path );
   }
 
   /**
@@ -311,16 +311,16 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return The index of the first file separator or -1.
    */
-  private int firstFileSeparator(String str) {
-    int idx1 = str.indexOf('/');
-    int idx2 = str.indexOf('\\');
-    if ((idx1 == -1) && (idx2 == -1)) {
+  private int firstFileSeparator( String str ) {
+    int idx1 = str.indexOf( '/' );
+    int idx2 = str.indexOf( '\\' );
+    if( (idx1 == -1) && (idx2 == -1) ) {
       return -1;
     }
-    if ((idx1 != -1) && (idx2 != -1)) {
-      return Math.min(idx1, idx2);
+    if( (idx1 != -1) && (idx2 != -1) ) {
+      return Math.min( idx1, idx2 );
     }
-    return Math.max(idx1, idx2);
+    return Math.max( idx1, idx2 );
   }
 
   /**
@@ -329,10 +329,10 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param nature
    *          the nature to add.
    */
-  public void addNature(ProjectNature nature) {
-    Assure.notNull("nature", nature);
-    if (!this._natures.contains(nature)) {
-      this._natures.add(nature);
+  public void addNature( ProjectNature nature ) {
+    Assure.notNull( "nature", nature );
+    if( !_natures.contains( nature ) ) {
+      _natures.add( nature );
     }
   }
 
@@ -340,24 +340,24 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public boolean hasNature(String natureName) {
-    Assure.notNull("natureName", natureName);
-    return hasNature(ProjectNature.createNature(natureName));
+  public boolean hasNature( String natureName ) {
+    Assure.notNull( "natureName", natureName );
+    return hasNature( ProjectNature.createNature( natureName ) );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasNature(ProjectNature nature) {
-    Assure.notNull("nature", nature);
+  public boolean hasNature( ProjectNature nature ) {
+    Assure.notNull( "nature", nature );
 
     // nature unknown:
-    if (!this._natures.contains(nature)) {
+    if( !_natures.contains( nature ) ) {
 
-      ProjectRoleIdentifierRegistry registry = 
-        A4ECore.instance().getRequiredService( ProjectRoleIdentifierRegistry.class );
-      
+      ProjectRoleIdentifierRegistry registry = A4ECore.instance().getRequiredService(
+          ProjectRoleIdentifierRegistry.class );
+
       // try if the user supplied an abbreviation
       String abbreviation = nature.getName().toLowerCase();
       ProjectNature[] natures = registry.getNaturesForAbbreviation( abbreviation );
@@ -369,7 +369,7 @@ public final class EclipseProjectImpl implements EclipseProject {
           }
         }
       }
-      
+
       // there's no mapping so we don't have an abbreviation here
       return false;
     }
@@ -385,15 +385,15 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public ProjectNature[] getNatures() {
-    return this._natures.toArray(new ProjectNature[this._natures.size()]);
+    return _natures.toArray( new ProjectNature[_natures.size()] );
   }
 
   /**
    * @param referencedProject
    */
-  public void addReferencedProject(String referencedProject) {
-    if ((referencedProject != null) && !this._referencedProjects.contains(referencedProject)) {
-      this._referencedProjects.add(referencedProject);
+  public void addReferencedProject( String referencedProject ) {
+    if( (referencedProject != null) && !_referencedProjects.contains( referencedProject ) ) {
+      _referencedProjects.add( referencedProject );
     }
   }
 
@@ -402,7 +402,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public String[] getReferencedProjects() {
-    return this._referencedProjects.toArray(new String[this._referencedProjects.size()]);
+    return _referencedProjects.toArray( new String[_referencedProjects.size()] );
   }
 
   /**
@@ -411,25 +411,25 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param role
    *          Adds the specified role to the EclipseProject.
    */
-  public void addRole(ProjectRole role) {
-    Assure.notNull("role", role);
-    if (hasRole(role.getClass())) {
-      throw new RuntimeException("ProjectRole " + role.getClass() + " is already set!");
+  public void addRole( ProjectRole role ) {
+    Assure.notNull( "role", role );
+    if( hasRole( role.getClass() ) ) {
+      throw new RuntimeException( "ProjectRole " + role.getClass() + " is already set!" );
     }
 
-    this._roles.add(role);
+    _roles.add( role );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasRole(Class<? extends ProjectRole> projectRoleClass) {
-    Assure.notNull("projectRoleClass", projectRoleClass);
-    Iterator<ProjectRole> iterator = this._roles.iterator();
-    while (iterator.hasNext()) {
+  public boolean hasRole( Class<? extends ProjectRole> projectRoleClass ) {
+    Assure.notNull( "projectRoleClass", projectRoleClass );
+    Iterator<ProjectRole> iterator = _roles.iterator();
+    while( iterator.hasNext() ) {
       AbstractProjectRole role = (AbstractProjectRole) iterator.next();
-      if (projectRoleClass.isAssignableFrom(role.getClass())) {
+      if( projectRoleClass.isAssignableFrom( role.getClass() ) ) {
         return true;
       }
     }
@@ -440,18 +440,18 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings("unchecked")
-  public <T extends ProjectRole> T getRole(Class<T> projectRoleClass) {
-    Assure.notNull("projectRoleClass", projectRoleClass);
-    Assure.assertTrue(hasRole(projectRoleClass), "hasRole(projectRoleClass) on project '" + getFolderName()
-        + "'has to be true for role '" + projectRoleClass + "'!");
+  @SuppressWarnings( "unchecked" )
+  public <T extends ProjectRole> T getRole( Class<T> projectRoleClass ) {
+    Assure.notNull( "projectRoleClass", projectRoleClass );
+    Assure.assertTrue( hasRole( projectRoleClass ), "hasRole(projectRoleClass) on project '" + getFolderName()
+        + "'has to be true for role '" + projectRoleClass + "'!" );
 
-    Iterator<ProjectRole> iterator = this._roles.iterator();
+    Iterator<ProjectRole> iterator = _roles.iterator();
 
     ProjectRole role = null;
-    while (iterator.hasNext()) {
+    while( iterator.hasNext() ) {
       role = iterator.next();
-      if (projectRoleClass.isAssignableFrom(role.getClass())) {
+      if( projectRoleClass.isAssignableFrom( role.getClass() ) ) {
         break;
       }
     }
@@ -463,7 +463,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public ProjectRole[] getRoles() {
-    return this._roles.toArray(new ProjectRole[this._roles.size()]);
+    return _roles.toArray( new ProjectRole[_roles.size()] );
   }
 
   /**
@@ -472,28 +472,28 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param command
    *          the specified build command to the project.
    */
-  public void addBuildCommand(BuildCommand command) {
-    Assure.notNull("command", command);
-    this._buildCommands.add(command);
+  public void addBuildCommand( BuildCommand command ) {
+    Assure.notNull( "command", command );
+    _buildCommands.add( command );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasBuildCommand(String commandName) {
-    Assure.notNull("commandName", commandName);
-    BuildCommand command = new BuildCommandImpl(commandName);
-    return hasBuildCommand(command);
+  public boolean hasBuildCommand( String commandName ) {
+    Assure.notNull( "commandName", commandName );
+    BuildCommand command = new BuildCommandImpl( commandName );
+    return hasBuildCommand( command );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasBuildCommand(BuildCommand command) {
-    Assure.notNull("command", command);
-    return this._buildCommands.contains(command);
+  public boolean hasBuildCommand( BuildCommand command ) {
+    Assure.notNull( "command", command );
+    return _buildCommands.contains( command );
   }
 
   /**
@@ -501,7 +501,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public BuildCommand[] getBuildCommands() {
-    return this._buildCommands.toArray(new BuildCommand[0]);
+    return _buildCommands.toArray( new BuildCommand[0] );
   }
 
   /**
@@ -510,12 +510,12 @@ public final class EclipseProjectImpl implements EclipseProject {
    * @param linkedResource
    *          the linked resource to add.
    */
-  public void addLinkedResource(LinkedResourceImpl linkedResource) {
-    Assure.notNull("linkedResource", linkedResource);
+  public void addLinkedResource( LinkedResourceImpl linkedResource ) {
+    Assure.notNull( "linkedResource", linkedResource );
 
-    if (!this._linkedResources.contains(linkedResource)) {
-      this._linkedResources.add(linkedResource);
-      this._linkedResourceNames.add(linkedResource.getName());
+    if( !_linkedResources.contains( linkedResource ) ) {
+      _linkedResources.add( linkedResource );
+      _linkedResourceNames.add( linkedResource.getName() );
     }
   }
 
@@ -527,10 +527,10 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return The desired LinkedResource instance.
    */
-  public LinkedResourceImpl getLinkedResource(String name) {
-    Assure.assertTrue(isLinkedResource(name), "Cannot retrieve linked resource '" + name + "' !");
-    int idx = this._linkedResourceNames.indexOf(name);
-    return this._linkedResources.get(idx);
+  public LinkedResourceImpl getLinkedResource( String name ) {
+    Assure.assertTrue( isLinkedResource( name ), "Cannot retrieve linked resource '" + name + "' !" );
+    int idx = _linkedResourceNames.indexOf( name );
+    return _linkedResources.get( idx );
   }
 
   /**
@@ -541,9 +541,9 @@ public final class EclipseProjectImpl implements EclipseProject {
    * 
    * @return true <=> The name applies to a specific linked resource.
    */
-  public boolean isLinkedResource(String name) {
-    Assure.notNull("name", name);
-    return this._linkedResourceNames.contains(name);
+  public boolean isLinkedResource( String name ) {
+    Assure.notNull( "name", name );
+    return _linkedResourceNames.contains( name );
   }
 
   /**
@@ -551,7 +551,7 @@ public final class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public Workspace getWorkspace() {
-    return this._workspace;
+    return _workspace;
   }
 
   /**
@@ -560,12 +560,12 @@ public final class EclipseProjectImpl implements EclipseProject {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[EclipseProject:");
-    buffer.append(" name: ");
-    buffer.append(getSpecifiedName());
-    buffer.append(" folder: ");
-    buffer.append(getFolder());
-    buffer.append("]");
+    buffer.append( "[EclipseProject:" );
+    buffer.append( " name: " );
+    buffer.append( getSpecifiedName() );
+    buffer.append( " folder: " );
+    buffer.append( getFolder() );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -573,93 +573,93 @@ public final class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     EclipseProjectImpl castedObj = (EclipseProjectImpl) o;
-    if (this._workspace == null) {
-      if (castedObj._workspace != null) {
+    if( _workspace == null ) {
+      if( castedObj._workspace != null ) {
         return false;
       }
     } else {
-      if (!this._workspace.equals(castedObj._workspace)) {
+      if( !_workspace.equals( castedObj._workspace ) ) {
         return false;
       }
     }
-    if (this._projectDirectory == null) {
-      if (castedObj._projectDirectory != null) {
+    if( _projectDirectory == null ) {
+      if( castedObj._projectDirectory != null ) {
         return false;
       }
     } else {
-      if (!this._projectDirectory.equals(castedObj._projectDirectory)) {
+      if( !_projectDirectory.equals( castedObj._projectDirectory ) ) {
         return false;
       }
     }
-    if (this._specifiedName == null) {
-      if (castedObj._specifiedName != null) {
+    if( _specifiedName == null ) {
+      if( castedObj._specifiedName != null ) {
         return false;
       }
     } else {
-      if (!this._specifiedName.equals(castedObj._specifiedName)) {
+      if( !_specifiedName.equals( castedObj._specifiedName ) ) {
         return false;
       }
     }
-    if (this._comment == null) {
-      if (castedObj._comment != null) {
+    if( _comment == null ) {
+      if( castedObj._comment != null ) {
         return false;
       }
     } else {
-      if (!this._comment.equals(castedObj._comment)) {
+      if( !_comment.equals( castedObj._comment ) ) {
         return false;
       }
     }
-    if (this._natures == null) {
-      if (castedObj._natures != null) {
+    if( _natures == null ) {
+      if( castedObj._natures != null ) {
         return false;
       }
     } else {
-      if (!this._natures.equals(castedObj._natures)) {
+      if( !_natures.equals( castedObj._natures ) ) {
         return false;
       }
     }
-    if (this._roles == null) {
-      if (castedObj._roles != null) {
+    if( _roles == null ) {
+      if( castedObj._roles != null ) {
         return false;
       }
     } else {
-      if (!this._roles.equals(castedObj._roles)) {
+      if( !_roles.equals( castedObj._roles ) ) {
         return false;
       }
     }
-    if (this._buildCommands == null) {
-      if (castedObj._buildCommands != null) {
+    if( _buildCommands == null ) {
+      if( castedObj._buildCommands != null ) {
         return false;
       }
     } else {
-      if (!this._buildCommands.equals(castedObj._buildCommands)) {
+      if( !_buildCommands.equals( castedObj._buildCommands ) ) {
         return false;
       }
     }
-    if (this._referencedProjects == null) {
-      if (castedObj._referencedProjects != null) {
+    if( _referencedProjects == null ) {
+      if( castedObj._referencedProjects != null ) {
         return false;
       }
     } else {
-      if (!this._referencedProjects.equals(castedObj._referencedProjects)) {
+      if( !_referencedProjects.equals( castedObj._referencedProjects ) ) {
         return false;
       }
     }
-    if (this._linkedResources == null) {
+    if( _linkedResources == null ) {
       return castedObj._linkedResources == null;
     } else {
-      return this._linkedResources.equals(castedObj._linkedResources);
+      return _linkedResources.equals( castedObj._linkedResources );
     }
   }
 
@@ -669,13 +669,14 @@ public final class EclipseProjectImpl implements EclipseProject {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._projectDirectory == null ? 0 : this._projectDirectory.hashCode());
-    hashCode = 31 * hashCode + (this._specifiedName == null ? 0 : this._specifiedName.hashCode());
-    hashCode = 31 * hashCode + (this._comment == null ? 0 : this._comment.hashCode());
-    hashCode = 31 * hashCode + (this._natures == null ? 0 : this._natures.hashCode());
-    hashCode = 31 * hashCode + (this._roles == null ? 0 : this._roles.hashCode());
-    hashCode = 31 * hashCode + (this._buildCommands == null ? 0 : this._buildCommands.hashCode());
-    hashCode = 31 * hashCode + (this._linkedResources == null ? 0 : this._linkedResources.hashCode());
+    hashCode = 31 * hashCode + (_projectDirectory == null ? 0 : _projectDirectory.hashCode());
+    hashCode = 31 * hashCode + (_specifiedName == null ? 0 : _specifiedName.hashCode());
+    hashCode = 31 * hashCode + (_comment == null ? 0 : _comment.hashCode());
+    hashCode = 31 * hashCode + (_natures == null ? 0 : _natures.hashCode());
+    hashCode = 31 * hashCode + (_roles == null ? 0 : _roles.hashCode());
+    hashCode = 31 * hashCode + (_buildCommands == null ? 0 : _buildCommands.hashCode());
+    hashCode = 31 * hashCode + (_linkedResources == null ? 0 : _linkedResources.hashCode());
     return hashCode;
   }
-}
+  
+} /* ENDCLASS */

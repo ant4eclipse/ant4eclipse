@@ -17,6 +17,6 @@ import java.io.File;
 
 public interface TeamProjectSetFileParser extends A4EService {
 
-  TeamProjectSet parseTeamProjectSetFile(File psfFile);
+  TeamProjectSet parseTeamProjectSetFile( File psfFile );
 
-} /* ENDCLASS */
+} /* ENDINTERFACE */

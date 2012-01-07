@@ -36,7 +36,7 @@ public interface ClasspathEntryResolver {
    *          the class path entry to resolve.
    * @return <code>true</code>, if this {@link ClasspathEntryResolver} can resolve the given {@link ClasspathEntry}.
    */
-  boolean canResolve(ClasspathEntry classpathEntry);
+  boolean canResolve( ClasspathEntry classpathEntry );
 
   /**
    * <p>
@@ -48,5 +48,6 @@ public interface ClasspathEntryResolver {
    * @param context
    *          the {@link ClasspathResolverContext}
    */
-  void resolve(ClasspathEntry classpathEntry, ClasspathResolverContext context);
-}
+  void resolve( ClasspathEntry classpathEntry, ClasspathResolverContext context );
+  
+} /* ENDCLASS */

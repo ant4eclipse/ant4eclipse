@@ -37,35 +37,35 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
    * {@inheritDoc}
    */
   @Override
-  public LaunchConfiguration readLaunchConfiguration(File launchConfigurationFile) {
+  public LaunchConfiguration readLaunchConfiguration( File launchConfigurationFile ) {
 
-    Assure.isFile("launchConfigurationFile", launchConfigurationFile);
+    Assure.isFile( "launchConfigurationFile", launchConfigurationFile );
 
     try {
       SAXParser parser = getParserFactory().newSAXParser();
       LaunchConfigHandler handler = new LaunchConfigHandler();
-      parser.parse(launchConfigurationFile, handler);
+      parser.parse( launchConfigurationFile, handler );
 
       LaunchConfigurationImpl launchConfigurationImpl = new LaunchConfigurationImpl(
-          handler.getLaunchConfigurationType(), handler.getAttributes());
+          handler.getLaunchConfigurationType(), handler.getAttributes() );
       return launchConfigurationImpl;
-    } catch (Exception ex) {
+    } catch( Exception ex ) {
       ex.printStackTrace();
-      throw new RuntimeException("Could not parse launch config '" + launchConfigurationFile + ": " + ex, ex);
+      throw new RuntimeException( "Could not parse launch config '" + launchConfigurationFile + ": " + ex, ex );
     }
 
   }
 
   protected SAXParserFactory getParserFactory() {
-    if (this._saxParserFactory == null) {
+    if( _saxParserFactory == null ) {
       SAXParserFactory newInstance = SAXParserFactory.newInstance();
-      newInstance.setValidating(false);
-      newInstance.setNamespaceAware(false);
-      newInstance.setXIncludeAware(false);
-      this._saxParserFactory = newInstance;
+      newInstance.setValidating( false );
+      newInstance.setNamespaceAware( false );
+      newInstance.setXIncludeAware( false );
+      _saxParserFactory = newInstance;
     }
 
-    return this._saxParserFactory;
+    return _saxParserFactory;
   }
 
   class LaunchConfigHandler extends DefaultHandler {
@@ -83,51 +83,51 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
     private LaunchConfigAttribute       _currentAttribute                 = null;
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+    public void startElement( String uri, String localName, String qName, Attributes attributes ) throws SAXException {
 
-      if (LAUNCH_CONFIGURATION_ELEMENT_NAME.equals(qName)) {
-        this._launchConfigurationType = attributes.getValue("type");
+      if( LAUNCH_CONFIGURATION_ELEMENT_NAME.equals( qName ) ) {
+        _launchConfigurationType = attributes.getValue( "type" );
         return;
       }
 
-      if (LIST_ENTRY_ELEMENT_NAME.equals(qName)) {
-        LaunchConfigAttribute.ListAttribute listAttribute = this._currentAttribute.getListAttributeValue();
-        listAttribute.addEntry(attributes.getValue("value"));
+      if( LIST_ENTRY_ELEMENT_NAME.equals( qName ) ) {
+        LaunchConfigAttribute.ListAttribute listAttribute = _currentAttribute.getListAttributeValue();
+        listAttribute.addEntry( attributes.getValue( "value" ) );
         return;
       }
 
-      String key = attributes.getValue("key");
-      if (key == null) {
+      String key = attributes.getValue( "key" );
+      if( key == null ) {
         // TODO
-        throw new IllegalStateException("Invalid element: " + localName + " -> no key found!");
+        throw new IllegalStateException( "Invalid element: " + localName + " -> no key found!" );
       }
-      this._currentAttribute = new LaunchConfigAttribute(key);
+      _currentAttribute = new LaunchConfigAttribute( key );
 
-      if (LIST_ATTRIBUTE_ELEMENT_NAME.equals(qName)) {
-        this._currentAttribute.setValue(new LaunchConfigAttribute.ListAttribute());
+      if( LIST_ATTRIBUTE_ELEMENT_NAME.equals( qName ) ) {
+        _currentAttribute.setValue( new LaunchConfigAttribute.ListAttribute() );
       } else {
-        this._currentAttribute.setValue(attributes.getValue("value"));
+        _currentAttribute.setValue( attributes.getValue( "value" ) );
       }
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
-      if (!LIST_ENTRY_ELEMENT_NAME.equals(qName) && this._currentAttribute != null) {
-        this._attributes.add(this._currentAttribute);
-        this._currentAttribute = null;
+    public void endElement( String uri, String localName, String qName ) throws SAXException {
+      if( !LIST_ENTRY_ELEMENT_NAME.equals( qName ) && _currentAttribute != null ) {
+        _attributes.add( _currentAttribute );
+        _currentAttribute = null;
       }
     }
 
     public String getLaunchConfigurationType() {
-      return this._launchConfigurationType;
+      return _launchConfigurationType;
     }
 
     public List<LaunchConfigAttribute> getAttributes() {
-      return this._attributes;
+      return _attributes;
     }
 
   }
-  
+
   /**
    * {@inheritDoc}
    */

@@ -34,7 +34,7 @@ public interface WorkspaceRegistry extends A4EService {
    *          the workspace definition
    * @return the new {@link Workspace} instance
    */
-  Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition);
+  Workspace registerWorkspace( String id, WorkspaceDefinition workspaceDefinition );
 
   /**
    * <p>
@@ -47,7 +47,7 @@ public interface WorkspaceRegistry extends A4EService {
    * @return <code>true</code> if the registry contains a {@link Workspace} that is registered under the specified
    *         identifier.
    */
-  boolean containsWorkspace(String id);
+  boolean containsWorkspace( String id );
 
   /**
    * <p>
@@ -59,7 +59,7 @@ public interface WorkspaceRegistry extends A4EService {
    *          the identifier.
    * @return the {@link Workspace} that is registered under the given identifier.
    */
-  Workspace getWorkspace(String id);
+  Workspace getWorkspace( String id );
 
   /**
    * <p>
@@ -69,7 +69,7 @@ public interface WorkspaceRegistry extends A4EService {
    * @param currentWorkspace
    *          the workspace.
    */
-  void setCurrent(Workspace currentWorkspace);
+  void setCurrent( Workspace currentWorkspace );
 
   /**
    * <p>
@@ -79,7 +79,7 @@ public interface WorkspaceRegistry extends A4EService {
    * @param specified
    *          the identifier of the workspace.
    */
-  void setCurrent(String id);
+  void setCurrent( String id );
 
   /**
    * <p>

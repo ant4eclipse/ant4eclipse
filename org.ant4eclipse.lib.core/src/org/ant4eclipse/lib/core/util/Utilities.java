@@ -1458,8 +1458,8 @@ public class Utilities {
       if( encoding == null ) {
         encoding = ENCODING;
       }
-      this._source = new BufferedReader( new InputStreamReader( instream, encoding ) );
-      this._receiver = dest;
+      _source = new BufferedReader( new InputStreamReader( instream, encoding ) );
+      _receiver = dest;
     }
 
     /**
@@ -1468,11 +1468,11 @@ public class Utilities {
     @Override
     public void run() {
       try {
-        String line = this._source.readLine();
+        String line = _source.readLine();
         while( line != null ) {
-          this._receiver.append( line );
-          this._receiver.append( NL );
-          line = this._source.readLine();
+          _receiver.append( line );
+          _receiver.append( NL );
+          line = _source.readLine();
         }
       } catch( IOException ex ) {
         /** @todo [06-Aug-2009:KASI] We might need something more precise here. */

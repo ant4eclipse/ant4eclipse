@@ -34,7 +34,7 @@ public class JUnitVisitor extends EmptyVisitor {
   public MethodVisitor visitMethod( int arg0, String arg1, String arg2, String arg3, String[] arg4 ) {
 
     //
-    if( !this._hasTestAnnotations ) {
+    if( !_hasTestAnnotations ) {
       return this;
     }
 
@@ -47,9 +47,9 @@ public class JUnitVisitor extends EmptyVisitor {
    */
   @Override
   public void visit( int arg0, int arg1, String arg2, String arg3, String arg4, String[] arg5 ) {
-    this._isAbstract = ((arg1 & Opcodes.ACC_ABSTRACT) != 0);
-    this._className = arg2.replace( '/', '.' );
-    this._superClassName = arg4.replace( '/', '.' );
+    _isAbstract = ((arg1 & Opcodes.ACC_ABSTRACT) != 0);
+    _className = arg2.replace( '/', '.' );
+    _superClassName = arg4.replace( '/', '.' );
   }
 
   /**
@@ -59,7 +59,7 @@ public class JUnitVisitor extends EmptyVisitor {
   public AnnotationVisitor visitAnnotation( String arg0, boolean arg1 ) {
     Type t = Type.getType( arg0 );
     if( t.getClassName().startsWith( "org.junit" ) ) {
-      this._hasTestAnnotations = true;
+      _hasTestAnnotations = true;
     }
     return null;
   }
@@ -72,7 +72,7 @@ public class JUnitVisitor extends EmptyVisitor {
    * @return <code>true</code> if the tested class is a test class.
    */
   public boolean isTestClass() {
-    return (!this._isAbstract) && this._hasTestAnnotations;
+    return (!_isAbstract) && _hasTestAnnotations;
   }
 
   /**
@@ -82,7 +82,7 @@ public class JUnitVisitor extends EmptyVisitor {
    * @return
    */
   public boolean hasTestAnnotations() {
-    return this._hasTestAnnotations;
+    return _hasTestAnnotations;
   }
 
   /**
@@ -93,7 +93,7 @@ public class JUnitVisitor extends EmptyVisitor {
    * @return the name of the class.
    */
   public String getClassName() {
-    return this._className;
+    return _className;
   }
 
   /**
@@ -103,7 +103,7 @@ public class JUnitVisitor extends EmptyVisitor {
    * @return
    */
   public String getSuperClassName() {
-    return this._superClassName;
+    return _superClassName;
   }
   
 } /* ENDCLASS */

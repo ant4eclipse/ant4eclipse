@@ -34,27 +34,27 @@ public class PluginProjectRoleIdentifier extends AbstractProjectRoleIdentifier {
   public PluginProjectRoleIdentifier() {
     super( PluginProjectRole.PLUGIN_NATURE );
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.debug("PluginProjectRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.debug( "PluginProjectRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
 
     BundleDescription description;
     try {
-      description = BundleDescriptionLoader.loadFromPluginProject(project);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage(), e);
+      description = BundleDescriptionLoader.loadFromPluginProject( project );
+    } catch( Exception e ) {
+      throw new RuntimeException( e.getMessage(), e );
     }
 
-    PluginProjectRole pluginProjectRole = new PluginProjectRoleImpl(project, description);
+    PluginProjectRole pluginProjectRole = new PluginProjectRoleImpl( project, description );
 
     // TODO: umbauen...
-    if (project.hasChild(BuildPropertiesParser.BUILD_PROPERTIES)) {
-      BuildPropertiesParser.parsePluginBuildProperties(pluginProjectRole);
+    if( project.hasChild( BuildPropertiesParser.BUILD_PROPERTIES ) ) {
+      BuildPropertiesParser.parsePluginBuildProperties( pluginProjectRole );
     }
 
     return pluginProjectRole;

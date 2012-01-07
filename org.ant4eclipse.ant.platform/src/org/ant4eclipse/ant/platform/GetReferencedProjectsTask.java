@@ -78,7 +78,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @return the name of an ant property that will hold the list of referenced projects.
    */
   public String getProperty() {
-    return this._property;
+    return _property;
   }
 
   /**
@@ -90,7 +90,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    *          the name of an ant property that will hold the list of referenced projects.
    */
   public void setProperty( String property ) {
-    this._property = property;
+    _property = property;
   }
 
   // /**
@@ -102,7 +102,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   // * the name of an ANT property that will hold the list of projects that are not available.
   // */
   // public void setUnavailableProjects(String property) {
-  // this._unavailableProjects = property;
+  // _unavailableProjects = property;
   // }
   //
   // /**
@@ -114,7 +114,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   // * <code>true</code> <=> Create the list using the specified names.
   // */
   // public void setSpecifiedNames(boolean specifiednames) {
-  // this._specifiedNames = specifiednames;
+  // _specifiedNames = specifiednames;
   // }
 
   /**
@@ -125,7 +125,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @return an (optional) separator that is used to separate the project names.
    */
   public String getSeparator() {
-    return this._separator;
+    return _separator;
   }
 
   /**
@@ -138,7 +138,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    */
   public void setSeparator( String separator ) {
     Assure.notNull( "separator", separator );
-    this._separator = separator;
+    _separator = separator;
   }
 
   /**
@@ -149,7 +149,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @return where to read the referenced projects from.
    */
   public String getSource() {
-    return this._source;
+    return _source;
   }
 
   /**
@@ -161,7 +161,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    *          where to read the referenced projects from.
    */
   public void setSource( String source ) {
-    this._source = source;
+    _source = source;
   }
 
   /**
@@ -172,7 +172,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @return true <=> Required projects should be resolved recursive.
    */
   public boolean isRecursive() {
-    return this._recursive;
+    return _recursive;
   }
 
   /**
@@ -185,19 +185,19 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    *          <code>true</code> if required projects should be resolve recursive.
    */
   public void setRecursive( boolean recursive ) {
-    this._recursive = recursive;
+    _recursive = recursive;
   }
 
   public boolean isExportedOnly() {
-    return this._exportedOnly;
+    return _exportedOnly;
   }
 
   public void setExportedOnly( boolean exportedOnly ) {
-    this._exportedOnly = exportedOnly;
+    _exportedOnly = exportedOnly;
   }
 
   public boolean isPropertySet() {
-    return Utilities.hasText( this._property );
+    return Utilities.hasText( _property );
   }
 
   public void requirePropertySet() {
@@ -239,7 +239,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // try {
     //
     // List rejected = null;
-    // if (this._unavailableProjects != null) {
+    // if (_unavailableProjects != null) {
     // rejected = new ArrayList();
     // }
     // if (isReadFromClasspath()) {
@@ -251,14 +251,14 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // }
     //
     // StringBuffer result = new StringBuffer();
-    // if (this._specifiedNames) {
+    // if (_specifiedNames) {
     // result.append(referencedProjects[0].getSpecifiedName());
     // } else {
     // result.append(referencedProjects[0].getFolderName());
     // }
     // for (int i = 1; i < referencedProjects.length; i++) {
     // result.append(getSeparator());
-    // if (this._specifiedNames) {
+    // if (_specifiedNames) {
     // result.append(referencedProjects[i].getSpecifiedName());
     // } else {
     // result.append(referencedProjects[i].getFolderName());
@@ -274,9 +274,9 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     // result.append(getSeparator());
     // result.append(rejected.get(i));
     // }
-    // A4ELogging.debug("Setting '%s' to list of rejected projects '%s'", this._unavailableProjects,
+    // A4ELogging.debug("Setting '%s' to list of rejected projects '%s'", _unavailableProjects,
     // result);
-    // getProjectDelegate().setStringProperty(this._unavailableProjects, result.toString());
+    // getProjectDelegate().setStringProperty(_unavailableProjects, result.toString());
     // }
     //
     // } catch (BuildException ex) {

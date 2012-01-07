@@ -37,8 +37,8 @@ public class Pair<T,U> {
    *          the second thing of this pair
    */
   public Pair( T first, U second ) {
-    this._first = first;
-    this._second = second;
+    _first = first;
+    _second = second;
   }
 
   /**
@@ -49,7 +49,7 @@ public class Pair<T,U> {
    * @return the first thing of this pair.
    */
   public T getFirst() {
-    return this._first;
+    return _first;
   }
 
   /**
@@ -60,7 +60,7 @@ public class Pair<T,U> {
    * @return the second thing of this pair.
    */
   public U getSecond() {
-    return this._second;
+    return _second;
   }
 
   /**
@@ -69,8 +69,8 @@ public class Pair<T,U> {
   @Override
   public int hashCode() {
     // compute the hash code
-    int result = this._first == null ? 0 : this._first.hashCode();
-    result = 31 * result + (this._second == null ? 0 : this._second.hashCode());
+    int result = _first == null ? 0 : _first.hashCode();
+    result = 31 * result + (_second == null ? 0 : _second.hashCode());
     return result;
   }
 
@@ -87,7 +87,7 @@ public class Pair<T,U> {
       return false;
     }
     Pair<T,U> otherPair = getClass().cast( other );
-    return Utilities.equals( this._first, otherPair._first ) && Utilities.equals( this._second, otherPair._second );
+    return Utilities.equals( _first, otherPair._first ) && Utilities.equals( _second, otherPair._second );
   }
 
 } /* ENDCLASS */

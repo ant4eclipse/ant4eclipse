@@ -49,8 +49,8 @@ public interface ReferencedProjectsResolverService extends A4EService {
    * 
    * @return A list of all directly referenced projects. Not <code>null</code>.
    */
-  List<EclipseProject> resolveReferencedProjects(EclipseProject project, String[] referenceTypes,
-      List<Object> additionalElements);
+  List<EclipseProject> resolveReferencedProjects( EclipseProject project, String[] referenceTypes,
+      List<Object> additionalElements );
 
   /**
    * <p>
@@ -67,6 +67,6 @@ public interface ReferencedProjectsResolverService extends A4EService {
    * 
    * @return A list of all directly referenced projects. Not <code>null</code>.
    */
-  List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements);
+  List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<Object> additionalElements );
 
-}
+} /* ENDINTERFACE */

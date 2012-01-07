@@ -44,9 +44,8 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    */
   public GetJdtClassPathTask() {
     super();
-
     // create the JdtClasspathContainerArgumentDelegate
-    this._classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
+    _classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
   }
 
   /**
@@ -69,7 +68,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * @return if a runtime path should be resolved or not.
    */
   public boolean isRuntime() {
-    return this._runtime;
+    return _runtime;
   }
 
   /**
@@ -77,11 +76,11 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * Returns if a runtime path should be resolved or not.
    * </p>
    * 
-   * @param runtime
+   * @param newruntime
    *          if a runtime path should be resolved or not.
    */
-  public void setRuntime( boolean runtime ) {
-    this._runtime = runtime;
+  public void setRuntime( boolean newruntime ) {
+    _runtime = newruntime;
   }
 
   /**
@@ -91,7 +90,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
   @SuppressWarnings( "deprecation" )
   @Deprecated
   public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
-    return this._classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
+    return _classpathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
   /**
@@ -99,7 +98,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    */
   @Override
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
-    return this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments();
+    return _classpathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }
 
   /**
@@ -107,7 +106,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    */
   @Override
   public void setDynamicAttribute( String name, String value ) throws BuildException {
-    this._classpathContainerArgumentDelegate.setDynamicAttribute( name, value );
+    _classpathContainerArgumentDelegate.setDynamicAttribute( name, value );
   }
 
   /**
@@ -118,7 +117,7 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
 
     // resolve the path
     ResolvedClasspath resolvedClasspath = JdtResolver.resolveProjectClasspath( getEclipseProject(), isRelative(),
-        isRuntime(), this._classpathContainerArgumentDelegate.getJdtClasspathContainerArguments() );
+        isRuntime(), _classpathContainerArgumentDelegate.getJdtClasspathContainerArguments() );
 
     // return the path files
     return resolvedClasspath.getClasspathFiles();

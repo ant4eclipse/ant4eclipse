@@ -49,32 +49,32 @@ public class TestDirectory {
   }
 
   public TestDirectory( boolean removeOnDispose ) {
-    this._removeOnDispose = removeOnDispose;
+    _removeOnDispose = removeOnDispose;
     init();
   }
 
   protected void init() {
-    this._rootDir = new File( System.getProperty( "java.io.tmpdir" ), "a4etest" );
-    if( this._rootDir.exists() ) {
-      if( !Utilities.delete( this._rootDir ) ) {
-        throw new RuntimeException( String.format( "Failed to delete directory '%s'.", this._rootDir ) );
+    _rootDir = new File( System.getProperty( "java.io.tmpdir" ), "a4etest" );
+    if( _rootDir.exists() ) {
+      if( !Utilities.delete( _rootDir ) ) {
+        throw new RuntimeException( String.format( "Failed to delete directory '%s'.", _rootDir ) );
       }
     }
-    System.out.println( "Create test dir: " + this._rootDir );
-    Utilities.mkdirs( this._rootDir );
+    System.out.println( "Create test dir: " + _rootDir );
+    Utilities.mkdirs( _rootDir );
   }
 
   public void dispose() {
     try {
-      if( this._rootDir != null && this._removeOnDispose ) {
-        System.out.println( "Remove test dir: " + this._rootDir );
-        if( !Utilities.delete( this._rootDir ) ) {
-          throw new RuntimeException( String.format( "Failed to delete directory '%s'.", this._rootDir ) );
+      if( _rootDir != null && _removeOnDispose ) {
+        System.out.println( "Remove test dir: " + _rootDir );
+        if( !Utilities.delete( _rootDir ) ) {
+          throw new RuntimeException( String.format( "Failed to delete directory '%s'.", _rootDir ) );
         }
-        this._rootDir = null;
+        _rootDir = null;
       }
     } catch( Exception ex ) {
-      System.err.println( "WARN! Could not remove test directory " + this._rootDir + ": " + ex );
+      System.err.println( "WARN! Could not remove test directory " + _rootDir + ": " + ex );
       ex.printStackTrace();
     }
   }
@@ -87,7 +87,7 @@ public class TestDirectory {
    * @throws IOException
    */
   public File createFile( String fileName, String content ) {
-    File outFile = new File( this._rootDir, fileName );
+    File outFile = new File( _rootDir, fileName );
     Utilities.writeFile( outFile, content, Utilities.ENCODING );
     return outFile;
   }
@@ -119,13 +119,13 @@ public class TestDirectory {
   public File createSubDirectory( String name ) {
     Assert.assertNotNull( name );
 
-    File subdir = new File( this._rootDir, name );
+    File subdir = new File( _rootDir, name );
     Utilities.mkdirs( subdir );
     return subdir;
   }
 
   public File getRootDir() {
-    return this._rootDir;
+    return _rootDir;
   }
 
 } /* ENDCLASS */

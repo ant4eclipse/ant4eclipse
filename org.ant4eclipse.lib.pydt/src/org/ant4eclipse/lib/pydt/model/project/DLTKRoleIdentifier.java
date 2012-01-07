@@ -32,18 +32,18 @@ public class DLTKRoleIdentifier extends AbstractProjectRoleIdentifier {
   public DLTKRoleIdentifier() {
     super( DLTKProjectRole.NATURE, "python" );
   }
-  
+
   /**
    * <p>
    * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
    * </p>
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.trace("PyDLTKRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
-    PythonProjectRoleImpl result = new PythonProjectRoleImpl(project, true);
-    DLTKParser.contributePathes(result);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.trace( "PyDLTKRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
+    PythonProjectRoleImpl result = new PythonProjectRoleImpl( project, true );
+    DLTKParser.contributePathes( result );
     return result;
   }
 

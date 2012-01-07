@@ -18,7 +18,4 @@ package org.ant4eclipse.lib.pde.model.buildproperties;
  * @version $Revision: 1.2 $
  */
 public class FeatureBuildProperties extends AbstractBuildProperties {
-
-  // TODO add additional feature properties
-
-}
+} /* ENDCLASS */

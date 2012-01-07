@@ -28,8 +28,8 @@ public class StringTemplate {
    * 
    */
   public StringTemplate() {
-    this._stringTemplate = new StringBuilder();
-    this._stringsToReplace = new StringMap();
+    _stringTemplate = new StringBuilder();
+    _stringsToReplace = new StringMap();
   }
 
   /**
@@ -38,7 +38,7 @@ public class StringTemplate {
   public StringTemplate( String content ) {
     this();
     Assure.notNull( "content", content );
-    this._stringTemplate.append( content );
+    _stringTemplate.append( content );
   }
 
   /**
@@ -46,7 +46,7 @@ public class StringTemplate {
    */
   public StringTemplate append( String content ) {
     Assure.notNull( "content", content );
-    this._stringTemplate.append( content );
+    _stringTemplate.append( content );
     return this;
   }
 
@@ -56,7 +56,7 @@ public class StringTemplate {
    * @return
    */
   public StringTemplate nl() {
-    this._stringTemplate.append( Utilities.NL );
+    _stringTemplate.append( Utilities.NL );
     return this;
   }
 
@@ -67,7 +67,7 @@ public class StringTemplate {
   public void replace( String name, String value ) {
     Assure.notNull( "name", name );
     Assure.notNull( "value", value );
-    this._stringsToReplace.put( name, value );
+    _stringsToReplace.put( name, value );
   }
 
   /**
@@ -75,7 +75,7 @@ public class StringTemplate {
    */
   @Override
   public String toString() {
-    return Utilities.replaceTokens( this._stringTemplate.toString(), this._stringsToReplace );
+    return Utilities.replaceTokens( _stringTemplate.toString(), _stringsToReplace );
   }
 
 } /* ENDCLASS */

@@ -290,7 +290,7 @@ public interface FeatureManifest {
      * 
      * @param effectiveVersion
      */
-    void setEffectiveVersion(String effectiveVersion);
+    void setEffectiveVersion( String effectiveVersion );
   }
 
   /**
@@ -371,5 +371,7 @@ public interface FeatureManifest {
      * @return the locale
      */
     String getLocale();
-  }
-}
+  
+  } /* ENDINTERFACE */
+  
+} /* ENDINTERFACE */

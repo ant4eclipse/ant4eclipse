@@ -62,8 +62,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    */
   public MacroExecutionDelegate( Task task, String prefix ) {
     super( task );
-    this._prefix = prefix;
-    this._macroDefs = new ArrayList<ScopedMacroDefinition<E>>();
+    _prefix = prefix;
+    _macroDefs = new ArrayList<ScopedMacroDefinition<E>>();
   }
 
   /**
@@ -83,7 +83,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    */
   @Override
   public String getPrefix() {
-    return this._prefix;
+    return _prefix;
   }
 
   /**
@@ -91,7 +91,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    */
   @Override
   public void setPrefix( String prefix ) {
-    this._prefix = prefix;
+    _prefix = prefix;
   }
 
   /**
@@ -99,7 +99,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
    */
   @Override
   public List<ScopedMacroDefinition<E>> getScopedMacroDefinitions() {
-    return this._macroDefs;
+    return _macroDefs;
   }
 
   /**
@@ -109,7 +109,7 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
   public NestedSequential createScopedMacroDefinition( E scope ) {
     MacroDef macroDef = new ConditionalMacroDef();
     macroDef.setProject( getAntProject() );
-    this._macroDefs.add( new ScopedMacroDefinition<E>( macroDef, scope ) );
+    _macroDefs.add( new ScopedMacroDefinition<E>( macroDef, scope ) );
     return macroDef.createSequential();
   }
 
@@ -168,8 +168,8 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
     AntReferencesRaper antReferencesRaper = new AntReferencesRaper( getAntProject(), Thread.currentThread() );
 
     // set scoped values
-    antPropertiesRaper.setScopedValues( macroExecutionValues.getProperties(), this._prefix );
-    antReferencesRaper.setScopedValues( macroExecutionValues.getReferences(), this._prefix );
+    antPropertiesRaper.setScopedValues( macroExecutionValues.getProperties(), _prefix );
+    antReferencesRaper.setScopedValues( macroExecutionValues.getReferences(), _prefix );
 
     // ******
     PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( getAntProject() );

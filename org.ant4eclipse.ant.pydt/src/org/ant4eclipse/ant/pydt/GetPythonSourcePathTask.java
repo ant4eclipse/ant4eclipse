@@ -39,7 +39,7 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
    *          <code>true</code> <=> Multiple folders are supported, otherwise they're not.
    */
   public void setAllowMultipleFolders( boolean allowMultipleFolders ) {
-    this._allowMultipleFolders = allowMultipleFolders;
+    _allowMultipleFolders = allowMultipleFolders;
   }
 
   /**
@@ -48,7 +48,7 @@ public class GetPythonSourcePathTask extends AbstractPydtGetProjectPathTask {
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    if( !this._allowMultipleFolders ) {
+    if( !_allowMultipleFolders ) {
       PythonProjectRole role = getEclipseProject().getRole( PythonProjectRole.class );
       RawPathEntry[] entries = role.getRawPathEntries( ReferenceKind.Source );
       if( entries.length > 1 ) {

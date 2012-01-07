@@ -127,7 +127,7 @@ public class JavaExecuter {
    */
   public JavaExecuter( File jreDirectory ) {
     Assure.isDirectory( "jreDirectory", jreDirectory );
-    this._jreDirectory = jreDirectory;
+    _jreDirectory = jreDirectory;
   }
 
   /**
@@ -174,7 +174,7 @@ public class JavaExecuter {
    */
   public void setClasspathEntries( File[] classpathEntries ) {
     Assure.notNull( "classpathEntries", classpathEntries );
-    this._classpathEntries = classpathEntries;
+    _classpathEntries = classpathEntries;
   }
 
   /**
@@ -187,7 +187,7 @@ public class JavaExecuter {
    */
   public void setMainClass( String mainClass ) {
     Assure.notNull( "mainClass", mainClass );
-    this._mainClass = mainClass;
+    _mainClass = mainClass;
   }
 
   /**
@@ -201,7 +201,7 @@ public class JavaExecuter {
   public void setArgs( String[] args ) {
     Assure.notNull( "args", args );
 
-    this._args = args;
+    _args = args;
   }
 
   /**
@@ -214,10 +214,10 @@ public class JavaExecuter {
 
     // create class path
     StringBuffer classpathBuffer = new StringBuffer();
-    for( int i = 0; i < this._classpathEntries.length; i++ ) {
-      File file = this._classpathEntries[i];
+    for( int i = 0; i < _classpathEntries.length; i++ ) {
+      File file = _classpathEntries[i];
       classpathBuffer.append( file.getAbsolutePath() );
-      if( i + 1 < this._classpathEntries.length ) {
+      if( i + 1 < _classpathEntries.length ) {
         classpathBuffer.append( File.pathSeparatorChar );
       }
     }
@@ -236,8 +236,8 @@ public class JavaExecuter {
       cmd.append( "\"" );
     }
     cmd.append( " " );
-    cmd.append( this._mainClass );
-    for( String _arg : this._args ) {
+    cmd.append( _mainClass );
+    for( String _arg : _args ) {
       cmd.append( " " );
       cmd.append( _arg );
     }
@@ -253,18 +253,18 @@ public class JavaExecuter {
       proc.waitFor();
 
       // read out and err stream
-      this._systemOut = extractFromInputStream( proc.getInputStream() );
-      this._systemErr = extractFromInputStream( proc.getErrorStream() );
+      _systemOut = extractFromInputStream( proc.getInputStream() );
+      _systemErr = extractFromInputStream( proc.getErrorStream() );
 
       // log error...
-      if( this._systemErr != null && this._systemErr.length > 0 ) {
+      if( _systemErr != null && _systemErr.length > 0 ) {
         // TODO
-        throw new RuntimeException( "ERROR: " + Arrays.asList( this._systemErr ) );
+        throw new RuntimeException( "ERROR: " + Arrays.asList( _systemErr ) );
       }
 
       // debug
-      A4ELogging.debug( "JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList( this._systemOut ) );
-      A4ELogging.debug( "JavaExecuter.execute(): System.err -> '%s'.", Arrays.asList( this._systemErr ) );
+      A4ELogging.debug( "JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList( _systemOut ) );
+      A4ELogging.debug( "JavaExecuter.execute(): System.err -> '%s'.", Arrays.asList( _systemErr ) );
 
     } catch( IOException e ) {
       // throw Ant4EclipseException
@@ -283,7 +283,7 @@ public class JavaExecuter {
    * @return the output that was written to system out as a string array .
    */
   public String[] getSystemOut() {
-    return this._systemOut;
+    return _systemOut;
   }
 
   /**
@@ -294,7 +294,7 @@ public class JavaExecuter {
    * @return the output that was written to system err as a string array .
    */
   public String[] getSystemErr() {
-    return this._systemErr;
+    return _systemErr;
   }
 
   /**
@@ -307,26 +307,26 @@ public class JavaExecuter {
    */
   private File getJavaExecutable() {
     // try 'bin/java'
-    File result = new File( this._jreDirectory, "bin/java" );
+    File result = new File( _jreDirectory, "bin/java" );
 
     // try 'bin/java.exe'
     if( !result.exists() ) {
-      result = new File( this._jreDirectory, "bin/java.exe" );
+      result = new File( _jreDirectory, "bin/java.exe" );
     }
 
     // try 'bin/j9'
     if( !result.exists() ) {
-      result = new File( this._jreDirectory, "bin/j9" );
+      result = new File( _jreDirectory, "bin/j9" );
     }
 
     // try 'bin/j9.exe'
     if( !result.exists() ) {
-      result = new File( this._jreDirectory, "bin/j9.exe" );
+      result = new File( _jreDirectory, "bin/j9.exe" );
     }
 
     // throw Ant4EclipseException
     if( !result.exists() ) {
-      throw new Ant4EclipseException( JdtExceptionCode.INVALID_JRE_DIRECTORY, this._jreDirectory.getAbsolutePath() );
+      throw new Ant4EclipseException( JdtExceptionCode.INVALID_JRE_DIRECTORY, _jreDirectory.getAbsolutePath() );
     }
 
     // return result

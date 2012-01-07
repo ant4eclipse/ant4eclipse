@@ -55,10 +55,10 @@ public class XQueryHandler extends DefaultHandler {
    */
   public XQueryHandler( String fileName ) {
     super();
-    this._buffer = new StringBuffer();
-    this._queries = new Vector<XQuery>();
-    this._depth = 0;
-    this._fileName = fileName;
+    _buffer = new StringBuffer();
+    _queries = new Vector<XQuery>();
+    _depth = 0;
+    _fileName = fileName;
   }
 
   /**
@@ -77,8 +77,8 @@ public class XQueryHandler extends DefaultHandler {
    * @return A query instance allowing to retrieve the results.
    */
   public XQuery createQuery( String query ) {
-    XQuery result = new XQuery( this._fileName, query );
-    this._queries.add( result );
+    XQuery result = new XQuery( _fileName, query );
+    _queries.add( result );
     return result;
   }
 
@@ -87,13 +87,13 @@ public class XQueryHandler extends DefaultHandler {
    */
   @Override
   public void startDocument() throws SAXException {
-    this._depth = 0;
-    for( int i = 0; i < this._queries.size(); i++ ) {
-      XQuery query = this._queries.get( i );
+    _depth = 0;
+    for( int i = 0; i < _queries.size(); i++ ) {
+      XQuery query = _queries.get( i );
       query.reset();
     }
-    if( this._buffer.length() > 0 ) {
-      this._buffer.delete( 0, this._buffer.length() );
+    if( _buffer.length() > 0 ) {
+      _buffer.delete( 0, _buffer.length() );
     }
   }
 
@@ -103,12 +103,12 @@ public class XQueryHandler extends DefaultHandler {
   @Override
   public void startElement( String uri, String localname, String qname, Attributes attributes ) throws SAXException {
 
-    for( int i = 0; i < this._queries.size(); i++ ) {
-      XQuery query = this._queries.get( i );
-      query.visit( this._depth, qname, attributes );
+    for( int i = 0; i < _queries.size(); i++ ) {
+      XQuery query = _queries.get( i );
+      query.visit( _depth, qname, attributes );
     }
 
-    this._depth++;
+    _depth++;
 
   }
 
@@ -118,16 +118,16 @@ public class XQueryHandler extends DefaultHandler {
   @Override
   public void endElement( String uri, String localname, String qname ) throws SAXException {
 
-    this._depth--;
+    _depth--;
 
-    String str = this._buffer.toString().trim();
-    for( int i = 0; i < this._queries.size(); i++ ) {
-      XQuery query = this._queries.get( i );
-      query.endVisit( this._depth, str );
+    String str = _buffer.toString().trim();
+    for( int i = 0; i < _queries.size(); i++ ) {
+      XQuery query = _queries.get( i );
+      query.endVisit( _depth, str );
     }
 
-    if( this._buffer.length() > 0 ) {
-      this._buffer.delete( 0, this._buffer.length() );
+    if( _buffer.length() > 0 ) {
+      _buffer.delete( 0, _buffer.length() );
     }
 
   }
@@ -137,7 +137,7 @@ public class XQueryHandler extends DefaultHandler {
    */
   @Override
   public void characters( char[] ch, int start, int length ) throws SAXException {
-    this._buffer.append( ch, start, length );
+    _buffer.append( ch, start, length );
   }
 
   /**

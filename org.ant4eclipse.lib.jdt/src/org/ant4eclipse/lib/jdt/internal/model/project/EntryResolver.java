@@ -22,18 +22,18 @@ public class EntryResolver {
    * @param entryResolver
    * @return A list of resolved paths.
    */
-  public static <T> List<T> resolveEntries(Condition<T> condition, JavaProjectRoleImpl javaProjectRole) {
+  public static <T> List<T> resolveEntries( Condition<T> condition, JavaProjectRoleImpl javaProjectRole ) {
 
     List<T> result = new ArrayList<T>();
 
     RawClasspathEntry[] rawClasspathEntries = javaProjectRole.getRawClasspathEntries();
 
-    for (RawClasspathEntry rawClasspathEntrie : rawClasspathEntries) {
+    for( RawClasspathEntry rawClasspathEntrie : rawClasspathEntries ) {
 
-      T path = condition.resolve(rawClasspathEntrie);
+      T path = condition.resolve( rawClasspathEntrie );
 
-      if (path != null) {
-        result.add(path);
+      if( path != null ) {
+        result.add( path );
       }
     }
     return result;
@@ -48,6 +48,7 @@ public class EntryResolver {
      * @param entry
      * @return The path.
      */
-    public T resolve(RawClasspathEntry entry);
+    public T resolve( RawClasspathEntry entry );
   }
-}
+  
+} /* ENDCLASS */

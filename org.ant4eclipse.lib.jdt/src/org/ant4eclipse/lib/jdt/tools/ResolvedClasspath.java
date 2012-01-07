@@ -69,4 +69,5 @@ public interface ResolvedClasspath {
    * 
    */
   boolean hasBootClasspath();
-}
+
+} /* ENDINTERFACE */

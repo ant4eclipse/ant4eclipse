@@ -39,11 +39,11 @@ public abstract class AbstractProjectRole implements ProjectRole {
    * @param eclipseProject
    *          the eclipse project
    */
-  public AbstractProjectRole(String name, EclipseProject eclipseProject) {
-    Assure.nonEmpty("name", name);
-    Assure.notNull("eclipseProject", eclipseProject);
-    this._name = name;
-    this._eclipseProject = eclipseProject;
+  public AbstractProjectRole( String name, EclipseProject eclipseProject ) {
+    Assure.nonEmpty( "name", name );
+    Assure.notNull( "eclipseProject", eclipseProject );
+    _name = name;
+    _eclipseProject = eclipseProject;
   }
 
   /**
@@ -51,7 +51,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
    */
   @Override
   public final String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -59,25 +59,25 @@ public abstract class AbstractProjectRole implements ProjectRole {
    */
   @Override
   public EclipseProject getEclipseProject() {
-    return this._eclipseProject;
+    return _eclipseProject;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     AbstractProjectRole castedObj = (AbstractProjectRole) o;
-    return (this._name == null ? castedObj._name == null : this._name.equals(castedObj._name));
+    return(_name == null ? castedObj._name == null : _name.equals( castedObj._name ));
   }
 
   /**
@@ -86,7 +86,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._name == null ? 0 : this._name.hashCode());
+    hashCode = 31 * hashCode + (_name == null ? 0 : _name.hashCode());
     return hashCode;
   }
 
@@ -96,12 +96,13 @@ public abstract class AbstractProjectRole implements ProjectRole {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[AbstractProjectRole:");
-    buffer.append(" _name: ");
-    buffer.append(this._name);
-    buffer.append(" _eclipseProject: ");
-    buffer.append(this._eclipseProject);
-    buffer.append("]");
+    buffer.append( "[AbstractProjectRole:" );
+    buffer.append( " _name: " );
+    buffer.append( _name );
+    buffer.append( " _eclipseProject: " );
+    buffer.append( _eclipseProject );
+    buffer.append( "]" );
     return buffer.toString();
   }
+  
 } /* ENDCLASS */

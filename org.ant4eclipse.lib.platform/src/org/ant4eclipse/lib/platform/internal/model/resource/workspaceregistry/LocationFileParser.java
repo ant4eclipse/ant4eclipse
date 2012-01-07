@@ -25,7 +25,6 @@ import java.net.URISyntaxException;
 /**
  * Reads a ".location" file which provides the position of an external project from eclipse's .metadata directory.
  * 
- * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 public class LocationFileParser {
@@ -50,30 +49,30 @@ public class LocationFileParser {
    *          the location file to be parsed
    * @return the project directory or <code>null</code> if the location doesn't point to a valid project directory
    */
-  public static final File getProjectDirectory(File locationFile) {
-    Assure.isFile("locationFile", locationFile);
+  public static final File getProjectDirectory( File locationFile ) {
+    Assure.isFile( "locationFile", locationFile );
 
     try {
       // read the location of the project directory
-      File projectDir = readLocation(locationFile);
+      File projectDir = readLocation( locationFile );
 
       // check if projectDir is valid
-      if (projectDir != null) {
-        if (projectDir.isDirectory()) {
-          File projectfile = new File(projectDir, ".project");
-          if (projectfile.isFile()) {
+      if( projectDir != null ) {
+        if( projectDir.isDirectory() ) {
+          File projectfile = new File( projectDir, ".project" );
+          if( projectfile.isFile() ) {
             return projectDir;
           } else {
             A4ELogging.debug(
                 "LocationFileParser.getProjectDirectory(): the project '%s' doesn't provide an Eclipse configuration",
-                projectDir.getAbsolutePath());
+                projectDir.getAbsolutePath() );
           }
         } else {
-          A4ELogging.debug("LocationFileParser.getProjectDirectory(): the stored location '%s' is not a directory",
-              projectDir);
+          A4ELogging.debug( "LocationFileParser.getProjectDirectory(): the stored location '%s' is not a directory",
+              projectDir );
         }
       }
-    } catch (IOException e) {
+    } catch( IOException e ) {
       // TODO: Logging
       e.printStackTrace();
     }
@@ -101,53 +100,54 @@ public class LocationFileParser {
    *         location could be read from the .location file
    * @throws IOException
    */
-  static final File readLocation(File locationfile) throws IOException {
-    Assure.isFile("locationfile", locationfile);
+  static final File readLocation( File locationfile ) throws IOException {
+    Assure.isFile( "locationfile", locationfile );
 
-    ChunkyFile cf = new ChunkyFile(locationfile);
-    if (cf.getChunkCount() == 1) {
-      byte[] data = cf.getChunk(0);
-      DataInputStream datain = new DataInputStream(new ByteArrayInputStream(data));
+    ChunkyFile cf = new ChunkyFile( locationfile );
+    if( cf.getChunkCount() == 1 ) {
+      byte[] data = cf.getChunk( 0 );
+      DataInputStream datain = new DataInputStream( new ByteArrayInputStream( data ) );
       String location = datain.readUTF();
       File file = null;
-      if (location.length() > 0) {
+      if( location.length() > 0 ) {
         /*
          * see {@link org.eclipse.core.internal.resources.LocalMetaArea#readPrivateDescription(IProject target,
          * IProjectDescription description)}
          */
-        if (location.startsWith(URI_PREFIX)) {
-          URI uri = URI.create(location.substring(URI_PREFIX.length()));
-          if (!uri.getScheme().startsWith("file")) {
-            A4ELogging.debug("LocationFileParser.readLocation(): the stored location uri '%s' is not a file-uri", uri);
+        if( location.startsWith( URI_PREFIX ) ) {
+          URI uri = URI.create( location.substring( URI_PREFIX.length() ) );
+          if( !uri.getScheme().startsWith( "file" ) ) {
+            A4ELogging.debug( "LocationFileParser.readLocation(): the stored location uri '%s' is not a file-uri", uri );
           } else {
-            file = new File(uri);
+            file = new File( uri );
           }
         } else {
           try {
             // try to interprete the location as a URI
-            file = new File(new URI(location));
-          } catch (URISyntaxException ex) {
+            file = new File( new URI( location ) );
+          } catch( URISyntaxException ex ) {
             // fallback mechanism which interprets the location as a simple path
-            A4ELogging.debug("LocationFileParser.readLocation(): the location '%s' will be interpreted as a path",
-                location);
-            file = new File(location);
-          } catch (IllegalArgumentException ex) {
+            A4ELogging.debug( "LocationFileParser.readLocation(): the location '%s' will be interpreted as a path",
+                location );
+            file = new File( location );
+          } catch( IllegalArgumentException ex ) {
             // fallback mechanism which interprets the location as a simple path.
             // this can happen if the location doesn't conform to the current system
             // (f.e. a location file for unix which is used while ANT is executed unter
             // windows)
-            A4ELogging.debug("LocationFileParser.readLocation(): the location '%s' will be interpreted as a path",
-                location);
-            file = new File(location);
+            A4ELogging.debug( "LocationFileParser.readLocation(): the location '%s' will be interpreted as a path",
+                location );
+            file = new File( location );
           }
         }
         return file;
       }
     } else {
-      A4ELogging.warn("the file '%s' contains %d chunks instead of a single one", locationfile,
-          Integer.valueOf(cf.getChunkCount()));
+      A4ELogging.warn( "the file '%s' contains %d chunks instead of a single one", locationfile,
+          Integer.valueOf( cf.getChunkCount() ) );
     }
 
     return null;
   }
-}
+  
+} /* ENDCLASS */

@@ -65,7 +65,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     super( "executePdeJunitLauncher" );
 
     // create the delegate
-    this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
+    _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
   /**
@@ -73,7 +73,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public String getPlatformConfigurationId() {
-    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+    return _targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
 
   /**
@@ -81,7 +81,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public final String getTargetPlatformId() {
-    return this._targetPlatformAwareDelegate.getTargetPlatformId();
+    return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
   /**
@@ -89,7 +89,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public boolean isPlatformConfigurationIdSet() {
-    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+    return _targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
 
   /**
@@ -97,7 +97,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public final boolean isTargetPlatformIdSet() {
-    return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
   /**
@@ -105,7 +105,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public void setPlatformConfigurationId( String platformConfigurationId ) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
+    _targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
@@ -113,7 +113,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public final void setTargetPlatformId( String targetPlatformId ) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
+    _targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -121,7 +121,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
    */
   @Override
   public final void requireTargetPlatformIdSet() {
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -145,7 +145,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     super.preconditions();
 
     //
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -169,12 +169,12 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
 
     // compute the bundle information
     computeBundlesInfo();
-    defaultValues.getProperties().put( "bundles.info", this._bundlesInfo.toString() );
-    defaultValues.getProperties().put( "osgi.bundles", this._osgiBundles.toString() );
-    defaultValues.getProperties().put( "dev.properties", this._devProperties.toString() );
+    defaultValues.getProperties().put( "bundles.info", _bundlesInfo.toString() );
+    defaultValues.getProperties().put( "osgi.bundles", _osgiBundles.toString() );
+    defaultValues.getProperties().put( "dev.properties", _devProperties.toString() );
 
     // set the osgi framework
-    BundleDescription osgiFramework = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
+    BundleDescription osgiFramework = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
         .getResolvedBundle( "org.eclipse.osgi", null );
     if( osgiFramework == null ) {
       throw new RuntimeException( "Bundle 'org.eclipse.osgi' is missing." );
@@ -184,7 +184,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     // set the test plug-in name and location
     PluginProjectRole pluginProjectRole = getEclipseProject().getRole( PluginProjectRole.class );
     BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
-    bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+    bundleDescription = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
         bundleDescription.getSymbolicName(), bundleDescription.getVersion() );
     BundleDescription bundleHost = BundleDependenciesResolver.getHost( bundleDescription );
 
@@ -198,7 +198,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
 
     // compute the 'pde.test.utils' class path
     try {
-      BundleDescription b = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+      BundleDescription b = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
           "pde.test.utils", null );
       StringBuilder collectorClassPath = new StringBuilder();
       for( BundleDependency dependency : new BundleDependenciesResolver().resolveBundleClasspath( b ) ) {
@@ -241,20 +241,20 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
   private void computeBundlesInfo() {
 
     // initialize result
-    this._bundlesInfo = new StringBuilder();
-    this._osgiBundles = new StringBuilder();
-    this._devProperties = new StringBuilder();
-    this._devProperties.append( "@ignoredot@=true\n" );
+    _bundlesInfo = new StringBuilder();
+    _osgiBundles = new StringBuilder();
+    _devProperties = new StringBuilder();
+    _devProperties.append( "@ignoredot@=true\n" );
 
     // compute contained bundles
     computeBundles( getLaunchConfiguration().getAttribute( "selected_workspace_plugins" ), true );
     computeBundles( getLaunchConfiguration().getAttribute( "selected_target_plugins" ), false );
 
     // add additional bundles
-    BundleDescription b = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+    BundleDescription b = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
         "org.eclipse.pde.junit.runtime", null );
     handle( b.getSymbolicName(), "4", "false", false );
-    b = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
+    b = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() ).getResolvedBundle(
         "org.eclipse.jdt.junit4.runtime", null );
     handle( b.getSymbolicName(), "4", "false", false );
     try {
@@ -305,7 +305,7 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     }
 
     //
-    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
+    TargetPlatform targetPlatform = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
     BundleDescription description = workspaceBundles ? targetPlatform.getBundleDescriptionFromWorkspace( symName )
         : targetPlatform.getBundleDescriptionFromBinaryBundles( symName );
 
@@ -329,22 +329,22 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
         PluginProjectRole pluginProjectRole = bundleSource.getAsEclipseProject().getRole( PluginProjectRole.class );
 
         //
-        this._devProperties.append( pluginProjectRole.getBundleDescription().getSymbolicName() );
-        this._devProperties.append( "=" );
-        this._devProperties.append( javaProjectRole.getDefaultOutputFolder() );
-        this._devProperties.append( "\n" );
+        _devProperties.append( pluginProjectRole.getBundleDescription().getSymbolicName() );
+        _devProperties.append( "=" );
+        _devProperties.append( javaProjectRole.getDefaultOutputFolder() );
+        _devProperties.append( "\n" );
       }
 
-      this._bundlesInfo.append( String.format( "%s,%s,file:/%s,4,%s\n", description.getSymbolicName(),
+      _bundlesInfo.append( String.format( "%s,%s,file:/%s,4,%s\n", description.getSymbolicName(),
           description.getVersion(), description.getLocation(), autoStart.equals( "true" ) ) );
 
-      this._osgiBundles
+      _osgiBundles
           .append( String.format( "reference\\:file\\:%s", description.getLocation().replace( "\\", "/" ) ) );
       if( autoStart.equals( "true" ) ) {
-        this._osgiBundles.append( "@start" );
+        _osgiBundles.append( "@start" );
       }
 
-      this._osgiBundles.append( "," );
+      _osgiBundles.append( "," );
     }
   }
 

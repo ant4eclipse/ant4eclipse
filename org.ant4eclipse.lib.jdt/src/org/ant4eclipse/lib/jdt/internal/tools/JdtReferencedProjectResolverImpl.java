@@ -45,7 +45,7 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
    */
   @Override
   public List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<Object> additionalElements ) {
-    Assure.notNull("project", project);
+    Assure.notNull( "project", project );
 
     List<JdtClasspathContainerArgument> containerargs = new ArrayList<JdtClasspathContainerArgument>();
     if( additionalElements != null ) {
@@ -56,23 +56,18 @@ public class JdtReferencedProjectResolverImpl implements ReferencedProjectsResol
       }
     }
     // create a ResolverJob
-    ResolverJob job = new ResolverJob(project, project.getWorkspace(), false, false, containerargs );
+    ResolverJob job = new ResolverJob( project, project.getWorkspace(), false, false, containerargs );
 
     ClasspathEntryResolverExecutor cpentryresolver = new ClasspathEntryResolverExecutor( false );
-    cpentryresolver.resolve(
-      job.getRootProject(), 
-      new ClasspathEntryResolver[] {
-        new ContainerClasspathEntryResolver(), 
-        new ProjectClasspathEntryResolver(), 
-      },
-      new ClasspathResolverContextImpl( cpentryresolver, job )
-    );
+    cpentryresolver.resolve( job.getRootProject(), new ClasspathEntryResolver[] {
+        new ContainerClasspathEntryResolver(), new ProjectClasspathEntryResolver(), },
+        new ClasspathResolverContextImpl( cpentryresolver, job ) );
 
     // we need to remove the calling project, since the api states that only referenced projects have to be returned
     List<EclipseProject> result = cpentryresolver.getReferencedProjects();
     result.remove( project );
     return result;
-    
+
   }
 
   /**

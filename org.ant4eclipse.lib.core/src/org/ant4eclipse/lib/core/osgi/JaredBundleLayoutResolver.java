@@ -61,12 +61,12 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     Assure.isFile( "location", location );
     Assure.notNull( "expansionDirectory", expansionDirectory );
 
-    this._location = location;
-    this._expansionDirectory = expansionDirectory;
+    _location = location;
+    _expansionDirectory = expansionDirectory;
 
     try {
-      this._jarFile = new JarFile( this._location );
-      this._manifest = this._jarFile.getManifest();
+      _jarFile = new JarFile( _location );
+      _manifest = _jarFile.getManifest();
     } catch( IOException e ) {
       throw new RuntimeException( e );
     }
@@ -85,7 +85,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    */
   @Override
   public File getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -93,7 +93,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    */
   @Override
   public Manifest getManifest() {
-    return this._manifest;
+    return _manifest;
   }
 
   /**
@@ -108,7 +108,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     }
 
     // return 'self'
-    return new File[] { this._location };
+    return new File[] { _location };
   }
 
   /**
@@ -121,13 +121,13 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   private boolean needExpansion() {
 
     // get the bundle class path
-    String[] bundleClasspath = ManifestHelper.getBundleClasspath( this._manifest );
+    String[] bundleClasspath = ManifestHelper.getBundleClasspath( _manifest );
 
     // check entries
     for( int i = 0; i < bundleClasspath.length; i++ ) {
 
       // avoid expanding for erroneous BundleClasspath-Entries
-      if( !".".equals( bundleClasspath[i] ) && (this._jarFile.getEntry( bundleClasspath[i] ) != null) ) {
+      if( !".".equals( bundleClasspath[i] ) && (_jarFile.getEntry( bundleClasspath[i] ) != null) ) {
         return true;
       }
     }
@@ -146,29 +146,29 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
   private File[] expand() {
 
     // compute destination
-    ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements( this._manifest,
+    ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements( _manifest,
         ManifestHelper.BUNDLE_SYMBOLICNAME );
 
     if( elements == null || elements.length == 0 || elements[0].getValues() == null
         || elements[0].getValues().length == 0 ) {
       // TODO: NLS
       throw new RuntimeException( "Invalid header '" + ManifestHelper.BUNDLE_SYMBOLICNAME + "' in bundle '"
-          + this._location + "'." );
+          + _location + "'." );
     }
 
-    String version = ManifestHelper.getManifestHeader( this._manifest, ManifestHelper.BUNDLE_VERSION );
+    String version = ManifestHelper.getManifestHeader( _manifest, ManifestHelper.BUNDLE_VERSION );
 
-    File destination = new File( this._expansionDirectory, elements[0].getValues()[0] + "_" + version );
+    File destination = new File( _expansionDirectory, elements[0].getValues()[0] + "_" + version );
 
     // unwrap jar file
     try {
-      Utilities.expandJarFile( this._jarFile, destination );
+      Utilities.expandJarFile( _jarFile, destination );
     } catch( Ant4EclipseException ex ) {
       if( ex.getExceptionCode() == CoreExceptionCode.IO_FAILURE ) {
         // log error
-        A4ELogging.error( "Could not expand jar file '%s'. Reason: '%s'", this._location, ex.getMessage() );
+        A4ELogging.error( "Could not expand jar file '%s'. Reason: '%s'", _location, ex.getMessage() );
         // return 'self'
-        return new File[] { this._location };
+        return new File[] { _location };
       } else {
         throw ex;
       }
@@ -178,7 +178,7 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
     List<File> result = new ArrayList<File>();
 
     // get bundle class path
-    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath( this._manifest );
+    String[] bundleClasspathEntries = ManifestHelper.getBundleClasspath( _manifest );
 
     // add class path entries to the result
     for( String bundleClasspathEntrie : bundleClasspathEntries ) {

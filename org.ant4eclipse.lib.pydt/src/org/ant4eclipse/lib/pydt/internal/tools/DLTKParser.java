@@ -49,14 +49,14 @@ public class DLTKParser {
    * 
    * @return The kind of reference used for this type of record.
    */
-  private static final ReferenceKind getReferenceKind(String kind) {
-    if (KIND_SOURCE.equals(kind)) {
+  private static final ReferenceKind getReferenceKind( String kind ) {
+    if( KIND_SOURCE.equals( kind ) ) {
       return ReferenceKind.Source;
-    } else if (KIND_LIBRARY.equals(kind)) {
+    } else if( KIND_LIBRARY.equals( kind ) ) {
       return ReferenceKind.Library;
-    } else if (KIND_PROJECT.equals(kind)) {
+    } else if( KIND_PROJECT.equals( kind ) ) {
       return ReferenceKind.Project;
-    } else if (KIND_CONTAINER.equals(kind)) {
+    } else if( KIND_CONTAINER.equals( kind ) ) {
       return ReferenceKind.Container;
     } else {
       return null;
@@ -70,53 +70,54 @@ public class DLTKParser {
    * @param pythonrole
    *          The role instance which will be filled with the corresponding information. Not <code>null</code>.
    */
-  public static final void contributePathes(PythonProjectRoleImpl pythonrole) {
+  public static final void contributePathes( PythonProjectRoleImpl pythonrole ) {
 
     String projectname = pythonrole.getEclipseProject().getSpecifiedName();
-    File buildpath = pythonrole.getEclipseProject().getChild(NAME_BUILDPATH);
+    File buildpath = pythonrole.getEclipseProject().getChild( NAME_BUILDPATH );
 
     XQueryHandler queryhandler = new XQueryHandler();
 
     // prepare the access for the attributes 'kind', 'path', 'exported', 'external'
-    XQuery kindquery = queryhandler.createQuery("/buildpath/buildpathentry/@kind");
-    XQuery pathquery = queryhandler.createQuery("/buildpath/buildpathentry/@path");
-    XQuery exportedquery = queryhandler.createQuery("/buildpath/buildpathentry/@exported");
-    XQuery externalquery = queryhandler.createQuery("/buildpath/buildpathentry/@external");
+    XQuery kindquery = queryhandler.createQuery( "/buildpath/buildpathentry/@kind" );
+    XQuery pathquery = queryhandler.createQuery( "/buildpath/buildpathentry/@path" );
+    XQuery exportedquery = queryhandler.createQuery( "/buildpath/buildpathentry/@exported" );
+    XQuery externalquery = queryhandler.createQuery( "/buildpath/buildpathentry/@external" );
 
     // now fetch the necessary data
-    XQueryHandler.queryFile(buildpath, queryhandler);
+    XQueryHandler.queryFile( buildpath, queryhandler );
 
     String[] kinds = kindquery.getResult();
     String[] pathes = pathquery.getResult();
     String[] exported = exportedquery.getResult();
     String[] externals = externalquery.getResult();
 
-    for (int i = 0; i < kinds.length; i++) {
-      ReferenceKind refkind = getReferenceKind(kinds[i]);
-      String path = Utilities.removeTrailingPathSeparator(pathes[i]);
-      if (refkind == null) {
+    for( int i = 0; i < kinds.length; i++ ) {
+      ReferenceKind refkind = getReferenceKind( kinds[i] );
+      String path = Utilities.removeTrailingPathSeparator( pathes[i] );
+      if( refkind == null ) {
         // we currently don't provide support for this kind, so skip it. just log the skipped path so the user will know
         // whether this issue is relevant for him or not.
-        A4ELogging.warn("Skipping buildpath entry with path '%s'. The kind '%s' is currently not supported.", path,
-            kinds[i]);
+        A4ELogging.warn( "Skipping buildpath entry with path '%s'. The kind '%s' is currently not supported.", path,
+            kinds[i] );
         continue;
       }
-      boolean isexported = Boolean.parseBoolean(exported[i]);
-      boolean isexternal = Boolean.parseBoolean(externals[i]);
-      if (refkind == ReferenceKind.Container) {
+      boolean isexported = Boolean.parseBoolean( exported[i] );
+      boolean isexternal = Boolean.parseBoolean( externals[i] );
+      if( refkind == ReferenceKind.Container ) {
         // runtimes are declared as containers in Python DLTK
-        if (path.startsWith(KEY_RUNTIME)) {
+        if( path.startsWith( KEY_RUNTIME ) ) {
           refkind = ReferenceKind.Runtime;
-          path = path.substring(KEY_RUNTIME.length());
-          if (path.startsWith("/")) {
-            path = path.substring(1);
+          path = path.substring( KEY_RUNTIME.length() );
+          if( path.startsWith( "/" ) ) {
+            path = path.substring( 1 );
           }
         }
       }
-      path = Utilities.cleanup(path);
-      pythonrole.addRawPathEntry(new RawPathEntry(projectname, refkind, path, isexported, isexternal));
+      path = Utilities.cleanup( path );
+      pythonrole.addRawPathEntry( new RawPathEntry( projectname, refkind, path, isexported, isexternal ) );
 
     }
 
   }
+  
 } /* ENDCLASS */

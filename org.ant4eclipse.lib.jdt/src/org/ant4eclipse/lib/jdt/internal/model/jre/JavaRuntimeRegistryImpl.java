@@ -52,7 +52,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   public JavaRuntimeRegistryImpl() {
 
     // create hash maps
-    this._javaRuntimeCache = new HashMap<String,JavaRuntime>();
+    _javaRuntimeCache = new HashMap<String,JavaRuntime>();
   }
 
   /**
@@ -101,7 +101,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     Assure.notNull( "id", id );
     Assure.assertTrue( hasJavaRuntime( id ), "No JavaRuntime with id '" + id + "' registered!" );
 
-    this._defaultJavaRuntimeKey = id;
+    _defaultJavaRuntimeKey = id;
   }
 
   /**
@@ -112,7 +112,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     Assure.nonEmpty( "path", path );
 
     // return true if a java runtime exists
-    if( this._javaRuntimeCache.containsKey( path ) ) {
+    if( _javaRuntimeCache.containsKey( path ) ) {
       return true;
     }
 
@@ -142,8 +142,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     Assure.nonEmpty( "path", path );
 
     // return true if a java runtime exists
-    if( this._javaRuntimeCache.containsKey( path ) ) {
-      return this._javaRuntimeCache.get( path );
+    if( _javaRuntimeCache.containsKey( path ) ) {
+      return _javaRuntimeCache.get( path );
     }
 
     // return if a java profile exists
@@ -210,8 +210,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   public JavaRuntime getDefaultJavaRuntime() {
 
     // search for default key
-    if( (this._defaultJavaRuntimeKey != null) && this._javaRuntimeCache.containsKey( this._defaultJavaRuntimeKey ) ) {
-      return this._javaRuntimeCache.get( this._defaultJavaRuntimeKey );
+    if( (_defaultJavaRuntimeKey != null) && _javaRuntimeCache.containsKey( _defaultJavaRuntimeKey ) ) {
+      return _javaRuntimeCache.get( _defaultJavaRuntimeKey );
     }
 
     // TODO:
@@ -221,7 +221,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // specified on the classpath or there is no JavaRuntime registered for the specified JRE_CONTAINER. Trying to use
     // JRE from java.home"
     // ,
-    // this._eclipseProject.getName());
+    // _eclipseProject.getName());
 
     // try to create java runtime from java.home
     JavaRuntime javaRuntime = getJavaRuntimeFromJavaHome();
@@ -248,7 +248,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     String profileName = javaProfile.getName();
 
     // iterate over java runtime cache
-    for( Object element : this._javaRuntimeCache.values() ) {
+    for( Object element : _javaRuntimeCache.values() ) {
 
       // get the java runtime
       JavaRuntime javaRuntime = (JavaRuntime) element;
@@ -301,8 +301,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // create path
     String id = javaRuntime.getId();
 
-    if( this._javaRuntimeCache.containsKey( id ) ) {
-      JavaRuntime runtime = this._javaRuntimeCache.get( id );
+    if( _javaRuntimeCache.containsKey( id ) ) {
+      JavaRuntime runtime = _javaRuntimeCache.get( id );
 
       if( !runtime.equals( javaRuntime ) ) {
 
@@ -311,14 +311,14 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
         throw new RuntimeException( "Duplicate definition of JavaRuntime with key '" + id + "'." );
       }
       // return previous instance
-      return this._javaRuntimeCache.get( id );
+      return _javaRuntimeCache.get( id );
     }
 
     // store java runtime
-    this._javaRuntimeCache.put( id, javaRuntime );
+    _javaRuntimeCache.put( id, javaRuntime );
 
     // store default if necessary
-    if( isDefault || (this._defaultJavaRuntimeKey == null) ) {
+    if( isDefault || (_defaultJavaRuntimeKey == null) ) {
       setDefaultJavaRuntime( id );
     }
 

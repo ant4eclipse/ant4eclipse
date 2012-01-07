@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.ReferableType;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
@@ -53,10 +52,10 @@ public class DefaultReferableType implements ReferableType {
    * @param libraryType
    *          the library type
    */
-  protected DefaultReferableType(String libraryLocation, byte libraryType) {
-    Assure.notNull("libraryLocation", libraryLocation);
-    this._libraryLocation = libraryLocation;
-    this._libraryType = libraryType;
+  protected DefaultReferableType( String libraryLocation, byte libraryType ) {
+    Assure.notNull( "libraryLocation", libraryLocation );
+    _libraryLocation = libraryLocation;
+    _libraryType = libraryType;
   }
 
   /**
@@ -64,7 +63,7 @@ public class DefaultReferableType implements ReferableType {
    */
   @Override
   public String getLibraryLocation() {
-    return this._libraryLocation;
+    return _libraryLocation;
   }
 
   /**
@@ -72,7 +71,7 @@ public class DefaultReferableType implements ReferableType {
    */
   @Override
   public byte getLibraryType() {
-    return this._libraryType;
+    return _libraryType;
   }
 
   /**
@@ -80,7 +79,7 @@ public class DefaultReferableType implements ReferableType {
    */
   @Override
   public final AccessRestriction getAccessRestriction() {
-    return this._accessRestriction;
+    return _accessRestriction;
   }
 
   /**
@@ -88,14 +87,14 @@ public class DefaultReferableType implements ReferableType {
    */
   @Override
   public final boolean hasAccessRestriction() {
-    return this._accessRestriction != null;
+    return _accessRestriction != null;
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setAccessRestriction(AccessRestriction accessRestriction) {
-    this._accessRestriction = accessRestriction;
+  public final void setAccessRestriction( AccessRestriction accessRestriction ) {
+    _accessRestriction = accessRestriction;
   }
 
   /**
@@ -105,8 +104,8 @@ public class DefaultReferableType implements ReferableType {
    * @param libraryLocation
    *          the libraryLocation to set
    */
-  public void setLibraryLocation(String libraryLocation) {
-    this._libraryLocation = libraryLocation;
+  public void setLibraryLocation( String libraryLocation ) {
+    _libraryLocation = libraryLocation;
   }
 
   /**
@@ -116,7 +115,8 @@ public class DefaultReferableType implements ReferableType {
    * @param libraryType
    *          the libraryType to set
    */
-  public void setLibraryType(byte libraryType) {
-    this._libraryType = libraryType;
+  public void setLibraryType( byte libraryType ) {
+    _libraryType = libraryType;
   }
-}
+  
+} /* ENDCLASS */

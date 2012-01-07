@@ -50,10 +50,10 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
     super( prefix );
 
     // create the delegates
-    this._jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
+    _jdtClasspathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
 
     // create the JdtExecutorValuesProvider
-    this._executorValuesProvider = new JdtExecutorValuesProvider( this, this );
+    _executorValuesProvider = new JdtExecutorValuesProvider( this, this );
   }
 
   /**
@@ -61,7 +61,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    */
   @Override
   public void setDynamicAttribute( String attributeName, String value ) throws BuildException {
-    this._jdtClasspathContainerArgumentDelegate.setDynamicAttribute( attributeName, value );
+    _jdtClasspathContainerArgumentDelegate.setDynamicAttribute( attributeName, value );
   }
 
   /**
@@ -71,7 +71,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
   @SuppressWarnings( "deprecation" )
   @Deprecated
   public final JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
-    return this._jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
+    return _jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
   }
 
   /**
@@ -79,7 +79,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    */
   @Override
   public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
-    return this._jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments();
+    return _jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }
 
   /**
@@ -101,7 +101,7 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    * @return the {@link JdtExecutorValuesProvider}.
    */
   protected final JdtExecutorValuesProvider getExecutorValuesProvider() {
-    return this._executorValuesProvider;
+    return _executorValuesProvider;
   }
   
 } /* ENDCLASS */

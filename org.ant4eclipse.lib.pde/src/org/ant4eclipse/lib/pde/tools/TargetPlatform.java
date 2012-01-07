@@ -51,7 +51,7 @@ public interface TargetPlatform {
    *          version of the bundle to query. null matches any bundle
    * @return the descriptor for the identified bundle or <code>null</code> if no such bundle is found.
    */
-  BundleDescription getResolvedBundle(String symbolicName, Version version);
+  BundleDescription getResolvedBundle( String symbolicName, Version version );
 
   /**
    * <p>
@@ -75,7 +75,7 @@ public interface TargetPlatform {
    * @return the feature description for the feature with the given id and version or <code>null</code> value is
    *         returned if no such feature is found.
    */
-  FeatureDescription getFeatureDescription(String id, Version version);
+  FeatureDescription getFeatureDescription( String id, Version version );
 
   /**
    * <p>
@@ -88,7 +88,7 @@ public interface TargetPlatform {
    *          the version of the requested feature (maybe null)
    * @return <code>true</code> if this target platform contains a feature description with the given id and version.
    */
-  boolean hasFeatureDescription(String id, Version version);
+  boolean hasFeatureDescription( String id, Version version );
 
   /**
    * <p>
@@ -101,7 +101,7 @@ public interface TargetPlatform {
    * @return the feature description for the feature with the given id or <code>null</code> value is returned if no such
    *         feature is found.
    */
-  FeatureDescription getFeatureDescription(String id);
+  FeatureDescription getFeatureDescription( String id );
 
   /**
    * <p>
@@ -112,7 +112,7 @@ public interface TargetPlatform {
    *          the id of the requested feature (must not be null)
    * @return <code>true</code> if this target platform contains a feature description with the given id.
    */
-  boolean hasFeatureDescription(String id);
+  boolean hasFeatureDescription( String id );
 
   /**
    * <p>
@@ -125,7 +125,7 @@ public interface TargetPlatform {
    * @return the bundle description for the bundle with the given id or <code>null</code> value is returned if no such
    *         feature is found.
    */
-  BundleDescription getBundleDescription(String id);
+  BundleDescription getBundleDescription( String id );
 
   /**
    * <p>
@@ -136,7 +136,7 @@ public interface TargetPlatform {
    *          the id of the requested bundle (must not be null)
    * @return <code>true</code> if this target platform contains a bundle description with the given id.
    */
-  boolean hasBundleDescription(String id);
+  boolean hasBundleDescription( String id );
 
   /**
    * <p>
@@ -145,7 +145,7 @@ public interface TargetPlatform {
    * @param bundleDescriptionId
    * @return
    */
-  boolean matchesPlatformFilter(String bundleDescriptionId);
+  boolean matchesPlatformFilter( String bundleDescriptionId );
 
   /**
    * <p>
@@ -156,7 +156,7 @@ public interface TargetPlatform {
    * @param manifest
    * @return returns the resolved feature
    */
-  ResolvedFeature resolveFeature(Object source, FeatureManifest manifest);
+  ResolvedFeature resolveFeature( Object source, FeatureManifest manifest );
 
   /**
    * Returns a list of all locations used by this TargetPlatform.
@@ -173,7 +173,8 @@ public interface TargetPlatform {
    */
   void refresh();
 
-  BundleDescription getBundleDescriptionFromWorkspace(String symbolicName);
+  BundleDescription getBundleDescriptionFromWorkspace( String symbolicName );
 
-  BundleDescription getBundleDescriptionFromBinaryBundles(String symbolicName);
-}
+  BundleDescription getBundleDescriptionFromBinaryBundles( String symbolicName );
+  
+} /* ENDINTERFACE */

@@ -47,7 +47,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
   protected List<CategorizedProblem> _categorizedProblems;
 
   /** collection of class files which have been compiled */
-  private Map<String, File>          _compiledClassFiles;
+  private Map<String,File>           _compiledClassFiles;
 
   /**
    * <p>
@@ -55,9 +55,9 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    * </p>
    */
   public CompilerRequestorImpl() {
-    this._compilationSuccessful = true;
-    this._categorizedProblems = new ArrayList<CategorizedProblem>();
-    this._compiledClassFiles = new Hashtable<String, File>();
+    _compilationSuccessful = true;
+    _categorizedProblems = new ArrayList<CategorizedProblem>();
+    _compiledClassFiles = new Hashtable<String,File>();
   }
 
   /**
@@ -65,15 +65,15 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    * 
    * @return A map for the compiled class files. Not <code>null</code>.
    */
-  public Map<String, File> getCompiledClassFiles() {
-    return Collections.unmodifiableMap(this._compiledClassFiles);
+  public Map<String,File> getCompiledClassFiles() {
+    return Collections.unmodifiableMap( _compiledClassFiles );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void acceptResult(CompilationResult result) {
+  public void acceptResult( CompilationResult result ) {
 
     // get the compilation unit...
     CompilationUnitImpl compilationUnitImpl = (CompilationUnitImpl) result.getCompilationUnit();
@@ -82,13 +82,13 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
     SourceFile sourceFile = compilationUnitImpl.getSourceFile();
 
     // return immediately if the source file is a ReferableSourceFile
-    if (sourceFile instanceof ReferableSourceFile) {
+    if( sourceFile instanceof ReferableSourceFile ) {
 
       // add the problems...
-      if (result.getAllProblems() != null) {
-        if (A4ELogging.isTraceingEnabled()) {
-          A4ELogging.trace("Could not compile referenced class '%s'. Reason: %s", sourceFile.getSourceFileName(),
-              Arrays.asList(result.getAllProblems()));
+      if( result.getAllProblems() != null ) {
+        if( A4ELogging.isTraceingEnabled() ) {
+          A4ELogging.trace( "Could not compile referenced class '%s'. Reason: %s", sourceFile.getSourceFileName(),
+              Arrays.asList( result.getAllProblems() ) );
         }
       }
 
@@ -98,40 +98,40 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
     // get the destination directory
     File destinationDirectory = sourceFile.getDestinationFolder();
 
-    if (!result.hasErrors()) {
+    if( !result.hasErrors() ) {
       ClassFile[] classFiles = result.getClassFiles();
-      for (ClassFile classFile2 : classFiles) {
+      for( ClassFile classFile2 : classFiles ) {
         char[][] compoundName = classFile2.getCompoundName();
         StringBuffer classFileName = new StringBuffer();
-        for (int j = 0; j < compoundName.length; j++) {
-          classFileName.append(compoundName[j]);
-          if (j < compoundName.length - 1) {
-            classFileName.append('/');
+        for( int j = 0; j < compoundName.length; j++ ) {
+          classFileName.append( compoundName[j] );
+          if( j < compoundName.length - 1 ) {
+            classFileName.append( '/' );
           }
         }
-        classFileName.append(".class");
-        File classFile = new File(destinationDirectory, classFileName.toString());
+        classFileName.append( ".class" );
+        File classFile = new File( destinationDirectory, classFileName.toString() );
         File classDir = classFile.getParentFile();
-        if (!classDir.exists()) {
+        if( !classDir.exists() ) {
           classDir.mkdirs();
         }
         try {
-          A4ELogging.debug("writing class file: '%s'", classFile);
-          Utilities.writeFile(classFile, classFile2.getBytes());
-          this._compiledClassFiles.put(classFileName.toString(), classFile);
-        } catch (Ant4EclipseException ioe) {
-          A4ELogging.error("Could not write classfile '%s': %s", classFileName.toString(), ioe.toString());
+          A4ELogging.debug( "writing class file: '%s'", classFile );
+          Utilities.writeFile( classFile, classFile2.getBytes() );
+          _compiledClassFiles.put( classFileName.toString(), classFile );
+        } catch( Ant4EclipseException ioe ) {
+          A4ELogging.error( "Could not write classfile '%s': %s", classFileName.toString(), ioe.toString() );
           ioe.printStackTrace();
-          this._compilationSuccessful = false;
+          _compilationSuccessful = false;
         }
       }
     } else {
-      this._compilationSuccessful = false;
+      _compilationSuccessful = false;
     }
 
     // add the problems...
-    if (result.getAllProblems() != null) {
-      this._categorizedProblems.addAll(Arrays.asList(result.getAllProblems()));
+    if( result.getAllProblems() != null ) {
+      _categorizedProblems.addAll( Arrays.asList( result.getAllProblems() ) );
     }
   }
 
@@ -143,7 +143,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    * @return <code>true</code> if the compilation was successful, <code>false</code> otherwise.
    */
   public boolean isCompilationSuccessful() {
-    return this._compilationSuccessful;
+    return _compilationSuccessful;
   }
 
   /**
@@ -154,6 +154,7 @@ public class CompilerRequestorImpl implements ICompilerRequestor {
    * @return the categorized problems.
    */
   public CategorizedProblem[] getCategorizedProblems() {
-    return this._categorizedProblems.toArray(new CategorizedProblem[0]);
+    return _categorizedProblems.toArray( new CategorizedProblem[0] );
   }
-}
+  
+} /* ENDCLASS */

@@ -46,21 +46,21 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * @param project
    *          the eclipse plug-in project that has to be resolved
    */
-  public PluginProjectLayoutResolver(EclipseProject project) {
-    Assure.notNull("project", project);
-    Assure.assertTrue(project.hasRole(PluginProjectRole.class), "Project must have plugin project role!");
+  public PluginProjectLayoutResolver( EclipseProject project ) {
+    Assure.notNull( "project", project );
+    Assure.assertTrue( project.hasRole( PluginProjectRole.class ), "Project must have plugin project role!" );
 
     // set the eclipse project
-    this._eclipseProject = project;
+    _eclipseProject = project;
 
     // retrieve the bundle manifest
-    File manifestFile = this._eclipseProject.getChild("META-INF/MANIFEST.MF");
+    File manifestFile = _eclipseProject.getChild( "META-INF/MANIFEST.MF" );
     try {
-      this._manifest = new Manifest(new FileInputStream(manifestFile));
-    } catch (Exception e) {
+      _manifest = new Manifest( new FileInputStream( manifestFile ) );
+    } catch( Exception e ) {
       // TODO:
       e.printStackTrace();
-      throw new RuntimeException(e);
+      throw new RuntimeException( e );
     }
   }
 
@@ -77,7 +77,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    */
   @Override
   public Manifest getManifest() {
-    return this._manifest;
+    return _manifest;
   }
 
   /**
@@ -85,7 +85,7 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    */
   @Override
   public File getLocation() {
-    return this._eclipseProject.getFolder();
+    return _eclipseProject.getFolder();
   }
 
   /**
@@ -98,40 +98,40 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     List<File> result = new ArrayList<File>();
 
     // resolve the bundle class path
-    String bundleClasspath[] = ManifestHelper.getBundleClasspath(this._manifest);
+    String bundleClasspath[] = ManifestHelper.getBundleClasspath( _manifest );
 
-    PluginProjectRole pluginProjectRole = this._eclipseProject.getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = _eclipseProject.getRole( PluginProjectRole.class );
 
     PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
-    File baseDir = this._eclipseProject.getFolder();
+    File baseDir = _eclipseProject.getFolder();
 
-    for (String element : bundleClasspath) {
-      if ((buildProperties != null) && buildProperties.hasLibrary(element)) {
-        String[] libaries = buildProperties.getLibrary(element).getOutput();
-        for (String libarie : libaries) {
-          File file = new File(baseDir, libarie);
-          if (!result.contains(file)) {
-            result.add(file);
+    for( String element : bundleClasspath ) {
+      if( (buildProperties != null) && buildProperties.hasLibrary( element ) ) {
+        String[] libaries = buildProperties.getLibrary( element ).getOutput();
+        for( String libarie : libaries ) {
+          File file = new File( baseDir, libarie );
+          if( !result.contains( file ) ) {
+            result.add( file );
           }
         }
       } else {
-        File file = new File(baseDir, element);
-        result.add(file);
+        File file = new File( baseDir, element );
+        result.add( file );
       }
     }
 
-    if (buildProperties != null && buildProperties.hasLibrary(".")) {
-      String[] libaries = buildProperties.getLibrary(".").getOutput();
-      for (String libary : libaries) {
-        File file = new File(baseDir, libary);
-        if (!result.contains(file)) {
-          result.add(file);
+    if( buildProperties != null && buildProperties.hasLibrary( "." ) ) {
+      String[] libaries = buildProperties.getLibrary( "." ).getOutput();
+      for( String libary : libaries ) {
+        File file = new File( baseDir, libary );
+        if( !result.contains( file ) ) {
+          result.add( file );
         }
       }
     }
 
     // return result
-    return result.toArray(new File[result.size()]);
+    return result.toArray( new File[result.size()] );
   }
 
   /**
@@ -146,16 +146,17 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     // declare result
     List<File> result = new ArrayList<File>();
 
-    if (this._eclipseProject.hasRole(JavaProjectRole.class)) {
-      JavaProjectRole javaProjectRole = this._eclipseProject.getRole(JavaProjectRole.class);
+    if( _eclipseProject.hasRole( JavaProjectRole.class ) ) {
+      JavaProjectRole javaProjectRole = _eclipseProject.getRole( JavaProjectRole.class );
 
       String[] sourcefolders = javaProjectRole.getSourceFolders();
-      for (String sourcefolder : sourcefolders) {
-        File file = this._eclipseProject.getChild(sourcefolder);
-        result.add(file);
+      for( String sourcefolder : sourcefolders ) {
+        File file = _eclipseProject.getChild( sourcefolder );
+        result.add( file );
       }
     }
 
-    return result.toArray(new File[0]);
+    return result.toArray( new File[0] );
   }
-}
+  
+} /* ENDCLASS */

@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.testframework;
 
 import org.junit.Assert;
@@ -14,14 +25,14 @@ public class EchoLogfile {
 
   private final BufferedReader _reader;
 
-  public EchoLogfile(String echoLogfileName) throws FileNotFoundException {
-    Assert.assertNotNull(echoLogfileName);
-    this._echoLogfileName = echoLogfileName;
+  public EchoLogfile( String echoLogfileName ) throws FileNotFoundException {
+    Assert.assertNotNull( echoLogfileName );
+    _echoLogfileName = echoLogfileName;
 
-    File echoLogfile = new File(echoLogfileName);
-    Assert.assertTrue(echoLogfile.exists());
+    File echoLogfile = new File( echoLogfileName );
+    Assert.assertTrue( echoLogfile.exists() );
 
-    this._reader = new BufferedReader(new FileReader(echoLogfile));
+    _reader = new BufferedReader( new FileReader( echoLogfile ) );
   }
 
   /**
@@ -33,14 +44,14 @@ public class EchoLogfile {
    * @param expectedLine
    * @throws IOException
    */
-  public void assertLine(String expectedLine) throws IOException {
-    String line = this._reader.readLine();
+  public void assertLine( String expectedLine ) throws IOException {
+    String line = _reader.readLine();
 
-    if (line != null) {
+    if( line != null ) {
       line = line.trim();
     }
 
-    Assert.assertEquals(expectedLine, line);
+    Assert.assertEquals( expectedLine, line );
   }
 
   /**
@@ -49,7 +60,7 @@ public class EchoLogfile {
    * @return
    */
   public String getEchoLogfileName() {
-    return this._echoLogfileName;
+    return _echoLogfileName;
   }
 
   /**
@@ -60,10 +71,10 @@ public class EchoLogfile {
    */
   public void dispose() {
     try {
-      this._reader.close();
-    } catch (Exception ex) {
-      System.err.println("WARN! Could not close echo logfile reader !");
+      _reader.close();
+    } catch( Exception ex ) {
+      System.err.println( "WARN! Could not close echo logfile reader !" );
     }
   }
 
-}
+} /* ENDCLASS */

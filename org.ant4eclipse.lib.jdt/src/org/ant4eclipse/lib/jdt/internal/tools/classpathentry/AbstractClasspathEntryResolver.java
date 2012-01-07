@@ -38,14 +38,14 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    * @param path
    * @param context
    */
-  protected final void resolveProjectRelativeResource(EclipseProject project, String path,
-      ClasspathResolverContext context) {
-    Assure.notNull("path", path);
+  protected final void resolveProjectRelativeResource( EclipseProject project, String path,
+      ClasspathResolverContext context ) {
+    Assure.notNull( "path", path );
 
     EclipseProject.PathStyle relative = context.isWorkspaceRelative() ? EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME
         : EclipseProject.PathStyle.ABSOLUTE;
-    File child = project.getChild(path, relative);
-    context.addClasspathEntry(new ResolvedClasspathEntry(child));
+    File child = project.getChild( path, relative );
+    context.addClasspathEntry( new ResolvedClasspathEntry( child ) );
   }
 
   /**
@@ -54,9 +54,9 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    * @param file
    *          The absolute resource.
    */
-  protected final void resolveAbsoluteResource(String path, ClasspathResolverContext context) {
-    Assure.nonEmpty("path", path);
-    context.addClasspathEntry(new ResolvedClasspathEntry(new File(path)));
+  protected final void resolveAbsoluteResource( String path, ClasspathResolverContext context ) {
+    Assure.nonEmpty( "path", path );
+    context.addClasspathEntry( new ResolvedClasspathEntry( new File( path ) ) );
   }
 
   /**
@@ -64,7 +64,7 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    * @param entryKind
    * @return
    */
-  protected final boolean isRawClasspathEntryOfKind(ClasspathEntry entry, int entryKind) {
+  protected final boolean isRawClasspathEntryOfKind( ClasspathEntry entry, int entryKind ) {
     return (entry instanceof RawClasspathEntry) && (entry.getEntryKind() == entryKind);
   }
 
@@ -86,7 +86,7 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    *          the class path entry
    * @return <code>true</code>, if the given entry is instance of type {@link ClasspathEntry}.
    */
-  protected final boolean isRawClasspathEntry(ClasspathEntry entry) {
+  protected final boolean isRawClasspathEntry( ClasspathEntry entry ) {
     return entry instanceof RawClasspathEntry;
   }
 
@@ -109,9 +109,9 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    *          the resolver context
    * @return <code>true</code>, if the class path entry is visible.
    */
-  protected final boolean isClasspathEntryVisible(ClasspathEntry entry, ClasspathResolverContext context) {
+  protected final boolean isClasspathEntryVisible( ClasspathEntry entry, ClasspathResolverContext context ) {
     return context.isRuntime() || context.isCurrentProjectRoot() /* || isRuntimeClasspathEntry(entry) */
-        || (isRawClasspathEntry(entry) && ((RawClasspathEntry) entry).isExported());
+        || (isRawClasspathEntry( entry ) && ((RawClasspathEntry) entry).isExported());
   }
 
   /**
@@ -123,7 +123,8 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    *          the {@link ClasspathResolverContext}
    * @return the {@link JavaProjectRole} of the current project.
    */
-  protected JavaProjectRole getCurrentJavaProjectRole(ClasspathResolverContext context) {
-    return context.getCurrentProject().getRole(JavaProjectRole.class);
+  protected JavaProjectRole getCurrentJavaProjectRole( ClasspathResolverContext context ) {
+    return context.getCurrentProject().getRole( JavaProjectRole.class );
   }
-}
+  
+} /* ENDCLASS */

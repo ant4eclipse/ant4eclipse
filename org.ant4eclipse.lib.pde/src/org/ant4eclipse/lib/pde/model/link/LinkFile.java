@@ -48,9 +48,9 @@ public class LinkFile {
    * @param destination
    *          the destination of the link file.
    */
-  public LinkFile(File destination) {
-    Assure.notNull("destination", destination);
-    this._destination = destination;
+  public LinkFile( File destination ) {
+    Assure.notNull( "destination", destination );
+    _destination = destination;
   }
 
   /**
@@ -76,7 +76,7 @@ public class LinkFile {
    * @see #PLUGINS_DIRECTORY
    */
   public File getPluginsDirectory() {
-    return new File(this._destination, PLUGINS_DIRECTORY);
+    return new File( _destination, PLUGINS_DIRECTORY );
   }
 
   /**
@@ -87,7 +87,7 @@ public class LinkFile {
    * @return the features directory
    */
   public File getFeaturesDirectory() {
-    return new File(this._destination, FEATURES_DIRECTORY);
+    return new File( _destination, FEATURES_DIRECTORY );
   }
 
   /**
@@ -98,7 +98,7 @@ public class LinkFile {
    * @return the destination of this link file
    */
   public File getDestination() {
-    return this._destination;
+    return _destination;
   }
 
   /**
@@ -108,7 +108,7 @@ public class LinkFile {
   public int hashCode() {
     int PRIME = 31;
     int result = 1;
-    result = PRIME * result + ((this._destination == null) ? 0 : this._destination.hashCode());
+    result = PRIME * result + ((_destination == null) ? 0 : _destination.hashCode());
     return result;
   }
 
@@ -116,25 +116,25 @@ public class LinkFile {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
     LinkFile other = (LinkFile) obj;
-    if (this._destination == null) {
-      if (other._destination != null) {
+    if( _destination == null ) {
+      if( other._destination != null ) {
         return false;
       }
-    } else if (!this._destination.equals(other._destination)) {
+    } else if( !_destination.equals( other._destination ) ) {
       return false;
     }
     return true;
   }
 
-}
+} /* ENDCLASS */

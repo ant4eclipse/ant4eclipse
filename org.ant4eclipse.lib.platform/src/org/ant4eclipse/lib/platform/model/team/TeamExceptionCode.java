@@ -44,8 +44,8 @@ public class TeamExceptionCode extends ExceptionCode {
   // NLS.initialize(TeamExceptionCode.class);
   // }
   //
-  public TeamExceptionCode(String message) {
-    super(message);
+  public TeamExceptionCode( String message ) {
+    super( message );
   }
 
-}
+} /* ENDCLASS */

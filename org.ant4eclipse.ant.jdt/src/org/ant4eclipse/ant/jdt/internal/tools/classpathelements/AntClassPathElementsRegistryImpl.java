@@ -34,8 +34,8 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    * {@inheritDoc}
    */
   @Override
-  public void configure( Project project ) {
-    this._project = project;
+  public void configure( Project newproject ) {
+    _project = newproject;
   }
 
   /**
@@ -44,7 +44,7 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
   @Override
   public ClassPathVariable getClassPathVariable( String name ) {
     ClassPathVariable result = super.getClassPathVariable( name );
-    if( (result == null) && (this._project != null) ) {
+    if( (result == null) && (_project != null) ) {
       // fallback to ant
       checkForVariable( name );
       // if it has not been registered, the variable wasn't available
@@ -59,10 +59,10 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
   @Override
   public boolean hasClassPathVariable( String name ) {
     boolean result = super.hasClassPathVariable( name );
-    if( (!result) && (this._project != null) ) {
+    if( (!result) && (_project != null) ) {
       // fallback to ant
       checkForVariable( name );
-      result = Utilities.cleanup( this._project.getProperty( name ) ) != null;
+      result = Utilities.cleanup( _project.getProperty( name ) ) != null;
     }
     return result;
   }
@@ -75,8 +75,8 @@ public class AntClassPathElementsRegistryImpl extends ClassPathElementsRegistryI
    *          The name of the potential variable.
    */
   private void checkForVariable( String name ) {
-    if( this._project != null ) {
-      String value = Utilities.cleanup( this._project.getProperty( name ) );
+    if( _project != null ) {
+      String value = Utilities.cleanup( _project.getProperty( name ) );
       if( value != null ) {
         File file = new File( value );
         if( file.exists() ) {

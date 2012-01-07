@@ -34,8 +34,8 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
    * {@inheritDoc}
    */
   @Override
-  public boolean canResolve(ClasspathEntry entry) {
-    return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_LIBRARY)
+  public boolean canResolve( ClasspathEntry entry ) {
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_LIBRARY )
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_ARCHIVE) */;
   }
 
@@ -43,35 +43,35 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
    * {@inheritDoc}
    */
   @Override
-  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
+  public void resolve( ClasspathEntry entry, ClasspathResolverContext context ) {
 
     // do not resolve if the class path entry is not visible
-    if (!isClasspathEntryVisible(entry, context)) {
+    if( !isClasspathEntryVisible( entry, context ) ) {
       return;
     }
 
     // PROJECT_RELATIVE_PATH
-    if (getPathType(entry, context) == EclipsePathUtil.PROJECT_RELATIVE_PATH) {
-      resolveProjectRelativeResource(context.getCurrentProject(), entry.getPath(), context);
+    if( getPathType( entry, context ) == EclipsePathUtil.PROJECT_RELATIVE_PATH ) {
+      resolveProjectRelativeResource( context.getCurrentProject(), entry.getPath(), context );
     }
 
     // WORKSPACE_RELATIVE_PATH
-    else if (getPathType(entry, context) == EclipsePathUtil.WORKSPACE_RELATIVE_PATH) {
-      String[] splitted = EclipsePathUtil.splitHeadAndTail(entry.getPath());
+    else if( getPathType( entry, context ) == EclipsePathUtil.WORKSPACE_RELATIVE_PATH ) {
+      String[] splitted = EclipsePathUtil.splitHeadAndTail( entry.getPath() );
 
       // AE-225: Classpath resolution fails if a project is added as a library
-      if (splitted.length == 1) {
-        EclipseProject referencedProject = context.getWorkspace().getProject(splitted[0]);
-        context.addClasspathEntry(new ResolvedClasspathEntry(referencedProject.getFolder()));
+      if( splitted.length == 1 ) {
+        EclipseProject referencedProject = context.getWorkspace().getProject( splitted[0] );
+        context.addClasspathEntry( new ResolvedClasspathEntry( referencedProject.getFolder() ) );
       } else {
-        resolveProjectRelativeResource(context.getWorkspace().getProject(splitted[0]), splitted[1], context);
+        resolveProjectRelativeResource( context.getWorkspace().getProject( splitted[0] ), splitted[1], context );
       }
 
     }
 
     // ABSOULTE_PATH
-    else if (getPathType(entry, context) == EclipsePathUtil.ABSOLUTE_PATH) {
-      resolveAbsoluteResource(entry.getPath(), context);
+    else if( getPathType( entry, context ) == EclipsePathUtil.ABSOLUTE_PATH ) {
+      resolveAbsoluteResource( entry.getPath(), context );
     }
   }
 
@@ -79,8 +79,8 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
    * @param entry
    * @return
    */
-  private int getPathType(ClasspathEntry entry, ClasspathResolverContext context) {
-    return EclipsePathUtil.getPathType(entry.getPath(), context.getWorkspace());
-    }
+  private int getPathType( ClasspathEntry entry, ClasspathResolverContext context ) {
+    return EclipsePathUtil.getPathType( entry.getPath(), context.getWorkspace() );
+  }
 
-}
+} /* ENDCLASS */

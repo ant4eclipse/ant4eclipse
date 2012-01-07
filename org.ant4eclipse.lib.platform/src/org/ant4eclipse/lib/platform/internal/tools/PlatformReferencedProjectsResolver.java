@@ -53,7 +53,7 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
   @Override
   public void reset() {
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -61,5 +61,5 @@ public class PlatformReferencedProjectsResolver implements ReferencedProjectsRes
   public String getReferenceType() {
     return "platform";
   }
-  
+
 } /* ENDCLASS */

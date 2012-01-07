@@ -26,7 +26,7 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
-public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSet {
+public class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSet {
 
   /** the workspace which contains the projects to build */
   private Workspace _workspace;
@@ -39,10 +39,10 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
    * @param workspace
    *          the {@link Workspace}
    */
-  public PluginAndFeatureProjectSet(Workspace workspace) {
-    super("workspace");
-    Assure.notNull("workspace", workspace);
-    this._workspace = workspace;
+  public PluginAndFeatureProjectSet( Workspace workspace ) {
+    super( "workspace" );
+    Assure.notNull( "workspace", workspace );
+    _workspace = workspace;
   }
 
   /**
@@ -52,20 +52,21 @@ public final class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSe
   protected void readBundlesAndFeatures() {
 
     // get all projects...
-    EclipseProject[] eclipseProjects = this._workspace.getAllProjects();
+    EclipseProject[] eclipseProjects = _workspace.getAllProjects();
 
     // add all plug-in projects
-    for (EclipseProject eclipseProject : eclipseProjects) {
+    for( EclipseProject eclipseProject : eclipseProjects ) {
 
       // add plug-in projects
-      if (eclipseProject.hasRole(PluginProjectRole.class)) {
-        addBundleDescription(eclipseProject.getRole(PluginProjectRole.class).getBundleDescription());
+      if( eclipseProject.hasRole( PluginProjectRole.class ) ) {
+        addBundleDescription( eclipseProject.getRole( PluginProjectRole.class ).getBundleDescription() );
       }
       // add feature projects
-      else if (eclipseProject.hasRole(FeatureProjectRole.class)) {
-        FeatureProjectRole featureProjectRole = eclipseProject.getRole(FeatureProjectRole.class);
-        addFeaturesDescription(new FeatureDescription(eclipseProject, featureProjectRole.getFeatureManifest()));
+      else if( eclipseProject.hasRole( FeatureProjectRole.class ) ) {
+        FeatureProjectRole featureProjectRole = eclipseProject.getRole( FeatureProjectRole.class );
+        addFeaturesDescription( new FeatureDescription( eclipseProject, featureProjectRole.getFeatureManifest() ) );
       }
     }
   }
-}
+
+} /* ENDCLASS */

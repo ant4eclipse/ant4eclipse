@@ -33,7 +33,7 @@ public interface ProjectValidator extends A4EService {
    * 
    * @return <code>true</code> <=> This validator is capable to handle the supplied role.
    */
-  boolean canValidate(ProjectRole role);
+  boolean canValidate( ProjectRole role );
 
   /**
    * <p>
@@ -44,6 +44,6 @@ public interface ProjectValidator extends A4EService {
    *          The role used to provide the necessary information. Not <code>null</code> and
    *          {@link #canValidate(ProjectRole)} evaluates to <code>true</code>.
    */
-  void validate(ProjectRole role);
+  void validate( ProjectRole role );
 
 } /* ENDINTERFACE */

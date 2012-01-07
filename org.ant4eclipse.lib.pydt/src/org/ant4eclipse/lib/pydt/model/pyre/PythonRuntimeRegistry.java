@@ -34,7 +34,7 @@ public interface PythonRuntimeRegistry extends A4EService {
    * @param sitepackages
    *          <code>true</code> <=> Enable support for site packages on the runtime.
    */
-  void registerRuntime(String id, File location, boolean sitepackages);
+  void registerRuntime( String id, File location, boolean sitepackages );
 
   /**
    * Sets the ID for the {@link PythonRuntime} that has to be used by default. If there's no runtime with the supplied
@@ -43,7 +43,7 @@ public interface PythonRuntimeRegistry extends A4EService {
    * @param id
    *          The id of the default python runtime. Neither <code>null</code> nor empty.
    */
-  void setDefaultRuntime(String id);
+  void setDefaultRuntime( String id );
 
   /**
    * Returns <code>true</code> if a python runtime is registered with the given id.
@@ -53,7 +53,7 @@ public interface PythonRuntimeRegistry extends A4EService {
    * 
    * @return <code>true</code> <=> The java runtime with the given id is known.
    */
-  boolean hasRuntime(String id);
+  boolean hasRuntime( String id );
 
   /**
    * Returns the runtime with the given id.
@@ -64,7 +64,7 @@ public interface PythonRuntimeRegistry extends A4EService {
    * @return The python runtime with the given path or <code>null</code> if {@link #hasRuntime(String)} is
    *         <code>false</code>.
    */
-  PythonRuntime getRuntime(String id);
+  PythonRuntime getRuntime( String id );
 
   /**
    * Returns the default python runtime. This method will cause an exception when no default runtime is available.

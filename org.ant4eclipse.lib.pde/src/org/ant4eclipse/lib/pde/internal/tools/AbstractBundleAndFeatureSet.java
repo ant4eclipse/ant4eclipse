@@ -52,17 +52,17 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param description
    *          a description of this {@link BundleAndFeatureSet}
    */
-  protected AbstractBundleAndFeatureSet(String description) {
-    Assure.nonEmpty("description", description);
+  protected AbstractBundleAndFeatureSet( String description ) {
+    Assure.nonEmpty( "description", description );
 
     // set the description
-    this._description = description;
+    _description = description;
 
     // create the bundle description list
-    this._bundleDescriptionList = new ArrayList<BundleDescription>();
+    _bundleDescriptionList = new ArrayList<BundleDescription>();
 
     // create the feature description list
-    this._featureDescriptionList = new ArrayList<FeatureDescription>();
+    _featureDescriptionList = new ArrayList<FeatureDescription>();
   }
 
   /**
@@ -80,34 +80,34 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   public final void initialize() {
 
     // return if already initialized
-    if (this._isInitialised) {
+    if( _isInitialised ) {
       return;
     }
 
     refresh();
 
     // set initialized
-    this._isInitialised = true;
+    _isInitialised = true;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public FeatureDescription getFeatureDescription(String featureId, Version version) {
-    Assure.nonEmpty("featureId", featureId);
-    Assure.notNull("version", version);
+  public FeatureDescription getFeatureDescription( String featureId, Version version ) {
+    Assure.nonEmpty( "featureId", featureId );
+    Assure.notNull( "version", version );
 
     // initialize if necessary
     initialize();
 
     // iterate over feature list
-    for (FeatureDescription featureDescription : this._featureDescriptionList) {
+    for( FeatureDescription featureDescription : _featureDescriptionList ) {
 
       // return if match
-      if (featureDescription.getFeatureManifest().getId().equals(featureId)
-          && PdeBuildHelper.resolveVersion(featureDescription.getFeatureManifest().getVersion(),
-              PdeBuildHelper.getResolvedContextQualifier()).equals(version)) {
+      if( featureDescription.getFeatureManifest().getId().equals( featureId )
+          && PdeBuildHelper.resolveVersion( featureDescription.getFeatureManifest().getVersion(),
+              PdeBuildHelper.getResolvedContextQualifier() ).equals( version ) ) {
 
         return featureDescription;
       }
@@ -121,8 +121,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   @Override
-  public FeatureDescription getFeatureDescription(String featureId) {
-    Assure.nonEmpty("featureId", featureId);
+  public FeatureDescription getFeatureDescription( String featureId ) {
+    Assure.nonEmpty( "featureId", featureId );
 
     // initialize if necessary
     initialize();
@@ -131,18 +131,18 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     FeatureDescription result = null;
 
     // iterate over feature descriptions
-    for (FeatureDescription featureDescription : this._featureDescriptionList) {
+    for( FeatureDescription featureDescription : _featureDescriptionList ) {
 
       // get the feature manifest
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
 
       // if match -> set as result
-      if (featureManifest.getId().equals(featureId)) {
-        if (result == null) {
+      if( featureManifest.getId().equals( featureId ) ) {
+        if( result == null ) {
           result = featureDescription;
         } else {
           // the current feature description has a higher version, so use this one
-          if (result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+          if( result.getFeatureManifest().getVersion().compareTo( featureDescription.getFeatureManifest().getVersion() ) < 0 ) {
             result = featureDescription;
           }
         }
@@ -157,8 +157,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * {@inheritDoc}
    */
   @Override
-  public BundleDescription getBundleDescription(String bundleid) {
-    Assure.nonEmpty("bundleid", bundleid);
+  public BundleDescription getBundleDescription( String bundleid ) {
+    Assure.nonEmpty( "bundleid", bundleid );
 
     // initialize if necessary
     initialize();
@@ -166,15 +166,15 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     // result
     BundleDescription result = null;
 
-    for (BundleDescription bundleDescription : this._bundleDescriptionList) {
+    for( BundleDescription bundleDescription : _bundleDescriptionList ) {
 
       // if match -> set as result
-      if (bundleDescription.getSymbolicName().equals(bundleid)) {
-        if (result == null) {
+      if( bundleDescription.getSymbolicName().equals( bundleid ) ) {
+        if( result == null ) {
           result = bundleDescription;
         } else {
           // the current feature description has a higher version, so use this one
-          if (result.getVersion().compareTo(bundleDescription.getVersion()) < 0) {
+          if( result.getVersion().compareTo( bundleDescription.getVersion() ) < 0 ) {
             result = bundleDescription;
           }
         }
@@ -195,24 +195,24 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
     // initialize if necessary
     initialize();
 
-    return this._bundleDescriptionList;
+    return _bundleDescriptionList;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final boolean containsBundle(String symbolicName) {
-    Assure.notNull("symbolicName", symbolicName);
+  public final boolean containsBundle( String symbolicName ) {
+    Assure.notNull( "symbolicName", symbolicName );
 
     // initialize if necessary
     initialize();
 
-    Iterator<BundleDescription> iterator = this._bundleDescriptionList.iterator();
+    Iterator<BundleDescription> iterator = _bundleDescriptionList.iterator();
 
-    while (iterator.hasNext()) {
+    while( iterator.hasNext() ) {
       BundleDescription description = iterator.next();
-      if (symbolicName.equals(description.getSymbolicName())
+      if( symbolicName.equals( description.getSymbolicName() )
       /*
        * TODO || "system.bundle".equals(symbolicName) && description.isSystemBundle()
        */) {
@@ -231,9 +231,9 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param bundleDescription
    *          the {@link BundleDescription} to add.
    */
-  protected final void addBundleDescription(BundleDescription bundleDescription) {
-    Assure.notNull("bundleDescription", bundleDescription);
-    this._bundleDescriptionList.add(bundleDescription);
+  protected final void addBundleDescription( BundleDescription bundleDescription ) {
+    Assure.notNull( "bundleDescription", bundleDescription );
+    _bundleDescriptionList.add( bundleDescription );
   }
 
   /**
@@ -244,9 +244,9 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param featureDescription
    *          the {@link FeatureDescription} to add
    */
-  protected final void addFeaturesDescription(FeatureDescription featureDescription) {
-    Assure.notNull("featureDescription", featureDescription);
-    this._featureDescriptionList.add(featureDescription);
+  protected final void addFeaturesDescription( FeatureDescription featureDescription ) {
+    Assure.notNull( "featureDescription", featureDescription );
+    _featureDescriptionList.add( featureDescription );
   }
 
   /**
@@ -258,18 +258,19 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   public final void refresh() {
 
     // debug
-    A4ELogging.info("Trying to read bundles and feature from '%s'.", this._description);
+    A4ELogging.info( "Trying to read bundles and feature from '%s'.", _description );
 
     // clear list of bundles...
-    this._bundleDescriptionList.clear();
+    _bundleDescriptionList.clear();
 
     // clear list of features...
-    this._bundleDescriptionList.clear();
+    _bundleDescriptionList.clear();
 
     // read all bundles and features...
     readBundlesAndFeatures();
 
-    this._isInitialised = true;
+    _isInitialised = true;
 
   }
-}
+  
+} /* ENDCLASS */

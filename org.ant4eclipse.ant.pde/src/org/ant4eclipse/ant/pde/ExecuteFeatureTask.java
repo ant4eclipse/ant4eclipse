@@ -95,7 +95,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     super( "executeFeature" );
 
     // create the target platform delegate
-    this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
+    _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
   /**
@@ -103,7 +103,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public final String getTargetPlatformId() {
-    return this._targetPlatformAwareDelegate.getTargetPlatformId();
+    return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
   /**
@@ -111,7 +111,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public final boolean isTargetPlatformIdSet() {
-    return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
   /**
@@ -119,7 +119,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public final void requireTargetPlatformIdSet() {
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -127,7 +127,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public final void setTargetPlatformId( String targetPlatformId ) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
+    _targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
@@ -135,7 +135,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public String getPlatformConfigurationId() {
-    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+    return _targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
 
   /**
@@ -143,7 +143,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public boolean isPlatformConfigurationIdSet() {
-    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+    return _targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
 
   /**
@@ -151,7 +151,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   @Override
   public void setPlatformConfigurationId( String platformConfigurationId ) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
+    _targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
@@ -162,7 +162,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * @return the featureId
    */
   public String getFeatureId() {
-    return this._featureId;
+    return _featureId;
   }
 
   /**
@@ -175,7 +175,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   public void setFeatureId( String featureId ) {
     if( Utilities.hasText( featureId ) ) {
-      this._featureId = featureId;
+      _featureId = featureId;
     }
   }
 
@@ -187,7 +187,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    * @return the version the version of the feature
    */
   public Version getFeatureVersion() {
-    return this._featureVersion;
+    return _featureVersion;
   }
 
   /**
@@ -200,7 +200,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   public void setFeatureVersion( String version ) {
     if( Utilities.hasText( version ) ) {
-      this._featureVersion = new Version( version );
+      _featureVersion = new Version( version );
     }
   }
 
@@ -248,16 +248,16 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     }
 
     // set a default version if feature version is not set
-    if( this._featureId != null && this._featureVersion == null ) {
-      this._featureVersion = Version.emptyVersion;
+    if( _featureId != null && _featureVersion == null ) {
+      _featureVersion = Version.emptyVersion;
     }
 
     // resolve the feature
-    this._resolvedFeature = resolveFeature();
+    _resolvedFeature = resolveFeature();
 
     if( A4ELogging.isDebuggingEnabled() ) {
       A4ELogging.debug( "Resolved feature is..." );
-      List<Pair<Plugin,BundleDescription>> list = this._resolvedFeature.getPluginToBundleDescptionList();
+      List<Pair<Plugin,BundleDescription>> list = _resolvedFeature.getPluginToBundleDescptionList();
       for( Pair<Plugin,BundleDescription> pair : list ) {
         A4ELogging.debug( "Resolved plug-in '%s (%s)' to bundle '%s (%s)'.", pair.getFirst().getId(), pair.getFirst()
             .getVersion(), pair.getSecond().getSymbolicName(), pair.getSecond().getVersion() );
@@ -265,10 +265,10 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     }
 
     // extract the resolved bundle versions
-    this._resolvedBundleVersions = extractBundleVersions();
+    _resolvedBundleVersions = extractBundleVersions();
 
     if( A4ELogging.isDebuggingEnabled() ) {
-      A4ELogging.debug( "Resolved bundle versions: '%s'", this._resolvedBundleVersions );
+      A4ELogging.debug( "Resolved bundle versions: '%s'", _resolvedBundleVersions );
     }
 
     // execute scoped macro definitions
@@ -306,11 +306,11 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     requireTargetPlatformIdSet();
 
     // require project name *or* featureId (and version) set...
-    if( (isProjectNameSet() && (this._featureId != null || this._featureVersion != null)) ) {
+    if( (isProjectNameSet() && (_featureId != null || _featureVersion != null)) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_X_OR_Y, "projectName",
           "featureId' and 'featureVersion" );
     }
-    if( (!isProjectNameSet() && (this._featureId == null || this._featureVersion == null)) ) {
+    if( (!isProjectNameSet() && (_featureId == null || _featureVersion == null)) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_X_OR_Y, "projectName",
           "featureId' and 'featureVersion" );
     }
@@ -329,7 +329,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
       A4ELogging.debug( "executePluginScopedMacroDef" );
     }
 
-    for( final Pair<Plugin,BundleDescription> pluginAndBundleDescription : this._resolvedFeature
+    for( final Pair<Plugin,BundleDescription> pluginAndBundleDescription : _resolvedFeature
         .getPluginToBundleDescptionList() ) {
 
       // execute macro
@@ -497,7 +497,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     }
 
     // iterate over the includes>
-    for( final Pair<Includes,FeatureDescription> pair : this._resolvedFeature.getIncludesToFeatureDescriptionList() ) {
+    for( final Pair<Includes,FeatureDescription> pair : _resolvedFeature.getIncludesToFeatureDescriptionList() ) {
 
       // execute macro definition
       executeMacroInstance( macroDef, new MacroExecutionValuesProvider() {
@@ -571,7 +571,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     configuration.setPreferProjects( true );
 
     // fetch the target platform
-    TargetPlatform targetPlatform = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
+    TargetPlatform targetPlatform = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() );
 
     // let the target platform resolve the feature
     // case 1: pde feature project
@@ -582,13 +582,13 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     // case 2: feature taken from the target platform
     else {
       if( A4ELogging.isDebuggingEnabled() ) {
-        A4ELogging.debug( "Trying to get feature '%s_%s' from target platform.", this._featureId, this._featureVersion );
+        A4ELogging.debug( "Trying to get feature '%s_%s' from target platform.", _featureId, _featureVersion );
       }
 
-      Version resolvedVersion = PdeBuildHelper.resolveVersion( this._featureVersion,
+      Version resolvedVersion = PdeBuildHelper.resolveVersion( _featureVersion,
           PdeBuildHelper.getResolvedContextQualifier() );
 
-      FeatureDescription featureDescription = targetPlatform.getFeatureDescription( this._featureId, resolvedVersion );
+      FeatureDescription featureDescription = targetPlatform.getFeatureDescription( _featureId, resolvedVersion );
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
       return targetPlatform.resolveFeature( featureDescription.getSource(), featureManifest );
     }
@@ -614,7 +614,7 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
     StringBuilder result = new StringBuilder();
 
     // iterate over all the resolved bundles and add them to the result...
-    for( Iterator<Pair<Plugin,BundleDescription>> iterator = this._resolvedFeature.getPluginToBundleDescptionList()
+    for( Iterator<Pair<Plugin,BundleDescription>> iterator = _resolvedFeature.getPluginToBundleDescptionList()
         .iterator(); iterator.hasNext(); ) {
 
       Pair<Plugin,BundleDescription> pair = iterator.next();

@@ -40,59 +40,59 @@ import java.util.Map;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class EcjAdapterImpl implements EcjAdapter {
+public class EcjAdapterImpl implements EcjAdapter {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public CompileJobResult compile(CompileJobDescription description) {
-    Assure.notNull("description", description);
+  public CompileJobResult compile( CompileJobDescription description ) {
+    Assure.notNull( "description", description );
 
     // create the name environment
-    INameEnvironment nameEnvironment = new NameEnvironmentImpl(description.getClassFileLoader());
+    INameEnvironment nameEnvironment = new NameEnvironmentImpl( description.getClassFileLoader() );
 
     // get the compiler options
-    Map<String, String> compilerOptions = description.getCompilerOptions();
+    Map<String,String> compilerOptions = description.getCompilerOptions();
 
     // retrieve the compilation units
-    ICompilationUnit[] sources = getCompilationUnits(description.getSourceFiles());
+    ICompilationUnit[] sources = getCompilationUnits( description.getSourceFiles() );
 
     // create the error handling policy
     IErrorHandlingPolicy policy = DefaultErrorHandlingPolicies.proceedWithAllProblems();
 
     // create the problem factory
-    IProblemFactory problemFactory = new DefaultProblemFactory(Locale.getDefault());
+    IProblemFactory problemFactory = new DefaultProblemFactory( Locale.getDefault() );
 
     // create the compiler requestor
     CompilerRequestorImpl requestor = new CompilerRequestorImpl();
 
     // create the compiler
-    Compiler compiler = new Compiler(nameEnvironment, policy, new CompilerOptions(compilerOptions), requestor,
-        problemFactory);
+    Compiler compiler = new Compiler( nameEnvironment, policy, new CompilerOptions( compilerOptions ), requestor,
+        problemFactory );
 
     // setup a batch annotation processor
-    setupAnnotationProcessor(compiler);
+    setupAnnotationProcessor( compiler );
 
     // compile
-    compiler.compile(sources);
+    compiler.compile( sources );
 
     // create the compile job result
     CompileJobResultImpl result = new CompileJobResultImpl();
-    result.setSucceeded(requestor.isCompilationSuccessful());
-    result.setCategorizedProblems(requestor.getCategorizedProblems());
-    result.setCompiledClassFiles(requestor.getCompiledClassFiles());
+    result.setSucceeded( requestor.isCompilationSuccessful() );
+    result.setCategorizedProblems( requestor.getCategorizedProblems() );
+    result.setCompiledClassFiles( requestor.getCompiledClassFiles() );
 
     // return the result
     return result;
   }
 
-  private void setupAnnotationProcessor(Compiler compiler) {
+  private void setupAnnotationProcessor( Compiler compiler ) {
     // compiler.annotationProcessorManager = Utilities
     // .newInstance("org.eclipse.jdt.internal.compiler.apt.dispatch.BatchAnnotationProcessorManager");
     // compiler.annotationProcessorManager.configure(null, new String[0]);
-    // // annotationManager.setErr(this.err);
-    // // annotationManager.setOut(this.out);
+    // // annotationManager.setErr(err);
+    // // annotationManager.setOut(out);
   }
 
   /**
@@ -104,22 +104,23 @@ public final class EcjAdapterImpl implements EcjAdapter {
    *          the source files
    * @return the compilation units for the given source files.
    */
-  private ICompilationUnit[] getCompilationUnits(SourceFile[] sourceFiles) {
+  private ICompilationUnit[] getCompilationUnits( SourceFile[] sourceFiles ) {
 
     // create result list
     List<ICompilationUnit> result = new ArrayList<ICompilationUnit>();
 
     // iterate over source folders
-    for (SourceFile sourceFile : sourceFiles) {
+    for( SourceFile sourceFile : sourceFiles ) {
 
-      CompilationUnitImpl compilationUnitImpl = new CompilationUnitImpl(sourceFile);
+      CompilationUnitImpl compilationUnitImpl = new CompilationUnitImpl( sourceFile );
 
-      if (!result.contains(compilationUnitImpl)) {
-        result.add(compilationUnitImpl);
+      if( !result.contains( compilationUnitImpl ) ) {
+        result.add( compilationUnitImpl );
       }
     }
 
     // return the result
-    return result.toArray(new ICompilationUnit[result.size()]);
+    return result.toArray( new ICompilationUnit[result.size()] );
   }
-}
+  
+} /* ENDCLASS */

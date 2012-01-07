@@ -27,29 +27,27 @@ import java.util.StringTokenizer;
  */
 public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
-  private static final String[] PROVIDER_IDS = new String[] {
-    "org.eclipse.team.cvs.core.cvsnature"
-  };
-  
+  private static final String[] PROVIDER_IDS               = new String[] { "org.eclipse.team.cvs.core.cvsnature" };
+
   /** REPOSITORY_LOCATION */
-  private static final int REPOSITORY_LOCATION        = 1;
+  private static final int      REPOSITORY_LOCATION        = 1;
 
   /** PROJECT_NAME_IN_REPOSITORY */
-  private static final int PROJECT_NAME_IN_REPOSITORY = 2;
+  private static final int      PROJECT_NAME_IN_REPOSITORY = 2;
 
   /** PROJECT_NAME_IN_WORKSPACE */
-  private static final int PROJECT_NAME_IN_WORKSPACE  = 3;
+  private static final int      PROJECT_NAME_IN_WORKSPACE  = 3;
 
   /** BRANCH_OR_VERSION_TAG */
-  private static final int BRANCH_OR_VERSION_TAG      = 4;
+  private static final int      BRANCH_OR_VERSION_TAG      = 4;
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assure.notNull("projectSetName", projectSetName);
-    CvsTeamProjectSet projectSet = new CvsTeamProjectSet(projectSetName);
+  public TeamProjectSet createTeamProjectSet( String projectSetName ) {
+    Assure.notNull( "projectSetName", projectSetName );
+    CvsTeamProjectSet projectSet = new CvsTeamProjectSet( projectSetName );
     return projectSet;
   }
 
@@ -57,19 +55,19 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
    * {@inheritDoc}
    */
   @Override
-  public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
-    Assure.instanceOf("projectSet", projectSet, CvsTeamProjectSet.class);
-    Assure.notNull("reference", reference);
-    A4ELogging.trace("parseReference ('%s')", reference);
+  public void addTeamProjectDescription( TeamProjectSet projectSet, String reference ) {
+    Assure.instanceOf( "projectSet", projectSet, CvsTeamProjectSet.class );
+    Assure.notNull( "reference", reference );
+    A4ELogging.trace( "parseReference ('%s')", reference );
 
-    StringTokenizer stringTokenizer = new StringTokenizer(reference, ",");
+    StringTokenizer stringTokenizer = new StringTokenizer( reference, "," );
     int tokensCount = stringTokenizer.countTokens();
 
-    if (tokensCount < 4) {
-      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_PSF_REFERENCE, "at least four", Integer
-          .valueOf(tokensCount), reference);
+    if( tokensCount < 4 ) {
+      throw new Ant4EclipseException( PlatformExceptionCode.INVALID_PSF_REFERENCE, "at least four",
+          Integer.valueOf( tokensCount ), reference );
     }
-    if (tokensCount > 5) {
+    if( tokensCount > 5 ) {
       // bug 1569122
       // it might happen that a project has more than one CVS tag, thus more tokens. Eclipse seems to
       // use *always* the first, regardless whether there are more tags specified.
@@ -77,13 +75,13 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
       A4ELogging
           .warn(
               "Unusual reference in psf file. Expected to have five tokens, but have: %d in reference '%s'. Ignoring extra tokens.",
-              Integer.valueOf(tokensCount), reference);
+              Integer.valueOf( tokensCount ), reference );
     }
 
     String[] token = new String[tokensCount];
     int counter = 0;
 
-    while (stringTokenizer.hasMoreTokens()) {
+    while( stringTokenizer.hasMoreTokens() ) {
       token[counter] = stringTokenizer.nextToken();
       counter++;
     }
@@ -94,9 +92,9 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
 
     CvsTeamProjectDescription cvsTeamProjectDescription = new CvsTeamProjectDescription(
         token[PROJECT_NAME_IN_WORKSPACE], token[REPOSITORY_LOCATION], token[PROJECT_NAME_IN_REPOSITORY],
-        branchOrVersion);
+        branchOrVersion );
 
-    cvsTeamProjectSet.addTeamProjectDescription(cvsTeamProjectDescription);
+    cvsTeamProjectSet.addTeamProjectDescription( cvsTeamProjectDescription );
   }
 
   /**
@@ -114,12 +112,12 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
   public Integer getPriority() {
     return null;
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

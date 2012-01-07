@@ -14,11 +14,11 @@ public class UnsetProperty extends Task {
   /**
    * Set the name of the property. Required unless 'file' is used.
    * 
-   * @param name
+   * @param newname
    *          the name of the property.
    */
-  public void setName( String name ) {
-    this.name = name;
+  public void setName( String newname ) {
+    name = newname;
   }
 
   /**
@@ -31,7 +31,7 @@ public class UnsetProperty extends Task {
   public void execute() throws BuildException {
 
     // assert
-    if( this.name == null || this.name.equals( "" ) ) {
+    if( name == null || name.equals( "" ) ) {
       throw new BuildException( "The 'name' attribute is required with 'unset'." );
     }
 
@@ -40,14 +40,14 @@ public class UnsetProperty extends Task {
 
     //
     if( ThreadDispatchingPropertyHelper.hasInstance( getProject() ) ) {
-      done = ThreadDispatchingPropertyHelper.getInstance( getProject() ).removeProperty( this.name );
+      done = ThreadDispatchingPropertyHelper.getInstance( getProject() ).removeProperty( name );
     }
 
     //
     if( !done ) {
 
       // remove property
-      removeProperty( this.name );
+      removeProperty( name );
     }
     //
     return;
@@ -55,7 +55,7 @@ public class UnsetProperty extends Task {
 
   /**
    * Remove a property from the project's property table and the userProperty table. Note that Ant 1.6 uses a helper for
-   * this.
+   * 
    */
   private void removeProperty( String name ) {
 

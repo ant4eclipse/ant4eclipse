@@ -39,18 +39,18 @@ public class JreContainerResolver implements ClasspathContainerResolver {
    * {@inheritDoc}
    */
   @Override
-  public boolean canResolveContainer(ClasspathEntry classpathEntry) {
-    return classpathEntry.getPath().startsWith(ContainerTypes.JRE_CONTAINER);
+  public boolean canResolveContainer( ClasspathEntry classpathEntry ) {
+    return classpathEntry.getPath().startsWith( ContainerTypes.JRE_CONTAINER );
   }
 
   /**
    * @param resolver
    */
   @Override
-  public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
+  public void resolveContainer( ClasspathEntry classpathEntry, ClasspathResolverContext context ) {
     //
 
-    if (!context.isCurrentProjectRoot()) {
+    if( !context.isCurrentProjectRoot() ) {
       return;
     }
 
@@ -59,25 +59,25 @@ public class JreContainerResolver implements ClasspathContainerResolver {
     String path = classpathEntry.getPath();
 
     // issue AE-116: re-replace '%' with ' '
-    if (path.contains("%")) {
-      path = path.replace('%', ' ');
+    if( path.contains( "%" ) ) {
+      path = path.replace( '%', ' ' );
     }
 
     JavaRuntime javaRuntime = null;
-    if (path.equals(ContainerTypes.JRE_CONTAINER)) {
+    if( path.equals( ContainerTypes.JRE_CONTAINER ) ) {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
-    } else if (path.startsWith(ContainerTypes.VMTYPE_PREFIX)) {
-      String key = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
-      javaRuntime = javaRuntimeRegistry.getJavaRuntime(key);
-      if (javaRuntime == null) {
+    } else if( path.startsWith( ContainerTypes.VMTYPE_PREFIX ) ) {
+      String key = path.substring( ContainerTypes.VMTYPE_PREFIX.length() );
+      javaRuntime = javaRuntimeRegistry.getJavaRuntime( key );
+      if( javaRuntime == null ) {
         // TODO
         javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
-        A4ELogging.warn("Could not find JRE for %s. Using default JRE (Version: %s, Location: %s).", path, javaRuntime
-            .getJavaVersion(), javaRuntime.getLocation());
+        A4ELogging.warn( "Could not find JRE for %s. Using default JRE (Version: %s, Location: %s).", path,
+            javaRuntime.getJavaVersion(), javaRuntime.getLocation() );
 
         // the default runtime has been chosen since there's no other possibility.
         // registering the runtime prevents successive fallbacks and annoying redundant warnings.
-        javaRuntimeRegistry.registerJavaRuntime(key, javaRuntime.getLocation());
+        javaRuntimeRegistry.registerJavaRuntime( key, javaRuntime.getLocation() );
       }
     } else {
       javaRuntime = javaRuntimeRegistry.getDefaultJavaRuntime();
@@ -87,17 +87,17 @@ public class JreContainerResolver implements ClasspathContainerResolver {
     AccessRestrictions accessRestrictions = null;
     File[] libraries = javaRuntime.getLibraries();
 
-    if (!path.equals(ContainerTypes.JRE_CONTAINER)) {
-      String profileKey = path.substring(ContainerTypes.VMTYPE_PREFIX.length());
-      if (javaRuntimeRegistry.hasJavaProfile(profileKey)) {
+    if( !path.equals( ContainerTypes.JRE_CONTAINER ) ) {
+      String profileKey = path.substring( ContainerTypes.VMTYPE_PREFIX.length() );
+      if( javaRuntimeRegistry.hasJavaProfile( profileKey ) ) {
         Set<String> publicPackages = new LinkedHashSet<String>();
-        publicPackages.add("java");
-        publicPackages.addAll(javaRuntimeRegistry.getJavaProfile(profileKey).getSystemPackages());
-        accessRestrictions = new AccessRestrictions(publicPackages, new LinkedHashSet<String>(), true);
+        publicPackages.add( "java" );
+        publicPackages.addAll( javaRuntimeRegistry.getJavaProfile( profileKey ).getSystemPackages() );
+        accessRestrictions = new AccessRestrictions( publicPackages, new LinkedHashSet<String>(), true );
       }
     }
 
-    context.setBootClasspathEntry(new ResolvedClasspathEntry(libraries, accessRestrictions));
+    context.setBootClasspathEntry( new ResolvedClasspathEntry( libraries, accessRestrictions ) );
   }
 
   /**
@@ -114,5 +114,5 @@ public class JreContainerResolver implements ClasspathContainerResolver {
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

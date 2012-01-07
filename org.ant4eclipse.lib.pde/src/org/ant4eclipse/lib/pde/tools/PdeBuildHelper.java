@@ -24,7 +24,6 @@ import java.util.Date;
  * PdeBuildHelper
  * 
  * @author Nils Hartmann (nils@nilshartmann.net)
- * 
  */
 public class PdeBuildHelper {
 
@@ -51,17 +50,17 @@ public class PdeBuildHelper {
    *          Feature version - must be "resolved", i.e. with replaced qualifier
    * @return An existing directory for the feature
    */
-  public static final File getExistingFeaturesDestDirectory(File destdir, String featureId, Version effectiveVersion) {
-    return getExistingDirectory(destdir, "features", featureId, effectiveVersion);
+  public static final File getExistingFeaturesDestDirectory( File destdir, String featureId, Version effectiveVersion ) {
+    return getExistingDirectory( destdir, "features", featureId, effectiveVersion );
   }
 
-  private static final File getExistingDirectory(File destdir, String kind, String id, Version effectiveVersion) {
+  private static final File getExistingDirectory( File destdir, String kind, String id, Version effectiveVersion ) {
     // the "feature" or "plugins" directory inside the destdir
-    File basedir = new File(destdir, kind);
-    Utilities.mkdirs(basedir);
-    String fileName = getFileName(id, effectiveVersion);
-    File pluginDir = new File(basedir, fileName);
-    Utilities.mkdirs(pluginDir);
+    File basedir = new File( destdir, kind );
+    Utilities.mkdirs( basedir );
+    String fileName = getFileName( id, effectiveVersion );
+    File pluginDir = new File( basedir, fileName );
+    Utilities.mkdirs( pluginDir );
     return pluginDir;
   }
 
@@ -73,8 +72,8 @@ public class PdeBuildHelper {
    *          The resolved version (i.e. with replaced qualifier)
    * @return The filename for this bundle
    */
-  private static final String getFileName(String id, Version effectiveVersion) {
-    return String.format("%s_%s", id, effectiveVersion);
+  private static final String getFileName( String id, Version effectiveVersion ) {
+    return String.format( "%s_%s", id, effectiveVersion );
   }
 
   /**
@@ -103,18 +102,18 @@ public class PdeBuildHelper {
    *          The qualifier argument from the build.properties. Might be null
    * @return
    */
-  public static final Version resolveVersion(Version version, String qualifier) {
-    Assure.notNull("qualifier", qualifier);
+  public static final Version resolveVersion( Version version, String qualifier ) {
+    Assure.notNull( "qualifier", qualifier );
 
     Version qualifiedVersion = null;
 
-    if (hasUnresolvedQualifier(version)) {
-      if (qualifier == null || AbstractBuildProperties.isContextQualifer(qualifier)) {
+    if( hasUnresolvedQualifier( version ) ) {
+      if( qualifier == null || AbstractBuildProperties.isContextQualifer( qualifier ) ) {
         qualifier = getResolvedContextQualifier();
-      } else if (AbstractBuildProperties.isNoneQualifier(qualifier)) {
+      } else if( AbstractBuildProperties.isNoneQualifier( qualifier ) ) {
         qualifier = null;
       }
-      qualifiedVersion = new Version(version.getMajor(), version.getMinor(), version.getMicro(), qualifier);
+      qualifiedVersion = new Version( version.getMajor(), version.getMinor(), version.getMicro(), qualifier );
     } else {
       // no ".qualifier" in original version -> return unchanged
       qualifiedVersion = version;
@@ -123,9 +122,9 @@ public class PdeBuildHelper {
     return qualifiedVersion;
   }
 
-  public static final boolean hasUnresolvedQualifier(Version version) {
-    Assure.notNull("version", version);
-    return (version != null) && "qualifier".equals(version.getQualifier());
+  public static final boolean hasUnresolvedQualifier( Version version ) {
+    Assure.notNull( "version", version );
+    return (version != null) && "qualifier".equals( version.getQualifier() );
   }
 
   /**
@@ -137,13 +136,14 @@ public class PdeBuildHelper {
    * is intended mainly for testing, since otherwise you can specify a qualifier in the build.properties
    */
   public static final String getResolvedContextQualifier() {
-    if (CONTEXT_QUALIFIER == null) {
-      CONTEXT_QUALIFIER = System.getProperty(CONTEXT_QUALIFIER_PROPERTY);
-      if (CONTEXT_QUALIFIER == null) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-        CONTEXT_QUALIFIER = simpleDateFormat.format(new Date());
+    if( CONTEXT_QUALIFIER == null ) {
+      CONTEXT_QUALIFIER = System.getProperty( CONTEXT_QUALIFIER_PROPERTY );
+      if( CONTEXT_QUALIFIER == null ) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat( "yyyyMMddHHmm" );
+        CONTEXT_QUALIFIER = simpleDateFormat.format( new Date() );
       }
     }
     return CONTEXT_QUALIFIER;
   }
-}
+  
+} /* ENDCLASS */

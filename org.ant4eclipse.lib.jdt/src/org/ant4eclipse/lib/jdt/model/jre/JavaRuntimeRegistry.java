@@ -39,7 +39,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    *          indicates is the {@link JavaRuntime} should be the default one.
    * @return the {@link JavaRuntime}
    */
-  JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault);
+  JavaRuntime registerJavaRuntime( String id, File location, boolean isDefault );
 
   /**
    * <p>
@@ -55,7 +55,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    *          the jreFiles that define the jre or null
    * @return
    */
-  JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles);
+  JavaRuntime registerJavaRuntime( String id, File location, List<File> jreFiles );
 
   /**
    * <p>
@@ -72,7 +72,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    * @return the {@link JavaRuntime}
    * 
    */
-  JavaRuntime registerJavaRuntime(String id, File location);
+  JavaRuntime registerJavaRuntime( String id, File location );
 
   /**
    * <p>
@@ -82,7 +82,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    * @param id
    *          the id of the default java runtime.
    */
-  void setDefaultJavaRuntime(String id);
+  void setDefaultJavaRuntime( String id );
 
   /**
    * <p>
@@ -93,7 +93,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    *          the id under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
    * @return <code>true</code> if the java runtime with the given id is known.
    */
-  boolean hasJavaRuntime(String id);
+  boolean hasJavaRuntime( String id );
 
   /**
    * <p>
@@ -104,7 +104,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    *          the id under this java runtime is stored (e.g. 'jdk15' or 'jdk16')
    * @return the java runtime with the given path or <code>null</code> if no such java runtime is registered.
    */
-  JavaRuntime getJavaRuntime(String id);
+  JavaRuntime getJavaRuntime( String id );
 
   /**
    * Returns the java runtime for the given path (i.e.
@@ -115,7 +115,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    * @return The matching runtime. In case no runtime can be discovered, the default runtime is returned. If no default
    *         runtime is set, an Exception is thrown
    */
-  JavaRuntime getJavaRuntimeForPath(String path);
+  JavaRuntime getJavaRuntimeForPath( String path );
 
   /**
    * <p>
@@ -139,7 +139,7 @@ public interface JavaRuntimeRegistry extends A4EService {
    *          the id of the profile
    * @return <code>true</code> if a java profile is registered with the given id.
    */
-  boolean hasJavaProfile(String id);
+  boolean hasJavaProfile( String id );
 
   /**
    * <p>
@@ -150,6 +150,6 @@ public interface JavaRuntimeRegistry extends A4EService {
    *          the id of the java profile.
    * @return the {@link JavaProfile} with the given id.
    */
-  JavaProfile getJavaProfile(String id);
+  JavaProfile getJavaProfile( String id );
 
-}
+} /* ENDINTERFACE */

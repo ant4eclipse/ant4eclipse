@@ -47,11 +47,11 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * 
    * @return the plugin project role.
    */
-  public static final PluginProjectRoleImpl getPluginProjectRole(EclipseProject eclipseProject) {
-    Assure.assertTrue(hasPluginProjectRole(eclipseProject), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have PluginProjectRole!");
+  public static final PluginProjectRoleImpl getPluginProjectRole( EclipseProject eclipseProject ) {
+    Assure.assertTrue( hasPluginProjectRole( eclipseProject ), "Project \"" + eclipseProject.getFolderName()
+        + "\" must have PluginProjectRole!" );
 
-    return eclipseProject.getRole(PluginProjectRoleImpl.class);
+    return eclipseProject.getRole( PluginProjectRoleImpl.class );
   }
 
   /**
@@ -61,9 +61,9 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * 
    * @return whether a plug-in project role is set or not.
    */
-  public static final boolean hasPluginProjectRole(EclipseProject eclipseProject) {
-    Assure.notNull("eclipseProject", eclipseProject);
-    return eclipseProject.hasRole(PluginProjectRoleImpl.class);
+  public static final boolean hasPluginProjectRole( EclipseProject eclipseProject ) {
+    Assure.notNull( "eclipseProject", eclipseProject );
+    return eclipseProject.hasRole( PluginProjectRoleImpl.class );
   }
 
   /**
@@ -74,12 +74,12 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * @param eclipseProject
    *          the plugin project.
    */
-  public PluginProjectRoleImpl(EclipseProject eclipseProject, BundleDescription description) {
-    super(PLUGIN_PROJECT_ROLE_NAME, eclipseProject);
-    Assure.notNull("eclipseProject", eclipseProject);
-    Assure.notNull("description", description);
-    this._bundleDescription = description;
-    this._buildProperties = null;
+  public PluginProjectRoleImpl( EclipseProject eclipseProject, BundleDescription description ) {
+    super( PLUGIN_PROJECT_ROLE_NAME, eclipseProject );
+    Assure.notNull( "eclipseProject", eclipseProject );
+    Assure.notNull( "description", description );
+    _bundleDescription = description;
+    _buildProperties = null;
   }
 
   /**
@@ -87,7 +87,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    */
   @Override
   public BundleDescription getBundleDescription() {
-    return this._bundleDescription;
+    return _bundleDescription;
   }
 
   /**
@@ -95,7 +95,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    */
   @Override
   public boolean hasBuildProperties() {
-    return this._buildProperties != null;
+    return _buildProperties != null;
   }
 
   /**
@@ -103,15 +103,15 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    */
   @Override
   public PluginBuildProperties getBuildProperties() {
-    return this._buildProperties;
+    return _buildProperties;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setBuildProperties(PluginBuildProperties buildProperties) {
-    this._buildProperties = buildProperties;
+  public void setBuildProperties( PluginBuildProperties buildProperties ) {
+    _buildProperties = buildProperties;
   }
 
-}
+} /* ENDCLASS */

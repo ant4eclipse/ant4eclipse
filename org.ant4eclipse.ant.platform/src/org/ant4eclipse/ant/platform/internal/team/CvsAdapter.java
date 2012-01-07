@@ -53,9 +53,9 @@ public class CvsAdapter extends VcsAdapter {
    */
   public CvsAdapter( Project antProject, boolean quiet, boolean reallyquiet, String tag ) {
     super( antProject );
-    this._quiet = quiet;
-    this._reallyQuiet = reallyquiet;
-    this._tag = tag;
+    _quiet = quiet;
+    _reallyQuiet = reallyquiet;
+    _tag = tag;
   }
 
   /**
@@ -86,8 +86,8 @@ public class CvsAdapter extends VcsAdapter {
     cvs.setCommand( "export -d " + quote( projectDescription.getProjectName() ) );
     cvs.setPackage( nameInRepository );
 
-    if( this._tag != null ) {
-      cvs.setTag( this._tag );
+    if( _tag != null ) {
+      cvs.setTag( _tag );
     } else if( !cvsTeamProjectDescription.isHead() ) {
       cvs.setTag( cvsTeamProjectDescription.getBranchOrVersionTag() );
     } else {
@@ -133,8 +133,8 @@ public class CvsAdapter extends VcsAdapter {
     // Normally, update acts only on directories and files that were already enrolled in your working directory.
     cvs.setCommand( "update -d" );
 
-    if( this._tag != null ) {
-      cvs.setTag( this._tag );
+    if( _tag != null ) {
+      cvs.setTag( _tag );
     } else if( !cvsTeamProjectDescription.isHead() ) {
       cvs.setTag( cvsTeamProjectDescription.getBranchOrVersionTag() );
     }
@@ -176,8 +176,8 @@ public class CvsAdapter extends VcsAdapter {
 
     cvs.setCommand( "checkout -d " + quote( projectDescription.getProjectName() ) );
 
-    if( this._tag != null ) {
-      cvs.setTag( this._tag );
+    if( _tag != null ) {
+      cvs.setTag( _tag );
     } else if( !cvsTeamProjectDescription.isHead() ) {
       cvs.setTag( cvsTeamProjectDescription.getBranchOrVersionTag() );
     }
@@ -210,10 +210,10 @@ public class CvsAdapter extends VcsAdapter {
     cvs.setCvsRoot( projectDescription.getResolvedCvsRoot().toString() );
     cvs.setDest( destination );
 
-    A4ELogging.debug( "CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf( this._quiet ),
-        Boolean.valueOf( this._reallyQuiet ) );
-    cvs.setQuiet( this._quiet );
-    cvs.setReallyquiet( this._reallyQuiet );
+    A4ELogging.debug( "CVS, quiet: %s, _reallyQuiet: %s", Boolean.valueOf( _quiet ),
+        Boolean.valueOf( _reallyQuiet ) );
+    cvs.setQuiet( _quiet );
+    cvs.setReallyquiet( _reallyQuiet );
     return cvs;
   }
 

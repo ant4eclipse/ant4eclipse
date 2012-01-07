@@ -57,4 +57,4 @@ public interface FeatureProjectRole extends ProjectRole {
    */
   FeatureBuildProperties getBuildProperties();
 
-}
+} /* ENDINTERFACE */

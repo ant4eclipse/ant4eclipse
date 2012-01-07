@@ -37,7 +37,7 @@ public interface PythonProjectBuilder {
    * @param export
    *          <code>true</code> <=> This dependency shall be exported.
    */
-  void useProject(String projectname, boolean export);
+  void useProject( String projectname, boolean export );
 
   /**
    * Changes the default source folder name.
@@ -45,7 +45,7 @@ public interface PythonProjectBuilder {
    * @param sourcename
    *          The new name of the default source folder. Neither <code>null</code> nor empty.
    */
-  void setSourceFolder(String sourcename);
+  void setSourceFolder( String sourcename );
 
   /**
    * Adds another source folder to this project.
@@ -53,7 +53,7 @@ public interface PythonProjectBuilder {
    * @param additionalfolder
    *          An additional source folder. Neither <code>null</code> nor empty.
    */
-  void addSourceFolder(String additionalfolder);
+  void addSourceFolder( String additionalfolder );
 
   /**
    * Populates the supplied workspace builder with the content of this project.
@@ -63,7 +63,7 @@ public interface PythonProjectBuilder {
    * 
    * @return The location of the project directory. Not <code>null</code>.
    */
-  File populate(WorkspaceBuilder workspacebuilder);
+  File populate( WorkspaceBuilder workspacebuilder );
 
   /**
    * Stores a build script to the projects folder.
@@ -71,7 +71,7 @@ public interface PythonProjectBuilder {
    * @param location
    *          The location of the build script. Not <code>null</code>.
    */
-  void setBuildScript(URL location);
+  void setBuildScript( URL location );
 
   /**
    * Adds an internal library to the project.
@@ -81,6 +81,6 @@ public interface PythonProjectBuilder {
    * 
    * @return The relative location within the project (project relative). Neither <code>null</code> nor empty.
    */
-  String importInternalLibrary(URL location);
+  String importInternalLibrary( URL location );
 
 } /* ENDINTERFACE */

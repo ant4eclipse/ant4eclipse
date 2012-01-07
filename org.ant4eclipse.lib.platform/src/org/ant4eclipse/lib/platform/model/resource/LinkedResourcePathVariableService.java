@@ -28,7 +28,7 @@ public interface LinkedResourcePathVariableService extends A4EService {
    * 
    * @param pathVariable
    */
-  String getLinkedResourcePath(String pathVariable);
+  String getLinkedResourcePath( String pathVariable );
 
   /**
    * <p>
@@ -37,5 +37,6 @@ public interface LinkedResourcePathVariableService extends A4EService {
    * @param pathVariable
    * @param location
    */
-  void registerLinkedResourcePathVariable(String pathVariable, String location);
-}
+  void registerLinkedResourcePathVariable( String pathVariable, String location );
+  
+} /* ENDINTERFACE */

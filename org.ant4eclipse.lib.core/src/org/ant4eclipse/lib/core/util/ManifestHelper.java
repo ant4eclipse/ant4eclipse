@@ -298,42 +298,42 @@ public class ManifestHelper {
     protected StringMap    _directives;
 
     public ManifestHeaderElement() {
-      this._values = new ArrayList<String>();
-      this._attributes = new StringMap();
-      this._directives = new StringMap();
+      _values = new ArrayList<String>();
+      _attributes = new StringMap();
+      _directives = new StringMap();
     }
 
     void addAttribute( String key, String value ) {
-      this._attributes.put( key, value );
+      _attributes.put( key, value );
     }
 
     void addDirective( String key, String value ) {
-      this._directives.put( key, value );
+      _directives.put( key, value );
     }
 
     public boolean addValue( String o ) {
-      return this._values.add( o );
+      return _values.add( o );
     }
 
     /**
      * @return
      */
     public String[] getValues() {
-      return this._values.toArray( new String[0] );
+      return _values.toArray( new String[0] );
     }
 
     /**
      * @return
      */
     public StringMap getAttributes() {
-      return this._attributes;
+      return _attributes;
     }
 
     /**
      * @return
      */
     public StringMap getDirectives() {
-      return this._directives;
+      return _directives;
     }
 
     /**
@@ -344,11 +344,11 @@ public class ManifestHelper {
       StringBuffer buffer = new StringBuffer();
       buffer.append( "[ManifestHeaderElement:" );
       buffer.append( " _values: " );
-      buffer.append( this._values );
+      buffer.append( _values );
       buffer.append( " _attributes: " );
-      buffer.append( this._attributes );
+      buffer.append( _attributes );
       buffer.append( " _directives: " );
-      buffer.append( this._directives );
+      buffer.append( _directives );
       buffer.append( "]" );
       return buffer.toString();
     }

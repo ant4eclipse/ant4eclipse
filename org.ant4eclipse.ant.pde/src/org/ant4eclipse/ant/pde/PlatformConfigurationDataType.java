@@ -46,7 +46,7 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
     super( project );
 
     // create a new TargetPlatformConfiguration
-    this._targetPlatformConfiguration = new PlatformConfiguration();
+    _targetPlatformConfiguration = new PlatformConfiguration();
   }
 
   /**
@@ -62,7 +62,7 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
       throw tooManyAttributes();
     }
 
-    this._id = id;
+    _id = id;
   }
 
   /**
@@ -70,13 +70,13 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    */
   @Override
   protected void doValidate() {
-    if( this._id == null || "".equals( this._id ) ) {
+    if( _id == null || "".equals( _id ) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id" );
     }
     // add the target platform definition
     TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance()
         .getRequiredService( TargetPlatformRegistry.class );
-    targetPlatformRegistry.addPlatformConfiguration( this._id, this._targetPlatformConfiguration );
+    targetPlatformRegistry.addPlatformConfiguration( _id, _targetPlatformConfiguration );
   }
 
   /**
@@ -87,7 +87,7 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    *          the architecture
    */
   public void setArchitecture( String value ) {
-    this._targetPlatformConfiguration.setArchitecture( value );
+    _targetPlatformConfiguration.setArchitecture( value );
   }
 
   /**
@@ -98,7 +98,7 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    *          the platform configuration
    */
   public void setLanguageSetting( String value ) {
-    this._targetPlatformConfiguration.setLanguageSetting( value );
+    _targetPlatformConfiguration.setLanguageSetting( value );
   }
 
   /**
@@ -109,7 +109,7 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    *          the operating system
    */
   public void setOperatingSystem( String value ) {
-    this._targetPlatformConfiguration.setOperatingSystem( value );
+    _targetPlatformConfiguration.setOperatingSystem( value );
   }
 
   /**
@@ -120,7 +120,7 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
    *          the windowing system
    */
   public void setWindowingSystem( String value ) {
-    this._targetPlatformConfiguration.setWindowingSystem( value );
+    _targetPlatformConfiguration.setWindowingSystem( value );
   }
   
 } /* ENDCLASS */

@@ -29,7 +29,7 @@ public enum PathEntryKind {
    *          The key used to identify the kind of the path.
    */
   PathEntryKind( String key ) {
-    this._key = key;
+    _key = key;
   }
 
   /**
@@ -38,7 +38,7 @@ public enum PathEntryKind {
    * @return The key used to identify the type of path. Neither <code>null</code> nor empty.
    */
   public String getKey() {
-    return this._key;
+    return _key;
   }
 
   /**

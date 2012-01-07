@@ -42,7 +42,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
    * @return <code>true</code>, if the task should fail on error.
    */
   public boolean isFailOnError() {
-    return this._failOnError;
+    return _failOnError;
   }
 
   /**
@@ -54,7 +54,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
    *          the value
    */
   public void setFailOnError( boolean failOnError ) {
-    this._failOnError = failOnError;
+    _failOnError = failOnError;
   }
 
   /**
@@ -74,7 +74,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
 
       // iterate over the issue list
       for( Issue issue : issues ) {
-        if( this._failOnError ) {
+        if( _failOnError ) {
           A4ELogging.error( issue.getMessage() );
         } else {
           A4ELogging.warn( issue.getMessage() );
@@ -82,7 +82,7 @@ public class CheckPluginProjectTask extends AbstractProjectBasedTask {
       }
 
       // fail if specified
-      if( this._failOnError ) {
+      if( _failOnError ) {
         throw new BuildException( String.format(
             "Inconsistent or erroneous plug-in project definition for project '%s'. See above for details.",
             getEclipseProject().getSpecifiedName() ) );

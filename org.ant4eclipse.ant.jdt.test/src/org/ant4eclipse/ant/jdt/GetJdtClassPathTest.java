@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtClassPathTest;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 
@@ -36,17 +34,17 @@ public class GetJdtClassPathTest extends AbstractJdtClassPathTest {
     super.setUp();
     File simpleProjectDir = JdtProjectBuilder.getPreConfiguredJdtBuilder( "simpleproject" ).createIn(
         getTestWorkspaceDirectory() );
-    this._simpleProjectBinDir = new File( simpleProjectDir, "bin" );
+    _simpleProjectBinDir = new File( simpleProjectDir, "bin" );
 
     // projectB depends on simpleProject but doesn't re-export it
     File projectbDir = JdtProjectBuilder.getPreConfiguredJdtBuilder( "projectb" )
         .withSrcClasspathEntry( "/simpleproject", false ).createIn( getTestWorkspaceDirectory() );
-    this._projectBBinDir = new File( projectbDir, "bin" );
+    _projectBBinDir = new File( projectbDir, "bin" );
   }
 
   public void testSimple() throws Exception {
     String classpath = executeTestTarget( "simpleproject", false, false );
-    assertClasspath( classpath, this._simpleProjectBinDir );
+    assertClasspath( classpath, _simpleProjectBinDir );
   }
 
   public void testSimple_Relative() throws Exception {
@@ -65,7 +63,7 @@ public class GetJdtClassPathTest extends AbstractJdtClassPathTest {
 
   public void test_WithProjectReferences() throws Exception {
     String classpath = executeTestTarget( "projectb", false, false );
-    assertClasspath( classpath, this._projectBBinDir, this._simpleProjectBinDir );
+    assertClasspath( classpath, _projectBBinDir, _simpleProjectBinDir );
   }
 
   public void test_WithMultipleReferences() throws Exception {
@@ -77,7 +75,7 @@ public class GetJdtClassPathTest extends AbstractJdtClassPathTest {
 
     String classpath = executeTestTarget( "projectc", false, false );
     File projectCBinDir = new File( projectcDir, "bin" );
-    assertClasspath( classpath, projectCBinDir, this._projectBBinDir );
+    assertClasspath( classpath, projectCBinDir, _projectBBinDir );
   }
 
   public void test_WithMultipleReferencesRuntime() throws Exception {
@@ -90,7 +88,7 @@ public class GetJdtClassPathTest extends AbstractJdtClassPathTest {
 
     String classpath = executeTestTarget( "projectc", true, false );
     File projectCBinDir = new File( projectcDir, "bin" );
-    assertClasspath( classpath, projectCBinDir, this._projectBBinDir, this._simpleProjectBinDir );
+    assertClasspath( classpath, projectCBinDir, _projectBBinDir, _simpleProjectBinDir );
   }
   
 } /* ENDCLASS */

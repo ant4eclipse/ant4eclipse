@@ -38,15 +38,15 @@ public class BundleSource {
    *          the bundle description.
    * @return the bundle source.
    */
-  public static BundleSource getBundleSource(BundleDescription bundleDescription) {
-    Assure.notNull("bundleDescription", bundleDescription);
+  public static BundleSource getBundleSource( BundleDescription bundleDescription ) {
+    Assure.notNull( "bundleDescription", bundleDescription );
 
     // retrieve the user object (that is always an instance of type BundleSource in our case)
     BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
 
     // throw RuntimeException if the bundle source is not set
-    if (bundleSource == null) {
-      throw new RuntimeException("Bundle '" + bundleDescription + "' doesn't have a user object!");
+    if( bundleSource == null ) {
+      throw new RuntimeException( "Bundle '" + bundleDescription + "' doesn't have a user object!" );
     }
 
     // return result
@@ -72,16 +72,16 @@ public class BundleSource {
    * @param bundleManifest
    *          the bundle manifest
    */
-  public BundleSource(Object source, Manifest bundleManifest) {
-    Assure.notNull("source", source);
-    Assure.notNull("bundleManifest", bundleManifest);
+  public BundleSource( Object source, Manifest bundleManifest ) {
+    Assure.notNull( "source", source );
+    Assure.notNull( "bundleManifest", bundleManifest );
 
-    this._source = source;
-    this._bundleManifest = bundleManifest;
-    if (source instanceof File) {
-      this._classpathRoot = (File) source;
-    } else if (source instanceof EclipseProject) {
-      this._classpathRoot = ((EclipseProject) source).getFolder();
+    _source = source;
+    _bundleManifest = bundleManifest;
+    if( source instanceof File ) {
+      _classpathRoot = (File) source;
+    } else if( source instanceof EclipseProject ) {
+      _classpathRoot = ((EclipseProject) source).getFolder();
     }
   }
 
@@ -93,7 +93,7 @@ public class BundleSource {
    * @return the bundle source.
    */
   public Object getSource() {
-    return this._source;
+    return _source;
   }
 
   /**
@@ -104,7 +104,7 @@ public class BundleSource {
    * @return <code>true</code>, if the bundle source is of type {@link EclipseProject}.
    */
   public boolean isEclipseProject() {
-    return this._source instanceof EclipseProject;
+    return _source instanceof EclipseProject;
   }
 
   /**
@@ -116,9 +116,9 @@ public class BundleSource {
    * @return the bundle source.
    */
   public EclipseProject getAsEclipseProject() {
-    Assure.assertTrue(isEclipseProject(), "Bundle source has to be instance of Eclipse Project");
+    Assure.assertTrue( isEclipseProject(), "Bundle source has to be instance of Eclipse Project" );
 
-    return (EclipseProject) this._source;
+    return (EclipseProject) _source;
   }
 
   /**
@@ -130,9 +130,9 @@ public class BundleSource {
    * @return the bundle source.
    */
   public File getAsFile() {
-    Assure.assertTrue(this._source instanceof File, "Bundle source has to be instance of File");
+    Assure.assertTrue( _source instanceof File, "Bundle source has to be instance of File" );
 
-    return (File) this._source;
+    return (File) _source;
   }
 
   /**
@@ -143,7 +143,7 @@ public class BundleSource {
    * @return the bundle manifest.
    */
   public Manifest getBundleManifest() {
-    return this._bundleManifest;
+    return _bundleManifest;
   }
 
   /**
@@ -155,7 +155,7 @@ public class BundleSource {
    * @return <code>true</code> if a class path root has already been set.
    */
   public boolean hasClasspathRoot() {
-    return this._classpathRoot != null;
+    return _classpathRoot != null;
   }
 
   /**
@@ -166,7 +166,7 @@ public class BundleSource {
    * @return the class path root or <code>null</code>.
    */
   public File getClasspathRoot() {
-    return this._classpathRoot;
+    return _classpathRoot;
   }
 
   /**
@@ -180,11 +180,11 @@ public class BundleSource {
    * @param classpathRoot
    *          the class path root
    */
-  public void setClasspathRoot(File classpathRoot) {
-    Assure.notNull("classpathRoot", classpathRoot);
-    Assure.assertTrue(!hasClasspathRoot(), "Classpath root already set!");
+  public void setClasspathRoot( File classpathRoot ) {
+    Assure.notNull( "classpathRoot", classpathRoot );
+    Assure.assertTrue( !hasClasspathRoot(), "Classpath root already set!" );
 
-    this._classpathRoot = classpathRoot;
+    _classpathRoot = classpathRoot;
   }
 
   /**
@@ -198,11 +198,11 @@ public class BundleSource {
   public String[] getBundleClasspath() {
 
     // parse the 'Bundle-Classpath' manifest entry
-    String[] bundleClasspath = ManifestElement.getArrayFromList(this._bundleManifest.getMainAttributes().getValue(
-        Constants.BUNDLE_CLASSPATH));
+    String[] bundleClasspath = ManifestElement.getArrayFromList( _bundleManifest.getMainAttributes().getValue(
+        Constants.BUNDLE_CLASSPATH ) );
 
     // set default if necessary
-    if ((bundleClasspath == null) || (bundleClasspath.length < 1)) {
+    if( (bundleClasspath == null) || (bundleClasspath.length < 1) ) {
       bundleClasspath = new String[] { "." };
     }
 
@@ -222,11 +222,11 @@ public class BundleSource {
   public String getBundleName() {
 
     // retrieve the bundle name
-    String bundleName = this._bundleManifest.getMainAttributes().getValue(Constants.BUNDLE_NAME);
+    String bundleName = _bundleManifest.getMainAttributes().getValue( Constants.BUNDLE_NAME );
 
     // retrieve the bundle symbolic name if necessary
-    if (bundleName == null) {
-      bundleName = this._bundleManifest.getMainAttributes().getValue(Constants.BUNDLE_SYMBOLICNAME);
+    if( bundleName == null ) {
+      bundleName = _bundleManifest.getMainAttributes().getValue( Constants.BUNDLE_SYMBOLICNAME );
     }
 
     // return result
@@ -239,14 +239,15 @@ public class BundleSource {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[BundleSource:");
-    buffer.append(" _source: ");
-    buffer.append(this._source);
-    buffer.append(" _bundleManifest: ");
-    buffer.append(this._bundleManifest);
-    buffer.append(" _classpathRoot: ");
-    buffer.append(this._classpathRoot);
-    buffer.append("]");
+    buffer.append( "[BundleSource:" );
+    buffer.append( " _source: " );
+    buffer.append( _source );
+    buffer.append( " _bundleManifest: " );
+    buffer.append( _bundleManifest );
+    buffer.append( " _classpathRoot: " );
+    buffer.append( _classpathRoot );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

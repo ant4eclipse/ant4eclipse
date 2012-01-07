@@ -34,30 +34,31 @@ import java.util.Set;
  */
 public class ProjectRoleIdentifierRegistry implements A4EService {
 
-  private List<ProjectRoleIdentifier>      roleidentifiers;
-  private Map<String,ProjectNature[]>      naturesmap;
-  
+  private List<ProjectRoleIdentifier> roleidentifiers;
+
+  private Map<String,ProjectNature[]> naturesmap;
+
   public ProjectRoleIdentifierRegistry() {
-    
+
     roleidentifiers = new ArrayList<ProjectRoleIdentifier>();
-    naturesmap      = new Hashtable<String,ProjectNature[]>();
+    naturesmap = new Hashtable<String,ProjectNature[]>();
     roleidentifiers.addAll( A4ECore.instance().getServices( ProjectRoleIdentifier.class ) );
-    
+
     Map<String,Set<ProjectNature>> naturesets = new Hashtable<String,Set<ProjectNature>>();
     for( ProjectRoleIdentifier identifier : roleidentifiers ) {
-      
+
       Set<ProjectNature> natures = identifier.getNatures();
       if( (natures == null) || natures.isEmpty() ) {
         // no associated nature so there's no possible mapping
         continue;
       }
-      
+
       String[] abbreviations = identifier.getNatureNicknames();
       if( abbreviations == null ) {
         // no abbreviations so there's no possible mapping
         continue;
       }
-      
+
       // associate all nicks with the corresponding natures list
       for( String abbreviation : abbreviations ) {
         Set<ProjectNature> currentnatures = naturesets.get( abbreviation );
@@ -67,27 +68,27 @@ public class ProjectRoleIdentifierRegistry implements A4EService {
         }
         currentnatures.addAll( natures );
       }
-      
+
     }
-    
+
     for( Map.Entry<String,Set<ProjectNature>> entry : naturesets.entrySet() ) {
-      naturesmap.put( entry.getKey(), entry.getValue().toArray( new ProjectNature[ entry.getValue().size() ] ) );
+      naturesmap.put( entry.getKey(), entry.getValue().toArray( new ProjectNature[entry.getValue().size()] ) );
     }
-    
+
   }
 
   /**
    * Returns all full nature IDs associated with the supplied nick.
    * 
-   * @param nick   
+   * @param nick
    *          The nick which will be used to access the natures. Neither <code>null</code> nor empty.
-   *          
-   * @return   A list of associated <code>ProjectNature</code> instances. Maybe <code>null</code>.
+   * 
+   * @return A list of associated <code>ProjectNature</code> instances. Maybe <code>null</code>.
    */
   public ProjectNature[] getNaturesForAbbreviation( String nick ) {
-    return naturesmap.get( nick ); 
+    return naturesmap.get( nick );
   }
-  
+
   /**
    * Modifies the supplied project according to all currently registered RoleIdentifier instances.
    * 
@@ -110,7 +111,7 @@ public class ProjectRoleIdentifierRegistry implements A4EService {
    * @param project
    *          The project used for the post processing step. Not <code>null</code>.
    */
-  public void postProcessRoles(EclipseProject project) {
+  public void postProcessRoles( EclipseProject project ) {
     for( ProjectRoleIdentifier roleidentifier : roleidentifiers ) {
       if( roleidentifier.isRoleSupported( project ) ) {
         roleidentifier.postProcess( project );
@@ -122,8 +123,8 @@ public class ProjectRoleIdentifierRegistry implements A4EService {
    * Provides an {@link Iterable} which can be used to run through all currently registered
    * {@link ProjectRoleIdentifier} instances.
    * 
-   * @return   An {@link Iterable} which can be used to run through all currently registered
-   *           {@link ProjectRoleIdentifier} instances. Not <code>null</code>.
+   * @return An {@link Iterable} which can be used to run through all currently registered {@link ProjectRoleIdentifier}
+   *         instances. Not <code>null</code>.
    */
   public Iterable<ProjectRoleIdentifier> getProjectRoleIdentifiers() {
     return roleidentifiers;

@@ -40,7 +40,7 @@ public interface ProjectSuiteApi {
    * 
    * @return A description of the created project structures. Not <code>null</code>.
    */
-  ProjectDescription createEmptyProject(URL script, int projectsettings);
+  ProjectDescription createEmptyProject( URL script, int projectsettings );
 
   /**
    * Creates two projects where project one depends from project two.
@@ -52,7 +52,7 @@ public interface ProjectSuiteApi {
    * 
    * @return A description of the created project structures. Not <code>null</code>.
    */
-  ProjectDescription createComplexProject(URL script, int projectsettings);
+  ProjectDescription createComplexProject( URL script, int projectsettings );
 
   /**
    * Creates two projects where both projects depends on each other.
@@ -64,6 +64,6 @@ public interface ProjectSuiteApi {
    * 
    * @return A description of the created project structures. Not <code>null</code>.
    */
-  ProjectDescription createCyclicProject(URL script, int projectsettings);
+  ProjectDescription createCyclicProject( URL script, int projectsettings );
 
 } /* ENDINTERFACE */

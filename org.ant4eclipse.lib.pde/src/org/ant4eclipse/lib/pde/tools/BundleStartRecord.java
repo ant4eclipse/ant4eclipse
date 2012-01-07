@@ -20,22 +20,19 @@ package org.ant4eclipse.lib.pde.tools;
  */
 public class BundleStartRecord implements Comparable<BundleStartRecord> {
 
-  /** - */
   private boolean _autostart;
 
-  /** - */
   private String  _id;
 
-  /** - */
   private int     _startlevel;
 
   /**
    * Initialises this data structure.
    */
   public BundleStartRecord() {
-    this._autostart = false;
-    this._id = null;
-    this._startlevel = -1;
+    _autostart = false;
+    _id = null;
+    _startlevel = -1;
   }
 
   /**
@@ -46,19 +43,19 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * 
    *          <bundleid> [ '@' <startlevel>] [ ':' 'start' ]
    */
-  public BundleStartRecord(String description) {
+  public BundleStartRecord( String description ) {
     this();
-    this._autostart = description.endsWith(":start");
-    if (this._autostart) {
-      description = description.substring(0, description.length() - 6); // 6 == ":start".length()
+    _autostart = description.endsWith( ":start" );
+    if( _autostart ) {
+      description = description.substring( 0, description.length() - 6 ); // 6 == ":start".length()
     }
-    int idx = description.lastIndexOf('@');
+    int idx = description.lastIndexOf( '@' );
     // get the startlevel
-    if (idx != -1) {
-      this._startlevel = Integer.parseInt(description.substring(idx + 1));
-      description = description.substring(0, idx);
+    if( idx != -1 ) {
+      _startlevel = Integer.parseInt( description.substring( idx + 1 ) );
+      description = description.substring( 0, idx );
     }
-    this._id = description;
+    _id = description;
   }
 
   /**
@@ -71,22 +68,22 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
     StringBuilder result = new StringBuilder();
 
     // set the identifier
-    result.append(this._id);
+    result.append( _id );
 
     // set the start level
-    if (this._startlevel > 0 || this._autostart) {
+    if( _startlevel > 0 || _autostart ) {
 
       // append ampersand
-      result.append("@");
+      result.append( "@" );
 
       // set the start level
-      if (this._startlevel > 0) {
-        result.append(this._startlevel);
-        result.append(":");
+      if( _startlevel > 0 ) {
+        result.append( _startlevel );
+        result.append( ":" );
       }
       // set the auto start
-      if (this._autostart) {
-        result.append("start");
+      if( _autostart ) {
+        result.append( "start" );
       }
 
     }
@@ -101,8 +98,8 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @param newid
    *          The new id for the corresponding plugin. Neither <code>null</code> nor empty.
    */
-  public void setId(String newid) {
-    this._id = newid;
+  public void setId( String newid ) {
+    _id = newid;
   }
 
   /**
@@ -111,7 +108,7 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @return The id for the corresponding plugin. Neither <code>null</code> nor empty.
    */
   public String getId() {
-    return this._id;
+    return _id;
   }
 
   /**
@@ -120,8 +117,8 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @param newautostart
    *          <code>true</code> <=> Enables the autostart for the corresponding plugin.
    */
-  public void setAutoStart(boolean newautostart) {
-    this._autostart = newautostart;
+  public void setAutoStart( boolean newautostart ) {
+    _autostart = newautostart;
   }
 
   /**
@@ -130,7 +127,7 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @return <code>true</code> <=> Autostart for the corresponding plugin is enabled.
    */
   public boolean isAutoStart() {
-    return this._autostart;
+    return _autostart;
   }
 
   /**
@@ -139,8 +136,8 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @param newstartlevel
    *          The new start level.
    */
-  public void setStartLevel(int newstartlevel) {
-    this._startlevel = newstartlevel;
+  public void setStartLevel( int newstartlevel ) {
+    _startlevel = newstartlevel;
   }
 
   /**
@@ -149,7 +146,7 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * @return The current start level.
    */
   public int getStartLevel() {
-    return this._startlevel;
+    return _startlevel;
   }
 
   /**
@@ -158,14 +155,14 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[BundleStartRecord:");
-    buffer.append(" _id: ");
-    buffer.append(this._id);
-    buffer.append(", _autostart: ");
-    buffer.append(this._autostart);
-    buffer.append(", _startlevel: ");
-    buffer.append(this._startlevel);
-    buffer.append("]");
+    buffer.append( "[BundleStartRecord:" );
+    buffer.append( " _id: " );
+    buffer.append( _id );
+    buffer.append( ", _autostart: " );
+    buffer.append( _autostart );
+    buffer.append( ", _startlevel: " );
+    buffer.append( _startlevel );
+    buffer.append( "]" );
     return buffer.toString();
 
   }
@@ -176,9 +173,9 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
   @Override
   public int hashCode() {
     int result = 1;
-    result = 31 * result + ((this._id == null) ? 0 : this._id.hashCode());
-    result = 31 * result + (this._autostart ? 0 : 1);
-    result = 31 * result + this._startlevel;
+    result = 31 * result + ((_id == null) ? 0 : _id.hashCode());
+    result = 31 * result + (_autostart ? 0 : 1);
+    result = 31 * result + _startlevel;
     return result;
   }
 
@@ -186,9 +183,9 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(BundleStartRecord other) {
-    if (other != null) {
-      return this._id.compareTo(other._id);
+  public int compareTo( BundleStartRecord other ) {
+    if( other != null ) {
+      return _id.compareTo( other._id );
     }
     return 1;
   }

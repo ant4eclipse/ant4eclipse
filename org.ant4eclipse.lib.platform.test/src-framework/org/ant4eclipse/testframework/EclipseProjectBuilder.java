@@ -38,43 +38,43 @@ public class EclipseProjectBuilder {
 
   private List<File>   _resources;
 
-  public EclipseProjectBuilder(String projectName) {
-    Assert.assertNotNull(projectName);
-    this._projectName = projectName;
-    this._natures = new ArrayList<String>();
-    this._builders = new ArrayList<String>();
-    this._resources = new ArrayList<File>();
-    this._referencedProjects = new ArrayList<String>();
+  public EclipseProjectBuilder( String projectName ) {
+    Assert.assertNotNull( projectName );
+    _projectName = projectName;
+    _natures = new ArrayList<String>();
+    _builders = new ArrayList<String>();
+    _resources = new ArrayList<File>();
+    _referencedProjects = new ArrayList<String>();
   }
 
   /**
    * @return the projectName
    */
   public String getProjectName() {
-    return this._projectName;
+    return _projectName;
   }
 
-  public EclipseProjectBuilder withNature(String natureId) {
-    Assert.assertNotNull(natureId);
-    this._natures.add(natureId);
+  public EclipseProjectBuilder withNature( String natureId ) {
+    Assert.assertNotNull( natureId );
+    _natures.add( natureId );
     return this;
   }
 
-  public EclipseProjectBuilder withProjectReference(String referencedProject) {
-    Assert.assertNotNull(referencedProject);
-    this._referencedProjects.add(referencedProject);
+  public EclipseProjectBuilder withProjectReference( String referencedProject ) {
+    Assert.assertNotNull( referencedProject );
+    _referencedProjects.add( referencedProject );
     return this;
   }
 
-  public EclipseProjectBuilder withBuilder(String buildCmd) {
-    Assert.assertNotNull(buildCmd);
-    this._builders.add(buildCmd);
+  public EclipseProjectBuilder withBuilder( String buildCmd ) {
+    Assert.assertNotNull( buildCmd );
+    _builders.add( buildCmd );
     return this;
   }
 
-  public EclipseProjectBuilder withResource(File resource) {
-    Assert.assertNotNull(resource);
-    this._resources.add(resource);
+  public EclipseProjectBuilder withResource( File resource ) {
+    Assert.assertNotNull( resource );
+    _resources.add( resource );
     return this;
   }
 
@@ -85,81 +85,81 @@ public class EclipseProjectBuilder {
    *          the directory where this project(directory) should be created to
    * @return The project directory
    */
-  public File createIn(File destinationDirectory) {
-    Assure.isDirectory("destinationDirectory", destinationDirectory);
-    File projectDir = new File(destinationDirectory, this._projectName);
-    Utilities.mkdirs(projectDir);
-    createArtefacts(projectDir);
+  public File createIn( File destinationDirectory ) {
+    Assure.isDirectory( "destinationDirectory", destinationDirectory );
+    File projectDir = new File( destinationDirectory, _projectName );
+    Utilities.mkdirs( projectDir );
+    createArtefacts( projectDir );
     return projectDir;
   }
 
-  protected void createArtefacts(File projectDir) {
-    createProjectFile(projectDir);
-    importResources(projectDir);
+  protected void createArtefacts( File projectDir ) {
+    createProjectFile( projectDir );
+    importResources( projectDir );
   }
 
-  protected void importResources(File projectDir) {
-    for (File resource : this._resources) {
+  protected void importResources( File projectDir ) {
+    for( File resource : _resources ) {
       try {
-        File destfile = new File(projectDir, resource.getName());
-        Utilities.copy(resource.toURI().toURL(), destfile);
-      } catch (MalformedURLException ex) {
-        Assert.fail(ex.getMessage());
+        File destfile = new File( projectDir, resource.getName() );
+        Utilities.copy( resource.toURI().toURL(), destfile );
+      } catch( MalformedURLException ex ) {
+        Assert.fail( ex.getMessage() );
       }
     }
   }
 
-  protected void createProjectFile(File projectDir) {
+  protected void createProjectFile( File projectDir ) {
     TextEmitter emitter = new TextEmitter();
-    emitter.appendln("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-    emitter.appendln("<projectDescription>");
+    emitter.appendln( "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" );
+    emitter.appendln( "<projectDescription>" );
     emitter.indent();
 
     // head
-    emitter.appendln("<name>%s</name>", this._projectName);
-    emitter.appendln("<comment/>");
+    emitter.appendln( "<name>%s</name>", _projectName );
+    emitter.appendln( "<comment/>" );
 
     // referenced projects
-    emitter.appendln("<projects>");
+    emitter.appendln( "<projects>" );
     emitter.indent();
-    for (String referencedProject : this._referencedProjects) {
-      emitter.appendln("<project>%s</project>", referencedProject);
+    for( String referencedProject : _referencedProjects ) {
+      emitter.appendln( "<project>%s</project>", referencedProject );
     }
     emitter.dedent();
-    emitter.appendln("</projects>");
+    emitter.appendln( "</projects>" );
 
     // builders
-    emitter.appendln("<buildSpec>");
+    emitter.appendln( "<buildSpec>" );
     emitter.indent();
-    Iterator<String> it = this._builders.iterator();
-    while (it.hasNext()) {
+    Iterator<String> it = _builders.iterator();
+    while( it.hasNext() ) {
       String builder = it.next();
-      emitter.appendln("<buildCommand>");
+      emitter.appendln( "<buildCommand>" );
       emitter.indent();
-      emitter.appendln("<name>%s</name>", builder);
-      emitter.appendln("<arguments/>");
+      emitter.appendln( "<name>%s</name>", builder );
+      emitter.appendln( "<arguments/>" );
       emitter.dedent();
-      emitter.appendln("</buildCommand>");
+      emitter.appendln( "</buildCommand>" );
     }
     emitter.dedent();
-    emitter.appendln("</buildSpec>");
+    emitter.appendln( "</buildSpec>" );
 
     // natures
-    emitter.appendln("<natures>");
+    emitter.appendln( "<natures>" );
     emitter.indent();
-    it = this._natures.iterator();
-    while (it.hasNext()) {
+    it = _natures.iterator();
+    while( it.hasNext() ) {
       String nature = it.next();
-      emitter.appendln("<nature>%s</nature>", nature);
+      emitter.appendln( "<nature>%s</nature>", nature );
     }
     emitter.dedent();
-    emitter.appendln("</natures>");
+    emitter.appendln( "</natures>" );
 
     emitter.dedent();
-    emitter.appendln("</projectDescription>");
+    emitter.appendln( "</projectDescription>" );
 
-    File dotProjectFile = new File(projectDir, ".project");
-    Utilities.writeFile(dotProjectFile, emitter.toString(), "UTF-8");
+    File dotProjectFile = new File( projectDir, ".project" );
+    Utilities.writeFile( dotProjectFile, emitter.toString(), "UTF-8" );
   }
 
 } /* ENDCLASS */

@@ -65,6 +65,6 @@ public interface PluginProjectRole extends ProjectRole {
    * Sets the build properties.
    * </p>
    */
-  void setBuildProperties(PluginBuildProperties buildProperties);
+  void setBuildProperties( PluginBuildProperties buildProperties );
 
-}
+} /* ENDINTERFACE */

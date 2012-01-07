@@ -38,8 +38,8 @@ public class ArchiveImpl implements Archive {
    * @param path
    *          The location of the classes. Maybe a directory or a Jar.
    */
-  public ArchiveImpl(File path) {
-    this(path, null, null);
+  public ArchiveImpl( File path ) {
+    this( path, null, null );
   }
 
   /**
@@ -52,11 +52,11 @@ public class ArchiveImpl implements Archive {
    * @param javadoc
    *          The location of the javadocs as an url.
    */
-  public ArchiveImpl(File path, File source, String javadoc) {
-    Assure.exists("path", path);
-    this._path = path;
-    setSource(source);
-    setJavaDoc(javadoc);
+  public ArchiveImpl( File path, File source, String javadoc ) {
+    Assure.exists( "path", path );
+    _path = path;
+    setSource( source );
+    setJavaDoc( javadoc );
   }
 
   /**
@@ -65,7 +65,7 @@ public class ArchiveImpl implements Archive {
    * @param newsource
    *          The new source entry for this archive.
    */
-  public void setSource(File newsource) {
+  public void setSource( File newsource ) {
     // TODO: Should we log this?
     // if (newsource != null && !newsource.exists()) {
     // LoggerFactory.instance().getLogger().warn(
@@ -73,7 +73,7 @@ public class ArchiveImpl implements Archive {
     // + "' does not exist!");
     // }
 
-    this._source = newsource;
+    _source = newsource;
   }
 
   /**
@@ -82,14 +82,14 @@ public class ArchiveImpl implements Archive {
    * @param newjavadoc
    *          The new javadoc entry.
    */
-  public void setJavaDoc(String newjavadoc) {
+  public void setJavaDoc( String newjavadoc ) {
     // TODO: Should we throw a exceptiion here?
     // if (newjavadoc != null) {
     // Assert.assertTrue(newjavadoc.length() > 0,
     // "javadoc.length() > 0 has to be true");
     // }
 
-    this._javadoc = newjavadoc;
+    _javadoc = newjavadoc;
   }
 
   /**
@@ -97,7 +97,7 @@ public class ArchiveImpl implements Archive {
    */
   @Override
   public File getPath() {
-    return this._path;
+    return _path;
   }
 
   /**
@@ -105,7 +105,7 @@ public class ArchiveImpl implements Archive {
    */
   @Override
   public File getSource() {
-    return this._source;
+    return _source;
   }
 
   /**
@@ -113,7 +113,7 @@ public class ArchiveImpl implements Archive {
    */
   @Override
   public String getJavaDoc() {
-    return this._javadoc;
+    return _javadoc;
   }
 
 } /* ENDCLASS */

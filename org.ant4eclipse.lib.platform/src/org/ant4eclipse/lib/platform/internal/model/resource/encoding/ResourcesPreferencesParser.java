@@ -17,4 +17,4 @@ public class ResourcesPreferencesParser {
 
   // private static final String ENCODING_PREFIX = "encoding/";
 
-}
+} /* ENDCLASS */

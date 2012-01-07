@@ -35,4 +35,5 @@ public interface ClasspathEntry {
    * @return the path.
    */
   String getPath();
-}
+  
+} /* ENDINTERFACE */

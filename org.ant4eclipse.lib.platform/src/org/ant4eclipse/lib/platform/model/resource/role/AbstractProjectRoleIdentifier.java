@@ -23,22 +23,23 @@ import java.util.Set;
  */
 public abstract class AbstractProjectRoleIdentifier implements ProjectRoleIdentifier {
 
-  private String[]             nicknames;
-  private Set<ProjectNature>   projectnatures;
+  private String[]           nicknames;
+
+  private Set<ProjectNature> projectnatures;
 
   public AbstractProjectRoleIdentifier( String nature, String ... nicks ) {
-    nicknames       = nicks;
-    projectnatures  = null;
+    nicknames = nicks;
+    projectnatures = null;
     if( nature != null ) {
-      projectnatures  = ProjectNature.createNatures( nature );
+      projectnatures = ProjectNature.createNatures( nature );
     }
   }
 
   public AbstractProjectRoleIdentifier( String[] natures, String[] nicks ) {
-    nicknames       = nicks; 
-    projectnatures  = ProjectNature.createNatures( natures );
+    nicknames = nicks;
+    projectnatures = ProjectNature.createNatures( natures );
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -53,7 +54,7 @@ public abstract class AbstractProjectRoleIdentifier implements ProjectRoleIdenti
     }
     return false;
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -84,7 +85,7 @@ public abstract class AbstractProjectRoleIdentifier implements ProjectRoleIdenti
   public Integer getPriority() {
     return null;
   }
-  
+
   /**
    * {@inheritDoc}
    */

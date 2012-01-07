@@ -12,12 +12,12 @@ public class SelectedLaunchConfigurationBundleParser {
    * @param bundleInfo
    * @return
    */
-  public SelectedLaunchConfigurationBundle parseLaunchConfigurationBundleInfo(String bundleInfo) {
+  public SelectedLaunchConfigurationBundle parseLaunchConfigurationBundleInfo( String bundleInfo ) {
 
-    final int i = bundleInfo.indexOf('@');
-    if (i == -1) {
+    final int i = bundleInfo.indexOf( '@' );
+    if( i == -1 ) {
       // not sure if this will ever happen
-      return new SelectedLaunchConfigurationBundle(bundleInfo, null, "default", "default");
+      return new SelectedLaunchConfigurationBundle( bundleInfo, null, "default", "default" );
     }
 
     String version = null;
@@ -26,31 +26,31 @@ public class SelectedLaunchConfigurationBundleParser {
     String autoStart = "default";
 
     // Parse the name and (optionally) the version
-    final String nameAndVersion = bundleInfo.substring(0, i);
-    int j = nameAndVersion.indexOf('*');
-    if (j == -1) {
+    final String nameAndVersion = bundleInfo.substring( 0, i );
+    int j = nameAndVersion.indexOf( '*' );
+    if( j == -1 ) {
       bundleSymbolicName = nameAndVersion;
     } else {
-      bundleSymbolicName = nameAndVersion.substring(0, j);
-      version = nameAndVersion.substring(j + 1);
+      bundleSymbolicName = nameAndVersion.substring( 0, j );
+      version = nameAndVersion.substring( j + 1 );
     }
 
     // Parse startLevel and autoStart parameter
-    if (i < bundleInfo.length() - 1) {
-      final String startLevelAndAutoStart = bundleInfo.substring(i + 1);
+    if( i < bundleInfo.length() - 1 ) {
+      final String startLevelAndAutoStart = bundleInfo.substring( i + 1 );
 
-      int k = startLevelAndAutoStart.indexOf(':');
-      if (k == -1) {
+      int k = startLevelAndAutoStart.indexOf( ':' );
+      if( k == -1 ) {
         startLevel = startLevelAndAutoStart;
       } else {
-        startLevel = startLevelAndAutoStart.substring(0, k);
-        autoStart = startLevelAndAutoStart.substring(k + 1);
+        startLevel = startLevelAndAutoStart.substring( 0, k );
+        autoStart = startLevelAndAutoStart.substring( k + 1 );
       }
     }
 
     // Return the a SelectedLaunchConfigurationBundle with the parsed information
-    return new SelectedLaunchConfigurationBundle(bundleSymbolicName, version, startLevel, autoStart);
+    return new SelectedLaunchConfigurationBundle( bundleSymbolicName, version, startLevel, autoStart );
 
   }
 
-}
+} /* ENDCLASS */

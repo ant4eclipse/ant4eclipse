@@ -25,26 +25,26 @@ import java.io.File;
  */
 public class PythonToolsImpl implements PythonTools {
 
-  private File    _epydoc      = null;
+  private File _epydoc = null;
 
   /**
    * {@inheritDoc}
    */
   @Override
   public File getEpydocInstallation() {
-    if (this._epydoc == null) {
+    if( _epydoc == null ) {
       try {
-        File zip = Utilities.exportResource("/org/ant4eclipse/lib/pydt/epydoc.zip");
-        this._epydoc = new File(zip.getParentFile(), "epydoc");
-        Utilities.unpack(zip, this._epydoc);
-      } catch (Ant4EclipseException ex) {
+        File zip = Utilities.exportResource( "/org/ant4eclipse/lib/pydt/epydoc.zip" );
+        _epydoc = new File( zip.getParentFile(), "epydoc" );
+        Utilities.unpack( zip, _epydoc );
+      } catch( Ant4EclipseException ex ) {
         // if unpacking failed we consider the python doc feature unavailable
-        if (ex.getExceptionCode() != CoreExceptionCode.UNPACKING_FAILED) {
+        if( ex.getExceptionCode() != CoreExceptionCode.UNPACKING_FAILED ) {
           throw ex;
         }
       }
     }
-    return this._epydoc;
+    return _epydoc;
   }
 
   /**

@@ -13,6 +13,6 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
  */
 public interface EclipseVariableResolver extends A4EService {
 
-  void getResolvedVariables(StringMap resolvedVariables, EclipseProject eclipseProject);
+  void getResolvedVariables( StringMap resolvedVariables, EclipseProject eclipseProject );
 
 } /* ENDINTERFACE */

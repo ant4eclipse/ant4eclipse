@@ -58,9 +58,9 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param launchConfiguration
    * @return
    */
-  public static boolean isEquinoxLaunchConfiguration(LaunchConfiguration launchConfiguration) {
-    notNull("launchConfiguration", launchConfiguration);
-    return (EQUINOX_LAUNCH_CONFIGURATION_TYPE.equals(launchConfiguration.getType()));
+  public static boolean isEquinoxLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
+    notNull( "launchConfiguration", launchConfiguration );
+    return(EQUINOX_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() ));
   }
 
   /**
@@ -70,9 +70,9 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param launchConfiguration
    * @return
    */
-  public static boolean isPdeJunitLaunchConfiguration(LaunchConfiguration launchConfiguration) {
-    notNull("launchConfiguration", launchConfiguration);
-    return (PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE.equals(launchConfiguration.getType()));
+  public static boolean isPdeJunitLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
+    notNull( "launchConfiguration", launchConfiguration );
+    return(PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() ));
   }
 
   /**
@@ -81,12 +81,12 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param launchConfiguration
    *          A Equinox LaunchConfiguration
    */
-  public EquinoxLaunchConfigurationWrapper(LaunchConfiguration launchConfiguration) {
-    notNull("launchConfiguration", launchConfiguration);
-    assertTrue(isEquinoxLaunchConfiguration(launchConfiguration), "Launch configuration must be of type '"
-        + EQUINOX_LAUNCH_CONFIGURATION_TYPE + "'");
+  public EquinoxLaunchConfigurationWrapper( LaunchConfiguration launchConfiguration ) {
+    notNull( "launchConfiguration", launchConfiguration );
+    assertTrue( isEquinoxLaunchConfiguration( launchConfiguration ), "Launch configuration must be of type '"
+        + EQUINOX_LAUNCH_CONFIGURATION_TYPE + "'" );
 
-    this._launchConfiguration = launchConfiguration;
+    _launchConfiguration = launchConfiguration;
   }
 
   /**
@@ -96,9 +96,9 @@ public class EquinoxLaunchConfigurationWrapper {
    * @return never null
    */
   public SelectedLaunchConfigurationBundle[] getSelectedWorkspaceBundles() {
-    String workspaceBundles = this._launchConfiguration.getAttribute(WORKSPACE_BUNDLES_ATTRIBUTE_NAME);
+    String workspaceBundles = _launchConfiguration.getAttribute( WORKSPACE_BUNDLES_ATTRIBUTE_NAME );
 
-    return createSelectedLaunchConfigurationBundle(workspaceBundles);
+    return createSelectedLaunchConfigurationBundle( workspaceBundles );
   }
 
   /**
@@ -108,39 +108,39 @@ public class EquinoxLaunchConfigurationWrapper {
    * @return
    */
   public SelectedLaunchConfigurationBundle[] getSelectedTargetBundles() {
-    String workspaceBundles = this._launchConfiguration.getAttribute(TARGET_BUNDLES_ATTRIBUTE_NAME);
+    String workspaceBundles = _launchConfiguration.getAttribute( TARGET_BUNDLES_ATTRIBUTE_NAME );
 
-    return createSelectedLaunchConfigurationBundle(workspaceBundles);
+    return createSelectedLaunchConfigurationBundle( workspaceBundles );
   }
 
-  private SelectedLaunchConfigurationBundle[] createSelectedLaunchConfigurationBundle(String bundles) {
+  private SelectedLaunchConfigurationBundle[] createSelectedLaunchConfigurationBundle( String bundles ) {
 
     List<SelectedLaunchConfigurationBundle> result = new ArrayList<SelectedLaunchConfigurationBundle>();
-    StringTokenizer tokenizer = new StringTokenizer(bundles, ",", false);
+    StringTokenizer tokenizer = new StringTokenizer( bundles, ",", false );
 
     SelectedLaunchConfigurationBundleParser parser = new SelectedLaunchConfigurationBundleParser();
 
-    while (tokenizer.hasMoreElements()) {
+    while( tokenizer.hasMoreElements() ) {
       String bundleInfoString = tokenizer.nextToken();
       final SelectedLaunchConfigurationBundle launchConfigurationBundleInfo = parser
-          .parseLaunchConfigurationBundleInfo(bundleInfoString);
-      result.add(launchConfigurationBundleInfo);
+          .parseLaunchConfigurationBundleInfo( bundleInfoString );
+      result.add( launchConfigurationBundleInfo );
     }
 
-    return result.toArray(new SelectedLaunchConfigurationBundle[0]);
+    return result.toArray( new SelectedLaunchConfigurationBundle[0] );
   }
 
   public String getDefaultStartLevel() {
-    String defaultStartLevel = this._launchConfiguration.getAttribute(DEFAULT_START_LEVEL_NAME);
-    if (defaultStartLevel == null) {
+    String defaultStartLevel = _launchConfiguration.getAttribute( DEFAULT_START_LEVEL_NAME );
+    if( defaultStartLevel == null ) {
       defaultStartLevel = "4";
     }
     return defaultStartLevel;
   }
 
   public String getDefaultAutoStart() {
-    String defaultAutoStart = this._launchConfiguration.getAttribute(DEFAULT_AUTO_START);
-    if (defaultAutoStart == null) {
+    String defaultAutoStart = _launchConfiguration.getAttribute( DEFAULT_AUTO_START );
+    if( defaultAutoStart == null ) {
       return "true";
     }
     return defaultAutoStart;
@@ -152,10 +152,10 @@ public class EquinoxLaunchConfigurationWrapper {
    * 
    * @return
    */
-  public String getResolvedStartLevel(SelectedLaunchConfigurationBundle selectedBundle) {
-    notNull("selectedBundle", selectedBundle);
+  public String getResolvedStartLevel( SelectedLaunchConfigurationBundle selectedBundle ) {
+    notNull( "selectedBundle", selectedBundle );
     String startLevel = selectedBundle.getStartLevel();
-    if ("default".equals(startLevel)) {
+    if( "default".equals( startLevel ) ) {
       return "";
     }
 
@@ -174,26 +174,27 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param selectedBundle
    * @return
    */
-  public String getResolvedAutoStart(SelectedLaunchConfigurationBundle selectedBundle) {
-    notNull("selectedBundle", selectedBundle);
+  public String getResolvedAutoStart( SelectedLaunchConfigurationBundle selectedBundle ) {
+    notNull( "selectedBundle", selectedBundle );
 
     String autoStart = selectedBundle.getAutoStart();
 
-    if ("false".equalsIgnoreCase(autoStart)) {
+    if( "false".equalsIgnoreCase( autoStart ) ) {
       return "";
     }
 
-    if ("true".equalsIgnoreCase(autoStart)) {
+    if( "true".equalsIgnoreCase( autoStart ) ) {
       return "start";
     }
 
     // must be set to default. check if default of this launch configuration is 'true'
 
-    if ("true".equalsIgnoreCase(getDefaultAutoStart())) {
+    if( "true".equalsIgnoreCase( getDefaultAutoStart() ) ) {
       return "start";
     }
 
     // is set to default and default auto start is 'false' -> return empty string
     return "";
   }
-}
+  
+} /* ENDCLASS */

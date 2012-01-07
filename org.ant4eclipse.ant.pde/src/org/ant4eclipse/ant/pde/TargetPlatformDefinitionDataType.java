@@ -51,7 +51,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     super( project );
 
     // create a new TargetPlatformDefinition
-    this._targetPlatformDefinition = new TargetPlatformDefinition();
+    _targetPlatformDefinition = new TargetPlatformDefinition();
   }
 
   /**
@@ -67,7 +67,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
       throw tooManyAttributes();
     }
 
-    this._id = id;
+    _id = id;
   }
 
   /**
@@ -75,14 +75,14 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    */
   @Override
   protected void doValidate() {
-    if( this._id == null || "".equals( this._id ) ) {
+    if( _id == null || "".equals( _id ) ) {
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id" );
     }
 
     // add the target platform definition
     TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance()
         .getRequiredService( TargetPlatformRegistry.class );
-    targetPlatformRegistry.addTargetPlatformDefinition( this._id, this._targetPlatformDefinition );
+    targetPlatformRegistry.addTargetPlatformDefinition( _id, _targetPlatformDefinition );
   }
 
   /**
@@ -95,7 +95,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    */
   public void addConfiguredLocation( Location location ) {
     Assure.notNull( "location", location );
-    this._targetPlatformDefinition.addLocation( location.getDirectory() );
+    _targetPlatformDefinition.addLocation( location.getDirectory() );
   }
 
   /**
@@ -105,11 +105,11 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
   public String toString() {
     StringBuffer buffer = new StringBuffer();
     buffer.append( "[" );
-    buffer.append( this.getClass().getSimpleName() );
+    buffer.append( getClass().getSimpleName() );
     buffer.append( ": _id=" );
-    buffer.append( this._id );
+    buffer.append( _id );
     buffer.append( ", _targetPlatformDefinition=" );
-    buffer.append( this._targetPlatformDefinition );
+    buffer.append( _targetPlatformDefinition );
     buffer.append( "]" );
     return buffer.toString();
   }
@@ -145,7 +145,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      */
     public Location( File directory ) {
       Assure.isDirectory( "directory", directory );
-      this._directory = directory;
+      _directory = directory;
     }
 
     /**
@@ -156,7 +156,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * @return the directory
      */
     public File getDirectory() {
-      return this._directory;
+      return _directory;
     }
 
     /**
@@ -169,7 +169,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      */
     public void setDir( File directory ) {
       Assure.isDirectory( "directory", directory );
-      this._directory = directory;
+      _directory = directory;
     }
 
     /**
@@ -180,7 +180,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
      * @return <code>true</code>, if the directory is set, <code>false</code> otherwise.
      */
     public boolean hasDirectory() {
-      return this._directory != null;
+      return _directory != null;
     }
 
     /**
@@ -190,7 +190,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     public int hashCode() {
       int PRIME = 31;
       int result = 1;
-      result = PRIME * result + ((this._directory == null) ? 0 : this._directory.hashCode());
+      result = PRIME * result + ((_directory == null) ? 0 : _directory.hashCode());
       return result;
     }
 
@@ -209,11 +209,11 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
         return false;
       }
       Location other = (Location) obj;
-      if( this._directory == null ) {
+      if( _directory == null ) {
         if( other._directory != null ) {
           return false;
         }
-      } else if( !this._directory.equals( other._directory ) ) {
+      } else if( !_directory.equals( other._directory ) ) {
         return false;
       }
       return true;
@@ -226,7 +226,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     public String toString() {
       StringBuffer result = new StringBuffer();
       result.append( "[Location path=" );
-      result.append( this._directory );
+      result.append( _directory );
       result.append( "]" );
       return result.toString();
     }

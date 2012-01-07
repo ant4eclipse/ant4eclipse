@@ -24,10 +24,8 @@ import java.io.File;
  */
 public class FeatureDescription {
 
-  /** - */
   private Object          _source;
 
-  /** - */
   private FeatureManifest _featureManifest;
 
   /**
@@ -40,11 +38,11 @@ public class FeatureDescription {
    * @param featureManifest
    *          the {@link FeatureManifest}
    */
-  public FeatureDescription(Object source, FeatureManifest featureManifest) {
+  public FeatureDescription( Object source, FeatureManifest featureManifest ) {
     super();
 
-    this._source = source;
-    this._featureManifest = featureManifest;
+    _source = source;
+    _featureManifest = featureManifest;
   }
 
   /**
@@ -55,19 +53,19 @@ public class FeatureDescription {
    * @return the source of this feature (e.g. an eclipse feature project, a jar file or a directory)
    */
   public Object getSource() {
-    return this._source;
+    return _source;
   }
 
   public boolean isFeatureProject() {
-    return this._source instanceof EclipseProject;
+    return _source instanceof EclipseProject;
   }
 
   public boolean isJarFile() {
-    return this._source instanceof File && ((File) this._source).isFile();
+    return _source instanceof File && ((File) _source).isFile();
   }
 
   public boolean isDirectory() {
-    return this._source instanceof File && ((File) this._source).isDirectory();
+    return _source instanceof File && ((File) _source).isDirectory();
   }
 
   /**
@@ -77,6 +75,7 @@ public class FeatureDescription {
    * @return the featureManifest
    */
   public FeatureManifest getFeatureManifest() {
-    return this._featureManifest;
+    return _featureManifest;
   }
-}
+  
+} /* ENDCLASS */

@@ -33,7 +33,7 @@ public class JavaRoleIdentifier extends AbstractProjectRoleIdentifier {
   public JavaRoleIdentifier() {
     super( JavaProjectRole.JAVA_NATURE, "java" );
   }
-  
+
   /**
    * {@inheritDoc}
    * 
@@ -42,11 +42,11 @@ public class JavaRoleIdentifier extends AbstractProjectRoleIdentifier {
    * </p>
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.trace("JavaRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
-    JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl(project);
-    ClasspathFileParser.parseClasspath(javaProjectRole);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.trace( "JavaRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
+    JavaProjectRoleImpl javaProjectRole = new JavaProjectRoleImpl( project );
+    ClasspathFileParser.parseClasspath( javaProjectRole );
     return javaProjectRole;
   }
 

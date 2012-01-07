@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
@@ -42,7 +53,7 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
     super( project );
 
     //
-    this._dirSet = new ArrayList<DirSet>();
+    _dirSet = new ArrayList<DirSet>();
   }
 
   public void setId( String id ) {
@@ -50,7 +61,7 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
       throw tooManyAttributes();
     }
 
-    this._id = id;
+    _id = id;
   }
 
   /**
@@ -60,7 +71,7 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
    * @param dirSet
    */
   public void addDirSet( DirSet dirSet ) {
-    this._dirSet.add( dirSet );
+    _dirSet.add( dirSet );
   }
 
   /**
@@ -68,17 +79,17 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
    */
   @Override
   protected void doValidate() {
-    if( this._dirSet.isEmpty() ) {
+    if( _dirSet.isEmpty() ) {
       throw new BuildException( "Workspace registration requires at least one fileset!" );
     }
 
-    if( this._id == null ) {
+    if( _id == null ) {
       throw new BuildException( "Workspace registration requires the identifier property to be set!" );
     }
 
     // create a workspace from the filesets
     List<File> projectDirectories = new ArrayList<File>();
-    for( DirSet fs : this._dirSet ) {
+    for( DirSet fs : _dirSet ) {
       File fsBase = fs.getDirectoryScanner().getBasedir();
       for( String d : fs.getDirectoryScanner().getIncludedDirectories() ) {
         File file = new File( fsBase, d );
@@ -106,7 +117,7 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
     }
 
     WorkspaceRegistry registry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
-    registry.registerWorkspace( this._id,
+    registry.registerWorkspace( _id,
         new FilesetWorkspaceDefinition( projectDirectories.toArray( new File[projectDirectories.size()] ) ) );
   }
   

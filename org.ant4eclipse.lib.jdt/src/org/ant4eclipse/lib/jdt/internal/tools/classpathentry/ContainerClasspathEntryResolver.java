@@ -40,7 +40,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
 
   /** the static container resolver list */
   private List<ClasspathContainerResolver> _containerresolver;
-  
+
   /**
    * <p>
    * Creates a new instance of type {@link ContainerClasspathEntryResolver}.
@@ -54,8 +54,8 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    * {@inheritDoc}
    */
   @Override
-  public boolean canResolve(ClasspathEntry entry) {
-    return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_CONTAINER)
+  public boolean canResolve( ClasspathEntry entry ) {
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_CONTAINER )
     /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_CONTAINER) */;
   }
 
@@ -63,52 +63,52 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    * {@inheritDoc}
    */
   @Override
-  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
-    Assure.notNull("entry", entry);
+  public void resolve( ClasspathEntry entry, ClasspathResolverContext context ) {
+    Assure.notNull( "entry", entry );
 
     // do not resolve if the class path entry is not visible
-    if (!isClasspathEntryVisible(entry, context)) {
+    if( !isClasspathEntryVisible( entry, context ) ) {
       return;
     }
 
     // log
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("ContainerClasspathEntryResolver.resolve(%s, %s)", entry, context);
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "ContainerClasspathEntryResolver.resolve(%s, %s)", entry, context );
     }
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("_containerresolver: %s", this._containerresolver);
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "_containerresolver: %s", _containerresolver );
     }
 
     // set 'handled' to false
     boolean handled = false;
 
     // iterate over all registered container resolvers
-    Iterator<ClasspathContainerResolver> iterator = this._containerresolver.iterator();
-    while (iterator.hasNext()) {
+    Iterator<ClasspathContainerResolver> iterator = _containerresolver.iterator();
+    while( iterator.hasNext() ) {
 
       ClasspathContainerResolver classpathContainerResolver = iterator.next();
 
-      if (A4ELogging.isDebuggingEnabled()) {
-        A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Try %s", classpathContainerResolver);
+      if( A4ELogging.isDebuggingEnabled() ) {
+        A4ELogging.debug( "ContainerClasspathEntryResolver.resolve: Try %s", classpathContainerResolver );
       }
 
-      if (classpathContainerResolver.canResolveContainer(entry)) {
+      if( classpathContainerResolver.canResolveContainer( entry ) ) {
 
-        if (A4ELogging.isDebuggingEnabled()) {
-          A4ELogging.debug("ContainerClasspathEntryResolver.resolve: Use %s", classpathContainerResolver);
+        if( A4ELogging.isDebuggingEnabled() ) {
+          A4ELogging.debug( "ContainerClasspathEntryResolver.resolve: Use %s", classpathContainerResolver );
         }
 
         handled = true;
-        classpathContainerResolver.resolveContainer(entry, context);
+        classpathContainerResolver.resolveContainer( entry, context );
         break;
       }
     }
 
     // throw exception if not handled
-    if (!handled) {
-      throw new Ant4EclipseException(JdtExceptionCode.CP_CONTAINER_NOT_HANDLED, entry.getPath(), context
-          .getCurrentProject().getSpecifiedName());
+    if( !handled ) {
+      throw new Ant4EclipseException( JdtExceptionCode.CP_CONTAINER_NOT_HANDLED, entry.getPath(), context
+          .getCurrentProject().getSpecifiedName() );
     }
   }
 

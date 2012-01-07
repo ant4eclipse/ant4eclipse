@@ -45,7 +45,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    * @param name
    * @param pathEntries
    */
-  void registerClassPathContainer(String name, File[] pathEntries);
+  void registerClassPathContainer( String name, File[] pathEntries );
 
   /**
    * <p>
@@ -60,7 +60,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    * @param name
    *          <code>true</code> if a class path container with the given name exists.
    */
-  boolean hasClassPathContainer(String name);
+  boolean hasClassPathContainer( String name );
 
   /**
    * <p>
@@ -75,7 +75,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    * @param name
    * @return
    */
-  ClassPathContainer getClassPathContainer(String name);
+  ClassPathContainer getClassPathContainer( String name );
 
   /**
    * <p>
@@ -101,7 +101,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    * @param path
    *          the path
    */
-  void registerClassPathVariable(String name, File path);
+  void registerClassPathVariable( String name, File path );
 
   /**
    * <p>
@@ -111,7 +111,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    * @param vars
    *          a map representing the class path variables. Not <code>null</code>.
    */
-  void registerClassPathVariables(Map<String, File> vars);
+  void registerClassPathVariables( Map<String,File> vars );
 
   /**
    * <p>
@@ -122,7 +122,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    *          the name of the class path variable.
    * @return <code>true</code> if a class path variable with the given name exists.
    */
-  boolean hasClassPathVariable(String name);
+  boolean hasClassPathVariable( String name );
 
   /**
    * <p>
@@ -133,7 +133,7 @@ public interface ClassPathElementsRegistry extends A4EService {
    *          the name of the class path variable.
    * @return the class path variable with the given name or <code>null</code>.
    */
-  ClassPathVariable getClassPathVariable(String name);
+  ClassPathVariable getClassPathVariable( String name );
 
   /**
    * <p>
@@ -144,4 +144,4 @@ public interface ClassPathElementsRegistry extends A4EService {
    */
   List<ClassPathVariable> getClasspathVariables();
 
-}
+} /* ENDINTERFACE */

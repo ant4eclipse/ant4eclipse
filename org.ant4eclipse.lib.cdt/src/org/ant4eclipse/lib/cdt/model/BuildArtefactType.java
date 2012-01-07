@@ -31,7 +31,7 @@ public enum BuildArtefactType {
    *          The identifying value used within the xml representation. Maybe <code>null</code>.
    */
   BuildArtefactType( String value ) {
-    this._value = value;
+    _value = value;
   }
 
   /**

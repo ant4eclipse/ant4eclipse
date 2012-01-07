@@ -38,29 +38,29 @@ public class FeatureProjectRoleIdentifier extends AbstractProjectRoleIdentifier 
   public FeatureProjectRoleIdentifier() {
     super( FeatureProjectRole.FEATURE_NATURE, "pde" );
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.debug("FeatureProjectRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.debug( "FeatureProjectRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
 
-    FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl(project);
+    FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl( project );
     File featureDescription = featureProjectRole.getFeatureXml();
 
     try {
-      FeatureManifest feature = FeatureManifestParser.parseFeature(new FileInputStream(featureDescription));
-      featureProjectRole.setFeature(feature);
-    } catch (FileNotFoundException e) {
-      throw new Ant4EclipseException(PdeExceptionCode.FEATURE_MANIFEST_FILE_NOT_FOUND, project.getFolder()
-          .getAbsolutePath());
+      FeatureManifest feature = FeatureManifestParser.parseFeature( new FileInputStream( featureDescription ) );
+      featureProjectRole.setFeature( feature );
+    } catch( FileNotFoundException e ) {
+      throw new Ant4EclipseException( PdeExceptionCode.FEATURE_MANIFEST_FILE_NOT_FOUND, project.getFolder()
+          .getAbsolutePath() );
     }
 
     // parse build properties
-    if (project.hasChild(BuildPropertiesParser.BUILD_PROPERTIES)) {
-      BuildPropertiesParser.parseFeatureBuildProperties(featureProjectRole);
+    if( project.hasChild( BuildPropertiesParser.BUILD_PROPERTIES ) ) {
+      BuildPropertiesParser.parseFeatureBuildProperties( featureProjectRole );
     }
 
     return featureProjectRole;

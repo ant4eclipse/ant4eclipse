@@ -26,7 +26,7 @@ import java.util.List;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class ResolvedClasspathImpl implements ResolvedClasspath {
+public class ResolvedClasspathImpl implements ResolvedClasspath {
 
   /** the list with all the resolved path entries */
   private List<ResolvedClasspathEntry> _classpath;
@@ -40,7 +40,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * </p>
    */
   public ResolvedClasspathImpl() {
-    this._classpath = new ArrayList<ResolvedClasspathEntry>();
+    _classpath = new ArrayList<ResolvedClasspathEntry>();
   }
 
   /**
@@ -48,7 +48,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    */
   @Override
   public final ResolvedClasspathEntry[] getClasspath() {
-    return this._classpath.toArray(new ResolvedClasspathEntry[0]);
+    return _classpath.toArray( new ResolvedClasspathEntry[0] );
   }
 
   /**
@@ -56,7 +56,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    */
   @Override
   public final ResolvedClasspathEntry getBootClasspath() {
-    return this._bootclasspath;
+    return _bootclasspath;
   }
 
   /**
@@ -64,10 +64,10 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    */
   @Override
   public File[] getBootClasspathFiles() {
-    if (!hasBootClasspath()) {
+    if( !hasBootClasspath() ) {
       return new File[0];
     }
-    return this._bootclasspath.getClassPathEntries();
+    return _bootclasspath.getClassPathEntries();
   }
 
   /**
@@ -75,7 +75,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    */
   @Override
   public boolean hasBootClasspath() {
-    return (this._bootclasspath != null);
+    return(_bootclasspath != null);
   }
 
   /**
@@ -83,7 +83,7 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    */
   @Override
   public File[] getClasspathFiles() {
-    return resolveClasspathToFiles(this._classpath);
+    return resolveClasspathToFiles( _classpath );
   }
 
   /**
@@ -94,10 +94,10 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * @param resolvedClasspathEntry
    *          the class path entry to add.
    */
-  public final void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
-    Assure.notNull("resolvedClasspathEntry", resolvedClasspathEntry);
-    if (!this._classpath.contains(resolvedClasspathEntry)) {
-      this._classpath.add(resolvedClasspathEntry);
+  public final void addClasspathEntry( ResolvedClasspathEntry resolvedClasspathEntry ) {
+    Assure.notNull( "resolvedClasspathEntry", resolvedClasspathEntry );
+    if( !_classpath.contains( resolvedClasspathEntry ) ) {
+      _classpath.add( resolvedClasspathEntry );
     }
   }
 
@@ -108,13 +108,13 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    * 
    * @param resolvedClasspathEntry
    */
-  public final void addBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry) {
-    Assure.notNull("resolvedClasspathEntry", resolvedClasspathEntry);
-    if (this._bootclasspath != null) {
+  public final void addBootClasspathEntry( ResolvedClasspathEntry resolvedClasspathEntry ) {
+    Assure.notNull( "resolvedClasspathEntry", resolvedClasspathEntry );
+    if( _bootclasspath != null ) {
       // TODO: NLS
-      throw new RuntimeException("FAIL");
+      throw new RuntimeException( "FAIL" );
     }
-    this._bootclasspath = resolvedClasspathEntry;
+    _bootclasspath = resolvedClasspathEntry;
   }
 
   /**
@@ -126,23 +126,24 @@ public final class ResolvedClasspathImpl implements ResolvedClasspath {
    *          the class path
    * @return a list with all class path entries as files.
    */
-  private File[] resolveClasspathToFiles(List<ResolvedClasspathEntry> classpath) {
+  private File[] resolveClasspathToFiles( List<ResolvedClasspathEntry> classpath ) {
 
     // create result
     List<File> result = new ArrayList<File>();
 
     // add all files
-    for (Object element : classpath) {
+    for( Object element : classpath ) {
       ResolvedClasspathEntry resolvedClasspathEntry = (ResolvedClasspathEntry) element;
       File[] files = resolvedClasspathEntry.getClassPathEntries();
-      for (int i = 0; i < files.length; i++) {
-        if (!result.contains(files[i])) {
-          result.add(files[i]);
+      for( int i = 0; i < files.length; i++ ) {
+        if( !result.contains( files[i] ) ) {
+          result.add( files[i] );
         }
       }
     }
 
     // return result
-    return result.toArray(new File[0]);
+    return result.toArray( new File[0] );
   }
-}
+  
+} /* ENDCLASS */

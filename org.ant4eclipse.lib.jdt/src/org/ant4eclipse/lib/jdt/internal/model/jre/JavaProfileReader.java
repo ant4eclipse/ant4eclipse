@@ -34,14 +34,14 @@ public class JavaProfileReader implements A4EService {
 
   public JavaProfileReader() {
 
-    this._javaProfileCache = new HashMap<String,JavaProfile>();
+    _javaProfileCache = new HashMap<String,JavaProfile>();
 
     // read all known profiles
     JavaProfile[] javaProfiles = readAllProfiles();
 
     // add profiles to profile cache
     for( JavaProfile javaProfile : javaProfiles ) {
-      this._javaProfileCache.put( javaProfile.getName(), javaProfile );
+      _javaProfileCache.put( javaProfile.getName(), javaProfile );
     }
   }
 
@@ -49,7 +49,7 @@ public class JavaProfileReader implements A4EService {
    * @return
    */
   public JavaProfile readDefaultProfile() {
-    return this._javaProfileCache.get( "JavaSE-1.6" );
+    return _javaProfileCache.get( "JavaSE-1.6" );
   }
 
   /**
@@ -57,12 +57,12 @@ public class JavaProfileReader implements A4EService {
    */
   public JavaProfile getJavaProfile( String path ) {
     Assure.nonEmpty( "path", path );
-    return this._javaProfileCache.get( path );
+    return _javaProfileCache.get( path );
   }
 
   public boolean hasJavaProfile( String path ) {
     Assure.nonEmpty( "path", path );
-    return this._javaProfileCache.containsKey( path );
+    return _javaProfileCache.containsKey( path );
   }
 
   /**
@@ -80,7 +80,7 @@ public class JavaProfileReader implements A4EService {
     JavaProfileImpl javaProfile = new JavaProfileImpl( props );
     javaProfile.setAssociatedJavaRuntimeId( jreId );
 
-    this._javaProfileCache.put( javaProfile.getName(), javaProfile );
+    _javaProfileCache.put( javaProfile.getName(), javaProfile );
   }
 
   /**

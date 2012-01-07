@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
@@ -25,11 +36,11 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
   private File                _launchConfigurationFile;
 
   public File getLaunchConfigurationFile() {
-    return this._launchConfigurationFile;
+    return _launchConfigurationFile;
   }
 
   public void setLaunchConfigurationFile( File launchConfiguration ) {
-    this._launchConfigurationFile = launchConfiguration;
+    _launchConfigurationFile = launchConfiguration;
   }
 
   public ExecuteLauncherTask( String prefix ) {
@@ -76,16 +87,16 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
     // check require fields
     requireWorkspaceAndProjectNameSet();
 
-    if( this._launchConfigurationFile == null ) {
+    if( _launchConfigurationFile == null ) {
       throw new BuildException( "You must specify the 'launchConfiguration' property" );
     }
 
-    if( !this._launchConfigurationFile.exists() ) {
-      throw new BuildException( "The launch configuration file '" + this._launchConfigurationFile + "' does not exists" );
+    if( !_launchConfigurationFile.exists() ) {
+      throw new BuildException( "The launch configuration file '" + _launchConfigurationFile + "' does not exists" );
     }
 
-    if( !this._launchConfigurationFile.isFile() ) {
-      throw new BuildException( "The launch configuration file '" + this._launchConfigurationFile + "' is not a file" );
+    if( !_launchConfigurationFile.isFile() ) {
+      throw new BuildException( "The launch configuration file '" + _launchConfigurationFile + "' is not a file" );
     }
 
   }
@@ -97,7 +108,7 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
 
   protected LaunchConfiguration getLaunchConfiguration() {
 
-    if( this._launchConfiguration == null ) {
+    if( _launchConfiguration == null ) {
 
       LaunchConfigurationReader launchConfigurationReader = A4ECore.instance().getRequiredService(
           LaunchConfigurationReader.class );
@@ -105,9 +116,9 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
       final LaunchConfiguration launchConfiguration = launchConfigurationReader
           .readLaunchConfiguration( getLaunchConfigurationFile() );
 
-      this._launchConfiguration = launchConfiguration;
+      _launchConfiguration = launchConfiguration;
     }
-    return this._launchConfiguration;
+    return _launchConfiguration;
   }
 
   private void executeLauncherScopedMacroDef( MacroDef macroDef ) {

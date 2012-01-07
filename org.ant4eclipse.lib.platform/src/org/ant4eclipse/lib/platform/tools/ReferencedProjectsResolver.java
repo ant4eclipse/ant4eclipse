@@ -38,11 +38,11 @@ public interface ReferencedProjectsResolver extends A4EService {
   /**
    * Returns the reference type which identifies references to be looked for using this resolver.
    * 
-   * @return   The reference type which identifies references to be looked for using this resolver.
-   *           Neither <code>null</code> nor empty.
+   * @return The reference type which identifies references to be looked for using this resolver. Neither
+   *         <code>null</code> nor empty.
    */
   String getReferenceType();
-  
+
   /**
    * <p>
    * Returns if this {@link ReferencedProjectsResolver} can resolve referenced projects for the given project.
@@ -53,7 +53,7 @@ public interface ReferencedProjectsResolver extends A4EService {
    * @return <code>true</code> if the {@link ReferencedProjectsResolver} can resolve referenced projects for the given
    *         project, otherwise <code>false</code>.
    */
-  boolean canHandle(EclipseProject project);
+  boolean canHandle( EclipseProject project );
 
   /**
    * <p>
@@ -72,5 +72,6 @@ public interface ReferencedProjectsResolver extends A4EService {
    * 
    * @return
    */
-  List<EclipseProject> resolveReferencedProjects(EclipseProject project, List<Object> additionalElements);
-}
+  List<EclipseProject> resolveReferencedProjects( EclipseProject project, List<Object> additionalElements );
+  
+} /* ENDINTERFACE */

@@ -31,7 +31,7 @@ public interface PathEntryRegistry extends A4EService {
    * 
    * @return <code>true</code> <=> The entry already has been resolved.
    */
-  boolean isResolved(RawPathEntry entry);
+  boolean isResolved( RawPathEntry entry );
 
   /**
    * Registers a path entry for an raw representation.
@@ -41,7 +41,7 @@ public interface PathEntryRegistry extends A4EService {
    * @param solution
    *          A corresponding entry which has been resolved. Not <code>null</code>.
    */
-  void registerResolvedPathEntry(RawPathEntry origin, ResolvedPathEntry solution);
+  void registerResolvedPathEntry( RawPathEntry origin, ResolvedPathEntry solution );
 
   /**
    * Returns the resolved entry for the supplied entry if it already has been registered.
@@ -52,6 +52,6 @@ public interface PathEntryRegistry extends A4EService {
    * @return The resolved representation of the supplied entry. Not <code>null</code> if
    *         {@link #isResolved(RawPathEntry)} returns <code>true</code>.
    */
-  ResolvedPathEntry getResolvedPathEntry(RawPathEntry entry);
+  ResolvedPathEntry getResolvedPathEntry( RawPathEntry entry );
 
 } /* ENDINTERFACE */

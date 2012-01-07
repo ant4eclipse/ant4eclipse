@@ -36,17 +36,17 @@ import java.util.Map;
 public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
   /** The factory used to build projects */
-  private ProjectFactory         _projectFactory;
+  private ProjectFactory        _projectFactory;
 
   /** the workspace map (String, Workspace) */
-  private Map<String, Workspace> _registry;
+  private Map<String,Workspace> _registry;
 
   /** the 'current' workspace */
-  private Workspace              _current;
+  private Workspace             _current;
 
   public WorkspaceRegistryImpl() {
-    this._registry = new HashMap<String, Workspace>();
-    this._projectFactory = new ProjectFactory();
+    _registry = new HashMap<String,Workspace>();
+    _projectFactory = new ProjectFactory();
   }
 
   /**
@@ -54,7 +54,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    */
   @Override
   public Workspace getCurrent() {
-    return this._current;
+    return _current;
   }
 
   /**
@@ -62,48 +62,48 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    */
   @Override
   public boolean hasCurrent() {
-    return this._current != null;
+    return _current != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setCurrent(Workspace currentWorkspace) {
-    this._current = currentWorkspace;
+  public void setCurrent( Workspace currentWorkspace ) {
+    _current = currentWorkspace;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setCurrent(String id) {
-    this._current = getWorkspace(id);
+  public void setCurrent( String id ) {
+    _current = getWorkspace( id );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Workspace getWorkspace(String id) {
-    return this._registry.get(id);
+  public Workspace getWorkspace( String id ) {
+    return _registry.get( id );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean containsWorkspace(String id) {
-    return this._registry.containsKey(id);
+  public boolean containsWorkspace( String id ) {
+    return _registry.containsKey( id );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Workspace registerWorkspace(String id, WorkspaceDefinition workspaceDefinition) {
-    Assure.nonEmpty("id", id);
-    Assure.notNull("workspaceDefinition", workspaceDefinition);
+  public Workspace registerWorkspace( String id, WorkspaceDefinition workspaceDefinition ) {
+    Assure.nonEmpty( "id", id );
+    Assure.notNull( "workspaceDefinition", workspaceDefinition );
 
     // create new workspace implementation
     WorkspaceImpl workspace = new WorkspaceImpl();
@@ -111,25 +111,25 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     // retrieve all project folders from the workspace definition
     File[] projectFolders = workspaceDefinition.getProjectFolders();
 
-    if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=%d.", Integer
-          .valueOf(projectFolders.length));
+    if( A4ELogging.isDebuggingEnabled() ) {
+      A4ELogging.debug( "WorkspaceRegistry.registerWorkspace: project directory count=%d.",
+          Integer.valueOf( projectFolders.length ) );
     }
 
     // read the projects and add them to the workspace
     List<EclipseProject> projects = new ArrayList<EclipseProject>();
-    for (File projectFolder : projectFolders) {
-      EclipseProject eclipseProject = this._projectFactory.readProjectFromWorkspace(workspace, projectFolder);
-      projects.add(eclipseProject);
-      workspace.registerEclipseProject(eclipseProject);
+    for( File projectFolder : projectFolders ) {
+      EclipseProject eclipseProject = _projectFactory.readProjectFromWorkspace( workspace, projectFolder );
+      projects.add( eclipseProject );
+      workspace.registerEclipseProject( eclipseProject );
     }
 
-    for (EclipseProject project : projects) {
-      this._projectFactory.postProcessRoleSetup(project);
+    for( EclipseProject project : projects ) {
+      _projectFactory.postProcessRoleSetup( project );
     }
 
     // add the workspace to the registry
-    this._registry.put(id, workspace);
+    _registry.put( id, workspace );
 
     // return the workspace
     return workspace;
@@ -150,5 +150,5 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   public void reset() {
     _registry.clear();
   }
-  
+
 } /* ENDCLASS */

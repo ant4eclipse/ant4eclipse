@@ -45,14 +45,14 @@ public class TargetDefinition {
    * @return
    */
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
    * @return
    */
   public boolean isLocationSet() {
-    return this._location != null;
+    return _location != null;
   }
 
   /**
@@ -63,14 +63,14 @@ public class TargetDefinition {
    * @return the location of the target definition.
    */
   public Location getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
    * @return
    */
   public boolean isEnvironmentSet() {
-    return this._environment != null;
+    return _environment != null;
   }
 
   /**
@@ -80,7 +80,7 @@ public class TargetDefinition {
    * @return
    */
   public Environment getEnvironment() {
-    return this._environment;
+    return _environment;
   }
 
   /**
@@ -90,7 +90,7 @@ public class TargetDefinition {
    * @return
    */
   public boolean isTargetJRESet() {
-    return this._targetJRE != null;
+    return _targetJRE != null;
   }
 
   /**
@@ -100,7 +100,7 @@ public class TargetDefinition {
    * @return
    */
   public TargetJRE getTargetJRE() {
-    return this._targetJRE;
+    return _targetJRE;
   }
 
   /**
@@ -110,7 +110,7 @@ public class TargetDefinition {
    * @return
    */
   public boolean isContentSet() {
-    return this._content != null;
+    return _content != null;
   }
 
   /**
@@ -120,7 +120,7 @@ public class TargetDefinition {
    * @return
    */
   public Content getContent() {
-    return this._content;
+    return _content;
   }
 
   /**
@@ -129,18 +129,18 @@ public class TargetDefinition {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[TargetDefinition:");
-    buffer.append(" _name: ");
-    buffer.append(this._name);
-    buffer.append(" _location: ");
-    buffer.append(this._location);
-    buffer.append(" _environment: ");
-    buffer.append(this._environment);
-    buffer.append(" _targetJRE: ");
-    buffer.append(this._targetJRE);
-    buffer.append(" _content: ");
-    buffer.append(this._content);
-    buffer.append("]");
+    buffer.append( "[TargetDefinition:" );
+    buffer.append( " _name: " );
+    buffer.append( _name );
+    buffer.append( " _location: " );
+    buffer.append( _location );
+    buffer.append( " _environment: " );
+    buffer.append( _environment );
+    buffer.append( " _targetJRE: " );
+    buffer.append( _targetJRE );
+    buffer.append( " _content: " );
+    buffer.append( _content );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -151,11 +151,11 @@ public class TargetDefinition {
   public int hashCode() {
     int prime = 31;
     int result = 1;
-    result = prime * result + ((this._content == null) ? 0 : this._content.hashCode());
-    result = prime * result + ((this._environment == null) ? 0 : this._environment.hashCode());
-    result = prime * result + ((this._location == null) ? 0 : this._location.hashCode());
-    result = prime * result + ((this._name == null) ? 0 : this._name.hashCode());
-    result = prime * result + ((this._targetJRE == null) ? 0 : this._targetJRE.hashCode());
+    result = prime * result + ((_content == null) ? 0 : _content.hashCode());
+    result = prime * result + ((_environment == null) ? 0 : _environment.hashCode());
+    result = prime * result + ((_location == null) ? 0 : _location.hashCode());
+    result = prime * result + ((_name == null) ? 0 : _name.hashCode());
+    result = prime * result + ((_targetJRE == null) ? 0 : _targetJRE.hashCode());
     return result;
   }
 
@@ -163,50 +163,50 @@ public class TargetDefinition {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals( Object obj ) {
+    if( this == obj ) {
       return true;
     }
-    if (obj == null) {
+    if( obj == null ) {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if( getClass() != obj.getClass() ) {
       return false;
     }
     TargetDefinition other = (TargetDefinition) obj;
-    if (this._content == null) {
-      if (other._content != null) {
+    if( _content == null ) {
+      if( other._content != null ) {
         return false;
       }
-    } else if (!this._content.equals(other._content)) {
+    } else if( !_content.equals( other._content ) ) {
       return false;
     }
-    if (this._environment == null) {
-      if (other._environment != null) {
+    if( _environment == null ) {
+      if( other._environment != null ) {
         return false;
       }
-    } else if (!this._environment.equals(other._environment)) {
+    } else if( !_environment.equals( other._environment ) ) {
       return false;
     }
-    if (this._location == null) {
-      if (other._location != null) {
+    if( _location == null ) {
+      if( other._location != null ) {
         return false;
       }
-    } else if (!this._location.equals(other._location)) {
+    } else if( !_location.equals( other._location ) ) {
       return false;
     }
-    if (this._name == null) {
-      if (other._name != null) {
+    if( _name == null ) {
+      if( other._name != null ) {
         return false;
       }
-    } else if (!this._name.equals(other._name)) {
+    } else if( !_name.equals( other._name ) ) {
       return false;
     }
-    if (this._targetJRE == null) {
-      if (other._targetJRE != null) {
+    if( _targetJRE == null ) {
+      if( other._targetJRE != null ) {
         return false;
       }
-    } else if (!this._targetJRE.equals(other._targetJRE)) {
+    } else if( !_targetJRE.equals( other._targetJRE ) ) {
       return false;
     }
     return true;
@@ -218,8 +218,8 @@ public class TargetDefinition {
    * 
    * @param name
    */
-  void setName(String name) {
-    this._name = name;
+  void setName( String name ) {
+    _name = name;
   }
 
   /**
@@ -228,8 +228,8 @@ public class TargetDefinition {
    * 
    * @param location
    */
-  void setLocation(Location location) {
-    this._location = location;
+  void setLocation( Location location ) {
+    _location = location;
   }
 
   /**
@@ -238,8 +238,8 @@ public class TargetDefinition {
    * 
    * @param environment
    */
-  void setEnvironment(Environment environment) {
-    this._environment = environment;
+  void setEnvironment( Environment environment ) {
+    _environment = environment;
   }
 
   /**
@@ -248,8 +248,8 @@ public class TargetDefinition {
    * 
    * @param targetJRE
    */
-  void setTargetJRE(TargetJRE targetJRE) {
-    this._targetJRE = targetJRE;
+  void setTargetJRE( TargetJRE targetJRE ) {
+    _targetJRE = targetJRE;
   }
 
   /**
@@ -258,8 +258,8 @@ public class TargetDefinition {
    * 
    * @param content
    */
-  void setContent(Content content) {
-    this._content = content;
+  void setContent( Content content ) {
+    _content = content;
   }
 
   /**
@@ -281,7 +281,7 @@ public class TargetDefinition {
      * @return
      */
     public boolean useDefault() {
-      return this._useDefault;
+      return _useDefault;
     }
 
     /**
@@ -291,7 +291,7 @@ public class TargetDefinition {
      * @return
      */
     public boolean isPathSet() {
-      return this._path != null;
+      return _path != null;
     }
 
     /**
@@ -301,7 +301,7 @@ public class TargetDefinition {
      * @return
      */
     public String getPath() {
-      return this._path;
+      return _path;
     }
 
     /**
@@ -311,8 +311,8 @@ public class TargetDefinition {
     public int hashCode() {
       int prime = 31;
       int result = 1;
-      result = prime * result + ((this._path == null) ? 0 : this._path.hashCode());
-      result = prime * result + (this._useDefault ? 1231 : 1237);
+      result = prime * result + ((_path == null) ? 0 : _path.hashCode());
+      result = prime * result + (_useDefault ? 1231 : 1237);
       return result;
     }
 
@@ -320,25 +320,25 @@ public class TargetDefinition {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       Location other = (Location) obj;
-      if (this._path == null) {
-        if (other._path != null) {
+      if( _path == null ) {
+        if( other._path != null ) {
           return false;
         }
-      } else if (!this._path.equals(other._path)) {
+      } else if( !_path.equals( other._path ) ) {
         return false;
       }
-      if (this._useDefault != other._useDefault) {
+      if( _useDefault != other._useDefault ) {
         return false;
       }
       return true;
@@ -350,12 +350,12 @@ public class TargetDefinition {
     @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("[Location:");
-      buffer.append(" _useDefault: ");
-      buffer.append(this._useDefault);
-      buffer.append(" _path: ");
-      buffer.append(this._path);
-      buffer.append("]");
+      buffer.append( "[Location:" );
+      buffer.append( " _useDefault: " );
+      buffer.append( _useDefault );
+      buffer.append( " _path: " );
+      buffer.append( _path );
+      buffer.append( "]" );
       return buffer.toString();
     }
 
@@ -365,8 +365,8 @@ public class TargetDefinition {
      * 
      * @param useDefault
      */
-    void setUseDefault(boolean useDefault) {
-      this._useDefault = useDefault;
+    void setUseDefault( boolean useDefault ) {
+      _useDefault = useDefault;
     }
 
     /**
@@ -375,8 +375,8 @@ public class TargetDefinition {
      * 
      * @param path
      */
-    void setPath(String path) {
-      this._path = path;
+    void setPath( String path ) {
+      _path = path;
     }
   }
 
@@ -398,70 +398,70 @@ public class TargetDefinition {
     private String _nl;
 
     public String getOs() {
-      return this._os;
+      return _os;
     }
 
     public String getWs() {
-      return this._ws;
+      return _ws;
     }
 
     public String getArch() {
-      return this._arch;
+      return _arch;
     }
 
     public String getNl() {
-      return this._nl;
+      return _nl;
     }
 
     @Override
     public int hashCode() {
       int prime = 31;
       int result = 1;
-      result = prime * result + ((this._arch == null) ? 0 : this._arch.hashCode());
-      result = prime * result + ((this._nl == null) ? 0 : this._nl.hashCode());
-      result = prime * result + ((this._os == null) ? 0 : this._os.hashCode());
-      result = prime * result + ((this._ws == null) ? 0 : this._ws.hashCode());
+      result = prime * result + ((_arch == null) ? 0 : _arch.hashCode());
+      result = prime * result + ((_nl == null) ? 0 : _nl.hashCode());
+      result = prime * result + ((_os == null) ? 0 : _os.hashCode());
+      result = prime * result + ((_ws == null) ? 0 : _ws.hashCode());
       return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       Environment other = (Environment) obj;
-      if (this._arch == null) {
-        if (other._arch != null) {
+      if( _arch == null ) {
+        if( other._arch != null ) {
           return false;
         }
-      } else if (!this._arch.equals(other._arch)) {
+      } else if( !_arch.equals( other._arch ) ) {
         return false;
       }
-      if (this._nl == null) {
-        if (other._nl != null) {
+      if( _nl == null ) {
+        if( other._nl != null ) {
           return false;
         }
-      } else if (!this._nl.equals(other._nl)) {
+      } else if( !_nl.equals( other._nl ) ) {
         return false;
       }
-      if (this._os == null) {
-        if (other._os != null) {
+      if( _os == null ) {
+        if( other._os != null ) {
           return false;
         }
-      } else if (!this._os.equals(other._os)) {
+      } else if( !_os.equals( other._os ) ) {
         return false;
       }
-      if (this._ws == null) {
-        if (other._ws != null) {
+      if( _ws == null ) {
+        if( other._ws != null ) {
           return false;
         }
-      } else if (!this._ws.equals(other._ws)) {
+      } else if( !_ws.equals( other._ws ) ) {
         return false;
       }
       return true;
@@ -473,33 +473,33 @@ public class TargetDefinition {
     @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("[Environment:");
-      buffer.append(" _os: ");
-      buffer.append(this._os);
-      buffer.append(" _ws: ");
-      buffer.append(this._ws);
-      buffer.append(" _arch: ");
-      buffer.append(this._arch);
-      buffer.append(" _nl: ");
-      buffer.append(this._nl);
-      buffer.append("]");
+      buffer.append( "[Environment:" );
+      buffer.append( " _os: " );
+      buffer.append( _os );
+      buffer.append( " _ws: " );
+      buffer.append( _ws );
+      buffer.append( " _arch: " );
+      buffer.append( _arch );
+      buffer.append( " _nl: " );
+      buffer.append( _nl );
+      buffer.append( "]" );
       return buffer.toString();
     }
 
-    void setOs(String os) {
-      this._os = os;
+    void setOs( String os ) {
+      _os = os;
     }
 
-    void setWs(String ws) {
-      this._ws = ws;
+    void setWs( String ws ) {
+      _ws = ws;
     }
 
-    void setArch(String arch) {
-      this._arch = arch;
+    void setArch( String arch ) {
+      _arch = arch;
     }
 
-    void setNl(String nl) {
-      this._nl = nl;
+    void setNl( String nl ) {
+      _nl = nl;
     }
   }
 
@@ -526,7 +526,7 @@ public class TargetDefinition {
      * @return
      */
     public String getJreName() {
-      return this._jreName;
+      return _jreName;
     }
 
     /**
@@ -536,7 +536,7 @@ public class TargetDefinition {
      * @return
      */
     public String getExecutionEnvironment() {
-      return this._executionEnvironment;
+      return _executionEnvironment;
     }
 
     /**
@@ -546,9 +546,9 @@ public class TargetDefinition {
      * @return
      */
     public int getType() {
-      if (this._jreName != null) {
+      if( _jreName != null ) {
         return JRE;
-      } else if (this._executionEnvironment != null) {
+      } else if( _executionEnvironment != null ) {
         return EXECUTION_ENVIRONMENT;
       } else {
         return DEFAULT_JRE;
@@ -558,50 +558,50 @@ public class TargetDefinition {
     /**
      * @param jreName
      */
-    void setJreName(String jreName) {
-      this._jreName = jreName;
+    void setJreName( String jreName ) {
+      _jreName = jreName;
     }
 
     /**
      * @param execEnv
      */
-    void setExecutionEnvironment(String executionEnvironment) {
-      this._executionEnvironment = executionEnvironment;
+    void setExecutionEnvironment( String executionEnvironment ) {
+      _executionEnvironment = executionEnvironment;
     }
 
     @Override
     public int hashCode() {
       int prime = 31;
       int result = 1;
-      result = prime * result + ((this._executionEnvironment == null) ? 0 : this._executionEnvironment.hashCode());
-      result = prime * result + ((this._jreName == null) ? 0 : this._jreName.hashCode());
+      result = prime * result + ((_executionEnvironment == null) ? 0 : _executionEnvironment.hashCode());
+      result = prime * result + ((_jreName == null) ? 0 : _jreName.hashCode());
       return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       TargetJRE other = (TargetJRE) obj;
-      if (this._executionEnvironment == null) {
-        if (other._executionEnvironment != null) {
+      if( _executionEnvironment == null ) {
+        if( other._executionEnvironment != null ) {
           return false;
         }
-      } else if (!this._executionEnvironment.equals(other._executionEnvironment)) {
+      } else if( !_executionEnvironment.equals( other._executionEnvironment ) ) {
         return false;
       }
-      if (this._jreName == null) {
-        if (other._jreName != null) {
+      if( _jreName == null ) {
+        if( other._jreName != null ) {
           return false;
         }
-      } else if (!this._jreName.equals(other._jreName)) {
+      } else if( !_jreName.equals( other._jreName ) ) {
         return false;
       }
       return true;
@@ -630,37 +630,37 @@ public class TargetDefinition {
      * 
      */
     public Content() {
-      this._plugins = new ArrayList<String>();
-      this._features = new ArrayList<String>();
-      this._extraLocations = new ArrayList<String>();
+      _plugins = new ArrayList<String>();
+      _features = new ArrayList<String>();
+      _extraLocations = new ArrayList<String>();
     }
 
     /**
      * @return
      */
     public boolean useAllPlugins() {
-      return this._useAllPlugins;
+      return _useAllPlugins;
     }
 
     /**
      * @return
      */
     public String[] getPlugins() {
-      return this._plugins.toArray(new String[0]);
+      return _plugins.toArray( new String[0] );
     }
 
     /**
      * @return
      */
     public String[] getFeatures() {
-      return this._features.toArray(new String[0]);
+      return _features.toArray( new String[0] );
     }
 
     /**
      * @return
      */
     public String[] getExtraLocations() {
-      return this._extraLocations.toArray(new String[0]);
+      return _extraLocations.toArray( new String[0] );
     }
 
     /**
@@ -670,10 +670,10 @@ public class TargetDefinition {
     public int hashCode() {
       int prime = 31;
       int result = 1;
-      result = prime * result + ((this._extraLocations == null) ? 0 : this._extraLocations.hashCode());
-      result = prime * result + ((this._features == null) ? 0 : this._features.hashCode());
-      result = prime * result + ((this._plugins == null) ? 0 : this._plugins.hashCode());
-      result = prime * result + (this._useAllPlugins ? 1231 : 1237);
+      result = prime * result + ((_extraLocations == null) ? 0 : _extraLocations.hashCode());
+      result = prime * result + ((_features == null) ? 0 : _features.hashCode());
+      result = prime * result + ((_plugins == null) ? 0 : _plugins.hashCode());
+      result = prime * result + (_useAllPlugins ? 1231 : 1237);
       return result;
     }
 
@@ -681,39 +681,39 @@ public class TargetDefinition {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       Content other = (Content) obj;
-      if (this._extraLocations == null) {
-        if (other._extraLocations != null) {
+      if( _extraLocations == null ) {
+        if( other._extraLocations != null ) {
           return false;
         }
-      } else if (!this._extraLocations.equals(other._extraLocations)) {
+      } else if( !_extraLocations.equals( other._extraLocations ) ) {
         return false;
       }
-      if (this._features == null) {
-        if (other._features != null) {
+      if( _features == null ) {
+        if( other._features != null ) {
           return false;
         }
-      } else if (!this._features.equals(other._features)) {
+      } else if( !_features.equals( other._features ) ) {
         return false;
       }
-      if (this._plugins == null) {
-        if (other._plugins != null) {
+      if( _plugins == null ) {
+        if( other._plugins != null ) {
           return false;
         }
-      } else if (!this._plugins.equals(other._plugins)) {
+      } else if( !_plugins.equals( other._plugins ) ) {
         return false;
       }
-      if (this._useAllPlugins != other._useAllPlugins) {
+      if( _useAllPlugins != other._useAllPlugins ) {
         return false;
       }
       return true;
@@ -725,46 +725,47 @@ public class TargetDefinition {
     @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("[Content:");
-      buffer.append(" _useAllPlugins: ");
-      buffer.append(this._useAllPlugins);
-      buffer.append(" _plugins: ");
-      buffer.append(this._plugins);
-      buffer.append(" _features: ");
-      buffer.append(this._features);
-      buffer.append(" _extraLocations: ");
-      buffer.append(this._extraLocations);
-      buffer.append("]");
+      buffer.append( "[Content:" );
+      buffer.append( " _useAllPlugins: " );
+      buffer.append( _useAllPlugins );
+      buffer.append( " _plugins: " );
+      buffer.append( _plugins );
+      buffer.append( " _features: " );
+      buffer.append( _features );
+      buffer.append( " _extraLocations: " );
+      buffer.append( _extraLocations );
+      buffer.append( "]" );
       return buffer.toString();
     }
 
     /**
      * @param useAllPlugins
      */
-    void setUseAllPlugins(boolean useAllPlugins) {
-      this._useAllPlugins = useAllPlugins;
+    void setUseAllPlugins( boolean useAllPlugins ) {
+      _useAllPlugins = useAllPlugins;
     }
 
     /**
      * @param plugin
      */
-    void addPlugin(String plugin) {
-      this._plugins.add(plugin);
+    void addPlugin( String plugin ) {
+      _plugins.add( plugin );
     }
 
     /**
      * @param feature
      */
-    void addFeature(String feature) {
-      this._features.add(feature);
+    void addFeature( String feature ) {
+      _features.add( feature );
     }
 
     /**
      * @param extraLocation
      */
-    void addExtraLocation(String extraLocation) {
-      this._extraLocations.add(extraLocation);
+    void addExtraLocation( String extraLocation ) {
+      _extraLocations.add( extraLocation );
     }
 
   }
-}
+  
+} /* ENDCLASS */

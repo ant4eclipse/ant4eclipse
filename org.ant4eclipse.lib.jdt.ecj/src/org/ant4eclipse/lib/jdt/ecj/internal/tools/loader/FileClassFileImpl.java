@@ -33,18 +33,18 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
   /**
    * @param classfile
    */
-  public FileClassFileImpl(File classfile, String libraryLocation, byte libraryType) {
-    super(libraryLocation, libraryType);
-    Assure.exists("classfile", classfile);
-    this._classfile = classfile;
+  public FileClassFileImpl( File classfile, String libraryLocation, byte libraryType ) {
+    super( libraryLocation, libraryType );
+    Assure.exists( "classfile", classfile );
+    _classfile = classfile;
   }
 
   @Override
   public byte[] getBytes() {
     try {
-      return Util.getFileByteContent(this._classfile);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage(), e);
+      return Util.getFileByteContent( _classfile );
+    } catch( Exception e ) {
+      throw new RuntimeException( e.getMessage(), e );
     }
   }
 
@@ -54,8 +54,8 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
   @Override
   public final IBinaryType getBinaryType() {
     try {
-      return ClassFileReader.read(this._classfile, true);
-    } catch (Exception e) {
+      return ClassFileReader.read( _classfile, true );
+    } catch( Exception e ) {
       // return null if an exception occurs
       e.printStackTrace();
       return null;
@@ -68,16 +68,17 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[FileClassFileImpl:");
-    buffer.append(" bundleLocation: ");
-    buffer.append(getLibraryLocation());
-    buffer.append(" bundleType: ");
-    buffer.append(getLibraryType());
-    buffer.append(" accessRestriction: ");
-    buffer.append(getAccessRestriction());
-    buffer.append(" classfile: ");
-    buffer.append(this._classfile);
-    buffer.append("]");
+    buffer.append( "[FileClassFileImpl:" );
+    buffer.append( " bundleLocation: " );
+    buffer.append( getLibraryLocation() );
+    buffer.append( " bundleType: " );
+    buffer.append( getLibraryType() );
+    buffer.append( " accessRestriction: " );
+    buffer.append( getAccessRestriction() );
+    buffer.append( " classfile: " );
+    buffer.append( _classfile );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

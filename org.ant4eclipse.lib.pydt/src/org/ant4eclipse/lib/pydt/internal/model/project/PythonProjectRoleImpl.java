@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.model.project;
 
-
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.lib.pydt.model.RawPathEntry;
@@ -45,10 +44,10 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    * @param eclipseProject
    *          The eclipse project. Not <code>null</code>.
    */
-  public PythonProjectRoleImpl(EclipseProject eclipseProject, boolean dltk) {
-    super(NAME, eclipseProject);
-    this._rawpathentries = new ArrayList<RawPathEntry>();
-    this._isdltk = dltk;
+  public PythonProjectRoleImpl( EclipseProject eclipseProject, boolean dltk ) {
+    super( NAME, eclipseProject );
+    _rawpathentries = new ArrayList<RawPathEntry>();
+    _isdltk = dltk;
   }
 
   /**
@@ -56,7 +55,7 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    */
   @Override
   public boolean isDLTK() {
-    return this._isdltk;
+    return _isdltk;
   }
 
   /**
@@ -65,8 +64,8 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    * @param rawPathEntry
    *          The raw path information associated with the current eclipse project.
    */
-  public void addRawPathEntry(RawPathEntry rawpathentry) {
-    this._rawpathentries.add(rawpathentry);
+  public void addRawPathEntry( RawPathEntry rawpathentry ) {
+    _rawpathentries.add( rawpathentry );
   }
 
   /**
@@ -74,8 +73,8 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    * 
    * @param entry
    */
-  public void removeRawPathEntry(RawPathEntry entry) {
-    this._rawpathentries.remove(entry);
+  public void removeRawPathEntry( RawPathEntry entry ) {
+    _rawpathentries.remove( entry );
   }
 
   /**
@@ -83,21 +82,21 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    */
   @Override
   public RawPathEntry[] getRawPathEntries() {
-    return this._rawpathentries.toArray(new RawPathEntry[this._rawpathentries.size()]);
+    return _rawpathentries.toArray( new RawPathEntry[_rawpathentries.size()] );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public RawPathEntry[] getRawPathEntries(ReferenceKind kind) {
+  public RawPathEntry[] getRawPathEntries( ReferenceKind kind ) {
     List<RawPathEntry> result = new ArrayList<RawPathEntry>();
-    for (RawPathEntry entry : this._rawpathentries) {
-      if (kind == entry.getKind()) {
-        result.add(entry);
+    for( RawPathEntry entry : _rawpathentries ) {
+      if( kind == entry.getKind() ) {
+        result.add( entry );
       }
     }
-    return result.toArray(new RawPathEntry[result.size()]);
+    return result.toArray( new RawPathEntry[result.size()] );
   }
 
   /**
@@ -106,21 +105,21 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[PythonProjectRole:");
-    buffer.append(" NAME: ");
-    buffer.append(NAME);
-    buffer.append(", _isdltk: ");
-    buffer.append(this._isdltk);
-    buffer.append(", _rawpathentries; {");
-    if (!this._rawpathentries.isEmpty()) {
-      buffer.append(this._rawpathentries.get(0));
-      for (int i = 1; i < this._rawpathentries.size(); i++) {
-        buffer.append(",");
-        buffer.append(this._rawpathentries.get(i));
+    buffer.append( "[PythonProjectRole:" );
+    buffer.append( " NAME: " );
+    buffer.append( NAME );
+    buffer.append( ", _isdltk: " );
+    buffer.append( _isdltk );
+    buffer.append( ", _rawpathentries; {" );
+    if( !_rawpathentries.isEmpty() ) {
+      buffer.append( _rawpathentries.get( 0 ) );
+      for( int i = 1; i < _rawpathentries.size(); i++ ) {
+        buffer.append( "," );
+        buffer.append( _rawpathentries.get( i ) );
       }
     }
-    buffer.append("}");
-    buffer.append("]");
+    buffer.append( "}" );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -130,10 +129,10 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    for (int i = 0; i < this._rawpathentries.size(); i++) {
-      result = result * 31 + this._rawpathentries.get(i).hashCode();
+    for( int i = 0; i < _rawpathentries.size(); i++ ) {
+      result = result * 31 + _rawpathentries.get( i ).hashCode();
     }
-    result = result * 31 + (this._isdltk ? 1 : 0);
+    result = result * 31 + (_isdltk ? 1 : 0);
     return result;
   }
 
@@ -141,28 +140,28 @@ public class PythonProjectRoleImpl extends AbstractProjectRole implements DLTKPr
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object object) {
-    if (this == object) {
+  public boolean equals( Object object ) {
+    if( this == object ) {
       return true;
     }
-    if (!super.equals(object)) {
+    if( !super.equals( object ) ) {
       return false;
     }
-    if (object == null) {
+    if( object == null ) {
       return false;
     }
-    if (object.getClass() != getClass()) {
+    if( object.getClass() != getClass() ) {
       return false;
     }
     PythonProjectRoleImpl other = (PythonProjectRoleImpl) object;
-    if (this._isdltk != other._isdltk) {
+    if( _isdltk != other._isdltk ) {
       return false;
     }
-    if (this._rawpathentries.size() != other._rawpathentries.size()) {
+    if( _rawpathentries.size() != other._rawpathentries.size() ) {
       return false;
     }
-    for (int i = 0; i < this._rawpathentries.size(); i++) {
-      if (!this._rawpathentries.get(i).equals(other._rawpathentries.get(i))) {
+    for( int i = 0; i < _rawpathentries.size(); i++ ) {
+      if( !_rawpathentries.get( i ).equals( other._rawpathentries.get( i ) ) ) {
         return false;
       }
     }

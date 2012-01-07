@@ -44,7 +44,7 @@ public interface ClassFileLoader {
    * 
    * @return <code>true</code> if the package is available via this {@link ClassFileLoader}
    */
-  boolean hasPackage(String packageName);
+  boolean hasPackage( String packageName );
 
   /**
    * <p>
@@ -57,7 +57,7 @@ public interface ClassFileLoader {
    * @return an instance of type {@link ClassFile} that represents the specified class or <code>null</code> if the class
    *         is not available.
    */
-  ClassFile loadClass(ClassName className);
+  ClassFile loadClass( ClassName className );
 
   /**
    * <p>
@@ -70,7 +70,7 @@ public interface ClassFileLoader {
    * @return an instance of type {@link SourceFile} that is the source file for the specified class or <code>null</code>
    *         if no such source can be found.
    */
-  ReferableSourceFile loadSource(ClassName className);
+  ReferableSourceFile loadSource( ClassName className );
 
   /**
    * Returns a list of File entries describing classpath entries associated with this ClassFileLoader instance. Please
@@ -81,4 +81,4 @@ public interface ClassFileLoader {
    */
   File[] getClasspath();
 
-}
+} /* ENDINTERFACE */

@@ -38,7 +38,6 @@ import java.util.List;
  */
 public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProjectRole {
 
-  /**  */
   public static final String   NAME = "JavaProjectRole";
 
   /** the class path entries */
@@ -52,9 +51,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @param eclipseProject
    *          the eclipse project
    */
-  public JavaProjectRoleImpl(EclipseProject eclipseProject) {
-    super(NAME, eclipseProject);
-    this._eclipseClasspathEntries = new ArrayList<ClasspathEntry>();
+  public JavaProjectRoleImpl( EclipseProject eclipseProject ) {
+    super( NAME, eclipseProject );
+    _eclipseClasspathEntries = new ArrayList<ClasspathEntry>();
   }
 
   /**
@@ -62,7 +61,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   @Override
   public boolean hasRawClasspathEntries() {
-    return !this._eclipseClasspathEntries.isEmpty();
+    return !_eclipseClasspathEntries.isEmpty();
   }
 
   /**
@@ -70,22 +69,22 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   @Override
   public RawClasspathEntry[] getRawClasspathEntries() {
-    return this._eclipseClasspathEntries.toArray(new RawClasspathEntry[0]);
+    return _eclipseClasspathEntries.toArray( new RawClasspathEntry[0] );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public RawClasspathEntry[] getRawClasspathEntries(int entrykind) {
+  public RawClasspathEntry[] getRawClasspathEntries( int entrykind ) {
     ArrayList<ClasspathEntry> templist = new ArrayList<ClasspathEntry>();
-    for (ClasspathEntry entry : this._eclipseClasspathEntries) {
-      if (entry.getEntryKind() == entrykind) {
-        templist.add(entry);
+    for( ClasspathEntry entry : _eclipseClasspathEntries ) {
+      if( entry.getEntryKind() == entrykind ) {
+        templist.add( entry );
       }
     }
     RawClasspathEntry[] result = new RawClasspathEntry[templist.size()];
-    templist.toArray(result);
+    templist.toArray( result );
     return result;
   }
 
@@ -96,11 +95,11 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   public JavaRuntime getJavaRuntime() {
     RawClasspathEntry runtimeEntry = getJreClasspathEntry();
 
-    if (runtimeEntry == null) {
+    if( runtimeEntry == null ) {
       return null;
     }
 
-    return getJavaRuntimeRegistry().getJavaRuntimeForPath(runtimeEntry.getPath());
+    return getJavaRuntimeRegistry().getJavaRuntimeForPath( runtimeEntry.getPath() );
   }
 
   /**
@@ -108,9 +107,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   @Override
   public JavaProfile getJavaProfile() {
-    if (getJreClasspathEntry().getPath().startsWith(ContainerTypes.VMTYPE_PREFIX)) {
+    if( getJreClasspathEntry().getPath().startsWith( ContainerTypes.VMTYPE_PREFIX ) ) {
       return getJavaRuntimeRegistry().getJavaProfile(
-          getJreClasspathEntry().getPath().substring(ContainerTypes.VMTYPE_PREFIX.length()));
+          getJreClasspathEntry().getPath().substring( ContainerTypes.VMTYPE_PREFIX.length() ) );
     }
     return null;
   }
@@ -124,12 +123,12 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     StringMap result = null;
 
     // read project-specific compiler settings if available
-    File settingsDir = getEclipseProject().getChild(".settings");
-    File prefsFile = new File(settingsDir, "org.eclipse.jdt.core.prefs");
-    if (prefsFile.isFile()) {
-      result = new StringMap(prefsFile);
+    File settingsDir = getEclipseProject().getChild( ".settings" );
+    File prefsFile = new File( settingsDir, "org.eclipse.jdt.core.prefs" );
+    if( prefsFile.isFile() ) {
+      result = new StringMap( prefsFile );
     } else {
-      A4ELogging.debug("No file with project specific compiler settings found at '%s'.", prefsFile);
+      A4ELogging.debug( "No file with project specific compiler settings found at '%s'.", prefsFile );
     }
 
     return result;
@@ -141,10 +140,10 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   @Override
   public String[] getSourceFolders() {
 
-    RawClasspathEntry[] entries = getRawClasspathEntries(RawClasspathEntry.CPE_SOURCE);
+    RawClasspathEntry[] entries = getRawClasspathEntries( RawClasspathEntry.CPE_SOURCE );
 
     String[] result = new String[entries.length];
-    for (int i = 0; i < entries.length; i++) {
+    for( int i = 0; i < entries.length; i++ ) {
       result[i] = entries[i].getPath();
     }
 
@@ -160,10 +159,10 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   @Override
   public boolean hasExcludeOrIncludeFiltersForSourceFolders() {
 
-    for (RawClasspathEntry entry : getRawClasspathEntries()) {
+    for( RawClasspathEntry entry : getRawClasspathEntries() ) {
 
-      if (entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE
-          && (entry.getIncludes() != null || entry.getExcludes() != null)) {
+      if( entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE
+          && (entry.getIncludes() != null || entry.getExcludes() != null) ) {
 
         return true;
       }
@@ -176,22 +175,22 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   @Override
-  public String getExcludePatternsForSourceFolder(String sourceFolder) {
-    RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
+  public String getExcludePatternsForSourceFolder( String sourceFolder ) {
+    RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder( sourceFolder );
 
     return (rawClasspathEntry != null && rawClasspathEntry.getExcludes() != null) ? rawClasspathEntry.getExcludes()
-        .replace('|', ' ') : "";
+        .replace( '|', ' ' ) : "";
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public String getIncludePatternsForSourceFolder(String sourceFolder) {
-    RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder(sourceFolder);
+  public String getIncludePatternsForSourceFolder( String sourceFolder ) {
+    RawClasspathEntry rawClasspathEntry = getEntryForSourceFolder( sourceFolder );
 
     return (rawClasspathEntry != null && rawClasspathEntry.getIncludes() != null) ? rawClasspathEntry.getIncludes()
-        .replace('|', ' ') : "**";
+        .replace( '|', ' ' ) : "**";
   }
 
   /**
@@ -202,17 +201,17 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
 
     EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
       @Override
-      public String resolve(RawClasspathEntry entry) {
-        if (entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT) {
+      public String resolve( RawClasspathEntry entry ) {
+        if( entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT ) {
           return entry.getPath();
-        } else if ((entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && entry.hasOutputLocation()) {
+        } else if( (entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && entry.hasOutputLocation() ) {
           return entry.getOutputLocation();
         }
         return null;
       }
     };
 
-    return EntryResolver.resolveEntries(condition, this).toArray(new String[0]);
+    return EntryResolver.resolveEntries( condition, this ).toArray( new String[0] );
   }
 
   /**
@@ -223,17 +222,17 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
 
     EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
       @Override
-      public String resolve(RawClasspathEntry entry) {
-        if (entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT) {
+      public String resolve( RawClasspathEntry entry ) {
+        if( entry.getEntryKind() == RawClasspathEntry.CPE_OUTPUT ) {
           return entry.getPath();
         }
         return null;
       }
     };
 
-    String[] result = EntryResolver.resolveEntries(condition, this).toArray(new String[0]);
+    String[] result = EntryResolver.resolveEntries( condition, this ).toArray( new String[0] );
 
-    if (result.length > 0) {
+    if( result.length > 0 ) {
       return result[0];
     } else {
       // TODO
@@ -245,52 +244,52 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   @Override
-  public String getOutputFolderForSourceFolder(final String sourceFolder) {
-    Assure.notNull("sourceFolder", sourceFolder);
+  public String getOutputFolderForSourceFolder( final String sourceFolder ) {
+    Assure.notNull( "sourceFolder", sourceFolder );
 
-    if ("".equals(sourceFolder)) {
+    if( "".equals( sourceFolder ) ) {
       return getDefaultOutputFolder();
     }
 
     // normalize path
-    final String normalizedSourceFolder = normalize(sourceFolder);
+    final String normalizedSourceFolder = normalize( sourceFolder );
 
     // Implementation of the EntryResolver.Condition
     EntryResolver.Condition<String> condition = new EntryResolver.Condition<String>() {
 
       @Override
-      public String resolve(RawClasspathEntry entry) {
+      public String resolve( RawClasspathEntry entry ) {
 
-        A4ELogging.debug("Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder);
+        A4ELogging.debug( "Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder );
 
         // try to retrieve the output folder for a 'normal' source folder
-        if ((entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && normalizedSourceFolder.equals(entry.getPath())) {
-          return getOutputFolder(entry);
+        if( (entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && normalizedSourceFolder.equals( entry.getPath() ) ) {
+          return getOutputFolder( entry );
         }
 
         // try to retrieve the output folder for a 'linked' source folder
-        A4ELogging.debug("Trying to resolve project child '%s' as sourcefolder '%s'.", getEclipseProject().getChild(
-            entry.getPath()), sourceFolder);
+        A4ELogging.debug( "Trying to resolve project child '%s' as sourcefolder '%s'.",
+            getEclipseProject().getChild( entry.getPath() ), sourceFolder );
         // if (getEclipseProject().hasChild(entry.getPath())) {
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(), EclipseProject.PathStyle.ABSOLUTE)
-            .getPath())) {
-          return getOutputFolder(entry);
+        if( sourceFolder.equals( getEclipseProject().getChild( entry.getPath(), EclipseProject.PathStyle.ABSOLUTE )
+            .getPath() ) ) {
+          return getOutputFolder( entry );
         }
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
-            EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME).getPath())) {
-          return getOutputFolder(entry);
+        if( sourceFolder.equals( getEclipseProject().getChild( entry.getPath(),
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ).getPath() ) ) {
+          return getOutputFolder( entry );
         }
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
-            EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME).getPath())) {
-          return getOutputFolder(entry);
+        if( sourceFolder.equals( getEclipseProject().getChild( entry.getPath(),
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME ).getPath() ) ) {
+          return getOutputFolder( entry );
         }
         // }
 
         return null;
       }
 
-      private String getOutputFolder(RawClasspathEntry entry) {
-        if (entry.hasOutputLocation()) {
+      private String getOutputFolder( RawClasspathEntry entry ) {
+        if( entry.hasOutputLocation() ) {
           return entry.getOutputLocation();
         } else {
           return getDefaultOutputFolder();
@@ -298,16 +297,16 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
       }
     };
 
-    String[] result = EntryResolver.resolveEntries(condition, this).toArray(new String[0]);
+    String[] result = EntryResolver.resolveEntries( condition, this ).toArray( new String[0] );
 
-    if (result.length == 0) {
+    if( result.length == 0 ) {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("The source folder '");
-      buffer.append(sourceFolder);
-      buffer.append("' does not exist in project '");
-      buffer.append(getEclipseProject().getFolderName());
-      buffer.append("'!");
-      throw new RuntimeException(buffer.toString());
+      buffer.append( "The source folder '" );
+      buffer.append( sourceFolder );
+      buffer.append( "' does not exist in project '" );
+      buffer.append( getEclipseProject().getFolderName() );
+      buffer.append( "'!" );
+      throw new RuntimeException( buffer.toString() );
     } else {
       return result[0];
     }
@@ -319,12 +318,12 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[JavaProjectRole:");
-    buffer.append(" NAME: ");
-    buffer.append(NAME);
-    buffer.append(" _eclipseClasspathEntries: ");
-    buffer.append(this._eclipseClasspathEntries);
-    buffer.append("]");
+    buffer.append( "[JavaProjectRole:" );
+    buffer.append( " NAME: " );
+    buffer.append( NAME );
+    buffer.append( " _eclipseClasspathEntries: " );
+    buffer.append( _eclipseClasspathEntries );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -334,7 +333,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   @Override
   public int hashCode() {
     int hashCode = super.hashCode();
-    hashCode = 31 * hashCode + (this._eclipseClasspathEntries == null ? 0 : this._eclipseClasspathEntries.hashCode());
+    hashCode = 31 * hashCode + (_eclipseClasspathEntries == null ? 0 : _eclipseClasspathEntries.hashCode());
     return hashCode;
   }
 
@@ -342,24 +341,24 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (!super.equals(o)) {
+    if( !super.equals( o ) ) {
       return false;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     JavaProjectRoleImpl other = (JavaProjectRoleImpl) o;
-    if (this._eclipseClasspathEntries == null) {
+    if( _eclipseClasspathEntries == null ) {
       return other._eclipseClasspathEntries == null;
     } else {
-      return this._eclipseClasspathEntries.equals(other._eclipseClasspathEntries);
+      return _eclipseClasspathEntries.equals( other._eclipseClasspathEntries );
     }
   }
 
@@ -369,9 +368,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @param classpathEntry
    *          the eclipse classpath entries to set.
    */
-  public void addEclipseClasspathEntry(RawClasspathEntry classpathEntry) {
-    Assure.notNull("classpathEntry", classpathEntry);
-    this._eclipseClasspathEntries.add(classpathEntry);
+  public void addEclipseClasspathEntry( RawClasspathEntry classpathEntry ) {
+    Assure.notNull( "classpathEntry", classpathEntry );
+    _eclipseClasspathEntries.add( classpathEntry );
   }
 
   /**
@@ -381,16 +380,16 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @return
    */
   public List<ClasspathEntry> getInternalEclipseClasspathEntries() {
-    return this._eclipseClasspathEntries;
+    return _eclipseClasspathEntries;
   }
 
-  private String normalize(String sourceFolder) {
+  private String normalize( String sourceFolder ) {
 
-    if (sourceFolder == null) {
+    if( sourceFolder == null ) {
       return sourceFolder;
     }
-    String result = sourceFolder.replace('/', File.separatorChar);
-    result = result.replace('\\', File.separatorChar);
+    String result = sourceFolder.replace( '/', File.separatorChar );
+    result = result.replace( '\\', File.separatorChar );
 
     return result;
   }
@@ -403,10 +402,10 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @return
    */
   private RawClasspathEntry getJreClasspathEntry() {
-    RawClasspathEntry[] containerEntries = getRawClasspathEntries(RawClasspathEntry.CPE_CONTAINER);
+    RawClasspathEntry[] containerEntries = getRawClasspathEntries( RawClasspathEntry.CPE_CONTAINER );
 
-    for (RawClasspathEntry entry : containerEntries) {
-      if (entry.getPath().startsWith(ContainerTypes.JRE_CONTAINER)) {
+    for( RawClasspathEntry entry : containerEntries ) {
+      if( entry.getPath().startsWith( ContainerTypes.JRE_CONTAINER ) ) {
         return entry;
       }
     }
@@ -421,46 +420,46 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @param sourceFolder
    * @return The RawClasspathEntry for the sourcefolder or <tt>null</tt>
    */
-  private RawClasspathEntry getEntryForSourceFolder(final String sourceFolder) {
-    Assure.notNull("sourceFolder", sourceFolder);
+  private RawClasspathEntry getEntryForSourceFolder( final String sourceFolder ) {
+    Assure.notNull( "sourceFolder", sourceFolder );
 
-    if ("".equals(sourceFolder)) {
+    if( "".equals( sourceFolder ) ) {
       return null;
     }
 
     // normalize path
-    final String normalizedSourceFolder = normalize(sourceFolder);
+    final String normalizedSourceFolder = normalize( sourceFolder );
 
     // Implementation of the EntryResolver.Condition
     EntryResolver.Condition<RawClasspathEntry> condition = new EntryResolver.Condition<RawClasspathEntry>() {
 
       @Override
-      public RawClasspathEntry resolve(RawClasspathEntry entry) {
+      public RawClasspathEntry resolve( RawClasspathEntry entry ) {
 
-        A4ELogging.debug("Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder);
+        A4ELogging.debug( "Trying to resolve RawClasspathEntry '%s' as sourcefolder '%s'.", entry, sourceFolder );
 
         // try to retrieve the output folder for a 'normal' source folder
-        if ((entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && normalizedSourceFolder.equals(entry.getPath())) {
+        if( (entry.getEntryKind() == RawClasspathEntry.CPE_SOURCE) && normalizedSourceFolder.equals( entry.getPath() ) ) {
           return entry;
         }
 
         // try to retrieve the output folder for a 'linked' source folder
-        A4ELogging.debug("Trying to resolve project child '%s' as sourcefolder '%s'.", getEclipseProject().getChild(
-            entry.getPath()), sourceFolder);
+        A4ELogging.debug( "Trying to resolve project child '%s' as sourcefolder '%s'.",
+            getEclipseProject().getChild( entry.getPath() ), sourceFolder );
 
         // if (getEclipseProject().hasChild(entry.getPath())) {
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(), EclipseProject.PathStyle.ABSOLUTE)
-            .getPath())) {
+        if( sourceFolder.equals( getEclipseProject().getChild( entry.getPath(), EclipseProject.PathStyle.ABSOLUTE )
+            .getPath() ) ) {
           return entry;
         }
 
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
-            EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME).getPath())) {
+        if( sourceFolder.equals( getEclipseProject().getChild( entry.getPath(),
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ).getPath() ) ) {
           return entry;
         }
 
-        if (sourceFolder.equals(getEclipseProject().getChild(entry.getPath(),
-            EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME).getPath())) {
+        if( sourceFolder.equals( getEclipseProject().getChild( entry.getPath(),
+            EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME ).getPath() ) ) {
           return entry;
         }
 
@@ -468,19 +467,20 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
       }
     };
 
-    List<RawClasspathEntry> result = EntryResolver.resolveEntries(condition, this);
+    List<RawClasspathEntry> result = EntryResolver.resolveEntries( condition, this );
 
-    if (result.size() == 0) {
+    if( result.size() == 0 ) {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("The source folder '");
-      buffer.append(sourceFolder);
-      buffer.append("' does not exist in project '");
-      buffer.append(getEclipseProject().getFolderName());
-      buffer.append("'!");
-      throw new RuntimeException(buffer.toString());
+      buffer.append( "The source folder '" );
+      buffer.append( sourceFolder );
+      buffer.append( "' does not exist in project '" );
+      buffer.append( getEclipseProject().getFolderName() );
+      buffer.append( "'!" );
+      throw new RuntimeException( buffer.toString() );
     } else {
-      return result.get(0);
+      return result.get( 0 );
     }
 
   }
-}
+
+} /* ENDCLASS */

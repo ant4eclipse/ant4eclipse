@@ -46,4 +46,5 @@ public interface BuildCommand {
    * @return <code>true</code> if builder has triggers set.
    */
   boolean hasTriggers();
+  
 } /* ENDCLASS */

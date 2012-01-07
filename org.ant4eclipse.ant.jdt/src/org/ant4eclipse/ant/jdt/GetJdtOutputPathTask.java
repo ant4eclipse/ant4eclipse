@@ -56,7 +56,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    * @return <code>true</code> if multiple folders are allowed.
    */
   public boolean isAllowMultipleFolders() {
-    return this._allowMultipleFolders;
+    return _allowMultipleFolders;
   }
 
   /**
@@ -67,7 +67,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    * @param allowMultipleFolders
    */
   public void setAllowMultipleFolders( boolean allowMultipleFolders ) {
-    this._allowMultipleFolders = allowMultipleFolders;
+    _allowMultipleFolders = allowMultipleFolders;
   }
 
   /**
@@ -80,7 +80,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    */
   public final void setResolve( String resolve ) {
     if( DEFAULT_FOLDER.equals( resolve ) || FOR_SOURCE_FOLDER.equals( resolve ) || ALL.equals( resolve ) ) {
-      this._resolve = resolve;
+      _resolve = resolve;
     } else {
       // TODO: NLS
       throw new BuildException( "Attribute resolve must have one of the following values: '" + FOR_SOURCE_FOLDER
@@ -97,7 +97,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    * @return the source folder.
    */
   public final String getSourceFolder() {
-    return this._sourceFolder;
+    return _sourceFolder;
   }
 
   /**
@@ -105,11 +105,11 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    * Sets the source folder.
    * </p>
    * 
-   * @param sourceFolder
+   * @param newsourcefolder
    *          the source folder.
    */
-  public final void setSourceFolder( String sourceFolder ) {
-    this._sourceFolder = sourceFolder;
+  public final void setSourceFolder( String newsourcefolder ) {
+    _sourceFolder = newsourcefolder;
   }
 
   /**
@@ -120,7 +120,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
    * @return <code>true</code> if the source folder is set.
    */
   public final boolean isSourceFolderSet() {
-    return this._sourceFolder != null;
+    return _sourceFolder != null;
   }
 
   /**
@@ -144,7 +144,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
         : EclipseProject.PathStyle.ABSOLUTE;
 
     // resolve output folder for source folder
-    if( FOR_SOURCE_FOLDER.equals( this._resolve ) ) {
+    if( FOR_SOURCE_FOLDER.equals( _resolve ) ) {
       requireSourceFolderSet();
 
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
@@ -155,7 +155,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
 
     }
     // resolve all output folder
-    else if( ALL.equals( this._resolve ) ) {
+    else if( ALL.equals( _resolve ) ) {
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
       String[] pathNames = javaProjectRole.getAllOutputFolders();
 
@@ -174,7 +174,7 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     } else
     // resolve default folder
     {
-      Assure.assertTrue( DEFAULT_FOLDER.equals( this._resolve ), "Illegal value for attribute resolve!" );
+      Assure.assertTrue( DEFAULT_FOLDER.equals( _resolve ), "Illegal value for attribute resolve!" );
 
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
       String path = javaProjectRole.getDefaultOutputFolder();

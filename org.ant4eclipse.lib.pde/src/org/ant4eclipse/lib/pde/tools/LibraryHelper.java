@@ -30,12 +30,12 @@ public class LibraryHelper {
    * @param eclipseProject
    * @return
    */
-  public static final String[] getSourceLibraryNames(EclipseProject eclipseProject) {
-    Library[] libraries = getLibraries(eclipseProject);
+  public static final String[] getSourceLibraryNames( EclipseProject eclipseProject ) {
+    Library[] libraries = getLibraries( eclipseProject );
     String[] names = new String[libraries.length];
-    for (int i = 0; i < libraries.length; i++) {
+    for( int i = 0; i < libraries.length; i++ ) {
       Library library = libraries[i];
-      names[i] = getSourceNameForLibrary(library.getName());
+      names[i] = getSourceNameForLibrary( library.getName() );
     }
     return names;
   }
@@ -43,22 +43,22 @@ public class LibraryHelper {
   /**
    * @return
    */
-  public static final Library[] getLibraries(EclipseProject eclipseProject) {
+  public static final Library[] getLibraries( EclipseProject eclipseProject ) {
     // get the plug-in project role
-    PluginProjectRole pluginProjectRole = eclipseProject.getRole(PluginProjectRole.class);
+    PluginProjectRole pluginProjectRole = eclipseProject.getRole( PluginProjectRole.class );
     // get the libraries
     PluginBuildProperties pluginBuildProperties = pluginProjectRole.getBuildProperties();
     // TODO: should we take sourceIncludes for source builds?
-    List<String> binaryIncludes = Arrays.asList(pluginBuildProperties.getBinaryIncludes());
+    List<String> binaryIncludes = Arrays.asList( pluginBuildProperties.getBinaryIncludes() );
     List<Library> result = new ArrayList<Library>();
     Library[] libraries = pluginBuildProperties.getOrderedLibraries();
     // only include libraries that are defined in the binary include list
-    for (Library library : libraries) {
-      if (binaryIncludes.contains(library.getName())) {
-        result.add(library);
+    for( Library library : libraries ) {
+      if( binaryIncludes.contains( library.getName() ) ) {
+        result.add( library );
       }
     }
-    return result.toArray(new Library[0]);
+    return result.toArray( new Library[0] );
   }
 
   /**
@@ -68,13 +68,13 @@ public class LibraryHelper {
    * @param libraryName
    * @return
    */
-  public static final String getSourceNameForLibrary(String libraryName) {
-    Assure.notNull("libraryName", libraryName);
+  public static final String getSourceNameForLibrary( String libraryName ) {
+    Assure.notNull( "libraryName", libraryName );
     String result = libraryName;
-    if (result.endsWith(".jar")) {
-      result = result.substring(0, result.length() - 4);
-    } else if (result.endsWith("/") || result.endsWith("\\")) {
-      result = result.substring(0, result.length() - 1);
+    if( result.endsWith( ".jar" ) ) {
+      result = result.substring( 0, result.length() - 4 );
+    } else if( result.endsWith( "/" ) || result.endsWith( "\\" ) ) {
+      result = result.substring( 0, result.length() - 1 );
     }
     return result + ".src";
   }

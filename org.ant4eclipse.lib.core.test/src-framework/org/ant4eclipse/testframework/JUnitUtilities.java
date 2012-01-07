@@ -130,12 +130,12 @@ public class JUnitUtilities {
     private File file;
 
     public Cleaner( File resource ) {
-      this.file = resource;
+      file = resource;
     }
 
     @Override
     public void run() {
-      delete( this.file );
+      delete( file );
     }
 
     public void delete( File resource ) {

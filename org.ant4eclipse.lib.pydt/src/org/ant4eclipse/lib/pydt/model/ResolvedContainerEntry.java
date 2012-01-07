@@ -34,11 +34,11 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    * @param pathes
    *          The bundled pathes representing this container. Not <code>null</code>.
    */
-  public ResolvedContainerEntry(String owningproject, File[] pathes) {
-    Assure.notNull("pathes", pathes);
-    Assure.nonEmpty("owningproject", owningproject);
-    this._owningproject = owningproject;
-    this._pathes = pathes;
+  public ResolvedContainerEntry( String owningproject, File[] pathes ) {
+    Assure.notNull( "pathes", pathes );
+    Assure.nonEmpty( "owningproject", owningproject );
+    _owningproject = owningproject;
+    _pathes = pathes;
   }
 
   /**
@@ -46,7 +46,7 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    */
   @Override
   public String getOwningProjectname() {
-    return this._owningproject;
+    return _owningproject;
   }
 
   /**
@@ -63,32 +63,32 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    * @return The pathes for this container. Not <code>null</code>.
    */
   public File[] getPathes() {
-    return this._pathes;
+    return _pathes;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object object) {
-    if (this == object) {
+  public boolean equals( Object object ) {
+    if( this == object ) {
       return true;
     }
-    if (object == null) {
+    if( object == null ) {
       return false;
     }
-    if (object.getClass() != getClass()) {
+    if( object.getClass() != getClass() ) {
       return false;
     }
     ResolvedContainerEntry other = (ResolvedContainerEntry) object;
-    if (!this._owningproject.equals(other._owningproject)) {
+    if( !_owningproject.equals( other._owningproject ) ) {
       return false;
     }
-    if (this._pathes.length != other._pathes.length) {
+    if( _pathes.length != other._pathes.length ) {
       return false;
     }
-    for (int i = 0; i < this._pathes.length; i++) {
-      if (!this._pathes[i].equals(other._pathes[i])) {
+    for( int i = 0; i < _pathes.length; i++ ) {
+      if( !_pathes[i].equals( other._pathes[i] ) ) {
         return false;
       }
     }
@@ -100,8 +100,8 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = this._owningproject.hashCode();
-    for (File path : this._pathes) {
+    int result = _owningproject.hashCode();
+    for( File path : _pathes ) {
       result = 31 * result + path.hashCode();
     }
     return result;
@@ -113,16 +113,16 @@ public class ResolvedContainerEntry implements ResolvedPathEntry {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ResolvedContainerEntry:");
-    buffer.append(" _owningproject: ");
-    buffer.append(this._owningproject);
-    buffer.append(", _pathes: {");
-    buffer.append(this._pathes[0]);
-    for (int i = 1; i < this._pathes.length; i++) {
-      buffer.append(", ");
-      buffer.append(this._pathes[i]);
+    buffer.append( "[ResolvedContainerEntry:" );
+    buffer.append( " _owningproject: " );
+    buffer.append( _owningproject );
+    buffer.append( ", _pathes: {" );
+    buffer.append( _pathes[0] );
+    for( int i = 1; i < _pathes.length; i++ ) {
+      buffer.append( ", " );
+      buffer.append( _pathes[i] );
     }
-    buffer.append("}]");
+    buffer.append( "}]" );
     return buffer.toString();
   }
 

@@ -58,9 +58,9 @@ public class EcjAdditionalCompilerArguments {
    */
   public EcjAdditionalCompilerArguments() {
     // create the maps
-    this._accessRestrictions = new HashMap<File,String>();
-    this._outputFolderMap = new HashMap<File,File>();
-    this._sourceFolderMap = new HashMap<File,Set<File>>();
+    _accessRestrictions = new HashMap<File,String>();
+    _outputFolderMap = new HashMap<File,File>();
+    _sourceFolderMap = new HashMap<File,Set<File>>();
   }
 
   /**
@@ -71,7 +71,7 @@ public class EcjAdditionalCompilerArguments {
    * @return <code>true</code>, if boot class path access restrictions are set.
    */
   public boolean hasBootClassPathAccessRestrictions() {
-    return this._bootClassPathAccessRestrictions != null;
+    return _bootClassPathAccessRestrictions != null;
   }
 
   /**
@@ -82,7 +82,7 @@ public class EcjAdditionalCompilerArguments {
    * @return the boot class path access restrictions.
    */
   public String getBootClassPathAccessRestrictions() {
-    return this._bootClassPathAccessRestrictions;
+    return _bootClassPathAccessRestrictions;
   }
 
   /**
@@ -95,7 +95,7 @@ public class EcjAdditionalCompilerArguments {
    * @return <code>true</code>, if an access restriction for the given class path entry is specified.
    */
   public boolean hasAccessRestrictions( File classpathentry ) {
-    return this._accessRestrictions.containsKey( classpathentry );
+    return _accessRestrictions.containsKey( classpathentry );
   }
 
   /**
@@ -110,7 +110,7 @@ public class EcjAdditionalCompilerArguments {
    *         the given class path entry is specified.
    */
   public String getAccessRestrictions( File classpathentry ) {
-    return this._accessRestrictions.get( classpathentry );
+    return _accessRestrictions.get( classpathentry );
   }
 
   /**
@@ -121,7 +121,7 @@ public class EcjAdditionalCompilerArguments {
    * @return
    */
   public boolean hasSourceFoldersForOutputFolder( File outputFolder ) {
-    return this._sourceFolderMap.containsKey( outputFolder );
+    return _sourceFolderMap.containsKey( outputFolder );
   }
 
   /**
@@ -132,7 +132,7 @@ public class EcjAdditionalCompilerArguments {
    * @return
    */
   public File[] getSourceFoldersForOutputFolder( File outputFolder ) {
-    return hasSourceFoldersForOutputFolder( outputFolder ) ? this._sourceFolderMap.get( outputFolder ).toArray(
+    return hasSourceFoldersForOutputFolder( outputFolder ) ? _sourceFolderMap.get( outputFolder ).toArray(
         new File[0] ) : new File[0];
   }
 
@@ -147,7 +147,7 @@ public class EcjAdditionalCompilerArguments {
    */
   public File getOutputFolder( File sourceFolder ) {
     Assure.isDirectory( "sourceFolder", sourceFolder );
-    return this._outputFolderMap.get( sourceFolder );
+    return _outputFolderMap.get( sourceFolder );
   }
 
   /**
@@ -161,7 +161,7 @@ public class EcjAdditionalCompilerArguments {
    *          an access restriction for the given class path entry.
    */
   public void addAccessRestrictions( File classpathentry, String accessRestrictions ) {
-    this._accessRestrictions.put( classpathentry, accessRestrictions );
+    _accessRestrictions.put( classpathentry, accessRestrictions );
   }
 
   /**
@@ -174,7 +174,7 @@ public class EcjAdditionalCompilerArguments {
    */
   public void setBootClassPathAccessRestrictions( String bootClassPathAccessRestrictions ) {
     Assure.nonEmpty( "bootClassPathAccessRestrictions", bootClassPathAccessRestrictions );
-    this._bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
+    _bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
   }
 
   /**
@@ -188,7 +188,7 @@ public class EcjAdditionalCompilerArguments {
    *          the output folder
    */
   public void addOutputFolderForSourceFolder( File sourceFolder, File outputFolder ) {
-    this._outputFolderMap.put( sourceFolder, outputFolder );
+    _outputFolderMap.put( sourceFolder, outputFolder );
   }
 
   /**
@@ -203,12 +203,12 @@ public class EcjAdditionalCompilerArguments {
     Assure.notNull( "sourceFolders", sourceFolders );
 
     // get source folder map
-    Set<File> sourceFolderSet = this._sourceFolderMap.get( outputFolder );
+    Set<File> sourceFolderSet = _sourceFolderMap.get( outputFolder );
 
     // if no source folder map exists, create a new one
     if( sourceFolderSet == null ) {
       sourceFolderSet = new HashSet<File>();
-      this._sourceFolderMap.put( outputFolder, sourceFolderSet );
+      _sourceFolderMap.put( outputFolder, sourceFolderSet );
     }
 
     // add the source folder
@@ -222,7 +222,7 @@ public class EcjAdditionalCompilerArguments {
    * @return
    */
   public boolean hasSourceFilteredFilesetPath() {
-    return this._sourceFilteredFilesetPath != null;
+    return _sourceFilteredFilesetPath != null;
   }
 
   /**
@@ -232,7 +232,7 @@ public class EcjAdditionalCompilerArguments {
    * @return
    */
   public Path getSourceFilteredFilesetPath() {
-    return this._sourceFilteredFilesetPath;
+    return _sourceFilteredFilesetPath;
   }
 
   /**
@@ -242,7 +242,7 @@ public class EcjAdditionalCompilerArguments {
    * @param sourceFilteredFilesetPath
    */
   public void setSourceFilteredFilesetPath( Path sourceFilteredFilesetPath ) {
-    this._sourceFilteredFilesetPath = sourceFilteredFilesetPath;
+    _sourceFilteredFilesetPath = sourceFilteredFilesetPath;
   }
 
   /**
@@ -250,10 +250,10 @@ public class EcjAdditionalCompilerArguments {
    */
   @Override
   public String toString() {
-    return "EcjAdditionalCompilerArguments [_sourceFolderMap=" + this._sourceFolderMap + ", _outputFolderMap="
-        + this._outputFolderMap + ", _bootClassPathAccessRestrictions=" + this._bootClassPathAccessRestrictions
-        + ", _accessRestrictions=" + this._accessRestrictions + ", _sourceFilteredFilesetPath="
-        + this._sourceFilteredFilesetPath + "]";
+    return "EcjAdditionalCompilerArguments [_sourceFolderMap=" + _sourceFolderMap + ", _outputFolderMap="
+        + _outputFolderMap + ", _bootClassPathAccessRestrictions=" + _bootClassPathAccessRestrictions
+        + ", _accessRestrictions=" + _accessRestrictions + ", _sourceFilteredFilesetPath="
+        + _sourceFilteredFilesetPath + "]";
   }
   
 } /* ENDCLASS */

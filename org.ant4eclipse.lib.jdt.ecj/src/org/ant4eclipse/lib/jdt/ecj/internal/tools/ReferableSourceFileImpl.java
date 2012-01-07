@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 
@@ -15,7 +26,6 @@ import java.io.File;
  */
 public class ReferableSourceFileImpl extends SourceFileImpl implements ReferableSourceFile {
 
-  /** - */
   private DefaultReferableType _referableType = new DefaultReferableType();
 
   /**
@@ -26,11 +36,11 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    * @param sourceFolder
    * @param sourceFileName
    */
-  public ReferableSourceFileImpl(File sourceFolder, String sourceFileName, String libraryLocation, byte libraryType) {
-    super(sourceFolder, sourceFileName);
-    Assure.notNull("libraryLocation", libraryLocation);
-    this._referableType.setLibraryLocation(libraryLocation);
-    this._referableType.setLibraryType(libraryType);
+  public ReferableSourceFileImpl( File sourceFolder, String sourceFileName, String libraryLocation, byte libraryType ) {
+    super( sourceFolder, sourceFileName );
+    Assure.notNull( "libraryLocation", libraryLocation );
+    _referableType.setLibraryLocation( libraryLocation );
+    _referableType.setLibraryType( libraryType );
   }
 
   /**
@@ -38,7 +48,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    */
   @Override
   public final AccessRestriction getAccessRestriction() {
-    return this._referableType.getAccessRestriction();
+    return _referableType.getAccessRestriction();
   }
 
   /**
@@ -46,7 +56,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    */
   @Override
   public String getLibraryLocation() {
-    return this._referableType.getLibraryLocation();
+    return _referableType.getLibraryLocation();
   }
 
   /**
@@ -54,7 +64,7 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    */
   @Override
   public byte getLibraryType() {
-    return this._referableType.getLibraryType();
+    return _referableType.getLibraryType();
   }
 
   /**
@@ -62,13 +72,14 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    */
   @Override
   public final boolean hasAccessRestriction() {
-    return this._referableType.hasAccessRestriction();
+    return _referableType.hasAccessRestriction();
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setAccessRestriction(AccessRestriction accessRestriction) {
-    this._referableType.setAccessRestriction(accessRestriction);
+  public final void setAccessRestriction( AccessRestriction accessRestriction ) {
+    _referableType.setAccessRestriction( accessRestriction );
   }
-}
+  
+} /* ENDCLASS */

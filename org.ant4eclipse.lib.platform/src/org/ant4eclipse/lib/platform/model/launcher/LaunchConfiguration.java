@@ -46,7 +46,7 @@ public interface LaunchConfiguration {
    *          The name of the attribute that should be returned
    * @return The attribute value as boolean ('false' if the attribute is not present)
    */
-  boolean getBooleanAttribute(String attributeName);
+  boolean getBooleanAttribute( String attributeName );
 
   /**
    * Returns the string value of the specified attribute from this launch configuration. <tt>null</tt> is returned, when
@@ -55,7 +55,7 @@ public interface LaunchConfiguration {
    * @param attributeName
    * @return
    */
-  String getAttribute(String attributeName);
+  String getAttribute( String attributeName );
 
   /**
    * Returns all list attributes with the given name
@@ -65,6 +65,6 @@ public interface LaunchConfiguration {
    *          attribute.
    * @return
    */
-  String[] getListAttribute(String attributeName);
+  String[] getListAttribute( String attributeName );
 
-}
+} /* ENDINTERFACE */

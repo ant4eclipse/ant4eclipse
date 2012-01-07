@@ -31,4 +31,5 @@ public interface ClassPathElement {
    * @return the name the name of the class path container
    */
   String getName();
-}
+  
+} /* ENDINTERFACE */

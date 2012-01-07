@@ -28,19 +28,19 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   private String  _tag            = null;
 
   public boolean isCvsQuiet() {
-    return this._cvsQuiet;
+    return _cvsQuiet;
   }
 
   public void setCvsQuiet( boolean cvsQuiet ) {
-    this._cvsQuiet = cvsQuiet;
+    _cvsQuiet = cvsQuiet;
   }
 
   public boolean isCvsReallyQuiet() {
-    return this._cvsReallyQuiet;
+    return _cvsReallyQuiet;
   }
 
   public void setCvsReallyQuiet( boolean cvsReallyQuiet ) {
-    this._cvsReallyQuiet = cvsReallyQuiet;
+    _cvsReallyQuiet = cvsReallyQuiet;
   }
 
   /**
@@ -66,11 +66,11 @@ public class CvsGetProjectSetTask extends AbstractGetProjectSetTask {
   }
 
   public String getTag() {
-    return this._tag;
+    return _tag;
   }
 
   public void setTag( String tag ) {
-    this._tag = tag;
+    _tag = tag;
   }
 
   /**

@@ -48,10 +48,10 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
     super( project );
 
     // create the project delegate
-    this._eclipseProjectDelegate = new EclipseProjectDelegate( this );
+    _eclipseProjectDelegate = new EclipseProjectDelegate( this );
 
     // create the result list
-    this._resourceList = new ArrayList<Resource>();
+    _resourceList = new ArrayList<Resource>();
   }
 
   /**
@@ -79,7 +79,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
       throw tooManyAttributes();
     }
 
-    this._useDefaultExcludes = useDefaultExcludes;
+    _useDefaultExcludes = useDefaultExcludes;
   }
 
   /**
@@ -90,7 +90,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @return the default exclusions value.
    */
   public synchronized boolean getDefaultexcludes() {
-    return isReference() ? getRef( getProject() ).getDefaultexcludes() : this._useDefaultExcludes;
+    return isReference() ? getRef( getProject() ).getDefaultexcludes() : _useDefaultExcludes;
   }
 
   /**
@@ -105,7 +105,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
     if( isReference() ) {
       throw tooManyAttributes();
     }
-    this._caseSensitive = caseSensitive;
+    _caseSensitive = caseSensitive;
   }
 
   /**
@@ -116,7 +116,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * @return <code>boolean</code> indicating whether the file set is case sensitive.
    */
   public synchronized boolean isCaseSensitive() {
-    return isReference() ? getRef( getProject() ).isCaseSensitive() : this._caseSensitive;
+    return isReference() ? getRef( getProject() ).isCaseSensitive() : _caseSensitive;
   }
 
   /**
@@ -124,7 +124,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public void ensureRole( Class<? extends ProjectRole> projectRoleClass ) {
-    this._eclipseProjectDelegate.ensureRole( projectRoleClass );
+    _eclipseProjectDelegate.ensureRole( projectRoleClass );
   }
 
   /**
@@ -132,7 +132,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public EclipseProject getEclipseProject() throws BuildException {
-    return this._eclipseProjectDelegate.getEclipseProject();
+    return _eclipseProjectDelegate.getEclipseProject();
   }
 
   /**
@@ -140,7 +140,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final Workspace getWorkspace() {
-    return this._eclipseProjectDelegate.getWorkspace();
+    return _eclipseProjectDelegate.getWorkspace();
   }
 
   /**
@@ -148,7 +148,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final File getWorkspaceDirectory() {
-    return this._eclipseProjectDelegate.getWorkspaceDirectory();
+    return _eclipseProjectDelegate.getWorkspaceDirectory();
   }
 
   /**
@@ -156,7 +156,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final boolean isProjectNameSet() {
-    return this._eclipseProjectDelegate.isProjectNameSet();
+    return _eclipseProjectDelegate.isProjectNameSet();
   }
 
   /**
@@ -164,7 +164,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final boolean isWorkspaceDirectorySet() {
-    return this._eclipseProjectDelegate.isWorkspaceDirectorySet();
+    return _eclipseProjectDelegate.isWorkspaceDirectorySet();
   }
 
   /**
@@ -172,7 +172,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final void requireWorkspaceAndProjectNameSet() {
-    this._eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
+    _eclipseProjectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
   /**
@@ -180,7 +180,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public String getWorkspaceId() {
-    return this._eclipseProjectDelegate.getWorkspaceId();
+    return _eclipseProjectDelegate.getWorkspaceId();
   }
 
   /**
@@ -188,7 +188,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public boolean isWorkspaceIdSet() {
-    return this._eclipseProjectDelegate.isWorkspaceIdSet();
+    return _eclipseProjectDelegate.isWorkspaceIdSet();
   }
 
   /**
@@ -196,7 +196,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public void requireWorkspaceDirectoryOrWorkspaceIdSet() {
-    this._eclipseProjectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
+    _eclipseProjectDelegate.requireWorkspaceDirectoryOrWorkspaceIdSet();
   }
 
   /**
@@ -204,7 +204,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public void setWorkspaceId( String identifier ) {
-    this._eclipseProjectDelegate.setWorkspaceId( identifier );
+    _eclipseProjectDelegate.setWorkspaceId( identifier );
   }
 
   /**
@@ -213,7 +213,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   @Override
   @Deprecated
   public void setProject( File projectPath ) {
-    this._eclipseProjectDelegate.setProject( projectPath );
+    _eclipseProjectDelegate.setProject( projectPath );
   }
 
   /**
@@ -221,7 +221,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final void setProjectName( String projectName ) {
-    this._eclipseProjectDelegate.setProjectName( projectName );
+    _eclipseProjectDelegate.setProjectName( projectName );
   }
 
   /**
@@ -230,7 +230,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   @Override
   @Deprecated
   public final void setWorkspace( String workspace ) {
-    this._eclipseProjectDelegate.setWorkspace( workspace );
+    _eclipseProjectDelegate.setWorkspace( workspace );
   }
 
   /**
@@ -238,7 +238,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   @Override
   public final void setWorkspaceDirectory( String workspaceDirectory ) {
-    this._eclipseProjectDelegate.setWorkspaceDirectory( workspaceDirectory );
+    _eclipseProjectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
   /**
@@ -267,8 +267,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * </p>
    */
   protected void clear() {
-    this._resourceList.clear();
-    this._fileListComputed = false;
+    _resourceList.clear();
+    _fileListComputed = false;
   }
 
   /**
@@ -278,7 +278,7 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   public Iterator<Resource> iterator() {
     computeFileSet();
 
-    return this._resourceList.iterator();
+    return _resourceList.iterator();
   }
 
   /**
@@ -288,11 +288,11 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   public int size() {
     computeFileSet();
 
-    return this._resourceList.size();
+    return _resourceList.size();
   }
 
   public boolean isFileListComputed() {
-    return this._fileListComputed;
+    return _fileListComputed;
   }
 
   /**
@@ -302,18 +302,18 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    */
   protected void computeFileSet() {
     // return if file list already is computed
-    if( this._fileListComputed ) {
+    if( _fileListComputed ) {
       return;
     }
 
     // Clear the FileList
-    this._resourceList.clear();
+    _resourceList.clear();
 
     // do the work
-    doComputeFileSet( this._resourceList );
+    doComputeFileSet( _resourceList );
 
     // set _fileListComputed
-    this._fileListComputed = true;
+    _fileListComputed = true;
   }
 
   /**

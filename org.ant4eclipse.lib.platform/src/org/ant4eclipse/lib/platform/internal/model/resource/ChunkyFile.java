@@ -44,19 +44,19 @@ public class ChunkyFile {
    * @throws IOException
    *           Reading the file failed for some reason.
    */
-  public ChunkyFile(File source) throws IOException {
-    this._chunkdata = new Vector<byte[]>();
+  public ChunkyFile( File source ) throws IOException {
+    _chunkdata = new Vector<byte[]>();
     byte[] data = new byte[(int) source.length()];
     InputStream input = null;
     try {
-      input = new FileInputStream(source);
-      input.read(data);
-      loadChunks(data);
-    } catch (IOException ex) {
-      A4ELogging.error(ex.getMessage());
-      throw (ex);
+      input = new FileInputStream( source );
+      input.read( data );
+      loadChunks( data );
+    } catch( IOException ex ) {
+      A4ELogging.error( ex.getMessage() );
+      throw(ex);
     } finally {
-      Utilities.close((Closeable)input);
+      Utilities.close( (Closeable) input );
     }
   }
 
@@ -66,7 +66,7 @@ public class ChunkyFile {
    * @return The number of available chunks.
    */
   public int getChunkCount() {
-    return this._chunkdata.size();
+    return _chunkdata.size();
   }
 
   /**
@@ -77,9 +77,9 @@ public class ChunkyFile {
    * 
    * @return The chunk data. null if the index wasn't valid.
    */
-  public byte[] getChunk(int index) {
-    if ((index >= 0) && (index < this._chunkdata.size())) {
-      return this._chunkdata.get(index);
+  public byte[] getChunk( int index ) {
+    if( (index >= 0) && (index < _chunkdata.size()) ) {
+      return _chunkdata.get( index );
     }
     return null;
   }
@@ -90,18 +90,18 @@ public class ChunkyFile {
    * @param content
    *          A bytewise representation of the file.
    */
-  private void loadChunks(byte[] content) {
-    int ptr = find(content, BEGIN_CHUNK, 0);
-    while ((ptr != -1) && (ptr < content.length)) {
+  private void loadChunks( byte[] content ) {
+    int ptr = find( content, BEGIN_CHUNK, 0 );
+    while( (ptr != -1) && (ptr < content.length) ) {
       ptr = ptr + BEGIN_CHUNK.length;
-      int end = find(content, END_CHUNK, ptr);
-      if (end != -1) {
+      int end = find( content, END_CHUNK, ptr );
+      if( end != -1 ) {
         byte[] data = new byte[end - ptr];
-        System.arraycopy(content, ptr, data, 0, data.length);
-        this._chunkdata.add(data);
+        System.arraycopy( content, ptr, data, 0, data.length );
+        _chunkdata.add( data );
         ptr = end + END_CHUNK.length;
       }
-      ptr = find(content, BEGIN_CHUNK, ptr);
+      ptr = find( content, BEGIN_CHUNK, ptr );
     }
   }
 
@@ -117,16 +117,16 @@ public class ChunkyFile {
    * 
    * @return The index of the byte sequence or -1 if the sequence could not be found.
    */
-  private int find(byte[] content, byte[] sequence, int first) {
-    while ((first + sequence.length) <= content.length) {
-      if (content[first] == sequence[0]) {
+  private int find( byte[] content, byte[] sequence, int first ) {
+    while( (first + sequence.length) <= content.length ) {
+      if( content[first] == sequence[0] ) {
         int i = 0;
         int j = first;
-        while ((i < sequence.length) && (content[j] == sequence[i])) {
+        while( (i < sequence.length) && (content[j] == sequence[i]) ) {
           i++;
           j++;
         }
-        if (i == sequence.length) {
+        if( i == sequence.length ) {
           return first;
         }
       }

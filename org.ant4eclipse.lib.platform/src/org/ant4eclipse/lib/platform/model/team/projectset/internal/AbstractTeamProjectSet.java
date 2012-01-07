@@ -33,10 +33,10 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * @param name
    *          the name of the team project set.
    */
-  public AbstractTeamProjectSet(String name) {
-    Assure.notNull("name", name);
-    this._name = name;
-    this._projectDescriptions = new ArrayList<TeamProjectDescription>();
+  public AbstractTeamProjectSet( String name ) {
+    Assure.notNull( "name", name );
+    _name = name;
+    _projectDescriptions = new ArrayList<TeamProjectDescription>();
   }
 
   /**
@@ -44,7 +44,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    */
   @Override
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -52,23 +52,23 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    */
   @Override
   public TeamProjectDescription[] getTeamProjectDescriptions() {
-    return this._projectDescriptions.toArray(new TeamProjectDescription[0]);
+    return _projectDescriptions.toArray( new TeamProjectDescription[0] );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public TeamProjectDescription getTeamProjectDescriptionByName(String name) {
-    Assure.notNull("name", name);
+  public TeamProjectDescription getTeamProjectDescriptionByName( String name ) {
+    Assure.notNull( "name", name );
 
-    for (TeamProjectDescription description : this._projectDescriptions) {
-      if (name.equals(description.getProjectName())) {
+    for( TeamProjectDescription description : _projectDescriptions ) {
+      if( name.equals( description.getProjectName() ) ) {
         return description;
       }
     }
 
-    throw new RuntimeException("EclipseProject " + name + " does not exist!");
+    throw new RuntimeException( "EclipseProject " + name + " does not exist!" );
   }
 
   /**
@@ -77,9 +77,9 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   @Override
   public String[] getProjectNames() {
 
-    String[] result = new String[this._projectDescriptions.size()];
+    String[] result = new String[_projectDescriptions.size()];
     int i = 0;
-    for (TeamProjectDescription description : this._projectDescriptions) {
+    for( TeamProjectDescription description : _projectDescriptions ) {
       String projectName = description.getProjectName();
       result[i] = projectName;
       i++;
@@ -94,33 +94,33 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[TeamProjectSet:");
-    buffer.append(" name: ");
-    buffer.append(this._name);
-    buffer.append(" { ");
-    for (Iterator<TeamProjectDescription> iterator = this._projectDescriptions.iterator(); iterator.hasNext();) {
+    buffer.append( "[TeamProjectSet:" );
+    buffer.append( " name: " );
+    buffer.append( _name );
+    buffer.append( " { " );
+    for( Iterator<TeamProjectDescription> iterator = _projectDescriptions.iterator(); iterator.hasNext(); ) {
       TeamProjectDescription description = iterator.next();
-      buffer.append(description);
+      buffer.append( description );
 
-      if (iterator.hasNext()) {
-        buffer.append(",");
+      if( iterator.hasNext() ) {
+        buffer.append( "," );
       }
     }
-    buffer.append(" } ");
-    buffer.append("]");
+    buffer.append( " } " );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
   /**
    * @param description
    */
-  protected void addTeamProjectDescription(TeamProjectDescription description) {
-    Assure.notNull("description", description);
-    this._projectDescriptions.add(description);
+  protected void addTeamProjectDescription( TeamProjectDescription description ) {
+    Assure.notNull( "description", description );
+    _projectDescriptions.add( description );
   }
 
   protected List<TeamProjectDescription> getProjectDescriptions() {
-    return this._projectDescriptions;
+    return _projectDescriptions;
   }
 
-}
+} /* ENDCLASS */

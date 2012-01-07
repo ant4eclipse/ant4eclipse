@@ -26,22 +26,22 @@ import java.util.Map;
  */
 public class PathEntryRegistryImpl implements PathEntryRegistry {
 
-  private Map<RawPathEntry, ResolvedPathEntry> _resolvedentries;
+  private Map<RawPathEntry,ResolvedPathEntry> _resolvedentries;
 
   /**
    * Initialises this registry for path entries.
    */
   public PathEntryRegistryImpl() {
-    _resolvedentries = new Hashtable<RawPathEntry, ResolvedPathEntry>();
+    _resolvedentries = new Hashtable<RawPathEntry,ResolvedPathEntry>();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean isResolved(RawPathEntry entry) {
-    Assure.notNull("entry", entry);
-    return _resolvedentries.containsKey(entry);
+  public boolean isResolved( RawPathEntry entry ) {
+    Assure.notNull( "entry", entry );
+    return _resolvedentries.containsKey( entry );
   }
 
   /**
@@ -49,8 +49,8 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
    */
   @Override
   public void registerResolvedPathEntry( RawPathEntry origin, ResolvedPathEntry solution ) {
-    Assure.notNull("origin", origin);
-    Assure.notNull("solution", solution);
+    Assure.notNull( "origin", origin );
+    Assure.notNull( "solution", solution );
     _resolvedentries.put( origin, solution );
   }
 
@@ -59,8 +59,8 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
    */
   @Override
   public ResolvedPathEntry getResolvedPathEntry( RawPathEntry entry ) {
-    Assure.notNull("entry", entry);
-    return _resolvedentries.get(entry);
+    Assure.notNull( "entry", entry );
+    return _resolvedentries.get( entry );
   }
 
   /**

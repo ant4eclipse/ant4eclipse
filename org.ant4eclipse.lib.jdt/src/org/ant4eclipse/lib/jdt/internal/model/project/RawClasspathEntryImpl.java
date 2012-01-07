@@ -21,7 +21,7 @@ import org.ant4eclipse.lib.jdt.model.project.RawClasspathEntry;
  * 
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public final class RawClasspathEntryImpl implements RawClasspathEntry {
+public class RawClasspathEntryImpl implements RawClasspathEntry {
 
   /** the path */
   private String  _path;
@@ -47,8 +47,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param entryKind
    * @param path
    */
-  public RawClasspathEntryImpl(String entryKind, String path) {
-    this(resolveEntryKind(entryKind, path), path, null, false);
+  public RawClasspathEntryImpl( String entryKind, String path ) {
+    this( resolveEntryKind( entryKind, path ), path, null, false );
   }
 
   /**
@@ -58,8 +58,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param path
    * @param output
    */
-  public RawClasspathEntryImpl(String entryKind, String path, String output) {
-    this(resolveEntryKind(entryKind, path), path, output, false);
+  public RawClasspathEntryImpl( String entryKind, String path, String output ) {
+    this( resolveEntryKind( entryKind, path ), path, output, false );
   }
 
   /**
@@ -69,30 +69,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param path
    * @param exported
    */
-  public RawClasspathEntryImpl(String entryKind, String path, boolean exported) {
-    this(resolveEntryKind(entryKind, path), path, null, exported);
-  }
-
-  /**
-   * Creates a new instance of type EclipseClasspathEntry
-   * 
-   * @param entryKind
-   * @param path
-   * @param output
-   * @param exported
-   */
-  public RawClasspathEntryImpl(String entryKind, String path, String output, boolean exported) {
-    this(resolveEntryKind(entryKind, path), path, output, exported);
-  }
-
-  /**
-   * Creates a new instance of type EclipseClasspathEntry
-   * 
-   * @param entryKind
-   * @param path
-   */
-  public RawClasspathEntryImpl(int entryKind, String path) {
-    this(entryKind, path, null, false);
+  public RawClasspathEntryImpl( String entryKind, String path, boolean exported ) {
+    this( resolveEntryKind( entryKind, path ), path, null, exported );
   }
 
   /**
@@ -103,22 +81,44 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * @param output
    * @param exported
    */
-  public RawClasspathEntryImpl(int entryKind, String path, String output, boolean exported) {
-    Assure.notNull("path", path);
+  public RawClasspathEntryImpl( String entryKind, String path, String output, boolean exported ) {
+    this( resolveEntryKind( entryKind, path ), path, output, exported );
+  }
 
-    this._entryKind = entryKind;
-    this._path = path;
-    this._outputLocation = output;
-    this._exported = exported;
+  /**
+   * Creates a new instance of type EclipseClasspathEntry
+   * 
+   * @param entryKind
+   * @param path
+   */
+  public RawClasspathEntryImpl( int entryKind, String path ) {
+    this( entryKind, path, null, false );
+  }
 
-    if ((this._entryKind == CPE_SOURCE) || (this._entryKind == CPE_OUTPUT)) {
-      if (this._path != null) {
-        this._path = this._path.replace('/', File.separatorChar);
-        this._path = this._path.replace('\\', File.separatorChar);
+  /**
+   * Creates a new instance of type EclipseClasspathEntry
+   * 
+   * @param entryKind
+   * @param path
+   * @param output
+   * @param exported
+   */
+  public RawClasspathEntryImpl( int entryKind, String path, String output, boolean exported ) {
+    Assure.notNull( "path", path );
+
+    _entryKind = entryKind;
+    _path = path;
+    _outputLocation = output;
+    _exported = exported;
+
+    if( (_entryKind == CPE_SOURCE) || (_entryKind == CPE_OUTPUT) ) {
+      if( _path != null ) {
+        _path = _path.replace( '/', File.separatorChar );
+        _path = _path.replace( '\\', File.separatorChar );
       }
-      if (this._outputLocation != null) {
-        this._outputLocation = this._outputLocation.replace('/', File.separatorChar);
-        this._outputLocation = this._outputLocation.replace('\\', File.separatorChar);
+      if( _outputLocation != null ) {
+        _outputLocation = _outputLocation.replace( '/', File.separatorChar );
+        _outputLocation = _outputLocation.replace( '\\', File.separatorChar );
       }
     }
   }
@@ -128,7 +128,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public int getEntryKind() {
-    return this._entryKind;
+    return _entryKind;
   }
 
   /**
@@ -136,7 +136,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public String getPath() {
-    return this._path;
+    return _path;
   }
 
   /**
@@ -144,7 +144,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public String getOutputLocation() {
-    return this._outputLocation;
+    return _outputLocation;
   }
 
   /**
@@ -152,7 +152,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public boolean hasOutputLocation() {
-    return this._outputLocation != null;
+    return _outputLocation != null;
   }
 
   /**
@@ -160,7 +160,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public boolean isExported() {
-    return this._exported;
+    return _exported;
   }
 
   /**
@@ -168,7 +168,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public String getIncludes() {
-    return this._includes;
+    return _includes;
   }
 
   /**
@@ -176,7 +176,7 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public String getExcludes() {
-    return this._excludes;
+    return _excludes;
   }
 
   /**
@@ -185,8 +185,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @param includes
    */
-  public void setIncludes(String includes) {
-    this._includes = includes;
+  public void setIncludes( String includes ) {
+    _includes = includes;
   }
 
   /**
@@ -195,8 +195,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @param excludes
    */
-  public void setExcludes(String excludes) {
-    this._excludes = excludes;
+  public void setExcludes( String excludes ) {
+    _excludes = excludes;
   }
 
   /**
@@ -205,8 +205,8 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @param path
    */
-  public void setPath(String path) {
-    this._path = path;
+  public void setPath( String path ) {
+    _path = path;
   }
 
   /**
@@ -219,21 +219,21 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * 
    * @return A numerical information specifying the entry kind.
    */
-  private static int resolveEntryKind(String entryKind, String path) {
-    Assure.notNull("entryKind", entryKind);
-    Assure.notNull("path", path);
+  private static int resolveEntryKind( String entryKind, String path ) {
+    Assure.notNull( "entryKind", entryKind );
+    Assure.notNull( "path", path );
 
-    if ("con".equals(entryKind)) {
+    if( "con".equals( entryKind ) ) {
       return CPE_CONTAINER;
-    } else if ("lib".equals(entryKind)) {
+    } else if( "lib".equals( entryKind ) ) {
       return CPE_LIBRARY;
-    } else if ("src".equals(entryKind) && path.startsWith("/")) {
+    } else if( "src".equals( entryKind ) && path.startsWith( "/" ) ) {
       return CPE_PROJECT;
-    } else if ("src".equals(entryKind) && !path.startsWith("/")) {
+    } else if( "src".equals( entryKind ) && !path.startsWith( "/" ) ) {
       return CPE_SOURCE;
-    } else if ("var".equals(entryKind)) {
+    } else if( "var".equals( entryKind ) ) {
       return CPE_VARIABLE;
-    } else if ("output".equals(entryKind)) {
+    } else if( "output".equals( entryKind ) ) {
       return CPE_OUTPUT;
     }
 
@@ -246,16 +246,16 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[EclipseClasspathEntry:");
-    buffer.append(" path: ");
-    buffer.append(this._path);
-    buffer.append(" entryKind: ");
-    buffer.append(this._entryKind);
-    buffer.append(" outputLocation: ");
-    buffer.append(this._outputLocation);
-    buffer.append(" exported: ");
-    buffer.append(this._exported);
-    buffer.append("]");
+    buffer.append( "[EclipseClasspathEntry:" );
+    buffer.append( " path: " );
+    buffer.append( _path );
+    buffer.append( " entryKind: " );
+    buffer.append( _entryKind );
+    buffer.append( " outputLocation: " );
+    buffer.append( _outputLocation );
+    buffer.append( " exported: " );
+    buffer.append( _exported );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -263,36 +263,36 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     RawClasspathEntryImpl other = (RawClasspathEntryImpl) o;
-    if (this._entryKind != other._entryKind) {
+    if( _entryKind != other._entryKind ) {
       return false;
     }
-    if (this._exported != other._exported) {
+    if( _exported != other._exported ) {
       return false;
     }
-    if (this._path == null) {
-      if (other._path != null) {
+    if( _path == null ) {
+      if( other._path != null ) {
         return false;
       }
     } else {
-      if (!this._path.equals(other._path)) {
+      if( !_path.equals( other._path ) ) {
         return false;
       }
     }
-    if (this._outputLocation == null) {
+    if( _outputLocation == null ) {
       return other._outputLocation == null;
     } else {
-      return this._outputLocation.equals(other._outputLocation);
+      return _outputLocation.equals( other._outputLocation );
     }
   }
 
@@ -302,10 +302,11 @@ public final class RawClasspathEntryImpl implements RawClasspathEntry {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._path == null ? 0 : this._path.hashCode());
-    hashCode = 31 * hashCode + this._entryKind;
-    hashCode = 31 * hashCode + (this._outputLocation == null ? 0 : this._outputLocation.hashCode());
-    hashCode = 31 * hashCode + (this._exported ? 1231 : 1237);
+    hashCode = 31 * hashCode + (_path == null ? 0 : _path.hashCode());
+    hashCode = 31 * hashCode + _entryKind;
+    hashCode = 31 * hashCode + (_outputLocation == null ? 0 : _outputLocation.hashCode());
+    hashCode = 31 * hashCode + (_exported ? 1231 : 1237);
     return hashCode;
   }
-}
+  
+} /* ENDCLASS */

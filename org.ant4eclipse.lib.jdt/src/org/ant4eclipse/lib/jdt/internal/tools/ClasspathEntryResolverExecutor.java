@@ -67,13 +67,13 @@ public class ClasspathEntryResolverExecutor {
    * 
    * @param failOnNonHandledEntry
    */
-  public ClasspathEntryResolverExecutor(boolean failOnNonHandledEntry) {
+  public ClasspathEntryResolverExecutor( boolean failOnNonHandledEntry ) {
 
     // initialize the executor attributes
-    this._resolvedProjects = new ArrayList<EclipseProject>();
-    this._referencedProjects = new ArrayList<EclipseProject>();
-    this._currentProject = new Stack<EclipseProject>();
-    this._failOnNonHandledEntry = failOnNonHandledEntry;
+    _resolvedProjects = new ArrayList<EclipseProject>();
+    _referencedProjects = new ArrayList<EclipseProject>();
+    _currentProject = new Stack<EclipseProject>();
+    _failOnNonHandledEntry = failOnNonHandledEntry;
   }
 
   /**
@@ -87,8 +87,8 @@ public class ClasspathEntryResolverExecutor {
 
     // returns the current project
     try {
-      return this._currentProject.peek();
-    } catch (EmptyStackException e) {
+      return _currentProject.peek();
+    } catch( EmptyStackException e ) {
       return null;
     }
   }
@@ -101,7 +101,7 @@ public class ClasspathEntryResolverExecutor {
    * @return <code>true</code> if a current project is set.
    */
   public final boolean hasCurrentProject() {
-    return !this._currentProject.empty();
+    return !_currentProject.empty();
   }
 
   /**
@@ -117,12 +117,12 @@ public class ClasspathEntryResolverExecutor {
     List<EclipseProject> result = new ArrayList<EclipseProject>();
 
     // add all resolved projects
-    result.addAll(this._resolvedProjects);
+    result.addAll( _resolvedProjects );
 
     // add all referenced projects
-    for (EclipseProject eclipseProject : this._referencedProjects) {
-      if (!result.contains(eclipseProject)) {
-        result.add(eclipseProject);
+    for( EclipseProject eclipseProject : _referencedProjects ) {
+      if( !result.contains( eclipseProject ) ) {
+        result.add( eclipseProject );
       }
     }
 
@@ -142,22 +142,22 @@ public class ClasspathEntryResolverExecutor {
    * @param classpathResolverContext
    *          the resolver context
    */
-  public final void resolve(EclipseProject rootProject, ClasspathEntryResolver[] classpathEntryResolvers,
-      ClasspathResolverContext classpathResolverContext) {
+  public final void resolve( EclipseProject rootProject, ClasspathEntryResolver[] classpathEntryResolvers,
+      ClasspathResolverContext classpathResolverContext ) {
 
     // Initialize the ProjectClasspathResolver instance
-    this._resolvedProjects.clear();
-    this._currentProject.clear();
-    this._referencedProjects.clear();
+    _resolvedProjects.clear();
+    _currentProject.clear();
+    _referencedProjects.clear();
 
     // set the entry resolvers
-    this._entryResolvers = classpathEntryResolvers;
+    _entryResolvers = classpathEntryResolvers;
 
     // set the resolver context
-    this._resolverContext = classpathResolverContext;
+    _resolverContext = classpathResolverContext;
 
     // resolve the class path
-    resolveReferencedProject(rootProject);
+    resolveReferencedProject( rootProject );
 
   }
 
@@ -169,12 +169,12 @@ public class ClasspathEntryResolverExecutor {
    * @param project
    *          the project to add.
    */
-  public final void addReferencedProject(EclipseProject project) {
-    Assure.notNull("project", project);
+  public final void addReferencedProject( EclipseProject project ) {
+    Assure.notNull( "project", project );
 
     // adds the referenced project
-    if (!this._referencedProjects.contains(project)) {
-      this._referencedProjects.add(project);
+    if( !_referencedProjects.contains( project ) ) {
+      _referencedProjects.add( project );
     }
   }
 
@@ -186,40 +186,40 @@ public class ClasspathEntryResolverExecutor {
    * @param project
    *          the project to add.
    */
-  public final void resolveReferencedProject(EclipseProject project) {
-    Assure.notNull("project", project);
+  public final void resolveReferencedProject( EclipseProject project ) {
+    Assure.notNull( "project", project );
 
     // detect circular dependencies
-    if (this._currentProject.contains(project)) {
+    if( _currentProject.contains( project ) ) {
       // TODO it should be configurable if the task fails on circular
       // dependencies
       // TODO detect which projects reference each other
-      A4ELogging.warn("Circular dependency detected! Project: '%s'", project.getFolderName());
+      A4ELogging.warn( "Circular dependency detected! Project: '%s'", project.getFolderName() );
       return;
     }
 
     // return if project already has been resolved
-    if (this._resolvedProjects.contains(project)) {
+    if( _resolvedProjects.contains( project ) ) {
       return;
     }
 
     // add project to the list of all resolved projects
-    this._resolvedProjects.add(project);
+    _resolvedProjects.add( project );
 
     // push the project to the stack
-    this._currentProject.push(project);
+    _currentProject.push( project );
 
     // assert raw class path entries
     // TODO: NLS
-    Assure.assertTrue(project.getRole(JavaProjectRole.class).hasRawClasspathEntries(), String.format(
+    Assure.assertTrue( project.getRole( JavaProjectRole.class ).hasRawClasspathEntries(), String.format(
         "The JDT project '%s' (%s) doesn't contain any class path entries.", project.getFolderName(), project
-            .getFolder().getAbsolutePath()));
+            .getFolder().getAbsolutePath() ) );
 
     // resolve the class path entries for this project
-    resolveClasspathEntries(project.getRole(JavaProjectRole.class).getRawClasspathEntries());
+    resolveClasspathEntries( project.getRole( JavaProjectRole.class ).getRawClasspathEntries() );
 
     // pop the project from the stack
-    this._currentProject.pop();
+    _currentProject.pop();
   }
 
   /**
@@ -230,17 +230,17 @@ public class ClasspathEntryResolverExecutor {
    * @param classpathEntries
    *          the class path entries to resolve
    */
-  private void resolveClasspathEntries(ClasspathEntry[] classpathEntries) {
+  private void resolveClasspathEntries( ClasspathEntry[] classpathEntries ) {
 
     // iterate over all entries
-    for (ClasspathEntry classpathEntry : classpathEntries) {
+    for( ClasspathEntry classpathEntry : classpathEntries ) {
       try {
-        resolveClasspathEntry(classpathEntry);
-      } catch (Ant4EclipseException e) {
+        resolveClasspathEntry( classpathEntry );
+      } catch( Ant4EclipseException e ) {
         throw e;
-      } catch (Exception e) {
-        throw new Ant4EclipseException(e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry,
-            (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage());
+      } catch( Exception e ) {
+        throw new Ant4EclipseException( e, JdtExceptionCode.EXCEPTION_WHILE_RESOLVING_CLASSPATH_ENTRY, classpathEntry,
+            (hasCurrentProject() ? getCurrentProject().getSpecifiedName() : "<unkown>"), e.getMessage() );
       }
     }
   }
@@ -253,25 +253,26 @@ public class ClasspathEntryResolverExecutor {
    * @param entry
    *          the class path entry to resolve.
    */
-  private final void resolveClasspathEntry(ClasspathEntry entry) {
-    Assure.notNull("entry", entry);
+  private final void resolveClasspathEntry( ClasspathEntry entry ) {
+    Assure.notNull( "entry", entry );
 
     // initialize handled
     boolean handled = false;
 
     // iterate over all the entry resolvers and try to resolve the entry
-    for (ClasspathEntryResolver entryResolver : this._entryResolvers) {
-      if (entryResolver.canResolve(entry)) {
+    for( ClasspathEntryResolver entryResolver : _entryResolvers ) {
+      if( entryResolver.canResolve( entry ) ) {
         handled = true;
-        entryResolver.resolve(entry, this._resolverContext);
+        entryResolver.resolve( entry, _resolverContext );
         break;
       }
     }
 
     // if the entry is not handled, we have to throw an exception here
-    if (!handled && this._failOnNonHandledEntry) {
+    if( !handled && _failOnNonHandledEntry ) {
       // TODO: NLS
-      throw new RuntimeException("Unsupported Entrykind!" + entry);
+      throw new RuntimeException( "Unsupported Entrykind!" + entry );
     }
   }
-}
+  
+} /* ENDCLASS */

@@ -47,4 +47,5 @@ public interface ReferableType {
    * @return the access restriction for this class file or <code>null</code> if no access restriction exists.
    */
   AccessRestriction getAccessRestriction();
-}
+  
+} /* ENDINTERFACE */

@@ -29,26 +29,26 @@ public class CvsRoleIdentifier extends AbstractProjectRoleIdentifier {
   public CvsRoleIdentifier() {
     super( null );
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean isRoleSupported(EclipseProject project) {
-    return CvsParser.isCvsProject(project);
+  public boolean isRoleSupported( EclipseProject project ) {
+    return CvsParser.isCvsProject( project );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.trace("CvsRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
-    CvsRoot cvsRoot = CvsParser.readCvsRoot(project);
-    String repositoryName = CvsParser.readCvsRepositoryName(project);
-    String tag = CvsParser.readTag(project);
-    CvsProjectRole cvsProjectRole = new CvsProjectRole(project, repositoryName, cvsRoot, tag);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.trace( "CvsRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
+    CvsRoot cvsRoot = CvsParser.readCvsRoot( project );
+    String repositoryName = CvsParser.readCvsRepositoryName( project );
+    String tag = CvsParser.readTag( project );
+    CvsProjectRole cvsProjectRole = new CvsProjectRole( project, repositoryName, cvsRoot, tag );
     return cvsProjectRole;
   }
 

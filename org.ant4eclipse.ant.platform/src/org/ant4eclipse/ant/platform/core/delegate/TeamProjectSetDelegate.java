@@ -52,11 +52,11 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    */
   @Override
   public final TeamProjectSet getTeamProjectSet() {
-    if( this._teamProjectSet == null ) {
-      this._teamProjectSet = readTeamProjectSet();
+    if( _teamProjectSet == null ) {
+      _teamProjectSet = readTeamProjectSet();
     }
 
-    return this._teamProjectSet;
+    return _teamProjectSet;
   }
 
   /**
@@ -64,7 +64,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    */
   @Override
   public final void setTeamProjectSet( File projectSet ) {
-    this._teamProjectSetFile = projectSet;
+    _teamProjectSetFile = projectSet;
   }
 
   /**
@@ -72,7 +72,7 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
    */
   @Override
   public final boolean isTeamProjectSetSet() {
-    return this._teamProjectSetFile != null;
+    return _teamProjectSetFile != null;
   }
 
   /**

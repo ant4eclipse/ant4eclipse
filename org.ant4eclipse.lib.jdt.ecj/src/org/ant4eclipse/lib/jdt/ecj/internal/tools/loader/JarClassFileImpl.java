@@ -41,23 +41,23 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
    * @param zipEntryName
    * @param zipFile
    */
-  public JarClassFileImpl(String zipEntryName, ZipFile zipFile, String libraryLocation, byte libraryType) {
+  public JarClassFileImpl( String zipEntryName, ZipFile zipFile, String libraryLocation, byte libraryType ) {
 
-    super(libraryLocation, libraryType);
+    super( libraryLocation, libraryType );
 
-    Assure.nonEmpty("zipEntryName", zipEntryName);
-    Assure.notNull("zipFile", zipFile);
+    Assure.nonEmpty( "zipEntryName", zipEntryName );
+    Assure.notNull( "zipFile", zipFile );
 
-    this._zipEntryName = zipEntryName;
-    this._zipFile = zipFile;
+    _zipEntryName = zipEntryName;
+    _zipFile = zipFile;
   }
 
   @Override
   public byte[] getBytes() {
     try {
-      return Util.getZipEntryByteContent(this._zipFile.getEntry(this._zipEntryName), this._zipFile);
-    } catch (Exception e) {
-      throw new RuntimeException(e.getMessage(), e);
+      return Util.getZipEntryByteContent( _zipFile.getEntry( _zipEntryName ), _zipFile );
+    } catch( Exception e ) {
+      throw new RuntimeException( e.getMessage(), e );
     }
   }
 
@@ -67,13 +67,11 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
   @Override
   public final IBinaryType getBinaryType() {
     try {
-      return ClassFileReader.read(this._zipFile, this._zipEntryName, true);
-    } catch (ClassFormatException e) {
-      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, this._zipFile,
-          this._zipEntryName);
-    } catch (IOException e) {
-      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, this._zipFile,
-          this._zipEntryName);
+      return ClassFileReader.read( _zipFile, _zipEntryName, true );
+    } catch( ClassFormatException e ) {
+      throw new Ant4EclipseException( e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, _zipFile, _zipEntryName );
+    } catch( IOException e ) {
+      throw new Ant4EclipseException( e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, _zipFile, _zipEntryName );
     }
   }
 
@@ -83,19 +81,19 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[JarClassFileImpl:");
-    buffer.append(" bundleLocation: ");
-    buffer.append(getLibraryLocation());
-    buffer.append(" bundleType: ");
-    buffer.append(getLibraryType());
-    buffer.append(" accessRestriction: ");
-    buffer.append(getAccessRestriction());
-    buffer.append(" zipFile: ");
-    buffer.append(this._zipFile);
-    buffer.append(" zipEntryName: ");
-    buffer.append(this._zipEntryName);
-    buffer.append("]");
+    buffer.append( "[JarClassFileImpl:" );
+    buffer.append( " bundleLocation: " );
+    buffer.append( getLibraryLocation() );
+    buffer.append( " bundleType: " );
+    buffer.append( getLibraryType() );
+    buffer.append( " accessRestriction: " );
+    buffer.append( getAccessRestriction() );
+    buffer.append( " zipFile: " );
+    buffer.append( _zipFile );
+    buffer.append( " zipEntryName: " );
+    buffer.append( _zipEntryName );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */

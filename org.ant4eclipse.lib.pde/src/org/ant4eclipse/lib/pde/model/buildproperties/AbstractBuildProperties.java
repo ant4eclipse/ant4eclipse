@@ -73,7 +73,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the <code>custom</code> property is set.
    */
   public boolean isCustom() {
-    return this._custom;
+    return _custom;
   }
 
   /**
@@ -84,7 +84,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has source excludes.
    */
   public boolean hasSourceExcludes() {
-    return this._srcExcludes != null && this._srcExcludes.length > 0;
+    return _srcExcludes != null && _srcExcludes.length > 0;
   }
 
   /**
@@ -95,7 +95,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has source includes.
    */
   public boolean hasSourceIncludes() {
-    return this._srcIncludes != null && this._srcIncludes.length > 0;
+    return _srcIncludes != null && _srcIncludes.length > 0;
   }
 
   /**
@@ -106,7 +106,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has binary excludes.
    */
   public boolean hasBinaryExcludes() {
-    return this._binExcludes != null && this._binExcludes.length > 0;
+    return _binExcludes != null && _binExcludes.length > 0;
   }
 
   /**
@@ -117,7 +117,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the build has binary includes.
    */
   public boolean hasBinaryIncludes() {
-    return this._binIncludes != null && this._binIncludes.length > 0;
+    return _binIncludes != null && _binIncludes.length > 0;
   }
 
   /**
@@ -128,7 +128,7 @@ public class AbstractBuildProperties {
    * @return the binary excludes.
    */
   public String[] getBinaryExcludes() {
-    return this._binExcludes;
+    return _binExcludes;
   }
 
   /**
@@ -139,7 +139,7 @@ public class AbstractBuildProperties {
    * @return the binary includes.
    */
   public String[] getBinaryIncludes() {
-    return this._binIncludes;
+    return _binIncludes;
   }
 
   /**
@@ -149,7 +149,7 @@ public class AbstractBuildProperties {
    * @return the srcIncludes
    */
   public String[] getSourceIncludes() {
-    return this._srcIncludes;
+    return _srcIncludes;
   }
 
   /**
@@ -159,7 +159,7 @@ public class AbstractBuildProperties {
    * @return the srcExcludes
    */
   public String[] getSourceExcludes() {
-    return this._srcExcludes;
+    return _srcExcludes;
   }
 
   /**
@@ -170,7 +170,7 @@ public class AbstractBuildProperties {
    * @return the qualifier.
    */
   public String getQualifier() {
-    return this._qualifier;
+    return _qualifier;
   }
 
   /**
@@ -181,7 +181,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the qualifier is the context qualifier.
    */
   public boolean isContextQualifier() {
-    return isContextQualifer(this._qualifier);
+    return isContextQualifer( _qualifier );
   }
 
   /**
@@ -193,8 +193,8 @@ public class AbstractBuildProperties {
    *          the qualifier
    * @return <code>true</code> if the qualifier is the context qualifier.
    */
-  public static boolean isContextQualifer(String qualifier) {
-    return CONTEXT_QUALIFIER.equals(qualifier);
+  public static boolean isContextQualifer( String qualifier ) {
+    return CONTEXT_QUALIFIER.equals( qualifier );
   }
 
   /**
@@ -205,7 +205,7 @@ public class AbstractBuildProperties {
    * @return <code>true</code> if the qualifier is the none qualifier.
    */
   public boolean isNoneQualifier() {
-    return isNoneQualifier(this._qualifier);
+    return isNoneQualifier( _qualifier );
   }
 
   /**
@@ -217,8 +217,8 @@ public class AbstractBuildProperties {
    *          the qualifier
    * @return <code>true</code> if the qualifier is the none qualifier.
    */
-  public static boolean isNoneQualifier(String qualifier) {
-    return NONE_QUALIFIER.equals(qualifier);
+  public static boolean isNoneQualifier( String qualifier ) {
+    return NONE_QUALIFIER.equals( qualifier );
   }
 
   /**
@@ -228,8 +228,8 @@ public class AbstractBuildProperties {
    * 
    * @param custom
    */
-  void setCustom(boolean custom) {
-    this._custom = custom;
+  void setCustom( boolean custom ) {
+    _custom = custom;
   }
 
   /**
@@ -239,9 +239,9 @@ public class AbstractBuildProperties {
    * 
    * @param excludes
    */
-  void setBinaryExcludes(String[] excludes) {
-    Assure.notNull("excludes", excludes);
-    this._binExcludes = excludes;
+  void setBinaryExcludes( String[] excludes ) {
+    Assure.notNull( "excludes", excludes );
+    _binExcludes = excludes;
   }
 
   /**
@@ -251,9 +251,9 @@ public class AbstractBuildProperties {
    * 
    * @param includes
    */
-  void setBinaryIncludes(String[] includes) {
-    Assure.notNull("includes", includes);
-    this._binIncludes = includes;
+  void setBinaryIncludes( String[] includes ) {
+    Assure.notNull( "includes", includes );
+    _binIncludes = includes;
   }
 
   /**
@@ -263,9 +263,9 @@ public class AbstractBuildProperties {
    * @param srcIncludes
    *          the srcIncludes to set
    */
-  void setSourceIncludes(String[] srcIncludes) {
-    Assure.notNull("srcIncludes", srcIncludes);
-    this._srcIncludes = srcIncludes;
+  void setSourceIncludes( String[] srcIncludes ) {
+    Assure.notNull( "srcIncludes", srcIncludes );
+    _srcIncludes = srcIncludes;
   }
 
   /**
@@ -275,9 +275,9 @@ public class AbstractBuildProperties {
    * @param srcExcludes
    *          the srcExcludes to set
    */
-  void setSourceExcludes(String[] srcExcludes) {
-    Assure.notNull("srcExcludes", srcExcludes);
-    this._srcExcludes = srcExcludes;
+  void setSourceExcludes( String[] srcExcludes ) {
+    Assure.notNull( "srcExcludes", srcExcludes );
+    _srcExcludes = srcExcludes;
   }
 
   /**
@@ -288,11 +288,12 @@ public class AbstractBuildProperties {
    * @param qualifier
    *          the qualifier to set.
    */
-  void setQualifier(String qualifier) {
-    if (qualifier == null) {
+  void setQualifier( String qualifier ) {
+    if( qualifier == null ) {
       return;
     }
 
-    this._qualifier = qualifier;
+    _qualifier = qualifier;
   }
-}
+  
+} /* ENDCLASS */

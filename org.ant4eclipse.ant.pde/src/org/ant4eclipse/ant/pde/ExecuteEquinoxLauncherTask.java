@@ -45,8 +45,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   public ExecuteEquinoxLauncherTask() {
     super( "executeEquinoxLauncher" );
-
-    this._targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
+    _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 
   /**
@@ -54,15 +53,15 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   @Override
   public String getPlatformConfigurationId() {
-    return this._targetPlatformAwareDelegate.getPlatformConfigurationId();
+    return _targetPlatformAwareDelegate.getPlatformConfigurationId();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final String getTargetPlatformId() {
-    return this._targetPlatformAwareDelegate.getTargetPlatformId();
+  public String getTargetPlatformId() {
+    return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
   /**
@@ -70,15 +69,15 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   @Override
   public boolean isPlatformConfigurationIdSet() {
-    return this._targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
+    return _targetPlatformAwareDelegate.isPlatformConfigurationIdSet();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final boolean isTargetPlatformIdSet() {
-    return this._targetPlatformAwareDelegate.isTargetPlatformIdSet();
+  public boolean isTargetPlatformIdSet() {
+    return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
   /**
@@ -86,23 +85,23 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   @Override
   public void setPlatformConfigurationId( String platformConfigurationId ) {
-    this._targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
+    _targetPlatformAwareDelegate.setPlatformConfigurationId( platformConfigurationId );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void setTargetPlatformId( String targetPlatformId ) {
-    this._targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
+  public void setTargetPlatformId( String targetPlatformId ) {
+    _targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void requireTargetPlatformIdSet() {
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+  public void requireTargetPlatformIdSet() {
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -123,7 +122,6 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
     if( SCOPE_FOR_EACH_SELECTED_BUNDLE.equalsIgnoreCase( name ) ) {
       return createScopedMacroDefinition( SCOPE_FOR_EACH_SELECTED_BUNDLE );
     }
-
     // all other scopes: not handled here, try super class
     return super.createDynamicElement( name );
   }
@@ -134,8 +132,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-
-    this._targetPlatformAwareDelegate.requireTargetPlatformIdSet();
+    _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
   /**
@@ -158,7 +155,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
   private void executeForEachSelectedBundleScopedMacroDef( MacroDef macroDef ) {
 
     // Step 1: read the launchconfiguration file
-    final LaunchConfiguration launchConfiguration = getLaunchConfiguration();
+    LaunchConfiguration launchConfiguration = getLaunchConfiguration();
 
     // Step 2: Create a EquinoxLaunchConfigurationWrapper to access Equinox-specific settings in launch config
     EquinoxLaunchConfigurationWrapper wrapper = new EquinoxLaunchConfigurationWrapper( launchConfiguration );
@@ -271,7 +268,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
     Version osgiVersion = (launchConfigurationBundleInfo.hasVersion() ? new Version(
         launchConfigurationBundleInfo.getVersion() ) : null);
 
-    BundleDescription bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
+    BundleDescription bundleDescription = _targetPlatformAwareDelegate.getTargetPlatform( getWorkspace() )
         .getResolvedBundle( bundleSymbolicName, osgiVersion );
 
     if( bundleDescription == null ) {

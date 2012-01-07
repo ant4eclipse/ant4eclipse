@@ -45,9 +45,9 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has one of the supported python natures.
    */
-  public static final boolean isPythonRelatedProject(EclipseProject project) {
-    Assure.notNull("project", project);
-    return project.hasRole(PyDevProjectRole.class) || project.hasRole(DLTKProjectRole.class);
+  public static final boolean isPythonRelatedProject( EclipseProject project ) {
+    Assure.notNull( "project", project );
+    return project.hasRole( PyDevProjectRole.class ) || project.hasRole( DLTKProjectRole.class );
   }
 
   /**
@@ -58,10 +58,10 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has been created using the PyDev framework.
    */
-  public static final boolean isPyDevProject(EclipseProject project) {
-    Assure.notNull("project", project);
-    if (project.hasRole(PyDevProjectRole.class)) {
-      PythonProjectRole role = project.getRole(PyDevProjectRole.class);
+  public static final boolean isPyDevProject( EclipseProject project ) {
+    Assure.notNull( "project", project );
+    if( project.hasRole( PyDevProjectRole.class ) ) {
+      PythonProjectRole role = project.getRole( PyDevProjectRole.class );
       return !role.isDLTK();
     } else {
       return false;
@@ -76,10 +76,10 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has been created within the Python DLTK framework.
    */
-  public static final boolean isPyDLTKProject(EclipseProject project) {
-    Assure.notNull("project", project);
-    if (project.hasRole(DLTKProjectRole.class)) {
-      PythonProjectRole role = project.getRole(DLTKProjectRole.class);
+  public static final boolean isPyDLTKProject( EclipseProject project ) {
+    Assure.notNull( "project", project );
+    if( project.hasRole( DLTKProjectRole.class ) ) {
+      PythonProjectRole role = project.getRole( DLTKProjectRole.class );
       return role.isDLTK();
     } else {
       return false;
@@ -92,7 +92,7 @@ public class PythonUtilities {
    * @return A list of all known python interpreters. Not <code>null</code>.
    */
   public static final PythonInterpreter[] getPythonInterpreters() {
-    PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService(PythonRuntimeRegistry.class);
+    PythonRuntimeRegistry registry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
     return registry.getSupportedInterpreters();
   }
 

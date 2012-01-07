@@ -69,7 +69,7 @@ public interface BundleAndFeatureSet {
    *          the symbolic name.
    * @return <code>true</code> if the {@link BundleAndFeatureSet} contains a Bundle with the given symbolic name.
    */
-  boolean containsBundle(String symbolicName);
+  boolean containsBundle( String symbolicName );
 
   /**
    * <p>
@@ -83,7 +83,7 @@ public interface BundleAndFeatureSet {
    *          the version of the feature
    * @return the {@link FeatureDescription}
    */
-  FeatureDescription getFeatureDescription(String featureId, Version version);
+  FeatureDescription getFeatureDescription( String featureId, Version version );
 
   /**
    * <p>
@@ -96,7 +96,7 @@ public interface BundleAndFeatureSet {
    *          the feature id
    * @return the {@link FeatureDescription}
    */
-  FeatureDescription getFeatureDescription(String featureId);
+  FeatureDescription getFeatureDescription( String featureId );
 
   /**
    * <p>
@@ -110,6 +110,6 @@ public interface BundleAndFeatureSet {
    * 
    * @return The {@link BundleDescription}. Maybe <code>null</code>.
    */
-  BundleDescription getBundleDescription(String bundleid);
+  BundleDescription getBundleDescription( String bundleid );
 
-}
+} /* ENDINTERFACE */

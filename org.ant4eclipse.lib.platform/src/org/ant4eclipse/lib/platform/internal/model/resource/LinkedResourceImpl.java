@@ -40,11 +40,11 @@ public class LinkedResourceImpl {
    * @param relative
    * @param type
    */
-  public LinkedResourceImpl(String name, String location, String relative, int type) {
-    this._name = name;
-    this._location = location;
-    this._type = type;
-    this._relativelocation = relative;
+  public LinkedResourceImpl( String name, String location, String relative, int type ) {
+    _name = name;
+    _location = location;
+    _type = type;
+    _relativelocation = relative;
   }
 
   /**
@@ -53,7 +53,7 @@ public class LinkedResourceImpl {
    * @return The location of the linked resource.
    */
   public String getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
@@ -62,7 +62,7 @@ public class LinkedResourceImpl {
    * @return The name of the linked resource.
    */
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -71,7 +71,7 @@ public class LinkedResourceImpl {
    * @return The type of the linked resource.
    */
   public int getType() {
-    return this._type;
+    return _type;
   }
 
   /**
@@ -80,7 +80,7 @@ public class LinkedResourceImpl {
    * @return The location relative to the project. Maybe null in case no relative location can be calculated.
    */
   public String getRelativeLocation() {
-    return this._relativelocation;
+    return _relativelocation;
   }
 
   /**
@@ -89,16 +89,16 @@ public class LinkedResourceImpl {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[LinkedResource:");
-    buffer.append(" name: ");
-    buffer.append(this._name);
-    buffer.append(" location: ");
-    buffer.append(this._location);
-    buffer.append(" relativelocation: ");
-    buffer.append(this._relativelocation);
-    buffer.append(" type: ");
-    buffer.append(this._type);
-    buffer.append("]");
+    buffer.append( "[LinkedResource:" );
+    buffer.append( " name: " );
+    buffer.append( _name );
+    buffer.append( " location: " );
+    buffer.append( _location );
+    buffer.append( " relativelocation: " );
+    buffer.append( _relativelocation );
+    buffer.append( " type: " );
+    buffer.append( _type );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
@@ -106,21 +106,21 @@ public class LinkedResourceImpl {
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals( Object o ) {
+    if( this == o ) {
       return true;
     }
-    if (o == null) {
+    if( o == null ) {
       return false;
     }
-    if (o.getClass() != getClass()) {
+    if( o.getClass() != getClass() ) {
       return false;
     }
     LinkedResourceImpl castedObj = (LinkedResourceImpl) o;
-    return ((this._name == null ? castedObj._name == null : this._name.equals(castedObj._name))
-        && (this._location == null ? castedObj._location == null : this._location.equals(castedObj._location))
-        && (this._type == castedObj._type) && (this._relativelocation == null ? castedObj._relativelocation == null
-        : this._relativelocation.equals(castedObj._relativelocation)));
+    return((_name == null ? castedObj._name == null : _name.equals( castedObj._name ))
+        && (_location == null ? castedObj._location == null : _location.equals( castedObj._location ))
+        && (_type == castedObj._type) && (_relativelocation == null ? castedObj._relativelocation == null
+        : _relativelocation.equals( castedObj._relativelocation )));
   }
 
   /**
@@ -129,10 +129,10 @@ public class LinkedResourceImpl {
   @Override
   public int hashCode() {
     int hashCode = 1;
-    hashCode = 31 * hashCode + (this._name == null ? 0 : this._name.hashCode());
-    hashCode = 31 * hashCode + (this._location == null ? 0 : this._location.hashCode());
-    hashCode = 31 * hashCode + (this._relativelocation == null ? 0 : this._relativelocation.hashCode());
-    hashCode = 31 * hashCode + this._type;
+    hashCode = 31 * hashCode + (_name == null ? 0 : _name.hashCode());
+    hashCode = 31 * hashCode + (_location == null ? 0 : _location.hashCode());
+    hashCode = 31 * hashCode + (_relativelocation == null ? 0 : _relativelocation.hashCode());
+    hashCode = 31 * hashCode + _type;
     return hashCode;
   }
 

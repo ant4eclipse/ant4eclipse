@@ -51,23 +51,23 @@ public class SourceClass {
 
   private JdtProjectBuilder _eclipseProjectCreator;
 
-  public SourceClass(JdtProjectBuilder eclipseProjectCreator, String className) {
-    this._eclipseProjectCreator = eclipseProjectCreator;
-    this._usedClasses = new ArrayList<String>();
-    this._className = className;
+  public SourceClass( JdtProjectBuilder eclipseProjectCreator, String className ) {
+    _eclipseProjectCreator = eclipseProjectCreator;
+    _usedClasses = new ArrayList<String>();
+    _className = className;
   }
 
-  public SourceClass withClassUsed(String className) {
-    this._usedClasses.add(className);
+  public SourceClass withClassUsed( String className ) {
+    _usedClasses.add( className );
     return this;
   }
 
   public JdtProjectBuilder finishClass() {
-    return this._eclipseProjectCreator;
+    return _eclipseProjectCreator;
   }
 
   public String getClassName() {
-    return this._className;
+    return _className;
   }
 
   /**
@@ -77,24 +77,24 @@ public class SourceClass {
    */
   String generateUsageCode() {
     StringBuffer source = new StringBuffer();
-    Iterator<String> it = this._usedClasses.iterator();
-    while (it.hasNext()) {
+    Iterator<String> it = _usedClasses.iterator();
+    while( it.hasNext() ) {
       String usedClassName = it.next().toString();
-      source.append(asSource(ClassName.fromQualifiedClassName(usedClassName))).append(Utilities.NL);
+      source.append( asSource( ClassName.fromQualifiedClassName( usedClassName ) ) ).append( Utilities.NL );
     }
     return source.toString();
   }
 
-  private String asSource(ClassName qualifiedClassName) {
+  private String asSource( ClassName qualifiedClassName ) {
     StringTemplate source = new StringTemplate();
-    source.append("private static ${className} _${attributeName};").nl().append(
-        "public static ${className} get${attributeName}() {").nl().append("  return _${attributeName};").nl().append(
-        "}").nl().append("public static void set${attributeName} (${className} value) {").nl().append(
-        "  _${attributeName} = value;").nl().append("}");
-    source.replace("className", qualifiedClassName.getQualifiedClassName());
-    String attributeName = qualifiedClassName.getQualifiedClassName().replace('.', '_');
-    attributeName = Character.toUpperCase(attributeName.charAt(0)) + attributeName.substring(1);
-    source.replace("attributeName", attributeName);
+    source.append( "private static ${className} _${attributeName};" ).nl()
+        .append( "public static ${className} get${attributeName}() {" ).nl().append( "  return _${attributeName};" )
+        .nl().append( "}" ).nl().append( "public static void set${attributeName} (${className} value) {" ).nl()
+        .append( "  _${attributeName} = value;" ).nl().append( "}" );
+    source.replace( "className", qualifiedClassName.getQualifiedClassName() );
+    String attributeName = qualifiedClassName.getQualifiedClassName().replace( '.', '_' );
+    attributeName = Character.toUpperCase( attributeName.charAt( 0 ) ) + attributeName.substring( 1 );
+    source.replace( "attributeName", attributeName );
     return source.toString();
   }
 

@@ -32,19 +32,19 @@ public class PyDevRoleIdentifier extends AbstractProjectRoleIdentifier {
   public PyDevRoleIdentifier() {
     super( PyDevProjectRole.NATURE, "python" );
   }
-  
+
   /**
    * <p>
    * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
    * </p>
    */
   @Override
-  public ProjectRole createRole(EclipseProject project) {
-    A4ELogging.trace("PyDevRoleIdentifier.applyRole(%s)", project);
-    Assure.notNull("project", project);
-    PythonProjectRoleImpl result = new PythonProjectRoleImpl(project, false);
-    PyDevParser.contributePathes(result);
+  public ProjectRole createRole( EclipseProject project ) {
+    A4ELogging.trace( "PyDevRoleIdentifier.applyRole(%s)", project );
+    Assure.notNull( "project", project );
+    PythonProjectRoleImpl result = new PythonProjectRoleImpl( project, false );
+    PyDevParser.contributePathes( result );
     return result;
   }
-  
+
 } /* ENDCLASS */

@@ -33,10 +33,10 @@ import java.util.Map;
 public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry {
 
   /** the class path variables */
-  private Map<String, ClassPathVariable>  _classpathVariables;
+  private Map<String,ClassPathVariable>  _classpathVariables;
 
   /** the class path containers */
-  private Map<String, ClassPathContainer> _classpathContainer;
+  private Map<String,ClassPathContainer> _classpathContainer;
 
   /**
    * <p>
@@ -46,10 +46,10 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
   public ClassPathElementsRegistryImpl() {
 
     // create the class path variables map
-    this._classpathVariables = new HashMap<String, ClassPathVariable>();
+    _classpathVariables = new HashMap<String,ClassPathVariable>();
 
     // create the class path container map
-    this._classpathContainer = new HashMap<String, ClassPathContainer>();
+    _classpathContainer = new HashMap<String,ClassPathContainer>();
   }
 
   /**
@@ -57,39 +57,39 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    */
   @Override
   public List<ClassPathContainer> getClasspathContainer() {
-    return new ArrayList<ClassPathContainer>(this._classpathContainer.values());
+    return new ArrayList<ClassPathContainer>( _classpathContainer.values() );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ClassPathContainer getClassPathContainer(String name) {
-    return this._classpathContainer.get(name);
+  public ClassPathContainer getClassPathContainer( String name ) {
+    return _classpathContainer.get( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasClassPathContainer(String name) {
-    return this._classpathContainer.containsKey(name);
+  public boolean hasClassPathContainer( String name ) {
+    return _classpathContainer.containsKey( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void registerClassPathContainer(String name, File[] pathEntries) {
-    this._classpathContainer.put(name, new ClassPathContainerImpl(name, pathEntries));
+  public void registerClassPathContainer( String name, File[] pathEntries ) {
+    _classpathContainer.put( name, new ClassPathContainerImpl( name, pathEntries ) );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ClassPathVariable getClassPathVariable(String name) {
-    return this._classpathVariables.get(name);
+  public ClassPathVariable getClassPathVariable( String name ) {
+    return _classpathVariables.get( name );
   }
 
   /**
@@ -97,42 +97,42 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    */
   @Override
   public List<ClassPathVariable> getClasspathVariables() {
-    return new ArrayList<ClassPathVariable>(this._classpathVariables.values());
+    return new ArrayList<ClassPathVariable>( _classpathVariables.values() );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasClassPathVariable(String name) {
-    return this._classpathVariables.containsKey(name);
+  public boolean hasClassPathVariable( String name ) {
+    return _classpathVariables.containsKey( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void registerClassPathVariable(String name, File path) {
-    ClassPathVariable newvar = new ClassPathVariableImpl(name, path);
-    ClassPathVariable oldvar = this._classpathVariables.get(name);
-    if (oldvar != null) {
+  public void registerClassPathVariable( String name, File path ) {
+    ClassPathVariable newvar = new ClassPathVariableImpl( name, path );
+    ClassPathVariable oldvar = _classpathVariables.get( name );
+    if( oldvar != null ) {
       // we already got an entry, so check if they're unequal (equal locations won't do any harm, so we consider them
       // legal
-      if (!oldvar.getPath().equals(newvar.getPath())) {
-        throw new Ant4EclipseException(JdtExceptionCode.CONFLICTING_CLASSPATH_VARIABLES, name, oldvar.getPath(), newvar
-            .getPath());
+      if( !oldvar.getPath().equals( newvar.getPath() ) ) {
+        throw new Ant4EclipseException( JdtExceptionCode.CONFLICTING_CLASSPATH_VARIABLES, name, oldvar.getPath(),
+            newvar.getPath() );
       }
     }
-    this._classpathVariables.put(name, newvar);
+    _classpathVariables.put( name, newvar );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void registerClassPathVariables(Map<String, File> vars) {
-    for (Map.Entry<String, File> var : vars.entrySet()) {
-      registerClassPathVariable(var.getKey(), var.getValue());
+  public void registerClassPathVariables( Map<String,File> vars ) {
+    for( Map.Entry<String,File> var : vars.entrySet() ) {
+      registerClassPathVariable( var.getKey(), var.getValue() );
     }
   }
 
@@ -144,14 +144,13 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
     _classpathVariables.clear();
     _classpathContainer.clear();
   }
-  
 
   /**
    * {@inheritDoc}
    */
   @Override
   public Integer getPriority() {
-    return Integer.valueOf(-2);
+    return Integer.valueOf( -2 );
   }
-  
+
 } /* ENDCLASS */

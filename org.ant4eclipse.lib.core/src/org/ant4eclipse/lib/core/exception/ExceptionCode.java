@@ -29,7 +29,7 @@ public class ExceptionCode {
    *          The message used for the user presentation. Not <code>null</code>.
    */
   protected ExceptionCode( String message ) {
-    this._message = message;
+    _message = message;
   }
 
   /**
@@ -40,7 +40,7 @@ public class ExceptionCode {
    * @return The message used for the user presentation. Not <code>null</code>.
    */
   public String getMessage() {
-    return this._message;
+    return _message;
   }
 
   /**
@@ -51,7 +51,7 @@ public class ExceptionCode {
     StringBuffer buffer = new StringBuffer();
     buffer.append( "[ExceptionCode:" );
     buffer.append( " _message: " );
-    buffer.append( this._message );
+    buffer.append( _message );
     buffer.append( "]" );
     return buffer.toString();
   }

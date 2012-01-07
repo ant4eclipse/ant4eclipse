@@ -42,35 +42,35 @@ public class OutputPathValidator extends AbstractProjectValidator {
    *          The key which is used to generate the failure information. Neither <code>null</code> nor empty.
    */
   public OutputPathValidator() {
-    super("output", PluginProjectRole.class);
+    super( "output", PluginProjectRole.class );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void validate(ProjectRole role) {
+  public void validate( ProjectRole role ) {
 
     PluginProjectRole pluginrole = (PluginProjectRole) role;
     EclipseProject project = pluginrole.getEclipseProject();
-    PropertyService properties = A4ECore.instance().getRequiredService(PropertyService.class);
+    PropertyService properties = A4ECore.instance().getRequiredService( PropertyService.class );
 
     // this test currently looks strange but future versions of eclipse will support non-java plugins, so we better
     // check for it
-    if (project.hasRole(JavaProjectRole.class)) {
+    if( project.hasRole( JavaProjectRole.class ) ) {
 
-      JavaProjectRole javarole = project.getRole(JavaProjectRole.class);
+      JavaProjectRole javarole = project.getRole( JavaProjectRole.class );
 
       // get the output folders from the normal java nature
-      File[] outputfolders = project.getChildren(javarole.getAllOutputFolders(),
-          EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME);
+      File[] outputfolders = project.getChildren( javarole.getAllOutputFolders(),
+          EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME );
       Set<String> jdtoutputpathes = new HashSet<String>();
-      for (File outputfolder : outputfolders) {
-        jdtoutputpathes.add(outputfolder.getPath().replace('\\', '/'));
+      for( File outputfolder : outputfolders ) {
+        jdtoutputpathes.add( outputfolder.getPath().replace( '\\', '/' ) );
       }
 
       PluginBuildProperties buildproperties = pluginrole.getBuildProperties();
-      if (buildproperties == null) {
+      if( buildproperties == null ) {
         // at this point a missing build.properties file is a warning only, as it is generally possible to work with
         // plug-in projects
         // that don't have a build.properties file (you can for example get the classpath of this project).
@@ -78,21 +78,21 @@ public class OutputPathValidator extends AbstractProjectValidator {
         // PluginProjectChecker
         addWarning(
             project,
-            "Plug-in project does not have a build.properties file. You won't be able to build this project using the ant4eclipse tasks.");
+            "Plug-in project does not have a build.properties file. You won't be able to build this project using the ant4eclipse tasks." );
       } else {
 
         // get the library representing the project itself
-        PluginBuildProperties.Library library = buildproperties.getLibrary(".");
-        if (library != null) {
+        PluginBuildProperties.Library library = buildproperties.getLibrary( "." );
+        if( library != null ) {
 
           // check each output path if it's available as an output path
-          for (String output : library.getOutput()) {
-            if (jdtoutputpathes.contains(output)) {
-              jdtoutputpathes.remove(output);
+          for( String output : library.getOutput() ) {
+            if( jdtoutputpathes.contains( output ) ) {
+              jdtoutputpathes.remove( output );
             } else {
               /** @todo [03-Dec-2009:KASI] I18N */
-              addError(project, String.format(
-                  "build.properties declares output path '%s' which has not been set as an output folder", output));
+              addError( project, String.format(
+                  "build.properties declares output path '%s' which has not been set as an output folder", output ) );
             }
           }
         }
@@ -103,17 +103,18 @@ public class OutputPathValidator extends AbstractProjectValidator {
          *       handy. Perhaps we should provide a switch to adjust the behaviour here.
          */
         A4ELevel missingOuputPath = A4ELevel.parse(
-            properties.getProperty("ant4eclipse.build.properties.missingOuputPath"), A4ELevel.WARN);
+            properties.getProperty( "ant4eclipse.build.properties.missingOuputPath" ), A4ELevel.WARN );
         Iterator<String> iterator = jdtoutputpathes.iterator();
-        while (iterator.hasNext()) {
+        while( iterator.hasNext() ) {
           String output = iterator.next();
           String message = String.format(
-              "build.properties does not contain output path '%s'. you will probably miss some classes", output);
-          addMessage(project, missingOuputPath, message);
+              "build.properties does not contain output path '%s'. you will probably miss some classes", output );
+          addMessage( project, missingOuputPath, message );
         }
       }
 
     }
 
   }
+  
 } /* ENDCLASS */

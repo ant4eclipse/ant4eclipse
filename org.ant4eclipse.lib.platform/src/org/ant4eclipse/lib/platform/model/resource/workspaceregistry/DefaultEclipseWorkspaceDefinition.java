@@ -48,10 +48,10 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @param workspaceDirectory
    *          the workspace directory
    */
-  public DefaultEclipseWorkspaceDefinition(File workspaceDirectory) {
-    Assure.isDirectory("workspaceDirectory", workspaceDirectory);
-    this._workspaceDirectory = workspaceDirectory;
-    this._metadataLocationDirectory = new File(workspaceDirectory, METADATA_PROJECTS);
+  public DefaultEclipseWorkspaceDefinition( File workspaceDirectory ) {
+    Assure.isDirectory( "workspaceDirectory", workspaceDirectory );
+    _workspaceDirectory = workspaceDirectory;
+    _metadataLocationDirectory = new File( workspaceDirectory, METADATA_PROJECTS );
   }
 
   /**
@@ -64,50 +64,50 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
     List<File> result = new ArrayList<File>();
 
     // read all directories in the workspace directory
-    File[] directories = this._workspaceDirectory.listFiles(new FileFilter() {
+    File[] directories = _workspaceDirectory.listFiles( new FileFilter() {
       @Override
-      public boolean accept(File file) {
-        boolean accepted = file.isDirectory() && !".metadata".equals(file.getName()) && isProjectDirectory(file);
+      public boolean accept( File file ) {
+        boolean accepted = file.isDirectory() && !".metadata".equals( file.getName() ) && isProjectDirectory( file );
         String message = String
             .format(
                 "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
-                file.getAbsolutePath(), Boolean.valueOf(accepted));
-        A4ELogging.debug(message);
+                file.getAbsolutePath(), Boolean.valueOf( accepted ) );
+        A4ELogging.debug( message );
         return accepted;
       }
-    });
+    } );
 
     // add all project directories to the result
-    result.addAll(Arrays.asList(directories));
+    result.addAll( Arrays.asList( directories ) );
 
     // check the METADATA_PROJECTS directory
-    if (isDirectory(this._metadataLocationDirectory)) {
+    if( isDirectory( _metadataLocationDirectory ) ) {
 
       // read all directories in the METADATA_PROJECTS directory
-      directories = this._metadataLocationDirectory.listFiles(new FileFilter() {
+      directories = _metadataLocationDirectory.listFiles( new FileFilter() {
         @Override
-        public boolean accept(File file) {
-          boolean accepted = file.isDirectory() && isLocationDirectory(file);
+        public boolean accept( File file ) {
+          boolean accepted = file.isDirectory() && isLocationDirectory( file );
           String message = String
               .format(
                   "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
-                  file.getAbsolutePath(), Boolean.valueOf(accepted));
-          A4ELogging.debug(message);
+                  file.getAbsolutePath(), Boolean.valueOf( accepted ) );
+          A4ELogging.debug( message );
           return accepted;
         }
-      });
+      } );
 
       // add the resolved linked directories to the result
-      for (File directorie : directories) {
-        File linkedProject = LocationFileParser.getProjectDirectory(new File(directorie, ".location"));
-        if ((linkedProject != null) && !result.contains(linkedProject)) {
-          result.add(linkedProject);
+      for( File directorie : directories ) {
+        File linkedProject = LocationFileParser.getProjectDirectory( new File( directorie, ".location" ) );
+        if( (linkedProject != null) && !result.contains( linkedProject ) ) {
+          result.add( linkedProject );
         }
       }
     }
 
     // return the result
-    return result.toArray(new File[0]);
+    return result.toArray( new File[0] );
   }
 
   /**
@@ -119,8 +119,8 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    *          the directory
    * @return <code>true</code>, if the specified directory is an eclipse project directory.
    */
-  private boolean isProjectDirectory(File directory) {
-    return ProjectFileParser.isProjectDirectory(directory);
+  private boolean isProjectDirectory( File directory ) {
+    return ProjectFileParser.isProjectDirectory( directory );
   }
 
   /**
@@ -130,15 +130,16 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @param directory
    * @return
    */
-  private boolean isLocationDirectory(File directory) {
-    return isDirectory(directory) && new File(directory, ".location").exists();
+  private boolean isLocationDirectory( File directory ) {
+    return isDirectory( directory ) && new File( directory, ".location" ).exists();
   }
 
   /**
    * @param directory
    * @return
    */
-  private boolean isDirectory(File directory) {
+  private boolean isDirectory( File directory ) {
     return (directory != null) && directory.exists();
   }
+  
 } /* ENDCLASS */

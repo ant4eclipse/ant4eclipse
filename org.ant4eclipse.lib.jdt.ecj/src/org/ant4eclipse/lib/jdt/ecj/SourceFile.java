@@ -66,4 +66,5 @@ public interface SourceFile {
    * @return the file encoding.
    */
   String getEncoding();
-}
+  
+} /* ENDINTERFACE */

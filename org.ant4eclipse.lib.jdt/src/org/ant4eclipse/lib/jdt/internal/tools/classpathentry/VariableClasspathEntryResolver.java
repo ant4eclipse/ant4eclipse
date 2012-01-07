@@ -46,15 +46,15 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
    * @return <code>true</code>, if the {@link ClasspathEntry} is of kind {@link RawClasspathEntry.CPE_VARIABLE}.
    */
   @Override
-  public boolean canResolve(ClasspathEntry entry) {
-    return isRawClasspathEntryOfKind(entry, RawClasspathEntry.CPE_VARIABLE);
+  public boolean canResolve( ClasspathEntry entry ) {
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_VARIABLE );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void resolve(ClasspathEntry entry, ClasspathResolverContext context) {
+  public void resolve( ClasspathEntry entry, ClasspathResolverContext context ) {
 
     // get the path
     String path = entry.getPath();
@@ -62,28 +62,30 @@ public class VariableClasspathEntryResolver extends AbstractClasspathEntryResolv
     // split variable and tail if necessary
     String variable = path;
     String tail = null;
-    int separatorIndex = path.indexOf(this.SEPARATOR);
-    if (separatorIndex != -1) {
-      variable = path.substring(0, separatorIndex);
-      tail = path.substring(separatorIndex);
+    int separatorIndex = path.indexOf( SEPARATOR );
+    if( separatorIndex != -1 ) {
+      variable = path.substring( 0, separatorIndex );
+      tail = path.substring( separatorIndex );
     }
 
     // get variablesRegistry
-    ClassPathElementsRegistry elementsRegistry = A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
+    ClassPathElementsRegistry elementsRegistry = A4ECore.instance()
+        .getRequiredService( ClassPathElementsRegistry.class );
 
     // resolve variable
-    if (elementsRegistry.hasClassPathVariable(variable)) {
-      ClassPathVariable classpathVariable = elementsRegistry.getClassPathVariable(variable);
-      if (tail != null) {
-        context.addClasspathEntry(new ResolvedClasspathEntry(new File(classpathVariable.getPath(), tail)));
+    if( elementsRegistry.hasClassPathVariable( variable ) ) {
+      ClassPathVariable classpathVariable = elementsRegistry.getClassPathVariable( variable );
+      if( tail != null ) {
+        context.addClasspathEntry( new ResolvedClasspathEntry( new File( classpathVariable.getPath(), tail ) ) );
       } else {
-        context.addClasspathEntry(new ResolvedClasspathEntry(classpathVariable.getPath()));
+        context.addClasspathEntry( new ResolvedClasspathEntry( classpathVariable.getPath() ) );
       }
     }
     // throw exception if variable is unbound
     else {
-      throw new Ant4EclipseException(JdtExceptionCode.UNBOUND_CLASS_PATH_VARIABLE, context.getCurrentProject()
-          .getSpecifiedName(), variable);
+      throw new Ant4EclipseException( JdtExceptionCode.UNBOUND_CLASS_PATH_VARIABLE, context.getCurrentProject()
+          .getSpecifiedName(), variable );
     }
   }
-}
+  
+} /* ENDCLASS */

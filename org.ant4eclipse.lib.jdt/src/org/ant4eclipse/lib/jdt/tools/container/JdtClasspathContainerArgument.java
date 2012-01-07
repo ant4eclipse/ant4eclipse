@@ -39,7 +39,7 @@ public class JdtClasspathContainerArgument {
    * @return the key.
    */
   public final String getKey() {
-    return this.key;
+    return key;
   }
 
   /**
@@ -47,10 +47,10 @@ public class JdtClasspathContainerArgument {
    * Sets the key of the {@link JdtClasspathContainerArgument}.
    * </p>
    * 
-   * @param key
+   * @param newkey
    */
-  public final void setKey(String key) {
-    this.key = key;
+  public final void setKey( String newkey ) {
+    key = newkey;
   }
 
   /**
@@ -61,7 +61,7 @@ public class JdtClasspathContainerArgument {
    * @return the value of the {@link JdtClasspathContainerArgument}.
    */
   public final String getValue() {
-    return this.value;
+    return value;
   }
 
   /**
@@ -69,11 +69,11 @@ public class JdtClasspathContainerArgument {
    * Sets the value of the {@link JdtClasspathContainerArgument}.
    * </p>
    * 
-   * @param value
+   * @param newvalue
    *          the value of the {@link JdtClasspathContainerArgument}.
    */
-  public final void setValue(String value) {
-    this.value = value;
+  public final void setValue( String newvalue ) {
+    value = newvalue;
   }
 
   /**
@@ -82,12 +82,13 @@ public class JdtClasspathContainerArgument {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[JdtClasspathContainerArgument:");
-    buffer.append(" key: ");
-    buffer.append(this.key);
-    buffer.append(" value: ");
-    buffer.append(this.value);
-    buffer.append("]");
+    buffer.append( "[JdtClasspathContainerArgument:" );
+    buffer.append( " key: " );
+    buffer.append( key );
+    buffer.append( " value: " );
+    buffer.append( value );
+    buffer.append( "]" );
     return buffer.toString();
   }
-}
+  
+} /* ENDCLASS */

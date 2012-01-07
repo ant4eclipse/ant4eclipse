@@ -33,12 +33,13 @@ import java.util.Vector;
 public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubstitutionService {
 
   private EclipseVariableResolver[] _eclipseVariableResolvers;
+
   private PropertyParser            _propertyParser;
 
   public EclipseStringSubstitutionServiceImpl() {
     _propertyParser = new PropertyParser();
     List<EclipseVariableResolver> resolvers = A4ECore.instance().getServices( EclipseVariableResolver.class );
-    _eclipseVariableResolvers = new EclipseVariableResolver[ resolvers.size() ];
+    _eclipseVariableResolvers = new EclipseVariableResolver[resolvers.size()];
     resolvers.toArray( _eclipseVariableResolvers );
   }
 
@@ -46,26 +47,26 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
    * {@inheritDoc}
    */
   @Override
-  public String substituteEclipseVariables(String string, EclipseProject project, StringMap otherProperties) {
-    Assure.notNull("string", string);
+  public String substituteEclipseVariables( String string, EclipseProject project, StringMap otherProperties ) {
+    Assure.notNull( "string", string );
     // resolve Eclipse variables
-    StringMap eclipseVariables = getEclipseVariables(project);
+    StringMap eclipseVariables = getEclipseVariables( project );
 
     // overwrite "default" values for eclipse variables with values as specified in otherProperties
-    if (otherProperties != null) {
-      eclipseVariables.putAll(otherProperties);
+    if( otherProperties != null ) {
+      eclipseVariables.putAll( otherProperties );
     }
 
     // resolve string
-    String resolvedString = resolveProperties(string, eclipseVariables);
+    String resolvedString = resolveProperties( string, eclipseVariables );
     return resolvedString;
   }
 
-  protected StringMap getEclipseVariables(EclipseProject eclipseProject) {
+  protected StringMap getEclipseVariables( EclipseProject eclipseProject ) {
     StringMap eclipseVariables = new StringMap();
 
-    for (EclipseVariableResolver resolver : this._eclipseVariableResolvers) {
-      resolver.getResolvedVariables(eclipseVariables, eclipseProject);
+    for( EclipseVariableResolver resolver : _eclipseVariableResolvers ) {
+      resolver.getResolvedVariables( eclipseVariables, eclipseProject );
     }
 
     // if (project != null) {
@@ -89,42 +90,42 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
    * @param properties
    * @return
    */
-  private String resolveProperties(String value, StringMap properties) {
+  private String resolveProperties( String value, StringMap properties ) {
 
     Vector<String> fragments = new Vector<String>();
     Vector<String> propertyRefs = new Vector<String>();
     Vector<String> propertyArgs = new Vector<String>();
-    this._propertyParser.parsePropertyString(value, fragments, propertyRefs, propertyArgs);
+    _propertyParser.parsePropertyString( value, fragments, propertyRefs, propertyArgs );
 
     StringBuffer sb = new StringBuffer();
     Enumeration<String> i = fragments.elements();
     Enumeration<String> j = propertyRefs.elements();
     Enumeration<String> k = propertyArgs.elements();
 
-    while (i.hasMoreElements()) {
+    while( i.hasMoreElements() ) {
       String fragment = i.nextElement();
-      if (fragment == null) {
+      if( fragment == null ) {
         String propertyName = j.nextElement();
         String propertyArg = k.nextElement();
         Object replacement = null;
-        if (properties != null) {
-          if ("workspace_loc".equals(propertyName)) {
-            replacement = properties.get(propertyName);
-            if ((propertyArg != null) && (propertyArg.length() > 0)) {
+        if( properties != null ) {
+          if( "workspace_loc".equals( propertyName ) ) {
+            replacement = properties.get( propertyName );
+            if( (propertyArg != null) && (propertyArg.length() > 0) ) {
               replacement = replacement + File.separator + propertyArg;
             }
-          } else if ("env_var".equals(propertyName)) {
-            if ((propertyArg != null) && (propertyArg.length() > 0)) {
-              replacement = System.getProperty(propertyArg);
+          } else if( "env_var".equals( propertyName ) ) {
+            if( (propertyArg != null) && (propertyArg.length() > 0) ) {
+              replacement = System.getProperty( propertyArg );
             }
           } else {
-            replacement = properties.get(propertyName);
+            replacement = properties.get( propertyName );
           }
         }
         String arg = propertyArg != null ? ":" + propertyArg : "";
         fragment = (replacement != null) ? replacement.toString() : "${" + propertyName + arg + "}";
       }
-      sb.append(fragment);
+      sb.append( fragment );
     }
 
     return sb.toString();

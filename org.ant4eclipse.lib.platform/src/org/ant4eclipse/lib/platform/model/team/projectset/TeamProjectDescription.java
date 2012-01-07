@@ -38,4 +38,4 @@ public interface TeamProjectDescription {
    */
   StringMap getAsProperties();
 
-}
+} /* ENDINTERFACE */

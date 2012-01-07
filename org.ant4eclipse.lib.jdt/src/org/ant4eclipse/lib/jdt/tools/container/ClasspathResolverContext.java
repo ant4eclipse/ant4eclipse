@@ -100,7 +100,7 @@ public interface ClasspathResolverContext {
    *          the key.
    * @return the {@link JdtClasspathContainerArgument} with the given key.
    */
-  JdtClasspathContainerArgument getJdtClasspathContainerArgument(String key);
+  JdtClasspathContainerArgument getJdtClasspathContainerArgument( String key );
 
   /**
    * <p>
@@ -110,7 +110,7 @@ public interface ClasspathResolverContext {
    * @param project
    *          the (java-)project which class path should be resolved.
    */
-  void resolveProjectClasspath(EclipseProject project);
+  void resolveProjectClasspath( EclipseProject project );
 
   /**
    * <p>
@@ -120,7 +120,7 @@ public interface ClasspathResolverContext {
    * @param eclipseProject
    *          the eclipse project.
    */
-  void addReferencedProjects(EclipseProject eclipseProject);
+  void addReferencedProjects( EclipseProject eclipseProject );
 
   /**
    * <p>
@@ -130,7 +130,7 @@ public interface ClasspathResolverContext {
    * @param entry
    *          the entry to add.
    */
-  void addClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
+  void addClasspathEntry( ResolvedClasspathEntry resolvedClasspathEntry );
 
   /**
    * <p>
@@ -140,5 +140,6 @@ public interface ClasspathResolverContext {
    * @param entry
    *          the entry to add.
    */
-  void setBootClasspathEntry(ResolvedClasspathEntry resolvedClasspathEntry);
-}
+  void setBootClasspathEntry( ResolvedClasspathEntry resolvedClasspathEntry );
+  
+} /* ENDCLASS */

@@ -25,13 +25,13 @@ import java.util.List;
 
 public class ResolvedFeature {
 
-  private Object                                   _source;
+  private Object                                  _source;
 
-  private FeatureManifest                          _featureManifest;
+  private FeatureManifest                         _featureManifest;
 
-  private List<Pair<Plugin, BundleDescription>>    _pluginToBundleDescptionList;
+  private List<Pair<Plugin,BundleDescription>>    _pluginToBundleDescptionList;
 
-  private List<Pair<Includes, FeatureDescription>> _includesToFeatureDescriptionList;
+  private List<Pair<Includes,FeatureDescription>> _includesToFeatureDescriptionList;
 
   /**
    * <p>
@@ -43,13 +43,15 @@ public class ResolvedFeature {
    * @param featureManifest
    *          the FeatureManifest
    */
-  public ResolvedFeature(Object source, FeatureManifest featureManifest) {
-    Assure.notNull("source", source);
-    Assure.assertTrue(source instanceof EclipseProject || source instanceof File, String.format(
-        "Feature source must be instance of %s or %s.", EclipseProject.class.getName(), File.class.getName()));
-    Assure.notNull("featureManifest", featureManifest);
-    this._featureManifest = featureManifest;
-    this._source = source;
+  public ResolvedFeature( Object source, FeatureManifest featureManifest ) {
+    Assure.notNull( "source", source );
+    Assure.assertTrue(
+        source instanceof EclipseProject || source instanceof File,
+        String.format( "Feature source must be instance of %s or %s.", EclipseProject.class.getName(),
+            File.class.getName() ) );
+    Assure.notNull( "featureManifest", featureManifest );
+    _featureManifest = featureManifest;
+    _source = source;
   }
 
   /**
@@ -60,7 +62,7 @@ public class ResolvedFeature {
    * @return the source of the feature.
    */
   public Object getSource() {
-    return this._source;
+    return _source;
   }
 
   /**
@@ -71,7 +73,7 @@ public class ResolvedFeature {
    * @return <code>true</code> if the source of the feature is an {@link EclipseProject}.
    */
   public boolean isEclipseProject() {
-    return this._source instanceof EclipseProject;
+    return _source instanceof EclipseProject;
   }
 
   /**
@@ -82,7 +84,7 @@ public class ResolvedFeature {
    * @return <code>true</code> if the source of the feature is a directory.
    */
   public boolean isDirectory() {
-    return this._source instanceof File && ((File) this._source).isDirectory();
+    return _source instanceof File && ((File) _source).isDirectory();
   }
 
   /**
@@ -93,7 +95,7 @@ public class ResolvedFeature {
    * @return <code>true</code> if the source of the feature is a file.
    */
   public boolean isFile() {
-    return this._source instanceof File && ((File) this._source).isFile();
+    return _source instanceof File && ((File) _source).isFile();
   }
 
   /**
@@ -104,7 +106,7 @@ public class ResolvedFeature {
    * @return the featureManifest
    */
   public FeatureManifest getFeatureManifest() {
-    return this._featureManifest;
+    return _featureManifest;
   }
 
   /**
@@ -114,8 +116,8 @@ public class ResolvedFeature {
    * 
    * @return the pluginToBundleDescptionList
    */
-  public List<Pair<Plugin, BundleDescription>> getPluginToBundleDescptionList() {
-    return this._pluginToBundleDescptionList;
+  public List<Pair<Plugin,BundleDescription>> getPluginToBundleDescptionList() {
+    return _pluginToBundleDescptionList;
   }
 
   /**
@@ -125,8 +127,8 @@ public class ResolvedFeature {
    * @param pluginToBundleDescptionList
    *          the pluginToBundleDescptionList to set
    */
-  public void setPluginToBundleDescptionList(List<Pair<Plugin, BundleDescription>> pluginToBundleDescptionList) {
-    this._pluginToBundleDescptionList = pluginToBundleDescptionList;
+  public void setPluginToBundleDescptionList( List<Pair<Plugin,BundleDescription>> pluginToBundleDescptionList ) {
+    _pluginToBundleDescptionList = pluginToBundleDescptionList;
   }
 
   /**
@@ -136,8 +138,8 @@ public class ResolvedFeature {
    * 
    * @return the includesToFeatureDescriptionList
    */
-  public List<Pair<Includes, FeatureDescription>> getIncludesToFeatureDescriptionList() {
-    return this._includesToFeatureDescriptionList;
+  public List<Pair<Includes,FeatureDescription>> getIncludesToFeatureDescriptionList() {
+    return _includesToFeatureDescriptionList;
   }
 
   /**
@@ -148,8 +150,8 @@ public class ResolvedFeature {
    *          the includesToFeatureDescriptionList to set
    */
   public void setIncludesToFeatureDescriptionList(
-      List<Pair<Includes, FeatureDescription>> includesToFeatureDescriptionList) {
-    this._includesToFeatureDescriptionList = includesToFeatureDescriptionList;
+      List<Pair<Includes,FeatureDescription>> includesToFeatureDescriptionList ) {
+    _includesToFeatureDescriptionList = includesToFeatureDescriptionList;
   }
 
-}
+} /* ENDCLASS */

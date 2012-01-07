@@ -45,35 +45,35 @@ public class SvnGetProjectSetTask extends AbstractGetProjectSetTask {
   private String  _dateTimeZone  = null;
 
   public String getDateFormatter() {
-    return this._dateFormatter;
+    return _dateFormatter;
   }
 
   public void setDateFormatter( String dateFormatter ) {
-    this._dateFormatter = dateFormatter;
+    _dateFormatter = dateFormatter;
   }
 
   public String getDateTimeZone() {
-    return this._dateTimeZone;
+    return _dateTimeZone;
   }
 
   public void setDateTimeZone( String dateTimeZone ) {
-    this._dateTimeZone = dateTimeZone;
+    _dateTimeZone = dateTimeZone;
   }
 
   public boolean isJavahl() {
-    return this._javahl;
+    return _javahl;
   }
 
   public void setJavahl( boolean javahl ) {
-    this._javahl = javahl;
+    _javahl = javahl;
   }
 
   public boolean isJavasvn() {
-    return this._javasvn;
+    return _javasvn;
   }
 
   public void setJavasvn( boolean javasvn ) {
-    this._javasvn = javasvn;
+    _javasvn = javasvn;
   }
 
   /**

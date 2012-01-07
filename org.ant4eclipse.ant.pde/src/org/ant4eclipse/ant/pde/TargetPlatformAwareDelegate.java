@@ -51,7 +51,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public final void setTargetPlatformId( String targetPlatformId ) {
-    this._targetPlatformId = targetPlatformId;
+    _targetPlatformId = targetPlatformId;
   }
 
   /**
@@ -59,7 +59,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public final boolean isTargetPlatformIdSet() {
-    return this._targetPlatformId != null;
+    return _targetPlatformId != null;
   }
 
   /**
@@ -67,7 +67,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public final String getTargetPlatformId() {
-    return this._targetPlatformId;
+    return _targetPlatformId;
   }
 
   /**
@@ -85,7 +85,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public String getPlatformConfigurationId() {
-    return this._platformConfigurationId;
+    return _platformConfigurationId;
   }
 
   /**
@@ -93,7 +93,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public boolean isPlatformConfigurationIdSet() {
-    return this._platformConfigurationId != null;
+    return _platformConfigurationId != null;
   }
 
   /**
@@ -101,7 +101,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
    */
   @Override
   public void setPlatformConfigurationId( String platformConfigurationId ) {
-    this._platformConfigurationId = platformConfigurationId;
+    _platformConfigurationId = platformConfigurationId;
   }
 
   /**
@@ -116,7 +116,7 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
   public TargetPlatform getTargetPlatform( Workspace workspace ) {
 
     // create the target platform if necessary
-    if( this._targetPlatform == null ) {
+    if( _targetPlatform == null ) {
 
       // get the target platform registry
       TargetPlatformRegistry targetPlatformRegistry = A4ECore.instance().getRequiredService(
@@ -133,11 +133,11 @@ public class TargetPlatformAwareDelegate implements TargetPlatformAwareComponent
       }
 
       // return the target platform
-      this._targetPlatform = targetPlatformRegistry.getInstance( workspace, getTargetPlatformId(), configuration );
+      _targetPlatform = targetPlatformRegistry.getInstance( workspace, getTargetPlatformId(), configuration );
     }
 
     // return the target platform
-    return this._targetPlatform;
+    return _targetPlatform;
   }
   
 } /* ENDCLASS */

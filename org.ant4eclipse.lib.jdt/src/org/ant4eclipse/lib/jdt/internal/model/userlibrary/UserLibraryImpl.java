@@ -44,11 +44,11 @@ public class UserLibraryImpl implements UserLibrary {
    * @param syslib
    *          true <=> This library affects the boot class path.
    */
-  public UserLibraryImpl(String name, boolean syslib) {
-    Assure.notNull("name", name);
-    this._name = name;
-    this._systemlibrary = syslib;
-    this._archives = new ArrayList<ArchiveImpl>();
+  public UserLibraryImpl( String name, boolean syslib ) {
+    Assure.notNull( "name", name );
+    _name = name;
+    _systemlibrary = syslib;
+    _archives = new ArrayList<ArchiveImpl>();
   }
 
   /**
@@ -56,7 +56,7 @@ public class UserLibraryImpl implements UserLibrary {
    */
   @Override
   public String getName() {
-    return this._name;
+    return _name;
   }
 
   /**
@@ -64,7 +64,7 @@ public class UserLibraryImpl implements UserLibrary {
    */
   @Override
   public boolean isSystemLibrary() {
-    return this._systemlibrary;
+    return _systemlibrary;
   }
 
   /**
@@ -72,8 +72,8 @@ public class UserLibraryImpl implements UserLibrary {
    */
   @Override
   public ArchiveImpl[] getArchives() {
-    ArchiveImpl[] result = new ArchiveImpl[this._archives.size()];
-    this._archives.toArray(result);
+    ArchiveImpl[] result = new ArchiveImpl[_archives.size()];
+    _archives.toArray( result );
     return result;
   }
 
@@ -87,12 +87,12 @@ public class UserLibraryImpl implements UserLibrary {
     List<File> result = new ArrayList<File>();
 
     // add all path entries
-    for (ArchiveImpl archive : this._archives) {
-      result.add(archive.getPath());
+    for( ArchiveImpl archive : _archives ) {
+      result.add( archive.getPath() );
     }
 
     // return result
-    return result.toArray(new File[0]);
+    return result.toArray( new File[0] );
   }
 
   /**
@@ -101,8 +101,9 @@ public class UserLibraryImpl implements UserLibrary {
    * @param arc
    *          The archive that will be added.
    */
-  public void addArchive(ArchiveImpl arc) {
-    Assure.notNull("arc", arc);
-    this._archives.add(arc);
+  public void addArchive( ArchiveImpl arc ) {
+    Assure.notNull( "arc", arc );
+    _archives.add( arc );
   }
+  
 } /* ENDCLASS */

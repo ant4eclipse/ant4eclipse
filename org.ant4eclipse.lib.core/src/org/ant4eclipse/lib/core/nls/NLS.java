@@ -75,7 +75,7 @@ import java.util.Properties;
  * The NLSInitializer class has built-in support for Strings, Exception Codes and any <tt>public static</tt> fields that
  * are marked with {@link NLSMessage} and have a type with a single-argument constructor taking a String.
  * 
- * @todo [10-Dec-2009:KASI] I need to recheck this. I suspect that the properties should be loaded completely for the
+ * @todo [10-Dec-2009:KASI] I need to recheck  I suspect that the properties should be loaded completely for the
  *       setup so applying the values would not happen within a custom Properties implementation (allows to remove some
  *       checking code and to simplify this code).
  * 

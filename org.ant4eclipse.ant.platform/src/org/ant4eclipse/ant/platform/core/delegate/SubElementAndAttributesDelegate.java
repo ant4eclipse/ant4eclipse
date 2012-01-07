@@ -69,7 +69,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
   public List<Object> getSubElements() {
     init();
 
-    return this._subElements;
+    return _subElements;
   }
 
   /**
@@ -79,7 +79,7 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
   public Map<String,String> getSubAttributes() {
     init();
 
-    return this._subAttributes;
+    return _subAttributes;
   }
 
   /**
@@ -92,12 +92,12 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
     init();
 
     // iterate over all known SubElementContributions
-    for( SubElementContribution subElementContribution : this._subElementContributions ) {
+    for( SubElementContribution subElementContribution : _subElementContributions ) {
 
       // if the subElementContribution can handle the element -> handle it
       if( subElementContribution.canHandleSubElement( name, getProjectComponent() ) ) {
         Object subElement = subElementContribution.createSubElement( name, getProjectComponent() );
-        this._subElements.add( subElement );
+        _subElements.add( subElement );
         return subElement;
       }
     }
@@ -123,25 +123,25 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
   protected void init() {
 
     // Return if already initialized
-    if( this._initialized ) {
+    if( _initialized ) {
       return;
     }
 
     // create the lists of dynamic elements
-    this._subElements = new ArrayList<Object>();
+    _subElements = new ArrayList<Object>();
 
     // create the lists of dynamic attributes
-    this._subAttributes = new HashMap<String,String>();
+    _subAttributes = new HashMap<String,String>();
 
     // /////
     // Create and set sub-elements...
     // ////
 
     // assign subElementContributions
-    this._subElementContributions = A4ECore.instance().getServices( SubElementContribution.class );
+    _subElementContributions = A4ECore.instance().getServices( SubElementContribution.class );
 
     // set initialized
-    this._initialized = true;
+    _initialized = true;
   }
   
 } /* ENDCLASS */

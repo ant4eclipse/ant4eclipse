@@ -25,24 +25,24 @@ public class TextEmitter {
    * Initialises this emitter for text.
    */
   public TextEmitter() {
-    this._buffer = new StringBuffer();
-    this._indention = new StringBuffer();
+    _buffer = new StringBuffer();
+    _indention = new StringBuffer();
   }
 
   /**
    * Indents the current emitting process.
    */
   public void indent() {
-    this._indention.append( INDENTION );
+    _indention.append( INDENTION );
   }
 
   /**
    * Dedents the current emitting process.
    */
   public void dedent() {
-    int newlength = this._indention.length() - INDENTION.length();
+    int newlength = _indention.length() - INDENTION.length();
     if( newlength >= 0 ) {
-      this._indention.setLength( newlength );
+      _indention.setLength( newlength );
     }
   }
 
@@ -50,16 +50,16 @@ public class TextEmitter {
    * Inserts a newline.
    */
   public void newline() {
-    this._buffer.append( Utilities.NL );
+    _buffer.append( Utilities.NL );
   }
 
   public void append( String format, Object ... args ) {
-    this._buffer.append( String.format( format, args ) );
+    _buffer.append( String.format( format, args ) );
   }
 
   public void appendln( String format, Object ... args ) {
-    this._buffer.append( this._indention );
-    this._buffer.append( String.format( format, args ) );
+    _buffer.append( _indention );
+    _buffer.append( String.format( format, args ) );
     newline();
   }
 
@@ -68,7 +68,7 @@ public class TextEmitter {
    */
   @Override
   public String toString() {
-    return this._buffer.toString();
+    return _buffer.toString();
   }
 
 } /* ENDCLASS */

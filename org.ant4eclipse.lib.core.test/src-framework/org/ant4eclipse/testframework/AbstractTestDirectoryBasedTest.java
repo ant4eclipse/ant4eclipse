@@ -32,7 +32,7 @@ public abstract class AbstractTestDirectoryBasedTest {
    */
   @Before
   public void setUp() {
-    this._testWorkspace = new TestDirectory();
+    _testWorkspace = new TestDirectory();
   }
 
   /**
@@ -40,8 +40,8 @@ public abstract class AbstractTestDirectoryBasedTest {
    */
   @After
   public void tearDown() {
-    this._testWorkspace.dispose();
-    this._testWorkspace = null;
+    _testWorkspace.dispose();
+    _testWorkspace = null;
   }
 
   /**
@@ -50,7 +50,7 @@ public abstract class AbstractTestDirectoryBasedTest {
    * @return A TestDirectory for this test case. Not <code>null</code> during a test.
    */
   protected TestDirectory getTestDirectory() {
-    return this._testWorkspace;
+    return _testWorkspace;
   }
 
   /**
@@ -59,7 +59,7 @@ public abstract class AbstractTestDirectoryBasedTest {
    * @return The root directory of the workspace. Not <code>null</code> during a test.
    */
   protected File getTestDirectoryRootDir() {
-    return this._testWorkspace.getRootDir();
+    return _testWorkspace.getRootDir();
   }
 
 } /* ENDCLASS */

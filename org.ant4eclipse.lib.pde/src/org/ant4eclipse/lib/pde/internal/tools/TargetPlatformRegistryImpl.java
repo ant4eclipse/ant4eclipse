@@ -41,26 +41,26 @@ import java.util.Map;
 public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
 
   /** the current {@link TargetPlatform}, maybe null **/
-  private TargetPlatform                         _currentTargetPlatform;
+  private TargetPlatform                        _currentTargetPlatform;
 
   /** the static map with all target platforms currently resolved */
-  private Map<Object, BundleAndFeatureSet>       _bundleAndFeatureSetMap     = new HashMap<Object, BundleAndFeatureSet>();
+  private Map<Object,BundleAndFeatureSet>       _bundleAndFeatureSetMap     = new HashMap<Object,BundleAndFeatureSet>();
 
   /** the target platform definitions */
-  private Map<String, TargetPlatformDefinition>  _targetPlatformDefnitionMap = new HashMap<String, TargetPlatformDefinition>();
+  private Map<String,TargetPlatformDefinition>  _targetPlatformDefnitionMap = new HashMap<String,TargetPlatformDefinition>();
 
   /** the platform configurations */
-  private Map<String, PlatformConfiguration>     _platformConfigurationMap   = new HashMap<String, PlatformConfiguration>();
+  private Map<String,PlatformConfiguration>     _platformConfigurationMap   = new HashMap<String,PlatformConfiguration>();
 
   /** - */
-  private Map<TargetPlatformKey, TargetPlatform> _targetPlatformMap          = new HashMap<TargetPlatformKey, TargetPlatform>();
+  private Map<TargetPlatformKey,TargetPlatform> _targetPlatformMap          = new HashMap<TargetPlatformKey,TargetPlatform>();
 
   /**
    * {@inheritDoc}
    */
   @Override
   public void refreshAll() {
-    for (TargetPlatform targetPlatform : this._targetPlatformMap.values()) {
+    for( TargetPlatform targetPlatform : _targetPlatformMap.values() ) {
       targetPlatform.refresh();
     }
   }
@@ -70,7 +70,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   @Override
   public TargetPlatform getCurrent() {
-    return this._currentTargetPlatform;
+    return _currentTargetPlatform;
   }
 
   /**
@@ -78,47 +78,47 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   @Override
   public boolean hasCurrent() {
-    return this._currentTargetPlatform != null;
+    return _currentTargetPlatform != null;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void setCurrent(TargetPlatform targetPlatform) {
-    this._currentTargetPlatform = targetPlatform;
+  public void setCurrent( TargetPlatform targetPlatform ) {
+    _currentTargetPlatform = targetPlatform;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void addPlatformConfiguration(String identifier, PlatformConfiguration platformConfiguration) {
-    this._platformConfigurationMap.put(identifier, platformConfiguration);
+  public void addPlatformConfiguration( String identifier, PlatformConfiguration platformConfiguration ) {
+    _platformConfigurationMap.put( identifier, platformConfiguration );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public PlatformConfiguration getPlatformConfiguration(String identifier) {
-    return this._platformConfigurationMap.get(identifier);
+  public PlatformConfiguration getPlatformConfiguration( String identifier ) {
+    return _platformConfigurationMap.get( identifier );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasPlatformConfiguration(String identifier) {
-    return this._platformConfigurationMap.containsKey(identifier);
+  public boolean hasPlatformConfiguration( String identifier ) {
+    return _platformConfigurationMap.containsKey( identifier );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void addTargetPlatformDefinition(String identifier, TargetPlatformDefinition targetPlatformDefinition) {
-    this._targetPlatformDefnitionMap.put(identifier, targetPlatformDefinition);
+  public void addTargetPlatformDefinition( String identifier, TargetPlatformDefinition targetPlatformDefinition ) {
+    _targetPlatformDefnitionMap.put( identifier, targetPlatformDefinition );
 
   }
 
@@ -127,46 +127,46 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    */
   @Override
   public List<String> getTargetPlatformDefinitionIds() {
-    return Collections.unmodifiableList(new ArrayList<String>(this._targetPlatformDefnitionMap.keySet()));
+    return Collections.unmodifiableList( new ArrayList<String>( _targetPlatformDefnitionMap.keySet() ) );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
-      PlatformConfiguration targetPlatformConfiguration) {
+  public TargetPlatform getInstance( Workspace workspace, String targetPlatformDefinitionIdentifier,
+      PlatformConfiguration targetPlatformConfiguration ) {
 
-    if (A4ELogging.isTraceingEnabled()) {
-      A4ELogging.trace("getInstance(%s, %s, %s)", workspace, targetPlatformDefinitionIdentifier,
-          targetPlatformConfiguration);
+    if( A4ELogging.isTraceingEnabled() ) {
+      A4ELogging.trace( "getInstance(%s, %s, %s)", workspace, targetPlatformDefinitionIdentifier,
+          targetPlatformConfiguration );
     }
 
-    TargetPlatformDefinition targetPlatformDefinition = this._targetPlatformDefnitionMap
-        .get(targetPlatformDefinitionIdentifier);
+    TargetPlatformDefinition targetPlatformDefinition = _targetPlatformDefnitionMap
+        .get( targetPlatformDefinitionIdentifier );
 
-    if (targetPlatformDefinition == null) {
-      throw new Ant4EclipseException(PdeExceptionCode.NOT_TARGET_PLATFORM_DEFINITION,
-          targetPlatformDefinitionIdentifier);
+    if( targetPlatformDefinition == null ) {
+      throw new Ant4EclipseException( PdeExceptionCode.NOT_TARGET_PLATFORM_DEFINITION,
+          targetPlatformDefinitionIdentifier );
     }
 
-    return getInstance(workspace, targetPlatformDefinition.getLocations(), targetPlatformConfiguration);
+    return getInstance( workspace, targetPlatformDefinition.getLocations(), targetPlatformConfiguration );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public TargetPlatformDefinition getTargetPlatformDefinition(String identifier) {
-    return this._targetPlatformDefnitionMap.get(identifier);
+  public TargetPlatformDefinition getTargetPlatformDefinition( String identifier ) {
+    return _targetPlatformDefnitionMap.get( identifier );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasTargetPlatformDefinition(String identifier) {
-    return this._targetPlatformDefnitionMap.containsKey(identifier);
+  public boolean hasTargetPlatformDefinition( String identifier ) {
+    return _targetPlatformDefnitionMap.containsKey( identifier );
   }
 
   /**
@@ -176,13 +176,13 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @param workspace
    * @return
    */
-  private PluginAndFeatureProjectSet getPluginProjectSet(Workspace workspace) {
+  private PluginAndFeatureProjectSet getPluginProjectSet( Workspace workspace ) {
 
-    if (!this._bundleAndFeatureSetMap.containsKey(workspace)) {
-      this._bundleAndFeatureSetMap.put(workspace, new PluginAndFeatureProjectSet(workspace));
+    if( !_bundleAndFeatureSetMap.containsKey( workspace ) ) {
+      _bundleAndFeatureSetMap.put( workspace, new PluginAndFeatureProjectSet( workspace ) );
     }
 
-    return (PluginAndFeatureProjectSet) this._bundleAndFeatureSetMap.get(workspace);
+    return (PluginAndFeatureProjectSet) _bundleAndFeatureSetMap.get( workspace );
   }
 
   /**
@@ -198,29 +198,29 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    *          the target platform configuration
    * @return an instance of type {@link TargetPlatform} with the specified configuration.
    */
-  private TargetPlatform getInstance(Workspace workspace, File[] targetLocations,
-      PlatformConfiguration targetPlatformConfiguration) {
+  private TargetPlatform getInstance( Workspace workspace, File[] targetLocations,
+      PlatformConfiguration targetPlatformConfiguration ) {
 
-    Assure.assertTrue((workspace != null) || (targetLocations != null),
-        "Parameter workspace or targetLocations has to be set !");
+    Assure.assertTrue( (workspace != null) || (targetLocations != null),
+        "Parameter workspace or targetLocations has to be set !" );
 
     // TargetPlatformKey
-    TargetPlatformKey key = new TargetPlatformKey(workspace, targetLocations, targetPlatformConfiguration);
-    if (this._targetPlatformMap.containsKey(key)) {
-      return this._targetPlatformMap.get(key);
+    TargetPlatformKey key = new TargetPlatformKey( workspace, targetLocations, targetPlatformConfiguration );
+    if( _targetPlatformMap.containsKey( key ) ) {
+      return _targetPlatformMap.get( key );
     }
 
     // get the workspace bundle set
-    BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet(workspace) : null;
+    BundleAndFeatureSet workspaceBundleSet = workspace != null ? getPluginProjectSet( workspace ) : null;
 
     // get the binary bundle sets
-    BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet(targetLocations) : null;
+    BundleAndFeatureSet[] binaryPluginSets = targetLocations != null ? getBinaryPluginSet( targetLocations ) : null;
 
     // create and return the target platform instance
-    TargetPlatform targetPlatform = new TargetPlatformImpl(workspaceBundleSet, binaryPluginSets,
-        targetPlatformConfiguration, targetLocations);
+    TargetPlatform targetPlatform = new TargetPlatformImpl( workspaceBundleSet, binaryPluginSets,
+        targetPlatformConfiguration, targetLocations );
 
-    this._targetPlatformMap.put(key, targetPlatform);
+    _targetPlatformMap.put( key, targetPlatform );
 
     return targetPlatform;
   }
@@ -232,31 +232,31 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @param file
    * @return
    */
-  private BinaryBundleAndFeatureSet getBinaryPluginSet(File file) {
+  private BinaryBundleAndFeatureSet getBinaryPluginSet( File file ) {
 
-    if (!this._bundleAndFeatureSetMap.containsKey(file)) {
-      this._bundleAndFeatureSetMap.put(file, new BinaryBundleAndFeatureSet(file));
+    if( !_bundleAndFeatureSetMap.containsKey( file ) ) {
+      _bundleAndFeatureSetMap.put( file, new BinaryBundleAndFeatureSet( file ) );
     }
 
-    return (BinaryBundleAndFeatureSet) this._bundleAndFeatureSetMap.get(file);
+    return (BinaryBundleAndFeatureSet) _bundleAndFeatureSetMap.get( file );
   }
 
   /**
    * @param files
    * @return
    */
-  private BinaryBundleAndFeatureSet[] getBinaryPluginSet(File[] files) {
+  private BinaryBundleAndFeatureSet[] getBinaryPluginSet( File[] files ) {
 
     //
     List<BinaryBundleAndFeatureSet> result = new ArrayList<BinaryBundleAndFeatureSet>();
 
     //
-    for (File file : files) {
-      result.add(getBinaryPluginSet(file));
+    for( File file : files ) {
+      result.add( getBinaryPluginSet( file ) );
     }
 
     //
-    return result.toArray(new BinaryBundleAndFeatureSet[0]);
+    return result.toArray( new BinaryBundleAndFeatureSet[0] );
   }
 
   /**
@@ -289,12 +289,12 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      * @param targetPlatformConfiguration
      *          the target platform configuration
      */
-    public TargetPlatformKey(Workspace workspace, File[] targetLocations,
-        PlatformConfiguration targetPlatformConfiguration) {
+    public TargetPlatformKey( Workspace workspace, File[] targetLocations,
+        PlatformConfiguration targetPlatformConfiguration ) {
 
-      this._targetLocations = targetLocations;
-      this._targetPlatformConfiguration = targetPlatformConfiguration;
-      this._workspace = workspace;
+      _targetLocations = targetLocations;
+      _targetPlatformConfiguration = targetPlatformConfiguration;
+      _workspace = workspace;
     }
 
     /**
@@ -305,10 +305,10 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
       int prime = 31;
       int result = 1;
       result = prime * result + getOuterType().hashCode();
-      result = prime * result + hashCode(this._targetLocations);
+      result = prime * result + hashCode( _targetLocations );
       result = prime * result
-          + ((this._targetPlatformConfiguration == null) ? 0 : this._targetPlatformConfiguration.hashCode());
-      result = prime * result + ((this._workspace == null) ? 0 : this._workspace.hashCode());
+          + ((_targetPlatformConfiguration == null) ? 0 : _targetPlatformConfiguration.hashCode());
+      result = prime * result + ((_workspace == null) ? 0 : _workspace.hashCode());
       return result;
     }
 
@@ -316,35 +316,35 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       TargetPlatformKey other = (TargetPlatformKey) obj;
-      if (!getOuterType().equals(other.getOuterType())) {
+      if( !getOuterType().equals( other.getOuterType() ) ) {
         return false;
       }
-      if (!Arrays.equals(this._targetLocations, other._targetLocations)) {
+      if( !Arrays.equals( _targetLocations, other._targetLocations ) ) {
         return false;
       }
-      if (this._targetPlatformConfiguration == null) {
-        if (other._targetPlatformConfiguration != null) {
+      if( _targetPlatformConfiguration == null ) {
+        if( other._targetPlatformConfiguration != null ) {
           return false;
         }
-      } else if (!this._targetPlatformConfiguration.equals(other._targetPlatformConfiguration)) {
+      } else if( !_targetPlatformConfiguration.equals( other._targetPlatformConfiguration ) ) {
         return false;
       }
-      if (this._workspace == null) {
-        if (other._workspace != null) {
+      if( _workspace == null ) {
+        if( other._workspace != null ) {
           return false;
         }
-      } else if (!this._workspace.equals(other._workspace)) {
+      } else if( !_workspace.equals( other._workspace ) ) {
         return false;
       }
       return true;
@@ -370,27 +370,27 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      *          the object array
      * @return
      */
-    private int hashCode(Object[] array) {
+    private int hashCode( Object[] array ) {
       int prime = 31;
-      if (array == null) {
+      if( array == null ) {
         return 0;
       }
       int result = 1;
-      for (Object element : array) {
+      for( Object element : array ) {
         result = prime * result + (element == null ? 0 : element.hashCode());
       }
       return result;
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
   public void reset() {
-    this._bundleAndFeatureSetMap.clear();
-    this._targetPlatformDefnitionMap.clear();
-    this._targetPlatformMap.clear();
+    _bundleAndFeatureSetMap.clear();
+    _targetPlatformDefnitionMap.clear();
+    _targetPlatformMap.clear();
   }
 
   /**

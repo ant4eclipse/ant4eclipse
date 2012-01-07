@@ -54,7 +54,7 @@ import java.util.Set;
  * @param <T>
  *          the type of the vertices
  */
-public final class DependencyGraph<T> {
+public class DependencyGraph<T> {
 
   /** vertices */
   private List<T>           _vertices;
@@ -71,8 +71,8 @@ public final class DependencyGraph<T> {
    * </p>
    */
   public DependencyGraph() {
-    this._vertices = new ArrayList<T>();
-    this._edges = new ArrayList<Edge<T>>();
+    _vertices = new ArrayList<T>();
+    _edges = new ArrayList<Edge<T>>();
   }
 
   /**
@@ -87,7 +87,7 @@ public final class DependencyGraph<T> {
   public DependencyGraph( VertexRenderer<T> renderer ) {
     this();
     Assure.notNull( "renderer", renderer );
-    this._renderer = renderer;
+    _renderer = renderer;
   }
 
   /**
@@ -100,8 +100,8 @@ public final class DependencyGraph<T> {
    */
   public void addVertex( T vertex ) {
     Assure.notNull( "vertex", vertex );
-    if( !this._vertices.contains( vertex ) ) {
-      this._vertices.add( vertex );
+    if( !_vertices.contains( vertex ) ) {
+      _vertices.add( vertex );
     }
   }
 
@@ -117,7 +117,7 @@ public final class DependencyGraph<T> {
    */
   public boolean containsVertex( T vertex ) {
     Assure.notNull( "vertex", vertex );
-    return this._vertices.contains( vertex );
+    return _vertices.contains( vertex );
   }
 
   /**
@@ -135,7 +135,7 @@ public final class DependencyGraph<T> {
     Assure.notNull( "child", child );
     addVertex( parent );
     addVertex( child );
-    this._edges.add( new Edge<T>( parent, child ) );
+    _edges.add( new Edge<T>( parent, child ) );
   }
 
   /**
@@ -148,7 +148,7 @@ public final class DependencyGraph<T> {
   public List<T> calculateOrder() {
 
     // setup a matrix that contains a true value iff there is a the first index donates a parent of the second value
-    boolean[][] matrix = new boolean[this._vertices.size()][this._vertices.size()];
+    boolean[][] matrix = new boolean[_vertices.size()][_vertices.size()];
 
     // fill the diagonale
     for( boolean[] element : matrix ) {
@@ -156,10 +156,10 @@ public final class DependencyGraph<T> {
     }
 
     // set each value to true iff there is a relationship form first to second...
-    for( int i = 0; i < this._edges.size(); i++ ) {
-      Edge<T> edge = this._edges.get( i );
-      int fromidx = this._vertices.indexOf( edge.getParent() );
-      int toidx = this._vertices.indexOf( edge.getChild() );
+    for( int i = 0; i < _edges.size(); i++ ) {
+      Edge<T> edge = _edges.get( i );
+      int fromidx = _vertices.indexOf( edge.getParent() );
+      int toidx = _vertices.indexOf( edge.getChild() );
 
       if( (fromidx == -1) || (toidx == -1) ) {
         // one of the edge's vertices has not been
@@ -206,7 +206,7 @@ public final class DependencyGraph<T> {
     // of removable candidates
     for( int i = 0; i < count.length; i++ ) {
       if( count[i] == 0 ) {
-        T vertex = this._vertices.get( i );
+        T vertex = _vertices.get( i );
 
         if( !result.contains( vertex ) ) {
           removable.add( vertex );
@@ -234,7 +234,7 @@ public final class DependencyGraph<T> {
       for( int i = 0; i < matrix.length; i++ ) {
         for( int j = 0; j < matrix.length; j++ ) {
           if( matrix[i][j] ) {
-            if( removable.contains( this._vertices.get( j ) ) ) {
+            if( removable.contains( _vertices.get( j ) ) ) {
               matrix[i][j] = false;
             }
           }
@@ -262,11 +262,11 @@ public final class DependencyGraph<T> {
    *          The current state of the matrix.
    */
   private void cycleString( StringBuffer buffer, Set<T> processed, int idx, boolean[][] matrix ) {
-    T vertex = this._vertices.get( idx );
-    if( this._renderer == null ) {
+    T vertex = _vertices.get( idx );
+    if( _renderer == null ) {
       buffer.append( String.valueOf( vertex ) );
     } else {
-      buffer.append( this._renderer.renderVertex( vertex ) );
+      buffer.append( _renderer.renderVertex( vertex ) );
     }
     if( processed.contains( vertex ) ) {
       return;

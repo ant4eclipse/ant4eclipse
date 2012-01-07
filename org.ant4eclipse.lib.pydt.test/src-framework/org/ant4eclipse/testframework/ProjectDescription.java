@@ -40,12 +40,12 @@ public class ProjectDescription {
    * Initialises this datastructure.
    */
   public ProjectDescription() {
-    this._primaryprojectname = null;
-    this._secondaryprojectname = null;
-    this._internallibs = new ArrayList<String>();
-    this._sourcefolders = new ArrayList<String>();
-    this._internallibsprimary = new ArrayList<String>();
-    this._internallibssecondary = new ArrayList<String>();
+    _primaryprojectname = null;
+    _secondaryprojectname = null;
+    _internallibs = new ArrayList<String>();
+    _sourcefolders = new ArrayList<String>();
+    _internallibsprimary = new ArrayList<String>();
+    _internallibssecondary = new ArrayList<String>();
   }
 
   /**
@@ -54,7 +54,7 @@ public class ProjectDescription {
    * @return A list of all added source folders. Not <code>null</code>.
    */
   public String[] getSourceFolders() {
-    return getSourceFolders(null);
+    return getSourceFolders( null );
   }
 
   /**
@@ -65,13 +65,13 @@ public class ProjectDescription {
    * 
    * @return A list of all added source folders. Not <code>null</code>.
    */
-  public String[] getSourceFolders(String dirseparator) {
-    if (dirseparator == null) {
+  public String[] getSourceFolders( String dirseparator ) {
+    if( dirseparator == null ) {
       dirseparator = File.separator;
     }
-    String[] result = new String[this._sourcefolders.size()];
-    for (int i = 0; i < result.length; i++) {
-      result[i] = Utilities.replace(Utilities.replace(this._sourcefolders.get(i), "\\", "/"), "/", dirseparator);
+    String[] result = new String[_sourcefolders.size()];
+    for( int i = 0; i < result.length; i++ ) {
+      result[i] = Utilities.replace( Utilities.replace( _sourcefolders.get( i ), "\\", "/" ), "/", dirseparator );
     }
     return result;
   }
@@ -82,8 +82,8 @@ public class ProjectDescription {
    * @param sourcefolder
    *          A workspace relative path of the source. Neither <code>null</code> nor empty.
    */
-  public void addSourceFolder(String sourcefolder) {
-    this._sourcefolders.add(sourcefolder);
+  public void addSourceFolder( String sourcefolder ) {
+    _sourcefolders.add( sourcefolder );
   }
 
   /**
@@ -92,7 +92,7 @@ public class ProjectDescription {
    * @return A list of all internal libararies. Not <code>null</code>.
    */
   public String[] getInternalLibs() {
-    return getInternalLibs(null, null);
+    return getInternalLibs( null, null );
   }
 
   /**
@@ -106,21 +106,21 @@ public class ProjectDescription {
    * 
    * @return A list of all internal libararies. Not <code>null</code>.
    */
-  public String[] getInternalLibs(String dirseparator, Boolean primary) {
-    if (dirseparator == null) {
+  public String[] getInternalLibs( String dirseparator, Boolean primary ) {
+    if( dirseparator == null ) {
       dirseparator = File.separator;
     }
-    List<String> libs = this._internallibs;
-    if (primary != null) {
-      if (primary.booleanValue()) {
-        libs = this._internallibsprimary;
+    List<String> libs = _internallibs;
+    if( primary != null ) {
+      if( primary.booleanValue() ) {
+        libs = _internallibsprimary;
       } else {
-        libs = this._internallibssecondary;
+        libs = _internallibssecondary;
       }
     }
     String[] result = new String[libs.size()];
-    for (int i = 0; i < result.length; i++) {
-      result[i] = Utilities.replace(Utilities.replace(libs.get(i), "\\", "/"), "/", dirseparator);
+    for( int i = 0; i < result.length; i++ ) {
+      result[i] = Utilities.replace( Utilities.replace( libs.get( i ), "\\", "/" ), "/", dirseparator );
     }
     return result;
   }
@@ -133,12 +133,12 @@ public class ProjectDescription {
    * @param primary
    *          <code>true</code> <=> Used for the primary project, secondary project otherwise.
    */
-  public void addInternalLibrary(String internallib, boolean primary) {
-    this._internallibs.add(internallib);
-    if (primary) {
-      this._internallibsprimary.add(internallib);
+  public void addInternalLibrary( String internallib, boolean primary ) {
+    _internallibs.add( internallib );
+    if( primary ) {
+      _internallibsprimary.add( internallib );
     } else {
-      this._internallibssecondary.add(internallib);
+      _internallibssecondary.add( internallib );
     }
   }
 
@@ -148,8 +148,8 @@ public class ProjectDescription {
    * @param primaryprojectname
    *          The primary project name. Neither <code>null</code> nor empty.
    */
-  public void setPrimaryProjectname(String primaryprojectname) {
-    this._primaryprojectname = primaryprojectname;
+  public void setPrimaryProjectname( String primaryprojectname ) {
+    _primaryprojectname = primaryprojectname;
   }
 
   /**
@@ -158,7 +158,7 @@ public class ProjectDescription {
    * @return The primary (main) project name. Neither <code>null</code> nor empty.
    */
   public String getPrimaryProjectname() {
-    return this._primaryprojectname;
+    return _primaryprojectname;
   }
 
   /**
@@ -167,8 +167,8 @@ public class ProjectDescription {
    * @param secondaryprojectname
    *          The secondary project name. Neither <code>null</code> nor empty.
    */
-  public void setSecondaryProjectname(String secondaryprojectname) {
-    this._secondaryprojectname = secondaryprojectname;
+  public void setSecondaryProjectname( String secondaryprojectname ) {
+    _secondaryprojectname = secondaryprojectname;
   }
 
   /**
@@ -177,7 +177,7 @@ public class ProjectDescription {
    * @return The secondary project name. Neither <code>null</code> nor empty.
    */
   public String getSecondaryProjectname() {
-    return this._secondaryprojectname;
+    return _secondaryprojectname;
   }
 
 } /* ENDCLASS */

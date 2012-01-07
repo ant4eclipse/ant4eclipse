@@ -58,16 +58,16 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * @param classFileLoader
    * @param filter
    */
-  public FilteringClassFileLoader(ClassFileLoader classFileLoader, String filter) {
+  public FilteringClassFileLoader( ClassFileLoader classFileLoader, String filter ) {
 
-    Assure.notNull("classFileLoader", classFileLoader);
-    Assure.nonEmpty("filter", filter);
+    Assure.notNull( "classFileLoader", classFileLoader );
+    Assure.nonEmpty( "filter", filter );
 
-    this._classFileLoader = classFileLoader;
-    this._filter = filter;
+    _classFileLoader = classFileLoader;
+    _filter = filter;
 
-    this._includes = new ArrayList<String>();
-    this._excludes = new ArrayList<String>();
+    _includes = new ArrayList<String>();
+    _excludes = new ArrayList<String>();
 
     init();
   }
@@ -77,7 +77,7 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   @Override
   public File[] getClasspath() {
-    return this._classFileLoader.getClasspath();
+    return _classFileLoader.getClasspath();
   }
 
   /**
@@ -85,26 +85,26 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   @Override
   public String[] getAllPackages() {
-    return this._classFileLoader.getAllPackages();
+    return _classFileLoader.getAllPackages();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasPackage(String packageName) {
-    return this._classFileLoader.hasPackage(packageName);
+  public boolean hasPackage( String packageName ) {
+    return _classFileLoader.hasPackage( packageName );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public ClassFile loadClass(ClassName className) {
+  public ClassFile loadClass( ClassName className ) {
 
-    ClassFile result = this._classFileLoader.loadClass(className);
+    ClassFile result = _classFileLoader.loadClass( className );
 
-    setAccessRestrictions(result, className);
+    setAccessRestrictions( result, className );
 
     return result;
   }
@@ -113,11 +113,11 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * {@inheritDoc}
    */
   @Override
-  public ReferableSourceFile loadSource(ClassName className) {
+  public ReferableSourceFile loadSource( ClassName className ) {
 
-    ReferableSourceFile result = this._classFileLoader.loadSource(className);
+    ReferableSourceFile result = _classFileLoader.loadSource( className );
 
-    setAccessRestrictions(result, className);
+    setAccessRestrictions( result, className );
 
     return result;
   }
@@ -129,15 +129,15 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * @param referableType
    * @return
    */
-  private ReferableType setAccessRestrictions(ReferableType referableType, ClassName className) {
+  private ReferableType setAccessRestrictions( ReferableType referableType, ClassName className ) {
 
     //
-    if (referableType == null) {
+    if( referableType == null ) {
       return referableType;
     }
 
     // try 'shortcut'
-    if (this._containedPackages != null && this._containedPackages.contains(className.getPackageName())) {
+    if( _containedPackages != null && _containedPackages.contains( className.getPackageName() ) ) {
       return referableType;
     }
 
@@ -145,22 +145,22 @@ public class FilteringClassFileLoader implements ClassFileLoader {
     String classFileName = className.asClassFileName();
 
     //
-    for (String includePattern : this._includes) {
-      if (classFileName.matches(includePattern)) {
+    for( String includePattern : _includes ) {
+      if( classFileName.matches( includePattern ) ) {
         return referableType;
       }
     }
 
     //
-    for (String exludePattern : this._excludes) {
-      if (classFileName.matches(exludePattern)) {
+    for( String exludePattern : _excludes ) {
+      if( classFileName.matches( exludePattern ) ) {
 
-        if (referableType instanceof DefaultReferableType) {
+        if( referableType instanceof DefaultReferableType ) {
 
-          AccessRestriction accessRestriction = new AccessRestriction(new AccessRule("**".toCharArray(),
-              IProblem.ForbiddenReference), referableType.getLibraryType(), referableType.getLibraryLocation());
+          AccessRestriction accessRestriction = new AccessRestriction( new AccessRule( "**".toCharArray(),
+              IProblem.ForbiddenReference ), referableType.getLibraryType(), referableType.getLibraryLocation() );
 
-          ((DefaultReferableType) referableType).setAccessRestriction(accessRestriction);
+          ((DefaultReferableType) referableType).setAccessRestriction( accessRestriction );
         }
         return referableType;
       }
@@ -176,38 +176,39 @@ public class FilteringClassFileLoader implements ClassFileLoader {
   private void init() {
 
     //
-    this._containedPackages = new HashSet<String>();
+    _containedPackages = new HashSet<String>();
 
     //
-    for (String part : this._filter.split(";")) {
+    for( String part : _filter.split( ";" ) ) {
 
       // step 0:
-      if (part.matches("\\+.*/\\*")) {
-        this._containedPackages.add(part.substring(1, part.length() - 2).replace('/', '.'));
-      } else if (part.matches("\\-\\*\\*/\\*")) {
+      if( part.matches( "\\+.*/\\*" ) ) {
+        _containedPackages.add( part.substring( 1, part.length() - 2 ).replace( '/', '.' ) );
+      } else if( part.matches( "\\-\\*\\*/\\*" ) ) {
         //
       } else {
-        this._containedPackages = null;
+        _containedPackages = null;
       }
 
       // step 1: replace all occurrences of '**/*' with '###' (temporary step)
-      String transformedPart = part.substring(1).replaceAll("\\*\\*/\\*", "###");
+      String transformedPart = part.substring( 1 ).replaceAll( "\\*\\*/\\*", "###" );
 
       // step 2: replace all occurrences of '*' with '[^\.]*'
-      transformedPart = transformedPart.replaceAll("\\*", "[^\\\\.]*");
+      transformedPart = transformedPart.replaceAll( "\\*", "[^\\\\.]*" );
 
       // step 3: replace all occurrences of '###' (formally '**/*') with '.*'
-      transformedPart = transformedPart.replaceAll("###", ".*");
+      transformedPart = transformedPart.replaceAll( "###", ".*" );
 
       // step 4: append '\.class'
-      transformedPart = transformedPart.concat("\\.class");
+      transformedPart = transformedPart.concat( "\\.class" );
 
-      if (part.startsWith("+")) {
-        this._includes.add(transformedPart);
+      if( part.startsWith( "+" ) ) {
+        _includes.add( transformedPart );
       }
-      if (part.startsWith("-")) {
-        this._excludes.add(transformedPart);
+      if( part.startsWith( "-" ) ) {
+        _excludes.add( transformedPart );
       }
     }
   }
-}
+  
+} /* ENDCLASS */

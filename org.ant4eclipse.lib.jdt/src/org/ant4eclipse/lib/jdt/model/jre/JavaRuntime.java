@@ -36,28 +36,28 @@ import java.io.File;
 public interface JavaRuntime {
 
   /** constant for the specification version '1.0' */
-  Version JAVA_SPECIFICATION_VERSION_1_0 = Version.newBundleVersion("1.0");
+  Version JAVA_SPECIFICATION_VERSION_1_0 = Version.newBundleVersion( "1.0" );
 
   /** constant for the specification version '1.1' */
-  Version JAVA_SPECIFICATION_VERSION_1_1 = Version.newBundleVersion("1.1");
+  Version JAVA_SPECIFICATION_VERSION_1_1 = Version.newBundleVersion( "1.1" );
 
   /** constant for the specification version '1.2' */
-  Version JAVA_SPECIFICATION_VERSION_1_2 = Version.newBundleVersion("1.2");
+  Version JAVA_SPECIFICATION_VERSION_1_2 = Version.newBundleVersion( "1.2" );
 
   /** constant for the specification version '1.3' */
-  Version JAVA_SPECIFICATION_VERSION_1_3 = Version.newBundleVersion("1.3");
+  Version JAVA_SPECIFICATION_VERSION_1_3 = Version.newBundleVersion( "1.3" );
 
   /** constant for the specification version '1.4' */
-  Version JAVA_SPECIFICATION_VERSION_1_4 = Version.newBundleVersion("1.4");
+  Version JAVA_SPECIFICATION_VERSION_1_4 = Version.newBundleVersion( "1.4" );
 
   /** constant for the specification version '1.5' */
-  Version JAVA_SPECIFICATION_VERSION_1_5 = Version.newBundleVersion("1.5");
+  Version JAVA_SPECIFICATION_VERSION_1_5 = Version.newBundleVersion( "1.5" );
 
   /** constant for the specification version '1.6' */
-  Version JAVA_SPECIFICATION_VERSION_1_6 = Version.newBundleVersion("1.6");
+  Version JAVA_SPECIFICATION_VERSION_1_6 = Version.newBundleVersion( "1.6" );
 
   /** constant for the specification version '1.7' */
-  Version JAVA_SPECIFICATION_VERSION_1_7 = Version.newBundleVersion("1.7");
+  Version JAVA_SPECIFICATION_VERSION_1_7 = Version.newBundleVersion( "1.7" );
 
   /**
    * <p>
@@ -114,4 +114,5 @@ public interface JavaRuntime {
    * @return the java profile that describes this java runtime.
    */
   JavaProfile getJavaProfile();
-}
+  
+} /* ENDINTERFACE */

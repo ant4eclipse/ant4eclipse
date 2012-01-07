@@ -33,29 +33,26 @@ import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
  */
 public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
 
-  private static final String[] PROVIDER_IDS = new String[] {
-    "org.polarion.team.svn.core.svnnature",
-    "org.tigris.subversion.subclipse.core.svnnature",
-    "org.eclipse.team.svn.core.svnnature"
-  };
-  
+  private static final String[] PROVIDER_IDS = new String[] { "org.polarion.team.svn.core.svnnature",
+      "org.tigris.subversion.subclipse.core.svnnature", "org.eclipse.team.svn.core.svnnature" };
+
   /**
    * Position of the repository URL in the reference string
    */
-  public static final int URL          = 1;
+  public static final int       URL          = 1;
 
   /**
    * Position of the project name in the reference string
    */
-  public static final int PROJECT_NAME = 2;
+  public static final int       PROJECT_NAME = 2;
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public TeamProjectSet createTeamProjectSet(String projectSetName) {
-    Assure.notNull("projectSetName", projectSetName);
-    SvnTeamProjectSet svnTeamProjectSet = new SvnTeamProjectSet(projectSetName);
+  public TeamProjectSet createTeamProjectSet( String projectSetName ) {
+    Assure.notNull( "projectSetName", projectSetName );
+    SvnTeamProjectSet svnTeamProjectSet = new SvnTeamProjectSet( projectSetName );
     return svnTeamProjectSet;
   }
 
@@ -66,25 +63,25 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    * </p>
    */
   @Override
-  public void addTeamProjectDescription(TeamProjectSet projectSet, String reference) {
-    Assure.instanceOf("projectSet", projectSet, SvnTeamProjectSet.class);
-    Assure.notNull("reference", reference);
+  public void addTeamProjectDescription( TeamProjectSet projectSet, String reference ) {
+    Assure.instanceOf( "projectSet", projectSet, SvnTeamProjectSet.class );
+    Assure.notNull( "reference", reference );
 
     SvnTeamProjectSet svnTeamProjectSet = (SvnTeamProjectSet) projectSet;
 
-    String[] parts = reference.split(",");
+    String[] parts = reference.split( "," );
 
-    if (parts.length < 3) {
-      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_PSF_REFERENCE, "three", Integer
-          .valueOf(parts.length), reference);
+    if( parts.length < 3 ) {
+      throw new Ant4EclipseException( PlatformExceptionCode.INVALID_PSF_REFERENCE, "three",
+          Integer.valueOf( parts.length ), reference );
     }
 
     String url = parts[URL];
     String projectName = parts[PROJECT_NAME];
 
-    SvnTeamProjectDescription svnTeamProjectDescription = new SvnTeamProjectDescription(svnTeamProjectSet, projectName,
-        url);
-    svnTeamProjectSet.addTeamProjectDescription(svnTeamProjectDescription);
+    SvnTeamProjectDescription svnTeamProjectDescription = new SvnTeamProjectDescription( svnTeamProjectSet,
+        projectName, url );
+    svnTeamProjectSet.addTeamProjectDescription( svnTeamProjectDescription );
   }
 
   /**
@@ -94,7 +91,7 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
   public String[] getProviderIDs() {
     return PROVIDER_IDS;
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -102,12 +99,12 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
   public Integer getPriority() {
     return null;
   }
-  
+
   /**
    * {@inheritDoc}
    */
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

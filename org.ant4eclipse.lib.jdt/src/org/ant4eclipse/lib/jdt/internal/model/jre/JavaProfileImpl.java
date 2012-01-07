@@ -66,7 +66,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   public JavaProfileImpl( StringMap properties ) {
     Assure.notNull( "properties", properties );
-    this._properties = properties;
+    _properties = properties;
     initialise();
   }
 
@@ -75,7 +75,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public String getName() {
-    return this._properties.get( JavaProfileImpl.PROPERTY_PROFILE_NAME );
+    return _properties.get( JavaProfileImpl.PROPERTY_PROFILE_NAME );
   }
 
   /**
@@ -83,7 +83,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public boolean isSystemPackage( String packageName ) {
-    return this._systemPackagesList.contains( packageName );
+    return _systemPackagesList.contains( packageName );
   }
 
   /**
@@ -92,7 +92,7 @@ public class JavaProfileImpl implements JavaProfile {
   @Override
   public boolean isDelegatedToBootClassLoader( String packageName ) {
 
-    for( Object element : this._delegatedToBootClassLoaderList ) {
+    for( Object element : _delegatedToBootClassLoaderList ) {
       PackageFilter packageFilter = (PackageFilter) element;
       if( packageFilter.containsPackage( packageName ) ) {
         return true;
@@ -106,7 +106,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public List<String> getExecutionEnvironmentNames() {
-    return Collections.unmodifiableList( this._executionEnvironments );
+    return Collections.unmodifiableList( _executionEnvironments );
   }
 
   /**
@@ -114,7 +114,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public List<String> getSystemPackages() {
-    return Collections.unmodifiableList( this._systemPackagesList );
+    return Collections.unmodifiableList( _systemPackagesList );
   }
 
   /**
@@ -124,7 +124,7 @@ public class JavaProfileImpl implements JavaProfile {
    * @return
    */
   public String getAssociatedJavaRuntimeId() {
-    return this._associatedJavaRuntimeId;
+    return _associatedJavaRuntimeId;
   }
 
   /**
@@ -134,7 +134,7 @@ public class JavaProfileImpl implements JavaProfile {
    * @param associatedJavaRuntimeId
    */
   public void setAssociatedJavaRuntimeId( String associatedJavaRuntimeId ) {
-    this._associatedJavaRuntimeId = associatedJavaRuntimeId;
+    _associatedJavaRuntimeId = associatedJavaRuntimeId;
   }
 
   /**
@@ -142,7 +142,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public StringMap getProperties() {
-    return this._properties;
+    return _properties;
   }
 
   /**
@@ -151,11 +151,11 @@ public class JavaProfileImpl implements JavaProfile {
   private void initialise() {
 
     // set up system packages list...
-    if( isNotEmpty( this._properties.get( PROPERTY_SYSTEM_PACKAGES ) ) ) {
+    if( isNotEmpty( _properties.get( PROPERTY_SYSTEM_PACKAGES ) ) ) {
 
       // get HeaderElements
       ManifestHelper.ManifestHeaderElement[] headerElements = ManifestHelper
-          .getManifestHeaderElements( this._properties.get( PROPERTY_SYSTEM_PACKAGES ) );
+          .getManifestHeaderElements( _properties.get( PROPERTY_SYSTEM_PACKAGES ) );
 
       // iterate over result
       for( ManifestHeaderElement headerElement : headerElements ) {
@@ -164,22 +164,22 @@ public class JavaProfileImpl implements JavaProfile {
 
         // add package names to string
         for( String packageName : packageNames ) {
-          this._systemPackagesList.add( packageName );
+          _systemPackagesList.add( packageName );
         }
       }
     }
 
-    if( isNotEmpty( this._properties.get( PROPERTY_BOOTDELEGATION ) ) ) {
-      String[] packageDescriptions = this._properties.get( PROPERTY_BOOTDELEGATION ).split( "," );
+    if( isNotEmpty( _properties.get( PROPERTY_BOOTDELEGATION ) ) ) {
+      String[] packageDescriptions = _properties.get( PROPERTY_BOOTDELEGATION ).split( "," );
       for( String packageDescription : packageDescriptions ) {
-        this._delegatedToBootClassLoaderList.add( new PackageFilter( packageDescription ) );
+        _delegatedToBootClassLoaderList.add( new PackageFilter( packageDescription ) );
       }
     }
 
-    if( isNotEmpty( this._properties.get( PROPERTY_EXECUTIONENVIRONMENT ) ) ) {
-      String[] executionEnvironments = this._properties.get( PROPERTY_EXECUTIONENVIRONMENT ).split( "," );
+    if( isNotEmpty( _properties.get( PROPERTY_EXECUTIONENVIRONMENT ) ) ) {
+      String[] executionEnvironments = _properties.get( PROPERTY_EXECUTIONENVIRONMENT ).split( "," );
       for( String executionEnvironment : executionEnvironments ) {
-        this._executionEnvironments.add( executionEnvironment );
+        _executionEnvironments.add( executionEnvironment );
       }
     }
   }
@@ -204,16 +204,16 @@ public class JavaProfileImpl implements JavaProfile {
     public PackageFilter( String includedPackages ) {
 
       // set default value
-      this._includedPackages = includedPackages == null ? new String[] {} : includedPackages.split( "," );
+      _includedPackages = includedPackages == null ? new String[] {} : includedPackages.split( "," );
 
       //
-      for( int i = 0; i < this._includedPackages.length; i++ ) {
+      for( int i = 0; i < _includedPackages.length; i++ ) {
 
         // replace OSGi wild cards (*) with regular expressions (.+)
         // NOTE: we're interpreting a * as "one or more characters here"
         // otherwise we have to use the regex ".*" which means "zero or more
         // characters here"
-        this._includedPackages[i] = this._includedPackages[i].replaceAll( "\\*", ".+" );
+        _includedPackages[i] = _includedPackages[i].replaceAll( "\\*", ".+" );
       }
     }
 
@@ -228,7 +228,7 @@ public class JavaProfileImpl implements JavaProfile {
       Assure.notNull( "packageName", packageName );
 
       //
-      for( String package1 : this._includedPackages ) {
+      for( String package1 : _includedPackages ) {
         if( matches( package1.trim(), packageName ) ) {
           return true;
         }
@@ -262,7 +262,7 @@ public class JavaProfileImpl implements JavaProfile {
     StringBuffer buffer = new StringBuffer();
     buffer.append( "[JavaProfile:" );
     buffer.append( " _properties: " );
-    buffer.append( this._properties );
+    buffer.append( _properties );
     buffer.append( "]" );
     return buffer.toString();
   }

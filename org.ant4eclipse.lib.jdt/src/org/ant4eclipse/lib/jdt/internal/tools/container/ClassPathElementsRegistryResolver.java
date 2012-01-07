@@ -32,17 +32,17 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
    * {@inheritDoc}
    */
   @Override
-  public boolean canResolveContainer(ClasspathEntry classpathEntry) {
-    return getClassPathElementsRegistry().hasClassPathContainer(classpathEntry.getPath());
+  public boolean canResolveContainer( ClasspathEntry classpathEntry ) {
+    return getClassPathElementsRegistry().hasClassPathContainer( classpathEntry.getPath() );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
-    ClassPathContainer container = getClassPathElementsRegistry().getClassPathContainer(classpathEntry.getPath());
-    context.addClasspathEntry(new ResolvedClasspathEntry(container.getPathEntries()));
+  public void resolveContainer( ClasspathEntry classpathEntry, ClasspathResolverContext context ) {
+    ClassPathContainer container = getClassPathElementsRegistry().getClassPathContainer( classpathEntry.getPath() );
+    context.addClasspathEntry( new ResolvedClasspathEntry( container.getPathEntries() ) );
   }
 
   /**
@@ -54,7 +54,7 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
   private ClassPathElementsRegistry getClassPathElementsRegistry() {
     return A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class );
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -69,5 +69,5 @@ public class ClassPathElementsRegistryResolver implements ClasspathContainerReso
   @Override
   public void reset() {
   }
-  
+
 } /* ENDCLASS */

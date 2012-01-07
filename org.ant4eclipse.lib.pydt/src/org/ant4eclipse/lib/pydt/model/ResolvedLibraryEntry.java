@@ -34,11 +34,11 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    * @param location
    *          The location of the library. Neither <code>null</code> nor empty.
    */
-  public ResolvedLibraryEntry(String owningproject, String location) {
-    Assure.nonEmpty("location", location);
-    Assure.nonEmpty("owningproject", owningproject);
-    this._owningproject = owningproject;
-    this._location = location;
+  public ResolvedLibraryEntry( String owningproject, String location ) {
+    Assure.nonEmpty( "location", location );
+    Assure.nonEmpty( "owningproject", owningproject );
+    _owningproject = owningproject;
+    _location = location;
   }
 
   /**
@@ -46,7 +46,7 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    */
   @Override
   public String getOwningProjectname() {
-    return this._owningproject;
+    return _owningproject;
   }
 
   /**
@@ -63,28 +63,28 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    * @return The location of the library. Neither <code>null</code> nor empty.
    */
   public String getLocation() {
-    return this._location;
+    return _location;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(Object object) {
-    if (this == object) {
+  public boolean equals( Object object ) {
+    if( this == object ) {
       return true;
     }
-    if (object == null) {
+    if( object == null ) {
       return false;
     }
-    if (object.getClass() != getClass()) {
+    if( object.getClass() != getClass() ) {
       return false;
     }
     ResolvedLibraryEntry other = (ResolvedLibraryEntry) object;
-    if (!this._owningproject.equals(other._owningproject)) {
+    if( !_owningproject.equals( other._owningproject ) ) {
       return false;
     }
-    return this._location.equals(other._location);
+    return _location.equals( other._location );
   }
 
   /**
@@ -92,8 +92,8 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    */
   @Override
   public int hashCode() {
-    int result = this._owningproject.hashCode();
-    result = 31 * result + this._location.hashCode();
+    int result = _owningproject.hashCode();
+    result = 31 * result + _location.hashCode();
     return result;
   }
 
@@ -103,12 +103,12 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[ResolvedLibraryEntry:");
-    buffer.append(" _owningproject: ");
-    buffer.append(this._owningproject);
-    buffer.append(", _location: ");
-    buffer.append(this._location);
-    buffer.append("]");
+    buffer.append( "[ResolvedLibraryEntry:" );
+    buffer.append( " _owningproject: " );
+    buffer.append( _owningproject );
+    buffer.append( ", _location: " );
+    buffer.append( _location );
+    buffer.append( "]" );
     return buffer.toString();
   }
 

@@ -42,19 +42,19 @@ public class FeatureDescriptionLoader {
    *          the feature file
    * @return the feature description
    */
-  public static FeatureDescription parseFeature(File file) {
-    Assure.exists("file", file);
+  public static FeatureDescription parseFeature( File file ) {
+    Assure.exists( "file", file );
 
-    if (file.isFile() && file.getName().endsWith(".jar")) {
-      return parseFeatureJarFile(file);
-    } else if (file.isDirectory()) {
-      return parseFeatureDirectory(file);
+    if( file.isFile() && file.getName().endsWith( ".jar" ) ) {
+      return parseFeatureJarFile( file );
+    } else if( file.isDirectory() ) {
+      return parseFeatureDirectory( file );
     }
 
-    if (A4ELogging.isDebuggingEnabled()) {
+    if( A4ELogging.isDebuggingEnabled() ) {
       // warn if feature description is null
-      A4ELogging.debug(PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(),
-          file.getAbsoluteFile());
+      A4ELogging.debug( PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(),
+          file.getAbsoluteFile() );
     }
     // return null
     return null;
@@ -69,28 +69,28 @@ public class FeatureDescriptionLoader {
    *          the given feature jar file.
    * @return the {@link FeatureDescription}
    */
-  private static FeatureDescription parseFeatureJarFile(File file) {
-    Assure.isFile("file", file);
+  private static FeatureDescription parseFeatureJarFile( File file ) {
+    Assure.isFile( "file", file );
 
     try {
       // create jar file
-      JarFile jarFile = new JarFile(file);
+      JarFile jarFile = new JarFile( file );
 
       // get the feature manifest
-      ZipEntry zipEntry = jarFile.getEntry(Constants.FEATURE_MANIFEST);
+      ZipEntry zipEntry = jarFile.getEntry( Constants.FEATURE_MANIFEST );
 
       // return null if no feature manifest
-      if (zipEntry == null) {
+      if( zipEntry == null ) {
         return null;
       }
 
       // parse the feature manifest
-      FeatureManifest featureManifest = FeatureManifestParser.parseFeature(jarFile.getInputStream(zipEntry));
+      FeatureManifest featureManifest = FeatureManifestParser.parseFeature( jarFile.getInputStream( zipEntry ) );
 
       // return the feature description
-      return new FeatureDescription(file, featureManifest);
+      return new FeatureDescription( file, featureManifest );
 
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // throw new RuntimeException();
       // TODO: handle exception
       return null;
@@ -108,28 +108,29 @@ public class FeatureDescriptionLoader {
    * @return the {@link FeatureDescription} or <code>null</code>, if the directory doesn't contain a
    *         <code>feature.xml</code> file, the method returns <code>null</code>.
    */
-  private static FeatureDescription parseFeatureDirectory(File directory) {
-    Assure.isDirectory("directory", directory);
+  private static FeatureDescription parseFeatureDirectory( File directory ) {
+    Assure.isDirectory( "directory", directory );
 
     try {
       // create jar file
-      File featureManifestFile = new File(directory, Constants.FEATURE_MANIFEST);
+      File featureManifestFile = new File( directory, Constants.FEATURE_MANIFEST );
 
       // return null if no feature manifest
-      if (!featureManifestFile.exists() || !featureManifestFile.isFile()) {
+      if( !featureManifestFile.exists() || !featureManifestFile.isFile() ) {
         return null;
       }
 
       // parse the feature manifest
-      FeatureManifest featureManifest = FeatureManifestParser.parseFeature(new FileInputStream(featureManifestFile));
+      FeatureManifest featureManifest = FeatureManifestParser.parseFeature( new FileInputStream( featureManifestFile ) );
 
       // return the feature description
-      return new FeatureDescription(directory, featureManifest);
+      return new FeatureDescription( directory, featureManifest );
 
-    } catch (Exception e) {
+    } catch( Exception e ) {
       // throw new RuntimeException(e.getMessage(), e);
       // TODO: handle exception
       return null;
     }
   }
-}
+  
+} /* ENDCLASS */

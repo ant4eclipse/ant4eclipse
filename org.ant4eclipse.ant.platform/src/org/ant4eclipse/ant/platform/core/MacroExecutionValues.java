@@ -38,9 +38,9 @@ public class MacroExecutionValues {
    */
   public MacroExecutionValues() {
     // create properties map
-    this.properties = new StringMap();
+    properties = new StringMap();
     // create references map
-    this.references = new HashMap<String,Object>();
+    references = new HashMap<String,Object>();
   }
 
   /**
@@ -55,7 +55,7 @@ public class MacroExecutionValues {
    */
   public StringMap getProperties( String prefix ) {
     StringMap result = new StringMap();
-    for( Map.Entry<String,String> pair : this.properties.entrySet() ) {
+    for( Map.Entry<String,String> pair : properties.entrySet() ) {
       result.put( String.format( "%s.%s", prefix, pair.getKey() ), pair.getValue() );
     }
     return result;
@@ -69,7 +69,7 @@ public class MacroExecutionValues {
    * @return the map with all properties.
    */
   public StringMap getProperties() {
-    return this.properties;
+    return properties;
   }
 
   /**
@@ -80,7 +80,7 @@ public class MacroExecutionValues {
    * @return the map with all references.
    */
   public Map<String,Object> getReferences() {
-    return this.references;
+    return references;
   }
   
 } /* ENDCLASS */

@@ -19,8 +19,8 @@ import org.ant4eclipse.lib.pydt.AllPydtTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({ AllCoreTests.class, AllJDTTests.class, AllPDETests.class, AllPlatformTests.class,
-    AllPydtTests.class })
+@RunWith( Suite.class )
+@Suite.SuiteClasses( { AllCoreTests.class, AllJDTTests.class, AllPDETests.class, AllPlatformTests.class,
+    AllPydtTests.class } )
 public class LibTests {
 } /* ENDCLASS */

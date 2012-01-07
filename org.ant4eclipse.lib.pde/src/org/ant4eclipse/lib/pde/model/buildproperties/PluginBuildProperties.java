@@ -27,19 +27,19 @@ import java.util.Map;
 public class PluginBuildProperties extends AbstractBuildProperties {
 
   /** list of libraries */
-  private Map<String, Library> _libraries;
+  private Map<String,Library> _libraries;
 
   // /** (deprecated) same effect than extra.<library> except that the entries are applied to all libraries */
   // private List _jarsExtraClasspath;
 
   /** defines the order in which jars should be compiled (in case there are multiple libraries) */
-  private String[]             _jarsCompileOrder;
+  private String[]            _jarsCompileOrder;
 
   /** Returns the javac source level for this plugin (If not set, 1.3 is the default value) */
-  private String               _javacSource = "1.3";
+  private String              _javacSource = "1.3";
 
   /** Returns the class compatibility level. (if not set 1.2 is the default value) */
-  private String               _javacTarget = "1.2";
+  private String              _javacTarget = "1.2";
 
   /**
    * The list of additional bundles, that are added to the compile-time classpath only (<b>additional.bundles</b>).
@@ -47,20 +47,20 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * <p>
    * This property can be set using the "Automated Management of Dependencies" section in the Manifest editor
    */
-  private String[]             _additionalBundles;
+  private String[]            _additionalBundles;
 
   /**
    *
    */
   public PluginBuildProperties() {
-    this._libraries = new HashMap<String, Library>();
+    _libraries = new HashMap<String,Library>();
   }
 
   /**
    * @return Returns the libraries.
    */
   public Library[] getLibraries() {
-    return this._libraries.values().toArray(new Library[0]);
+    return _libraries.values().toArray( new Library[0] );
   }
 
   /**
@@ -69,18 +69,18 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * 
    * @return
    */
-  public String getLibrariesSourceRoots(String sourcePostfix) {
+  public String getLibrariesSourceRoots( String sourcePostfix ) {
 
     StringBuffer buffer = new StringBuffer();
 
-    for (Iterator<Library> iterator = this._libraries.values().iterator(); iterator.hasNext();) {
+    for( Iterator<Library> iterator = _libraries.values().iterator(); iterator.hasNext(); ) {
       Library library = iterator.next();
-      buffer.append(library.getName());
-      if (!library.isSelf() && sourcePostfix != null) {
-        buffer.append(sourcePostfix);
+      buffer.append( library.getName() );
+      if( !library.isSelf() && sourcePostfix != null ) {
+        buffer.append( sourcePostfix );
       }
-      if (iterator.hasNext()) {
-        buffer.append(",");
+      if( iterator.hasNext() ) {
+        buffer.append( "," );
       }
     }
 
@@ -91,10 +91,10 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @param library
    *          add the specified library to the build properties.
    */
-  public void addLibrary(Library library) {
-    Assure.notNull("library", library);
-    if (!this._libraries.containsKey(library.getName())) {
-      this._libraries.put(library.getName(), library);
+  public void addLibrary( Library library ) {
+    Assure.notNull( "library", library );
+    if( !_libraries.containsKey( library.getName() ) ) {
+      _libraries.put( library.getName(), library );
     }
   }
 
@@ -105,9 +105,9 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          (eq. "." or "library1.jar")
    * @return The Library object or null if no such library exists
    */
-  public Library getLibrary(String libraryName) {
-    Assure.notNull("libraryName", libraryName);
-    return this._libraries.get(libraryName);
+  public Library getLibrary( String libraryName ) {
+    Assure.notNull( "libraryName", libraryName );
+    return _libraries.get( libraryName );
   }
 
   /**
@@ -117,16 +117,16 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          (eg. "." or "library1.jar")
    * @return true or false
    */
-  public boolean hasLibrary(String libraryName) {
-    Assure.notNull("libraryName", libraryName);
-    return this._libraries.containsKey(libraryName);
+  public boolean hasLibrary( String libraryName ) {
+    Assure.notNull( "libraryName", libraryName );
+    return _libraries.containsKey( libraryName );
   }
 
   /**
    * @return Returns the jarsCompileOrder.
    */
   public String[] getJarsCompileOrder() {
-    return this._jarsCompileOrder;
+    return _jarsCompileOrder;
   }
 
   /**
@@ -139,46 +139,47 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     // build libraries
     String[] jars = getJarsCompileOrder();
     Collection<Library> libraries = null;
-    if (jars == null || jars.length < 1) {
+    if( jars == null || jars.length < 1 ) {
       // no build order specified, hope we don't need one...
-      libraries = this._libraries.values();
+      libraries = _libraries.values();
     } else {
       libraries = new ArrayList<Library>();
-      for (String jar : jars) {
-        Library library = getLibrary(jar);
-        if (library != null) {
-          libraries.add(library);
+      for( String jar : jars ) {
+        Library library = getLibrary( jar );
+        if( library != null ) {
+          libraries.add( library );
         } else {
-          A4ELogging.warn("Library '%s' specified in 'jars.compile.order' is not in defined in build.properties!", jar);
+          A4ELogging
+              .warn( "Library '%s' specified in 'jars.compile.order' is not in defined in build.properties!", jar );
         }
       }
     }
-    return libraries.toArray(new Library[libraries.size()]);
+    return libraries.toArray( new Library[libraries.size()] );
   }
 
   /**
    * @param compileOrder
    *          The compileOrder to set.
    */
-  void setJarsCompileOrder(String[] compileOrder) {
-    Assure.notNull("compileOrder", compileOrder);
-    this._jarsCompileOrder = compileOrder;
+  void setJarsCompileOrder( String[] compileOrder ) {
+    Assure.notNull( "compileOrder", compileOrder );
+    _jarsCompileOrder = compileOrder;
   }
 
   /**
    * @return the additionalBundles
    */
   public String[] getAdditionalBundles() {
-    return this._additionalBundles;
+    return _additionalBundles;
   }
 
   /**
    * @param additionalBundles
    *          the additionalBundles to set
    */
-  public void setAdditionalBundles(String[] additionalBundles) {
-    Assure.notNull("additionalBundles", additionalBundles);
-    this._additionalBundles = additionalBundles;
+  public void setAdditionalBundles( String[] additionalBundles ) {
+    Assure.notNull( "additionalBundles", additionalBundles );
+    _additionalBundles = additionalBundles;
   }
 
   /**
@@ -187,7 +188,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return
    */
   public boolean hasAdditionalBundles() {
-    return (this._additionalBundles != null);
+    return(_additionalBundles != null);
   }
 
   /**
@@ -232,23 +233,23 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     /**
      * @param name
      */
-    public Library(String name) {
-      Assure.notNull("name", name);
-      this._name = name;
+    public Library( String name ) {
+      Assure.notNull( "name", name );
+      _name = name;
     }
 
     /**
      * @return Returns the name.
      */
     public String getName() {
-      return this._name;
+      return _name;
     }
 
     /**
      * @return Returns the manifest.
      */
     public String getManifest() {
-      return this._manifest;
+      return _manifest;
     }
 
     /**
@@ -259,7 +260,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @return Returns the output.
      */
     public String[] getOutput() {
-      return this._output;
+      return _output;
     }
 
     /**
@@ -269,28 +270,28 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @return
      */
     public boolean hasOutput() {
-      return this._output != null && this._output.length > 0;
+      return _output != null && _output.length > 0;
     }
 
     /**
      * @return Returns the source.
      */
     public String[] getSource() {
-      return this._source;
+      return _source;
     }
 
     /**
      * @return
      */
     public boolean hasSource() {
-      return this._source != null && this._source.length > 0;
+      return _source != null && _source.length > 0;
     }
 
     /**
      * @return Returns the exclude.
      */
     public String getExclude() {
-      return this._exclude;
+      return _exclude;
     }
 
     /**
@@ -299,18 +300,18 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     @Override
     public String toString() {
       StringBuffer buffer = new StringBuffer();
-      buffer.append("[PluginBuildProperties.Libary");
-      buffer.append(" name:");
-      buffer.append(this._name);
-      buffer.append(", manifest:");
-      buffer.append(this._manifest);
-      buffer.append(", source:");
-      buffer.append(Arrays.asList(this._source));
-      buffer.append(", output:");
-      buffer.append(Arrays.asList(this._output));
-      buffer.append(", exclude:");
-      buffer.append(this._exclude);
-      buffer.append("]");
+      buffer.append( "[PluginBuildProperties.Libary" );
+      buffer.append( " name:" );
+      buffer.append( _name );
+      buffer.append( ", manifest:" );
+      buffer.append( _manifest );
+      buffer.append( ", source:" );
+      buffer.append( Arrays.asList( _source ) );
+      buffer.append( ", output:" );
+      buffer.append( Arrays.asList( _output ) );
+      buffer.append( ", exclude:" );
+      buffer.append( _exclude );
+      buffer.append( "]" );
       return buffer.toString();
     }
 
@@ -318,63 +319,63 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     public int hashCode() {
       int PRIME = 31;
       int result = 1;
-      result = PRIME * result + ((this._exclude == null) ? 0 : this._exclude.hashCode());
-      result = PRIME * result + ((this._manifest == null) ? 0 : this._manifest.hashCode());
-      result = PRIME * result + ((this._name == null) ? 0 : this._name.hashCode());
-      result = PRIME * result + Library.hashCode(this._output);
-      result = PRIME * result + Library.hashCode(this._source);
+      result = PRIME * result + ((_exclude == null) ? 0 : _exclude.hashCode());
+      result = PRIME * result + ((_manifest == null) ? 0 : _manifest.hashCode());
+      result = PRIME * result + ((_name == null) ? 0 : _name.hashCode());
+      result = PRIME * result + Library.hashCode( _output );
+      result = PRIME * result + Library.hashCode( _source );
       return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
+    public boolean equals( Object obj ) {
+      if( this == obj ) {
         return true;
       }
-      if (obj == null) {
+      if( obj == null ) {
         return false;
       }
-      if (getClass() != obj.getClass()) {
+      if( getClass() != obj.getClass() ) {
         return false;
       }
       Library other = (Library) obj;
-      if (this._exclude == null) {
-        if (other._exclude != null) {
+      if( _exclude == null ) {
+        if( other._exclude != null ) {
           return false;
         }
-      } else if (!this._exclude.equals(other._exclude)) {
+      } else if( !_exclude.equals( other._exclude ) ) {
         return false;
       }
-      if (this._manifest == null) {
-        if (other._manifest != null) {
+      if( _manifest == null ) {
+        if( other._manifest != null ) {
           return false;
         }
-      } else if (!this._manifest.equals(other._manifest)) {
+      } else if( !_manifest.equals( other._manifest ) ) {
         return false;
       }
-      if (this._name == null) {
-        if (other._name != null) {
+      if( _name == null ) {
+        if( other._name != null ) {
           return false;
         }
-      } else if (!this._name.equals(other._name)) {
+      } else if( !_name.equals( other._name ) ) {
         return false;
       }
-      if (!Arrays.equals(this._output, other._output)) {
+      if( !Arrays.equals( _output, other._output ) ) {
         return false;
       }
-      if (!Arrays.equals(this._source, other._source)) {
+      if( !Arrays.equals( _source, other._source ) ) {
         return false;
       }
       return true;
     }
 
-    private static int hashCode(Object[] array) {
+    private static int hashCode( Object[] array ) {
       int PRIME = 31;
-      if (array == null) {
+      if( array == null ) {
         return 0;
       }
       int result = 1;
-      for (Object element : array) {
+      for( Object element : array ) {
         result = PRIME * result + (element == null ? 0 : element.hashCode());
       }
       return result;
@@ -388,32 +389,32 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * @param manifest
      *          the manifest to set.
      */
-    void setManifest(String manifest) {
-      this._manifest = manifest;
+    void setManifest( String manifest ) {
+      _manifest = manifest;
     }
 
     /**
      * @param output
      *          The output to set.
      */
-    void setOutput(String[] output) {
-      this._output = output;
+    void setOutput( String[] output ) {
+      _output = output;
     }
 
     /**
      * @param source
      *          The source to set.
      */
-    void setSource(String[] source) {
-      this._source = source;
+    void setSource( String[] source ) {
+      _source = source;
     }
 
     /**
      * @param exclude
      *          The exclude to set.
      */
-    void setExclude(String exclude) {
-      this._exclude = exclude;
+    void setExclude( String exclude ) {
+      _exclude = exclude;
     }
 
     /**
@@ -421,7 +422,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      * 
      */
     public boolean isSelf() {
-      return ".".equals(getName());
+      return ".".equals( getName() );
     }
   }
 
@@ -430,22 +431,22 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return the source compatibility level or 1.3 (default value); never null
    */
   public String getJavacSource() {
-    return this._javacSource == null ? "1.3" : this._javacSource;
+    return _javacSource == null ? "1.3" : _javacSource;
   }
 
-  public void setJavacSource(String javacSource) {
-    this._javacSource = javacSource;
+  public void setJavacSource( String javacSource ) {
+    _javacSource = javacSource;
   }
 
   /**
    * @return the class compatibility level or 1.2 (default value); never null
    */
   public String getJavacTarget() {
-    return this._javacTarget == null ? "1.2" : this._javacTarget;
+    return _javacTarget == null ? "1.2" : _javacTarget;
   }
 
-  public void setJavacTarget(String javacTarget) {
-    this._javacTarget = javacTarget;
+  public void setJavacTarget( String javacTarget ) {
+    _javacTarget = javacTarget;
   }
 
-}
+} /* ENDCLASS */

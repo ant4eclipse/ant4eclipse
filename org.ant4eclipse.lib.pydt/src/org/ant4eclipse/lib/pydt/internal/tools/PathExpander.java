@@ -46,10 +46,10 @@ public class PathExpander {
    * @param project
    *          The project instance currently used for the path expansion. Not <code>null</code>.
    */
-  public PathExpander(EclipseProject project) {
-    Assure.notNull("project", project);
-    this._project = project;
-    this._workspace = this._project.getWorkspace();
+  public PathExpander( EclipseProject project ) {
+    Assure.notNull( "project", project );
+    _project = project;
+    _workspace = _project.getWorkspace();
   }
 
   /**
@@ -62,19 +62,19 @@ public class PathExpander {
    * 
    * @return A list of resolved filesystem locations. Not <code>null</code>.
    */
-  public File[] expand(ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle) {
-    Assure.notNull("entries", entries);
-    Assure.notNull("pathstyle", pathstyle);
+  public File[] expand( ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle ) {
+    Assure.notNull( "entries", entries );
+    Assure.notNull( "pathstyle", pathstyle );
     List<File> list = new ArrayList<File>();
-    for (ResolvedPathEntry entry : entries) {
-      expand(list, entry);
+    for( ResolvedPathEntry entry : entries ) {
+      expand( list, entry );
     }
-    if (pathstyle != EclipseProject.PathStyle.ABSOLUTE) {
-      for (int i = 0; i < list.size(); i++) {
-        list.set(i, getRelative(list.get(i), pathstyle));
+    if( pathstyle != EclipseProject.PathStyle.ABSOLUTE ) {
+      for( int i = 0; i < list.size(); i++ ) {
+        list.set( i, getRelative( list.get( i ), pathstyle ) );
       }
     }
-    return list.toArray(new File[list.size()]);
+    return list.toArray( new File[list.size()] );
   }
 
   /**
@@ -88,22 +88,22 @@ public class PathExpander {
    * 
    * @return The relative filesystem location description as desired. Not <code>null</code>.
    */
-  private File getRelative(File file, EclipseProject.PathStyle pathstyle) {
-    String relativepath = Utilities.calcRelative(this._project.getFolder(), file);
-    if (relativepath == null) {
-      throw new Ant4EclipseException(PydtExceptionCode.NO_RELATIVE_PATH, this._project.getFolder(), file);
+  private File getRelative( File file, EclipseProject.PathStyle pathstyle ) {
+    String relativepath = Utilities.calcRelative( _project.getFolder(), file );
+    if( relativepath == null ) {
+      throw new Ant4EclipseException( PydtExceptionCode.NO_RELATIVE_PATH, _project.getFolder(), file );
     }
-    if (pathstyle == EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME) {
-      if (relativepath.length() == 0) {
-        return new File(this._project.getFolderName());
+    if( pathstyle == EclipseProject.PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ) {
+      if( relativepath.length() == 0 ) {
+        return new File( _project.getFolderName() );
       } else {
-        return new File(this._project.getFolderName() + File.separator + relativepath);
+        return new File( _project.getFolderName() + File.separator + relativepath );
       }
     } else /* if (pathstyle == EclipseProject.PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME) */{
-      if (relativepath.length() == 0) {
-        return new File(".");
+      if( relativepath.length() == 0 ) {
+        return new File( "." );
       } else {
-        return new File(relativepath);
+        return new File( relativepath );
       }
     }
   }
@@ -116,74 +116,74 @@ public class PathExpander {
    * @param entry
    *          A resolved path entry which have to be translated into a filesystem path. Not <code>null</code>.
    */
-  private void expand(List<File> receiver, ResolvedPathEntry entry) {
-    if (entry.getKind() == ReferenceKind.Container) {
-      expandContainer(receiver, (ResolvedContainerEntry) entry);
-    } else if (entry.getKind() == ReferenceKind.Library) {
-      expandLibrary(receiver, (ResolvedLibraryEntry) entry);
-    } else if (entry.getKind() == ReferenceKind.Project) {
-      expandProject(receiver, (ResolvedProjectEntry) entry);
-    } else if (entry.getKind() == ReferenceKind.Runtime) {
-      expandRuntime(receiver, (ResolvedRuntimeEntry) entry);
+  private void expand( List<File> receiver, ResolvedPathEntry entry ) {
+    if( entry.getKind() == ReferenceKind.Container ) {
+      expandContainer( receiver, (ResolvedContainerEntry) entry );
+    } else if( entry.getKind() == ReferenceKind.Library ) {
+      expandLibrary( receiver, (ResolvedLibraryEntry) entry );
+    } else if( entry.getKind() == ReferenceKind.Project ) {
+      expandProject( receiver, (ResolvedProjectEntry) entry );
+    } else if( entry.getKind() == ReferenceKind.Runtime ) {
+      expandRuntime( receiver, (ResolvedRuntimeEntry) entry );
     } else /* if (entry.getKind() == ReferenceKind.Source) */{
-      expandSource(receiver, (ResolvedSourceEntry) entry);
+      expandSource( receiver, (ResolvedSourceEntry) entry );
     }
   }
 
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandSource(List<File> receiver, ResolvedSourceEntry entry) {
+  private void expandSource( List<File> receiver, ResolvedSourceEntry entry ) {
     File sourcefolder = null;
-    if (entry.getFolder() == null) {
-      sourcefolder = getProject(entry).getFolder(EclipseProject.PathStyle.ABSOLUTE);
+    if( entry.getFolder() == null ) {
+      sourcefolder = getProject( entry ).getFolder( EclipseProject.PathStyle.ABSOLUTE );
     } else {
-      sourcefolder = getProject(entry).getChild(entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE);
+      sourcefolder = getProject( entry ).getChild( entry.getFolder(), EclipseProject.PathStyle.ABSOLUTE );
     }
-    receiver.add(sourcefolder);
+    receiver.add( sourcefolder );
   }
 
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandRuntime(List<File> receiver, ResolvedRuntimeEntry entry) {
+  private void expandRuntime( List<File> receiver, ResolvedRuntimeEntry entry ) {
     File[] libraries = entry.getLibraries();
-    for (File lib : libraries) {
-      receiver.add(lib);
+    for( File lib : libraries ) {
+      receiver.add( lib );
     }
   }
 
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandProject(List<File> receiver, ResolvedProjectEntry entry) {
-    if (entry.getProjectname().equals(entry.getOwningProjectname())) {
-      receiver.add(getProject(entry).getFolder(EclipseProject.PathStyle.ABSOLUTE));
+  private void expandProject( List<File> receiver, ResolvedProjectEntry entry ) {
+    if( entry.getProjectname().equals( entry.getOwningProjectname() ) ) {
+      receiver.add( getProject( entry ).getFolder( EclipseProject.PathStyle.ABSOLUTE ) );
     } else {
-      EclipseProject otherproject = this._workspace.getProject(entry.getProjectname());
-      receiver.add(otherproject.getFolder(EclipseProject.PathStyle.ABSOLUTE));
+      EclipseProject otherproject = _workspace.getProject( entry.getProjectname() );
+      receiver.add( otherproject.getFolder( EclipseProject.PathStyle.ABSOLUTE ) );
     }
   }
 
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandLibrary(List<File> receiver, ResolvedLibraryEntry entry) {
-    EclipseProject project = this._workspace.getProject(entry.getOwningProjectname());
-    File file = new File(entry.getLocation());
-    if (!file.isAbsolute()) {
-      file = project.getChild(entry.getLocation(), EclipseProject.PathStyle.ABSOLUTE);
+  private void expandLibrary( List<File> receiver, ResolvedLibraryEntry entry ) {
+    EclipseProject project = _workspace.getProject( entry.getOwningProjectname() );
+    File file = new File( entry.getLocation() );
+    if( !file.isAbsolute() ) {
+      file = project.getChild( entry.getLocation(), EclipseProject.PathStyle.ABSOLUTE );
     }
-    receiver.add(file);
+    receiver.add( file );
   }
 
   /**
    * @see #expand(ResolvedPathEntry[])
    */
-  private void expandContainer(List<File> receiver, ResolvedContainerEntry entry) {
+  private void expandContainer( List<File> receiver, ResolvedContainerEntry entry ) {
     File[] pathes = entry.getPathes();
-    for (File path : pathes) {
-      receiver.add(path);
+    for( File path : pathes ) {
+      receiver.add( path );
     }
   }
 
@@ -195,8 +195,8 @@ public class PathExpander {
    * 
    * @return The project associated with the supplied entry. Not <code>null</code>.
    */
-  private EclipseProject getProject(ResolvedPathEntry entry) {
-    return this._workspace.getProject(entry.getOwningProjectname());
+  private EclipseProject getProject( ResolvedPathEntry entry ) {
+    return _workspace.getProject( entry.getOwningProjectname() );
   }
 
 } /* ENDCLASS */

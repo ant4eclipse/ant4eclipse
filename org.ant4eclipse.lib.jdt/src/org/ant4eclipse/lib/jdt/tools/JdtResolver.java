@@ -52,11 +52,11 @@ public class JdtResolver {
    *          an optional list with class path container arguments
    * @return the resolved class path
    */
-  public static final ResolvedClasspath resolveProjectClasspath(EclipseProject project, boolean resolveRelative,
-      boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
+  public static final ResolvedClasspath resolveProjectClasspath( EclipseProject project, boolean resolveRelative,
+      boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments ) {
 
-      // cache is disabled, always re-resolve classpath
-      return doResolveProjectClasspath(project, resolveRelative, isRuntimeClasspath, classpathContainerArguments);
+    // cache is disabled, always re-resolve classpath
+    return doResolveProjectClasspath( project, resolveRelative, isRuntimeClasspath, classpathContainerArguments );
   }
 
   /**
@@ -69,17 +69,17 @@ public class JdtResolver {
    * @param classpathContainerArguments
    * @return
    */
-  private static final ResolvedClasspath doResolveProjectClasspath(EclipseProject project, boolean resolveRelative,
-      boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments) {
+  private static final ResolvedClasspath doResolveProjectClasspath( EclipseProject project, boolean resolveRelative,
+      boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments ) {
 
-    Assure.notNull("project", project);
+    Assure.notNull( "project", project );
 
     // create a ResolverJob
-    ResolverJob job = new ResolverJob(project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
-        classpathContainerArguments);
+    ResolverJob job = new ResolverJob( project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
+        classpathContainerArguments );
 
     // create the ClasspathEntryResolverExecutor
-    ClasspathEntryResolverExecutor executor = new ClasspathEntryResolverExecutor(true);
+    ClasspathEntryResolverExecutor executor = new ClasspathEntryResolverExecutor( true );
 
     // create the ClasspathEntryResolvers
     ClasspathEntryResolver[] resolvers = new ClasspathEntryResolver[] { new VariableClasspathEntryResolver(),
@@ -90,10 +90,11 @@ public class JdtResolver {
     ResolvedClasspathImpl resolvedClasspath = new ResolvedClasspathImpl();
 
     // execute the job
-    executor.resolve(job.getRootProject(), resolvers,
-        new ClasspathResolverContextImpl(executor, job, resolvedClasspath));
+    executor.resolve( job.getRootProject(), resolvers, new ClasspathResolverContextImpl( executor, job,
+        resolvedClasspath ) );
 
     // return the ResolvedClasspath
     return resolvedClasspath;
   }
-}
+
+} /* ENDCLASS */

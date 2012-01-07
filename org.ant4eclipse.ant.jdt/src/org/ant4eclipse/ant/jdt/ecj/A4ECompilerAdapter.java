@@ -93,7 +93,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
    *          <code>true</code> <=> Enable warn messages.
    */
   public void setWarnings( boolean newwarnings ) {
-    this._warnings = newwarnings;
+    _warnings = newwarnings;
   }
 
   /**
@@ -158,7 +158,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
         for( SourceFile sourceFile : sourceFiles ) {
           if( fileName.equals( sourceFile.getSourceFileName() ) ) {
             if( !categorizedProblem.isError() ) {
-              if( !this._warnings ) {
+              if( !_warnings ) {
                 continue;
               }
             }
@@ -297,8 +297,8 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
       // log
       A4ELogging.info( "Compiling %s source %s (filtered %s source %s from source file list).", Integer
-          .valueOf( filelist.length ), filelist.length > 1 ? "files" : "file", Integer.valueOf( this.compileList.length
-          - filelist.length ), this.compileList.length - filelist.length > 1 ? "files" : "file" );
+          .valueOf( filelist.length ), filelist.length > 1 ? "files" : "file", Integer.valueOf( compileList.length
+          - filelist.length ), compileList.length - filelist.length > 1 ? "files" : "file" );
     }
 
     // iterate over all the source files and create SourceFile

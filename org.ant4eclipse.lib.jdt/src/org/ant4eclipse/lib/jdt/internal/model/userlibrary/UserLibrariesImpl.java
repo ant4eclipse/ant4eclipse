@@ -22,15 +22,15 @@ import java.util.Map;
  * 
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  */
-public final class UserLibrariesImpl implements UserLibraries {
+public class UserLibrariesImpl implements UserLibraries {
 
-  private Map<String, UserLibraryImpl> _libraries;
+  private Map<String,UserLibraryImpl> _libraries;
 
   /**
    * Initialises this data structure used to collect the content of an eclipse user library configuration file.
    */
   public UserLibrariesImpl() {
-    this._libraries = new Hashtable<String, UserLibraryImpl>();
+    _libraries = new Hashtable<String,UserLibraryImpl>();
   }
 
   /**
@@ -39,27 +39,27 @@ public final class UserLibrariesImpl implements UserLibraries {
    * @param userlibrary
    *          The user library entry which shall be added.
    */
-  public void addLibrary(UserLibraryImpl userlibrary) {
-    Assure.notNull("userlibrary", userlibrary);
-    this._libraries.put(userlibrary.getName(), userlibrary);
+  public void addLibrary( UserLibraryImpl userlibrary ) {
+    Assure.notNull( "userlibrary", userlibrary );
+    _libraries.put( userlibrary.getName(), userlibrary );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public boolean hasLibrary(String name) {
-    Assure.notNull("name", name);
-    return this._libraries.containsKey(name);
+  public boolean hasLibrary( String name ) {
+    Assure.notNull( "name", name );
+    return _libraries.containsKey( name );
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public UserLibraryImpl getLibrary(String name) {
-    Assure.notNull("name", name);
-    return this._libraries.get(name);
+  public UserLibraryImpl getLibrary( String name ) {
+    Assure.notNull( "name", name );
+    return _libraries.get( name );
   }
 
   /**
@@ -67,8 +67,8 @@ public final class UserLibrariesImpl implements UserLibraries {
    */
   @Override
   public String[] getAvailableLibraries() {
-    String[] result = new String[this._libraries.size()];
-    this._libraries.keySet().toArray(result);
+    String[] result = new String[_libraries.size()];
+    _libraries.keySet().toArray( result );
     return result;
   }
 

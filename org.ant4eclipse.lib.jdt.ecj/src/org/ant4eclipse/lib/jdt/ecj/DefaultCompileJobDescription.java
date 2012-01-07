@@ -27,13 +27,13 @@ import java.util.Map;
 public class DefaultCompileJobDescription implements CompileJobDescription {
 
   /** the ClassFileLoader */
-  private ClassFileLoader     _classFileLoader;
+  private ClassFileLoader    _classFileLoader;
 
   /** the compiler options */
-  private Map<String, String> _compilerOptions;
+  private Map<String,String> _compilerOptions;
 
   /** the source files */
-  private SourceFile[]        _sourceFiles;
+  private SourceFile[]       _sourceFiles;
 
   /**
    * <p>
@@ -53,14 +53,14 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    * @param sourceFiles
    */
-  public DefaultCompileJobDescription(ClassFileLoader classFileLoader, StringMap compilerOptions,
-      SourceFile[] sourceFiles) {
-    Assure.notNull("classFileLoader", classFileLoader);
-    Assure.notNull("compilerOptions", compilerOptions);
-    Assure.notNull("sourceFiles", sourceFiles);
-    this._classFileLoader = classFileLoader;
-    this._compilerOptions = compilerOptions;
-    this._sourceFiles = sourceFiles;
+  public DefaultCompileJobDescription( ClassFileLoader classFileLoader, StringMap compilerOptions,
+      SourceFile[] sourceFiles ) {
+    Assure.notNull( "classFileLoader", classFileLoader );
+    Assure.notNull( "compilerOptions", compilerOptions );
+    Assure.notNull( "sourceFiles", sourceFiles );
+    _classFileLoader = classFileLoader;
+    _compilerOptions = compilerOptions;
+    _sourceFiles = sourceFiles;
   }
 
   /**
@@ -68,15 +68,15 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    */
   @Override
   public ClassFileLoader getClassFileLoader() {
-    return this._classFileLoader;
+    return _classFileLoader;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public Map<String, String> getCompilerOptions() {
-    return this._compilerOptions;
+  public Map<String,String> getCompilerOptions() {
+    return _compilerOptions;
   }
 
   /**
@@ -84,7 +84,7 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    */
   @Override
   public SourceFile[] getSourceFiles() {
-    return this._sourceFiles;
+    return _sourceFiles;
   }
 
   /**
@@ -95,9 +95,9 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param classFileLoader
    *          the class file loader.
    */
-  public void setClassFileLoader(ClassFileLoader classFileLoader) {
-    Assure.notNull("classFileLoader", classFileLoader);
-    this._classFileLoader = classFileLoader;
+  public void setClassFileLoader( ClassFileLoader classFileLoader ) {
+    Assure.notNull( "classFileLoader", classFileLoader );
+    _classFileLoader = classFileLoader;
   }
 
   /**
@@ -108,9 +108,9 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    *          the compiler options.
    */
-  public void setCompilerOptions(Map<String, String> compilerOptions) {
-    Assure.notNull("compilerOptions", compilerOptions);
-    this._compilerOptions = compilerOptions;
+  public void setCompilerOptions( Map<String,String> compilerOptions ) {
+    Assure.notNull( "compilerOptions", compilerOptions );
+    _compilerOptions = compilerOptions;
   }
 
   /**
@@ -121,9 +121,9 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param sourceFiles
    *          the source files.
    */
-  public void setSourceFiles(SourceFile[] sourceFiles) {
-    Assure.notNull("sourceFiles", sourceFiles);
-    this._sourceFiles = sourceFiles;
+  public void setSourceFiles( SourceFile[] sourceFiles ) {
+    Assure.notNull( "sourceFiles", sourceFiles );
+    _sourceFiles = sourceFiles;
   }
 
   /**
@@ -132,42 +132,42 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
   @Override
   public String toString() {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("[DefaultCompileJobDescription:");
-    buffer.append(" _classFileLoader: ");
-    buffer.append(this._classFileLoader);
-    buffer.append(", _compilerOptions: {");
-    if ((this._compilerOptions != null) && (this._compilerOptions.size() > 0)) {
-      Iterator<Map.Entry<String, String>> iterator = this._compilerOptions.entrySet().iterator();
-      Map.Entry<String, String> current = iterator.next();
-      buffer.append("(");
-      buffer.append(current.getKey());
-      buffer.append(",");
-      buffer.append(current.getValue());
-      buffer.append(")");
-      while (iterator.hasNext()) {
-        buffer.append(",");
+    buffer.append( "[DefaultCompileJobDescription:" );
+    buffer.append( " _classFileLoader: " );
+    buffer.append( _classFileLoader );
+    buffer.append( ", _compilerOptions: {" );
+    if( (_compilerOptions != null) && (_compilerOptions.size() > 0) ) {
+      Iterator<Map.Entry<String,String>> iterator = _compilerOptions.entrySet().iterator();
+      Map.Entry<String,String> current = iterator.next();
+      buffer.append( "(" );
+      buffer.append( current.getKey() );
+      buffer.append( "," );
+      buffer.append( current.getValue() );
+      buffer.append( ")" );
+      while( iterator.hasNext() ) {
+        buffer.append( "," );
         current = iterator.next();
-        buffer.append("(");
-        buffer.append(current.getKey());
-        buffer.append(",");
-        buffer.append(current.getValue());
-        buffer.append(")");
+        buffer.append( "(" );
+        buffer.append( current.getKey() );
+        buffer.append( "," );
+        buffer.append( current.getValue() );
+        buffer.append( ")" );
       }
     }
-    buffer.append(this._compilerOptions);
-    buffer.append("}");
-    buffer.append(", _sourceFiles: {");
-    if ((this._sourceFiles != null) && (this._sourceFiles.length > 0)) {
-      buffer.append(this._sourceFiles[0]);
-      for (int i = 1; i < this._sourceFiles.length; i++) {
-        buffer.append(", ");
-        buffer.append(this._sourceFiles[i]);
+    buffer.append( _compilerOptions );
+    buffer.append( "}" );
+    buffer.append( ", _sourceFiles: {" );
+    if( (_sourceFiles != null) && (_sourceFiles.length > 0) ) {
+      buffer.append( _sourceFiles[0] );
+      for( int i = 1; i < _sourceFiles.length; i++ ) {
+        buffer.append( ", " );
+        buffer.append( _sourceFiles[i] );
       }
     }
-    buffer.append(this._sourceFiles);
-    buffer.append("}");
-    buffer.append("]");
+    buffer.append( _sourceFiles );
+    buffer.append( "}" );
+    buffer.append( "]" );
     return buffer.toString();
   }
 
-}
+} /* ENDCLASS */
