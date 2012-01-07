@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtClassPathTest;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 
@@ -26,11 +24,17 @@ import java.io.File;
  */
 public class UserLibrariesTest extends AbstractJdtClassPathTest {
 
+  private static final String USERLIBRARIES = 
+    "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+    "<eclipse-userlibraries version=\"2\">\n" +
+    "  <library name=\"testLibrary\" systemlibrary=\"true\">\n" +
+    "    <archive path=\"%s\"/>\n" +
+    "  </library>\n" +
+    "</eclipse-userlibraries>";
+  
   @Override
   public void setUp() throws Exception {
     super.setUp();
-
-    // set up the build file
     setupBuildFile( "userLibraries.xml" );
   }
 
@@ -46,35 +50,22 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
         .withContainerClasspathEntry( "org.eclipse.jdt.USER_LIBRARY/testLibrary" )
         .createIn( getTestWorkspaceDirectory() );
 
-    //
     getTestWorkspace().createFile( "myUserLibraries.xml", getContent() );
 
-    // set the properties
     getProject().setProperty( "projectName", "project" );
 
     // execute target
     String classpath = executeTestTarget( "project", true, true );
     System.err.println( classpath );
+    
     assertClasspath( classpath, new File( "project/bin" ), new File( getTestWorkspaceDirectory(), "haensel" ) );
+    
   }
 
   private String getContent() {
-
     String pathDir = getTestWorkspaceDirectory().getAbsolutePath() + File.separatorChar + "haensel";
-
     getTestWorkspace().createSubDirectory( "haensel" );
-
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" );
-    buffer.append( "<eclipse-userlibraries version=\"2\">" );
-    buffer.append( "<library name=\"testLibrary\" systemlibrary=\"true\">" );
-    buffer.append( "<archive path=\"" );
-    buffer.append( pathDir );
-    buffer.append( "\"/>" );
-    buffer.append( "</library>" );
-    buffer.append( "</eclipse-userlibraries>" );
-
-    return buffer.toString();
+    return String.format( USERLIBRARIES, pathDir );
   }
   
 } /* ENDCLASS */
