@@ -261,9 +261,9 @@ public class Assure {
    *          the message
    */
   public static final void assertTrue( boolean condition, String msg ) {
-    if( !condition ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, msg );
-    }
+//    if( !condition ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, msg );
+//    }
   }
 
   /**
