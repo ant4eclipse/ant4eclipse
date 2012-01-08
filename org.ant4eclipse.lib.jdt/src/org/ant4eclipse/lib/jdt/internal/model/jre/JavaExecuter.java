@@ -65,8 +65,11 @@ public class JavaExecuter {
   /** the qualified name of the main class */
   private String   _mainClass;
 
+  /** vm arguments */
+  private String[] _vmargs = new String[0];
+
   /** the program arguments */
-  private String[] _args = new String[0];
+  private String[] _args   = new String[0];
 
   /** the system out result */
   private String[] _systemOut;
@@ -103,6 +106,8 @@ public class JavaExecuter {
     // patch for the usage with clover instrumented classes...
     String ant4eclipseCloverPath = System.getProperty("clover.path");
     if (ant4eclipseCloverPath != null) {
+      // need more ram
+      javaExecuter.setVmargs(new String[] { "-Xmx128m" });
       String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split(File.pathSeparator);
       String[] finalEntries = new String[ant4eclipseCloverPathEntries.length + classpathentries.length];
       System.arraycopy(ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length);
@@ -204,6 +209,15 @@ public class JavaExecuter {
   }
 
   /**
+   * @param vmargs
+   *          the vmargs to set
+   */
+  public void setVmargs(String[] vmargs) {
+    Assure.notNull("vmargs", vmargs);
+    this._vmargs = vmargs;
+  }
+
+  /**
    * @throws IOException
    */
   public void execute() {
@@ -226,6 +240,14 @@ public class JavaExecuter {
     // create java command
     StringBuffer cmd = new StringBuffer();
     cmd.append(getJavaExecutable().getAbsolutePath());
+
+    // add VM arguments
+    for (String vmArg : this._vmargs) {
+      cmd.append(" ");
+      cmd.append(vmArg);
+    }
+
+    // add classpath
     cmd.append(" -cp ");
     if (classPathContainsBlanks) {
       cmd.append("\"");
@@ -234,8 +256,12 @@ public class JavaExecuter {
     if (classPathContainsBlanks) {
       cmd.append("\"");
     }
+
+    // add main class
     cmd.append(" ");
     cmd.append(this._mainClass);
+
+    // add program arguments
     for (String _arg : this._args) {
       cmd.append(" ");
       cmd.append(_arg);
