@@ -46,19 +46,19 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
    */
   public void testClasspathVariables() throws Exception {
     // create simple project 'project' with a source directory 'src' and a output directory 'bin'
-    JdtProjectBuilder.getPreConfiguredJdtBuilder( "project" )
+    JdtProjectBuilder.getPreConfiguredJdtBuilder( "projectk" )
         .withContainerClasspathEntry( "org.eclipse.jdt.USER_LIBRARY/testLibrary" )
         .createIn( getTestWorkspaceDirectory() );
 
     getTestWorkspace().createFile( "myUserLibraries.xml", getContent() );
 
-    getProject().setProperty( "projectName", "project" );
+    getProject().setProperty( "projectName", "projectk" );
 
     // execute target
-    String classpath = executeTestTarget( "project", true, true );
+    String classpath = executeTestTarget( "projectk", true, true );
     System.err.println( classpath );
     
-    assertClasspath( classpath, new File( "project/bin" ), new File( getTestWorkspaceDirectory(), "haensel" ) );
+    assertClasspath( classpath, new File( "projectk/bin" ), new File( getTestWorkspaceDirectory(), "haensel" ) );
     
   }
 
