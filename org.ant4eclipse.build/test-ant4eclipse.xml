@@ -162,7 +162,7 @@
         <not><equals arg1="@{htmldir}" arg2=""/></not>
         <then>
           <delete-dir dir="@{htmldir}" recreate="true"/>
-          <cobertura-report destdir="@{htmldir}" datafile="@{datafile}" format="html">
+          <cobertura-report destdir="@{htmldir}" datafile="@{datafile}" format="html" maxmemory="128m">
             <fileset dir="@{sourcesdir}">
               <include name="**/*.java"/>
             </fileset>
