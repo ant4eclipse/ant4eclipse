@@ -67,10 +67,10 @@ public class Assure {
    *          the object that must be set.
    */
   public static final void notNull( String parametername, Object object ) {
-    if( object == null ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTNULL,
-          parametername ) );
-    }
+//    if( object == null ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTNULL,
+//          parametername ) );
+//    }
   }
 
   /**
