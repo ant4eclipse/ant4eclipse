@@ -82,11 +82,11 @@ public class Assure {
    *          The object that has to be tested.
    */
   public static final void nonEmpty( String parametername, byte[] object ) {
-    notNull( parametername, object );
-    if( object.length == 0 ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
-          parametername ) );
-    }
+//    notNull( parametername, object );
+//    if( object.length == 0 ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_NOTEMPTY,
+//          parametername ) );
+//    }
   }
 
   /**
