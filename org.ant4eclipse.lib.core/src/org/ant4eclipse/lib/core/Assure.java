@@ -180,11 +180,11 @@ public class Assure {
    *          The type the parameter should be an instance of
    */
   public static final void instanceOf( String parameterName, Object parameter, Class<?> expectedType ) {
-    notNull( parameterName, parameter );
-    if( !expectedType.isInstance( parameter ) ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_INVALIDTYPE,
-          parameterName, expectedType.getName(), parameter.getClass().getName() ) );
-    }
+//    notNull( parameterName, parameter );
+//    if( !expectedType.isInstance( parameter ) ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_INVALIDTYPE,
+//          parameterName, expectedType.getName(), parameter.getClass().getName() ) );
+//    }
   }
 
   /**
@@ -196,10 +196,10 @@ public class Assure {
    *          the string that must provide a value.
    */
   public static final void nonEmpty( String param, String string ) {
-    notNull( param, string );
-    if( string.length() == 0 ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, MSG_STRINGMUSTBENONEMPTY );
-    }
+//    notNull( param, string );
+//    if( string.length() == 0 ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, MSG_STRINGMUSTBENONEMPTY );
+//    }
   }
 
   /**
@@ -211,11 +211,11 @@ public class Assure {
    *          the file that must exist.
    */
   public static final void exists( String param, File file ) {
-    notNull( param, file );
-    if( !file.exists() ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
-          MSG_RESOURCEDOESNOTEXIST, file.getAbsolutePath() ) );
-    }
+//    notNull( param, file );
+//    if( !file.exists() ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+//          MSG_RESOURCEDOESNOTEXIST, file.getAbsolutePath() ) );
+//    }
   }
 
   /**
