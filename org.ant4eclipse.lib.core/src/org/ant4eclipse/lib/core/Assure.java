@@ -227,11 +227,11 @@ public class Assure {
    *          the file that must be a file.
    */
   public static final void isFile( String param, File file ) {
-    Assure.exists( param, file );
-    if( !file.isFile() ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
-          MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath() ) );
-    }
+//    Assure.exists( param, file );
+//    if( !file.isFile() ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+//          MSG_RESOURCEISNOTAREGULARFILE, file.getAbsolutePath() ) );
+//    }
   }
 
   /**
@@ -243,11 +243,11 @@ public class Assure {
    *          the file that must be a directory.
    */
   public static final void isDirectory( String param, File file ) {
-    Assure.exists( param, file );
-    if( !file.isDirectory() ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
-          MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath() ) );
-    }
+//    Assure.exists( param, file );
+//    if( !file.isDirectory() ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format(
+//          MSG_RESOURCEISNOTADIRECTORY, file.getAbsolutePath() ) );
+//    }
   }
 
   /**
@@ -279,10 +279,10 @@ public class Assure {
    *          the upper bound inclusive.
    */
   public static final void inRange( int value, int from, int to ) {
-    if( (value < from) || (value > to) ) {
-      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_VALUEOUTOFRANGE,
-          Integer.valueOf( value ), Integer.valueOf( from ), Integer.valueOf( to ) ) );
-    }
+//    if( (value < from) || (value > to) ) {
+//      throw new Ant4EclipseException( CoreExceptionCode.PRECONDITION_VIOLATION, String.format( MSG_VALUEOUTOFRANGE,
+//          Integer.valueOf( value ), Integer.valueOf( from ), Integer.valueOf( to ) ) );
+//    }
   }
 
 } /* ENDCLASS */
