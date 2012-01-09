@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.buildproperties;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,8 +231,8 @@ public class AbstractBuildProperties {
    * 
    * @param excludes
    */
+  // Assure.notNull( "excludes", excludes );
   void setBinaryExcludes( List<String> excludes ) {
-    Assure.notNull( "excludes", excludes );
     _binExcludes = excludes;
   }
 
@@ -245,8 +243,8 @@ public class AbstractBuildProperties {
    * 
    * @param includes
    */
+  // Assure.notNull( "includes", includes );
   void setBinaryIncludes( List<String> includes ) {
-    Assure.notNull( "includes", includes );
     _binIncludes = includes;
   }
 
@@ -257,8 +255,8 @@ public class AbstractBuildProperties {
    * @param srcIncludes
    *          the srcIncludes to set
    */
+  // Assure.notNull( "srcIncludes", srcIncludes );
   void setSourceIncludes( List<String> srcIncludes ) {
-    Assure.notNull( "srcIncludes", srcIncludes );
     _srcIncludes = srcIncludes;
   }
 
@@ -269,8 +267,8 @@ public class AbstractBuildProperties {
    * @param srcExcludes
    *          the srcExcludes to set
    */
+  // Assure.notNull( "srcExcludes", srcExcludes );
   void setSourceExcludes( List<String> srcExcludes ) {
-    Assure.notNull( "srcExcludes", srcExcludes );
     _srcExcludes = srcExcludes;
   }
 

@@ -1,12 +1,11 @@
 package org.ant4eclipse.ant.core;
 
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.PropertyHelper;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import org.ant4eclipse.lib.core.Assure;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.PropertyHelper;
 
 /**
  * <p>
@@ -28,16 +27,14 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param project
    * @return the {@link ThreadDispatchingPropertyHelper}
    */
+  // Assure.notNull( "project", project );
   public static ThreadDispatchingPropertyHelper getInstance( Project project ) {
-    Assure.notNull( "project", project );
-
     PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( project ).getNext();
-
     if( propertyHelper instanceof ThreadDispatchingPropertyHelper ) {
       return (ThreadDispatchingPropertyHelper) propertyHelper;
+    } else {
+      return null;
     }
-
-    return null;
   }
 
   /**
@@ -58,8 +55,8 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * 
    * @param project
    */
+  // Assure.notNull( "project", project );
   public ThreadDispatchingPropertyHelper( Project project ) {
-    Assure.notNull( "project", project );
     setProject( project );
     propertiesmap = new HashMap<Thread,Properties>();
   }
@@ -97,8 +94,8 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * 
    * @param thread
    */
+  // Assure.notNull( "thread", thread );
   public void registerThread( Thread thread ) {
-    Assure.notNull( "thread", thread );
     if( !isAnt4EclipseThread( thread ) ) {
       return;
     }

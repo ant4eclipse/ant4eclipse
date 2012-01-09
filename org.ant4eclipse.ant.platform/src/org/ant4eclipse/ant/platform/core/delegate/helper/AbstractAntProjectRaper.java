@@ -11,15 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate.helper;
 
+import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
+import org.apache.tools.ant.Project;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionDelegate;
-import org.ant4eclipse.lib.core.Assure;
-import org.apache.tools.ant.Project;
 
 /**
  * <p>
@@ -80,7 +79,7 @@ public abstract class AbstractAntProjectRaper<V> {
    * 
    * @return the ant project.
    */
-  public final Project getAntProject() {
+  public Project getAntProject() {
     return _antProject;
   }
 
@@ -94,9 +93,9 @@ public abstract class AbstractAntProjectRaper<V> {
    * @param prefix
    *          the prefix used for the scoped values.
    */
-  public final void setScopedValues( Map<String,V> scopedValues, String prefix ) {
-    Assure.assertTrue( _scopedValues == null, "Scoped values are already set!" );
-    Assure.notNull( "scopedValues", scopedValues );
+  // Assure.assertTrue( _scopedValues == null, "Scoped values are already set!" );
+  // Assure.notNull( "scopedValues", scopedValues );
+  public void setScopedValues( Map<String,V> scopedValues, String prefix ) {
 
     // set the scoped values
     _scopedValues = scopedValues;
@@ -128,8 +127,8 @@ public abstract class AbstractAntProjectRaper<V> {
    * Unsets all
    * </p>
    */
-  public final void unsetScopedValues() {
-    Assure.assertTrue( _scopedValues != null, "Scoped values must be set!" );
+  // Assure.assertTrue( _scopedValues != null, "Scoped values must be set!" );
+  public void unsetScopedValues() {
 
     // unset scopes value
     Iterator<String> keyIterator = _scopedValues.keySet().iterator();

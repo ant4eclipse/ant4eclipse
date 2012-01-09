@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.PathComponent;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.ProjectNature;
 
@@ -41,8 +40,8 @@ public class PlatformExecutorValuesProvider {
    * 
    * @param pathComponent
    */
+  // Assure.notNull( "pathComponent", pathComponent );
   public PlatformExecutorValuesProvider( PathComponent pathComponent ) {
-    Assure.notNull( "pathComponent", pathComponent );
     _pathComponent = pathComponent;
   }
 
@@ -53,9 +52,9 @@ public class PlatformExecutorValuesProvider {
    * @param eclipseProject
    * @param executionValues
    */
+  // Assure.notNull( "eclipseProject", eclipseProject );
+  // Assure.notNull( "executionValues", executionValues );
   public void provideExecutorValues( EclipseProject eclipseProject, MacroExecutionValues executionValues ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
-    Assure.notNull( "executionValues", executionValues );
 
     // create scoped properties
     executionValues.getProperties()

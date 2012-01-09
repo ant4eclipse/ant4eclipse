@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 
@@ -33,8 +32,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * @param name
    *          the name of the team project set.
    */
+  // Assure.notNull( "name", name );
   public AbstractTeamProjectSet( String name ) {
-    Assure.notNull( "name", name );
     _name = name;
     _projectDescriptions = new ArrayList<TeamProjectDescription>();
   }
@@ -59,8 +58,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
    * {@inheritDoc}
    */
   @Override
+  // Assure.notNull( "name", name );
   public TeamProjectDescription getTeamProjectDescriptionByName( String name ) {
-    Assure.notNull( "name", name );
     for( TeamProjectDescription description : _projectDescriptions ) {
       if( name.equals( description.getProjectName() ) ) {
         return description;
@@ -107,8 +106,8 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
   /**
    * @param description
    */
+  // Assure.notNull( "description", description );
   protected void addTeamProjectDescription( TeamProjectDescription description ) {
-    Assure.notNull( "description", description );
     _projectDescriptions.add( description );
   }
 

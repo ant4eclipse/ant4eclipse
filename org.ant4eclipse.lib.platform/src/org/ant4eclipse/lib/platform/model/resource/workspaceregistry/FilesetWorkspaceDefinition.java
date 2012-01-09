@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.io.File;
 import java.util.List;
 
@@ -36,8 +34,8 @@ public class FilesetWorkspaceDefinition implements WorkspaceDefinition {
    * 
    * @param directories
    */
+  // Assure.notNull( "newdirectories", newdirectories );
   public FilesetWorkspaceDefinition( List<File> newdirectories ) {
-    Assure.notNull( "newdirectories", newdirectories );
     directories = newdirectories;
   }
 

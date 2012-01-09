@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.ReferableSourceFile;
 import org.eclipse.jdt.internal.compiler.env.AccessRestriction;
 
@@ -36,9 +35,9 @@ public class ReferableSourceFileImpl extends SourceFileImpl implements Referable
    * @param sourceFolder
    * @param sourceFileName
    */
+  // Assure.notNull( "libraryLocation", libraryLocation );
   public ReferableSourceFileImpl( File sourceFolder, String sourceFileName, String libraryLocation, byte libraryType ) {
     super( sourceFolder, sourceFileName );
-    Assure.notNull( "libraryLocation", libraryLocation );
     _referableType.setLibraryLocation( libraryLocation );
     _referableType.setLibraryType( libraryType );
   }

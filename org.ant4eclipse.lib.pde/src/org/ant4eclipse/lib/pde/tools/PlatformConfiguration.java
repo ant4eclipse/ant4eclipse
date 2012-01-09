@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pde.tools;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
 import org.eclipse.core.runtime.internal.adaptor.EclipseEnvironmentInfo;
@@ -32,8 +31,6 @@ public class PlatformConfiguration {
 
   private Map<Object,Object> _configurationProperties;
 
-  private boolean            _isLocked       = false;
-
   /**
    * 
    */
@@ -52,37 +49,27 @@ public class PlatformConfiguration {
   }
 
   public void setPreferProjects( boolean preferProjects ) {
-    assertNotLocked();
     _preferProjects = preferProjects;
   }
 
   public void setOperatingSystem( String value ) {
-    assertNotLocked();
     _configurationProperties.put( Constants.PROP_OS, value );
   }
 
   public void setArchitecture( String value ) {
-    assertNotLocked();
     _configurationProperties.put( Constants.PROP_ARCH, value );
   }
 
   public void setWindowingSystem( String value ) {
-    assertNotLocked();
     _configurationProperties.put( Constants.PROP_WS, value );
   }
 
   public void setProfileName( String value ) {
-    assertNotLocked();
     _configurationProperties.put( "osgi.java.profile.name", value );
   }
 
   public void setLanguageSetting( String value ) {
-    assertNotLocked();
     _configurationProperties.put( Constants.PROP_NL, value );
-  }
-
-  public void lock() {
-    _isLocked = true;
   }
 
   public boolean isPreferProjects() {
@@ -158,10 +145,6 @@ public class PlatformConfiguration {
       return false;
     }
     return true;
-  }
-
-  private void assertNotLocked() {
-    Assure.assertTrue( !_isLocked, "TargetPlatformConfiguration is locked!" );
   }
 
 } /* ENDCLASS */

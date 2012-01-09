@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.lib.core.Assure;
 
 /**
  * Resolved record used to identify an eclipse project.
@@ -32,9 +31,9 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    * @param name
    *          The name of the project. Neither <code>null</code> nor empty.
    */
+  // Assure.nonEmpty( "owningproject", owningproject );
+  // Assure.nonEmpty( "name", name );
   public ResolvedProjectEntry( String owningproject, String name ) {
-    Assure.nonEmpty( "owningproject", owningproject );
-    Assure.nonEmpty( "name", name );
     _owningproject = owningproject;
     _projectname = name;
   }

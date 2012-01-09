@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.platform.core.delegate;
 
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.PathComponent;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Path;
@@ -56,9 +55,9 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "newpathseparator", newpathseparator );
   @Override
   public void setPathSeparator( String newpathseparator ) {
-    Assure.nonEmpty( "newpathseparator", newpathseparator );
     _pathSeparator = newpathseparator;
   }
 
@@ -81,9 +80,9 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "newdirseparator", newdirseparator );
   @Override
   public void setDirSeparator( String newdirseparator ) {
-    Assure.nonEmpty( "newdirseparator", newdirseparator );
     _dirSeparator = newdirseparator;
   }
 
@@ -114,9 +113,9 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "entries", entries );
   @Override
   public String convertToString( List<File> entries ) {
-    Assure.notNull( "entries", entries );
     // convert Files to String
     List<String> entriesAsString = new ArrayList<String>();
     for( File entry : entries ) {
@@ -153,9 +152,9 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "entries", entries );
   @Override
   public Path convertToPath( List<File> entries ) {
-    Assure.notNull( "entries", entries );
     Path antPath = new Path( getAntProject() );
     for( File entry : entries ) {
       // TODO getPath() vs. getAbsolutePath()

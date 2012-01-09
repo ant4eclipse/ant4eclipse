@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
@@ -45,9 +44,9 @@ public class EcjAdapterImpl implements EcjAdapter {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "description", description );
   @Override
   public CompileJobResult compile( CompileJobDescription description ) {
-    Assure.notNull( "description", description );
 
     // create the name environment
     INameEnvironment nameEnvironment = new NameEnvironmentImpl( description.getClassFileLoader() );

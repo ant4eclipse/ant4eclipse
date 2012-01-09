@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 
 import java.io.File;
@@ -38,10 +37,10 @@ public class ResolvedRuntimeEntry implements ResolvedPathEntry {
    * @param libs
    *          The bundled libraries representing the runtime. Not <code>null</code>.
    */
+  // Assure.notNull( "version", version );
+  // Assure.notNull( "libs", libs );
+  // Assure.nonEmpty( "owningproject", owningproject );
   public ResolvedRuntimeEntry( String owningproject, Version version, List<File> libs ) {
-    Assure.notNull( "version", version );
-    Assure.notNull( "libs", libs );
-    Assure.nonEmpty( "owningproject", owningproject );
     _owningproject = owningproject;
     _version = version;
     _libs = libs;

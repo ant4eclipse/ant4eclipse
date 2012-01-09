@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.osgi;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
 
 import java.io.File;
@@ -43,13 +42,9 @@ public class ExplodedBundleLayoutResolver implements BundleLayoutResolver {
    * @param location
    *          the root directory of the exploded bundle.
    */
+  // Assure.isDirectory( "location", location );
   public ExplodedBundleLayoutResolver( File location ) {
-    Assure.isDirectory( "location", location );
-
-    // set the location
     _location = location;
-
-    // Get manifest for exploded bundle
     File manifestFile = new File( location, "META-INF/MANIFEST.MF" );
     try {
       _manifest = new Manifest( new FileInputStream( manifestFile ) );

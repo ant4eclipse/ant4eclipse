@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.model.pyre;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -120,20 +119,19 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
   @Override
   public boolean hasRuntime( String id ) {
-    Assure.nonEmpty( "id", id );
     return _runtimes.containsKey( id );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
+  // Assure.notNull( "location", location );
   @Override
   public void registerRuntime( String id, File location, boolean sitepackages ) {
-
-    Assure.nonEmpty( "id", id );
-    Assure.notNull( "location", location );
 
     location = Utilities.getCanonicalFile( location );
 
@@ -270,9 +268,9 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
   @Override
   public void setDefaultRuntime( String id ) {
-    Assure.nonEmpty( "id", id );
     if( !hasRuntime( id ) ) {
       throw new Ant4EclipseException( PydtExceptionCode.INVALIDDEFAULTID, id );
     }
@@ -295,9 +293,9 @@ public class PythonRuntimeRegistryImpl implements PythonRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
   @Override
   public PythonRuntime getRuntime( String id ) {
-    Assure.nonEmpty( "id", id );
     return _runtimes.get( id );
   }
 

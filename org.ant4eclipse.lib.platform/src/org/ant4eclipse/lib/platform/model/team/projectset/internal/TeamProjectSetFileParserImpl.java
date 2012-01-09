@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.xquery.XQuery;
@@ -61,9 +60,9 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
   /**
    * {@inheritDoc}
    */
+  // Assure.isFile( "projectSetFile", projectSetFile );
   @Override
   public TeamProjectSet parseTeamProjectSetFile( File projectSetFile ) {
-    Assure.isFile( "projectSetFile", projectSetFile );
 
     XQueryHandler queryhandler2 = new XQueryHandler();
 
@@ -94,8 +93,8 @@ public class TeamProjectSetFileParserImpl implements TeamProjectSetFileParser {
 
   }
 
+  // Assure.notNull( "providerId", providerId );
   public TeamProjectSetFactory getFactoryForProvider( String providerId ) {
-    Assure.notNull( "providerId", providerId );
     if( !factorymap.containsKey( providerId ) ) {
       throw new Ant4EclipseException( PlatformExceptionCode.UNKNOWN_TEAM_PROJECT_SET_PROVIDER, providerId );
     }

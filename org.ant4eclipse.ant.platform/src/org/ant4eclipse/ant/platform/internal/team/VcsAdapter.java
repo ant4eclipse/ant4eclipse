@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.internal.team;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
@@ -29,8 +28,8 @@ public abstract class VcsAdapter {
   /** the ant project in which the cvs tasks will be executed */
   private Project _antProject;
 
+  // Assure.notNull( "antProject", antProject );
   public VcsAdapter( Project antProject ) {
-    Assure.notNull( "antProject", antProject );
     _antProject = antProject;
   }
 
@@ -49,16 +48,13 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
+  // Assure.notNull( "projectDescription", projectDescription );
   public final void checkoutProject( File destination, TeamProjectDescription projectDescription, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.notNull( "projectDescription", projectDescription );
-
     String projectName = projectDescription.getProjectName();
-
     if( deleteExisting && Utilities.hasChild( destination, projectName ) ) {
       Utilities.delete( Utilities.getChild( destination, projectName ) );
     }
-
     checkout( destination, projectDescription );
   }
 
@@ -75,9 +71,9 @@ public abstract class VcsAdapter {
    * @throws VcsException
    *           The CVS operation failed for some reason.
    */
+  // Assure.notNull( "projectDescription", projectDescription );
   public final void updateProject( File destination, TeamProjectDescription projectDescription )
       throws Ant4EclipseException {
-    Assure.notNull( "projectDescription", projectDescription );
     update( destination, projectDescription );
   }
 
@@ -94,16 +90,13 @@ public abstract class VcsAdapter {
    *          indicates if existing projects should be deleted.
    * @throws VcsException
    */
+  // Assure.notNull( "projectDescription", projectDescription );
   public final void exportProject( File destination, TeamProjectDescription projectDescription, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.notNull( "projectDescription", projectDescription );
-
     String projectName = projectDescription.getProjectName();
-
     if( deleteExisting && Utilities.hasChild( destination, projectName ) ) {
       Utilities.delete( Utilities.getChild( destination, projectName ) );
     }
-
     export( destination, projectDescription );
   }
 

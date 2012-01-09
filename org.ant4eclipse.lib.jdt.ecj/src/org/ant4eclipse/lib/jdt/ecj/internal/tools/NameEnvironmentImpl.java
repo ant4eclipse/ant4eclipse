@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -52,14 +51,12 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param classFileLoader
    *          the class file loader to use.
    */
+  // Assure.notNull( "classFileLoader", classFileLoader );
   public NameEnvironmentImpl( ClassFileLoader classFileLoader ) {
-    Assure.notNull( "classFileLoader", classFileLoader );
     _classFileLoader = classFileLoader;
-
     if( DEBUG_ALL || DEBUG_TYPE_NOT_FOUND ) {
       A4ELogging.info( "NameEnvironment tracing enabled." );
     }
-
   }
 
   /**
@@ -145,8 +142,8 @@ public class NameEnvironmentImpl implements INameEnvironment {
    * @param className
    * @return
    */
+  // Assure.notNull( "className", className );
   protected NameEnvironmentAnswer findClass( String className ) {
-    Assure.notNull( "className", className );
     return findClass( ClassName.fromQualifiedClassName( className ) );
   }
 

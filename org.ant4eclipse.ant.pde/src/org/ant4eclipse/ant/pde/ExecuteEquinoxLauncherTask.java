@@ -11,14 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import static org.ant4eclipse.lib.core.Assure.notNull;
-import static org.ant4eclipse.lib.core.logging.A4ELogging.warn;
-
 import org.ant4eclipse.ant.core.FileListHelper;
 import org.ant4eclipse.ant.platform.ExecuteLauncherTask;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.lib.core.A4ECore;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
@@ -200,11 +198,11 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    * @param workspaceBundle
    * @return
    */
+  // Assure.notNull( "wrapper", wrapper );
+  // Assure.notNull( "launchConfigurationBundleInfo", selectedBundle );
   protected MacroExecutionValuesProvider createBundleMacroExecuteValuesProvider(
       final EquinoxLaunchConfigurationWrapper wrapper, final SelectedLaunchConfigurationBundle selectedBundle,
       final boolean workspaceBundle ) {
-    notNull( "wrapper", wrapper );
-    notNull( "launchConfigurationBundleInfo", selectedBundle );
 
     final BundleDescription bundleDescription = getResolvedBundle( selectedBundle );
 
@@ -283,7 +281,7 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
         .getResolvedBundle( bundleSymbolicName, osgiVersion );
 
     if( bundleDescription == null ) {
-      warn( "Bundle '%s' with version '%s' not found in target platform", bundleSymbolicName, osgiVersion );
+      A4ELogging.warn( "Bundle '%s' with version '%s' not found in target platform", bundleSymbolicName, osgiVersion );
     }
 
     return bundleDescription;

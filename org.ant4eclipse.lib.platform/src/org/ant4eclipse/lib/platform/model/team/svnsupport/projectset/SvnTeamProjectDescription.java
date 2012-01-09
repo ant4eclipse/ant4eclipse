@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.svnsupport.projectset;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.projectset.internal.AbstractTeamProjectDescription;
 
@@ -35,10 +34,10 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param revision
    *          The revision of the project (might be null which means HEAD)
    */
+  // Assure.notNull( "teamProjectSet", teamProjectSet );
+  // Assure.notNull( "url", url );
   public SvnTeamProjectDescription( SvnTeamProjectSet teamProjectSet, String projectname, String url, String revision ) {
     super( projectname );
-    Assure.notNull( "teamProjectSet", teamProjectSet );
-    Assure.notNull( "url", url );
     _teamProjectSet = teamProjectSet;
     _url = url;
     _revision = (revision != null ? revision : "HEAD");

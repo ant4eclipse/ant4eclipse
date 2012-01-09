@@ -15,7 +15,6 @@ import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.ConditionalMacroDef;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
@@ -334,8 +333,8 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
    * 
    * @param macroDef
    */
+  // Assure.instanceOf( "macroDef", macroDef, ConditionalMacroDef.class );
   private void executeForEachRuntimeClasspathScopedMacroDef( MacroDef macroDef ) {
-    Assure.instanceOf( "macroDef", macroDef, ConditionalMacroDef.class );
 
     // Get the ConditionalMacroDef to access the macros attributes
     ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;

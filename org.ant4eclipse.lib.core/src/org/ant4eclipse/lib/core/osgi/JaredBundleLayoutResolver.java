@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.osgi;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -58,9 +57,9 @@ public class JaredBundleLayoutResolver implements BundleLayoutResolver {
    * @param expansionDirectory
    *          the expansion directory
    */
+  // Assure.isFile( "location", location );
+  // Assure.notNull( "expansionDirectory", expansionDirectory );
   public JaredBundleLayoutResolver( File location, File expansionDirectory ) {
-    Assure.isFile( "location", location );
-    Assure.notNull( "expansionDirectory", expansionDirectory );
 
     _location = location;
     _expansionDirectory = expansionDirectory;

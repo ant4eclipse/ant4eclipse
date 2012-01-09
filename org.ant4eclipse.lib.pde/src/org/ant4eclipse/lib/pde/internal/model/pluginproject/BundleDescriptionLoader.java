@@ -11,6 +11,15 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
+import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
+import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.StateObjectFactory;
+import org.osgi.framework.BundleException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,16 +29,6 @@ import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
-
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.pde.PdeExceptionCode;
-import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
-import org.ant4eclipse.lib.pde.model.pluginproject.Constants;
-import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
-import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.osgi.service.resolver.StateObjectFactory;
-import org.osgi.framework.BundleException;
 
 public class BundleDescriptionLoader {
 
@@ -47,9 +46,9 @@ public class BundleDescriptionLoader {
    * @throws FileNotFoundException
    * @throws BundleException
    */
+  // Assure.notNull( "project", project );
   public static BundleDescription loadFromPluginProject( EclipseProject project ) throws FileNotFoundException,
       IOException, BundleException {
-    Assure.notNull( "project", project );
 
     File manifestFile = project.getChild( Constants.OSGI_BUNDLE_MANIFEST );
     // TODO: handle projects with plugin.xml that may not have a MANIFEST-file
@@ -104,8 +103,8 @@ public class BundleDescriptionLoader {
    * @return
    * @throws FileParserException
    */
+  // Assure.exists( "file", file ); 
   public static BundleDescription parsePlugin( File file ) {
-    Assure.exists( "file", file );
     BundleDescription description = null;
     try {
       if( file.isFile() && file.getName().endsWith( ".jar" ) ) {
@@ -128,23 +127,20 @@ public class BundleDescriptionLoader {
     return description;
   }
 
+  // Assure.isFile( "file", file );
   private static BundleDescription parsePluginJarFile( File file ) {
-    Assure.isFile( "file", file );
-
     try {
-      // create jar file
       JarFile jarFile = new JarFile( file );
-
       // support for plugins based on the osgi bundle model
       Manifest manifest = jarFile.getManifest();
       if( (manifest != null) && isBundleManifest( manifest ) ) {
         return createBundleDescription( manifest, file.getAbsolutePath(), file );
+      } else {
+        return null;
       }
     } catch( Exception e ) {
       throw new RuntimeException( String.format( "Exception while parsing plugin jar '%s'!", file.getName() ), e );
     }
-
-    return null;
   }
 
   /**
@@ -158,12 +154,9 @@ public class BundleDescriptionLoader {
    * @throws FileNotFoundException
    * @throws BundleException
    */
+  // Assure.isDirectory( "directory", directory );
   private static BundleDescription parsePluginDirectory( File directory ) throws FileNotFoundException, IOException,
       BundleException {
-
-    Assure.isDirectory( "directory", directory );
-
-    // support for plugins based on the osgi bundle model
     File bundleManifestFile = new File( directory, Constants.OSGI_BUNDLE_MANIFEST );
     if( bundleManifestFile.isFile() ) {
       Manifest manifest = new Manifest( new FileInputStream( bundleManifestFile ) );

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -89,8 +88,8 @@ public class Utilities {
    * 
    * @return The canonical file. Not <code>null</code>.
    */
+  // Assure.notNull( "file", file );
   public static final File getCanonicalFile( File file ) {
-    Assure.notNull( "file", file );
     try {
       return file.getCanonicalFile();
     } catch( IOException ex ) {
@@ -256,8 +255,8 @@ public class Utilities {
     close( (Closeable) writer );
   }
 
+  // Assure.notNull( "file", file );
   public static final URL toURL( File file ) {
-    Assure.notNull( "file", file );
     URI uri = file.toURI();
     try {
       return uri.toURL();
@@ -275,8 +274,8 @@ public class Utilities {
    * 
    * @return true <=> The path could be deleted with success.
    */
+  // Assure.notNull( "file", file );
   public static final boolean delete( File file ) {
-    Assure.notNull( "file", file );
     if( !file.exists() ) {
       return true;
     }
@@ -319,8 +318,8 @@ public class Utilities {
    * 
    * @return The list containing all children. Not <code>null</code>.
    */
+  // Assure.notNull( "file", file );
   public static final List<File> getAllChildren( File file ) {
-    Assure.notNull( "file", file );
     List<File> result = new ArrayList<File>();
     if( file.isDirectory() ) {
       // add the children
@@ -369,10 +368,10 @@ public class Utilities {
    * 
    * @return The modified text. Not <code>null</code>.
    */
+  // Assure.notNull( "input", input );
+  // Assure.notNull( "search", search );
+  // Assure.notNull( "replacement", replacement );
   public static final String replace( String input, String search, String replacement ) {
-    Assure.notNull( "input", input );
-    Assure.notNull( "search", search );
-    Assure.notNull( "replacement", replacement );
     int idx = input.indexOf( search );
     if( idx == -1 ) {
       return input;
@@ -412,9 +411,9 @@ public class Utilities {
    * 
    * @return The file which indicates the relative path. null in case the relative path could not be calculated.
    */
+  // Assure.notNull( "fromfile", fromfile );
+  // Assure.notNull( "tofile", tofile );
   public static final String calcRelative( File fromfile, File tofile ) {
-    Assure.notNull( "fromfile", fromfile );
-    Assure.notNull( "tofile", tofile );
     String frompath = null;
     String topath = null;
     try {
@@ -599,8 +598,8 @@ public class Utilities {
    * 
    * @return A textual representation for the supplied list of values. Not <code>null</code>.
    */
+  // Assure.notNull( "objects", objects );
   public static final String listToString( Object[] objects, String delimiter ) {
-    Assure.notNull( "objects", objects );
     if( delimiter == null ) {
       delimiter = ",";
     }
@@ -684,8 +683,8 @@ public class Utilities {
    * 
    * @return The text representing the content of the supplied map.
    */
+  // Assure.notNull( "properties", properties );
   public static final String toString( String title, Properties properties ) {
-    Assure.notNull( "properties", properties );
     StringBuilder buffer = new StringBuilder();
     if( title != null ) {
       buffer.append( title );
@@ -708,8 +707,8 @@ public class Utilities {
    * 
    * @param directory
    */
+  // Assure.notNull( "directory", directory );
   public static final void mkdirs( File directory ) {
-    Assure.notNull( "directory", directory );
     if( directory.isDirectory() ) {
       return;
     }
@@ -730,9 +729,9 @@ public class Utilities {
    * @param className
    * @return
    */
+  // Assure.notNull( "className", className );
   @SuppressWarnings( "unchecked" )
   public static final <T> T newInstance( String className ) {
-    Assure.notNull( "className", className );
     Class<?> clazz = null;
     try {
       clazz = Class.forName( className );
@@ -750,9 +749,9 @@ public class Utilities {
     return object;
   }
 
+  // Assure.notNull( "className", className );
   @SuppressWarnings( "unchecked" )
   public static final <T> T newInstance( String className, Class<?>[] types, Object[] args ) {
-    Assure.notNull( "className", className );
     Class<?> clazz = null;
     try {
       clazz = Class.forName( className );
@@ -785,9 +784,9 @@ public class Utilities {
    * 
    * @return The newly instantiated type. Not <code>null</code>.
    */
+  // Assure.notNull( "className", className );
   @SuppressWarnings( { "unchecked", "rawtypes" } )
   public static final <T> T newInstance( String className, String arg ) {
-    Assure.notNull( "className", className );
     Class<?> clazz = null;
     // Try to load class...
     try {
@@ -821,9 +820,9 @@ public class Utilities {
    * 
    * @return <code>true</code> <=> The supplied literal is part of the allowed values.
    */
+  // Assure.notNull( "candidate", candidate );
+  // Assure.notNull( "allowed", allowed );
   public static final boolean contains( String candidate, String ... allowed ) {
-    Assure.notNull( "candidate", candidate );
-    Assure.notNull( "allowed", allowed );
     for( String part : allowed ) {
       if( candidate.equals( part ) ) {
         return true;
@@ -842,9 +841,9 @@ public class Utilities {
    * 
    * @return A list with the input elements that do match the specified type. Not <code>null</code>.
    */
+  // Assure.notNull( "input", input );
+  // Assure.notNull( "clazz", clazz );
   public static final List<Object> filter( List<Object> input, Class<?> clazz ) {
-    Assure.notNull( "input", input );
-    Assure.notNull( "clazz", clazz );
     List<Object> result = new ArrayList<Object>();
     for( int i = 0; i < input.size(); i++ ) {
       if( clazz.isAssignableFrom( input.get( i ).getClass() ) ) {
@@ -863,9 +862,9 @@ public class Utilities {
    * @param dest
    *          The destination file where the copy shall be created. Not <code>null</code>.
    */
+  // Assure.notNull( "source", source );
+  // Assure.notNull( "dest", dest );
   public static final void copy( URL source, File dest ) {
-    Assure.notNull( "source", source );
-    Assure.notNull( "dest", dest );
     InputStream instream = null;
     OutputStream outstream = null;
     try {
@@ -888,9 +887,9 @@ public class Utilities {
    * @param destdir
    *          The directory where the content shall be written to. Not <code>null</code>.
    */
+  // Assure.notNull( "zipfile", zipfile );
+  // Assure.notNull( "destdir", destdir );
   public static final void unpack( File zipfile, File destdir ) {
-    Assure.notNull( "zipfile", zipfile );
-    Assure.notNull( "destdir", destdir );
     byte[] buffer = new byte[16384];
     try {
       if( !destdir.isAbsolute() ) {
@@ -921,9 +920,9 @@ public class Utilities {
    * @param to
    *          The destination File which has to be written. Not <code>null</code>.
    */
+  // Assure.isFile( "source", source );
+  // Assure.notNull( "to", to );
   public static final void copy( File source, File to ) {
-    Assure.isFile( "source", source );
-    Assure.notNull( "to", to );
     FileInputStream instream = null;
     FileOutputStream outstream = null;
     FileChannel readchannel = null;
@@ -959,10 +958,10 @@ public class Utilities {
    * @throws IOException
    *           Copying failed for some reason.
    */
+  // Assure.notNull( "instream", instream );
+  // Assure.notNull( "outstream", outstream );
+  // Assure.nonEmpty( "buffer", buffer );
   public static final void copy( InputStream instream, OutputStream outstream, byte[] buffer ) throws IOException {
-    Assure.notNull( "instream", instream );
-    Assure.notNull( "outstream", outstream );
-    Assure.nonEmpty( "buffer", buffer );
     try {
       int read = instream.read( buffer );
       while( read != -1 ) {
@@ -989,9 +988,9 @@ public class Utilities {
    * 
    * @return The file keeping the exported content.
    */
+  // Assure.nonEmpty( "resource", resource );
+  // Assure.assertTrue( resource.startsWith( "/" ), MSG_INVALIDRESOURCEPATH );
   public static final File exportResource( String resource ) {
-    Assure.nonEmpty( "resource", resource );
-    Assure.assertTrue( resource.startsWith( "/" ), MSG_INVALIDRESOURCEPATH );
     String suffix = ".tmp";
     int lidx = resource.lastIndexOf( '.' );
     if( lidx != -1 ) {
@@ -1013,9 +1012,9 @@ public class Utilities {
    * 
    * @return The file keeping the exported content.
    */
+  // Assure.nonEmpty( "resource", resource );
+  // Assure.assertTrue( resource.startsWith( "/" ), MSG_INVALIDRESOURCEPATH );
   public static final File exportResource( String resource, String suffix ) {
-    Assure.nonEmpty( "resource", resource );
-    Assure.assertTrue( resource.startsWith( "/" ), MSG_INVALIDRESOURCEPATH );
     URL url = Utilities.class.getResource( resource );
     if( url == null ) {
       throw new Ant4EclipseException( CoreExceptionCode.RESOURCE_NOT_ON_THE_CLASSPATH, resource );
@@ -1069,9 +1068,9 @@ public class Utilities {
    * 
    * @return A temporary used file containing the supplied content. Not <code>null</code>.
    */
+  // Assure.notNull( "content", content );
+  // Assure.nonEmpty( "encoding", encoding );
   public static final File createTempFile( String content, String suffix, String encoding ) {
-    Assure.notNull( "content", content );
-    Assure.nonEmpty( "encoding", encoding );
     try {
       File result = File.createTempFile( "a4e", suffix );
       writeFile( result, content, encoding );
@@ -1093,10 +1092,10 @@ public class Utilities {
    * @param encoding
    *          The encoding that will be used to write the content. Neither <code>null</code> nor empty.
    */
+  // Assure.notNull( "destination", destination );
+  // Assure.notNull( "content", content );
+  // Assure.nonEmpty( "encoding", encoding );
   public static final void writeFile( File destination, String content, String encoding ) {
-    Assure.notNull( "destination", destination );
-    Assure.notNull( "content", content );
-    Assure.nonEmpty( "encoding", encoding );
     OutputStream output = null;
     Writer writer = null;
     try {
@@ -1119,9 +1118,9 @@ public class Utilities {
    * @param content
    *          The content that has to be written. Not <code>null</code>.
    */
+  // Assure.notNull( "destination", destination );
+  // Assure.notNull( "content", content );
   public static final void writeFile( File destination, byte[] content ) {
-    Assure.notNull( "destination", destination );
-    Assure.notNull( "content", content );
     OutputStream output = null;
     try {
       output = new FileOutputStream( destination );
@@ -1141,8 +1140,8 @@ public class Utilities {
    * 
    * @return The name without the suffix.
    */
+  // Assure.notNull( "name", name );
   public static final String stripSuffix( String name ) {
-    Assure.notNull( "name", name );
     int lidx = name.lastIndexOf( '.' );
     if( lidx != -1 ) {
       return name.substring( 0, lidx );
@@ -1177,10 +1176,10 @@ public class Utilities {
    *          the expansion directory
    * @throws IOException
    */
+  // Assure.notNull( "jarFile", jarFile );
+  // Assure.notNull( "expansionDirectory", expansionDirectory );
   public static synchronized final void expandJarFile( JarFile jarFile, File expansionDirectory ) {
 
-    Assure.notNull( "jarFile", jarFile );
-    Assure.notNull( "expansionDirectory", expansionDirectory );
 
     if( expansionDirectory.exists() ) {
       A4ELogging.info( "%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory );
@@ -1224,8 +1223,8 @@ public class Utilities {
 
   }
 
+  // Assure.notNull( "inputStream", inputStream );
   private static void writeFile( InputStream inputStream, File file ) {
-    Assure.notNull( "inputStream", inputStream );
 
     FileOutputStream fos = null;
     try {
@@ -1358,12 +1357,12 @@ public class Utilities {
    * 
    * @return The evaluated result. Not <code>null</code>.
    */
+  // Assure.notNull( "template", template );
+  // Assure.notNull( "replacements", replacements );
+  // Assure.notNull( "openlit", openlit );
+  // Assure.notNull( "closelit", closelit );
   public static final String replaceTokens( String template, Map<String,String> replacements, String openlit,
       String closelit ) {
-    Assure.notNull( "template", template );
-    Assure.notNull( "replacements", replacements );
-    Assure.notNull( "openlit", openlit );
-    Assure.notNull( "closelit", closelit );
     StringBuffer buffer = new StringBuffer( template );
     int index = buffer.indexOf( openlit );
     while( index != -1 ) {

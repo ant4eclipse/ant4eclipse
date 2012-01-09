@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -53,9 +52,9 @@ public class JavaRuntimeLoader {
    *          the list of (jar-)files defining this java runtime or null if the file should be determined from the
    *          JavaRuntime's location
    */
+  // Assure.nonEmpty( "id", id );
+  // Assure.isDirectory( "location", location );
   public static JavaRuntime loadJavaRuntime( String id, File location, List<File> libraries ) {
-    Assure.nonEmpty( "id", id );
-    Assure.isDirectory( "location", location );
 
     String outfileName = System.getProperty( "java.io.tmpdir" ) + File.separatorChar + "ant4eclipse_jdk_props_"
         + Math.round( Math.random() * 1000000000 );

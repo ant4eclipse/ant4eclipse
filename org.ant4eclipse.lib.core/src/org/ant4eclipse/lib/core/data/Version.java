@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.data;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.nls.NLS;
@@ -61,8 +60,8 @@ public class Version {
    * @param version
    *          A formatted version string. Neither <code>null</code> nor empty.
    */
+  // Assure.nonEmpty( "version", version );
   public static final Version newBundleVersion( String version ) {
-    Assure.nonEmpty( "version", version );
     return new Version( version, true );
   }
 
@@ -76,8 +75,8 @@ public class Version {
    * @param version
    *          A formatted version string. Neither <code>null</code> nor empty.
    */
+  // Assure.nonEmpty( "version", version );
   public static final Version newStandardVersion( String version ) {
-    Assure.nonEmpty( "version", version );
     return new Version( version, false );
   }
 
@@ -93,9 +92,8 @@ public class Version {
    * @param bundleversion
    *          <code>true</code> <=> The format of the version denotes a bundle version.
    */
+  // Assure.nonEmpty( "version", version );
   private Version( String version, boolean bundleversion ) {
-    Assure.nonEmpty( "version", version );
-
     _major = Integer.valueOf( 0 );
     _minor = Integer.valueOf( 0 );
     _micro = Integer.valueOf( 0 );

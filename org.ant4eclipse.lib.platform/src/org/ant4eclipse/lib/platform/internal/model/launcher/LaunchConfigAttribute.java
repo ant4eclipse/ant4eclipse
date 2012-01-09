@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +20,8 @@ class LaunchConfigAttribute {
 
   private Object _value;
 
+  // Assure.notNull( "name", name );
   public LaunchConfigAttribute( String name ) {
-    Assure.notNull( "name", name );
     _name = name;
   }
 
@@ -43,13 +41,13 @@ class LaunchConfigAttribute {
     return _value instanceof ListAttribute;
   }
 
+  // Assure.assertTrue( isListAttribute(), String.format( "LauchConfigAttribute '%s' must be a list-based attribute", _name ) );
   public ListAttribute getListAttributeValue() {
-    Assure.assertTrue( isListAttribute(), String.format( "LauchConfigAttribute '%s' must be a list-based attribute", _name ) );
     return (ListAttribute) _value;
   }
 
+  // Assure.assertTrue( isStringBasedAttribute(), String.format( "LauchConfigAttribute '%s' must be a string-based attribute", _name ) );
   public String getStringValue() {
-    Assure.assertTrue( isStringBasedAttribute(), String.format( "LauchConfigAttribute '%s' must be a string-based attribute", _name ) );
     return (String) _value;
   }
 

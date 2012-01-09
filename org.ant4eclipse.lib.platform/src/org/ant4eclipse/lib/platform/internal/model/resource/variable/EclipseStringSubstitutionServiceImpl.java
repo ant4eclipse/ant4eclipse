@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.platform.internal.model.resource.variable;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.variable.EclipseStringSubstitutionService;
@@ -46,12 +45,11 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "string", string );
   @Override
   public String substituteEclipseVariables( String string, EclipseProject project, StringMap otherProperties ) {
-    Assure.notNull( "string", string );
     // resolve Eclipse variables
     StringMap eclipseVariables = getEclipseVariables( project );
-
     // overwrite "default" values for eclipse variables with values as specified in otherProperties
     if( otherProperties != null ) {
       eclipseVariables.putAll( otherProperties );

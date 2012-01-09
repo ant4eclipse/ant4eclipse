@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -40,51 +39,41 @@ public class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "name", name );
   @Override
   public boolean hasProject( String name ) {
-    Assure.nonEmpty( "name", name );
     return _projects.containsKey( name );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "name", name );
   @Override
   public EclipseProject getProject( String name ) {
-    Assure.nonEmpty( "name", name );
     return _projects.get( name );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "names", names );
   @Override
   public List<EclipseProject> getProjects( List<String> names, boolean failOnMissingProjects ) {
-    Assure.notNull( "names", names );
-
-    // the result list with all the eclipse projects...
     List<EclipseProject> projects = new ArrayList<EclipseProject>();
-
-    // iterate over the project names...
     for( String name : names ) {
-      // get the eclipse project
       EclipseProject project = getProject( name );
-
-      // handle project is null
       if( project == null ) {
         if( failOnMissingProjects ) {
           throw new Ant4EclipseException( PlatformExceptionCode.SPECIFIED_PROJECT_DOES_NOT_EXIST, name );
         } else {
           A4ELogging.debug( "Specified project '%s' does not exist.", name );
         }
-      }
-      // add the project to the result list...
-      else {
+      } else {
+        // add the project to the result list...
         projects.add( project );
       }
     }
-
-    // return the result
     return projects;
   }
 
@@ -99,14 +88,12 @@ public class WorkspaceImpl implements Workspace {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "projectRole", projectRole );
+  // Assure.assertTrue( ProjectRole.class.isAssignableFrom( projectRole ), String.format(
+  //    "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(),
+  //    ProjectRole.class.getName() ) );
   @Override
   public List<EclipseProject> getAllProjects( Class<? extends ProjectRole> projectRole ) {
-    Assure.notNull( "projectRole", projectRole );
-    Assure
-        .assertTrue( ProjectRole.class.isAssignableFrom( projectRole ), String.format(
-            "Class '%s' must be assignable from class '%s'", projectRole.getClass().getName(),
-            ProjectRole.class.getName() ) );
-
     List<EclipseProject> result = new ArrayList<EclipseProject>();
     Collection<EclipseProject> projects = _projects.values();
     for( EclipseProject eclipseProject : projects ) {
@@ -126,17 +113,13 @@ public class WorkspaceImpl implements Workspace {
     _projects = new Hashtable<String,EclipseProject>();
   }
 
+  // Assure.notNull( "eclipseProject", eclipseProject );
   public void registerEclipseProject( EclipseProject eclipseProject ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
-
-    // we have to use the specified name here instead of the directory name
     String key = eclipseProject.getSpecifiedName();
-
     if( _projects.containsKey( key ) && !eclipseProject.equals( _projects.get( key ) ) ) {
       throw new Ant4EclipseException( PlatformExceptionCode.PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS,
           _projects.get( key ), eclipseProject );
     }
-
     _projects.put( key, eclipseProject );
   }
 

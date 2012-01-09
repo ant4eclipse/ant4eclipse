@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
@@ -79,8 +78,8 @@ public class PluginProjectChecker {
    * @param eclipseProject
    *          the eclipse project to check.
    */
+  // Assure.notNull( "eclipseProject", eclipseProject );
   public PluginProjectChecker( EclipseProject eclipseProject ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
     _eclipseProject = eclipseProject;
     _issues = new ArrayList<Issue>();
     _projectName = _eclipseProject.getSpecifiedName();

@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import org.ant4eclipse.lib.core.A4EService;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 
@@ -55,13 +54,13 @@ public class JavaProfileReader implements A4EService {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "path", path );
   public JavaProfile getJavaProfile( String path ) {
-    Assure.nonEmpty( "path", path );
     return _javaProfileCache.get( path );
   }
 
+  // Assure.nonEmpty( "path", path );
   public boolean hasJavaProfile( String path ) {
-    Assure.nonEmpty( "path", path );
     return _javaProfileCache.containsKey( path );
   }
 
@@ -72,14 +71,12 @@ public class JavaProfileReader implements A4EService {
    * @param profileFile
    * @return
    */
+  // Assure.exists( "profileFile", profileFile );
+  // Assure.nonEmpty( "jreId", jreId );
   public void registerProfile( File profileFile, String jreId ) {
-    Assure.exists( "profileFile", profileFile );
-    Assure.nonEmpty( "jreId", jreId );
-
     StringMap props = new StringMap( profileFile );
     JavaProfileImpl javaProfile = new JavaProfileImpl( props );
     javaProfile.setAssociatedJavaRuntimeId( jreId );
-
     _javaProfileCache.put( javaProfile.getName(), javaProfile );
   }
 

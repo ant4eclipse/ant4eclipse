@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.File;
@@ -42,18 +41,18 @@ abstract class AbstractPythonProjectBuilder extends EclipseProjectBuilder implem
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "workspacebuilder", workspacebuilder );
   @Override
   public File populate( WorkspaceBuilder workspacebuilder ) {
-    Assure.notNull( "workspacebuilder", workspacebuilder );
     return workspacebuilder.addProject( this );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "location", location );
   @Override
   public void setBuildScript( URL location ) {
-    Assure.notNull( "location", location );
     _buildscript = location;
   }
 

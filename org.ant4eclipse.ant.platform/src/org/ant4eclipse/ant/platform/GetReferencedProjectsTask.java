@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.platform;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
@@ -135,8 +134,8 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
    * @param separator
    *          an (optional) separator that is used to separate the project names.
    */
+  // Assure.notNull( "separator", separator );
   public void setSeparator( String separator ) {
-    Assure.notNull( "separator", separator );
     _separator = separator;
   }
 

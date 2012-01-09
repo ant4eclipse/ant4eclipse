@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibraries;
 
 import java.util.ArrayList;
@@ -41,8 +40,8 @@ public class UserLibrariesImpl implements UserLibraries {
    * @param userlibrary
    *          The user library entry which shall be added.
    */
+  // Assure.notNull( "userlibrary", userlibrary );
   public void addLibrary( UserLibraryImpl userlibrary ) {
-    Assure.notNull( "userlibrary", userlibrary );
     _libraries.put( userlibrary.getName(), userlibrary );
   }
 
@@ -50,8 +49,8 @@ public class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   @Override
+  // Assure.notNull( "name", name );
   public boolean hasLibrary( String name ) {
-    Assure.notNull( "name", name );
     return _libraries.containsKey( name );
   }
 
@@ -59,8 +58,8 @@ public class UserLibrariesImpl implements UserLibraries {
    * {@inheritDoc}
    */
   @Override
+  // Assure.notNull( "name", name );
   public UserLibraryImpl getLibrary( String name ) {
-    Assure.notNull( "name", name );
     return _libraries.get( name );
   }
 

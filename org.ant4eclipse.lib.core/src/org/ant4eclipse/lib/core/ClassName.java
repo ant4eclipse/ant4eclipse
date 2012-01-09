@@ -166,8 +166,8 @@ public class ClassName {
    *          The qualified class name
    * @return a ClassName instance representing this qualified class name
    */
+  // Assure.nonEmpty( "qualifiedClassName", qualifiedClassName );
   public static final ClassName fromQualifiedClassName( String qualifiedClassName ) {
-    Assure.nonEmpty( "qualifiedClassName", qualifiedClassName );
     return new ClassName( qualifiedClassName );
   }
 

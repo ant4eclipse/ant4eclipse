@@ -16,7 +16,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ldapfilter.LdapFilter;
 import org.ant4eclipse.lib.core.ldapfilter.ParseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -144,9 +143,8 @@ public class ConditionalMacroDef extends MacroDef {
      * 
      * @param conditionalMacroDef
      */
+    // Assure.notNull( "conditionalMacroDef", conditionalMacroDef );
     public ConditionalNestedSequential( ConditionalMacroDef conditionalMacroDef ) {
-      Assure.notNull( "conditionalMacroDef", conditionalMacroDef );
-
       _conditionalMacroDef = conditionalMacroDef;
     }
 

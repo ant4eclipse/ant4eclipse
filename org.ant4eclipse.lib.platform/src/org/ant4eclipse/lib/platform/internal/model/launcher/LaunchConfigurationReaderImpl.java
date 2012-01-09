@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.launcher;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfigurationReader;
 import org.xml.sax.Attributes;
@@ -36,9 +35,9 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
   /**
    * {@inheritDoc}
    */
+  // Assure.isFile( "launchConfigurationFile", launchConfigurationFile );
   @Override
   public LaunchConfiguration readLaunchConfiguration( File launchConfigurationFile ) {
-    Assure.isFile( "launchConfigurationFile", launchConfigurationFile );
     try {
       SAXParser parser = getParserFactory().newSAXParser();
       LaunchConfigHandler handler = new LaunchConfigHandler();

@@ -15,7 +15,6 @@ import org.ant4eclipse.ant.core.AntBasedLogger;
 import org.ant4eclipse.ant.core.ProjectBuildListener;
 import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
@@ -552,8 +551,8 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
    * @param defaultValue
    * @return
    */
+  // Assure.notNull( "argumentName", argumentName );
   private String extractJavacCompilerArg( String argumentName, String defaultValue ) {
-    Assure.notNull( "argumentName", argumentName );
 
     // Step 1: Get all compilerArguments
     String[] currentCompilerArgs = getJavac().getCurrentCompilerArgs();
@@ -622,9 +621,9 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
    * @param sourceEnd
    * @return
    */
+  // Assure.notNull( "sourceFile", sourceFile );
+  // Assure.notNull( "categorizedProblem", categorizedProblem );
   private String[] readProblematicLine( SourceFile sourceFile, CategorizedProblem categorizedProblem ) {
-    Assure.notNull( "sourceFile", sourceFile );
-    Assure.notNull( "categorizedProblem", categorizedProblem );
 
     int lineNumber = categorizedProblem.getSourceLineNumber();
     int sourceStart = categorizedProblem.getSourceStart();

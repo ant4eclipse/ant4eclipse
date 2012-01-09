@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
@@ -46,14 +45,10 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
    * @param project
    *          the eclipse plug-in project that has to be resolved
    */
+  // Assure.notNull( "project", project );
+  // Assure.assertTrue( project.hasRole( PluginProjectRole.class ), "Project must have plugin project role!" );
   public PluginProjectLayoutResolver( EclipseProject project ) {
-    Assure.notNull( "project", project );
-    Assure.assertTrue( project.hasRole( PluginProjectRole.class ), "Project must have plugin project role!" );
-
-    // set the eclipse project
     _eclipseProject = project;
-
-    // retrieve the bundle manifest
     File manifestFile = _eclipseProject.getChild( "META-INF/MANIFEST.MF" );
     try {
       _manifest = new Manifest( new FileInputStream( manifestFile ) );

@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pde.tools;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -62,9 +61,9 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "context", context );
   @Override
   public void resolveContainer( ClasspathEntry classpathEntry, ClasspathResolverContext context ) {
-    Assure.notNull( "context", context );
 
     // Step 1: get the plug-in project role
     EclipseProject eclipseProject = context.getCurrentProject();

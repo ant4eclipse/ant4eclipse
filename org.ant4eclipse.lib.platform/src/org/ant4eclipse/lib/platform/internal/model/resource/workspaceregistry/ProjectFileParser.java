@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
@@ -48,8 +47,8 @@ public class ProjectFileParser {
    * 
    * @return the supplied {@link EclipseProject} instance.
    */
+  // Assure.notNull( "eclipseProject", eclipseProject );
   public static EclipseProjectImpl parseProject( EclipseProjectImpl eclipseProject ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
 
     // retrieve the '.project' file
     File projectFile = eclipseProject.getChild( ".project" );

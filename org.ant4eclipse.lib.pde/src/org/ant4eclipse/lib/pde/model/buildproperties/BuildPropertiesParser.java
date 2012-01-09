@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.buildproperties;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.pde.internal.model.featureproject.FeatureProjectRoleImpl;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
@@ -19,7 +18,6 @@ import org.ant4eclipse.lib.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -57,8 +55,8 @@ public class BuildPropertiesParser {
    * @throws FileParserException
    * @see PluginProjectRole#getBuildProperties()
    */
+  // Assure.notNull( "pluginProjectRole", pluginProjectRole );
   public static void parsePluginBuildProperties( PluginProjectRole pluginProjectRole ) {
-    Assure.notNull( "pluginProjectRole", pluginProjectRole );
     StringMap properties = loadBuildProperties( pluginProjectRole.getEclipseProject() );
     PluginBuildProperties buildProperties = initializePluginBuildProperties( properties );
     pluginProjectRole.setBuildProperties( buildProperties );
@@ -76,8 +74,8 @@ public class BuildPropertiesParser {
    *          the featureProjectRole
    * @see PluginProjectRole#getBuildProperties()
    */
+  // Assure.notNull( "featureProjectRole", featureProjectRole );
   public static void parseFeatureBuildProperties( FeatureProjectRole featureProjectRole ) {
-    Assure.notNull( "featureProjectRole", featureProjectRole );
     StringMap buildProperties = loadBuildProperties( featureProjectRole.getEclipseProject() );
     FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
     initializeAbstractBuildProperties( buildProperties, featureBuildProperties );
@@ -85,10 +83,9 @@ public class BuildPropertiesParser {
     ((FeatureProjectRoleImpl) featureProjectRole).setBuildProperties( featureBuildProperties );
   }
 
+  // Assure.notNull( "eclipseProject", eclipseProject );
   private static StringMap loadBuildProperties( EclipseProject eclipseProject ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
-    File file = eclipseProject.getChild( BUILD_PROPERTIES );
-    return new StringMap( file );
+    return new StringMap( eclipseProject.getChild( BUILD_PROPERTIES ) );
   }
 
   /**
@@ -100,8 +97,8 @@ public class BuildPropertiesParser {
    * This method is mainly public to make it accessible from tests (?)
    * </p>
    */
+  // Assure.notNull( "properties", properties );
   public static PluginBuildProperties initializePluginBuildProperties( StringMap properties ) {
-    Assure.notNull( "properties", properties );
 
     PluginBuildProperties buildProperties = new PluginBuildProperties();
     initializeAbstractBuildProperties( properties, buildProperties );
@@ -163,10 +160,9 @@ public class BuildPropertiesParser {
     return buildProperties;
   }
 
-  private static void initializeAbstractBuildProperties( StringMap allProperties,
-      AbstractBuildProperties abstractBuildProperties ) {
-    Assure.notNull( "allProperties", allProperties );
-    Assure.notNull( "abstractBuildProperties", abstractBuildProperties );
+  // Assure.notNull( "allProperties", allProperties );
+  // Assure.notNull( "abstractBuildProperties", abstractBuildProperties );
+  private static void initializeAbstractBuildProperties( StringMap allProperties, AbstractBuildProperties abstractBuildProperties ) {
 
     // set qualifier
     abstractBuildProperties.setQualifier( allProperties.get( "qualifier" ) );
@@ -188,8 +184,8 @@ public class BuildPropertiesParser {
    * @param delimiter
    * @return
    */
+  // Assure.notNull( "delimiter", delimiter );
   private static List<String> getAsList( String content, String delimiter, boolean removePathSeparator ) {
-    Assure.notNull( "delimiter", delimiter );
     if( content == null ) {
       return new ArrayList<String>();
     }

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core.delegate;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectComponent;
 
@@ -34,8 +33,8 @@ public abstract class AbstractAntDelegate {
    * @param newcomponent
    *          the project component
    */
+  // Assure.notNull( "component", newcomponent );
   public AbstractAntDelegate( ProjectComponent newcomponent ) {
-    Assure.notNull( "component", newcomponent );
     component = newcomponent;
   }
 

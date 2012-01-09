@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.io.File;
@@ -42,8 +41,8 @@ public class ClassLoadingHelper {
    *          the class
    * @return the class path entries for the specified class.
    */
+  // Assure.notNull( "clazz", clazz );
   public static String[] getClasspathEntriesFor( Class<?> clazz ) {
-    Assure.notNull( "clazz", clazz );
 
     // get class loader
     ClassLoader classLoader = clazz.getClassLoader();

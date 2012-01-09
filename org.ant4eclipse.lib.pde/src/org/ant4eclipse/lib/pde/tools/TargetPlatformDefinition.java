@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +44,8 @@ public class TargetPlatformDefinition {
    * @param location
    *          the location to add
    */
+  // Assure.isDirectory( "location", location );
   public void addLocation( File location ) {
-    Assure.isDirectory( "location", location );
     if( !_locations.contains( location ) ) {
       _locations.add( location );
     }

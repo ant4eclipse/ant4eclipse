@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model.project;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
@@ -38,10 +37,10 @@ public class PyDevRoleIdentifier extends AbstractProjectRoleIdentifier {
    * Adds a {@link DLTKProjectRole} to the given project and parses the pathes.
    * </p>
    */
+  // Assure.notNull( "project", project );
   @Override
   public ProjectRole createRole( EclipseProject project ) {
     A4ELogging.trace( "PyDevRoleIdentifier.applyRole(%s)", project );
-    Assure.notNull( "project", project );
     PythonProjectRoleImpl result = new PythonProjectRoleImpl( project, false );
     PyDevParser.contributePathes( result );
     return result;

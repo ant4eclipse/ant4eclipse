@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.buildproperties;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
 import java.util.ArrayList;
@@ -86,8 +85,8 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @param library
    *          add the specified library to the build properties.
    */
+  // Assure.notNull( "library", library );
   public void addLibrary( Library library ) {
-    Assure.notNull( "library", library );
     if( !_libraries.containsKey( library.getName() ) ) {
       _libraries.put( library.getName(), library );
     }
@@ -100,8 +99,8 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          (eq. "." or "library1.jar")
    * @return The Library object or null if no such library exists
    */
+  // Assure.notNull( "libraryName", libraryName );
   public Library getLibrary( String libraryName ) {
-    Assure.notNull( "libraryName", libraryName );
     return _libraries.get( libraryName );
   }
 
@@ -112,8 +111,8 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    *          (eg. "." or "library1.jar")
    * @return true or false
    */
+  // Assure.notNull( "libraryName", libraryName );
   public boolean hasLibrary( String libraryName ) {
-    Assure.notNull( "libraryName", libraryName );
     return _libraries.containsKey( libraryName );
   }
 
@@ -156,8 +155,8 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @param compileOrder
    *          The compileOrder to set.
    */
+  // Assure.notNull( "compileOrder", compileOrder );
   void setJarsCompileOrder( List<String> compileOrder ) {
-    Assure.notNull( "compileOrder", compileOrder );
     _jarsCompileOrder = compileOrder;
   }
 
@@ -172,8 +171,8 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @param additionalBundles
    *          the additionalBundles to set
    */
+  // Assure.notNull( "additionalBundles", additionalBundles );
   public void setAdditionalBundles( List<String> additionalBundles ) {
-    Assure.notNull( "additionalBundles", additionalBundles );
     _additionalBundles = additionalBundles;
   }
 
@@ -221,8 +220,8 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     /**
      * @param name
      */
+    // Assure.notNull( "name", name );
     public Library( String name ) {
-      Assure.notNull( "name", name );
       _name = name;
     }
 

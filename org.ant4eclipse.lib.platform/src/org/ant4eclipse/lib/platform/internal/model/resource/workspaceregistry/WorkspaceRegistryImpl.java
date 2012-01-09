@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.WorkspaceImpl;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -100,12 +99,11 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
+  // Assure.notNull( "workspaceDefinition", workspaceDefinition );
   @Override
   public Workspace registerWorkspace( String id, WorkspaceDefinition workspaceDefinition ) {
-    Assure.nonEmpty( "id", id );
-    Assure.notNull( "workspaceDefinition", workspaceDefinition );
 
-    // create new workspace implementation
     WorkspaceImpl workspace = new WorkspaceImpl();
 
     // retrieve all project folders from the workspace definition

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
 
 import java.io.File;
@@ -54,11 +53,11 @@ public class SourceFileImpl implements SourceFile {
    * @param encoding
    *          the file encoding
    */
+  // Assure.isDirectory( "sourceFolder", sourceFolder );
+  // Assure.nonEmpty( "sourceFileName", sourceFileName );
+  // Assure.isDirectory( "destinationFolder", destinationFolder );
+  // Assure.nonEmpty( "encoding", encoding );
   public SourceFileImpl( File sourceFolder, String sourceFileName, File destinationFolder, String encoding ) {
-    Assure.isDirectory( "sourceFolder", sourceFolder );
-    Assure.nonEmpty( "sourceFileName", sourceFileName );
-    Assure.isDirectory( "destinationFolder", destinationFolder );
-    Assure.nonEmpty( "encoding", encoding );
     _destinationFolder = destinationFolder;
     _encoding = encoding;
     _sourceFileName = sourceFileName;
@@ -89,9 +88,9 @@ public class SourceFileImpl implements SourceFile {
    * @param sourceFolder
    * @param sourceFileName
    */
+  // Assure.isDirectory( "sourceFolder", sourceFolder );
+  // Assure.nonEmpty( "sourceFileName", sourceFileName );
   protected SourceFileImpl( File sourceFolder, String sourceFileName ) {
-    Assure.isDirectory( "sourceFolder", sourceFolder );
-    Assure.nonEmpty( "sourceFileName", sourceFileName );
     _sourceFileName = sourceFileName;
     _sourceFolder = sourceFolder;
     _encoding = System.getProperty( FILE_ENCODING_SYSTEM_PROPERTY );

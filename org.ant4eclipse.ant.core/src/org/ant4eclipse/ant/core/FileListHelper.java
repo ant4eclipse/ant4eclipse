@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.apache.tools.ant.types.FileList;
 import org.apache.tools.ant.types.FileList.FileName;
@@ -44,14 +43,11 @@ public class FileListHelper {
    *          the file
    * @return a {@link FileList} that contains all children of the specified file.
    */
+  // Assure.exists( "file", file );
   public static FileList getFileList( File file ) {
-    
-    Assure.exists( "file", file );
-
     File     parentfile = file.getParentFile();
     FileList filelist   = new FileList();
     filelist.setDir( parentfile );
-
     if( file.isFile() ) {
       FileName filename = new FileList.FileName();
       filename.setName( file.getName() );
@@ -63,9 +59,7 @@ public class FileListHelper {
         filelist.addConfiguredFile( filename );
       }
     }
-
     return filelist;
-    
   }
 
 } /* ENDCLASS */

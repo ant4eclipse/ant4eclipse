@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.pluginproject;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.BundleDescriptionLoader;
 import org.ant4eclipse.lib.pde.internal.model.pluginproject.PluginProjectRoleImpl;
@@ -38,10 +37,10 @@ public class PluginProjectRoleIdentifier extends AbstractProjectRoleIdentifier {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "project", project );
   @Override
   public ProjectRole createRole( EclipseProject project ) {
     A4ELogging.debug( "PluginProjectRoleIdentifier.applyRole(%s)", project );
-    Assure.notNull( "project", project );
 
     BundleDescription description;
     try {

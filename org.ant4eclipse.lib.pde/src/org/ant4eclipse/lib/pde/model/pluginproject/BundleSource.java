@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.pluginproject;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.util.ManifestElement;
@@ -38,8 +37,8 @@ public class BundleSource {
    *          the bundle description.
    * @return the bundle source.
    */
+  // Assure.notNull( "bundleDescription", bundleDescription );
   public static BundleSource getBundleSource( BundleDescription bundleDescription ) {
-    Assure.notNull( "bundleDescription", bundleDescription );
 
     // retrieve the user object (that is always an instance of type BundleSource in our case)
     BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
@@ -72,9 +71,9 @@ public class BundleSource {
    * @param bundleManifest
    *          the bundle manifest
    */
+  // Assure.notNull( "source", source );
+  // Assure.notNull( "bundleManifest", bundleManifest );
   public BundleSource( Object source, Manifest bundleManifest ) {
-    Assure.notNull( "source", source );
-    Assure.notNull( "bundleManifest", bundleManifest );
     _source = source;
     _bundleManifest = bundleManifest;
     if( source instanceof File ) {
@@ -114,8 +113,8 @@ public class BundleSource {
    * 
    * @return the bundle source.
    */
+  // Assure.assertTrue( isEclipseProject(), "Bundle source has to be instance of Eclipse Project" );
   public EclipseProject getAsEclipseProject() {
-    Assure.assertTrue( isEclipseProject(), "Bundle source has to be instance of Eclipse Project" );
     return (EclipseProject) _source;
   }
 
@@ -127,8 +126,8 @@ public class BundleSource {
    * 
    * @return the bundle source.
    */
+  // Assure.assertTrue( _source instanceof File, "Bundle source has to be instance of File" );
   public File getAsFile() {
-    Assure.assertTrue( _source instanceof File, "Bundle source has to be instance of File" );
     return (File) _source;
   }
 
@@ -177,9 +176,9 @@ public class BundleSource {
    * @param classpathRoot
    *          the class path root
    */
+  // Assure.notNull( "classpathRoot", classpathRoot );
+  // Assure.assertTrue( !hasClasspathRoot(), "Classpath root already set!" );
   public void setClasspathRoot( File classpathRoot ) {
-    Assure.notNull( "classpathRoot", classpathRoot );
-    Assure.assertTrue( !hasClasspathRoot(), "Classpath root already set!" );
     _classpathRoot = classpathRoot;
   }
 

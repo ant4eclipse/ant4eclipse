@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.internal.model.resource.role.ProjectRoleIdentifierRegistry;
 import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
@@ -79,9 +78,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * @param projectName
    *          the name of the project
    */
+  // Assure.isDirectory( "projectDirectory", projectDirectory );
   public EclipseProjectImpl( Workspace workspace, File projectDirectory ) {
-    Assure.isDirectory( "projectDirectory", projectDirectory );
-
     _workspace = workspace;
     _projectDirectory = Utilities.getCanonicalFile( projectDirectory );
     _natures = new ArrayList<ProjectNature>();
@@ -90,7 +88,6 @@ public class EclipseProjectImpl implements EclipseProject {
     _referencedProjects = new ArrayList<String>();
     _linkedResources = new ArrayList<LinkedResourceImpl>();
     _linkedResourceNames = new ArrayList<String>();
-
     File settingsFolder = getChild( SETTINGS_FOLDER_NAME );
     _settingsFolder = (settingsFolder.isDirectory() ? settingsFolder : null);
   }
@@ -146,9 +143,9 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "pathstyle", pathstyle );
   @Override
   public File getFolder( PathStyle pathstyle ) {
-    Assure.notNull( "pathstyle", pathstyle );
     if( pathstyle == PathStyle.PROJECT_RELATIVE_WITHOUT_LEADING_PROJECT_NAME ) {
       return new File( "." );
     } else if( pathstyle == PathStyle.PROJECT_RELATIVE_WITH_LEADING_PROJECT_NAME ) {
@@ -169,9 +166,9 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "path", path );
   @Override
   public boolean hasChild( String path ) {
-    Assure.notNull( "path", path );
     File child = getChild( path );
     return child.exists();
   }
@@ -195,9 +192,9 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "path", path );
   @Override
   public List<File> getChildren( List<String> path, PathStyle relative ) {
-    Assure.notNull( "path", path );
     List<File> result = new ArrayList<File>();
     for( int i = 0; i < path.size(); i++ ) {
       result.add( getChild( path.get(i), relative ) );
@@ -226,10 +223,10 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "settingsFileName", settingsFileName );
+  // Assure.assertTrue( hasSettingsFolder(), String.format( "The project '%s' must have a .settings folder", getFolderName() ) );
   @Override
   public File getSettingsFile( String settingsFileName ) throws RuntimeException {
-    Assure.notNull( "settingsFileName", settingsFileName );
-    Assure.assertTrue( hasSettingsFolder(), String.format( "The project '%s' must have a .settings folder", getFolderName() ) );
     File settingsFile = new File( _settingsFolder, settingsFileName );
     if( !settingsFile.exists() ) {
       throw new RuntimeException( String.format( "Settings File '%s' not found in project '%s'", settingsFileName, getFolderName() ) );
@@ -243,9 +240,9 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "path", path );
   @Override
   public File getChild( String path, PathStyle pathstyle ) {
-    Assure.notNull( "path", path );
 
     String name = path;
     String rest = null;
@@ -321,8 +318,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * @param nature
    *          the nature to add.
    */
+  // Assure.notNull( "nature", nature );
   public void addNature( ProjectNature nature ) {
-    Assure.notNull( "nature", nature );
     if( !_natures.contains( nature ) ) {
       _natures.add( nature );
     }
@@ -331,9 +328,9 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "natureName", natureName );
   @Override
   public boolean hasNature( String natureName ) {
-    Assure.notNull( "natureName", natureName );
     return hasNature( ProjectNature.createNature( natureName ) );
   }
 
@@ -341,8 +338,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * {@inheritDoc}
    */
   @Override
+  // Assure.notNull( "nature", nature );
   public boolean hasNature( ProjectNature nature ) {
-    Assure.notNull( "nature", nature );
 
     // nature unknown:
     if( !_natures.contains( nature ) ) {
@@ -364,10 +361,7 @@ public class EclipseProjectImpl implements EclipseProject {
 
       // there's no mapping so we don't have an abbreviation here
       return false;
-    }
-
-    // nature known:
-    else {
+    } else {
       return true;
     }
   }
@@ -403,8 +397,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * @param role
    *          Adds the specified role to the EclipseProject.
    */
+  // Assure.notNull( "role", role );
   public void addRole( ProjectRole role ) {
-    Assure.notNull( "role", role );
     if( hasRole( role.getClass() ) ) {
       throw new RuntimeException( String.format( "ProjectRole %s is already set!", role.getClass() ) );
     }
@@ -414,9 +408,9 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "projectRoleClass", projectRoleClass );
   @Override
   public boolean hasRole( Class<? extends ProjectRole> projectRoleClass ) {
-    Assure.notNull( "projectRoleClass", projectRoleClass );
     Iterator<ProjectRole> iterator = _roles.iterator();
     while( iterator.hasNext() ) {
       AbstractProjectRole role = (AbstractProjectRole) iterator.next();
@@ -430,11 +424,11 @@ public class EclipseProjectImpl implements EclipseProject {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "projectRoleClass", projectRoleClass );
+  // Assure.assertTrue( hasRole( projectRoleClass ), String.format( "hasRole(projectRoleClass) on project '%s' has to be true for role '%s'!", getFolderName(), projectRoleClass ) );
   @Override
   @SuppressWarnings( "unchecked" )
   public <T extends ProjectRole> T getRole( Class<T> projectRoleClass ) {
-    Assure.notNull( "projectRoleClass", projectRoleClass );
-    Assure.assertTrue( hasRole( projectRoleClass ), String.format( "hasRole(projectRoleClass) on project '%s' has to be true for role '%s'!", getFolderName(), projectRoleClass ) );
 
     Iterator<ProjectRole> iterator = _roles.iterator();
 
@@ -462,27 +456,26 @@ public class EclipseProjectImpl implements EclipseProject {
    * @param command
    *          the specified build command to the project.
    */
+  // Assure.notNull( "command", command );
   public void addBuildCommand( BuildCommand command ) {
-    Assure.notNull( "command", command );
     _buildCommands.add( command );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "commandName", commandName );
   @Override
   public boolean hasBuildCommand( String commandName ) {
-    Assure.notNull( "commandName", commandName );
-    BuildCommand command = new BuildCommandImpl( commandName );
-    return hasBuildCommand( command );
+    return hasBuildCommand( new BuildCommandImpl( commandName ) );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "command", command );
   @Override
   public boolean hasBuildCommand( BuildCommand command ) {
-    Assure.notNull( "command", command );
     return _buildCommands.contains( command );
   }
 
@@ -500,8 +493,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * @param linkedResource
    *          the linked resource to add.
    */
+  // Assure.notNull( "linkedResource", linkedResource );
   public void addLinkedResource( LinkedResourceImpl linkedResource ) {
-    Assure.notNull( "linkedResource", linkedResource );
     if( !_linkedResources.contains( linkedResource ) ) {
       _linkedResources.add( linkedResource );
       _linkedResourceNames.add( linkedResource.getName() );
@@ -516,8 +509,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * 
    * @return The desired LinkedResource instance.
    */
+  // Assure.assertTrue( isLinkedResource( name ), String.format( "Cannot retrieve linked resource '%s' !", name ) );
   public LinkedResourceImpl getLinkedResource( String name ) {
-    Assure.assertTrue( isLinkedResource( name ), String.format( "Cannot retrieve linked resource '%s' !", name ) );
     int idx = _linkedResourceNames.indexOf( name );
     return _linkedResources.get( idx );
   }
@@ -530,8 +523,8 @@ public class EclipseProjectImpl implements EclipseProject {
    * 
    * @return true <=> The name applies to a specific linked resource.
    */
+  // Assure.notNull( "name", name );
   public boolean isLinkedResource( String name ) {
-    Assure.notNull( "name", name );
     return _linkedResourceNames.contains( name );
   }
 

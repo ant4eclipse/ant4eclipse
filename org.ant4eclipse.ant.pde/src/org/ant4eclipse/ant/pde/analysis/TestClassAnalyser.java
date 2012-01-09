@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde.analysis;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -55,8 +54,8 @@ public class TestClassAnalyser {
    * @param eclipseProject
    *          the eclipse project to test.
    */
+  // Assure.notNull( "eclipseProject", eclipseProject );
   public TestClassAnalyser( EclipseProject eclipseProject ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
     _eclipseProject = eclipseProject;
     ResolvedClasspath classpath = JdtResolver.resolveProjectClasspath( _eclipseProject, false, false, new ArrayList<JdtClasspathContainerArgument>() );
     _fileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader( _eclipseProject.getFolder(), EcjAdapter.PROJECT, classpath.getClasspathFiles(), new ArrayList<File>() );

@@ -16,7 +16,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.internal.model.launcher.LaunchConfigAttribute.ListAttribute;
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 
@@ -75,8 +74,8 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
     return listAttributeValue.getEntries();
   }
 
+  // Assure.notNull( "attributeName", attributeName );
   protected LaunchConfigAttribute getLaunchConfigAttribute( String attributeName ) {
-    Assure.notNull( "attributeName", attributeName );
     return _attributes.get( attributeName );
   }
 

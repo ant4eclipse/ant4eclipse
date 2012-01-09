@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.tools.classpathentry;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
@@ -61,9 +60,9 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "entry", entry );
   @Override
   public void resolve( ClasspathEntry entry, ClasspathResolverContext context ) {
-    Assure.notNull( "entry", entry );
 
     // do not resolve if the class path entry is not visible
     if( !isClasspathEntryVisible( entry, context ) ) {

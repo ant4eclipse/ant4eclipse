@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.jdt.internal.model.project;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.jdt.model.ClasspathEntry;
@@ -221,9 +220,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "sourceFolder", sourceFolder );
   @Override
   public String getOutputFolderForSourceFolder( final String sourceFolder ) {
-    Assure.notNull( "sourceFolder", sourceFolder );
 
     if( "".equals( sourceFolder ) ) {
       return getDefaultOutputFolder();
@@ -333,8 +332,8 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @param classpathEntry
    *          the eclipse classpath entries to set.
    */
+  // Assure.notNull( "classpathEntry", classpathEntry );
   public void addEclipseClasspathEntry( RawClasspathEntry classpathEntry ) {
-    Assure.notNull( "classpathEntry", classpathEntry );
     _eclipseClasspathEntries.add( classpathEntry );
   }
 
@@ -371,8 +370,8 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    * @param sourceFolder
    * @return The RawClasspathEntry for the sourcefolder or <tt>null</tt>
    */
+  // Assure.notNull( "sourceFolder", sourceFolder );
   private RawClasspathEntry getEntryForSourceFolder( final String sourceFolder ) {
-    Assure.notNull( "sourceFolder", sourceFolder );
 
     if( "".equals( sourceFolder ) ) {
       return null;

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Pair;
@@ -82,9 +81,9 @@ public class TargetPlatformImpl implements TargetPlatform {
    * @param targetlocations
    *          a list of all targetplatform locations providing the bundles. Neither <code>null</code> nor empty.
    */
+  // Assure.notNull( "configuration", configuration );
   public TargetPlatformImpl( BundleAndFeatureSet pluginProjectSet, BundleAndFeatureSet[] binaryBundleSets,
       PlatformConfiguration configuration, File[] targetlocations ) {
-    Assure.notNull( "configuration", configuration );
 
     // set the plug-in project set
     _pluginProjectSet = pluginProjectSet;
@@ -226,9 +225,9 @@ public class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
   @Override
   public FeatureDescription getFeatureDescription( String id, Version version ) {
-    Assure.nonEmpty( "id", id );
 
     if( version == null ) {
       return getFeatureDescription( id );
@@ -269,9 +268,9 @@ public class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
   @Override
   public FeatureDescription getFeatureDescription( String id ) {
-    Assure.nonEmpty( "id", id );
 
     FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription( id );
 
@@ -347,25 +346,19 @@ public class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "id", id );
   @Override
   public BundleDescription getBundleDescription( String id ) {
-    Assure.nonEmpty( "id", id );
 
-    //
     BundleDescription bundleDescription = _pluginProjectSet.getBundleDescription( id );
-
-    //
     if( bundleDescription != null ) {
       return bundleDescription;
     }
 
-    // result
     BundleDescription result = null;
 
-    // iterate over feature descriptions
     for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
 
-      // get the feature manifest
       bundleDescription = bundleSet.getBundleDescription( id );
 
       // if match -> set as result
@@ -387,23 +380,22 @@ public class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "symbolicName", symbolicName );
   @Override
   public BundleDescription getBundleDescriptionFromWorkspace( String symbolicName ) {
-    Assure.nonEmpty( "symbolicName", symbolicName );
     return _pluginProjectSet.getBundleDescription( symbolicName );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "symbolicName", symbolicName );
   @Override
   public BundleDescription getBundleDescriptionFromBinaryBundles( String symbolicName ) {
-    Assure.nonEmpty( "symbolicName", symbolicName );
 
     BundleDescription bundleDescription = null;
     BundleDescription result = null;
 
-    // iterate over feature descriptions
     for( BundleAndFeatureSet bundleSet : _binaryBundleSets ) {
 
       // get the feature manifest
@@ -436,17 +428,13 @@ public class TargetPlatformImpl implements TargetPlatform {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "source", source );
+  // Assure.notNull( "manifest", manifest );
   @Override
   public ResolvedFeature resolveFeature( Object source, FeatureManifest manifest ) {
-    Assure.notNull( "source", source );
-    Assure.notNull( "manifest", manifest );
-
     ResolvedFeature resolvedFeature = new ResolvedFeature( source, manifest );
-
     resolvePlugins( manifest, resolvedFeature );
     resolveIncludes( manifest, resolvedFeature );
-
-    // 6.3 return result
     return resolvedFeature;
   }
 
@@ -653,8 +641,8 @@ public class TargetPlatformImpl implements TargetPlatform {
     return false;
   }
 
+  // Assure.notNull( "description", description );
   public static boolean platformFilterDoesNotMatch( BundleDescription description ) {
-    Assure.notNull( "description", description );
     State state = description.getContainingState();
     ResolverError[] errors = state.getResolverErrors( description );
     return errors != null && errors.length == 1 && errors[0].getType() == ResolverError.PLATFORM_FILTER;
@@ -671,8 +659,8 @@ public class TargetPlatformImpl implements TargetPlatform {
    *          indicates if the header should be dumped or not
    * @return the resolver errors as a string.
    */
+  // Assure.notNull( "description", description );
   public static String dumpResolverErrors( BundleDescription description, boolean dumpHeader ) {
-    Assure.notNull( "description", description );
 
     StringBuffer stringBuffer = new StringBuffer();
     State state = description.getContainingState();
@@ -718,8 +706,8 @@ public class TargetPlatformImpl implements TargetPlatform {
    *          the bundle description.
    * @return the bundle info of the given bundle description.
    */
+  // Assure.notNull( "description", description );
   static String getBundleInfo( BundleDescription description ) {
-    Assure.notNull( "description", description );
     BundleSource bundleSource = BundleSource.getBundleSource( description );
     StringBuffer buffer = new StringBuffer();
     buffer.append( description.getSymbolicName() ).append( "_" ).append( description.getVersion().toString() )

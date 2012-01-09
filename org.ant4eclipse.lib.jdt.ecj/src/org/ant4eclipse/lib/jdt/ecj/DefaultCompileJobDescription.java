@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 
 import java.util.Iterator;
@@ -53,10 +52,10 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    * @param sourceFiles
    */
+  // Assure.notNull( "classFileLoader", classFileLoader );
+  // Assure.notNull( "compilerOptions", compilerOptions );
+  // Assure.notNull( "sourceFiles", sourceFiles );
   public DefaultCompileJobDescription( ClassFileLoader classFileLoader, StringMap compilerOptions, List<SourceFile> sourceFiles ) {
-    Assure.notNull( "classFileLoader", classFileLoader );
-    Assure.notNull( "compilerOptions", compilerOptions );
-    Assure.notNull( "sourceFiles", sourceFiles );
     _classFileLoader  = classFileLoader;
     _compilerOptions  = compilerOptions;
     _sourceFiles      = sourceFiles;
@@ -94,8 +93,8 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param classFileLoader
    *          the class file loader.
    */
+  // Assure.notNull( "classFileLoader", classFileLoader );
   public void setClassFileLoader( ClassFileLoader classFileLoader ) {
-    Assure.notNull( "classFileLoader", classFileLoader );
     _classFileLoader = classFileLoader;
   }
 
@@ -107,8 +106,8 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param compilerOptions
    *          the compiler options.
    */
+  // Assure.notNull( "compilerOptions", compilerOptions );
   public void setCompilerOptions( Map<String,String> compilerOptions ) {
-    Assure.notNull( "compilerOptions", compilerOptions );
     _compilerOptions = compilerOptions;
   }
 
@@ -120,8 +119,8 @@ public class DefaultCompileJobDescription implements CompileJobDescription {
    * @param sourceFiles
    *          the source files.
    */
+  // Assure.notNull( "sourceFiles", sourceFiles );
   public void setSourceFiles( List<SourceFile> sourceFiles ) {
-    Assure.notNull( "sourceFiles", sourceFiles );
     _sourceFiles = sourceFiles;
   }
 

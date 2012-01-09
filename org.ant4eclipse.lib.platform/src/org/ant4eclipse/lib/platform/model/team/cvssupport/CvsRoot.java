@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -47,8 +46,8 @@ public class CvsRoot implements Cloneable {
    *          the cvsroot as a string.
    * @throws IllegalArgumentException
    */
+  // Assure.nonEmpty( "root", root );
   public CvsRoot( String root ) throws IllegalArgumentException {
-    Assure.nonEmpty( "root", root );
     parse( root );
   }
 
@@ -58,8 +57,8 @@ public class CvsRoot implements Cloneable {
    * @param encodedPassword
    *          The encodedPassword to set.
    */
+  // Assure.notNull( "encodedPassword", encodedPassword );
   public void setEncodedPassword( String encodedPassword ) {
-    Assure.notNull( "encodedPassword", encodedPassword );
     _encodedPassword = encodedPassword;
   }
 
@@ -69,8 +68,8 @@ public class CvsRoot implements Cloneable {
    * @param user
    *          Sets a cvs user.
    */
+  // Assure.notNull( "user", user );
   public void setUser( String user ) {
-    Assure.notNull( "user", user );
     _user = user;
   }
 
@@ -189,24 +188,19 @@ public class CvsRoot implements Cloneable {
    *          the password to use in the cvsroot. Might be null
    * @return the resolved root.
    */
+  // Assure.notNull( "username", username );
   public CvsRoot getResolvedRoot( String username, String password ) {
-    Assure.notNull( "username", username );
-
     CvsRoot cvsRoot = null;
-
     try {
       cvsRoot = (CvsRoot) clone();
     } catch( Exception e ) {
       A4ELogging.debug( e.getMessage() );
       return null;
     }
-
     cvsRoot.setUser( username );
-
     if( password != null ) {
       cvsRoot.setEncodedPassword( password );
     }
-
     return cvsRoot;
   }
 

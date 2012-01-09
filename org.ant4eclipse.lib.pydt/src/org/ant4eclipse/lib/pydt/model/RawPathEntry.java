@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.lib.core.Assure;
-
 /**
  * A raw path entry is a reference to another entity which has not been resolved. It's only used to represent the data
  * stored within the configuration file.
@@ -45,9 +43,9 @@ public class RawPathEntry {
    * @param external
    *          <code>true</code> <=> The value doesn't refer to a location within the workspace.
    */
+  // Assure.nonEmpty( "projectname", projectname );
+  // Assure.notNull( "refkind", refkind );
   public RawPathEntry( String projectname, ReferenceKind refkind, String value, boolean export, boolean external ) {
-    Assure.nonEmpty( "projectname", projectname );
-    Assure.notNull( "refkind", refkind );
     _projectname = projectname;
     _kind = refkind;
     _value = value;

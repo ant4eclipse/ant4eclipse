@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractAnt4EclipseFileSet;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
@@ -283,8 +282,8 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
      * 
      * @param pattern
      */
+    // Assure.notNull( "pattern", pattern );
     public void setName( String pattern ) {
-      Assure.notNull( "pattern", pattern );
       _name = pattern;
     }
 
@@ -297,6 +296,6 @@ public class JdtProjectFileSet extends AbstractAnt4EclipseFileSet {
       return Utilities.hasText( _name );
     }
 
-  }
+  } /* ENDCLASS */
   
 } /* ENDCLASS */

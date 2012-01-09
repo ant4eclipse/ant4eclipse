@@ -1,7 +1,5 @@
 package org.ant4eclipse.lib.pde.model.launcher;
 
-import static org.ant4eclipse.lib.core.Assure.notNull;
-
 /**
  * Represents information about a bundle that is selected inside a Equinox launch configuration, like it's name,
  * version, start level etc.
@@ -35,12 +33,11 @@ public class SelectedLaunchConfigurationBundle {
    */
   private String _autoStart;
 
+  // Assure.notNull( "bundleSymbolicName", bundleSymbolicName );
+  // Assure.notNull( "startLevel", startLevel );
+  // Assure.notNull( "autoStart", autoStart );
   public SelectedLaunchConfigurationBundle( String bundleSymbolicName, String version, String startLevel,
       String autoStart ) {
-    notNull( "bundleSymbolicName", bundleSymbolicName );
-    notNull( "startLevel", startLevel );
-    notNull( "autoStart", autoStart );
-
     _bundleSymbolicName = bundleSymbolicName;
     _version = version;
     _startLevel = startLevel;

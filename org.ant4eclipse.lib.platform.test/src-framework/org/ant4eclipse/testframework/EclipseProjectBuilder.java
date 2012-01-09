@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.junit.Assert;
 
@@ -85,8 +84,8 @@ public class EclipseProjectBuilder {
    *          the directory where this project(directory) should be created to
    * @return The project directory
    */
+  // Assure.isDirectory( "destinationDirectory", destinationDirectory );
   public File createIn( File destinationDirectory ) {
-    Assure.isDirectory( "destinationDirectory", destinationDirectory );
     File projectDir = new File( destinationDirectory, _projectName );
     Utilities.mkdirs( projectDir );
     createArtefacts( projectDir );

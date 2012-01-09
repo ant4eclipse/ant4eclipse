@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.model.buildproperties.AbstractBuildProperties;
 import org.osgi.framework.Version;
@@ -101,8 +100,8 @@ public class PdeBuildHelper {
    *          The qualifier argument from the build.properties. Might be null
    * @return
    */
+  // Assure.notNull( "qualifier", qualifier );
   public static final Version resolveVersion( Version version, String qualifier ) {
-    Assure.notNull( "qualifier", qualifier );
     Version qualifiedVersion = null;
     if( hasUnresolvedQualifier( version ) ) {
       if( qualifier == null || AbstractBuildProperties.isContextQualifer( qualifier ) ) {
@@ -118,8 +117,8 @@ public class PdeBuildHelper {
     return qualifiedVersion;
   }
 
+  // Assure.notNull( "version", version );
   public static final boolean hasUnresolvedQualifier( Version version ) {
-    Assure.notNull( "version", version );
     return (version != null) && "qualifier".equals( version.getQualifier() );
   }
 

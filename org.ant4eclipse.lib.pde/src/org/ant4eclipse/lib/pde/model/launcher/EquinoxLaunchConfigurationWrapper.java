@@ -1,8 +1,5 @@
 package org.ant4eclipse.lib.pde.model.launcher;
 
-import static org.ant4eclipse.lib.core.Assure.assertTrue;
-import static org.ant4eclipse.lib.core.Assure.notNull;
-
 import org.ant4eclipse.lib.platform.model.launcher.LaunchConfiguration;
 
 import java.util.ArrayList;
@@ -57,9 +54,9 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param launchConfiguration
    * @return
    */
+  // Assure.notNull( "launchConfiguration", launchConfiguration );
   public static boolean isEquinoxLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
-    notNull( "launchConfiguration", launchConfiguration );
-    return(EQUINOX_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() ));
+    return EQUINOX_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() );
   }
 
   /**
@@ -69,8 +66,8 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param launchConfiguration
    * @return
    */
+  // Assure.notNull( "launchConfiguration", launchConfiguration );
   public static boolean isPdeJunitLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
-    notNull( "launchConfiguration", launchConfiguration );
     return PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() );
   }
 
@@ -80,9 +77,9 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param launchConfiguration
    *          A Equinox LaunchConfiguration
    */
+  // Assure.notNull( "launchConfiguration", launchConfiguration );
+  // Assure.assertTrue( isEquinoxLaunchConfiguration( launchConfiguration ), String.format( "Launch configuration must be of type '%s'", EQUINOX_LAUNCH_CONFIGURATION_TYPE ) );
   public EquinoxLaunchConfigurationWrapper( LaunchConfiguration launchConfiguration ) {
-    notNull( "launchConfiguration", launchConfiguration );
-    assertTrue( isEquinoxLaunchConfiguration( launchConfiguration ), String.format( "Launch configuration must be of type '%s'", EQUINOX_LAUNCH_CONFIGURATION_TYPE ) );
     _launchConfiguration = launchConfiguration;
   }
 
@@ -147,8 +144,8 @@ public class EquinoxLaunchConfigurationWrapper {
    * 
    * @return
    */
+  // Assure.notNull( "selectedBundle", selectedBundle );
   public String getResolvedStartLevel( SelectedLaunchConfigurationBundle selectedBundle ) {
-    notNull( "selectedBundle", selectedBundle );
     String startLevel = selectedBundle.getStartLevel();
     if( "default".equals( startLevel ) ) {
       return "";
@@ -169,8 +166,8 @@ public class EquinoxLaunchConfigurationWrapper {
    * @param selectedBundle
    * @return
    */
+  // Assure.notNull( "selectedBundle", selectedBundle );
   public String getResolvedAutoStart( SelectedLaunchConfigurationBundle selectedBundle ) {
-    notNull( "selectedBundle", selectedBundle );
 
     String autoStart = selectedBundle.getAutoStart();
 

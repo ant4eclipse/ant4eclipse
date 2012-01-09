@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -31,8 +30,8 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
   /** maps packages to a package provider that contains a list of one or more class path entries */
   private Map<String,List<ClassFileLoader>> _allPackages;
 
+  // Assure.notNull( "classFileLoaders", classFileLoaders );
   public CompoundClassFileLoaderImpl( ClassFileLoader[] classFileLoaders ) {
-    Assure.notNull( "classFileLoaders", classFileLoaders );
     _classFileLoaders = classFileLoaders;
     _allPackages = new HashMap<String,List<ClassFileLoader>>();
     initialise();

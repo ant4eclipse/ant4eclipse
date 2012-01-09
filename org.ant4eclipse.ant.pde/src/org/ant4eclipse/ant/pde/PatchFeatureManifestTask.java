@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.pde;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseTask;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -177,9 +176,9 @@ public class PatchFeatureManifestTask extends AbstractAnt4EclipseTask {
    *          A map containing plugin-id (String) - version (String) associations
    * @throws Exception
    */
+  // Assure.notNull( "featureXml", featureXml );
+  // Assure.assertTrue( featureXml.isFile(), String.format( "featureXml (%s) must point to an existing file", featureXml ) );
   protected void replaceVersions( File featureXml, String qualifier, StringMap newBundleVersions ) throws Exception {
-    Assure.notNull( "featureXml", featureXml );
-    Assure.assertTrue( featureXml.isFile(), String.format( "featureXml (%s) must point to an existing file", featureXml ) );
 
     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
     Document featureDom = builder.parse( featureXml );

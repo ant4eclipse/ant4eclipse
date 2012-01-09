@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathEntryResolverExecutor;
 import org.ant4eclipse.lib.jdt.internal.tools.ClasspathResolverContextImpl;
 import org.ant4eclipse.lib.jdt.internal.tools.ResolvedClasspathImpl;
@@ -68,10 +67,10 @@ public class JdtResolver {
    * @param classpathContainerArguments
    * @return
    */
+  // Assure.notNull( "project", project );
   private static final ResolvedClasspath doResolveProjectClasspath( EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments ) {
 
-    Assure.notNull( "project", project );
 
     // create a ResolverJob
     ResolverJob job = new ResolverJob( project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,

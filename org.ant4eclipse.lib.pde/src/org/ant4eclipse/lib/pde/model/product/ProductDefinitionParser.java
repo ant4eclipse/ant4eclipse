@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.product;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.core.xquery.XQuery;
@@ -41,9 +40,8 @@ public class ProductDefinitionParser {
    * 
    * @return A product definition instance. Not <code>null</code>.
    */
+  // Assure.notNull( "inputstream", inputstream );
   public static final ProductDefinition parseProductDefinition( InputStream inputstream ) {
-
-    Assure.notNull( "inputstream", inputstream );
 
     XQueryHandler queryhandler = new XQueryHandler();
 

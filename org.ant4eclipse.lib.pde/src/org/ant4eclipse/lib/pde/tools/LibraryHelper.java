@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
@@ -67,8 +66,8 @@ public class LibraryHelper {
    * @param libraryName
    * @return
    */
+  // Assure.notNull( "libraryName", libraryName );
   public static final String getSourceNameForLibrary( String libraryName ) {
-    Assure.notNull( "libraryName", libraryName );
     String result = libraryName;
     if( result.endsWith( ".jar" ) ) {
       result = result.substring( 0, result.length() - 4 );

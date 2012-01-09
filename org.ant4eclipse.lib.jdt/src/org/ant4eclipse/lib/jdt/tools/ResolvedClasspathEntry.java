@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.tools;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -67,9 +65,8 @@ public class ResolvedClasspathEntry {
    * @param sourcePathEntries
    *          the source path entries
    */
+  // Assure.notNull( "classPathEntries", classPathEntries );
   public ResolvedClasspathEntry( List<File> classPathEntries, AccessRestrictions accessRestrictions, List<File> sourcePathEntries ) {
-    Assure.notNull( "classPathEntries", classPathEntries );
-
     _classPathEntries = classPathEntries;
     _accessRestrictions = accessRestrictions;
     _sourcePathEntries = sourcePathEntries;

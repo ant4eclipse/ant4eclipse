@@ -11,9 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.projectset;
 
-import static org.ant4eclipse.lib.core.Assure.notNull;
-
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
@@ -47,15 +44,14 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param tag
    *          the tag
    */
+  
+  // Assure.notNull( "cvsroot", cvsroot );
+  // Assure.notNull( "nameInRepository", nameInRepository );
   public CvsTeamProjectDescription( String projectname, CvsRoot cvsroot, String nameInRepository, String tag ) {
     super( projectname );
-    Assure.notNull( "cvsroot", cvsroot );
-    Assure.notNull( "nameInRepository", nameInRepository );
-
     _cvsRoot = cvsroot;
     _nameInRepository = nameInRepository;
     _branchOrVersionTag = tag;
-
     if( "".equals( _branchOrVersionTag ) ) {
       _branchOrVersionTag = null;
     }
@@ -102,8 +98,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * 
    * @return Returns the resolved CvsRoot.
    */
+  // Assure.assertTrue( isCvsUserSet(), "CvsUser and CvsPwd have to be set!" );
   public CvsRoot getResolvedCvsRoot() {
-    Assure.assertTrue( isCvsUserSet(), "CvsUser and CvsPwd have to be set!" );
     return _cvsRoot.getResolvedRoot( _cvsUser, _cvsPwd );
   }
 
@@ -153,16 +149,16 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    * @param cvsPwd
    *          the cvs password might be null
    */
+  // Assure.notNull( "cvsUser", cvsUser );
   public void setCvsUserAndPassword( String cvsUser, String cvsPwd ) {
-    Assure.notNull( "cvsUser", cvsUser );
     A4ELogging.debug( "setCvsUserAndPassword(%s, %s)", cvsUser, cvsPwd );
     _cvsUser = cvsUser;
     _cvsPwd = cvsPwd;
   }
 
+  // Assure.notNull( "properties", properties );
   @Override
   protected void addSpecificProperties( StringMap properties ) {
-    notNull( "properties", properties );
 
     // add basic properties
     properties.put( "cvs.nameInRepository", _nameInRepository );

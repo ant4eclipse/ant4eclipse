@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
@@ -75,10 +74,10 @@ public class CompilerOptionsProvider {
    * 
    * @return the map with the merged compiler options.
    */
+  // Assure.notNull( "javac", javac );
   @SuppressWarnings( "unchecked" )
   public static final StringMap getCompilerOptions( Javac javac, String projectCompilerOptionsFile,
       String globalCompilerOptionsFile ) {
-    Assure.notNull( "javac", javac );
 
     // get the project options
     StringMap projectOptions = getFileCompilerOptions( projectCompilerOptionsFile );

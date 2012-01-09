@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
@@ -52,16 +51,10 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param description
    *          a description of this {@link BundleAndFeatureSet}
    */
+  // Assure.nonEmpty( "description", description );
   protected AbstractBundleAndFeatureSet( String description ) {
-    Assure.nonEmpty( "description", description );
-
-    // set the description
     _description = description;
-
-    // create the bundle description list
     _bundleDescriptionList = new ArrayList<BundleDescription>();
-
-    // create the feature description list
     _featureDescriptionList = new ArrayList<FeatureDescription>();
   }
 
@@ -93,47 +86,30 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "featureId", featureId );
+  // Assure.notNull( "version", version );
   @Override
   public FeatureDescription getFeatureDescription( String featureId, Version version ) {
-    Assure.nonEmpty( "featureId", featureId );
-    Assure.notNull( "version", version );
-
-    // initialize if necessary
     initialize();
-
-    // iterate over feature list
     for( FeatureDescription featureDescription : _featureDescriptionList ) {
-
-      // return if match
       if( featureDescription.getFeatureManifest().getId().equals( featureId )
           && PdeBuildHelper.resolveVersion( featureDescription.getFeatureManifest().getVersion(),
               PdeBuildHelper.getResolvedContextQualifier() ).equals( version ) ) {
-
         return featureDescription;
       }
     }
-
-    // no Feature found -> return null
     return null;
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.no nEmpty( "featureId", featureId );
   @Override
   public FeatureDescription getFeatureDescription( String featureId ) {
-    Assure.nonEmpty( "featureId", featureId );
-
-    // initialize if necessary
     initialize();
-
-    // result
     FeatureDescription result = null;
-
-    // iterate over feature descriptions
     for( FeatureDescription featureDescription : _featureDescriptionList ) {
-
-      // get the feature manifest
       FeatureManifest featureManifest = featureDescription.getFeatureManifest();
 
       // if match -> set as result
@@ -149,23 +125,17 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
       }
     }
 
-    // return result
     return result;
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "bundleid", bundleid );
   @Override
   public BundleDescription getBundleDescription( String bundleid ) {
-    Assure.nonEmpty( "bundleid", bundleid );
-
-    // initialize if necessary
     initialize();
-
-    // result
     BundleDescription result = null;
-
     for( BundleDescription bundleDescription : _bundleDescriptionList ) {
 
       // if match -> set as result
@@ -181,7 +151,6 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
       }
     }
 
-    // return result
     return result;
 
   }
@@ -201,15 +170,11 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "symbolicName", symbolicName );
   @Override
   public final boolean containsBundle( String symbolicName ) {
-    Assure.notNull( "symbolicName", symbolicName );
-
-    // initialize if necessary
     initialize();
-
     Iterator<BundleDescription> iterator = _bundleDescriptionList.iterator();
-
     while( iterator.hasNext() ) {
       BundleDescription description = iterator.next();
       if( symbolicName.equals( description.getSymbolicName() )
@@ -231,8 +196,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param bundleDescription
    *          the {@link BundleDescription} to add.
    */
+  // Assure.notNull( "bundleDescription", bundleDescription );
   protected final void addBundleDescription( BundleDescription bundleDescription ) {
-    Assure.notNull( "bundleDescription", bundleDescription );
     _bundleDescriptionList.add( bundleDescription );
   }
 
@@ -244,8 +209,8 @@ public abstract class AbstractBundleAndFeatureSet implements BundleAndFeatureSet
    * @param featureDescription
    *          the {@link FeatureDescription} to add
    */
+  // Assure.notNull( "featureDescription", featureDescription );
   protected final void addFeaturesDescription( FeatureDescription featureDescription ) {
-    Assure.notNull( "featureDescription", featureDescription );
     _featureDescriptionList.add( featureDescription );
   }
 

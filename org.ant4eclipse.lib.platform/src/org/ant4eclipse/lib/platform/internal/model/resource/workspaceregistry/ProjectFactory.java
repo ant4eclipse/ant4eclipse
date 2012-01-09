@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.EclipseProjectImpl;
 import org.ant4eclipse.lib.platform.internal.model.resource.WorkspaceImpl;
@@ -47,13 +46,12 @@ public class ProjectFactory {
    *          The root directory of the project
    * @return a configured EclipseProject instance
    */
+  // Assure.notNull( "workspace", workspace );
+  // Assure.isDirectory( "projectDirectory", projectDirectory );
   public EclipseProject readProjectFromWorkspace( WorkspaceImpl workspace, File projectDirectory ) {
 
     A4ELogging
         .trace( "ProjectFactory: readProjectFromWorkspace(%s, %s)", workspace, projectDirectory.getAbsolutePath() );
-
-    Assure.notNull( "workspace", workspace );
-    Assure.isDirectory( "projectDirectory", projectDirectory );
 
     EclipseProjectImpl project = new EclipseProjectImpl( workspace, projectDirectory );
 

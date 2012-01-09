@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.internal.tools.ExpansionDirectory;
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
@@ -223,23 +222,15 @@ public class NativeLauncherHelper {
    *          the root directory
    * @return all files contained in the given directory as a file list.
    */
+  // Assure.isDirectory( "directory", directory );
   private static FileList getAllChildren( File directory ) {
-
-    // assert that directory is a directory
-    Assure.isDirectory( "directory", directory );
-
-    // create the result file list
     FileList fileList = new FileList();
     fileList.setDir( directory );
-
-    // add all children to the file list
     for( File child : Utilities.getAllChildren( directory ) ) {
       FileName fileName = new FileList.FileName();
       fileName.setName( child.getAbsolutePath().substring( directory.getAbsolutePath().length() + 1 ) );
       fileList.addConfiguredFile( fileName );
     }
-
-    // return the result
     return fileList;
   }
 

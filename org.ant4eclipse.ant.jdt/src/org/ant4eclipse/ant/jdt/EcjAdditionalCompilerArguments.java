@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.types.Path;
 
 import java.io.File;
@@ -149,8 +148,8 @@ public class EcjAdditionalCompilerArguments {
    *          the source folder.
    * @return the output folder for a specific source folder.
    */
+  // Assure.isDirectory( "sourceFolder", sourceFolder );
   public File getOutputFolder( File sourceFolder ) {
-    Assure.isDirectory( "sourceFolder", sourceFolder );
     return _outputFolderMap.get( sourceFolder );
   }
 
@@ -176,8 +175,8 @@ public class EcjAdditionalCompilerArguments {
    * @param bootClassPathAccessRestrictions
    *          the boot access restriction.
    */
+  // Assure.nonEmpty( "bootClassPathAccessRestrictions", bootClassPathAccessRestrictions );
   public void setBootClassPathAccessRestrictions( String bootClassPathAccessRestrictions ) {
-    Assure.nonEmpty( "bootClassPathAccessRestrictions", bootClassPathAccessRestrictions );
     _bootClassPathAccessRestrictions = bootClassPathAccessRestrictions;
   }
 
@@ -202,20 +201,14 @@ public class EcjAdditionalCompilerArguments {
    * @param sourceFolders
    * @param outputFolder
    */
+  // Assure.notNull( "outputFolder", outputFolder );
+  // Assure.notNull( "sourceFolders", sourceFolders );
   public void addSourceFolderForOutputFolder( File outputFolder, List<File> sourceFolders ) {
-    Assure.notNull( "outputFolder", outputFolder );
-    Assure.notNull( "sourceFolders", sourceFolders );
-
-    // get source folder map
     Set<File> sourceFolderSet = _sourceFolderMap.get( outputFolder );
-
-    // if no source folder map exists, create a new one
     if( sourceFolderSet == null ) {
       sourceFolderSet = new HashSet<File>();
       _sourceFolderMap.put( outputFolder, sourceFolderSet );
     }
-
-    // add the source folder
     sourceFolderSet.addAll( sourceFolders );
   }
 

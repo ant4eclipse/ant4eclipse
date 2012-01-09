@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
@@ -60,16 +59,16 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param type
    *          type
    */
+  // Assure.notNull( "entry", entry );
   public ClasspathClassFileLoaderImpl( File entry, byte type ) {
-    Assure.notNull( "entry", entry );
     _location = entry;
     _type = type;
     initialize( Arrays.asList( entry ), new ArrayList<File>() );
   }
 
+  // Assure.notNull( "classPathEntry", classPathEntry );
+  // Assure.notNull( "sourcePathEntry", sourcePathEntry );
   public ClasspathClassFileLoaderImpl( File classPathEntry, byte type, File sourcePathEntry ) {
-    Assure.notNull( "classPathEntry", classPathEntry );
-    Assure.notNull( "sourcePathEntry", sourcePathEntry );
     _location = classPathEntry;
     _type = type;
     initialize( Arrays.asList( classPathEntry ), Arrays.asList( sourcePathEntry ) );
@@ -84,20 +83,17 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param type
    * @param classpathEntries
    */
+  // Assure.notNull( "location", location );
   public ClasspathClassFileLoaderImpl( File location, byte type, List<File> classpathEntries ) {
-    Assure.notNull( "location", location );
     _location = location;
     _type = type;
     initialize( classpathEntries, new ArrayList<File>() );
   }
 
+  // Assure.notNull( "location", location );
   public ClasspathClassFileLoaderImpl( File location, byte type, List<File> classpathEntries, List<File> sourcePathEntries ) {
-    Assure.notNull( "location", location );
-
     _location = location;
     _type = type;
-
-    // initialize
     initialize( classpathEntries, sourcePathEntries );
   }
 
@@ -197,18 +193,15 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @param classpathEntries
    *          the class path entries.
    */
+  // Assure.notNull( "classpathEntries", classpathEntries );
+  // Assure.notNull( "sourcepathEntries", sourcepathEntries );
+  // for( File classpathEntrie : classpathEntries ) {
+  //   Assure.notNull( "classpathEntrie", classpathEntrie );
+  // }
+  // for( File sourcepathEntry : sourcepathEntries ) {
+  //   Assure.notNull( "sourcepathEntry", sourcepathEntry );
+  // }
   protected void initialize( List<File> classpathEntries, List<File> sourcepathEntries ) {
-
-    Assure.notNull( "classpathEntries", classpathEntries );
-    Assure.notNull( "sourcepathEntries", sourcepathEntries );
-
-    // assert that each entry is not null
-    for( File classpathEntrie : classpathEntries ) {
-      Assure.notNull( "classpathEntrie", classpathEntrie );
-    }
-    for( File sourcepathEntry : sourcepathEntries ) {
-      Assure.notNull( "sourcepathEntry", sourcepathEntry );
-    }
 
     // assign path entries
     _classpathEntries = classpathEntries;
@@ -311,8 +304,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    * @return
    * @throws IOException
    */
+  // Assure.isFile( "jar", jar );
   private List<String> getAllPackagesFromJar( File jar ) {
-    Assure.isFile( "jar", jar );
 
     // prepare result...
     List<String> result = new ArrayList<String>();
@@ -512,8 +505,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * @param classpathEntry
      *          the class path entry to add.
      */
+    // Assure.exists( "classpathEntry", classpathEntry ); 
     public void addClasspathEntry( File classpathEntry ) {
-      Assure.exists( "classpathEntry", classpathEntry );
       _classpathEntries.add( classpathEntry );
     }
 
@@ -525,8 +518,8 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      * @param sourcepathEntry
      *          the source path entry to add.
      */
+    // Assure.isDirectory( "sourcepathEntry", sourcepathEntry );
     public void addSourcepathEntry( File sourcepathEntry ) {
-      Assure.isDirectory( "sourcepathEntry", sourcepathEntry );
       _sourcepathEntries.add( sourcepathEntry );
     }
 

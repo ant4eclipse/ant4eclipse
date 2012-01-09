@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.ChunkyFile;
 
@@ -49,8 +48,8 @@ public class LocationFileParser {
    *          the location file to be parsed
    * @return the project directory or <code>null</code> if the location doesn't point to a valid project directory
    */
+  // Assure.isFile( "locationFile", locationFile );
   public static final File getProjectDirectory( File locationFile ) {
-    Assure.isFile( "locationFile", locationFile );
 
     try {
       // read the location of the project directory
@@ -100,8 +99,8 @@ public class LocationFileParser {
    *         location could be read from the .location file
    * @throws IOException
    */
+  // Assure.isFile( "locationfile", locationfile );
   static final File readLocation( File locationfile ) throws IOException {
-    Assure.isFile( "locationfile", locationfile );
 
     ChunkyFile cf = new ChunkyFile( locationfile );
     if( cf.getChunkCount() == 1 ) {

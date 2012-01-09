@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.platform.team;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractTeamProjectSetBasedTask;
 import org.ant4eclipse.ant.platform.internal.team.VcsAdapter;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
@@ -98,8 +97,8 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param command
    *          The command to set.
    */
+  // Assure.notNull( "command", command );
   public void setCommand( VcsCommand command ) {
-    Assure.notNull( "command", command );
     _command = command;
   }
 
@@ -162,18 +161,14 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    * @param deleteExisting
    */
+  // Assure.isDirectory( "destination", destination );
+  // Assure.notNull( "projectSet", projectSet );
   public void checkoutProjectSet( File destination, TeamProjectSet projectSet, boolean deleteExisting ) throws Ant4EclipseException {
-    
-    Assure.isDirectory( "destination", destination );
-    Assure.notNull( "projectSet", projectSet );
-
     A4ELogging.debug( "checkoutProjectSet(%s, %s, %s)", destination, projectSet, Boolean.valueOf( deleteExisting ) );
-
     List<TeamProjectDescription> _teamProjectDescription = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription teamProjectDescription : _teamProjectDescription ) {
       _vcsAdapter.checkoutProject( destination, teamProjectDescription, deleteExisting );
     }
-    
   }
 
   /**
@@ -181,10 +176,10 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param projectSet
    * @param deleteExisting
    */
+  // Assure.isDirectory( "destination", destination );
+  // Assure.notNull( "projectSet", projectSet );
   public void exportProjectSet( File destination, TeamProjectSet projectSet, boolean deleteExisting )
       throws Ant4EclipseException {
-    Assure.isDirectory( "destination", destination );
-    Assure.notNull( "projectSet", projectSet );
     List<TeamProjectDescription> descriptions = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription description : descriptions ) {
       _vcsAdapter.exportProject( destination, description, deleteExisting );
@@ -195,9 +190,9 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
    * @param workspace
    * @param projectSet
    */
+  // Assure.isDirectory( "destination", destination );
+  // Assure.notNull( "projectSet", projectSet );
   public void updateProjectSet( File destination, TeamProjectSet projectSet ) throws Ant4EclipseException {
-    Assure.isDirectory( "destination", destination );
-    Assure.notNull( "projectSet", projectSet );
     List<TeamProjectDescription> descriptions = projectSet.getTeamProjectDescriptions();
     for( TeamProjectDescription description : descriptions ) {
       _vcsAdapter.updateProject( destination, description );

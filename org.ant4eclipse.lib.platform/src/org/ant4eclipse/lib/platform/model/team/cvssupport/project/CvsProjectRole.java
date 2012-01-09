@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.project;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRole;
 import org.ant4eclipse.lib.platform.model.team.cvssupport.CvsRoot;
@@ -40,8 +39,8 @@ public class CvsProjectRole extends AbstractProjectRole {
    * 
    * @return Returns the cvs project role.
    */
+  // Assure.assertTrue( hasCvsProjectRole( eclipseProject ), String.format( "Project \"%s\" must have CvsProjectRole!", eclipseProject.getFolderName() ) );
   public static CvsProjectRole getCvsProjectRole( EclipseProject eclipseProject ) {
-    Assure.assertTrue( hasCvsProjectRole( eclipseProject ), String.format( "Project \"%s\" must have CvsProjectRole!", eclipseProject.getFolderName() ) );
     return eclipseProject.getRole( CvsProjectRole.class );
   }
 
@@ -64,13 +63,11 @@ public class CvsProjectRole extends AbstractProjectRole {
    * @param branchOrVersionTag
    *          the name of the branch or version
    */
+  // Assure.notNull( "projectNameInRepository", projectNameInRepository );
+  // Assure.notNull( "cvsRoot", cvsRoot );
   public CvsProjectRole( EclipseProject eclipseProject, String projectNameInRepository, String cvsRoot,
       String branchOrVersionTag ) {
     super( NAME, eclipseProject );
-
-    Assure.notNull( "projectNameInRepository", projectNameInRepository );
-    Assure.notNull( "cvsRoot", cvsRoot );
-
     _cvsRoot = new CvsRoot( cvsRoot );
     _projectNameInRepository = projectNameInRepository;
     _branchOrVersionTag = branchOrVersionTag;
@@ -86,13 +83,11 @@ public class CvsProjectRole extends AbstractProjectRole {
    * @param branchOrVersionTag
    *          the name of the branch or version
    */
+  // Assure.notNull( "projectNameInRepository", projectNameInRepository );
+  // Assure.notNull( "cvsRoot", cvsRoot );
   public CvsProjectRole( EclipseProject eclipseProject, String projectNameInRepository, CvsRoot cvsRoot,
       String branchOrVersionTag ) {
     super( NAME, eclipseProject );
-
-    Assure.notNull( "projectNameInRepository", projectNameInRepository );
-    Assure.notNull( "cvsRoot", cvsRoot );
-
     _cvsRoot = cvsRoot;
     _projectNameInRepository = projectNameInRepository;
     _branchOrVersionTag = branchOrVersionTag;

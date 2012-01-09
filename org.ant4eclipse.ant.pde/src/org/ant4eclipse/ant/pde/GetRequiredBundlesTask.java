@@ -14,7 +14,6 @@ package org.ant4eclipse.ant.pde;
 import org.ant4eclipse.ant.platform.core.GetPathComponent;
 import org.ant4eclipse.ant.platform.core.delegate.GetPathDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectPathTask;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -323,23 +322,17 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * @param specification
    *          the bundle specification
    */
+  // Assure.notNull( "specification", specification );
+  // assert symbolic name is set
+  // if( Utilities.hasText( specification._symbolicName ) ) {
+  //  throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "bundleSymbolicName" );
+  // }
   public void addConfiguredBundle( BundleSpecification specification ) {
-
-    // assert not null
-    Assure.notNull( "specification", specification );
-
-    // assert symbolic name is set
-    if( Utilities.hasText( specification._symbolicName ) ) {
-      throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "bundleSymbolicName" );
-    }
-
-    // assert valid version
     try {
       specification.getVersion();
     } catch( Exception e ) {
       throw new Ant4EclipseException( PdeExceptionCode.INVALID_VERSION, "bundleSymbolicName", "bundle" );
     }
-
     // add specification
     _bundleSpecifications.add( specification );
   }

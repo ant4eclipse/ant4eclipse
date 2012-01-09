@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.configuration;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Pair;
@@ -49,8 +48,8 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
    * @param properties
    *          The backing properties
    */
+  // Assure.notNull( "properties", properties );
   public Ant4EclipseConfigurationImpl( StringMap properties ) {
-    Assure.notNull( "properties", properties );
     _properties = properties;
   }
 
@@ -66,27 +65,27 @@ public class Ant4EclipseConfigurationImpl implements Ant4EclipseConfiguration {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "propertyName", propertyName );
   @Override
   public String getProperty( String propertyName ) {
-    Assure.notNull( "propertyName", propertyName );
     return _properties.get( propertyName );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "propertyName", propertyName );
   @Override
   public boolean hasProperty( String propertyName ) {
-    Assure.notNull( "propertyName", propertyName );
     return _properties.containsKey( propertyName );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "prefix", prefix );
   @Override
   public Iterable<Pair<String,String>> getAllProperties( String prefix ) {
-    Assure.notNull( "prefix", prefix );
     if( !prefix.endsWith( "." ) ) {
       prefix += ".";
     }

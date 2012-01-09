@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -46,8 +45,8 @@ public class PathExpander {
    * @param project
    *          The project instance currently used for the path expansion. Not <code>null</code>.
    */
+  // Assure.notNull( "project", project );
   public PathExpander( EclipseProject project ) {
-    Assure.notNull( "project", project );
     _project = project;
     _workspace = _project.getWorkspace();
   }
@@ -62,9 +61,9 @@ public class PathExpander {
    * 
    * @return A list of resolved filesystem locations. Not <code>null</code>.
    */
+  // Assure.notNull( "entries", entries );
+  // Assure.notNull( "pathstyle", pathstyle );
   public List<File> expand( ResolvedPathEntry[] entries, EclipseProject.PathStyle pathstyle ) {
-    Assure.notNull( "entries", entries );
-    Assure.notNull( "pathstyle", pathstyle );
     List<File> list = new ArrayList<File>();
     for( ResolvedPathEntry entry : entries ) {
       expand( list, entry );

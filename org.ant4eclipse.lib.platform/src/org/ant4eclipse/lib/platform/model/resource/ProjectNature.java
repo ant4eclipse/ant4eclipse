@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
@@ -98,8 +96,8 @@ public class ProjectNature {
    * 
    * @return The nature associated with the supplied name. Not <code>null</code>.
    */
+  // Assure.nonEmpty( "name", name );
   public static final synchronized ProjectNature createNature( String name ) {
-    Assure.nonEmpty( "name", name );
     ProjectNature result = NATURES.get( name );
     if( result == null ) {
       result = new ProjectNature( name );

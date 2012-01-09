@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pydt.model.RawPathEntry;
 import org.ant4eclipse.lib.pydt.model.ResolvedPathEntry;
 import org.ant4eclipse.lib.pydt.tools.PathEntryRegistry;
@@ -38,19 +37,19 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "entry", entry );
   @Override
   public boolean isResolved( RawPathEntry entry ) {
-    Assure.notNull( "entry", entry );
     return _resolvedentries.containsKey( entry );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "origin", origin );
+  // Assure.notNull( "solution", solution );
   @Override
   public void registerResolvedPathEntry( RawPathEntry origin, ResolvedPathEntry solution ) {
-    Assure.notNull( "origin", origin );
-    Assure.notNull( "solution", solution );
     _resolvedentries.put( origin, solution );
   }
 
@@ -58,8 +57,8 @@ public class PathEntryRegistryImpl implements PathEntryRegistry {
    * {@inheritDoc}
    */
   @Override
+  // Assure.notNull( "entry", entry );
   public ResolvedPathEntry getResolvedPathEntry( RawPathEntry entry ) {
-    Assure.notNull( "entry", entry );
     return _resolvedentries.get( entry );
   }
 

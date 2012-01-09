@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.model.pluginproject;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -47,8 +46,8 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * 
    * @return the plugin project role.
    */
+  // Assure.assertTrue( hasPluginProjectRole( eclipseProject ), String.format("Project \"%s\" must have PluginProjectRole!", eclipseProject.getFolderName() ));
   public static final PluginProjectRoleImpl getPluginProjectRole( EclipseProject eclipseProject ) {
-    Assure.assertTrue( hasPluginProjectRole( eclipseProject ), String.format("Project \"%s\" must have PluginProjectRole!", eclipseProject.getFolderName() ));
     return eclipseProject.getRole( PluginProjectRoleImpl.class );
   }
 
@@ -59,8 +58,8 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * 
    * @return whether a plug-in project role is set or not.
    */
+  // Assure.notNull( "eclipseProject", eclipseProject );
   public static final boolean hasPluginProjectRole( EclipseProject eclipseProject ) {
-    Assure.notNull( "eclipseProject", eclipseProject );
     return eclipseProject.hasRole( PluginProjectRoleImpl.class );
   }
 
@@ -72,10 +71,10 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * @param eclipseProject
    *          the plugin project.
    */
+  // Assure.notNull( "eclipseProject", eclipseProject );
+  // Assure.notNull( "description", description );
   public PluginProjectRoleImpl( EclipseProject eclipseProject, BundleDescription description ) {
     super( PLUGIN_PROJECT_ROLE_NAME, eclipseProject );
-    Assure.notNull( "eclipseProject", eclipseProject );
-    Assure.notNull( "description", description );
     _bundleDescription = description;
     _buildProperties = null;
   }

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -195,11 +194,10 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    *          the target platform configuration
    * @return an instance of type {@link TargetPlatform} with the specified configuration.
    */
+  // Assure.assertTrue( (workspace != null) || (targetLocations != null), "Parameter workspace or targetLocations has to be set !" );
   private TargetPlatform getInstance( Workspace workspace, File[] targetLocations,
       PlatformConfiguration targetPlatformConfiguration ) {
 
-    Assure.assertTrue( (workspace != null) || (targetLocations != null),
-        "Parameter workspace or targetLocations has to be set !" );
 
     // TargetPlatformKey
     TargetPlatformKey key = new TargetPlatformKey( workspace, targetLocations, targetPlatformConfiguration );

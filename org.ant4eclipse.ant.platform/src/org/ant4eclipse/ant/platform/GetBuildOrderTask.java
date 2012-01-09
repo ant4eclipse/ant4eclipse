@@ -16,7 +16,6 @@ import org.ant4eclipse.ant.platform.core.SubElementAndAttributesComponent;
 import org.ant4eclipse.ant.platform.core.delegate.ProjectReferenceAwareDelegate;
 import org.ant4eclipse.ant.platform.core.delegate.SubElementAndAttributesDelegate;
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectSetBasedTask;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.tools.BuildOrderResolver;
 import org.apache.tools.ant.BuildException;
@@ -195,13 +194,9 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * 
    * @return A String which contains the list of names.
    */
+  // Assure.notNull("projects", projects);
   private String convertToString(List<EclipseProject> projects, char separator) {
-    Assure.notNull("projects", projects);
-
-    // create StringBuffer
     StringBuffer buffer = new StringBuffer();
-
-    // construct result
     for (Iterator<EclipseProject> iterator = projects.iterator(); iterator.hasNext();) {
       EclipseProject eclipseProject = iterator.next();
       buffer.append(eclipseProject.getFolderName());
@@ -209,8 +204,6 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
         buffer.append(separator);
       }
     }
-
-    // return result
     return buffer.toString();
   }
 }

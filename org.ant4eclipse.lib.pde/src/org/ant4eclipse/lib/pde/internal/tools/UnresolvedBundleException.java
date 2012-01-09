@@ -1,6 +1,5 @@
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
@@ -27,8 +26,8 @@ public class UnresolvedBundleException extends Exception {
    * @param bundleDescription
    *          the bundle description
    */
+  // Assure.notNull( "bundleDescription", bundleDescription );
   public UnresolvedBundleException( BundleDescription bundleDescription ) {
-    Assure.notNull( "bundleDescription", bundleDescription );
     _bundleDescription = bundleDescription;
   }
 

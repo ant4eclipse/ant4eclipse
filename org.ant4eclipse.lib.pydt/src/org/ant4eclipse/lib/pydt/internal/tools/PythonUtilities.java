@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pydt.internal.tools;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.pydt.internal.model.project.PythonProjectRole;
 import org.ant4eclipse.lib.pydt.model.PythonInterpreter;
@@ -47,8 +46,8 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has one of the supported python natures.
    */
+  // Assure.notNull( "project", project );
   public static final boolean isPythonRelatedProject( EclipseProject project ) {
-    Assure.notNull( "project", project );
     return project.hasRole( PyDevProjectRole.class ) || project.hasRole( DLTKProjectRole.class );
   }
 
@@ -60,8 +59,8 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has been created using the PyDev framework.
    */
+  // Assure.notNull( "project", project );
   public static final boolean isPyDevProject( EclipseProject project ) {
-    Assure.notNull( "project", project );
     if( project.hasRole( PyDevProjectRole.class ) ) {
       PythonProjectRole role = project.getRole( PyDevProjectRole.class );
       return !role.isDLTK();
@@ -78,8 +77,8 @@ public class PythonUtilities {
    * 
    * @return <code>true</code> <=> The supplied project has been created within the Python DLTK framework.
    */
+  // Assure.notNull( "project", project );
   public static final boolean isPyDLTKProject( EclipseProject project ) {
-    Assure.notNull( "project", project );
     if( project.hasRole( DLTKProjectRole.class ) ) {
       PythonProjectRole role = project.getRole( DLTKProjectRole.class );
       return role.isDLTK();

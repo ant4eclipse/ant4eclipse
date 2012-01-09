@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureProjectRole;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -41,9 +40,9 @@ public class PluginAndFeatureProjectSet extends AbstractBundleAndFeatureSet {
    * @param workspace
    *          the {@link Workspace}
    */
+  // Assure.notNull( "workspace", workspace );
   public PluginAndFeatureProjectSet( Workspace workspace ) {
     super( "workspace" );
-    Assure.notNull( "workspace", workspace );
     _workspace = workspace;
   }
 

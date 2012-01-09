@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
@@ -163,8 +162,8 @@ public class ClasspathEntryResolverExecutor {
    * @param project
    *          the project to add.
    */
+  // Assure.notNull( "project", project );
   public final void addReferencedProject( EclipseProject project ) {
-    Assure.notNull( "project", project );
 
     // adds the referenced project
     if( !_referencedProjects.contains( project ) ) {
@@ -180,8 +179,8 @@ public class ClasspathEntryResolverExecutor {
    * @param project
    *          the project to add.
    */
+  // Assure.notNull( "project", project );
   public final void resolveReferencedProject( EclipseProject project ) {
-    Assure.notNull( "project", project );
 
     // detect circular dependencies
     if( _currentProject.contains( project ) ) {
@@ -204,11 +203,12 @@ public class ClasspathEntryResolverExecutor {
     _currentProject.push( project );
 
     // assert raw class path entries
-    // TODO: NLS
-    Assure.assertTrue( project.getRole( JavaProjectRole.class ).hasRawClasspathEntries(), String.format(
-        "The JDT project '%s' (%s) doesn't contain any class path entries.", project.getFolderName(), project
-            .getFolder().getAbsolutePath() ) );
-
+    if( ! project.getRole( JavaProjectRole.class ).hasRawClasspathEntries() ) {
+      throw new RuntimeException( String.format(
+          "The JDT project '%s' (%s) doesn't contain any class path entries.", 
+          project.getFolderName(), project.getFolder().getAbsolutePath()) );
+    }
+    
     // resolve the class path entries for this project
     resolveClasspathEntries( project.getRole( JavaProjectRole.class ).getRawClasspathEntries() );
 
@@ -244,8 +244,8 @@ public class ClasspathEntryResolverExecutor {
    * @param entry
    *          the class path entry to resolve.
    */
+  // Assure.notNull( "entry", entry );
   private final void resolveClasspathEntry( ClasspathEntry entry ) {
-    Assure.notNull( "entry", entry );
 
     // initialize handled
     boolean handled = false;

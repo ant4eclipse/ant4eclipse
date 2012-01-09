@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.LocationFileParser;
 import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.ProjectFileParser;
@@ -48,8 +47,8 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
    * @param workspaceDirectory
    *          the workspace directory
    */
+  // Assure.isDirectory( "workspaceDirectory", workspaceDirectory );
   public DefaultEclipseWorkspaceDefinition( File workspaceDirectory ) {
-    Assure.isDirectory( "workspaceDirectory", workspaceDirectory );
     _workspaceDirectory = workspaceDirectory;
     _metadataLocationDirectory = new File( workspaceDirectory, METADATA_PROJECTS );
   }

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.ant4eclipse.lib.jdt.ecj.SourceFile;
@@ -58,8 +57,8 @@ public class CompilationUnitImpl implements ICompilationUnit {
    * @param sourceFile
    *          the source file
    */
+  // Assure.notNull( "sourceFile", sourceFile );
   public CompilationUnitImpl( SourceFile sourceFile ) {
-    Assure.notNull( "sourceFile", sourceFile );
 
     _sourceFile = sourceFile;
 

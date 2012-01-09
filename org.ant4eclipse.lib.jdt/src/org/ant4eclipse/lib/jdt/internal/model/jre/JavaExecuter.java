@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.ClassLoadingHelper;
@@ -84,8 +83,8 @@ public class JavaExecuter {
    * 
    * @return a new {@link JavaExecuter}
    */
+  // Assure.isDirectory( "jreLocation", jreLocation );
   public static JavaExecuter createWithA4eClasspath( File jreLocation ) {
-    Assure.isDirectory( "jreLocation", jreLocation );
 
     // check if the location points to a JDK (instead a JRE)...
     File jreDirectory = new File( jreLocation, "jre" );
@@ -125,8 +124,8 @@ public class JavaExecuter {
    * @param jreDirectory
    *          the directory of the java runtime.
    */
+  // Assure.isDirectory( "jreDirectory", jreDirectory );
   public JavaExecuter( File jreDirectory ) {
-    Assure.isDirectory( "jreDirectory", jreDirectory );
     _jreDirectory = jreDirectory;
   }
 
@@ -138,16 +137,12 @@ public class JavaExecuter {
    * @param classpathEntries
    *          the class path entries
    */
+  // Assure.notNull( "classpathEntries", classpathEntries );
   public void setClasspathEntries( String[] classpathEntries ) {
-    Assure.notNull( "classpathEntries", classpathEntries );
-
-    // create file array
     File[] files = new File[classpathEntries.length];
     for( int i = 0; i < classpathEntries.length; i++ ) {
       files[i] = new File( classpathEntries[i] );
     }
-
-    // sets the class path entries
     setClasspathEntries( files );
   }
 
@@ -159,8 +154,8 @@ public class JavaExecuter {
    * @param classpathEntry
    *          the class path entry
    */
+  // Assure.notNull( "classpathEntry", classpathEntry );
   public void setClasspathEntries( File classpathEntry ) {
-    Assure.notNull( "classpathEntry", classpathEntry );
     setClasspathEntries( new File[] { classpathEntry } );
   }
 
@@ -172,8 +167,8 @@ public class JavaExecuter {
    * @param classpathEntries
    *          the class path entries
    */
+  // Assure.notNull( "classpathEntries", classpathEntries );
   public void setClasspathEntries( File[] classpathEntries ) {
-    Assure.notNull( "classpathEntries", classpathEntries );
     _classpathEntries = classpathEntries;
   }
 
@@ -185,8 +180,8 @@ public class JavaExecuter {
    * @param mainClass
    *          the main class
    */
+  // Assure.notNull( "mainClass", mainClass );
   public void setMainClass( String mainClass ) {
-    Assure.notNull( "mainClass", mainClass );
     _mainClass = mainClass;
   }
 
@@ -198,8 +193,8 @@ public class JavaExecuter {
    * @param args
    *          the program arguments.
    */
+  // Assure.notNull( "args", args );
   public void setArgs( String[] args ) {
-    Assure.notNull( "args", args );
     _args = args;
   }
 

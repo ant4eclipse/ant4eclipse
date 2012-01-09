@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.project;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -37,8 +36,8 @@ public class CvsParser {
    * 
    * @return true <=> The CVS project has been set.
    */
+  // Assure.notNull( "project", project );
   public static boolean isCvsProject( EclipseProject project ) {
-    Assure.notNull( "project", project );
     return project.hasChild( "CVS" + File.separator + "Root" );
   }
 
@@ -53,8 +52,8 @@ public class CvsParser {
    * @throws Ant4EclipseException
    *           Loading the content failed for some reason.
    */
+  // Assure.notNull( "project", project );
   public static String readCvsRepositoryName( EclipseProject project ) throws Ant4EclipseException {
-    Assure.notNull( "project", project );
     File cvsRepositoryFile = project.getChild( "CVS" + File.separator + "Repository" );
     return readFile( cvsRepositoryFile );
   }
@@ -70,15 +69,15 @@ public class CvsParser {
    * @throws Ant4EclipseException
    *           Loading the root file failed.
    */
+  // Assure.notNull( "project", project );
   public static CvsRoot readCvsRoot( EclipseProject project ) throws Ant4EclipseException {
-    Assure.notNull( "project", project );
     File cvsRootFile = project.getChild( "CVS" + File.separator + "Root" );
     String cvsRoot = readFile( cvsRootFile );
     return new CvsRoot( cvsRoot );
   }
 
+  // Assure.notNull( "project", project );
   public static String readTag( EclipseProject project ) throws Ant4EclipseException {
-    Assure.notNull( "project", project );
     String tagname = String.format( "CVS%sTag", File.separator );
     if( !project.hasChild( tagname ) ) {
       return null;

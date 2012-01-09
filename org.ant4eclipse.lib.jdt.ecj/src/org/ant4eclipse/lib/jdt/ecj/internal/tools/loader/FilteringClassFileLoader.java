@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.ClassName;
 import org.ant4eclipse.lib.jdt.ecj.ClassFile;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
@@ -58,10 +57,10 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    * @param classFileLoader
    * @param filter
    */
+  // Assure.notNull( "classFileLoader", classFileLoader );
+  // Assure.nonEmpty( "filter", filter );
   public FilteringClassFileLoader( ClassFileLoader classFileLoader, String filter ) {
 
-    Assure.notNull( "classFileLoader", classFileLoader );
-    Assure.nonEmpty( "filter", filter );
 
     _classFileLoader = classFileLoader;
     _filter = filter;

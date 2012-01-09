@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 
 import java.io.Closeable;
@@ -41,13 +40,9 @@ public class JarBundleBuilder {
    * 
    * @param name
    */
+  // Assure.nonEmpty( "name", name );
   public JarBundleBuilder( String name ) {
-    Assure.nonEmpty( "name", name );
-
-    // set the name
     _name = name;
-
-    // default manifest
     _manifest = new BundleManifest( _name );
   }
 

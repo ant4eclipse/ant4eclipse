@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.pydt.internal.tools;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -68,8 +67,8 @@ public class PythonResolver {
    * @param ignoreruntimes
    *          <code>true</code> <=> Runtimes have to be ignored.
    */
+  // Assure.notNull( "workspace", workspace );
   public PythonResolver( Workspace workspace, Mode mode, boolean ignoreruntimes ) {
-    Assure.notNull( "workspace", workspace );
     _pathregistry = A4ECore.instance().getRequiredService( PathEntryRegistry.class );
     _runtimeregistry = A4ECore.instance().getRequiredService( PythonRuntimeRegistry.class );
     _workspace = workspace;
@@ -86,8 +85,8 @@ public class PythonResolver {
    * @param entry
    *          The unresolved entry pointing to a source folder. Not <code>null</code>.
    */
+  // Assure.notNull( "entry", entry );
   private void resolveImpl( RawPathEntry entry ) {
-    Assure.notNull( "entry", entry );
     ResolvedPathEntry result = _pathregistry.getResolvedPathEntry( entry );
     if( result == null ) {
       result = newResolvedEntry( entry );
@@ -118,8 +117,8 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
+  // Assure.notNull( "entries", entries );
   public ResolvedPathEntry[] resolve( RawPathEntry ... entries ) {
-    Assure.notNull( "entries", entries );
     List<RawPathEntry> input = new ArrayList<RawPathEntry>();
     for( RawPathEntry entry : entries ) {
       input.add( entry );
@@ -135,8 +134,8 @@ public class PythonResolver {
    * 
    * @return The resolved entries identifying the source folders. Not <code>null</code>.
    */
+  // Assure.notNull( "entries", entries );
   public ResolvedPathEntry[] resolve( List<RawPathEntry> entries ) {
-    Assure.notNull( "entries", entries );
     List<ResolvedPathEntry> list = new ArrayList<ResolvedPathEntry>();
     resolve( list, filter( entries ) );
     return list.toArray( new ResolvedPathEntry[list.size()] );

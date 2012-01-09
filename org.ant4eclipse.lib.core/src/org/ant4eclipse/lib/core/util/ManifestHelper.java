@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
@@ -78,8 +77,8 @@ public class ManifestHelper {
    * @throws Ant4EclipseException
    *           if the symbolic name could not be found.
    */
+  // Assure.notNull( "manifest", manifest );
   public static String getBundleSymbolicName( Manifest manifest ) {
-    Assure.notNull( "manifest", manifest );
 
     // get the manifest header elements
     ManifestHelper.ManifestHeaderElement[] elements = ManifestHelper.getManifestHeaderElements( manifest,
@@ -122,27 +121,24 @@ public class ManifestHelper {
     return bundleClasspath;
   }
 
+  // Assure.notNull( "manifest", manifest );
+  // Assure.nonEmpty( "header", header );
   public static String getManifestHeader( Manifest manifest, String header ) {
-    Assure.notNull( "manifest", manifest );
-    Assure.nonEmpty( "header", header );
     return manifest.getMainAttributes().getValue( header );
   }
 
+  // Assure.notNull( "manifest", manifest );
+  // Assure.nonEmpty( "header", header );
   public static ManifestHeaderElement[] getManifestHeaderElements( Manifest manifest, String header ) {
-    Assure.notNull( "manifest", manifest );
-    Assure.nonEmpty( "header", header );
-
     String manifestValue = manifest.getMainAttributes().getValue( header );
-
     if( (manifestValue == null) || "".equals( manifestValue.trim() ) ) {
       return new ManifestHeaderElement[0];
     }
-
     return getManifestHeaderElements( manifestValue );
   }
 
+  // Assure.nonEmpty( "manifestValue", manifestValue );
   public static ManifestHeaderElement[] getManifestHeaderElements( String manifestValue ) {
-    Assure.nonEmpty( "manifestValue", manifestValue );
 
     String[] elements = splitHeader( manifestValue );
     List<ManifestHeaderElement> result = new ArrayList<ManifestHeaderElement>();
@@ -245,21 +241,17 @@ public class ManifestHelper {
    * @param pattern
    * @return
    */
+  // Assure.nonEmpty( "pattern", pattern );
   private static boolean lookup( char[] array, int index, String pattern ) {
-    Assure.nonEmpty( "pattern", pattern );
-
     if( index + pattern.length() > array.length ) {
       return false;
     }
-
     char[] patternChars = pattern.toCharArray();
-
     for( int i = 0; i < patternChars.length; i++ ) {
       if( array[index + i] != patternChars[i] ) {
         return false;
       }
     }
-
     return true;
   }
 

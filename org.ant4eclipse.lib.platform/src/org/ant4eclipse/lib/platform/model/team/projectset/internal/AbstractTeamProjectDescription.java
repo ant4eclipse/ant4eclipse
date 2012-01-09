@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.projectset.internal;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectDescription;
 
@@ -28,8 +27,8 @@ public abstract class AbstractTeamProjectDescription implements TeamProjectDescr
     return _projectname;
   }
 
+  // Assure.notNull( "projectname", projectname );
   public AbstractTeamProjectDescription( String projectname ) {
-    Assure.notNull( "projectname", projectname );
     _projectname = projectname;
   }
 

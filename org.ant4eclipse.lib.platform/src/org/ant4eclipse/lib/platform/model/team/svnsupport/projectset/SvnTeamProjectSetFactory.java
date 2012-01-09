@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.svnsupport.projectset;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
@@ -55,11 +54,10 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "projectSetName", projectSetName );
   @Override
   public TeamProjectSet createTeamProjectSet( String projectSetName ) {
-    Assure.notNull( "projectSetName", projectSetName );
-    SvnTeamProjectSet svnTeamProjectSet = new SvnTeamProjectSet( projectSetName );
-    return svnTeamProjectSet;
+    return new SvnTeamProjectSet( projectSetName );
   }
 
   /**
@@ -68,10 +66,10 @@ public class SvnTeamProjectSetFactory implements TeamProjectSetFactory {
    * Parses a "reference" in a subversion-Project Set file.
    * </p>
    */
+  // Assure.instanceOf( "projectSet", projectSet, SvnTeamProjectSet.class );
+  // Assure.notNull( "reference", reference );
   @Override
   public void addTeamProjectDescription( TeamProjectSet projectSet, String reference ) {
-    Assure.instanceOf( "projectSet", projectSet, SvnTeamProjectSet.class );
-    Assure.notNull( "reference", reference );
 
     SvnTeamProjectSet svnTeamProjectSet = (SvnTeamProjectSet) projectSet;
 

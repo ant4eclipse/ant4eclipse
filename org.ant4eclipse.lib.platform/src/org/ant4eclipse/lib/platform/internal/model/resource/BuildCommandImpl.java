@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.platform.model.resource.BuildCommand;
 
 /**
@@ -47,8 +46,8 @@ public class BuildCommandImpl implements BuildCommand {
    * @param the
    *          triggers that would cause this builder to run in eclipse (might be null)
    */
+  // Assure.notNull( "name", name );
   public BuildCommandImpl( String name, String triggers ) {
-    Assure.notNull( "name", name );
     _name = name;
     if( (triggers != null) && triggers.endsWith( "," ) ) {
       if( triggers.length() > 1 ) { // remove trailing ,

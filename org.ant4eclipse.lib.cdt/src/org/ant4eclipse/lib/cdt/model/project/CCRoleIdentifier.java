@@ -12,7 +12,6 @@
 package org.ant4eclipse.lib.cdt.model.project;
 
 import org.ant4eclipse.lib.cdt.internal.model.project.CCProjectRoleImpl;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.role.AbstractProjectRoleIdentifier;
@@ -37,10 +36,10 @@ public class CCRoleIdentifier extends AbstractProjectRoleIdentifier {
    * Adds a {@link CProjectRole} to the given project and parses the pathes.
    * </p>
    */
+  // Assure.notNull( "project", project );
   @Override
   public ProjectRole createRole( EclipseProject project ) {
     A4ELogging.trace( "CRoleIdentifier.applyRole(%s)", project );
-    Assure.notNull( "project", project );
     return new CCProjectRoleImpl( project );
   }
 

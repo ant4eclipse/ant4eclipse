@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.dependencygraph;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
@@ -84,9 +83,9 @@ public class DependencyGraph<T> {
    *          the provided renderer is used to create a custom string representation of a vertex for further usage in an
    *          exception message.
    */
+  // Assure.notNull( "renderer", renderer );
   public DependencyGraph( VertexRenderer<T> renderer ) {
     this();
-    Assure.notNull( "renderer", renderer );
     _renderer = renderer;
   }
 
@@ -98,8 +97,8 @@ public class DependencyGraph<T> {
    * @param vertex
    *          the vertex that will be added.
    */
+  // Assure.notNull( "vertex", vertex );
   public void addVertex( T vertex ) {
-    Assure.notNull( "vertex", vertex );
     if( !_vertices.contains( vertex ) ) {
       _vertices.add( vertex );
     }
@@ -115,8 +114,8 @@ public class DependencyGraph<T> {
    * @return <code>true</code>, if the given vertex has already been added to the {@link DependencyGraph}, otherwise
    *         <code>false</code>.
    */
+  // Assure.notNull( "vertex", vertex );
   public boolean containsVertex( T vertex ) {
-    Assure.notNull( "vertex", vertex );
     return _vertices.contains( vertex );
   }
 
@@ -130,9 +129,9 @@ public class DependencyGraph<T> {
    * @param child
    *          the child node
    */
+  // Assure.notNull( "parent", parent );
+  // Assure.notNull( "child", child );
   public void addEdge( T parent, T child ) {
-    Assure.notNull( "parent", parent );
-    Assure.notNull( "child", child );
     addVertex( parent );
     addVertex( child );
     _edges.add( new Edge<T>( parent, child ) );

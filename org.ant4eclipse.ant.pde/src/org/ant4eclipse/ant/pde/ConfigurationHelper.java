@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -198,8 +197,8 @@ public class ConfigurationHelper {
    * @param value
    * @return
    */
+  // Assure.notNull( "value", value );
   private static boolean matches( String commaSeparatedList, String value ) {
-    Assure.notNull( "value", value );
 
     if( !Utilities.hasText( commaSeparatedList ) ) {
       return true;

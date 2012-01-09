@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.internal.team;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
@@ -79,12 +78,11 @@ public class SvnAdapter extends VcsAdapter {
   /**
    * {@inheritDoc}
    */
+  // Assure.isDirectory( "destination", destination );
+  // Assure.notNull( "projectDescription", projectDescription );
+  // Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription, "ProjectDescription must be a SvnTeamProjectDescription" );
   @Override
   protected void checkout( File destination, TeamProjectDescription projectDescription ) throws Ant4EclipseException {
-    Assure.isDirectory( "destination", destination );
-    Assure.notNull( "projectDescription", projectDescription );
-    Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription,
-        "ProjectDescription must be a SvnTeamProjectDescription" );
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
@@ -117,12 +115,11 @@ public class SvnAdapter extends VcsAdapter {
   /**
    * {@inheritDoc}
    */
+  // Assure.isDirectory( "destination", destination );
+  // Assure.notNull( "projectDescription", projectDescription );
+  // Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription, "ProjectDescription must be a SvnTeamProjectDescription" );
   @Override
   protected void export( File destination, TeamProjectDescription projectDescription ) throws Ant4EclipseException {
-    Assure.isDirectory( "destination", destination );
-    Assure.notNull( "projectDescription", projectDescription );
-    Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription,
-        "ProjectDescription must be a SvnTeamProjectDescription" );
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 
@@ -156,12 +153,11 @@ public class SvnAdapter extends VcsAdapter {
   /**
    * {@inheritDoc}
    */
+  // Assure.isDirectory( "destination", destination );
+  // Assure.notNull( "projectDescription", projectDescription );
+  // Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription, "ProjectDescription must be a SvnTeamProjectDescription" );
   @Override
   protected void update( File destination, TeamProjectDescription projectDescription ) throws Ant4EclipseException {
-    Assure.isDirectory( "destination", destination );
-    Assure.notNull( "projectDescription", projectDescription );
-    Assure.assertTrue( projectDescription instanceof SvnTeamProjectDescription,
-        "ProjectDescription must be a SvnTeamProjectDescription" );
 
     SvnTeamProjectDescription svnTeamProjectDescription = (SvnTeamProjectDescription) projectDescription;
 

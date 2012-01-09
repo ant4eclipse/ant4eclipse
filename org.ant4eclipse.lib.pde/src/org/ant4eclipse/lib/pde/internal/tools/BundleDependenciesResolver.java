@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
@@ -61,9 +60,9 @@ public class BundleDependenciesResolver {
    * @return
    * @throws UnresolvedBundleException
    */
+  // Assure.notNull( "description", description );
   public List<BundleDependency> resolveBundleClasspath( final BundleDescription description, TargetPlatform targetPlatform, List<String> additionalBundles ) throws UnresolvedBundleException {
 
-    Assure.notNull( "description", description );
 
     // step 1: throw exception if bundle description is not resolved
     if( !description.isResolved() ) {
@@ -285,8 +284,8 @@ public class BundleDependenciesResolver {
      * 
      * @param bundleDescription
      */
+    // Assure.notNull( "bundleDescription", bundleDescription );
     public BundleDependency( BundleDescription bundleDescription ) {
-      Assure.notNull( "bundleDescription", bundleDescription );
       _bundleDescription = bundleDescription;
       _exportedPackages = new LinkedHashSet<String>();
     }

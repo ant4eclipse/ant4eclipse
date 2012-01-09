@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pydt.model;
 
-import org.ant4eclipse.lib.core.Assure;
-
 import java.io.File;
 
 /**
@@ -37,9 +35,9 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    *          The supported executable names. Not <code>null</code>. Must be sorted lexicographically and each element
    *          is supposed to be neither <code>null</code> nor empty.
    */
+  // Assure.notNull( "name", name );
+  // Assure.notNull( "executables", executables );
   public PythonInterpreter( String name, String[] executables ) {
-    Assure.notNull( "name", name );
-    Assure.notNull( "executables", executables );
     _name = name;
     _executables = executables;
   }
@@ -61,8 +59,8 @@ public class PythonInterpreter implements Comparable<PythonInterpreter> {
    * 
    * @return The location of the python executable or <code>null</code>.
    */
+  // Assure.notNull( "directory", directory );
   public File lookup( File directory ) {
-    Assure.notNull( "directory", directory );
     for( String exename : _executables ) {
       for( String suffix : EXESUFFICES ) {
         File candidate = new File( directory, exename + suffix );

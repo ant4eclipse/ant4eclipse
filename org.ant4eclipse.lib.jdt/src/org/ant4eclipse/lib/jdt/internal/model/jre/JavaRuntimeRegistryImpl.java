@@ -14,7 +14,6 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
@@ -77,9 +76,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return registerJavaRuntime( id, location, jreFiles, false );
   }
 
+  // Assure.nonEmpty( "id", id );
+  // Assure.isDirectory( "location", location );
   private JavaRuntime registerJavaRuntime( String id, File location, List<File> jreFiles, boolean isDefault ) {
-    Assure.nonEmpty( "id", id );
-    Assure.isDirectory( "location", location );
     JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime( id, location, jreFiles );
     return registerJavaRuntime( javaRuntime, isDefault );
   }
@@ -87,26 +86,25 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "id", id );
+  // Assure.assertTrue( hasJavaRuntime( id ), String.format( "No JavaRuntime with id '%s' registered!", id ) );
   @Override
   public void setDefaultJavaRuntime( String id ) {
-    Assure.notNull( "id", id );
-    Assure.assertTrue( hasJavaRuntime( id ), String.format( "No JavaRuntime with id '%s' registered!", id ) );
     _defaultJavaRuntimeKey = id;
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "path", path );
   @Override
   public boolean hasJavaRuntime( String path ) {
-    Assure.nonEmpty( "path", path );
 
     // return true if a java runtime exists
     if( _javaRuntimeCache.containsKey( path ) ) {
       return true;
     }
 
-    // return if a java profile exists
     JavaProfile javaProfile = getProfileReader().getJavaProfile( path );
     if( javaProfile != null && getJavaRuntime( javaProfile ) != null ) {
       return true;
@@ -118,18 +116,18 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "path", path );
   @Override
   public boolean hasJavaProfile( String path ) {
-    Assure.nonEmpty( "path", path );
     return getProfileReader().hasJavaProfile( path );
   }
 
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "path", path );
   @Override
   public JavaRuntime getJavaRuntime( String path ) {
-    Assure.nonEmpty( "path", path );
 
     // return true if a java runtime exists
     if( _javaRuntimeCache.containsKey( path ) ) {
@@ -149,14 +147,12 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#getJavaRuntimeForPath(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
+  // Assure.notNull( "path", path );
   @Override
   public JavaRuntime getJavaRuntimeForPath( String path ) {
-    Assure.notNull( "path", path );
 
     trace( "Determining JRE for path '%s'", path );
 
@@ -186,9 +182,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
+  // Assure.nonEmpty( "path", path );
   @Override
   public JavaProfile getJavaProfile( String path ) {
-    Assure.nonEmpty( "path", path );
     return getProfileReader().getJavaProfile( path );
   }
 
@@ -284,8 +280,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @return the path under this java runtime is stored, e.g.
    *         <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
    */
+  // Assure.notNull( "javaRuntime", javaRuntime );
   private JavaRuntime registerJavaRuntime( JavaRuntime javaRuntime, boolean isDefault ) {
-    Assure.notNull( "javaRuntime", javaRuntime );
     String id = javaRuntime.getId();
     if( _javaRuntimeCache.containsKey( id ) ) {
       JavaRuntime runtime = _javaRuntimeCache.get( id );

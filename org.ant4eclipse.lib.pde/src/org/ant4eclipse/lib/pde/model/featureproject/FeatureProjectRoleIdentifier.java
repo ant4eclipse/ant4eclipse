@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.featureproject;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -42,10 +41,10 @@ public class FeatureProjectRoleIdentifier extends AbstractProjectRoleIdentifier 
   /**
    * {@inheritDoc}
    */
+  // Assure.notNull( "project", project );
   @Override
   public ProjectRole createRole( EclipseProject project ) {
     A4ELogging.debug( "FeatureProjectRoleIdentifier.applyRole(%s)", project );
-    Assure.notNull( "project", project );
 
     FeatureProjectRoleImpl featureProjectRole = new FeatureProjectRoleImpl( project );
     File featureDescription = featureProjectRole.getFeatureXml();

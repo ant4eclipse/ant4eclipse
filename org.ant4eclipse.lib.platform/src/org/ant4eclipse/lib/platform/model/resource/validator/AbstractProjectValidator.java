@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.validator;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELevel;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -40,9 +39,9 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
    * @param roleclasses
    *          The types of role supported by this validator. Not <code>null</code>.
    */
+  // Assure.nonEmpty( "ident", ident );
+  // Assure.notNull( "roleclasses", roleclasses );
   public AbstractProjectValidator( String ident, Class<?> ... roleclasses ) {
-    Assure.nonEmpty( "ident", ident );
-    Assure.notNull( "roleclasses", roleclasses );
     _types = roleclasses;
     _key = ident;
   }

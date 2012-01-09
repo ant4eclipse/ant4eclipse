@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.taskdefs.MacroDef;
 
 /**
@@ -40,9 +39,9 @@ public class ScopedMacroDefinition<E> {
    * @param macroDefinition
    * @param scope
    */
+  // Assure.notNull( "macroDefinition", macroDefinition );
+  // Assure.notNull( "scope", scope );
   public ScopedMacroDefinition( MacroDef macroDefinition, E scope ) {
-    Assure.notNull( "macroDefinition", macroDefinition );
-    Assure.notNull( "scope", scope );
     _macroDef = macroDefinition;
     _scope = scope;
   }

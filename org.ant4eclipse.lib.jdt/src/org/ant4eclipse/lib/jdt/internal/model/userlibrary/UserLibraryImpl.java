@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.userlibrary;
 
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.userlibrary.Archive;
 import org.ant4eclipse.lib.jdt.model.userlibrary.UserLibrary;
 
@@ -45,8 +44,8 @@ public class UserLibraryImpl implements UserLibrary {
    * @param syslib
    *          true <=> This library affects the boot class path.
    */
+  // Assure.notNull( "name", name );
   public UserLibraryImpl( String name, boolean syslib ) {
-    Assure.notNull( "name", name );
     _name = name;
     _systemlibrary = syslib;
     _archives = new ArrayList<Archive>();
@@ -94,8 +93,8 @@ public class UserLibraryImpl implements UserLibrary {
    * @param arc
    *          The archive that will be added.
    */
+  // Assure.notNull( "arc", arc );
   public void addArchive( ArchiveImpl arc ) {
-    Assure.notNull( "arc", arc );
     _archives.add( arc );
   }
   
