@@ -83,106 +83,106 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     return destdir2;
   }
 
-  @Test
-  public void calcRelative() {
+//  @Test
+//  public void calcRelative() {
+//
+//    String relative1 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
+//    Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative1 );
+//
+//    if( Utilities.isWindows() ) {
+//
+//      String relative2 = Utilities.calcRelative( new File( "K:/schnerd" ), new File( "K:/temp/rep/schrepp/depp" ) );
+//      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
+//
+//      String relative3 = Utilities.calcRelative( new File( "K:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
+//      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
+//
+//      String relative4 = Utilities.calcRelative( new File( "J:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
+//      Assert.assertEquals( null, relative4 );
+//
+//    } else {
+//
+//      String relative2 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
+//      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
+//
+//      String relative3 = Utilities.calcRelative( new File( "/" ), new File( "/temp/rep/schrepp/depp" ) );
+//      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
+//
+//    }
+//
+//  }
 
-    String relative1 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
-    Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative1 );
+//  @Test
+//  public void cleanup() {
+//
+//    String cleaned1 = Utilities.cleanup( (String) null );
+//    Assert.assertEquals( null, cleaned1 );
+//
+//    String cleaned2 = Utilities.cleanup( "" );
+//    Assert.assertEquals( null, cleaned2 );
+//
+//    String cleaned3 = Utilities.cleanup( "   " );
+//    Assert.assertEquals( null, cleaned3 );
+//
+//    String cleaned4 = Utilities.cleanup( "\t\t\t" );
+//    Assert.assertEquals( null, cleaned4 );
+//
+//    String cleaned5 = Utilities.cleanup( "   BLA  " );
+//    Assert.assertEquals( "BLA", cleaned5 );
+//
+//    String[] cleaned6 = Utilities.cleanup( new String[] { null, "", "   ", "\t\t\t", "   BLA  " } );
+//    Assert.assertNotNull( cleaned6 );
+//    Assert.assertEquals( 1, cleaned6.length );
+//    Assert.assertEquals( "BLA", cleaned6[0] );
+//
+//  }
 
-    if( Utilities.isWindows() ) {
+//  @Test
+//  public void contains() {
+//    Assert.assertFalse( Utilities.contains( "test" ) );
+//    Assert.assertFalse( Utilities.contains( "test", null, null ) );
+//    Assert.assertFalse( Utilities.contains( "test", "", "" ) );
+//    Assert.assertTrue( Utilities.contains( "test", "", "test" ) );
+//  }
 
-      String relative2 = Utilities.calcRelative( new File( "K:/schnerd" ), new File( "K:/temp/rep/schrepp/depp" ) );
-      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
+//  @Test
+//  public void copyStream() throws IOException {
+//
+//    String text = "My Message";
+//    byte[] input = text.getBytes();
+//
+//    ByteArrayInputStream instream1 = new ByteArrayInputStream( input );
+//    ByteArrayOutputStream outstream1 = new ByteArrayOutputStream();
+//    try {
+//      Utilities.copy( instream1, outstream1, new byte[0] );
+//    } catch( Ant4EclipseException ex ) {
+//      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
+//    } finally {
+//      Utilities.close( (Closeable) instream1 );
+//      Utilities.close( (Closeable) outstream1 );
+//    }
+//
+//    ByteArrayInputStream instream2 = new ByteArrayInputStream( input );
+//    ByteArrayOutputStream outstream2 = new ByteArrayOutputStream();
+//
+//    try {
+//      Utilities.copy( instream2, outstream2, new byte[10] );
+//    } finally {
+//      Utilities.close( (Closeable) instream2 );
+//      Utilities.close( (Closeable) outstream2 );
+//    }
+//
+//    Assert.assertEquals( text, new String( outstream2.toByteArray() ) );
+//
+//  }
 
-      String relative3 = Utilities.calcRelative( new File( "K:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
-      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
-
-      String relative4 = Utilities.calcRelative( new File( "J:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
-      Assert.assertEquals( null, relative4 );
-
-    } else {
-
-      String relative2 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
-      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
-
-      String relative3 = Utilities.calcRelative( new File( "/" ), new File( "/temp/rep/schrepp/depp" ) );
-      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
-
-    }
-
-  }
-
-  @Test
-  public void cleanup() {
-
-    String cleaned1 = Utilities.cleanup( (String) null );
-    Assert.assertEquals( null, cleaned1 );
-
-    String cleaned2 = Utilities.cleanup( "" );
-    Assert.assertEquals( null, cleaned2 );
-
-    String cleaned3 = Utilities.cleanup( "   " );
-    Assert.assertEquals( null, cleaned3 );
-
-    String cleaned4 = Utilities.cleanup( "\t\t\t" );
-    Assert.assertEquals( null, cleaned4 );
-
-    String cleaned5 = Utilities.cleanup( "   BLA  " );
-    Assert.assertEquals( "BLA", cleaned5 );
-
-    String[] cleaned6 = Utilities.cleanup( new String[] { null, "", "   ", "\t\t\t", "   BLA  " } );
-    Assert.assertNotNull( cleaned6 );
-    Assert.assertEquals( 1, cleaned6.length );
-    Assert.assertEquals( "BLA", cleaned6[0] );
-
-  }
-
-  @Test
-  public void contains() {
-    Assert.assertFalse( Utilities.contains( "test" ) );
-    Assert.assertFalse( Utilities.contains( "test", null, null ) );
-    Assert.assertFalse( Utilities.contains( "test", "", "" ) );
-    Assert.assertTrue( Utilities.contains( "test", "", "test" ) );
-  }
-
-  @Test
-  public void copyStream() throws IOException {
-
-    String text = "My Message";
-    byte[] input = text.getBytes();
-
-    ByteArrayInputStream instream1 = new ByteArrayInputStream( input );
-    ByteArrayOutputStream outstream1 = new ByteArrayOutputStream();
-    try {
-      Utilities.copy( instream1, outstream1, new byte[0] );
-    } catch( Ant4EclipseException ex ) {
-      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
-    } finally {
-      Utilities.close( (Closeable) instream1 );
-      Utilities.close( (Closeable) outstream1 );
-    }
-
-    ByteArrayInputStream instream2 = new ByteArrayInputStream( input );
-    ByteArrayOutputStream outstream2 = new ByteArrayOutputStream();
-
-    try {
-      Utilities.copy( instream2, outstream2, new byte[10] );
-    } finally {
-      Utilities.close( (Closeable) instream2 );
-      Utilities.close( (Closeable) outstream2 );
-    }
-
-    Assert.assertEquals( text, new String( outstream2.toByteArray() ) );
-
-  }
-
-  @Test
-  public void copyResource() throws IOException {
-    URL url = getClass().getClassLoader().getResource( "util/test-jar.jar" );
-    File tempfile = JUnitUtilities.createTempFile();
-    Utilities.copy( url, tempfile );
-    verifyExpandedJar( tempfile );
-  }
+//  @Test
+//  public void copyResource() throws IOException {
+//    URL url = getClass().getClassLoader().getResource( "util/test-jar.jar" );
+//    File tempfile = JUnitUtilities.createTempFile();
+//    Utilities.copy( url, tempfile );
+//    verifyExpandedJar( tempfile );
+//  }
 
   @Test
   public void equals() {
@@ -446,11 +446,6 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     URL url1 = Utilities.toURL( file );
     Assert.assertEquals( expectedurl, url1 );
 
-  }
-
-  public static final void main( String[] args ) throws Exception {
-    URL expectedurl = UtilitiesTest.class.getClassLoader().getResource( "util/test-jar.jar" );
-    System.err.println( "path: '" + expectedurl.getPath() + "'" );
   }
 
   @Test
