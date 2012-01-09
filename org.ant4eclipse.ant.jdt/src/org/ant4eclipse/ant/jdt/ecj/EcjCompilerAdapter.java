@@ -13,7 +13,7 @@ package org.ant4eclipse.ant.jdt.ecj;
 
 import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
-import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.EcjAdapterImpl;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public class EcjCompilerAdapter extends A4ECompilerAdapter {
    */
   @Override
   protected CompileJobResult compile( CompileJobDescription description ) {
-    return EcjAdapter.Factory.create().compile( description );
+    return new EcjAdapterImpl().compile( description );
   }
 
 } /* ENDCALSS */

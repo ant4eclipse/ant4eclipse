@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj;
 
-import org.ant4eclipse.lib.jdt.ecj.internal.tools.EcjAdapterImpl;
 
 /**
  * <p>
@@ -38,26 +37,4 @@ public interface EcjAdapter {
    */
   CompileJobResult compile( CompileJobDescription description );
 
-  /**
-   * <p>
-   * Inner factory to allow the creation of new {@link EcjAdapter} instances.
-   * </p>
-   * 
-   * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
-   */
-  public static class Factory {
-
-    /**
-     * <p>
-     * Creates a new instance of type {@link EcjAdapter}
-     * </p>
-     * 
-     * @return a new instance of type {@link EcjAdapter}.
-     */
-    public static EcjAdapter create() {
-      return new EcjAdapterImpl();
-    }
-    
-  } /* ENDCLASS */
-  
 } /* ENDINTERFACE */
