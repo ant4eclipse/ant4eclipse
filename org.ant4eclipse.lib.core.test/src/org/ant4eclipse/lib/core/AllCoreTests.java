@@ -22,6 +22,6 @@ import org.junit.runners.Suite;
 
 @RunWith( Suite.class )
 @Suite.SuiteClasses( {  ClassNameTest.class, VersionTest.class, DependencyGraphTest.class,
-    NLSTest.class, ManifestHelperTest.class /*, UtilitiesTest.class, XQueryHandlerTest.class */ } )
+    NLSTest.class, ManifestHelperTest.class /*, UtilitiesTest.class */, XQueryHandlerTest.class } )
 public class AllCoreTests {
 } /* ENDCLASS */
