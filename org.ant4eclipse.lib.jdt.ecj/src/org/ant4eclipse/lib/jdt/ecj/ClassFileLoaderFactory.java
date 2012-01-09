@@ -30,35 +30,6 @@ import java.util.List;
  */
 public class ClassFileLoaderFactory {
 
-  // /**
-  // * <p>
-  // * Creates an new instance of type {@link ClassFileLoader}, that can load {@link ClassFile ClassFiles} from an array
-  // * of files (jar files or directories).
-  // * </p>
-  // *
-  // * @param source
-  // * the file, that represents the source (e.g. a jar file, the root directory of an "exploded" bundle or the
-  // * root directory of an eclipse project) for the {@link ClassFileLoader}.
-  // * @param type
-  // * the type of the source. Possible values are {@link EcjAdapter#LIBRARY} and {@link EcjAdapter#PROJECT}.
-  // * @param classpathEntries
-  // * the class path entries for the {@link ClassFileLoader}.
-  // *
-  // * @return creates an new instance of type {@link ClassFileLoader}, that can load {@link ClassFile ClassFiles} from
-  // an
-  // * array of files (jar files or directories).
-  // */
-  // public static ClassFileLoader createClasspathClassFileLoader(File source, byte type, File[] classpathEntries) {
-  // PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneSourcePath");
-  // PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneSourcePath-" + source);
-  // try {
-  // return new ClasspathClassFileLoaderImpl(source, type, classpathEntries);
-  // } finally {
-  // PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneSourcePath");
-  // PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneSourcePath-" + source);
-  // }
-  // }
-
   /**
    * <p>
    * </p>
@@ -145,35 +116,11 @@ public class ClassFileLoaderFactory {
 
     @Override
     public String toString() {
-      return "ClassFileLoaderCacheKey [_source=" + _source + ", _type=" + _type + ", _classpathEntries="
-          + Utilities.toString( _classpathEntries ) + ", _sourcepathEntries="
-          + Utilities.toString( _sourcepathEntries ) + "]";
+      return String.format( "ClassFileLoaderCacheKey [_source=%s, _type=%s, _classpathEntries=%s, _sourcepathEntries=%s]", 
+          _source, _type, Utilities.toString( _classpathEntries ), Utilities.toString( _sourcepathEntries ) );
     }
 
   }
-
-  // /**
-  // * <p>
-  // * </p>
-  // *
-  // * @param classPathEntry
-  // * @param type
-  // * @param sourcePathEntry
-  // * @return
-  // */
-  // public static ClassFileLoader createClasspathClassFileLoader(File classPathEntry, byte type, File sourcePathEntry)
-  // {
-  // PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneBinaryPath");
-  // PerformanceLogging.start(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneBinaryPath-"
-  // + classPathEntry);
-  // try {
-  // return new ClasspathClassFileLoaderImpl(classPathEntry, type, sourcePathEntry);
-  // } finally {
-  // PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneBinaryPath");
-  // PerformanceLogging.stop(ClassFileLoaderFactory.class, "createClasspathClassFileLoader-ohneBinaryPath-"
-  // + classPathEntry);
-  // }
-  // }
 
   /**
    * <p>

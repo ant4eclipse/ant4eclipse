@@ -30,9 +30,6 @@ public class PluginBuildProperties extends AbstractBuildProperties {
   /** list of libraries */
   private Map<String,Library> _libraries;
 
-  // /** (deprecated) same effect than extra.<library> except that the entries are applied to all libraries */
-  // private List _jarsExtraClasspath;
-
   /** defines the order in which jars should be compiled (in case there are multiple libraries) */
   private List<String>        _jarsCompileOrder;
 
@@ -71,9 +68,7 @@ public class PluginBuildProperties extends AbstractBuildProperties {
    * @return
    */
   public String getLibrariesSourceRoots( String sourcePostfix ) {
-
     StringBuffer buffer = new StringBuffer();
-
     for( Iterator<Library> iterator = _libraries.values().iterator(); iterator.hasNext(); ) {
       Library library = iterator.next();
       buffer.append( library.getName() );
@@ -84,7 +79,6 @@ public class PluginBuildProperties extends AbstractBuildProperties {
         buffer.append( "," );
       }
     }
-
     return buffer.toString();
   }
 
@@ -224,13 +218,6 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     /** List the files that should not be copied into the library by the compiler */
     private String          _exclude;
 
-    // /**
-    // * extra classpaths used to perform automated build. Classpath can either be relative paths, or // platform urls
-    // * referring to plug-ins and fragments of your development environment (e.g. ../someplugin/xyz.jar, //
-    // * platform:/plugins/org.apache.ant/ant.jar). Platform urls are recommended over relative paths
-    // */
-    // private List _extra;
-
     /**
      * @param name
      */
@@ -256,7 +243,6 @@ public class PluginBuildProperties extends AbstractBuildProperties {
     /**
      * <p>
      * </p>
-     * 
      * 
      * @return Returns the output.
      */
@@ -300,20 +286,9 @@ public class PluginBuildProperties extends AbstractBuildProperties {
      */
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[PluginBuildProperties.Libary" );
-      buffer.append( " name:" );
-      buffer.append( _name );
-      buffer.append( ", manifest:" );
-      buffer.append( _manifest );
-      buffer.append( ", source:" );
-      buffer.append( Arrays.asList( _source ) );
-      buffer.append( ", output:" );
-      buffer.append( Arrays.asList( _output ) );
-      buffer.append( ", exclude:" );
-      buffer.append( _exclude );
-      buffer.append( "]" );
-      return buffer.toString();
+      return String.format(
+        "[PluginBuildProperties.Libary name: %s, manifest: %s, source: %s, output: %s, exclude: %s]",
+      _name, _manifest, Arrays.asList( _source ), Arrays.asList( _output ), _exclude );
     }
 
     @Override

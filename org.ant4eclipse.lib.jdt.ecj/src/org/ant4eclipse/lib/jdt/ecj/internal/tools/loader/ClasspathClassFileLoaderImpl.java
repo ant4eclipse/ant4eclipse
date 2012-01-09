@@ -62,13 +62,9 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
    */
   public ClasspathClassFileLoaderImpl( File entry, byte type ) {
     Assure.notNull( "entry", entry );
-
     _location = entry;
     _type = type;
-
-    // initialize
     initialize( Arrays.asList( entry ), new ArrayList<File>() );
-    
   }
 
   public ClasspathClassFileLoaderImpl( File classPathEntry, byte type, File sourcePathEntry ) {
@@ -605,22 +601,6 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
             }
           }
         }
-
-        // we do not support source jars here...
-        // else {
-        // try {
-        // JarFile jarFile = new JarFile(classpathEntry);
-        //
-        // JarEntry entry = jarFile.getJarEntry(className.asClassFileName());
-        //
-        // if ((entry != null)) {
-        // return new JarClassFileImpl(className.asClassFileName(), jarFile, classpathEntry.getAbsolutePath(),
-        // ClasspathClassFileLoaderImpl._type);
-        // }
-        // } catch (IOException e) {
-        // // nothing to do here...
-        // }
-        // }
 
       }
       return null;

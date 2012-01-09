@@ -111,14 +111,7 @@ public class BuildCommandImpl implements BuildCommand {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[BuildCommand:" );
-    buffer.append( " name: " );
-    buffer.append( _name );
-    buffer.append( " triggers: " );
-    buffer.append( _triggers );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[BuildCommand: name: %s triggers: %s]", _name, _triggers );
   }
   
 } /* ENDCLASS */

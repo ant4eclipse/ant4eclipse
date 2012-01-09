@@ -181,7 +181,6 @@ public class XQueryHandler extends DefaultHandler {
   }
 
   private static SAXParserFactory getSAXParserFactory() throws FactoryConfigurationError {
-
     if( factory == null ) {
       factory = SAXParserFactory.newInstance();
       // factory.setFeature("http://xml.org/sax/features/string-interning", true);

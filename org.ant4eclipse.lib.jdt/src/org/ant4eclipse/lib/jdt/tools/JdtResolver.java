@@ -54,7 +54,6 @@ public class JdtResolver {
    */
   public static final ResolvedClasspath resolveProjectClasspath( EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments ) {
-
     // cache is disabled, always re-resolve classpath
     return doResolveProjectClasspath( project, resolveRelative, isRuntimeClasspath, classpathContainerArguments );
   }

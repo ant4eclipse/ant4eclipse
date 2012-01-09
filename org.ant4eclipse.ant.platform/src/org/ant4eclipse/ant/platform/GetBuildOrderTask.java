@@ -51,9 +51,6 @@ public class GetBuildOrderTask extends AbstractProjectSetBasedTask implements Su
    * </p>
    */
   public GetBuildOrderTask() {
-    super();
-
-    // create delegates
     _subElementAndAttributesDelegate = new SubElementAndAttributesDelegate(this);
     _projectReferenceAwareDelegate = new ProjectReferenceAwareDelegate();
   }

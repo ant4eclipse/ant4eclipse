@@ -43,7 +43,6 @@ public class ClassPathVariableImpl implements ClassPathVariable {
   public ClassPathVariableImpl( String name, File path ) {
     Assure.nonEmpty( "name", name );
     Assure.notNull( "path", path );
-
     _name = name;
     _path = Utilities.getCanonicalFile( path );
   }
@@ -111,14 +110,7 @@ public class ClassPathVariableImpl implements ClassPathVariable {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[ClasspathVariableImpl:" );
-    buffer.append( " _name: " );
-    buffer.append( _name );
-    buffer.append( " _path: " );
-    buffer.append( _path );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format("[ClasspathVariableImpl: _name: %s _path: %s]", _name, _path);
   }
 
 } /* ENDCLASS */

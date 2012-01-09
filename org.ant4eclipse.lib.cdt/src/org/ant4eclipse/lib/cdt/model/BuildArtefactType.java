@@ -18,9 +18,10 @@ package org.ant4eclipse.lib.cdt.model;
  */
 public enum BuildArtefactType {
 
-  SharedLibrary( "org.eclipse.cdt.build.core.buildArtefactType.sharedLib" ), StaticLibrary(
-      "org.eclipse.cdt.build.core.buildArtefactType.staticLib" ), Executable(
-      "org.eclipse.cdt.build.core.buildArtefactType.exe" ), Unmanaged( null );
+  SharedLibrary( "org.eclipse.cdt.build.core.buildArtefactType.sharedLib" ), 
+  StaticLibrary( "org.eclipse.cdt.build.core.buildArtefactType.staticLib" ), 
+  Executable( "org.eclipse.cdt.build.core.buildArtefactType.exe" ), 
+  Unmanaged( null );
 
   private String _value;
 

@@ -153,18 +153,10 @@ public class SourceFileImpl implements SourceFile {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[SourceFile:" );
-    buffer.append( " _sourceFolder: " );
-    buffer.append( _sourceFolder );
-    buffer.append( " _sourceFileName: " );
-    buffer.append( _sourceFileName );
-    buffer.append( " _destinationFolder: " );
-    buffer.append( _destinationFolder );
-    buffer.append( " _encoding: " );
-    buffer.append( _encoding );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format(
+      "[SourceFile: _sourceFolder: %s _sourceFileName: %s _destinationFolder: %s _encoding: %s]",
+      _sourceFolder, _sourceFileName, _destinationFolder, _encoding
+    );
   }
 
 } /* ENDCLASS */

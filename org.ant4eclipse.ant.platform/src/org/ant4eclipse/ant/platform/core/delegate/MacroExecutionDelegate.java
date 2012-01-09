@@ -123,7 +123,6 @@ public class MacroExecutionDelegate<E> extends AbstractAntDelegate implements Ma
 
     if( macroDef instanceof ConditionalMacroDef ) {
       ConditionalMacroDef conditionalMacroDef = (ConditionalMacroDef) macroDef;
-
       if( !conditionalMacroDef.isIf() || conditionalMacroDef.isUnless() ) {
         return;
       }

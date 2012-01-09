@@ -47,7 +47,6 @@ public class ReferencedProjectsResolverServiceImpl implements ReferencedProjects
     }
     reftypes = new ArrayList<String>( referencedProjectsResolvers.keySet() );
     Collections.sort( reftypes );
-    
   }
 
   /**

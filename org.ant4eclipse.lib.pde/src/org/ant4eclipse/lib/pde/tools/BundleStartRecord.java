@@ -154,17 +154,7 @@ public class BundleStartRecord implements Comparable<BundleStartRecord> {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[BundleStartRecord:" );
-    buffer.append( " _id: " );
-    buffer.append( _id );
-    buffer.append( ", _autostart: " );
-    buffer.append( _autostart );
-    buffer.append( ", _startlevel: " );
-    buffer.append( _startlevel );
-    buffer.append( "]" );
-    return buffer.toString();
-
+    return String.format( "[BundleStartRecord: _id: %s, _autostart: %s, _startlevel: %s]", _id, _autostart, _startlevel );
   }
 
   /**

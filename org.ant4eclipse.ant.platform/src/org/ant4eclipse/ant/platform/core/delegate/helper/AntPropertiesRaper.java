@@ -94,11 +94,7 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * </p>
    */
   private void registerThread() {
-
-    //
     PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( getAntProject() ).getNext();
-
-    //
     if( propertyHelper instanceof ThreadDispatchingPropertyHelper ) {
       ((ThreadDispatchingPropertyHelper) propertyHelper).registerThread( Thread.currentThread() );
     }
@@ -111,10 +107,7 @@ public class AntPropertiesRaper extends AbstractAntProjectRaper<String> {
    * @param name
    */
   private void removeProperty( String name ) {
-    //
     PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper( getAntProject() ).getNext();
-
-    //
     if( propertyHelper instanceof ThreadDispatchingPropertyHelper ) {
       // System.out.println(String.format(" - - - removeProperty(%s)", name));
       ThreadDispatchingPropertyHelper threadDispatchingPropertyHelper = (ThreadDispatchingPropertyHelper) propertyHelper;

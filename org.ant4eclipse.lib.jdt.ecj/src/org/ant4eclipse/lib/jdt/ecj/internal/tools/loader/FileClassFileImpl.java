@@ -67,18 +67,9 @@ public class FileClassFileImpl extends DefaultReferableType implements ClassFile
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[FileClassFileImpl:" );
-    buffer.append( " bundleLocation: " );
-    buffer.append( getLibraryLocation() );
-    buffer.append( " bundleType: " );
-    buffer.append( getLibraryType() );
-    buffer.append( " accessRestriction: " );
-    buffer.append( getAccessRestriction() );
-    buffer.append( " classfile: " );
-    buffer.append( _classfile );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[FileClassFileImpl: bundleLocation: %s bundleType: %s accessRestriction: %s classfile: %s]",
+        getLibraryLocation(), getLibraryType(), getAccessRestriction(), _classfile
+    );
   }
   
 } /* ENDCLASS */

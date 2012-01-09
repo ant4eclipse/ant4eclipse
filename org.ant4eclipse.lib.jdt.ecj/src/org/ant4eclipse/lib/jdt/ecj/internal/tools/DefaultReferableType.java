@@ -78,7 +78,7 @@ public class DefaultReferableType implements ReferableType {
    * {@inheritDoc}
    */
   @Override
-  public final AccessRestriction getAccessRestriction() {
+  public AccessRestriction getAccessRestriction() {
     return _accessRestriction;
   }
 
@@ -86,14 +86,14 @@ public class DefaultReferableType implements ReferableType {
    * {@inheritDoc}
    */
   @Override
-  public final boolean hasAccessRestriction() {
+  public boolean hasAccessRestriction() {
     return _accessRestriction != null;
   }
 
   /**
    * {@inheritDoc}
    */
-  public final void setAccessRestriction( AccessRestriction accessRestriction ) {
+  public void setAccessRestriction( AccessRestriction accessRestriction ) {
     _accessRestriction = accessRestriction;
   }
 

@@ -33,7 +33,6 @@ public class PdeBuildHelper {
    */
   public static final String CONTEXT_QUALIFIER_PROPERTY = "ant4eclipse.contextQualifier";
 
-  /** - */
   public static String       CONTEXT_QUALIFIER          = null;
 
   /**
@@ -104,9 +103,7 @@ public class PdeBuildHelper {
    */
   public static final Version resolveVersion( Version version, String qualifier ) {
     Assure.notNull( "qualifier", qualifier );
-
     Version qualifiedVersion = null;
-
     if( hasUnresolvedQualifier( version ) ) {
       if( qualifier == null || AbstractBuildProperties.isContextQualifer( qualifier ) ) {
         qualifier = getResolvedContextQualifier();
@@ -118,7 +115,6 @@ public class PdeBuildHelper {
       // no ".qualifier" in original version -> return unchanged
       qualifiedVersion = version;
     }
-
     return qualifiedVersion;
   }
 

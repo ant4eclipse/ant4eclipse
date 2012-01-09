@@ -195,12 +195,12 @@ public class ConditionalMacroDef extends MacroDef {
           // search for the unknown element that causes the problem
           for( UnknownElement unknownElement : (List<UnknownElement>) element.getChildren() ) {
             if( equals( unknownElement.getWrapper().getProxy() ) ) {
-              throw new BuildException( "Invalid filter '" + filter + "'.", unknownElement.getLocation() );
+              throw new BuildException( String.format( "Invalid filter '%s'.", unknownElement.getLocation(), filter ) );
             }
           }
 
           // no element found -> throw simple BuildException
-          throw new BuildException( "Invalid filter '" + filter + "'." );
+          throw new BuildException( String.format( "Invalid filter '%s'." ) );
         } catch( BuildException exception ) {
           throw exception;
         } catch( Exception exception ) {
@@ -211,7 +211,7 @@ public class ConditionalMacroDef extends MacroDef {
           }
 
           // no element found -> throw simple BuildException
-          throw new BuildException( "Invalid filter '" + filter + "'." );
+          throw new BuildException( String.format( "Invalid filter '%s'.", filter ) );
         }
       }
 
@@ -269,7 +269,6 @@ public class ConditionalMacroDef extends MacroDef {
      * Allows the specification of additional attributes on a MacroDefinition
      * 
      * @see org.apache.tools.ant.DynamicAttribute#setDynamicAttribute(java.lang.String, java.lang.String)
-     * 
      */
     @Override
     public void setDynamicAttribute( String name, String value ) throws BuildException {

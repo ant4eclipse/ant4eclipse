@@ -29,19 +29,11 @@ import java.util.Map.Entry;
  */
 public class GeneratePackagingProperties {
 
-  /** - */
   private String                   ws;
-
-  /** - */
   private String                   os;
-
-  /** - */
   private String                   arch;
-
-  /** - */
+  
   private Map<String,List<String>> fileMap;
-
-  /** - */
   private List<String>             fileList;
 
   /**
@@ -69,9 +61,9 @@ public class GeneratePackagingProperties {
   public GeneratePackagingProperties( File binDirectory ) {
     fileMap = new HashMap<String,List<String>>();
     dumpChildren( binDirectory, binDirectory, 0 );
+    StringBuffer buffer = new StringBuffer();
     for( Entry<String,List<String>> entries : fileMap.entrySet() ) {
-
-      StringBuffer buffer = new StringBuffer();
+      buffer.setLength(0);
       for( Iterator iterator = entries.getValue().iterator(); iterator.hasNext(); ) {
         String value = (String) iterator.next();
         buffer.append( value );
@@ -79,7 +71,7 @@ public class GeneratePackagingProperties {
           buffer.append( "," );
         }
       }
-      System.out.println( entries.getKey() + "=" + buffer.toString() );
+      System.out.println( String.format( "%s=%s", entries.getKey(), buffer.toString() ) );
     }
   }
 
@@ -104,9 +96,10 @@ public class GeneratePackagingProperties {
         break;
       case 3:
         arch = directory.getName();
-        if( !fileMap.containsKey( ws + "." + os + "." + arch ) ) {
+        String key = String.format( "%s.%s.%s", ws, os, arch );
+        if( !fileMap.containsKey( key ) ) {
           fileList = new ArrayList<String>();
-          fileMap.put( ws + "." + os + "." + arch, fileList );
+          fileMap.put( key, fileList );
         }
         break;
       default:

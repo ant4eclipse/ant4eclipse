@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pydt;
 
-
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;

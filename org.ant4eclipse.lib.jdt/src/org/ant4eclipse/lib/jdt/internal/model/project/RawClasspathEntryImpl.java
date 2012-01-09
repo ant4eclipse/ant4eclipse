@@ -222,7 +222,6 @@ public class RawClasspathEntryImpl implements RawClasspathEntry {
   private static int resolveEntryKind( String entryKind, String path ) {
     Assure.notNull( "entryKind", entryKind );
     Assure.notNull( "path", path );
-
     if( "con".equals( entryKind ) ) {
       return CPE_CONTAINER;
     } else if( "lib".equals( entryKind ) ) {
@@ -236,7 +235,6 @@ public class RawClasspathEntryImpl implements RawClasspathEntry {
     } else if( "output".equals( entryKind ) ) {
       return CPE_OUTPUT;
     }
-
     return -1;
   }
 
@@ -245,18 +243,7 @@ public class RawClasspathEntryImpl implements RawClasspathEntry {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[EclipseClasspathEntry:" );
-    buffer.append( " path: " );
-    buffer.append( _path );
-    buffer.append( " entryKind: " );
-    buffer.append( _entryKind );
-    buffer.append( " outputLocation: " );
-    buffer.append( _outputLocation );
-    buffer.append( " exported: " );
-    buffer.append( _exported );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[EclipseClasspathEntry: path: %s entryKind: %s outputLocation: %s exported: %s]", _path, _entryKind, _outputLocation, _exported );
   }
 
   /**

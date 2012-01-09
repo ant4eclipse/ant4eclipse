@@ -78,7 +78,6 @@ public class BuildPropertiesParser {
    */
   public static void parseFeatureBuildProperties( FeatureProjectRole featureProjectRole ) {
     Assure.notNull( "featureProjectRole", featureProjectRole );
-
     StringMap buildProperties = loadBuildProperties( featureProjectRole.getEclipseProject() );
     FeatureBuildProperties featureBuildProperties = new FeatureBuildProperties();
     initializeAbstractBuildProperties( buildProperties, featureBuildProperties );

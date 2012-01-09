@@ -16,6 +16,9 @@ import org.apache.tools.ant.PropertyHelper;
  */
 public class ThreadDispatchingPropertyHelper extends PropertyHelper {
 
+  private static final String MSG_SET_PROPERTY_HOOK = "[%s] setPropertyHook(%s ,%s ) - %s";
+  private static final String PROP_NEWBUNDLEVERSION = "buildPlugin.newBundleVersion";
+  
   private Map<Thread,Properties> propertiesmap;
 
   /**
@@ -56,7 +59,6 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
    * @param project
    */
   public ThreadDispatchingPropertyHelper( Project project ) {
-    super();
     Assure.notNull( "project", project );
     setProject( project );
     propertiesmap = new HashMap<Thread,Properties>();
@@ -130,8 +132,8 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
     Properties properties = propertiesmap.get( Thread.currentThread() );
     properties.put( name, value );
 
-    if( name.startsWith( "buildPlugin.newBundleVersion" ) ) {
-      System.out.println( String.format( "[%s] setPropertyHook(%s ,%s ) - %s", Thread.currentThread(), name, value, properties ) );
+    if( name.startsWith( PROP_NEWBUNDLEVERSION ) ) {
+      System.out.println( String.format( MSG_SET_PROPERTY_HOOK, Thread.currentThread(), name, value, properties ) );
     }
     
     return true;

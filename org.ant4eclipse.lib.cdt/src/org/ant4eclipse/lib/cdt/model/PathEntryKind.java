@@ -18,7 +18,9 @@ package org.ant4eclipse.lib.cdt.model;
  */
 public enum PathEntryKind {
 
-  Source( "sourcePath" ), Library( "libraryPath" ), Include( "includePath" );
+  Source( "sourcePath" ), 
+  Library( "libraryPath" ), 
+  Include( "includePath" );
 
   private String _key;
 

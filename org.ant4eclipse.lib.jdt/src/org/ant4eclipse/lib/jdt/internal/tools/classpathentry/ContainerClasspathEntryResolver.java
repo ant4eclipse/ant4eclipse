@@ -55,8 +55,7 @@ public class ContainerClasspathEntryResolver extends AbstractClasspathEntryResol
    */
   @Override
   public boolean canResolve( ClasspathEntry entry ) {
-    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_CONTAINER )
-    /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_CONTAINER) */;
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_CONTAINER );
   }
 
   /**

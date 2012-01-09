@@ -69,7 +69,6 @@ public class ClasspathEntryResolverExecutor {
    * @param failOnNonHandledEntry
    */
   public ClasspathEntryResolverExecutor( boolean failOnNonHandledEntry ) {
-
     // initialize the executor attributes
     _resolvedProjects = new ArrayList<EclipseProject>();
     _referencedProjects = new ArrayList<EclipseProject>();
@@ -85,8 +84,6 @@ public class ClasspathEntryResolverExecutor {
    * @return the current project or <code>null</code> if no current project is set.
    */
   public final EclipseProject getCurrentProject() {
-
-    // returns the current project
     try {
       return _currentProject.peek();
     } catch( EmptyStackException e ) {
@@ -114,20 +111,16 @@ public class ClasspathEntryResolverExecutor {
    */
   public List<EclipseProject> getReferencedProjects() {
 
-    // create the result
     List<EclipseProject> result = new ArrayList<EclipseProject>();
 
-    // add all resolved projects
     result.addAll( _resolvedProjects );
 
-    // add all referenced projects
     for( EclipseProject eclipseProject : _referencedProjects ) {
       if( !result.contains( eclipseProject ) ) {
         result.add( eclipseProject );
       }
     }
 
-    // return result
     return result;
   }
 
@@ -268,8 +261,7 @@ public class ClasspathEntryResolverExecutor {
 
     // if the entry is not handled, we have to throw an exception here
     if( !handled && _failOnNonHandledEntry ) {
-      // TODO: NLS
-      throw new RuntimeException( "Unsupported Entrykind!" + entry );
+      throw new RuntimeException( String.format("Unsupported Entrykind: %s", entry ) );
     }
   }
   

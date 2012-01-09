@@ -174,7 +174,7 @@ public class GetUsedProjectsTask extends AbstractProjectBasedTask implements Sub
       List<String> allowed = getResolver().getReferenceTypes();
       for( String reftype : _referencetypes ) {
         if( ! allowed.contains( reftype ) ) {
-          throw new BuildException( "The 'referencetypes' value '" + reftype + "' is not supported." );
+          throw new BuildException( String.format( "The 'referencetypes' value '%s' is not supported.", reftype ) );
         }
       }
     }

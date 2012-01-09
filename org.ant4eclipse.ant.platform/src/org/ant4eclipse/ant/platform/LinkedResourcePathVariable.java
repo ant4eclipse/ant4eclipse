@@ -82,7 +82,7 @@ public class LinkedResourcePathVariable extends AbstractAnt4EclipseDataType {
   }
 
   /**
-   * @see org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType#doValidate()
+   * {@inheritDoc}
    */
   @Override
   protected void doValidate() {

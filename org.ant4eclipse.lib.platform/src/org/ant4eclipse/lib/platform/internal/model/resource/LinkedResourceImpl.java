@@ -88,18 +88,9 @@ public class LinkedResourceImpl {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[LinkedResource:" );
-    buffer.append( " name: " );
-    buffer.append( _name );
-    buffer.append( " location: " );
-    buffer.append( _location );
-    buffer.append( " relativelocation: " );
-    buffer.append( _relativelocation );
-    buffer.append( " type: " );
-    buffer.append( _type );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format(
+        "[LinkedResource: name: %s location: %s relativelocation: %s type: %s]",
+        _name,_location, _relativelocation, _type );
   }
 
   /**

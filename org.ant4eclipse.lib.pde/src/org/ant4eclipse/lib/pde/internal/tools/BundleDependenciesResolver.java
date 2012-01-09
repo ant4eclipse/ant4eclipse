@@ -47,8 +47,7 @@ import java.util.Set;
  */
 public class BundleDependenciesResolver {
 
-  public List<BundleDependency> resolveBundleClasspath( BundleDescription description )
-      throws UnresolvedBundleException {
+  public List<BundleDependency> resolveBundleClasspath( BundleDescription description ) throws UnresolvedBundleException {
     return resolveBundleClasspath( description, null, null );
   }
 
@@ -117,7 +116,6 @@ public class BundleDependenciesResolver {
       bundleDependency.addExportedPackage( exportPackageDescription.getName() );
     }
 
-    // return the result
     return result;
   }
 
@@ -181,7 +179,6 @@ public class BundleDependenciesResolver {
    * @return <code>true</code> if the given <code>bundleDescription</code> is a fragment.
    */
   public static boolean isFragment( BundleDescription bundleDescription ) {
-
     // bundle description describes a fragment if bundleDescription.getHost() != null
     return bundleDescription.getHost() != null;
   }
@@ -207,8 +204,7 @@ public class BundleDependenciesResolver {
     if( isFragment( bundleDescription ) ) {
       return bundleDescription.getHost().getHosts()[0];
     }
-    // bundle description describes a host ->
-    // return bundle description
+    // bundle description describes a host -> return bundle description
     else {
       return bundleDescription;
     }
@@ -260,8 +256,7 @@ public class BundleDependenciesResolver {
     BundleSource bundleSource = (BundleSource) bundleDescription.getUserObject();
 
     // get the location
-    File result = bundleSource.isEclipseProject() ? bundleSource.getAsEclipseProject().getFolder() : bundleSource
-        .getAsFile();
+    File result = bundleSource.isEclipseProject() ? bundleSource.getAsEclipseProject().getFolder() : bundleSource.getAsFile();
 
     // return result
     return result;
@@ -292,7 +287,6 @@ public class BundleDependenciesResolver {
      */
     public BundleDependency( BundleDescription bundleDescription ) {
       Assure.notNull( "bundleDescription", bundleDescription );
-
       _bundleDescription = bundleDescription;
       _exportedPackages = new LinkedHashSet<String>();
     }
@@ -357,16 +351,6 @@ public class BundleDependenciesResolver {
         result.add( bundleSource.getAsEclipseProject() );
       }
 
-      // // add the fragment if it is an eclipse project
-      // for (BundleDescription fragment : getFragments()) {
-      // BundleSource fragmentSource = (BundleSource) fragment.getUserObject();
-      //
-      // if (fragmentSource.isEclipseProject()) {
-      // result.add(fragmentSource.getAsEclipseProject());
-      // }
-      // }
-
-      // return the result
       return result;
     }
 

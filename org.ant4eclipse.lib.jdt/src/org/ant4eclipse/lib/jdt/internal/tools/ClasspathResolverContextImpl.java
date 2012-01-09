@@ -109,15 +109,12 @@ public class ClasspathResolverContextImpl implements ClasspathResolverContext {
   @Override
   public JdtClasspathContainerArgument getJdtClasspathContainerArgument( String key ) {
     Assure.nonEmpty( "key", key );
-
     List<JdtClasspathContainerArgument> arguments = _resolverJob.getJdtClasspathContainerArguments();
-
     for( JdtClasspathContainerArgument jdtClasspathContainerArgument : arguments ) {
       if( key.equalsIgnoreCase( jdtClasspathContainerArgument.getKey() ) ) {
         return jdtClasspathContainerArgument;
       }
     }
-
     return null;
   }
 

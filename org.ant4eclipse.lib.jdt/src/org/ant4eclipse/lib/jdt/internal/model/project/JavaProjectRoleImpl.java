@@ -92,11 +92,9 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   @Override
   public JavaRuntime getJavaRuntime() {
     RawClasspathEntry runtimeEntry = getJreClasspathEntry();
-
     if( runtimeEntry == null ) {
       return null;
     }
-
     return getJavaRuntimeRegistry().getJavaRuntimeForPath( runtimeEntry.getPath() );
   }
 
@@ -117,9 +115,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   @Override
   public StringMap getCompilerOptions() {
-
     StringMap result = null;
-
     // read project-specific compiler settings if available
     File settingsDir = getEclipseProject().getChild( ".settings" );
     File prefsFile = new File( settingsDir, "org.eclipse.jdt.core.prefs" );
@@ -128,7 +124,6 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     } else {
       A4ELogging.debug( "No file with project specific compiler settings found at '%s'.", prefsFile );
     }
-
     return result;
   }
 
@@ -215,13 +210,12 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     };
 
     String[] result = EntryResolver.resolveEntries( condition, this ).toArray( new String[0] );
-
     if( result.length > 0 ) {
       return result[0];
     } else {
-      // TODO
       return null;
     }
+    
   }
 
   /**
@@ -284,13 +278,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     String[] result = EntryResolver.resolveEntries( condition, this ).toArray( new String[0] );
 
     if( result.length == 0 ) {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "The source folder '" );
-      buffer.append( sourceFolder );
-      buffer.append( "' does not exist in project '" );
-      buffer.append( getEclipseProject().getFolderName() );
-      buffer.append( "'!" );
-      throw new RuntimeException( buffer.toString() );
+      throw new RuntimeException( String.format( "The source folder '%s' does not exist in project '%s'!", sourceFolder, getEclipseProject().getFolderName() ) );
     } else {
       return result[0];
     }
@@ -301,14 +289,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[JavaProjectRole:" );
-    buffer.append( " NAME: " );
-    buffer.append( NAME );
-    buffer.append( " _eclipseClasspathEntries: " );
-    buffer.append( _eclipseClasspathEntries );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[JavaProjectRole: NAME: %s _eclipseClasspathEntries: %s]", NAME, _eclipseClasspathEntries );
   }
 
   /**
@@ -358,13 +339,11 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
   }
 
   private String normalize( String sourceFolder ) {
-
     if( sourceFolder == null ) {
       return sourceFolder;
     }
     String result = sourceFolder.replace( '/', File.separatorChar );
     result = result.replace( '\\', File.separatorChar );
-
     return result;
   }
 
@@ -442,13 +421,7 @@ public class JavaProjectRoleImpl extends AbstractProjectRole implements JavaProj
     List<RawClasspathEntry> result = EntryResolver.resolveEntries( condition, this );
 
     if( result.size() == 0 ) {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "The source folder '" );
-      buffer.append( sourceFolder );
-      buffer.append( "' does not exist in project '" );
-      buffer.append( getEclipseProject().getFolderName() );
-      buffer.append( "'!" );
-      throw new RuntimeException( buffer.toString() );
+      throw new RuntimeException( String.format( "The source folder '%s' does not exist in project '%s'!", sourceFolder, getEclipseProject().getFolderName() ) );
     } else {
       return result.get( 0 );
     }

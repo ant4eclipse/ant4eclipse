@@ -68,15 +68,6 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
     return (entry instanceof RawClasspathEntry) && (entry.getEntryKind() == entryKind);
   }
 
-  // /**
-  // * @param entry
-  // * @param entryKind
-  // * @return
-  // */
-  // protected final boolean isRuntimeClasspathEntryOfKind(ClasspathEntry entry, int entryKind) {
-  // return (entry instanceof RuntimeClasspathEntry) && (entry.getEntryKind() == entryKind);
-  // }
-
   /**
    * <p>
    * Returns <code>true</code>, if the given entry is instance of type {@link ClasspathEntry}.
@@ -90,14 +81,6 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
     return entry instanceof RawClasspathEntry;
   }
 
-  // /**
-  // * @param entry
-  // * @return
-  // */
-  // protected final boolean isRuntimeClasspathEntry(ClasspathEntry entry) {
-  // return (entry instanceof RuntimeClasspathEntry);
-  // }
-
   /**
    * <p>
    * Returns <code>true</code>, if the class path entry is visible.
@@ -110,7 +93,7 @@ public abstract class AbstractClasspathEntryResolver implements ClasspathEntryRe
    * @return <code>true</code>, if the class path entry is visible.
    */
   protected final boolean isClasspathEntryVisible( ClasspathEntry entry, ClasspathResolverContext context ) {
-    return context.isRuntime() || context.isCurrentProjectRoot() /* || isRuntimeClasspathEntry(entry) */
+    return context.isRuntime() || context.isCurrentProjectRoot()
         || (isRawClasspathEntry( entry ) && ((RawClasspathEntry) entry).isExported());
   }
 

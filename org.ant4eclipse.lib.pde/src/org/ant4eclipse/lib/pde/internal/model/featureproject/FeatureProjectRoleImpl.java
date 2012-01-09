@@ -43,9 +43,7 @@ public class FeatureProjectRoleImpl extends AbstractProjectRole implements Featu
    * @return Returns the feature project role.
    */
   public static FeatureProjectRoleImpl getFeatureProjectRole( EclipseProject eclipseProject ) {
-    Assure.assertTrue( hasFeatureProjectRole( eclipseProject ), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have FeatureProjectRole!" );
-
+    Assure.assertTrue( hasFeatureProjectRole( eclipseProject ), String.format( "Project \"%s\" must have FeatureProjectRole!", eclipseProject.getFolderName() ) );
     return eclipseProject.getRole( FeatureProjectRoleImpl.class );
   }
 

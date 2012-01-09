@@ -273,15 +273,12 @@ public class TargetPlatformImpl implements TargetPlatform {
   public FeatureDescription getFeatureDescription( String id ) {
     Assure.nonEmpty( "id", id );
 
-    //
     FeatureDescription featureDescription = _pluginProjectSet.getFeatureDescription( id );
 
-    //
     if( featureDescription != null ) {
       return featureDescription;
     }
 
-    // result
     FeatureDescription result = null;
 
     // iterate over feature descriptions
@@ -303,7 +300,6 @@ public class TargetPlatformImpl implements TargetPlatform {
       }
     }
 
-    // return result
     return result;
   }
 
@@ -394,8 +390,6 @@ public class TargetPlatformImpl implements TargetPlatform {
   @Override
   public BundleDescription getBundleDescriptionFromWorkspace( String symbolicName ) {
     Assure.nonEmpty( "symbolicName", symbolicName );
-
-    //
     return _pluginProjectSet.getBundleDescription( symbolicName );
   }
 
@@ -406,7 +400,6 @@ public class TargetPlatformImpl implements TargetPlatform {
   public BundleDescription getBundleDescriptionFromBinaryBundles( String symbolicName ) {
     Assure.nonEmpty( "symbolicName", symbolicName );
 
-    //
     BundleDescription bundleDescription = null;
     BundleDescription result = null;
 
@@ -451,7 +444,6 @@ public class TargetPlatformImpl implements TargetPlatform {
     ResolvedFeature resolvedFeature = new ResolvedFeature( source, manifest );
 
     resolvePlugins( manifest, resolvedFeature );
-
     resolveIncludes( manifest, resolvedFeature );
 
     // 6.3 return result
@@ -483,8 +475,8 @@ public class TargetPlatformImpl implements TargetPlatform {
         }
         if( featureDescription == null ) {
           // TODO: NLS
-          throw new RuntimeException( "No Feature found for included feature '" + includes.getId() + "_"
-              + includes.getVersion() + "'." );
+          throw new RuntimeException( 
+              String.format( "No Feature found for included feature '%s_%s'.", includes.getId(), includes.getVersion() ) );
         } else {
           result.add( new Pair<Includes,FeatureDescription>( includes, featureDescription ) );
         }
@@ -579,7 +571,7 @@ public class TargetPlatformImpl implements TargetPlatform {
       copy.setUserObject( bundleDescription.getUserObject() );
       if( !state.addBundle( copy ) ) {
         // TODO: NLS
-        throw new RuntimeException( "Could not add bundle '" + bundleDescription + "' to state!" );
+        throw new RuntimeException( String.format( "Could not add bundle '%s' to state!", bundleDescription ) );
       }
       if( A4ELogging.isTraceingEnabled() ) {
         A4ELogging.trace( "Copied bundle to state: '%s'", getBundleInfo( bundleDescription ) );
@@ -643,38 +635,28 @@ public class TargetPlatformImpl implements TargetPlatform {
    */
   private static boolean contains( String element, String commaSeparatedList ) {
 
-    //
     if( element == null || element.trim().equals( "" ) ) {
       return true;
     }
 
-    //
     if( commaSeparatedList == null || commaSeparatedList.trim().equals( "" ) ) {
       return true;
     }
 
-    // split the elements
     String[] elements = commaSeparatedList.split( "," );
-
-    // iterate over all the list elements
     for( String listElement : elements ) {
-
-      //
       if( element.trim().equalsIgnoreCase( listElement ) ) {
         return true;
       }
     }
 
-    // finally return false
     return false;
   }
 
   public static boolean platformFilterDoesNotMatch( BundleDescription description ) {
     Assure.notNull( "description", description );
-
     State state = description.getContainingState();
     ResolverError[] errors = state.getResolverErrors( description );
-
     return errors != null && errors.length == 1 && errors[0].getType() == ResolverError.PLATFORM_FILTER;
   }
 
@@ -738,9 +720,7 @@ public class TargetPlatformImpl implements TargetPlatform {
    */
   static String getBundleInfo( BundleDescription description ) {
     Assure.notNull( "description", description );
-
     BundleSource bundleSource = BundleSource.getBundleSource( description );
-
     StringBuffer buffer = new StringBuffer();
     buffer.append( description.getSymbolicName() ).append( "_" ).append( description.getVersion().toString() )
         .append( "@" );

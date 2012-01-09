@@ -43,7 +43,6 @@ public abstract class AbstractProjectValidator implements ProjectValidator {
   public AbstractProjectValidator( String ident, Class<?> ... roleclasses ) {
     Assure.nonEmpty( "ident", ident );
     Assure.notNull( "roleclasses", roleclasses );
-
     _types = roleclasses;
     _key = ident;
   }

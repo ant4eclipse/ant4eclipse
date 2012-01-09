@@ -105,8 +105,7 @@ public class ClassName {
    * @return this class name as a file name
    */
   public String asClassFileName() {
-    String fileName = getQualifiedClassName().replace( '.', '/' );
-    return fileName + ".class";
+    return String.format( "%s.class", getQualifiedClassName().replace( '.', '/' ) );
   }
 
   /**
@@ -118,8 +117,7 @@ public class ClassName {
    * @return this class name as a file name
    */
   public String asSourceFileName() {
-    String fileName = getQualifiedClassName().replace( '.', '/' );
-    return fileName + ".java";
+    return String.format( "%s.java", getQualifiedClassName().replace( '.', '/' ) );
   }
 
   /**

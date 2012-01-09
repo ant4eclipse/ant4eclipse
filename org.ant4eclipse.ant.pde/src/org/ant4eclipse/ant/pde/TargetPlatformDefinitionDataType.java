@@ -103,15 +103,7 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[" );
-    buffer.append( getClass().getSimpleName() );
-    buffer.append( ": _id=" );
-    buffer.append( _id );
-    buffer.append( ", _targetPlatformDefinition=" );
-    buffer.append( _targetPlatformDefinition );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format("[%s: _id=%s, _targetPlatformDefinition=%s]", getClass().getSimpleName(), _id, _targetPlatformDefinition);
   }
 
   /**

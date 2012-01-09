@@ -80,20 +80,9 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[JarClassFileImpl:" );
-    buffer.append( " bundleLocation: " );
-    buffer.append( getLibraryLocation() );
-    buffer.append( " bundleType: " );
-    buffer.append( getLibraryType() );
-    buffer.append( " accessRestriction: " );
-    buffer.append( getAccessRestriction() );
-    buffer.append( " zipFile: " );
-    buffer.append( _zipFile );
-    buffer.append( " zipEntryName: " );
-    buffer.append( _zipEntryName );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format(
+        "[JarClassFileImpl: bundleLocation: %s bundleType: %s accessRestriction: %s zipFile: %s zipEntryName: %s]",
+        getLibraryLocation(), getLibraryType(), getAccessRestriction(), _zipFile, _zipEntryName);
   }
 
 } /* ENDCLASS */

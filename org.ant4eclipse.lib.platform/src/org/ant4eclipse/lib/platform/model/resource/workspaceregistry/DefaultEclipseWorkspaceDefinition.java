@@ -68,11 +68,10 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
       @Override
       public boolean accept( File file ) {
         boolean accepted = file.isDirectory() && !".metadata".equals( file.getName() ) && isProjectDirectory( file );
-        String message = String
+        A4ELogging.debug( String
             .format(
                 "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
-                file.getAbsolutePath(), Boolean.valueOf( accepted ) );
-        A4ELogging.debug( message );
+                file.getAbsolutePath(), Boolean.valueOf( accepted ) ) );
         return accepted;
       }
     } );
@@ -88,11 +87,10 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
         @Override
         public boolean accept( File file ) {
           boolean accepted = file.isDirectory() && isLocationDirectory( file );
-          String message = String
+          A4ELogging.debug( String
               .format(
                   "DefaultEclipseWorkspaceDefinition.getProjectFolders(): directory '%s' - accept as project directory: '%s'",
-                  file.getAbsolutePath(), Boolean.valueOf( accepted ) );
-          A4ELogging.debug( message );
+                  file.getAbsolutePath(), Boolean.valueOf( accepted ) ) );
           return accepted;
         }
       } );
@@ -106,7 +104,6 @@ public class DefaultEclipseWorkspaceDefinition implements WorkspaceDefinition {
       }
     }
 
-    // return the result
     return result;
   }
 

@@ -41,9 +41,7 @@ public class CvsProjectRole extends AbstractProjectRole {
    * @return Returns the cvs project role.
    */
   public static CvsProjectRole getCvsProjectRole( EclipseProject eclipseProject ) {
-    Assure.assertTrue( hasCvsProjectRole( eclipseProject ), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have CvsProjectRole!" );
-
+    Assure.assertTrue( hasCvsProjectRole( eclipseProject ), String.format( "Project \"%s\" must have CvsProjectRole!", eclipseProject.getFolderName() ) );
     return eclipseProject.getRole( CvsProjectRole.class );
   }
 
@@ -174,18 +172,8 @@ public class CvsProjectRole extends AbstractProjectRole {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[CvsProjectRole:" );
-    buffer.append( " NAME: " );
-    buffer.append( NAME );
-    buffer.append( " cvsRoot: " );
-    buffer.append( _cvsRoot );
-    buffer.append( " projectNameInRepository: " );
-    buffer.append( _projectNameInRepository );
-    buffer.append( " branchOrVersionTag: " );
-    buffer.append( _branchOrVersionTag );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[CvsProjectRole: NAME: %s cvsRoot: %s projectNameInRepository: %s branchOrVersionTag: %s]",
+      NAME, _cvsRoot, _projectNameInRepository, _branchOrVersionTag );
   }
 
 } /* ENDCLASS */

@@ -35,8 +35,7 @@ public class LibraryClasspathEntryResolver extends AbstractClasspathEntryResolve
    */
   @Override
   public boolean canResolve( ClasspathEntry entry ) {
-    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_LIBRARY )
-    /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_ARCHIVE) */;
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_LIBRARY );
   }
 
   /**

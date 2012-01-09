@@ -128,20 +128,8 @@ public class TargetDefinition {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[TargetDefinition:" );
-    buffer.append( " _name: " );
-    buffer.append( _name );
-    buffer.append( " _location: " );
-    buffer.append( _location );
-    buffer.append( " _environment: " );
-    buffer.append( _environment );
-    buffer.append( " _targetJRE: " );
-    buffer.append( _targetJRE );
-    buffer.append( " _content: " );
-    buffer.append( _content );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[TargetDefinition: _name: %s _location: %s _environment: %s _targetJRE: %s _content: %s]",
+        _name, _location, _environment, _targetJRE, _content );
   }
 
   /**
@@ -349,14 +337,7 @@ public class TargetDefinition {
      */
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[Location:" );
-      buffer.append( " _useDefault: " );
-      buffer.append( _useDefault );
-      buffer.append( " _path: " );
-      buffer.append( _path );
-      buffer.append( "]" );
-      return buffer.toString();
+      return String.format( "[Location: _useDefault: %s _path: %s]", _useDefault, _path );
     }
 
     /**
@@ -472,18 +453,7 @@ public class TargetDefinition {
      */
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[Environment:" );
-      buffer.append( " _os: " );
-      buffer.append( _os );
-      buffer.append( " _ws: " );
-      buffer.append( _ws );
-      buffer.append( " _arch: " );
-      buffer.append( _arch );
-      buffer.append( " _nl: " );
-      buffer.append( _nl );
-      buffer.append( "]" );
-      return buffer.toString();
+      return String.format( "[Environment: _os: %s _ws: %s _arch: %s _nl: %s]", _os, _ws, _arch, _nl );
     }
 
     void setOs( String os ) {
@@ -516,10 +486,7 @@ public class TargetDefinition {
 
     public static final int EXECUTION_ENVIRONMENT = 2;
 
-    /** - */
     private String          _jreName              = null;
-
-    /** - */
     private String          _executionEnvironment = null;
 
     /**
@@ -617,13 +584,8 @@ public class TargetDefinition {
     /** wheather all plugins should be used or not */
     private boolean      _useAllPlugins;
 
-    /**  */
     private List<String> _plugins;
-
-    /** */
     private List<String> _features;
-
-    /** */
     private List<String> _extraLocations;
 
     /**
@@ -724,18 +686,9 @@ public class TargetDefinition {
      */
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[Content:" );
-      buffer.append( " _useAllPlugins: " );
-      buffer.append( _useAllPlugins );
-      buffer.append( " _plugins: " );
-      buffer.append( _plugins );
-      buffer.append( " _features: " );
-      buffer.append( _features );
-      buffer.append( " _extraLocations: " );
-      buffer.append( _extraLocations );
-      buffer.append( "]" );
-      return buffer.toString();
+      return String.format(
+          "[Content: _useAllPlugins: %s _plugins: %s _features: %s _extraLocations: %s]",
+          _useAllPlugins, _plugins, _features, _extraLocations );
     }
 
     /**

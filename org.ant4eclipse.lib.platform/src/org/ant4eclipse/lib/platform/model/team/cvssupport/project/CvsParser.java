@@ -72,22 +72,18 @@ public class CvsParser {
    */
   public static CvsRoot readCvsRoot( EclipseProject project ) throws Ant4EclipseException {
     Assure.notNull( "project", project );
-
     File cvsRootFile = project.getChild( "CVS" + File.separator + "Root" );
-
     String cvsRoot = readFile( cvsRootFile );
     return new CvsRoot( cvsRoot );
   }
 
   public static String readTag( EclipseProject project ) throws Ant4EclipseException {
     Assure.notNull( "project", project );
-
-    if( !project.hasChild( "CVS" + File.separator + "Tag" ) ) {
+    String tagname = String.format( "CVS%sTag", File.separator );
+    if( !project.hasChild( tagname ) ) {
       return null;
     }
-
-    File tagFile = project.getChild( "CVS" + File.separator + "Tag" );
-
+    File tagFile = project.getChild( tagname );
     String tag = readFile( tagFile );
     if( tag.length() <= 1 ) {
       return null;

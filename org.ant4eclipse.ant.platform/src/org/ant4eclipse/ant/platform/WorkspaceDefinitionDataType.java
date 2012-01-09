@@ -31,7 +31,6 @@ import java.util.List;
  * old directory as a workspace. The benefit is that a4e will run on a system without a proper eclipse workspace.
  * 
  * @author mriley
- * 
  */
 public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
 
@@ -51,8 +50,6 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
    */
   public WorkspaceDefinitionDataType( Project project ) {
     super( project );
-
-    //
     _dirSet = new ArrayList<DirSet>();
   }
 
@@ -60,7 +57,6 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
     if( isReference() ) {
       throw tooManyAttributes();
     }
-
     _id = id;
   }
 
@@ -96,23 +92,24 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
 
         // make sure it exists
         if( !file.exists() ) {
-          A4ELogging.debug( "File " + file + " does not exist and will be ignored." );
+          A4ELogging.debug( "File %s does not exist and will be ignored.", file );
           continue;
         }
 
         // make sure its a directory
         if( !file.isDirectory() ) {
-          A4ELogging.debug( "File " + file + " is not a directory and will be ignored." );
+          A4ELogging.debug( "File %s is not a directory and will be ignored.", file );
           continue;
         }
 
         // and it should have a .project file
         if( !ProjectFileParser.isProjectDirectory( file ) ) {
-          A4ELogging.debug( "File " + file + " is not an eclipse project directory and will be ignored." );
+          A4ELogging.debug( "File %s is not an eclipse project directory and will be ignored.", file );
           continue;
         }
 
         projectDirectories.add( file );
+        
       }
     }
 

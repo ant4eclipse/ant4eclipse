@@ -64,21 +64,9 @@ public class EclipseStringSubstitutionServiceImpl implements EclipseStringSubsti
 
   protected StringMap getEclipseVariables( EclipseProject eclipseProject ) {
     StringMap eclipseVariables = new StringMap();
-
     for( EclipseVariableResolver resolver : _eclipseVariableResolvers ) {
       resolver.getResolvedVariables( eclipseVariables, eclipseProject );
     }
-
-    // if (project != null) {
-    // eclipseVariables.put("build_project", project.getFolder().getAbsolutePath());
-    // eclipseVariables.put("build_type", "full");
-    // eclipseVariables.put("project_loc", project.getFolder().getAbsolutePath());
-    // eclipseVariables.put("project_name", project.getFolderName());
-    // // TODO: is project_path always project_name ?
-    // eclipseVariables.put("project_path", project.getFolderName());
-    // // TODO: replace
-    // // eclipseVariables.put("workspace_loc", project.getWorkspace().getAbsolutePath());
-    // }
     return eclipseVariables;
   }
 

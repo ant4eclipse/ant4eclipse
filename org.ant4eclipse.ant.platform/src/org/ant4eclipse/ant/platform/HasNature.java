@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-
 import org.ant4eclipse.ant.platform.core.condition.AbstractProjectBasedCondition;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;

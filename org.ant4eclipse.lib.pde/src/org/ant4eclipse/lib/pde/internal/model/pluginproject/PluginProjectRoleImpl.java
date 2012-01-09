@@ -48,9 +48,7 @@ public class PluginProjectRoleImpl extends AbstractProjectRole implements Plugin
    * @return the plugin project role.
    */
   public static final PluginProjectRoleImpl getPluginProjectRole( EclipseProject eclipseProject ) {
-    Assure.assertTrue( hasPluginProjectRole( eclipseProject ), "Project \"" + eclipseProject.getFolderName()
-        + "\" must have PluginProjectRole!" );
-
+    Assure.assertTrue( hasPluginProjectRole( eclipseProject ), String.format("Project \"%s\" must have PluginProjectRole!", eclipseProject.getFolderName() ));
     return eclipseProject.getRole( PluginProjectRoleImpl.class );
   }
 

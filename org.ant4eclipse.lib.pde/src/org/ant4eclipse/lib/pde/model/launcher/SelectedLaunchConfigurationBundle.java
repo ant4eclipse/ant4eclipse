@@ -18,22 +18,22 @@ public class SelectedLaunchConfigurationBundle {
   /**
    * The symbolic name of the bundle. Nver null.
    */
-  private final String _bundleSymbolicName;
+  private String _bundleSymbolicName;
 
   /**
    * The version of the selected bundle might be null
    */
-  private final String _version;
+  private String _version;
 
   /**
    * The selected startLevel of the bundle. Never null
    */
-  private final String _startLevel;
+  private String _startLevel;
 
   /**
    * The autostart flag (true, false, default) of the selected bundle. Never null
    */
-  private final String _autoStart;
+  private String _autoStart;
 
   public SelectedLaunchConfigurationBundle( String bundleSymbolicName, String version, String startLevel,
       String autoStart ) {
@@ -64,7 +64,7 @@ public class SelectedLaunchConfigurationBundle {
   }
 
   public boolean hasVersion() {
-    return(_version != null);
+    return _version != null;
   }
 
 } /* ENDCLASS */

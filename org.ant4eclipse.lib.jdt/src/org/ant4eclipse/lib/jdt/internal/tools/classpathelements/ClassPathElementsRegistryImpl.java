@@ -44,11 +44,7 @@ public class ClassPathElementsRegistryImpl implements ClassPathElementsRegistry 
    * </p>
    */
   public ClassPathElementsRegistryImpl() {
-
-    // create the class path variables map
     _classpathVariables = new HashMap<String,ClassPathVariable>();
-
-    // create the class path container map
     _classpathContainer = new HashMap<String,ClassPathContainer>();
   }
 

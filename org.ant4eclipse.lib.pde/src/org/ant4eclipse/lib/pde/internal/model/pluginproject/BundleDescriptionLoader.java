@@ -141,13 +141,9 @@ public class BundleDescriptionLoader {
         return createBundleDescription( manifest, file.getAbsolutePath(), file );
       }
     } catch( Exception e ) {
-      throw new RuntimeException( "Exception while parsing plugin jar '" + file.getName() + "'!", e );
+      throw new RuntimeException( String.format( "Exception while parsing plugin jar '%s'!", file.getName() ), e );
     }
 
-    // throw FileParserException since jar is no valid plugin jar
-    // TODO: Konfigurierbar machen!!
-    // throw new FileParserException("Could not parse plugin jar '" + file.getAbsolutePath()
-    // + "' since it contains neither a Bundle-Manifest nor a plugin.xml!");
     return null;
   }
 
@@ -171,16 +167,10 @@ public class BundleDescriptionLoader {
     File bundleManifestFile = new File( directory, Constants.OSGI_BUNDLE_MANIFEST );
     if( bundleManifestFile.isFile() ) {
       Manifest manifest = new Manifest( new FileInputStream( bundleManifestFile ) );
-
       if( isBundleManifest( manifest ) ) {
         return createBundleDescription( manifest, directory.getAbsolutePath(), directory );
       }
     }
-
-    // throw FileParserException since directory is no valid plugin
-    // directory
-    // throw new FileParserException("Could not parse plugin directory '" + directory.getAbsolutePath()
-    // + "' since it contains neither a Bundle-Manifest nor a plugin.xml!");
     return null;
   }
 

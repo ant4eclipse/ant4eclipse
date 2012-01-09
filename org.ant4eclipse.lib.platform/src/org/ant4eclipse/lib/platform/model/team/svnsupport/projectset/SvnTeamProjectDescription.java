@@ -39,7 +39,6 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
     super( projectname );
     Assure.notNull( "teamProjectSet", teamProjectSet );
     Assure.notNull( "url", url );
-
     _teamProjectSet = teamProjectSet;
     _url = url;
     _revision = (revision != null ? revision : "HEAD");
@@ -85,15 +84,7 @@ public class SvnTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[SvnTeamProjectDescription:" );/* Inaccessible getter for private field _projectname */
-    buffer.append( " projectname: " + getProjectName() );
-    buffer.append( " _url: " );
-    buffer.append( _url );
-    buffer.append( " _revision: " );
-    buffer.append( _revision );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[SvnTeamProjectDescription: projectname: %s _url: %s _revision: %s]", getProjectName(), _url, _revision );
   }
 
   /**

@@ -29,7 +29,6 @@ public class UnresolvedBundlesAnalyzer {
    */
   public UnresolvedBundlesAnalyzer( TargetPlatform targetPlatform ) {
     Assure.notNull( "targetPlatform", targetPlatform );
-    // set the target platform
     _targetPlatform = targetPlatform;
   }
 
@@ -42,11 +41,7 @@ public class UnresolvedBundlesAnalyzer {
    * @return the root cause of the bundle description
    */
   public BundleDescription getRootCause( BundleDescription bundleDescription ) {
-
-    // get the resolver errors
     ResolverError[] errors = bundleDescription.getContainingState().getResolverErrors( bundleDescription );
-
-    // iterate over all the errors
     for( ResolverError error : errors ) {
       switch( error.getType() ) {
       case ResolverError.MISSING_IMPORT_PACKAGE:
@@ -57,8 +52,6 @@ public class UnresolvedBundlesAnalyzer {
         return bundleDescription;
       }
     }
-
-    // return the 'original' bundle description
     return bundleDescription;
   }
 
@@ -74,18 +67,12 @@ public class UnresolvedBundlesAnalyzer {
    * @return the root cause for a missing required bundle.
    */
   private BundleDescription resolveMissingRequiredBundle( BundleDescription bundleDescription, ResolverError error ) {
-
-    // get the constraint
     VersionConstraint versionConstraint = error.getUnsatisfiedConstraint();
-
-    // iterate over all bundles with errors
     for( BundleDescription erronousBundleDescription : _targetPlatform.getBundlesWithResolverErrors() ) {
       if( versionConstraint.isSatisfiedBy( erronousBundleDescription ) ) {
         return getRootCause( erronousBundleDescription );
       }
     }
-
-    // return the 'original' bundle description
     return bundleDescription;
   }
 
@@ -101,11 +88,7 @@ public class UnresolvedBundlesAnalyzer {
    * @return the root cause for a missing required bundle.
    */
   private BundleDescription resolveMissingImport( BundleDescription bundleDescription, ResolverError error ) {
-
-    // get the constraint
     VersionConstraint versionConstraint = error.getUnsatisfiedConstraint();
-
-    // iterate over all bundles with errors
     for( BundleDescription erronousBundleDescription : _targetPlatform.getBundlesWithResolverErrors() ) {
       for( ExportPackageDescription exportPackageDescription : erronousBundleDescription.getExportPackages() ) {
         if( versionConstraint.isSatisfiedBy( exportPackageDescription ) ) {
@@ -113,8 +96,6 @@ public class UnresolvedBundlesAnalyzer {
         }
       }
     }
-
-    // return the 'original' bundle description
     return bundleDescription;
   }
   

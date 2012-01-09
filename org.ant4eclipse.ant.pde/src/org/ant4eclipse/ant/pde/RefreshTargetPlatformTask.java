@@ -26,15 +26,6 @@ import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 public class RefreshTargetPlatformTask extends AbstractAnt4EclipseTask {
 
   /**
-   * <p>
-   * Creates a new instance of type {@link RefreshTargetPlatformTask}.
-   * </p>
-   */
-  public RefreshTargetPlatformTask() {
-    super();
-  }
-
-  /**
    * {@inheritDoc}
    */
   @Override

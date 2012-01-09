@@ -75,7 +75,6 @@ public class BundleSource {
   public BundleSource( Object source, Manifest bundleManifest ) {
     Assure.notNull( "source", source );
     Assure.notNull( "bundleManifest", bundleManifest );
-
     _source = source;
     _bundleManifest = bundleManifest;
     if( source instanceof File ) {
@@ -117,7 +116,6 @@ public class BundleSource {
    */
   public EclipseProject getAsEclipseProject() {
     Assure.assertTrue( isEclipseProject(), "Bundle source has to be instance of Eclipse Project" );
-
     return (EclipseProject) _source;
   }
 
@@ -131,7 +129,6 @@ public class BundleSource {
    */
   public File getAsFile() {
     Assure.assertTrue( _source instanceof File, "Bundle source has to be instance of File" );
-
     return (File) _source;
   }
 
@@ -183,7 +180,6 @@ public class BundleSource {
   public void setClasspathRoot( File classpathRoot ) {
     Assure.notNull( "classpathRoot", classpathRoot );
     Assure.assertTrue( !hasClasspathRoot(), "Classpath root already set!" );
-
     _classpathRoot = classpathRoot;
   }
 
@@ -238,16 +234,8 @@ public class BundleSource {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[BundleSource:" );
-    buffer.append( " _source: " );
-    buffer.append( _source );
-    buffer.append( " _bundleManifest: " );
-    buffer.append( _bundleManifest );
-    buffer.append( " _classpathRoot: " );
-    buffer.append( _classpathRoot );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[BundleSource:  _source: %s _bundleManifest: %s _classpathRoot: %s]",
+        _source, _bundleManifest, _classpathRoot );
   }
   
 } /* ENDCLASS */

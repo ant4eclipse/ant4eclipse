@@ -45,67 +45,27 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
    * The query type is used to select the kind of data that is being requested.
    */
   public static enum QueryType {
-
-    /** - */
     id,
-
-    /** - */
     name,
-
-    /** - */
     basedonfeatures,
-
-    /** - */
     configini,
-
-    /** - */
     programargs,
-
-    /** - */
     vmargs,
-
-    /** - */
     application,
-
-    /** - */
     version,
-
-    /** - */
     launchername,
-
-    /** - */
     wsplugins,
-
-    /** - */
     wsfragments,
-
-    /** - */
     wsfeatures,
-
-    /** - */
     plugins,
-
-    /** - */
     fragments,
-
-    /** - */
     features;
-
   }
 
-  /** - */
   private File              _product;
-
-  /** - */
   private String            _delimiter;
-
-  /** - */
   private WorkspaceDelegate _workspacedelegate;
-
-  /** - */
   private boolean           _defaultisempty;
-
-  /** - */
   private List<Query>       _queries;
 
   /**

@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -211,8 +210,7 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
       throw new BuildException( "Missing parameter: 'source'" );
     }
     if( !SOURCE_CLASSPATH.equals( getSource() ) && !SOURCE_PROJECT.equals( getSource() ) ) {
-      throw new BuildException( "Invalid 'source' parameter value. Must be '" + SOURCE_CLASSPATH + "' or '"
-          + SOURCE_PROJECT + "'" );
+      throw new BuildException( String.format( "Invalid 'source' parameter value. Must be '%s' or '%s'", SOURCE_CLASSPATH, SOURCE_PROJECT ) );
     }
   }
 

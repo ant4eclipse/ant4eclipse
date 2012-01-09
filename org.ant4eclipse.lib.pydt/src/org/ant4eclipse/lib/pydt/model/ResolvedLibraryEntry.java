@@ -102,14 +102,7 @@ public class ResolvedLibraryEntry implements ResolvedPathEntry {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[ResolvedLibraryEntry:" );
-    buffer.append( " _owningproject: " );
-    buffer.append( _owningproject );
-    buffer.append( ", _location: " );
-    buffer.append( _location );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[ResolvedLibraryEntry: _owningproject: %s, _location: %s]", _owningproject, _location );
   }
 
 } /* ENDCLASS */

@@ -81,14 +81,7 @@ public class JdtClasspathContainerArgument {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[JdtClasspathContainerArgument:" );
-    buffer.append( " key: " );
-    buffer.append( key );
-    buffer.append( " value: " );
-    buffer.append( value );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[JdtClasspathContainerArgument: key: %s value: %s]", key, value );
   }
   
 } /* ENDCLASS */

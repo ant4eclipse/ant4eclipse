@@ -14,7 +14,7 @@ public class SelectedLaunchConfigurationBundleParser {
    */
   public SelectedLaunchConfigurationBundle parseLaunchConfigurationBundleInfo( String bundleInfo ) {
 
-    final int i = bundleInfo.indexOf( '@' );
+    int i = bundleInfo.indexOf( '@' );
     if( i == -1 ) {
       // not sure if this will ever happen
       return new SelectedLaunchConfigurationBundle( bundleInfo, null, "default", "default" );

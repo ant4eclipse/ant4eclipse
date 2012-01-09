@@ -102,14 +102,7 @@ public class ResolvedSourceEntry implements ResolvedPathEntry {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[ResolvedSourceEntry:" );
-    buffer.append( " _owningproject: " );
-    buffer.append( _owningproject );
-    buffer.append( ", _folder: " );
-    buffer.append( _folder );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[ResolvedSourceEntry: _owningproject: %s, _folder: %s]", _owningproject, _folder );
   }
 
 } /* ENDCLASS */

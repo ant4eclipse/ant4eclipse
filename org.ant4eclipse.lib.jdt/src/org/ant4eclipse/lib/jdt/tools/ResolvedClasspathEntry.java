@@ -418,18 +418,9 @@ public class ResolvedClasspathEntry {
      */
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[AccessRestrictions:" );
-      buffer.append( " _excludeAll: " );
-      buffer.append( _excludeAll );
-      buffer.append( " _publicPackages: " );
-      buffer.append( _publicPackages );
-      buffer.append( " _privatePackages: " );
-      buffer.append( _privatePackages );
-      buffer.append( "]" );
-      return buffer.toString();
+      return String.format( "[AccessRestrictions: _excludeAll: %s _publicPackages: %s _privatePackages: %s]", _excludeAll, _publicPackages, _privatePackages );
     }
 
-  }
+  } /* ENDCLASS */
 
 } /* ENDCLASS */

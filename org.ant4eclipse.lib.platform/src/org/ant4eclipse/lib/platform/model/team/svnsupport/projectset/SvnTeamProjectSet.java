@@ -88,16 +88,8 @@ public class SvnTeamProjectSet extends AbstractTeamProjectSet {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[SvnTeamProjectSet:" );/* Inaccessible getter for private field _name */
-    buffer.append( " _name: " + getName() );
-    buffer.append( " _projectDescriptions: " + getProjectDescriptions() );
-    buffer.append( " _user: " );
-    buffer.append( _user );
-    buffer.append( " _password: " );
-    buffer.append( _password );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[SvnTeamProjectSet: _name: %s _projectDescriptions: %s _user: %s _password: %s]",
+        getName(), getProjectDescriptions(), _user, _password );
   }
   
 } /* ENDCLASS */

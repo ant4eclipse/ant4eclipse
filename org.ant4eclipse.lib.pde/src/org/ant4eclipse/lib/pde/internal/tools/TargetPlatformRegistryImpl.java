@@ -119,7 +119,6 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   @Override
   public void addTargetPlatformDefinition( String identifier, TargetPlatformDefinition targetPlatformDefinition ) {
     _targetPlatformDefnitionMap.put( identifier, targetPlatformDefinition );
-
   }
 
   /**
@@ -177,11 +176,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @return
    */
   private PluginAndFeatureProjectSet getPluginProjectSet( Workspace workspace ) {
-
     if( !_bundleAndFeatureSetMap.containsKey( workspace ) ) {
       _bundleAndFeatureSetMap.put( workspace, new PluginAndFeatureProjectSet( workspace ) );
     }
-
     return (PluginAndFeatureProjectSet) _bundleAndFeatureSetMap.get( workspace );
   }
 
@@ -233,11 +230,9 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @return
    */
   private BinaryBundleAndFeatureSet getBinaryPluginSet( File file ) {
-
     if( !_bundleAndFeatureSetMap.containsKey( file ) ) {
       _bundleAndFeatureSetMap.put( file, new BinaryBundleAndFeatureSet( file ) );
     }
-
     return (BinaryBundleAndFeatureSet) _bundleAndFeatureSetMap.get( file );
   }
 
@@ -246,16 +241,10 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
    * @return
    */
   private BinaryBundleAndFeatureSet[] getBinaryPluginSet( File[] files ) {
-
-    //
     List<BinaryBundleAndFeatureSet> result = new ArrayList<BinaryBundleAndFeatureSet>();
-
-    //
     for( File file : files ) {
       result.add( getBinaryPluginSet( file ) );
     }
-
-    //
     return result.toArray( new BinaryBundleAndFeatureSet[0] );
   }
 
@@ -291,7 +280,6 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
      */
     public TargetPlatformKey( Workspace workspace, File[] targetLocations,
         PlatformConfiguration targetPlatformConfiguration ) {
-
       _targetLocations = targetLocations;
       _targetPlatformConfiguration = targetPlatformConfiguration;
       _workspace = workspace;

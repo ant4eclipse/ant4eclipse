@@ -33,13 +33,8 @@ import java.util.List;
  */
 public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent {
 
-  /** - */
   private ProjectSetComponent _projectSetComponent;
-
-  /** - */
   private WorkspaceComponent  _workspaceComponent;
-
-  /** - */
   private boolean             _allWorkspaceProjects;
 
   /**
@@ -68,7 +63,6 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
   @Override
   public void requireAllWorkspaceProjectsOrProjectSetOrProjectNamesSet() {
     if( !_allWorkspaceProjects && !isProjectNamesSet() && !isTeamProjectSetSet() ) {
-      // TODO
       throw new BuildException( "allWorkspaceProjects or projectNames or teamProjectSet has to be set!" );
     }
   }

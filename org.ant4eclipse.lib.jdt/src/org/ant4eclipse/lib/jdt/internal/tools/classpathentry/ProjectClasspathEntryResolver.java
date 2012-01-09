@@ -32,8 +32,7 @@ public class ProjectClasspathEntryResolver extends AbstractClasspathEntryResolve
    */
   @Override
   public boolean canResolve( ClasspathEntry entry ) {
-    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_PROJECT )
-    /* || isRuntimeClasspathEntryOfKind(entry, RuntimeClasspathEntry.RCE_PROJECT) */;
+    return isRawClasspathEntryOfKind( entry, RawClasspathEntry.CPE_PROJECT );
   }
 
   /**

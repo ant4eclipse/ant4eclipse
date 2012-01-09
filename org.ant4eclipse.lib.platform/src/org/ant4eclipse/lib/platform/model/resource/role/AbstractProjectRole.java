@@ -95,14 +95,7 @@ public abstract class AbstractProjectRole implements ProjectRole {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[AbstractProjectRole:" );
-    buffer.append( " _name: " );
-    buffer.append( _name );
-    buffer.append( " _eclipseProject: " );
-    buffer.append( _eclipseProject );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[AbstractProjectRole: _name: %s _eclipseProject: %s]", _name, _eclipseProject );
   }
   
 } /* ENDCLASS */

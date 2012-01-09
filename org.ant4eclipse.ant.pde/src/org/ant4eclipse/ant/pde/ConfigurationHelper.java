@@ -39,16 +39,9 @@ import java.util.List;
  */
 public class ConfigurationHelper {
 
-  /** - */
   private static final String MSG_USING_HARDCODED       = "Failed to detect bundles, so the following hard coded ones are used:";
-
-  /** - */
   private static final String MSG_FAILED_BUNDLESINFO    = "Failed to load bundles info file '%s'. Cause: %s";
-
-  /** - */
   private static final String MSG_ACCESSING_BUNDLESINFO = "Accessing bundles info file '%s' to identify start bundles...";
-
-  /** - */
   private static final String MSG_ACCESSING_CONFIGINI   = "Accessing file '%s' to identify start bundles...";
 
   /**
@@ -103,13 +96,8 @@ public class ConfigurationHelper {
     }
 
     if( productdef.isBasedOnFeatures() ) {
-
-      //
       return getOsgiBundlesFromFeatures( productdef, targetplatform );
-
     } else {
-
-      //
       return getOsgiBundlesFromPlugins( productdef, targetplatform );
     }
   }

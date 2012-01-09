@@ -101,11 +101,8 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   @Override
   public ClassFile loadClass( ClassName className ) {
-
     ClassFile result = _classFileLoader.loadClass( className );
-
     setAccessRestrictions( result, className );
-
     return result;
   }
 
@@ -114,11 +111,8 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   @Override
   public ReferableSourceFile loadSource( ClassName className ) {
-
     ReferableSourceFile result = _classFileLoader.loadSource( className );
-
     setAccessRestrictions( result, className );
-
     return result;
   }
 
@@ -131,7 +125,6 @@ public class FilteringClassFileLoader implements ClassFileLoader {
    */
   private ReferableType setAccessRestrictions( ReferableType referableType, ClassName className ) {
 
-    //
     if( referableType == null ) {
       return referableType;
     }
@@ -141,17 +134,14 @@ public class FilteringClassFileLoader implements ClassFileLoader {
       return referableType;
     }
 
-    //
     String classFileName = className.asClassFileName();
 
-    //
     for( String includePattern : _includes ) {
       if( classFileName.matches( includePattern ) ) {
         return referableType;
       }
     }
 
-    //
     for( String exludePattern : _excludes ) {
       if( classFileName.matches( exludePattern ) ) {
 

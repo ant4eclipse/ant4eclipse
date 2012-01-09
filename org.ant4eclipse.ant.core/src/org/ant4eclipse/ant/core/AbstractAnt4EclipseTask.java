@@ -37,6 +37,8 @@ import org.apache.tools.ant.Task;
  */
 public abstract class AbstractAnt4EclipseTask extends Task {
 
+  private static final String MSG_EXECUTION_FAILURE = "Execute of %s failed: %s%n%s";
+
   /**
    * <p>
    * Overrides the <code>setProject</code> method defined in <code>org.ant4eclipse.ant.Task</code> to configure
@@ -77,7 +79,7 @@ public abstract class AbstractAnt4EclipseTask extends Task {
     } catch( Exception ex ) {
       StringWriter sw = new StringWriter();
       ex.printStackTrace( new PrintWriter( sw ) );
-      A4ELogging.error( "Execute of %s failed: %s%n%s", getClass().getName(), ex, sw );
+      A4ELogging.error( MSG_EXECUTION_FAILURE, getClass().getName(), ex, sw );
       throw new BuildException( ex.toString(), ex );
     }
   }

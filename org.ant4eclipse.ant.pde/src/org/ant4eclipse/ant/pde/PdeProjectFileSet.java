@@ -61,7 +61,6 @@ public class PdeProjectFileSet extends AbstractAnt4EclipseFileSet {
    */
   public PdeProjectFileSet( Project project ) {
     super( project );
-
   }
 
   /**

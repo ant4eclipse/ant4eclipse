@@ -41,9 +41,7 @@ public class SimpleConfiguratorBundles {
    *          The location of the file providing the simple configuration setup.
    */
   public SimpleConfiguratorBundles( File location ) {
-
     _records = new ArrayList<BundleStartRecord>();
-
     StringBuffer textcontent = Utilities.readTextContent( location, "UTF-8", true );
     String[] list = textcontent.toString().split( "\n" );
     for( String line : list ) {
@@ -61,7 +59,6 @@ public class SimpleConfiguratorBundles {
         }
       }
     }
-
   }
 
   /**

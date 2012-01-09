@@ -37,9 +37,6 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * </p>
    */
   public AbstractProjectPathTask() {
-    super();
-
-    // create the delegate
     _pathDelegate = new PathDelegate( this );
   }
 
@@ -47,7 +44,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final String getDirSeparator() {
+  public String getDirSeparator() {
     return _pathDelegate.getDirSeparator();
   }
 
@@ -55,7 +52,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final String getPathSeparator() {
+  public String getPathSeparator() {
     return _pathDelegate.getPathSeparator();
   }
 
@@ -63,7 +60,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final boolean isDirSeparatorSet() {
+  public boolean isDirSeparatorSet() {
     return _pathDelegate.isDirSeparatorSet();
   }
 
@@ -71,7 +68,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final boolean isPathSeparatorSet() {
+  public boolean isPathSeparatorSet() {
     return _pathDelegate.isPathSeparatorSet();
   }
 
@@ -79,7 +76,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final void setDirSeparator( String newdirseparator ) {
+  public void setDirSeparator( String newdirseparator ) {
     _pathDelegate.setDirSeparator( newdirseparator );
   }
 
@@ -87,7 +84,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final void setPathSeparator( String newpathseparator ) {
+  public void setPathSeparator( String newpathseparator ) {
     _pathDelegate.setPathSeparator( newpathseparator );
   }
 
@@ -95,7 +92,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath( List<File> entries ) {
+  public Path convertToPath( List<File> entries ) {
     return _pathDelegate.convertToPath( entries );
   }
 
@@ -103,7 +100,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString( List<File> entries ) {
+  public String convertToString( List<File> entries ) {
     return _pathDelegate.convertToString( entries );
   }
 
@@ -111,7 +108,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final Path convertToPath( File entry ) {
+  public Path convertToPath( File entry ) {
     return _pathDelegate.convertToPath( entry );
   }
 
@@ -119,7 +116,7 @@ public abstract class AbstractProjectPathTask extends AbstractProjectBasedTask i
    * {@inheritDoc}
    */
   @Override
-  public final String convertToString( File entry ) {
+  public String convertToString( File entry ) {
     return _pathDelegate.convertToString( entry );
   }
   

@@ -43,12 +43,7 @@ public class CProjectRoleImpl extends AbstractProjectRole implements CProjectRol
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[CProjectRole:" );
-    buffer.append( " NAME: " );
-    buffer.append( NAME );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format("[CProjectRole: NAME: %s]", NAME);
   }
 
   /**

@@ -69,17 +69,10 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    */
   @Override
   public final void setWorkspaceDirectory( String workspaceDirectory ) {
-
-    //
     if( workspaceDirectory != null && !workspaceDirectory.equals( "" ) ) {
-
-      // create new file
       _workspaceDirectory = new File( workspaceDirectory );
-
-      // check if workspace directory exists
       if( !_workspaceDirectory.exists() ) {
-        throw new Ant4EclipseException( PlatformExceptionCode.WORKSPACE_DIRECTORY_DOES_NOT_EXIST,
-            _workspaceDirectory );
+        throw new Ant4EclipseException( PlatformExceptionCode.WORKSPACE_DIRECTORY_DOES_NOT_EXIST, _workspaceDirectory );
       }
     }
   }
@@ -105,9 +98,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    */
   @Override
   public void setWorkspaceId( String identifier ) {
-
     _workspaceId = identifier;
-
   }
 
   /**

@@ -50,8 +50,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * </p>
    */
   public JavaRuntimeRegistryImpl() {
-
-    // create hash maps
     _javaRuntimeCache = new HashMap<String,JavaRuntime>();
   }
 
@@ -61,7 +59,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   @Override
   public JavaRuntime registerJavaRuntime( String id, File location, boolean isDefault ) {
     return registerJavaRuntime( id, location, null, isDefault );
-
   }
 
   /**
@@ -70,14 +67,10 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   @Override
   public JavaRuntime registerJavaRuntime( String id, File location ) {
     return registerJavaRuntime( id, location, null );
-
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#registerJavaRuntime(java.lang.String, java.io.File,
-   * java.util.List)
+  /**
+   * {@inheritDoc}
    */
   @Override
   public JavaRuntime registerJavaRuntime( String id, File location, List<File> jreFiles ) {
@@ -87,9 +80,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   private JavaRuntime registerJavaRuntime( String id, File location, List<File> jreFiles, boolean isDefault ) {
     Assure.nonEmpty( "id", id );
     Assure.isDirectory( "location", location );
-
     JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime( id, location, jreFiles );
-
     return registerJavaRuntime( javaRuntime, isDefault );
   }
 
@@ -99,8 +90,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   @Override
   public void setDefaultJavaRuntime( String id ) {
     Assure.notNull( "id", id );
-    Assure.assertTrue( hasJavaRuntime( id ), "No JavaRuntime with id '" + id + "' registered!" );
-
+    Assure.assertTrue( hasJavaRuntime( id ), String.format( "No JavaRuntime with id '%s' registered!", id ) );
     _defaultJavaRuntimeKey = id;
   }
 
@@ -149,7 +139,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     // return if a java profile exists
     JavaProfile javaProfile = getProfileReader().getJavaProfile( path );
     if( javaProfile != null ) {
-
       if( ((JavaProfileImpl) javaProfile).getAssociatedJavaRuntimeId() != null ) {
         return getJavaRuntime( ((JavaProfileImpl) javaProfile).getAssociatedJavaRuntimeId() );
       } else {
@@ -297,20 +286,12 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    */
   private JavaRuntime registerJavaRuntime( JavaRuntime javaRuntime, boolean isDefault ) {
     Assure.notNull( "javaRuntime", javaRuntime );
-
-    // create path
     String id = javaRuntime.getId();
-
     if( _javaRuntimeCache.containsKey( id ) ) {
       JavaRuntime runtime = _javaRuntimeCache.get( id );
-
       if( !runtime.equals( javaRuntime ) ) {
-
-        // throw an exception
-        // TODO
-        throw new RuntimeException( "Duplicate definition of JavaRuntime with key '" + id + "'." );
+        throw new RuntimeException( String.format( "Duplicate definition of JavaRuntime with key '%s'.", id ) );
       }
-      // return previous instance
       return _javaRuntimeCache.get( id );
     }
 

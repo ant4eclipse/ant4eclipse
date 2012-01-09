@@ -11,10 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.platform.core.task.AbstractGetProjectPathTask;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -84,11 +81,8 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     if( DEFAULT_FOLDER.equals( resolve ) || FOR_SOURCE_FOLDER.equals( resolve ) || ALL.equals( resolve ) ) {
       _resolve = resolve;
     } else {
-      // TODO: NLS
-      throw new BuildException( "Attribute resolve must have one of the following values: '" + FOR_SOURCE_FOLDER
-          + "', '" + ALL + "' or '" + DEFAULT_FOLDER + "'!" );
+      throw new BuildException( String.format( "Attribute resolve must have one of the following values: '%s', '%s' or '%s'!", FOR_SOURCE_FOLDER, ALL, DEFAULT_FOLDER ) );
     }
-
   }
 
   /**
@@ -137,6 +131,10 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
     }
   }
 
+  private static final String MSG_ALLOW_MULTIPLE_FOLDERS =
+    "Project '%s' contains multiple output folder! If you want to allow this, set allowMultipleFolder='true'!";
+
+  
   /**
    * {@inheritDoc}
    */
@@ -160,23 +158,17 @@ public class GetJdtOutputPathTask extends AbstractGetProjectPathTask {
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
       List<String> pathNames = javaProjectRole.getAllOutputFolders();
 
-      // TODO: NLS
       if( (pathNames.size() > 1) && (! isAllowMultipleFolders()) ) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append( "Project '" );
-        buffer.append( getEclipseProject().getSpecifiedName() );
-        buffer.append( "' contains multiple output folder! " );
-        buffer.append( "If you want to allow this, " );
-        buffer.append( " set allowMultipleFolder='true'!" );
-        throw new BuildException( buffer.toString() );
+        throw new BuildException( String.format( MSG_ALLOW_MULTIPLE_FOLDERS, getEclipseProject().getSpecifiedName() ) );
       }
 
       return getEclipseProject().getChildren( pathNames, relative );
       
     } else {
       // resolve default folder
-      Assure.assertTrue( DEFAULT_FOLDER.equals( _resolve ), "Illegal value for attribute resolve!" );
-
+      if( ! DEFAULT_FOLDER.equals( _resolve ) ) {
+        throw new BuildException( "Illegal value for attribute resolve!" );
+      }
       JavaProjectRole javaProjectRole = getEclipseProject().getRole( JavaProjectRole.class );
       String path = javaProjectRole.getDefaultOutputFolder();
       File resolvedPathEntry = getEclipseProject().getChild( path, relative );

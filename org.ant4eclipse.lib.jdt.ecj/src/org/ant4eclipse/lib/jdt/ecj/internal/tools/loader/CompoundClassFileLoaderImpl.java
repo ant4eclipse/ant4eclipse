@@ -33,11 +33,8 @@ public class CompoundClassFileLoaderImpl implements ClassFileLoader {
 
   public CompoundClassFileLoaderImpl( ClassFileLoader[] classFileLoaders ) {
     Assure.notNull( "classFileLoaders", classFileLoaders );
-
     _classFileLoaders = classFileLoaders;
-
     _allPackages = new HashMap<String,List<ClassFileLoader>>();
-
     initialise();
   }
 

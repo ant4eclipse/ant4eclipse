@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
-
 import org.ant4eclipse.ant.platform.core.condition.AbstractProjectBasedCondition;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.apache.tools.ant.BuildException;
@@ -27,14 +26,6 @@ public class HasBuildCommand extends AbstractProjectBasedCondition {
 
   /** the build command */
   private String _buildCommand;
-
-  /**
-   * <p>
-   * Creates a new instance of type {@link HasBuildCommand}.
-   * </p>
-   */
-  public HasBuildCommand() {
-  }
 
   /**
    * {@inheritDoc}

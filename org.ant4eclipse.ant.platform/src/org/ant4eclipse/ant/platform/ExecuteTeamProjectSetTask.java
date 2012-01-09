@@ -61,12 +61,8 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
     return _macroExecutionDelegate.createScopedMacroDefinition( scope );
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * org.ant4eclipse.ant.platform.core.MacroExecutionComponent#executeMacroInstance(org.apache.tools.ant.taskdefs.MacroDef
-   * , org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider)
+  /**
+   * {@inheritDoc}
    */
   @Override
   public void executeMacroInstance( MacroDef macroDef, MacroExecutionValuesProvider provider ) {
@@ -74,30 +70,24 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#getPrefix()
+  /**
+   * {@inheritDoc}
    */
   @Override
   public String getPrefix() {
     return _macroExecutionDelegate.getPrefix();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#getScopedMacroDefinitions()
+  /**
+   * {@inheritDoc}
    */
   @Override
   public List<ScopedMacroDefinition<String>> getScopedMacroDefinitions() {
     return _macroExecutionDelegate.getScopedMacroDefinitions();
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.ant.platform.core.MacroExecutionComponent#setPrefix(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
   @Override
   public void setPrefix( String prefix ) {
@@ -105,10 +95,8 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
 
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.apache.tools.ant.DynamicElement#createDynamicElement(java.lang.String)
+  /**
+   * {@inheritDoc}
    */
   @Override
   public final Object createDynamicElement( String name ) throws BuildException {
@@ -121,10 +109,8 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
     return null;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.ant4eclipse.ant.core.AbstractAnt4EclipseTask#doExecute()
+  /**
+   * {@inheritDoc}
    */
   @Override
   protected void doExecute() {
@@ -140,7 +126,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
       if( SCOPE_FOR_EACH_PROJECT.equals( scopedMacroDefinition.getScope() ) ) {
         executeForEachProjectScopedMacroDef( macroDef );
       } else {
-        throw new RuntimeException( "Unknown Scope '" + scopedMacroDefinition.getScope() + "'" );
+        throw new RuntimeException( String.format( "Unknown Scope '%s'", scopedMacroDefinition.getScope() ) );
       }
     }
 
@@ -169,7 +155,7 @@ public class ExecuteTeamProjectSetTask extends AbstractTeamProjectSetBasedTask i
         @Override
         public MacroExecutionValues provideMacroExecutionValues( MacroExecutionValues values ) {
           // Get Properties from teamProjectDescription...
-          final StringMap teamProjectDescriptionProperties = teamProjectDescription.getAsProperties();
+          StringMap teamProjectDescriptionProperties = teamProjectDescription.getAsProperties();
 
           // ...add teamProjectDescription-properties as scoped properties to macro invocation
           values.getProperties().putAll( teamProjectDescriptionProperties );

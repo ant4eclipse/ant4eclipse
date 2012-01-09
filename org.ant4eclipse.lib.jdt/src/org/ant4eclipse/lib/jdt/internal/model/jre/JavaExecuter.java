@@ -200,7 +200,6 @@ public class JavaExecuter {
    */
   public void setArgs( String[] args ) {
     Assure.notNull( "args", args );
-
     _args = args;
   }
 
@@ -329,7 +328,6 @@ public class JavaExecuter {
       throw new Ant4EclipseException( JdtExceptionCode.INVALID_JRE_DIRECTORY, _jreDirectory.getAbsolutePath() );
     }
 
-    // return result
     return result;
   }
 

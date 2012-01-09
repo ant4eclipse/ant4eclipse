@@ -32,6 +32,10 @@ import java.util.Set;
 
 public class JdtExecutorValuesProvider implements JdtExecutorValues {
 
+  private static final String MSG_MISSING_OUTPUT_FOLDER = "Project '%s' has no output folder";
+
+  private static final String MSG_RESOLVED_CPENTRY = "Resolved cp entry: %s";
+
   /** the internally used path component */
   private PathComponent                  _pathComponent;
 
@@ -121,7 +125,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
         }
 
         if( A4ELogging.isDebuggingEnabled() ) {
-          A4ELogging.debug( "Resolved cp entry: %s", resolvedClasspathEntry.toString() );
+          A4ELogging.debug( MSG_RESOLVED_CPENTRY, resolvedClasspathEntry.toString() );
         }
 
         // set access restrictions
@@ -173,7 +177,7 @@ public class JdtExecutorValuesProvider implements JdtExecutorValues {
     // resolve default output folder
     String defaultOutputFolderName = javaProjectRole.getDefaultOutputFolder();
     if( defaultOutputFolderName == null ) {
-      A4ELogging.info( "Project '%s' has no output folder", javaProjectRole.getEclipseProject().getSpecifiedName() );
+      A4ELogging.info( MSG_MISSING_OUTPUT_FOLDER, javaProjectRole.getEclipseProject().getSpecifiedName() );
     } else {
       File defaultOutputFolder = javaProjectRole.getEclipseProject().getChild( defaultOutputFolderName );
       executionValues.getProperties().put( DEFAULT_OUTPUT_DIRECTORY_NAME, defaultOutputFolderName );

@@ -153,20 +153,8 @@ public class RawPathEntry {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[RawPathEntry:" );
-    buffer.append( " _projectname: " );
-    buffer.append( _projectname );
-    buffer.append( ", _kind: " );
-    buffer.append( _kind );
-    buffer.append( ", _value: " );
-    buffer.append( _value );
-    buffer.append( ", _exported: " );
-    buffer.append( _exported );
-    buffer.append( ", _external: " );
-    buffer.append( _external );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[RawPathEntry: _projectname: %s, _kind: %s, _value: %s, _exported: %s, _external: %s]",
+        _projectname, _kind, _value, _exported, _external );
   }
 
 } /* ENDCLASS */

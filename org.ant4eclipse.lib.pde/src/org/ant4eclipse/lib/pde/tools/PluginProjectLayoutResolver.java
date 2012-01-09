@@ -58,8 +58,6 @@ public class PluginProjectLayoutResolver implements BundleLayoutResolver {
     try {
       _manifest = new Manifest( new FileInputStream( manifestFile ) );
     } catch( Exception e ) {
-      // TODO:
-      e.printStackTrace();
       throw new RuntimeException( e );
     }
   }

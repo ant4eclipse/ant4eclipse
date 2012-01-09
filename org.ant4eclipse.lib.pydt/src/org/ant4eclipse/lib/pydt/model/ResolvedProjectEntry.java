@@ -100,14 +100,7 @@ public class ResolvedProjectEntry implements ResolvedPathEntry {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[ResolvedProjectEntry:" );
-    buffer.append( " _owningproject: " );
-    buffer.append( _owningproject );
-    buffer.append( ", _projectname: " );
-    buffer.append( _projectname );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[ResolvedProjectEntry: _owningproject: %s, _projectname: %s]", _owningproject, _projectname );
   }
 
 } /* ENDCLASS */

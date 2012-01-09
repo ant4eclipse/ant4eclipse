@@ -22,16 +22,9 @@ public class TextBuffer {
 
   private static final String DEFAULT_INDENT = "  ";
 
-  /** - */
   private StringBuffer        _buffer;
-
-  /** - */
   private String              _indent;
-
-  /** - */
   private StringBuffer        _indention;
-
-  /** - */
   private String              _nl;
 
   /**

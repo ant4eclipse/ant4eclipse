@@ -62,10 +62,7 @@ import java.util.zip.ZipFile;
  */
 public class Utilities {
 
-  /** - */
   private static final String OPEN            = "${";
-
-  /** - */
   private static final String CLOSE           = "}";
 
   @NLSMessage( "Exporting a resource is only supported for root based pathes !" )
@@ -74,16 +71,10 @@ public class Utilities {
   @NLSMessage( "Failed to delete '%s' !" )
   public static String        MSG_FAILEDTODELETE;
 
-  /** - */
   public static final String  PROP_A4ETEMPDIR = "ant4eclipse.temp";
 
-  /** - */
   public static final String  NL              = System.getProperty( "line.separator" );
-
-  /** - */
   public static final String  ENCODING        = System.getProperty( "file.encoding" );
-
-  /** - */
   private static final String OS              = System.getProperty( "os.name" );
 
   static {
@@ -817,8 +808,6 @@ public class Utilities {
     } catch( Exception ex ) {
       throw new Ant4EclipseException( ex, CoreExceptionCode.COULD_NOT_INSTANTIATE_CLASS, className, ex.toString() );
     }
-
-    // return the constructed object
     return object;
   }
 

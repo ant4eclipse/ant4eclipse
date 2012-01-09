@@ -66,8 +66,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
     int tokensCount = stringTokenizer.countTokens();
 
     if( tokensCount < 4 ) {
-      throw new Ant4EclipseException( PlatformExceptionCode.INVALID_PSF_REFERENCE, "at least four",
-          Integer.valueOf( tokensCount ), reference );
+      throw new Ant4EclipseException( PlatformExceptionCode.INVALID_PSF_REFERENCE, "at least four", Integer.valueOf( tokensCount ), reference );
     }
     if( tokensCount > 5 ) {
       // bug 1569122

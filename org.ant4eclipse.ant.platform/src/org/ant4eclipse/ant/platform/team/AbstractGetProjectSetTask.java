@@ -121,7 +121,7 @@ public abstract class AbstractGetProjectSetTask extends AbstractTeamProjectSetBa
     checkPrereqs();
 
     _vcsAdapter = createVcsAdapter();
-    A4ELogging.debug( "using version control adapter = ", _vcsAdapter );
+    A4ELogging.debug( "using version control adapter = %s", _vcsAdapter );
 
     // set user and password
     getProjectSet().setUserAndPassword( getUsername(), getPassword() );

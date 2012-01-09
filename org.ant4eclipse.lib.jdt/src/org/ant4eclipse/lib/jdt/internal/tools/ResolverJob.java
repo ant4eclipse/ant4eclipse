@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.tools;
 
-
 import org.ant4eclipse.lib.jdt.tools.container.JdtClasspathContainerArgument;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
@@ -46,7 +45,6 @@ public class ResolverJob {
    */
   public ResolverJob( EclipseProject rootProject, Workspace workspace, boolean relative, boolean runtime,
       List<JdtClasspathContainerArgument> classpathContainerArguments ) {
-
     _rootProject = rootProject;
     _workspace = workspace;
     _relative = relative;

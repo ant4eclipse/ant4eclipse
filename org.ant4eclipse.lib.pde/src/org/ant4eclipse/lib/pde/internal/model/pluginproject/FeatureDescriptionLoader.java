@@ -56,7 +56,6 @@ public class FeatureDescriptionLoader {
       A4ELogging.debug( PdeExceptionCode.WARNING_FILE_DOES_NOT_CONTAIN_FEATURE_MANIFEST_FILE.getMessage(),
           file.getAbsoluteFile() );
     }
-    // return null
     return null;
   }
 

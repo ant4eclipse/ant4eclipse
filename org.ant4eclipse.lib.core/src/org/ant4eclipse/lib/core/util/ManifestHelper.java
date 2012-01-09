@@ -341,16 +341,7 @@ public class ManifestHelper {
      */
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[ManifestHeaderElement:" );
-      buffer.append( " _values: " );
-      buffer.append( _values );
-      buffer.append( " _attributes: " );
-      buffer.append( _attributes );
-      buffer.append( " _directives: " );
-      buffer.append( _directives );
-      buffer.append( "]" );
-      return buffer.toString();
+      return String.format( "[ManifestHeaderElement: _values: %s _attributes: %s _directives: %s]", _values, _attributes, _directives );
     }
 
   } /* ENDCLASS */

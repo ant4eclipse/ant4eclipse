@@ -32,7 +32,6 @@ public class LinkFile {
    */
   public static final String PLUGINS_DIRECTORY  = "eclipse/plugins";
 
-  /** -- */
   public static final String FEATURES_DIRECTORY = "eclipse/features";
 
   /**

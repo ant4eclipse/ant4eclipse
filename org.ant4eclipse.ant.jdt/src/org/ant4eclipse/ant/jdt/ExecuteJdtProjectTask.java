@@ -234,7 +234,7 @@ public class ExecuteJdtProjectTask extends AbstractExecuteJdtProjectTask impleme
       else {
         if( !onExecuteScopeMacroDefintion( scopedMacroDefinition ) ) {
           // TODO: NLS
-          throw new RuntimeException( "Unknown Scope '" + scopedMacroDefinition.getScope() + "'" );
+          throw new RuntimeException( String.format("Unknown Scope '%s'", scopedMacroDefinition.getScope() ) );
         }
       }
     }

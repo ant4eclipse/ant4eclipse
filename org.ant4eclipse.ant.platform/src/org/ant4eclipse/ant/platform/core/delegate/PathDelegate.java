@@ -49,8 +49,6 @@ public class PathDelegate extends AbstractAntDelegate implements PathComponent {
    */
   public PathDelegate( ProjectComponent component ) {
     super( component );
-
-    // set default separators
     _pathSeparator = File.pathSeparator;
     _dirSeparator = File.separator;
   }

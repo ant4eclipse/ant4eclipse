@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.featureproject;
 
-
 import org.ant4eclipse.lib.pde.model.buildproperties.FeatureBuildProperties;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 

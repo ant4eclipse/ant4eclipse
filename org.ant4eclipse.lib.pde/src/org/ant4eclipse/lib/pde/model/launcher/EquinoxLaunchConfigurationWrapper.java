@@ -14,7 +14,6 @@ import java.util.StringTokenizer;
  * Equinox-specific information of the launch configuration file.
  * 
  * @author nils hartmann
- * 
  */
 public class EquinoxLaunchConfigurationWrapper {
 
@@ -72,7 +71,7 @@ public class EquinoxLaunchConfigurationWrapper {
    */
   public static boolean isPdeJunitLaunchConfiguration( LaunchConfiguration launchConfiguration ) {
     notNull( "launchConfiguration", launchConfiguration );
-    return(PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() ));
+    return PDE_JUNIT_LAUNCH_CONFIGURATION_TYPE.equals( launchConfiguration.getType() );
   }
 
   /**
@@ -83,9 +82,7 @@ public class EquinoxLaunchConfigurationWrapper {
    */
   public EquinoxLaunchConfigurationWrapper( LaunchConfiguration launchConfiguration ) {
     notNull( "launchConfiguration", launchConfiguration );
-    assertTrue( isEquinoxLaunchConfiguration( launchConfiguration ), "Launch configuration must be of type '"
-        + EQUINOX_LAUNCH_CONFIGURATION_TYPE + "'" );
-
+    assertTrue( isEquinoxLaunchConfiguration( launchConfiguration ), String.format( "Launch configuration must be of type '%s'", EQUINOX_LAUNCH_CONFIGURATION_TYPE ) );
     _launchConfiguration = launchConfiguration;
   }
 
@@ -97,7 +94,6 @@ public class EquinoxLaunchConfigurationWrapper {
    */
   public SelectedLaunchConfigurationBundle[] getSelectedWorkspaceBundles() {
     String workspaceBundles = _launchConfiguration.getAttribute( WORKSPACE_BUNDLES_ATTRIBUTE_NAME );
-
     return createSelectedLaunchConfigurationBundle( workspaceBundles );
   }
 
@@ -109,7 +105,6 @@ public class EquinoxLaunchConfigurationWrapper {
    */
   public SelectedLaunchConfigurationBundle[] getSelectedTargetBundles() {
     String workspaceBundles = _launchConfiguration.getAttribute( TARGET_BUNDLES_ATTRIBUTE_NAME );
-
     return createSelectedLaunchConfigurationBundle( workspaceBundles );
   }
 

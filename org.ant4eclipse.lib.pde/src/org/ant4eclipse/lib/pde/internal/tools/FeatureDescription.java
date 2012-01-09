@@ -39,8 +39,6 @@ public class FeatureDescription {
    *          the {@link FeatureManifest}
    */
   public FeatureDescription( Object source, FeatureManifest featureManifest ) {
-    super();
-
     _source = source;
     _featureManifest = featureManifest;
   }

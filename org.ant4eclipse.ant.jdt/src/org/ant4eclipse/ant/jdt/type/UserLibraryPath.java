@@ -77,12 +77,6 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
    */
   public void setUserlibraries( File userlib ) {
     _userlibfile = userlib;
-    // if (!userlib.isFile()) {
-    // A4ELogging.warn("missing file '%s'", userlib.getPath());
-    // } else {
-    // _userlibfile = userlib;
-    // loadConfigurationFile();
-    // }
   }
 
   @Override
@@ -90,10 +84,6 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
     if( _userlibfile == null ) {
       throw new BuildException( "Property userlibraries must be set" );
     }
-
-    // if (!_workspaceDelegate.isWorkspaceDirectorySet() && _workspaceDelegate.isWorkspaceIdSet()) {
-    // A4ELogging.warn("No workspace directory or id has been set. Will not be able to resolve ")
-    // }
 
     if( !_userlibfile.isFile() ) {
       A4ELogging.warn( "missing file '%s'", _userlibfile.getPath() );

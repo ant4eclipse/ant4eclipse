@@ -24,6 +24,8 @@ import java.util.List;
  */
 public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
 
+  private static final String MSG_MISSING_ROLE = "The project '%s' must have the c or c++ project role!";
+
   /**
    * {@inheritDoc}
    */
@@ -31,7 +33,7 @@ public class GetCdtSourcePathTask extends AbstractGetProjectPathTask {
   protected void preconditions() throws BuildException {
     super.preconditions();
     if( !CdtUtilities.isCRelatedProject( getEclipseProject() ) ) {
-      throw new BuildException( String.format( "The project '%s' must have the c or c++ project role!", getEclipseProject().getSpecifiedName() ) );
+      throw new BuildException( String.format( MSG_MISSING_ROLE, getEclipseProject().getSpecifiedName() ) );
     }
   }
 

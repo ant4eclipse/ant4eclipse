@@ -48,12 +48,7 @@ public class ExceptionCode {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[ExceptionCode:" );
-    buffer.append( " _message: " );
-    buffer.append( _message );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[ExceptionCode: _message: %s]", _message );
   }
 
 } /* ENDCLASS */

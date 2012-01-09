@@ -250,14 +250,11 @@ public class EcjAdditionalCompilerArguments {
   }
 
   /**
-   * @see java.lang.Object#toString()
+   * {@inheritDoc}
    */
   @Override
   public String toString() {
-    return "EcjAdditionalCompilerArguments [_sourceFolderMap=" + _sourceFolderMap + ", _outputFolderMap="
-        + _outputFolderMap + ", _bootClassPathAccessRestrictions=" + _bootClassPathAccessRestrictions
-        + ", _accessRestrictions=" + _accessRestrictions + ", _sourceFilteredFilesetPath="
-        + _sourceFilteredFilesetPath + "]";
+    return String.format("EcjAdditionalCompilerArguments [_sourceFolderMap=%s, _outputFolderMap=%s, _bootClassPathAccessRestrictions=%s, _accessRestrictions=" + _accessRestrictions + ", _sourceFilteredFilesetPath=%s]", _sourceFolderMap, _outputFolderMap, _bootClassPathAccessRestrictions, _sourceFilteredFilesetPath);
   }
   
 } /* ENDCLASS */

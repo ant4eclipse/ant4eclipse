@@ -38,9 +38,7 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
    */
   @Override
   public LaunchConfiguration readLaunchConfiguration( File launchConfigurationFile ) {
-
     Assure.isFile( "launchConfigurationFile", launchConfigurationFile );
-
     try {
       SAXParser parser = getParserFactory().newSAXParser();
       LaunchConfigHandler handler = new LaunchConfigHandler();
@@ -50,10 +48,8 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
           handler.getLaunchConfigurationType(), handler.getAttributes() );
       return launchConfigurationImpl;
     } catch( Exception ex ) {
-      ex.printStackTrace();
-      throw new RuntimeException( "Could not parse launch config '" + launchConfigurationFile + ": " + ex, ex );
+      throw new RuntimeException( String.format( "Could not parse launch config '%s': %s", launchConfigurationFile, ex ), ex );
     }
-
   }
 
   protected SAXParserFactory getParserFactory() {
@@ -99,7 +95,7 @@ public class LaunchConfigurationReaderImpl implements LaunchConfigurationReader 
       String key = attributes.getValue( "key" );
       if( key == null ) {
         // TODO
-        throw new IllegalStateException( "Invalid element: " + localName + " -> no key found!" );
+        throw new IllegalStateException( String.format( "Invalid element: %s -> no key found!", localName ) );
       }
       _currentAttribute = new LaunchConfigAttribute( key );
 

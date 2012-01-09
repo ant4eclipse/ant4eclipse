@@ -52,7 +52,7 @@ public class PropertyParser {
         // property found, extract its name or bail on a typo
         int endName = value.indexOf( '}', pos );
         if( endName < 0 ) {
-          throw new RuntimeException( "Syntax error in property: " + value );
+          throw new RuntimeException( String.format( "Syntax error in property: %s", value ) );
         }
         String propertyName = value.substring( pos + 2, endName );
         // cut off eclipse arguments, since they are not supported

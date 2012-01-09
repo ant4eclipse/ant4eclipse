@@ -38,9 +38,6 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    * </p>
    */
   public AbstractProjectBasedTask() {
-    super();
-
-    // create delegate
     _eclipseProjectDelegate = new EclipseProjectDelegate( this );
   }
 

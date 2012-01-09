@@ -30,7 +30,11 @@ import java.util.List;
  */
 public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
 
-  /** specifies if multiple source folders are supported */
+  private static final String MSG_MULTIPLE_FOLDERS = 
+    "Project '%s' contains multiple SourceFolders! If you want to allow this, you have to set allowMultipleFolders='true'!";
+
+  private static final String MSG_MISSING_JAVA_ROLE = "The project '%s' must have the java project role!";
+  
   private boolean _allowMultipleFolders = false;
 
   /**
@@ -63,8 +67,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
   protected void preconditions() throws BuildException {
     super.preconditions();
     if( !getEclipseProject().hasRole( JavaProjectRoleImpl.class ) ) {
-      throw new BuildException( String.format( "The project '%s' must have the java project role!", getEclipseProject()
-          .getSpecifiedName() ) );
+      throw new BuildException( String.format( MSG_MISSING_JAVA_ROLE, getEclipseProject().getSpecifiedName() ) );
     }
   }
 
@@ -83,14 +86,7 @@ public class GetJdtSourcePathTask extends AbstractGetProjectPathTask {
     List<String> paths = javaProjectRole.getSourceFolders();
     List<File> result = getEclipseProject().getChildren( paths, relative );
     if( (result.size() > 1) && !isAllowMultipleFolders() ) {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "Project '" );
-      buffer.append( getEclipseProject().getFolderName() );
-      buffer.append( "' contains multiple SourceFolders! " );
-      buffer.append( "If you want to allow this, you have to" );
-      buffer.append( " set allowMultipleFolders='true'!" );
-
-      throw new RuntimeException( buffer.toString() );
+      throw new RuntimeException( String.format( MSG_MULTIPLE_FOLDERS, getEclipseProject().getFolderName() ) );
     }
 
     return result;

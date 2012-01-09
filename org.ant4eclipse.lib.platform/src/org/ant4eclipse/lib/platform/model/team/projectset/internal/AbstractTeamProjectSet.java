@@ -66,7 +66,7 @@ public abstract class AbstractTeamProjectSet implements TeamProjectSet {
         return description;
       }
     }
-    throw new RuntimeException( "EclipseProject " + name + " does not exist!" );
+    throw new RuntimeException( String.format( "EclipseProject '%s' does not exist!", name ) );
   }
 
   /**

@@ -27,7 +27,6 @@ import java.util.List;
  */
 public class TargetPlatformDefinition {
 
-  /** the list of all locations */
   private List<File> _locations;
 
   /**
@@ -36,7 +35,6 @@ public class TargetPlatformDefinition {
    * </p>
    */
   public TargetPlatformDefinition() {
-    // create the locations list
     _locations = new ArrayList<File>();
   }
 

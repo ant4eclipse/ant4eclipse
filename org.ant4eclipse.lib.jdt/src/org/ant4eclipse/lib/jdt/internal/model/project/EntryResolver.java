@@ -44,6 +44,7 @@ public class EntryResolver {
      * @return The path.
      */
     public T resolve( RawClasspathEntry entry );
+    
   }
   
 } /* ENDCLASS */

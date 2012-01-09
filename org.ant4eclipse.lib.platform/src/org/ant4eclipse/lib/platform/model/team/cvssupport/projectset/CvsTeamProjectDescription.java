@@ -104,7 +104,6 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   public CvsRoot getResolvedCvsRoot() {
     Assure.assertTrue( isCvsUserSet(), "CvsUser and CvsPwd have to be set!" );
-
     return _cvsRoot.getResolvedRoot( _cvsUser, _cvsPwd );
   }
 
@@ -191,22 +190,8 @@ public class CvsTeamProjectDescription extends AbstractTeamProjectDescription {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[CvsTeamProjectDescription:" );
-    buffer.append( " projectname: " );
-    buffer.append( getProjectName() );
-    buffer.append( " cvsRoot: " );
-    buffer.append( _cvsRoot );
-    buffer.append( " nameInRepository: " );
-    buffer.append( _nameInRepository );
-    buffer.append( " branchOrVersionTag: " );
-    buffer.append( _branchOrVersionTag );
-    buffer.append( " cvsUser: " );
-    buffer.append( _cvsUser );
-    buffer.append( " cvsPwd: " );
-    buffer.append( _cvsPwd );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[CvsTeamProjectDescription: projectname: %s cvsRoot: %s nameInRepository: %s branchOrVersionTag: %s cvsUser: %s cvsPwd: %s]",
+        getProjectName(), _cvsRoot, _nameInRepository, _branchOrVersionTag, _cvsUser, _cvsPwd );
   }
 
   /**

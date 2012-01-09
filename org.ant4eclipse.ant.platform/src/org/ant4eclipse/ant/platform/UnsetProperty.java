@@ -1,3 +1,14 @@
+/**********************************************************************
+ * Copyright (c) 2005-2009 ant4eclipse project team.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
 import java.lang.reflect.Field;
@@ -30,27 +41,17 @@ public class UnsetProperty extends Task {
   @Override
   public void execute() throws BuildException {
 
-    // assert
     if( name == null || name.equals( "" ) ) {
       throw new BuildException( "The 'name' attribute is required with 'unset'." );
     }
 
-    // the done variable
     boolean done = false;
-
-    //
     if( ThreadDispatchingPropertyHelper.hasInstance( getProject() ) ) {
       done = ThreadDispatchingPropertyHelper.getInstance( getProject() ).removeProperty( name );
     }
-
-    //
     if( !done ) {
-
-      // remove property
       removeProperty( name );
     }
-    //
-    return;
   }
 
   /**

@@ -32,10 +32,7 @@ import org.apache.tools.ant.ProjectComponent;
  */
 public class JdtClasspathContainerArgumentContribution implements SubElementContribution {
 
-  /** - */
   private JdtClasspathContainerArgumentDelegate _classpathContainerArgumentDelegate;
-
-  /** - */
   private boolean                               _initialized = false;
 
   /**

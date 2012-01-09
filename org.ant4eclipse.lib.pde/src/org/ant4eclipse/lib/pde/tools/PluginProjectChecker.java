@@ -81,10 +81,8 @@ public class PluginProjectChecker {
    */
   public PluginProjectChecker( EclipseProject eclipseProject ) {
     Assure.notNull( "eclipseProject", eclipseProject );
-
     _eclipseProject = eclipseProject;
     _issues = new ArrayList<Issue>();
-
     _projectName = _eclipseProject.getSpecifiedName();
   }
 
@@ -111,15 +109,12 @@ public class PluginProjectChecker {
       errorAssert( hasBuildProperties, "Project '%s' must have a 'build.properties' file in it's root folder",
           _projectName );
       if( hasBuildProperties ) {
-
-        final PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
-
+        PluginBuildProperties buildProperties = pluginProjectRole.getBuildProperties();
         validateManifestRelatedEntries( buildProperties );
         validateLibrariesRelatedEntries( buildProperties );
       }
     }
 
-    // return the issue list
     return _issues;
   }
 
@@ -157,9 +152,6 @@ public class PluginProjectChecker {
     for( Library library : libraries ) {
       warningAssert( library.hasSource(), LIBRARY_WITHOUT_SOURCE_DIRECTORY, _projectName, _eclipseProject
           .getChild( "build.properties" ).getAbsolutePath(), library.getName() );
-
-      // warningAssert(library.hasOutput(), LIBRARY_WITHOUT_OUTPUT_DIRECTORY, _projectName, _eclipseProject.getChild(
-      // "build.properties").getAbsolutePath(), library.getName());
     }
   }
 
@@ -247,6 +239,6 @@ public class PluginProjectChecker {
       return _message;
     }
   
-  }
+  } /* ENDCLASS */
   
 } /* ENDCLASS */

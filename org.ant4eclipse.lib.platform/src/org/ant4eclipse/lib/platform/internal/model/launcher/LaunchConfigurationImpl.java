@@ -86,20 +86,11 @@ public class LaunchConfigurationImpl implements LaunchConfiguration {
   }
 
   /**
-   * Constructs a <code>String</code> with all attributes in name = value format.
-   * 
-   * @return a <code>String</code> representation of this object.
+   * {@inheritDoc}
    */
   @Override
   public String toString() {
-
-    String retValue = "LaunchConfigurationImpl ( " // prefix
-        + super.toString() // add super attributes
-        + ", _type = '" + _type + "'" // _type
-        + ", _attributes = '" + _attributes + "'" // _attributes
-        + " )";
-
-    return retValue;
+    return String.format( "LaunchConfigurationImpl ( %s, _type = '%s', _attributes = '" + _attributes + "' )", super.toString(), _type, _attributes );
   }
 
 } /* ENDCLASS */

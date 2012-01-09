@@ -13,7 +13,6 @@ package org.ant4eclipse.ant.jdt.type;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.A4ECore;
-import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.jdt.internal.model.jre.JavaProfileReader;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
@@ -60,8 +59,10 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
       throw new Ant4EclipseException( PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "jreId" );
     }
 
-    Assure.exists( "file", _file );
-
+    if(! _file.exists() ) {
+      throw new RuntimeException( String.format( "Missing file: %s", _file ) );
+    }
+    
     A4ECore.instance().getRequiredService( JavaProfileReader.class ).registerProfile( _file, _jreId );
   }
 
@@ -90,7 +91,7 @@ public class ExecutionEnvironmentDefinitionDataType extends AbstractAnt4EclipseD
    */
   @Override
   public String toString() {
-    return "ExecutionEnvironmentDefinitionDataType [_file=" + _file + "]";
+    return String.format( "ExecutionEnvironmentDefinitionDataType [_file=%s]", _file );
   }
 
 } /* ENDCLASS */

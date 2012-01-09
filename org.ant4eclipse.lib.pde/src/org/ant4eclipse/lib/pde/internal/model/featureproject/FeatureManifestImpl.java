@@ -102,10 +102,7 @@ public class FeatureManifestImpl implements FeatureManifest {
    * </p>
    */
   public FeatureManifestImpl() {
-
-    // initialize plug-in list
     _plugins = new ArrayList<Plugin>();
-
     _includes = new ArrayList<Includes>();
   }
 
@@ -242,40 +239,9 @@ public class FeatureManifestImpl implements FeatureManifest {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[Feature:" );
-    buffer.append( " _id: " );
-    buffer.append( _id );
-    buffer.append( " _version: " );
-    buffer.append( _version );
-    buffer.append( " label: " );
-    buffer.append( label );
-    buffer.append( " _providerName: " );
-    buffer.append( _providerName );
-    buffer.append( " _image: " );
-    buffer.append( _image );
-    buffer.append( " _operatingSystem: " );
-    buffer.append( _operatingSystem );
-    buffer.append( " _machineArchitecture: " );
-    buffer.append( _machineArchitecture );
-    buffer.append( " _windowingSystem: " );
-    buffer.append( _windowingSystem );
-    buffer.append( " _locale: " );
-    buffer.append( _locale );
-    buffer.append( " _colocationAffinity: " );
-    buffer.append( _colocationAffinity );
-    buffer.append( " _primary: " );
-    buffer.append( _primary );
-    buffer.append( " _exclusive: " );
-    buffer.append( _exclusive );
-    buffer.append( " _application: " );
-    buffer.append( _application );
-    buffer.append( " _plugin: " );
-    buffer.append( _plugin );
-    buffer.append( " _plugins: " );
-    buffer.append( _plugins );
-    buffer.append( "]" );
-    return buffer.toString();
+      return String.format(
+          "[Feature: _id: %s _version: %s label: %s _providerName: %s _image: %s _operatingSystem: %s _machineArchitecture: %s _windowingSystem: %s _locale: %s _colocationAffinity: %s _primary: %s _exclusive: %s _application: %s _plugin: %s _plugins: %s]",
+         _id, _version, label, _providerName, _image, _operatingSystem, _machineArchitecture, _windowingSystem, _locale, _colocationAffinity, _primary, _exclusive, _application, _plugin, _plugins );
   }
 
   public void setApplication( String application ) {
@@ -538,30 +504,10 @@ public class FeatureManifestImpl implements FeatureManifest {
 
     @Override
     public String toString() {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append( "[Plugin:" );
-      buffer.append( " id: " );
-      buffer.append( _id );
-      buffer.append( " version: " );
-      buffer.append( _version );
-      buffer.append( " fragment: " );
-      buffer.append( _fragment );
-      buffer.append( " operatingSystem: " );
-      buffer.append( _operatingSystem );
-      buffer.append( " machineArchitecture: " );
-      buffer.append( _machineArchitecture );
-      buffer.append( " windowingSystem: " );
-      buffer.append( _windowingSystem );
-      buffer.append( " locale: " );
-      buffer.append( _locale );
-      buffer.append( " downloadSize: " );
-      buffer.append( _downloadSize );
-      buffer.append( " installSize: " );
-      buffer.append( _installSize );
-      buffer.append( " unpack: " );
-      buffer.append( _unpack );
-      buffer.append( "]" );
-      return buffer.toString();
+        return
+            String.format( "[Plugin: id: %s version: %s fragment: %s operatingSystem: %s machineArchitecture: %s windowingSystem: %s locale: %s downloadSize: %s installSize: %s unpack: %s]",
+            _id, _version, _fragment, _operatingSystem, _machineArchitecture, _windowingSystem, _locale,
+            _downloadSize, _installSize, _unpack);
     }
 
     @Override

@@ -55,7 +55,6 @@ public class TeamProjectSetDelegate extends AbstractAntDelegate implements TeamP
     if( _teamProjectSet == null ) {
       _teamProjectSet = readTeamProjectSet();
     }
-
     return _teamProjectSet;
   }
 

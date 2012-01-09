@@ -39,8 +39,6 @@ public abstract class AbstractProjectSetBasedTask extends AbstractAnt4EclipseTas
    * </p>
    */
   public AbstractProjectSetBasedTask() {
-
-    // create the delegates
     _workspaceProjectSetDelegate = new WorkspaceProjectSetDelegate( this );
   }
 

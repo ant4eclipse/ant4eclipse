@@ -229,19 +229,14 @@ public class EclipseProjectImpl implements EclipseProject {
   @Override
   public File getSettingsFile( String settingsFileName ) throws RuntimeException {
     Assure.notNull( "settingsFileName", settingsFileName );
-    Assure.assertTrue( hasSettingsFolder(), "The project '" + getFolderName() + "' must have a .settings folder" );
-
+    Assure.assertTrue( hasSettingsFolder(), String.format( "The project '%s' must have a .settings folder", getFolderName() ) );
     File settingsFile = new File( _settingsFolder, settingsFileName );
     if( !settingsFile.exists() ) {
-      throw new RuntimeException( "Settings File '" + settingsFileName + "' not found in project '" + getFolderName()
-          + "'" );
+      throw new RuntimeException( String.format( "Settings File '%s' not found in project '%s'", settingsFileName, getFolderName() ) );
     }
-
     if( !settingsFile.isFile() ) {
-      throw new RuntimeException( "Settings File '" + settingsFile + "' in project '" + getFolderName()
-          + "' is not a file" );
+      throw new RuntimeException( String.format( "Settings File '%s' in project '%s' is not a file", settingsFile, getFolderName() ) );
     }
-
     return settingsFile;
   }
 
@@ -411,9 +406,8 @@ public class EclipseProjectImpl implements EclipseProject {
   public void addRole( ProjectRole role ) {
     Assure.notNull( "role", role );
     if( hasRole( role.getClass() ) ) {
-      throw new RuntimeException( "ProjectRole " + role.getClass() + " is already set!" );
+      throw new RuntimeException( String.format( "ProjectRole %s is already set!", role.getClass() ) );
     }
-
     _roles.add( role );
   }
 
@@ -440,8 +434,7 @@ public class EclipseProjectImpl implements EclipseProject {
   @SuppressWarnings( "unchecked" )
   public <T extends ProjectRole> T getRole( Class<T> projectRoleClass ) {
     Assure.notNull( "projectRoleClass", projectRoleClass );
-    Assure.assertTrue( hasRole( projectRoleClass ), "hasRole(projectRoleClass) on project '" + getFolderName()
-        + "'has to be true for role '" + projectRoleClass + "'!" );
+    Assure.assertTrue( hasRole( projectRoleClass ), String.format( "hasRole(projectRoleClass) on project '%s' has to be true for role '%s'!", getFolderName(), projectRoleClass ) );
 
     Iterator<ProjectRole> iterator = _roles.iterator();
 
@@ -524,7 +517,7 @@ public class EclipseProjectImpl implements EclipseProject {
    * @return The desired LinkedResource instance.
    */
   public LinkedResourceImpl getLinkedResource( String name ) {
-    Assure.assertTrue( isLinkedResource( name ), "Cannot retrieve linked resource '" + name + "' !" );
+    Assure.assertTrue( isLinkedResource( name ), String.format( "Cannot retrieve linked resource '%s' !", name ) );
     int idx = _linkedResourceNames.indexOf( name );
     return _linkedResources.get( idx );
   }
@@ -555,14 +548,7 @@ public class EclipseProjectImpl implements EclipseProject {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[EclipseProject:" );
-    buffer.append( " name: " );
-    buffer.append( getSpecifiedName() );
-    buffer.append( " folder: " );
-    buffer.append( getFolder() );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format( "[EclipseProject: name: %s folder: %s]", getSpecifiedName(), getFolder() );
   }
 
   /**

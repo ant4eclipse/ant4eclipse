@@ -54,11 +54,8 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
     init();
 
     if( !canHandleSubAttribute( attributeName ) ) {
-
-      String msg = ((Task) getProjectComponent()).getTaskName() + " doesn't support the \"" + attributeName
-          + "\" attribute.";
+      String msg = String.format("%s doesn't support the \"%s\" attribute.", ((Task) getProjectComponent()).getTaskName(), attributeName);
       throw new UnsupportedAttributeException( msg, attributeName );
-      // ant4eclipse:executeJdtProject doesn't support the "targetPlatformId" attribute
     }
 
     // create argument

@@ -61,7 +61,6 @@ public class PlatformConfigurationDataType extends AbstractAnt4EclipseDataType {
     if( isReference() ) {
       throw tooManyAttributes();
     }
-
     _id = id;
   }
 

@@ -44,15 +44,12 @@ class LaunchConfigAttribute {
   }
 
   public ListAttribute getListAttributeValue() {
-    Assure.assertTrue( isListAttribute(), "LauchConfigAttribute '" + _name + "' must be a list-based attribute" );
-
+    Assure.assertTrue( isListAttribute(), String.format( "LauchConfigAttribute '%s' must be a list-based attribute", _name ) );
     return (ListAttribute) _value;
   }
 
   public String getStringValue() {
-    Assure.assertTrue( isStringBasedAttribute(), "LauchConfigAttribute '" + _name
-        + "' must be a string-based attribute" );
-
+    Assure.assertTrue( isStringBasedAttribute(), String.format( "LauchConfigAttribute '%s' must be a string-based attribute", _name ) );
     return (String) _value;
   }
 

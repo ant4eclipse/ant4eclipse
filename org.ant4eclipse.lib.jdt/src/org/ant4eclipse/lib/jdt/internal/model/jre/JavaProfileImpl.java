@@ -91,7 +91,6 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public boolean isDelegatedToBootClassLoader( String packageName ) {
-
     for( Object element : _delegatedToBootClassLoaderList ) {
       PackageFilter packageFilter = (PackageFilter) element;
       if( packageFilter.containsPackage( packageName ) ) {
@@ -195,7 +194,6 @@ public class JavaProfileImpl implements JavaProfile {
    */
   public class PackageFilter {
 
-    /** - */
     private String[] _includedPackages;
 
     /**
@@ -259,12 +257,7 @@ public class JavaProfileImpl implements JavaProfile {
    */
   @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append( "[JavaProfile:" );
-    buffer.append( " _properties: " );
-    buffer.append( _properties );
-    buffer.append( "]" );
-    return buffer.toString();
+    return String.format("[JavaProfile: _properties: %s]", _properties);
   }
 
 } /* ENDCLASS */

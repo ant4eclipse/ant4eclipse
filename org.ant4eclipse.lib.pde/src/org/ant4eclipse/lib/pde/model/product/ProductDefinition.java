@@ -115,16 +115,10 @@ public class ProductDefinition {
    * @return
    */
   public FeatureId[] getFeatureIdentifiers() {
-
-    //
     List<FeatureId> result = new ArrayList<FeatureId>();
-
-    //
     for( Entry<String,Version> featureId : _features.entrySet() ) {
       result.add( new FeatureId( featureId.getKey(), featureId.getValue() ) );
     }
-
-    //
     return result.toArray( new FeatureId[0] );
   }
 
@@ -393,12 +387,9 @@ public class ProductDefinition {
    * @return
    */
   public List<String> getPluginAndFragmentIds() {
-
     List<String> result = new ArrayList<String>();
-
     result.addAll( _pluginids );
     result.addAll( _fragmentids );
-
     return result;
   }
 
@@ -653,7 +644,6 @@ public class ProductDefinition {
     buffer.append( "}" );
     buffer.append( "]" );
     return buffer.toString();
-
   }
 
   /**

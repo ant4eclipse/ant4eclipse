@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.team;
 
-
 import org.ant4eclipse.ant.platform.internal.team.CvsAdapter;
 import org.ant4eclipse.ant.platform.internal.team.VcsAdapter;
 import org.apache.tools.ant.BuildException;

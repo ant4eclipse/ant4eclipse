@@ -133,7 +133,6 @@ public class WorkspaceImpl implements Workspace {
     String key = eclipseProject.getSpecifiedName();
 
     if( _projects.containsKey( key ) && !eclipseProject.equals( _projects.get( key ) ) ) {
-
       throw new Ant4EclipseException( PlatformExceptionCode.PROJECT_WITH_SAME_SPECIFIED_NAME_ALREADY_EXISTS,
           _projects.get( key ), eclipseProject );
     }

@@ -33,10 +33,7 @@ import java.util.List;
  */
 public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
 
-  /** - */
   private Union  _resources = null;
-
-  /** - */
   private String _name;
 
   /**
@@ -87,6 +84,7 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
    * {@inheritDoc}
    */
   @Override
+  @SuppressWarnings( "unchecked" ) 
   protected void doValidate() {
     // TODO: validate
 
@@ -95,8 +93,8 @@ public class JdtClassPathContainerType extends AbstractAnt4EclipseDataType {
         ClassPathElementsRegistry.class );
 
     // fetch the provided files
+    Iterator<FileResource> iterator = _resources.iterator();
     List<File> files = new ArrayList<File>();
-    @SuppressWarnings( "unchecked" ) Iterator<FileResource> iterator = _resources.iterator();
     while( iterator.hasNext() ) {
       files.add( iterator.next().getFile() );
     }

@@ -61,15 +61,6 @@ public class AbstractBuildProperties {
 
   /**
    * <p>
-   * Creates a new instance of type {@link AbstractBuildProperties}.
-   * </p>
-   */
-  public AbstractBuildProperties() {
-    // nothing to do here...
-  }
-
-  /**
-   * <p>
    * Returns <code>true</code> if the <code>custom</code> property is set.
    * </p>
    * 
@@ -295,7 +286,6 @@ public class AbstractBuildProperties {
     if( qualifier == null ) {
       return;
     }
-
     _qualifier = qualifier;
   }
   

@@ -68,7 +68,6 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
   @Override
   public List<Object> getSubElements() {
     init();
-
     return _subElements;
   }
 
@@ -78,7 +77,6 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
   @Override
   public Map<String,String> getSubAttributes() {
     init();
-
     return _subAttributes;
   }
 
@@ -111,7 +109,6 @@ public class SubElementAndAttributesDelegate extends AbstractAntDelegate impleme
    */
   @Override
   public void setDynamicAttribute( String name, String value ) throws BuildException {
-    // initialize the delegate
     init();
   }
 

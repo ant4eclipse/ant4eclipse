@@ -66,13 +66,6 @@ public class ArchiveImpl implements Archive {
    *          The new source entry for this archive.
    */
   public void setSource( File newsource ) {
-    // TODO: Should we log this?
-    // if (newsource != null && !newsource.exists()) {
-    // LoggerFactory.instance().getLogger().warn(
-    // "Source '" + newsource + "' of archive '" + _path
-    // + "' does not exist!");
-    // }
-
     _source = newsource;
   }
 
@@ -83,12 +76,6 @@ public class ArchiveImpl implements Archive {
    *          The new javadoc entry.
    */
   public void setJavaDoc( String newjavadoc ) {
-    // TODO: Should we throw a exceptiion here?
-    // if (newjavadoc != null) {
-    // Assert.assertTrue(newjavadoc.length() > 0,
-    // "javadoc.length() > 0 has to be true");
-    // }
-
     _javadoc = newjavadoc;
   }
 

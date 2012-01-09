@@ -33,6 +33,10 @@ import org.apache.tools.ant.taskdefs.compilers.CompilerAdapter;
  */
 public class JdtCompilerTask extends Javac {
 
+  private static final String MSG_COMPILING_MULTIPLE = "Compiling %d source files to '%s' !";
+
+  private static final String MSG_COMPILING_1 = "Compiling 1 source file '%s' to '%s' !";
+
   private static final String MSG_INVALID_ATTRIBUTE = "The attribute 'compiler' for the task '%s' is not allowed to be used.";
 
   private static final String MSG_FAILURE           = "The compilation failed. Check the output for more information.";
@@ -123,9 +127,9 @@ public class JdtCompilerTask extends Javac {
       File current = new File( "." );
       String dest = destdir != null ? String.valueOf( destdir ) : String.valueOf( current );
       if( compileList.length == 1 ) {
-        A4ELogging.info( "Compiling 1 source file '%s' to '%s' !", compileList[0], dest );
+        A4ELogging.info( MSG_COMPILING_1, compileList[0], dest );
       } else {
-        A4ELogging.info( "Compiling %d source files to '%s' !", Integer.valueOf( compileList.length ), dest );
+        A4ELogging.info( MSG_COMPILING_MULTIPLE, Integer.valueOf( compileList.length ), dest );
       }
 
       if( listFiles ) {

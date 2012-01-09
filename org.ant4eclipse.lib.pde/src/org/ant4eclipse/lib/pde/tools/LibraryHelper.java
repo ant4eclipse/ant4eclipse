@@ -75,7 +75,7 @@ public class LibraryHelper {
     } else if( result.endsWith( "/" ) || result.endsWith( "\\" ) ) {
       result = result.substring( 0, result.length() - 1 );
     }
-    return result + ".src";
+    return String.format( "%s.src", result );
   }
 
 } /* ENDCLASS */

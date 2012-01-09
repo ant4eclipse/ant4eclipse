@@ -92,11 +92,11 @@ public class ExecuteLauncherTask extends AbstractExecuteProjectTask {
     }
 
     if( !_launchConfigurationFile.exists() ) {
-      throw new BuildException( "The launch configuration file '" + _launchConfigurationFile + "' does not exists" );
+      throw new BuildException( String.format( "The launch configuration file '%s' does not exists", _launchConfigurationFile ) );
     }
 
     if( !_launchConfigurationFile.isFile() ) {
-      throw new BuildException( "The launch configuration file '" + _launchConfigurationFile + "' is not a file" );
+      throw new BuildException( String.format( "The launch configuration file '%s' is not a file", _launchConfigurationFile ) );
     }
 
   }

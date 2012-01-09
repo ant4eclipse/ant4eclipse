@@ -78,7 +78,6 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    */
   @Override
   public final void requireWorkspaceAndProjectNameSet() {
-
     if( !(isWorkspaceDirectorySet() || isWorkspaceIdSet()) || !isProjectNameSet() ) {
       throw new Ant4EclipseException( PlatformExceptionCode.MISSING_WORKSPACE_AND_PROJECT_NAME );
     }
