@@ -116,7 +116,7 @@ public class ProjectNature {
    * 
    * @return The natures associated with the supplied names. Maybe <code>null</code>.
    */
-  public static final Set<ProjectNature> createNatures( String ... names ) {
+  public static final synchronized Set<ProjectNature> createNatures( String ... names ) {
     Set<ProjectNature> result = null;
     if( names != null ) {
       result = new HashSet<ProjectNature>();
