@@ -176,13 +176,13 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //
 //  }
 
-//  @Test
-//  public void copyResource() throws IOException {
-//    URL url = getClass().getClassLoader().getResource( "util/test-jar.jar" );
-//    File tempfile = JUnitUtilities.createTempFile();
-//    Utilities.copy( url, tempfile );
-//    verifyExpandedJar( tempfile );
-//  }
+  @Test
+  public void copyResource() throws IOException {
+    URL url = getClass().getClassLoader().getResource( "util/test-jar.jar" );
+    File tempfile = JUnitUtilities.createTempFile();
+    Utilities.copy( url, tempfile );
+    verifyExpandedJar( tempfile );
+  }
 
   @Test
   public void equals() {
