@@ -81,6 +81,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     // read the projects and add them to the workspace
     List<EclipseProject> projects = new ArrayList<EclipseProject>();
     for( File projectFolder : projectFolders ) {
+      A4ELogging.info( "Loading project folder '%s' ...", projectFolder.getName() );
       EclipseProject eclipseProject = _projectFactory.readProjectFromWorkspace( workspace, projectFolder );
       projects.add( eclipseProject );
       workspace.registerEclipseProject( eclipseProject );
@@ -90,7 +91,6 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
       _projectFactory.postProcessRoleSetup( project );
     }
 
-    // add the workspace to the registry
     _registry.put( id, workspace );
 
     return workspace;

@@ -71,7 +71,6 @@ public class JdtResolver {
   private static final ResolvedClasspath doResolveProjectClasspath( EclipseProject project, boolean resolveRelative,
       boolean isRuntimeClasspath, List<JdtClasspathContainerArgument> classpathContainerArguments ) {
 
-
     // create a ResolverJob
     ResolverJob job = new ResolverJob( project, project.getWorkspace(), resolveRelative, isRuntimeClasspath,
         classpathContainerArguments );
