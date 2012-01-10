@@ -43,8 +43,6 @@ public class GetJdtClassPathTask extends AbstractGetProjectPathTask implements J
    * </p>
    */
   public GetJdtClassPathTask() {
-    super();
-    // create the JdtClasspathContainerArgumentDelegate
     _classpathContainerArgumentDelegate = new JdtClasspathContainerArgumentDelegate( this );
   }
 

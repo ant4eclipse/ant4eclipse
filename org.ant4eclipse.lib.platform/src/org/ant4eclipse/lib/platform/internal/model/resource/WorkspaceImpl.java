@@ -42,6 +42,10 @@ public class WorkspaceImpl implements Workspace {
   // Assure.nonEmpty( "name", name );
   @Override
   public boolean hasProject( String name ) {
+    A4ELogging.info( "Checking for project '%s' (got %d) !", name, Integer.valueOf( _projects.size() ) );
+    for( String projectname : _projects.keySet() ) {
+      A4ELogging.info( "\t%s", projectname );
+    }
     return _projects.containsKey( name );
   }
 

@@ -35,10 +35,7 @@ import java.util.List;
 public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask implements GetPathComponent,
     EclipseProjectComponent {
 
-  /** the project delegate */
   private EclipseProjectDelegate _projectDelegate;
-
-  /** the get path delegate */
   private GetPathDelegate        _getPathDelegate;
 
   /**
@@ -47,9 +44,6 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
    * </p>
    */
   public AbstractGetProjectPathTask() {
-    super();
-
-    // create the delegates
     _projectDelegate = new EclipseProjectDelegate( this );
     _getPathDelegate = new GetPathDelegate( this );
   }
@@ -69,7 +63,6 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   @Override
   protected void preconditions() throws BuildException {
     super.preconditions();
-    // check requires attributes
     requireWorkspaceAndProjectNameSet();
     requirePathIdOrPropertySet();
   }
