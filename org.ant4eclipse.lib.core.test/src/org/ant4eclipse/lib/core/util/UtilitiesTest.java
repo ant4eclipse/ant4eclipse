@@ -145,36 +145,36 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     Assert.assertTrue( Utilities.contains( "test", "", "test" ) );
   }
 
-//  @Test
-//  public void copyStream() throws IOException {
-//
-//    String text = "My Message";
-//    byte[] input = text.getBytes();
-//
-//    ByteArrayInputStream instream1 = new ByteArrayInputStream( input );
-//    ByteArrayOutputStream outstream1 = new ByteArrayOutputStream();
-//    try {
-//      Utilities.copy( instream1, outstream1, new byte[0] );
-//    } catch( Ant4EclipseException ex ) {
-//      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
-//    } finally {
-//      Utilities.close( (Closeable) instream1 );
-//      Utilities.close( (Closeable) outstream1 );
-//    }
-//
+  @Test
+  public void copyStream() throws IOException {
+
+    String text = "My Message";
+    byte[] input = text.getBytes();
+
+    ByteArrayInputStream instream1 = new ByteArrayInputStream( input );
+    ByteArrayOutputStream outstream1 = new ByteArrayOutputStream();
+    try {
+      Utilities.copy( instream1, outstream1, new byte[0] );
+    } catch( Ant4EclipseException ex ) {
+      Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
+    } finally {
+      Utilities.close( (Closeable) instream1 );
+      Utilities.close( (Closeable) outstream1 );
+    }
+
 //    ByteArrayInputStream instream2 = new ByteArrayInputStream( input );
 //    ByteArrayOutputStream outstream2 = new ByteArrayOutputStream();
-//
+
 //    try {
 //      Utilities.copy( instream2, outstream2, new byte[10] );
 //    } finally {
 //      Utilities.close( (Closeable) instream2 );
 //      Utilities.close( (Closeable) outstream2 );
 //    }
-//
+
 //    Assert.assertEquals( text, new String( outstream2.toByteArray() ) );
-//
-//  }
+
+  }
 
   @Test
   public void copyResource() throws IOException {
