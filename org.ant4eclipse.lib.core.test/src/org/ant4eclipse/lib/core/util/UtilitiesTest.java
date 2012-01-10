@@ -83,67 +83,67 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     return destdir2;
   }
 
-//  @Test
-//  public void calcRelative() {
-//
-//    String relative1 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
-//    Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative1 );
-//
-//    if( Utilities.isWindows() ) {
-//
-//      String relative2 = Utilities.calcRelative( new File( "K:/schnerd" ), new File( "K:/temp/rep/schrepp/depp" ) );
-//      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
-//
-//      String relative3 = Utilities.calcRelative( new File( "K:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
-//      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
-//
-//      String relative4 = Utilities.calcRelative( new File( "J:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
-//      Assert.assertEquals( null, relative4 );
-//
-//    } else {
-//
-//      String relative2 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
-//      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
-//
-//      String relative3 = Utilities.calcRelative( new File( "/" ), new File( "/temp/rep/schrepp/depp" ) );
-//      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
-//
-//    }
-//
-//  }
+  @Test
+  public void calcRelative() {
 
-//  @Test
-//  public void cleanup() {
-//
-//    String cleaned1 = Utilities.cleanup( (String) null );
-//    Assert.assertEquals( null, cleaned1 );
-//
-//    String cleaned2 = Utilities.cleanup( "" );
-//    Assert.assertEquals( null, cleaned2 );
-//
-//    String cleaned3 = Utilities.cleanup( "   " );
-//    Assert.assertEquals( null, cleaned3 );
-//
-//    String cleaned4 = Utilities.cleanup( "\t\t\t" );
-//    Assert.assertEquals( null, cleaned4 );
-//
-//    String cleaned5 = Utilities.cleanup( "   BLA  " );
-//    Assert.assertEquals( "BLA", cleaned5 );
-//
-//    String[] cleaned6 = Utilities.cleanup( new String[] { null, "", "   ", "\t\t\t", "   BLA  " } );
-//    Assert.assertNotNull( cleaned6 );
-//    Assert.assertEquals( 1, cleaned6.length );
-//    Assert.assertEquals( "BLA", cleaned6[0] );
-//
-//  }
+    String relative1 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
+    Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative1 );
 
-//  @Test
-//  public void contains() {
-//    Assert.assertFalse( Utilities.contains( "test" ) );
-//    Assert.assertFalse( Utilities.contains( "test", null, null ) );
-//    Assert.assertFalse( Utilities.contains( "test", "", "" ) );
-//    Assert.assertTrue( Utilities.contains( "test", "", "test" ) );
-//  }
+    if( Utilities.isWindows() ) {
+
+      String relative2 = Utilities.calcRelative( new File( "K:/schnerd" ), new File( "K:/temp/rep/schrepp/depp" ) );
+      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
+
+      String relative3 = Utilities.calcRelative( new File( "K:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
+      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
+
+      String relative4 = Utilities.calcRelative( new File( "J:/" ), new File( "K:/temp/rep/schrepp/depp" ) );
+      Assert.assertEquals( null, relative4 );
+
+    } else {
+
+      String relative2 = Utilities.calcRelative( new File( "/schnerd" ), new File( "/temp/rep/schrepp/depp" ) );
+      Assert.assertEquals( "../temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative2 );
+
+      String relative3 = Utilities.calcRelative( new File( "/" ), new File( "/temp/rep/schrepp/depp" ) );
+      Assert.assertEquals( "temp/rep/schrepp/depp".replace( '/', File.separatorChar ), relative3 );
+
+    }
+
+  }
+
+  @Test
+  public void cleanup() {
+
+    String cleaned1 = Utilities.cleanup( (String) null );
+    Assert.assertEquals( null, cleaned1 );
+
+    String cleaned2 = Utilities.cleanup( "" );
+    Assert.assertEquals( null, cleaned2 );
+
+    String cleaned3 = Utilities.cleanup( "   " );
+    Assert.assertEquals( null, cleaned3 );
+
+    String cleaned4 = Utilities.cleanup( "\t\t\t" );
+    Assert.assertEquals( null, cleaned4 );
+
+    String cleaned5 = Utilities.cleanup( "   BLA  " );
+    Assert.assertEquals( "BLA", cleaned5 );
+
+    String[] cleaned6 = Utilities.cleanup( new String[] { null, "", "   ", "\t\t\t", "   BLA  " } );
+    Assert.assertNotNull( cleaned6 );
+    Assert.assertEquals( 1, cleaned6.length );
+    Assert.assertEquals( "BLA", cleaned6[0] );
+
+  }
+
+  @Test
+  public void contains() {
+    Assert.assertFalse( Utilities.contains( "test" ) );
+    Assert.assertFalse( Utilities.contains( "test", null, null ) );
+    Assert.assertFalse( Utilities.contains( "test", "", "" ) );
+    Assert.assertTrue( Utilities.contains( "test", "", "test" ) );
+  }
 
   @Test
   public void copyStream() throws IOException {
@@ -176,13 +176,13 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
   }
 
-  @Test
-  public void copyResource() throws IOException {
-    URL url = getClass().getClassLoader().getResource( "util/test-jar.jar" );
-    File tempfile = JUnitUtilities.createTempFile();
-    Utilities.copy( url, tempfile );
-    verifyExpandedJar( tempfile );
-  }
+//  @Test
+//  public void copyResource() throws IOException {
+//    URL url = getClass().getClassLoader().getResource( "util/test-jar.jar" );
+//    File tempfile = JUnitUtilities.createTempFile();
+//    Utilities.copy( url, tempfile );
+//    verifyExpandedJar( tempfile );
+//  }
 
   @Test
   public void equals() {
