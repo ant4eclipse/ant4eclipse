@@ -217,35 +217,35 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    Assert.assertArrayEquals( expected, current );
 //  }
 
-  @Test
-  public void filter() {
-
-    List<Object> input = new ArrayList<Object>();
-
-    List<Object> result = Utilities.filter( input, String.class );
-    Assert.assertTrue( result.isEmpty() );
-
-    input.add( "Bla" );
-    result = Utilities.filter( input, String.class );
-    Assert.assertEquals( 1, result.size() );
-    Assert.assertEquals( "Bla", result.get( 0 ) );
-
-    input.add( new ArrayList<String>() );
-    input.add( new LinkedList<String>() );
-    result = Utilities.filter( input, String.class );
-    Assert.assertEquals( 1, result.size() );
-    Assert.assertEquals( "Bla", result.get( 0 ) );
-
-    result = Utilities.filter( input, List.class );
-    Assert.assertEquals( 2, result.size() );
-    Assert.assertTrue( result.get( 0 ) instanceof List<?> );
-    Assert.assertTrue( result.get( 1 ) instanceof List<?> );
-
-    result = Utilities.filter( input, LinkedList.class );
-    Assert.assertEquals( 1, result.size() );
-    Assert.assertTrue( result.get( 0 ) instanceof LinkedList<?> );
-
-  }
+//  @Test
+//  public void filter() {
+//
+//    List<Object> input = new ArrayList<Object>();
+//
+//    List<Object> result = Utilities.filter( input, String.class );
+//    Assert.assertTrue( result.isEmpty() );
+//
+//    input.add( "Bla" );
+//    result = Utilities.filter( input, String.class );
+//    Assert.assertEquals( 1, result.size() );
+//    Assert.assertEquals( "Bla", result.get( 0 ) );
+//
+//    input.add( new ArrayList<String>() );
+//    input.add( new LinkedList<String>() );
+//    result = Utilities.filter( input, String.class );
+//    Assert.assertEquals( 1, result.size() );
+//    Assert.assertEquals( "Bla", result.get( 0 ) );
+//
+//    result = Utilities.filter( input, List.class );
+//    Assert.assertEquals( 2, result.size() );
+//    Assert.assertTrue( result.get( 0 ) instanceof List<?> );
+//    Assert.assertTrue( result.get( 1 ) instanceof List<?> );
+//
+//    result = Utilities.filter( input, LinkedList.class );
+//    Assert.assertEquals( 1, result.size() );
+//    Assert.assertTrue( result.get( 0 ) instanceof LinkedList<?> );
+//
+//  }
 
 //  @Test
 //  public void exportResource() throws IOException {
@@ -266,52 +266,52 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    Assert.assertArrayEquals( expected, current );
 //  }
 
-  @Test
-  public void getAllChildren() throws IOException {
+//  @Test
+//  public void getAllChildren() throws IOException {
+//
+//    File file = Utilities.exportResource( "/util/test-jar.jar" );
+//    File dir = verifyExpandedJar( file );
+//
+//    List<File> children1 = Utilities.getAllChildren( dir );
+//    Assert.assertNotNull( children1 );
+//    Assert.assertEquals( 4, children1.size() );
+//    Collections.sort( children1 );
+//    for( File child : children1 ) {
+//      Assert.assertTrue( child.isFile() );
+//    }
+//    Assert.assertEquals( new File( dir, "META-INF/MANIFEST.MF" ), children1.get( 0 ) );
+//    Assert.assertEquals( new File( dir, "test.jar" ), children1.get( 1 ) );
+//    Assert.assertEquals( new File( dir, "test.txt" ), children1.get( 2 ) );
+//    Assert.assertEquals( new File( dir, "test2.jar" ), children1.get( 3 ) );
+//
+//    File tempdir = Utilities.createTempDir();
+//    List<File> children2 = Utilities.getAllChildren( tempdir );
+//    Assert.assertNotNull( children2 );
+//    Assert.assertEquals( 0, children2.size() );
+//
+//  }
 
-    File file = Utilities.exportResource( "/util/test-jar.jar" );
-    File dir = verifyExpandedJar( file );
+//  @Test
+//  public void getAndHasChild() throws IOException {
+//    File file = Utilities.exportResource( "/util/test-jar.jar" );
+//    File dir = verifyExpandedJar( file );
+//    Assert.assertTrue( Utilities.hasChild( dir, "test.jar" ) );
+//    File child1 = Utilities.getChild( dir, "test.jar" );
+//    Assert.assertNotNull( child1 );
+//    Assert.assertTrue( child1.isFile() );
+//    Assert.assertFalse( Utilities.hasChild( dir, "frodo.txt" ) );
+//    File child2 = Utilities.getChild( dir, "frodo.txt" );
+//    Assert.assertNull( child2 );
+//  }
 
-    List<File> children1 = Utilities.getAllChildren( dir );
-    Assert.assertNotNull( children1 );
-    Assert.assertEquals( 4, children1.size() );
-    Collections.sort( children1 );
-    for( File child : children1 ) {
-      Assert.assertTrue( child.isFile() );
-    }
-    Assert.assertEquals( new File( dir, "META-INF/MANIFEST.MF" ), children1.get( 0 ) );
-    Assert.assertEquals( new File( dir, "test.jar" ), children1.get( 1 ) );
-    Assert.assertEquals( new File( dir, "test.txt" ), children1.get( 2 ) );
-    Assert.assertEquals( new File( dir, "test2.jar" ), children1.get( 3 ) );
-
-    File tempdir = Utilities.createTempDir();
-    List<File> children2 = Utilities.getAllChildren( tempdir );
-    Assert.assertNotNull( children2 );
-    Assert.assertEquals( 0, children2.size() );
-
-  }
-
-  @Test
-  public void getAndHasChild() throws IOException {
-    File file = Utilities.exportResource( "/util/test-jar.jar" );
-    File dir = verifyExpandedJar( file );
-    Assert.assertTrue( Utilities.hasChild( dir, "test.jar" ) );
-    File child1 = Utilities.getChild( dir, "test.jar" );
-    Assert.assertNotNull( child1 );
-    Assert.assertTrue( child1.isFile() );
-    Assert.assertFalse( Utilities.hasChild( dir, "frodo.txt" ) );
-    File child2 = Utilities.getChild( dir, "frodo.txt" );
-    Assert.assertNull( child2 );
-  }
-
-  @Test
-  public void hasText() {
-    Assert.assertFalse( Utilities.hasText( null ) );
-    Assert.assertFalse( Utilities.hasText( "" ) );
-    Assert.assertFalse( Utilities.hasText( "   " ) );
-    Assert.assertTrue( Utilities.hasText( "12345" ) );
-    Assert.assertTrue( Utilities.hasText( "   12345   " ) );
-  }
+//  @Test
+//  public void hasText() {
+//    Assert.assertFalse( Utilities.hasText( null ) );
+//    Assert.assertFalse( Utilities.hasText( "" ) );
+//    Assert.assertFalse( Utilities.hasText( "   " ) );
+//    Assert.assertTrue( Utilities.hasText( "12345" ) );
+//    Assert.assertTrue( Utilities.hasText( "   12345   " ) );
+//  }
 
   @Test
   public void listToString() {
