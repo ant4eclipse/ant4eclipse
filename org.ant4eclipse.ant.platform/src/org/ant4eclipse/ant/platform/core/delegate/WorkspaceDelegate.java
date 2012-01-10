@@ -33,13 +33,8 @@ import java.io.File;
  */
 public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceComponent {
 
-  /** the workspace directory (has to be defined in the ant build file) */
   private File      _workspaceDirectory;
-
-  /** the workspace id **/
   private String    _workspaceId;
-
-  /** the workspace instance */
   private Workspace _workspace;
 
   /**
@@ -59,7 +54,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    */
   @Override
   @Deprecated
-  public final void setWorkspace( String workspace ) {
+  public void setWorkspace( String workspace ) {
     A4ELogging.warn( "The attribute 'workspace' is deprecated. Please use 'workspaceDirectory' instead !" );
     setWorkspaceDirectory( workspace );
   }
@@ -68,7 +63,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * {@inheritDoc}
    */
   @Override
-  public final void setWorkspaceDirectory( String workspaceDirectory ) {
+  public void setWorkspaceDirectory( String workspaceDirectory ) {
     if( workspaceDirectory != null && !workspaceDirectory.equals( "" ) ) {
       _workspaceDirectory = new File( workspaceDirectory );
       if( !_workspaceDirectory.exists() ) {
@@ -81,7 +76,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * {@inheritDoc}
    */
   @Override
-  public final File getWorkspaceDirectory() {
+  public File getWorkspaceDirectory() {
     return _workspaceDirectory;
   }
 
@@ -89,7 +84,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * {@inheritDoc}
    */
   @Override
-  public final boolean isWorkspaceDirectorySet() {
+  public boolean isWorkspaceDirectorySet() {
     return _workspaceDirectory != null && !_workspaceDirectory.equals( "" );
   }
 
@@ -134,13 +129,13 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * {@inheritDoc}
    */
   @Override
-  public final Workspace getWorkspace() {
+  public Workspace getWorkspace() {
     requireWorkspaceDirectoryOrWorkspaceIdSet();
-
+    A4ELogging.debug("Current workspace: " + _workspace);
     if( _workspace == null ) {
-
       WorkspaceRegistry registry = A4ECore.instance().getRequiredService( WorkspaceRegistry.class );
       if( !registry.containsWorkspace( getIdentifier() ) ) {
+        A4ELogging.debug("RELOADING");
         if( isWorkspaceDirectorySet() ) {
           _workspace = registry.registerWorkspace( getIdentifier(), new DefaultEclipseWorkspaceDefinition(
               _workspaceDirectory ) );
@@ -148,11 +143,10 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
           throw new Ant4EclipseException( PlatformExceptionCode.UNKNOWN_WORKSPACE_ID, getIdentifier() );
         }
       } else {
+        A4ELogging.debug("REUSING");
         _workspace = registry.getWorkspace( getIdentifier() );
       }
     }
-
-    // return the Workspace instance
     return _workspace;
   }
 
@@ -160,9 +154,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * <p>
    * </p>
    */
-  private final String getIdentifier() {
-
-    //
+  private String getIdentifier() {
     if( _workspaceDirectory != null ) {
       return _workspaceDirectory.getAbsolutePath();
     } else {
