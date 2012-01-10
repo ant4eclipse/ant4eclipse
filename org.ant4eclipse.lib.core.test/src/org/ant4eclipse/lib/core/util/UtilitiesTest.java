@@ -151,13 +151,19 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     String text = "My Message";
     byte[] input = text.getBytes();
 
+    System.err.println("#s0");
     ByteArrayInputStream instream1 = new ByteArrayInputStream( input );
     ByteArrayOutputStream outstream1 = new ByteArrayOutputStream();
+    System.err.println("#s1");
     try {
+      System.err.println("#s2");
       Utilities.copy( instream1, outstream1, new byte[0] );
+      System.err.println("#s3");
     } catch( Ant4EclipseException ex ) {
+      System.err.println("#s4");
       Assert.assertEquals( CoreExceptionCode.PRECONDITION_VIOLATION, ex.getExceptionCode() );
     } finally {
+      System.err.println("#s5");
       Utilities.close( (Closeable) instream1 );
       Utilities.close( (Closeable) outstream1 );
     }
