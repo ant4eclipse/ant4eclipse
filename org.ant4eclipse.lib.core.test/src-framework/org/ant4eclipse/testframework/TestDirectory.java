@@ -71,11 +71,9 @@ public class TestDirectory {
         if( !Utilities.delete( _rootDir ) ) {
           throw new RuntimeException( String.format( "Failed to delete directory '%s'.", _rootDir ) );
         }
-        _rootDir = null;
       }
     } catch( Exception ex ) {
       System.err.println( "WARN! Could not remove test directory " + _rootDir + ": " + ex );
-      ex.printStackTrace();
     }
   }
 
