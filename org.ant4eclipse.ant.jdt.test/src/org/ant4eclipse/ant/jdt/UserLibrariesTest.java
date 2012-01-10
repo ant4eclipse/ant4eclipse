@@ -35,6 +35,7 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
   
   @Override
   public void setUp() throws Exception {
+    super.getTestWorkspace().dispose();
     super.setUp();
     setupBuildFile( "userLibraries.xml" );
   }
