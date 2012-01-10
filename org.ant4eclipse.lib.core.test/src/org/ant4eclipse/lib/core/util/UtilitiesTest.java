@@ -304,26 +304,26 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     Assert.assertNull( child2 );
   }
 
-////  @Test
-////  public void hasText() {
-////    Assert.assertFalse( Utilities.hasText( null ) );
-////    Assert.assertFalse( Utilities.hasText( "" ) );
-////    Assert.assertFalse( Utilities.hasText( "   " ) );
-////    Assert.assertTrue( Utilities.hasText( "12345" ) );
-////    Assert.assertTrue( Utilities.hasText( "   12345   " ) );
-////  }
-//
-////  @Test
-////  public void listToString() {
-////    Assert.assertEquals( "", Utilities.listToString( new Object[0], null ) );
-////    Assert.assertEquals( "A,B,C", Utilities.listToString( new Object[] { "A", "B", "C" }, null ) );
-////    Assert.assertEquals( "ABC", Utilities.listToString( new Object[] { "A", "B", "C" }, "" ) );
-////    Assert.assertEquals(
-////        "12#13.0#14.0#NaN",
-////        Utilities.listToString(
-////            new Object[] { Integer.valueOf( 12 ), Float.valueOf( 13 ), Double.valueOf( 14 ),
-////                Double.valueOf( Double.NaN ) }, "#" ) );
-////  }
+  @Test
+  public void hasText() {
+    Assert.assertFalse( Utilities.hasText( null ) );
+    Assert.assertFalse( Utilities.hasText( "" ) );
+    Assert.assertFalse( Utilities.hasText( "   " ) );
+    Assert.assertTrue( Utilities.hasText( "12345" ) );
+    Assert.assertTrue( Utilities.hasText( "   12345   " ) );
+  }
+
+  @Test
+  public void listToString() {
+    Assert.assertEquals( "", Utilities.listToString( new Object[0], null ) );
+    Assert.assertEquals( "A,B,C", Utilities.listToString( new Object[] { "A", "B", "C" }, null ) );
+    Assert.assertEquals( "ABC", Utilities.listToString( new Object[] { "A", "B", "C" }, "" ) );
+    Assert.assertEquals(
+        "12#13.0#14.0#NaN",
+        Utilities.listToString(
+            new Object[] { Integer.valueOf( 12 ), Float.valueOf( 13 ), Double.valueOf( 14 ),
+                Double.valueOf( Double.NaN ) }, "#" ) );
+  }
 
   @Test
   public void readTextContent() throws IOException {
