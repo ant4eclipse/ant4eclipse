@@ -57,7 +57,7 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     File[] entries = workspacedir.listFiles();
     A4ELogging.info( "COUNT: %d", Integer.valueOf( entries.length ) );
     for( File entry : entries ) {
-      log( entry, "\t" );
+      log( entry, "    " );
     }
     
     getProject().setProperty( "projectName", "projectk" );
@@ -72,10 +72,10 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
 
   private void log( File file, String prefix ) {
     if( file.isDirectory() ) {
-      A4ELogging.info( "%s(dir) %s", prefix, file.getName() );
+      A4ELogging.info( "%s(dir)  %s", prefix, file.getName() );
       File[] children = file.listFiles();
       for( File child : children ) {
-        log( child, prefix + "\t" );
+        log( child, prefix + "    " );
       }
     } else {
       A4ELogging.info( "%s(file) %s", prefix, file.getName() );
