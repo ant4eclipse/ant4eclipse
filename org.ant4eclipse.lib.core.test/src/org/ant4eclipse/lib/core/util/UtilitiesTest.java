@@ -384,42 +384,42 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath\\" ) );
 //  }
 
-  @Test
-  public void replace() {
+//  @Test
+//  public void replace() {
+//
+//    // character based replacements
+//    Assert.assertEquals( "My blanput Strblang", Utilities.replace( "My input String", 'i', "bla" ) );
+//    Assert.assertEquals( "My nput Strng", Utilities.replace( "My input String", 'i', "" ) );
+//    Assert.assertEquals( "My nput Strng", Utilities.replace( "iMy input Stringi", 'i', "" ) );
+//    Assert.assertEquals( "My iinput Striing", Utilities.replace( "My input String", 'i', "ii" ) );
+//
+//    // string based replacements
+//    Assert.assertEquals( "My blanput Strblang", Utilities.replace( "My input String", "i", "bla" ) );
+//    Assert.assertEquals( "My nput Strng", Utilities.replace( "My input String", "i", "" ) );
+//    Assert.assertEquals( "My nput Strng", Utilities.replace( "iMy input Stringi", "i", "" ) );
+//    Assert.assertEquals( "My iinput Striing", Utilities.replace( "My input String", "i", "ii" ) );
+//
+//  }
 
-    // character based replacements
-    Assert.assertEquals( "My blanput Strblang", Utilities.replace( "My input String", 'i', "bla" ) );
-    Assert.assertEquals( "My nput Strng", Utilities.replace( "My input String", 'i', "" ) );
-    Assert.assertEquals( "My nput Strng", Utilities.replace( "iMy input Stringi", 'i', "" ) );
-    Assert.assertEquals( "My iinput Striing", Utilities.replace( "My input String", 'i', "ii" ) );
+//  @Test
+//  public void stripSuffix() {
+//    Assert.assertEquals( "", Utilities.stripSuffix( "" ) );
+//    Assert.assertEquals( "", Utilities.stripSuffix( ".txt" ) );
+//    Assert.assertEquals( "txt", Utilities.stripSuffix( "txt" ) );
+//    Assert.assertEquals( "bla", Utilities.stripSuffix( "bla.txt" ) );
+//    Assert.assertEquals( "bla.txt", Utilities.stripSuffix( "bla.txt.txt" ) );
+//  }
 
-    // string based replacements
-    Assert.assertEquals( "My blanput Strblang", Utilities.replace( "My input String", "i", "bla" ) );
-    Assert.assertEquals( "My nput Strng", Utilities.replace( "My input String", "i", "" ) );
-    Assert.assertEquals( "My nput Strng", Utilities.replace( "iMy input Stringi", "i", "" ) );
-    Assert.assertEquals( "My iinput Striing", Utilities.replace( "My input String", "i", "ii" ) );
-
-  }
-
-  @Test
-  public void stripSuffix() {
-    Assert.assertEquals( "", Utilities.stripSuffix( "" ) );
-    Assert.assertEquals( "", Utilities.stripSuffix( ".txt" ) );
-    Assert.assertEquals( "txt", Utilities.stripSuffix( "txt" ) );
-    Assert.assertEquals( "bla", Utilities.stripSuffix( "bla.txt" ) );
-    Assert.assertEquals( "bla.txt", Utilities.stripSuffix( "bla.txt.txt" ) );
-  }
-
-  @Test
-  public void toStringTest() {
-    Properties properties = new Properties();
-    properties.setProperty( "A", "A-Value" );
-    properties.setProperty( "B", "B-Value" );
-    Assert.assertEquals( "'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'" + Utilities.NL,
-        Utilities.toString( properties ) );
-    Assert.assertEquals( "my-title" + Utilities.NL + "'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'"
-        + Utilities.NL, Utilities.toString( "my-title", properties ) );
-  }
+//  @Test
+//  public void toStringTest() {
+//    Properties properties = new Properties();
+//    properties.setProperty( "A", "A-Value" );
+//    properties.setProperty( "B", "B-Value" );
+//    Assert.assertEquals( "'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'" + Utilities.NL,
+//        Utilities.toString( properties ) );
+//    Assert.assertEquals( "my-title" + Utilities.NL + "'A' -> 'A-Value'" + Utilities.NL + "'B' -> 'B-Value'"
+//        + Utilities.NL, Utilities.toString( "my-title", properties ) );
+//  }
 
   @Test
   public void toURL() {
@@ -479,30 +479,30 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
   }
 
-  @Test
-  public void replaceTokens() {
-
-    Map<String,String> replacements = new Hashtable<String,String>();
-    replacements.put( "dev1", "Gerd Wütherich" );
-    replacements.put( "devel2", "Nils Hartmann" );
-    replacements.put( "d3", "Daniel Kasmeroglu" );
-
-    String template1 = "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}";
-    String result1 = Utilities.replaceTokens( template1, replacements );
-    Assert.assertEquals( "${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
-        result1 );
-
-    String result2 = Utilities.replaceTokens( template1, replacements, "$", "$" );
-    Assert.assertEquals( "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}", result2 );
-
-    String template2 = template1.replace( '$', '@' );
-    String result3 = Utilities.replaceTokens( template2, replacements, "@{", "}" );
-    Assert.assertEquals( "@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
-        result3 );
-
-    String result4 = Utilities.replaceTokens( "", replacements, "@{", "}" );
-    Assert.assertEquals( "", result4 );
-
-  }
+//  @Test
+//  public void replaceTokens() {
+//
+//    Map<String,String> replacements = new Hashtable<String,String>();
+//    replacements.put( "dev1", "Gerd Wütherich" );
+//    replacements.put( "devel2", "Nils Hartmann" );
+//    replacements.put( "d3", "Daniel Kasmeroglu" );
+//
+//    String template1 = "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}";
+//    String result1 = Utilities.replaceTokens( template1, replacements );
+//    Assert.assertEquals( "${notclosed Nils Hartmann was here. ${unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
+//        result1 );
+//
+//    String result2 = Utilities.replaceTokens( template1, replacements, "$", "$" );
+//    Assert.assertEquals( "${notclosed ${devel2} was here. ${unknown} sees ${d3}. Hello ${dev1}", result2 );
+//
+//    String template2 = template1.replace( '$', '@' );
+//    String result3 = Utilities.replaceTokens( template2, replacements, "@{", "}" );
+//    Assert.assertEquals( "@{notclosed Nils Hartmann was here. @{unknown} sees Daniel Kasmeroglu. Hello Gerd Wütherich",
+//        result3 );
+//
+//    String result4 = Utilities.replaceTokens( "", replacements, "@{", "}" );
+//    Assert.assertEquals( "", result4 );
+//
+//  }
 
 } /* ENDCLASS */
