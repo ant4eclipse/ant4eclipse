@@ -145,6 +145,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    */
   @Override
   public void reset() {
+    _current = null;
     _registry.clear();
   }
 
