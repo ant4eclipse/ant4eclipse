@@ -37,21 +37,21 @@ import java.util.jar.JarFile;
 
 public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
-  /**
-   * This one is also used to test the {@link Utilities#delete(File)} function. It would be nicer if we could separate
-   * theses tests but JUnit doesn't support dependencies. It's also used to test the unpack method.
-   */
-  @Test
-  public void expandJarFile() throws IOException {
-
-    File file = Utilities.exportResource( "/util/test-jar.jar" );
-    File dir = verifyExpandedJar( file );
-
-    // delete function test
-    Assert.assertTrue( Utilities.delete( dir ) );
-    Assert.assertFalse( dir.exists() );
-
-  }
+//  /**
+//   * This one is also used to test the {@link Utilities#delete(File)} function. It would be nicer if we could separate
+//   * theses tests but JUnit doesn't support dependencies. It's also used to test the unpack method.
+//   */
+//  @Test
+//  public void expandJarFile() throws IOException {
+//
+//    File file = Utilities.exportResource( "/util/test-jar.jar" );
+//    File dir = verifyExpandedJar( file );
+//
+//    // delete function test
+//    Assert.assertTrue( Utilities.delete( dir ) );
+//    Assert.assertFalse( dir.exists() );
+//
+//  }
 
   /**
    * This function would be necessary under TestNG !
@@ -184,14 +184,14 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    verifyExpandedJar( tempfile );
 //  }
 
-  @Test
-  public void equals() {
-    Assert.assertTrue( Utilities.equals( null, null ) );
-    Assert.assertFalse( Utilities.equals( "A", null ) );
-    Assert.assertFalse( Utilities.equals( null, "A" ) );
-    Assert.assertTrue( Utilities.equals( "A", "A" ) );
-    Assert.assertTrue( Utilities.equals( "A", new String( "A" ) ) );
-  }
+//  @Test
+//  public void equals() {
+//    Assert.assertTrue( Utilities.equals( null, null ) );
+//    Assert.assertFalse( Utilities.equals( "A", null ) );
+//    Assert.assertFalse( Utilities.equals( null, "A" ) );
+//    Assert.assertTrue( Utilities.equals( "A", "A" ) );
+//    Assert.assertTrue( Utilities.equals( "A", new String( "A" ) ) );
+//  }
 
   @Test
   public void newInstance() {
@@ -207,15 +207,15 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
   }
 
-  @Test
-  public void createFile() {
-    File destfile = Utilities.createTempFile( "Frösche", ".txt", "UTF-8" );
-    File file = Utilities.exportResource( "/util/createfile.txt" );
-    Assert.assertEquals( file.length(), destfile.length() );
-    byte[] current = JUnitUtilities.loadFile( destfile );
-    byte[] expected = JUnitUtilities.loadFile( file );
-    Assert.assertArrayEquals( expected, current );
-  }
+//  @Test
+//  public void createFile() {
+//    File destfile = Utilities.createTempFile( "Frösche", ".txt", "UTF-8" );
+//    File file = Utilities.exportResource( "/util/createfile.txt" );
+//    Assert.assertEquals( file.length(), destfile.length() );
+//    byte[] current = JUnitUtilities.loadFile( destfile );
+//    byte[] expected = JUnitUtilities.loadFile( file );
+//    Assert.assertArrayEquals( expected, current );
+//  }
 
   @Test
   public void filter() {
@@ -247,24 +247,24 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 
   }
 
-  @Test
-  public void exportResource() throws IOException {
-    File exported = Utilities.exportResource( "/util/createfile.txt", ".dat" );
-    Assert.assertTrue( exported.isFile() );
-    URL url = getClass().getClassLoader().getResource( "util/createfile.txt" );
-    ByteArrayOutputStream expectedout = new ByteArrayOutputStream();
-    InputStream instream = null;
-    try {
-      instream = url.openStream();
-      Utilities.copy( instream, expectedout, new byte[512] );
-    } finally {
-      Utilities.close( (Closeable) instream );
-    }
-    byte[] expected = expectedout.toByteArray();
-    Assert.assertEquals( expected.length, exported.length() );
-    byte[] current = JUnitUtilities.loadFile( exported );
-    Assert.assertArrayEquals( expected, current );
-  }
+//  @Test
+//  public void exportResource() throws IOException {
+//    File exported = Utilities.exportResource( "/util/createfile.txt", ".dat" );
+//    Assert.assertTrue( exported.isFile() );
+//    URL url = getClass().getClassLoader().getResource( "util/createfile.txt" );
+//    ByteArrayOutputStream expectedout = new ByteArrayOutputStream();
+//    InputStream instream = null;
+//    try {
+//      instream = url.openStream();
+//      Utilities.copy( instream, expectedout, new byte[512] );
+//    } finally {
+//      Utilities.close( (Closeable) instream );
+//    }
+//    byte[] expected = expectedout.toByteArray();
+//    Assert.assertEquals( expected.length, exported.length() );
+//    byte[] current = JUnitUtilities.loadFile( exported );
+//    Assert.assertArrayEquals( expected, current );
+//  }
 
   @Test
   public void getAllChildren() throws IOException {
