@@ -193,19 +193,19 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    Assert.assertTrue( Utilities.equals( "A", new String( "A" ) ) );
 //  }
 
-  @Test
-  public void newInstance() {
-
-    Object object1 = Utilities.newInstance( UtilitiesTest.class.getName() );
-    Assert.assertNotNull( object1 );
-    Assert.assertTrue( object1 instanceof UtilitiesTest );
-
-    Object object2 = Utilities.newInstance( String.class.getName(), "Frosch" );
-    Assert.assertNotNull( object2 );
-    Assert.assertTrue( object2 instanceof String );
-    Assert.assertEquals( "Frosch", object2 );
-
-  }
+//  @Test
+//  public void newInstance() {
+//
+//    Object object1 = Utilities.newInstance( UtilitiesTest.class.getName() );
+//    Assert.assertNotNull( object1 );
+//    Assert.assertTrue( object1 instanceof UtilitiesTest );
+//
+//    Object object2 = Utilities.newInstance( String.class.getName(), "Frosch" );
+//    Assert.assertNotNull( object2 );
+//    Assert.assertTrue( object2 instanceof String );
+//    Assert.assertEquals( "Frosch", object2 );
+//
+//  }
 
 //  @Test
 //  public void createFile() {
@@ -313,76 +313,76 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //    Assert.assertTrue( Utilities.hasText( "   12345   " ) );
 //  }
 
-  @Test
-  public void listToString() {
-    Assert.assertEquals( "", Utilities.listToString( new Object[0], null ) );
-    Assert.assertEquals( "A,B,C", Utilities.listToString( new Object[] { "A", "B", "C" }, null ) );
-    Assert.assertEquals( "ABC", Utilities.listToString( new Object[] { "A", "B", "C" }, "" ) );
-    Assert.assertEquals(
-        "12#13.0#14.0#NaN",
-        Utilities.listToString(
-            new Object[] { Integer.valueOf( 12 ), Float.valueOf( 13 ), Double.valueOf( 14 ),
-                Double.valueOf( Double.NaN ) }, "#" ) );
-  }
+//  @Test
+//  public void listToString() {
+//    Assert.assertEquals( "", Utilities.listToString( new Object[0], null ) );
+//    Assert.assertEquals( "A,B,C", Utilities.listToString( new Object[] { "A", "B", "C" }, null ) );
+//    Assert.assertEquals( "ABC", Utilities.listToString( new Object[] { "A", "B", "C" }, "" ) );
+//    Assert.assertEquals(
+//        "12#13.0#14.0#NaN",
+//        Utilities.listToString(
+//            new Object[] { Integer.valueOf( 12 ), Float.valueOf( 13 ), Double.valueOf( 14 ),
+//                Double.valueOf( Double.NaN ) }, "#" ) );
+//  }
 
-  @Test
-  public void readTextContent() throws IOException {
+//  @Test
+//  public void readTextContent() throws IOException {
+//
+//    InputStream instream = getClass().getClassLoader().getResource( "util/createfile.txt" ).openStream();
+//    try {
+//      // wrong encoding !
+//      StringBuffer buffer1 = Utilities.readTextContent( instream, "ISO-8859-1", false );
+//      Assert.assertNotNull( buffer1 );
+//      Assert.assertEquals( new String( "Frösche".getBytes( "UTF-8" ), "ISO-8859-1" ), buffer1.toString() );
+//    } finally {
+//      Utilities.close( (Closeable) instream );
+//    }
+//
+//    instream = getClass().getClassLoader().getResource( "util/createfile.txt" ).openStream();
+//    try {
+//      // correct encoding !
+//      StringBuffer buffer2 = Utilities.readTextContent( instream, "UTF-8", false );
+//      Assert.assertNotNull( buffer2 );
+//      Assert.assertEquals( "Frösche", buffer2.toString() );
+//    } finally {
+//      Utilities.close( (Closeable) instream );
+//    }
+//
+//    // multiple lines, without line separators
+//    instream = getClass().getClassLoader().getResource( "util/multilined.txt" ).openStream();
+//    try {
+//      StringBuffer buffer2 = Utilities.readTextContent( instream, "UTF-8", false );
+//      Assert.assertNotNull( buffer2 );
+//      Assert.assertEquals( "FröscheWürfelFlanch", buffer2.toString() );
+//    } finally {
+//      Utilities.close( (Closeable) instream );
+//    }
+//
+//    // multiple lines, with line separators
+//    instream = getClass().getClassLoader().getResource( "util/multilined.txt" ).openStream();
+//    try {
+//      StringBuffer buffer2 = Utilities.readTextContent( instream, "UTF-8", true );
+//      Assert.assertNotNull( buffer2 );
+//      Assert.assertEquals( "Frösche" + Utilities.NL + "Würfel" + Utilities.NL + "Flanch" + Utilities.NL,
+//          buffer2.toString() );
+//    } finally {
+//      Utilities.close( (Closeable) instream );
+//    }
+//
+//  }
 
-    InputStream instream = getClass().getClassLoader().getResource( "util/createfile.txt" ).openStream();
-    try {
-      // wrong encoding !
-      StringBuffer buffer1 = Utilities.readTextContent( instream, "ISO-8859-1", false );
-      Assert.assertNotNull( buffer1 );
-      Assert.assertEquals( new String( "Frösche".getBytes( "UTF-8" ), "ISO-8859-1" ), buffer1.toString() );
-    } finally {
-      Utilities.close( (Closeable) instream );
-    }
-
-    instream = getClass().getClassLoader().getResource( "util/createfile.txt" ).openStream();
-    try {
-      // correct encoding !
-      StringBuffer buffer2 = Utilities.readTextContent( instream, "UTF-8", false );
-      Assert.assertNotNull( buffer2 );
-      Assert.assertEquals( "Frösche", buffer2.toString() );
-    } finally {
-      Utilities.close( (Closeable) instream );
-    }
-
-    // multiple lines, without line separators
-    instream = getClass().getClassLoader().getResource( "util/multilined.txt" ).openStream();
-    try {
-      StringBuffer buffer2 = Utilities.readTextContent( instream, "UTF-8", false );
-      Assert.assertNotNull( buffer2 );
-      Assert.assertEquals( "FröscheWürfelFlanch", buffer2.toString() );
-    } finally {
-      Utilities.close( (Closeable) instream );
-    }
-
-    // multiple lines, with line separators
-    instream = getClass().getClassLoader().getResource( "util/multilined.txt" ).openStream();
-    try {
-      StringBuffer buffer2 = Utilities.readTextContent( instream, "UTF-8", true );
-      Assert.assertNotNull( buffer2 );
-      Assert.assertEquals( "Frösche" + Utilities.NL + "Würfel" + Utilities.NL + "Flanch" + Utilities.NL,
-          buffer2.toString() );
-    } finally {
-      Utilities.close( (Closeable) instream );
-    }
-
-  }
-
-  @Test
-  public void removeTrailingPathSeparator() {
-    Assert.assertEquals( null, Utilities.removeTrailingPathSeparator( null ) );
-    Assert.assertEquals( "", Utilities.removeTrailingPathSeparator( "" ) );
-    Assert.assertEquals( "/", Utilities.removeTrailingPathSeparator( "/" ) );
-    Assert.assertEquals( "\\", Utilities.removeTrailingPathSeparator( "\\" ) );
-    Assert.assertEquals( "/", Utilities.removeTrailingPathSeparator( "//" ) );
-    Assert.assertEquals( "\\", Utilities.removeTrailingPathSeparator( "\\\\" ) );
-    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath" ) );
-    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath/" ) );
-    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath\\" ) );
-  }
+//  @Test
+//  public void removeTrailingPathSeparator() {
+//    Assert.assertEquals( null, Utilities.removeTrailingPathSeparator( null ) );
+//    Assert.assertEquals( "", Utilities.removeTrailingPathSeparator( "" ) );
+//    Assert.assertEquals( "/", Utilities.removeTrailingPathSeparator( "/" ) );
+//    Assert.assertEquals( "\\", Utilities.removeTrailingPathSeparator( "\\" ) );
+//    Assert.assertEquals( "/", Utilities.removeTrailingPathSeparator( "//" ) );
+//    Assert.assertEquals( "\\", Utilities.removeTrailingPathSeparator( "\\\\" ) );
+//    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath" ) );
+//    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath/" ) );
+//    Assert.assertEquals( "/mypath", Utilities.removeTrailingPathSeparator( "/mypath\\" ) );
+//  }
 
   @Test
   public void replace() {
