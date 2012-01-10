@@ -53,35 +53,35 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //
 //  }
 
-  /**
-   * This function would be necessary under TestNG !
-   * 
-   * @return The destination directory keeping the content
-   */
-  private File verifyExpandedJar( File file ) throws IOException {
-    File destdir1 = JUnitUtilities.createTempDir( false );
-    JarFile jarfile = new JarFile( file );
-    try {
-      Utilities.expandJarFile( jarfile, destdir1 );
-    } finally {
-      jarfile.close();
-    }
-    Assert.assertTrue( new File( destdir1, "test.jar" ).isFile() );
-    Assert.assertTrue( new File( destdir1, "test.txt" ).isFile() );
-    Assert.assertTrue( new File( destdir1, "test2.jar" ).isFile() );
-    Assert.assertTrue( new File( destdir1, "META-INF" ).isDirectory() );
-    Assert.assertTrue( new File( destdir1, "META-INF/MANIFEST.MF" ).isFile() );
-
-    File destdir2 = JUnitUtilities.createTempDir();
-    Utilities.unpack( file, destdir2 );
-    Assert.assertTrue( new File( destdir2, "test.jar" ).isFile() );
-    Assert.assertTrue( new File( destdir2, "test.txt" ).isFile() );
-    Assert.assertTrue( new File( destdir2, "test2.jar" ).isFile() );
-    Assert.assertTrue( new File( destdir2, "META-INF" ).isDirectory() );
-    Assert.assertTrue( new File( destdir2, "META-INF/MANIFEST.MF" ).isFile() );
-
-    return destdir2;
-  }
+//  /**
+//   * This function would be necessary under TestNG !
+//   * 
+//   * @return The destination directory keeping the content
+//   */
+//  private File verifyExpandedJar( File file ) throws IOException {
+//    File destdir1 = JUnitUtilities.createTempDir( false );
+//    JarFile jarfile = new JarFile( file );
+//    try {
+//      Utilities.expandJarFile( jarfile, destdir1 );
+//    } finally {
+//      jarfile.close();
+//    }
+//    Assert.assertTrue( new File( destdir1, "test.jar" ).isFile() );
+//    Assert.assertTrue( new File( destdir1, "test.txt" ).isFile() );
+//    Assert.assertTrue( new File( destdir1, "test2.jar" ).isFile() );
+//    Assert.assertTrue( new File( destdir1, "META-INF" ).isDirectory() );
+//    Assert.assertTrue( new File( destdir1, "META-INF/MANIFEST.MF" ).isFile() );
+//
+//    File destdir2 = JUnitUtilities.createTempDir();
+//    Utilities.unpack( file, destdir2 );
+//    Assert.assertTrue( new File( destdir2, "test.jar" ).isFile() );
+//    Assert.assertTrue( new File( destdir2, "test.txt" ).isFile() );
+//    Assert.assertTrue( new File( destdir2, "test2.jar" ).isFile() );
+//    Assert.assertTrue( new File( destdir2, "META-INF" ).isDirectory() );
+//    Assert.assertTrue( new File( destdir2, "META-INF/MANIFEST.MF" ).isFile() );
+//
+//    return destdir2;
+//  }
 
 //  @Test
 //  public void calcRelative() {
@@ -421,63 +421,63 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
 //        + Utilities.NL, Utilities.toString( "my-title", properties ) );
 //  }
 
-  @Test
-  public void toURL() {
+//  @Test
+//  public void toURL() {
+//
+//    URL expectedurl = getClass().getClassLoader().getResource( "util/test-jar.jar" );
+//
+//    // the test setup is required to provide the resource as a separate file and not contained
+//    // within a jar (toURL is only supposed to handle normal file objects)
+//    Assert.assertFalse( expectedurl.toExternalForm().startsWith( "jar:" ) );
+//
+//    String path = expectedurl.getPath();
+//
+//    if( !Utilities.isWindows() ) {
+//      /**
+//       * @todo [29-Dec-2009:KASI] This is somewhat odd. The 'getPath' is supposed to return the path itself. For some
+//       *       reason the unix version returns the protocol, too.
+//       */
+//      int idx = path.indexOf( '/' );
+//      path = path.substring( idx );
+//    }
+//
+//    File file = new File( path );
+//
+//    URL url1 = Utilities.toURL( file );
+//    Assert.assertEquals( expectedurl, url1 );
+//
+//  }
 
-    URL expectedurl = getClass().getClassLoader().getResource( "util/test-jar.jar" );
-
-    // the test setup is required to provide the resource as a separate file and not contained
-    // within a jar (toURL is only supposed to handle normal file objects)
-    Assert.assertFalse( expectedurl.toExternalForm().startsWith( "jar:" ) );
-
-    String path = expectedurl.getPath();
-
-    if( !Utilities.isWindows() ) {
-      /**
-       * @todo [29-Dec-2009:KASI] This is somewhat odd. The 'getPath' is supposed to return the path itself. For some
-       *       reason the unix version returns the protocol, too.
-       */
-      int idx = path.indexOf( '/' );
-      path = path.substring( idx );
-    }
-
-    File file = new File( path );
-
-    URL url1 = Utilities.toURL( file );
-    Assert.assertEquals( expectedurl, url1 );
-
-  }
-
-  @Test
-  public void writeFile() throws IOException {
-
-    // write the file using binary data
-    File tempfile1 = JUnitUtilities.createTempFile();
-    Utilities.writeFile( tempfile1, "Frösche".getBytes( "UTF-8" ) );
-
-    // write the file using character data (the String)
-    File tempfile2 = JUnitUtilities.createTempFile();
-    Utilities.writeFile( tempfile2, "Frösche", "UTF-8" );
-
-    InputStream instream1 = new FileInputStream( tempfile1 );
-    try {
-      StringBuffer buffer1 = Utilities.readTextContent( instream1, "UTF-8", false );
-      Assert.assertNotNull( buffer1 );
-      Assert.assertEquals( "Frösche", buffer1.toString() );
-    } finally {
-      Utilities.close( (Closeable) instream1 );
-    }
-
-    InputStream instream2 = new FileInputStream( tempfile1 );
-    try {
-      StringBuffer buffer2 = Utilities.readTextContent( instream2, "UTF-8", false );
-      Assert.assertNotNull( buffer2 );
-      Assert.assertEquals( "Frösche", buffer2.toString() );
-    } finally {
-      Utilities.close( (Closeable) instream2 );
-    }
-
-  }
+//  @Test
+//  public void writeFile() throws IOException {
+//
+//    // write the file using binary data
+//    File tempfile1 = JUnitUtilities.createTempFile();
+//    Utilities.writeFile( tempfile1, "Frösche".getBytes( "UTF-8" ) );
+//
+//    // write the file using character data (the String)
+//    File tempfile2 = JUnitUtilities.createTempFile();
+//    Utilities.writeFile( tempfile2, "Frösche", "UTF-8" );
+//
+//    InputStream instream1 = new FileInputStream( tempfile1 );
+//    try {
+//      StringBuffer buffer1 = Utilities.readTextContent( instream1, "UTF-8", false );
+//      Assert.assertNotNull( buffer1 );
+//      Assert.assertEquals( "Frösche", buffer1.toString() );
+//    } finally {
+//      Utilities.close( (Closeable) instream1 );
+//    }
+//
+//    InputStream instream2 = new FileInputStream( tempfile1 );
+//    try {
+//      StringBuffer buffer2 = Utilities.readTextContent( instream2, "UTF-8", false );
+//      Assert.assertNotNull( buffer2 );
+//      Assert.assertEquals( "Frösche", buffer2.toString() );
+//    } finally {
+//      Utilities.close( (Closeable) instream2 );
+//    }
+//
+//  }
 
 //  @Test
 //  public void replaceTokens() {
