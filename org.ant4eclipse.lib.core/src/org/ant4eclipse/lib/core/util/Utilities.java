@@ -213,7 +213,6 @@ public class Utilities {
    *          The closeable that has to be closed. Maybe <code>null</code>.
    */
   public static final void close( Closeable closeable ) {
-    System.err.println("#blob");
     if( closeable != null ) {
       try {
         closeable.close();
