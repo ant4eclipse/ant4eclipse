@@ -57,7 +57,7 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     File[] entries = workspacedir.listFiles();
     A4ELogging.info( "COUNT: %d", Integer.valueOf( entries.length ) );
     for( File entry : entries ) {
-      A4ELogging.info( "ENTRY: %s", entry.getAbsolutePath() );
+      log( entry, "\t" );
     }
     
     getProject().setProperty( "projectName", "projectk" );
@@ -70,6 +70,18 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     
   }
 
+  private void log( File file, String prefix ) {
+    if( file.isDirectory() ) {
+      A4ELogging.info( "%s(dir) %s", prefix, file.getName() );
+      File[] children = file.listFiles();
+      for( File child : children ) {
+        log( child, prefix + "\t" );
+      }
+    } else {
+      A4ELogging.info( "%s(file) %s", prefix, file.getName() );
+    }
+  }
+  
   private String getContent() {
     String pathDir = getTestWorkspaceDirectory().getAbsolutePath() + File.separatorChar + "haensel";
     getTestWorkspace().createSubDirectory( "haensel" );
