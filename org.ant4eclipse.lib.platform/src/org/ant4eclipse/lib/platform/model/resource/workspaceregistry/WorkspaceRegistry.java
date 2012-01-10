@@ -61,42 +61,4 @@ public interface WorkspaceRegistry extends A4EService {
    */
   Workspace getWorkspace( String id );
 
-  /**
-   * <p>
-   * Sets the specified workspace as the current workspace.
-   * </p>
-   * 
-   * @param currentWorkspace
-   *          the workspace.
-   */
-  void setCurrent( Workspace currentWorkspace );
-
-  /**
-   * <p>
-   * Sets the workspace with the specified identifier as the current workspace.
-   * </p>
-   * 
-   * @param specified
-   *          the identifier of the workspace.
-   */
-  void setCurrent( String id );
-
-  /**
-   * <p>
-   * Returns <code>true</code> if a current workspace is set.
-   * </p>
-   * 
-   * @return <code>true</code> if a current workspace is set.
-   */
-  boolean hasCurrent();
-
-  /**
-   * <p>
-   * Returns the current {@link Workspace}.
-   * </p>
-   * 
-   * @return the current {@link Workspace}.
-   */
-  Workspace getCurrent();
-
 } /* ENDINTERFACE */

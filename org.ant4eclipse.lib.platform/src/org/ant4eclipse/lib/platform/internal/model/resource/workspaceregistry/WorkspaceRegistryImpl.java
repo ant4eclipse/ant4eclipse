@@ -40,44 +40,9 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   /** the workspace map (String, Workspace) */
   private Map<String,Workspace> _registry;
 
-  /** the 'current' workspace */
-  private Workspace             _current;
-
   public WorkspaceRegistryImpl() {
     _registry = new HashMap<String,Workspace>();
     _projectFactory = new ProjectFactory();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public Workspace getCurrent() {
-    return _current;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean hasCurrent() {
-    return _current != null;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void setCurrent( Workspace currentWorkspace ) {
-    _current = currentWorkspace;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void setCurrent( String id ) {
-    _current = getWorkspace( id );
   }
 
   /**
@@ -145,7 +110,6 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    */
   @Override
   public void reset() {
-    _current = null;
     _registry.clear();
   }
 
