@@ -43,6 +43,7 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     getTestWorkspace().dispose();
     setupBuildFile( "userLibraries.xml" );
     log( getTestWorkspaceDirectory(), "----\t" );
+    A4ELogging.info( "### end setup" );
   }
 
   /**
@@ -77,6 +78,7 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
   }
 
   private void log( File file, String prefix ) {
+    A4ELogging.info( "Running on '%s' ...", file.getAbsolutePath() );
     if( file.isDirectory() ) {
       A4ELogging.info( "%s(dir)  %s", prefix, file.getName() );
       File[] children = file.listFiles();
