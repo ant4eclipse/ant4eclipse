@@ -145,6 +145,7 @@ public abstract class AbstractWorkspaceBasedBuildFileTest extends BuildFileTest 
     String qualifiedBuildFileName = getProjectBuildFile( unqualifiedBuildFileName );
     StringBuffer buffer = Utilities.readTextContent( "/" + qualifiedBuildFileName, Utilities.ENCODING, true );
     String buildFileContent = buffer.toString();
+    _testWorkspace.getRootDir().mkdirs();
     File buildFile = _testWorkspace.createFile( unqualifiedBuildFileName, buildFileContent );
     configureProject( buildFile.getAbsolutePath(), priority );
     getProject().setProperty( "workspaceDir", _testWorkspace.getRootDir().getAbsolutePath() );

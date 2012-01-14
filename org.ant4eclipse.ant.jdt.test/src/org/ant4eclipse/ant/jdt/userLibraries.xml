@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-
-<project name="getEclipseClasspath-test" basedir="." default="foo">
+<project name="userLibraries-test" basedir="." default="foo">
 
   <!-- definition of type userLibraries -->
   <typedef name="userLibraries"
