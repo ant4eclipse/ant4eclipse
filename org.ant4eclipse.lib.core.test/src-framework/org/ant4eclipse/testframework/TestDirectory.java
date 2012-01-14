@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.junit.Assert;
 
@@ -86,6 +87,8 @@ public class TestDirectory {
    */
   public File createFile( String fileName, String content ) {
     File outFile = new File( _rootDir, fileName );
+    A4ELogging.info( ">> outfile: %s", outFile.getAbsolutePath() );
+    A4ELogging.info( ">> content: %s", content );
     Utilities.writeFile( outFile, content, Utilities.ENCODING );
     return outFile;
   }
