@@ -33,11 +33,16 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     "  </library>\n" +
     "</eclipse-userlibraries>";
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setUp() throws Exception {
+    A4ELogging.info( "### setup" );
     super.setUp();
     getTestWorkspace().dispose();
     setupBuildFile( "userLibraries.xml" );
+    log( getTestWorkspaceDirectory(), "----\t" );
   }
 
   /**
