@@ -40,7 +40,6 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
   public void setUp() throws Exception {
     A4ELogging.info( "### setup" );
     super.setUp();
-    getTestWorkspace().dispose();
     setupBuildFile( "userLibraries.xml" );
     log( getTestWorkspaceDirectory(), "----\t" );
     A4ELogging.info( "### end setup" );
