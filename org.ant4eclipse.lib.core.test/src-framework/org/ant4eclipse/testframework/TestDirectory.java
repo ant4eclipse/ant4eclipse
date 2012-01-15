@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.testframework;
 
-import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.junit.Assert;
 
@@ -61,14 +60,12 @@ public class TestDirectory {
         throw new RuntimeException( String.format( "Failed to delete directory '%s'.", _rootDir ) );
       }
     }
-    System.out.println( "Create test dir: " + _rootDir );
     Utilities.mkdirs( _rootDir );
   }
 
   public void dispose() {
     try {
       if( _rootDir != null && _removeOnDispose ) {
-        System.out.println( "Remove test dir: " + _rootDir );
         if( !Utilities.delete( _rootDir ) ) {
           throw new RuntimeException( String.format( "Failed to delete directory '%s'.", _rootDir ) );
         }
@@ -87,8 +84,6 @@ public class TestDirectory {
    */
   public File createFile( String fileName, String content ) {
     File outFile = new File( _rootDir, fileName );
-    A4ELogging.info( ">> outfile: %s", outFile.getAbsolutePath() );
-    A4ELogging.info( ">> content: %s", content );
     Utilities.writeFile( outFile, content, Utilities.ENCODING );
     return outFile;
   }

@@ -12,7 +12,6 @@
 package org.ant4eclipse.ant.jdt;
 
 import org.ant4eclipse.ant.jdt.base.AbstractJdtClassPathTest;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 
 import java.io.File;
@@ -38,11 +37,8 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
    */
   @Override
   public void setUp() throws Exception {
-    A4ELogging.info( "### setup" );
     super.setUp();
     setupBuildFile( "userLibraries.xml" );
-    log( getTestWorkspaceDirectory(), "----\t" );
-    A4ELogging.info( "### end setup" );
   }
 
   /**
@@ -59,13 +55,6 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
 
     getTestWorkspace().createFile( "myUserLibraries.xml", getContent() );
 
-    File workspacedir = getTestWorkspaceDirectory();
-    File[] entries = workspacedir.listFiles();
-    A4ELogging.info( "COUNT: %d", Integer.valueOf( entries.length ) );
-    for( File entry : entries ) {
-      log( entry, "    " );
-    }
-    
     getProject().setProperty( "projectName", "projectk" );
 
     // execute target
@@ -76,19 +65,6 @@ public class UserLibrariesTest extends AbstractJdtClassPathTest {
     
   }
 
-  private void log( File file, String prefix ) {
-    A4ELogging.info( "Running on '%s' ...", file.getAbsolutePath() );
-    if( file.isDirectory() ) {
-      A4ELogging.info( "%s(dir)  %s", prefix, file.getName() );
-      File[] children = file.listFiles();
-      for( File child : children ) {
-        log( child, prefix + "    " );
-      }
-    } else {
-      A4ELogging.info( "%s(file) %s", prefix, file.getName() );
-    }
-  }
-  
   private String getContent() {
     String pathDir = getTestWorkspaceDirectory().getAbsolutePath() + File.separatorChar + "haensel";
     getTestWorkspace().createSubDirectory( "haensel" );
