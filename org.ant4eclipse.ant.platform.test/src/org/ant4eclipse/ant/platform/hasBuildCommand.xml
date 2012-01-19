@@ -9,7 +9,7 @@
   <!-- test testHasBuildCommand -->
   <target name="testHasBuildCommand">
     <condition property="hasBuildCommand">
-      <hasBuildCommand workspace='${workspaceDir}'
+      <hasBuildCommand workspaceDirectory='${workspaceDir}'
                        projectName='simpleproject'
                        buildCommand='my.command' />
     </condition>
@@ -19,7 +19,7 @@
   <!-- test testNoCommandSet -->
   <target name="testNoCommandSet">
     <condition property="hasBuildCommand">
-      <hasBuildCommand workspace='${workspaceDir}'
+      <hasBuildCommand workspaceDirectory='${workspaceDir}'
                        projectName='simpleproject' />
     </condition>
     <echo>OK</echo>

@@ -8,7 +8,7 @@
   <target name='testJdtNatureLong'>
     <condition property="hasNature">
       <hasNature
-        workspace='${workspaceDir}'
+        workspaceDirectory='${workspaceDir}'
         projectName='jdtproject'
         nature='org.eclipse.jdt.core.javanature'
       />
@@ -21,7 +21,7 @@
   <target name='testJdtNatureShort'>
     <condition property="hasNature">
       <hasNature
-        workspace='${workspaceDir}'
+        workspaceDirectory='${workspaceDir}'
         projectName='jdtproject'
         nature='java'
       />
