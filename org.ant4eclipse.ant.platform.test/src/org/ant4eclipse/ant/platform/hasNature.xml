@@ -8,7 +8,7 @@
   <target name="testNonexistingNature">
     <condition property="hasNature">
       <hasNature
-        workspace='${workspaceDir}'
+        workspaceDirectory='${workspaceDir}'
         projectName='simpleproject'
         nature='nonexistingnature'
       />
@@ -21,7 +21,7 @@
   <target name='testExistingNature'>
     <condition property="hasNature">
       <hasNature
-        workspace='${workspaceDir}'
+        workspaceDirectory='${workspaceDir}'
         projectName='simpleproject'
         nature='org.ant4eclipse.testnature'
       />
@@ -34,7 +34,7 @@
   <target name='testProjectAttribute'>
     <condition property="hasNature">
       <hasNature
-        workspace='${workspaceDir}'
+        workspaceDirectory='${workspaceDir}'
         project='test'
         nature='org.ant4eclipse.testnature'
       />
