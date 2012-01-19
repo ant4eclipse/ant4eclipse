@@ -73,25 +73,6 @@ public class JdtClasspathContainerArgumentDelegate extends AbstractAntDelegate i
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings( "deprecation" )
-  @Deprecated
-  public JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
-    init();
-
-    // create argument
-    JdtClasspathContainerArgument argument = new JdtClasspathContainerArgument();
-
-    // add argument to argument list
-    _containerArguments.add( argument );
-
-    // return result
-    return argument;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     init();
 

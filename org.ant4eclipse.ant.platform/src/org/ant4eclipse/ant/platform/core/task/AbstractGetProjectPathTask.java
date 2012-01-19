@@ -308,16 +308,6 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings( "deprecation" )
-  @Deprecated
-  public void setProject( File projectPath ) {
-    _projectDelegate.setProject( projectPath );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void setProperty( String property ) {
     _getPathDelegate.setProperty( property );
   }
@@ -336,15 +326,6 @@ public abstract class AbstractGetProjectPathTask extends AbstractAnt4EclipseTask
   @Override
   public void setResolvedPath( List<File> resolvedPath ) {
     _getPathDelegate.setResolvedPath( resolvedPath );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @SuppressWarnings( "deprecation" )
-  @Override
-  public void setWorkspace( String workspace ) {
-    _projectDelegate.setWorkspace( workspace );
   }
 
   /**

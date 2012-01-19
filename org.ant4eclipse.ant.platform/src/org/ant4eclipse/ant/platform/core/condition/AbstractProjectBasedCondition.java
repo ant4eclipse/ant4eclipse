@@ -55,15 +55,6 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
    * {@inheritDoc}
    */
   @Override
-  @Deprecated
-  public void setWorkspace( String workspace ) {
-    _projectDelegate.setWorkspaceDirectory( workspace );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final void setWorkspaceDirectory( String workspaceDirectory ) {
     _projectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
@@ -156,13 +147,4 @@ public abstract class AbstractProjectBasedCondition extends AbstractAnt4EclipseC
     _projectDelegate.requireWorkspaceAndProjectNameSet();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @SuppressWarnings( "deprecation" )
-  public void setProject( File projectPath ) {
-    _projectDelegate.setProject( projectPath );
-  }
-  
 } /* ENDCLASS */

@@ -33,7 +33,6 @@ import org.apache.tools.ant.types.FileList;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -207,7 +206,7 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     } catch( IOException ex ) {
       throw new BuildException( ex );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
   }
 

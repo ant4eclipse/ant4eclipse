@@ -186,15 +186,6 @@ public class WorkspaceProjectSetDelegate implements WorkspaceProjectSetComponent
    * {@inheritDoc}
    */
   @Override
-  @Deprecated
-  public void setWorkspace( String workspace ) {
-    _workspaceComponent.setWorkspace( workspace );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void setWorkspaceDirectory( String workspaceDirectory ) {
     _workspaceComponent.setWorkspaceDirectory( workspaceDirectory );
   }

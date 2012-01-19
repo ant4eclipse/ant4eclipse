@@ -17,8 +17,6 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 
-import java.io.File;
-
 /**
  * <p>
  * Interface for all ant4eclipse tasks, conditions and types that require a eclipse project. As this component is a
@@ -41,19 +39,6 @@ import java.io.File;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
 public interface EclipseProjectComponent extends WorkspaceComponent {
-
-  /**
-   * <p>
-   * Sets the project.
-   * </p>
-   * 
-   * @param project
-   *          the project.
-   * 
-   * @deprecated use setWorkspaceDirectory() and setProjectName() instead!
-   */
-  @Deprecated
-  void setProject( File projectPath );
 
   /**
    * <p>

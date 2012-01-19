@@ -68,16 +68,6 @@ public abstract class AbstractExecuteJdtProjectTask extends AbstractExecuteProje
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings( "deprecation" )
-  @Deprecated
-  public final JdtClasspathContainerArgument createJdtClasspathContainerArgument() {
-    return _jdtClasspathContainerArgumentDelegate.createJdtClasspathContainerArgument();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments() {
     return _jdtClasspathContainerArgumentDelegate.getJdtClasspathContainerArguments();
   }

@@ -30,15 +30,6 @@ public interface JdtClasspathContainerArgumentComponent extends DynamicAttribute
    * 
    * @return
    */
-  @Deprecated
-  JdtClasspathContainerArgument createJdtClasspathContainerArgument();
-
-  /**
-   * <p>
-   * </p>
-   * 
-   * @return
-   */
   List<JdtClasspathContainerArgument> getJdtClasspathContainerArguments();
   
 } /* ENDINTERFACE */

@@ -24,7 +24,6 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject.PathStyle;
 import org.apache.tools.ant.BuildException;
 import org.osgi.framework.Version;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -180,7 +179,7 @@ public class QueryProductTask extends AbstractAnt4EclipseTask {
     } catch( IOException ex ) {
       throw new BuildException( ex );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
   }
 

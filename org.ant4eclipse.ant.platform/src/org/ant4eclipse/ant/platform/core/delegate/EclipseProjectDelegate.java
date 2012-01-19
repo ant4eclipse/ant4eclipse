@@ -19,8 +19,6 @@ import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 
-import java.io.File;
-
 /**
  * <p>
  * Delegate class for ant4eclipse tasks, conditions and types that require a eclipse project.
@@ -46,15 +44,6 @@ public class EclipseProjectDelegate extends WorkspaceDelegate implements Eclipse
    */
   public EclipseProjectDelegate( ProjectComponent component ) {
     super( component );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Deprecated
-  public void setProject( File projectPath ) {
-    throw new Ant4EclipseException( PlatformExceptionCode.DEPRECATED_USAGE_OF_SET_PROJECT );
   }
 
   /**

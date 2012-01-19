@@ -53,16 +53,6 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    * {@inheritDoc}
    */
   @Override
-  @Deprecated
-  public void setWorkspace( String workspace ) {
-    A4ELogging.warn( "The attribute 'workspace' is deprecated. Please use 'workspaceDirectory' instead !" );
-    setWorkspaceDirectory( workspace );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void setWorkspaceDirectory( String workspaceDirectory ) {
     if( workspaceDirectory != null && !workspaceDirectory.equals( "" ) ) {
       _workspaceDirectory = new File( workspaceDirectory );

@@ -18,7 +18,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -166,8 +165,8 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
     try {
       Utilities.copy( instream2, outstream2, new byte[10] );
     } finally {
-      Utilities.close( (Closeable) instream2 );
-      Utilities.close( (Closeable) outstream2 );
+      Utilities.close( instream2 );
+      Utilities.close( outstream2 );
     }
 
     Assert.assertEquals( text, new String( outstream2.toByteArray() ) );
@@ -256,7 +255,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       instream = url.openStream();
       Utilities.copy( instream, expectedout, new byte[512] );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
     byte[] expected = expectedout.toByteArray();
     Assert.assertEquals( expected.length, exported.length() );
@@ -333,7 +332,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       Assert.assertNotNull( buffer1 );
       Assert.assertEquals( new String( "Frösche".getBytes( "UTF-8" ), "ISO-8859-1" ), buffer1.toString() );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
 
     instream = getClass().getClassLoader().getResource( "util/createfile.txt" ).openStream();
@@ -343,7 +342,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       Assert.assertNotNull( buffer2 );
       Assert.assertEquals( "Frösche", buffer2.toString() );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
 
     // multiple lines, without line separators
@@ -353,7 +352,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       Assert.assertNotNull( buffer2 );
       Assert.assertEquals( "FröscheWürfelFlanch", buffer2.toString() );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
 
     // multiple lines, with line separators
@@ -364,7 +363,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       Assert.assertEquals( "Frösche" + Utilities.NL + "Würfel" + Utilities.NL + "Flanch" + Utilities.NL,
           buffer2.toString() );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
 
   }
@@ -463,7 +462,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       Assert.assertNotNull( buffer1 );
       Assert.assertEquals( "Frösche", buffer1.toString() );
     } finally {
-      Utilities.close( (Closeable) instream1 );
+      Utilities.close( instream1 );
     }
 
     InputStream instream2 = new FileInputStream( tempfile1 );
@@ -472,7 +471,7 @@ public class UtilitiesTest extends ConfigurableAnt4EclipseTestCase {
       Assert.assertNotNull( buffer2 );
       Assert.assertEquals( "Frösche", buffer2.toString() );
     } finally {
-      Utilities.close( (Closeable) instream2 );
+      Utilities.close( instream2 );
     }
 
   }

@@ -211,26 +211,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
    * {@inheritDoc}
    */
   @Override
-  @Deprecated
-  public void setProject( File projectPath ) {
-    _eclipseProjectDelegate.setProject( projectPath );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final void setProjectName( String projectName ) {
     _eclipseProjectDelegate.setProjectName( projectName );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Deprecated
-  public final void setWorkspace( String workspace ) {
-    _eclipseProjectDelegate.setWorkspace( workspace );
   }
 
   /**

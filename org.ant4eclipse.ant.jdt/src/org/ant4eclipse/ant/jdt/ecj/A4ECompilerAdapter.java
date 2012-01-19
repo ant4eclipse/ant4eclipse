@@ -39,7 +39,6 @@ import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -648,7 +647,7 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
         }
         strLine = newLine;
       }
-      Utilities.close( (Closeable) in );
+      Utilities.close( in );
       StringBuilder underscoreLine = new StringBuilder();
       for( int i = lineStart; i < sourceStart; i++ ) {
         if( strLine.charAt( i - lineStart ) == '\t' ) {

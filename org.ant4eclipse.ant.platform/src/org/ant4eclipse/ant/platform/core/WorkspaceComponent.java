@@ -42,20 +42,6 @@ public interface WorkspaceComponent {
    * 
    * @param workspace
    *          the workspace directory
-   * 
-   * @deprecated use {@link WorkspaceComponent#setWorkspaceDirectory(String)} instead. This method is for backward
-   *             compatibility only.
-   */
-  @Deprecated
-  void setWorkspace( String workspace );
-
-  /**
-   * <p>
-   * Sets the workspace directory.
-   * </p>
-   * 
-   * @param workspace
-   *          the workspace directory
    */
   void setWorkspaceDirectory( String workspaceDirectory );
 

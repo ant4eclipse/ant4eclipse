@@ -141,26 +141,8 @@ public abstract class AbstractProjectBasedTask extends AbstractAnt4EclipseTask i
    * {@inheritDoc}
    */
   @Override
-  @SuppressWarnings( "deprecation" )
-  public void setWorkspace( String workspace ) {
-    _eclipseProjectDelegate.setWorkspace( workspace );
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public void setWorkspaceDirectory( String workspaceDirectory ) {
     _eclipseProjectDelegate.setWorkspaceDirectory( workspaceDirectory );
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  @Deprecated
-  public void setProject( File projectPath ) {
-    _eclipseProjectDelegate.setProject( projectPath );
-  }
-  
 } /* ENDCLASS */

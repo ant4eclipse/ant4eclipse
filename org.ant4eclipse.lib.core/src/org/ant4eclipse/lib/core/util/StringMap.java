@@ -15,7 +15,6 @@ import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -118,7 +117,7 @@ public class StringMap extends Hashtable<String,String> {
     } catch( IOException ex ) {
       throw new Ant4EclipseException( ex, CoreExceptionCode.RESOURCEIO_FAILURE, resource.toExternalForm() );
     } finally {
-      Utilities.close( (Closeable) instream );
+      Utilities.close( instream );
     }
   }
 
@@ -146,7 +145,7 @@ public class StringMap extends Hashtable<String,String> {
     } catch( IOException ex ) {
       throw new Ant4EclipseException( ex, CoreExceptionCode.FILEIO_FAILURE, propertiesFile );
     } finally {
-      Utilities.close( (Closeable) fis );
+      Utilities.close( fis );
     }
   }
 
@@ -228,7 +227,7 @@ public class StringMap extends Hashtable<String,String> {
     } catch( IOException ex ) {
       throw new Ant4EclipseException( ex, CoreExceptionCode.IO_FAILURE );
     } finally {
-      Utilities.close( (Closeable) outstream );
+      Utilities.close( outstream );
     }
   }
 
