@@ -93,8 +93,6 @@ public class ExecuteFeatureTask extends AbstractExecuteProjectTask implements Pd
    */
   public ExecuteFeatureTask() {
     super( "executeFeature" );
-
-    // create the target platform delegate
     _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
   }
 

@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtClassPathTest;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 

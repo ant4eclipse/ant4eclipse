@@ -101,7 +101,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       path.createPathElement().setLocation( librarie );
     }
 
-    getProject().addReference( ContainerTypes.VMTYPE_PREFIX + runtime.getId(), path );
+    getProject().addReference( String.format( "%s%s", ContainerTypes.VMTYPE_PREFIX, runtime.getId() ), path );
 
     // register default JRE as JRE_CONTAINER too
     if( isDefault ) {

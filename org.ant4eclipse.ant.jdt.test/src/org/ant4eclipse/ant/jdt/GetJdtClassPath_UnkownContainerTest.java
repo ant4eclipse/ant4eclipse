@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtClassPathTest;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 
@@ -27,7 +25,6 @@ import java.io.File;
  */
 public class GetJdtClassPath_UnkownContainerTest extends AbstractJdtClassPathTest {
 
-  /** - */
   private File _simpleProjectBinDir;
 
   @Override

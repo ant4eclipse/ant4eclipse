@@ -11,6 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,54 +26,69 @@ import java.util.ServiceLoader;
  */
 public class A4ECore {
 
-  private static final A4ECore                     INSTANCE   = new A4ECore();
+  private static final A4ECore         INSTANCE   = new A4ECore();
 
-  private static final Comparator<A4EService>      COMPARATOR = new Comparator<A4EService>() {
+  private static final LocalComparator COMPARATOR = new LocalComparator();
 
-                                                                /**
-                                                                 * {@inheritDoc}
-                                                                 */
-                                                                @Override
-                                                                public int compare( A4EService s1, A4EService s2 ) {
-                                                                  Integer o1 = s1.getPriority();
-                                                                  Integer o2 = s2.getPriority();
-                                                                  if( (o1 != null) && (o2 != null) ) {
-                                                                    return o2.compareTo( o1 );
-                                                                  } else if( (o1 == null) && (o2 == null) ) {
-                                                                    return 0;
-                                                                  } else if( o1 != null ) {
-                                                                    return -1;
-                                                                  } else {
-                                                                    return 1;
-                                                                  }
-                                                                }
-
-                                                              };
-
-  private Map<Class<?>,List<? extends A4EService>> servicecache;
-
-  private Map<Object,Object>                       runtimecache;
+  private Map<Class<?>,List<? extends A4EService>>    servicecache;
+  private Map<Object,Object>                          runtimecache;
+  private Map<Object,Serializable>                    persistentcache;
 
   /**
    * Initializes this management class for A4E related services and data.
    */
   private A4ECore() {
-    servicecache = new Hashtable<Class<?>,List<? extends A4EService>>();
-    runtimecache = new Hashtable<Object,Object>();
+    servicecache    = new Hashtable<Class<?>,List<? extends A4EService>>();
+    runtimecache    = new Hashtable<Object,Object>();
+    persistentcache = new Hashtable<Object,Serializable>();
   }
 
-  public void putRuntimeValue( Object key, Object val ) {
+  /**
+   * Supplies a cache value which can be used at runtime and persisted. 
+   * 
+   * @param key   The key used to manage the cache value. Not <code>null</code>.
+   * @param val   The cache value depending on the user. Not <code>null</code>.
+   */
+  public synchronized <T extends Serializable> void putPersistentValue( Object key, T val ) {
+    persistentcache.put( key, val );
+  }
+
+  /**
+   * Returns the cache value which can be used at runtime and persisted. 
+   * 
+   * @param key   The key used to access the cache value. Not <code>null</code>.
+   * 
+   * @return   The cache value depending on the user. Maybe <code>null</code>.
+   */
+  public synchronized <T extends Serializable> T getPersistentValue( Object key ) {
+    return (T) persistentcache.get( key );
+  }
+  
+  /**
+   * Supplies a cache value which can be used at runtime. 
+   * 
+   * @param key   The key used to manage the cache value. Not <code>null</code>.
+   * @param val   The cache value depending on the user. Not <code>null</code>.
+   */
+  public synchronized <T> void putRuntimeValue( Object key, T val ) {
     runtimecache.put( key, val );
   }
 
-  public <T> T getRuntimeValue( Object key ) {
+  /**
+   * Returns the cache value which can be used at runtime. 
+   * 
+   * @param key   The key used to access the cache value. Not <code>null</code>.
+   * 
+   * @return   The cache value depending on the user. Maybe <code>null</code>.
+   */
+  public synchronized <T> T getRuntimeValue( Object key ) {
     return (T) runtimecache.get( key );
   }
 
   /**
    * This function can be called to enforce the reset of all loaded service states.
    */
-  public void reset() {
+  public synchronized void reset() {
     for( List<? extends A4EService> services : servicecache.values() ) {
       for( A4EService service : services ) {
         service.reset();
@@ -89,7 +105,7 @@ public class A4ECore {
    * 
    * @return An instance of the supplied type. Not <code>null</code>.
    */
-  public <T extends A4EService> T getRequiredService( Class<T> servicetype ) {
+  public synchronized <T extends A4EService> T getRequiredService( Class<T> servicetype ) {
     List<T> services = loadServices( servicetype );
     if( services.isEmpty() ) {
       /* KASI */
@@ -106,7 +122,7 @@ public class A4ECore {
    * 
    * @return An instance of the supplied type. Not <code>null</code>.
    */
-  public <T extends A4EService> T getOptionalService( Class<T> servicetype ) {
+  public synchronized <T extends A4EService> T getOptionalService( Class<T> servicetype ) {
     List<T> services = loadServices( servicetype );
     if( services.isEmpty() ) {
       return null;
@@ -123,7 +139,7 @@ public class A4ECore {
    * 
    * @return A list of service implementations for the supplied service type. Not <code>null</code>.
    */
-  public <T extends A4EService> List<T> getServices( Class<T> servicetype ) {
+  public synchronized <T extends A4EService> List<T> getServices( Class<T> servicetype ) {
     return loadServices( servicetype );
   }
 
@@ -158,4 +174,26 @@ public class A4ECore {
     return INSTANCE;
   }
 
+  private static class LocalComparator implements Comparator<A4EService> {
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int compare( A4EService s1, A4EService s2 ) {
+      Integer o1 = s1.getPriority();
+      Integer o2 = s2.getPriority();
+      if( (o1 != null) && (o2 != null) ) {
+        return o2.compareTo( o1 );
+      } else if( (o1 == null) && (o2 == null) ) {
+        return 0;
+      } else if( o1 != null ) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+  
+  } /* ENDCLASS */
+  
 } /* ENDCLASS */

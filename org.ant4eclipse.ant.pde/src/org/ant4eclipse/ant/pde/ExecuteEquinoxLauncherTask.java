@@ -46,7 +46,6 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
    */
   public static final String          SCOPE_FOR_EACH_SELECTED_BUNDLE = "forEachSelectedBundle";
 
-  /** - */
   private TargetPlatformAwareDelegate _targetPlatformAwareDelegate;
 
   /**
@@ -227,13 +226,13 @@ public class ExecuteEquinoxLauncherTask extends ExecuteLauncherTask implements T
         // set the "bundle start parameter" as expected in osgi.bundles property
         String bundleStart = "";
         if( Utilities.hasText( resolvedStartLevel ) ) {
-          bundleStart = "@" + resolvedStartLevel;
+          bundleStart = String.format( "@%s", resolvedStartLevel );
         }
         if( Utilities.hasText( resolvedAutoStart ) ) {
           if( Utilities.hasText( bundleStart ) ) {
-            bundleStart += ":" + resolvedAutoStart;
+            bundleStart = String.format( "%s:%s", bundleStart, resolvedAutoStart);
           } else {
-            bundleStart = "@" + resolvedAutoStart;
+            bundleStart = String.format("@%s", resolvedAutoStart);
           }
         }
 

@@ -78,11 +78,8 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * </p>
    */
   public GetRequiredBundlesTask() {
-
-    // // create the delegates
     _getPathComponent = new GetPathDelegate( this );
     _targetPlatformAwareDelegate = new TargetPlatformAwareDelegate();
-
     _bundleSpecifications = new ArrayList<BundleSpecification>();
     _resolvedBundleDescriptions = new HashSet<BundleDescription>();
   }
@@ -91,7 +88,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public final String getTargetPlatformId() {
+  public String getTargetPlatformId() {
     return _targetPlatformAwareDelegate.getTargetPlatformId();
   }
 
@@ -99,7 +96,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public final boolean isTargetPlatformIdSet() {
+  public boolean isTargetPlatformIdSet() {
     return _targetPlatformAwareDelegate.isTargetPlatformIdSet();
   }
 
@@ -107,7 +104,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public final void requireTargetPlatformIdSet() {
+  public void requireTargetPlatformIdSet() {
     _targetPlatformAwareDelegate.requireTargetPlatformIdSet();
   }
 
@@ -115,7 +112,7 @@ public class GetRequiredBundlesTask extends AbstractProjectPathTask implements T
    * {@inheritDoc}
    */
   @Override
-  public final void setTargetPlatformId( String targetPlatformId ) {
+  public void setTargetPlatformId( String targetPlatformId ) {
     _targetPlatformAwareDelegate.setTargetPlatformId( targetPlatformId );
   }
 

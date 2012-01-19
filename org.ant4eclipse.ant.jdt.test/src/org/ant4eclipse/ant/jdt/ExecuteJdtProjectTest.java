@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtTest;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 
@@ -29,8 +27,6 @@ public class ExecuteJdtProjectTest extends AbstractJdtTest {
   @Override
   public void setUp() throws Exception {
     super.setUp();
-
-    // set up the build file
     setupBuildFile( "executeJdtProject.xml" );
   }
 

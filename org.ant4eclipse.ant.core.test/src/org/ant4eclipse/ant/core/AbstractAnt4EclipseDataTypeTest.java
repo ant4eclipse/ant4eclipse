@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.apache.tools.ant.Project;
 
 public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFileTest {
@@ -38,7 +38,7 @@ public class AbstractAnt4EclipseDataTypeTest extends AbstractAnt4EclipseBuildFil
      *          The new user library configuration file.
      */
     public void setAttribute( String attribute ) {
-      getProject().log( "setAttribute(" + attribute + ")" );
+      A4ELogging.info( "setAttribute(%s)", attribute );
     }
   }
   

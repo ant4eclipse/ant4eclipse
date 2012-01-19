@@ -26,10 +26,8 @@ import java.io.IOException;
  */
 public abstract class AbstractJdtTest extends AbstractWorkspaceBasedBuildFileTest {
 
-  /** TEST_PATH_SEPARATOR */
   public static final String TEST_PATH_SEPARATOR = File.pathSeparator;
 
-  /** TEST_DIR_SEPARATOR */
   public static final String TEST_DIR_SEPARATOR  = File.separator;
 
   /**

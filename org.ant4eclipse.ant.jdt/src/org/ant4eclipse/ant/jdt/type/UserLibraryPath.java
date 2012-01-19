@@ -114,11 +114,11 @@ public class UserLibraryPath extends AbstractAnt4EclipseDataType {
         }
 
         // add it as an ant path
-        getProject().addReference( PREFIX + lib, path );
+        getProject().addReference( String.format( "%s%s", PREFIX, lib ), path );
 
         // add it to the ClassPathElementsRegistry
         A4ECore.instance().getRequiredService( ClassPathElementsRegistry.class )
-            .registerClassPathContainer( PREFIX + library.getName(), library.getArchiveFiles() );
+            .registerClassPathContainer( String.format( "%s%s", PREFIX, library.getName() ), library.getArchiveFiles() );
       }
     } catch( Exception ex ) {
       ex.printStackTrace();

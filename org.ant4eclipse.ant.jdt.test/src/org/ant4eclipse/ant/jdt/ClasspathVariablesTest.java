@@ -11,8 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt;
 
-
-
 import org.ant4eclipse.ant.jdt.base.AbstractJdtClassPathTest;
 import org.ant4eclipse.testframework.JdtProjectBuilder;
 
@@ -29,8 +27,6 @@ public class ClasspathVariablesTest extends AbstractJdtClassPathTest {
   @Override
   public void setUp() throws Exception {
     super.setUp();
-
-    // set up the build file
     setupBuildFile( "classpathVariables.xml" );
   }
 
