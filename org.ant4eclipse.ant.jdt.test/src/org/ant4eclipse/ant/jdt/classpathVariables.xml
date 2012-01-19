@@ -18,7 +18,7 @@
 
     <jdtClassPathVariable name="VAR2" path="${workspaceDir}/var2" />
 
-    <getJdtClassPath workspace="${workspaceDir}"
+    <getJdtClassPath workspaceDirectory="${workspaceDir}"
                      relative="${relative}"
                      pathSeparator="${pathSeparator}"
                      runtime="${runtimeClasspath}"

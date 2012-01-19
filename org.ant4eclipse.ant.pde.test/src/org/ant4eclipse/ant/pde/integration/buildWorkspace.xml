@@ -18,7 +18,7 @@
       <location dir="${targetplatform.2}" />
     </targetPlatform>
 
-    <executeProjectSet workspace="${workspaceDir}"
+    <executeProjectSet workspaceDirectory="${workspaceDir}"
                        allWorkspaceProjects="true">
 
       <jdtclasspathcontainerargument key="target.platform"
@@ -27,7 +27,7 @@
       <forEachProject>
         <echo>projectname: '${executeProjectSet.project.name}'</echo>
 
-        <executeJdtProject workspace="${workspaceDir}"
+        <executeJdtProject workspaceDirectory="${workspaceDir}"
                            projectName="${executeProjectSet.project.name}"
                            pathSeparator="${pathSeparator}">
 

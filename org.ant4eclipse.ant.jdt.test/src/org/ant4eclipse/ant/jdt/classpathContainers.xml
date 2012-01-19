@@ -17,7 +17,7 @@
     <jdtClassPathContainer name="testContainer">
       <fileset dir="${workspaceDir}" includes="${projectName}/testFile.txt"/>
     </jdtClassPathContainer>
-    <getJdtClassPath workspace="${workspaceDir}"
+    <getJdtClassPath workspaceDirectory="${workspaceDir}"
                      relative="${relative}"
                      pathSeparator="${pathSeparator}"
                      runtime="${runtimeClasspath}"

@@ -4,7 +4,7 @@
   <target name="get-python-path">
     <getPythonPath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+      workspaceDirectory="${workspacedir}"
       property="pythonpath"
       ignoreruntime="true"
     />
@@ -14,7 +14,7 @@
   <target name="get-python-path-relative">
     <getPythonPath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+      workspaceDirectory="${workspacedir}"
       property="pythonpath"
       relative="true"
       ignoreruntime="true"
@@ -25,7 +25,7 @@
   <target name="get-python-path-dirseparator">
     <getPythonPath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+      workspaceDirectory="${workspacedir}"
       property="pythonpath"
       dirseparator="@"
       ignoreruntime="true"

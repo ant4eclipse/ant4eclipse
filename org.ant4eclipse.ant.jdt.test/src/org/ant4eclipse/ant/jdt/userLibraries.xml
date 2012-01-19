@@ -13,7 +13,7 @@
     <!-- definition of type classpathVariables -->
     <userLibraries userlibraries="${workspaceDir}/myUserLibraries.xml" />
 
-    <getJdtClassPath workspace="${workspaceDir}"
+    <getJdtClassPath workspaceDirectory="${workspaceDir}"
                      relative="${relative}"
                      pathSeparator="${pathSeparator}"
                      runtime="${runtimeClasspath}"

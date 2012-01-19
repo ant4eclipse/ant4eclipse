@@ -8,7 +8,7 @@
   />
 
   <target name="getJdtClassPath">
-    <getJdtClassPath workspace="${workspaceDir}"
+    <getJdtClassPath workspaceDirectory="${workspaceDir}"
                          relative="${relative}"
                          pathSeparator="${pathSeparator}"
                          runtime="${runtimeClasspath}"

@@ -4,7 +4,7 @@
   <target name="get-source-path">
     <getPythonSourcePath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+      workspaceDirectory="${workspacedir}"
       property="sources"
     />
     <echo>${sources}</echo>
@@ -13,7 +13,7 @@
   <target name="get-source-path-multiple-folders">
     <getPythonSourcePath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+        workspaceDirectory="${workspacedir}"
       property="sources"
       allowmultiplefolders="true"
     />
@@ -23,7 +23,7 @@
   <target name="get-source-path-relative">
     <getPythonSourcePath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+        workspaceDirectory="${workspacedir}"
       property="sources"
       relative="true"
     />
@@ -33,7 +33,7 @@
   <target name="get-source-path-multiple-folders-relative">
     <getPythonSourcePath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+        workspaceDirectory="${workspacedir}"
       property="sources"
       allowmultiplefolders="true"
       relative="true"
@@ -44,7 +44,7 @@
   <target name="get-source-path-dirseparator">
     <getPythonSourcePath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+      workspaceDirectory="${workspacedir}"
       property="sources"
       dirseparator="@"
     />
@@ -54,7 +54,7 @@
   <target name="get-source-path-multiple-folders-dirseparator">
     <getPythonSourcePath
       projectName="${projectname}"
-      workspace="${workspacedir}"
+      workspaceDirectory="${workspacedir}"
       property="sources"
       allowmultiplefolders="true"
       dirseparator="@"
