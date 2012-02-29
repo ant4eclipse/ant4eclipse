@@ -22,12 +22,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.ExplodedBundleLayoutResolver;
 import org.ant4eclipse.lib.core.osgi.JaredBundleLayoutResolver;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry;
 import org.ant4eclipse.lib.jdt.tools.ResolvedClasspathEntry.AccessRestrictions;
+import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.tools.PluginProjectLayoutResolver;
 import org.ant4eclipse.lib.pde.tools.TargetPlatform;
@@ -137,6 +139,11 @@ public class BundleDependenciesResolver {
     for (String additionalBundle : additionalBundles) {
       A4ELogging.debug("Adding additional bundle '%s'", additionalBundle);
       BundleDescription resolvedBundle = targetPlatform.getResolvedBundle(additionalBundle, null);
+
+      if (resolvedBundle == null) {
+        throw new Ant4EclipseException(PdeExceptionCode.SPECIFIED_BUNDLE_NOT_FOUND, additionalBundle, "(any)");
+      }
+
       addAdditionalPackages(result, targetPlatform, resolvedBundle);
     }
 
