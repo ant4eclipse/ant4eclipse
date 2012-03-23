@@ -20,6 +20,7 @@ import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
+import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
@@ -195,6 +196,18 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
    *          the macro execution values
    */
   private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) {
+
+    // add source folder from JDT project
+    if (getEclipseProject().hasRole(JavaProjectRole.class)) {
+      JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
+
+      values.getProperties().put(SOURCE_DIRECTORIES,
+          convertToString(javaProjectRole.getEclipseProject().getChildren(javaProjectRole.getSourceFolders())));
+
+      values.getReferences().put(SOURCE_DIRECTORIES_PATH,
+          convertToPath(javaProjectRole.getEclipseProject().getChildren(javaProjectRole.getSourceFolders())));
+
+    }
 
     // get the plug-in project role
     PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
