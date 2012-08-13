@@ -63,6 +63,20 @@ public class JUnitUtilities {
    * @return A temporary directory. Not <code>null</code>.
    */
   public static final File createTempDir() {
+    return createTempDir(true);
+  }
+
+  /**
+   * <p>
+   * Creates a temporary directory location and allows to create it.
+   * </p>
+   * 
+   * @param create
+   *          <code>true</code> <=> Create a directory.
+   * 
+   * @return A temporary directory. Not <code>null</code>.
+   */
+  public static final File createTempDir(boolean create) {
     try {
       File tempfile = File.createTempFile("a4e.", ".dir");
       int tries = 10;
@@ -80,8 +94,10 @@ public class JUnitUtilities {
       if (tempfile.isFile()) {
         Assert.fail();
       }
-      if (!tempfile.mkdir()) {
-        Assert.fail();
+      if (create) {
+        if (!tempfile.mkdir()) {
+          Assert.fail();
+        }
       }
       Runtime.getRuntime().addShutdownHook(new Cleaner(tempfile));
       return tempfile;

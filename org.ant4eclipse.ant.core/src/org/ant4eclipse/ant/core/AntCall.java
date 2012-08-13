@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Ant;
@@ -62,7 +61,6 @@ public class AntCall extends Ant {
 
     // configure ant4eclipse
     AntConfigurator.configureAnt4Eclipse(getProject());
-
     try {
       // execute the super class
       super.execute();

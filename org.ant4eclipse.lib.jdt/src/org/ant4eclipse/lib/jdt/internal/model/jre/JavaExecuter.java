@@ -11,12 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.core.logging.A4ELogging;
-import org.ant4eclipse.lib.core.util.ClassLoadingHelper;
-import org.ant4eclipse.lib.jdt.JdtExceptionCode;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +19,12 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.ClassLoadingHelper;
+import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 
 /**
  * <p>
@@ -65,8 +65,11 @@ public class JavaExecuter {
   /** the qualified name of the main class */
   private String   _mainClass;
 
+  /** vm arguments */
+  private String[] _vmargs = new String[0];
+
   /** the program arguments */
-  private String[] _args = new String[0];
+  private String[] _args   = new String[0];
 
   /** the system out result */
   private String[] _systemOut;
@@ -103,6 +106,8 @@ public class JavaExecuter {
     // patch for the usage with clover instrumented classes...
     String ant4eclipseCloverPath = System.getProperty("clover.path");
     if (ant4eclipseCloverPath != null) {
+      // need more ram
+      javaExecuter.setVmargs(new String[] { "-Xmx128m" });
       String[] ant4eclipseCloverPathEntries = ant4eclipseCloverPath.split(File.pathSeparator);
       String[] finalEntries = new String[ant4eclipseCloverPathEntries.length + classpathentries.length];
       System.arraycopy(ant4eclipseCloverPathEntries, 0, finalEntries, 0, ant4eclipseCloverPathEntries.length);
@@ -204,6 +209,15 @@ public class JavaExecuter {
   }
 
   /**
+   * @param vmargs
+   *          the vmargs to set
+   */
+  public void setVmargs(String[] vmargs) {
+    Assure.notNull("vmargs", vmargs);
+    this._vmargs = vmargs;
+  }
+
+  /**
    * @throws IOException
    */
   public void execute() {
@@ -226,6 +240,14 @@ public class JavaExecuter {
     // create java command
     StringBuffer cmd = new StringBuffer();
     cmd.append(getJavaExecutable().getAbsolutePath());
+
+    // add VM arguments
+    for (String vmArg : this._vmargs) {
+      cmd.append(" ");
+      cmd.append(vmArg);
+    }
+
+    // add classpath
     cmd.append(" -cp ");
     if (classPathContainsBlanks) {
       cmd.append("\"");
@@ -234,8 +256,12 @@ public class JavaExecuter {
     if (classPathContainsBlanks) {
       cmd.append("\"");
     }
+
+    // add main class
     cmd.append(" ");
     cmd.append(this._mainClass);
+
+    // add program arguments
     for (String _arg : this._args) {
       cmd.append(" ");
       cmd.append(_arg);
@@ -255,15 +281,15 @@ public class JavaExecuter {
       this._systemOut = extractFromInputStream(proc.getInputStream());
       this._systemErr = extractFromInputStream(proc.getErrorStream());
 
-      // log error...
-      if (this._systemErr != null && this._systemErr.length > 0) {
-        // TODO
-        throw new RuntimeException("ERROR: " + Arrays.asList(this._systemErr));
-      }
-
       // debug
       A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList(this._systemOut));
       A4ELogging.debug("JavaExecuter.execute(): System.err -> '%s'.", Arrays.asList(this._systemErr));
+
+      // log error...
+      if (this._systemErr != null && this._systemErr.length > 0) {
+        // TODO
+        throw new RuntimeException("ERROR JAVAEXCUTOR FAILED: " + Arrays.asList(this._systemErr));
+      }
 
     } catch (IOException e) {
       // throw Ant4EclipseException

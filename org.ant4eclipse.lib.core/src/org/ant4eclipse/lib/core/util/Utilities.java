@@ -1014,6 +1014,7 @@ public class Utilities {
     try {
       File result = File.createTempFile("a4e", suffix);
       writeFile(result, content, encoding);
+      result.deleteOnExit();
       return result.getCanonicalFile();
     } catch (IOException ex) {
       A4ELogging.debug("Temp dir: %s", System.getProperty("java.io.tmpdir"));
@@ -1114,7 +1115,6 @@ public class Utilities {
    *          the jar file to expand
    * @param expansionDirectory
    *          the expansion directory
-   * @throws IOException
    */
   public static synchronized final void expandJarFile(JarFile jarFile, File expansionDirectory) {
 

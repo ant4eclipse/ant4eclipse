@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.team.cvssupport.projectset;
 
+import java.util.StringTokenizer;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSet;
 import org.ant4eclipse.lib.platform.model.team.projectset.TeamProjectSetFactory;
-
-import java.util.StringTokenizer;
 
 /**
  * Parses a ProjectSetFile provided by the default Eclipse CVS plugin
@@ -60,8 +60,8 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
     int tokensCount = stringTokenizer.countTokens();
 
     if (tokensCount < 4) {
-      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_PSF_REFERENCE, "at least four", Integer
-          .valueOf(tokensCount), reference);
+      throw new Ant4EclipseException(PlatformExceptionCode.INVALID_PSF_REFERENCE, "at least four",
+          Integer.valueOf(tokensCount), reference);
     }
     if (tokensCount > 5) {
       // bug 1569122
@@ -82,7 +82,7 @@ public class CvsTeamProjectSetFactory implements TeamProjectSetFactory {
       counter++;
     }
 
-    String branchOrVersion = (tokensCount > 4) ? token[BRANCH_OR_VERSION_TAG] : "HEAD";
+    String branchOrVersion = (tokensCount > 4) ? token[BRANCH_OR_VERSION_TAG] : null;
 
     CvsTeamProjectSet cvsTeamProjectSet = (CvsTeamProjectSet) projectSet;
 

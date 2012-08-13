@@ -22,11 +22,17 @@
     <fileset dir="${basedir}/${ant.project.name}/libs/cobertura-1.9.2" includes="**/*.jar"/>
   </path>
 
+  <path id="path.antcontrib">
+    <fileset dir="${basedir}/org.ant4eclipse.build/libs" includes="ant-contrib*.jar" />
+  </path>
+  
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- TASK DEFINITIONS                                                                        -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   
-  <taskdef classpathref="path.cobertura" resource="tasks.properties"/>
+  <taskdef classpathref="path.cobertura"  resource="tasks.properties"/>
+  <taskdef classpathref="path.antcontrib" resource="net/sf/antcontrib/antlib.xml" />
+
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- MACRO DEFINITIONS                                                                       -->
@@ -42,6 +48,7 @@
     <attribute name="jarfile"/>
     <attribute name="datafile"/>
     <sequential>
+      <echo level="verbose" message="#cobertura-instrumentation( jarfile = '@{jarfile}', datafile = '@{datafile}' )"/>
       <dirname  file="@{jarfile}" property="ci_dir"/>
       <basename file="@{jarfile}" property="ci_name"/>
       <cobertura-instrument datafile="@{datafile}">
@@ -70,7 +77,7 @@
       <taskdef classpathref="path.antcontrib"  resource="net/sf/antcontrib/antlib.xml" />
       
       <!-- instrument our a4e release version (ant + lib) using cobertura -->
-      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse.jar" datafile="@{datafile}"/>
+      <cobertura-instrumentation jarfile="@{dest}/org.ant4eclipse_${revision}.jar" datafile="@{datafile}"/>
       
       <!-- we also need the testcode for the execution -->
       <for param="zip">
@@ -84,13 +91,16 @@
       <path id="path.ant4eclipse">
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/junit" includes="junit-*.jar"/>
         <fileset dir="${basedir}/org.ant4eclipse.external/libs/ant-antunit" includes="*.jar"/>
+        <fileset dir="${basedir}/org.ant4eclipse.external/libs/equinox" includes="*.jar"/>
         <path refid="path.cobertura" />
-        <path location="@{dest}/org.ant4eclipse.jar"/>
+        <path location="@{dest}/org.ant4eclipse_${revision}.jar"/>
         <path path="@{dest}/testcode"/>
       </path>
       
       <taskdef classpathref="path.ant4eclipse" resource="org/ant4eclipse/antlib.xml" />
 
+      <property refid="path.cobertura" name="coberturapath"/>
+      
     </sequential>
   </macrodef>
   
@@ -152,7 +162,7 @@
         <not><equals arg1="@{htmldir}" arg2=""/></not>
         <then>
           <delete-dir dir="@{htmldir}" recreate="true"/>
-          <cobertura-report destdir="@{htmldir}" datafile="@{datafile}" format="html">
+          <cobertura-report destdir="@{htmldir}" datafile="@{datafile}" format="html" maxmemory="128m">
             <fileset dir="@{sourcesdir}">
               <include name="**/*.java"/>
             </fileset>
@@ -178,8 +188,28 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
   <target name="init">
+    
     <property name="dest.reports"     value="${testing}/reports"/>
     <property name="dest.cobertura"   value="${testing}/cobertura"/>
+    
+    <!-- identify the current revision (or local build) -->
+    <if>
+      <not>
+        <isset property="revision" />
+      </not>
+      <then>
+        <if>
+          <equals arg1="${env.BUILD_NUMBER}" arg2="$${env.BUILD_NUMBER}" />
+          <then>
+            <var name="revision" value="local-revision" />
+          </then>
+          <else>
+            <var name="revision" value="${env.BUILD_NUMBER}" />
+          </else>
+        </if>
+      </then>
+    </if>
+    
   </target>
   
   <target name="clean" depends="init">
@@ -254,10 +284,10 @@
         <mkdir dir="${reports}" />
         <junit dir="${basedir}/${executeProjectSet.project.name}" fork="yes">
           <jvmarg line="-Dnet.sourceforge.cobertura.datafile=${dest.cobertura}/cobertura.data"/>
+          <jvmarg line="-Dclover.path=${coberturapath}"/>
           <classpath>
-            <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
             <path refid="path.ant4eclipse"/>
-            <path refid="path.cobertura"/>
+            <path refid="executeJdtProject.classpath.absolute.runtime.path"/>
           </classpath>
           <formatter type="xml" />
           <batchtest todir="${reports}">

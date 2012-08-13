@@ -12,16 +12,15 @@
 package org.ant4eclipse.ant.pde;
 
 import java.io.File;
-import java.util.Properties;
 import java.util.jar.Manifest;
 
-import org.ant4eclipse.ant.core.ThreadDispatchingPropertyHelper;
 import org.ant4eclipse.ant.platform.core.MacroExecutionValues;
 import org.ant4eclipse.ant.platform.core.ScopedMacroDefinition;
 import org.ant4eclipse.ant.platform.core.delegate.MacroExecutionValuesProvider;
 import org.ant4eclipse.ant.platform.core.task.AbstractExecuteProjectTask;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.ManifestHelper;
+import org.ant4eclipse.lib.jdt.model.project.JavaProjectRole;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties.Library;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
@@ -29,7 +28,6 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.pde.tools.LibraryHelper;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
-import org.apache.tools.ant.PropertyHelper;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.osgi.framework.Version;
 
@@ -95,14 +93,6 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
     for (ScopedMacroDefinition<String> scopedMacroDefinition : getScopedMacroDefinitions()) {
 
       MacroDef macroDef = scopedMacroDefinition.getMacroDef();
-
-      //
-      PropertyHelper propertyHelper = PropertyHelper.getPropertyHelper(getProject()).getNext();
-      if (propertyHelper instanceof ThreadDispatchingPropertyHelper) {
-        ThreadDispatchingPropertyHelper threadDispatchingPropertyHelper = (ThreadDispatchingPropertyHelper) propertyHelper;
-        Properties properties = threadDispatchingPropertyHelper.getThreadProperties();
-        // System.out.println(String.format(" - - - [%s] %s", Thread.currentThread().hashCode(), properties));
-      }
 
       // execute SCOPE_LIBRARY
       if (SCOPE_LIBRARY.equals(scopedMacroDefinition.getScope())) {
@@ -206,6 +196,18 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
    *          the macro execution values
    */
   private void addPluginProjectMacroExecutionValues(MacroExecutionValues values) {
+
+    // add source folder from JDT project
+    if (getEclipseProject().hasRole(JavaProjectRole.class)) {
+      JavaProjectRole javaProjectRole = getEclipseProject().getRole(JavaProjectRole.class);
+
+      values.getProperties().put(SOURCE_DIRECTORIES,
+          convertToString(javaProjectRole.getEclipseProject().getChildren(javaProjectRole.getSourceFolders())));
+
+      values.getReferences().put(SOURCE_DIRECTORIES_PATH,
+          convertToPath(javaProjectRole.getEclipseProject().getChildren(javaProjectRole.getSourceFolders())));
+
+    }
 
     // get the plug-in project role
     PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);

@@ -11,6 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -20,14 +28,6 @@ import org.ant4eclipse.lib.pde.tools.TargetPlatform;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
-
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -133,7 +133,7 @@ public class TargetPlatformRegistryImpl implements TargetPlatformRegistry {
   /**
    * {@inheritDoc}
    */
-  public TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
+  public synchronized TargetPlatform getInstance(Workspace workspace, String targetPlatformDefinitionIdentifier,
       PlatformConfiguration targetPlatformConfiguration) {
 
     if (A4ELogging.isTraceingEnabled()) {

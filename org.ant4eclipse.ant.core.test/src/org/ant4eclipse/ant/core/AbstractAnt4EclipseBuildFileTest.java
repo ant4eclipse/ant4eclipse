@@ -29,12 +29,19 @@ public abstract class AbstractAnt4EclipseBuildFileTest extends BuildFileTest {
 
   private TestDirectory _testDirectory;
 
+  /**
+   * Returns the currently used <code>TestDirectory</code> instance.
+   * 
+   * @return The currently used <code>TestDirectory</code> instance.
+   */
+  protected TestDirectory getTestDirectory() {
+    return this._testDirectory;
+  }
+
   @Override
   public void setUp() throws Exception {
     this._testDirectory = new TestDirectory(true);
-
     File buildFile = this._testDirectory.createFile(getBuildFileName(), getResource(getBuildFileName()).openStream());
-
     configureProject(buildFile.getAbsolutePath());
   }
 
