@@ -50,6 +50,9 @@ public class LibraryDetector {
     buffer.append("|");
     buffer.append(System.getProperty("java.vendor"));
 
+    // dump for logging purpose
+    System.out.println(buffer.toString());
+
     // write to file
     try {
       File outfile = new File(args[0]);
