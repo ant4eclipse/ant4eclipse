@@ -26,21 +26,6 @@ public interface JavaRuntimeRegistry {
 
   /**
    * <p>
-   * Registers the java runtime that is specified using the given location with the {@link JavaRuntimeRegistry}.
-   * </p>
-   * 
-   * @param id
-   *          the id of java runtime
-   * @param location
-   *          the location
-   * @param isDefault
-   *          indicates is the {@link JavaRuntime} should be the default one.
-   * @return the {@link JavaRuntime}
-   */
-  JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault);
-
-  /**
-   * <p>
    * Registers the java runtime that is specified using the given location and the specified files with the
    * {@link JavaRuntimeRegistry}.
    * </p>

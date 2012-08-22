@@ -57,14 +57,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /**
    * {@inheritDoc}
    */
-  public JavaRuntime registerJavaRuntime(String id, File location, boolean isDefault) {
-    return registerJavaRuntime(id, location, null, isDefault);
-
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   public JavaRuntime registerJavaRuntime(String id, File location) {
     return registerJavaRuntime(id, location, null);
 
