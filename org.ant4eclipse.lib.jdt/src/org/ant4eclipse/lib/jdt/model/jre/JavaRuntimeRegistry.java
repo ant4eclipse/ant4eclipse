@@ -30,7 +30,11 @@ public interface JavaRuntimeRegistry {
    * {@link JavaRuntimeRegistry}.
    * </p>
    * <p>
-   * If <b>jreFiles</b> is <tt>null</tt>, the files for the jre are automatically determined
+   * If <b>jreFiles</b> is <tt>null</tt>, the files for the jre are automatically determined.
+   * 
+   * <p>
+   * In case jars are determined automatically, the ext dir (java.ext.dirs) and the endorsed dirs (java.endorsed.dirs)
+   * may be specified. Otherwise this parameters are ignored
    * 
    * @param id
    * @param location
@@ -38,7 +42,7 @@ public interface JavaRuntimeRegistry {
    *          the jreFiles that define the jre or null
    * @return
    */
-  JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles);
+  JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs, List<File> jreFiles);
 
   /**
    * <p>

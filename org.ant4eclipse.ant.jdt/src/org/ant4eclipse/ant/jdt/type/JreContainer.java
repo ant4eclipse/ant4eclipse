@@ -85,7 +85,8 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     // If specified: add files for jre (otherwise required JRE jars are determined automatically)
     List<File> jreFiles = getSelectedJreFiles(runtime);
 
-    JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation(), jreFiles);
+    JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation(),
+        runtime.getExtDirs(), runtime.getEndorsedDirs(), jreFiles);
 
     Assure.notNull("javaRuntime", javaRuntime);
 
@@ -135,9 +136,13 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
   public static class Runtime {
 
-    private String _id;
+    private String        _id;
 
-    private File   _location;
+    private File          _location;
+
+    private String        _extDirs      = null;
+
+    private String        _endorsedDirs = null;
 
     private List<FileSet> _fileSets;
 
@@ -155,6 +160,22 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     public void setLocation(File location) {
       this._location = location;
+    }
+
+    public String getExtDirs() {
+      return this._extDirs;
+    }
+
+    public void setExtDirs(String extDirs) {
+      this._extDirs = extDirs;
+    }
+
+    public String getEndorsedDirs() {
+      return this._endorsedDirs;
+    }
+
+    public void setEndorsedDirs(String endorsedDirs) {
+      this._endorsedDirs = endorsedDirs;
     }
 
     public void addFileSet(FileSet fileSet) {

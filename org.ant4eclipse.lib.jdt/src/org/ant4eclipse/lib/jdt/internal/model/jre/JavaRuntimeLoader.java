@@ -55,7 +55,8 @@ public class JavaRuntimeLoader {
    *          the list of (jar-)files defining this java runtime or null if the file should be determined from the
    *          JavaRuntime's location
    */
-  public static JavaRuntime loadJavaRuntime(String id, File location, List<File> files) {
+  public static JavaRuntime loadJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
+      List<File> files) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
 
@@ -66,6 +67,7 @@ public class JavaRuntimeLoader {
     JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
     javaLauncher.setMainClass(LibraryDetector.class.getName());
     javaLauncher.setArgs(new String[] { outfileName });
+
     javaLauncher.execute();
 
     // TODO
@@ -83,17 +85,19 @@ public class JavaRuntimeLoader {
     String[] values = result.split("\\|");
     Version javaVersion = Version.newStandardVersion(values[0]);
     String sunbootclasspath = values[1];
-    String javaextdirs = values[2];
-    String javaendorseddirs = values[3];
+    String javaextdirs = (extDirs != null ? extDirs : values[2]);
+    String javaendorseddirs = (endorsedDirs != null ? endorsedDirs : values[3]);
     Version javaSpecificationVersion = Version.newBundleVersion(values[4]);
 
     if (files != null) {
       A4ELogging.debug("Using specified files for JRE '%s': '%s'", id, files);
     } else {
       files = new LinkedList<File>();
-    addFiles(javaendorseddirs, false, files);
-    addFiles(sunbootclasspath, false, files);
-    addFiles(javaextdirs, true, files);
+      A4ELogging.debug("Adding endorsed files from endorsed dirs for JRE '%s': '%s'", id, javaendorseddirs);
+      addFiles(javaendorseddirs, false, files);
+      addFiles(sunbootclasspath, false, files);
+      A4ELogging.debug("Adding ext files from exts dirs for JRE '%s': '%s'", id, javaextdirs);
+      addFiles(javaextdirs, true, files);
     }
 
     File[] libraries = files.toArray(new File[0]);

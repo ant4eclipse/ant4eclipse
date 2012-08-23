@@ -58,7 +58,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public JavaRuntime registerJavaRuntime(String id, File location) {
-    return registerJavaRuntime(id, location, null);
+    return registerJavaRuntime(id, location, null, null, null);
 
   }
 
@@ -68,15 +68,17 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#registerJavaRuntime(java.lang.String, java.io.File,
    * java.util.List)
    */
-  public JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles) {
-    return registerJavaRuntime(id, location, jreFiles, false);
+  public JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
+      List<File> jreFiles) {
+    return registerJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles, false);
   }
 
-  private JavaRuntime registerJavaRuntime(String id, File location, List<File> jreFiles, boolean isDefault) {
+  private JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
+      List<File> jreFiles, boolean isDefault) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
 
-    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, jreFiles);
+    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles);
 
     return registerJavaRuntime(javaRuntime, isDefault);
   }
@@ -333,6 +335,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // create new java runtime
     A4ELogging.debug("Using JRE defined in system property 'java.home' (%s)", location.getAbsolutePath());
-    return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null);
+    return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null, null, null);
   }
 }
