@@ -47,6 +47,9 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
   /** the id of the target platform */
   private String                   _id;
 
+  /**
+   * The target file to parse for location entries
+   */
   private File                     _targetFile;
 
   /**
