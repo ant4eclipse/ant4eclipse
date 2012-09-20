@@ -7,21 +7,29 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich, Christoph Läubrich
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
-
-import java.io.File;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * <p>
@@ -38,6 +46,8 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
 
   /** the id of the target platform */
   private String                   _id;
+
+  private File                     _targetFile;
 
   /**
    * <p>
@@ -71,6 +81,14 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
   }
 
   /**
+   * @param targetFile
+   *          the new value for _targetFile
+   */
+  public void setTargetFile(File targetFile) {
+    this._targetFile = targetFile;
+  }
+
+  /**
    * {@inheritDoc}
    */
   @Override
@@ -78,7 +96,35 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
     if (this._id == null || "".equals(this._id)) {
       throw new Ant4EclipseException(PdeExceptionCode.ANT_ATTRIBUTE_NOT_SET, "id");
     }
-
+    // Parse target file...
+    if (this._targetFile != null) {
+      if (!this._targetFile.exists()) {
+        throw new Ant4EclipseException(PdeExceptionCode.TARGET_FILE_NOT_FOUND, this._targetFile.toString());
+      }
+      try {
+        XMLReader reader = XMLReaderFactory.createXMLReader();
+        reader.setContentHandler(new TargetPlattformContentHandler(this._targetFile, this));
+        FileInputStream in = new FileInputStream(this._targetFile);
+        try {
+          reader.parse(new InputSource(new InputStreamReader(in, "UTF-8")));
+        } finally {
+          in.close();
+        }
+      } catch (SAXException e) {
+        Ant4EclipseException exeption = new Ant4EclipseException(PdeExceptionCode.TARGET_PARSING_FAILED,
+            this._targetFile.toString(), e.toString());
+        exeption.initCause(e);
+        throw exeption;
+      } catch (IOException e) {
+        Ant4EclipseException exeption = new Ant4EclipseException(PdeExceptionCode.TARGET_PARSING_FAILED,
+            this._targetFile.toString(), e.toString());
+        exeption.initCause(e);
+        throw exeption;
+      }
+    }
+    if (this._targetPlatformDefinition.getLocations().length == 0) {
+      A4ELogging.warn("Target definition with id %s does not contain any locations!", this._id);
+    }
     // add the target platform definition
     TargetPlatformRegistry targetPlatformRegistry = ServiceRegistryAccess.instance().getService(
         TargetPlatformRegistry.class);
