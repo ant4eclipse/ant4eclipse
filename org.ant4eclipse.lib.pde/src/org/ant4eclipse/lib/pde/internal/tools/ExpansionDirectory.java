@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich, Christoph Läubrich
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
