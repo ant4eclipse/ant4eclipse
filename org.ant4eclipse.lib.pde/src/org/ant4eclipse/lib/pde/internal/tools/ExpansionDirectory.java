@@ -7,13 +7,14 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich
+ *     Nils Hartmann, Daniel Kasmeroglu, Gerd Wuetherich, Christoph Läubrich
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
-import org.ant4eclipse.lib.core.util.Utilities;
-
 import java.io.File;
+import java.util.UUID;
+
+import org.ant4eclipse.lib.core.util.Utilities;
 
 /**
  * <p>
@@ -27,7 +28,8 @@ public class ExpansionDirectory {
 
   /** the default expansion directory **/
   public static final String DEFAULT_EXPANSION_DIRECTORY       = System.getProperty("java.io.tmpdir")
-                                                                   + File.separatorChar + "a4e_expand_dir";
+                                                                   + File.separatorChar + "a4e_expand_dir_"
+                                                                   + UUID.randomUUID();
 
   /** the name of the expansion directory property **/
   public static final String EXPANSION_DIRECTORY_PROPERTY_NAME = "a4e.expansion.directory";
@@ -60,13 +62,23 @@ public class ExpansionDirectory {
         Utilities.delete(expansionDir);
       }
 
-      // set delete on exit
-      expansionDir.deleteOnExit();
-
       // create if not exists
       if (!expansionDir.exists()) {
-        expansionDir.mkdirs();
+        boolean created = expansionDir.mkdirs();
+        if (!created) {
+          throw new RuntimeException("can't create expansion directory " + expansionDirectory);
+        }
       }
+
+      // delete on exit
+      Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+
+        public void run() {
+          if (expansionDir.exists()) {
+            Utilities.delete(expansionDir);
+          }
+        }
+      }));
     }
 
     // return the expansion directory
