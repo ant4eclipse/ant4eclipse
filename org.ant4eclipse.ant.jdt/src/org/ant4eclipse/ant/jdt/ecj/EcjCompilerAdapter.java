@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobDescription;
 import org.ant4eclipse.lib.jdt.ecj.CompileJobResult;
 import org.ant4eclipse.lib.jdt.ecj.EcjAdapter;
@@ -32,7 +34,23 @@ public class EcjCompilerAdapter extends A4ECompilerAdapter {
    */
   @Override
   protected CompileJobResult compile(CompileJobDescription description) {
-    return EcjAdapter.Factory.create().compile(description);
+
+    PerformanceLogging.start(EcjCompilerAdapter.class, "compile");
+
+    CompileJobResult result = null;
+
+    try {
+      result = EcjAdapter.Factory.create().compile(description);
+    } finally {
+      long duration = PerformanceLogging.stop(EcjCompilerAdapter.class, "compile");
+      if (duration > 0) {
+        int compiledClasses = (result == null ? -1 : result.getCompiledClassFiles().size());
+        A4ELogging.info("ECJ Compilation took %d ms for %d class files (avg: %f ms/class)", //
+            duration, compiledClasses, (double) duration / compiledClasses);
+      }
+    }
+
+    return result;
   }
 
 } /* ENDCALSS */

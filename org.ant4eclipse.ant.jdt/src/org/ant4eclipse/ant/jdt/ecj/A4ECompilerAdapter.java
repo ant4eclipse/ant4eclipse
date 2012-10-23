@@ -11,11 +11,23 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.ant.core.AntConfigurator;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
@@ -33,17 +45,6 @@ import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -181,7 +182,13 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
        *       alternatively but references like the EcjAdditionalCompilerArguments need to be adopted in this case.
        */
       File destdir = Utilities.getCanonicalFile(getJavac().getDestdir());
-      cloneClasses(destdir, compileJobResult.getCompiledClassFiles());
+
+      PerformanceLogging.start(A4ECompilerAdapter.class, "cloneClasses");
+      try {
+        cloneClasses(destdir, compileJobResult.getCompiledClassFiles());
+      } finally {
+        PerformanceLogging.stop(A4ECompilerAdapter.class, "cloneClasses");
+      }
     }
 
     // throw Exception if compilation was not successful
