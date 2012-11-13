@@ -1073,6 +1073,20 @@ public class Utilities {
     }
   }
 
+  public static synchronized void appendFile(File destination, byte[] content) {
+    Assure.notNull("destination", destination);
+    Assure.notNull("content", content);
+    OutputStream output = null;
+    try {
+      output = new FileOutputStream(destination, true);
+      output.write(content);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, destination);
+    } finally {
+      close(output);
+    }
+  }
+
   /**
    * Removes a suffix from a name if it has one.
    * 

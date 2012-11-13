@@ -58,6 +58,8 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
   private static final String ANT4ECLIPSE_DEFAULT_FILE_ENCODING = "ant4eclipse.default.file.encoding";
 
+  private static final String ANT4ECLIPSE_COMPILE_ERRORS_FILE   = "ant4eclipse.compile.errors.file";
+
   /** format of the compile problem message */
   private static final String COMPILE_PROBLEM_MESSAGE           = "----------\n%s. %s in %s (at line %s)\n%s\n%s\n%s\n";
 
@@ -145,6 +147,9 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // Step 7: dump result
     CategorizedProblem[] categorizedProblems = compileJobResult.getCategorizedProblems();
 
+    // Buffer for messages
+    StringBuilder builder = new StringBuilder();
+
     for (int i = 0; i < categorizedProblems.length; i++) {
       CategorizedProblem categorizedProblem = categorizedProblems[i];
       if (categorizedProblem.isError() || (categorizedProblem.isWarning() && !getJavac().getNowarn())) {
@@ -165,12 +170,24 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
             args[4] = problematicLine[0];
             args[5] = problematicLine[1];
             args[6] = categorizedProblem.getMessage();
-            A4ELogging.error(COMPILE_PROBLEM_MESSAGE, args);
+            builder.append(String.format(COMPILE_PROBLEM_MESSAGE, args));
             if (i + 1 == categorizedProblems.length) {
-              A4ELogging.error("----------");
+              builder.append("----------\n");
             }
           }
         }
+      }
+    }
+
+    // Dump error messages if any
+    if (builder.length() > 0) {
+      // Dump to logging system
+      A4ELogging.error(builder.toString());
+
+      // Optional: dump to specified file
+      String compilerErrorFile = System.getProperty(ANT4ECLIPSE_COMPILE_ERRORS_FILE);
+      if (compilerErrorFile != null) {
+        Utilities.appendFile(new File(compilerErrorFile), builder.toString().getBytes());
       }
     }
 
