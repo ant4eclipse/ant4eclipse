@@ -655,7 +655,9 @@ public class Utilities {
       throw new Ant4EclipseException(CoreExceptionCode.PATH_MUST_NOT_BE_A_FILE, directory);
     }
     if (!directory.mkdirs()) {
-      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
+      if (!directory.isDirectory()) { // if another one created the directory in between
+        throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
+      }
     }
   }
 
