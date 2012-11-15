@@ -1136,11 +1136,11 @@ public class Utilities {
     Assure.notNull("expansionDirectory", expansionDirectory);
 
     if (expansionDirectory.exists()) {
-      A4ELogging.info("%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
+      A4ELogging.debug("%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
       return;
     }
 
-    A4ELogging.info("%s|Expanding '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
+    A4ELogging.debug("%s|Expanding '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
 
     mkdirs(expansionDirectory);
 
