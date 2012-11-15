@@ -16,6 +16,7 @@ import org.ant4eclipse.lib.core.util.StopWatch;
 import org.ant4eclipse.lib.core.util.StopWatchService;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.LogLevel;
 
 /**
  * @author Nils Hartmann
@@ -27,6 +28,8 @@ public class StopWatchTask extends AbstractAnt4EclipseTask {
 
   private String _name;
 
+  private int    _logLevel = Project.MSG_VERBOSE;
+
   @Override
   public void doExecute() throws BuildException {
 
@@ -35,7 +38,7 @@ public class StopWatchTask extends AbstractAnt4EclipseTask {
     } else if (isCommand("stop")) {
       StopWatch stopWatch = getStopWatchService().getOrCreateStopWatch(getName());
       long elapsedTime = stopWatch.stop();
-      log(String.format("Stopped watch '%s' after '%d' ms", stopWatch.getName(), elapsedTime), Project.MSG_INFO);
+      log(String.format("Stopped watch '%s' after '%d' ms", stopWatch.getName(), elapsedTime), this._logLevel);
     } else if (isCommand("reset-all")) {
       getStopWatchService().resetAll();
     } else if (isCommand("dump-all")) {
@@ -63,6 +66,27 @@ public class StopWatchTask extends AbstractAnt4EclipseTask {
   }
 
   /**
+   * Set the logging level. Level should be one of
+   * <ul>
+   * <li>error</li>
+   * <li>warning</li>
+   * <li>info</li>
+   * <li>verbose</li>
+   * <li>debug</li>
+   * </ul>
+   * <p>
+   * The default is &quot;warning&quot; to ensure that messages are displayed by default when using the -quiet command
+   * line option.
+   * </p>
+   * 
+   * @param echoLevel
+   *          the logging level
+   */
+  public void setLevel(EchoLevel echoLevel) {
+    this._logLevel = echoLevel.getLevel();
+  }
+
+  /**
    * Set the name of the stop watch
    * 
    * @param name
@@ -77,6 +101,12 @@ public class StopWatchTask extends AbstractAnt4EclipseTask {
 
   private boolean isCommand(String expected) {
     return (this._command != null && expected.equalsIgnoreCase(this._command.trim()));
+  }
+
+  /**
+   * The enumerated values for the level attribute.
+   */
+  public static class EchoLevel extends LogLevel {
   }
 
 }
