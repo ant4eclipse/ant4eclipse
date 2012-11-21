@@ -32,7 +32,7 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
   private static List<AbstractAnt4EclipseDataType> instances  = new LinkedList<AbstractAnt4EclipseDataType>();
 
   /** - */
-  private boolean                                 _validated = false;
+  private boolean                                  _validated = false;
 
   /**
    * <p>
@@ -44,11 +44,15 @@ public abstract class AbstractAnt4EclipseDataType extends DataType {
   public AbstractAnt4EclipseDataType(Project project) {
     setProject(project);
 
+    // Validate all datatypes known so far in case this data types needs access
+    // to earlier defined datatypes
+    AbstractAnt4EclipseDataType.validateAll();
+
     // add instance
     synchronized (instances) {
       if (instances.isEmpty() || (this instanceof HasReferencesDataType)) {
         // add to end
-      instances.add(this);
+        instances.add(this);
       } else {
         instances.add(0, this);
       }
