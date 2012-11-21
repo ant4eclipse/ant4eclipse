@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -31,6 +32,7 @@ import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleD
 import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundlesAnalyzer;
+import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -126,7 +128,15 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       if (!context.isRuntime() && context.hasCurrentProject()) {
         EclipseProject eclipseProject = context.getCurrentProject();
         PluginProjectRole role = eclipseProject.getRole(PluginProjectRole.class);
-        additionalBundles = role.getBuildProperties().getAdditionalBundles();
+        PluginBuildProperties buildProperties = role.getBuildProperties();
+
+        if (buildProperties == null) {
+          // TODO should we fail here?
+          A4ELogging.warn("No build.properties found in project '%s'", eclipseProject.getFolder());
+        } else {
+          additionalBundles = buildProperties.getAdditionalBundles();
+        }
+
       }
 
       bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription,
