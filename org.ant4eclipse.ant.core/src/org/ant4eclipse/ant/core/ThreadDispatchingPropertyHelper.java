@@ -154,18 +154,21 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
     // }
 
     //
-    if (!this._propertiesMap.containsKey(Thread.currentThread())) {
+    final Thread currentThread = Thread.currentThread();
+
+    if (!this._propertiesMap.containsKey(currentThread)) {
       return false;
     }
 
     //
-    Properties properties = this._propertiesMap.get(Thread.currentThread());
-    properties.put(name, value);
+    Properties properties = this._propertiesMap.get(currentThread);
 
-    if (name.startsWith("buildPlugin.newBundleVersion")) {
-      System.out.println(String.format("[%s] setPropertyHook(%s ,%s ) - %s", Thread.currentThread(), name, value,
-          properties));
+    if (properties == null) {
+      throw new IllegalStateException("_propertiesMap.containsKey(" + currentThread.getId()
+          + ") returned 'true', but _propertiesMap.get() returned null");
     }
+
+    properties.put(name, value);
 
     //
     // if (!inherited && user && !isNew) {

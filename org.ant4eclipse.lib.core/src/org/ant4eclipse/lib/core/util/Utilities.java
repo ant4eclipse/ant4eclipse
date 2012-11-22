@@ -655,7 +655,9 @@ public class Utilities {
       throw new Ant4EclipseException(CoreExceptionCode.PATH_MUST_NOT_BE_A_FILE, directory);
     }
     if (!directory.mkdirs()) {
-      throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
+      if (!directory.isDirectory()) { // if another one created the directory in between
+        throw new Ant4EclipseException(CoreExceptionCode.DIRECTORY_COULD_NOT_BE_CREATED, directory);
+      }
     }
   }
 
@@ -1073,6 +1075,20 @@ public class Utilities {
     }
   }
 
+  public static synchronized void appendFile(File destination, byte[] content) {
+    Assure.notNull("destination", destination);
+    Assure.notNull("content", content);
+    OutputStream output = null;
+    try {
+      output = new FileOutputStream(destination, true);
+      output.write(content);
+    } catch (IOException ex) {
+      throw new Ant4EclipseException(ex, CoreExceptionCode.FILEIO_FAILURE, destination);
+    } finally {
+      close(output);
+    }
+  }
+
   /**
    * Removes a suffix from a name if it has one.
    * 
@@ -1122,11 +1138,11 @@ public class Utilities {
     Assure.notNull("expansionDirectory", expansionDirectory);
 
     if (expansionDirectory.exists()) {
-      A4ELogging.info("%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
+      A4ELogging.debug("%s|Already expanded '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
       return;
     }
 
-    A4ELogging.info("%s|Expanding '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
+    A4ELogging.debug("%s|Expanding '%s' to '%s'", Thread.currentThread().getId(), jarFile, expansionDirectory);
 
     mkdirs(expansionDirectory);
 
