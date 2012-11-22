@@ -14,4 +14,6 @@
   <typedef name="executeTeamProjectSet"    classname="org.ant4eclipse.ant.platform.ExecuteTeamProjectSetTask"/>
   <typedef name="workspaceDefinition" 	   classname="org.ant4eclipse.ant.platform.WorkspaceDefinitionDataType"/>
   <typedef name="unsetProperty" 	       classname="org.ant4eclipse.ant.platform.UnsetProperty"/>
+  <typedef name="workspaceDirSet"          classname="org.ant4eclipse.ant.platform.WorkspaceDirSetTask" />
+  <typedef name="refreshWorkspace"         classname="org.ant4eclipse.ant.platform.RefreshWorkspaceTask" />
 </antlib>

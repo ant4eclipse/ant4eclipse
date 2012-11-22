@@ -11,7 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.model.resource.workspaceregistry;
 
-
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 
@@ -60,6 +59,15 @@ public interface WorkspaceRegistry extends Lifecycle {
    * @return the {@link Workspace} that is registered under the given identifier.
    */
   Workspace getWorkspace(String id);
+
+  /**
+   * Refreshes the specified workspace, i.e. re-reads all project definitions
+   * 
+   * <p>
+   * This can be helpful in cases where project-relevant artifacts, like build.properties or .classpath are
+   * changed/generated during the build <b>after<b> the workspace has been initialized.
+   */
+  void refreshWorkspace(String id);
 
   /**
    * <p>

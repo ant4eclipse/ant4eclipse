@@ -32,8 +32,8 @@ public class PerformanceLogging {
    */
   public static void start(Class<?> source, String name) {
     if (ENABLE_PERFORMANCE_LOGGING) {
-    getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).start();
-  }
+      getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).start();
+    }
   }
 
   /**
@@ -43,10 +43,12 @@ public class PerformanceLogging {
    * @param source
    * @param name
    */
-  public static void stop(Class<?> source, String name) {
+  public static long stop(Class<?> source, String name) {
     if (ENABLE_PERFORMANCE_LOGGING) {
-    getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).stop();
-  }
+      return getStopWatchService().getOrCreateStopWatch(source.getName() + "::" + name).stop();
+    }
+
+    return -1;
   }
 
   /**

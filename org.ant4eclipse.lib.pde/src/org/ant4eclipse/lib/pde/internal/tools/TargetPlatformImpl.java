@@ -179,6 +179,25 @@ public final class TargetPlatformImpl implements TargetPlatform {
     this._state = resolve();
   }
 
+  public List<File> getAllBundleFiles() {
+    List<BundleDescription> allBundleDescriptions = getAllBundleDescriptions(true);
+
+    List<File> allBundles = new LinkedList<File>();
+    for (BundleDescription bundleDescription : allBundleDescriptions) {
+      String location = bundleDescription.getLocation();
+
+      if (location == null) {
+        A4ELogging.warn("Bundle '%s_%s' has no location", bundleDescription.getSymbolicName(),
+            bundleDescription.getVersion());
+      } else {
+        allBundles.add(new File(location));
+      }
+    }
+
+    return allBundles;
+
+  }
+
   /**
    * <p>
    * Returns a list with a {@link BundleDescription BundleDescriptions} of each bundle that is contained in the plug-in
