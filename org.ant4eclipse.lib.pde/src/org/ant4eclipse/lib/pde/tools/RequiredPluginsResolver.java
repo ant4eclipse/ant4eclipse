@@ -125,7 +125,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
       String[] additionalBundles = null;
 
-      if (!context.isRuntime() && context.hasCurrentProject()) {
+      if (context.hasCurrentProject()) {
         EclipseProject eclipseProject = context.getCurrentProject();
         PluginProjectRole role = eclipseProject.getRole(PluginProjectRole.class);
         PluginBuildProperties buildProperties = role.getBuildProperties();
