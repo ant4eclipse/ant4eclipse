@@ -1,8 +1,8 @@
 package org.ant4eclipse.ant.core;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.Project;
@@ -66,7 +66,7 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
     setProject(project);
 
     //
-    this._propertiesMap = new HashMap<Thread, Properties>();
+    this._propertiesMap = new ConcurrentHashMap<Thread, Properties>();
   }
 
   /**
@@ -149,9 +149,9 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
   @Override
   public boolean setPropertyHook(String ns, String name, Object value, boolean inherited, boolean user, boolean isNew) {
 
-    // if (name.startsWith("buildPlugin.newBundleVersion")) {
-    // System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // }
+    if (name.startsWith("buildPlugin.project.directory")) {
+      System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
+    }
 
     //
     final Thread currentThread = Thread.currentThread();

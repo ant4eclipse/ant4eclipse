@@ -1,8 +1,8 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.ant4eclipse.lib.core.Lifecycle;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -50,7 +50,7 @@ public class ClassFileLoaderCache implements Lifecycle {
    * </p>
    */
   public ClassFileLoaderCache() {
-    this._classFileLoaderMap = new HashMap<Object, ClassFileLoader>();
+    this._classFileLoaderMap = new ConcurrentHashMap<Object, ClassFileLoader>();
   }
 
   /**
