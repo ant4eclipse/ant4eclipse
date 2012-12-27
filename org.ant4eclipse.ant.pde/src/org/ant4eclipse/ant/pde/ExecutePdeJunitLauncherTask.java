@@ -179,7 +179,12 @@ public class ExecutePdeJunitLauncherTask extends ExecuteLauncherTask implements 
     BundleDescription bundleDescription = pluginProjectRole.getBundleDescription();
     bundleDescription = this._targetPlatformAwareDelegate.getTargetPlatform(getWorkspace()).getResolvedBundle(
         bundleDescription.getSymbolicName(), bundleDescription.getVersion());
-    BundleDescription bundleHost = BundleDependenciesResolver.getHost(bundleDescription);
+    BundleDescription bundleHost;
+    try {
+      bundleHost = BundleDependenciesResolver.getHost(bundleDescription);
+    } catch (UnresolvedBundleException e1) {
+      throw new RuntimeException("Bundle not resolved: " + e1.getMessage());
+    }
 
     defaultValues.getProperties().put("testplugin.bundlehost.name", bundleHost.getSymbolicName());
     defaultValues.getProperties().put("testplugin.name", bundleDescription.getSymbolicName());

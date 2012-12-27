@@ -204,12 +204,13 @@ public class BundleDependenciesResolver {
    * @param bundleDescription
    *          the {@link BundleDescription}
    * @return the host for the given {@link BundleDescription}.
+   * @throws UnresolvedBundleException
    */
-  public static BundleDescription getHost(BundleDescription bundleDescription) {
+  public static BundleDescription getHost(BundleDescription bundleDescription) throws UnresolvedBundleException {
 
     //
     if (!bundleDescription.isResolved()) {
-      throw new RuntimeException(String.format("Bundle '%s' is not resolved.", bundleDescription.getSymbolicName()));
+      throw new UnresolvedBundleException(bundleDescription);
     }
 
     // bundle description describes a fragment ->

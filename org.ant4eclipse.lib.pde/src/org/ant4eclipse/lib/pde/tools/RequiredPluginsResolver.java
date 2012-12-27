@@ -61,6 +61,8 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
   /**
    * {@inheritDoc}
+   * 
+   * @throws UnresolvedBundleException
    */
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
     Assure.notNull("context", context);
@@ -85,7 +87,12 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     if (BundleDependenciesResolver.isFragment(resolvedBundleDescription)) {
 
       // Step 7.1: get the host description
-      BundleDescription hostDescription = BundleDependenciesResolver.getHost(resolvedBundleDescription);
+      BundleDescription hostDescription;
+      try {
+        hostDescription = BundleDependenciesResolver.getHost(resolvedBundleDescription);
+      } catch (UnresolvedBundleException e) {
+        throw newBundleNotResolvedException(e, targetPlatform);
+      }
 
       // resolveBundleClassPath(context, hostDescription);
 
@@ -152,14 +159,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       }
 
     } catch (UnresolvedBundleException e) {
-
-      // try to find the root cause
-      BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform).getRootCause(e
-          .getBundleDescription());
-
-      // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
-      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
-          TargetPlatformImpl.dumpResolverErrors(description, true));
+      throw newBundleNotResolvedException(e, targetPlatform);
     }
 
     // add all dependencies to the class path
@@ -241,6 +241,18 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // .getResolvedClasspathEntry());
     // }
     // }
+  }
+
+  private Ant4EclipseException newBundleNotResolvedException(UnresolvedBundleException e, TargetPlatform targetPlatform) {
+
+    // try to find the root cause
+    BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform)
+        .getRootCause(e.getBundleDescription());
+
+    // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
+    return new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
+        TargetPlatformImpl.dumpResolverErrors(description, true));
+
   }
 
   private void addDependentBundles(BundleDependency referencedBundle, List<BundleDependency> bundleDependencies)
