@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.core;
 
+import java.util.IllegalFormatException;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.Ant4EclipseLogger;
 import org.apache.tools.ant.BuildEvent;
@@ -161,15 +163,25 @@ public class AntBasedLogger implements Ant4EclipseLogger, BuildListener {
   private void log(int msgLevel, String msg, Object... args) {
     // retrieve the context
     Object ctx = this._context.get();
+    String message;
+    if (args.length > 0) {
+      try {
+        message = String.format(msg, args);
+      } catch (IllegalFormatException e) {
+        message = msg;
+      }
+    } else {
+      message = msg;
+    }
     if (ctx instanceof Task) {
       // log with task context
-      this._project.log((Task) ctx, String.format(msg, args), msgLevel);
+      this._project.log((Task) ctx, message, msgLevel);
     } else if (ctx instanceof Target) {
       // log with target context
-      this._project.log((Target) ctx, String.format(msg, args), msgLevel);
+      this._project.log((Target) ctx, message, msgLevel);
     } else {
       // log without context
-      this._project.log(String.format(msg, args), msgLevel);
+      this._project.log(message, msgLevel);
     }
   }
 
