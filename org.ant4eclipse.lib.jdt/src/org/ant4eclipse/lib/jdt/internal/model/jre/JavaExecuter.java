@@ -274,12 +274,21 @@ public class JavaExecuter {
 
       Process proc = runtime.exec(cmd.toString(), new String[] { "JavaHome=" });
 
+      List<String> errorLinesList = new LinkedList<String>();
+      StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), errorLinesList);
+
+      List<String> outputLinesList = new LinkedList<String>();
+      StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), outputLinesList);
+
+      errorGobbler.start();
+      outputGobbler.start();
+
       // wait for result
       proc.waitFor();
 
       // read out and err stream
-      this._systemOut = extractFromInputStream(proc.getInputStream());
-      this._systemErr = extractFromInputStream(proc.getErrorStream());
+      this._systemOut = outputLinesList.toArray(new String[0]);
+      this._systemErr = errorLinesList.toArray(new String[0]);
 
       // debug
       A4ELogging.debug("JavaExecuter.execute(): System.out -> '%s'.", Arrays.asList(this._systemOut));
@@ -359,25 +368,34 @@ public class JavaExecuter {
   }
 
   /**
-   * <p>
-   * Returns
-   * </p>
+   * StreamGlobber thread is responsible for proper consuming of {@link java.lang.Process} output and error streams.
+   * Without it <code>java.lang.Process.waitFor()</code> can hang on some platforms.
    * 
-   * @param inputstream
-   * @return
-   * @throws IOException
+   * @author Karol Ka&#324;ski (karkan)
+   * 
    */
-  private String[] extractFromInputStream(InputStream inputstream) throws IOException {
-    InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-    BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
+  private class StreamGobbler extends Thread {
+    private InputStream  is;
 
-    // read the ls output
+    private List<String> streamLinesList;
 
-    List<String> sysOut = new LinkedList<String>();
-    String line;
-    while ((line = bufferedreader.readLine()) != null) {
-      sysOut.add(line);
+    StreamGobbler(InputStream is, List<String> streamLinesList) {
+      this.is = is;
+      this.streamLinesList = streamLinesList;
     }
-    return sysOut.toArray(new String[0]);
+
+    @Override
+    public void run() {
+      try {
+        InputStreamReader isr = new InputStreamReader(this.is);
+        BufferedReader br = new BufferedReader(isr);
+        String line = null;
+        while ((line = br.readLine()) != null) {
+          this.streamLinesList.add(line);
+        }
+      } catch (IOException ioe) {
+        ioe.printStackTrace();
+      }
+    }
   }
 }
