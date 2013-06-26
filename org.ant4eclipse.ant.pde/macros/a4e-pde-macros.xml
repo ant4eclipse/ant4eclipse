@@ -27,7 +27,9 @@
 		<attribute name="workspaceDirectory" default="" />
 		<attribute name="workspaceId" default="" />
 		<attribute name="projectName" />
-		<attribute name="targetPlatformId" />
+		<attribute name="source" default="1.5" />
+		<attribute name="target" default="1.5" />
+	  <attribute name="targetPlatformId" />
 		<attribute name="platformConfigurationId" default="" />
 		<attribute name="destination" />
 		<attribute name="packageAsJar" default="true" />
@@ -212,8 +214,8 @@
 
 							<ant4eclipse:jdtCompiler useecj="@{useEcj}"
 							                         destdir="${buildPlugin.default.output.directory}"
-							                         source="1.5"
-							                         target="1.5"
+							                         source="@{source}"
+							                         target="@{target}"
 							                         noWarn="@{noWarn}"
 							                         debug="@{debug}">
 
