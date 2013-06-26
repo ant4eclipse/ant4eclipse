@@ -11,13 +11,13 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.util;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.CoreExceptionCode;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.jar.Manifest;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.CoreExceptionCode;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 
 /**
  * <p>
@@ -116,6 +116,10 @@ public class ManifestHelper {
     // set default if necessary
     if ((bundleClasspath == null) || (bundleClasspath.length < 1)) {
       bundleClasspath = new String[] { "." };
+    } else {
+      for (int i = 0; i < bundleClasspath.length; i++) {
+        bundleClasspath[i] = bundleClasspath[i].trim();
+      }
     }
 
     // return result
