@@ -149,9 +149,9 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
   @Override
   public boolean setPropertyHook(String ns, String name, Object value, boolean inherited, boolean user, boolean isNew) {
 
-    if (name.startsWith("buildPlugin.project.directory")) {
-      System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    }
+    // if (name.startsWith("buildPlugin.project.directory")) {
+    // System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
+    // }
 
     //
     final Thread currentThread = Thread.currentThread();
