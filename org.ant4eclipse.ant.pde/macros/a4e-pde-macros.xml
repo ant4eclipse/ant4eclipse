@@ -855,9 +855,9 @@
 								<echo file="@{destination}/configuration/config.ini"
 								      append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
 							</executeIfSet>
-							<executeIfSet property="executeProduct.product.applicationid">
+							<executeIfSet property="executeProduct.product.id">
 								<echo file="@{destination}/configuration/config.ini"
-								      append="true">eclipse.product=${executeProduct.product.applicationid}${line.separator}</echo>
+								      append="true">eclipse.product=${executeProduct.product.id}${line.separator}</echo>
 							</executeIfSet>
 							<echo file="@{destination}/configuration/config.ini"
 							      append="true">osgi.bundles.defaultStartLevel=4${line.separator}</echo>
