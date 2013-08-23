@@ -511,6 +511,10 @@ public class ExecuteProductTask extends AbstractExecuteProjectTask implements Pd
     values.getProperties().put(PROP_LAUNCHERNAME,
         productdef.hasLaunchername() ? productdef.getLaunchername() : "eclipse");
 
+    if (productdef.hasSplashplugin()) {
+      values.getProperties().put(PROP_SPLASH_PLUGIN, productdef.getSplashplugin());
+    }
+
     values.getProperties().put(PROP_VERSION, String.valueOf(productdef.getVersion()));
     values.getProperties().put(PROP_VMARGS, productdef.getVmArgs(this._os));
     values.getProperties().put(PROP_PROGRAMARGS, productdef.getProgramArgs(this._os));
