@@ -67,11 +67,14 @@ public class JarClassFileImpl extends DefaultReferableType implements ClassFile 
     try {
       return ClassFileReader.read(this._zipFile, this._zipEntryName, true);
     } catch (ClassFormatException e) {
-      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, this._zipFile,
-          this._zipEntryName);
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION,
+          this._zipFile.getName(), this._zipEntryName);
     } catch (IOException e) {
-      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION, this._zipFile,
-          this._zipEntryName);
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION,
+          this._zipFile.getName(), this._zipEntryName);
+    } catch (java.lang.SecurityException e) {
+      throw new Ant4EclipseException(e, EcjExceptionCodes.UNABLE_TO_READ_BINARY_TYPE_FROM_JAR_EXCEPTION,
+          this._zipFile.getName(), this._zipEntryName);
     }
   }
 
