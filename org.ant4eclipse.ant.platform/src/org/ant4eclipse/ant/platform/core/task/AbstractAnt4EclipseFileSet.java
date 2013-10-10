@@ -1,6 +1,7 @@
 package org.ant4eclipse.ant.platform.core.task;
 
-import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import java.io.File;
+
 import org.ant4eclipse.ant.platform.core.EclipseProjectComponent;
 import org.ant4eclipse.ant.platform.core.delegate.EclipseProjectDelegate;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -9,15 +10,8 @@ import org.ant4eclipse.lib.platform.model.resource.role.ProjectRole;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Reference;
-import org.apache.tools.ant.types.Resource;
-import org.apache.tools.ant.types.ResourceCollection;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseDataType implements ResourceCollection,
+public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseResourceCollection implements
     EclipseProjectComponent {
   /** 'ant-provided' attributes **/
 
@@ -29,14 +23,8 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
 
   /** 'derived' attributes **/
 
-  /** the result resource list */
-  private List<Resource>         _resourceList;
-
   /** the eclipse project delegate */
   private EclipseProjectDelegate _eclipseProjectDelegate;
-
-  /** indicates if the file list already has been computed */
-  private boolean                _fileListComputed   = false;
 
   /**
    * <p>
@@ -51,9 +39,6 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
 
     // create the project delegate
     this._eclipseProjectDelegate = new EclipseProjectDelegate(this);
-
-    // create the result list
-    this._resourceList = new LinkedList<Resource>();
   }
 
   /**
@@ -227,90 +212,5 @@ public abstract class AbstractAnt4EclipseFileSet extends AbstractAnt4EclipseData
   public final void setWorkspaceDirectory(String workspaceDirectory) {
     this._eclipseProjectDelegate.setWorkspaceDirectory(workspaceDirectory);
   }
-
-  /**
-   * {@inheritDoc}
-   */
-  public boolean isFilesystemOnly() {
-    return true;
-  }
-
-  /**
-   * <p>
-   * Performs the check for circular references and returns the referenced {@link PdeProjectFileSet}.
-   * </p>
-   * 
-   * @param p
-   *          the current project
-   * @return the referenced {@link PdeProjectFileSet}
-   */
-  protected AbstractAnt4EclipseFileSet getRef(Project p) {
-    return (AbstractAnt4EclipseFileSet) getCheckedRef(p);
-  }
-
-  /**
-   * <p>
-   * </p>
-   */
-  protected void clear() {
-    this._resourceList.clear();
-    this._fileListComputed = false;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public Iterator<Resource> iterator() {
-    computeFileSet();
-
-    return this._resourceList.iterator();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public int size() {
-    computeFileSet();
-
-    return this._resourceList.size();
-  }
-
-  public boolean isFileListComputed() {
-    return this._fileListComputed;
-  }
-
-  /**
-   * <p>
-   * Computes the file set if it has not been computed already
-   * </p>
-   */
-  protected void computeFileSet() {
-    // return if file list already is computed
-    if (this._fileListComputed) {
-      return;
-    }
-
-    // Clear the FileList
-    this._resourceList.clear();
-
-    // do the work
-    doComputeFileSet(this._resourceList);
-
-    // set _fileListComputed
-    this._fileListComputed = true;
-  }
-
-  /**
-   * Compute the actual FileSet.
-   * 
-   * <p>
-   * This method will only be called if the FileSet has not been computed already. Implementors don't need to check if
-   * it's neccessary to compute the fileset
-   */
-  /**
-   * @param resourceList
-   *          The result list all resources should be added to
-   */
-  protected abstract void doComputeFileSet(List<Resource> resourceList);
 
 }

@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.pde.tools;
 
 import java.io.File;
+import java.util.List;
 
 import org.ant4eclipse.lib.pde.internal.tools.FeatureDescription;
 import org.ant4eclipse.lib.pde.model.featureproject.FeatureManifest;
@@ -176,4 +177,6 @@ public interface TargetPlatform {
   BundleDescription getBundleDescriptionFromWorkspace(String symbolicName);
 
   BundleDescription getBundleDescriptionFromBinaryBundles(String symbolicName);
+
+  List<File> getAllBundleFiles();
 }

@@ -11,6 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.platform.internal.model.resource.WorkspaceImpl;
@@ -18,12 +24,6 @@ import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
 import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceDefinition;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -35,13 +35,13 @@ import java.util.Map;
 public class WorkspaceRegistryImpl implements WorkspaceRegistry {
 
   /** The factory used to build projects */
-  private ProjectFactory         _projectFactory;
+  private ProjectFactory                               _projectFactory;
 
   /** the workspace map (String, Workspace) */
-  private Map<String, Workspace> _registry;
+  private Map<String, WorkspaceDefinitionAndWorkspace> _registry;
 
   /** the 'current' workspace */
-  private Workspace              _current;
+  private Workspace                                    _current;
 
   public WorkspaceRegistryImpl() {
     super();
@@ -79,7 +79,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    * {@inheritDoc}
    */
   public Workspace getWorkspace(String id) {
-    return this._registry.get(id);
+    return this._registry.get(id).getWorkspace();
   }
 
   /**
@@ -87,6 +87,19 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    */
   public boolean containsWorkspace(String id) {
     return this._registry.containsKey(id);
+  }
+
+  public void refreshWorkspace(String id) {
+    Assure.nonEmpty("id", id);
+    if (!this._registry.containsKey(id)) {
+      A4ELogging.warn("Attempt to refresh non-existing workspace with id '%s' ignored.", id);
+    }
+
+    // Get original definition
+    WorkspaceDefinitionAndWorkspace workspaceDefinitionAndWorkspace = this._registry.get(id);
+
+    // re-register workspace
+    registerWorkspace(id, workspaceDefinitionAndWorkspace.getWorkspaceDefinition());
   }
 
   /**
@@ -103,8 +116,8 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     File[] projectFolders = workspaceDefinition.getProjectFolders();
 
     if (A4ELogging.isDebuggingEnabled()) {
-      A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=%d.", Integer
-          .valueOf(projectFolders.length));
+      A4ELogging.debug("WorkspaceRegistry.registerWorkspace: project directory count=%d.",
+          Integer.valueOf(projectFolders.length));
     }
 
     // read the projects and add them to the workspace
@@ -120,7 +133,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
     }
 
     // add the workspace to the registry
-    this._registry.put(id, workspace);
+    this._registry.put(id, new WorkspaceDefinitionAndWorkspace(workspaceDefinition, workspace));
 
     // return the workspace
     return workspace;
@@ -139,7 +152,7 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
    * {@inheritDoc}
    */
   public void initialize() {
-    this._registry = new HashMap<String, Workspace>();
+    this._registry = new HashMap<String, WorkspaceDefinitionAndWorkspace>();
     this._projectFactory = new ProjectFactory();
   }
 
@@ -149,4 +162,26 @@ public class WorkspaceRegistryImpl implements WorkspaceRegistry {
   public boolean isInitialized() {
     return (this._registry != null) && (this._projectFactory != null);
   }
+
+  final class WorkspaceDefinitionAndWorkspace {
+    private final WorkspaceDefinition _workspaceDefinition;
+
+    private final Workspace           _workspace;
+
+    public WorkspaceDefinitionAndWorkspace(WorkspaceDefinition workspaceDefinition, Workspace workspace) {
+      super();
+      this._workspaceDefinition = workspaceDefinition;
+      this._workspace = workspace;
+    }
+
+    public WorkspaceDefinition getWorkspaceDefinition() {
+      return this._workspaceDefinition;
+    }
+
+    public Workspace getWorkspace() {
+      return this._workspace;
+    }
+
+  }
+
 }

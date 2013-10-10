@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform.core.delegate;
 
+import java.io.File;
+
 import org.ant4eclipse.ant.core.delegate.AbstractAntDelegate;
 import org.ant4eclipse.ant.platform.core.WorkspaceComponent;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -21,8 +23,6 @@ import org.ant4eclipse.lib.platform.model.resource.Workspace;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.DefaultEclipseWorkspaceDefinition;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
 import org.apache.tools.ant.ProjectComponent;
-
-import java.io.File;
 
 /**
  * <p>
@@ -143,8 +143,8 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
 
         if (isWorkspaceDirectorySet()) {
 
-          this._workspace = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class).registerWorkspace(
-              getIdentifier(), new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
+          this._workspace = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class)
+              .registerWorkspace(getIdentifier(), new DefaultEclipseWorkspaceDefinition(this._workspaceDirectory));
 
         } else {
           throw new Ant4EclipseException(PlatformExceptionCode.UNKNOWN_WORKSPACE_ID, getIdentifier());
@@ -152,8 +152,8 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
 
       } else {
 
-        this._workspace = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class).getWorkspace(
-            getIdentifier());
+        this._workspace = ServiceRegistryAccess.instance().getService(WorkspaceRegistry.class)
+            .getWorkspace(getIdentifier());
       }
     }
 
@@ -167,7 +167,7 @@ public class WorkspaceDelegate extends AbstractAntDelegate implements WorkspaceC
    */
   private final String getIdentifier() {
 
-    // 
+    //
     if (this._workspaceDirectory != null) {
       return this._workspaceDirectory.getAbsolutePath();
     } else {

@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.osgi.BundleLayoutResolver;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -31,6 +32,7 @@ import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleD
 import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundlesAnalyzer;
+import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
@@ -59,6 +61,8 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
   /**
    * {@inheritDoc}
+   * 
+   * @throws UnresolvedBundleException
    */
   public void resolveContainer(ClasspathEntry classpathEntry, ClasspathResolverContext context) {
     Assure.notNull("context", context);
@@ -83,7 +87,12 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     if (BundleDependenciesResolver.isFragment(resolvedBundleDescription)) {
 
       // Step 7.1: get the host description
-      BundleDescription hostDescription = BundleDependenciesResolver.getHost(resolvedBundleDescription);
+      BundleDescription hostDescription;
+      try {
+        hostDescription = BundleDependenciesResolver.getHost(resolvedBundleDescription);
+      } catch (UnresolvedBundleException e) {
+        throw newBundleNotResolvedException(e, targetPlatform);
+      }
 
       // resolveBundleClassPath(context, hostDescription);
 
@@ -123,10 +132,18 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
 
       String[] additionalBundles = null;
 
-      if (!context.isRuntime() && context.hasCurrentProject()) {
+      if (context.hasCurrentProject()) {
         EclipseProject eclipseProject = context.getCurrentProject();
         PluginProjectRole role = eclipseProject.getRole(PluginProjectRole.class);
-        additionalBundles = role.getBuildProperties().getAdditionalBundles();
+        PluginBuildProperties buildProperties = role.getBuildProperties();
+
+        if (buildProperties == null) {
+          // TODO should we fail here?
+          A4ELogging.warn("No build.properties found in project '%s'", eclipseProject.getFolder());
+        } else {
+          additionalBundles = buildProperties.getAdditionalBundles();
+        }
+
       }
 
       bundleDependencies = new BundleDependenciesResolver().resolveBundleClasspath(resolvedBundleDescription,
@@ -142,14 +159,7 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
       }
 
     } catch (UnresolvedBundleException e) {
-
-      // try to find the root cause
-      BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform).getRootCause(e
-          .getBundleDescription());
-
-      // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
-      throw new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
-          TargetPlatformImpl.dumpResolverErrors(description, true));
+      throw newBundleNotResolvedException(e, targetPlatform);
     }
 
     // add all dependencies to the class path
@@ -231,6 +241,18 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
     // .getResolvedClasspathEntry());
     // }
     // }
+  }
+
+  private Ant4EclipseException newBundleNotResolvedException(UnresolvedBundleException e, TargetPlatform targetPlatform) {
+
+    // try to find the root cause
+    BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform)
+        .getRootCause(e.getBundleDescription());
+
+    // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
+    return new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
+        TargetPlatformImpl.dumpResolverErrors(description, true));
+
   }
 
   private void addDependentBundles(BundleDependency referencedBundle, List<BundleDependency> bundleDependencies)

@@ -27,7 +27,9 @@
 		<attribute name="workspaceDirectory" default="" />
 		<attribute name="workspaceId" default="" />
 		<attribute name="projectName" />
-		<attribute name="targetPlatformId" />
+		<attribute name="source" default="1.5" />
+		<attribute name="target" default="1.5" />
+	  <attribute name="targetPlatformId" />
 		<attribute name="platformConfigurationId" default="" />
 		<attribute name="destination" />
 		<attribute name="packageAsJar" default="true" />
@@ -212,8 +214,8 @@
 
 							<ant4eclipse:jdtCompiler useecj="@{useEcj}"
 							                         destdir="${buildPlugin.default.output.directory}"
-							                         source="1.5"
-							                         target="1.5"
+							                         source="@{source}"
+							                         target="@{target}"
 							                         noWarn="@{noWarn}"
 							                         debug="@{debug}">
 
@@ -853,15 +855,15 @@
 								<echo file="@{destination}/configuration/config.ini"
 								      append="true">eclipse.application=${executeProduct.product.applicationid}${line.separator}</echo>
 							</executeIfSet>
-							<executeIfSet property="executeProduct.product.applicationid">
+							<executeIfSet property="executeProduct.product.id">
 								<echo file="@{destination}/configuration/config.ini"
-								      append="true">eclipse.product=${executeProduct.product.applicationid}${line.separator}</echo>
+								      append="true">eclipse.product=${executeProduct.product.id}${line.separator}</echo>
 							</executeIfSet>
 							<echo file="@{destination}/configuration/config.ini"
 							      append="true">osgi.bundles.defaultStartLevel=4${line.separator}</echo>
 							<executeIfSet property="executeProduct.product.splashplugin">
 								<echo file="@{destination}/configuration/config.ini"
-								      append="true">osgi.splashPath=${executeProduct.product.splashplugin}${line.separator}</echo>
+								      append="true">osgi.splashPath=platform:/base/plugins/${executeProduct.product.splashplugin}${line.separator}</echo>
 							</executeIfSet>
 							<echo file="@{destination}/configuration/config.ini"
 							      append="true">osgi.bundles=${executeProduct.osgi.bundles}${line.separator}</echo>

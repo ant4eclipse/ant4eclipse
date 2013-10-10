@@ -67,10 +67,18 @@ public abstract class AbstractAnt4EclipseTask extends Task {
       preconditions();
       doExecute();
     } catch (Exception ex) {
-      StringWriter sw = new StringWriter();
-      ex.printStackTrace(new PrintWriter(sw));
 
-      A4ELogging.error("Execute of %s failed: %s%n%s", getClass().getName(), ex, sw);
+      if (Boolean.getBoolean("a4e.dumpExceptionOnFailure")) {
+        StringWriter sw = new StringWriter();
+        ex.printStackTrace(new PrintWriter(sw));
+
+        A4ELogging.error("Execute of %s failed: %s%n%s", getClass().getName(), ex, sw);
+      }
+
+      if (ex instanceof BuildException) {
+        throw ((BuildException) ex);
+      }
+
       throw new BuildException(ex.toString(), ex);
     }
   }

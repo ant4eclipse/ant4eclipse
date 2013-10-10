@@ -11,15 +11,6 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.ecj.internal.tools.loader;
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.ClassName;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.jdt.ecj.ClassFile;
-import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
-import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
-import org.ant4eclipse.lib.jdt.ecj.ReferableSourceFile;
-import org.ant4eclipse.lib.jdt.ecj.internal.tools.ReferableSourceFileImpl;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -32,6 +23,15 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.ClassName;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.jdt.ecj.ClassFile;
+import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
+import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.lib.jdt.ecj.ReferableSourceFile;
+import org.ant4eclipse.lib.jdt.ecj.internal.tools.ReferableSourceFileImpl;
 
 /**
  * <p>
@@ -434,8 +434,10 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
       }
     });
 
-    for (File element : children) {
-      getAllPackagesFromDirectory(null, element, result);
+    if (children != null) {
+      for (File element : children) {
+        getAllPackagesFromDirectory(null, element, result);
+      }
     }
 
     return result.toArray(new String[0]);
@@ -458,8 +460,10 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
       }
     });
 
-    for (File element : children) {
-      getAllPackagesFromDirectory(newPrefix + directory.getName(), element, result);
+    if (children != null) {
+      for (File element : children) {
+        getAllPackagesFromDirectory(newPrefix + directory.getName(), element, result);
+      }
     }
   }
 

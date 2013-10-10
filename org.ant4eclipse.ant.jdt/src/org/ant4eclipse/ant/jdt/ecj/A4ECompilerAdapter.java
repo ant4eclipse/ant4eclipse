@@ -11,11 +11,23 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.ant4eclipse.ant.core.AntConfigurator;
 import org.ant4eclipse.ant.jdt.EcjAdditionalCompilerArguments;
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
+import org.ant4eclipse.lib.core.util.PerformanceLogging;
 import org.ant4eclipse.lib.core.util.StringMap;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.ecj.ClassFileLoader;
@@ -34,17 +46,6 @@ import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.eclipse.jdt.core.compiler.CategorizedProblem;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 /**
  * <p>
  * Basic implementation of a compiler adapter used within A4E.
@@ -56,6 +57,8 @@ import java.util.Map;
 public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
 
   private static final String ANT4ECLIPSE_DEFAULT_FILE_ENCODING = "ant4eclipse.default.file.encoding";
+
+  private static final String ANT4ECLIPSE_COMPILE_ERRORS_FILE   = "ant4eclipse.compile.errors.file";
 
   /** format of the compile problem message */
   private static final String COMPILE_PROBLEM_MESSAGE           = "----------\n%s. %s in %s (at line %s)\n%s\n%s\n%s\n";
@@ -144,6 +147,9 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     // Step 7: dump result
     CategorizedProblem[] categorizedProblems = compileJobResult.getCategorizedProblems();
 
+    // Buffer for messages
+    StringBuilder builder = new StringBuilder();
+
     for (int i = 0; i < categorizedProblems.length; i++) {
       CategorizedProblem categorizedProblem = categorizedProblems[i];
       if (categorizedProblem.isError() || (categorizedProblem.isWarning() && !getJavac().getNowarn())) {
@@ -164,12 +170,24 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
             args[4] = problematicLine[0];
             args[5] = problematicLine[1];
             args[6] = categorizedProblem.getMessage();
-            A4ELogging.error(COMPILE_PROBLEM_MESSAGE, args);
+            builder.append(String.format(COMPILE_PROBLEM_MESSAGE, args));
             if (i + 1 == categorizedProblems.length) {
-              A4ELogging.error("----------");
+              builder.append("----------\n");
             }
           }
         }
+      }
+    }
+
+    // Dump error messages if any
+    if (builder.length() > 0) {
+      // Dump to logging system
+      A4ELogging.error(builder.toString());
+
+      // Optional: dump to specified file
+      String compilerErrorFile = System.getProperty(ANT4ECLIPSE_COMPILE_ERRORS_FILE);
+      if (compilerErrorFile != null) {
+        Utilities.appendFile(new File(compilerErrorFile), builder.toString().getBytes());
       }
     }
 
@@ -181,7 +199,13 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
        *       alternatively but references like the EcjAdditionalCompilerArguments need to be adopted in this case.
        */
       File destdir = Utilities.getCanonicalFile(getJavac().getDestdir());
-      cloneClasses(destdir, compileJobResult.getCompiledClassFiles());
+
+      PerformanceLogging.start(A4ECompilerAdapter.class, "cloneClasses");
+      try {
+        cloneClasses(destdir, compileJobResult.getCompiledClassFiles());
+      } finally {
+        PerformanceLogging.stop(A4ECompilerAdapter.class, "cloneClasses");
+      }
     }
 
     // throw Exception if compilation was not successful

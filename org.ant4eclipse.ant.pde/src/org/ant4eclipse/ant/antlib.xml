@@ -14,4 +14,5 @@
   <typedef name="queryProduct"            classname="org.ant4eclipse.ant.pde.QueryProductTask"/>
   <typedef name="executeEquinoxLauncher"  classname="org.ant4eclipse.ant.pde.ExecuteEquinoxLauncherTask"/>
   <typedef name="executePdeJunitLauncher" classname="org.ant4eclipse.ant.pde.ExecutePdeJunitLauncherTask"/>
+  <typedef name="targetPlatformFileSet"   classname="org.ant4eclipse.ant.pde.TargetPlatformFileSet" />
 </antlib>

@@ -1,8 +1,8 @@
 package org.ant4eclipse.ant.core;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.apache.tools.ant.Project;
@@ -66,7 +66,7 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
     setProject(project);
 
     //
-    this._propertiesMap = new HashMap<Thread, Properties>();
+    this._propertiesMap = new ConcurrentHashMap<Thread, Properties>();
   }
 
   /**
@@ -149,23 +149,26 @@ public class ThreadDispatchingPropertyHelper extends PropertyHelper {
   @Override
   public boolean setPropertyHook(String ns, String name, Object value, boolean inherited, boolean user, boolean isNew) {
 
-    // if (name.startsWith("buildPlugin.newBundleVersion")) {
-    // System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
-    // }
+    if (name.startsWith("buildPlugin.project.directory")) {
+      System.out.println(String.format("~~~ [%s] 1 - setPropertyHook(%s ,%s )", Thread.currentThread(), name, value));
+    }
 
     //
-    if (!this._propertiesMap.containsKey(Thread.currentThread())) {
+    final Thread currentThread = Thread.currentThread();
+
+    if (!this._propertiesMap.containsKey(currentThread)) {
       return false;
     }
 
     //
-    Properties properties = this._propertiesMap.get(Thread.currentThread());
-    properties.put(name, value);
+    Properties properties = this._propertiesMap.get(currentThread);
 
-    if (name.startsWith("buildPlugin.newBundleVersion")) {
-      System.out.println(String.format("[%s] setPropertyHook(%s ,%s ) - %s", Thread.currentThread(), name, value,
-          properties));
+    if (properties == null) {
+      throw new IllegalStateException("_propertiesMap.containsKey(" + currentThread.getId()
+          + ") returned 'true', but _propertiesMap.get() returned null");
     }
+
+    properties.put(name, value);
 
     //
     // if (!inherited && user && !isNew) {
