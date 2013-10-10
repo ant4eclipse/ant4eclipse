@@ -11,9 +11,9 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.model.jre;
 
-import org.ant4eclipse.lib.core.data.Version;
-
 import java.io.File;
+
+import org.ant4eclipse.lib.core.data.Version;
 
 /**
  * <p>
@@ -114,4 +114,11 @@ public interface JavaRuntime {
    * @return the java profile that describes this java runtime.
    */
   JavaProfile getJavaProfile();
+
+  /**
+   * 
+   * @param version
+   * @return <code>true</code> if this version amtches the version of the {@link JavaRuntime}
+   */
+  boolean isJavaVersion(Version version);
 }
