@@ -317,8 +317,7 @@ public class JavaExecuter {
         cmd.append("\"");
       }
     }
-    String result = cmd.toString();
-    return result;
+    return cmd.toString();
   }
 
   /**
