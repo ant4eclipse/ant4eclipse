@@ -291,11 +291,34 @@ public class JavaExecuter {
 
     } catch (IOException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmdList.toString());
+      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmdListToStr(cmdList));
     } catch (InterruptedException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmdList.toString());
+      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmdListToStr(cmdList));
     }
+  }
+
+  /**
+   * Converts a command list to a String, adding quotes where they are needed (spaced args)
+   * 
+   * @param cmdList
+   *          The command list to convert
+   * @return The command list as a String
+   */
+  private String cmdListToStr(List<String> cmdList) {
+    StringBuilder cmd = new StringBuilder();
+    for (String arg : cmdList) {
+      boolean containSpace = arg.contains(" ");
+      if (containSpace) {
+        cmd.append("\"");
+      }
+      cmd.append(arg);
+      if (containSpace) {
+        cmd.append("\"");
+      }
+    }
+    String result = cmd.toString();
+    return result;
   }
 
   /**
