@@ -239,7 +239,9 @@ public class JavaExecuter {
 
     // create java command
     StringBuffer cmd = new StringBuffer();
-    cmd.append(getJavaExecutable().getAbsolutePath());
+    File javaExecutable = getJavaExecutable();
+    
+    cmd.append(javaExecutable.getName());
 
     // add VM arguments
     for (String vmArg : this._vmargs) {
@@ -272,7 +274,8 @@ public class JavaExecuter {
       // debug
       A4ELogging.debug("JavaExecuter.execute(): Executing '%s'.", cmd.toString());
 
-      Process proc = runtime.exec(cmd.toString(), new String[] { "JavaHome=" });
+      Process proc = runtime.exec(cmd.toString(),
+          new String[] { "JavaHome=".concat(javaExecutable.getParentFile().getAbsolutePath()) });
 
       List<String> errorLinesList = new LinkedList<String>();
       StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), errorLinesList);
