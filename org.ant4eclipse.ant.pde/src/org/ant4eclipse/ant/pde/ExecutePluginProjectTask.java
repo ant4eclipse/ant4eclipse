@@ -28,6 +28,7 @@ import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
 import org.ant4eclipse.lib.pde.tools.LibraryHelper;
 import org.ant4eclipse.lib.pde.tools.PdeBuildHelper;
 import org.ant4eclipse.lib.platform.PlatformExceptionCode;
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.osgi.framework.Version;
 
@@ -211,6 +212,11 @@ public class ExecutePluginProjectTask extends AbstractExecuteProjectTask impleme
 
     // get the plug-in project role
     PluginProjectRole pluginProjectRole = getEclipseProject().getRole(PluginProjectRole.class);
+
+    if (!pluginProjectRole.hasBuildProperties()) {
+      throw new BuildException("No build.properties in Plug-in project '" + getEclipseProject().getSpecifiedName()
+          + "'.");
+    }
 
     // get the bundle source
     BundleSource bundleSource = (BundleSource) pluginProjectRole.getBundleDescription().getUserObject();
