@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -235,44 +236,32 @@ public class JavaExecuter {
       }
     }
     String classPath = classpathBuffer.toString();
-    boolean classPathContainsBlanks = classPath.contains(" ");
 
     // create java command
-    StringBuffer cmd = new StringBuffer();
-    cmd.append(getJavaExecutable().getAbsolutePath());
+    List<String> cmdList = new ArrayList<String>(this._vmargs.length + this._args.length + 4);
+    File javaExecutable = getJavaExecutable();
+
+    cmdList.add(javaExecutable.getAbsolutePath());
 
     // add VM arguments
-    for (String vmArg : this._vmargs) {
-      cmd.append(" ");
-      cmd.append(vmArg);
-    }
+    cmdList.addAll(Arrays.asList(this._vmargs));
 
     // add classpath
-    cmd.append(" -cp ");
-    if (classPathContainsBlanks) {
-      cmd.append("\"");
-    }
-    cmd.append(classPath);
-    if (classPathContainsBlanks) {
-      cmd.append("\"");
-    }
+    cmdList.add("-cp");
+    cmdList.add(classPath);
 
     // add main class
-    cmd.append(" ");
-    cmd.append(this._mainClass);
+    cmdList.add(this._mainClass);
 
     // add program arguments
-    for (String _arg : this._args) {
-      cmd.append(" ");
-      cmd.append(_arg);
-    }
+    cmdList.addAll(Arrays.asList(this._args));
 
     // execute
     try {
       // debug
-      A4ELogging.debug("JavaExecuter.execute(): Executing '%s'.", cmd.toString());
+      A4ELogging.debug("JavaExecuter.execute(): Executing '%s'.", cmdList.toString());
 
-      Process proc = runtime.exec(cmd.toString(), new String[] { "JavaHome=" });
+      Process proc = runtime.exec(cmdList.toArray(new String[cmdList.size()]), new String[] { "JavaHome=" });
 
       List<String> errorLinesList = new LinkedList<String>();
       StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), errorLinesList);
@@ -302,11 +291,33 @@ public class JavaExecuter {
 
     } catch (IOException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString());
+      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmdListToStr(cmdList));
     } catch (InterruptedException e) {
       // throw Ant4EclipseException
-      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmd.toString());
+      throw new Ant4EclipseException(e, JdtExceptionCode.JAVA_LAUNCHER_EXECUTION_EXCEPTION, cmdListToStr(cmdList));
     }
+  }
+
+  /**
+   * Converts a command list to a String, adding quotes where they are needed (spaced args)
+   * 
+   * @param cmdList
+   *          The command list to convert
+   * @return The command list as a String
+   */
+  private String cmdListToStr(List<String> cmdList) {
+    StringBuilder cmd = new StringBuilder();
+    for (String arg : cmdList) {
+      boolean containSpace = arg.contains(" ");
+      if (containSpace) {
+        cmd.append("\"");
+      }
+      cmd.append(arg);
+      if (containSpace) {
+        cmd.append("\"");
+      }
+    }
+    return cmd.toString();
   }
 
   /**

@@ -975,6 +975,7 @@
 					              platformConfigurationId="@{platformConfigurationId}"
 					              destination="@{destination}"
 					              packageAsJar="@{packageAsJar}"
+								  defaultCompilerOptionsFile="@{defaultCompilerOptionsFile}"
 					              useEcj="@{useEcj}"
 					              skipBuildPlugins="@{skipBuildPlugins}"
 					              debug="@{debug}" />
