@@ -77,6 +77,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
       List<File> jreFiles, boolean isDefault) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
+    A4ELogging.info(
+        "registerJavaRuntime: id = %s, location = %s, extDirs = %s, endorsedDirs = %s, jreFiles = %s, isDefault = %s",
+        id, location, extDirs, endorsedDirs, jreFiles, isDefault);
 
     JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles);
 

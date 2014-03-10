@@ -34,7 +34,7 @@ public class RefreshWorkspaceTask extends AbstractAnt4EclipseTask {
 
   @Override
   protected void preconditions() throws BuildException {
-    if (this._workspaceId == null || this._workspaceId.isEmpty()) {
+    if (this._workspaceId == null || this._workspaceId.length() == 0) {
       throw new BuildException("Parameter 'workspaceId' must be set");
     }
   }

@@ -11,12 +11,12 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
+import java.io.File;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
-
-import java.io.File;
 
 /**
  * <p>
@@ -26,25 +26,25 @@ import java.io.File;
  * @author Daniel Kasmeroglu (daniel.kasmeroglu@kasisoft.net)
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  */
-public class JavaRuntimeImpl implements JavaRuntime {
+public final class JavaRuntimeImpl implements JavaRuntime {
 
   /** the id */
-  private String      _id                       = null;
+  private final String      _id;
 
   /** the location */
-  private File        _location                 = null;
+  private final File        _location;
 
   /** the version */
-  private Version     _javaVersion              = null;
+  private final Version     _javaVersion;
 
   /** the version */
-  private Version     _javaSpecificationVersion = null;
+  private final Version     _javaSpecificationVersion;
 
   /** - */
-  private JavaProfile _javaProfile;
+  private final JavaProfile _javaProfile;
 
   /** the libraries */
-  private File[]      _libraries                = new File[0];
+  private File[]            _libraries = new File[0];
 
   /**
    * <p>
@@ -98,8 +98,7 @@ public class JavaRuntimeImpl implements JavaRuntime {
   }
 
   /**
-   * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntime#isJavaVersion(net.sf.ant4eclipse.model.jdt.jre.JavaRuntimeImpl.Version
-   *      )
+   * {@inheritDoc}
    */
   public boolean isJavaVersion(Version version) {
     return (version.getMajor() == this._javaVersion.getMajor()) && (version.getMinor() == this._javaVersion.getMinor());

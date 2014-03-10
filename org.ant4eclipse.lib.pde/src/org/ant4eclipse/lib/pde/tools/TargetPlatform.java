@@ -73,10 +73,14 @@ public interface TargetPlatform {
    *          the id of the requested feature (must not be null)
    * @param version
    *          the version of the requested feature (maybe null)
-   * @return the feature description for the feature with the given id and version or <code>null</code> value is
-   *         returned if no such feature is found.
+   * @return the feature description for the feature with the given id and version
+   * @throws IllegalArgumentException
+   *           if the feature with the given ID and version can't be found
+   * @throws IllegalStateException
+   *           if the feature with the given ID can't be resolved
    */
-  FeatureDescription getFeatureDescription(String id, Version version);
+  FeatureDescription getFeatureDescription(String id, Version version) throws IllegalArgumentException,
+      IllegalStateException;
 
   /**
    * <p>
@@ -99,10 +103,14 @@ public interface TargetPlatform {
    * 
    * @param id
    *          the id of the requested feature (must not be null)
-   * @return the feature description for the feature with the given id or <code>null</code> value is returned if no such
-   *         feature is found.
+   * @return the feature description for the feature with the given id
+   * 
+   * @throws IllegalArgumentException
+   *           if the feature with the given ID and version can't be found
+   * @throws IllegalStateException
+   *           if the feature with the given ID can't be resolved
    */
-  FeatureDescription getFeatureDescription(String id);
+  FeatureDescription getFeatureDescription(String id) throws IllegalArgumentException, IllegalStateException;
 
   /**
    * <p>
