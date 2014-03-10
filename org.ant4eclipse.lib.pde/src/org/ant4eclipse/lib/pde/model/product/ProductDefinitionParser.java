@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.model.product;
 
+import java.io.InputStream;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.util.Utilities;
@@ -19,8 +21,6 @@ import org.ant4eclipse.lib.core.xquery.XQueryHandler;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.BundleStartRecord;
 import org.osgi.framework.Version;
-
-import java.io.InputStream;
 
 /**
  * <p>
@@ -150,7 +150,9 @@ public class ProductDefinitionParser {
     String[] featureids = featureidquery.getResult();
     String[] featureversions = featureversionquery.getResult();
     for (int i = 0; i < featureids.length; i++) {
-      result.addFeature(featureids[i], new Version(featureversions[i]));
+      String version = i < featureversions.length ? featureversions[i] : null;
+      result.addFeature(featureids[i], version != null && version.length() > 0 ? new Version(version)
+          : Version.emptyVersion);
     }
 
     String[] configids = configidquery.getResult();
