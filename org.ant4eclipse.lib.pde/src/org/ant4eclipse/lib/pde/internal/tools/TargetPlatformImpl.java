@@ -242,11 +242,7 @@ public final class TargetPlatformImpl implements TargetPlatform {
   public FeatureDescription getFeatureDescription(String id, Version version) {
     Assure.nonEmpty("id", id);
 
-    if (version == null) {
-      return getFeatureDescription(id);
-    }
-
-    if (version.equals(Version.emptyVersion)) {
+    if (version == null || version.equals(Version.emptyVersion)) {
       return getFeatureDescription(id);
     }
 
@@ -255,26 +251,32 @@ public final class TargetPlatformImpl implements TargetPlatform {
 
     //
     if (featureDescription != null) {
+      A4ELogging.debug("Feature '%s' with version '%s' found in plugin project set", id, version);
       return featureDescription;
     }
 
     for (BundleAndFeatureSet bundleSet : this._binaryBundleSets) {
       featureDescription = bundleSet.getFeatureDescription(id, version);
       if (featureDescription != null) {
+        A4ELogging.debug("Feature '%s' with version '%s' found in binary bundle set", id, version);
         return featureDescription;
       }
     }
-    // TODO
-    A4ELogging.error("Could not resolve feature '%s' in version '%s'.", id, version);
-    //
-    return null;
+    throw new IllegalArgumentException("Feature with id '" + id + "' and version '" + version
+        + "' not found in target or project set");
   }
 
   /**
    * {@inheritDoc}
    */
   public boolean hasFeatureDescription(String id, Version version) {
-    return getFeatureDescription(id, version) != null;
+    try {
+      getFeatureDescription(id, version);
+      return true;
+    } catch (RuntimeException e) {
+      A4ELogging.debug("Could not find feature '%s' in version '%s' Problem %s.", id, version, e);
+      return false;
+    }
   }
 
   /**
@@ -282,12 +284,9 @@ public final class TargetPlatformImpl implements TargetPlatform {
    */
   public FeatureDescription getFeatureDescription(String id) {
     Assure.nonEmpty("id", id);
-
-    //
     FeatureDescription featureDescription = this._pluginProjectSet.getFeatureDescription(id);
-
-    //
     if (featureDescription != null) {
+      A4ELogging.debug("Feature '%s' found in plugin project set", id);
       return featureDescription;
     }
 
@@ -304,15 +303,19 @@ public final class TargetPlatformImpl implements TargetPlatform {
       if (featureDescription != null && featureDescription.getFeatureManifest().getId().equals(id)) {
         if (result == null) {
           result = featureDescription;
+          A4ELogging.debug("Feature '%s' found in binary bundle set", id);
         } else {
           // the current feature description has a higher version, so use this one
           if (result.getFeatureManifest().getVersion().compareTo(featureDescription.getFeatureManifest().getVersion()) < 0) {
+            A4ELogging.debug("Higher version for feature '%s' found in binary bundle set", id);
             result = featureDescription;
           }
         }
       }
     }
-
+    if (result == null) {
+      throw new IllegalArgumentException("Feature with id '" + id + "' not found in target or project set");
+    }
     // return result
     return result;
   }
@@ -321,7 +324,13 @@ public final class TargetPlatformImpl implements TargetPlatform {
    * {@inheritDoc}
    */
   public boolean hasFeatureDescription(String id) {
-    return getFeatureDescription(id) != null;
+    try {
+      getFeatureDescription(id);
+      return true;
+    } catch (RuntimeException e) {
+      A4ELogging.debug("Could not find feature '%s' Problem %s.", id, e);
+      return false;
+    }
   }
 
   public boolean matchesPlatformFilter(String id) {
@@ -478,22 +487,23 @@ public final class TargetPlatformImpl implements TargetPlatform {
       if (matches(includes.getOperatingSystem(), includes.getMachineArchitecture(), includes.getWindowingSystem(),
           includes.getLocale())) {
 
-        FeatureDescription featureDescription = null;
-        if (includes.getVersion().equals(Version.emptyVersion)) {
-          featureDescription = getFeatureDescription(includes.getId());
-        } else {
-          featureDescription = getFeatureDescription(includes.getId(), includes.getVersion());
-        }
-        if (featureDescription == null) {
-          // TODO: NLS
+        FeatureDescription featureDescription;
+        try {
+          if (includes.getVersion().equals(Version.emptyVersion)) {
+            featureDescription = getFeatureDescription(includes.getId());
+          } else {
+            featureDescription = getFeatureDescription(includes.getId(), includes.getVersion());
+          }
+        } catch (IllegalStateException e) {
+          throw new RuntimeException("Can't resolve included feature '" + includes.getId() + "_"
+              + includes.getVersion() + "'.");
+        } catch (IllegalArgumentException e) {
           throw new RuntimeException("No Feature found for included feature '" + includes.getId() + "_"
               + includes.getVersion() + "'.");
-        } else {
-          result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
         }
+        result.add(new Pair<Includes, FeatureDescription>(includes, featureDescription));
       }
     }
-
     resolvedFeature.setIncludesToFeatureDescriptionList(result);
   }
 

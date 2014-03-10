@@ -11,10 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.pde.internal.tools;
 
+import java.util.List;
+
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.osgi.framework.Version;
-
-import java.util.List;
 
 /**
  * <p>

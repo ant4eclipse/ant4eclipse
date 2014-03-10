@@ -11,6 +11,8 @@
  **********************************************************************/
 package org.ant4eclipse.ant.pde;
 
+import java.io.File;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.pde.internal.tools.ExpansionDirectory;
@@ -22,8 +24,6 @@ import org.apache.tools.ant.taskdefs.Expand;
 import org.apache.tools.ant.types.FileList;
 import org.apache.tools.ant.types.FileList.FileName;
 import org.apache.tools.ant.types.PatternSet;
-
-import java.io.File;
 
 /**
  * <p>
@@ -77,15 +77,13 @@ public class NativeLauncherHelper {
    *         eclipse.exe and eclipsec.exe).
    */
   private static FileList getNativeLauncherFromExecutableFeature(TargetPlatform targetPlatform) {
-
+    if (!targetPlatform.hasFeatureDescription(FEATURE_ORG_ECLIPSE_EQUINOX_EXECUTABLE)) {
+      // return null if feature doesn't exist
+      return null;
+    }
     // get the executable feature from the target platform
     FeatureDescription featureDescription = targetPlatform
         .getFeatureDescription(FEATURE_ORG_ECLIPSE_EQUINOX_EXECUTABLE);
-
-    // return null if feature doesn't exist
-    if (featureDescription == null) {
-      return null;
-    }
 
     // get the platform configuration
     String ws = targetPlatform.getTargetPlatformConfiguration().getWindowingSystem();
@@ -96,7 +94,7 @@ public class NativeLauncherHelper {
     if (featureDescription.isFeatureProject()) {
       // TODO
       throw new RuntimeException(
-          "The feature 'org.eclipse.equinox.executable' has to be a exported feature, not a feature project.");
+          "The feature 'org.eclipse.equinox.executable' has to be an exported feature, not a feature project.");
     }
 
     // case 1: feature 'org.eclipse.equinox.executable' is a directory
