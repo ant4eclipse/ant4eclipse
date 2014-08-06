@@ -12,12 +12,6 @@
 package org.ant4eclipse.lib.jdt.ecj.internal.tools;
 
 
-import org.ant4eclipse.lib.core.Assure;
-import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
-import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
-import org.ant4eclipse.lib.jdt.ecj.SourceFile;
-import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
+
+import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
+import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
+import org.ant4eclipse.lib.jdt.ecj.SourceFile;
+import org.eclipse.jdt.internal.compiler.env.ICompilationUnit;
 
 /**
  * <p>
@@ -159,5 +159,9 @@ public class CompilationUnitImpl implements ICompilationUnit {
     } else {
       return fileName.replace(File.separatorChar, '.');
     }
+  }
+
+  public boolean ignoreOptionalProblems() {
+    return false;
   }
 }
