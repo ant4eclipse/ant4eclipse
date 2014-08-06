@@ -421,51 +421,55 @@ public abstract class A4ECompilerAdapter extends DefaultCompilerAdapter {
     List<ClassFileLoader> classFileLoaderList = new LinkedList<ClassFileLoader>();
 
     // Step 2: add boot class loader
-    classFileLoaderList.add(createBootClassLoader(compilerArguments));
+    if (getJavac().getBootclasspath() != null) {
+      classFileLoaderList.add(createBootClassLoader(compilerArguments));
+    }
 
     // Step 3: add class loader for class path entries
-    Iterator<FileResource> iterator = getJavac().getClasspath().iterator();
-    while (iterator.hasNext()) {
+    if (getJavac().getClasspath() != null) {
+      Iterator<FileResource> iterator = getJavac().getClasspath().iterator();
+      while (iterator.hasNext()) {
 
-      // get the file resource that contains the class files
-      FileResource fileResource = iterator.next();
-      File classesFile = fileResource.getFile();
-      ClassFileLoader myclassFileLoader = null;
+        // get the file resource that contains the class files
+        FileResource fileResource = iterator.next();
+        File classesFile = fileResource.getFile();
+        ClassFileLoader myclassFileLoader = null;
 
-      // jar files
-      if (classesFile.isFile()) {
+        // jar files
+        if (classesFile.isFile()) {
 
-        // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
-        // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
-        // } else {
-        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
-            new File[] { classesFile }, new File[] {});
-        // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
-        // }
+          // if (ClassFileLoaderCache.getInstance().hasClassFileLoader(classesFile)) {
+          // myclassFileLoader = ClassFileLoaderCache.getInstance().getClassFileLoader(classesFile);
+          // } else {
+          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+              new File[] { classesFile }, new File[] {});
+          // ClassFileLoaderCache.getInstance().storeClassFileLoader(classesFile, myclassFileLoader);
+          // }
 
-      } else {
+        } else {
 
-        // get source folders if available
-        File[] sourceFolders = new File[] {};
+          // get source folders if available
+          File[] sourceFolders = new File[] {};
 
-        if ((compilerArguments != null) && compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
-          sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(classesFile);
+          if ((compilerArguments != null) && compilerArguments.hasSourceFoldersForOutputFolder(classesFile)) {
+            sourceFolders = compilerArguments.getSourceFoldersForOutputFolder(classesFile);
+          }
+
+          // create class file loader for file resource
+          // TODO: LIBRARY AND PROJECT
+          myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
+              new File[] { classesFile }, sourceFolders);
         }
 
-        // create class file loader for file resource
-        // TODO: LIBRARY AND PROJECT
-        myclassFileLoader = ClassFileLoaderFactory.createClasspathClassFileLoader(classesFile, EcjAdapter.LIBRARY,
-            new File[] { classesFile }, sourceFolders);
-      }
-
-      // create and add FilteringClassFileLoader is necessary
-      if (compilerArguments != null && compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
-        classFileLoaderList.add(ClassFileLoaderFactory.createFilteringClassFileLoader(myclassFileLoader,
-            compilerArguments.getAccessRestrictions(fileResource.getFile())));
-      }
-      // else add class file loader
-      else {
-        classFileLoaderList.add(myclassFileLoader);
+        // create and add FilteringClassFileLoader is necessary
+        if (compilerArguments != null && compilerArguments.hasAccessRestrictions(fileResource.getFile())) {
+          classFileLoaderList.add(ClassFileLoaderFactory.createFilteringClassFileLoader(myclassFileLoader,
+              compilerArguments.getAccessRestrictions(fileResource.getFile())));
+        }
+        // else add class file loader
+        else {
+          classFileLoaderList.add(myclassFileLoader);
+        }
       }
     }
 
