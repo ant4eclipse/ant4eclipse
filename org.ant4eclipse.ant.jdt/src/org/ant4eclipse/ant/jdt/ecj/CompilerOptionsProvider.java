@@ -11,6 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.ant.jdt.ecj;
 
+import java.io.File;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
@@ -20,10 +24,6 @@ import org.ant4eclipse.lib.jdt.ecj.EcjExceptionCodes;
 import org.apache.tools.ant.taskdefs.Javac;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.util.Util;
-
-import java.io.File;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * <p>
@@ -160,6 +160,8 @@ public class CompilerOptionsProvider {
         result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_6);
       } else if (source.equals("1.7") || source.equals("7") || source.equals("7.0")) {
         result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_7);
+      } else if (source.equals("1.8") || source.equals("8") || source.equals("8.0")) {
+        result.put(CompilerOptions.OPTION_Source, CompilerOptions.VERSION_1_8);
       } else {
         throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_SOURCE_OPTION_EXCEPTION, source);
       }
@@ -189,6 +191,9 @@ public class CompilerOptionsProvider {
       } else if (target.equals("1.7") || target.equals("7") || target.equals("7.0")) {
         result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_7);
         result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_7);
+      } else if (target.equals("1.8") || target.equals("8") || target.equals("8.0")) {
+        result.put(CompilerOptions.OPTION_TargetPlatform, CompilerOptions.VERSION_1_8);
+        result.put(CompilerOptions.OPTION_Compliance, CompilerOptions.VERSION_1_8);
       } else {
         throw new Ant4EclipseException(EcjExceptionCodes.UNKNOWN_JAVA_TARGET_OPTION_EXCEPTION, target);
       }
