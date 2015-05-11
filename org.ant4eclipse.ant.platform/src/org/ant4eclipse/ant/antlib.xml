@@ -9,6 +9,7 @@
   <typedef name="cvsGetProjectSet"         classname="org.ant4eclipse.ant.platform.team.CvsGetProjectSetTask" />
   <typedef name="svnGetProjectSet"         classname="org.ant4eclipse.ant.platform.team.SvnGetProjectSetTask" />
   <typedef name="getBuildOrder"            classname="org.ant4eclipse.ant.platform.GetBuildOrderTask" />
+  <typedef name="getReferencedProjects"    classname="org.ant4eclipse.ant.platform.GetReferencedProjectsTask" />
   <typedef name="getUsedProjects"          classname="org.ant4eclipse.ant.platform.GetUsedProjectsTask"/>
   <typedef name="executeLauncher"  	       classname="org.ant4eclipse.ant.platform.ExecuteLauncherTask"/>
   <typedef name="executeTeamProjectSet"    classname="org.ant4eclipse.ant.platform.ExecuteTeamProjectSetTask"/>
@@ -17,3 +18,4 @@
   <typedef name="workspaceDirSet"          classname="org.ant4eclipse.ant.platform.WorkspaceDirSetTask" />
   <typedef name="refreshWorkspace"         classname="org.ant4eclipse.ant.platform.RefreshWorkspaceTask" />
 </antlib>
+
