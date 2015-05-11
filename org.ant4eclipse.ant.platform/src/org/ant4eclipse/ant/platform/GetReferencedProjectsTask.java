@@ -11,12 +11,17 @@
  **********************************************************************/
 package org.ant4eclipse.ant.platform;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.ant4eclipse.ant.platform.core.task.AbstractProjectBasedTask;
 import org.ant4eclipse.lib.core.Assure;
+import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.platform.model.resource.EclipseProject;
+import org.ant4eclipse.lib.platform.tools.ReferencedProjectsResolverService;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.types.EnumeratedAttribute;
 
 /**
  * <p>
@@ -30,19 +35,10 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   /** the default seperator */
   public static final String DEFAULT_SEPARATOR = ",";
 
-  /** read projects from classpath (default) */
-  public static final String SOURCE_CLASSPATH  = "classpath";
-
-  /** read projects from .project file */
-  public static final String SOURCE_PROJECT    = "project";
-
   /**
    * The name of an ant property that will hold the list of referenced projects
    */
   private String             _property;
-
-  /** Where to read the referenced projects from: .classpath or .project */
-  private String             _source           = SOURCE_CLASSPATH;
 
   /**
    * An (optional) specified separator that is used to separate the project names (defaults to <b>
@@ -51,24 +47,9 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   private String             _separator        = DEFAULT_SEPARATOR;
 
   /**
-   * (Optional - only with <code>source=classpath</code>) specifies if only exported projects should be listed
-   * (equivalent to runtime classpath). Defaults to <b>false</b>.
-   */
-  private boolean            _exportedOnly     = false;
-
-  /**
-   * (Optional - only with <code>source=project</code>) specifies if required projects should be resolve recursive.
-   * Defaults to true.
+   * (Optional) specifies if required projects should be resolve recursive. Defaults to true.
    */
   private boolean            _recursive        = true;
-
-  // /** The property used to describe the unavailable projects. */
-  // private String _unavailableProjects;
-  //
-  // /**
-  // * Use the specified name of an Eclipse project rather than it's filesystem name.
-  // */
-  // private boolean _specifiedNames = false;
 
   /**
    * <p>
@@ -92,30 +73,6 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
   public void setProperty(String property) {
     this._property = property;
   }
-
-  // /**
-  // * <p>
-  // * Sets the name of an ANT property that will hold the list of projects that are not available.
-  // * </p>
-  // *
-  // * @param property
-  // * the name of an ANT property that will hold the list of projects that are not available.
-  // */
-  // public void setUnavailableProjects(String property) {
-  // this._unavailableProjects = property;
-  // }
-  //
-  // /**
-  // * <p>
-  // * Enables the use of specified names which might differ from the project name within the file system.
-  // * </p>
-  // *
-  // * @param specifiednames
-  // * <code>true</code> <=> Create the list using the specified names.
-  // */
-  // public void setSpecifiedNames(boolean specifiednames) {
-  // this._specifiedNames = specifiednames;
-  // }
 
   /**
    * <p>
@@ -143,29 +100,6 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
 
   /**
    * <p>
-   * Return where to read the referenced projects from. Allowed values are 'classpath' or 'project'.
-   * </p>
-   * 
-   * @return where to read the referenced projects from.
-   */
-  public String getSource() {
-    return this._source;
-  }
-
-  /**
-   * <p>
-   * Sets where to read the referenced projects from. Allowed values are 'classpath' or 'project'.
-   * </p>
-   * 
-   * @param source
-   *          where to read the referenced projects from.
-   */
-  public void setSource(String source) {
-    this._source = source;
-  }
-
-  /**
-   * <p>
    * Returns if required projects should be resolve recursive.
    * </p>
    * 
@@ -188,14 +122,6 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     this._recursive = recursive;
   }
 
-  public boolean isExportedOnly() {
-    return this._exportedOnly;
-  }
-
-  public void setExportedOnly(boolean exportedOnly) {
-    this._exportedOnly = exportedOnly;
-  }
-
   public boolean isPropertySet() {
     return Utilities.hasText(this._property);
   }
@@ -206,126 +132,49 @@ public class GetReferencedProjectsTask extends AbstractProjectBasedTask {
     }
   }
 
-  protected void requireSourceSet() {
-    if (!Utilities.hasText(getSource())) {
-      throw new BuildException("Missing parameter: 'source'");
-    }
-    if (!SOURCE_CLASSPATH.equals(getSource()) && !SOURCE_PROJECT.equals(getSource())) {
-      throw new BuildException("Invalid 'source' parameter value. Must be '" + SOURCE_CLASSPATH + "' or '"
-          + SOURCE_PROJECT + "'");
-    }
-  }
-
-  public boolean isReadFromProject() {
-    return SOURCE_PROJECT.equals(getSource());
-  }
-
-  public boolean isReadFromClasspath() {
-    return SOURCE_CLASSPATH.equals(getSource());
-  }
-
   /**
    * {@inheritDoc}
    */
   @Override
   protected void doExecute() {
     requirePropertySet();
-    requireSourceSet();
     requireWorkspaceAndProjectNameSet();
 
-    throw new UnsupportedOperationException("Not implemented yet");
+    final EclipseProject eclipseProject = getEclipseProject();
+    final List<EclipseProject> result = new LinkedList<EclipseProject>();
 
-    // EclipseProject[] referencedProjects;
-    // try {
-    //
-    // List rejected = null;
-    // if (this._unavailableProjects != null) {
-    // rejected = new LinkedList();
-    // }
-    // if (isReadFromClasspath()) {
-    // referencedProjects = ReferencedProjectsResolver.getProjectsReferencedByClasspath(getEclipseProject(),
-    // isExportedOnly(), rejected);
-    // } else {
-    // referencedProjects = ReferencedProjectsResolver.getReferencedProjects(getEclipseProject(), isRecursive(),
-    // rejected);
-    // }
-    //
-    // StringBuffer result = new StringBuffer();
-    // if (this._specifiedNames) {
-    // result.append(referencedProjects[0].getSpecifiedName());
-    // } else {
-    // result.append(referencedProjects[0].getFolderName());
-    // }
-    // for (int i = 1; i < referencedProjects.length; i++) {
-    // result.append(getSeparator());
-    // if (this._specifiedNames) {
-    // result.append(referencedProjects[i].getSpecifiedName());
-    // } else {
-    // result.append(referencedProjects[i].getFolderName());
-    // }
-    // }
-    // A4ELogging.debug("Setting '%s' to list of referenced projects '%s'", getProperty(), result);
-    // getProjectDelegate().setStringProperty(getProperty(), result.toString());
-    //
-    // if ((rejected != null) && (!rejected.isEmpty())) {
-    // result.setLength(0);
-    // result.append(rejected.get(0));
-    // for (int i = 1; i < rejected.size(); i++) {
-    // result.append(getSeparator());
-    // result.append(rejected.get(i));
-    // }
-    // A4ELogging.debug("Setting '%s' to list of rejected projects '%s'", this._unavailableProjects,
-    // result);
-    // getProjectDelegate().setStringProperty(this._unavailableProjects, result.toString());
-    // }
-    //
-    // } catch (BuildException ex) {
-    // throw ex;
-    // } catch (Exception ex) {
-    // A4ELogging.debug(ex.getMessage());
-    // throw new BuildException(ex.getMessage(), ex);
-    // }
+    resolveDependencies(ServiceRegistryAccess.instance().getService(ReferencedProjectsResolverService.class), result,
+        isRecursive(), eclipseProject);
+
+    StringBuilder builder = new StringBuilder();
+    Iterator<EclipseProject> it = result.iterator();
+
+    while (it.hasNext()) {
+      builder.append(it.next().getSpecifiedName());
+      if (it.hasNext()) {
+        builder.append(getSeparator());
+      }
+    }
+
+    getProject().setProperty(this._property, builder.toString());
   }
 
-  /**
-   * <p>
-   * </p>
-   * 
-   * @author Nils Hartmann (nils@nilshartmann.net)
-   */
-  public static class NonJavaProjectHandling extends EnumeratedAttribute {
+  private void resolveDependencies(final ReferencedProjectsResolverService referencedProjectsResolverService,
+      final List<EclipseProject> result, final boolean recursive, final EclipseProject project) {
+    List<EclipseProject> referencedProjects = referencedProjectsResolverService
+        .resolveReferencedProjects(project, null);
 
-    /**
-     * Creates a new instance of type NonJavaProjectHandling.
-     */
-    public NonJavaProjectHandling() {
-      // default cstr
+    for (EclipseProject eclipseProject : referencedProjects) {
+      if (!result.contains(eclipseProject)) {
+        result.add(eclipseProject);
+
+        if (recursive) {
+          resolveDependencies(referencedProjectsResolverService, result, recursive, eclipseProject);
+        }
+      }
+
     }
 
-    /**
-     * Creates a new instance of type NonJavaProjectHandling.
-     * 
-     * @param value
-     *          the yalue to be set.
-     */
-    public NonJavaProjectHandling(String value) {
-      super();
-      setValue(value);
-    }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String[] getValues() {
-      return new String[] { "fail", "ignore", "prepend", "append" };
-    }
-
-    /**
-     * @return
-     */
-    public int asBuildOrderResolverConstant() {
-      return getIndex() + 1;
-    }
-  } /* ENDCLASS */
 }
