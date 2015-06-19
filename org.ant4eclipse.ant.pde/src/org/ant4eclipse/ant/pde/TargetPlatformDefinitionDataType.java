@@ -24,8 +24,10 @@ import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.pde.PdeExceptionCode;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformDefinition;
 import org.ant4eclipse.lib.pde.tools.TargetPlatformRegistry;
+import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DataType;
+import org.apache.tools.ant.types.DirSet;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -145,6 +147,24 @@ public class TargetPlatformDefinitionDataType extends AbstractAnt4EclipseDataTyp
   public void addConfiguredLocation(Location location) {
     Assure.notNull("location", location);
     this._targetPlatformDefinition.addLocation(location.getDirectory());
+  }
+
+  /** Add all files selected by the specified dirset to the target platform */
+  /**
+   * @param dirSet
+   *          The {@link DirSet}
+   */
+  public void addConfiguredDirSet(DirSet dirSet) {
+    final DirectoryScanner scanner = dirSet.getDirectoryScanner(getProject());
+
+    String[] includedDirectories = scanner.getIncludedDirectories();
+    for (String string : includedDirectories) {
+      final File directory = new File(dirSet.getDir(), string);
+      Location location = new Location();
+      location.setProject(getProject());
+      location.setDir(directory);
+      addConfiguredLocation(location);
+    }
   }
 
   /**
