@@ -27,15 +27,20 @@ import org.ant4eclipse.lib.core.util.Utilities;
 public class ExpansionDirectory {
 
   /** the default expansion directory **/
-  public static final String DEFAULT_EXPANSION_DIRECTORY       = System.getProperty("java.io.tmpdir")
-                                                                   + File.separatorChar + "a4e_expand_dir_"
-                                                                   + UUID.randomUUID();
+  public static final String DEFAULT_EXPANSION_DIRECTORY                           = System
+                                                                                       .getProperty("java.io.tmpdir")
+                                                                                       + File.separatorChar
+                                                                                       + "a4e_expand_dir_"
+                                                                                       + UUID.randomUUID();
 
   /** the name of the expansion directory property **/
-  public static final String EXPANSION_DIRECTORY_PROPERTY_NAME = "a4e.expansion.directory";
+  public static final String EXPANSION_DIRECTORY_PROPERTY_NAME                     = "a4e.expansion.directory";
+
+  /** skip removal of expansion dir when ant4eclipse ends */
+  public static final String EXPANSION_DIRECTORY_DONOTREMOVE_ON_EXIT_PROPERTY_NAME = "a4e.expansion.directory.do-not-remove-on-exit";
 
   /** the expansion directory */
-  private static File        expansionDir                      = null;
+  private static File        expansionDir                                          = null;
 
   /**
    * <p>
@@ -70,15 +75,17 @@ public class ExpansionDirectory {
         }
       }
 
-      // delete on exit
-      Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+      if (!Boolean.getBoolean(EXPANSION_DIRECTORY_DONOTREMOVE_ON_EXIT_PROPERTY_NAME)) {
+        // delete on exit
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 
-        public void run() {
-          if (expansionDir.exists()) {
-            Utilities.delete(expansionDir);
+          public void run() {
+            if (expansionDir.exists()) {
+              Utilities.delete(expansionDir);
+            }
           }
-        }
-      }));
+        }));
+      }
     }
 
     // return the expansion directory
