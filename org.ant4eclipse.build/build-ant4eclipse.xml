@@ -10,6 +10,7 @@
 
   <property environment="env" />
 
+
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- PATH DEFINITIONS                                                                        -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -34,10 +35,11 @@
   <taskdef classpathref="path.antcontrib"
            resource="net/sf/antcontrib/antlib.xml" />
 
+	<!--
   <installedJREs>
-    <!-- jre id="jdk15" location="${jdk15.location}"/ -->
     <jre id="jdk16" location="${jdk16.location}" />
   </installedJREs>
+  -->
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- MACRO DEFINITIONS                                                                       -->
@@ -220,6 +222,9 @@
 
     <!-- directory to be meant for the dynamic creation of configurations. -->
     <property name="dest.cfg" value="${destination}/cfg" />
+  	<tstamp>
+  	    <format property="BUILD_TIMESTAMP" pattern="yyyyMMdd_HHmm" />
+  	  </tstamp>
 
     <!-- identify the current revision (or local build) -->
     <if>
@@ -228,16 +233,18 @@
       </not>
       <then>
         <if>
-          <equals arg1="${env.BUILD_NUMBER}" arg2="$${env.BUILD_NUMBER}" />
+          <equals arg1="${env.TRAVIS_BUILD_NUMBER}" arg2="$${env.TRAVIS_BUILD_NUMBER}" />
           <then>
             <var name="revision" value="local-revision" />
           </then>
           <else>
-            <var name="revision" value="${env.BUILD_NUMBER}" />
+            <var name="revision" value="${BUILD_TIMESTAMP}_${env.TRAVIS_BUILD_NUMBER}" />
           </else>
         </if>
       </then>
     </if>
+  	
+	<echoproperties />
 
   </target>
 

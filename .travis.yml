@@ -1,0 +1,22 @@
+language: java
+jdk:
+- openjdk6
+script:
+- ant -lib org.ant4eclipse.build/libs -f org.ant4eclipse.build/build-ant4eclipse.xml
+  build.ant4eclipse
+- ant -lib org.ant4eclipse.build/libs -f org.ant4eclipse.build/test-ant4eclipse.xml
+  tests.ant4eclipse
+before_deploy:
+  - export RELEASE_PKG_FILE=$(ls org.ant4eclipse.build/destination/org.ant4eclipse_*)
+  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+deploy:
+  provider: releases
+  api_key:
+    secure: D1xlBmvuHYNSbRC54sfo/jVA6xEtwCHW2gTCe8rRkPATt1wpakNAQ0crGlNBBioJsz0RuW8TAMhlrUja9hus7M6CHZQmROH+phNhlLKcnUykTLlEGVXHmTsqVx+3XFHx5i/rP3c5nqZ3QrT7BtUYFSpzbG42DOZsd4/9w3bpKHZF5QrI5ha1lkUxyhthTQ7wjVEVhRlflVZegrlThjoNkH0uZbZhlsXF0rTy26+IYcKVsfg/FYuc8Xx5vYIkv13nwRPcHLMSGnWhIwa3D9lyiixmX2WW5ObqxjZRaXy9FV6BTR16DvOhlc+y8y6Be0dj8Bbg1o9BpUEpUOP7rq+DiyJnP4bImx1hiYc/VOcYBZDvss3ssOdXZ8VviIY1je6faScNcMnagkJFl8Vh/C4cGDBkrBocxj7EyYWOBIRrfJoteSQVixX0wxjekV1P++fIg90GeqwrzACc0eBcKqu8G2TStu5retwVVGnKVDdXv2Q6D1GWzKWUttZpwce6+w/Bolr5oYSG8qqLtzAVmfEqgYPzM9u+4By30ScPF25QKoWTaURIfeaZKgln7JOjMrprEzZln8/+DQzAIZfRvuBRAStskvVBgoxjQN72xAwLec4P87C2GpH9mSBt6EsL5ikTLij/rcb7+DtfDXX8MNnARfRlSRJAQtCHK+1f24guGIM=
+  file_glob: true
+  file: "org.ant4eclipse.build/destination/org.ant4eclipse_*"
+  skip_cleanup: true
+  on:
+    repo: nilshartmann/ant4eclipse
+    tags: true
+
