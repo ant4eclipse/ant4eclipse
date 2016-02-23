@@ -64,6 +64,7 @@
     <attribute name="targetLevel" default="1.5" />
     <attribute name="sourceLevel" default="@{targetLevel}" />
     <attribute name="useEcj" default="true" />
+    <attribute name="clean" default="true" />
 
     <!-- element definitions for lifecycle phases -->
     <element name="initialize"
@@ -133,21 +134,26 @@
         </ant4eclipse:forProject>
 
         <!-- Step 4: clean output directories -->
-        <!-- Step 4: clean output directories -->
-        <ant4eclipse:forEachOutputDirectory>
-          <antcontrib:if>
-            <equals arg1="${buildJdtProject.output.directory}"
-                    arg2="${buildJdtProject.project.directory}" />
-            <antcontrib:then>
-              <echo level="warning"> * NOT cleaning output directory '${buildJdtProject.output.directory}' as it points to the projects (${buildJdtProject.project.name}) root folder</echo>
-            </antcontrib:then>
-            <antcontrib:else>
-              <echo> * Cleaning output directory '${buildJdtProject.output.directory}' project: ${buildJdtProject.project.directory}</echo>
-              <delete dir="${buildJdtProject.output.directory}" quiet="true" />
-              <mkdir dir="${buildJdtProject.output.directory}" />
-            </antcontrib:else>
-          </antcontrib:if>
-        </ant4eclipse:forEachOutputDirectory>
+         <ant4eclipse:forEachOutputDirectory>
+     	  <antcontrib:if>
+      	    <equals arg1="@{clean}" arg2="true" />
+             <antcontrib:then>
+	       <antcontrib:if>
+	          <equals arg1="${buildJdtProject.output.directory}"
+	                  arg2="${buildJdtProject.project.directory}" />
+	          <antcontrib:then>
+	            <echo level="warning"> * NOT cleaning output directory '${buildJdtProject.output.directory}' as it points to the projects (${buildJdtProject.project.name}) root folder</echo>
+	          </antcontrib:then>
+	          <antcontrib:else>
+	            <echo> * Cleaning output directory '${buildJdtProject.output.directory}' project: ${buildJdtProject.project.directory}</echo>
+	            <delete dir="${buildJdtProject.output.directory}" quiet="true" />
+	          </antcontrib:else>
+	        </antcontrib:if>
+               </antcontrib:then>
+      	  </antcontrib:if>
+      	
+	  <mkdir dir="${buildJdtProject.output.directory}" />
+         </ant4eclipse:forEachOutputDirectory>
 
         <!-- Step 5: Compile the project (as long as it has at least one source dir) using the eclipse java compiler (ejc) -->
         <ant4eclipse:forProject filter="(buildJdtProject.source.directories=*)">
