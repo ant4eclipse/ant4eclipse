@@ -31,7 +31,6 @@ import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver;
 import org.ant4eclipse.lib.pde.internal.tools.BundleDependenciesResolver.BundleDependency;
 import org.ant4eclipse.lib.pde.internal.tools.TargetPlatformImpl;
 import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundleException;
-import org.ant4eclipse.lib.pde.internal.tools.UnresolvedBundlesAnalyzer;
 import org.ant4eclipse.lib.pde.model.buildproperties.PluginBuildProperties;
 import org.ant4eclipse.lib.pde.model.pluginproject.BundleSource;
 import org.ant4eclipse.lib.pde.model.pluginproject.PluginProjectRole;
@@ -246,12 +245,12 @@ public class RequiredPluginsResolver implements ClasspathContainerResolver {
   private Ant4EclipseException newBundleNotResolvedException(UnresolvedBundleException e, TargetPlatform targetPlatform) {
 
     // try to find the root cause
-    BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform)
-        .getRootCause(e.getBundleDescription());
+    // BundleDescription description = new UnresolvedBundlesAnalyzer(targetPlatform)
+    // .getRootCause(e.getBundleDescription());
 
     // throw a BUNDLE_NOT_RESOLVED_EXCEPTION
     return new Ant4EclipseException(PdeExceptionCode.BUNDLE_NOT_RESOLVED_EXCEPTION,
-        TargetPlatformImpl.dumpResolverErrors(description, true));
+        TargetPlatformImpl.dumpResolverErrors(new BundleDescription[] { e.getBundleDescription() }, true));
 
   }
 

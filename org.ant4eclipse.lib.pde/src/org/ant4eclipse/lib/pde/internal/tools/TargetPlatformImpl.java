@@ -14,10 +14,16 @@ package org.ant4eclipse.lib.pde.internal.tools;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
@@ -36,7 +42,9 @@ import org.eclipse.osgi.framework.internal.core.FrameworkProperties;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.ResolverError;
 import org.eclipse.osgi.service.resolver.State;
+import org.eclipse.osgi.service.resolver.StateHelper;
 import org.eclipse.osgi.service.resolver.StateObjectFactory;
+import org.eclipse.osgi.service.resolver.VersionConstraint;
 import org.osgi.framework.Filter;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
@@ -614,11 +622,9 @@ public final class TargetPlatformImpl implements TargetPlatform {
     // boolean allStatesResolved = true;
 
     if (A4ELogging.isDebuggingEnabled()) {
-      for (BundleDescription description : bundleDescriptions) {
-        String resolverErrors = dumpResolverErrors(description, true);
-        if (resolverErrors != null && !resolverErrors.trim().equals("")) {
-          A4ELogging.debug(resolverErrors);
-        }
+      String resolverErrors = dumpResolverErrors(bundleDescriptions, true);
+      if (resolverErrors != null && !resolverErrors.trim().equals("")) {
+        A4ELogging.debug(resolverErrors);
       }
     }
     // return the state
@@ -705,9 +711,10 @@ public final class TargetPlatformImpl implements TargetPlatform {
   public static String dumpResolverErrors(BundleDescription description, boolean dumpHeader) {
     Assure.notNull("description", description);
 
-    StringBuffer stringBuffer = new StringBuffer();
+    StringBuilder stringBuffer = new StringBuilder();
     State state = description.getContainingState();
     ResolverError[] errors = state.getResolverErrors(description);
+
     if (!description.isResolved() || ((errors != null) && (errors.length != 0))) {
       if ((errors != null) && (errors.length == 1) && (errors[0].getType() == ResolverError.SINGLETON_SELECTION)) {
         stringBuffer.append("Not using '");
@@ -737,6 +744,102 @@ public final class TargetPlatformImpl implements TargetPlatform {
         }
       }
     }
+    return stringBuffer.toString();
+
+  }
+
+  public static String dumpResolverErrors(BundleDescription[] descriptions, boolean dumpHeader) {
+    if (descriptions.length < 1) {
+      return "";
+    }
+
+    final StringBuilder result = new StringBuilder();
+
+    for (BundleDescription bundleDescription : descriptions) {
+      result.append(dumpResolverErrors(bundleDescription, dumpHeader));
+    }
+
+    final State state = descriptions[0].getContainingState();
+
+    if (Boolean.getBoolean("a4e.dumpResolverErrors")) {
+      result.append(getUnresolvedLeaves(state, descriptions));
+    }
+
+    return result.toString();
+  }
+
+  public static String getUnresolvedLeaves(final State state, final BundleDescription[] allDescriptions) {
+    final StringBuilder stringBuffer = new StringBuilder();
+
+    final StateHelper helper = state.getStateHelper();
+
+    final List<BundleDescription> descriptionsWithError = new LinkedList<BundleDescription>();
+    for (BundleDescription bundleDescription : allDescriptions) {
+      if (!bundleDescription.isResolved()) {
+        descriptionsWithError.add(bundleDescription);
+      }
+    }
+
+    final BundleDescription[] descriptions = descriptionsWithError.toArray(new BundleDescription[0]);
+
+    if (helper != null) {
+      VersionConstraint[] unsatisfiedLeaves = helper.getUnsatisfiedLeaves(descriptions);
+      stringBuffer.append("\n  -------- UNSATISFIED LEAVES OF " + Arrays.asList(descriptions) + ": -----------\n");
+      stringBuffer.append("  Unsatisfied Leaves Count: " + unsatisfiedLeaves.length + "\n");
+      final SortedMap<String, SortedSet<String>> allUnresolvedBundles = new TreeMap<String, SortedSet<String>>();
+      for (VersionConstraint versionConstraint : unsatisfiedLeaves) {
+        BundleDescription unresolvedBundle = versionConstraint.getBundle();
+        final String unresolvedBundleName = unresolvedBundle.getName();
+
+        String missingConstraint = versionConstraint.getName();
+
+        SortedSet<String> missingConstraints = allUnresolvedBundles.get(unresolvedBundleName);
+        if (missingConstraints == null) {
+          missingConstraints = new TreeSet<String>();
+
+          BundleDescription[] fragments = unresolvedBundle.getFragments();
+          if (fragments != null && fragments.length > 0) {
+            for (BundleDescription bundleDescription : fragments) {
+              missingConstraints.add("    (attached fragment: " + bundleDescription.getName() + ")");
+            }
+          }
+
+          allUnresolvedBundles.put(unresolvedBundleName, missingConstraints);
+        }
+
+        BundleDescription missingOrUnresolvedBundle = state.getBundle(versionConstraint.getName(), null);
+        if (missingOrUnresolvedBundle == null) {
+          missingConstraint = missingConstraint + " (Package or Bundle not found in Target Platform)";
+        } else {
+          BundleDescription[] fragments = missingOrUnresolvedBundle.getFragments();
+          if (fragments != null && fragments.length > 0) {
+            missingConstraint = missingConstraint + " (has attached fragments: ";
+            for (BundleDescription bundleDescription : fragments) {
+              missingConstraint = missingConstraint + " " + bundleDescription.getName();
+            }
+            missingConstraint = missingConstraint + ")";
+          }
+        }
+
+        missingConstraints.add(missingConstraint);
+      }
+
+      Iterator<Entry<String, SortedSet<String>>> it = allUnresolvedBundles.entrySet().iterator();
+      while (it.hasNext()) {
+        Entry<String, SortedSet<String>> next = it.next();
+        stringBuffer.append("  - " + next.getKey() + " misses:\n");
+        Iterator<String> iterator = next.getValue().iterator();
+        while (iterator.hasNext()) {
+          stringBuffer.append("     -> " + iterator.next() + "\n");
+        }
+      }
+
+      stringBuffer.append("  -----------------------------------------------------------------------\n");
+
+    } else {
+      stringBuffer.append("Could not get StateHelper\n");
+    }
+
     return stringBuffer.toString();
   }
 
