@@ -21,9 +21,11 @@ import java.util.StringTokenizer;
 
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.data.Version;
+import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
 import org.ant4eclipse.lib.core.util.Utilities;
+import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.internal.model.jre.support.LibraryDetector;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
 import org.ant4eclipse.lib.jdt.model.jre.JavaRuntime;
@@ -40,13 +42,13 @@ public class JavaRuntimeLoader {
   private static final String J2ME_MICROEDITION_CONFIGURATION = "microedition.configuration"; //$NON-NLS-1$
 
   /** J2ME profile property name */
-  private static final String J2ME_MICROEDITION_PROFILES      = "microedition.profiles";     //$NON-NLS-1$
+  private static final String J2ME_MICROEDITION_PROFILES      = "microedition.profiles";      //$NON-NLS-1$
 
   /**  */
-  private static String       J2SE                            = "J2SE-";                     //$NON-NLS-1$
+  private static String       J2SE                            = "J2SE-";                      //$NON-NLS-1$
 
   /**  */
-  private static String       JAVASE                          = "JavaSE-";                   //$NON-NLS-1$
+  private static String       JAVASE                          = "JavaSE-";                    //$NON-NLS-1$
 
   /**
    * @param id
@@ -109,6 +111,11 @@ public class JavaRuntimeLoader {
 
     String javaProfileName = getVmProfile(properties);
     JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
+    if (!javaRuntimeRegistry.hasJavaProfile(javaProfileName)) {
+      A4ELogging.error("No Java-Profile with name '%s' found for JRE '%s' located at '%s'. Known Profiles: '%s'",
+          javaProfileName, id, location, javaRuntimeRegistry.getAllJavaProfileNames());
+      throw new Ant4EclipseException(JdtExceptionCode.NO_JAVA_PROFILE_FOUND_FOR_JRE, id, location, javaProfileName);
+    }
     JavaProfile javaProfile = javaRuntimeRegistry.getJavaProfile(javaProfileName);
 
     JavaRuntime javaRuntime = new JavaRuntimeImpl(id, location, libraries, javaVersion, javaSpecificationVersion,

@@ -40,6 +40,9 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
   /** the default java runtime key * */
   private String                   _defaultJavaRuntimeKey = null;
 
+  /** the default java runtime (lazy initialized) */
+  private JavaRuntime              _defaultJavaRuntime    = null;
+
   /** the java runtime cache */
   private Map<String, JavaRuntime> _javaRuntimeCache;
 
@@ -124,6 +127,10 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
     return JavaProfileReader.getInstance().hasJavaProfile(path);
   }
 
+  public String getAllJavaProfileNames() {
+    return JavaProfileReader.getInstance().getAllProfileNames();
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -191,28 +198,32 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    */
   public JavaRuntime getDefaultJavaRuntime() {
 
-    // search for default key
-    if ((this._defaultJavaRuntimeKey != null) && this._javaRuntimeCache.containsKey(this._defaultJavaRuntimeKey)) {
-      return this._javaRuntimeCache.get(this._defaultJavaRuntimeKey);
+    if (this._defaultJavaRuntime != null) {
+      return this._defaultJavaRuntime;
+    }
+
+    if (this._defaultJavaRuntimeKey != null) {
+      if (this._javaRuntimeCache.containsKey(this._defaultJavaRuntimeKey)) {
+        this._defaultJavaRuntime = this._javaRuntimeCache.get(this._defaultJavaRuntimeKey);
+        return this._defaultJavaRuntime;
+      }
+
+      // default jre was specified but does not exists. This shouldn't happen as
+      // we make sure that there is a JRE with the default id in the moment
+      // the default jre is set (setDefaultJavaRuntime).
+      // For backward compatibility we only print a warning here.
+      A4ELogging.error(
+          "No default JRE configured with id '%s'. (missing or wrong <installedJREs> in your build file?). Trying to use JRE from java.home. ",
+          this._defaultJavaRuntimeKey);
     }
 
     // TODO:
-    // A4ELogging
-    // .warn(
-    // "No java runtime could be found for eclipse project '%s'. Possible reasons are: either there is no JRE_CONTAINER
-    // specified on the classpath or there is no JavaRuntime registered for the specified JRE_CONTAINER. Trying to use
-    // JRE from java.home"
-    // ,
-    // this._eclipseProject.getName());
+    A4ELogging.warn(
+        "No default JRE has been set (using the 'default' attribute on <installedJREs> data type). Trying to use JRE from java.home");
 
     // try to create java runtime from java.home
-    JavaRuntime javaRuntime = getJavaRuntimeFromJavaHome();
-    if (javaRuntime != null) {
-      return javaRuntime;
-    }
-
-    // no java runtime available - throw RuntimeException
-    throw new Ant4EclipseException(JdtExceptionCode.NO_DEFAULT_JAVA_RUNTIME_EXCEPTION);
+    this._defaultJavaRuntime = getJavaRuntimeFromJavaHome();
+    return this._defaultJavaRuntime;
   }
 
   /**
@@ -323,8 +334,8 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // if system property 'java.home' is not set, return null
     if (javaHome == null) {
-      A4ELogging.debug("System property 'java.home' not set.");
-      return null;
+      throw new Ant4EclipseException(JdtExceptionCode.NO_DEFAULT_JAVA_RUNTIME_EXCEPTION,
+          "Tried to read JRE from 'java.home' but system property 'java.home' is not set.");
     }
 
     // create file
@@ -332,12 +343,12 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // if location is not a directory, return null
     if (!location.isDirectory()) {
-      A4ELogging.debug("Location of 'java.home' (%s) is not a directory", javaHome);
-      return null;
+      throw new Ant4EclipseException(JdtExceptionCode.NO_DEFAULT_JAVA_RUNTIME_EXCEPTION,
+          String.format("Location of 'java.home' (%s) is not a directory", javaHome));
     }
 
     // create new java runtime
-    A4ELogging.debug("Using JRE defined in system property 'java.home' (%s)", location.getAbsolutePath());
+    A4ELogging.info("Using default JRE defined in system property 'java.home' (%s)", location.getAbsolutePath());
     return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null, null, null);
   }
 }

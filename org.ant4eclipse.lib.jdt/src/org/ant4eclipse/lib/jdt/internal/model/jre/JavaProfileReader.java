@@ -12,6 +12,7 @@
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,6 +72,17 @@ public class JavaProfileReader implements Lifecycle {
    */
   public JavaProfile readDefaultProfile() {
     return this._defaultProfile;
+  }
+
+  /**
+   * Returns a list of all known profiles as string. Mostly intended for debugging purposes
+   * 
+   * @return string containing all profile names
+   */
+  public String getAllProfileNames() {
+    final List<String> profileNames = new LinkedList<String>(this._javaProfileCache.keySet());
+    Collections.sort(profileNames);
+    return String.valueOf(profileNames);
   }
 
   /**

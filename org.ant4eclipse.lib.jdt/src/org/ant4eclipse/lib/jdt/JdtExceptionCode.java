@@ -41,7 +41,7 @@ public class JdtExceptionCode extends ExceptionCode {
   @NLSMessage("Project '%s' must have a java project role.")
   public static JdtExceptionCode NO_JAVA_PROJECT_ROLE;
 
-  @NLSMessage("Default java runtime could not be resolved!")
+  @NLSMessage("Default java runtime could not be resolved: %s")
   public static JdtExceptionCode NO_DEFAULT_JAVA_RUNTIME_EXCEPTION;
 
   @NLSMessage("Exception while executing java launcher ('%s')")
@@ -72,6 +72,9 @@ public class JdtExceptionCode extends ExceptionCode {
 
   @NLSMessage("The class path variable '%s' is declared at least once with different locations: '%s' <-> '%s' !")
   public static JdtExceptionCode CONFLICTING_CLASSPATH_VARIABLES;
+
+  @NLSMessage("The JRE with id '%s' at '%s' has VM Profile '%s' but that profile is unknown.")
+  public static JdtExceptionCode NO_JAVA_PROFILE_FOUND_FOR_JRE;
 
   static {
     NLS.initialize(JdtExceptionCode.class);

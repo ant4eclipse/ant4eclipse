@@ -139,4 +139,11 @@ public interface JavaRuntimeRegistry {
    */
   JavaProfile getJavaProfile(String id);
 
+  /**
+   * Returns a String containing all known Java Profiles (intended for debugging purposes)
+   * 
+   * @return a string containing all Java Profile Names
+   */
+  String getAllJavaProfileNames();
+
 }
