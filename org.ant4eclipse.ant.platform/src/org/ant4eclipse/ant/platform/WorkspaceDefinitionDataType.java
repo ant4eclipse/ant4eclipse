@@ -1,13 +1,10 @@
 package org.ant4eclipse.ant.platform;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.ant4eclipse.ant.core.AbstractAnt4EclipseDataType;
+import org.ant4eclipse.lib.core.logging.A4ELevel;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
+import org.ant4eclipse.lib.core.util.PropertyService;
 import org.ant4eclipse.lib.platform.internal.model.resource.workspaceregistry.ProjectFileParser;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.FilesetWorkspaceDefinition;
 import org.ant4eclipse.lib.platform.model.resource.workspaceregistry.WorkspaceRegistry;
@@ -15,6 +12,11 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.DirSet;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -141,8 +143,18 @@ public class WorkspaceDefinitionDataType extends AbstractAnt4EclipseDataType {
       return;
     }
     // Everything is fine, we add this directory!
-    A4ELogging.info("Add project for location %s", file);
+    A4ELogging.log(getLogLevelForProjectLocation(), "Add project for location %s", file);
     projectDirectories.add(file);
+  }
+
+  /**
+   * Returns the level for logging a project location.
+   * 
+   * @return a log level as {@link A4ELevel}
+   */
+  protected A4ELevel getLogLevelForProjectLocation() {
+    PropertyService properties = ServiceRegistryAccess.instance().getService(PropertyService.class);
+    return A4ELevel.parse(properties.getProperty("ant4eclipse.projectLocation.logLevel"), A4ELevel.INFO);
   }
 
   /**
