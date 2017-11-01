@@ -26,6 +26,7 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.DirSet;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
 
@@ -62,6 +63,29 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     this._defaultJre = defaultJre;
   }
 
+  public void addConfiguredJreAutodiscover(AutoDiscover autoDiscover) {
+    List<DirSet> dirSets = autoDiscover.getDirSets();
+    if (dirSets != null) {
+      for (DirSet set : dirSets) {
+        DirectoryScanner scanner = set.getDirectoryScanner(getProject());
+        File dir = set.getDir();
+        for (String includedDir : scanner.getIncludedDirectories()) {
+          File file = new File(dir, includedDir);
+          A4ELogging.info("Checking %s for installed JRE...", file.getAbsolutePath());
+          Runtime runtime = new Runtime();
+          runtime.setId(file.getName());
+          runtime.setLocation(file);
+          try {
+            JavaRuntime rt = createJavaRuntime(runtime);
+            A4ELogging.info("... found JRE %s (%s).", rt.getJavaProfile().getName(), rt.getJavaVersion());
+          } catch (Exception e) {
+            A4ELogging.warn("Can't use JRE: %s", e.toString());
+          }
+        }
+      }
+    }
+  }
+
   /**
    * Adds the supplied java runtime environment to this type after it has been configured..
    * 
@@ -69,6 +93,10 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
    *          The java runtime environment configuration that shall be added.
    */
   public void addConfiguredJre(Runtime runtime) {
+    createJavaRuntime(runtime);
+  }
+
+  protected JavaRuntime createJavaRuntime(Runtime runtime) throws BuildException {
     File location = runtime.getLocation();
     if (location == null) {
       throw new BuildException("Missing parameter 'location' on jre!");
@@ -107,6 +135,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       A4ELogging.debug("Registered default JRE with id '%s'", ContainerTypes.JRE_CONTAINER);
       getProject().addReference(ContainerTypes.JRE_CONTAINER, path);
     }
+    return javaRuntime;
   }
 
   /**
@@ -132,6 +161,25 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
       }
     }
     return files;
+  }
+
+  public static class AutoDiscover {
+
+    private List<DirSet> _dirSets;
+
+    public void addDirSet(DirSet fileSet) {
+      if (this._dirSets == null) {
+        this._dirSets = new LinkedList<DirSet>();
+      }
+      this._dirSets.add(fileSet);
+    }
+
+    /**
+     * @return the current value of _dirSets
+     */
+    public List<DirSet> getDirSets() {
+      return this._dirSets;
+    }
   }
 
   public static class Runtime {
