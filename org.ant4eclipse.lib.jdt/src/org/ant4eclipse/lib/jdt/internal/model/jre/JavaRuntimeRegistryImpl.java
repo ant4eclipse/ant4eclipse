@@ -14,6 +14,7 @@ package org.ant4eclipse.lib.jdt.internal.model.jre;
 import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,13 +39,13 @@ import org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry;
 public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
   /** the default java runtime key * */
-  private String                   _defaultJavaRuntimeKey = null;
+  private String                         _defaultJavaRuntimeKey = null;
 
   /** the default java runtime (lazy initialized) */
-  private JavaRuntime              _defaultJavaRuntime    = null;
+  private JavaRuntime                    _defaultJavaRuntime    = null;
 
   /** the java runtime cache */
-  private Map<String, JavaRuntime> _javaRuntimeCache;
+  private final Map<String, JavaRuntime> _javaRuntimeCache      = new HashMap<String, JavaRuntime>();
 
   /**
    * <p>
@@ -52,9 +53,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * </p>
    */
   public JavaRuntimeRegistryImpl() {
-
-    // create hash maps
-    this._javaRuntimeCache = new HashMap<String, JavaRuntime>();
   }
 
   /**
@@ -73,20 +71,14 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    */
   public JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
       List<File> jreFiles) {
-    return registerJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles, false);
-  }
-
-  private JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
-      List<File> jreFiles, boolean isDefault) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
-    A4ELogging.info(
-        "registerJavaRuntime: id = %s, location = %s, extDirs = %s, endorsedDirs = %s, jreFiles = %s, isDefault = %s",
-        id, location, extDirs, endorsedDirs, jreFiles, isDefault);
+    A4ELogging.info("registerJavaRuntime: id = %s, location = %s, extDirs = %s, endorsedDirs = %s, jreFiles = %s", id,
+        location, extDirs, endorsedDirs, jreFiles);
 
     JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles);
 
-    return registerJavaRuntime(javaRuntime, isDefault);
+    return registerJavaRuntime(javaRuntime);
   }
 
   /**
@@ -217,13 +209,26 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
           this._defaultJavaRuntimeKey);
     }
 
-    // TODO:
-    A4ELogging.warn(
-        "No default JRE has been set (using the 'default' attribute on <installedJREs> data type). Trying to use JRE from java.home");
-
-    // try to create java runtime from java.home
-    this._defaultJavaRuntime = getJavaRuntimeFromJavaHome();
-    return this._defaultJavaRuntime;
+    JavaRuntime highest = null;
+    Collection<JavaRuntime> values = this._javaRuntimeCache.values();
+    for (JavaRuntime javaRuntime : values) {
+      if (highest == null || highest.getJavaVersion().compareTo(javaRuntime.getJavaVersion()) < 0) {
+        highest = javaRuntime;
+      }
+    }
+    if (highest != null) {
+      A4ELogging.warn(
+          "No default JRE has been set (using the 'default' attribute on <installedJREs> data type). Use highest JRE %s",
+          highest.getJavaVersion());
+      this._defaultJavaRuntime = highest;
+      return highest;
+    } else {
+      A4ELogging.warn("No JRE has been set (using <installedJREs> data type). Trying to use JRE from java.home: %s",
+          System.getProperty("java.home"));
+      // try to create java runtime from java.home
+      this._defaultJavaRuntime = getJavaRuntimeFromJavaHome();
+      return this._defaultJavaRuntime;
+    }
   }
 
   /**
@@ -288,7 +293,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * @return the path under this java runtime is stored, e.g.
    *         <code>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk15</code>
    */
-  private JavaRuntime registerJavaRuntime(JavaRuntime javaRuntime, boolean isDefault) {
+  private JavaRuntime registerJavaRuntime(JavaRuntime javaRuntime) {
     Assure.notNull("javaRuntime", javaRuntime);
 
     // create path
@@ -309,11 +314,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // store java runtime
     this._javaRuntimeCache.put(id, javaRuntime);
-
-    // store default if necessary
-    if (isDefault || (this._defaultJavaRuntimeKey == null)) {
-      setDefaultJavaRuntime(id);
-    }
 
     // return java runtime
     return javaRuntime;

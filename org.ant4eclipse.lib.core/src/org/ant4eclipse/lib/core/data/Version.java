@@ -11,14 +11,14 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core.data;
 
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+
 import org.ant4eclipse.lib.core.Assure;
 import org.ant4eclipse.lib.core.CoreExceptionCode;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.nls.NLS;
 import org.ant4eclipse.lib.core.nls.NLSMessage;
-
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
 
 /**
  * <p>
@@ -28,7 +28,7 @@ import java.util.StringTokenizer;
  * @author Gerd W&uuml;therich (gerd@gerd-wuetherich.de)
  * @author Daniel Kasmeroglu (Daniel.Kasmeroglu@Kasisoft.net)
  */
-public class Version {
+public class Version implements Comparable<Version> {
 
   @NLSMessage("The given version '%s' is invalid. Must match: <major> [ '.' <minor> [ '.' <micro> [ '_' <qualifier> ] ] ]")
   public static String MSG_FORMATERROR;
@@ -239,6 +239,43 @@ public class Version {
   @Override
   public String toString() {
     return this._str;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  public int compareTo(Version o) {
+    int cmp = compare(this._major, o._major);
+    if (cmp == 0) {
+      cmp = compare(this._minor, o._minor);
+      if (cmp == 0) {
+        cmp = compare(this._micro, o._micro);
+        if (cmp == 0) {
+          cmp = compare(this._qualifier, o._qualifier);
+        }
+      }
+    }
+    return cmp;
+  }
+
+  /**
+   * @param _major2
+   * @param _major3
+   * @return
+   */
+  private static <T extends Comparable<T>> int compare(T o1, T o2) {
+    if (o1 == o2) {
+      return 0;
+    }
+    if (o1 == null && o2 != null) {
+      return -1;
+    }
+    if (o1 != null && o2 == null) {
+      return 1;
+    }
+    return o1.compareTo(o2);
   }
 
 } /* ENDCLASS */
