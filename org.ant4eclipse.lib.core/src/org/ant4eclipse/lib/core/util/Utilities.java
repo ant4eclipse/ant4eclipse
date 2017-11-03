@@ -877,7 +877,8 @@ public class Utilities {
       writechannel = outstream.getChannel();
       readchannel.transferTo(0, readchannel.size(), writechannel);
     } catch (IOException ex) {
-      throw new Ant4EclipseException(ex, CoreExceptionCode.COPY_FAILURE, source.getAbsolutePath(), to.getAbsolutePath());
+      throw new Ant4EclipseException(ex, CoreExceptionCode.COPY_FAILURE, source.getAbsolutePath(),
+          to.getAbsolutePath());
     } finally {
       close(readchannel);
       close(writechannel);
@@ -1015,8 +1016,8 @@ public class Utilities {
     Assure.nonEmpty("encoding", encoding);
     try {
       File result = File.createTempFile("a4e", suffix);
-      writeFile(result, content, encoding);
       result.deleteOnExit();
+      writeFile(result, content, encoding);
       return result.getCanonicalFile();
     } catch (IOException ex) {
       A4ELogging.debug("Temp dir: %s", System.getProperty("java.io.tmpdir"));
@@ -1246,7 +1247,8 @@ public class Utilities {
       int result = process.waitFor();
       if (result != 0) {
         A4ELogging.error(CoreExceptionCode.LAUNCHING_FAILURE.getMessage(), exe, Integer.valueOf(result), output, error);
-        throw new Ant4EclipseException(CoreExceptionCode.LAUNCHING_FAILURE, exe, Integer.valueOf(result), output, error);
+        throw new Ant4EclipseException(CoreExceptionCode.LAUNCHING_FAILURE, exe, Integer.valueOf(result), output,
+            error);
       }
 
     } catch (Exception ex) {
