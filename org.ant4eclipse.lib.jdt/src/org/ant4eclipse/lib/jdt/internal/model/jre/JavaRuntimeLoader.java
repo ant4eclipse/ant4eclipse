@@ -85,7 +85,7 @@ public class JavaRuntimeLoader {
     String result = contents.toString();
     // System.out.println(result);
     String[] values = result.split("\\|");
-    Version javaVersion = Version.newStandardVersion(values[0]);
+    Version javaVersion = Version.newJavaVersion(values[0]);
     String sunbootclasspath = values[1];
     String javaextdirs = (extDirs != null ? extDirs : values[2]);
     String javaendorseddirs = (endorsedDirs != null ? endorsedDirs : values[3]);
@@ -180,11 +180,10 @@ public class JavaRuntimeLoader {
           vmProfile = "CDC-" + javaSpecVersion + "_Foundation-" + javaSpecVersion; //$NON-NLS-1$ //$NON-NLS-2$
         } else {
           javaEdition = J2SE;
-
-          if (Integer.parseInt(javaSpecVersion.split("\\.")[1]) >= 6) {
+          Version version = Version.newJavaVersion(javaSpecVersion);
+          if ((version.getMajor() == 1 && version.getMinor() >= 6) || version.getMajor() >= 9) {
             javaEdition = JAVASE;
           }
-
           vmProfile = javaEdition + javaSpecVersion;
         }
       }
