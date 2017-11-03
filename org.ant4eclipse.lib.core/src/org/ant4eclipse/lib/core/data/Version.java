@@ -63,7 +63,7 @@ public class Version implements Comparable<Version> {
    */
   public static final Version newBundleVersion(String version) {
     Assure.nonEmpty("version", version);
-    return new Version(version, true);
+    return new Version(version, true, null);
   }
 
   /**
@@ -78,7 +78,25 @@ public class Version implements Comparable<Version> {
    */
   public static final Version newStandardVersion(String version) {
     Assure.nonEmpty("version", version);
-    return new Version(version, false);
+    return new Version(version, false, null);
+  }
+
+  /**
+   * Parse the given String as a Java-Version information. This was somewhat unspecified in Releases &le; Java 8, from
+   * Java 9 onwards it is spcified as proposed by http://openjdk.java.net/jeps/223 This method treats all parts after
+   * the version as a "qualifier" like in a Bundle Version
+   * 
+   * @param version
+   *          A formatted version string. Neither <code>null</code> nor empty.
+   */
+  public static final Version newJavaVersion(String version) {
+    Assure.nonEmpty("version", version);
+    String[] split = version.split("[-+]", 2);
+    if (split.length > 1) {
+      return new Version(split[0], false, split[1]);
+    } else {
+      return new Version(version, false, null);
+    }
   }
 
   /**
@@ -93,13 +111,13 @@ public class Version implements Comparable<Version> {
    * @param bundleversion
    *          <code>true</code> <=> The format of the version denotes a bundle version.
    */
-  private Version(String version, boolean bundleversion) {
+  private Version(String version, boolean bundleversion, String qualifier) {
     Assure.nonEmpty("version", version);
 
     this._major = Integer.valueOf(0);
     this._minor = Integer.valueOf(0);
     this._micro = Integer.valueOf(0);
-    this._qualifier = null;
+    this._qualifier = qualifier;
 
     try {
       StringTokenizer st = new StringTokenizer(version, ".", false);
