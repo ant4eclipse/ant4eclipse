@@ -110,6 +110,18 @@ public final class ClassName {
   }
 
   /**
+   * Returns the Name of the outermost class. If this is not an inner class, the actual classname is returned
+   * 
+   * @return
+   */
+  public String getOuterClassName() {
+    int v = this._className.indexOf('$');
+    final String outerClassName = v == -1 ? this._className : this._className.substring(0, v);
+    return outerClassName;
+
+  }
+
+  /**
    * <p>
    * Returns this class name as a classname including the package directory structure and the ".java" ending (e.g.
    * <code>foo/bar/Bazz.java</code>
@@ -118,8 +130,17 @@ public final class ClassName {
    * @return this class name as a file name
    */
   public String asSourceFileName() {
-    String fileName = getQualifiedClassName().replace('.', '/');
-    return fileName + ".java";
+    String directoryName = getPackageAsDirectoryName();
+    if (!directoryName.isEmpty()) {
+      directoryName = directoryName + "/";
+    }
+    String fileName = directoryName + getOuterClassName() + ".java";
+    return fileName;
+  }
+
+  // TODO
+  public String asSimpleSourceFileName() {
+    return getOuterClassName() + ".java";
   }
 
   /**

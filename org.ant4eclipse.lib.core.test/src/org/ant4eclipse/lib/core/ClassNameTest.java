@@ -11,11 +11,10 @@
  **********************************************************************/
 package org.ant4eclipse.lib.core;
 
-import org.ant4eclipse.lib.core.ClassName;
+import java.util.LinkedList;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.LinkedList;
 
 public class ClassNameTest {
 
@@ -106,6 +105,22 @@ public class ClassNameTest {
     Assert.assertEquals("C", className.getClassName());
     Assert.assertEquals("C.class", className.asClassFileName());
     Assert.assertEquals("C.java", className.asSourceFileName());
+  }
+
+  @Test
+  public void withInnerClass() {
+    String CLASSNAME = "org.foo.Outer$Inner";
+
+    ClassName className = ClassName.fromQualifiedClassName(CLASSNAME);
+    Assert.assertNotNull(className);
+    Assert.assertEquals(CLASSNAME, className.getQualifiedClassName());
+    Assert.assertEquals(CLASSNAME, className.toString());
+    Assert.assertEquals("org.foo", className.getPackageName());
+    Assert.assertEquals("Outer$Inner", className.getClassName());
+    Assert.assertEquals("org/foo/Outer$Inner.class", className.asClassFileName());
+    Assert.assertEquals("org/foo/Outer.java", className.asSourceFileName());
+    Assert.assertEquals("Outer.java", className.asSimpleSourceFileName());
+
   }
 
 } /* ENDCLASS */
