@@ -1,6 +1,6 @@
 language: java
 jdk:
-- openjdk6
+- openjdk7
 script:
 - ant -lib org.ant4eclipse.build/libs -f org.ant4eclipse.build/build-ant4eclipse.xml
   build.ant4eclipse
