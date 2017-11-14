@@ -740,10 +740,75 @@ public final class TargetPlatformImpl implements TargetPlatform {
                 stringBuffer.append("\n");
               }
             }
+
+            if (Boolean.getBoolean("a4e.dumpResolverErrors")) {
+
+              StateHelper helper = state.getStateHelper();
+
+              if (helper != null) {
+                VersionConstraint[] unsatisfiedLeaves = helper
+                    .getUnsatisfiedLeaves(new BundleDescription[] { description });
+                stringBuffer.append("-------- UNSATISFIED LEAVES OF " + description.getName() + ": -----------\n");
+                stringBuffer.append("Unsatisfied Leaves Count: " + unsatisfiedLeaves.length + "\n");
+                final SortedMap<String, SortedSet<String>> allUnresolvedBundles = new TreeMap<String, SortedSet<String>>();
+                for (VersionConstraint versionConstraint : unsatisfiedLeaves) {
+                  BundleDescription unresolvedBundle = versionConstraint.getBundle();
+                  final String unresolvedBundleName = unresolvedBundle.getName();
+
+                  String missingConstraint = versionConstraint.getName();
+
+                  SortedSet<String> missingConstraints = allUnresolvedBundles.get(unresolvedBundleName);
+                  if (missingConstraints == null) {
+                    missingConstraints = new TreeSet<String>();
+
+                    BundleDescription[] fragments = unresolvedBundle.getFragments();
+                    if (fragments != null && fragments.length > 0) {
+                      for (BundleDescription bundleDescription : fragments) {
+                        missingConstraints.add("(attached fragment: " + bundleDescription.getName() + ")");
+                      }
+                    }
+
+                    allUnresolvedBundles.put(unresolvedBundleName, missingConstraints);
+                  }
+
+                  BundleDescription missingOrUnresolvedBundle = state.getBundle(versionConstraint.getName(), null);
+                  if (missingOrUnresolvedBundle == null) {
+                    missingConstraint = missingConstraint + " (Bundle not found in Target Platform)";
+                  } else {
+                    BundleDescription[] fragments = missingOrUnresolvedBundle.getFragments();
+                    if (fragments != null && fragments.length > 0) {
+                      missingConstraint = missingConstraint + " (has attached fragments: ";
+                      for (BundleDescription bundleDescription : fragments) {
+                        missingConstraint = missingConstraint + " " + bundleDescription.getName();
+                      }
+                      missingConstraint = missingConstraint + ")";
+                    }
+                  }
+
+                  missingConstraints.add(missingConstraint);
+                }
+
+                Iterator<Entry<String, SortedSet<String>>> it = allUnresolvedBundles.entrySet().iterator();
+                while (it.hasNext()) {
+                  Entry<String, SortedSet<String>> next = it.next();
+                  stringBuffer.append(" - " + next.getKey() + " misses bundle(s):\n");
+                  Iterator<String> iterator = next.getValue().iterator();
+                  while (iterator.hasNext()) {
+                    stringBuffer.append("    -> " + iterator.next() + "\n");
+                  }
+                }
+
+                stringBuffer.append("---------------------------------------------------\n");
+
+              } else {
+                stringBuffer.append("Could not get StateHelper\n");
+              }
+            }
           }
         }
       }
     }
+
     return stringBuffer.toString();
 
   }

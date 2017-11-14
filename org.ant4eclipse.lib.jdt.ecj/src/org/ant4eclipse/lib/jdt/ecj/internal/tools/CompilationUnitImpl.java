@@ -1,5 +1,3 @@
-/*--- (C) 1999-2017 Techniker Krankenkasse ---*/
-
 /**********************************************************************
  * Copyright (c) 2005-2009 ant4eclipse project team.
  *
@@ -193,5 +191,3 @@ public class CompilationUnitImpl implements ICompilationUnit {
 		return false;
 	}
 }
-
-/*--- Formatiert nach TK Code Konventionen vom 05.03.2002 ---*/
