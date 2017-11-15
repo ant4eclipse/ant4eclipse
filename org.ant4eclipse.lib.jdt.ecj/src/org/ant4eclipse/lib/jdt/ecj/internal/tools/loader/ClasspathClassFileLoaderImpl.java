@@ -617,7 +617,7 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
      */
     public ReferableSourceFile loadSourceFile(ClassName className) {
 
-      String javaFileName = className.getClassName() + ".java";
+      String javaFileName = className.asSimpleSourceFileName();
 
       for (File classpathEntry : this._sourcepathEntries) {
 
@@ -625,11 +625,11 @@ public class ClasspathClassFileLoaderImpl implements ClassFileLoader {
           File packageDir = new File(classpathEntry, className.getPackageAsDirectoryName());
           if (packageDir.isDirectory()) {
             for (String name : packageDir.list()) {
-              if (javaFileName.equals(name)
-                  && new File(classpathEntry, className.asSourceFileName().replace('/', File.separatorChar)
-                      .replace('\\', File.separatorChar)).exists()) {
-                return new ReferableSourceFileImpl(classpathEntry, className.asSourceFileName()
-                    .replace('/', File.separatorChar).replace('\\', File.separatorChar),
+              if (javaFileName.equals(name) && new File(classpathEntry,
+                  className.asSourceFileName().replace('/', File.separatorChar).replace('\\', File.separatorChar))
+                      .exists()) {
+                return new ReferableSourceFileImpl(classpathEntry,
+                    className.asSourceFileName().replace('/', File.separatorChar).replace('\\', File.separatorChar),
                     classpathEntry.getAbsolutePath(), ClasspathClassFileLoaderImpl.this._type);
               }
             }

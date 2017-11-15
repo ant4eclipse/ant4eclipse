@@ -11,59 +11,32 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre.support;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * Used to discover the boot path, extension directories, and endorsed directories for a Java VM.
  */
 public class LibraryDetector {
 
   /**
-   * Prints system properties to a file that must be specified in args[0].
+   * Prints system properties to std.out
    * <ul>
    * <li>java.version</li>
    * <li>sun.boot.class.path</li>
    * <li>java.ext.dirs</li>
    * <li>java.endorsed.dirs</li>
+   * <li>java.specification.version</li>
+   * <li>java.specification.name</li>
+   * <li>java.vendor</li>
    * </ul>
    * 
    * @param args
    */
   public static void main(String[] args) {
-
-    // create property string
-    StringBuffer buffer = new StringBuffer();
-    buffer.append(System.getProperty("java.version"));
-    buffer.append("|");
-    buffer.append(System.getProperty("sun.boot.class.path"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.ext.dirs"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.endorsed.dirs"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.specification.version"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.specification.name"));
-    buffer.append("|");
-    buffer.append(System.getProperty("java.vendor"));
-
-    // dump for logging purpose
-    System.out.println(buffer.toString());
-
-    // write to file
-    try {
-      File outfile = new File(args[0]);
-      BufferedWriter out = new BufferedWriter(new FileWriter(outfile));
-      out.write(buffer.toString());
-      out.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    //
-    // // exit
-    // System.exit(0);
+    System.out.println(System.getProperty("java.version", ""));
+    System.out.println(System.getProperty("sun.boot.class.path", ""));
+    System.out.println(System.getProperty("java.ext.dirs", ""));
+    System.out.println(System.getProperty("java.endorsed.dirs", ""));
+    System.out.println(System.getProperty("java.specification.version", ""));
+    System.out.println(System.getProperty("java.specification.name", ""));
+    System.out.println(System.getProperty("java.vendor", ""));
   }
 }

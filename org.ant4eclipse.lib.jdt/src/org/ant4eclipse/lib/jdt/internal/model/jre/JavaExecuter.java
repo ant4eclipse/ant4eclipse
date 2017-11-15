@@ -219,7 +219,7 @@ public class JavaExecuter {
   }
 
   /**
-   * @throws IOException
+   * start the vm, read the result and wait fro the process to finish
    */
   public void execute() {
 
