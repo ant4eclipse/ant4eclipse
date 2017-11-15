@@ -51,7 +51,9 @@ public class JavaRuntimeLoader {
 
   /**
    * @param id
+   *          the id to assign to this JRE
    * @param location
+   *          the location of the JRE
    * @param files
    *          the list of (jar-)files defining this java runtime or null if the file should be determined from the
    *          JavaRuntime's location
