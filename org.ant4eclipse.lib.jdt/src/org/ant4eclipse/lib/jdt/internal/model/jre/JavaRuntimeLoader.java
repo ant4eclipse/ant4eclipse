@@ -24,7 +24,6 @@ import org.ant4eclipse.lib.core.data.Version;
 import org.ant4eclipse.lib.core.exception.Ant4EclipseException;
 import org.ant4eclipse.lib.core.logging.A4ELogging;
 import org.ant4eclipse.lib.core.service.ServiceRegistryAccess;
-import org.ant4eclipse.lib.core.util.Utilities;
 import org.ant4eclipse.lib.jdt.JdtExceptionCode;
 import org.ant4eclipse.lib.jdt.internal.model.jre.support.LibraryDetector;
 import org.ant4eclipse.lib.jdt.model.jre.JavaProfile;
@@ -62,29 +61,11 @@ public class JavaRuntimeLoader {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
 
-    String outfileName = System.getProperty("java.io.tmpdir") + File.separatorChar + "ant4eclipse_jdk_props_"
-        + Math.round(Math.random() * 1000000000);
-    // System.out.println(outfileName);
-
     JavaExecuter javaLauncher = JavaExecuter.createWithA4eClasspath(location);
     javaLauncher.setMainClass(LibraryDetector.class.getName());
-    javaLauncher.setArgs(new String[] { outfileName });
-
     javaLauncher.execute();
+    String[] values = javaLauncher.getSystemOut();
 
-    // TODO
-    StringBuffer contents = new StringBuffer();
-    try {
-      File file = new File(outfileName);
-      contents = Utilities.readTextContent(file, Utilities.ENCODING, false);
-      file.deleteOnExit();
-    } catch (Throwable e) {
-      e.printStackTrace();
-    }
-
-    String result = contents.toString();
-    // System.out.println(result);
-    String[] values = result.split("\\|");
     Version javaVersion = Version.newJavaVersion(values[0]);
     String sunbootclasspath = values[1];
     String javaextdirs = (extDirs != null ? extDirs : values[2]);
@@ -103,8 +84,6 @@ public class JavaRuntimeLoader {
     }
 
     File[] libraries = files.toArray(new File[0]);
-
-    //
     Properties properties = new Properties();
     properties.put(JAVA_SPECIFICATION_VERSION, values[4]);
     properties.put(JAVA_SPECIFICATION_NAME, values[5]);
