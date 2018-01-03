@@ -12,10 +12,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: Xy2Lz54l3K4zAg0QnGig1amkNa+3z3nNS1eHg/wSdRfw35QahW2ZkjdVbeVhQLVJoEwy7FAm3TVNqVyyJN9Q+pJfMuqnQF4MReQ1U4jZDWyIGgkEPVq1olmHc+BQDJt50yqDaRqueU11mjodxemDcMytvcW5QOIIg1AVqjmjYv8=
-  file_glob: true
-  file: "org.ant4eclipse.build/destination/org.ant4eclipse_*"
-  skip_cleanup: true
+    secure: UvUiGNKkgxOQh+KZzHqjJ6sb89BTm+t3GDdCZpTCBR8VxQdwiK4FJGBkEfTLHViUcYvr2vQFMj49so0HYavbwFXQeBeG7vNH3psp0z+jk8YTvjR3REBYaVIRbnZL3IABxH86lLtJugsCzi1+btmx9sVMm1VtnM53y4l91MPfZQM=
+  file: org.ant4eclipse.build/destination/org.ant4eclipse_*
   on:
     repo: ant4eclipse/ant4eclipse
-    tags: true
