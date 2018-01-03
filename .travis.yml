@@ -1,18 +1,25 @@
 language: java
 jdk:
-- openjdk7
+  - openjdk7
 script:
-- ant -lib org.ant4eclipse.build/libs -f org.ant4eclipse.build/build-ant4eclipse.xml
-  build.ant4eclipse
-- ant -lib org.ant4eclipse.build/libs -f org.ant4eclipse.build/test-ant4eclipse.xml
-  tests.ant4eclipse
+  - >-
+    ant -lib org.ant4eclipse.build/libs -f
+    org.ant4eclipse.build/build-ant4eclipse.xml build.ant4eclipse
+  - >-
+    ant -lib org.ant4eclipse.build/libs -f
+    org.ant4eclipse.build/test-ant4eclipse.xml tests.ant4eclipse
 before_deploy:
-- export RELEASE_PKG_FILE=$(ls org.ant4eclipse.build/destination/org.ant4eclipse_*)
-- echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+  - >-
+    export RELEASE_PKG_FILE=$(ls
+    org.ant4eclipse.build/destination/org.ant4eclipse_*)
+  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
 deploy:
   provider: releases
   api_key:
-    secure: UvUiGNKkgxOQh+KZzHqjJ6sb89BTm+t3GDdCZpTCBR8VxQdwiK4FJGBkEfTLHViUcYvr2vQFMj49so0HYavbwFXQeBeG7vNH3psp0z+jk8YTvjR3REBYaVIRbnZL3IABxH86lLtJugsCzi1+btmx9sVMm1VtnM53y4l91MPfZQM=
+    secure: >-
+      UvUiGNKkgxOQh+KZzHqjJ6sb89BTm+t3GDdCZpTCBR8VxQdwiK4FJGBkEfTLHViUcYvr2vQFMj49so0HYavbwFXQeBeG7vNH3psp0z+jk8YTvjR3REBYaVIRbnZL3IABxH86lLtJugsCzi1+btmx9sVMm1VtnM53y4l91MPfZQM=
+  file_glob: true
   file: org.ant4eclipse.build/destination/org.ant4eclipse_*
+  skip_cleanup: true
   on:
     repo: ant4eclipse/ant4eclipse
