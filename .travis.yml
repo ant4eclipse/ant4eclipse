@@ -22,5 +22,5 @@ deploy:
   file: org.ant4eclipse.build/destination/org.ant4eclipse_*
   skip_cleanup: true
   on:
-    branch: master
+    tags: true
     repo: ant4eclipse/ant4eclipse
