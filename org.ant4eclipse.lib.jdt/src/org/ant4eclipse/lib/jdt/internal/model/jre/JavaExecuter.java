@@ -275,6 +275,9 @@ public class JavaExecuter {
       // wait for result
       proc.waitFor();
 
+      errorGobbler.join();
+      outputGobbler.join();
+
       // read out and err stream
       this._systemOut = outputLinesList.toArray(new String[0]);
       this._systemErr = errorLinesList.toArray(new String[0]);
