@@ -131,6 +131,9 @@ public class Version implements Comparable<Version> {
           if (firstpos == -1) {
             // no delimiter
             this._micro = Integer.valueOf(microWithQualifier);
+            if (st.hasMoreTokens()) {
+              this._qualifier = st.nextToken();
+            }
           } else {
             // with delimiter separating the qualifier
             this._micro = Integer.valueOf(microWithQualifier.substring(0, firstpos));
