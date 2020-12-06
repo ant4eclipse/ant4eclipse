@@ -57,9 +57,11 @@ public class JavaRuntimeLoader {
    * @param files
    *          the list of (jar-)files defining this java runtime or null if the file should be determined from the
    *          JavaRuntime's location
+   * @param profile
+   *          Optional alternative profile to use.
    */
   public static JavaRuntime loadJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
-      List<File> files) {
+      List<File> files, String profile) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
 
@@ -90,7 +92,7 @@ public class JavaRuntimeLoader {
     properties.put(JAVA_SPECIFICATION_VERSION, values[4]);
     properties.put(JAVA_SPECIFICATION_NAME, values[5]);
 
-    String javaProfileName = getVmProfile(properties);
+    String javaProfileName = profile == null ? getVmProfile(properties) : profile;
     JavaRuntimeRegistry javaRuntimeRegistry = ServiceRegistryAccess.instance().getService(JavaRuntimeRegistry.class);
     if (!javaRuntimeRegistry.hasJavaProfile(javaProfileName)) {
       A4ELogging.error("No Java-Profile with name '%s' found for JRE '%s' located at '%s'. Known Profiles: '%s'",

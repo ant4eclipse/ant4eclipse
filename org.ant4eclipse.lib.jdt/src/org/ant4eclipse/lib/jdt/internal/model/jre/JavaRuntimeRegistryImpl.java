@@ -11,7 +11,7 @@
  **********************************************************************/
 package org.ant4eclipse.lib.jdt.internal.model.jre;
 
-import static org.ant4eclipse.lib.core.logging.A4ELogging.trace;
+import static org.ant4eclipse.lib.core.logging.A4ELogging.*;
 
 import java.io.File;
 import java.util.Collection;
@@ -59,7 +59,7 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * {@inheritDoc}
    */
   public JavaRuntime registerJavaRuntime(String id, File location) {
-    return registerJavaRuntime(id, location, null, null, null);
+    return registerJavaRuntime(id, location, null, null, null, null);
 
   }
 
@@ -67,16 +67,17 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
    * (non-Javadoc)
    * 
    * @see org.ant4eclipse.lib.jdt.model.jre.JavaRuntimeRegistry#registerJavaRuntime(java.lang.String, java.io.File,
-   * java.util.List)
+   * java.util.List, java.lang.String)
    */
   public JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs,
-      List<File> jreFiles) {
+      List<File> jreFiles, String profile) {
     Assure.nonEmpty("id", id);
     Assure.isDirectory("location", location);
-    A4ELogging.info("registerJavaRuntime: id = %s, location = %s, extDirs = %s, endorsedDirs = %s, jreFiles = %s", id,
-        location, extDirs, endorsedDirs, jreFiles);
+    A4ELogging.info(
+        "registerJavaRuntime: id = %s, location = %s, extDirs = %s, endorsedDirs = %s, jreFiles = %s, profile = %s", id,
+        location, extDirs, endorsedDirs, jreFiles, profile);
 
-    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles);
+    JavaRuntime javaRuntime = JavaRuntimeLoader.loadJavaRuntime(id, location, extDirs, endorsedDirs, jreFiles, profile);
 
     return registerJavaRuntime(javaRuntime);
   }
@@ -349,6 +350,6 @@ public class JavaRuntimeRegistryImpl implements JavaRuntimeRegistry {
 
     // create new java runtime
     A4ELogging.info("Using default JRE defined in system property 'java.home' (%s)", location.getAbsolutePath());
-    return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null, null, null);
+    return JavaRuntimeLoader.loadJavaRuntime("java.home", location, null, null, null, null);
   }
 }
