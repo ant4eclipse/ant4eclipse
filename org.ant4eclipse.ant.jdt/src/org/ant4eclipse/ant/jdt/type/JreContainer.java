@@ -114,7 +114,7 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
     List<File> jreFiles = getSelectedJreFiles(runtime);
 
     JavaRuntime javaRuntime = javaRuntimeRegistry.registerJavaRuntime(runtime.getId(), runtime.getLocation(),
-        runtime.getExtDirs(), runtime.getEndorsedDirs(), jreFiles);
+        runtime.getExtDirs(), runtime.getEndorsedDirs(), jreFiles, runtime.getProfile());
 
     Assure.notNull("javaRuntime", javaRuntime);
 
@@ -194,6 +194,8 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     private List<FileSet> _fileSets;
 
+    private String        _profile;
+
     public String getId() {
       return this._id;
     }
@@ -244,6 +246,24 @@ public class JreContainer extends AbstractAnt4EclipseDataType {
 
     public boolean hasFileSets() {
       return this._fileSets != null;
+    }
+
+    /**
+     * The profile name to use as alternative for the profile name provided by the runtime.
+     * 
+     * <p>
+     * Use this option, if ant4eclipse does not support the profile of your Java runtime.
+     * </p>
+     */
+    public String getProfile() {
+      return this._profile;
+    }
+
+    /**
+     * @see #getProfile()
+     */
+    public void setProfile(String profile) {
+      this._profile = profile;
     }
   }
 } /* ENDCLASS */

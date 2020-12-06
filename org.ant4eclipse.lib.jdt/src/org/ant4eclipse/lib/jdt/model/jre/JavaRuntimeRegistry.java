@@ -40,9 +40,12 @@ public interface JavaRuntimeRegistry {
    * @param location
    * @param jreFiles
    *          the jreFiles that define the jre or null
+   * @param profile
+   *          Optional profile name to use instead of the detected profile name.
    * @return
    */
-  JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs, List<File> jreFiles);
+  JavaRuntime registerJavaRuntime(String id, File location, String extDirs, String endorsedDirs, List<File> jreFiles,
+      String profile);
 
   /**
    * <p>
